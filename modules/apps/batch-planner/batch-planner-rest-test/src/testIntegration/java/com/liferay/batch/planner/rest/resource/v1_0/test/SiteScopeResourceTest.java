@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.URLCodec;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -63,6 +64,8 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 		_testGetPlanInternalClassNameKeySiteScopesPageNotFound(
 			true, internalClassNameKey);
 
+		Group globalGroup = testCompany.getGroup();
+
 		Group group = GroupTestUtil.addGroupToCompany(
 			testCompany.getCompanyId());
 
@@ -100,11 +103,14 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 		internalClassNameKey = _getInternalClassNameKey(objectDefinition2);
 
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(group, testGroup), null, internalClassNameKey);
+			Arrays.asList(globalGroup, group, testGroup), null,
+			internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(group, testGroup), false, internalClassNameKey);
+			Arrays.asList(globalGroup, group, testGroup), false,
+			internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(group, testGroup), true, internalClassNameKey);
+			Arrays.asList(globalGroup, group, testGroup), true,
+			internalClassNameKey);
 
 		// Service builder entity (company scoped)
 
@@ -116,7 +122,7 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 		_testGetPlanInternalClassNameKeySiteScopesPage(
 			Collections.emptyList(), false, internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Collections.singletonList(testGroup), true, internalClassNameKey);
+			Arrays.asList(globalGroup, testGroup), true, internalClassNameKey);
 
 		// Service builder entity (site scoped)
 
@@ -124,11 +130,14 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 			"com.liferay.headless.delivery.dto.v1_0.BlogPosting";
 
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(group, testGroup), null, internalClassNameKey);
+			Arrays.asList(globalGroup, group, testGroup), null,
+			internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(group, testGroup), false, internalClassNameKey);
+			Arrays.asList(globalGroup, group, testGroup), false,
+			internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(group, testGroup), true, internalClassNameKey);
+			Arrays.asList(globalGroup, group, testGroup), true,
+			internalClassNameKey);
 	}
 
 	@Override
@@ -170,8 +179,18 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 		}
 
 		for (Group group : expectedGroups) {
+			String groupLabel;
+
+			if (Objects.equals(group.getDescriptiveName(), "Global")) {
+				groupLabel = group.getDescriptiveName();
+			}
+			else {
+				groupLabel = group.getGroupKey();
+			}
+
 			assertEquals(
-				_toSiteScope(group), _getSiteScope(group.getGroupKey(), page));
+				_toSiteScope(group.getGroupId(), groupLabel),
+				_getSiteScope(groupLabel, page));
 		}
 	}
 
@@ -187,11 +206,12 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 		Assert.assertEquals(404, httpResponse.getStatusCode());
 	}
 
-	private SiteScope _toSiteScope(Group group) {
+	private SiteScope _toSiteScope(Long groupId, String groupLabel) {
 		SiteScope siteScope = new SiteScope();
 
-		siteScope.setLabel(group.getGroupKey());
-		siteScope.setValue(group.getGroupId());
+		siteScope.setLabel(groupLabel);
+
+		siteScope.setValue(groupId);
 
 		return siteScope;
 	}

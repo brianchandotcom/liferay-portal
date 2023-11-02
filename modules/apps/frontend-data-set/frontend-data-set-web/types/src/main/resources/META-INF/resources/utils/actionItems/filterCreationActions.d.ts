@@ -5,10 +5,10 @@
 
 import {ICreationActionItem} from '../../management_bar/components/CreationMenu';
 declare const filterCreationActions: ({
-	creationActions,
+	customActions,
 	globalCollectionActions,
 }: {
-	creationActions: Array<ICreationActionItem>;
+	customActions: Array<ICreationActionItem>;
 	globalCollectionActions: any;
 }) => Array<ICreationActionItem> | null;
 export default filterCreationActions;

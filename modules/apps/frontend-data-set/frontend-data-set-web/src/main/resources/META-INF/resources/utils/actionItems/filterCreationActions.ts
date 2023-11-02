@@ -5,25 +5,30 @@
 
 import {ICreationActionItem} from '../../management_bar/components/CreationMenu';
 
-const filterCreationActions = ({creationActions, globalCollectionActions}: {
-	creationActions: Array<ICreationActionItem>,
-	globalCollectionActions: any
+const filterCreationActions = ({
+	customActions,
+	globalCollectionActions,
+}: {
+	customActions: Array<ICreationActionItem>;
+	globalCollectionActions: any;
 }): Array<ICreationActionItem> | null => {
-	return creationActions
-		? creationActions.reduce(
+	return customActions
+		? customActions.reduce(
 				(
-					creationActions: Array<ICreationActionItem>,
+					customActions: Array<ICreationActionItem>,
 					action: ICreationActionItem
 				) => {
 					if (action.data?.permissionKey) {
-						if (globalCollectionActions[action.data.permissionKey]) {
-							return [...creationActions, action];
+						if (
+							globalCollectionActions[action.data.permissionKey]
+						) {
+							return [...customActions, action];
 						}
 
-						return creationActions;
+						return customActions;
 					}
 
-					return [...creationActions, action];
+					return [...customActions, action];
 				},
 				[]
 		  )

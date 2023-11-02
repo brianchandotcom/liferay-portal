@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Constants;
@@ -100,6 +101,11 @@ public class CTCollectionPreviewFilter extends BasePortalFilter {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
+			if (permissionChecker == null) {
+				permissionChecker = permissionCheckerFactory.create(
+					_portal.getUser(httpServletRequest));
+			}
+
 			if (!_modelResourcePermission.contains(
 					permissionChecker, ctCollection, ActionKeys.VIEW)) {
 
@@ -119,6 +125,9 @@ public class CTCollectionPreviewFilter extends BasePortalFilter {
 			CTCollectionPreviewFilter.class.getName(), httpServletRequest,
 			httpServletResponse, filterChain);
 	}
+
+	@Reference
+	protected PermissionCheckerFactory permissionCheckerFactory;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

@@ -10,6 +10,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
@@ -28,6 +29,7 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -126,13 +128,27 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 				WebKeys.THEME_DISPLAY);
 
 		String url = null;
+		String language = "";
+
+		String displayContextLanguage = displayContext.getLocale(
+		).getLanguage();
+
+		if (!Objects.equals(displayContextLanguage, "en") ||
+			(layout.getCtCollectionId() == 0)) {
+
+			language = StringPool.FORWARD_SLASH + displayContextLanguage;
+		}
 
 		if (!layout.isDenied() && !layout.isPending()) {
-			url = _portal.getLayoutFriendlyURL(layout, themeDisplay);
+			url = StringBundler.concat(
+				_portal.getPortalURL(themeDisplay), language,
+				layout.getFriendlyURL());
 		}
 		else {
-			url = _portal.getLayoutFriendlyURL(
-				layout.fetchDraftLayout(), themeDisplay);
+			url = StringBundler.concat(
+				_portal.getPortalURL(themeDisplay), language,
+				layout.fetchDraftLayout(
+				).getFriendlyURL());
 		}
 
 		url = HttpComponentsUtil.addParameter(url, "p_l_mode", "preview");

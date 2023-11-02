@@ -25,10 +25,10 @@ import org.json.JSONObject;
  */
 public class BuildHistory {
 
-	public BuildHistory(String name, long startTime, long duration) {
+	public BuildHistory(long duration, String name, long startTime) {
+		_duration = duration;
 		_name = name;
 		_startTime = startTime;
-		_duration = duration;
 	}
 
 	public void addBuildDataJSONObject(BuildJSONObject buildJSONObject) {
@@ -88,7 +88,7 @@ public class BuildHistory {
 		public static final long TIMELINE_SAMPLE_PERIOD_MINUTES = 10;
 
 		public static JSONArray getTimeJSONArray(
-			long startTime, long duration) {
+			long duration, long startTime) {
 
 			int size = getTimelineSize(duration);
 
@@ -132,10 +132,10 @@ public class BuildHistory {
 		}
 
 		protected Timeline(
-			BuildHistory buildHistory, long startTime, long duration) {
+			BuildHistory buildHistory, long duration, long startTime) {
 
-			_startTime = startTime;
 			_duration = duration;
+			_startTime = startTime;
 
 			_size = getTimelineSize(duration);
 
@@ -422,7 +422,7 @@ public class BuildHistory {
 
 	private Timeline _getTimeline() {
 		if (_timeline == null) {
-			_timeline = new Timeline(this, getStartTime(), getDuration());
+			_timeline = new Timeline(this, getDuration(), getStartTime());
 		}
 
 		return _timeline;

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -154,11 +155,21 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getAddChildSiteActionUnsafeConsumer() {
 
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
 		return dropdownItem -> {
+			String backURLTitle = portletDisplay.getPortletDisplayName();
+
+			if (_group != null) {
+				backURLTitle = _group.getDescriptiveName(
+					_themeDisplay.getLocale());
+			}
+
 			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(),
-				"mvcRenderCommandName", "/site_admin/select_site_initializer",
-				"redirect", _themeDisplay.getURLCurrent(), "parentGroupId",
+				_liferayPortletResponse.createRenderURL(), "backURLTitle",
+				backURLTitle, "mvcRenderCommandName",
+				"/site_admin/select_site_initializer", "redirect",
+				_themeDisplay.getURLCurrent(), "parentGroupId",
 				String.valueOf(_group.getGroupId()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "add-child-site"));

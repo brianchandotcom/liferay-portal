@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -112,6 +113,22 @@ public class SiteAdminManagementToolbarDisplayContext
 							"/site_admin/select_site_initializer"
 						).setRedirect(
 							themeDisplay.getURLCurrent()
+						).setParameter(
+							"backURLTitle",
+							() -> {
+								Group group =
+									_siteAdminDisplayContext.getGroup();
+
+								if (group != null) {
+									return group.getDescriptiveName(
+										themeDisplay.getLocale());
+								}
+
+								PortletDisplay portletDisplay =
+									themeDisplay.getPortletDisplay();
+
+								return portletDisplay.getPortletDisplayName();
+							}
 						).setParameter(
 							"parentGroupId",
 							() -> {

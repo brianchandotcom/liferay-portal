@@ -129,6 +129,9 @@ public class SelectSiteInitializerDisplayContext {
 		).setRedirect(
 			getBackURL()
 		).setParameter(
+			"backURLTitle",
+			ParamUtil.getString(_httpServletRequest, "backURLTitle")
+		).setParameter(
 			"parentGroupId", getParentGroupId()
 		).buildPortletURL();
 	}

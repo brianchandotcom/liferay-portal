@@ -12,7 +12,7 @@ SelectSiteInitializerDisplayContext selectSiteInitializerDisplayContext = new Se
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(selectSiteInitializerDisplayContext.getBackURL());
-portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
+portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>

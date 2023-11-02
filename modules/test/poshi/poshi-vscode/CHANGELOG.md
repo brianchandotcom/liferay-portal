@@ -2,6 +2,8 @@
 
 ## [0.3.8]
 
+- Fixes broken Marketplace presentation issues
+
 ## [0.3.7]
 
 - Reduces package size

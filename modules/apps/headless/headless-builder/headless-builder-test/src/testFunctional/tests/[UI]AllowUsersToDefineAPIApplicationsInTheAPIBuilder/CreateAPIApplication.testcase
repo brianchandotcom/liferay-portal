@@ -310,7 +310,9 @@ definition {
 
 			AssertElementPresent(locator1 = "APIBuilder#AUTOMATED_URL");
 
-			AssertElementPresent(locator1 = "APIBuilder#DESCRIPTION");
+			AssertElementPresent(
+				key_value = "API",
+				locator1 = "APIBuilder#DESCRIPTION");
 		}
 
 		task ("And Then I can see example url /o/ and note about url can be modified") {

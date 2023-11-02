@@ -152,14 +152,16 @@ public class JournalConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailArticleAdded");
-		validateEmail(actionRequest, "emailArticleApprovalDenied");
-		validateEmail(actionRequest, "emailArticleApprovalGranted");
-		validateEmail(actionRequest, "emailArticleApprovalRequested");
-		validateEmail(actionRequest, "emailArticleExpired");
-		validateEmail(actionRequest, "emailArticleReview");
-		validateEmail(actionRequest, "emailArticleUpdated");
-		validateEmailFrom(actionRequest);
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
+			validateEmail(actionRequest, "emailArticleAdded");
+			validateEmail(actionRequest, "emailArticleApprovalDenied");
+			validateEmail(actionRequest, "emailArticleApprovalGranted");
+			validateEmail(actionRequest, "emailArticleApprovalRequested");
+			validateEmail(actionRequest, "emailArticleExpired");
+			validateEmail(actionRequest, "emailArticleReview");
+			validateEmail(actionRequest, "emailArticleUpdated");
+			validateEmailFrom(actionRequest);
+		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

@@ -160,7 +160,4 @@ public class ProductConfigurationResourceImpl
 	private DTOConverter<CPDefinitionInventory, ProductConfiguration>
 		_productConfigurationDTOConverter;
 
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
-
 }

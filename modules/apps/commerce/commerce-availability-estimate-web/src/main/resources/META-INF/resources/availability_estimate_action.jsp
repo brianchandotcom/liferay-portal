@@ -25,7 +25,6 @@ CommerceAvailabilityEstimate commerceAvailabilityEstimate = (CommerceAvailabilit
 	<c:if test="<%= commerceAvailabilityEstimateDisplayContext.hasManageCommerceAvailabilityEstimatesPermission() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/commerce_availability_estimate/edit_commerce_availability_estimate" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="commerceAvailabilityEstimateId" value="<%= String.valueOf(commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId()) %>" />
 		</portlet:renderURL>
 

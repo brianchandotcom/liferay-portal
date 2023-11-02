@@ -41,8 +41,6 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 								renderResponse
 							).setMVCRenderCommandName(
 								"/commerce_availability_estimate/edit_commerce_availability_estimate"
-							).setRedirect(
-								currentURL
 							).setParameter(
 								"commerceAvailabilityEstimateId", commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId()
 							).buildPortletURL()

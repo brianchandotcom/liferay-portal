@@ -9,15 +9,6 @@
 
 <%
 CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
 %>
 
 <liferay-frontend:screen-navigation

@@ -40,8 +40,6 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 								renderResponse
 							).setMVCRenderCommandName(
 								"/commerce_country/edit_commerce_country"
-							).setRedirect(
-								currentURL
 							).setParameter(
 								"countryId", country.getCountryId()
 							).buildPortletURL()

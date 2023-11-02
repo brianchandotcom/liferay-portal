@@ -15,22 +15,12 @@ long countryId = commerceRegionsDisplayContext.getCountryId();
 Region region = commerceRegionsDisplayContext.getRegion();
 
 long regionId = commerceRegionsDisplayContext.getRegionId();
-
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
 %>
 
 <portlet:actionURL name="/commerce_country/edit_commerce_region" var="editCommerceRegionActionURL" />
 
 <aui:form action="<%= editCommerceRegionActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceRegion();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (region == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="countryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
 	<aui:input name="regionId" type="hidden" value="<%= String.valueOf(regionId) %>" />
 
@@ -57,7 +47,7 @@ else {
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

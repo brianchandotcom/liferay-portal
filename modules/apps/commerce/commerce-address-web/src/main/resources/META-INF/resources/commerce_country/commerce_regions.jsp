@@ -41,8 +41,6 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 								renderResponse
 							).setMVCRenderCommandName(
 								"/commerce_country/edit_commerce_region"
-							).setRedirect(
-								currentURL
 							).setParameter(
 								"countryId", region.getCountryId()
 							).setParameter(

@@ -54,7 +54,7 @@ long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRe
 					<aui:button-row>
 						<aui:button cssClass="btn-lg" type="submit" />
 
-						<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+						<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 					</aui:button-row>
 				</aui:fieldset>
 			</div>

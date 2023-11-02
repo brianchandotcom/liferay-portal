@@ -25,8 +25,6 @@ Region region = (Region)row.getObject();
 	<c:if test="<%= commerceRegionsDisplayContext.hasPermission(ActionKeys.MANAGE_COUNTRIES) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/commerce_country/edit_commerce_region" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= backURL %>" />
 			<portlet:param name="countryId" value="<%= String.valueOf(region.getCountryId()) %>" />
 			<portlet:param name="regionId" value="<%= String.valueOf(region.getRegionId()) %>" />
 		</portlet:renderURL>
@@ -51,7 +49,6 @@ Region region = (Region)row.getObject();
 		<portlet:actionURL name="/commerce_country/edit_commerce_region" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= backURL %>" />
 			<portlet:param name="regionId" value="<%= String.valueOf(region.getRegionId()) %>" />
 		</portlet:actionURL>
 

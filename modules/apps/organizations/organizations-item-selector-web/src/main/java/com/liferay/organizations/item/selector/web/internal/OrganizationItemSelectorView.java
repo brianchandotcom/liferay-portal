@@ -13,7 +13,6 @@ import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion
 import com.liferay.organizations.item.selector.web.internal.display.context.OrganizationItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
@@ -95,9 +94,6 @@ public class OrganizationItemSelectorView
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private OrganizationService _organizationService;
 
 	@Reference
 	private Portal _portal;

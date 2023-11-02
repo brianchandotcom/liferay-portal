@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -141,8 +140,5 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

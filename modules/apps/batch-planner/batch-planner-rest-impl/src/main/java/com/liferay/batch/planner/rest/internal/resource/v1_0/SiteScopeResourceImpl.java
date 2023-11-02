@@ -25,7 +25,6 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,10 +83,6 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 			for (Group group :
 					_groupService.getUserSitesGroups(
 						_CLASS_NAMES, QueryUtil.ALL_POS)) {
-
-				if (Objects.equals(group.getDescriptiveName(), "Global")) {
-					continue;
-				}
 
 				siteScopes.add(
 					new SiteScope() {

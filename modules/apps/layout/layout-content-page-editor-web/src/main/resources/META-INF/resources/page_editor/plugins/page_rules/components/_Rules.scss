@@ -16,6 +16,7 @@ html#{$cadmin-selector} .cadmin {
 		}
 
 		&:hover .page-editor__rule-builder-delete-button,
+		&:focus-within .page-editor__rule-builder-delete-button,
 		.page-editor__rule-builder-delete-button:focus-visible {
 			opacity: 1;
 		}

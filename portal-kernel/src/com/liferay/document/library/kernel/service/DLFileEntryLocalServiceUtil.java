@@ -436,6 +436,25 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().fetchFileEntryByName(groupId, folderId, name);
 	}
 
+	public static void forEachFileEntry(
+			long companyId, java.util.function.Consumer<DLFileEntry> consumer,
+			long maximumSize, String[] mimeTypes)
+		throws PortalException {
+
+		getService().forEachFileEntry(
+			companyId, consumer, maximumSize, mimeTypes);
+	}
+
+	public static void forEachFileEntry(
+			long companyId, long classNameId,
+			java.util.function.Consumer<DLFileEntry> consumer, long maximumSize,
+			String[] mimeTypes)
+		throws PortalException {
+
+		getService().forEachFileEntry(
+			companyId, classNameId, consumer, maximumSize, mimeTypes);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

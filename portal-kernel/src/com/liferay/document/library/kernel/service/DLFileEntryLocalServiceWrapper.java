@@ -489,6 +489,27 @@ public class DLFileEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void forEachFileEntry(
+			long companyId, java.util.function.Consumer<DLFileEntry> consumer,
+			long maximumSize, String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlFileEntryLocalService.forEachFileEntry(
+			companyId, consumer, maximumSize, mimeTypes);
+	}
+
+	@Override
+	public void forEachFileEntry(
+			long companyId, long classNameId,
+			java.util.function.Consumer<DLFileEntry> consumer, long maximumSize,
+			String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlFileEntryLocalService.forEachFileEntry(
+			companyId, classNameId, consumer, maximumSize, mimeTypes);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

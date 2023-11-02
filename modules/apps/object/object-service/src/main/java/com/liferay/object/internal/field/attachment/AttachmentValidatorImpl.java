@@ -6,6 +6,7 @@
 package com.liferay.object.internal.field.attachment;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -143,6 +145,13 @@ public class AttachmentValidatorImpl implements AttachmentValidator {
 
 			throw new FileExtensionException(
 				"Invalid file extension for " + fileName);
+		}
+	}
+
+	@Override
+	public void validateFileName(String fileName) throws FileNameException {
+		if (Validator.isNull(fileName)) {
+			throw new FileNameException("Title is null");
 		}
 	}
 

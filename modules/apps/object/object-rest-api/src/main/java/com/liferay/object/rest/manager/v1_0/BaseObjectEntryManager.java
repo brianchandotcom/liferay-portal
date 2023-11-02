@@ -15,12 +15,14 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
@@ -65,6 +67,13 @@ public abstract class BaseObjectEntryManager {
 	protected long getGroupId(
 		ObjectDefinition objectDefinition, String scopeKey) {
 
+		return getGroupId(objectDefinition, scopeKey, false);
+	}
+
+	protected long getGroupId(
+		ObjectDefinition objectDefinition, String scopeKey,
+		boolean useCompanyGroup) {
+
 		ObjectScopeProvider objectScopeProvider =
 			objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
@@ -81,6 +90,18 @@ public abstract class BaseObjectEntryManager {
 				GroupUtil.getDepotGroupId(
 					scopeKey, objectDefinition.getCompanyId(),
 					depotEntryLocalService, groupLocalService));
+		}
+
+		if (useCompanyGroup) {
+			try {
+				Company company = companyLocalService.getCompany(
+					objectDefinition.getCompanyId());
+
+				return company.getGroupId();
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 
 		return 0;
@@ -126,6 +147,9 @@ public abstract class BaseObjectEntryManager {
 				objectDefinition.getObjectDefinitionId()),
 			objectEntry.getProperties());
 	}
+
+	@Reference
+	protected CompanyLocalService companyLocalService;
 
 	@Reference
 	protected DDMExpressionFactory ddmExpressionFactory;

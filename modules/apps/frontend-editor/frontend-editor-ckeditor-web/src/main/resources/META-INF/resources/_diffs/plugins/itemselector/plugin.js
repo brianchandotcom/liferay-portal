@@ -263,15 +263,25 @@
 						const editorContentHeight = editorContent.getBoundingClientRect()
 							.height;
 
-						let elementOuterHtml = `<img src="${imageSrc}" height="${editorContentHeight}">`;
+						const imgElement = new Image();
 
-						if (instance._isEmptySelection(editor)) {
-							elementOuterHtml += '<br />';
-						}
+						imgElement.src = imageSrc;
 
-						editor.insertHtml(elementOuterHtml);
+						imgElement.onload = function () {
+							if (imgElement.height > editorContentHeight) {
+								imgElement.height = editorContentHeight;
+							}
 
-						editor.focus();
+							let elementOuterHtml = imgElement.outerHTML;
+
+							if (instance._isEmptySelection(editor)) {
+								elementOuterHtml += '<br />';
+							}
+
+							editor.insertHtml(elementOuterHtml);
+
+							editor.focus();
+						};
 					}
 				}
 			}

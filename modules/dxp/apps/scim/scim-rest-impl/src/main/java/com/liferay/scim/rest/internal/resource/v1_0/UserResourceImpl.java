@@ -22,8 +22,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/user.properties",
 	scope = ServiceScope.PROTOTYPE, service = UserResource.class
 )
-public class UserResourceImpl
-	extends BaseUserResourceImpl implements UserResourceHandler {
+public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Override
 	public Object getV2User(Integer count, Integer startIndex)

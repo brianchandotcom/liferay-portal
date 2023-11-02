@@ -697,6 +697,7 @@ definition {
 			picklistName = ${picklistName},
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
+		var itemKey = StringUtil.removeSpaces(${itemKey});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";

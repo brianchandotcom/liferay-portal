@@ -32,7 +32,6 @@ import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
-import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
@@ -1904,9 +1903,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	@Reference
 	private DEDataDefinitionFieldLinkLocalService
 		_deDataDefinitionFieldLinkLocalService;
-
-	@Reference
-	private DEDataListViewLocalService _deDataListViewLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

@@ -251,7 +251,8 @@ public abstract class BaseWorkspace implements Workspace {
 		);
 
 		try {
-			String workspaceDirNames =
+			jsonObject.put(
+				"workspace_repository_dir_names",
 				JenkinsResultsParserUtil.removeDuplicates(
 					",",
 					JenkinsResultsParserUtil.getProperty(
@@ -259,9 +260,7 @@ public abstract class BaseWorkspace implements Workspace {
 						"workspace.repository.dir.names",
 						_primaryWorkspaceGitRepository.getName(),
 						_primaryWorkspaceGitRepository.getUpstreamBranchName(),
-						jobName));
-
-			jsonObject.put("workspace_repository_dir_names", workspaceDirNames);
+						jobName)));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

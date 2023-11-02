@@ -19,6 +19,7 @@ public class BuildSoyCommandTest extends BaseSoyCommandTestCase {
 		content = content.replaceAll("__\\w+", "__TEST");
 		content = content.replaceAll(
 			"localeMetadata\\w+", "localeMetadataTEST");
+		content = content.replaceAll("[\\w/\\\\]+?.soy:", "TEST.soy:");
 
 		return content;
 	}

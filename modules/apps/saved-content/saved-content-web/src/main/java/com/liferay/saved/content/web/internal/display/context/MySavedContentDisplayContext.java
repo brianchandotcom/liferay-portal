@@ -85,6 +85,22 @@ public class MySavedContentDisplayContext {
 		}
 	}
 
+	public String getRemoveSavedContentURL(String className, long classPK) {
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_httpServletRequest, MySavedContentPortletKeys.MY_SAVED_CONTENT,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/saved_content/delete_saved_content_entry"
+		).setRedirect(
+			PortalUtil.getCurrentURL(_httpServletRequest)
+		).setParameter(
+			"className", className
+		).setParameter(
+			"classPK", classPK
+		).buildString();
+	}
+
 	public SearchContainer<SavedContentEntry> getSearchContainer()
 		throws PortalException {
 

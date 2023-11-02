@@ -577,8 +577,6 @@ definition {
 
 	@summary = "Default summary"
 	macro viewInvitedUser(userInvite = null, publicationRole = null) {
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 		AssertElementPresent(
 			key_publicationRole = ${publicationRole},
 			key_userInvite = ${userInvite},

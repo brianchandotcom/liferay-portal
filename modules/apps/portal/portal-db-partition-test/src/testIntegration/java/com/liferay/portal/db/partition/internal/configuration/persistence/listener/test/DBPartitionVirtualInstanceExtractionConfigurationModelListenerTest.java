@@ -63,7 +63,19 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 
 	@Test
 	public void testConfigurationIsDeletedAfterDeploy() throws Exception {
-		testConfigurationIsDeletedAfterDeploy(_PID, "webId=T\"testWebId\"\n");
+		try (AutoCloseable autoCloseable = swapCompanyLocalService(
+				(proxy, method, args) -> {
+					if (Objects.equals(method.getName(), "getCompanyByWebId")) {
+						return _companyLocalService.createCompany(
+							COMPANY_IDS[0]);
+					}
+
+					return null;
+				})) {
+
+			testConfigurationIsDeletedAfterDeploy(
+				_PID, "webId=T\"testWebId\"\n");
+		}
 	}
 
 	private static final String _PID =

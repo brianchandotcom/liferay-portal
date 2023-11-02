@@ -9,6 +9,22 @@
 					"if": {
 						"properties": {
 							"type": {
+								"const": "DisplayPage"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"value": {
+								"$ref": "#/definitions/DisplayPageActionExecutionResult"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
 								"const": "None"
 							}
 						}
@@ -73,6 +89,7 @@
 			"properties": {
 				"type": {
 					"enum": [
+						"DisplayPage",
 						"None",
 						"Notification",
 						"Page",
@@ -348,6 +365,22 @@
 				"customCSS"
 			],
 			"title": "The CustomCSSViewport Schema",
+			"type": "object"
+		},
+		"DisplayPageActionExecutionResult": {
+			"additionalProperties": false,
+			"properties": {
+				"mapping": {
+					"additionalProperties": false,
+					"properties": {
+						"fieldKey": {
+							"title": "The fieldKey Schema",
+							"type": "string"
+						}
+					}
+				}
+			},
+			"title": "The DisplayPageActionExecutionResult Schema",
 			"type": "object"
 		},
 		"Fragment": {

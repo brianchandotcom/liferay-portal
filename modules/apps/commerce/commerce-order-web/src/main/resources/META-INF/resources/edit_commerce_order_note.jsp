@@ -13,9 +13,6 @@ CommerceOrderNoteEditDisplayContext commerceOrderNoteEditDisplayContext = (Comme
 
 CommerceOrderNote commerceOrderNote = commerceOrderNoteEditDisplayContext.getCommerceOrderNote();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
 renderResponse.setTitle(LanguageUtil.get(request, "edit-note"));
 %>
 
@@ -25,7 +22,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-note"));
 
 <aui:form action="<%= editCommerceOrderNoteActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceOrderNote();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceOrderNote == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= portletDisplay.getURLBack() %>" />
 	<aui:input name="commerceOrderNoteId" type="hidden" value="<%= String.valueOf(commerceOrderNote.getCommerceOrderNoteId()) %>" />
 
 	<div class="lfr-form-content">
@@ -47,7 +44,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-note"));
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

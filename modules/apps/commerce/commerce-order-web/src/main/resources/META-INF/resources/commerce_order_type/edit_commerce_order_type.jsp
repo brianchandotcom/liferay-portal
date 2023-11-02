@@ -11,15 +11,6 @@
 CommerceOrderTypeDisplayContext commerceOrderTypeDisplayContext = (CommerceOrderTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceOrderType commerceOrderType = commerceOrderTypeDisplayContext.getCommerceOrderType();
-
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
 %>
 
 <liferay-portlet:renderURL var="editCommerceOrderTypeExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

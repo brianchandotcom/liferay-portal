@@ -18,12 +18,7 @@ String title = LanguageUtil.format(request, "order-x", commerceOrder.getCommerce
 renderResponse.setTitle(title);
 
 portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	redirect = String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderItemsPortletURL());
-}
-
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderItemsPortletURL()));
 %>
 
 <div id="<portlet:namespace />editOrderShipmentContainer">

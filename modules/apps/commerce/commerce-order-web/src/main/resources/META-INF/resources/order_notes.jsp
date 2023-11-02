@@ -33,7 +33,6 @@ else {
 
 <portlet:renderURL var="editCommerceOrderNotesURL">
 	<portlet:param name="mvcRenderCommandName" value="/commerce_order/edit_commerce_order" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
 	<portlet:param name="screenNavigationCategoryKey" value="<%= CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES %>" />
 </portlet:renderURL>

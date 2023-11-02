@@ -1876,7 +1876,7 @@ definition {
 		}
 
 		task ("Edit variant page and add some fragment to the page") {
-			Click(locator1 = "ABTest#PENCIL_BUTTON");
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1913,7 +1913,7 @@ definition {
 		}
 
 		task ("Edit variant page and add some fragment to the page") {
-			Click(locator1 = "ABTest#PENCIL_BUTTON");
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

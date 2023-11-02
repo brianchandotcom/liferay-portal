@@ -12,14 +12,8 @@ CommercePricingClassDisplayContext commercePricingClassDisplayContext = (Commerc
 
 CommercePricingClass commercePricingClass = commercePricingClassDisplayContext.getCommercePricingClass();
 
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
-
 portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 %>
 
 <liferay-portlet:renderURL var="editCommercePricingClassExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

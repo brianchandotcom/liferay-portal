@@ -20,6 +20,8 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 <portlet:actionURL name="/commerce_pricing_classes/edit_commerce_pricing_class" var="editCommercePricingClassActionURL" />
 
 <aui:form action="<%= editCommercePricingClassActionURL %>" cssClass="pt-4" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
 	<c:if test="<%= hasPermission %>">
 		<div class="row">
 			<div class="col-12 pt-4">

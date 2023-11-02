@@ -17,15 +17,6 @@ String headerTitle = LanguageUtil.get(request, "add-price-list");
 if (commercePriceList != null) {
 	headerTitle = commercePriceList.getName();
 }
-
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
 %>
 
 <liferay-portlet:renderURL var="editCommercePriceListExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

@@ -299,8 +299,6 @@ public class CommercePriceListDisplayContext
 					commercePricingRequestHelper.getRenderResponse()
 				).setMVCRenderCommandName(
 					"/commerce_price_list/edit_commerce_price_list"
-				).setRedirect(
-					commercePricingRequestHelper.getCurrentURL()
 				).setParameter(
 					"commercePriceListId", "{id}"
 				).setParameter(

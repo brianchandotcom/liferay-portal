@@ -11,15 +11,6 @@
 CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscountDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceDiscount commerceDiscount = commerceDiscountDisplayContext.getCommerceDiscount();
-
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
 %>
 
 <liferay-portlet:renderURL var="editCommerceDiscountExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

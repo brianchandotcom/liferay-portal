@@ -19,7 +19,7 @@ long commercePricingClassId = commercePricingClass.getCommercePricingClassId();
 
 <aui:form action="<%= editCommercePricingClassActionURL %>" cssClass="pt-4" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commercePricingClass == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commercePricingClassId" type="hidden" value="<%= (commercePricingClass == null) ? 0 : commercePricingClass.getCommercePricingClassId() %>" />
 
 	<div class="row">

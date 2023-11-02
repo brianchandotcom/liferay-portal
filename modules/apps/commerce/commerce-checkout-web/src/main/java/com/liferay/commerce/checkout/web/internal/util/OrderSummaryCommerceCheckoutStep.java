@@ -18,6 +18,7 @@ import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
@@ -304,6 +305,13 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 		CommerceOrder commerceOrder = (CommerceOrder)actionRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
+		if (!commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException();
+		}
 
 		if ((commerceOrder.getShippingAddressId() <= 0) &&
 			commerceOrder.isShippable()) {

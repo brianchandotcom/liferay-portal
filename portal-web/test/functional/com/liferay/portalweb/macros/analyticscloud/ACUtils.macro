@@ -1028,19 +1028,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro tearDownAC() {
-
-		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
-
-		ACUtils.launchAC();
-
-		ACSettings.deleteAllProperties();
-
-		//ACSettings.deleteAllDataSource();
-
-	}
-
-	@summary = "Default summary"
 	macro tearDownABTest() {
 		ACUtils.launchDXP();
 
@@ -1055,6 +1042,19 @@ definition {
 		}
 
 		ABTest.deleteABTest();
+	}
+
+	@summary = "Default summary"
+	macro tearDownAC() {
+
+		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
+
+		ACUtils.launchAC();
+
+		ACSettings.deleteAllProperties();
+
+		//ACSettings.deleteAllDataSource();
+
 	}
 
 	@summary = "Default summary"

@@ -30,7 +30,8 @@ definition {
 		return ${improvementNumber};
 	}
 
-	macro statusABTest {
+	@summary = "Default summary"
+	macro statusABTest(status) {
 		AssertTextEquals(
 			locator1 = "ACTests#LABEL_STATUS",
 			value1 = ${status});
@@ -51,7 +52,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewABTestResultAlertMessage {
+	@summary = "Default summary"
+	macro viewABTestResultAlertMessage(messageTitle, messageDescription = null,) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACTests#AB_TEST_ALERT_MESSAGE",
 			value1 = ${messageTitle});
@@ -63,20 +65,23 @@ definition {
 		}
 	}
 
-	macro viewABTestStatusInACList {
+	@summary = "Default summary"
+	macro viewABTestStatusInACList(abTestTitle, status) {
 		AssertTextEquals(
 			key_abTestTitle = ${abTestTitle},
 			locator1 = "ACTests#VIEW_TEST_STATUS_ANALYTICS_CLOUD",
 			value1 = ${status});
 	}
 
-	macro viewABTestStatusSummary {
+	@summary = "Default summary"
+	macro viewABTestStatusSummary(abTestSummaryText) {
 		AssertTextEquals(
 			locator1 = "ACTests#SUMMARY_CARD_TEXT",
 			value1 = ${abTestSummaryText});
 	}
 
-	macro viewVariantImprovementNumberInAC {
+	@summary = "Default summary"
+	macro viewVariantImprovementNumberInAC(variantName, improvementNumber) {
 		var key_variantName = ${variantName};
 
 		AssertTextEquals(

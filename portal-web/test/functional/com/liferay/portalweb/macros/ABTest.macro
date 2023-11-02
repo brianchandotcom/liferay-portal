@@ -1,5 +1,7 @@
 definition {
-	macro assertDXPABTestEmptyState {
+
+	@summary = "Default summary"
+	macro assertDXPABTestEmptyState() {
 		AssertVisible(
 			key_title = "No active tests were found for the selected experience.",
 			locator1 = "Header#H4_TITLE");
@@ -49,7 +51,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkVariantAnalyticsCloud() {
+	macro checkVariantAnalyticsCloud(variantNames) {
 		var index = 1;
 
 		if (IsElementPresent(key_text = "Review and Run Test", locator1 = "Button#ANY")) {
@@ -79,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createABTest(goal = null, testTitle = null,) {
+	macro createABTest(goal, testTitle) {
 		if (IsElementPresent(locator1 = "ABTest#CLOSED_ADMIN_PANEL")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
@@ -101,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createVariant(variantName = null) {
+	macro createVariant(variantName) {
 		Button.click(button = "Create Variant");
 
 		ABTest.fillInput(
@@ -113,7 +115,8 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	macro deleteABTest {
+	@summary = "Default summary"
+	macro deleteABTest() {
 		if (IsElementNotPresent(locator1 = "Modal#MODAL_CONTENT")) {
 			if (IsElementPresent(locator1 = "ABTest#KEBAB_AB_TEST")) {
 				Click(locator1 = "ABTest#KEBAB_AB_TEST");
@@ -152,14 +155,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editVariant(variantName = null) {
+	macro editVariant(variantName) {
 		Click(
 			key_variantName = ${variantName},
 			locator1 = "ABTest#EDIT_VARIANT_BUTTON");
 	}
 
 	@summary = "Default summary"
-	macro editVariantName() {
+	macro editVariantName(key_index = null) {
 		if (!(isSet(key_index))) {
 			var key_index = 1;
 		}
@@ -170,7 +173,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fillInput(labelValue = null, key_testTitle = null) {
+	macro fillInput(labelValue, key_testTitle) {
 		Click(
 			key_fieldLabel = ${labelValue},
 			locator1 = "Modal#INPUT_WITH_LABEL");
@@ -189,7 +192,8 @@ definition {
 		return ${improvementNumber};
 	}
 
-	macro openABTestInAC {
+	@summary = "Default summary"
+	macro openABTestInAC() {
 		ABTest.viewDataInAnalyticsCloud();
 
 		SelectWindow(value1 = "name=undefined");
@@ -364,7 +368,8 @@ definition {
 		}
 	}
 
-	macro viewVariantImprovementNumberInDXP {
+	@summary = "Default summary"
+	macro viewVariantImprovementNumberInDXP(improvementNumber, variantName) {
 		var key_variantName = ${variantName};
 
 		AssertTextEquals(
@@ -372,7 +377,8 @@ definition {
 			value1 = ${improvementNumber});
 	}
 
-	macro writeId {
+	@summary = "Default summary"
+	macro writeId(elementId) {
 		Click(locator1 = "ABTest#ELEMENT_ID_INPUT");
 
 		Type(

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="GenericTypeCheck" files="analytics-message-sender-impl/src/main/java/com/liferay/analytics/message/sender/internal/messaging/AddAnalyticsMessagesMessageListener\.java" />
-	</checkstyle>
-</suppressions>

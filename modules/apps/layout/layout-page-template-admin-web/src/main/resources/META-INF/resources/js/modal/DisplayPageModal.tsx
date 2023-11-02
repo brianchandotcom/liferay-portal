@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch, navigate} from 'frontend-js-web';
+import {fetch, navigate, openModal} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 import {MODAL_TYPES, ModalType} from '../constants/modalTypes';
@@ -94,13 +94,37 @@ export default function DisplayPageModal({
 				method: 'POST',
 			})
 				.then((response) => response.json())
-				.then((responseContent) => {
-					if (responseContent.error) {
-						setLoading(false);
-						setError(responseContent.error);
+				.then(({error, redirectURL}) => {
+					if (error?.isLocked) {
+						onClose();
+
+						openModal({
+							bodyHTML: `
+							<p class="text-secondary">
+								${Liferay.Language.get(
+									'the-content-type-cannot-be-changed-because-this-display-page-is-being-edited-by-another-user'
+								)}
+							</p>`,
+							buttons: [
+								{
+									autoFocus: true,
+									displayType: 'warning',
+									label: Liferay.Language.get('ok'),
+									type: 'cancel',
+								},
+							],
+							status: 'warning',
+							title: Liferay.Language.get(
+								'display-page-in-edition'
+							),
+						});
 					}
-					else if (responseContent.redirectURL) {
-						navigate(responseContent.redirectURL, {
+					else if (error) {
+						setLoading(false);
+						setError({other: error});
+					}
+					else if (redirectURL) {
+						navigate(redirectURL, {
 							beforeScreenFlip: onClose,
 						});
 					}

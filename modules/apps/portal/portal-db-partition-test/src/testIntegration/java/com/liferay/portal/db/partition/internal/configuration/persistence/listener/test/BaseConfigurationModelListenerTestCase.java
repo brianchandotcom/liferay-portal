@@ -57,10 +57,7 @@ public abstract class BaseConfigurationModelListenerTestCase
 		_deleteConfiguration();
 	}
 
-	protected abstract String getListenerName();
-
-	protected void testConfigurationIsDeletedAfterDeploy(
-			String pid, String content)
+	protected void deployConfiguration(String pid, String content)
 		throws Exception {
 
 		_waitForConfigurationModelListenerEnabled();
@@ -82,18 +79,26 @@ public abstract class BaseConfigurationModelListenerTestCase
 					"(service.pid=" + pid + ")"));
 
 			_countDownLatch.await(10, TimeUnit.SECONDS);
-
-			Assert.assertFalse(Files.exists(_configurationPath));
-
-			Assert.assertNull(
-				_configurationAdmin.listConfigurations(
-					"(service.pid=" + pid + ")"));
-
-			Assert.assertNull(
-				ReflectionTestUtil.invoke(
-					_persistenceManager, "_getDictionary",
-					new Class<?>[] {String.class}, pid));
 		}
+	}
+
+	protected abstract String getListenerName();
+
+			String pid, String content)
+		throws Exception {
+
+		deployConfiguration(pid, content);
+
+		Assert.assertFalse(Files.exists(_configurationPath));
+
+		Assert.assertNull(
+			_configurationAdmin.listConfigurations(
+				"(service.pid=" + pid + ")"));
+
+		Assert.assertNull(
+			ReflectionTestUtil.invoke(
+				_persistenceManager, "_getDictionary",
+				new Class<?>[] {String.class}, pid));
 	}
 
 	private Configuration _createConfiguration(

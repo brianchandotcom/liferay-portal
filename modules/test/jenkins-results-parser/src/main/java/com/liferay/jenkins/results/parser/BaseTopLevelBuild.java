@@ -719,7 +719,7 @@ public abstract class BaseTopLevelBuild
 
 		@Override
 		public Integer getPullRequestNumber() {
-			Matcher matcher = _pattern.matcher(
+			Matcher matcher = _gitHubURLPattern.matcher(
 				_workspaceGitRepository.getGitHubURL());
 
 			if (!matcher.find()) {
@@ -731,7 +731,7 @@ public abstract class BaseTopLevelBuild
 
 		@Override
 		public String getReceiverUsername() {
-			Matcher matcher = _pattern.matcher(
+			Matcher matcher = _gitHubURLPattern.matcher(
 				_workspaceGitRepository.getGitHubURL());
 
 			if (!matcher.find()) {
@@ -796,9 +796,6 @@ public abstract class BaseTopLevelBuild
 			_workspaceGitRepository = workspaceGitRepository;
 		}
 
-		private final Pattern _pattern = Pattern.compile(
-			"https://github.com/(?<username>[^/]+)/[^/]/pull/" +
-				"(?<pullNumber>\\d+)");
 		private final WorkspaceGitRepository _workspaceGitRepository;
 
 	}
@@ -2359,6 +2356,9 @@ public abstract class BaseTopLevelBuild
 			"(?<url>.+/job/(?<jobName>[^/]+)/.+)\\.");
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
+	private static final Pattern _gitHubURLPattern = Pattern.compile(
+		"https://github.com/(?<username>[^/]+)/[^/]/pull/" +
+			"(?<pullNumber>\\d+)");
 
 	private boolean _compareToUpstream;
 	private Build _controllerBuild;

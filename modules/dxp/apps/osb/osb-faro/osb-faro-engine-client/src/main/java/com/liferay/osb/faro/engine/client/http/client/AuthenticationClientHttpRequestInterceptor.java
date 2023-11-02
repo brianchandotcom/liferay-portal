@@ -103,7 +103,7 @@ public class AuthenticationClientHttpRequestInterceptor
 
 		private static String _getScheme(HttpRequest httpRequest) {
 			String forwardedProtocol = _getHttpHeaderValue(
-				httpRequest.getHeaders(), "X-Forwarded-Proto");
+				httpRequest.getHeaders(), "X-Forwarded-Origin-Proto");
 
 			if (forwardedProtocol != null) {
 				return forwardedProtocol;
@@ -116,7 +116,7 @@ public class AuthenticationClientHttpRequestInterceptor
 
 		private static String _getServerName(HttpRequest httpRequest) {
 			String forwardedHost = _getHttpHeaderValue(
-				httpRequest.getHeaders(), "X-Forwarded-Host");
+				httpRequest.getHeaders(), "X-Forwarded-Origin-Host");
 
 			if (forwardedHost != null) {
 				return forwardedHost;
@@ -131,7 +131,7 @@ public class AuthenticationClientHttpRequestInterceptor
 			int serverPort = 0;
 
 			String forwardedPort = _getHttpHeaderValue(
-				httpRequest.getHeaders(), "X-Forwarded-Port");
+				httpRequest.getHeaders(), "X-Forwarded-Origin-Port");
 
 			if (forwardedPort != null) {
 				serverPort = GetterUtil.getInteger(forwardedPort);

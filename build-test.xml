@@ -1307,6 +1307,35 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-patch-name">
+		<attribute name="patch.file.url" />
+
+		<sequential>
+			<var name="patch.name" unset="true" />
+
+			<propertyregex
+				input="@{patch.file.url}"
+				property="patch.name"
+				regexp=".*liferay-(fix-pack-)?(.*-\d{4})(-build\d*)?(-src)?.zip"
+				replace="\2"
+			/>
+
+			<if>
+				<not>
+					<isset property="patch.name" />
+				</not>
+				<then>
+					<propertyregex
+						input="@{patch.file.url}"
+						property="patch.name"
+						regexp=".*liferay-dxp-\d{4}.q\d.\d+-(hotfix-\d+).zip"
+						replace="\1"
+					/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-patch-requirements">
 		<attribute name="patch.file.zip.url" />
 
@@ -1357,15 +1386,44 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 								project.setProperty("patch.requirements", patchRequirements);
 							}
 						</script>
+
+						<antelope:stringutil property="patch.requirements" string="${patch.requirements}">
+							<antelope:replace regex="!" replacement="" />
+							<antelope:replace regex="&gt;=" replacement="-" />
+							<antelope:replace regex="=" replacement="-" />
+						</antelope:stringutil>
+					</then>
+				</elseif>
+				<elseif>
+					<available file="${tstamp.value}-dir/hotfix.json" />
+					<then>
+						<local name="json.content" />
+
+						<loadfile
+							property="json.content"
+							srcFile="${tstamp.value}-dir/hotfix.json"
+						/>
+
+						<script language="javascript">
+							var json = project.getProperty("json.content");
+
+							var hotfix = JSON.parse(json);
+
+							var patchingToolVersion = hotfix["requirement"]["patching-tool-version"];
+
+							if (patchingToolVersion != null) {
+								project.setProperty("patching.tool.version", patchingToolVersion);
+							}
+
+							var patchProductVersion = hotfix["requirement"]["product-version"];
+
+							if (patchProductVersion != null) {
+								project.setProperty("patch.product.version", patchProductVersion);
+							}
+						</script>
 					</then>
 				</elseif>
 			</if>
-
-			<antelope:stringutil property="patch.requirements" string="${patch.requirements}">
-				<antelope:replace regex="!" replacement="" />
-				<antelope:replace regex="&gt;=" replacement="-" />
-				<antelope:replace regex="=" replacement="-" />
-			</antelope:stringutil>
 
 			<delete dir="${tstamp.value}-dir" />
 			<delete file="${tstamp.value}.zip" />
@@ -8298,13 +8356,9 @@ war.path=${app.server.portal.dir}/</echo>
 				</fileset>
 				<sequential>
 					<local name="patch.file.base.name" />
+					<local name="patch.name" />
 
-					<propertyregex
-						input="@{patch.file.path}"
-						property="patch.name"
-						regexp=".*liferay-(fix-pack-)?(.*-\d{4})(-build\d*)?(-src)?.zip"
-						replace="\2"
-					/>
+					<get-patch-name patch.file.url="@{patch.file.path}" />
 
 					<fail message="${patch.name} was not reverted.">
 						<condition>
@@ -8349,12 +8403,7 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<local name="patch.name" />
 
-			<propertyregex
-				input="@{patch.file.zip.url}"
-				property="patch.name"
-				regexp=".*liferay-(fix-pack-)?(.*-\d{4})(-build\d*)?(-src)?.zip"
-				replace="\2"
-			/>
+			<get-patch-name patch.file.url="@{patch.file.zip.url}" />
 
 			<fail message="${patch.name} was not installed.">
 				<condition>
@@ -8390,12 +8439,7 @@ war.path=${app.server.portal.dir}/</echo>
 				<sequential>
 					<local name="patch.name" />
 
-					<propertyregex
-						input="@{patch.file.path}"
-						property="patch.name"
-						regexp=".*liferay-(fix-pack-)?(.*-\d{4})(-build\d*)?(-src)?.zip"
-						replace="\2"
-					/>
+					<get-patch-name patch.file.url="@{patch.file.path}" />
 
 					<fail message="${patch.name} was not installed.">
 						<condition>

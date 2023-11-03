@@ -808,6 +808,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192724. The copied pages are now separate entities."
+	@priority = 4
+	test ViewCopyOfDisplayPageTemplateAndOriginCannotAffectEachOther {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a page creator has a copy of display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Make a Copy");
+
+			MenuItem.click(menuItem = "Display Page");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the page creator makes some changes in copy of display page template") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name (Copy)");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Welcome to Liferay");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the original display page template shouldn't be updated") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("When the page creator makes some changes in original display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the copy of display page template shouldn't be updated") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name (Copy)");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Welcome to Liferay",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
+		}
+	}
+
 	@description = "This is a test for LPS-133350. View master page after renaming display page template within custom master page."
 	@priority = 4
 	test ViewMasterPageAfterRenamingDisplayPageTemplateWithinCustomMasterPage {

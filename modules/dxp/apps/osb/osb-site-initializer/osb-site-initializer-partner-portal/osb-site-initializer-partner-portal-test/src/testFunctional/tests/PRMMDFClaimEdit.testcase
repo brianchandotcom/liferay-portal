@@ -136,6 +136,7 @@ definition {
 	@description = "This is a test for LPS-183234. Verify that the CFM can edit the claim in 'Claim Paid' status"
 	@priority = 5
 	test CFMCanEditClaimInClaimdPaidStatus {
+		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -201,6 +202,7 @@ definition {
 	@description = "This is a test for LPS-183235. Verify that the CFM can edit the claim in 'In Finance Review' status"
 	@priority = 5
 	test CFMCanEditClaimInFinanceReviewStatus {
+		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

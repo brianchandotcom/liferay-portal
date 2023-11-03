@@ -366,6 +366,7 @@ definition {
 	@description = "This is a test for LPS-187090. Verify that the PMU can edit an MDF in 'Draft' Status"
 	@priority = 5
 	test PMUCanEditMDFInDraftStatus {
+		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

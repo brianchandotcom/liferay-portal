@@ -63,6 +63,8 @@ definition {
 	@description = "This is a test for LPS-195724. Verify that it's possible to delete the MDF Request while in draft status."
 	@priority = 5
 	test CanDeleteInDraftStatus {
+		property portal.acceptance = "true";
+
 		task ("Given the PMU Fill MDF Request and save as draft") {
 			PRMMarketing.gotoAddNewMDF();
 
@@ -325,6 +327,7 @@ definition {
 	@description = "This is a test for LPS-173731. Verify that is possible to export filtered MDFs"
 	@priority = 4
 	test CanExportSearchedMDFs {
+		property portal.acceptance = "true";
 		property solutions.acceptance = "true";
 
 		task ("Given that a new account is created") {
@@ -571,6 +574,7 @@ definition {
 	@description = "This is a test for LPS-173507. Verify that the detail page displays all the information the partner entered on MDF Request Form"
 	@priority = 5
 	test DetailPageDisplaysAllMDFInformation {
+		property portal.acceptance = "true";
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

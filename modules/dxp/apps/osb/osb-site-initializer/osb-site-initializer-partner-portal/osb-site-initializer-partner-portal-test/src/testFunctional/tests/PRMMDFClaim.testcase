@@ -72,6 +72,7 @@ definition {
 	@description = "This is a test for LPS-175292. Verify that is possible to export all visible Claims"
 	@priority = 4
 	test CanExportAllVisibleClaims {
+		property portal.acceptance = "true";
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -324,6 +325,7 @@ definition {
 	@description = "This is a test for LPS-175611. Verify that is possible to submit a full claim"
 	@priority = 5
 	test CanSubmitFullClaim {
+		property portal.acceptance = "true";
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -379,6 +381,7 @@ definition {
 	@description = "This is a test for LPS-185927. Verify that when the MDF Claim is 'In Finance Review' status, the CFM can change to 'Claim Paid' status"
 	@priority = 5
 	test CFMCanChangeStatusToClaimPaid {
+		property portal.acceptance = "true";
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

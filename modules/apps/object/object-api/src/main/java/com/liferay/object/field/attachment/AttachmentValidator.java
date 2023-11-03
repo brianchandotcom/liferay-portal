@@ -7,14 +7,19 @@ package com.liferay.object.field.attachment;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
-
-import java.util.List;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Carlos Correa
  */
 public interface AttachmentValidator {
+
 	public String[] getAcceptedFileExtensions(long objectFieldId);
+
+	public DLFolder getDLFolder(
+		long objectFieldId, long companyId, long groupId,
+		ServiceContext serviceContext, long userId);
 
 	public long getMaximumFileSize(long objectFieldId, boolean signedIn);
 
@@ -22,7 +27,8 @@ public interface AttachmentValidator {
 		throws FileExtensionException;
 
 	public void validateFileSize(
-		String fileName, long fileSize, long objectFieldId,
-		boolean signedIn) throws FileSizeException;
+			String fileName, long fileSize, long objectFieldId,
+			boolean signedIn)
+		throws FileSizeException;
 
 }

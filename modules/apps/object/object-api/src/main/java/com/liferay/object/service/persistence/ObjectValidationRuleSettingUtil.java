@@ -868,6 +868,75 @@ public class ObjectValidationRuleSettingUtil {
 	}
 
 	/**
+	 * Returns the object validation rule setting where name = &#63; and value = &#63; or throws a <code>NoSuchObjectValidationRuleSettingException</code> if it could not be found.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the matching object validation rule setting
+	 * @throws NoSuchObjectValidationRuleSettingException if a matching object validation rule setting could not be found
+	 */
+	public static ObjectValidationRuleSetting findByN_V(
+			String name, String value)
+		throws com.liferay.object.exception.
+			NoSuchObjectValidationRuleSettingException {
+
+		return getPersistence().findByN_V(name, value);
+	}
+
+	/**
+	 * Returns the object validation rule setting where name = &#63; and value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the matching object validation rule setting, or <code>null</code> if a matching object validation rule setting could not be found
+	 */
+	public static ObjectValidationRuleSetting fetchByN_V(
+		String name, String value) {
+
+		return getPersistence().fetchByN_V(name, value);
+	}
+
+	/**
+	 * Returns the object validation rule setting where name = &#63; and value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object validation rule setting, or <code>null</code> if a matching object validation rule setting could not be found
+	 */
+	public static ObjectValidationRuleSetting fetchByN_V(
+		String name, String value, boolean useFinderCache) {
+
+		return getPersistence().fetchByN_V(name, value, useFinderCache);
+	}
+
+	/**
+	 * Removes the object validation rule setting where name = &#63; and value = &#63; from the database.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the object validation rule setting that was removed
+	 */
+	public static ObjectValidationRuleSetting removeByN_V(
+			String name, String value)
+		throws com.liferay.object.exception.
+			NoSuchObjectValidationRuleSettingException {
+
+		return getPersistence().removeByN_V(name, value);
+	}
+
+	/**
+	 * Returns the number of object validation rule settings where name = &#63; and value = &#63;.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the number of matching object validation rule settings
+	 */
+	public static int countByN_V(String name, String value) {
+		return getPersistence().countByN_V(name, value);
+	}
+
+	/**
 	 * Returns the object validation rule setting where objectValidationRuleId = &#63; and name = &#63; and value = &#63; or throws a <code>NoSuchObjectValidationRuleSettingException</code> if it could not be found.
 	 *
 	 * @param objectValidationRuleId the object validation rule ID

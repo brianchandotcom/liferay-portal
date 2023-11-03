@@ -10,7 +10,83 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateAccount() {
+	macro addMKTProduct {
+		if (!(isSet(catalogName))) {
+			var catalogName = "QA Test";
+		}
+
+		if (!(isSet(fieldType))) {
+			var fieldType = "radio";
+		}
+
+		if (!(isSet(optionKey))) {
+			var optionKey = "dxp-license-usage-type";
+		}
+
+		if (!(isSet(optionName))) {
+			var optionName = "DXP License Usage Type";
+		}
+
+		if (!(isSet(productDescription))) {
+			var productDescription = "This is a full Description";
+		}
+
+		if (!(isSet(productName))) {
+			var productName = "QA Product";
+		}
+
+		if (!(isSet(productStatus))) {
+			var productStatus = 0;
+		}
+
+		if (!(isSet(productType))) {
+			var productType = "Virtual";
+		}
+
+		if (!(isSet(shortDescription))) {
+			var shortDescription = "This is a short description.";
+		}
+
+		CommerceJSONProductsAPI._addCommerceProduct(
+			catalogName = ${catalogName},
+			productDescription = ${productDescription},
+			productName = ${productName},
+			productType = ${productType},
+			shortDescription = ${shortDescription});
+
+		CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = ${fieldType},
+				optionKey = ${optionKey},
+				optionName = ${optionName},
+				productName = ${productName});
+
+		for (var specificationKeyAndPriority : list "developer-name:0,latest-version:1,license-type:2,price-model:3,type:4") {
+				var specificationKey = StringUtil.extractFirst(${specificationKeyAndPriority}, ":");
+				var priority = StringUtil.extractLast(${specificationKeyAndPriority}, ":");
+
+				CommerceJSONProductsAPI._addCommerceProductSpecifications(
+					priority = ${priority},
+					productName = ${productName},
+					specificationKey = ${specificationKey},
+					value = 0);
+		}
+
+		CommerceProducts.openProductsAdmin();
+
+		CommerceNavigator.gotoEntry(entryName = ${productName});
+
+		Click(
+			key_fieldName = "Marketplace Product Type",
+			locator1 = "Button#SELECT_BUTTON");
+
+		AssetCategorization.selectCategories(categoryNameList = "App");
+
+		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceSKUs.generateAllSkuCombinations();
+	}
 		if (!(isSet(accountName))) {
 			var accountName = "QA Development";
 		}

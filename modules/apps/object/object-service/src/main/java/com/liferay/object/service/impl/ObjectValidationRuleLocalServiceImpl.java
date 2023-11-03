@@ -7,10 +7,12 @@ package com.liferay.object.service.impl;
 
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectValidationRuleExternalReferenceCodeException;
+import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleOutputTypeException;
@@ -18,6 +20,7 @@ import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.exception.ObjectValidationRuleSettingNameException;
 import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.exception.ObjectValidationRuleSystemException;
+import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.internal.validation.rule.UniqueCompositeKeyObjectValidationRuleEngineImpl;
@@ -27,6 +30,8 @@ import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -37,6 +42,9 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -47,6 +55,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -61,6 +70,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -98,8 +108,9 @@ public class ObjectValidationRuleLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validate(
-			externalReferenceCode, 0, objectDefinitionId, user.getCompanyId(),
-			engine, nameMap, outputType, script, objectValidationRuleSettings);
+			externalReferenceCode, 0, active, objectDefinitionId,
+			user.getCompanyId(), engine, nameMap, outputType, script,
+			objectValidationRuleSettings);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.create(
@@ -307,9 +318,16 @@ public class ObjectValidationRuleLocalServiceImpl
 			"Only allowed bundles can edit system object validation rules",
 			objectValidationRule.isSystem());
 
+		if (StringUtil.equals(
+				engine,
+				ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY)) {
+
+			active = true;
+		}
+
 		_validate(
 			externalReferenceCode,
-			objectValidationRule.getObjectValidationRuleId(),
+			objectValidationRule.getObjectValidationRuleId(), active,
 			objectValidationRule.getObjectDefinitionId(),
 			objectValidationRule.getCompanyId(), engine, nameMap, outputType,
 			script, objectValidationRuleSettings);
@@ -325,12 +343,9 @@ public class ObjectValidationRuleLocalServiceImpl
 		objectValidationRule = objectValidationRulePersistence.update(
 			objectValidationRule);
 
-		_objectValidationRuleSettingPersistence.removeByObjectValidationRuleId(
-			objectValidationRuleId);
-
 		objectValidationRule.setObjectValidationRuleSettings(
 			_updateObjectValidationRuleSettings(
-				objectValidationRuleSettings, objectValidationRule));
+				objectValidationRule, objectValidationRuleSettings));
 
 		return objectValidationRule;
 	}
@@ -461,6 +476,43 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 	}
 
+	private void _deleteObjectValidationRuleSettings(
+			long objectValidationRuleId, boolean approvedObjectDefinition,
+			String objectValidationRuleSettingName,
+			List<ObjectValidationRuleSetting> newObjectValidationRuleSettings,
+			List<ObjectValidationRuleSetting> oldObjectValidationRuleSettings)
+		throws PortalException {
+
+		Set<String> deleteObjectObjectValidationRuleSettingValues =
+			SetUtil.asymmetricDifference(
+				TransformUtil.transform(
+					oldObjectValidationRuleSettings,
+					ObjectValidationRuleSetting::getValue),
+				TransformUtil.transform(
+					newObjectValidationRuleSettings,
+					ObjectValidationRuleSetting::getValue));
+
+		for (String deleteObjectObjectValidationRuleSettingValue :
+				deleteObjectObjectValidationRuleSettingValues) {
+
+			if (approvedObjectDefinition &&
+				StringUtil.equals(
+					objectValidationRuleSettingName,
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID)) {
+
+				throw new RequiredObjectFieldException.
+					MustNotDeleteObjectFieldUniqueCompositeKeyPublishedObjectDefinition();
+			}
+
+			_objectValidationRuleSettingLocalService.
+				deleteObjectValidationRuleSetting(
+					_objectValidationRuleSettingPersistence.findByOVRI_N_V(
+						objectValidationRuleId, objectValidationRuleSettingName,
+						deleteObjectObjectValidationRuleSettingValue));
+		}
+	}
+
 	private List<ObjectValidationRule> _getObjectValidationRules(
 		List<ObjectValidationRule> objectValidationRules) {
 
@@ -478,64 +530,132 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	private List<ObjectValidationRuleSetting>
 			_updateObjectValidationRuleSettings(
-				List<ObjectValidationRuleSetting>
-					newObjectValidationRuleSettings,
-				ObjectValidationRule objectValidationRule)
+				ObjectValidationRule objectValidationRule,
+				List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
-		Set<ObjectValidationRuleSetting> objectValidationRuleSettings =
-			SetUtil.fromCollection(newObjectValidationRuleSettings);
+		List<ObjectValidationRuleSetting> keyObjectValidationRuleSettings =
+			new ArrayList<>();
 
-		for (ObjectValidationRuleSetting oldObjectValidationRuleSetting :
-				_objectValidationRuleSettingPersistence.
-					findByObjectValidationRuleId(
-						objectValidationRule.getObjectValidationRuleId())) {
-
-			boolean delete = true;
-
-			for (ObjectValidationRuleSetting newObjectValidationRuleSetting :
-					newObjectValidationRuleSettings) {
-
-				if (StringUtil.equals(
-						oldObjectValidationRuleSetting.getName(),
-						newObjectValidationRuleSetting.getName()) &&
-					StringUtil.equals(
-						oldObjectValidationRuleSetting.getValue(),
-						newObjectValidationRuleSetting.getValue())) {
-
-					delete = false;
-
-					objectValidationRuleSettings.remove(
-						newObjectValidationRuleSetting);
-
-					break;
-				}
-			}
-
-			if (delete) {
-				_objectValidationRuleSettingPersistence.remove(
-					oldObjectValidationRuleSetting);
-			}
-		}
+		List<ObjectValidationRuleSetting> outputObjectValidationRuleSettings =
+			new ArrayList<>();
 
 		for (ObjectValidationRuleSetting objectValidationRuleSetting :
 				objectValidationRuleSettings) {
 
-			_objectValidationRuleSettingLocalService.
-				addObjectValidationRuleSetting(
-					objectValidationRule.getUserId(),
-					objectValidationRule.getObjectValidationRuleId(),
-					objectValidationRuleSetting.getName(),
-					objectValidationRuleSetting.getValue());
+			if (objectValidationRuleSetting.compareName(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID)) {
+
+				keyObjectValidationRuleSettings.add(
+					objectValidationRuleSetting);
+
+				continue;
+			}
+
+			outputObjectValidationRuleSettings.add(objectValidationRuleSetting);
 		}
 
-		return newObjectValidationRuleSettings;
+		_validateObjectValidationRuleSettingCount(
+			objectValidationRule.isActive(), objectValidationRule.getEngine(),
+			keyObjectValidationRuleSettings);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(
+				objectValidationRule.getObjectDefinitionId());
+
+		_deleteObjectValidationRuleSettings(
+			objectValidationRule.getObjectValidationRuleId(),
+			objectDefinition.isApproved(),
+			ObjectValidationRuleSettingConstants.
+				NAME_COMPOSITE_KEY_OBJECT_FIELD_ID,
+			keyObjectValidationRuleSettings,
+			_objectValidationRuleSettingPersistence.findByOVRI_N(
+				objectValidationRule.getObjectValidationRuleId(),
+				ObjectValidationRuleSettingConstants.
+					NAME_COMPOSITE_KEY_OBJECT_FIELD_ID));
+		_deleteObjectValidationRuleSettings(
+			objectValidationRule.getObjectValidationRuleId(),
+			objectDefinition.isApproved(),
+			ObjectValidationRuleSettingConstants.NAME_OUTPUT_OBJECT_FIELD_ID,
+			outputObjectValidationRuleSettings,
+			_objectValidationRuleSettingPersistence.findByOVRI_N(
+				objectValidationRule.getObjectValidationRuleId(),
+				ObjectValidationRuleSettingConstants.
+					NAME_OUTPUT_OBJECT_FIELD_ID));
+
+		List<ObjectValidationRuleSetting> updatedObjectValidationRuleSettings =
+			new ArrayList<>();
+
+		for (ObjectValidationRuleSetting objectValidationRuleSetting :
+				objectValidationRuleSettings) {
+
+			ObjectValidationRuleSetting
+				serviceBuilderObjectValidationRuleSetting =
+					_objectValidationRuleSettingPersistence.fetchByOVRI_N_V(
+						objectValidationRule.getObjectValidationRuleId(),
+						objectValidationRuleSetting.getName(),
+						objectValidationRuleSetting.getValue());
+
+			if (serviceBuilderObjectValidationRuleSetting != null) {
+				updatedObjectValidationRuleSettings.add(
+					serviceBuilderObjectValidationRuleSetting);
+
+				continue;
+			}
+
+			if (objectDefinition.isApproved() &&
+				objectValidationRuleSetting.compareName(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID)) {
+
+				ObjectFieldLocalService objectFieldLocalService =
+					_objectFieldLocalServiceSnapshot.get();
+
+				ObjectField objectField =
+					objectFieldLocalService.getObjectField(
+						GetterUtil.getLong(
+							objectValidationRuleSetting.getValue()));
+
+				Table<?> table = objectFieldLocalService.getTable(
+					objectValidationRule.getObjectDefinitionId(),
+					objectField.getName());
+
+				Column<?, ?> column = table.getColumn(
+					objectField.getDBColumnName());
+
+				ObjectEntryLocalService objectEntryLocalService =
+					_objectEntryLocalServiceSnapshot.get();
+
+				long objectEntriesCount =
+					objectEntryLocalService.getObjectEntriesCount(
+						0, objectDefinition, column.isNotNull());
+
+				if (objectEntriesCount > 0) {
+					throw new ObjectValidationRuleSettingValueException.
+						InvalidValue(
+							objectValidationRuleSetting.getName(),
+							objectValidationRuleSetting.getValue());
+				}
+			}
+
+			updatedObjectValidationRuleSettings.add(
+				_objectValidationRuleSettingLocalService.
+					addObjectValidationRuleSetting(
+						objectValidationRule.getUserId(),
+						objectValidationRule.getObjectValidationRuleId(),
+						objectValidationRuleSetting.getName(),
+						objectValidationRuleSetting.getValue()));
+		}
+
+		return updatedObjectValidationRuleSettings;
 	}
 
 	private void _validate(
 			String externalReferenceCode, long objectValidationRuleId,
-			long objectDefinitionId, long companyId, String engine,
-			Map<Locale, String> nameMap, String outputType, String script,
+			boolean active, long objectDefinitionId, long companyId,
+			String engine, Map<Locale, String> nameMap, String outputType,
+			String script,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
@@ -637,6 +757,25 @@ public class ObjectValidationRuleLocalServiceImpl
 						NAME_OUTPUT_OBJECT_FIELD_ID);
 		}
 
+		List<ObjectValidationRuleSetting> keyObjectValidationRuleSettings =
+			new ArrayList<>();
+
+		for (ObjectValidationRuleSetting objectValidationRuleSetting :
+				objectValidationRuleSettings) {
+
+			if (!objectValidationRuleSetting.compareName(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID)) {
+
+				continue;
+			}
+
+			keyObjectValidationRuleSettings.add(objectValidationRuleSetting);
+		}
+
+		_validateObjectValidationRuleSettingCount(
+			active, engine, keyObjectValidationRuleSettings);
+
 		for (ObjectValidationRuleSetting objectValidationRuleSetting :
 				objectValidationRuleSettings) {
 
@@ -644,9 +783,13 @@ public class ObjectValidationRuleLocalServiceImpl
 				!(objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
 						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID) ||
-				  objectValidationRuleSetting.compareName(
+				  (objectValidationRuleSetting.compareName(
 					  ObjectValidationRuleSettingConstants.
-						  NAME_OUTPUT_OBJECT_FIELD_ID))) {
+						  NAME_OUTPUT_OBJECT_FIELD_ID) &&
+				   StringUtil.equals(
+					   outputType,
+					   ObjectValidationRuleConstants.
+						   OUTPUT_TYPE_PARTIAL_VALIDATION)))) {
 
 				throw new ObjectValidationRuleSettingNameException.
 					NotAllowedName(objectValidationRuleSetting.getName());
@@ -674,6 +817,20 @@ public class ObjectValidationRuleLocalServiceImpl
 						objectValidationRuleSetting.getName(),
 						objectValidationRuleSetting.getValue());
 			}
+
+			if (StringUtil.equals(
+					objectValidationRuleSetting.getName(),
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID) &&
+				!_allowedObjectFieldBusinessTypes.contains(
+					objectField.getBusinessType())) {
+
+				throw new ObjectFieldBusinessTypeException(
+					StringBundler.concat(
+						"Object field business type ",
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+						" is not allowed on unique composite key"));
+			}
 		}
 	}
 
@@ -687,8 +844,52 @@ public class ObjectValidationRuleLocalServiceImpl
 		throw new ObjectValidationRuleSystemException(message);
 	}
 
+	private void _validateObjectValidationRuleSettingCount(
+			boolean active, String engine,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
+		throws ObjectValidationRuleSettingValueException {
+
+		if (active &&
+			StringUtil.equals(
+				engine,
+				ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY) &&
+			(objectValidationRuleSettings.size() <
+			 ObjectValidationRuleSettingConstants.
+					COMPOSITE_KEY_OBJECT_FIELDS_SIZE_MIN)) {
+
+			throw new ObjectValidationRuleSettingValueException.
+				MustHaveTwoObjectFieldsAtMinimum();
+		}
+
+		if (StringUtil.equals(
+				engine,
+				ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY) &&
+			(objectValidationRuleSettings.size() >
+			 ObjectValidationRuleSettingConstants.
+					COMPOSITE_KEY_OBJECT_FIELDS_SIZE_MAX)) {
+
+			throw new ObjectValidationRuleSettingValueException.
+				MustHaveFiveObjectFieldsAtMaximum();
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectValidationRuleLocalServiceImpl.class);
+
+	private static final List<String> _allowedObjectFieldBusinessTypes =
+		Arrays.asList(
+			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
+	private static final Snapshot<ObjectEntryLocalService>
+		_objectEntryLocalServiceSnapshot = new Snapshot<>(
+			ObjectValidationRuleSettingLocalServiceImpl.class,
+			ObjectEntryLocalService.class, null, true);
+	private static final Snapshot<ObjectFieldLocalService>
+		_objectFieldLocalServiceSnapshot = new Snapshot<>(
+			ObjectValidationRuleSettingLocalServiceImpl.class,
+			ObjectFieldLocalService.class, null, true);
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;

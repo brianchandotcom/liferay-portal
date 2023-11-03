@@ -92,14 +92,6 @@ public class SiteAdminDisplayContext {
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(_httpServletRequest, "sites"));
 
-		PortletURL mainURL = PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCPath(
-			"/view.jsp"
-		).buildPortletURL();
-
-		breadcrumbEntry.setURL(mainURL.toString());
-
 		breadcrumbEntries.add(breadcrumbEntry);
 
 		Group group = getGroup();
@@ -107,6 +99,14 @@ public class SiteAdminDisplayContext {
 		if (group == null) {
 			return breadcrumbEntries;
 		}
+
+		PortletURL mainURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/view.jsp"
+		).buildPortletURL();
+
+		breadcrumbEntry.setURL(mainURL.toString());
 
 		List<Group> ancestorGroups = group.getAncestors();
 
@@ -130,11 +130,6 @@ public class SiteAdminDisplayContext {
 		breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(unescapedGroup.getDescriptiveName());
-
-		mainURL.setParameter(
-			"groupId", String.valueOf(unescapedGroup.getGroupId()));
-
-		breadcrumbEntry.setURL(mainURL.toString());
 
 		breadcrumbEntries.add(breadcrumbEntry);
 

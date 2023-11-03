@@ -1316,6 +1316,35 @@ public class JournalDisplayContext {
 		return articleAndFolderSearchContainer;
 	}
 
+	private SearchContainer<JournalArticle> _getArticleSearchContainer()
+		throws PortalException {
+
+		SearchContainer<JournalArticle> articleSearchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, getPortletURL("web-content"), null,
+				null);
+
+		articleSearchContainer.setOrderByCol(getOrderByCol());
+		articleSearchContainer.setOrderByComparator(
+			JournalPortletUtil.getArticleOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		articleSearchContainer.setOrderByType(getOrderByType());
+		articleSearchContainer.setRowChecker(_getEntriesChecker());
+
+		if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
+			articleSearchContainer.setRowMover(
+				new EntriesMover(
+					_trashHelper.isTrashEnabled(
+						_themeDisplay.getScopeGroupId())));
+		}
+
+		if (isNavigationRecent()) {
+			articleSearchContainer.setOrderByCol("modified-date");
+		}
+
+		return articleSearchContainer;
+	}
+
 	private SearchContainer<?> _getArticlesSearchContainer()
 		throws PortalException {
 
@@ -1347,27 +1376,7 @@ public class JournalDisplayContext {
 
 		if (!isSearch() && (isNavigationMine() || isNavigationRecent())) {
 			SearchContainer<JournalArticle> articleSearchContainer =
-				new SearchContainer<>(
-					_liferayPortletRequest, getPortletURL("web-content"), null,
-					null);
-
-			articleSearchContainer.setOrderByCol(getOrderByCol());
-			articleSearchContainer.setOrderByComparator(
-				JournalPortletUtil.getArticleOrderByComparator(
-					getOrderByCol(), getOrderByType()));
-			articleSearchContainer.setOrderByType(getOrderByType());
-			articleSearchContainer.setRowChecker(_getEntriesChecker());
-
-			if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
-				articleSearchContainer.setRowMover(
-					new EntriesMover(
-						_trashHelper.isTrashEnabled(
-							_themeDisplay.getScopeGroupId())));
-			}
-
-			if (isNavigationRecent()) {
-				articleSearchContainer.setOrderByCol("modified-date");
-			}
+				_getArticleSearchContainer();
 
 			articleSearchContainer.setResultsAndTotal(
 				() -> JournalArticleServiceUtil.getGroupArticles(
@@ -1387,23 +1396,7 @@ public class JournalDisplayContext {
 
 		if (!isSearch() && (getDDMStructureId() > 0)) {
 			SearchContainer<JournalArticle> articleSearchContainer =
-				new SearchContainer<>(
-					_liferayPortletRequest, getPortletURL("web-content"), null,
-					null);
-
-			articleSearchContainer.setOrderByCol(getOrderByCol());
-			articleSearchContainer.setOrderByComparator(
-				JournalPortletUtil.getArticleOrderByComparator(
-					getOrderByCol(), getOrderByType()));
-			articleSearchContainer.setOrderByType(getOrderByType());
-			articleSearchContainer.setRowChecker(_getEntriesChecker());
-
-			if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
-				articleSearchContainer.setRowMover(
-					new EntriesMover(
-						_trashHelper.isTrashEnabled(
-							_themeDisplay.getScopeGroupId())));
-			}
+				_getArticleSearchContainer();
 
 			articleSearchContainer.setResultsAndTotal(
 				() -> JournalArticleServiceUtil.getArticlesByStructureId(

@@ -168,6 +168,10 @@ public class SXPBlueprintDTOConverter
 		for (ElementInstance elementInstance : elementInstances) {
 			SXPElement sxpElement = elementInstance.getSxpElement();
 
+			sxpElement.setElementDefinition(
+				SXPDTOConverterUtil.translateElementDefinition(
+					sxpElement.getElementDefinition(), _language, locale));
+
 			try {
 				com.liferay.search.experiences.model.SXPElement
 					serviceBuilderSXPElement =

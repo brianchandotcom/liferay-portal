@@ -14,7 +14,7 @@ import {UseFormSetValue, UseFormWatch} from 'react-hook-form';
 
 import useCart from '../../../../hooks/useCart';
 import {GetAppForm} from '../../GetAppPage';
-import {paymentMethod} from '../../enums/paymentMethod';
+import {PaymentMethod} from '../../enums/paymentMethod';
 import {PaidTimeline} from './components/PaidTimeline';
 import {TrialTimeline} from './components/TrialTimeline';
 
@@ -87,7 +87,7 @@ export function LicenseSelector({
 
 						formUtils.setValue(
 							'selectedPaymentMethod',
-							paymentMethod.TRIAL
+							PaymentMethod.TRIAL
 						);
 						formUtils.setValue('selectedTimeline', 'trial');
 					}}
@@ -111,7 +111,7 @@ export function LicenseSelector({
 						formUtils.setValue('selectedTimeline', 'paid');
 						formUtils.setValue(
 							'selectedPaymentMethod',
-							paymentMethod.PAY
+							PaymentMethod.PAY
 						);
 					}}
 					selected={formUtils.watch('selectedTimeline') === 'paid'}

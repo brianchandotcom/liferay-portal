@@ -19,8 +19,8 @@ import {
 	getProducts,
 } from '../../utils/api';
 import {
+	getAccountImage,
 	getProductVersionFromSpecifications,
-	showAccountImage,
 } from '../../utils/util';
 import {
 	formatDate,
@@ -181,7 +181,7 @@ const PublishedAppsDashboardOutlet = () => {
 		<div className="published-apps-dashboard-page-container">
 			<DashboardNavigation
 				accountAppsNumber={appsTotalCount}
-				accountIcon={showAccountImage(commerceAccount?.logoURL)}
+				accountIcon={getAccountImage(commerceAccount?.logoURL)}
 				accounts={accounts ?? []}
 				currentAccount={selectedAccount}
 				dashboardNavigationItems={initialDashboardNavigationItems.map(

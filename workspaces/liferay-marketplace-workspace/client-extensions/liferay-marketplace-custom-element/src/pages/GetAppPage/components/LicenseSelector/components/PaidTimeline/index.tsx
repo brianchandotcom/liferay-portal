@@ -7,7 +7,7 @@ import {useEffect, useState} from 'react';
 
 import useCart from '../../../../../../hooks/useCart';
 import {getLicenseDescription, getTierPrice} from '../../../../../../utils/api';
-import LicenseSectorCard from '../../LicenseCard';
+import LicenseCard from '../../LicenseCard';
 
 interface PaidTimelineProps {
 	cartUtil: ReturnType<typeof useCart>;
@@ -15,9 +15,10 @@ interface PaidTimelineProps {
 }
 
 export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
-	const [skuInfo, setSkuInfo] = useState<any>({});
-	const [tierPrice, setTierPrice] = useState<any>([]);
-	const productId = product?.id;
+	const [skuInfo, setSkuInfo] = useState({});
+	const [tierPrices, setTierPrices] = useState<any[]>([]);
+
+	const {id: productId, skus} = product || {};
 
 	useEffect(() => {
 		(async () => {
@@ -28,12 +29,10 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 				getLicenseDescription(),
 			]);
 
-			setTierPrice(tierpriceData);
+			setTierPrices(tierpriceData);
 			setSkuInfo(skuDescription?.items[0]);
 		})();
 	}, [product?.catalog?.name]);
-
-	const skus = product?.skus;
 
 	const purchasebleSkus = skus?.filter((sku) =>
 		sku?.skuOptions.find(
@@ -44,33 +43,31 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 	return (
 		<div className="paid-timeline">
 			<div>
-				<span>
-					<p className="mt-3">Need help with license calculations?</p>
-				</span>
+				<p className="mt-3">Need help with license calculations?</p>
 
 				{purchasebleSkus
-					?.map((sku: SKU, index) => {
-						const tierPricesList = tierPrice?.filter(
+					?.map((sku, index) => {
+						const tierPricesFiltered = tierPrices?.filter(
 							(tier: any) =>
 								tier?.tierPrice.length && tier.skuId === sku.id
 						);
 
 						const licenseTypeName = sku.skuOptions.find(
-							(optins) =>
-								optins.value.toLocaleLowerCase() ===
+							(skuOption) =>
+								skuOption.value.toLocaleLowerCase() ===
 								sku.sku.toLocaleLowerCase()
 						);
 
 						return (
 							<div className="mb-5" key={index}>
-								<LicenseSectorCard
+								<LicenseCard
 									cartUtil={cartUtil}
 									licenseDescription={
 										skuInfo[
 											sku.sku.toLocaleLowerCase() as keyof typeof skuInfo
 										]
 									}
-									licensetiers={tierPricesList}
+									licensetiers={tierPricesFiltered}
 									lisenceType={licenseTypeName?.value}
 									productId={productId}
 									sku={sku}

@@ -12,12 +12,11 @@ import './PurchasedAppsDashboardTableRow.scss';
 import DropDown from '@clayui/drop-down/lib/DropDown';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import {OrderStatus} from '../../enums/OrderStatus';
 import {orderType} from '../../enums/orderType';
 import i18n from '../../i18n';
-import {AppTabEnum} from '../../pages/PurchasedAppsDashboard/Apps/enums/AppTabEnum';
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboard/PurchasedAppsDashboardOutlet';
 import {showAppImage} from '../../utils/util';
 
@@ -49,14 +48,11 @@ export function PurchasedAppsDashboardTableRow({
 	const orderStatusIsNotCompleted =
 		provisioningLabel !== OrderStatus.COMPLETED;
 
-	const {setActive} = useOutletContext<any>();
-
 	return (
 		<ClayTable.Row
 			className="dashboard-table-row"
 			onClick={() => {
 				navigate(`/app/${productId}`);
-				setActive(AppTabEnum.DETAILS);
 			}}
 		>
 			<ClayTable.Cell>
@@ -181,11 +177,11 @@ export function PurchasedAppsDashboardTableRow({
 						<DropDown.Item
 							onClick={() => {
 								navigate(`/app/${productId}/licenses`);
-								setActive(AppTabEnum.LICENSES);
 							}}
 						>
 							Manage License Key(s)
 						</DropDown.Item>
+
 						<DropDown.Item
 							onClick={() => {
 								window.location.href =
@@ -194,6 +190,7 @@ export function PurchasedAppsDashboardTableRow({
 						>
 							{i18n.translate('access-console')}
 						</DropDown.Item>
+
 						{orderTypeExternalReferenceCode === orderType.DXP && (
 							<ClayTooltipProvider>
 								<DropDown.Item

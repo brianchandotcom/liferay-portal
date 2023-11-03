@@ -20,8 +20,8 @@ import {
 	getProductById,
 } from '../../utils/api';
 import {
+	getAccountImage,
 	getThumbnailByProductAttachment,
-	showAccountImage,
 	showAppImage,
 } from '../../utils/util';
 
@@ -256,7 +256,7 @@ export function NextStepPage({
 
 							<AccountAndAppCard
 								category="Account"
-								logo={showAccountImage(accountLogo as string)}
+								logo={getAccountImage(accountLogo as string)}
 								title={accountName ?? ''}
 							></AccountAndAppCard>
 						</div>

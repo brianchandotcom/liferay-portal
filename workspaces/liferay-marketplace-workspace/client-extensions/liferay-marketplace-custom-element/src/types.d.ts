@@ -234,8 +234,6 @@ interface OrderType {
 	name: {[key: string]: string};
 }
 
-type PaymentMethodMode = 'PayPal';
-
 type PaymentMethodSelector = 'order' | 'pay' | 'trial' | 'free';
 
 interface PlacedOrder {

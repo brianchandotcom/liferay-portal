@@ -40,8 +40,7 @@ const AccountSelection = ({
 					if (accountInfo.type === 'person') {
 						displayAccount = true;
 					}
-				}
-				else {
+				} else {
 					displayAccount = accountBrief.roleBriefs.some((roleBrief) =>
 						enabledAccountRoles.includes(roleBrief.name)
 					);
@@ -85,13 +84,11 @@ const AccountSelection = ({
 	return (
 		<div>
 			<div className="mb-4">
-				<span>
-					{`Accounts available for `}
+				{`Accounts available for `}
 
-					<strong>{userAccount?.emailAddress}</strong>
+				<strong>{userAccount?.emailAddress}</strong>
 
-					{` (you)`}
-				</span>
+				{` (you)`}
 			</div>
 
 			<RadioCardList
@@ -101,13 +98,9 @@ const AccountSelection = ({
 				showImage
 			/>
 
-			<div>
-				<span className="mr-1">Not seeing a specific Account?</span>
+			<span className="mr-1">Not seeing a specific Account?</span>
 
-				<ClayLink href="http://help.liferay.com/">
-					Contact Support
-				</ClayLink>
-			</div>
+			<ClayLink href="http://help.liferay.com/">Contact Support</ClayLink>
 		</div>
 	);
 };

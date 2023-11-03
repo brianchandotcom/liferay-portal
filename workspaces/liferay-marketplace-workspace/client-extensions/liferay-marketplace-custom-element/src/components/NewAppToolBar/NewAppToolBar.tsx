@@ -11,7 +11,7 @@ import chevronRight from '../../assets/icons/chevron_right_icon.svg';
 import circleFill from '../../assets/icons/circle_fill_icon.svg';
 import dotsIcon from '../../assets/icons/dots_icon.svg';
 import emptyPicture from '../../assets/icons/empty_picture_icon.svg';
-import {showAccountImage} from '../../utils/util';
+import {getAccountImage} from '../../utils/util';
 
 import './NewAppToolBar.scss';
 
@@ -70,7 +70,7 @@ export function NewAppToolBar({
 					<img
 						alt="Main account logo"
 						className="new-app-tool-bar-main-account-logo-img"
-						src={showAccountImage(accountImage)}
+						src={getAccountImage(accountImage)}
 					/>
 
 					<span className="new-app-tool-bar-main-account-logo-text">

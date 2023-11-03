@@ -7,9 +7,9 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import CreateLicense from '../CreateLicense';
 import Apps from './Apps';
-import App from './Apps/App';
-import AppOutlet from './Apps/AppOutlet';
-import Licenses from './Apps/Licenses';
+import App from './Apps/App/App';
+import AppOutlet from './Apps/App/AppOutlet';
+import Licenses from './Apps/App/Licenses';
 import Members from './Members';
 import PurchasedAppsDashboardOutlet from './PurchasedAppsDashboardOutlet';
 import Solutions from './Solutions';

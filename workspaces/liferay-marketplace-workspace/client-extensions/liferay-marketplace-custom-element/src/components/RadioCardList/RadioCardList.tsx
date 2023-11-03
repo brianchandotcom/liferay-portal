@@ -36,25 +36,23 @@ const RadioCardList = <T extends unknown>({
 	};
 
 	return (
-		<div className="d-flex flex-column w-100">
-			<div className="mb-0 w-100">
-				{contentList.map((content, index) => (
-					<RadioCard
-						activeRadio={content.selected}
-						description={content.description}
-						imageURL={content.imageURL}
-						index={index}
-						key={index}
-						label={content.label}
-						leftRadio={leftRadio}
-						selectRadio={() =>
-							handleSelectRadio({index, value: content.value})
-						}
-						showImage={showImage}
-						title={content.title}
-					/>
-				))}
-			</div>
+		<div className="mb-0 w-100">
+			{contentList.map((content, index) => (
+				<RadioCard
+					activeRadio={content.selected}
+					description={content.description}
+					imageURL={content.imageURL}
+					index={index}
+					key={index}
+					label={content.label}
+					leftRadio={leftRadio}
+					selectRadio={() =>
+						handleSelectRadio({index, value: content.value})
+					}
+					showImage={showImage}
+					title={content.title}
+				/>
+			))}
 		</div>
 	);
 };

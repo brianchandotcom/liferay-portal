@@ -276,6 +276,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_BY_TITLE</td>
+	<td>//dd[@data-title='${content_title}']//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACEBOOK</td>
 	<td>//input[contains(@id,'facebook')]</td>
 	<td></td>

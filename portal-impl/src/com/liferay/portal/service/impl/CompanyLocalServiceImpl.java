@@ -1270,7 +1270,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					return null;
 				});
 
-			DBPartitionUtil.migrateDBPartition(companyId);
+			DBPartitionUtil.removeDBPartition(companyId);
 
 			return company;
 		}

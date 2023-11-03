@@ -130,7 +130,55 @@ public class Main {
 			GetterUtil.getBoolean(
 				System.getenv("LIFERAY_LEARN_ETC_CRON_OFFLINE")));
 
-		main.uploadToLiferay();
+		String message = null;
+
+		try {
+			main.uploadToLiferay();
+		}
+		catch (Exception exception) {
+			message = exception.getMessage();
+		}
+
+		sendSlackMessage(message);
+	}
+
+	public static void sendSlackMessage(String message) throws Exception {
+		String slackMessage = StringBundler.concat(
+			new Date(), " *", System.getenv("LCP_PROJECT_ID"), "*->*",
+			System.getenv("LCP_SERVICE_ID"), "* <https://console.",
+			System.getenv("LCP_INFRASTRUCTURE_DOMAIN"), "/projects/",
+			System.getenv("LCP_PROJECT_ID"), "/services/",
+			System.getenv("LCP_SERVICE_ID"), "/logs?instanceId=",
+			System.getenv("HOSTNAME"), "&logServiceId=",
+			System.getenv("LCP_SERVICE_ID"), "|", System.getenv("HOSTNAME"),
+			"> \n>");
+
+		if (Validator.isNotNull(message)) {
+			slackMessage += ":red-alert:Import job finished\n" + message;
+		}
+		else {
+			slackMessage += ":sunflower:Import job finished with return code 0";
+		}
+
+		HttpPost httpPost = new HttpPost(
+			System.getenv("LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT"));
+
+		httpPost.setEntity(
+			new StringEntity(
+				StringBundler.concat(
+					"{\"channel\":\"",
+					System.getenv("LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL"),
+					"\",\"icon_emoji\":\":robot_face:\",\"text\":\"",
+					slackMessage, "\",\"username\":\"devopsbot\"}")));
+
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-type", "application/json");
+
+		try (CloseableHttpClient closeableHttpClient = HttpClientBuilder.create(
+			).build()) {
+
+			closeableHttpClient.execute(httpPost);
+		}
 	}
 
 	public Main(
@@ -180,10 +228,7 @@ public class Main {
 	}
 
 	public void uploadToLiferay() throws Exception {
-		if (!_validateUUIDs()) {
-			_sendSlackMessage(false);
-			System.exit(1);
-		}
+		_validateUUIDs();
 
 		long start = System.currentTimeMillis();
 
@@ -378,11 +423,8 @@ public class Main {
 				System.out.println(errorMessage);
 			}
 
-			_sendSlackMessage(false);
-			System.exit(1);
-		}
-		else {
-			_sendSlackMessage(true);
+			throw new Exception(
+				_errorMessages.size() + "entries in error log file");
 		}
 	}
 
@@ -1627,60 +1669,6 @@ public class Main {
 		return line;
 	}
 
-	private String _sendSlackMessage(boolean success) throws Exception {
-		String log_url = StringBundler.concat(
-			"https://console.", System.getenv("LCP_INFRASTRUCTURE_DOMAIN"),
-			"/projects/", System.getenv("LCP_PROJECT_ID"), "/services/",
-			System.getenv("LCP_SERVICE_ID"), "/logs?instanceId=",
-			System.getenv("HOSTNAME"), "&logServiceId=",
-			System.getenv("LCP_SERVICE_ID"));
-
-		String slackMessage = StringBundler.concat(
-			new Date(), " *", System.getenv("LCP_PROJECT_ID"), "*->*",
-			System.getenv("LCP_SERVICE_ID"), "* <", log_url, "|",
-			System.getenv("HOSTNAME"), "> \n>");
-
-		if (success) {
-			slackMessage += ":sunflower:Import job finished with return code 0";
-		}
-		else {
-			slackMessage += ":red-alert:Import job finished with return code 1";
-		}
-
-		HttpPost httpPost = new HttpPost(
-			System.getenv("LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT"));
-
-		String slackJSON = StringBundler.concat(
-			"{\"channel\":\"",
-			System.getenv("LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL"),
-			"\",\"icon_emoji\":\":robot_face:\",\"text\":\"", slackMessage,
-			"\",\"username\":\"devopsbot\"}");
-
-		StringEntity entity = new StringEntity(slackJSON);
-
-		httpPost.setEntity(entity);
-
-		httpPost.setHeader("Accept", "application/json");
-		httpPost.setHeader("Content-type", "application/json");
-
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build()) {
-
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(httpPost);
-
-			StatusLine statusLine = closeableHttpResponse.getStatusLine();
-
-			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-				return "Message sent";
-			}
-
-			throw new Exception("Unable to send message");
-		}
-	}
-
 	private String _toFriendlyURLPath(File file) {
 		String filePathString = file.getPath();
 
@@ -1936,7 +1924,7 @@ public class Main {
 		return structuredContent;
 	}
 
-	private boolean _validateUUIDs() throws Exception {
+	private void _validateUUIDs() throws Exception {
 		Set<String> uuids = new HashSet<>();
 
 		for (String fileName : _fileNames) {
@@ -1952,17 +1940,13 @@ public class Main {
 			String uuid = _getUuid(englishText);
 
 			if (Validator.isNull(uuid)) {
-				System.out.println("Missing UUID in " + fileName);
-
-				return false;
+				throw new Exception("Missing UUID in " + fileName);
 			}
 
 			if (uuids.contains(uuid)) {
-				System.out.println(
+				throw new Exception(
 					StringBundler.concat(
 						"Duplicate UUID ", uuid, " in ", fileName));
-
-				return false;
 			}
 
 			uuids.add(uuid);
@@ -1975,15 +1959,11 @@ public class Main {
 					japaneseFile, StandardCharsets.UTF_8);
 
 				if (Validator.isNotNull(_getUuid(japaneseText))) {
-					System.out.println(
+					throw new Exception(
 						"Irrelevant UUID in " + japaneseFile.getPath());
-
-					return false;
 				}
 			}
 		}
-
-		return true;
 	}
 
 	private void _visit(Image image) throws Exception {

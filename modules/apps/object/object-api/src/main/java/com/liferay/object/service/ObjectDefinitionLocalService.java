@@ -449,6 +449,10 @@ public interface ObjectDefinitionLocalService
 			long objectDefinitionId, long objectFolderId)
 		throws PortalException;
 
+	public ObjectDefinition updatePortlet(
+			long objectDefinitionId, boolean portlet)
+		throws PortalException;
+
 	public ObjectDefinition updateRootObjectDefinitionId(
 			long objectDefinitionId, long rootObjectDefinitionId)
 		throws PortalException;

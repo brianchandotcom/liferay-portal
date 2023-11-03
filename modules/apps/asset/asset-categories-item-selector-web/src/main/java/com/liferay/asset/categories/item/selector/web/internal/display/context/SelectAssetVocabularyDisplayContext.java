@@ -16,10 +16,10 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 
 import java.util.List;
 
@@ -87,17 +87,20 @@ public class SelectAssetVocabularyDisplayContext {
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() {
-		return ListUtil.fromArray(_getAssetVocabulariesBreadcrumbEntry());
-	}
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				String backURL = ParamUtil.getString(
+					_httpServletRequest, "backURL",
+					PortalUtil.getCurrentURL(_httpServletRequest));
 
-	private BreadcrumbEntry _createBreadcrumbEntry(String title, String url) {
-		return new BreadcrumbEntry() {
-			{
-				setBrowsable(url != null);
-				setTitle(title);
-				setURL(url);
+				breadcrumbEntry.setBrowsable(backURL != null);
+
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(
+						_themeDisplay.getLocale(), "vocabularies"));
+				breadcrumbEntry.setURL(backURL);
 			}
-		};
+		).build();
 	}
 
 	private List<AssetVocabulary> _getAssetVocabularies() {
@@ -107,16 +110,6 @@ public class SelectAssetVocabularyDisplayContext {
 				_themeDisplay.getScopeGroupId()
 			},
 			new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
-	}
-
-	private BreadcrumbEntry _getAssetVocabulariesBreadcrumbEntry() {
-		String backURL = ParamUtil.getString(
-			_httpServletRequest, "backURL",
-			PortalUtil.getCurrentURL(_httpServletRequest));
-
-		return _createBreadcrumbEntry(
-			LanguageUtil.get(_themeDisplay.getLocale(), "vocabularies"),
-			backURL);
 	}
 
 	private String _getAssetVocabularyURL(long assetVocabularyId)

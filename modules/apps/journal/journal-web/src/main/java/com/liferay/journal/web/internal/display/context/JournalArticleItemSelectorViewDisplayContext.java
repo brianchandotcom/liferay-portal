@@ -32,6 +32,7 @@ import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.dao.search.JournalRowChecker;
 import com.liferay.journal.web.internal.item.selector.JournalArticleItemSelectorView;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -64,6 +65,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryBuilder;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.ArrayList;
@@ -225,62 +228,69 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		).toString();
 	}
 
-	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
-		breadcrumbEntries.add(_getSiteBreadcrumb());
-
-		breadcrumbEntries.add(_getHomeBreadcrumb());
-
+	public List<BreadcrumbEntry> getPortletBreadcrumbEntries() {
 		JournalFolder folder = _getFolder();
 
-		if (folder == null) {
-			return breadcrumbEntries;
-		}
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(
+						_httpServletRequest, "sites-and-libraries"));
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"groupType", "site"
+					).setParameter(
+						"scopeGroupType",
+						ParamUtil.getBoolean(
+							_httpServletRequest, "scopeGroupType")
+					).setParameter(
+						"showGroupSelector", true
+					).buildString());
+			}
+		).add(
+			breadcrumbEntry -> {
+				Group group = GroupLocalServiceUtil.getGroup(_getGroupId());
 
-		List<JournalFolder> ancestorFolders = folder.getAncestors();
+				breadcrumbEntry.setTitle(
+					group.getDescriptiveName(_themeDisplay.getLocale()));
 
-		Collections.reverse(ancestorFolders);
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"folderId",
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID
+					).buildString());
+			}
+		).addAll(
+			() -> folder != null,
+			() -> {
+				List<JournalFolder> ancestorFolders = folder.getAncestors();
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			getPortletURL()
-		).setParameter(
-			"folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID
-		).buildPortletURL();
+				Collections.reverse(ancestorFolders);
 
-		for (JournalFolder ancestorFolder : ancestorFolders) {
-			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
+				return TransformUtil.transform(
+					ancestorFolders,
+					ancestorFolder -> BreadcrumbEntryBuilder.setTitle(
+						ancestorFolder.getName()
+					).setURL(
+						PortletURLBuilder.create(
+							getPortletURL()
+						).setParameter(
+							"folderId", ancestorFolder.getFolderId()
+						).buildString()
+					).build());
+			}
+		).add(
+			() -> folder != null,
+			breadcrumbEntry -> {
+				JournalFolder unescapedFolder = folder.toUnescapedModel();
 
-			folderBreadcrumbEntry.setTitle(ancestorFolder.getName());
-
-			portletURL.setParameter(
-				"folderId", String.valueOf(ancestorFolder.getFolderId()));
-
-			folderBreadcrumbEntry.setURL(portletURL.toString());
-
-			breadcrumbEntries.add(folderBreadcrumbEntry);
-		}
-
-		if (folder.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
-
-			JournalFolder unescapedFolder = folder.toUnescapedModel();
-
-			folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
-
-			portletURL.setParameter(
-				"folderId", String.valueOf(folder.getFolderId()));
-
-			folderBreadcrumbEntry.setURL(portletURL.toString());
-
-			breadcrumbEntries.add(folderBreadcrumbEntry);
-		}
-
-		return breadcrumbEntries;
+				breadcrumbEntry.setTitle(unescapedFolder.getName());
+			}
+		).build();
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
@@ -550,24 +560,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return new long[] {_getStagingAwareGroupId()};
 	}
 
-	private BreadcrumbEntry _getHomeBreadcrumb() throws Exception {
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		Group group = GroupLocalServiceUtil.getGroup(_getGroupId());
-
-		breadcrumbEntry.setTitle(
-			group.getDescriptiveName(_themeDisplay.getLocale()));
-
-		breadcrumbEntry.setURL(
-			PortletURLBuilder.create(
-				getPortletURL()
-			).setParameter(
-				"folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID
-			).buildString());
-
-		return breadcrumbEntry;
-	}
-
 	private long _getJournalArticleClassNameId() {
 		if (_journalArticleClassNameId != null) {
 			return _journalArticleClassNameId;
@@ -611,26 +603,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			"item-selector-order-by-type", "asc");
 
 		return _orderByType;
-	}
-
-	private BreadcrumbEntry _getSiteBreadcrumb() throws Exception {
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(
-			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
-		breadcrumbEntry.setURL(
-			PortletURLBuilder.create(
-				getPortletURL()
-			).setParameter(
-				"groupType", "site"
-			).setParameter(
-				"scopeGroupType",
-				ParamUtil.getBoolean(_httpServletRequest, "scopeGroupType")
-			).setParameter(
-				"showGroupSelector", true
-			).buildString());
-
-		return breadcrumbEntry;
 	}
 
 	private long _getStagingAwareGroupId() {

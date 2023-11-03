@@ -79,44 +79,24 @@ public class BreadcrumbUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
 		boolean hasAll = ArrayUtil.contains(types, ENTRY_TYPE_ANY);
 
-		if (hasAll || ArrayUtil.contains(types, ENTRY_TYPE_GUEST_GROUP)) {
-			BreadcrumbEntry breadcrumbEntry = getGuestGroupBreadcrumbEntry(
-				themeDisplay);
-
-			if (breadcrumbEntry != null) {
-				breadcrumbEntries.add(breadcrumbEntry);
-			}
-		}
-
-		if (hasAll || ArrayUtil.contains(types, ENTRY_TYPE_PARENT_GROUP)) {
-			breadcrumbEntries.addAll(
-				getParentGroupBreadcrumbEntries(themeDisplay));
-		}
-
-		if (hasAll || ArrayUtil.contains(types, ENTRY_TYPE_CURRENT_GROUP)) {
-			BreadcrumbEntry breadcrumbEntry = getScopeGroupBreadcrumbEntry(
-				themeDisplay);
-
-			if (breadcrumbEntry != null) {
-				breadcrumbEntries.add(breadcrumbEntry);
-			}
-		}
-
-		if (hasAll || ArrayUtil.contains(types, ENTRY_TYPE_LAYOUT)) {
-			breadcrumbEntries.addAll(
-				getLayoutBreadcrumbEntries(httpServletRequest, themeDisplay));
-		}
-
-		if (hasAll || ArrayUtil.contains(types, ENTRY_TYPE_PORTLET)) {
-			breadcrumbEntries.addAll(
-				getPortletBreadcrumbEntries(httpServletRequest));
-		}
-
-		return breadcrumbEntries;
+		return BreadcrumbEntryListBuilder.add(
+			() -> hasAll || ArrayUtil.contains(types, ENTRY_TYPE_GUEST_GROUP),
+			getGuestGroupBreadcrumbEntry(themeDisplay)
+		).addAll(
+			() -> hasAll || ArrayUtil.contains(types, ENTRY_TYPE_PARENT_GROUP),
+			() -> getParentGroupBreadcrumbEntries(themeDisplay)
+		).add(
+			() -> hasAll || ArrayUtil.contains(types, ENTRY_TYPE_CURRENT_GROUP),
+			getScopeGroupBreadcrumbEntry(themeDisplay)
+		).addAll(
+			() -> hasAll || ArrayUtil.contains(types, ENTRY_TYPE_LAYOUT),
+			() -> getLayoutBreadcrumbEntries(httpServletRequest, themeDisplay)
+		).addAll(
+			() -> hasAll || ArrayUtil.contains(types, ENTRY_TYPE_PORTLET),
+			() -> getPortletBreadcrumbEntries(httpServletRequest)
+		).build();
 	}
 
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(
@@ -153,39 +133,44 @@ public class BreadcrumbUtil {
 	}
 
 	public static List<BreadcrumbEntry> getLayoutBreadcrumbEntries(
-			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
 		Layout layout = themeDisplay.getLayout();
 
 		Group group = layout.getGroup();
 
-		if (!group.isLayoutPrototype()) {
-			_addLayoutBreadcrumbEntries(
-				breadcrumbEntries, httpServletRequest, layout, themeDisplay);
-		}
+		return BreadcrumbEntryListBuilder.addAll(
+			() -> !group.isLayoutPrototype(),
+			() -> {
+				List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
-		return breadcrumbEntries;
+				_addLayoutBreadcrumbEntries(
+					breadcrumbEntries, httpServletRequest, layout,
+					themeDisplay);
+
+				return breadcrumbEntries;
+			}
+		).build();
 	}
 
 	public static List<BreadcrumbEntry> getParentGroupBreadcrumbEntries(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+		LayoutSet parentLayoutSet = _getParentLayoutSet(
+			themeDisplay.getLayoutSet());
 
-		Layout layout = themeDisplay.getLayout();
+		return BreadcrumbEntryListBuilder.addAll(
+			() -> parentLayoutSet != null,
+			() -> {
+				List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
-		LayoutSet parentLayoutSet = _getParentLayoutSet(layout.getLayoutSet());
+				_addGroupsBreadcrumbEntries(
+					breadcrumbEntries, themeDisplay, parentLayoutSet, true);
 
-		if (parentLayoutSet != null) {
-			_addGroupsBreadcrumbEntries(
-				breadcrumbEntries, themeDisplay, parentLayoutSet, true);
-		}
-
-		return breadcrumbEntries;
+				return breadcrumbEntries;
+			}
+		).build();
 	}
 
 	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(

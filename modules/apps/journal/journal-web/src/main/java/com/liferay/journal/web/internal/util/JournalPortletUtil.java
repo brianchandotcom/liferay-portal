@@ -17,6 +17,7 @@ import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.ArticleReviewDateComparator;
 import com.liferay.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,8 +30,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryBuilder;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -106,26 +108,9 @@ public class JournalPortletUtil {
 	}
 
 	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
-			JournalFolder folder, HttpServletRequest httpServletRequest,
-			boolean lastElementLinkable,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(LanguageUtil.get(httpServletRequest, "home"));
-		breadcrumbEntry.setURL(
-			PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).buildString());
-
-		breadcrumbEntries.add(breadcrumbEntry);
-
-		if (folder == null) {
-			return breadcrumbEntries;
-		}
+		JournalFolder folder, HttpServletRequest httpServletRequest,
+		boolean lastElementLinkable,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -134,62 +119,77 @@ public class JournalPortletUtil {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		List<JournalFolder> ancestorFolders = folder.getAncestors();
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(httpServletRequest, "home"));
 
-		Collections.reverse(ancestorFolders);
-
-		for (JournalFolder ancestorFolder : ancestorFolders) {
-			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
-
-			if (permissionChecker.hasPermission(
-					ancestorFolder.getGroupId(), JournalFolder.class.getName(),
-					ancestorFolder.getFolderId(), ActionKeys.VIEW)) {
-
-				folderBreadcrumbEntry.setTitle(ancestorFolder.getName());
-				folderBreadcrumbEntry.setURL(
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setParameter(
-						"folderId", ancestorFolder.getFolderId()
-					).buildString());
-			}
-			else {
-				folderBreadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);
-			}
-
-			breadcrumbEntries.add(folderBreadcrumbEntry);
-		}
-
-		if (folder.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
-
-			if (permissionChecker.hasPermission(
-					folder.getGroupId(), JournalFolder.class.getName(),
-					folder.getFolderId(), ActionKeys.VIEW)) {
-
-				JournalFolder unescapedFolder = folder.toUnescapedModel();
-
-				folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
-
-				if (lastElementLinkable) {
-					folderBreadcrumbEntry.setURL(
+				if ((folder != null) || lastElementLinkable) {
+					breadcrumbEntry.setURL(
 						PortletURLBuilder.createRenderURL(
 							liferayPortletResponse
-						).setParameter(
-							"folderId", folder.getFolderId()
 						).buildString());
 				}
 			}
-			else {
-				folderBreadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);
+		).addAll(
+			() -> folder != null,
+			() -> {
+				List<JournalFolder> ancestorFolders = folder.getAncestors();
+
+				Collections.reverse(ancestorFolders);
+
+				ancestorFolders.add(folder);
+
+				return TransformUtil.transform(
+					ancestorFolders,
+					ancestorFolder -> {
+						if (permissionChecker.hasPermission(
+								ancestorFolder.getGroupId(),
+								JournalFolder.class.getName(),
+								ancestorFolder.getFolderId(),
+								ActionKeys.VIEW)) {
+
+							return BreadcrumbEntryBuilder.setTitle(
+								ancestorFolder.getName()
+							).setURL(
+								PortletURLBuilder.createRenderURL(
+									liferayPortletResponse
+								).setParameter(
+									"folderId", ancestorFolder.getFolderId()
+								).buildString()
+							).build();
+						}
+
+						return BreadcrumbEntryBuilder.setTitle(
+							StringPool.TRIPLE_PERIOD
+						).build();
+					});
 			}
+		).add(
+			() -> folder != null,
+			breadcrumbEntry -> {
+				if (permissionChecker.hasPermission(
+						folder.getGroupId(), JournalFolder.class.getName(),
+						folder.getFolderId(), ActionKeys.VIEW)) {
 
-			breadcrumbEntries.add(folderBreadcrumbEntry);
-		}
+					JournalFolder unescapedFolder = folder.toUnescapedModel();
 
-		return breadcrumbEntries;
+					breadcrumbEntry.setTitle(unescapedFolder.getName());
+
+					if (lastElementLinkable) {
+						breadcrumbEntry.setURL(
+							PortletURLBuilder.createRenderURL(
+								liferayPortletResponse
+							).setParameter(
+								"folderId", folder.getFolderId()
+							).buildString());
+					}
+				}
+				else {
+					breadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);
+				}
+			}
+		).build();
 	}
 
 	private static long _getAddMenuFavItemFolderId(

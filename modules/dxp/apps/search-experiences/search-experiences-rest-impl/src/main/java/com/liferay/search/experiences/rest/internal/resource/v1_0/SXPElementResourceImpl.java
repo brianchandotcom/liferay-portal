@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -123,6 +124,10 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 					sxpElement.getElementDefinitionJSON())
 			).put(
 				"externalReferenceCode", sxpElement.getExternalReferenceCode()
+			).put(
+				"fallbackDescription", sxpElement.getFallbackDescription()
+			).put(
+				"fallbackTitle", sxpElement.getFallbackTitle()
 			).put(
 				"schemaVersion", sxpElement.getSchemaVersion()
 			).put(
@@ -243,8 +248,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 					sxpElement.getDescription(),
 					sxpElement.getDescription_i18n()),
 				_getElementDefinitionJSON(sxpElement),
-				sxpElement.getDescription(), sxpElement.getTitle(), false,
-				_getSchemaVersion(),
+				sxpElement.getFallbackDescription(),
+				sxpElement.getFallbackTitle(), false, _getSchemaVersion(),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
@@ -267,8 +272,11 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			_sxpElementService.addSXPElement(
 				null, sxpElement.getDescriptionMap(),
 				sxpElement.getElementDefinitionJSON(),
-				sxpElement.getDescription(), sxpElement.getTitle(), false,
-				sxpElement.getSchemaVersion(),
+				sxpElement.getFallbackDescription(),
+				_language.format(
+					LocaleUtil.getDefault(), "copy-of-x",
+					sxpElement.getFallbackTitle()),
+				false, sxpElement.getSchemaVersion(),
 				TitleMapUtil.copy(sxpElement.getTitleMap()),
 				sxpElement.getType(),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));

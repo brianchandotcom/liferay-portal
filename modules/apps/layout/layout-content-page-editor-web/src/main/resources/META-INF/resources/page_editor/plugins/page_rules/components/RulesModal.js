@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -39,6 +40,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 	);
 
 	const [nameError, setNameError] = useState(false);
+	const [ruleError, setRuleError] = useState(false);
 
 	const [actions, setActions] = useState(
 		() => editingRule?.actions || [{id: uuidv4}]
@@ -78,16 +80,20 @@ export default function RulesModal({editingRule, onCloseModal}) {
 			return;
 		}
 
-		const filteredActions = actions.filter((action) => action.itemId);
-		const filteredConditions = conditions.filter(
-			(condition) => condition.value
-		);
+		if (
+			actions.some((action) => !action.itemId) ||
+			conditions.some((condition) => !condition.value)
+		) {
+			setRuleError(true);
+
+			return;
+		}
 
 		if (editingRule) {
 			dispatch(
 				updateRule({
-					actions: filteredActions,
-					conditions: filteredConditions,
+					actions,
+					conditions,
 					name,
 					ruleId: editingRule.id,
 				})
@@ -96,8 +102,8 @@ export default function RulesModal({editingRule, onCloseModal}) {
 		else {
 			dispatch(
 				addRule({
-					actions: filteredActions,
-					conditions: filteredConditions,
+					actions,
+					conditions,
 					name,
 				})
 			);
@@ -119,6 +125,19 @@ export default function RulesModal({editingRule, onCloseModal}) {
 			<ClayModal.Header>{title}</ClayModal.Header>
 
 			<ClayModal.Body>
+				{ruleError ? (
+					<ClayAlert
+						displayType="danger"
+						hideCloseIcon={false}
+						onClose={() => setRuleError(false)}
+						title={Liferay.Language.get('error')}
+					>
+						{Liferay.Language.get(
+							'incomplete-rule.-please-check-that-the-conditions-and-actions-are-completed-before-saving'
+						)}
+					</ClayAlert>
+				) : null}
+
 				<ClayForm.Group
 					className={classNames({'has-error': nameError})}
 				>
@@ -171,7 +190,11 @@ export default function RulesModal({editingRule, onCloseModal}) {
 							conditionType={conditionType}
 							conditions={conditions}
 							setConditionType={setConditionType}
-							setConditions={setConditions}
+							setConditions={(conditions) => {
+								setRuleError(false);
+
+								setConditions(conditions);
+							}}
 						/>
 					</div>
 
@@ -182,7 +205,11 @@ export default function RulesModal({editingRule, onCloseModal}) {
 						<RuleBuilderActionSection
 							actions={actions}
 							layoutDataItems={layoutDataItems}
-							setActions={setActions}
+							setActions={(actions) => {
+								setRuleError(false);
+
+								setActions(actions);
+							}}
 						/>
 					</div>
 				</ScreenReaderAnnouncerContext>

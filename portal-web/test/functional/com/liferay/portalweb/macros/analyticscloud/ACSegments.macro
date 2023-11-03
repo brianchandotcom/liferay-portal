@@ -453,7 +453,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterAndOrderForSegLists(filterName = null) {
+	macro filterAndOrderForSegLists(filterName) {
 		var key_filterName = ${filterName};
 
 		if (!(isSet(key_dropdownName))) {

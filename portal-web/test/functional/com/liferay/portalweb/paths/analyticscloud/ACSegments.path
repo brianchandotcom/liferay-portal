@@ -494,12 +494,12 @@
 
 <tr>
 	<td>FILTER_AND_ORDER_BUTTON</td>
-	<td>//button[contains(@data-testid,'filter-and-order-button')]/span[@class='text-truncate' and text()='${key_dropdownName}']</td>
+	<td>//div[contains(@class,'filter-and-order-root')]//button[text()='${key_dropdownName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_DROPDOWN_OPTION</td>
-	<td>//div[contains(@class,'dropdown-item')]//label/input//following-sibling::span/span[text()='${key_filterName}']</td>
+	<td>//span[contains(@class,'dropdown-item')]//label/input//following-sibling::span/span[text()='${key_filterName}']</td>
 	<td></td>
 </tr>
 

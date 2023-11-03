@@ -404,6 +404,10 @@ const FrontendDataSet = ({
 				}
 				else {
 					setCreationMenu((currentCreationMenu) => {
+						if (!currentCreationMenu) {
+							return;
+						}
+
 						const filteredCreationMenu = {};
 
 						filteredCreationMenu.primaryItems = filterCreationActions(

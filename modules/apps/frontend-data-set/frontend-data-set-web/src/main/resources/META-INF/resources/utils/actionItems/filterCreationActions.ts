@@ -11,18 +11,16 @@ const filterCreationActions = ({
 }: {
 	customActions: Array<ICreationActionItem>;
 	globalCollectionActions: any;
-}): Array<ICreationActionItem> | null => {
-	return customActions
-		? customActions.filter((action: ICreationActionItem) => {
-				if (
-					!action.data?.permissionKey ||
-					(action.data?.permissionKey &&
-						globalCollectionActions[action.data.permissionKey])
-				) {
-					return action;
-				}
-		  })
-		: null;
+}): Array<ICreationActionItem> => {
+	return customActions.filter((action: ICreationActionItem) => {
+		if (
+			!action.data?.permissionKey ||
+			(action.data?.permissionKey &&
+				globalCollectionActions[action.data.permissionKey])
+		) {
+			return action;
+		}
+	});
 };
 
 export default filterCreationActions;

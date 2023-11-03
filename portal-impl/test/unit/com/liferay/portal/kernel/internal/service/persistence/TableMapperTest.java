@@ -1941,7 +1941,6 @@ public class TableMapperTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static ServiceRegistration<FinderCache> _serviceRegistration;
 
 	private DataSource _dataSource;
 	private MockBasePersistence<Left> _leftBasePersistence;
@@ -1949,6 +1948,7 @@ public class TableMapperTest {
 		_mappingSqlQueryFactoryUtilMockedStatic;
 	private final Map<Long, long[]> _mappingStore = new HashMap<>();
 	private MockBasePersistence<Right> _rightBasePersistence;
+	private ServiceRegistration<FinderCache> _serviceRegistration;
 	private MockedStatic<SqlUpdateFactoryUtil>
 		_sqlUpdateFactoryUtilMockedStatic;
 	private TableMapperImpl<Left, Right> _tableMapperImpl;

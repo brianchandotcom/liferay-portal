@@ -17,6 +17,7 @@ export default function ScheduleModal({
 	callback = noop,
 	displayDate: initialDisplayDate,
 	scheduled,
+	timeZone,
 	observer,
 	onModalClose = noop,
 }) {
@@ -70,6 +71,7 @@ export default function ScheduleModal({
 						onChange={setDisplayDate}
 						placeholder="YYYY-MM-DD HH:mm"
 						time
+						timeZone={timeZone}
 						value={displayDate}
 					/>
 				</div>

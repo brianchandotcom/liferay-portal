@@ -12,7 +12,7 @@ liferay-marketplace-etc-spring-boot-oauth-application-user-agent:
     scopes:
         - Liferay.Headless.Admin.User.everything
         - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Commerce.Delivery.Catalog.everything
         - Liferay.Headless.Commerce.Admin.Catalog.everything
         - Liferay.Headless.Commerce.Admin.Order.everything
+        - Liferay.Headless.Commerce.Delivery.Catalog.everything
     type: oAuthApplicationUserAgent

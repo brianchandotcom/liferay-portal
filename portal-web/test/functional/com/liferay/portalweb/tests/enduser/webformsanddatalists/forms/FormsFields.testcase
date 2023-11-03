@@ -362,6 +362,44 @@ definition {
 		FormPortlet.submitSuccessfully();
 	}
 
+	@description = "Verify that the dropdown options for Acceptance Date are shown after adding a translation "
+	@priority = 4
+	test CanViewAcceptedDateOptionsAfterActiveValidation {
+		task ("Given a form with a date field") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Birthday");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Date");
+		}
+
+		task ("and Given a translation is added to the form") {
+			Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+		}
+
+		task ("When the validation is activated") {
+			Click(
+				key_fieldName = "Date",
+				locator1 = "Form#FIELD_LABEL");
+
+			Form.gotoAdvancedTab();
+
+			FormFields.enableSwitch(fieldName = "Validation");
+
+			Click(locator1 = "FormFields#VALIDATION_ACCEPTED_DATE");
+		}
+
+		task ("Then the dropdown options for Acceptance Date are shown") {
+			for (var acceptedDateOptions : list "Future Dates,Past Dates,Range") {
+				AssertVisible(
+					key_menuItem = ${acceptedDateOptions},
+					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			}
+		}
+	}
+
 	@description = "LPS-167567 - Verify that the Field Reference property is not vulnerable to Cross Site Scripting"
 	@priority = 5
 	test CheckFieldReferenceCrossSiteScripting {

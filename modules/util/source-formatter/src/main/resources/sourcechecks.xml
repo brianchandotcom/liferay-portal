@@ -1717,10 +1717,6 @@
 			<category name="Upgrade" />
 			<description name="Replace parameter in updateCommerceAddress method by other parameters list" />
 		</check>
-		<check name="UpgradeJavaUserLocalServiceUtilCheck">
-			<category name="Upgrade" />
-			<description name="Replace parameters of addUser and updateStatus methods in UserServices" />
-		</check>
 		<check name="UpgradeJSPFieldSetGroupCheck">
 			<category name="Upgrade" />
 			<description name="Run code to remove 'fieldset-group' tag" />

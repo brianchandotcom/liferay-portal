@@ -156,6 +156,48 @@ public class SXPElement implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public String getFallbackDescription() {
+		return fallbackDescription;
+	}
+
+	public void setFallbackDescription(String fallbackDescription) {
+		this.fallbackDescription = fallbackDescription;
+	}
+
+	public void setFallbackDescription(
+		UnsafeSupplier<String, Exception> fallbackDescriptionUnsafeSupplier) {
+
+		try {
+			fallbackDescription = fallbackDescriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fallbackDescription;
+
+	public String getFallbackTitle() {
+		return fallbackTitle;
+	}
+
+	public void setFallbackTitle(String fallbackTitle) {
+		this.fallbackTitle = fallbackTitle;
+	}
+
+	public void setFallbackTitle(
+		UnsafeSupplier<String, Exception> fallbackTitleUnsafeSupplier) {
+
+		try {
+			fallbackTitle = fallbackTitleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fallbackTitle;
+
 	public Boolean getHidden() {
 		return hidden;
 	}

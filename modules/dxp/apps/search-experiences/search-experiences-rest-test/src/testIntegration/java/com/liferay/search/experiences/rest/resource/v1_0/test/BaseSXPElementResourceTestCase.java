@@ -179,6 +179,8 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		sxpElement.setDescription(regex);
 		sxpElement.setExternalReferenceCode(regex);
+		sxpElement.setFallbackDescription(regex);
+		sxpElement.setFallbackTitle(regex);
 		sxpElement.setSchemaVersion(regex);
 		sxpElement.setTitle(regex);
 		sxpElement.setUserName(regex);
@@ -192,6 +194,8 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		Assert.assertEquals(regex, sxpElement.getDescription());
 		Assert.assertEquals(regex, sxpElement.getExternalReferenceCode());
+		Assert.assertEquals(regex, sxpElement.getFallbackDescription());
+		Assert.assertEquals(regex, sxpElement.getFallbackTitle());
 		Assert.assertEquals(regex, sxpElement.getSchemaVersion());
 		Assert.assertEquals(regex, sxpElement.getTitle());
 		Assert.assertEquals(regex, sxpElement.getUserName());
@@ -1022,6 +1026,24 @@ public abstract class BaseSXPElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"fallbackDescription", additionalAssertFieldName)) {
+
+				if (sxpElement.getFallbackDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fallbackTitle", additionalAssertFieldName)) {
+				if (sxpElement.getFallbackTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("hidden", additionalAssertFieldName)) {
 				if (sxpElement.getHidden() == null) {
 					valid = false;
@@ -1274,6 +1296,30 @@ public abstract class BaseSXPElementResourceTestCase {
 				if (!Objects.deepEquals(
 						sxpElement1.getExternalReferenceCode(),
 						sxpElement2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"fallbackDescription", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sxpElement1.getFallbackDescription(),
+						sxpElement2.getFallbackDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fallbackTitle", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sxpElement1.getFallbackTitle(),
+						sxpElement2.getFallbackTitle())) {
 
 					return false;
 				}
@@ -1625,6 +1671,98 @@ public abstract class BaseSXPElementResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("fallbackDescription")) {
+			Object object = sxpElement.getFallbackDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("fallbackTitle")) {
+			Object object = sxpElement.getFallbackTitle();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("hidden")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1915,6 +2053,10 @@ public abstract class BaseSXPElementResourceTestCase {
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				fallbackDescription = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				fallbackTitle = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				hidden = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();

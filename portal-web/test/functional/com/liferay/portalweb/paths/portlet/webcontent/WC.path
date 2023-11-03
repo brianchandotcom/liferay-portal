@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_TITLE_NAME</td>
-	<td>//*[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a[contains(text(),'${key_webContentTitle}')]</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a[contains(text(),'${key_webContentTitle}')] | //*[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//span[contains(text(),'${key_webContentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

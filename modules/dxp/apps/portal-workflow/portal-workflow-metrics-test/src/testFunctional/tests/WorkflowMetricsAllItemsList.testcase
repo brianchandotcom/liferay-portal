@@ -373,6 +373,10 @@ definition {
 	test CanOrderByCreatedBy {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
@@ -717,6 +721,10 @@ definition {
 	@description = "LPS-130218 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number"
 	@priority = 3
 	test CreatedBySortIsPreservedWhenChangesPagination {
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		JSONUser.addUser(
 			userEmailAddress = "user2@liferay.com",
 			userFirstName = "user2",
@@ -2803,6 +2811,10 @@ definition {
 	@priority = 3
 	test TaskReassignedToMultipleUsers {
 		task ("Given a primary user who creates a secondary Power user with a membership") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
 			JSONUser.addUser(

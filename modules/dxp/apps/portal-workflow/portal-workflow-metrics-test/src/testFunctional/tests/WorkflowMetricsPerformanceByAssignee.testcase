@@ -98,6 +98,10 @@ definition {
 	@description = "LPS-97666 - Verify that the Performance by Assignee card are also considering inactive users"
 	@priority = 5
 	test CardConsideresInactiveUser {
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		JSONUser.addUser(
 			userEmailAddress = "user2@liferay.com",
 			userFirstName = "user2",

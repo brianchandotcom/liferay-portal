@@ -193,7 +193,7 @@ public class CommerceOrderValidatorRegistryImpl
 	@Override
 	public List<CommerceOrderValidatorResult> validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			BigDecimal quantity)
+			String json, BigDecimal quantity, boolean child)
 		throws PortalException {
 
 		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
@@ -207,7 +207,7 @@ public class CommerceOrderValidatorRegistryImpl
 
 			CommerceOrderValidatorResult commerceOrderValidatorResult =
 				commerceOrderValidator.validate(
-					locale, commerceOrder, cpInstance, quantity);
+					locale, commerceOrder, cpInstance, json, quantity, child);
 
 			if (!commerceOrderValidatorResult.isValid()) {
 				commerceOrderValidatorResults.add(commerceOrderValidatorResult);

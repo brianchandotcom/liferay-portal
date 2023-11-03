@@ -47,7 +47,7 @@ public class SubscriptionCommerceOrderValidatorImpl
 	@Override
 	public CommerceOrderValidatorResult validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			BigDecimal quantity)
+			String json, BigDecimal quantity, boolean child)
 		throws PortalException {
 
 		if (cpInstance == null) {

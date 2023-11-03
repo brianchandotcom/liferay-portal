@@ -48,7 +48,7 @@ public class VersionCommerceOrderValidatorImpl
 	@Override
 	public CommerceOrderValidatorResult validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			BigDecimal quantity)
+			String json, BigDecimal quantity, boolean child)
 		throws PortalException {
 
 		return new CommerceOrderValidatorResult(true);

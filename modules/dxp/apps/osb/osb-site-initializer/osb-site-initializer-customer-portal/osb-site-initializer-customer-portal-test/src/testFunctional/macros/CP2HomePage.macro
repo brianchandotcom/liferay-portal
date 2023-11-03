@@ -28,7 +28,7 @@ definition {
 
 		Click(locator1 = "CP2HomePage#LANGUAGE_BUTTON");
 
-		Click(locator1 = "CP2HomePage#DROPDOWN_OPTIONS");
+		Click(locator1 = "CP2HomePage#DROPDOWN_LANGUAGE_OPTIONS");
 	}
 
 }

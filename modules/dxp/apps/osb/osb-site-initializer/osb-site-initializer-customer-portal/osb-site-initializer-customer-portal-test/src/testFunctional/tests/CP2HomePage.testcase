@@ -80,11 +80,13 @@ definition {
 		}
 
 		task ("When I change the site language") {
-			CP2HomePage.clickAtLanguageButton(language = "português-Brasil");
+			CP2HomePage.clickAtLanguageButton(language = "Português");
 		}
 
 		task ("Then I should be able to assert the selected language") {
-			CP2HomePage.assertLanguageChange(siteTitle = "Bem vindo");
+			CP2HomePage.assertLanguageChange(siteTitle = "Bem vindo,");
+
+			CP2HomePage.clickAtLanguageButton(language = "English");
 		}
 	}
 

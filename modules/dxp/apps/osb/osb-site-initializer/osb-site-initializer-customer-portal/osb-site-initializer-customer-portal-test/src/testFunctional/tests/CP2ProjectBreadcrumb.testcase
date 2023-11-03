@@ -83,8 +83,8 @@ definition {
 				locator1 = "CP2Utils#SVG_DROPDOWN_LIST");
 
 			AssertElementPresent(
-				locator1 = "CP2Utils#SVG_DROPDOWN_LIST",
-				value1 = ${searchItem});
+				key_project = "Test Account Ana",
+				locator1 = "CP2Utils#SVG_DROPDOWN_LIST");
 		}
 	}
 

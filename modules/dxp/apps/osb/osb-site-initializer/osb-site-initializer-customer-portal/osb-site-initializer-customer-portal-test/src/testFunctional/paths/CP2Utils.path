@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>SVG_DROPDOWN_LIST</td>
-	<td>//*[contains(@class, 'cp-project-breadcrumbs')]//*[contains(@class, 'dropdown-item') and contains(text(),'${key_project}')]</td>
+	<td>//div[contains(@class, 'cp-project-breadcrumbs')]/ul//a[contains(.,'${key_project}')]</td>
 	<td></td>
 </tr>
 <tr>

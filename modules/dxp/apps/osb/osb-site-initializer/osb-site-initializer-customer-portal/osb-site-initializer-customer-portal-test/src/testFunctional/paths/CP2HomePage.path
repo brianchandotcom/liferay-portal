@@ -16,13 +16,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DROPDOWN_OPTIONS</td>
-	<td>//*[contains(@class, 'dropdown-item')]//*[contains(text(), '${key_option}')]</td>
+	<td>DROPDOWN_LANGUAGE_OPTIONS</td>
+	<td>//div[contains(@class, 'dropdown-menu')]/div[contains(@class,language-dropdown)]/ul/li/a[contains(.,'${key_option}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-toggle')]/descendant::span//*[contains(@class, 'lexicon-icon')]</td>
+	<td>//div[contains(@class,'language-selector-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>WELCOME_PAGE</td>
-	<td>//*[contains(@class,'customer-portal')]//*[contains(text(), '${key_title}')]</td>
+	<td>//*[contains(@class,'customer-portal')]//div/div[contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>

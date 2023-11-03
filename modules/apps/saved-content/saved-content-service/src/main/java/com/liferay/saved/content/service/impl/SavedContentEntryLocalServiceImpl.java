@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SavedContentEntryLocalServiceImpl
 	extends SavedContentEntryLocalServiceBaseImpl {
 
-	@Override
-	public void addEntryResources(
+	private void _addEntryResources(
 			SavedContentEntry entry, boolean addGroupPermissions,
 			boolean addGuestPermissions)
 		throws PortalException {
@@ -47,7 +46,7 @@ public class SavedContentEntryLocalServiceImpl
 			false, addGroupPermissions, addGuestPermissions);
 	}
 
-	public void addEntryResources(
+	private void _addEntryResources(
 			SavedContentEntry entry, ModelPermissions modelPermissions)
 		throws PortalException {
 
@@ -64,7 +63,9 @@ public class SavedContentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(groupId, userId, className, classPK);
+		long classNameId = _classNameLocalService.getClassNameId(className);
+
+		_validate(groupId, userId, classNameId, classPK);
 
 		long savedContentEntryId = counterLocalService.increment(
 			SavedContentEntry.class.getName());
@@ -79,10 +80,12 @@ public class SavedContentEntryLocalServiceImpl
 		savedContentEntry.setUserId(user.getUserId());
 		savedContentEntry.setUserName(user.getFullName());
 
-		savedContentEntry.setCreateDate(new Date());
-		savedContentEntry.setModifiedDate(new Date());
-		savedContentEntry.setClassNameId(
-			_classNameLocalService.getClassNameId(className));
+		Date date = new Date();
+
+		savedContentEntry.setCreateDate(date);
+		savedContentEntry.setModifiedDate(date);
+
+		savedContentEntry.setClassNameId(classNameId);
 		savedContentEntry.setClassPK(classPK);
 
 		savedContentEntry = savedContentEntryPersistence.update(
@@ -93,12 +96,12 @@ public class SavedContentEntryLocalServiceImpl
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
 
-			addEntryResources(
+			_addEntryResources(
 				savedContentEntry, serviceContext.isAddGroupPermissions(),
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			addEntryResources(
+			_addEntryResources(
 				savedContentEntry, serviceContext.getModelPermissions());
 		}
 
@@ -115,13 +118,12 @@ public class SavedContentEntryLocalServiceImpl
 	}
 
 	private void _validate(
-			long groupId, long userId, String className, long classPK)
+			long groupId, long userId, long classNameId, long classPK)
 		throws DuplicateSavedContentEntryException {
 
 		SavedContentEntry savedContentEntry =
 			savedContentEntryPersistence.fetchByG_U_C_C(
-				groupId, userId,
-				_classNameLocalService.getClassNameId(className), classPK);
+				groupId, userId, classNameId, classPK);
 
 		if (savedContentEntry != null) {
 			throw new DuplicateSavedContentEntryException();

@@ -1,5 +1,7 @@
 # Change Log
 
+## [0.3.9]
+
 ## [0.3.8]
 
 - Fixes broken Marketplace presentation issues

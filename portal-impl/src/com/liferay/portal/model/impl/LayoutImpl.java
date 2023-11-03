@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
@@ -1518,9 +1517,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isUnlocked(String mode, long userId) {
-		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPS-180328") ||
-			!Objects.equals(mode, Constants.EDIT) || !isDraftLayout()) {
-
+		if (!Objects.equals(mode, Constants.EDIT) || !isDraftLayout()) {
 			return true;
 		}
 

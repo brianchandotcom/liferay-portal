@@ -61,6 +61,10 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 					"externalReferenceCode",
 					sxpElement.getExternalReferenceCode()
 				).put(
+					"fallbackDescription", sxpElement.getFallbackDescription()
+				).put(
+					"fallbackTitle", sxpElement.getFallbackTitle()
+				).put(
 					"schemaVersion", postSXPElement.getSchemaVersion()
 				).put(
 					"title_i18n", JSONUtil.put("en_US", sxpElement.getTitle())

@@ -64,7 +64,11 @@ export default function LeftSidebar({setShowModal}: LeftSidebarProps) {
 			(key) => key === selectedObjectFolder.name
 		) as string;
 
-		setExpandedKeys(new Set([selectedObjectFolderKey]));
+		const filteredFolders = leftSidebarItems
+			.filter((item) => item.leftSidebarObjectDefinitionItems?.length)
+			.map((filteredItems) => filteredItems.name);
+
+		setExpandedKeys(new Set([selectedObjectFolderKey, ...filteredFolders]));
 
 		return newLeftSidebarItems;
 	}, [leftSidebarItems, query, selectedObjectFolder]);

@@ -59,6 +59,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -245,11 +246,21 @@ public class CommerceAccountResource {
 		@Context HttpServletRequest httpServletRequest) {
 
 		try {
-			_commerceAccountHelper.setCurrentCommerceAccount(
-				httpServletRequest,
+			long channelGroupId =
 				_commerceChannelLocalService.
-					getCommerceChannelGroupIdBySiteGroupId(groupId),
-				accountId);
+					getCommerceChannelGroupIdBySiteGroupId(groupId);
+
+			_commerceAccountHelper.setCurrentCommerceAccount(
+				httpServletRequest, channelGroupId, accountId);
+
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(httpServletRequest);
+
+			HttpSession httpSession = originalHttpServletRequest.getSession();
+
+			httpSession.removeAttribute(
+				CommerceOrder.class.getName() + StringPool.POUND +
+					channelGroupId);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -3035,42 +3035,80 @@ tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
 
 	<macrodef name="prepare-patching-tool">
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+		<attribute default="${test.build.fix.pack.zip.url}" name="test.build.fix.pack.zip.url" />
 
 		<sequential>
+			<local name="patching.tool.version" />
 			<local name="patching.tool.version.url" />
 
-			<property name="patching.tool.version.url" value="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
-
 			<if>
-				<contains string="${patching.tool.version.url}" substring="mirrors.lax.liferay.com" />
+				<matches pattern="https?://" string="@{test.build.fix.pack.zip.url}" />
 				<then>
-					<propertyregex
-						input="${patching.tool.version.url}"
-						override="true"
-						property="patching.tool.version.url"
-						regexp="mirrors.lax.liferay.com"
-						replace="mirrors-no-cache.lax.liferay.com"
-					/>
+					<get-patch-requirements patch.file.zip.url="@{test.build.fix.pack.zip.url}" />
 				</then>
 			</if>
 
-			<get
-				dest="${basedir}"
-				httpusecaches="false"
-				src="${patching.tool.version.url}"
-			/>
+			<if>
+				<isset property="patching.tool.version" />
+				<then>
+					<beanshell>
+						<![CDATA[
+							import java.util.regex.Matcher;
+							import java.util.regex.Pattern;
 
-			<local name="patching.tool.version" />
+							Pattern pattern = Pattern.compile("(\\d)(\\d)(\\d\\d)");
 
-			<loadfile
-				property="patching.tool.version"
-				srcFile="${patching.tool.latest.txt}"
-			>
-				<filterchain>
-					<striplinebreaks />
-					<trim />
-				</filterchain>
-			</loadfile>
+							Matcher matcher = pattern.matcher(project.getProperty("patching.tool.version"));
+
+							if (matcher.find()) {
+								StringBuilder sb = new StringBuilder();
+
+								sb.append(matcher.group(1));
+								sb.append(".");
+								sb.append(matcher.group(2));
+								sb.append(".");
+								sb.append(Integer.parseInt(matcher.group(3)));
+
+								project.setProperty("patching.tool.version", sb.toString());
+							}
+						]]>
+					</beanshell>
+				</then>
+				<else>
+					<property name="patching.tool.version.url" value="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
+
+					<if>
+						<contains string="${patching.tool.version.url}" substring="mirrors.lax.liferay.com" />
+						<then>
+							<propertyregex
+								input="${patching.tool.version.url}"
+								override="true"
+								property="patching.tool.version.url"
+								regexp="mirrors.lax.liferay.com"
+								replace="mirrors-no-cache.lax.liferay.com"
+							/>
+						</then>
+					</if>
+
+					<get
+						dest="${basedir}"
+						httpusecaches="false"
+						src="${patching.tool.version.url}"
+					/>
+
+					<local name="patching.tool.version" />
+
+					<loadfile
+						property="patching.tool.version"
+						srcFile="${patching.tool.latest.txt}"
+					>
+						<filterchain>
+							<striplinebreaks/>
+							<trim />
+						</filterchain>
+					</loadfile>
+				</else>
+			</if>
 
 			<local name="patching.tool.name" />
 

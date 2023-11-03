@@ -87,7 +87,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
 		}
 
 		task ("Go to the product activation page") {
@@ -97,7 +97,20 @@ definition {
 		}
 
 		task ("Open the dropdown and verify that there are 5 DXP versions") {
-			CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
+			CustomerPortal.viewVersions(
+				dropDownItems = "7.4,7.3,7.2,7.1,7.0",
+				dropDownLabel = "Developer Keys");
+		}
+
+		task ("Click on finish activation") {
+			CustomerPortal.clickOnFinishActivationButton();
+		}
+
+		task ("Can see that there are 5 DXP versions") {
+			CustomerPortal.viewVersions(
+				dropDownItems = "7.4,7.3,7.2,7.1,7.0",
+				dropDownLabel = "Liferay DXP Version",
+				modalVersion = "modalVersion");
 		}
 	}
 
@@ -117,7 +130,9 @@ definition {
 		}
 
 		task ("Open the dropdown and assert if have 4 versions of Portal") {
-			CustomerPortal.viewVersions(dropDownItems = "6.2,6.1 GA3,6.1 GA2,6.1 GA1");
+			CustomerPortal.viewVersions(
+				dropDownItems = "6.2,6.1 GA3,6.1 GA2,6.1 GA1",
+				dropDownLabel = "Developer Keys");
 		}
 	}
 

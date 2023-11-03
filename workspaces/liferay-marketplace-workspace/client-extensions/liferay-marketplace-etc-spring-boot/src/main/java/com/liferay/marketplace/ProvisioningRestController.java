@@ -18,6 +18,7 @@ import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLic
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
@@ -75,73 +76,21 @@ public class ProvisioningRestController extends BaseRestController {
 			_productPurchaseResource.getProductPurchase(
 				jsonObject.getString("productPurchaseKey"));
 
-		String version = "1.0.0";
+		Date expirationDate = productPurchase.getEndDate();
 
-		try {
-			URL liferayURL = new URL(
-				lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
-
-			SkuResource skuResource = SkuResource.builder(
-			).header(
-				HttpHeaders.AUTHORIZATION, jwt.getTokenValue()
-			).endpoint(
-				liferayURL.getHost(), liferayURL.getPort(),
-				liferayURL.getProtocol()
-			).build();
-
-			Sku sku = skuResource.getSku(jsonObject.getLong("skuId"));
-
-			CustomField[] customFields = sku.getCustomFields();
-
-			for (CustomField customField : customFields) {
-				String name = customField.getName();
-
-				if (name.equals("Version")) {
-					version = customField.getCustomValue(
-					).getData(
-					).toString();
-
-					break;
-				}
-			}
-		}
-		catch (Exception exception) {
-			System.out.println(
-				"Unable to set SKU Version" + exception.getMessage());
+		if (productPurchase.getPerpetual()) {
+			expirationDate = Date.from(
+				ZonedDateTime.now(
+				).plusYears(
+					100
+				).toInstant());
 		}
 
 		AppLicenseKey.LicenseType licenseType =
 			AppLicenseKey.LicenseType.PRODUCTION;
 
-		String type = jsonObject.getString("type");
-
-		if (type.equals("standard") || type.equals("trial")) {
-			licenseType = AppLicenseKey.LicenseType.PRODUCTION;
-		}
-		else if (type.equals("developer")) {
+		if (StringUtil.equals(jsonObject.getString("type"), "developer")) {
 			licenseType = AppLicenseKey.LicenseType.DEVELOPER;
-		}
-
-		String userName = jwt.getClaim("username");
-		String userUUID = jwt.getClaim("sub");
-
-		Date productPurchaseStartDate = productPurchase.getStartDate();
-		Date productPurchaseEndDate = productPurchase.getEndDate();
-
-		if (productPurchaseStartDate == null) {
-			productPurchaseStartDate = new Date();
-		}
-
-		if (productPurchaseEndDate == null) {
-			productPurchaseEndDate = new Date();
-		}
-
-		if (productPurchase.getPerpetual()) {
-			productPurchaseEndDate = Date.from(
-				ZonedDateTime.now(
-				).plusYears(
-					100
-				).toInstant());
 		}
 
 		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
@@ -151,21 +100,20 @@ public class ProvisioningRestController extends BaseRestController {
 
 		appLicenseKey.setActive(true);
 		appLicenseKey.setCreateDate(new Date());
-		appLicenseKey.setExpirationDate(productPurchaseEndDate);
+		appLicenseKey.setExpirationDate(expirationDate);
 		appLicenseKey.setLicenseType(licenseType);
-		appLicenseKey.setOwner(userName);
+		appLicenseKey.setOwner(jwt.getClaim("username"));
 		appLicenseKey.setProductId(productPurchase.getProductKey());
 		appLicenseKey.setProductName(
 			productPurchase.getProduct(
 			).getName());
-		appLicenseKey.setProductVersion(version);
-		appLicenseKey.setStartDate(productPurchaseStartDate);
-		appLicenseKey.setUserName(userName);
-		appLicenseKey.setUserUuid(userUUID);
+		appLicenseKey.setProductVersion(_getVersion(jsonObject, jwt));
+		appLicenseKey.setStartDate(productPurchase.getStartDate());
+		appLicenseKey.setUserName(jwt.getClaim("username"));
+		appLicenseKey.setUserUuid(jwt.getClaim("sub"));
 
 		return _appLicenseKeyResource.postAppLicenseKey(
-			userName, userUUID, appLicenseKey);
-
+			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
 	}
 
 	@GetMapping("license-keys/{id}/download")
@@ -174,28 +122,26 @@ public class ProvisioningRestController extends BaseRestController {
 
 		_initResourceBuilders();
 
-		long licenseKeyId = GetterUtil.getLong(id);
-
 		AppLicenseKey appLicenseKey = _appLicenseKeyResource.getAppLicenseKey(
-			licenseKeyId);
+			GetterUtil.getLong(id));
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.setContentDispositionFormData(
+			"attachment",
+			StringBundler.concat(
+				"activation-key-", appLicenseKey.getProductName(),
+				StringPool.DASH, appLicenseKey.getProductVersion(),
+				StringPool.DASH, appLicenseKey.getHostName(), ".xml"
+			).replaceAll(
+				StringPool.SPACE, StringPool.DASH
+			).toLowerCase());
+		headers.setContentType(MediaType.TEXT_XML);
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
 		HttpInvoker.HttpResponse licenseKeyHttpResponse =
 			_appLicenseKeyResource.getAppLicenseKeyDownloadHttpResponse(
 				licenseKeyId);
-
-		String appLicenseName = StringBundler.concat(
-			"activation-key-", appLicenseKey.getProductName(), StringPool.DASH,
-			appLicenseKey.getProductVersion(), StringPool.DASH,
-			appLicenseKey.getHostName(), ".xml"
-		).replaceAll(
-			StringPool.SPACE, StringPool.DASH
-		).toLowerCase();
-
-		HttpHeaders headers = new HttpHeaders();
-
-		headers.setContentDispositionFormData("attachment", appLicenseName);
-		headers.setContentType(MediaType.TEXT_XML);
-		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
 		return new ResponseEntity(
 			licenseKeyHttpResponse.getBinaryContent(), headers, HttpStatus.OK);
@@ -282,11 +228,53 @@ public class ProvisioningRestController extends BaseRestController {
 		}
 	}
 
-	private void _initResourceBuilders() throws Exception {
-		String authorization = _getOAuthAuthorization();
+	private String _getVersion(JSONObject jsonObject, Jwt jwt) {
+		String version = "1.0.0";
 
+		try {
+			URL liferayURL = new URL(
+				lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
+			SkuResource skuResource = SkuResource.builder(
+			).header(
+				HttpHeaders.AUTHORIZATION, jwt.getTokenValue()
+			).endpoint(
+				liferayURL.getHost(), liferayURL.getPort(),
+				liferayURL.getProtocol()
+			).build();
+
+			Sku sku = skuResource.getSku(jsonObject.getLong("skuId"));
+
+			for (CustomField customField : sku.getCustomFields()) {
+				if (StringUtil.equals(customField.getName(), "Version")) {
+					version = customField.getCustomValue(
+					).getData(
+					).toString();
+
+					break;
+				}
+			}
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"Unable to set SKU Version" + exception.getMessage());
+		}
+
+		return version;
+	}
+
+	private void _initResourceBuilders() throws Exception {
 		URL koroneikiURL = new URL(_koroneikiAuthURL);
+
 		URL provisioningURL = new URL(_provisioningAuthURL);
+
+		_appLicenseKeyResource = AppLicenseKeyResource.builder(
+		).header(
+			"Authorization", _getOAuthAuthorization()
+		).endpoint(
+			provisioningURL.getHost(), provisioningURL.getPort(),
+			provisioningURL.getProtocol()
+		).build();
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
@@ -294,16 +282,6 @@ public class ProvisioningRestController extends BaseRestController {
 		).endpoint(
 			koroneikiURL.getHost(), koroneikiURL.getPort(),
 			koroneikiURL.getProtocol()
-		).build();
-
-		AppLicenseKeyResource.Builder appLicenseKeyResourceBuilder =
-			AppLicenseKeyResource.builder();
-
-		_appLicenseKeyResource = appLicenseKeyResourceBuilder.header(
-			"Authorization", authorization
-		).endpoint(
-			provisioningURL.getHost(), provisioningURL.getPort(),
-			provisioningURL.getProtocol()
 		).build();
 	}
 

@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.scim.rest.dto.v1_0.User;
-import com.liferay.scim.rest.internal.ScimUserManager;
 import com.liferay.scim.rest.internal.constants.ScimConstants;
 import com.liferay.scim.rest.internal.manager.UserManagerImpl;
 import com.liferay.scim.rest.resource.v1_0.UserResource;
@@ -85,12 +84,9 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 		_registerLiferayUserSchemaExtension();
 
 		_userManager = new UserManagerImpl(
-			_companyLocalService,
-			new ScimUserManager(
-				_classNameLocalService, _companyLocalService,
-				_configurationAdmin, _expandoColumnLocalService,
-				_expandoTableLocalService, _expandoValueLocalService,
-				_userLocalService));
+			_classNameLocalService, _companyLocalService, _configurationAdmin,
+			_expandoColumnLocalService, _expandoTableLocalService,
+			_expandoValueLocalService, _userLocalService);
 	}
 
 	private Response _buildResponse(SCIMResponse scimResponse) {

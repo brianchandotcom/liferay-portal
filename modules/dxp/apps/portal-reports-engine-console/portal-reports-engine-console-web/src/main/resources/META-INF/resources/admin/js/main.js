@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-AUI().use('escape', 'aui-lang', (A) => {
+AUI().use('escape', 'event', 'aui-lang', (A) => {
 	const AEscape = A.Escape;
 
 	const TPL_TAG_FORM =

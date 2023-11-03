@@ -64,7 +64,7 @@ public class GetObjectFieldDeleteInfoMVCResourceCommand
 				() -> _shouldDeleteObjectFieldObjectValidationRuleSetting(
 					objectField)
 			).put(
-				"showDeletionModal",
+				"showObjectFieldDeletionConfirmationModal",
 				() -> {
 					if (objectDefinition.isApproved() &&
 						_shouldDeleteLastPublishedObjectDefinitionObjectField(

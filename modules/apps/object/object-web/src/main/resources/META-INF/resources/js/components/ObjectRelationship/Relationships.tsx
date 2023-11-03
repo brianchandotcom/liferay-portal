@@ -20,7 +20,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
-import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
+import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
 import {deleteRelationship} from '../ViewObjectDefinitions/objectDefinitionUtil';
 import {ModalAddObjectRelationship} from './ModalAddObjectRelationship';
 import {ModalDeleteObjectRelationship} from './ModalDeleteObjectRelationship';
@@ -268,7 +268,7 @@ export default function Relationships({
 			)}
 
 			{showDeletionNotAllowedModal && Liferay.FeatureFlags['LPS-187142'] && (
-				<ModalDeletionNotAllowed
+				<ModalObjectFieldDeletionNotAllowed
 					content={
 						<span
 							dangerouslySetInnerHTML={{

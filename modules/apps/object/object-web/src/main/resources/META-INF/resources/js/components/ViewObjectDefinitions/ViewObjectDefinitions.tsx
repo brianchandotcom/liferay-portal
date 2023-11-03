@@ -20,7 +20,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
-import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
+import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
 import objectDefinitionModifiedDateDataRenderer from './FDSDataRenderers/ObjectDefinitionModifiedDateDataRenderer';
 import objectDefinitionStatusDataRenderer from './FDSDataRenderers/ObjectDefinitionStatusDataRenderer';
 import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinitionSystemDataRenderer';
@@ -98,9 +98,9 @@ export default function ViewObjectDefinitions({
 		bindToRootObjectDefinition: false,
 		deleteObjectDefinition: false,
 		deleteObjectFolder: false,
-		deletionNotAllowed: false,
 		editObjectFolder: false,
 		moveObjectDefinition: false,
+		objectFieldDeletionNotAllowed: false,
 		unbindFromRootObjectDefinition: false,
 	});
 	const [selectedObjectFolder, setSelectedObjectFolder] = useState<
@@ -436,10 +436,10 @@ export default function ViewObjectDefinitions({
 				/>
 			)}
 
-			{showModal.deletionNotAllowed &&
+			{showModal.objectFieldDeletionNotAllowed &&
 				selectedObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalDeletionNotAllowed
+					<ModalObjectFieldDeletionNotAllowed
 						content={
 							<span
 								dangerouslySetInnerHTML={{
@@ -462,7 +462,7 @@ export default function ViewObjectDefinitions({
 									previousState: ViewObjectDefinitionsModals
 								) => ({
 									...previousState,
-									deletionNotAllowed: false,
+									objectFieldDeletionNotAllowed: false,
 								})
 							)
 						}

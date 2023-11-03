@@ -421,7 +421,7 @@ export function UniqueCompositeKey({
 							const parentWindow = Liferay.Util.getOpener();
 
 							parentWindow.Liferay.fire(
-								'openModalDeletionNotAllowed',
+								'openModalObjectFieldDeletionNotAllowed',
 								{
 									contentLiferayFire: (
 										<span>

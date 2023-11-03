@@ -97,7 +97,7 @@ interface ModelBuilderModals
 	extends Omit<
 		ViewObjectDefinitionsModals,
 		| 'bindToRootObjectDefinition'
-		| 'deletionNotAllowed'
+		| 'objectFieldDeletionNotAllowed'
 		| 'unbindFromRootObjectDefinition'
 	> {
 	addObjectField: boolean;
@@ -485,8 +485,8 @@ interface ViewObjectDefinitionsModals {
 	bindToRootObjectDefinition: boolean;
 	deleteObjectDefinition: boolean;
 	deleteObjectFolder: boolean;
-	deletionNotAllowed: boolean;
 	editObjectFolder: boolean;
 	moveObjectDefinition: boolean;
+	objectFieldDeletionNotAllowed: boolean;
 	unbindFromRootObjectDefinition: boolean;
 }

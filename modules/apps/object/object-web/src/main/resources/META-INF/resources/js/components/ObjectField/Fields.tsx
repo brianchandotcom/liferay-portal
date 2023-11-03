@@ -16,7 +16,7 @@ import {
 	formatActionURL,
 } from '../../utils/fds';
 import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
-import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
+import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
 import {ModalAddObjectField} from './ModalAddObjectField';
 import {ModalDeleteObjectField} from './ModalDeleteObjectField';
 import {handleTriggerDeleteObjectField} from './deleteObjectFieldUtil';
@@ -245,8 +245,8 @@ export default function Fields({
 			{objectFieldDeleteInfo.showObjectFieldDeletionConfirmationModal && (
 				<ModalDeleteObjectField
 					handleOnClose={() =>
-						setDeleteObjectFieldModal(
-							(prevState: DeleteObjectFieldModal) => ({
+						setObjectFieldDeleteInfo(
+							(prevState: ObjectFieldDeleteInfoProps) => ({
 								...prevState,
 								showObjectFieldDeletionConfirmationModal: false,
 							})
@@ -262,7 +262,7 @@ export default function Fields({
 
 			{!!deletedObjectField &&
 				objectFieldDeleteInfo.showObjectFieldDeletionNotAllowedModal && (
-					<ModalDeletionNotAllowed
+					<ModalObjectFieldDeletionNotAllowed
 						content={
 							objectFieldDeleteInfo.deleteObjectFieldObjectValidationRuleSetting ? (
 								<Text>

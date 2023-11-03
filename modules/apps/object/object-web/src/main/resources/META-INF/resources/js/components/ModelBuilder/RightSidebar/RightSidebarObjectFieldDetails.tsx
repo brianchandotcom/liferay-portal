@@ -15,7 +15,7 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {useStore} from 'react-flow-renderer';
 
-import ModalDeletionNotAllowed from '../../ModalDeletionNotAllowed';
+import ModalObjectFieldDeletionNotAllowed from '../../ModalObjectFieldDeletionNotAllowed';
 import {objectFieldInitialValues} from '../../ObjectField/EditObjectField';
 import {EditObjectFieldContent} from '../../ObjectField/EditObjectFieldContent';
 import {ModalDeleteObjectField} from '../../ObjectField/ModalDeleteObjectField';
@@ -250,8 +250,8 @@ export function RightSidebarObjectFieldDetails() {
 			{objectFieldDeleteInfo.showObjectFieldDeletionConfirmationModal && (
 				<ModalDeleteObjectField
 					handleOnClose={() =>
-						setDeleteObjectFieldModal(
-							(prevState: DeleteObjectFieldModal) => ({
+						setObjectFieldDeleteInfo(
+							(prevState: ObjectFieldDeleteInfoProps) => ({
 								...prevState,
 								showObjectFieldDeletionConfirmationModal: false,
 							})
@@ -278,7 +278,7 @@ export function RightSidebarObjectFieldDetails() {
 			)}
 
 			{objectFieldDeleteInfo?.showObjectFieldDeletionNotAllowedModal && (
-				<ModalDeletionNotAllowed
+				<ModalObjectFieldDeletionNotAllowed
 					content={
 						objectFieldDeleteInfo?.deleteObjectFieldObjectValidationRuleSetting ? (
 							<Text>

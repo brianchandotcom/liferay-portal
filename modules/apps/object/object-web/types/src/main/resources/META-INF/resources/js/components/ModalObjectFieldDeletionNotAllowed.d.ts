@@ -4,12 +4,12 @@
  */
 
 import React from 'react';
-interface ModalDeletionNotAllowedProps {
+interface ModalObjectFieldDeletionNotAllowedProps {
 	content: React.ReactNode;
 	onVisibilityChange: () => void;
 }
-declare function ModalDeletionNotAllowed({
+declare function ModalObjectFieldDeletionNotAllowed({
 	content,
 	onVisibilityChange,
-}: ModalDeletionNotAllowedProps): JSX.Element;
-export default ModalDeletionNotAllowed;
+}: ModalObjectFieldDeletionNotAllowedProps): JSX.Element;
+export default ModalObjectFieldDeletionNotAllowed;

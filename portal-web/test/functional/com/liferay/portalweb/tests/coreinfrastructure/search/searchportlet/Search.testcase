@@ -1523,6 +1523,19 @@ definition {
 
 		Refresh();
 
+		SearchFacets.viewFacetTermsSpecificOrder(
+			facetName = "Category Facet",
+			termList = "Category Name");
+
+		Click(
+			key_facetName = "Category Facet",
+			key_termValue = "Category Name",
+			locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Blogs Entry Title",
+			searchAssetType = "Blogs Entry");
+
 		AssertElementPresent(
 			key_facetName = "Category Facet",
 			key_termValue = "Category Name",
@@ -1718,6 +1731,18 @@ definition {
 			portletName = "Tag Facet");
 
 		Refresh();
+
+		SearchFacets.viewFacetTermsSpecificOrder(
+			facetName = "Tag Facet",
+			termList = "tag name");
+
+		Click(
+			locator1 = "Search#TAG_FACET_CLOUD_LAYOUT",
+			tagName = "tag name");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Blogs Entry Title",
+			searchAssetType = "Blogs Entry");
 
 		AssertElementPresent(
 			locator1 = "Search#TAG_FACET_CLOUD_LAYOUT",

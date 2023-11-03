@@ -381,6 +381,17 @@ definition {
 
 		Refresh();
 
+		Click(
+			key_facetName = "Category Facet",
+			key_termValue = "Company",
+			locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Test Test/User,astronaut.png/Document,earth.png/Document,Provided by Liferay/Documents Folder,Home/Page,satellite.png/Document,planet.png/Document,stars.png/Document,tree.png/Document,moon.png/Document");
+
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
 				key_facetName = "Category Facet",
@@ -388,11 +399,26 @@ definition {
 				locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 		}
 
+		Click(
+			key_facetName = "Category Facet",
+			locator1 = "Search#CLEAR_FACET_BUTTON");
+
 		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
 			portletName = "Category Facet");
 
 		Refresh();
+
+		Click(
+			key_facetName = "Category Facet",
+			key_termValue = "Product",
+			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Test Test/User,astronaut.png/Document,earth.png/Document,Provided by Liferay/Documents Folder,Home/Page,satellite.png/Document,planet.png/Document,stars.png/Document,tree.png/Document,moon.png/Document");
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
@@ -401,11 +427,26 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
+		Click(
+			key_facetName = "Category Facet",
+			locator1 = "Search#CLEAR_FACET_BUTTON");
+
 		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Category Facet");
 
 		Refresh();
+
+		Click(
+			key_facetName = "Category Facet",
+			key_termValue = "Engineering",
+			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Test Test/User,astronaut.png/Document,earth.png/Document,Provided by Liferay/Documents Folder,Home/Page,satellite.png/Document,planet.png/Document,stars.png/Document,tree.png/Document,moon.png/Document");
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
@@ -414,11 +455,25 @@ definition {
 				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 
+		Click(
+			key_facetName = "Category Facet",
+			locator1 = "Search#CLEAR_FACET_BUTTON");
+
 		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Vocabulary Layout",
 			portletName = "Category Facet");
 
 		Refresh();
+
+		Check(
+			checkboxName = "Company",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Test Test/User,astronaut.png/Document,earth.png/Document,Provided by Liferay/Documents Folder,Home/Page,satellite.png/Document,planet.png/Document,stars.png/Document,tree.png/Document,moon.png/Document");
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
@@ -471,6 +526,17 @@ definition {
 
 		Refresh();
 
+		Click(
+			key_facetName = "Custom Facet",
+			key_termValue = "dm title 1",
+			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "dm title 1",
+			searchAssetType = "Document");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "dm title 2,dm title 3");
+
 		for (var Document : list "dm title 1,dm title 2,dm title 3") {
 			AssertElementPresent(
 				key_facetName = "Custom Facet",
@@ -478,11 +544,26 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
+		Click(
+			key_facetName = "Custom Facet",
+			locator1 = "Search#CLEAR_FACET_BUTTON");
+
 		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Custom Facet");
 
 		Refresh();
+
+		Click(
+			key_facetName = "Custom Facet",
+			key_termValue = "dm title 2",
+			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "dm title 2",
+			searchAssetType = "Document");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "dm title 1,dm title 3");
 
 		for (var Document : list "dm title 1,dm title 2,dm title 3") {
 			AssertElementPresent(
@@ -730,6 +811,19 @@ definition {
 
 		Refresh();
 
+		Click(
+			key_facetName = "Site Facet",
+			key_termValue = "Community",
+			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Web Content",
+			searchAssetType = "Web Content Article");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchPage#RESULTS_PORTLET_SEARCH_QUERY",
+			value1 = "1 result for Web Content");
+
 		for (var siteName : list "Community,Engineering,Product") {
 			AssertElementPresent(
 				key_facetName = "Site Facet",
@@ -737,11 +831,28 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
+		Click(
+			key_facetName = "Site Facet",
+			locator1 = "Search#CLEAR_FACET_BUTTON");
+
 		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Site Facet");
 
 		Refresh();
+
+		Click(
+			key_facetName = "Site Facet",
+			key_termValue = "Engineering",
+			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Web Content",
+			searchAssetType = "Web Content Article");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchPage#RESULTS_PORTLET_SEARCH_QUERY",
+			value1 = "1 result for Web Content");
 
 		for (var siteName : list "Community,Engineering,Product") {
 			AssertElementPresent(
@@ -769,6 +880,17 @@ definition {
 
 		Refresh();
 
+		Click(
+			key_facetName = "Tag Facet",
+			key_termValue = 2021,
+			locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Test Test/User,astronaut.png/Document,earth.png/Document,Provided by Liferay/Documents Folder,Home/Page,satellite.png/Document,planet.png/Document,stars.png/Document,tree.png/Document,moon.png/Document");
+
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
 				key_facetName = "Tag Facet",
@@ -776,11 +898,26 @@ definition {
 				locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 		}
 
+		Click(
+			key_facetName = "Tag Facet",
+			locator1 = "Search#CLEAR_FACET_BUTTON");
+
 		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
 			portletName = "Tag Facet");
 
 		Refresh();
+
+		Click(
+			key_facetName = "Tag Facet",
+			key_termValue = "engineering",
+			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Test Test/User,astronaut.png/Document,earth.png/Document,Provided by Liferay/Documents Folder,Home/Page,satellite.png/Document,planet.png/Document,stars.png/Document,tree.png/Document,moon.png/Document");
 
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
@@ -789,11 +926,26 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
+		Click(
+			key_facetName = "Tag Facet",
+			locator1 = "Search#CLEAR_FACET_BUTTON");
+
 		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Tag Facet");
 
 		Refresh();
+
+		Click(
+			key_facetName = "Tag Facet",
+			key_termValue = "product",
+			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Test Test/User,astronaut.png/Document,earth.png/Document,Provided by Liferay/Documents Folder,Home/Page,satellite.png/Document,planet.png/Document,stars.png/Document,tree.png/Document,moon.png/Document");
 
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
@@ -830,6 +982,17 @@ definition {
 
 		Refresh();
 
+		Click(
+			key_facetName = "Type Facet",
+			key_termValue = "Blogs Entry",
+			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Blogs Entry Title",
+			searchAssetType = "Blogs Entry");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "DM Title/Document,WC WebContent Title 1/Web Content Article");
+
 		for (var Document : list "Web Content Article,Document,Blogs Entry") {
 			AssertElementPresent(
 				key_facetName = "Type Facet",
@@ -837,11 +1000,26 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
+		Click(
+			key_facetName = "Type Facet",
+			locator1 = "Search#CLEAR_FACET_BUTTON");
+
 		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Type Facet");
 
 		Refresh();
+
+		Click(
+			key_facetName = "Type Facet",
+			key_termValue = "Web Content Article",
+			locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Blogs Entry Title/Blogs Entry,DM Title/Document");
 
 		for (var Document : list "Web Content Article,Document,Blogs Entry") {
 			AssertElementPresent(
@@ -956,6 +1134,16 @@ definition {
 				portletName = "Category Facet");
 
 			Refresh();
+
+			Check(
+				checkboxName = "Community",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			SearchResults.viewSearchResults(
+				searchAssetTitle = "WC WebContent Title 1",
+				searchAssetType = "Web Content Article");
+
+			SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "WC WebContent Title 2,WC WebContent Title 3,WC WebContent Title 4");
 		}
 
 		task ("Assert the sort order is changed from 'Term Frequency Descending' to 'Term Frequency Ascending'") {

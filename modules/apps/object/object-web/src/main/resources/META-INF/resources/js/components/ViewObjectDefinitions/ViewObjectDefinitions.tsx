@@ -419,6 +419,41 @@ export default function ViewObjectDefinitions({
 				/>
 			)}
 
+			{showModal.addObjectFolder && (
+				<ModalAddObjectFolder
+					handleOnClose={() => {
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								addObjectFolder: false,
+							})
+						);
+					}}
+					setObjectFolders={setObjectFolders}
+					setSelectedObjectFolder={setSelectedObjectFolder}
+				/>
+			)}
+
+			{showModal.bindToRootObjectDefinition &&
+				Liferay.FeatureFlags['LPS-187142'] && (
+					<ModalBindToRootObjectDefinition
+						baseResourceURL={baseResourceURL}
+						onVisibilityChange={() => {
+							setShowModal(
+								(
+									previousState: ViewObjectDefinitionsModals
+								) => ({
+									...previousState,
+									bindToRootObjectDefinition: false,
+								})
+							);
+						}}
+						selectedObjectDefinitionToBind={
+							selectedObjectDefinition
+						}
+					/>
+				)}
+
 			{showModal.deleteObjectDefinition && (
 				<ModalDeleteObjectDefinition
 					handleOnClose={() => {
@@ -433,54 +468,6 @@ export default function ViewObjectDefinitions({
 						deletedObjectDefinition as DeletedObjectDefinition
 					}
 					setDeletedObjectDefinition={setDeletedObjectDefinition}
-				/>
-			)}
-
-			{showModal.objectFieldDeletionNotAllowed &&
-				selectedObjectDefinition &&
-				Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalObjectFieldDeletionNotAllowed
-						content={
-							<span
-								dangerouslySetInnerHTML={{
-									__html: sub(
-										Liferay.Language.get(
-											'x-is-being-used-by-a-root-object-and-cannot-be-deleted'
-										),
-										`<strong>"${getLocalizableLabel(
-											selectedObjectDefinition.defaultLanguageId,
-											selectedObjectDefinition.label,
-											selectedObjectDefinition.name
-										)}"</strong>`
-									),
-								}}
-							/>
-						}
-						onVisibilityChange={() =>
-							setShowModal(
-								(
-									previousState: ViewObjectDefinitionsModals
-								) => ({
-									...previousState,
-									objectFieldDeletionNotAllowed: false,
-								})
-							)
-						}
-					/>
-				)}
-
-			{showModal.addObjectFolder && (
-				<ModalAddObjectFolder
-					handleOnClose={() => {
-						setShowModal(
-							(previousState: ViewObjectDefinitionsModals) => ({
-								...previousState,
-								addObjectFolder: false,
-							})
-						);
-					}}
-					setObjectFolders={setObjectFolders}
-					setSelectedObjectFolder={setSelectedObjectFolder}
 				/>
 			)}
 
@@ -534,22 +521,35 @@ export default function ViewObjectDefinitions({
 				/>
 			)}
 
-			{showModal.bindToRootObjectDefinition &&
+			{showModal.objectFieldDeletionNotAllowed &&
+				selectedObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalBindToRootObjectDefinition
-						baseResourceURL={baseResourceURL}
-						onVisibilityChange={() => {
+					<ModalObjectFieldDeletionNotAllowed
+						content={
+							<span
+								dangerouslySetInnerHTML={{
+									__html: sub(
+										Liferay.Language.get(
+											'x-is-being-used-by-a-root-object-and-cannot-be-deleted'
+										),
+										`<strong>"${getLocalizableLabel(
+											selectedObjectDefinition.defaultLanguageId,
+											selectedObjectDefinition.label,
+											selectedObjectDefinition.name
+										)}"</strong>`
+									),
+								}}
+							/>
+						}
+						onVisibilityChange={() =>
 							setShowModal(
 								(
 									previousState: ViewObjectDefinitionsModals
 								) => ({
 									...previousState,
-									bindToRootObjectDefinition: false,
+									objectFieldDeletionNotAllowed: false,
 								})
-							);
-						}}
-						selectedObjectDefinitionToBind={
-							selectedObjectDefinition
+							)
 						}
 					/>
 				)}

@@ -860,6 +860,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		_objectRelationshipLocalService;
 	private final OpenAPIResource _openAPIResource;
 	private final Set<String> _readOnlyFieldNames = SetUtil.fromArray(
-		"dateCreated", "dateModified", "id");
+		"dateCreated", "dateModified");
 
 }

@@ -1231,54 +1231,54 @@ public class ObjectEntryLocalServiceImpl
 					_objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(objectDefinitionId);
+		DynamicObjectDefinitionTable dynamicRootObjectDefinitionTable =
+			_getDynamicRootObjectDefinitionTable(objectDefinitionId);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
 
-		DynamicObjectDefinitionTable dynamicRootObjectDefinitionTable =
-			_getDynamicRootObjectDefinitionTable(objectDefinitionId);
-
-		return objectEntryPersistence.dslQueryCount(
-			DSLQueryFactoryUtil.countDistinct(
-				ObjectEntryTable.INSTANCE.objectEntryId
-			).from(
-				dynamicObjectDefinitionTable
-			).innerJoinON(
-				ObjectEntryTable.INSTANCE,
-				ObjectEntryTable.INSTANCE.objectEntryId.eq(
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn())
-			).innerJoinON(
-				extensionDynamicObjectDefinitionTable,
-				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
-				).eq(
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn()
-				)
-			).innerJoinON(
-				dynamicRootObjectDefinitionTable,
-				_getInnerJoinRootObjectDefinitionTablePredicate(
-					dynamicRootObjectDefinitionTable)
-			).leftJoinOn(
+		DSLQuery dslQuery = DSLQueryFactoryUtil.countDistinct(
+			ObjectEntryTable.INSTANCE.objectEntryId
+		).from(
+			dynamicObjectDefinitionTable
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
+		).innerJoinON(
+			extensionDynamicObjectDefinitionTable,
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+			).eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+			)
+		).innerJoinON(
+			dynamicRootObjectDefinitionTable,
+			_getInnerJoinRootObjectDefinitionTablePredicate(
+				dynamicRootObjectDefinitionTable)
+		).leftJoinOn(
+			dynamicObjectDefinitionLocalizationTable,
+			_getLeftJoinLocalizationTablePredicate(
 				dynamicObjectDefinitionLocalizationTable,
-				_getLeftJoinLocalizationTablePredicate(
-					dynamicObjectDefinitionLocalizationTable,
-					dynamicObjectDefinitionTable)
-			).where(
-				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-					objectDefinitionId
-				).and(
-					() -> {
-						if (groupId == 0) {
-							return null;
-						}
-
-						return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
+				dynamicObjectDefinitionTable)
+		).where(
+			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+				objectDefinitionId
+			).and(
+				() -> {
+					if (groupId == 0) {
+						return null;
 					}
-				).and(
-					_fillPredicate(objectDefinitionId, predicate, search)
-				).and(
-					_getPermissionWherePredicate(
-						dynamicObjectDefinitionTable, groupId)
-				)
-			));
+
+					return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
+				}
+			).and(
+				_fillPredicate(objectDefinitionId, predicate, search)
+			).and(
+				_getPermissionWherePredicate(
+					dynamicObjectDefinitionTable, groupId)
+			)
+		);
+
+		return objectEntryPersistence.dslQueryCount(dslQuery);
 	}
 
 	@Override

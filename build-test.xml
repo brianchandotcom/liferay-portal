@@ -9815,7 +9815,6 @@ org.apache.catalina.tribes.level = FINE]]>
 						</if>
 
 						<delete dir="${test.app.server.liferay.home}/logs" />
-						<delete dir="${test.app.server.liferay.home}/work" />
 
 						<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
 					</else>

@@ -122,6 +122,14 @@ definition {
 
 			task ("Then I look for the next project and enter the same") {
 				CP2Utils.clickBreadcrumb(project = "Test Account QA ${account}");
+
+				CP2Utils.search(
+					project = "Test Account QA ${account}",
+					searchItem = "Test Account QA ${account}");
+
+				Click(
+					locator1 = "CP2Utils#SVG_DROPDOWN_LIST",
+					key_project= "Test Account QA");
 			}
 		}
 	}

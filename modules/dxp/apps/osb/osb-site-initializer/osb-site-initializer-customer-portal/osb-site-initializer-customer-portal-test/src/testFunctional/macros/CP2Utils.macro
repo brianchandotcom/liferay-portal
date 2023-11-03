@@ -174,16 +174,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickBreadcrumb(project = null) {
-		var key_project = ${project};
-
+	macro clickBreadcrumb() {
 		Click(locator1 = "CP2Utils#SVG_DROPDOWN");
-
-		CP2Utils.search(
-			project = ${project},
-			searchItem = ${project});
-
-		Click(locator1 = "CP2Utils#SVG_DROPDOWN_LIST");
 	}
 
 	@summary = "Default summary"

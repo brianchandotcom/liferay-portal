@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.Arrays;
 
@@ -48,13 +46,14 @@ public class IndexableActionableDynamicQueryTest {
 			Mockito.mock(Indexer.class)
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			IndexerRegistryUtil.class, "_indexerRegistry", indexerRegistry);
+		_indexerRegistryServiceRegistration = _bundleContext.registerService(
+			IndexerRegistry.class, Mockito.mock(IndexerRegistry.class), null);
 	}
 
 	@After
 	public void tearDown() {
 		_indexWriterHelperServiceRegistration.unregister();
+		_indexerRegistryServiceRegistration.unregister();
 		_serviceRegistration.unregister();
 	}
 
@@ -106,6 +105,8 @@ public class IndexableActionableDynamicQueryTest {
 	private static ServiceRegistration<IndexWriterHelper>
 		_indexWriterHelperServiceRegistration;
 
+	private ServiceRegistration<IndexerRegistry>
+		_indexerRegistryServiceRegistration;
 	private ServiceRegistration<?> _serviceRegistration;
 
 }

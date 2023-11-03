@@ -12,34 +12,6 @@ import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-function getModuleAndFunctionNames(url) {
-	const parts = url.split(' from ');
-
-	const moduleName = parts[1].trim();
-	let functionName = parts[0].trim();
-
-	if (
-		functionName !== 'default' &&
-		(!functionName.startsWith('{') || !functionName.endsWith('}'))
-	) {
-		throw new Error(`Invalid data renderer URL: ${url}`);
-	}
-
-	if (functionName.startsWith('{')) {
-		functionName = functionName
-			.substring(1, functionName.length - 1)
-			.trim();
-	}
-
-	return [functionName, moduleName];
-}
-
-const callModuleFunction = (functionName, jsOnClickConfig, module) => {
-	if (module[functionName] && typeof module[functionName] === 'function') {
-		module[functionName](jsOnClickConfig);
-	}
-};
-
 function mapItemsOnClick(items) {
 	return items.map((item) => {
 		const {
@@ -56,27 +28,17 @@ function mapItemsOnClick(items) {
 		}
 
 		if (onClickJSModuleURL) {
-			if (onClickJSModuleURL.includes(' from ')) {
-				newVal.onClick = async () => {
-					const [
-						functionName,
-						moduleName,
-					] = getModuleAndFunctionNames(onClickJSModuleURL);
-
-					const module = await import(
-						/* webpackIgnore: true */ moduleName
+			newVal.onClick = async () => {
+				const onClickFn = await new Promise((resolve, reject) => {
+					Liferay.Loader.require(
+						onClickJSModuleURL,
+						(jsModule) => resolve(jsModule.default),
+						(error) => reject(error)
 					);
+				});
 
-					callModuleFunction(functionName, jsOnClickConfig, module);
-				};
-			}
-			else {
-				newVal.onClick = () => {
-					Liferay.Loader.require(onClickJSModuleURL, (module) =>
-						callModuleFunction('default', jsOnClickConfig, module)
-					);
-				};
-			}
+				onClickFn(jsOnClickConfig);
+			};
 		}
 
 		return newVal;

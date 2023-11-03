@@ -148,30 +148,34 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 		window,
 		'<portlet:namespace />selectFormInstance',
 		(formInstanceId, formInstanceName) => {
-			var A = AUI();
+			document.getElementById(
+				'<portlet:namespace />formInstanceId'
+			).value = formInstanceId;
 
-			document.<portlet:namespace />fm.<portlet:namespace />formInstanceId.value = formInstanceId;
-
-			var formInstanceHolder = A.one('.displaying-form-instance-id-holder');
-
-			if (formInstanceHolder) {
-				formInstanceHolder.show();
-			}
-
-			var messageHolder = A.one('.displaying-help-message-holder');
-
-			if (messageHolder) {
-				messageHolder.hide();
-			}
-
-			var displayFormInstanceId = A.one('.displaying-form-instance-id');
-
-			displayFormInstanceId.set(
-				'innerHTML',
-				formInstanceName + ' (<liferay-ui:message key="modified" />)'
+			const formInstanceHolder = document.querySelector(
+				'.displaying-form-instance-id-holder'
 			);
 
-			displayFormInstanceId.addClass('modified');
+			if (formInstanceHolder) {
+				formInstanceHolder.classList.remove('hide');
+			}
+
+			const messageHolder = document.querySelector(
+				'.displaying-help-message-holder'
+			);
+
+			if (messageHolder) {
+				messageHolder.classList.add('hide');
+			}
+
+			const displayFormInstanceId = document.querySelector(
+				'.displaying-form-instance-id'
+			);
+
+			displayFormInstanceId.innerHTML =
+				formInstanceName + ' (<liferay-ui:message key="modified" />)';
+
+			displayFormInstanceId.classList.add('modified');
 		},
 		['aui-base']
 	);

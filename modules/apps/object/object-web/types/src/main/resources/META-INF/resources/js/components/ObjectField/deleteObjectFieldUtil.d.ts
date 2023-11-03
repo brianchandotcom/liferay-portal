@@ -4,7 +4,6 @@
  */
 
 export declare function deleteObjectField(
-	defaultLanguageId: Liferay.Language.Locale,
-	id: number,
-	objectField: ObjectField
+	objectFieldId: number,
+	objectFieldLabel: string
 ): Promise<void>;

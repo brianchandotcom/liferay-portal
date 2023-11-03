@@ -13,20 +13,20 @@ import {defaultLanguageId} from '../../utils/constants';
 import {deleteObjectField} from './deleteObjectFieldUtil';
 
 interface ModalDeleteObjectFieldProps {
+	handleOnClose: () => void;
 	objectField: ObjectField;
 	onAfterSubmit: () => void;
-	setModalVisibility: (value: boolean) => void;
 	setObjectField?: (values: ObjectField | null) => void;
 }
 
 export function ModalDeleteObjectField({
+	handleOnClose,
 	objectField,
 	onAfterSubmit,
-	setModalVisibility,
 	setObjectField,
 }: ModalDeleteObjectFieldProps) {
 	const {observer, onClose, open} = useModal({
-		onClose: () => setModalVisibility(false),
+		onClose: () => handleOnClose(),
 	});
 
 	return (

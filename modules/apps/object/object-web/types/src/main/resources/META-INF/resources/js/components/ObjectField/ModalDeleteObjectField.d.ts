@@ -6,15 +6,15 @@
 /// <reference types="react" />
 
 interface ModalDeleteObjectFieldProps {
+	handleOnClose: () => void;
 	objectField: ObjectField;
 	onAfterSubmit: () => void;
-	setModalVisibility: (value: boolean) => void;
 	setObjectField?: (values: ObjectField | null) => void;
 }
 export declare function ModalDeleteObjectField({
+	handleOnClose,
 	objectField,
 	onAfterSubmit,
-	setModalVisibility,
 	setObjectField,
 }: ModalDeleteObjectFieldProps): JSX.Element;
 export {};

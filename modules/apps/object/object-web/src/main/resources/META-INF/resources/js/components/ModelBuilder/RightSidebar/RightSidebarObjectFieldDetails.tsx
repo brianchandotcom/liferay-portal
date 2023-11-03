@@ -249,6 +249,14 @@ export function RightSidebarObjectFieldDetails() {
 
 			{objectFieldDeleteInfo.showObjectFieldDeletionConfirmationModal && (
 				<ModalDeleteObjectField
+					handleOnClose={() =>
+						setDeleteObjectFieldModal(
+							(prevState: DeleteObjectFieldModal) => ({
+								...prevState,
+								showObjectFieldDeletionConfirmationModal: false,
+							})
+						)
+					}
 					objectField={values as ObjectField}
 					onAfterSubmit={() => {
 						if (

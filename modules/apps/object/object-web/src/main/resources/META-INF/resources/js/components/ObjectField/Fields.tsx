@@ -244,6 +244,14 @@ export default function Fields({
 
 			{objectFieldDeleteInfo.showObjectFieldDeletionConfirmationModal && (
 				<ModalDeleteObjectField
+					handleOnClose={() =>
+						setDeleteObjectFieldModal(
+							(prevState: DeleteObjectFieldModal) => ({
+								...prevState,
+								showObjectFieldDeletionConfirmationModal: false,
+							})
+						)
+					}
 					objectField={deletedObjectField as ObjectField}
 					onAfterSubmit={() => {
 						setTimeout(() => window.location.reload(), 1500);

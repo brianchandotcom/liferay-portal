@@ -101,7 +101,7 @@ export default function Condition({
 				onSelectionChange={(type) =>
 					onConditionChange({...condition, type})
 				}
-				selectedKey={condition.type ?? ''}
+				selectedKey={condition.type}
 			/>
 
 			{condition.type && CONDITION_ITEMS[condition.type] ? (

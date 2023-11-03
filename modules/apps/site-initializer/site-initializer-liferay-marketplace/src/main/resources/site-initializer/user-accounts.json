@@ -4,26 +4,6 @@
 			{
 				"externalReferenceCode": "MKT-ACCOUNT-1",
 				"roleBriefs": [
-					"App Editor",
-					"Account Administrator"
-				]
-			}
-		],
-		"alternateName": "jane.acme",
-		"birthDate": "1975-01-01T00:00:00.000+00:00",
-		"emailAddress": "j@acme.com",
-		"externalReferenceCode": "MP1",
-		"familyName": "Acme",
-		"givenName": "Jane",
-		"jobTitle": "Owner",
-		"name": "Jane Acme",
-		"password": "mp4all"
-	},
-	{
-		"accountBriefs": [
-			{
-				"externalReferenceCode": "MKT-ACCOUNT-2",
-				"roleBriefs": [
 					"App Editor"
 				]
 			}
@@ -38,15 +18,15 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "MKT-ACCOUNT-2",
+				"externalReferenceCode": "MKT-ACCOUNT-1",
 				"roleBriefs": [
 					"Account Administrator"
 				]
 			}
 		],
 		"alternateName": "da",
-		"emailAddress": "da@administrator.com",
-		"familyName": "Administrator",
+		"emailAddress": "dashboard@adm.com",
+		"familyName": "ADM",
 		"givenName": "Dashboard",
 		"jobTitle": "Owner",
 		"name": "Dashboard Administrator (DA)",
@@ -55,7 +35,7 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "MKT-ACCOUNT-2",
+				"externalReferenceCode": "MKT-ACCOUNT-1",
 				"roleBriefs": [
 					"Account Buyer"
 				]
@@ -66,22 +46,6 @@
 		"familyName": "Buyer",
 		"givenName": "Customer Account",
 		"name": "Customer Account Buyer (CAB)",
-		"password": "test"
-	},
-	{
-		"accountBriefs": [
-			{
-				"externalReferenceCode": "MKT-ACCOUNT-2",
-				"roleBriefs": [
-					"Account Administrator (Regular)"
-				]
-			}
-		],
-		"alternateName": "aar",
-		"emailAddress": "aar@regular.com",
-		"familyName": "Regular",
-		"givenName": "MKT Account Administrator",
-		"name": "MKT Account Administrator Regular (AAR)",
 		"password": "test"
 	}
 ]

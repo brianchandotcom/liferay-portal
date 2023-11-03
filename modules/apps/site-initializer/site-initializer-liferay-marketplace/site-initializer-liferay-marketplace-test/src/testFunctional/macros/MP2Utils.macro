@@ -9,7 +9,8 @@ definition {
 		}
 	}
 
-	macro assertUploadImage {
+	@summary = "Default summary"
+	macro assertUploadImage() {
 		AssertElementPresent(locator1 = "MP2Utils#PRODUCT_IMAGE");
 	}
 

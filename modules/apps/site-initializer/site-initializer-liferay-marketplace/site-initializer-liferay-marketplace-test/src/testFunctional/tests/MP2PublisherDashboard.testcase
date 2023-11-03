@@ -23,14 +23,14 @@ definition {
 
 		task ("Assign the users to the account") {
 			JSONAccountEntryUser.addExistUsertoAccount(
-				accountEntryName = "QA Development",
-				userEmailAddress = "da@administrator.com");
+				accountEntryName = "QA Test",
+				userEmailAddress = "dashboard@adm.com");
 		}
 
 		task ("Go to Marketplace and login with the created user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "da@administrator.com",
-				userLoginFullName = "Dashboard Administrator");
+				userLoginEmailAddress = "dashboard@adm.com",
+				userLoginFullName = "Dashboard ADM");
 
 			MP2Navigator.gotoMP2();
 		}
@@ -45,6 +45,8 @@ definition {
 	test AssertTheDetailsOfTheEmail {
 		task ("Given that the user sends an invitation") {
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
 
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
@@ -66,7 +68,7 @@ definition {
 			MockMock._viewMailFromInbox(
 				asset = "Liferay Marketplace - Invitation from Dashboard",
 				recipient = "test.mp@liferay.com",
-				sender = "da@administrator.com");
+				sender = "dashboard@adm.com");
 		}
 	}
 
@@ -78,6 +80,8 @@ definition {
 		}
 
 		task ("And the user clicks Members in the side menu") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 		}
 
@@ -111,6 +115,8 @@ definition {
 		}
 
 		task ("And the user clicks Members in the side menu") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 		}
 
@@ -125,7 +131,7 @@ definition {
 
 		task ("Then I should be able to assert that the user has been invited") {
 			var table = '''
-				| Name    | Test QA             |
+				| Name    | QA Test             |
 				| Email   | test.mp@liferay.com |
 				| Role    | Invited Member      |
 			''';
@@ -150,6 +156,8 @@ definition {
 		task ("Given that a marketplace account administrator invites a member to the Publisher Dashboard") {
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
 
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
 			MP2Dashboards.inviteNewMember(
@@ -170,9 +178,9 @@ definition {
 
 		task ("When the user log into the account") {
 			MP2Utils.firstLoginMKT(
-				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				asset = "Liferay Marketplace - Invitation from Dashboard ADM",
 				bodyLink = "Accept invitation",
-				recipient = "da@administrator.com",
+				recipient = "dashboard@adm.com",
 				userEmailAddress = "test.mp@liferay.com");
 		}
 
@@ -195,6 +203,8 @@ definition {
 	test CannotViewReinviteButton {
 		task ("Given that the admin user invites a new user to the Publisher Dashboard") {
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
 
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
@@ -220,20 +230,22 @@ definition {
 			MockMock._gotoMail();
 
 			MP2Utils.firstLoginMKT(
-				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				asset = "Liferay Marketplace - Invitation from Dashboard ADM",
 				bodyLink = "Accept invitation",
-				recipient = "da@administrator.com",
+				recipient = "dashboard@adm.com",
 				userEmailAddress = "test.mp@liferay.com");
 		}
 
 		task ("And I go back to the members page details") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "da@administrator.com",
-				userLoginFullName = "Dashboard Administrator");
+				userLoginEmailAddress = "dashboard@adm.com",
+				userLoginFullName = "Dashboard ADM");
 
 			MP2Navigator.gotoMP2();
 
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
 
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
@@ -252,7 +264,7 @@ definition {
 	test CannotViewTheNewMemberButton {
 		task ("Given that I log in with 'App Editor' credentials") {
 			JSONAccountEntryUser.addExistUsertoAccount(
-				accountEntryName = "QA Development",
+				accountEntryName = "QA Test",
 				userEmailAddress = "pae@editor.com");
 
 			User.logoutAndLoginPG(
@@ -267,6 +279,8 @@ definition {
 		}
 
 		task ("When the user clicks on Members in the side menu") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 		}
 
@@ -280,6 +294,8 @@ definition {
 	test CanReinviteListedUser {
 		task ("Given that the admin user invites a new user to the Publisher Dashboard") {
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
 
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
@@ -299,7 +315,7 @@ definition {
 			MockMock._viewMailFromInbox(
 				asset = "Liferay Marketplace - Invitation from Dashboard",
 				recipient = "test.mp@liferay.com",
-				sender = "da@administrator.com");
+				sender = "dashboard@adm.com");
 		}
 
 		task ("And delete the invitation email without accepting it") {
@@ -311,7 +327,7 @@ definition {
 		task ("And the user remains in the member list as a invited") {
 			User.loginUserPG(
 				password = "test",
-				userEmailAddress = "da@administrator.com");
+				userEmailAddress = "dashboard@adm.com");
 
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
 
@@ -334,7 +350,7 @@ definition {
 			MockMock._viewMailFromInbox(
 				asset = "Liferay Marketplace - Invitation from Dashboard",
 				recipient = "test.mp@liferay.com",
-				sender = "da@administrator.com");
+				sender = "dashboard@adm.com");
 		}
 	}
 
@@ -343,6 +359,8 @@ definition {
 	test CanViewTheUserRoleInTheMemberList {
 		task ("Given the user accepts the invitation") {
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
 
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
@@ -360,19 +378,21 @@ definition {
 
 		task ("And logs into the panel with the invited roles") {
 			MP2Utils.firstLoginMKT(
-				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				asset = "Liferay Marketplace - Invitation from Dashboard ADM",
 				bodyLink = "Accept invitation",
-				recipient = "da@administrator.com",
+				recipient = "dashboard@adm.com",
 				userEmailAddress = "test.mp@liferay.com");
 		}
 
 		task ("When I go to the member page") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Test");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 		}
 
 		task ("Then I should be able to assert that the invited user's status is now Active") {
 			var table = '''
-				| Name    | Test QA             |
+				| Name    | QA Test             |
 				| Email   | test.mp@liferay.com |
 				| Role    | App Editor          |
 			''';

@@ -26,7 +26,7 @@ definition {
 		}
 
 		task ("Then I should be able to assert that Account Users was created") {
-			for (var accountName : list "Jane Acme,Dashboard Administrator,Customer Account Buyer,Publisher App Editor,MKT Account Administrator Regular") {
+			for (var accountName : list "Jane Acme,Dashboard ADM,Customer Account Buyer,Publisher App Editor") {
 				LexiconEntry.viewEntryName(rowEntry = ${accountName});
 			}
 		}
@@ -41,7 +41,7 @@ definition {
 
 		task ("Then I should be able to assert that the App Marketplace page is present") {
 			AssertElementPresent(
-				key_title = "App Marketplace",
+				key_title = "Applications",
 				locator1 = "Marketplace#FRAGMENT_HEADING");
 		}
 	}

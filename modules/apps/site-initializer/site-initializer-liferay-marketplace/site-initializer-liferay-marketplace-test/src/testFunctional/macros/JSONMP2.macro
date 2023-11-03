@@ -1,9 +1,29 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCatalog() {
+	macro addMKTAccount {
+		if (!(isSet(accountName))) {
+			var accountName = "QA Test";
+		}
+
+		if (!(isSet(accountType))) {
+			var accountType = "Business";
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "MKT-ACCOUNT-01-ERC";
+		}
+
+		CommerceJSONAccountsAPI._addCommerceAccount(
+			accountName = ${accountName},
+			accountType = ${accountType},
+			externalReferenceCode = ${externalReferenceCode});
+	}
+
+	@summary = "Default summary"
+	macro addMKTCatalog {
 		if (!(isSet(catalogName))) {
-			var catalogName = "MKT Catalog";
+			var catalogName = "QA Test";
 		}
 
 		CommerceJSONCatalogsAPI._addCatalog(catalogName = ${catalogName});
@@ -87,17 +107,27 @@ definition {
 
 		CommerceSKUs.generateAllSkuCombinations();
 	}
+
+	@summary = "Default summary"
+	macro updateAccount {
 		if (!(isSet(accountName))) {
-			var accountName = "QA Development";
+			var accountName = "QA Test";
 		}
 
 		if (!(isSet(catalogName))) {
-			var catalogName = "MKT Catalog";
+			var catalogName = "QA Test";
 		}
 
-		JSONMP2API.updateAccount(
-			accountName = ${accountName},
-			catalogName = ${catalogName});
+		JSONMP2.addMKTAccount(accountId = ${accountId});
+
+		JSONMP2.addMKTCatalog(catalogId = ${catalogId});
+
+		var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
+
+		JSONMP2._updateAccount(
+			accountId = ${accountId},
+			catalogId = ${catalogId});
 
 		// Workaround for LPS-192397
 
@@ -107,15 +137,50 @@ definition {
 
 		Account.assignUsers(
 			accountName = ${accountName},
-			assigneeName = "Dashboard Administrator");
+			assigneeName = "Dashboard ADM");
 
 		Account.addAssigneeToRoleViaUsersTab(
 			accountRoleTitle = "Account Administrator",
-			accountUserName = "Dashboard Administrator");
+			accountUserName = "Dashboard ADM");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userEmailAddress = StringUtil.toLowerCase("da@administrator.com"));
+			userEmailAddress = StringUtil.toLowerCase("dashboard@adm.com"));
+	}
+
+	@summary = "Default summary"
+	macro _updateAccount {
+		Variables.assertDefined(parameterList = "${accountId},${catalogId}");
+
+		if (!(isSet(accountName))) {
+			var accountName = "QA Test";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/accounts/${accountId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name":"${accountName}",
+					"customFields":[
+						{
+							"customValue":{
+								"data":"${catalogId}"
+							},
+							"dataType":"Text",
+							"name":"CatalogId"
+						}
+					]
+				}'
+		''';
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		echo(${response});
 	}
 
 }

@@ -5,7 +5,8 @@ definition {
 		AssertElementNotPresent(locator1 = "MP2Dashboards#RESEND_INVITATION");
 	}
 
-	macro assertNotViewCustomerGatePage {
+	@summary = "Default summary"
+	macro assertNotViewCustomerGatePage(title = null,) {
 		AssertElementNotPresent(
 			key_headerTitle = ${title},
 			locator1 = "MP2Dashboards#HEADER_TITLE_CG");
@@ -35,7 +36,8 @@ definition {
 			locator1 = "MP2Dashboards#ANY_DASHBOARD_BUTTON");
 	}
 
-	macro clickOnTheGetStartedButton {
+	@summary = "Default summary"
+	macro clickOnTheGetStartedButton() {
 		Click(locator1 = "MP2Dashboards#GET_STARTED_BUTTON");
 	}
 
@@ -54,7 +56,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro customerGateFlow {
+	@summary = "Default summary"
+	macro customerGateFlow(imageName = null, field = null,) {
 		Click(locator1 = "MP2Dashboards#GET_STARTED_BUTTON");
 
 		if (isSet(imageName)) {

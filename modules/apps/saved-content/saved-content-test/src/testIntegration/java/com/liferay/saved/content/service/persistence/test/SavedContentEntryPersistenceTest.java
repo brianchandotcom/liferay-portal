@@ -239,12 +239,30 @@ public class SavedContentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_C() throws Exception {
+		_persistence.countByG_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_C_C(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_C_C() throws Exception {
 		_persistence.countByC_C_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C_C(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_U_C_C() throws Exception {
+		_persistence.countByG_U_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_U_C_C(0L, 0L, 0L, 0L);
 	}
 
 	@Test
@@ -584,6 +602,27 @@ public class SavedContentEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				savedContentEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			Long.valueOf(savedContentEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				savedContentEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(savedContentEntry.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				savedContentEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
+		Assert.assertEquals(
+			Long.valueOf(savedContentEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				savedContentEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
+		Assert.assertEquals(
+			Long.valueOf(savedContentEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				savedContentEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 
 		Assert.assertEquals(
 			Long.valueOf(savedContentEntry.getCompanyId()),

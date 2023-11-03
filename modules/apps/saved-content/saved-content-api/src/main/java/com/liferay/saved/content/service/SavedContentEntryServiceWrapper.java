@@ -6,6 +6,7 @@
 package com.liferay.saved.content.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.saved.content.model.SavedContentEntry;
 
 /**
  * Provides a wrapper for {@link SavedContentEntryService}.
@@ -26,6 +27,32 @@ public class SavedContentEntryServiceWrapper
 		SavedContentEntryService savedContentEntryService) {
 
 		_savedContentEntryService = savedContentEntryService;
+	}
+
+	@Override
+	public SavedContentEntry addSavedContentEntry(
+			long groupId, String className, long classPK,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _savedContentEntryService.addSavedContentEntry(
+			groupId, className, classPK, serviceContext);
+	}
+
+	@Override
+	public void deleteSavedContentEntry(SavedContentEntry savedContentEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_savedContentEntryService.deleteSavedContentEntry(savedContentEntry);
+	}
+
+	@Override
+	public SavedContentEntry fetchSavedContentEntry(
+			long groupId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _savedContentEntryService.fetchSavedContentEntry(
+			groupId, className, classPK);
 	}
 
 	/**

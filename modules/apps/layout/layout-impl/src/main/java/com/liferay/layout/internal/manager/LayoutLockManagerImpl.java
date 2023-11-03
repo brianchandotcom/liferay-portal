@@ -277,7 +277,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public void unlockLayouts(long companyId, long autosaveMinutes)
-		throws LockedLayoutException {
+		throws Exception {
 
 		Map<Long, LockedLayoutsGroupConfiguration>
 			lockedLayoutsGroupConfigurations =
@@ -346,12 +346,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				});
 		}
 
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			throw new LockedLayoutException(portalException);
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -495,7 +490,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	private Map<Long, LockedLayoutsGroupConfiguration>
 			_getLockedLayoutsGroupConfigurations(long companyId)
-		throws LockedLayoutException {
+		throws Exception {
 
 		Map<Long, LockedLayoutsGroupConfiguration>
 			lockedLayoutsGroupConfigurations = new HashMap<>();
@@ -524,7 +519,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			}
 		}
 		catch (Exception exception) {
-			throw new LockedLayoutException(
+			throw new Exception(
 				"Unable to get LockedLayoutsGroupConfigurations", exception);
 		}
 

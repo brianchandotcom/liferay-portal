@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SavedContentEntryLocalServiceImpl
 	extends SavedContentEntryLocalServiceBaseImpl {
 
-	@Override
-	public void addEntryResources(
+	private void _addEntryResources(
 			SavedContentEntry entry, boolean addGroupPermissions,
 			boolean addGuestPermissions)
 		throws PortalException {
@@ -47,7 +46,7 @@ public class SavedContentEntryLocalServiceImpl
 			false, addGroupPermissions, addGuestPermissions);
 	}
 
-	public void addEntryResources(
+	private void _addEntryResources(
 			SavedContentEntry entry, ModelPermissions modelPermissions)
 		throws PortalException {
 
@@ -80,8 +79,11 @@ public class SavedContentEntryLocalServiceImpl
 		savedContentEntry.setUserId(user.getUserId());
 		savedContentEntry.setUserName(user.getFullName());
 
-		savedContentEntry.setCreateDate(new Date());
-		savedContentEntry.setModifiedDate(new Date());
+		Date date = new Date();
+
+		savedContentEntry.setCreateDate(date);
+		savedContentEntry.setModifiedDate(date);
+
 		savedContentEntry.setClassNameId(
 			_classNameLocalService.getClassNameId(className));
 		savedContentEntry.setClassPK(classPK);
@@ -94,12 +96,12 @@ public class SavedContentEntryLocalServiceImpl
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
 
-			addEntryResources(
+			_addEntryResources(
 				savedContentEntry, serviceContext.isAddGroupPermissions(),
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			addEntryResources(
+			_addEntryResources(
 				savedContentEntry, serviceContext.getModelPermissions());
 		}
 

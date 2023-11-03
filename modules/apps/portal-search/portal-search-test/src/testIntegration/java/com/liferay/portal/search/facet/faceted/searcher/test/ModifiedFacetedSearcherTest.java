@@ -60,7 +60,7 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		setConfigurationRanges(facet, configRange1, configRange2);
 
-		setCustomRange(facet, searchContext, customRange);
+		setCustomRange(facet, customRange);
 
 		searchContext.addFacet(facet);
 
@@ -68,7 +68,7 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		Map<String, Integer> frequencies = SearchMapUtil.join(
 			toMap(configRange1, 0), toMap(configRange2, 1),
-			toMap(customRange, 1));
+			toMap("custom-range", 1));
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);
@@ -78,9 +78,12 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String range : ranges) {
-			JSONObject jsonObject = JSONUtil.put("range", range);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"label", range
+				).put(
+					"range", range
+				));
 		}
 
 		return JSONUtil.put("ranges", jsonArray);
@@ -94,10 +97,21 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		facetConfiguration.setDataJSONObject(createDataJSONObject(ranges));
 	}
 
-	protected static void setCustomRange(
-		Facet facet, SearchContext searchContext, String customRange) {
+	protected static void setCustomRange(Facet facet, String customRange) {
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		searchContext.setAttribute(facet.getFieldId(), customRange);
+		JSONObject jsonObject = facetConfiguration.getData();
+
+		JSONArray jsonArray = jsonObject.getJSONArray("ranges");
+
+		jsonArray.put(
+			JSONUtil.put(
+				"label", "custom-range"
+			).put(
+				"range", customRange
+			));
+
+		jsonObject.put("ranges", jsonArray);
 	}
 
 	protected static Map<String, Integer> toMap(String key, Integer value) {

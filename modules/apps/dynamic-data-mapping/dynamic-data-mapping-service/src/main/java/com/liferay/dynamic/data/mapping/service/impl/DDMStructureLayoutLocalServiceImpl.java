@@ -5,7 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
-import com.liferay.dynamic.data.mapping.internal.search.helper.DDMSearchHelper;
+import com.liferay.dynamic.data.mapping.internal.search.util.DDMSearchUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
@@ -279,12 +279,12 @@ public class DDMStructureLayoutLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext =
-			_ddmSearchHelper.buildStructureLayoutSearchContext(
+			DDMSearchUtil.buildStructureLayoutSearchContext(
 				companyId, groupIds, classNameId, keywords, keywords,
 				StringPool.BLANK, null, WorkflowConstants.STATUS_ANY, start,
 				end, orderByComparator);
 
-		return _ddmSearchHelper.doSearch(
+		return DDMSearchUtil.doSearch(
 			searchContext, DDMStructureLayout.class,
 			ddmStructureLayoutPersistence::findByPrimaryKey);
 	}
@@ -295,12 +295,12 @@ public class DDMStructureLayoutLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext =
-			_ddmSearchHelper.buildStructureLayoutSearchContext(
+			DDMSearchUtil.buildStructureLayoutSearchContext(
 				companyId, groupIds, classNameId, keywords, keywords,
 				StringPool.BLANK, null, WorkflowConstants.STATUS_ANY,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		return _ddmSearchHelper.doSearchCount(
+		return DDMSearchUtil.doSearchCount(
 			searchContext, DDMStructureLayout.class);
 	}
 
@@ -358,9 +358,6 @@ public class DDMStructureLayoutLocalServiceImpl
 
 	@Reference
 	private DDMFormLayoutValidator _ddmFormLayoutValidator;
-
-	@Reference
-	private DDMSearchHelper _ddmSearchHelper;
 
 	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
 	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;

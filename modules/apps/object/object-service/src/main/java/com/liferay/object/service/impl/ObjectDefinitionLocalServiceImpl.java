@@ -1169,6 +1169,19 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition updatePortlet(
+			long objectDefinitionId, boolean portlet)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		objectDefinition.setPortlet(portlet);
+
+		return objectDefinitionPersistence.update(objectDefinition);
+	}
+
+	@Override
 	public ObjectDefinition updateRootObjectDefinitionId(
 			long objectDefinitionId, long rootObjectDefinitionId)
 		throws PortalException {

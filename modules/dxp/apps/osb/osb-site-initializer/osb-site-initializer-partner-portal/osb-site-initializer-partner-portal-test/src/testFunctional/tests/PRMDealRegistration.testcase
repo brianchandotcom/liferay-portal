@@ -60,7 +60,7 @@ definition {
 	@priority = 5
 	test CanCreateADeal {
 		property portal.acceptance = "true";
-		
+
 		task ("Given that the PSU user goes to Deal Registrations page") {
 			PRMHomePage.gotoQuickLinksOption(
 				buttonLink = "deal-registrations",

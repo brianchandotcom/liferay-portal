@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.persistence.listener;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfiguration;
 import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.helper.CrossClusterReplicationHelperImpl;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
@@ -315,6 +317,17 @@ public class CrossClusterReplicationConfigurationModelListener
 			Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
+		if (ArrayUtil.isEmpty(ccrLocalClusterConnectionConfigurations)) {
+			throw new ConfigurationModelListenerException(
+				_getMessage("please-set-a-hostname-and-connection-id"),
+				CrossClusterReplicationConfiguration.class, getClass(),
+				properties);
+		}
+
+		List<String> connectionIds = TransformUtil.transform(
+			_searchEngineInformation.getConnectionInformationList(),
+			connectionInformation -> connectionInformation.getConnectionId());
+
 		for (String ccrLocalClusterConnectionConfiguration :
 				ccrLocalClusterConnectionConfigurations) {
 
@@ -327,10 +340,22 @@ public class CrossClusterReplicationConfigurationModelListener
 					CrossClusterReplicationConfiguration.class, getClass(),
 					properties);
 			}
+
+			if (!connectionIds.contains(
+					localClusterConnectionConfigurationParts.get(1))) {
+
+				throw new ConfigurationModelListenerException(
+					_getMessage("please-set-a-valid-connection-id"),
+					CrossClusterReplicationConfiguration.class, getClass(),
+					properties);
+			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CrossClusterReplicationConfigurationModelListener.class);
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 }

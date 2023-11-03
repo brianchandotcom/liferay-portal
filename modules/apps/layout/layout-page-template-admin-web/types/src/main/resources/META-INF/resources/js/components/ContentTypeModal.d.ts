@@ -8,6 +8,8 @@
 import {ModalType} from '../constants/modalTypes';
 import {MappingType} from '../types/MappingTypes';
 interface Props {
+	description?: string;
+	disableWarning?: boolean;
 	displayPageName: string;
 	formSubmitURL: string;
 	mappingTypes: MappingType[];
@@ -17,7 +19,9 @@ interface Props {
 	type: ModalType;
 	warningMessage: string;
 }
-export default function DisplayPageModal({
+export default function ContentTypeModal({
+	description,
+	disableWarning,
 	displayPageName,
 	formSubmitURL,
 	mappingTypes,

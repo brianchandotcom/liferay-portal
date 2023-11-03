@@ -16,7 +16,7 @@ interface Props {
 	onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 	type: ModalType;
 }
-export default function DisplayPageModalForm({
+export default function ContentTypeModalForm({
 	displayPageName,
 	error: initialError,
 	formRef,

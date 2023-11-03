@@ -10,5 +10,5 @@ interface Props {
 	importURL: string;
 	portletNamespace: string;
 }
-export default function ImportFragments(props: Props): JSX.Element;
+export default function ImportPageTemplates(props: Props): JSX.Element;
 export {};

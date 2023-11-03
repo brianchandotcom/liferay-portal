@@ -588,23 +588,31 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Close session, go to AC and segments") {
+		task ("Close session and Go to AC") {
 			ACUtils.closeAllSessionsAndWait();
 
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToSegments();
 		}
 
-		task ("Create segment test and save") {
-			ACSegments.createStaticSegment();
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
 
-			ACUtils.setItemName(itemName = "Static Segment Test");
+			ACSegments.createDynamicSegment();
 
-			ACSegments.addStaticMember(tableMember = "ac ac");
+			ACUtils.setItemName(itemName = "New Segment Test");
+		}
 
+		task ("Add an email field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "email");
+
+			ACSegments.editTextCriterion(textInput = "ac@liferay.com");
+		}
+
+		task ("Save the segment") {
 			ACSegments.saveSegment();
 		}
 

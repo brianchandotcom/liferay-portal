@@ -171,58 +171,102 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add 3 new Static Segments") {
-			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3") {
-				ACNavigation.goToSegments();
+		task ("Add 3 new Dynamic Segments") {
+			for (var segmentName : list "Dynamic Segment Test1,Dynamic Segment Test2,Dynamic Segment Test3") {
+				task ("Add a new dynamic segment") {
+					ACNavigation.goToSegments();
 
-				ACSegments.createStaticSegment();
+					ACSegments.createDynamicSegment();
 
-				ACUtils.setItemName(itemName = ${segmentName});
+					ACUtils.setItemName(itemName = "New Segment Test");
+				}
 
-				ACSegments.addStaticMember(tableMember = "userfn userln");
+				task ("Add an email field") {
+					ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-				ACSegments.saveSegment();
+					ACSegments.addSegmentField(segmentField = "email");
+
+					ACSegments.editTextCriterion(textInput = "userea@liferay.com");
+				}
+
+				task ("Save the segment") {
+					ACSegments.saveSegment();
+				}
 			}
 		}
 
-		task ("Go to Segments and filter by 'Name'") {
+		task ("Go to Segments and Sort by 'Name'") {
 			ACNavigation.goToSegments();
 
 			ACSegments.filterAndOrderForSegLists(filterName = "Name");
 		}
 
-		task ("Assert 3 segments filter by name display") {
+		task ("Assert 3 segments sorted by name display") {
 			ACUtils.viewNameListInOrder(
 				index = 1,
-				name = "Static Segment Test1");
+				name = "Dynamic Segment Test1");
 
 			ACUtils.viewNameListInOrder(
 				index = 2,
-				name = "Static Segment Test2");
+				name = "Dynamic Segment Test2");
 
 			ACUtils.viewNameListInOrder(
 				index = 3,
-				name = "Static Segment Test3");
+				name = "Dynamic Segment Test3");
 		}
 
-		task ("Go to Segments and filter by descending order of 'Name'") {
-			ACNavigation.goToSegments();
-
+		task ("Go to Segments and Sort by descending order of 'Name'") {
 			ACUtils.orderArrow(type = "descending");
 		}
 
-		task ("Assert 3 segments in order filter by membership display") {
+		task ("Assert 3 segments sorted by name display") {
 			ACUtils.viewNameListInOrder(
 				index = 1,
-				name = "Static Segment Test3");
+				name = "Dynamic Segment Test3");
 
 			ACUtils.viewNameListInOrder(
 				index = 2,
-				name = "Static Segment Test2");
+				name = "Dynamic Segment Test2");
 
 			ACUtils.viewNameListInOrder(
 				index = 3,
-				name = "Static Segment Test1");
+				name = "Dynamic Segment Test1");
+		}
+
+		task ("Sort by 'Last Modified'") {
+			ACSegments.filterAndOrderForSegLists(filterName = "Last Modified");
+		}
+
+		task ("Assert 3 segments sorted by Last Modified") {
+			ACUtils.viewNameListInOrder(
+				index = 1,
+				name = "Dynamic Segment Test1");
+
+			ACUtils.viewNameListInOrder(
+				index = 2,
+				name = "Dynamic Segment Test2");
+
+			ACUtils.viewNameListInOrder(
+				index = 3,
+				name = "Dynamic Segment Test3");
+		}
+
+		task ("Sort by descending order of 'Last Modified'") {
+			ACUtils.orderArrow(type = "descending");
+		}
+
+		task ("Assert 3 segments sorted by Last Modified") {
+			ACUtils.viewNameListInOrder(
+				index = 1,
+				name = "Dynamic Segment Test3");
+
+			ACUtils.viewNameListInOrder(
+				index = 2,
+				name = "Dynamic Segment Test2");
+
+			ACUtils.viewNameListInOrder(
+				index = 3,
+				name = "Dynamic Segment Test1");
 		}
 	}
 
@@ -268,24 +312,34 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add 6 new Static Segments") {
-			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3,Static Segment Test4,Static Segment Test5,Static Segment Test6") {
-				ACNavigation.goToSegments();
+		task ("Add 5 new Static Segments") {
+			for (var segmentName : list "Dynamic Segment Test1,Dynamic Segment Test2,Dynamic Segment Test3,Dynamic Segment Test4,Dynamic Segment Test5") {
+				task ("Add a new dynamic segment") {
+					ACNavigation.goToSegments();
 
-				ACSegments.createStaticSegment();
+					ACSegments.createDynamicSegment();
 
-				ACUtils.setItemName(itemName = ${segmentName});
+					ACUtils.setItemName(itemName = ${segmentName});
+				}
 
-				ACSegments.addStaticMember(tableMember = "userfn userln");
+				task ("Add an email field") {
+					ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-				ACSegments.saveSegment();
+					ACSegments.addSegmentField(segmentField = "email");
+
+					ACSegments.editTextCriterion(textInput = "userea@liferay.com");
+				}
+
+				task ("Save the segment") {
+					ACSegments.saveSegment();
+				}
 			}
 		}
 
-		task ("Assert 6 segments display") {
+		task ("Assert 5 segments display") {
 			ACNavigation.goToSegments();
 
-			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3,Static Segment Test4,Static Segment Test5,Static Segment Test6") {
+			for (var segmentName : list "Dynamic Segment Test1,Dynamic Segment Test2,Dynamic Segment Test3,Dynamic Segment Test4,Dynamic Segment Test5") {
 				ACSegments.assertSegmentPresent(segmentName = ${segmentName});
 			}
 		}
@@ -295,7 +349,7 @@ definition {
 				locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
 				value1 = "20 Items");
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 6 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 5 entries.");
 
 			ACUtils.viewResultsPages(pageNumber = 1);
 		}
@@ -303,27 +357,29 @@ definition {
 		task ("Change the pagination to "4"") {
 			ACUtils.changePagination(itemsPerPage = 4);
 
-			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3,Static Segment Test4") {
+			for (var segmentName : list "Dynamic Segment Test1,Dynamic Segment Test2,Dynamic Segment Test3,Dynamic Segment Test4") {
 				ACSegments.assertSegmentPresent(segmentName = ${segmentName});
 			}
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 5 entries.");
 
 			ACUtils.viewResultsPages(pageNumber = 1);
 
 			ACUtils.viewResultsPages(pageNumber = 2);
 		}
 
-		task ("Page number display 1 2 and check previous next button") {
+		task ("Go to the second page and check if only one segment appears") {
 			ACUtils.checkPreviousNextButton(nextButton = "true");
 
-			ACUtils.viewResultsMessage(results = "Showing 5 to 6 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 5 to 5 of 5 entries.");
 
-			ACSegments.assertSegmentPresent(segmentName = "Static Segment Test6");
+			ACSegments.assertSegmentPresent(segmentName = "Dynamic Segment Test5");
+		}
 
+		task ("Previous to the first page and check that only 4 segments appear") {
 			ACUtils.checkPreviousNextButton(previousButton = "true");
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 5 entries.");
 		}
 	}
 

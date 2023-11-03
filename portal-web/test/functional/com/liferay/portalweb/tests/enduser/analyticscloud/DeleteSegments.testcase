@@ -200,15 +200,23 @@ definition {
 			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
-		task ("Go to Segments and add a new segment") {
+		task ("Add a new dynamic segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createStaticSegment();
+			ACSegments.createDynamicSegment();
 
 			ACUtils.setItemName(itemName = "New Segment Test");
+		}
 
-			ACSegments.addStaticMember(tableMember = "ac ac");
+		task ("Add an email field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
+			ACSegments.addSegmentField(segmentField = "email");
+
+			ACSegments.editTextCriterion(textInput = "ac@liferay.com");
+		}
+
+		task ("Save the segment") {
 			ACSegments.saveSegment();
 		}
 

@@ -32,16 +32,11 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 			modelVar="savedContentEntry"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-small table-title"
-				name="title"
-				value="<%= mySavedContentDisplayContext.getAssetTitle(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
-				name="description"
-				value="<%= ResourceActionsUtil.getModelResource(locale, savedContentEntry.getClassName()) %>"
-			/>
+			>
+				<p class="list-group-title"><%= mySavedContentDisplayContext.getAssetTitle(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %></p>
+				<p class="list-group-subtitle"><%= ResourceActionsUtil.getModelResource(locale, savedContentEntry.getClassName()) %></p>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-smallest"

@@ -265,6 +265,23 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <%
+String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "kbArticleSuccessMessage"));
+%>
+
+<c:if test="<%= Validator.isNotNull(kbArticleSuccessMessage) %>">
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"autoClose", 20000
+			).put(
+				"message", kbArticleSuccessMessage
+			).build()
+		%>'
+		module="admin/js/utils/openToast"
+	/>
+</c:if>
+
+<%
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(KBArticle.class.getName(), kbArticle.getClassPK());
 
 PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);

@@ -384,3 +384,20 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 		%>'
 	/>
 </div>
+
+<%
+String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "kbArticleSuccessMessage"));
+%>
+
+<c:if test="<%= Validator.isNotNull(kbArticleSuccessMessage) %>">
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"autoClose", 20000
+			).put(
+				"message", kbArticleSuccessMessage
+			).build()
+		%>'
+		module="admin/js/utils/openToast"
+	/>
+</c:if>

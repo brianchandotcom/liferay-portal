@@ -63,7 +63,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProvisioningRestController extends BaseRestController {
 
 	@PostMapping("license-keys")
-	public ResponseEntity<String> createLicenseKey(
+	public AppLicenseKey createLicenseKey(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
@@ -163,14 +163,9 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setUserName(userName);
 		appLicenseKey.setUserUuid(userUUID);
 
-		appLicenseKey = _appLicenseKeyResource.postAppLicenseKey(
+		return _appLicenseKeyResource.postAppLicenseKey(
 			userName, userUUID, appLicenseKey);
 
-		return new ResponseEntity<>(
-			new JSONObject(
-				appLicenseKey
-			).toString(),
-			HttpStatus.OK);
 	}
 
 	@GetMapping("license-keys/{id}/download")

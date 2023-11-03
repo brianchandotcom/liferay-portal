@@ -9,6 +9,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,8 +30,8 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,40 +67,35 @@ public class DefaultFragmentEntriesDisplayContext {
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() {
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				if (Validator.isNotNull(getFragmentCollectionKey())) {
+					breadcrumbEntry.setBrowsable(false);
+				}
 
-		BreadcrumbEntry defaultBreadcrumbEntry = new BreadcrumbEntry();
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(_httpServletRequest, "default"));
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.create(
+						PortletURLUtil.getCurrent(
+							_liferayPortletRequest, _liferayPortletResponse)
+					).setParameter(
+						"fragmentCollectionKey", StringPool.BLANK
+					).buildString());
+			}
+		).add(
+			() -> Validator.isNotNull(getFragmentCollectionKey()),
+			breadcrumbEntry -> {
+				FragmentCollectionContributor fragmentCollectionContributor =
+					_fragmentCollectionContributorRegistry.
+						getFragmentCollectionContributor(
+							getFragmentCollectionKey());
 
-		defaultBreadcrumbEntry.setTitle(
-			LanguageUtil.get(_httpServletRequest, "default"));
-		defaultBreadcrumbEntry.setURL(
-			PortletURLBuilder.create(
-				PortletURLUtil.getCurrent(
-					_liferayPortletRequest, _liferayPortletResponse)
-			).setParameter(
-				"fragmentCollectionKey", ""
-			).buildString());
-
-		breadcrumbEntries.add(defaultBreadcrumbEntry);
-
-		if (Validator.isNotNull(getFragmentCollectionKey())) {
-			defaultBreadcrumbEntry.setBrowsable(false);
-
-			FragmentCollectionContributor fragmentCollectionContributor =
-				_fragmentCollectionContributorRegistry.
-					getFragmentCollectionContributor(
-						getFragmentCollectionKey());
-
-			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-			breadcrumbEntry.setTitle(
-				fragmentCollectionContributor.getName(
-					_themeDisplay.getLocale()));
-
-			breadcrumbEntries.add(breadcrumbEntry);
-		}
-
-		return breadcrumbEntries;
+				breadcrumbEntry.setTitle(
+					fragmentCollectionContributor.getName(
+						_themeDisplay.getLocale()));
+			}
+		).build();
 	}
 
 	public SearchContainer<FragmentCollectionContributor>

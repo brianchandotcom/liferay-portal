@@ -8,6 +8,7 @@ package com.liferay.site.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -42,10 +43,11 @@ import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.search.SiteChecker;
 import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItemsProvider;
 import com.liferay.site.constants.SiteWebKeys;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryBuilder;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 import com.liferay.site.search.GroupSearch;
 import com.liferay.site.util.GroupSearchProvider;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -85,55 +87,53 @@ public class SiteAdminDisplayContext {
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(
-			LanguageUtil.get(_httpServletRequest, "sites"));
-
-		breadcrumbEntries.add(breadcrumbEntry);
-
 		Group group = getGroup();
 
 		if (group == null) {
-			return breadcrumbEntries;
+			return BreadcrumbEntryListBuilder.add(
+				breadcrumbEntry -> breadcrumbEntry.setTitle(
+					LanguageUtil.get(_httpServletRequest, "sites"))
+			).build();
 		}
 
-		PortletURL mainURL = PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCPath(
-			"/view.jsp"
-		).buildPortletURL();
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(_httpServletRequest, "sites"));
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/view.jsp"
+					).buildString());
+			}
+		).addAll(
+			() -> {
+				List<Group> ancestorGroups = group.getAncestors();
 
-		breadcrumbEntry.setURL(mainURL.toString());
+				Collections.reverse(ancestorGroups);
 
-		List<Group> ancestorGroups = group.getAncestors();
+				return TransformUtil.transform(
+					ancestorGroups,
+					ancestorGroup -> BreadcrumbEntryBuilder.setTitle(
+						ancestorGroup.getDescriptiveName()
+					).setURL(
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setMVCPath(
+							"/view.jsp"
+						).setParameter(
+							"groupId", ancestorGroup.getGroupId()
+						).buildString()
+					).build());
+			}
+		).add(
+			breadcrumbEntry -> {
+				Group unescapedGroup = group.toUnescapedModel();
 
-		Collections.reverse(ancestorGroups);
-
-		for (Group ancestorGroup : ancestorGroups) {
-			breadcrumbEntry = new BreadcrumbEntry();
-
-			breadcrumbEntry.setTitle(ancestorGroup.getDescriptiveName());
-
-			mainURL.setParameter(
-				"groupId", String.valueOf(ancestorGroup.getGroupId()));
-
-			breadcrumbEntry.setURL(mainURL.toString());
-
-			breadcrumbEntries.add(breadcrumbEntry);
-		}
-
-		Group unescapedGroup = group.toUnescapedModel();
-
-		breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(unescapedGroup.getDescriptiveName());
-
-		breadcrumbEntries.add(breadcrumbEntry);
-
-		return breadcrumbEntries;
+				breadcrumbEntry.setTitle(unescapedGroup.getDescriptiveName());
+			}
+		).build();
 	}
 
 	public String getDisplayStyle() {

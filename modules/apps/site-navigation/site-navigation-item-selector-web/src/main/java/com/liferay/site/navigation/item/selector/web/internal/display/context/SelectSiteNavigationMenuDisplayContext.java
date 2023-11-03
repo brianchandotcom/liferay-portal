@@ -5,6 +5,7 @@
 
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,6 +33,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUti
 import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryBuilder;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
@@ -68,21 +71,26 @@ public class SelectSiteNavigationMenuDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<BreadcrumbEntry> getBreadcrumbEntries() throws Exception {
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+	public List<BreadcrumbEntry> getBreadcrumbEntries() {
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				String backURL = ParamUtil.getString(
+					_httpServletRequest, "backURL",
+					PortalUtil.getCurrentURL(_httpServletRequest));
 
-		breadcrumbEntries.add(_getMenusBreadcrumbEntry());
+				breadcrumbEntry.setBrowsable(backURL != null);
 
-		long siteNavigationMenuId = getSiteNavigationMenuId();
-
-		if (siteNavigationMenuId == 0) {
-			breadcrumbEntries.addAll(_getLayoutBreadcrumbEntries());
-		}
-		else if (siteNavigationMenuId > 0) {
-			breadcrumbEntries.addAll(_getSiteNavigationMenuBreadcrumbEntries());
-		}
-
-		return breadcrumbEntries;
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(_themeDisplay.getLocale(), "menus"));
+				breadcrumbEntry.setURL(backURL);
+			}
+		).addAll(
+			() -> getSiteNavigationMenuId() == 0,
+			this::_getLayoutBreadcrumbEntries
+		).addAll(
+			() -> getSiteNavigationMenuId() > 0,
+			this::_getSiteNavigationMenuBreadcrumbEntries
+		).build();
 	}
 
 	public Map<String, Object> getContext(
@@ -252,51 +260,46 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return _privateLayout;
 	}
 
-	private BreadcrumbEntry _createBreadcrumbEntry(String title, String url) {
-		return new BreadcrumbEntry() {
-			{
-				setBrowsable(url != null);
-				setTitle(title);
-				setURL(url);
-			}
-		};
-	}
-
-	private List<BreadcrumbEntry> _getAncestorsBreadcrumbEntries()
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
+	private List<BreadcrumbEntry> _getAncestorsBreadcrumbEntries() {
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
 				getParentSiteNavigationMenuItemId());
 
-		breadcrumbEntries.add(
-			_createBreadcrumbEntry(
-				_getSiteNavigationMenuItemName(siteNavigationMenuItem),
-				getSelectSiteNavigationMenuLevelURL(
-					getSiteNavigationMenuId(),
-					SiteNavigationConstants.TYPE_DEFAULT)));
+		return BreadcrumbEntryListBuilder.addAll(
+			() -> {
+				List<SiteNavigationMenuItem> ancestorsSiteNavigationMenuItems =
+					siteNavigationMenuItem.getAncestors();
 
-		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
-					0) {
+				Collections.reverse(ancestorsSiteNavigationMenuItems);
 
-			siteNavigationMenuItem =
-				SiteNavigationMenuItemLocalServiceUtil.
-					fetchSiteNavigationMenuItem(
-						siteNavigationMenuItem.
-							getParentSiteNavigationMenuItemId());
-
-			breadcrumbEntries.add(
-				0,
-				_createBreadcrumbEntry(
-					_getSiteNavigationMenuItemName(siteNavigationMenuItem),
-					_getSelectSiteNavigationMenuLevelURL(
+				return TransformUtil.transform(
+					ancestorsSiteNavigationMenuItems,
+					curSiteNavigationMenuItem ->
+						BreadcrumbEntryBuilder.setTitle(
+							_getSiteNavigationMenuItemName(
+								curSiteNavigationMenuItem)
+						).setURL(
+							_getSelectSiteNavigationMenuLevelURL(
+								getSiteNavigationMenuId(),
+								curSiteNavigationMenuItem.
+									getSiteNavigationMenuItemId())
+						).build());
+			}
+		).add(
+			breadcrumbEntry -> {
+				String selectSiteNavigationMenuLevelURL =
+					getSelectSiteNavigationMenuLevelURL(
 						getSiteNavigationMenuId(),
-						siteNavigationMenuItem.getSiteNavigationMenuItemId())));
-		}
+						SiteNavigationConstants.TYPE_DEFAULT);
 
-		return breadcrumbEntries;
+				breadcrumbEntry.setBrowsable(
+					selectSiteNavigationMenuLevelURL != null);
+
+				breadcrumbEntry.setTitle(
+					_getSiteNavigationMenuItemName(siteNavigationMenuItem));
+				breadcrumbEntry.setURL(selectSiteNavigationMenuLevelURL);
+			}
+		).build();
 	}
 
 	private PortletURL _getBasePortletURL(long siteNavigationMenuId)
@@ -333,41 +336,42 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return "public-pages-hierarchy";
 	}
 
-	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries()
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
-		breadcrumbEntries.add(
-			_createBreadcrumbEntry(
-				LanguageUtil.get(_themeDisplay.getLocale(), _getKey()),
-				_getSelectSiteNavigationMenuLevelURL(
-					getSiteNavigationMenuId(), 0)));
-
-		if (getParentSiteNavigationMenuItemId() != 0) {
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				getParentSiteNavigationMenuItemId());
-
-			List<Layout> ancestors = layout.getAncestors();
-
-			Collections.reverse(ancestors);
-
-			for (Layout ancestor : ancestors) {
-				breadcrumbEntries.add(
-					_createBreadcrumbEntry(
-						ancestor.getName(_themeDisplay.getLocale()),
-						_getSelectSiteNavigationMenuLevelURL(
-							getSiteNavigationMenuId(), ancestor.getPlid())));
-			}
-
-			breadcrumbEntries.add(
-				_createBreadcrumbEntry(
-					layout.getName(_themeDisplay.getLocale()),
+	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries() {
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				String selectSiteNavigationMenuLevelURL =
 					_getSelectSiteNavigationMenuLevelURL(
-						getSiteNavigationMenuId(), layout.getPlid())));
-		}
+						getSiteNavigationMenuId(), 0);
 
-		return breadcrumbEntries;
+				breadcrumbEntry.setBrowsable(
+					selectSiteNavigationMenuLevelURL != null);
+
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(_themeDisplay.getLocale(), _getKey()));
+				breadcrumbEntry.setURL(selectSiteNavigationMenuLevelURL);
+			}
+		).addAll(
+			() -> getParentSiteNavigationMenuItemId() != 0,
+			() -> {
+				Layout layout = LayoutLocalServiceUtil.fetchLayout(
+					getParentSiteNavigationMenuItemId());
+
+				List<Layout> ancestors = layout.getAncestors();
+
+				Collections.reverse(ancestors);
+
+				ancestors.add(layout);
+
+				return TransformUtil.transform(
+					ancestors,
+					ancestor -> BreadcrumbEntryBuilder.setTitle(
+						ancestor.getName(_themeDisplay.getLocale())
+					).setURL(
+						_getSelectSiteNavigationMenuLevelURL(
+							getSiteNavigationMenuId(), ancestor.getPlid())
+					).build());
+			}
+		).build();
 	}
 
 	private List<Layout> _getLayouts() {
@@ -384,15 +388,6 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return LayoutLocalServiceUtil.getLayouts(
 			_themeDisplay.getScopeGroupId(), isPrivateLayout(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-	}
-
-	private BreadcrumbEntry _getMenusBreadcrumbEntry() {
-		String backURL = ParamUtil.getString(
-			_httpServletRequest, "backURL",
-			PortalUtil.getCurrentURL(_httpServletRequest));
-
-		return _createBreadcrumbEntry(
-			LanguageUtil.get(_themeDisplay.getLocale(), "menus"), backURL);
 	}
 
 	private SiteNavigationMenu _getPagesHierarchySiteNavigationMenu() {
@@ -460,26 +455,27 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return portletURL.toString();
 	}
 
-	private List<BreadcrumbEntry> _getSiteNavigationMenuBreadcrumbEntries()
-		throws Exception {
+	private List<BreadcrumbEntry> _getSiteNavigationMenuBreadcrumbEntries() {
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				SiteNavigationMenu siteNavigationMenu =
+					SiteNavigationMenuServiceUtil.fetchSiteNavigationMenu(
+						getSiteNavigationMenuId());
 
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+				String selectSiteNavigationMenuLevelURL =
+					_getSelectSiteNavigationMenuLevelURL(
+						getSiteNavigationMenuId(), 0);
 
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuServiceUtil.fetchSiteNavigationMenu(
-				getSiteNavigationMenuId());
+				breadcrumbEntry.setBrowsable(
+					selectSiteNavigationMenuLevelURL != null);
 
-		breadcrumbEntries.add(
-			_createBreadcrumbEntry(
-				siteNavigationMenu.getName(),
-				_getSelectSiteNavigationMenuLevelURL(
-					getSiteNavigationMenuId(), 0)));
-
-		if (getParentSiteNavigationMenuItemId() != 0) {
-			breadcrumbEntries.addAll(_getAncestorsBreadcrumbEntries());
-		}
-
-		return breadcrumbEntries;
+				breadcrumbEntry.setTitle(siteNavigationMenu.getName());
+				breadcrumbEntry.setURL(siteNavigationMenu.getName());
+			}
+		).addAll(
+			() -> getParentSiteNavigationMenuItemId() != 0,
+			this::_getAncestorsBreadcrumbEntries
+		).build();
 	}
 
 	private String _getSiteNavigationMenuItemName(

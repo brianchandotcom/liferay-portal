@@ -8,6 +8,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
 import React, {Dispatch, SetStateAction, useContext, useMemo} from 'react';
+import {flushSync} from 'react-dom';
 
 // @ts-ignore
 
@@ -48,11 +49,18 @@ export function RuleBuilderActionSection({
 	const actionsRefMap = useMemo(() => new Map(), []);
 
 	const onAddAction = () => {
-		setActions((previousActions) => [
-			...previousActions,
-			{id: uuidv4()} as Action,
-		]);
+		const actionId = uuidv4();
 
+		flushSync(() => {
+			setActions((previousActions) => [
+				...previousActions,
+				{id: actionId} as Action,
+			]);
+		});
+
+		const actionElement = actionsRefMap.get(actionId);
+
+		actionElement?.focus();
 		sendMessage(Liferay.Language.get('action-added'));
 	};
 
@@ -162,11 +170,18 @@ export function RuleBuilderConditionSection({
 	const conditionRefMap = useMemo(() => new Map(), []);
 
 	const onAddCondition = () => {
-		setConditions((previousConditions) => [
-			...previousConditions,
-			{id: uuidv4()} as Condition,
-		]);
+		const conditionId = uuidv4();
 
+		flushSync(() => {
+			setConditions((previousConditions) => [
+				...previousConditions,
+				{id: conditionId} as Condition,
+			]);
+		});
+
+		const conditionElement = conditionRefMap.get(conditionId);
+
+		conditionElement?.focus();
 		sendMessage(Liferay.Language.get('condition-added'));
 	};
 

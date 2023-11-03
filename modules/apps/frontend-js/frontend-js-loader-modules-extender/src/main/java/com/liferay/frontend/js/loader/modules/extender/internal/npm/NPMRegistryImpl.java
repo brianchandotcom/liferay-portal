@@ -17,8 +17,8 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
-import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResources;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMJavaScriptLastModifiedUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
@@ -338,9 +338,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_applyVersioning = details.applyVersioning();
 
 		_serviceTracker = _openServiceTracker();
-
-		_javaScriptAwarePortalWebResources = ServiceTrackerListFactory.open(
-			bundleContext, JavaScriptAwarePortalWebResources.class);
 	}
 
 	@Deactivate
@@ -348,8 +345,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		if (_npmRegistryUpdatesListeners != null) {
 			_npmRegistryUpdatesListeners.close();
 		}
-
-		_javaScriptAwarePortalWebResources.close();
 
 		_serviceTracker.close();
 
@@ -573,8 +568,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		new DCLSingleton<>();
 	private volatile Supplier<DataBag> _dataBagSupplier;
 	private final Map<String, String> _globalAliases = new HashMap<>();
-	private ServiceTrackerList<JavaScriptAwarePortalWebResources>
-		_javaScriptAwarePortalWebResources;
 
 	@Reference
 	private JSBundleProcessor _jsBundleProcessor;
@@ -659,13 +652,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 				_notifyNPMRegistryUpdatesListeners();
 
-				for (JavaScriptAwarePortalWebResources
-						javaScriptAwarePortalWebResources :
-							_javaScriptAwarePortalWebResources) {
-
-					javaScriptAwarePortalWebResources.updateLastModifed(
-						bundle.getLastModified());
-				}
+				NPMJavaScriptLastModifiedUtil.updateLastModified(
+					bundle.getLastModified());
 			}
 
 			return jsBundle;

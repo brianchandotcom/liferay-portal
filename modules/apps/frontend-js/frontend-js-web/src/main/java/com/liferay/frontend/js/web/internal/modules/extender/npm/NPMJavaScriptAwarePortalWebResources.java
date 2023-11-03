@@ -5,11 +5,9 @@
 
 package com.liferay.frontend.js.web.internal.modules.extender.npm;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResources;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMJavaScriptLastModifiedUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.ServletContext;
 
@@ -22,13 +20,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Peter Fellwock
  */
-@Component(
-	service = {
-		JavaScriptAwarePortalWebResources.class, PortalWebResources.class
-	}
-)
+@Component(service = PortalWebResources.class)
 public class NPMJavaScriptAwarePortalWebResources
-	implements JavaScriptAwarePortalWebResources {
+	implements PortalWebResources {
 
 	@Override
 	public String getContextPath() {
@@ -37,7 +31,7 @@ public class NPMJavaScriptAwarePortalWebResources
 
 	@Override
 	public long getLastModified() {
-		return _lastModified.get();
+		return NPMJavaScriptLastModifiedUtil.getLastModified();
 	}
 
 	@Override
@@ -50,19 +44,12 @@ public class NPMJavaScriptAwarePortalWebResources
 		return _servletContext;
 	}
 
-	@Override
-	public void updateLastModifed(long lastModified) {
-		_lastModified.accumulateAndGet(lastModified, Math::max);
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		Bundle bundle = bundleContext.getBundle();
 
-		_lastModified.set(bundle.getLastModified());
+		NPMJavaScriptLastModifiedUtil.setLastModified(bundle.getLastModified());
 	}
-
-	private final AtomicLong _lastModified = new AtomicLong();
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.frontend.js.web)")
 	private ServletContext _servletContext;

@@ -44,6 +44,7 @@ import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.theme.item.selector.criterion.LayoutThemeItemSelectorCriterion;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -105,6 +106,8 @@ import com.liferay.portal.util.RobotsUtil;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryBuilder;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 
 import java.io.IOException;
 
@@ -911,80 +914,86 @@ public class LayoutsAdminDisplayContext {
 		return _parentLayoutId;
 	}
 
-	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
-		throws PortalException {
-
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
-		boolean privatePages = isPrivateLayout();
-
+	public List<BreadcrumbEntry> getPortletBreadcrumbEntries() {
 		Layout selLayout = getSelLayout();
 
-		if (selLayout != null) {
-			privatePages = selLayout.isPrivateLayout();
-		}
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(httpServletRequest, "pages"));
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setTabs1(
+						getTabs1()
+					).setParameter(
+						"displayStyle",
+						() -> {
+							String displayStyle = getDisplayStyle();
 
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+							if (Validator.isNotNull(displayStyle)) {
+								return displayStyle;
+							}
 
-		breadcrumbEntry.setTitle(LanguageUtil.get(httpServletRequest, "pages"));
-		breadcrumbEntry.setURL(
-			PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setTabs1(
-				getTabs1()
-			).setParameter(
-				"displayStyle",
-				() -> {
-					String displayStyle = getDisplayStyle();
+							return null;
+						}
+					).setParameter(
+						"firstColumn", true
+					).setParameter(
+						"selPlid", LayoutConstants.DEFAULT_PLID
+					).buildString());
+			}
+		).add(
+			() -> !isFirstColumn() && isPrivateLayoutsEnabled(),
+			breadcrumbEntry -> {
+				boolean privatePages = isPrivateLayout();
 
-					if (Validator.isNotNull(displayStyle)) {
-						return displayStyle;
-					}
-
-					return null;
+				if (selLayout != null) {
+					privatePages = selLayout.isPrivateLayout();
 				}
-			).setParameter(
-				"firstColumn", true
-			).setParameter(
-				"selPlid", LayoutConstants.DEFAULT_PLID
-			).buildString());
 
-		breadcrumbEntries.add(breadcrumbEntry);
+				breadcrumbEntry.setTitle(getTitle(privatePages));
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"privateLayout", privatePages
+					).setParameter(
+						"selPlid", LayoutConstants.DEFAULT_PLID
+					).buildString());
+			}
+		).addAll(
+			() ->
+				!isFirstColumn() &&
+				(getSelPlid() != LayoutConstants.DEFAULT_PLID) &&
+				(selLayout != null),
+			() -> {
+				List<Layout> layouts = selLayout.getAncestors();
 
-		if (isFirstColumn()) {
-			return breadcrumbEntries;
-		}
+				Collections.reverse(layouts);
 
-		if (isPrivateLayoutsEnabled()) {
-			breadcrumbEntries.add(
-				_getBreadcrumbEntry(
-					LayoutConstants.DEFAULT_PLID, privatePages,
-					getTitle(privatePages)));
-		}
-
-		if ((getSelPlid() == LayoutConstants.DEFAULT_PLID) ||
-			(selLayout == null)) {
-
-			return breadcrumbEntries;
-		}
-
-		List<Layout> layouts = selLayout.getAncestors();
-
-		Collections.reverse(layouts);
-
-		for (Layout layout : layouts) {
-			breadcrumbEntries.add(
-				_getBreadcrumbEntry(
-					layout.getPlid(), layout.isPrivateLayout(),
-					layout.getName(themeDisplay.getLocale())));
-		}
-
-		breadcrumbEntries.add(
-			_getBreadcrumbEntry(
-				selLayout.getPlid(), selLayout.isPrivateLayout(),
-				selLayout.getName(themeDisplay.getLocale())));
-
-		return breadcrumbEntries;
+				return TransformUtil.transform(
+					layouts,
+					layout -> BreadcrumbEntryBuilder.setTitle(
+						layout.getName(themeDisplay.getLocale())
+					).setURL(
+						PortletURLBuilder.create(
+							getPortletURL()
+						).setParameter(
+							"privateLayout", layout.isPrivateLayout()
+						).setParameter(
+							"selPlid", layout.getPlid()
+						).buildString()
+					).build());
+			}
+		).add(
+			() ->
+				!isFirstColumn() &&
+				(getSelPlid() != LayoutConstants.DEFAULT_PLID) &&
+				(selLayout != null),
+			breadcrumbEntry -> breadcrumbEntry.setTitle(
+				selLayout.getName(themeDisplay.getLocale()))
+		).build();
 	}
 
 	public String getPortletResource() {
@@ -1063,47 +1072,43 @@ public class LayoutsAdminDisplayContext {
 		return _redirect;
 	}
 
-	public List<BreadcrumbEntry> getRelativeBreadcrumbEntries(Layout layout)
-		throws PortalException {
+	public List<BreadcrumbEntry> getRelativeBreadcrumbEntries(Layout layout) {
+		return BreadcrumbEntryListBuilder.addAll(
+			() -> {
+				List<Layout> ancestorLayouts = layout.getAncestors();
 
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+				Collections.reverse(ancestorLayouts);
 
-		List<Layout> ancestorLayouts = layout.getAncestors();
+				return TransformUtil.transform(
+					ancestorLayouts,
+					ancestorLayout -> {
+						if (LayoutPermissionUtil.contains(
+								themeDisplay.getPermissionChecker(),
+								ancestorLayout, ActionKeys.VIEW)) {
 
-		Collections.reverse(ancestorLayouts);
+							return BreadcrumbEntryBuilder.setTitle(
+								ancestorLayout.getName(themeDisplay.getLocale())
+							).setURL(
+								PortletURLBuilder.create(
+									getPortletURL()
+								).setParameter(
+									"privateLayout",
+									ancestorLayout.isPrivateLayout()
+								).setParameter(
+									"selPlid", ancestorLayout.getPlid()
+								).buildString()
+							).build();
+						}
 
-		for (Layout ancestorLayout : ancestorLayouts) {
-			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-			if (LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), ancestorLayout,
-					ActionKeys.VIEW)) {
-
-				breadcrumbEntry.setTitle(
-					ancestorLayout.getName(themeDisplay.getLocale()));
-				breadcrumbEntry.setURL(
-					PortletURLBuilder.create(
-						getPortletURL()
-					).setParameter(
-						"privateLayout", ancestorLayout.isPrivateLayout()
-					).setParameter(
-						"selPlid", ancestorLayout.getPlid()
-					).buildString());
+						return BreadcrumbEntryBuilder.setTitle(
+							StringPool.TRIPLE_PERIOD
+						).build();
+					});
 			}
-			else {
-				breadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);
-			}
-
-			breadcrumbEntries.add(breadcrumbEntry);
-		}
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(layout.getName(themeDisplay.getLocale()));
-
-		breadcrumbEntries.add(breadcrumbEntry);
-
-		return breadcrumbEntries;
+		).add(
+			breadcrumbEntry -> breadcrumbEntry.setTitle(
+				layout.getName(themeDisplay.getLocale()))
+		).build();
 	}
 
 	public String getRobots() {
@@ -2078,24 +2083,6 @@ public class LayoutsAdminDisplayContext {
 			PortletRequest.RENDER_PHASE);
 
 		return portletURL.toString();
-	}
-
-	private BreadcrumbEntry _getBreadcrumbEntry(
-		long plid, boolean privateLayout, String title) {
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(title);
-		breadcrumbEntry.setURL(
-			PortletURLBuilder.create(
-				getPortletURL()
-			).setParameter(
-				"privateLayout", privateLayout
-			).setParameter(
-				"selPlid", plid
-			).buildString());
-
-		return breadcrumbEntry;
 	}
 
 	private String _getDefaultFaviconTitle() {

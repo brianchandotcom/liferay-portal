@@ -17,7 +17,6 @@ import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,8 +37,8 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -71,39 +70,34 @@ public class FragmentEntriesDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+	public List<BreadcrumbEntry> getBreadcrumbEntries() {
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				if (getFragmentCollectionId() > 0) {
+					breadcrumbEntry.setBrowsable(false);
+				}
 
-		BreadcrumbEntry defaultBreadcrumbEntry = new BreadcrumbEntry();
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(
+						_httpServletRequest,
+						_group.getDescriptiveName(_themeDisplay.getLocale())));
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.create(
+						_portletURL
+					).setParameter(
+						"fragmentCollectionId", StringPool.BLANK
+					).buildString());
+			}
+		).add(
+			() -> getFragmentCollectionId() > 0,
+			breadcrumbEntry -> {
+				FragmentCollection fragmentCollection =
+					FragmentCollectionLocalServiceUtil.getFragmentCollection(
+						getFragmentCollectionId());
 
-		defaultBreadcrumbEntry.setTitle(
-			LanguageUtil.get(
-				_httpServletRequest,
-				_group.getDescriptiveName(_themeDisplay.getLocale())));
-		defaultBreadcrumbEntry.setURL(
-			PortletURLBuilder.create(
-				_portletURL
-			).setParameter(
-				"fragmentCollectionId", StringPool.BLANK
-			).buildString());
-
-		breadcrumbEntries.add(defaultBreadcrumbEntry);
-
-		if (getFragmentCollectionId() > 0) {
-			defaultBreadcrumbEntry.setBrowsable(false);
-
-			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-			FragmentCollection fragmentCollection =
-				FragmentCollectionLocalServiceUtil.getFragmentCollection(
-					getFragmentCollectionId());
-
-			breadcrumbEntry.setTitle(fragmentCollection.getName());
-
-			breadcrumbEntries.add(breadcrumbEntry);
-		}
-
-		return breadcrumbEntries;
+				breadcrumbEntry.setTitle(fragmentCollection.getName());
+			}
+		).build();
 	}
 
 	public long getFragmentCollectionId() {

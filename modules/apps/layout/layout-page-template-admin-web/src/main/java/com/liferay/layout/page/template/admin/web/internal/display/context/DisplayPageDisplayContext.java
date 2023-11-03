@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryBuilder;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -254,35 +256,56 @@ public class DisplayPageDisplayContext {
 	}
 
 	public List<BreadcrumbEntry> getLayoutPageTemplateBreadcrumbEntries() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setTabs1(
-			"display-page-templates"
-		).buildPortletURL();
+		return BreadcrumbEntryListBuilder.add(
+			breadcrumbEntry -> {
+				breadcrumbEntry.setTitle(
+					LanguageUtil.get(_httpServletRequest, "home"));
+				breadcrumbEntry.setURL(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setTabs1(
+						"display-page-templates"
+					).setParameter(
+						"layoutPageTemplateCollectionId",
+						LayoutPageTemplateConstants.
+							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT
+					).buildString());
+			}
+		).addAll(
+			() ->
+				_getLayoutPageTemplateCollectionId() !=
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			() -> {
+				LayoutPageTemplateCollection layoutPageTemplateCollection =
+					LayoutPageTemplateCollectionLocalServiceUtil.
+						fetchLayoutPageTemplateCollection(
+							_getLayoutPageTemplateCollectionId());
 
-		if (_getLayoutPageTemplateCollectionId() ==
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) {
+				List<LayoutPageTemplateCollection>
+					layoutPageTemplateCollections =
+						layoutPageTemplateCollection.getAncestors();
 
-			return Collections.singletonList(
-				_getRootBreadcrumbEntry(portletURL));
-		}
+				Collections.reverse(layoutPageTemplateCollections);
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			LayoutPageTemplateCollectionLocalServiceUtil.
-				fetchLayoutPageTemplateCollection(
-					_getLayoutPageTemplateCollectionId());
-
-		List<BreadcrumbEntry> breadcrumbEntries = TransformUtil.transform(
-			layoutPageTemplateCollection.getAncestors(),
-			curLayoutPageTemplateCollection -> _createBreadcrumbEntry(
-				curLayoutPageTemplateCollection, portletURL));
-
-		breadcrumbEntries.add(_getRootBreadcrumbEntry(portletURL));
-
-		Collections.reverse(breadcrumbEntries);
-
-		return breadcrumbEntries;
+				return TransformUtil.transform(
+					layoutPageTemplateCollections,
+					curLayoutPageTemplateCollection ->
+						BreadcrumbEntryBuilder.setTitle(
+							curLayoutPageTemplateCollection.getName()
+						).setURL(
+							PortletURLBuilder.createRenderURL(
+								_renderResponse
+							).setTabs1(
+								"display-page-templates"
+							).setParameter(
+								"layoutPageTemplateCollectionId",
+								curLayoutPageTemplateCollection.
+									getLayoutPageTemplateCollectionId()
+							).buildString()
+						).build());
+			}
+		).build();
 	}
 
 	public long getLayoutPageTemplateEntryId() {
@@ -407,25 +430,6 @@ public class DisplayPageDisplayContext {
 		return false;
 	}
 
-	private BreadcrumbEntry _createBreadcrumbEntry(
-		LayoutPageTemplateCollection layoutPageTemplateCollection,
-		PortletURL portletURL) {
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(layoutPageTemplateCollection.getName());
-
-		portletURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId()));
-
-		breadcrumbEntry.setURL(portletURL.toString());
-
-		return breadcrumbEntry;
-	}
-
 	private Map<Long, Long[]> _getClassNameIdsMap() {
 		if (_classNameIdsMap != null) {
 			return _classNameIdsMap;
@@ -534,23 +538,6 @@ public class DisplayPageDisplayContext {
 		}
 
 		return null;
-	}
-
-	private BreadcrumbEntry _getRootBreadcrumbEntry(PortletURL portletURL) {
-		BreadcrumbEntry homeBreadcrumbEntry = new BreadcrumbEntry();
-
-		homeBreadcrumbEntry.setTitle(
-			LanguageUtil.get(_httpServletRequest, "home"));
-
-		portletURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
-
-		homeBreadcrumbEntry.setURL(portletURL.toString());
-
-		return homeBreadcrumbEntry;
 	}
 
 	private Map<Long, Long[]> _classNameIdsMap;

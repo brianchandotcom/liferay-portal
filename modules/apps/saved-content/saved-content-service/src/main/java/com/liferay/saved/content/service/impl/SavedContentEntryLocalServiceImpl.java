@@ -14,8 +14,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.saved.content.exception.DuplicateSavedContentEntryException;
 import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.service.base.SavedContentEntryLocalServiceBaseImpl;
@@ -34,27 +32,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SavedContentEntryLocalServiceImpl
 	extends SavedContentEntryLocalServiceBaseImpl {
-
-	private void _addEntryResources(
-			SavedContentEntry entry, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException {
-
-		_resourceLocalService.addResources(
-			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
-			SavedContentEntry.class.getName(), entry.getSavedContentEntryId(),
-			false, addGroupPermissions, addGuestPermissions);
-	}
-
-	private void _addEntryResources(
-			SavedContentEntry entry, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		_resourceLocalService.addModelResources(
-			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
-			SavedContentEntry.class.getName(), entry.getSavedContentEntryId(),
-			modelPermissions);
-	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -96,13 +73,21 @@ public class SavedContentEntryLocalServiceImpl
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
 
-			_addEntryResources(
-				savedContentEntry, serviceContext.isAddGroupPermissions(),
+			_resourceLocalService.addResources(
+				savedContentEntry.getCompanyId(),
+				savedContentEntry.getGroupId(), savedContentEntry.getUserId(),
+				SavedContentEntry.class.getName(),
+				savedContentEntry.getSavedContentEntryId(), false,
+				serviceContext.isAddGroupPermissions(),
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			_addEntryResources(
-				savedContentEntry, serviceContext.getModelPermissions());
+			_resourceLocalService.addModelResources(
+				savedContentEntry.getCompanyId(),
+				savedContentEntry.getGroupId(), savedContentEntry.getUserId(),
+				SavedContentEntry.class.getName(),
+				savedContentEntry.getSavedContentEntryId(),
+				serviceContext.getModelPermissions());
 		}
 
 		return savedContentEntry;

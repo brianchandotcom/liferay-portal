@@ -349,7 +349,7 @@ public interface ObjectEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectEntriesCount(long groupId, long objectDefinitionId);
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getObjectEntriesCount(
 			long groupId, ObjectDefinition objectDefinition,
 			Predicate predicate)

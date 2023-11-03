@@ -610,7 +610,7 @@ definition {
 
 		Workflow.viewTaskAssignedToMyRoles(
 			workflowAssetTitle = "Order",
-			workflowAssetType = "Commerce Order",
+			workflowAssetType = "Order",
 			workflowTask = "Review");
 	}
 

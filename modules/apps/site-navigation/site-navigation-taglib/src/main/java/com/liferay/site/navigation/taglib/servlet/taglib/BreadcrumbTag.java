@@ -5,6 +5,7 @@
 
 package com.liferay.site.navigation.taglib.servlet.taglib;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntryContributorUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
@@ -25,8 +26,16 @@ public class BreadcrumbTag extends IncludeTag {
 		return _breadcrumbEntries;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
 	public void setBreadcrumbEntries(List<BreadcrumbEntry> breadcrumbEntries) {
 		_breadcrumbEntries = breadcrumbEntries;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
 	}
 
 	@Override
@@ -41,6 +50,7 @@ public class BreadcrumbTag extends IncludeTag {
 		super.cleanUp();
 
 		_breadcrumbEntries = new ArrayList<>();
+		_cssClass = StringPool.BLANK;
 	}
 
 	@Override
@@ -54,10 +64,13 @@ public class BreadcrumbTag extends IncludeTag {
 			"liferay-site-navigation:breadcrumb:breadcrumbEntries",
 			BreadcrumbEntryContributorUtil.contribute(
 				_breadcrumbEntries, httpServletRequest));
+		httpServletRequest.setAttribute(
+			"liferay-site-navigation:breadcrumb:cssClass", _cssClass);
 	}
 
 	private static final String _PAGE = "/breadcrumb/page.jsp";
 
 	private List<BreadcrumbEntry> _breadcrumbEntries = new ArrayList<>();
+	private String _cssClass = StringPool.BLANK;
 
 }

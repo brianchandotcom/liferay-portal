@@ -7,10 +7,21 @@ import {useOutletContext} from 'react-router-dom';
 
 import solutionsIcon from '../../../assets/icons/analytics_icon.svg';
 import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {DashboardPage} from '../../DashBoardPage/DashboardPage';
+import {usePurchasedOrders} from '../usePurchasedOrders';
 
 const Solutions = () => {
-	const {solutionsItems} = useOutletContext<any>();
+	const {selectedAccount} = useOutletContext<any>();
+	const {channel} = useMarketplaceContext();
+
+	const {data: placedOrders = {items: []}} = usePurchasedOrders({
+		accountId: selectedAccount.id,
+		channelId: channel.id,
+		orderTypeExternalReferenceCodes: ['SOLUTION30'],
+		page: 1,
+		pageSize: 20,
+	});
 
 	return (
 		<DashboardPage
@@ -28,7 +39,7 @@ const Solutions = () => {
 					title: 'No Solutions Yet',
 				}}
 				icon={solutionsIcon}
-				items={solutionsItems}
+				items={placedOrders.items}
 				tableHeaders={[]}
 			/>
 		</DashboardPage>

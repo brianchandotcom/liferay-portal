@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.methods.MethodFactory;
-import com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil;
+import com.liferay.portal.webdav.methods.MethodFactoryImpl;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -52,7 +52,7 @@ public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 
 	@Override
 	public MethodFactory getMethodFactory() {
-		return MethodFactoryRegistryUtil.getDefaultMethodFactory();
+		return _methodFactory;
 	}
 
 	@Override
@@ -157,6 +157,8 @@ public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 
 		return false;
 	}
+
+	private static final MethodFactory _methodFactory = new MethodFactoryImpl();
 
 	private String _rootPath;
 	private String _token;

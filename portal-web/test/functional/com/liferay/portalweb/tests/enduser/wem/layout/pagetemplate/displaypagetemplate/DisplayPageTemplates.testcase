@@ -360,6 +360,10 @@ definition {
 
 			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name (Copy)");
 
+			LexiconCard.viewCardSubtitle(
+				card = "Display Page Name (Copy)",
+				cardSubtitle = "Web Content Article - Basic Web Content");
+
 			LexiconCard.viewCardLabel(
 				card = "Display Page Name (Copy)",
 				cardLabel = "Draft");

@@ -412,6 +412,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192724. When copying a published DPT, the copy is the same as the published one. The copy of a DPT is the same as the last version."
+	@priority = 4
+	test CopyDisplayPageTemplateWithContent {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a page creator has a published display page template with content") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator makes a copy of display page template") {
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Make a Copy");
+
+			MenuItem.click(menuItem = "Display Page");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the copy of display page template should keep the content") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name (Copy)");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
+
+		task ("When the page creator makes a copy of original display page template with draft") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Welcome to Liferay");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Make a Copy");
+
+			MenuItem.click(menuItem = "Display Page");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the copy of display page template should keep the same content with last published version") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name (Copy 1)");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
+	}
+
 	@description = "User can delete default display page template."
 	@priority = 5
 	@uitest

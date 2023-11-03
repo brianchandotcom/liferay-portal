@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
@@ -23,7 +23,7 @@ import {SelectPaymentMethod} from './components/SelectPaymentMethod/SelectPaymen
 import StepWizard from './components/StepWizard/StepWizard';
 import {initialBillingAddress} from './constants/initialBillingAddress';
 import {LicenseType} from './enums/licenseType';
-import {paymentMethod} from './enums/paymentMethod';
+import {PaymentMethod} from './enums/paymentMethod';
 import {SkuOptions} from './enums/skuOptions';
 import {StepType} from './enums/stepType';
 import useGetAddresses from './hooks/useGetAddresses';
@@ -40,7 +40,7 @@ import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 export type GetAppForm = {
 	account?: Account;
 	product?: Product;
-	selectedPaymentMethod: paymentMethod;
+	selectedPaymentMethod: PaymentMethod;
 	selectedSKU?: SKU;
 	selectedTimeline?: string;
 	userAccount?: UserAccount;
@@ -56,7 +56,7 @@ const GetAppFlow = () => {
 		false
 	);
 	const [enableTrialMethod, setEnableTrialMethod] = useState<boolean>(false);
-	const [licenseSelected, setLincenseSelected] = useState<boolean>(false);
+	const [licenseSelected, setLicenseSelected] = useState<boolean>(false);
 	const [orderType, setOrderType] = useState<OrderType>();
 	const [purchaseOrderNumber, setPurchaseOrderNumber] = useState<string>('');
 	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
@@ -67,7 +67,7 @@ const GetAppFlow = () => {
 		defaultValues: {
 			account: undefined,
 			product: undefined,
-			selectedPaymentMethod: paymentMethod.PAY,
+			selectedPaymentMethod: PaymentMethod.PAY,
 			selectedSKU: undefined,
 			selectedTimeline: '',
 		},
@@ -91,12 +91,11 @@ const GetAppFlow = () => {
 
 	useEffect(() => {
 		if (cartUtil?.cartItems?.length) {
-			setLincenseSelected(true);
+			setLicenseSelected(true);
 			setEnablePurchaseButton(true);
-		}
-		else {
+		} else {
 			setEnablePurchaseButton(false);
-			setLincenseSelected(false);
+			setLicenseSelected(false);
 		}
 	}, [cartUtil?.cartItems?.length]);
 
@@ -167,7 +166,7 @@ const GetAppFlow = () => {
 			`${encodeURIComponent(cartResponse.id)}`
 		);
 
-		if (selectedPaymentMethod === paymentMethod.PAY) {
+		if (selectedPaymentMethod === PaymentMethod.PAY) {
 			const paymentMethodURL = await getPaymentMethodURL(
 				cartResponse.id,
 				nextStepsCallbackURL
@@ -181,69 +180,87 @@ const GetAppFlow = () => {
 		window.location.href = nextStepsCallbackURL;
 	}
 
-	const StepsInformation = {
-		[StepType.ACCOUNT]: {
-			backStep: StepType.ACCOUNT,
-			component: (
-				<AccountSelection
-					onSelectAccount={(account: Account) => {
-						setValue('account', account);
-					}}
-					selectedAccount={account}
-					userAccount={myUserAccount}
-				/>
-			),
-			nextStep: StepType.LICENSES,
-			stepTitle: 'Account',
-			title: 'Account Selection',
-		},
-		[StepType.LICENSES]: {
-			backStep: StepType.ACCOUNT,
-			component: (
-				<LicenseSelector
-					cartUtil={cartUtil}
-					formUtils={{
-						setValue,
-						watch,
-					}}
-					onSelectLicense={(sku?: SKU) =>
-						setValue('selectedSKU', sku)
-					}
-					selectedProduct={product}
-					setLicenseSelected={setLincenseSelected}
-					sku={sku}
-				/>
-			),
-			nextStep: StepType.PAYMENT,
-			stepTitle: 'Licenses',
-			title: 'License Selection',
-		},
-		[StepType.PAYMENT]: {
-			backStep: StepType.LICENSES,
-			component: (
-				<SelectPaymentMethod
-					addresses={addresses}
-					billingAddress={billingAddress}
-					email={email}
-					enableTrialMethod={enableTrialMethod}
-					form={{
-						setValue,
-						watch,
-					}}
-					purchaseOrderNumber={purchaseOrderNumber}
-					selectedPaymentMethod={selectedPaymentMethod}
-					setBillingAddress={setBillingAddress}
-					setEmail={setEmail}
-					setEnablePurchaseButton={setEnablePurchaseButton}
-					setPurchaseOrderNumber={setPurchaseOrderNumber}
-					step={step}
-				/>
-			),
-			nextStep: StepType.PAYMENT,
-			stepTitle: 'Payment Method',
-			title: 'Payment Method',
-		},
-	};
+	const StepsInformation = useMemo(
+		() => ({
+			[StepType.ACCOUNT]: {
+				backStep: StepType.ACCOUNT,
+				component: (
+					<AccountSelection
+						onSelectAccount={(account: Account) => {
+							setValue('account', account);
+						}}
+						selectedAccount={account}
+						userAccount={myUserAccount}
+					/>
+				),
+				nextStep: StepType.LICENSES,
+				stepTitle: 'Account',
+				title: 'Account Selection',
+			},
+			[StepType.LICENSES]: {
+				backStep: StepType.ACCOUNT,
+				component: (
+					<LicenseSelector
+						cartUtil={cartUtil}
+						formUtils={{
+							setValue,
+							watch,
+						}}
+						onSelectLicense={(sku?: SKU) =>
+							setValue('selectedSKU', sku)
+						}
+						selectedProduct={product}
+						setLicenseSelected={setLicenseSelected}
+						sku={sku}
+					/>
+				),
+				nextStep: StepType.PAYMENT,
+				stepTitle: 'Licenses',
+				title: 'License Selection',
+			},
+			[StepType.PAYMENT]: {
+				backStep: StepType.LICENSES,
+				component: (
+					<SelectPaymentMethod
+						addresses={addresses}
+						billingAddress={billingAddress}
+						email={email}
+						enableTrialMethod={enableTrialMethod}
+						form={{
+							setValue,
+							watch,
+						}}
+						purchaseOrderNumber={purchaseOrderNumber}
+						selectedPaymentMethod={selectedPaymentMethod}
+						setBillingAddress={setBillingAddress}
+						setEmail={setEmail}
+						setEnablePurchaseButton={setEnablePurchaseButton}
+						setPurchaseOrderNumber={setPurchaseOrderNumber}
+						step={step}
+					/>
+				),
+				nextStep: StepType.PAYMENT,
+				stepTitle: 'Payment Method',
+				title: 'Payment Method',
+			},
+		}),
+		[
+			account,
+			addresses,
+			billingAddress,
+			cartUtil,
+			email,
+			enableTrialMethod,
+			myUserAccount,
+			product,
+			purchaseOrderNumber,
+			selectedPaymentMethod,
+			setValue,
+			sku,
+			step,
+			watch,
+		]
+	);
 
 	const getProductBasePriceAndTrial = (skus: SKU[]) => {
 		skus?.forEach((sku) => {
@@ -375,7 +392,6 @@ const GetAppFlow = () => {
 
 					<div>{StepsInformation[step].component}</div>
 				</div>
-
 				<ProductFooter
 					addresses={addresses}
 					cartUtil={cartUtil}

@@ -14,18 +14,16 @@ import {DashboardPage} from '../../DashBoardPage/DashboardPage';
 import {PurchasedAppProps} from '../PurchasedAppsDashboardOutlet';
 import {tableHeaders} from '../PurchasedDashboardPageUtil';
 
-const appMessages = {
-	description: 'Manage apps purchase from the Marketplace',
-	title: 'My Apps',
-};
-
 const Apps = () => {
 	const {page, purchasedAppTable, setPage} = useOutletContext<any>();
 
 	return (
 		<DashboardPage
 			buttonMessage="Add Apps"
-			messages={appMessages}
+			messages={{
+				description: 'Manage apps purchase from the Marketplace',
+				title: 'My Apps',
+			}}
 			onButtonClick={() => {
 				window.location.href = getSiteURL();
 			}}

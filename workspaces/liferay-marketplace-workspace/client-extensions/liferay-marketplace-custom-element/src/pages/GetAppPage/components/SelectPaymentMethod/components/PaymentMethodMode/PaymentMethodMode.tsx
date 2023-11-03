@@ -6,26 +6,24 @@
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
 
-const paymentModes: PaymentMethodMode[] = ['PayPal'];
+const paymentModes = ['PayPal'];
 
-export function PaymentMethodMode({
+const PaymentMethodMode = ({
 	selectedPaymentMethod,
 }: {
 	selectedPaymentMethod: PaymentMethodSelector;
-}) {
-	return (
-		<Section className="get-app-modal-section" label="Payment Method">
-			{paymentModes.map((paymentMode, i) => {
-				return (
-					<RadioCard
-						key={i}
-						onChange={() => {}}
-						selected={selectedPaymentMethod === 'pay'}
-						small
-						title={paymentMode}
-					/>
-				);
-			})}
-		</Section>
-	);
-}
+}) => (
+	<Section className="get-app-modal-section" label="Payment Method">
+		{paymentModes.map((paymentMode, index) => (
+			<RadioCard
+				key={index}
+				onChange={() => {}}
+				selected={selectedPaymentMethod === 'pay'}
+				small
+				title={paymentMode}
+			/>
+		))}
+	</Section>
+);
+
+export {PaymentMethodMode};

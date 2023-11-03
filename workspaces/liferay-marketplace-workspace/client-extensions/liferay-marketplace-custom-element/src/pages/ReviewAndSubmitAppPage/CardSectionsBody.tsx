@@ -142,7 +142,7 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 								to: '1',
 							}}
 							value={
-								app?.price.toLocaleString('en-US', {
+								app?.price?.toLocaleString('en-US', {
 									currency: 'USD',
 									style: 'currency',
 								}) as string
@@ -159,35 +159,33 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 				sectionName="Storefront"
 			>
 				<div>
-					{app?.storefront?.map(({id, src, title}) => {
-						return (
-							<div
-								className="card-section-body-section-files"
-								key={id}
-							>
-								<div className="card-section-body-section-files-container">
-									<img
-										className="preview-image"
-										src={removeUnnecessaryURLString(src)}
-									/>
-								</div>
-
-								<div className="card-section-body-section-files-data">
-									<img
-										alt={title['en_US']}
-										className="card-section-body-section-files-data-icon"
-										src={documentIcon}
-									/>
-
-									<span className="card-section-body-section-files-data-name">
-										{title['en_US']}
-									</span>
-
-									<span className="card-section-body-section-files-data-description"></span>
-								</div>
+					{app?.storefront?.map(({id, src, title}) => (
+						<div
+							className="card-section-body-section-files"
+							key={id}
+						>
+							<div className="card-section-body-section-files-container">
+								<img
+									className="preview-image"
+									src={removeUnnecessaryURLString(src)}
+								/>
 							</div>
-						);
-					})}
+
+							<div className="card-section-body-section-files-data">
+								<img
+									alt={title['en_US']}
+									className="card-section-body-section-files-data-icon"
+									src={documentIcon}
+								/>
+
+								<span className="card-section-body-section-files-data-name">
+									{title['en_US']}
+								</span>
+
+								<span className="card-section-body-section-files-data-description"></span>
+							</div>
+						</div>
+					))}
 
 					<div className="card-section-body-section-files-info">
 						Important: Images will be displayed following the
@@ -227,11 +225,11 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 				required
 				sectionName="Support & Help"
 			>
-				{app?.supportAndHelp.map(({icon, link, title}) => (
+				{app?.supportAndHelp.map(({icon, link, title}, index) => (
 					<CardLink
 						description={link as string}
 						icon={icon}
-						key={title}
+						key={index}
 						title={title as string}
 					/>
 				))}

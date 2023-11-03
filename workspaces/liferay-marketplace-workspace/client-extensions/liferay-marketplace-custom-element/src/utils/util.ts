@@ -100,7 +100,8 @@ export function getThumbnailByProductAttachment(
 		return !!customField;
 	};
 
-	const thumbnail = attachments.find(findThumbnailWithAppIcon);
+	const thumbnail =
+		attachments.find(findThumbnailWithAppIcon) ?? attachments[0];
 
 	return thumbnail?.src;
 }
@@ -133,7 +134,7 @@ export function getValueFromSpecifications(
 	return value;
 }
 
-export function showAccountImage(url?: string) {
+export function getAccountImage(url?: string) {
 	return url?.includes('img_id=0') || !url ? accountPlaceholder : url;
 }
 
@@ -177,8 +178,7 @@ async function submitSpecification(
 		});
 
 		return -1;
-	}
-	else {
+	} else {
 		const {id} = await createProductSpecification({
 			appId,
 			body: {
@@ -247,14 +247,12 @@ export async function submitBase64EncodedFile({
 
 				if (result?.includes('application/zip')) {
 					result = result?.substring(28);
-				}
-				else if (
+				} else if (
 					result?.includes('image/gif') ||
 					result?.includes('image/png')
 				) {
 					result = result?.substring(22);
-				}
-				else if (result?.includes('image/jpeg')) {
+				} else if (result?.includes('image/jpeg')) {
 					result = result?.substring(23);
 				}
 

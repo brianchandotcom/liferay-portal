@@ -7,7 +7,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 
-import {showAccountImage} from '../../utils/util';
+import {getAccountImage} from '../../utils/util';
 import {DashboardNavigationList} from './DashboardNavigationList';
 
 import './DashboardNavigation.scss';
@@ -50,7 +50,7 @@ export function DashboardNavigation({
 							<img
 								alt="account logo"
 								className="dashboard-navigation-header-logo"
-								src={showAccountImage(accountIcon)}
+								src={getAccountImage(accountIcon)}
 							/>
 
 							<div className="dashboard-navigation-header-text-container">

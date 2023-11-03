@@ -18,7 +18,7 @@ const LicenseSectorCard: React.FC<any> = ({
 	cartUtil,
 	licenseDescription,
 	licensetiers,
-	lisenceType,
+	lisenceType = '',
 	productId,
 	sku,
 }) => {
@@ -51,39 +51,37 @@ const LicenseSectorCard: React.FC<any> = ({
 					</div>
 				</span>
 				<div className="align-items-center d-flex justify-content-between license__card__buttons__container p-1">
-					<span>
-						<ClayButton
-							aria-label="Remove from Cart"
-							className="align-items-center d-flex justify-content-center license__card__buttons p-2"
-							disabled={count === MIN_ITEM}
-							displayType="primary"
-							onClick={() => cartUtil.removeFromCart(sku.id)}
-						>
-							<ClayIcon
-								aria-label="Divider"
-								className="license__card__buttons__icon"
-								symbol="hr"
-							/>
-						</ClayButton>
+					<ClayButton
+						aria-label="Remove from Cart"
+						className="align-items-center d-flex justify-content-center license__card__buttons p-2"
+						disabled={count === MIN_ITEM}
+						displayType="primary"
+						onClick={() => cartUtil.removeFromCart(sku.id)}
+					>
+						<ClayIcon
+							aria-label="Divider"
+							className="license__card__buttons__icon"
+							symbol="hr"
+						/>
+					</ClayButton>
+
+					<span className="d-flex justify-content-center license__card__buttons__container__count">
+						{count}
 					</span>
-					<span className="d-flex justify-content-center license__card__buttons__container__conut">
-						{count.toString()}
-					</span>
-					<span>
-						<ClayButton
-							aria-label="Add To Cart"
-							className="align-items-center d-flex justify-content-center license__card__buttons p-2"
-							disabled={count === MAX_ITEM}
-							displayType="primary"
-							onClick={() => cartUtil.addCart(productId, sku.id)}
-						>
-							<ClayIcon
-								aria-label="Plus Button"
-								className="license__card__buttons__icon"
-								symbol="plus"
-							/>
-						</ClayButton>
-					</span>
+
+					<ClayButton
+						aria-label="Add To Cart"
+						className="align-items-center d-flex justify-content-center license__card__buttons p-2"
+						disabled={count === MAX_ITEM}
+						displayType="primary"
+						onClick={() => cartUtil.addCart(productId, sku.id)}
+					>
+						<ClayIcon
+							aria-label="Plus Button"
+							className="license__card__buttons__icon"
+							symbol="plus"
+						/>
+					</ClayButton>
 				</div>
 			</div>
 

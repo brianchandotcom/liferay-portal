@@ -8,7 +8,7 @@ import {UseFormSetValue, UseFormWatch} from 'react-hook-form';
 
 import {Input} from '../../../../components/Input/Input';
 import {GetAppForm} from '../../GetAppPage';
-import {paymentMethod} from '../../enums/paymentMethod';
+import {PaymentMethod} from '../../enums/paymentMethod';
 import {StepType} from '../../enums/stepType';
 import {BillingAddress} from './components/BillingAddress/BillingAddress';
 import {PaymentMethodMode} from './components/PaymentMethodMode/PaymentMethodMode';
@@ -55,23 +55,25 @@ export function SelectPaymentMethod({
 			<div className="d-flex justify-content-between mb-6">
 				<PaymentMethodSelector
 					enableTrial={enableTrialMethod}
-					selectedPaymentMethod={selectedPaymentMethod as string}
-					setSelectedPaymentMethod={(value: paymentMethod) =>
+					selectedPaymentMethod={
+						selectedPaymentMethod as PaymentMethod
+					}
+					setSelectedPaymentMethod={(value: PaymentMethod) =>
 						form.setValue('selectedPaymentMethod', value)
 					}
 					step={step}
 				/>
 			</div>
 
-			{selectedPaymentMethod === paymentMethod.TRIAL && <TrialMethod />}
+			{selectedPaymentMethod === PaymentMethod.TRIAL && <TrialMethod />}
 
-			{selectedPaymentMethod === paymentMethod.PAY && (
+			{selectedPaymentMethod === PaymentMethod.PAY && (
 				<PaymentMethodMode
 					selectedPaymentMethod={selectedPaymentMethod}
 				/>
 			)}
 
-			{selectedPaymentMethod === paymentMethod.ORDER && (
+			{selectedPaymentMethod === PaymentMethod.ORDER && (
 				<>
 					<Input
 						label="Purchase order number"

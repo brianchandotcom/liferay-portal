@@ -7,16 +7,32 @@ import credit_card_icon from '../../../../../../assets/icons/credit_card_icon.sv
 import document_icon from '../../../../../../assets/icons/document_icon.svg';
 import task_checked_icon from '../../../../../../assets/icons/task_checked_icon.svg';
 import {CardButton} from '../../../../../../components/CardButton/CardButton';
-import {paymentMethod} from '../../../../enums/paymentMethod';
+import {PaymentMethod} from '../../../../enums/paymentMethod';
 import {StepType} from '../../../../enums/stepType';
 
-interface PaymentMethodInfo {
-	description: string;
-	disabled?: boolean;
-	icon: string;
-	method: paymentMethod;
-	title: string;
-}
+const getPaymentMethods = (selectedPaymentMethod: PaymentMethod) => [
+	{
+		description: 'Try Now. Pay Later.',
+		disabled: selectedPaymentMethod === PaymentMethod.PAY,
+		icon: task_checked_icon,
+		method: PaymentMethod.TRIAL,
+		title: '30-day trial',
+	},
+	{
+		description: 'Pay Today',
+		disabled: selectedPaymentMethod !== PaymentMethod.PAY,
+		icon: credit_card_icon,
+		method: PaymentMethod.PAY,
+		title: 'Pay Now',
+	},
+	{
+		description: 'Requires a PO Number',
+		disabled: selectedPaymentMethod !== PaymentMethod.PAY,
+		icon: document_icon,
+		method: PaymentMethod.ORDER,
+		title: 'Invoice',
+	},
+];
 
 export function PaymentMethodSelector({
 	selectedPaymentMethod,
@@ -24,50 +40,26 @@ export function PaymentMethodSelector({
 	step,
 }: {
 	enableTrial: boolean;
-	selectedPaymentMethod: string;
-	setSelectedPaymentMethod: (value: paymentMethod) => void;
+	selectedPaymentMethod: PaymentMethod;
+	setSelectedPaymentMethod: (value: PaymentMethod) => void;
 	step: StepType;
 }) {
-	const paymentMethods: PaymentMethodInfo[] = [
-		{
-			description: 'Try Now. Pay Later.',
-			disabled: selectedPaymentMethod === paymentMethod.PAY,
-			icon: task_checked_icon,
-			method: paymentMethod.TRIAL,
-			title: '30-day trial',
-		},
-		{
-			description: 'Pay Today',
-			disabled: selectedPaymentMethod !== paymentMethod.PAY,
-			icon: credit_card_icon,
-			method: paymentMethod.PAY,
-			title: 'Pay Now',
-		},
-		{
-			description: 'Requires a PO Number',
-			disabled: selectedPaymentMethod !== paymentMethod.PAY,
-			icon: document_icon,
-			method: paymentMethod.ORDER,
-			title: 'Invoice',
-		},
-	];
+	const paymentMethods = getPaymentMethods(selectedPaymentMethod);
 
 	return (
 		<>
-			{paymentMethods.map((methodInfo) => (
+			{paymentMethods.map((paymentMethod, index) => (
 				<CardButton
-					description={methodInfo.description}
-					disabled={methodInfo.disabled || false}
-					icon={methodInfo.icon}
-					key={methodInfo.method}
+					{...paymentMethod}
+					disabled={paymentMethod.disabled || false}
+					key={index}
 					onClick={() => {
-						if (!methodInfo.disabled) {
-							setSelectedPaymentMethod(methodInfo.method);
+						if (!paymentMethod.disabled) {
+							setSelectedPaymentMethod(paymentMethod.method);
 						}
 					}}
-					selected={methodInfo.method === selectedPaymentMethod}
+					selected={paymentMethod.method === selectedPaymentMethod}
 					step={step}
-					title={methodInfo.title}
 				/>
 			))}
 		</>

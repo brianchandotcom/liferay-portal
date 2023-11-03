@@ -9,7 +9,7 @@ import infoCircleIcon from '../../../assets/icons/info_circle_icon.svg';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import useCart from '../../../hooks/useCart';
 import {Liferay} from '../../../liferay/liferay';
-import {paymentMethod} from '../enums/paymentMethod';
+import {PaymentMethod} from '../enums/paymentMethod';
 import {StepType} from '../enums/stepType';
 
 interface ProductFooterProps {
@@ -61,33 +61,27 @@ const ProductFooter = ({
 			return 'Continue';
 		}
 
-		if (selectedPaymentMethod === paymentMethod.PAY) {
-			return `Pay ${cartUtil?.cart?.summary?.totalFormatted} Now`;
+		if (selectedPaymentMethod === PaymentMethod.PAY) {
+			return `Pay ${cartUtil?.cart?.summary?.totalFormatted ?? 0} Now`;
 		}
 
-		if (selectedPaymentMethod === paymentMethod.TRIAL) {
+		if (selectedPaymentMethod === PaymentMethod.TRIAL) {
 			return 'Start Free Trial';
 		}
 
-		if (selectedPaymentMethod === paymentMethod.ORDER) {
+		if (selectedPaymentMethod === PaymentMethod.ORDER) {
 			return `Create PO for ${cartUtil?.cart?.summary?.totalFormatted}`;
 		}
 	};
 
-	const onPrevious = async (previousStep: StepType) => {
-		setStep(previousStep);
-
-		return;
-	};
+	const onPrevious = (previousStep: StepType) => setStep(previousStep);
 
 	const onContinue = async (nextStep: StepType) => {
 		const isAccountStep = step === StepType.ACCOUNT;
 		const isLicenseStep = step === StepType.LICENSES;
 
 		if ((!isFreeApp && isAccountStep && selectedAccount) || isLicenseStep) {
-			setStep(nextStep);
-
-			return;
+			return setStep(nextStep);
 		}
 
 		const isPaymentStep = step === StepType.PAYMENT;
@@ -146,7 +140,7 @@ const ProductFooter = ({
 
 			{!isFreeApp &&
 				step === StepType.PAYMENT &&
-				selectedPaymentMethod === paymentMethod.PAY && (
+				selectedPaymentMethod === PaymentMethod.PAY && (
 					<div className="align-items-end d-flex flex-column mt-4">
 						<span>
 							You will be redirected to PayPal to complete payment

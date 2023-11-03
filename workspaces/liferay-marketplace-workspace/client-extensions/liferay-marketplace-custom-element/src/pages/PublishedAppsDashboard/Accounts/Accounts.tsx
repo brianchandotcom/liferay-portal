@@ -16,7 +16,7 @@ import userIcon from '../../../assets/icons/user_icon.svg';
 import {DetailedCard} from '../../../components/DetailedCard/DetailedCard';
 import {getAccountPostalAddressesByAccountId} from '../../../utils/api';
 import {getCustomFieldValue} from '../../../utils/customFieldUtil';
-import {removeProtocolURL, showAccountImage} from '../../../utils/util';
+import {getAccountImage, removeProtocolURL} from '../../../utils/util';
 
 import './Accounts.scss';
 import EmptyState from '../../../components/EmptyState';
@@ -112,7 +112,7 @@ function AccountDetailsPage({
 							<img
 								alt="Account Image"
 								className="account-details-header-left-content-image"
-								src={showAccountImage(commerceAccount?.logoURL)}
+								src={getAccountImage(commerceAccount?.logoURL)}
 							/>
 
 							<div className="account-details-header-left-content-text-container">

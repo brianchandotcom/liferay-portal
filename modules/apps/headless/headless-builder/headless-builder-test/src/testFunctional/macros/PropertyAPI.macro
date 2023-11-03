@@ -29,9 +29,15 @@ definition {
 		Variables.assertDefined(parameterList = "${objectFieldERC},${name},${schemaERC}");
 
 		var curl = PropertyAPI._curlAPIProperty(virtualHost = ${virtualHost});
+
+		if (!(isSet(relationshipName))) {
+			var relationshipName = "";
+		}
+
 		var body = '''
 			"name": "${name}",
 			"objectFieldERC": "${objectFieldERC}",
+			"objectRelationshipNames": "${relationshipName}",
 			"r_apiSchemaToAPIProperties_c_apiSchemaERC": "${schemaERC}"
 		''';
 

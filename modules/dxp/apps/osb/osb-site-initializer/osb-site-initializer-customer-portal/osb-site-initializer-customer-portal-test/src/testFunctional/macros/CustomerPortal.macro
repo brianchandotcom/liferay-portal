@@ -904,7 +904,7 @@ definition {
 	macro viewAlert(alertText = null) {
 		var key_alertText = ${alertText};
 
-		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
+		AssertElementPresent(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
 	}
 
 	@summary = "Default summary"

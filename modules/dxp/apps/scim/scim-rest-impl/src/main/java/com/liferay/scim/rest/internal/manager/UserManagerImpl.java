@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -247,20 +250,22 @@ public class UserManagerImpl implements UserManager {
 
 	private User _addOrUpdateUser(User user) throws CharonException {
 		try {
-			Company company = _companyLocalService.getCompany(
+			Company company = _companyLocalService.fetchCompany(
 				CompanyThreadLocal.getCompanyId());
 
-			ScimUser scimUser = _addOrUpdateScimUser(
-				ScimUserUtil.toScimUser(
-					company.getCompanyId(), company.getLocale(), user));
+			ScimUser scimUser = TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> _addOrUpdateScimUser(
+					ScimUserUtil.toScimUser(
+						company.getCompanyId(), company.getLocale(), user)));
 
 			return ScimUserUtil.toUser(scimUser);
 		}
-		catch (Exception exception) {
+		catch (Throwable throwable) {
 			throw new CharonException(
 				"Unable to provision a portal user for " +
 					user.getDisplayName(),
-				exception);
+				throwable);
 		}
 	}
 
@@ -558,6 +563,10 @@ public class UserManagerImpl implements UserManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserManagerImpl.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.SUPPORTS, new Class<?>[] {Exception.class});
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final CompanyLocalService _companyLocalService;

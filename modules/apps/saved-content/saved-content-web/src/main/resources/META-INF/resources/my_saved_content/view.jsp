@@ -31,10 +31,15 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 			keyProperty="savedContentEntryId"
 			modelVar="savedContentEntry"
 		>
+
+			<%
+			String assetTitle = mySavedContentDisplayContext.getAssetTitle(savedContentEntry.getClassName(), savedContentEntry.getClassPK());
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 			>
-				<p class="list-group-title"><%= mySavedContentDisplayContext.getAssetTitle(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %></p>
+				<p class="list-group-title"><%= assetTitle %></p>
 				<p class="list-group-subtitle"><%= ResourceActionsUtil.getModelResource(locale, savedContentEntry.getClassName()) %></p>
 			</liferay-ui:search-container-column-text>
 
@@ -44,6 +49,7 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 				<div class="btn-group">
 					<div class="btn-group-item">
 						<clay:link
+							aria-label='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
 							borderless="<%= true %>"
 							cssClass="lfr-portal-tooltip"
 							displayType="secondary"
@@ -59,6 +65,7 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 
 					<div class="btn-group-item">
 						<clay:link
+							aria-label='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escapeAttribute(assetTitle)) %>'
 							borderless="<%= true %>"
 							cssClass="lfr-portal-tooltip"
 							displayType="secondary"

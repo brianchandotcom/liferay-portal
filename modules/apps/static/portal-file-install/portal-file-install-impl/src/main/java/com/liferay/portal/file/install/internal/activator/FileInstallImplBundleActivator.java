@@ -16,11 +16,7 @@ import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import java.io.File;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -43,20 +39,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_jarFileInstallerServiceRegistration = _bundleContext.registerService(
 			FileInstaller.class, new DefaultJarInstaller(), null);
 
-		Collection<ServiceReference<DataSource>> serviceReferences =
-			bundleContext.getServiceReferences(
-				DataSource.class, "(bean.id=liferayDataSource)");
-
-		if ((serviceReferences == null) || serviceReferences.isEmpty()) {
-			throw new IllegalStateException(
-				"Liferay data source is not available");
-		}
-
-		Iterator<ServiceReference<DataSource>> iterator =
-			serviceReferences.iterator();
-
-		_serviceReference = iterator.next();
-
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, ConfigurationAdmin.class.getName(),
 			new ServiceTrackerCustomizer
@@ -74,7 +56,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 							FileInstaller.class.getName(),
 							new ConfigurationFileInstaller(
 								configurationAdmin,
-								_bundleContext.getService(_serviceReference),
 								ModuleFrameworkPropsValues.
 									MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING),
 							null),
@@ -124,10 +105,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 		_serviceTracker.close();
 
 		_jarFileInstallerServiceRegistration.unregister();
-
-		if (_serviceReference != null) {
-			bundleContext.ungetService(_serviceReference);
-		}
 	}
 
 	public void updateChecksum(File file) {
@@ -140,7 +117,6 @@ public class FileInstallImplBundleActivator implements BundleActivator {
 	private DirectoryWatcher _directoryWatcher;
 	private ServiceRegistration<FileInstaller>
 		_jarFileInstallerServiceRegistration;
-	private ServiceReference<DataSource> _serviceReference;
 	private ServiceTracker<ConfigurationAdmin, List<ServiceRegistration<?>>>
 		_serviceTracker;
 

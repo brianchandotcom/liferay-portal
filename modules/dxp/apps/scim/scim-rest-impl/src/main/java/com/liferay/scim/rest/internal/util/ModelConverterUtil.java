@@ -231,23 +231,22 @@ public class ModelConverterUtil {
 
 	private static boolean _isMale(User user) {
 		try {
-			ComplexAttribute liferayUserComplexAttribute =
+			ComplexAttribute complexAttribute =
 				(ComplexAttribute)user.getAttribute(
 					_LIFERAY_USER_SCHEMA_EXTENSION_URI);
 
-			if (liferayUserComplexAttribute == null) {
+			if (complexAttribute == null) {
 				return true;
 			}
 
-			SimpleAttribute maleAttribute =
-				(SimpleAttribute)liferayUserComplexAttribute.getSubAttribute(
-					"male");
+			SimpleAttribute simpleAttribute =
+				(SimpleAttribute)complexAttribute.getSubAttribute("male");
 
-			if (maleAttribute == null) {
+			if (simpleAttribute == null) {
 				return true;
 			}
 
-			return maleAttribute.getBooleanValue();
+			return simpleAttribute.getBooleanValue();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

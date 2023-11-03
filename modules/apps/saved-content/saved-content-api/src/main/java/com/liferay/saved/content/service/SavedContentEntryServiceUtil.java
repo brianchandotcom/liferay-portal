@@ -5,6 +5,9 @@
 
 package com.liferay.saved.content.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.saved.content.model.SavedContentEntry;
+
 /**
  * Provides the remote service utility for SavedContentEntry. This utility wraps
  * <code>com.liferay.saved.content.service.impl.SavedContentEntryServiceImpl</code> and is an
@@ -24,13 +27,36 @@ public class SavedContentEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.saved.content.service.impl.SavedContentEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static SavedContentEntry addSavedContentEntry(
+			long groupId, long userId, String className, long classPK,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSavedContentEntry(
+			groupId, userId, className, classPK, serviceContext);
+	}
+
+	public static void deleteSavedContentEntry(
+			SavedContentEntry savedContentEntry)
+		throws PortalException {
+
+		getService().deleteSavedContentEntry(savedContentEntry);
+	}
+
+	public static SavedContentEntry fetchSavedContentEntry(
+			long groupId, long userId, String className, long classPK)
+		throws PortalException {
+
+		return getService().fetchSavedContentEntry(
+			groupId, userId, className, classPK);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

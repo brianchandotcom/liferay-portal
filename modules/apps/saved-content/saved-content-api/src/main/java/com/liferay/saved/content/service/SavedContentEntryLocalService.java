@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -60,6 +61,11 @@ public interface SavedContentEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.saved.content.service.impl.SavedContentEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the saved content entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SavedContentEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public SavedContentEntry addSavedContentEntry(
+			long groupId, long userId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the saved content entry to the database. Also notifies the appropriate model listeners.
@@ -200,6 +206,10 @@ public interface SavedContentEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SavedContentEntry fetchSavedContentEntry(long savedContentEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SavedContentEntry fetchSavedContentEntry(
+		long groupId, long userId, String className, long classPK);
 
 	/**
 	 * Returns the saved content entry matching the UUID and group.

@@ -5,13 +5,21 @@
 
 package com.liferay.saved.content.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.saved.content.service.SavedContentEntryServiceUtil;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.saved.content.service.SavedContentEntryServiceUtil</code> service
+ * <code>SavedContentEntryServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -32,4 +40,140 @@ package com.liferay.saved.content.service.http;
  * @generated
  */
 public class SavedContentEntryServiceHttp {
+
+	public static com.liferay.saved.content.model.SavedContentEntry
+			addSavedContentEntry(
+				HttpPrincipal httpPrincipal, long groupId, long userId,
+				String className, long classPK,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SavedContentEntryServiceUtil.class, "addSavedContentEntry",
+				_addSavedContentEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, userId, className, classPK, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.saved.content.model.SavedContentEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static void deleteSavedContentEntry(
+			HttpPrincipal httpPrincipal,
+			com.liferay.saved.content.model.SavedContentEntry savedContentEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SavedContentEntryServiceUtil.class, "deleteSavedContentEntry",
+				_deleteSavedContentEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, savedContentEntry);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.saved.content.model.SavedContentEntry
+			fetchSavedContentEntry(
+				HttpPrincipal httpPrincipal, long groupId, long userId,
+				String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SavedContentEntryServiceUtil.class, "fetchSavedContentEntry",
+				_fetchSavedContentEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, userId, className, classPK);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.saved.content.model.SavedContentEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SavedContentEntryServiceHttp.class);
+
+	private static final Class<?>[] _addSavedContentEntryParameterTypes0 =
+		new Class[] {
+			long.class, long.class, String.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteSavedContentEntryParameterTypes1 =
+		new Class[] {com.liferay.saved.content.model.SavedContentEntry.class};
+	private static final Class<?>[] _fetchSavedContentEntryParameterTypes2 =
+		new Class[] {long.class, long.class, String.class, long.class};
+
 }

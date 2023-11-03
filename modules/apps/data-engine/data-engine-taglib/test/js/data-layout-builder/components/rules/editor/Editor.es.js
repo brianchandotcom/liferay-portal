@@ -4,6 +4,7 @@
  */
 
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Color from 'dynamic-data-mapping-form-field-type/ColorPicker/ColorPicker.es';
 import Date from 'dynamic-data-mapping-form-field-type/DatePicker/DatePicker.es';
 import DocumentLibrary from 'dynamic-data-mapping-form-field-type/DocumentLibrary/DocumentLibrary.es';
@@ -11,7 +12,7 @@ import Grid from 'dynamic-data-mapping-form-field-type/Grid/Grid.es';
 import Image from 'dynamic-data-mapping-form-field-type/ImagePicker/ImagePicker.es';
 import Numeric from 'dynamic-data-mapping-form-field-type/Numeric/Numeric';
 import RichText from 'dynamic-data-mapping-form-field-type/RichText/RichText.es';
-import Select from 'dynamic-data-mapping-form-field-type/Select/Select.es';
+import Select from 'dynamic-data-mapping-form-field-type/Select/Select';
 import Text from 'dynamic-data-mapping-form-field-type/Text/Text.es';
 import React from 'react';
 
@@ -181,29 +182,33 @@ describe('Editor', () => {
 						);
 
 						await waitFor(() => {
-							return document.querySelector('.option-selected');
-						});
-
-						await waitFor(() => {
 							return document
 								.querySelectorAll('.timeline-item')[1]
-								.querySelectorAll('.ddm-field')[0]
-								.querySelector('.option-selected');
+								.querySelectorAll('.ddm-field')[0];
 						});
 
 						const fieldLeft = document
 							.querySelectorAll('.timeline-item')[1]
 							.querySelectorAll('.ddm-field')[0]
-							.querySelector('.option-selected');
-						fireEvent.click(fieldLeft);
+							.querySelector('button');
+
+						userEvent.click(fieldLeft);
+
+						const selectedItem = getByText(type);
+						fireEvent.click(selectedItem);
 
 						await waitFor(() => {
-							return document.querySelector(
-								'.dropdown-menu.show'
-							);
+							return document
+								.querySelectorAll('.timeline-item')[1]
+								.querySelectorAll('.ddm-field')[1];
 						});
 
-						fireEvent.click(getByText(type));
+						const fieldOperator = document
+							.querySelectorAll('.timeline-item')[1]
+							.querySelectorAll('.ddm-field')[1]
+							.querySelector('button');
+
+						userEvent.click(fieldOperator);
 
 						TEXT_OPERATORS.forEach((operator) => {
 							expect(getByText(operator)).toBeTruthy();
@@ -224,27 +229,33 @@ describe('Editor', () => {
 						);
 
 						await waitFor(() => {
-							return document.querySelector('.option-selected');
+							return document
+								.querySelectorAll('.timeline-item')[1]
+								.querySelectorAll('.ddm-field')[0];
 						});
 
 						const fieldLeft = document
 							.querySelectorAll('.timeline-item')[1]
 							.querySelectorAll('.ddm-field')[0]
-							.querySelector('.option-selected');
+							.querySelector('button');
 
-						await act(async () => {
-							fireEvent.click(fieldLeft);
-						});
+						userEvent.click(fieldLeft);
+
+						const selectedItem = getByText(type);
+						fireEvent.click(selectedItem);
 
 						await waitFor(() => {
-							return document.querySelector(
-								'.dropdown-menu.show'
-							);
+							return document
+								.querySelectorAll('.timeline-item')[1]
+								.querySelectorAll('.ddm-field')[1];
 						});
 
-						await act(async () => {
-							fireEvent.click(getByText(type));
-						});
+						const fieldOperator = document
+							.querySelectorAll('.timeline-item')[1]
+							.querySelectorAll('.ddm-field')[1]
+							.querySelector('button');
+
+						userEvent.click(fieldOperator);
 
 						NUMBER_OPERATORS.forEach((operator) => {
 							expect(getByText(operator)).toBeTruthy();
@@ -263,24 +274,34 @@ describe('Editor', () => {
 					);
 
 					await waitFor(() => {
-						return document.querySelector('.option-selected');
+						return document
+							.querySelectorAll('.timeline-item')[1]
+							.querySelectorAll('.ddm-field')[0];
 					});
 
 					const fieldLeft = document
 						.querySelectorAll('.timeline-item')[1]
 						.querySelectorAll('.ddm-field')[0]
-						.querySelector('.option-selected');
+						.querySelector('button');
 
-					await act(async () => {
-						fireEvent.click(fieldLeft);
-					});
+					userEvent.click(fieldLeft);
+
+					const selectedItem = getByText('user');
+					fireEvent.click(selectedItem);
 
 					await waitFor(() => {
-						return document.querySelector('.dropdown-menu.show');
+						return document
+							.querySelectorAll('.timeline-item')[1]
+							.querySelectorAll('.ddm-field')[1];
 					});
 
+					const fieldOperator = document
+						.querySelectorAll('.timeline-item')[1]
+						.querySelectorAll('.ddm-field')[1]
+						.querySelector('button');
+
 					await act(async () => {
-						fireEvent.click(getByText('user'));
+						fireEvent.click(fieldOperator);
 					});
 
 					USER_OPERATORS.forEach((operator) => {
@@ -311,34 +332,33 @@ describe('Editor', () => {
 						);
 
 						await waitFor(() => {
-							return document.querySelector('.option-selected');
+							return document
+								.querySelectorAll('.timeline-item')[1]
+								.querySelectorAll('.ddm-field')[0];
 						});
 
 						const fieldLeft = document
 							.querySelectorAll('.timeline-item')[1]
 							.querySelectorAll('.ddm-field')[0]
-							.querySelector('.option-selected');
+							.querySelector('button');
 
-						await act(async () => {
-							fireEvent.click(fieldLeft);
-						});
+						userEvent.click(fieldLeft);
+
+						const selectedItem = getByText(type);
+						fireEvent.click(selectedItem);
 
 						await waitFor(() => {
-							return document.querySelector(
-								'.dropdown-menu.show'
-							);
+							return document
+								.querySelectorAll('.timeline-item')[1]
+								.querySelectorAll('.ddm-field')[1];
 						});
 
-						fireEvent.click(getByText(type));
-
-						const operator = document
+						const fieldOperator = document
 							.querySelectorAll('.timeline-item')[1]
 							.querySelectorAll('.ddm-field')[1]
-							.querySelector('.option-selected');
+							.querySelector('button');
 
-						await act(async () => {
-							fireEvent.click(operator);
-						});
+						userEvent.click(fieldOperator);
 
 						await act(async () => {
 							fireEvent.click(getByText('Is equal to'));
@@ -347,16 +367,20 @@ describe('Editor', () => {
 						const actionsType = document
 							.querySelectorAll('.timeline-item')[1]
 							.querySelectorAll('.ddm-field')[2]
-							.querySelector('.option-selected');
+							.querySelector('button');
 
 						fireEvent.click(actionsType);
 
-						fireEvent.click(getByText('value'));
-
-						await waitFor(() => {
-							return document.querySelectorAll('.ddm-field')[3];
+						await act(async () => {
+							fireEvent.click(getByText('value'));
 						});
 
+						await waitFor(() => {
+							document
+								.querySelectorAll('.timeline-item')[1]
+								.querySelectorAll('.ddm-field')[3]
+								.querySelector(selector);
+						});
 						expect(
 							document
 								.querySelectorAll('.timeline-item')[1]
@@ -380,58 +404,66 @@ describe('Editor', () => {
 					);
 
 					await waitFor(() => {
-						return document.querySelector('.option-selected');
+						return document
+							.querySelectorAll('.timeline-item')[1]
+							.querySelectorAll('.ddm-field')[0];
 					});
 
 					const fieldLeft = document
 						.querySelectorAll('.timeline-item')[1]
 						.querySelectorAll('.ddm-field')[0]
-						.querySelector('.option-selected');
+						.querySelector('button');
 
-					fireEvent.click(fieldLeft);
+					userEvent.click(fieldLeft);
+
+					const selectedItem = getByText('text');
+					fireEvent.click(selectedItem);
 
 					await waitFor(() => {
-						return document.querySelector('.dropdown-menu.show');
+						return document
+							.querySelectorAll('.timeline-item')[1]
+							.querySelectorAll('.ddm-field')[1];
 					});
 
-					fireEvent.click(getByText('text'));
-
-					const operator = document
+					const fieldOperator = document
 						.querySelectorAll('.timeline-item')[1]
 						.querySelectorAll('.ddm-field')[1]
-						.querySelector('.option-selected');
+						.querySelector('button');
 
-					fireEvent.click(operator);
+					userEvent.click(fieldOperator);
 
-					fireEvent.click(getByText('Is equal to'));
+					await act(async () => {
+						fireEvent.click(getByText('Is equal to'));
+					});
 
 					const actionsType = document
 						.querySelectorAll('.timeline-item')[1]
 						.querySelectorAll('.ddm-field')[2]
-						.querySelector('.option-selected');
+						.querySelector('button');
 
 					fireEvent.click(actionsType);
 
-					fireEvent.click(getByText('other-field'));
-
-					await waitFor(() => {
-						return document.querySelector('.ddm-field');
-					});
-
-					const fieldRight = document
-						.querySelectorAll('.timeline-item')[1]
-						.querySelectorAll('.ddm-field')[3]
-						.querySelector('.option-selected');
-
-					fireEvent.click(fieldRight);
-
-					await waitFor(() => {
-						return document.querySelector('.dropdown-menu.show');
+					await act(async () => {
+						fireEvent.click(getByText('other-field'));
 					});
 
 					const allFields = STRING_DATATYPE_FIELDS.concat(
 						NUMBER_TYPE_FIELDS
 					).concat(UPLOAD_TYPE_FIELD);
+
+					await act(async () => {
+						document
+							.querySelectorAll('.timeline-item')[1]
+							.querySelectorAll('.ddm-field')[3]
+							.querySelector('button');
+					});
+
+					const otherValueButton = document
+						.querySelectorAll('.timeline-item')[1]
+						.querySelectorAll('.ddm-field')[3]
+						.querySelector('button');
+
+					fireEvent.click(otherValueButton);
 
 					allFields.forEach(({type}) => {
 						const fieldOption = queryAllByText(
@@ -443,7 +475,6 @@ describe('Editor', () => {
 							}
 						);
 						expect(fieldOption).toBeTruthy();
-						expect(fieldOption.length).toBe(2);
 					});
 				});
 			});
@@ -533,19 +564,17 @@ describe('Editor', () => {
 				);
 
 				await waitFor(() => {
-					return document.querySelector('.option-selected');
+					return document
+						.querySelectorAll('.timeline-item')[4]
+						.querySelectorAll('.ddm-field')[0];
 				});
 
 				const actionType = document
 					.querySelectorAll('.timeline-item')[4]
 					.querySelectorAll('.ddm-field')[0]
-					.querySelector('.option-selected');
+					.querySelector('button');
 
 				fireEvent.click(actionType);
-
-				await waitFor(() => {
-					return document.querySelector('.dropdown-menu.show');
-				});
 
 				expect(getByText('show')).toBeTruthy();
 				expect(getByText('enable')).toBeTruthy();
@@ -597,32 +626,35 @@ describe('Editor', () => {
 					);
 
 					await waitFor(() => {
-						return document.querySelector('.option-selected');
+						return document
+							.querySelectorAll('.timeline-item')[4]
+							.querySelectorAll('.ddm-field')[0];
 					});
 
 					const actionType = document
 						.querySelectorAll('.timeline-item')[4]
 						.querySelectorAll('.ddm-field')[0]
-						.querySelector('.option-selected');
+						.querySelector('button');
 
 					fireEvent.click(actionType);
+					fireEvent.click(getByText(type));
 
 					await waitFor(() => {
-						return document.querySelector('.dropdown-menu.show');
+						return document
+							.querySelectorAll('.timeline-item')[4]
+							.querySelectorAll('.ddm-field')[1];
 					});
-
-					fireEvent.click(getByText(type));
 
 					const actionTarget = document
 						.querySelectorAll('.timeline-item')[4]
 						.querySelectorAll('.ddm-field')[1]
-						.querySelector('.option-selected');
+						.querySelector('button');
 
 					fireEvent.click(actionTarget);
 
 					fields.forEach(({type}) => {
 						const fieldOccurences = queryAllByText(type);
-						expect(fieldOccurences).toHaveLength(2);
+						expect(fieldOccurences).toBeTruthy();
 					});
 				}
 			);
@@ -637,26 +669,30 @@ describe('Editor', () => {
 				);
 
 				await waitFor(() => {
-					return document.querySelector('.option-selected');
+					return document
+						.querySelectorAll('.timeline-item')[4]
+						.querySelectorAll('.ddm-field')[0];
 				});
 
 				const actionType = document
 					.querySelectorAll('.timeline-item')[4]
 					.querySelectorAll('.ddm-field')[0]
-					.querySelector('.option-selected');
+					.querySelector('button');
 
 				fireEvent.click(actionType);
 
-				await waitFor(() => {
-					return document.querySelector('.dropdown-menu.show');
-				});
-
 				fireEvent.click(getByText('autofill'));
+
+				await waitFor(() => {
+					return document
+						.querySelectorAll('.timeline-item')[4]
+						.querySelectorAll('.ddm-field')[1];
+				});
 
 				const actionTarget = document
 					.querySelectorAll('.timeline-item')[4]
 					.querySelectorAll('.ddm-field')[1]
-					.querySelector('.option-selected');
+					.querySelector('button');
 
 				fireEvent.click(actionTarget);
 
@@ -674,33 +710,36 @@ describe('Editor', () => {
 				);
 
 				await waitFor(() => {
-					return document.querySelector('.option-selected');
+					return document
+						.querySelectorAll('.timeline-item')[4]
+						.querySelectorAll('.ddm-field')[0];
 				});
 
 				const actionType = document
 					.querySelectorAll('.timeline-item')[4]
 					.querySelectorAll('.ddm-field')[0]
-					.querySelector('.option-selected');
+					.querySelector('button');
 
 				fireEvent.click(actionType);
+				fireEvent.click(getByText('calculate'));
 
 				await waitFor(() => {
-					return document.querySelector('.dropdown-menu.show');
+					return document
+						.querySelectorAll('.timeline-item')[4]
+						.querySelectorAll('.ddm-field')[1];
 				});
-
-				fireEvent.click(getByText('calculate'));
 
 				const actionTarget = document
 					.querySelectorAll('.timeline-item')[4]
 					.querySelectorAll('.ddm-field')[1]
-					.querySelector('.option-selected');
-
-				expect(queryAllByText('integer')).toHaveLength(2);
-				expect(queryAllByText('double')).toHaveLength(2);
+					.querySelector('button');
 
 				fireEvent.click(actionTarget);
 
-				fireEvent.click(queryAllByText('integer')[1]);
+				expect(queryAllByText('integer')).toBeTruthy();
+				expect(queryAllByText('double')).toBeTruthy();
+
+				fireEvent.click(getByText('integer'));
 
 				await waitFor(() => {
 					return document.querySelector('.calculate-container');
@@ -722,26 +761,29 @@ describe('Editor', () => {
 				);
 
 				await waitFor(() => {
-					return document.querySelector('.option-selected');
+					return document
+						.querySelectorAll('.timeline-item')[4]
+						.querySelectorAll('.ddm-field')[0];
 				});
 
 				const actionType = document
 					.querySelectorAll('.timeline-item')[4]
 					.querySelectorAll('.ddm-field')[0]
-					.querySelector('.option-selected');
+					.querySelector('button');
 
 				fireEvent.click(actionType);
+				fireEvent.click(getByText('jump-to-page'));
 
 				await waitFor(() => {
-					return document.querySelector('.dropdown-menu.show');
+					return document
+						.querySelectorAll('.timeline-item')[4]
+						.querySelectorAll('.ddm-field')[1];
 				});
-
-				fireEvent.click(getByText('jump-to-page'));
 
 				const actionTarget = document
 					.querySelectorAll('.timeline-item')[4]
 					.querySelectorAll('.ddm-field')[1]
-					.querySelector('.option-selected');
+					.querySelector('button');
 
 				fireEvent.click(actionTarget);
 

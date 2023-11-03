@@ -41,7 +41,7 @@ export const FIELDS = [
 		name: 'select',
 		options: [],
 		repeatable: false,
-		selector: '.form-builder-select-field',
+		selector: '.form-control-select',
 		settingsContext: {
 			pages: [],
 		},
@@ -86,7 +86,7 @@ export const FIELDS = [
 		name: 'radio',
 		options: [],
 		repeatable: false,
-		selector: '.form-builder-select-field',
+		selector: '.form-control-select',
 		settingsContext: {
 			pages: [],
 		},
@@ -131,7 +131,7 @@ export const FIELDS = [
 		name: 'checkboxMultiple',
 		options: [],
 		repeatable: false,
-		selector: '.form-builder-select-field',
+		selector: '.form-control-select',
 		settingsContext: {
 			pages: [],
 		},

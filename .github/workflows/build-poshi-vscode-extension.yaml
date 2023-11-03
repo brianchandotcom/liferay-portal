@@ -51,6 +51,10 @@ jobs:
                       npm_config_arch: x64
                       os: ubuntu-latest
                       platform: alpine
+                    - arch: arm64
+                      npm_config_arch: arm64
+                      os: ubuntu-latest
+                      platform: alpine
                     - arch: x64
                       npm_config_arch: x64
                       os: macos-latest

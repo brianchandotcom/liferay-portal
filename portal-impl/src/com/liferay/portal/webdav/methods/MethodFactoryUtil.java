@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.kernel.webdav.methods.MethodFactory;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashMap;
@@ -21,10 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MethodFactoryImpl implements MethodFactory {
+public class MethodFactoryUtil {
 
-	@Override
-	public Method create(HttpServletRequest httpServletRequest)
+	public static Method create(HttpServletRequest httpServletRequest)
 		throws WebDAVException {
 
 		String method = httpServletRequest.getMethod();
@@ -62,14 +60,14 @@ public class MethodFactoryImpl implements MethodFactory {
 
 							String className = GetterUtil.getString(
 								PropsUtil.get(
-									MethodFactoryImpl.class.getName() + "." +
+									MethodFactoryUtil.class.getName() + "." +
 										methodName),
 								defaultClassName);
 
 							put(
 								methodName,
 								InstanceFactory.newInstance(
-									MethodFactoryImpl.class.getClassLoader(),
+									MethodFactoryUtil.class.getClassLoader(),
 									className));
 						}
 					}

@@ -21,7 +21,7 @@ definition {
 			EVPUtils.addEVPSite();
 		}
 
-		task ("Login with the Employee and go to EVP Portal") {
+		task ("Login with the Employee user and go to EVP Portal") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "employee@liferay.com",
 				userLoginFullName = "Employee User");
@@ -85,7 +85,7 @@ definition {
 	@description = "LPS-162902 - Verify that can create a Request by clicking on 'Create a Request'"
 	@priority = 4
 	test CanCreateRequestForm {
-		task ("Given that the Employee user create a new Request") {
+		task ("Given that the Employee user creates a new Request") {
 			EVPRequest.fillRequestForm(
 				grantAmount = 10,
 				grantRequestType = "Proposed",
@@ -111,7 +111,7 @@ definition {
 	@description = "LPS-162902 - Verify that can not submit the request form without fill all required fields"
 	@priority = 3
 	test CannotSubmitFormWithoutRequiredFields {
-		task ("When the Employee user clicks the send button on the request form without filling in a required field") {
+		task ("When the Employee user clicks on submit button in the request form without filling in any required field") {
 			Button.click(button = "Submit");
 		}
 

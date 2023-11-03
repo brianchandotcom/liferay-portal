@@ -202,6 +202,10 @@ public class PullRequest {
 			forwardSenderUsername, getTitle());
 	}
 
+	public String getBody() {
+		return _jsonObject.optString("body");
+	}
+
 	public String getCIMergeSHA() {
 		getFileNames();
 

@@ -69,7 +69,7 @@ export default function Action({
 				)}
 				items={TYPE_ITEMS}
 				onSelectionChange={(type) => onActionChange({...action, type})}
-				selectedKey={action.type ?? ''}
+				selectedKey={action.type}
 			/>
 
 			{action.type ? (

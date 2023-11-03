@@ -14,6 +14,8 @@ interface Props {
 	mappingTypes: MappingType[];
 	namespace: string;
 	onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+	selectedSubtype?: string;
+	selectedType?: string;
 	type: ModalType;
 }
 export default function ContentTypeModalForm({
@@ -23,6 +25,8 @@ export default function ContentTypeModalForm({
 	mappingTypes,
 	namespace,
 	onSubmit,
+	selectedSubtype,
+	selectedType,
 	type,
 }: Props): JSX.Element;
 export {};

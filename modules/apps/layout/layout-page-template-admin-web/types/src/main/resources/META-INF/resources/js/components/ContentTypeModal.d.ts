@@ -15,6 +15,8 @@ interface Props {
 	mappingTypes: MappingType[];
 	namespace: string;
 	onClose: () => void;
+	selectedSubtype?: string;
+	selectedType?: string;
 	title: string;
 	type: ModalType;
 	warningMessage: string;
@@ -27,6 +29,8 @@ export default function ContentTypeModal({
 	mappingTypes,
 	namespace,
 	onClose,
+	selectedSubtype,
+	selectedType,
 	title,
 	type,
 	warningMessage,

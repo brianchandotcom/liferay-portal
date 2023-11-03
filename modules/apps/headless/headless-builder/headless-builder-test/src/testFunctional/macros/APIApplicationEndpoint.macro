@@ -19,6 +19,10 @@ definition {
 
 		var api = "${baseURL}${path}";
 
+		if (isSet(filter)) {
+			var api = StringUtil.add(${api}, "?filter=${filter}", "");
+		}
+
 		var curl = '''
 			${portalURL}/o/c/${api} \
 				-u test@liferay.com:test \
@@ -29,11 +33,27 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getEndpoint(path = null, baseURL = null, portalURL = null) {
+	macro assertCorrectItemInResponse(baseURL = null, expectedValue = null, jsonObject = null, path = null) {
+		Variables.assertDefined(parameterList = "${baseURL},${path},${jsonObject},${expectedValue}");
+
+		var response = APIApplicationEndpoint.getEndpoint(
+			baseURL = ${baseURL},
+			path = ${path});
+
+		var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..${jsonObject}");
+
+		TestUtils.assertEquals(
+			actual = ${actualValue},
+			expected = ${expectedValue});
+	}
+
+	@summary = "Default summary"
+	macro getEndpoint(baseURL = null, filter = null, path = null, portalURL = null) {
 		Variables.assertDefined(parameterList = "${baseURL},${path}");
 
 		var curl = APIApplicationEndpoint._curlAPIEndpoint(
 			baseURL = ${baseURL},
+			filter = ${filter},
 			path = ${path},
 			portalURL = ${portalURL});
 

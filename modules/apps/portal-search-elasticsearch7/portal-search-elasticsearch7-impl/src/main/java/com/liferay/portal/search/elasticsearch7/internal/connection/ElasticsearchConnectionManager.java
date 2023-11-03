@@ -141,6 +141,10 @@ public class ElasticsearchConnectionManager
 				currentCrossClusterReplicationConfigurationHelper.
 					getLocalClusterConnectionIds();
 
+			if (localClusterConnectionIds.isEmpty()) {
+				return null;
+			}
+
 			return localClusterConnectionIds.get(0);
 		}
 

@@ -99,7 +99,7 @@ const useHandleAccount = ({
 			type: accountTypes.PERSON,
 		};
 
-		if (form.accountQuantity === 1 || form.accountQuantity > 1) {
+		if (form.accountQuantity >= 1) {
 			delete submitForm.type;
 			delete submitForm.name;
 			delete submitForm.externalReferenceCode;

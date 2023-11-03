@@ -17,9 +17,11 @@ import {getSiteURL} from '../../components/InviteMemberModal/services';
 import RadioCardList, {
 	RadioCardContent,
 } from '../../components/RadioCardList/RadioCardList';
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {Liferay} from '../../liferay/liferay';
 import {StepType} from './PurchasedSolutions';
 import useAccountForm from './hooks/useAccountForm';
+import useHandleAccount from './hooks/useHandleAccount';
 
 type AccountSelectionProps = {
 	accountForm: ReturnType<typeof useAccountForm>;
@@ -34,6 +36,13 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 }) => {
 	const accountSelected = accountForm.watch('accountSelected');
 	const emailAddress = accountForm.watch('emailAddress');
+	const {mutateMyUserAccount, myUserAccount} = useMarketplaceContext();
+
+	const {formDataTransform, updateAccount} = useHandleAccount({
+		mutateMyUserAccount,
+		myUserAccount,
+	});
+
 	const [accounts, setAccounts] = useState<RadioCardContent<Account>[]>(
 		() => {
 			return accountForm.accounts.map((account: Account) => ({
@@ -59,6 +68,16 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 	};
 
 	const handleNextStep = async () => {
+		const form = {
+			...accountForm.getValues(),
+			accountQuantity: accountForm?.accountQuantity,
+		};
+
+		await updateAccount({
+			accountId: Number(form?.accountSelected?.id),
+			data: formDataTransform(form),
+		});
+
 		await onSubmit();
 
 		setStep(StepType.CHECKOUT);

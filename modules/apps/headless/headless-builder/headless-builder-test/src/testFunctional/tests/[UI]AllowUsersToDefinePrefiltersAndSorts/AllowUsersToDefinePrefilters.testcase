@@ -1,0 +1,326 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given objects definitons Student, Subject with field name created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "studentErc",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentNameErc");
+
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "subject",
+				en_US_plural_label = "subjects",
+				name = "Subject",
+				objectDefinitionExternalReferenceCode = "subjectErc",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "subjectNameErc");
+		}
+
+		task ("And Given one-to-many relationship studentSubjects created") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Subject",
+				deletionType = "cascade",
+				name = "studentSubjects",
+				parentObjectName = "Student",
+				type = "oneToMany");
+		}
+
+		task ("And Given Student entries 'aabc', 'abc', 'bbbabc','zzzz' with externalReferenceCode 'aabc', 'abc', 'bbbabc', 'zzzz' created") {
+			for (var name : list "aabc,abc,bbbabc,zzzz") {
+				ObjectDefinitionAPI.createObjectEntryWithName(
+					en_US_plural_label = "students",
+					externalReferenceCode = ${name},
+					name = ${name});
+			}
+		}
+
+		task ("And Given Subject entries 'abc', 'zzzz', 'bbbabc' created and related to students 'abc', 'bbbabc', 'zzzz'") {
+			CustomObjectAPI.createObjectRelatedToAnotherObject(
+				en_US_plural_label = "subjects",
+				name = "abc",
+				relatedObject = "student",
+				relatedObjectErc = "abc",
+				relationship = "studentSubjects");
+
+			CustomObjectAPI.createObjectRelatedToAnotherObject(
+				en_US_plural_label = "subjects",
+				name = "zzzz",
+				relatedObject = "student",
+				relatedObjectErc = "bbbabc",
+				relationship = "studentSubjects");
+
+			CustomObjectAPI.createObjectRelatedToAnotherObject(
+				en_US_plural_label = "subjects",
+				name = "bbbabc",
+				relatedObject = "student",
+				relatedObjectErc = "zzzz",
+				relationship = "studentSubjects");
+		}
+
+		task ("And Given apiApplication with an endpoint of scope Company created and published") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testEndpoint",
+				endpointPath = "/testendpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("And Given a schema based on Student object definition with student name, subject name as schema properties student_name, subject_name") {
+			SchemaAPI.createAPISchema(
+				externalReferenceCode = "My-app",
+				mainObjectDefinitionERC = "studentErc",
+				name = "testSchema");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "testEndpoint",
+				responseSchemaErc = "testSchema");
+
+			PropertyAPI.createAPIProperty(
+				name = "student_name",
+				objectFieldERC = "studentNameErc",
+				schemaERC = "testSchema");
+
+			PropertyAPI.createAPIProperty(
+				name = "subject_name",
+				objectFieldERC = "subjectNameErc",
+				relationshipName = "studentSubjects",
+				schemaERC = "testSchema");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanApplyPrefilterAndFilter {
+		property portal.acceptance = "true";
+
+		task ("And Given setting the Filters to 'contains(name,'abc')'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "contains(name,'abc')",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("When I call endpoint with '?filter=contains(subject_name,'z')' in API Explorer") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestendpointPage",
+				parameter = "filter",
+				service = "testSchema",
+				value = "contains(subject_name,'z')");
+		}
+
+		task ("Then endpoint returns student 'bbbabc'") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestendpointPage",
+				value1 = "\"items\": [     {       \"student_name\": \"bbbabc\",       \"subject_name\"");
+		}
+	}
+
+	@priority = 4
+	test CanResetPrefiltering {
+		property portal.acceptance = "true";
+
+		task ("And Given setting the Filters to 'contains(studentSubjects/name,'abc')'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "contains(studentSubjects/name,'abc')",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("And Given endpoint returning students 'abc', 'zzzz'") {
+			APIApplicationEndpoint.assertCorrectItemInResponse(
+				baseURL = "my-app",
+				expectedValue = "abc,zzzz",
+				jsonObject = "student_name",
+				path = "/testendpoint");
+		}
+
+		task ("When I empty the Filter box in endpoint configuration") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then Student entries 'aabc', 'abc', 'bbbabc', 'zzzz' are listed in the endpoint response") {
+			APIApplicationEndpoint.assertCorrectItemInResponse(
+				baseURL = "my-app",
+				expectedValue = "aabc,abc,bbbabc,zzzz",
+				jsonObject = "student_name",
+				path = "/testendpoint");
+		}
+	}
+
+	@priority = 5
+	test FiltersIsPresentInEndpointConfiguration {
+		property portal.acceptance = "true";
+
+		task ("When navigating to the endpoint Configuration tab") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				name = "testendpoint",
+				tabEntity = "Configuration",
+				title = "My-app");
+		}
+
+		task ("Then Filters box to Add a filter using OData is present") {
+			WaitForElementPresent(
+				fieldName = "filter",
+				locator1 = "APIBuilder#ODATA_TEXTAREA");
+		}
+	}
+
+	@priority = 5
+	test PrefilterAndFilterReturnTheSameData {
+		property portal.acceptance = "true";
+
+		task ("And Given setting the Filters to 'contains(studentSubjects/name,'abc') and name eq 'zzzz'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "contains(studentSubjects/name,'abc') and name eq 'zzzz'",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("And Given endpoint returning student 'zzzz'") {
+			APIApplicationEndpoint.assertCorrectItemInResponse(
+				baseURL = "my-app",
+				expectedValue = "zzzz",
+				jsonObject = "student_name",
+				path = "/testendpoint");
+		}
+
+		task ("When I empty the Filters") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("And When I call endpoint with '?filter=contains(subject_name,'abc') and student_name eq 'zzzz'' in API Explorer") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestendpointPage",
+				parameter = "filter",
+				service = "testSchema",
+				value = "contains(subject_name,'abc') and student_name eq 'zzzz'");
+		}
+
+		task ("Then endpoint returns student 'zzzz'") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestendpointPage",
+				value1 = "\"items\": [     {       \"student_name\": \"zzzz\",       \"subject_name\"");
+		}
+	}
+
+	@priority = 4
+	test PrefilteringWorksWithMainObjectFieldsThatAreNotPartOfSchemaProperties {
+		property portal.acceptance = "true";
+
+		task ("When setting the Filters to 'externalReferenceCode eq 'abc''") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "externalReferenceCode eq 'abc'",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then endpoint returns student 'abc'") {
+			APIApplicationEndpoint.assertCorrectItemInResponse(
+				baseURL = "my-app",
+				expectedValue = "abc",
+				jsonObject = "student_name",
+				path = "/testendpoint");
+		}
+	}
+
+	@priority = 4
+	test PrefilteringWorksWithSchemaPropertiesMadeOfMainObjectFields {
+		property portal.acceptance = "true";
+
+		task ("When setting the Filters to 'contains(name,'abc')'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "contains(name,'abc')",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then students 'aabc', 'abc', 'bbbabc' are listed in the endpoint response") {
+			APIApplicationEndpoint.assertCorrectItemInResponse(
+				baseURL = "my-app",
+				expectedValue = "aabc,abc,bbbabc",
+				jsonObject = "student_name",
+				path = "/testendpoint");
+		}
+	}
+
+	@priority = 4
+	test PrefilteringWorksWithSchemaPropertiesMadeOfObjectFieldsRelatedWithOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When setting the Filters to 'contains(studentSubjects/name,'abc')'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "contains(studentSubjects/name,'abc')",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then students 'abc', 'zzzz' are listed in the endpoint response") {
+			APIApplicationEndpoint.assertCorrectItemInResponse(
+				baseURL = "my-app",
+				expectedValue = "abc,zzzz",
+				jsonObject = "student_name",
+				path = "/testendpoint");
+		}
+	}
+
+}

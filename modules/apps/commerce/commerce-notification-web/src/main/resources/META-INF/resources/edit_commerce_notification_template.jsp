@@ -205,17 +205,19 @@ if (commerceNotificationTemplate != null) {
 		window,
 		'<portlet:namespace />selectType',
 		() => {
-			var A = AUI();
+			const name = document.getElementById('<portlet:namespace />name').value;
+			const description = document.getElementById(
+				'<portlet:namespace />description'
+			).value;
+			const from = document.getElementById('<portlet:namespace />from').value;
+			const fromName = document.getElementById(
+				'<portlet:namespace />fromName'
+			).value;
+			const cc = document.getElementById('<portlet:namespace />cc').value;
+			const bcc = document.getElementById('<portlet:namespace />bcc').value;
+			const type = document.getElementById('<portlet:namespace />type').value;
 
-			var name = A.one('#<portlet:namespace />name').val();
-			var description = A.one('#<portlet:namespace />description').val();
-			var from = A.one('#<portlet:namespace />from').val();
-			var fromName = A.one('#<portlet:namespace />fromName').val();
-			var cc = A.one('#<portlet:namespace />cc').val();
-			var bcc = A.one('#<portlet:namespace />bcc').val();
-			var type = A.one('#<portlet:namespace />type').val();
-
-			var portletURL = new Liferay.PortletURL.createURL(
+			const portletURL = new Liferay.PortletURL.createURL(
 				'<%= currentURLObj %>'
 			);
 

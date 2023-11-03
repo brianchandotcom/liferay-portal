@@ -43,7 +43,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			String from = jsonObject.getString("from");
 
 			if (from.contains(StringPool.OPEN_PARENTHESIS) &&
-				!from.matches(_CONSTRUCTOR_REGEX)) {
+				!jsonObject.getBoolean("skipParametersValidation")) {
 
 				expectedMessages.add(_getMessage(jsonObject));
 			}
@@ -144,9 +144,21 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		}
 
 		if (regex.contains(StringPool.OPEN_PARENTHESIS)) {
-			regex =
-				from.substring(0, from.indexOf(CharPool.OPEN_PARENTHESIS)) +
-					"\\b\\(";
+			regex = StringUtil.replace(
+				regex, CharPool.OPEN_PARENTHESIS, "\\b\\(");
+
+			if (jsonObject.getBoolean("skipParametersValidation") &&
+				!from.matches(_CONSTRUCTOR_REGEX)) {
+
+				regex = StringUtil.replace(
+					regex, CharPool.CLOSE_PARENTHESIS, "\\)");
+
+				regex = StringUtil.removeSubstring(regex, "\\b");
+			}
+			else {
+				regex = regex.substring(
+					0, regex.indexOf(CharPool.OPEN_PARENTHESIS) + 1);
+			}
 		}
 		else {
 			regex = regex + "[,;> (]";
@@ -271,7 +283,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 					to);
 			}
 			else {
-				newContent = StringUtil.replace(
+				newContent = StringUtil.replaceFirst(
 					newContent, methodCall,
 					StringUtil.replace(methodCall, from, to));
 			}
@@ -358,7 +370,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			return newContent;
 		}
 
-		if ((fileName.endsWith(".java") && !from.matches(_CONSTRUCTOR_REGEX) &&
+		if ((fileName.endsWith(".java") &&
+			 !jsonObject.getBoolean("skipParametersValidation") &&
 			 !hasParameterTypes(
 				 javaMethodContent, javaMethodContent,
 				 ArrayUtil.toStringArray(parameterNames),
@@ -376,7 +389,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			0, to.indexOf(CharPool.OPEN_PARENTHESIS) + 1);
 
 		if (!newMethodCall.contains(StringPool.PERIOD) &&
-			!Character.isUpperCase(newMethodCall.charAt(0))) {
+			!Character.isUpperCase(newMethodCall.charAt(0)) &&
+			!newMethodCall.contains(StringPool.SPACE)) {
 
 			newMethodCall = StringBundler.concat(
 				getVariableName(methodCall), CharPool.PERIOD, newMethodCall);

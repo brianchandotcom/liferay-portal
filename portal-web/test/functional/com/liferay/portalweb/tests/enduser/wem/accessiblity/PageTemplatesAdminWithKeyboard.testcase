@@ -103,6 +103,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192724. Using Keyboard navigation it is possible to copy an existing Display Page Template from the ellipsis menu of the card."
+	@priority = 4
+	test CopyDisplayPageTemplateViaKeyboard {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a page creator has a published display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				statusKey = "APPROVED",
+				subType = "Basic Web Content");
+		}
+
+		task ("When the page creator navigates to the Display Page Templates admin") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then the page creator could make a copy of display page template via keyboard") {
+			KeyPress(
+				key_card = "Display Page Name",
+				locator1 = "Card#CARD_TITLE_LINK",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_card = "Display Page Name",
+				locator1 = "Card#CARD_ELLIPSIS",
+				value1 = "\ENTER");
+
+			for (var menuItem : list "Edit,Change Content Type,Change Thumbnail,Mark as Default,Rename,View Usages") {
+				KeyPress(
+					key_menuItem = ${menuItem},
+					locator1 = "MenuItem#ANY_MENU_ITEM",
+					value1 = "\DOWN");
+			}
+
+			for (var menuItem : list "Make a Copy,Display Page") {
+				KeyPress(
+					key_menuItem = ${menuItem},
+					locator1 = "MenuItem#ANY_MENU_ITEM",
+					value1 = "\ENTER");
+			}
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name (Copy)");
+		}
+	}
+
 	@description = "This is a test for LPS-199793. Using Keyboard navigation it is possible to copy an existing Master Page from the ellipsis menu of the card."
 	@priority = 4
 	test CopyMasterPageTemplateViaKeyboard {

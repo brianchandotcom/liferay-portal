@@ -632,7 +632,7 @@ definition {
 		var ctCollectionId2 = ${ctCollectionId1} + 1;
 		var portalURL = PropsUtil.get("portal.url");
 
-		Open.openRedirect(locator1 = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId2}");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId2}");
 
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
 	}
@@ -2175,7 +2175,7 @@ definition {
 
 		User.logoutPG();
 
-		Open.openRedirect(locator1 = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId}");
+		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId}");
 
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
 	}

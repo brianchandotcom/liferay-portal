@@ -305,9 +305,7 @@ public class CIForwardProcessor {
 	private String _getCIForwardPullRequestInitialComment() throws IOException {
 		StringBuilder sb = new StringBuilder();
 
-		JSONObject pullRequestJSONObject = _pullRequest.getJSONObject();
-
-		String pullRequestBody = pullRequestJSONObject.optString("body");
+		String pullRequestBody = _pullRequest.getBody();
 
 		if (!pullRequestBody.isEmpty()) {
 			sb.append("\n");

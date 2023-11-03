@@ -26,8 +26,6 @@ public class BreadcrumbEntriesUtil {
 		boolean showGuestGroup, boolean showLayout, boolean showParentGroups,
 		boolean showPortletBreadcrumb) {
 
-		List<BreadcrumbEntry> breadcrumbEntries = Collections.emptyList();
-
 		List<Integer> breadcrumbEntryTypes = new ArrayList<>();
 
 		if (showCurrentGroup) {
@@ -51,7 +49,7 @@ public class BreadcrumbEntriesUtil {
 		}
 
 		try {
-			breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(
+			return BreadcrumbUtil.getBreadcrumbEntries(
 				httpServletRequest, ArrayUtil.toIntArray(breadcrumbEntryTypes));
 		}
 		catch (Exception exception) {
@@ -60,7 +58,7 @@ public class BreadcrumbEntriesUtil {
 			}
 		}
 
-		return breadcrumbEntries;
+		return Collections.emptyList();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

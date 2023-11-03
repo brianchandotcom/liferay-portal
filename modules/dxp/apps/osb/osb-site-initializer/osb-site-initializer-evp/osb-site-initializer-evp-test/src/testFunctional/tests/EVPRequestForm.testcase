@@ -21,33 +21,36 @@ definition {
 			EVPUtils.addEVPSite();
 		}
 
-		task ("Log as Employee user") {
+		task ("Login with the Employee and go to EVP Portal") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "employee@liferay.com",
 				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
 		}
 
-		task ("Navigate to Create a Request") {
-			EVPUtils.gotoEVP();
-
-			EVPOrganization.goToCreateOrganization();
-
-			EVPOrganization.fillOrganizationForm(
+		task ("Add a new organization") {
+			var organizationId = JSONEVP.createOrganization(
+				accountOwnerName = "User 4",
 				bankingInfo = "Bank Test",
 				city = "City Test",
-				contactEmail = "test@liferay.com",
+				contactEmail = "OrganizationTest@liferay.com",
 				contactName = "Contact Test",
 				contactPhone = 12345,
 				country = "Country Test",
-				createRequest = "false",
-				organizationName = "Organization Test",
+				emailAddress = "employee@liferay.com",
+				key_status = "awaitingApprovalOnEvp",
+				organizationName = "Organization test",
 				organizationSite = "www.test.com.br",
 				smallDescription = "Description Test",
 				state = "State Test",
+				status = "Awaiting Approval On EVP",
 				street = "Street Test",
 				taxId = 12345,
 				zipCode = "12.345-67");
+		}
 
+		task ("Go to create request page") {
 			EVPRequest.goToCreateRequest();
 		}
 	}
@@ -65,14 +68,14 @@ definition {
 		}
 	}
 
-	@description = "LPS-162902 - Verify that can cancel the request creation"
+	@description = "LPS-162902 - Verify that the user can cancel the request by clicking on 'Cancel' button"
 	@priority = 3
 	test CanCancelRequestCreation {
-		task ("When the user clicks on the Cancel button on the request form") {
+		task ("When the Employee user clicks on the 'Cancel' button") {
 			Button.clickCancel();
 		}
 
-		task ("Then the user can see that there were no requests being showed") {
+		task ("Then the Employee user can see that the request is not present in the list") {
 			EVPUtils.viewNotPresentStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting Approval On EVP");
@@ -82,11 +85,11 @@ definition {
 	@description = "LPS-162902 - Verify that can create a Request by clicking on 'Create a Request'"
 	@priority = 4
 	test CanCreateRequestForm {
-		task ("When The employee user creates a request") {
+		task ("Given that the Employee user create a new Request") {
 			EVPRequest.fillRequestForm(
 				grantAmount = 10,
 				grantRequestType = "Proposed",
-				organization = "Organization Test",
+				organization = ${organizationId},
 				phoneNumber = 12345,
 				requestBehalf = "Global/Local Poor",
 				requestDescription = "Request Description Test",
@@ -94,9 +97,11 @@ definition {
 				requestType = "Grant");
 		}
 
-		task ("Then the user can see the created request on listing") {
+		task ("When Employee user goes to the request page") {
 			EVPNavigator.goToNavItem(navItem = "Request");
+		}
 
+		task ("Then Employee user see the created request no request listing page") {
 			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting Approval On EVP");
@@ -106,7 +111,7 @@ definition {
 	@description = "LPS-162902 - Verify that can not submit the request form without fill all required fields"
 	@priority = 3
 	test CannotSubmitFormWithoutRequiredFields {
-		task ("When the user clicks on submit button in the request form without filling out any required fields") {
+		task ("When the Employee user clicks the send button on the request form without filling in a required field") {
 			Button.click(button = "Submit");
 		}
 

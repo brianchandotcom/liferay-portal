@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.form.builder.internal.helper;
+package com.liferay.dynamic.data.mapping.form.builder.internal.settings;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author Carolina Barbosa
  */
-public class DDMExpressionFunctionMetadataHelperTest {
+public class DDMFormBuilderSettingsRetrieverHelperImplTest {
 
 	@ClassRule
 	@Rule
@@ -54,7 +54,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 			_resourceBundle
 		);
 		ReflectionTestUtil.setFieldValue(
-			_ddmExpressionFunctionMetadataHelper, "_portal", portal);
+			_ddmFormBuilderSettingsRetrieverHelperImpl, "_portal", portal);
 
 		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
 			ResourceBundleLoader.class);
@@ -69,7 +69,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmExpressionFunctionMetadataHelper, "_language",
+			_ddmFormBuilderSettingsRetrieverHelperImpl, "_language",
 			new LanguageImpl());
 	}
 
@@ -80,7 +80,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		Map<String, List<DDMExpressionFunctionMetadata>>
 			ddmExpressionFunctionMetadatasMap = new HashMap<>();
 
-		_ddmExpressionFunctionMetadataHelper.
+		_ddmFormBuilderSettingsRetrieverHelperImpl.
 			populateCustomDDMExpressionFunctionsMetadata(
 				ddmExpressionFunctionMetadatasMap, LocaleUtil.US);
 
@@ -118,7 +118,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		Map<String, List<DDMExpressionFunctionMetadata>>
 			ddmExpressionFunctionMetadatasMap = new HashMap<>();
 
-		_ddmExpressionFunctionMetadataHelper.
+		_ddmFormBuilderSettingsRetrieverHelperImpl.
 			populateDDMExpressionFunctionsMetadata(
 				ddmExpressionFunctionMetadatasMap, _resourceBundle);
 
@@ -172,13 +172,13 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmExpressionFunctionMetadataHelper,
+			_ddmFormBuilderSettingsRetrieverHelperImpl,
 			"_ddmExpressionFunctionRegistry", ddmExpressionFunctionRegistry);
 	}
 
-	private static final DDMExpressionFunctionMetadataHelper
-		_ddmExpressionFunctionMetadataHelper =
-			new DDMExpressionFunctionMetadataHelper();
+	private static final DDMFormBuilderSettingsRetrieverHelperImpl
+		_ddmFormBuilderSettingsRetrieverHelperImpl =
+			new DDMFormBuilderSettingsRetrieverHelperImpl();
 
 	@Mock
 	private static ResourceBundle _resourceBundle;

@@ -21,6 +21,8 @@ const ACTIONS = {
 		{
 			assetType,
 			changeContentTypeURL,
+			classNameId,
+			classTypeId,
 			hasMissingType,
 			mappingTypes,
 			viewUsagesURL,
@@ -41,6 +43,8 @@ const ACTIONS = {
 				formSubmitURL: changeContentTypeURL,
 				mappingTypes,
 				namespace,
+				selectedSubtype: classTypeId,
+				selectedType: classNameId,
 				spritemap: getSpritemap(),
 				title: hasMissingType
 					? Liferay.Language.get('select-content-type')

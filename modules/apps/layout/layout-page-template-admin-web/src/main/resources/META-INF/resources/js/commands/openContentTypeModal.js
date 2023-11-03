@@ -30,6 +30,8 @@ export default function openContentTypeModal({
 	formSubmitURL,
 	mappingTypes,
 	namespace,
+	selectedSubtype,
+	selectedType,
 	spritemap,
 	title,
 	type = MODAL_TYPES.create,
@@ -54,6 +56,8 @@ export default function openContentTypeModal({
 				mappingTypes={mappingTypes}
 				namespace={namespace}
 				onClose={cleanUp}
+				selectedSubtype={selectedSubtype}
+				selectedType={selectedType}
 				title={title}
 				type={type}
 				warningMessage={warningMessage}

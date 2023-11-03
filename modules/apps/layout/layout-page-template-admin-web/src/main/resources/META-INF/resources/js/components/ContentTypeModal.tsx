@@ -23,6 +23,8 @@ interface Props {
 	mappingTypes: MappingType[];
 	namespace: string;
 	onClose: () => void;
+	selectedSubtype?: string;
+	selectedType?: string;
 	title: string;
 	type: ModalType;
 	warningMessage: string;
@@ -36,6 +38,8 @@ export default function ContentTypeModal({
 	mappingTypes,
 	namespace,
 	onClose,
+	selectedSubtype,
+	selectedType,
 	title,
 	type,
 	warningMessage,
@@ -193,6 +197,8 @@ export default function ContentTypeModal({
 					mappingTypes={mappingTypes}
 					namespace={namespace}
 					onSubmit={handleSubmit}
+					selectedSubtype={selectedSubtype}
+					selectedType={selectedType}
 					type={type}
 				/>
 			</ClayModal.Body>

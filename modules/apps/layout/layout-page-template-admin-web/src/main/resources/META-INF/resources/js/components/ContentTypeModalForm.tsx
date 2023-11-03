@@ -25,6 +25,8 @@ interface Props {
 	mappingTypes: MappingType[];
 	namespace: string;
 	onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+	selectedSubtype?: string;
+	selectedType?: string;
 	type: ModalType;
 }
 
@@ -35,6 +37,8 @@ export default function ContentTypeModalForm({
 	mappingTypes,
 	namespace,
 	onSubmit,
+	selectedSubtype,
+	selectedType,
 	type,
 }: Props) {
 	const [error, setError] = useState<ValidationError>(initialError);
@@ -58,6 +62,8 @@ export default function ContentTypeModalForm({
 					error={error}
 					mappingTypes={mappingTypes}
 					namespace={namespace}
+					selectedSubtype={selectedSubtype}
+					selectedType={selectedType}
 					setError={setError}
 				/>
 			</form>
@@ -95,6 +101,8 @@ interface MappingTypesSelectorProps {
 	error: ValidationError;
 	mappingTypes: MappingType[];
 	namespace: string;
+	selectedSubtype?: string;
+	selectedType?: string;
 	setError: (error: ValidationError) => void;
 }
 
@@ -102,9 +110,19 @@ function MappingTypeSelector({
 	error,
 	mappingTypes,
 	namespace,
+	selectedSubtype,
+	selectedType,
 	setError,
 }: MappingTypesSelectorProps) {
-	const [subtypes, setSubtypes] = useState<MappingSubtype[]>([]);
+	const [subtypes, setSubtypes] = useState<MappingSubtype[]>(() => {
+		const mappingType = mappingTypes.find(({id}) => id === selectedType);
+
+		if (mappingType) {
+			return mappingType.subtypes;
+		}
+
+		return [];
+	});
 
 	const onChange = useCallback(
 		(event) => {
@@ -148,9 +166,13 @@ function MappingTypeSelector({
 						{`-- ${Liferay.Language.get('not-selected')} --`}
 					</option>
 
-					{mappingTypes.map((mappingType) => (
-						<option key={mappingType.id} value={mappingType.id}>
-							{mappingType.label}
+					{mappingTypes.map(({id, label}) => (
+						<option
+							key={id}
+							selected={id === selectedType}
+							value={id}
+						>
+							{label}
 						</option>
 					))}
 				</select>
@@ -176,9 +198,13 @@ function MappingTypeSelector({
 							{`-- ${Liferay.Language.get('not-selected')} --`}
 						</option>
 
-						{subtypes.map((subtype) => (
-							<option key={subtype.id} value={subtype.id}>
-								{subtype.label}
+						{subtypes.map(({id, label}) => (
+							<option
+								key={id}
+								selected={id === selectedSubtype}
+								value={id}
+							>
+								{label}
 							</option>
 						))}
 					</select>

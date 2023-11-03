@@ -35,6 +35,8 @@ export default function ScheduleModal({
 		callback('');
 	};
 
+	const currentYear = new Date().getFullYear();
+
 	useEffect(() => {
 		setInvalidDate(
 			!(
@@ -71,6 +73,10 @@ export default function ScheduleModal({
 						placeholder="YYYY-MM-DD HH:mm"
 						time
 						value={displayDate}
+						years={{
+							end: currentYear + 1,
+							start: currentYear,
+						}}
 					/>
 				</div>
 

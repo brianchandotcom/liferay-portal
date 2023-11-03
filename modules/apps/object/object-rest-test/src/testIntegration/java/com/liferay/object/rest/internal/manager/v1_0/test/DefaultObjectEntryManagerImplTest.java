@@ -1373,7 +1373,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Tree objectEntriesTree = _createObjectEntryTree(
+		Tree objectEntriesTree = _createAccountRestrictedObjectEntryTree(
 			accountEntry1, StringPool.BLANK);
 
 		_addResourcePermission(
@@ -2001,11 +2001,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		_createObjectEntryTree(accountEntry1, "1");
+		_createAccountRestrictedObjectEntryTree(accountEntry1, "1");
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
-		_createObjectEntryTree(accountEntry2, "2");
+		_createAccountRestrictedObjectEntryTree(accountEntry2, "2");
 
 		_user = _addUser();
 
@@ -2810,7 +2810,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Tree objectEntriesTree = _createObjectEntryTree(
+		Tree objectEntriesTree = _createAccountRestrictedObjectEntryTree(
 			accountEntry1, StringPool.BLANK);
 
 		_addResourcePermission(
@@ -3491,24 +3491,7 @@ public class DefaultObjectEntryManagerImplTest
 			StringUtil.merge(valuesList, includes ? " or " : " and "), "))");
 	}
 
-	private ObjectDefinition _createObjectDefinition(
-			List<ObjectField> objectFields)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.addCustomObjectDefinition(
-				adminUser.getUserId(), 0, false, true, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
-
-		return objectDefinitionLocalService.publishCustomObjectDefinition(
-			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
-	}
-
-	private Tree _createObjectEntryTree(
+	private Tree _createAccountRestrictedObjectEntryTree(
 			AccountEntry accountEntry, String externalReferenceCodeSuffix)
 		throws Exception {
 
@@ -3536,6 +3519,23 @@ public class DefaultObjectEntryManagerImplTest
 			ServiceContextTestUtil.getServiceContext());
 
 		return tree;
+	}
+
+	private ObjectDefinition _createObjectDefinition(
+			List<ObjectField> objectFields)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				adminUser.getUserId(), 0, false, true, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+
+		return objectDefinitionLocalService.publishCustomObjectDefinition(
+			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(

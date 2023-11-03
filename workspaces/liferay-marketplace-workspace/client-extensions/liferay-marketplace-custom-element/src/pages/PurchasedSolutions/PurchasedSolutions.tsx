@@ -264,8 +264,9 @@ const PurchasedSolutions: React.FC = () => {
 									}}
 									wizardSteps={{
 										[StepType.ACCOUNT]:
-											!!account &&
-											step !== StepType.ACCOUNT,
+											!!accountForm.getValues(
+												'accountSelected'
+											) && step !== StepType.ACCOUNT,
 										[StepType.FORM]:
 											hasAllValidations &&
 											step !== StepType.FORM,

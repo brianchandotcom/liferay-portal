@@ -7,13 +7,30 @@ package com.liferay.object.internal.field.attachment;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.attachment.AttachmentValidator;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,6 +62,55 @@ public class AttachmentValidatorImpl implements AttachmentValidator {
 		String value = objectFieldSetting.getValue();
 
 		return value.split("\\s*,\\s*");
+	}
+
+	@Override
+	public DLFolder getDLFolder(
+		long objectFieldId, long companyId, long groupId,
+		ServiceContext serviceContext, long userId) {
+
+		try {
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectFieldId);
+
+			boolean showFilesInDocumentsAndMedia = GetterUtil.getBoolean(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.
+						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+					objectField.getObjectFieldSettings()));
+
+			Long dlFolderId = null;
+
+			if (showFilesInDocumentsAndMedia) {
+				String storageDLFolderPath = ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+					objectField.getObjectFieldSettings());
+
+				dlFolderId = _getStorageDLFolderId(
+					companyId, groupId, serviceContext, storageDLFolderPath);
+			}
+			else {
+				ObjectDefinition objectDefinition =
+					objectField.getObjectDefinition();
+
+				dlFolderId = _getObjectRepositoryFolderId(
+					companyId, groupId, objectDefinition.getPortletId(),
+					serviceContext, userId);
+			}
+
+			if (dlFolderId == null) {
+				return null;
+			}
+
+			return _dlFolderLocalService.fetchDLFolder(dlFolderId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
 	}
 
 	@Override
@@ -104,11 +170,107 @@ public class AttachmentValidatorImpl implements AttachmentValidator {
 			ObjectConfiguration.class, properties);
 	}
 
+	private Repository _getObjectRepository(
+			long groupId, String portletId, ServiceContext serviceContext)
+		throws Exception {
+
+		Repository repository = _portletFileRepository.fetchPortletRepository(
+			groupId, portletId);
+
+		if (repository != null) {
+			return repository;
+		}
+
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return _portletFileRepository.addPortletRepository(
+			groupId, portletId, serviceContext);
+	}
+
+	private Long _getObjectRepositoryFolderId(
+			long companyId, long groupId, String portletId,
+			ServiceContext serviceContext, long userId)
+		throws Exception {
+
+		Repository repository = _getObjectRepository(
+			groupId, portletId, serviceContext);
+
+		if (repository == null) {
+			return null;
+		}
+
+		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
+			repository.getGroupId(), repository.getDlFolderId(),
+			String.valueOf(userId));
+
+		if (dlFolder != null) {
+			return dlFolder.getFolderId();
+		}
+
+		dlFolder = _dlFolderLocalService.addFolder(
+			null, _userLocalService.getGuestUserId(companyId),
+			repository.getGroupId(), repository.getRepositoryId(), false,
+			repository.getDlFolderId(), String.valueOf(userId), null, false,
+			serviceContext);
+
+		return dlFolder.getFolderId();
+	}
+
+	private Long _getStorageDLFolderId(
+			long companyId, long groupId, ServiceContext serviceContext,
+			String storageDLFolderPath)
+		throws Exception {
+
+		long storageDLFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		for (String name :
+				StringUtil.split(storageDLFolderPath, CharPool.FORWARD_SLASH)) {
+
+			DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
+				groupId, storageDLFolderId, name);
+
+			if (dlFolder != null) {
+				storageDLFolderId = dlFolder.getFolderId();
+
+				continue;
+			}
+
+			Folder folder = _dlAppLocalService.addFolder(
+				null, _userLocalService.getGuestUserId(companyId), groupId,
+				storageDLFolderId, name, null, serviceContext);
+
+			storageDLFolderId = folder.getFolderId();
+		}
+
+		return storageDLFolderId;
+	}
+
 	private static final long _FILE_LENGTH_MB = 1024 * 1024;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AttachmentValidatorImpl.class);
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
 
 	private volatile ObjectConfiguration _objectConfiguration;
 
 	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

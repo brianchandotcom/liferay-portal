@@ -43,15 +43,6 @@
 	<bean class="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" id="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil">
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil" id="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil">
-		<property name="methodFactoryRegistry">
-			<bean class="com.liferay.portal.webdav.methods.MethodFactoryRegistryImpl">
-				<property name="defaultMethodFactory">
-					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" />
-				</property>
-			</bean>
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.xml.SAXReaderImpl" id="com.liferay.portal.kernel.xml.SAXReader">
 		<property name="secure" value="true" />
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />

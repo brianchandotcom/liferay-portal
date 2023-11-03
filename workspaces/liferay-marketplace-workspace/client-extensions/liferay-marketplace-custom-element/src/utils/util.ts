@@ -178,7 +178,8 @@ async function submitSpecification(
 		});
 
 		return -1;
-	} else {
+	}
+	else {
 		const {id} = await createProductSpecification({
 			appId,
 			body: {
@@ -247,12 +248,14 @@ export async function submitBase64EncodedFile({
 
 				if (result?.includes('application/zip')) {
 					result = result?.substring(28);
-				} else if (
+				}
+				else if (
 					result?.includes('image/gif') ||
 					result?.includes('image/png')
 				) {
 					result = result?.substring(22);
-				} else if (result?.includes('image/jpeg')) {
+				}
+				else if (result?.includes('image/jpeg')) {
 					result = result?.substring(23);
 				}
 

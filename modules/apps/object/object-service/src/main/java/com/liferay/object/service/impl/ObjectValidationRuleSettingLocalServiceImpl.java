@@ -53,6 +53,11 @@ public class ObjectValidationRuleSettingLocalServiceImpl
 			objectValidationRuleSetting);
 	}
 
+	@Override
+	public int getObjectValidationRuleSettingsCount(String name, String value) {
+		return objectValidationRuleSettingPersistence.countByN_V(name, value);
+	}
+
 	@Reference
 	private ObjectValidationRulePersistence _objectValidationRulePersistence;
 

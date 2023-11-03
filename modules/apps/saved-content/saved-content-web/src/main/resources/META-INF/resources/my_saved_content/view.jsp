@@ -45,12 +45,14 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 					<div class="btn-group-item">
 						<clay:link
 							borderless="<%= true %>"
+							cssClass="lfr-portal-tooltip"
 							displayType="secondary"
 							href="<%= mySavedContentDisplayContext.getURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
 							icon="shortcut"
 							monospaced="<%= true %>"
 							small="<%= true %>"
 							target="_blank"
+							title='<%= LanguageUtil.get(request, "open-in-a-new-tab") %>'
 							type="button"
 						/>
 					</div>
@@ -58,11 +60,13 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 					<div class="btn-group-item">
 						<clay:link
 							borderless="<%= true %>"
+							cssClass="lfr-portal-tooltip"
 							displayType="secondary"
 							href="<%= mySavedContentDisplayContext.getRemoveSavedContentURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
 							icon="trash"
 							monospaced="<%= true %>"
 							small="<%= true %>"
+							title='<%= LanguageUtil.get(request, "remove-content") %>'
 							type="button"
 						/>
 					</div>

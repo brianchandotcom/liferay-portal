@@ -35,9 +35,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.fragment.importer.FragmentsImportStrategy;
@@ -253,7 +251,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
-		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoValueLocalService expandoValueLocalService,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
@@ -335,7 +332,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
-		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
@@ -509,9 +505,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addFragmentEntries(
 					serviceContext, stringUtilReplaceValues));
 
-			_invoke(
-				() -> _addOrUpdateExpandoColumns(
-					serviceContext, stringUtilReplaceValues));
+			_invoke(() -> _addOrUpdateExpandoColumns(serviceContext));
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
 
@@ -1963,9 +1957,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			siteNavigationMenuItemSettingsBuilder, stringUtilReplaceValues);
 	}
 
-	private void _addOrUpdateExpandoColumns(
-			ServiceContext serviceContext,
-			Map<String, String> stringUtilReplaceValues)
+	private void _addOrUpdateExpandoColumns(ServiceContext serviceContext)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
@@ -2020,15 +2012,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				expandoBridge.setAttributeProperties(
 					jsonObject.getString("name"), unicodeProperties);
 			}
-		}
-
-		List<ExpandoColumn> expandoColumns =
-			_expandoColumnLocalService.getExpandoColumns(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (ExpandoColumn expandoColumn : expandoColumns) {
-			stringUtilReplaceValues.put(
-				"EXPANDO_COLUMN_ID:" + expandoColumn.getName(),
-				String.valueOf(expandoColumn.getColumnId()));
 		}
 	}
 
@@ -5058,7 +5041,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
-	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;

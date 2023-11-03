@@ -7,11 +7,11 @@ package com.liferay.site.initializer.extender;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.annotation.versioning.ProviderType;
-
-import java.util.Map;
 
 /**
  * @author Nilton Vieira
@@ -20,7 +20,8 @@ import java.util.Map;
 public interface OSBSiteInitializer {
 
 	public void addOrUpdateSXPBlueprint(
-			ServiceContext serviceContext, ServletContext servletContext, Map<String, String> stringUtilReplaceValues)
+			ServiceContext serviceContext, ServletContext servletContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception;
 
 }

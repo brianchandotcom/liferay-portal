@@ -12,6 +12,8 @@ import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
 import java.util.List;
@@ -157,6 +160,26 @@ public class EditCOREntryMVCActionCommand extends BaseMVCActionCommand {
 			PropertiesParamUtil.getProperties(
 				actionRequest, "type--settings--");
 
+		String quantity = typeSettingsUnicodeProperties.getProperty(
+			COREntryConstants.TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_QUANTITY);
+
+		if (Validator.isNotNull(quantity)) {
+			try {
+				quantity = String.valueOf(Double.valueOf(quantity));
+			}
+			catch (NumberFormatException numberFormatException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(numberFormatException);
+				}
+
+				quantity = "0";
+			}
+
+			typeSettingsUnicodeProperties.setProperty(
+				COREntryConstants.TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_QUANTITY,
+				quantity);
+		}
+
 		return typeSettingsUnicodeProperties.toString();
 	}
 
@@ -187,6 +210,9 @@ public class EditCOREntryMVCActionCommand extends BaseMVCActionCommand {
 				COREntryConstants.TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_QUANTITY)
 		).buildString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCOREntryMVCActionCommand.class);
 
 	@Reference
 	private COREntryService _corEntryService;

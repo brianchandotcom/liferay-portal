@@ -46,6 +46,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			if (jsonObject == null) {
+				continue;
+			}
+
 			JSONObject attributesJSONObject = jsonObject.getJSONObject(
 				"attributes");
 

@@ -1440,10 +1440,10 @@ public class JournalDisplayContext {
 		return _assetCategoryIds;
 	}
 
-	private Filter _getAssetCategoryIdsFilter(long[] assetCategoryIds) {
+	private Filter _getAssetCategoryIdsFilter() {
 		BooleanFilter booleanFilter = new BooleanFilter();
 
-		for (long assetCategoryId : assetCategoryIds) {
+		for (long assetCategoryId : _getAssetCategoryIds()) {
 			booleanFilter.addTerm(
 				Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategoryId),
 				BooleanClauseOccur.MUST);
@@ -1467,10 +1467,10 @@ public class JournalDisplayContext {
 		return _assetTagNames;
 	}
 
-	private Filter _getAssetTagNamesFilter(String[] assetTagNames) {
+	private Filter _getAssetTagNamesFilter() {
 		BooleanFilter booleanFilter = new BooleanFilter();
 
-		for (String assetTagName : assetTagNames) {
+		for (String assetTagName : _getAssetTagNames()) {
 			booleanFilter.addTerm(
 				Field.ASSET_TAG_NAMES + ".raw", assetTagName,
 				BooleanClauseOccur.MUST);
@@ -1479,28 +1479,25 @@ public class JournalDisplayContext {
 		return booleanFilter;
 	}
 
-	private BooleanClause<Query>[] _getBooleanClauses(
-		long[] assetCategoryIds, String[] assetTagNames, long userId) {
-
+	private BooleanClause<Query>[] _getBooleanClauses() {
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
-		if (ArrayUtil.isNotEmpty(assetCategoryIds)) {
+		if (ArrayUtil.isNotEmpty(_getAssetCategoryIds())) {
 			booleanFilter.add(
-				_getAssetCategoryIdsFilter(assetCategoryIds),
-				BooleanClauseOccur.MUST);
+				_getAssetCategoryIdsFilter(), BooleanClauseOccur.MUST);
 		}
 
-		if (ArrayUtil.isNotEmpty(assetTagNames)) {
+		if (ArrayUtil.isNotEmpty(_getAssetTagNames())) {
 			booleanFilter.add(
-				_getAssetTagNamesFilter(assetTagNames),
-				BooleanClauseOccur.MUST);
+				_getAssetTagNamesFilter(), BooleanClauseOccur.MUST);
 		}
 
-		if (userId > 0) {
+		if (isNavigationMine() && (_themeDisplay.getUserId() > 0)) {
 			booleanFilter.addTerm(
-				Field.USER_ID, String.valueOf(userId), BooleanClauseOccur.MUST);
+				Field.USER_ID, String.valueOf(_themeDisplay.getUserId()),
+				BooleanClauseOccur.MUST);
 		}
 
 		booleanQuery.setPreBooleanFilter(booleanFilter);
@@ -1764,15 +1761,7 @@ public class JournalDisplayContext {
 
 		searchContext.setAttributes(attributes);
 
-		long userId = 0;
-
-		if (isNavigationMine()) {
-			userId = _themeDisplay.getUserId();
-		}
-
-		searchContext.setBooleanClauses(
-			_getBooleanClauses(
-				_getAssetCategoryIds(), _getAssetTagNames(), userId));
+		searchContext.setBooleanClauses(_getBooleanClauses());
 
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");

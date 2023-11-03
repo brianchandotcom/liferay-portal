@@ -65,11 +65,12 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _createObjectEntryWithName(keywords = null, taxonomyCategoryIds = null, name = null, virtualHost = null, en_US_plural_label = null, token = null) {
+	macro _createObjectEntryWithName(externalReferenceCode = null, keywords = null,taxonomyCategoryIds = null,name = null,virtualHost = null,en_US_plural_label = null,token = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var response = CustomObjectAPI.createObjectEntryWithFields(
 			en_US_plural_label = ${en_US_plural_label},
+			externalReferenceCode = ${externalReferenceCode},
 			fieldName = "name",
 			fieldValue = ${name},
 			keywords = ${keywords},
@@ -826,9 +827,10 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createObjectEntryWithName(keywords = null, taxonomyCategoryIds = null, name = null, secondFieldValue = null, virtualHost = null, en_US_plural_label = null, token = null) {
+	macro createObjectEntryWithName(externalReferenceCode = null, keywords = null,taxonomyCategoryIds = null,name = null,secondFieldValue = null,virtualHost = null,en_US_plural_label = null,token = null) {
 		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
 			en_US_plural_label = ${en_US_plural_label},
+			externalReferenceCode = ${externalReferenceCode},
 			keywords = ${keywords},
 			name = ${name},
 			secondFieldValue = ${secondFieldValue},

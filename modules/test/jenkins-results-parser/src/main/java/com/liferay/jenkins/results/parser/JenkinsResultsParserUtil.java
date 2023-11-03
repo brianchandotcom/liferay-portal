@@ -4663,7 +4663,8 @@ public class JenkinsResultsParserUtil {
 
 					StringBuilder sb = new StringBuilder();
 
-					sb.append("HTTP response code 422 detected\n");
+					sb.append(exceptionMessage);
+					sb.append("\n");
 
 					if (!isNullOrEmpty(postContent)) {
 						sb.append("Post content:\n");
@@ -4672,8 +4673,7 @@ public class JenkinsResultsParserUtil {
 
 					System.out.println(sb.toString());
 
-					throw new RuntimeException(
-						"HTTP response code 422 detected", ioException);
+					throw new RuntimeException(exceptionMessage, ioException);
 				}
 
 				Integer retryPeriodOverride = null;

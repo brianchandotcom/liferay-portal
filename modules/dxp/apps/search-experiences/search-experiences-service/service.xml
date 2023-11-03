@@ -54,6 +54,8 @@
 
 		<column localized="true" name="description" type="String" />
 		<column name="elementDefinitionJSON" type="String" />
+		<column name="fallbackDescription" type="String" />
+		<column name="fallbackTitle" type="String" />
 		<column name="hidden" type="boolean" />
 		<column name="readOnly" type="boolean" />
 		<column name="schemaVersion" type="String" />

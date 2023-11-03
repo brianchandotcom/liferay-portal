@@ -76,6 +76,7 @@ import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
@@ -3838,15 +3839,17 @@ public class ObjectEntryLocalServiceImpl
 
 		TreeFactory treeFactory = _treeFactorySnapshot.get();
 
-		Tree tree = treeFactory.createObjectDefinitionTree(
+		Tree objectDefinitionTree = treeFactory.createObjectDefinitionTree(
 			objectDefinition.getRootObjectDefinitionId());
 
-		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
+		Node objectDefinitionNode = objectDefinitionTree.getNode(
+			objectDefinition.getObjectDefinitionId());
+
+		Edge edge = objectDefinitionNode.getEdge();
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipPersistence.findByPrimaryKey(
-				node.getEdge(
-				).getObjectRelationshipId());
+				edge.getObjectRelationshipId());
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
@@ -3857,9 +3860,22 @@ public class ObjectEntryLocalServiceImpl
 		if (objectEntry.getRootObjectEntryId() !=
 				parentObjectEntry.getRootObjectEntryId()) {
 
-			_updateDescendantsRootObjectEntryId(
-				objectEntry, parentObjectEntry.getRootObjectEntryId(),
-				treeFactory);
+			Tree objectEntryTree = treeFactory.createObjectEntryTree(
+				objectEntry.getObjectEntryId());
+
+			Iterator<Node> iterator = objectEntryTree.iterator();
+
+			while (iterator.hasNext()) {
+				Node objectEntryNode = iterator.next();
+
+				ObjectEntry nodeObjectEntry = getObjectEntry(
+					objectEntryNode.getPrimaryKey());
+
+				nodeObjectEntry.setRootObjectEntryId(
+					parentObjectEntry.getRootObjectEntryId());
+
+				updateObjectEntry(nodeObjectEntry);
+			}
 		}
 
 		objectEntry.setRootObjectEntryId(
@@ -3901,27 +3917,6 @@ public class ObjectEntryLocalServiceImpl
 		return StringUtil.replace(
 			value, value.charAt(NumberUtil.getDecimalSeparatorIndex(value)),
 			'.');
-	}
-
-	private void _updateDescendantsRootObjectEntryId(
-			ObjectEntry objectEntry, long rootObjectEntryId,
-			TreeFactory treeFactory)
-		throws PortalException {
-
-		Tree tree = treeFactory.createObjectEntryTree(
-			objectEntry.getObjectEntryId());
-
-		Iterator<Node> iterator = tree.iterator();
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			ObjectEntry nodeObjectEntry = getObjectEntry(node.getPrimaryKey());
-
-			nodeObjectEntry.setRootObjectEntryId(rootObjectEntryId);
-
-			updateObjectEntry(nodeObjectEntry);
-		}
 	}
 
 	private void _updateTable(

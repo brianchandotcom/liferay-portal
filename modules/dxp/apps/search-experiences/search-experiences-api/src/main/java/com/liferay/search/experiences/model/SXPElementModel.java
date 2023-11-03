@@ -334,6 +334,36 @@ public interface SXPElementModel
 	public void setElementDefinitionJSON(String elementDefinitionJSON);
 
 	/**
+	 * Returns the fallback description of this sxp element.
+	 *
+	 * @return the fallback description of this sxp element
+	 */
+	@AutoEscape
+	public String getFallbackDescription();
+
+	/**
+	 * Sets the fallback description of this sxp element.
+	 *
+	 * @param fallbackDescription the fallback description of this sxp element
+	 */
+	public void setFallbackDescription(String fallbackDescription);
+
+	/**
+	 * Returns the fallback title of this sxp element.
+	 *
+	 * @return the fallback title of this sxp element
+	 */
+	@AutoEscape
+	public String getFallbackTitle();
+
+	/**
+	 * Sets the fallback title of this sxp element.
+	 *
+	 * @param fallbackTitle the fallback title of this sxp element
+	 */
+	public void setFallbackTitle(String fallbackTitle);
+
+	/**
 	 * Returns the hidden of this sxp element.
 	 *
 	 * @return the hidden of this sxp element

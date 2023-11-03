@@ -45,6 +45,8 @@ public class SXPElementWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("description", getDescription());
 		attributes.put("elementDefinitionJSON", getElementDefinitionJSON());
+		attributes.put("fallbackDescription", getFallbackDescription());
+		attributes.put("fallbackTitle", getFallbackTitle());
 		attributes.put("hidden", isHidden());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("schemaVersion", getSchemaVersion());
@@ -124,6 +126,19 @@ public class SXPElementWrapper
 
 		if (elementDefinitionJSON != null) {
 			setElementDefinitionJSON(elementDefinitionJSON);
+		}
+
+		String fallbackDescription = (String)attributes.get(
+			"fallbackDescription");
+
+		if (fallbackDescription != null) {
+			setFallbackDescription(fallbackDescription);
+		}
+
+		String fallbackTitle = (String)attributes.get("fallbackTitle");
+
+		if (fallbackTitle != null) {
+			setFallbackTitle(fallbackTitle);
 		}
 
 		Boolean hidden = (Boolean)attributes.get("hidden");
@@ -298,6 +313,26 @@ public class SXPElementWrapper
 	@Override
 	public String getExternalReferenceCode() {
 		return model.getExternalReferenceCode();
+	}
+
+	/**
+	 * Returns the fallback description of this sxp element.
+	 *
+	 * @return the fallback description of this sxp element
+	 */
+	@Override
+	public String getFallbackDescription() {
+		return model.getFallbackDescription();
+	}
+
+	/**
+	 * Returns the fallback title of this sxp element.
+	 *
+	 * @return the fallback title of this sxp element
+	 */
+	@Override
+	public String getFallbackTitle() {
+		return model.getFallbackTitle();
 	}
 
 	/**
@@ -661,6 +696,26 @@ public class SXPElementWrapper
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		model.setExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	 * Sets the fallback description of this sxp element.
+	 *
+	 * @param fallbackDescription the fallback description of this sxp element
+	 */
+	@Override
+	public void setFallbackDescription(String fallbackDescription) {
+		model.setFallbackDescription(fallbackDescription);
+	}
+
+	/**
+	 * Sets the fallback title of this sxp element.
+	 *
+	 * @param fallbackTitle the fallback title of this sxp element
+	 */
+	@Override
+	public void setFallbackTitle(String fallbackTitle) {
+		model.setFallbackTitle(fallbackTitle);
 	}
 
 	/**

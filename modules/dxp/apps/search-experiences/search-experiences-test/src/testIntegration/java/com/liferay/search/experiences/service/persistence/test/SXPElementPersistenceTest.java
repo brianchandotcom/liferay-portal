@@ -137,6 +137,10 @@ public class SXPElementPersistenceTest {
 
 		newSXPElement.setElementDefinitionJSON(RandomTestUtil.randomString());
 
+		newSXPElement.setFallbackDescription(RandomTestUtil.randomString());
+
+		newSXPElement.setFallbackTitle(RandomTestUtil.randomString());
+
 		newSXPElement.setHidden(RandomTestUtil.randomBoolean());
 
 		newSXPElement.setReadOnly(RandomTestUtil.randomBoolean());
@@ -185,6 +189,12 @@ public class SXPElementPersistenceTest {
 		Assert.assertEquals(
 			existingSXPElement.getElementDefinitionJSON(),
 			newSXPElement.getElementDefinitionJSON());
+		Assert.assertEquals(
+			existingSXPElement.getFallbackDescription(),
+			newSXPElement.getFallbackDescription());
+		Assert.assertEquals(
+			existingSXPElement.getFallbackTitle(),
+			newSXPElement.getFallbackTitle());
 		Assert.assertEquals(
 			existingSXPElement.isHidden(), newSXPElement.isHidden());
 		Assert.assertEquals(
@@ -309,9 +319,10 @@ public class SXPElementPersistenceTest {
 			"SXPElement", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "sxpElementId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "description", true, "hidden", true,
-			"readOnly", true, "schemaVersion", true, "title", true, "type",
-			true, "version", true, "status", true);
+			"modifiedDate", true, "description", true, "fallbackDescription",
+			true, "fallbackTitle", true, "hidden", true, "readOnly", true,
+			"schemaVersion", true, "title", true, "type", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -610,6 +621,10 @@ public class SXPElementPersistenceTest {
 		sxpElement.setDescription(RandomTestUtil.randomString());
 
 		sxpElement.setElementDefinitionJSON(RandomTestUtil.randomString());
+
+		sxpElement.setFallbackDescription(RandomTestUtil.randomString());
+
+		sxpElement.setFallbackTitle(RandomTestUtil.randomString());
 
 		sxpElement.setHidden(RandomTestUtil.randomBoolean());
 

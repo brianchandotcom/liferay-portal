@@ -10,5 +10,5 @@ declare const filterCreationActions: ({
 }: {
 	customActions: Array<ICreationActionItem>;
 	globalCollectionActions: any;
-}) => Array<ICreationActionItem> | null;
+}) => Array<ICreationActionItem>;
 export default filterCreationActions;

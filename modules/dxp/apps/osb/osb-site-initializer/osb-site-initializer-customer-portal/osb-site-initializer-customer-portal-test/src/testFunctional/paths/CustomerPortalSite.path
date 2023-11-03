@@ -416,8 +416,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_ICON</td>
+	<td>//*[contains(text(), '${key_dropdownLabel}')]/following-sibling::div//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERSION_DROPDOWN</td>
-	<td>//*[contains(text(), 'Developer Keys')]/following-sibling::div//select</td>
+	<td>//*[contains(normalize-space(), '${key_dropdownLabel}')]//option[normalize-space()='${key_dropdownItem}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_DROPDOWN_MODAL</td>
+	<td>xpath=(//*[contains(normalize-space(), '${key_dropdownLabel}')]//option[normalize-space()='${key_dropdownItem}'])[2]</td>
 	<td></td>
 </tr>
 <tr>

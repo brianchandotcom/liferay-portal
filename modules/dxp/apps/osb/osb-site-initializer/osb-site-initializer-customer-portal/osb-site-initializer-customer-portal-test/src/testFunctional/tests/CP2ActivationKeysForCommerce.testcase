@@ -128,8 +128,8 @@ definition {
 					searchItem = "Test Account QA ${account}");
 
 				Click(
-					locator1 = "CP2Utils#SVG_DROPDOWN_LIST",
-					key_project= "Test Account QA");
+					key_project = "Test Account QA",
+					locator1 = "CP2Utils#SVG_DROPDOWN_LIST");
 			}
 		}
 	}

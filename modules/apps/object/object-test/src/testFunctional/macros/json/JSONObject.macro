@@ -607,7 +607,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectValidation(validationType = null, objectName = null, labelName = null) {
+	macro addObjectValidation(validationType, objectName, labelName, fieldName = null) {
 		Variables.assertDefined(parameterList = "${objectName},${labelName},${script},${validationType}");
 
 		var portalURL = JSONCompany.getDefaultPortalURL();

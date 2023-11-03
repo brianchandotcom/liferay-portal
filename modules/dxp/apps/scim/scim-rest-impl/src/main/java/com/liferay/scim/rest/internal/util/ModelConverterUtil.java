@@ -59,23 +59,18 @@ public class ModelConverterUtil {
 		scimUser.setAutoPassword(user.getPassword() == null);
 		scimUser.setBirthday(_getBirthday(locale, user));
 		scimUser.setCompanyId(companyId);
+		scimUser.setEmailAddress(_getEmailAddress(user));
+		scimUser.setExternalReferenceCode(user.getExternalId());
 
 		ScimName scimName = user.getName();
 
 		scimUser.setFirstName(scimName.getGivenName());
 
-		scimUser.setEmailAddress(_getEmailAddress(user));
-		scimUser.setExternalReferenceCode(user.getExternalId());
 		scimUser.setJobTitle(user.getTitle());
-
 		scimUser.setLastName(scimName.getFamilyName());
-
 		scimUser.setLocale(locale);
-
 		scimUser.setMale(_isMale(user));
-
 		scimUser.setMiddleName(scimName.getMiddleName());
-
 		scimUser.setPassword(user.getPassword());
 		scimUser.setScreenName(user.getUserName());
 

@@ -12,6 +12,7 @@ export default function ScheduleKBArticle({
 	displayDate,
 	portletNamespace,
 	scheduled,
+	timeZone,
 }) {
 	const [showModal, setShowModal] = useState();
 	const [callback, setCallback] = useState();
@@ -56,6 +57,7 @@ export default function ScheduleKBArticle({
 					observer={observer}
 					onModalClose={onClose}
 					scheduled={scheduled}
+					timeZone={timeZone}
 				/>
 			)}
 		</>

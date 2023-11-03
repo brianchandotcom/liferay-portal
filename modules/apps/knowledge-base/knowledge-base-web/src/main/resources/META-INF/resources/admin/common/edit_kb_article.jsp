@@ -380,6 +380,8 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 				"displayDate", editKBArticleDisplayContext.getDatePickerFormattedDisplayDate()
 			).put(
 				"scheduled", editKBArticleDisplayContext.isScheduled()
+			).put(
+				"timeZone", timeZone.getID()
 			).build()
 		%>'
 	/>

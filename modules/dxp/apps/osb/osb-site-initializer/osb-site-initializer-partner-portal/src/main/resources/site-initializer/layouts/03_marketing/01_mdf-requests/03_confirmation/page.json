@@ -30,7 +30,22 @@
 			],
 			"roleName": "Partner Marketing User (PMU)",
 			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Channel Marketing Manager (CMM)",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Channel Finance Manager (CFM)",
+			"scope": 4
 		}
+
 	],
 	"private": false,
 	"system": false,

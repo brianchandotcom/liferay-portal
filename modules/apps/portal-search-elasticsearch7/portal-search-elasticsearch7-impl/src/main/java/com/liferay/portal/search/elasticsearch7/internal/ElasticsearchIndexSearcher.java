@@ -536,10 +536,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Skipping search. Start:", start,
-							" is not less than the maxResultWindow: ",
+							"Skip search because index max result window ",
 							_elasticsearchConfigurationWrapper.
-								indexMaxResultWindow()));
+								indexMaxResultWindow(),
+							" is less than or equal to ", start));
 				}
 
 				return new HitsImpl();

@@ -9,7 +9,6 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
-import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
@@ -25,7 +24,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URL;
 
@@ -64,8 +63,6 @@ public class KoroneikiRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		_initResourceBuilders(jwt);
-
 		JSONObject jsonObject = new JSONObject(json);
 
 		JSONObject commerceOrderJSONObject = jsonObject.getJSONObject(
@@ -78,37 +75,32 @@ public class KoroneikiRestController extends BaseRestController {
 			return;
 		}
 
-		long orderId = commerceOrderJSONObject.getLong("id");
+		_initResourceBuilders(jwt);
 
 		Order order = new Order();
 
 		order.setOrderStatus(_COMMERCE_ORDER_PROCESSING_STATUS);
 
-		_orderResource.patchOrder(orderId, order);
+		_orderResource.patchOrder(commerceOrderJSONObject.getLong("id"), order);
 
-		int cpDefinitionIdInt = GetterUtil.getInteger(
+		long cpDefinitionId = GetterUtil.getInteger(
 			orderItemsJSONArray.getJSONObject(
 				0
 			).getString(
 				"cpDefinitionId"
 			));
 
-		long cpDefinitionId = cpDefinitionIdInt + 1;
+		Product product = _productResource.getProduct(cpDefinitionId + 1);
 
-		Product product = _productResource.getProduct(cpDefinitionId);
-
-		Page<Sku> skuPage = _skuResource.getProductIdSkusPage(
-			product.getProductId(), Pagination.of(1, 10));
-
-		Page<ProductSpecification> productSpecificationPage =
-			_productSpecificationResource.getProductIdProductSpecificationsPage(
-				product.getProductId(), Pagination.of(1, 10));
-
-		Map<String, String> commerceProductSKUs = _getCommerceProductSKUS(
-			skuPage.getItems());
+		Map<String, String> skuMap = _getSkuMap(
+			_skuResource.getProductIdSkusPage(
+				product.getProductId(), Pagination.of(1, 10)
+			).getItems());
 
 		String licenseType = _getLicenseType(
-			productSpecificationPage.getItems());
+			_productSpecificationResource.getProductIdProductSpecificationsPage(
+				product.getProductId(), Pagination.of(1, 10)
+			).getItems());
 
 		ZonedDateTime commerceOrderStartDate = ZonedDateTime.parse(
 			commerceOrderJSONObject.getString("createDate"),
@@ -123,14 +115,12 @@ public class KoroneikiRestController extends BaseRestController {
 				i);
 
 			_getDXPLicenseUsageTypeProperties(
-				orderItemJSONObject.getString("options"),
-				dxpLicenseUsageTypePropertiesMap);
+				dxpLicenseUsageTypePropertiesMap,
+				orderItemJSONObject.getString("options"));
 
 			ProductPurchase productPurchase = new ProductPurchase();
 
-			if (Validator.isNotNull(licenseType) &&
-				licenseType.equals("Subscription")) {
-
+			if (StringUtil.equals(licenseType, "Subscription")) {
 				productPurchase.setEndDate(
 					Date.from(
 						commerceOrderStartDate.plusYears(
@@ -138,9 +128,7 @@ public class KoroneikiRestController extends BaseRestController {
 						).toInstant()));
 			}
 
-			if (Validator.isNotNull(licenseType) &&
-				licenseType.equals("Trial")) {
-
+			if (StringUtil.equals(licenseType, "Trial")) {
 				productPurchase.setEndDate(
 					Date.from(
 						commerceOrderStartDate.plusMonths(
@@ -151,17 +139,17 @@ public class KoroneikiRestController extends BaseRestController {
 			productPurchase.setStartDate(
 				Date.from(commerceOrderStartDate.toInstant()));
 			productPurchase.setPerpetual(
-				Validator.isNotNull(licenseType) &&
-				licenseType.equals("Perpetual"));
+				StringUtil.equals(licenseType, "Perpetual"));
 			productPurchase.setProductKey(
-				commerceProductSKUs.get(orderItemJSONObject.getString("sku")));
+				skuMap.get(orderItemJSONObject.getString("sku")));
 			productPurchase.setStatus(ProductPurchase.Status.APPROVED);
 			productPurchase.setQuantity(orderItemJSONObject.getInt("quantity"));
 
 			ExternalLink externalLink = new ExternalLink();
 
 			externalLink.setDomain("salesforce");
-			externalLink.setEntityId(String.valueOf(orderId));
+			externalLink.setEntityId(
+				String.valueOf(commerceOrderJSONObject.getLong("id")));
 			externalLink.setEntityName("opportunity");
 
 			ExternalLink[] externalLinks = {externalLink};
@@ -191,89 +179,71 @@ public class KoroneikiRestController extends BaseRestController {
 			}
 		}
 
-		order.setOrderStatus(_COMMERCE_ORDER_COMPLETED_STATUS);
-
-		boolean orderCompleted = false;
-
-		if (successCount == orderItemsJSONArray.length()) {
-			if (dxpLicenseUsageTypePropertiesMap.get("developer") ||
-				(dxpLicenseUsageTypePropertiesMap.get("standard") &&
-				 (commerceOrderJSONObject.getInt("paymentStatus") ==
-					 _COMMERCE_ORDER_PAYMENT_COMPLETED_STATUS))) {
-
-				orderCompleted = true;
-			}
-
-			if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
-				orderCompleted = true;
-
-				order.setPaymentStatus(
-					_COMMERCE_ORDER_PAYMENT_COMPLETED_STATUS);
-			}
-
-			if (!dxpLicenseUsageTypePropertiesMap.get("developer") &&
-				!dxpLicenseUsageTypePropertiesMap.get("standard") &&
-				!dxpLicenseUsageTypePropertiesMap.get("trial")) {
-
-				orderCompleted = true;
-			}
+		if (successCount != orderItemsJSONArray.length()) {
+			return;
 		}
 
-		if (orderCompleted) {
-			_orderResource.patchOrder(orderId, order);
+		order.setOrderStatus(_COMMERCE_ORDER_COMPLETED_STATUS);
+
+		if (dxpLicenseUsageTypePropertiesMap.get("developer") ||
+			(dxpLicenseUsageTypePropertiesMap.get("standard") &&
+			 (commerceOrderJSONObject.getInt("paymentStatus") ==
+				 _COMMERCE_ORDER_PAYMENT_COMPLETED_STATUS))) {
+
+			_orderResource.patchOrder(
+				commerceOrderJSONObject.getLong("id"), order);
+		}
+		else if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
+			order.setPaymentStatus(_COMMERCE_ORDER_PAYMENT_COMPLETED_STATUS);
+
+			_orderResource.patchOrder(
+				commerceOrderJSONObject.getLong("id"), order);
+		}
+		else if (!dxpLicenseUsageTypePropertiesMap.get("developer") &&
+				 !dxpLicenseUsageTypePropertiesMap.get("standard") &&
+				 !dxpLicenseUsageTypePropertiesMap.get("trial")) {
+
+			_orderResource.patchOrder(
+				commerceOrderJSONObject.getLong("id"), order);
 		}
 	}
 
 	@GetMapping("subscriptions/{orderId}")
 	public String getSubscriptionsByOrderId(
 			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("orderId") String orderId)
+			@PathVariable("orderId") Long orderId)
 		throws Exception {
 
 		_initResourceBuilders(jwt);
 
 		JSONArray jsonArray = new JSONArray();
 
-		long orderId2 = GetterUtil.getLong(orderId);
+		Order order = _orderResource.getOrder(orderId);
 
-		com.liferay.headless.commerce.admin.order.client.pagination.Page
-			<OrderItem> orderItemPage =
+		for (OrderItem orderItem :
 				_orderItemResource.getOrderIdOrderItemsPage(
-					orderId2,
+					orderId,
 					com.liferay.headless.commerce.admin.order.client.pagination.
-						Pagination.of(1, 10));
-
-		Order order = _orderResource.getOrder(orderId2);
-
-		Collection<OrderItem> orderItemCollection = orderItemPage.getItems();
-
-		for (OrderItem orderItem : orderItemCollection) {
-			String skuExternalReferenceCode =
-				orderItem.getSkuExternalReferenceCode();
+						Pagination.of(1, 10)
+				).getItems()) {
 
 			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap =
 				new HashMap<>();
 
 			_getDXPLicenseUsageTypeProperties(
-				orderItem.getOptions(), dxpLicenseUsageTypePropertiesMap);
+				dxpLicenseUsageTypePropertiesMap, orderItem.getOptions());
 
 			ProductPurchaseView productPurchaseView =
 				_productPurchaseViewResource.
 					getAccountAccountKeyProductProductKeyProductPurchaseView(
 						order.getAccountExternalReferenceCode(),
-						skuExternalReferenceCode);
-
-			ProductConsumption[] productConsumptions =
-				productPurchaseView.getProductConsumptions();
-
-			ProductPurchase[] productPurchases =
-				productPurchaseView.getProductPurchases();
-
-			ProductPurchase productPurchase = productPurchases[0];
+						orderItem.getSkuExternalReferenceCode());
 
 			int provisionedCount = 0;
 
-			for (ProductConsumption productConsumption : productConsumptions) {
+			for (ProductConsumption productConsumption :
+					productPurchaseView.getProductConsumptions()) {
+
 				if (productConsumption.getEndDate(
 					).after(
 						new Date()
@@ -283,17 +253,20 @@ public class KoroneikiRestController extends BaseRestController {
 				}
 			}
 
-			String name = skuExternalReferenceCode;
+			String licenseName = orderItem.getSkuExternalReferenceCode();
 
-			for (Map.Entry<String, Boolean> set :
-					dxpLicenseUsageTypePropertiesMap.entrySet()) {
-
-				if (set.getValue()) {
-					name = set.getKey();
+			for (String licenseUsageType : _LICENSE_USAGE_TYPES) {
+				if (dxpLicenseUsageTypePropertiesMap.get(licenseUsageType)) {
+					licenseName = licenseUsageType;
 
 					break;
 				}
 			}
+
+			ProductPurchase[] productPurchases =
+					productPurchaseView.getProductPurchases();
+
+			ProductPurchase productPurchase = productPurchases[0];
 
 			String endDate = null;
 			Date startDate = productPurchase.getStartDate();
@@ -316,13 +289,15 @@ public class KoroneikiRestController extends BaseRestController {
 				).put(
 					"endDate", endDate
 				).put(
-					"name", name
+					"name", licenseName
 				).put(
-					"purchasedCount", orderItem.getQuantity()
+					"perpetual", productPurchase.getPerpetual()
+				).put(
+					"productPurchasedKey", productPurchase.getKey()
 				).put(
 					"provisionedCount", provisionedCount
 				).put(
-					"productPurchasedKey", productPurchase.getKey()
+					"purchasedCount", orderItem.getQuantity()
 				).put(
 					"skuId", orderItem.getSkuId()
 				).put(
@@ -332,59 +307,37 @@ public class KoroneikiRestController extends BaseRestController {
 					).format(
 						DateTimeFormatter.ISO_INSTANT
 					)
-				).put(
-					"perpetual", productPurchase.getPerpetual()
 				));
 		}
 
 		return jsonArray.toString();
 	}
 
-	private Map<String, String> _getCommerceProductSKUS(
-		Collection<Sku> skuCollection) {
-
-		Map<String, String> map = new HashMap<>();
-
-		skuCollection.forEach(
-			sku -> map.put(sku.getSku(), sku.getExternalReferenceCode()));
-
-		return map;
-	}
-
 	private void _getDXPLicenseUsageTypeProperties(
-		String options, Map<String, Boolean> map) {
-
-		if (map.isEmpty()) {
-			map.put("developer", false);
-			map.put("standard", false);
-			map.put("trial", false);
-		}
+		Map<String, Boolean> map, String options) {
 
 		JSONArray optionsJSONArray = new JSONArray(options);
 
 		for (int i = 0; i < optionsJSONArray.length(); i++) {
 			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
 
-			String key = jsonObject.getString("key");
+			if (!StringUtil.equals(
+					jsonObject.getString("key"), "dxp-license-usage-type")) {
 
-			if (key.equals("dxp-license-usage-type")) {
-				JSONArray jsonArray = jsonObject.getJSONArray("value");
+				continue;
+			}
 
-				for (int j = 0; j < jsonArray.length(); j++) {
-					String licenseUsageType = jsonArray.getString(j);
+			JSONArray jsonArray = jsonObject.getJSONArray("value");
 
-					if (!map.get("developer")) {
+			for (int j = 0; j < jsonArray.length(); j++) {
+				for (String licenseUsageType : _LICENSE_USAGE_TYPES) {
+					if (!map.containsKey(licenseUsageType) ||
+						!map.get(licenseUsageType)) {
+
 						map.put(
-							"developer", licenseUsageType.equals("developer"));
-					}
-
-					if (!map.get("standard")) {
-						map.put(
-							"standard", licenseUsageType.equals("standard"));
-					}
-
-					if (!map.get("trial")) {
-						map.put("trial", licenseUsageType.equals("trial"));
+							licenseUsageType,
+							StringUtil.equals(
+								jsonArray.getString(j), licenseUsageType));
 					}
 				}
 			}
@@ -397,22 +350,34 @@ public class KoroneikiRestController extends BaseRestController {
 		for (ProductSpecification productSpecification :
 				productSpecificationCollection) {
 
-			String specificationKey =
-				productSpecification.getSpecificationKey();
+			if (!StringUtil.equals(
+					productSpecification.getSpecificationKey(),
+					"license-type")) {
 
-			if (specificationKey.equals("license-type")) {
-				return productSpecification.getValue(
-				).get(
-					"en_US"
-				);
+				continue;
 			}
+
+			return productSpecification.getValue(
+			).get(
+				"en_US"
+			);
 		}
 
 		return null;
 	}
 
+	private Map<String, String> _getSkuMap(Collection<Sku> skuCollection) {
+		Map<String, String> map = new HashMap<>();
+
+		for (Sku sku : skuCollection) {
+			map.put(sku.getSku(), sku.getExternalReferenceCode());
+		}
+
+		return map;
+	}
+
 	private void _initResourceBuilders(Jwt jwt) throws Exception {
-		URL url = new URL(_koroneikiAuthURL);
+		URL koroneikiURL = new URL(_koroneikiAuthURL);
 
 		URL liferayURL = new URL(
 			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
@@ -442,14 +407,16 @@ public class KoroneikiRestController extends BaseRestController {
 		).header(
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
-			url.getHost(), url.getPort(), url.getProtocol()
+			koroneikiURL.getHost(), koroneikiURL.getPort(),
+			koroneikiURL.getProtocol()
 		).build();
 
 		_productPurchaseViewResource = ProductPurchaseViewResource.builder(
 		).header(
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
-			url.getHost(), url.getPort(), url.getProtocol()
+			koroneikiURL.getHost(), koroneikiURL.getPort(),
+			koroneikiURL.getProtocol()
 		).build();
 
 		_productResource = ProductResource.builder(
@@ -479,6 +446,10 @@ public class KoroneikiRestController extends BaseRestController {
 	private static final int _COMMERCE_ORDER_PAYMENT_COMPLETED_STATUS = 0;
 
 	private static final int _COMMERCE_ORDER_PROCESSING_STATUS = 10;
+
+	private static final String[] _LICENSE_USAGE_TYPES = {
+		"developer", "standard", "trial"
+	};
 
 	private AccountResource _accountResource;
 

@@ -2071,70 +2071,6 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assertObjectEntriesSize(0);
 
-		// Search
-
-		AccountEntry accountEntry3 = _addAccountEntry();
-		AccountEntry accountEntry4 = _addAccountEntry();
-
-		_objectEntryLocalService.addObjectEntry(
-			adminUser.getUserId(), 0,
-			_objectDefinition3.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"r_oneToManyRelationshipName_accountEntryId",
-				accountEntry3.getAccountEntryId()
-			).put(
-				"textObjectFieldName1", "Able"
-			).put(
-				"textObjectFieldName2", "Baker"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_objectEntryLocalService.addObjectEntry(
-			adminUser.getUserId(), 0,
-			_objectDefinition3.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"r_oneToManyRelationshipName_accountEntryId",
-				accountEntry4.getAccountEntryId()
-			).put(
-				"textObjectFieldName1", "Charlie"
-			).put(
-				"textObjectFieldName2", "Delta"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_assignAccountEntryRole(accountEntry3, _buyerRole, _addUser());
-
-		_assignAccountEntryRole(accountEntry4, _buyerRole, _addUser());
-
-		for (String value : ListUtil.fromArray("Able", "Baker")) {
-			Page<ObjectEntry> page =
-				_defaultObjectEntryManager.getObjectEntries(
-					companyId, _objectDefinition3, null, null,
-					dtoConverterContext, StringPool.BLANK, null, value, null);
-
-			Collection<ObjectEntry> objectEntries = page.getItems();
-
-			Assert.assertEquals(
-				objectEntries.toString(), 0, objectEntries.size());
-		}
-
-		for (String value : ListUtil.fromArray("Charlie", "Delta")) {
-			Page<ObjectEntry> page =
-				_defaultObjectEntryManager.getObjectEntries(
-					companyId, _objectDefinition3, null, null,
-					dtoConverterContext, StringPool.BLANK, null, value, null);
-
-			Collection<ObjectEntry> objectEntries = page.getItems();
-
-			Assert.assertEquals(
-				objectEntries.toString(), 1, objectEntries.size());
-		}
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
-
-		PrincipalThreadLocal.setName(_user.getUserId());
-
 		// User should be able to view object entries for account entry 1
 		// because he is a member of account entry 1
 
@@ -2596,6 +2532,52 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			});
+	}
+
+	@Test
+	public void testSearchObjectEntriesWithAccountRestriction()
+		throws Exception {
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+
+		_objectEntryLocalService.addObjectEntry(
+			adminUser.getUserId(), 0,
+			_objectDefinition3.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"r_oneToManyRelationshipName1_accountEntryId",
+				accountEntry1.getAccountEntryId()
+			).put(
+				"textObjectFieldName1", "Able"
+			).put(
+				"textObjectFieldName2", "Baker"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_objectEntryLocalService.addObjectEntry(
+			adminUser.getUserId(), 0,
+			_objectDefinition3.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"r_oneToManyRelationshipName1_accountEntryId",
+				accountEntry2.getAccountEntryId()
+			).put(
+				"textObjectFieldName1", "Charlie"
+			).put(
+				"textObjectFieldName2", "Delta"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assignAccountEntryRole(accountEntry1, _buyerRole, _addUser());
+
+		_user = _addUser();
+
+		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
+
+		_assertObjectEntriesSize(_objectDefinition3, "Able", 0);
+		_assertObjectEntriesSize(_objectDefinition3, "Baker", 0);
+		_assertObjectEntriesSize(_objectDefinition3, "Charlie", 1);
+		_assertObjectEntriesSize(_objectDefinition3, "Delta", 1);
 	}
 
 	@Test
@@ -3397,12 +3379,19 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinition objectDefinition, long size)
 		throws Exception {
 
+		_assertObjectEntriesSize(objectDefinition, null, size);
+	}
+
+	private void _assertObjectEntriesSize(
+			ObjectDefinition objectDefinition, String search, long size)
+		throws Exception {
+
 		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
 			companyId, objectDefinition, null, null,
 			new DefaultDTOConverterContext(
 				false, Collections.emptyMap(), dtoConverterRegistry, null,
 				LocaleUtil.getDefault(), null, _user),
-			StringPool.BLANK, null, null, null);
+			StringPool.BLANK, null, search, null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();
 

@@ -469,6 +469,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192724. The site administrator could copy a display page template with mapping."
+	@priority = 4
+	test CopyDisplayPageTemplateWithMapping {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a page creator has a published display page template with mapping") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator makes a copy of display page template") {
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Make a Copy");
+
+			MenuItem.click(menuItem = "Display Page");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the copy of display page template should keep the mapping") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name (Copy)");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Title");
+		}
+	}
+
 	@description = "User can delete default display page template."
 	@priority = 5
 	@uitest

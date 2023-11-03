@@ -30,10 +30,11 @@ type DefinitionActions = {
 	update: DefinitionAction;
 };
 
-type DeletionNotAllowedModal = {
+type ObjectFieldDeleteInfoProps = {
 	deleteLastPublishedObjectDefinitionObjectField: boolean;
 	deleteObjectFieldObjectValidationRuleSetting: boolean;
-	showModal: boolean;
+	showObjectFieldDeletionConfirmationModal: boolean;
+	showObjectFieldDeletionNotAllowedModal: boolean;
 };
 
 type ExcludesFilterOperator = {

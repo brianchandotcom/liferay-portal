@@ -1448,10 +1448,12 @@ public class JournalDisplayContext {
 			return null;
 		}
 
-		if (_assetCategoryIds == null) {
-			_assetCategoryIds = ParamUtil.getLongValues(
-				_httpServletRequest, "assetCategoryId");
+		if (_assetCategoryIds != null) {
+			return _assetCategoryIds;
 		}
+
+		_assetCategoryIds = ParamUtil.getLongValues(
+			_httpServletRequest, "assetCategoryId");
 
 		return _assetCategoryIds;
 	}

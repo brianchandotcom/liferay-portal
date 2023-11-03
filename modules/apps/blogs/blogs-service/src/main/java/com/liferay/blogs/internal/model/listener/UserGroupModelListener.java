@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -85,15 +84,17 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		userGroupUserIds.removeAll(
 			SetUtil.fromArray(_groupLocalService.getUserPrimaryKeys(groupId)));
 
-		long[] organizationIds = _groupLocalService.getOrganizationPrimaryKeys(
-			groupId);
-
 		Group group = _groupLocalService.getGroup(groupId);
 
 		if (group.getOrganizationId() > 0) {
-			organizationIds = ArrayUtil.append(
-				organizationIds, group.getOrganizationId());
+			userGroupUserIds.removeAll(
+				SetUtil.fromArray(
+					_userLocalService.getOrganizationUserIds(
+						group.getOrganizationId())));
 		}
+
+		long[] organizationIds = _groupLocalService.getOrganizationPrimaryKeys(
+			groupId);
 
 		for (long organizationId : organizationIds) {
 			userGroupUserIds.removeAll(

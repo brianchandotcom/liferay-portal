@@ -29,16 +29,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(service = DDMSearchHelper.class)
-public class DDMSearchHelper {
+public class DDMSearchUtil {
 
-	public SearchContext buildStructureLayoutSearchContext(
+	public static SearchContext buildStructureLayoutSearchContext(
 		long companyId, long[] groupIds, long classNameId, String name,
 		String description, String storageType, Integer type, int status,
 		int start, int end,
@@ -63,11 +59,11 @@ public class DDMSearchHelper {
 		return searchContext;
 	}
 
-	public SearchContext buildStructureSearchContext(
+	public static SearchContext buildStructureSearchContext(
 		long companyId, long[] groupIds, long userId, long classNameId,
 		Long classPK, String name, String description, String storageType,
-		Integer type, int status, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		Integer type, int status, DDMPermissionSupport ddmPermissionSupport,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -78,7 +74,7 @@ public class DDMSearchHelper {
 		searchContext.setAttribute(Field.STATUS, status);
 		searchContext.setAttribute(
 			"resourcePermissionName",
-			_ddmPermissionSupport.getStructureModelResourceName(classNameId));
+			ddmPermissionSupport.getStructureModelResourceName(classNameId));
 		searchContext.setAttribute("storageType", storageType);
 		searchContext.setAttribute("type", type);
 		searchContext.setCompanyId(companyId);
@@ -97,47 +93,52 @@ public class DDMSearchHelper {
 		return searchContext;
 	}
 
-	public SearchContext buildStructureSearchContext(
+	public static SearchContext buildStructureSearchContext(
 		long companyId, long[] groupIds, long classNameId, Long classPK,
 		String name, String description, String storageType, Integer type,
-		int status, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		int status, DDMPermissionSupport ddmPermissionSupport, int start,
+		int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return buildStructureSearchContext(
 			companyId, groupIds, 0, classNameId, classPK, name, description,
-			storageType, type, status, start, end, orderByComparator);
+			storageType, type, status, ddmPermissionSupport, start, end,
+			orderByComparator);
 	}
 
-	public SearchContext buildTemplateSearchContext(
+	public static SearchContext buildTemplateSearchContext(
 		long companyId, long groupId, long userId, long classNameId,
 		long classPK, long resourceClassNameId, String name, String description,
-		String type, String mode, String language, int status, int start,
-		int end, OrderByComparator<DDMTemplate> orderByComparator) {
+		String type, String mode, String language, int status,
+		DDMPermissionSupport ddmPermissionSupport, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return buildTemplateSearchContext(
 			companyId, new long[] {groupId}, userId, new long[] {classNameId},
 			new long[] {classPK}, resourceClassNameId, name, description, type,
-			mode, language, status, start, end, orderByComparator);
+			mode, language, status, ddmPermissionSupport, start, end,
+			orderByComparator);
 	}
 
-	public SearchContext buildTemplateSearchContext(
+	public static SearchContext buildTemplateSearchContext(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String name, String description, String type,
-		String mode, String language, int status, int start, int end,
+		String mode, String language, int status,
+		DDMPermissionSupport ddmPermissionSupport, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return buildTemplateSearchContext(
 			companyId, new long[] {groupId}, new long[] {classNameId},
 			new long[] {classPK}, resourceClassNameId, name, description, type,
-			mode, language, status, start, end, orderByComparator);
+			mode, language, status, ddmPermissionSupport, start, end,
+			orderByComparator);
 	}
 
-	public SearchContext buildTemplateSearchContext(
+	public static SearchContext buildTemplateSearchContext(
 		long companyId, long[] groupIds, long userId, long[] classNameIds,
 		long[] classPKs, long resourceClassNameId, String name,
 		String description, String type, String mode, String language,
-		int status, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator) {
+		int status, DDMPermissionSupport ddmPermissionSupport, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -153,7 +154,7 @@ public class DDMSearchHelper {
 		try {
 			searchContext.setAttribute(
 				"resourcePermissionName",
-				_ddmPermissionSupport.getTemplateModelResourceName(
+				ddmPermissionSupport.getTemplateModelResourceName(
 					resourceClassNameId));
 		}
 		catch (Exception exception) {
@@ -179,19 +180,20 @@ public class DDMSearchHelper {
 		return searchContext;
 	}
 
-	public SearchContext buildTemplateSearchContext(
+	public static SearchContext buildTemplateSearchContext(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, String name, String description, String type,
-		String mode, String language, int status, int start, int end,
+		String mode, String language, int status,
+		DDMPermissionSupport ddmPermissionSupport, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return buildTemplateSearchContext(
 			companyId, groupIds, 0, classNameIds, classPKs, resourceClassNameId,
-			name, description, type, mode, language, status, start, end,
-			orderByComparator);
+			name, description, type, mode, language, status,
+			ddmPermissionSupport, start, end, orderByComparator);
 	}
 
-	public <T> List<T> doSearch(
+	public static <T> List<T> doSearch(
 		SearchContext searchContext, Class<T> modelClass,
 		UnsafeFunction<Long, T, ? extends PortalException>
 			getModelUnsafeFunction) {
@@ -215,7 +217,7 @@ public class DDMSearchHelper {
 		return Collections.emptyList();
 	}
 
-	public <T> int doSearchCount(
+	public static <T> int doSearchCount(
 		SearchContext searchContext, Class<T> modelClass) {
 
 		try {
@@ -232,7 +234,7 @@ public class DDMSearchHelper {
 		return 0;
 	}
 
-	private Sort[] _getSortsFromComparator(
+	private static Sort[] _getSortsFromComparator(
 		OrderByComparator<? extends BaseModel<?>> orderByComparator) {
 
 		return TransformUtil.transform(
@@ -250,8 +252,7 @@ public class DDMSearchHelper {
 			Sort.class);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMSearchHelper.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDMSearchUtil.class);
 
 	private static final Map<String, String> _fieldNameOrderByCols =
 		HashMapBuilder.put(
@@ -271,8 +272,5 @@ public class DDMSearchHelper {
 		).put(
 			Field.MODIFIED_DATE, Sort.LONG_TYPE
 		).build();
-
-	@Reference
-	private DDMPermissionSupport _ddmPermissionSupport;
 
 }

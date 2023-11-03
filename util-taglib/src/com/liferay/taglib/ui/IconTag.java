@@ -544,6 +544,12 @@ public class IconTag extends IncludeTag {
 		if (isAUIImage()) {
 			String pathThemeImages = themeDisplay.getPathThemeImages();
 
+			int path = pathThemeImages.indexOf("/o/");
+
+			if (path != -1) {
+				pathThemeImages = pathThemeImages.substring(path);
+			}
+
 			return pathThemeImages.concat("/spacer.png");
 		}
 		else if (Validator.isNotNull(_image)) {

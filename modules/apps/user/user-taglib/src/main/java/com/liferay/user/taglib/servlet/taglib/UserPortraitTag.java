@@ -43,12 +43,20 @@ public class UserPortraitTag extends IncludeTag {
 				sb.append(CharPool.SPACE);
 			}
 
+			String spritemap = themeDisplay.getPathThemeSpritemap();
+
+			int path = spritemap.indexOf("/o/");
+
+			if (path != -1) {
+				spritemap = spritemap.substring(path);
+			}
+
 			sb.append("user-icon-color-");
 			sb.append((user == null) ? 0 : (user.getUserId() % 10));
 			sb.append("\"><span class=\"inline-item\">");
 			sb.append("<svg class=\"lexicon-icon\">");
 			sb.append("<use href=\"");
-			sb.append(themeDisplay.getPathThemeSpritemap());
+			sb.append(spritemap);
 			sb.append("#user\" /></svg>");
 			sb.append("</span></span>");
 

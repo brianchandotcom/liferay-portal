@@ -259,7 +259,7 @@ public class ButtonTag extends BaseContainerTag {
 		jspWriter.write("\"><svg class=\"lexicon-icon lexicon-icon-");
 		jspWriter.write(_icon);
 		jspWriter.write("\" role=\"presentation\" viewBox=\"0 0 512 ");
-		jspWriter.write("512\"><use xlink:href=\"");
+		jspWriter.write("512\"><use href=\"");
 
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -267,7 +267,15 @@ public class ButtonTag extends BaseContainerTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		jspWriter.write(themeDisplay.getPathThemeSpritemap());
+		String spritemap = themeDisplay.getPathThemeSpritemap();
+
+		int path = spritemap.indexOf("/o/");
+
+		if (path != -1) {
+			spritemap = spritemap.substring(path);
+		}
+
+		jspWriter.write(spritemap);
 
 		jspWriter.write("#");
 		jspWriter.write(_icon);

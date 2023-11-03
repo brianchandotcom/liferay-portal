@@ -38,6 +38,10 @@ public class IconTag extends BaseContainerTag {
 
 		_spritemap = themeDisplay.getPathThemeSpritemap();
 
+		int path = _spritemap.indexOf("/o/");
+
+		_spritemap = _spritemap.substring(path);
+
 		return super.doStartTag();
 	}
 
@@ -71,7 +75,7 @@ public class IconTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<use xlink:href=\"");
+		jspWriter.write("<use href=\"");
 		jspWriter.write(_spritemap);
 		jspWriter.write("#");
 		jspWriter.write(_symbol);

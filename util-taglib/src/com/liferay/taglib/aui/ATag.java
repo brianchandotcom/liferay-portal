@@ -49,11 +49,19 @@ public class ATag extends BaseATag {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
+				String spritemap = themeDisplay.getPathThemeSpritemap();
+
+				int path = spritemap.indexOf("/o/");
+
+				if (path != -1) {
+					spritemap = spritemap.substring(path);
+				}
+
 				jspWriter.write(StringPool.SPACE);
 				jspWriter.write("<svg class=\"lexicon-icon ");
 				jspWriter.write("lexicon-icon-shortcut\" focusable=\"false\" ");
 				jspWriter.write("role=\"img\"><use href=\"");
-				jspWriter.write(themeDisplay.getPathThemeSpritemap());
+				jspWriter.write(spritemap);
 				jspWriter.write("#shortcut\" /><span ");
 				jspWriter.write("class=\"sr-only\">");
 

@@ -139,6 +139,12 @@ public class IconTag extends BaseIconTag {
 						WebKeys.THEME_DISPLAY);
 
 				src = themeDisplay.getPathThemeSpritemap();
+
+				int path = src.indexOf("/o/");
+
+				if (path != -1) {
+					src = src.substring(path);
+				}
 			}
 
 			jspWriter.write(src);

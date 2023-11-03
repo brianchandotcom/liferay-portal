@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.kernel.webdav.methods.MethodFactory;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.webdav.methods.MethodFactoryUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -99,9 +99,7 @@ public class WebDAVServlet extends HttpServlet {
 
 			// Get the method instance
 
-			MethodFactory methodFactory = storage.getMethodFactory();
-
-			Method method = methodFactory.create(httpServletRequest);
+			Method method = MethodFactoryUtil.create(httpServletRequest);
 
 			// Process the method
 

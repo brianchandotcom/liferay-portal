@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.webdav;
 
 import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.webdav.methods.MethodFactory;
 
 import java.util.List;
 
@@ -44,11 +43,6 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 		throws WebDAVException {
 
 		return _webDAVStorage.deleteResource(webDAVRequest);
-	}
-
-	@Override
-	public MethodFactory getMethodFactory() {
-		return _webDAVStorage.getMethodFactory();
 	}
 
 	@Override

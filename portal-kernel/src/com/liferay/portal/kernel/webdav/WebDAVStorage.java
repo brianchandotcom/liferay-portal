@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.webdav;
 
 import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.webdav.methods.MethodFactory;
 
 import java.util.List;
 
@@ -28,8 +27,6 @@ public interface WebDAVStorage {
 
 	public int deleteResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException;
-
-	public MethodFactory getMethodFactory();
 
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException;

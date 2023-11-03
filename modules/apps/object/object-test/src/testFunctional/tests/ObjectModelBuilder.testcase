@@ -374,4 +374,52 @@ definition {
 		}
 	}
 
+	@description = "LPS-185674 - Verify the user is able to view multiple object definitions in model builder view"
+	@priority = 4
+	test CanViewMultipleObjectDefinitions {
+		task ("Given several custom object definitions in a created folder") {
+			JSONObjectFolder.addFolder(
+				folderLabel = "Custom Folder 185674",
+				folderName = "CustomFolder185674");
+
+			ObjectAdmin.openObjectAdmin();
+
+			Click.javaScriptClick(
+				folderLabel = "Custom Folder 185674",
+				locator1 = "ObjectAdmin#SIDEBAR_ITEM");
+
+			for (var letter : list "A,B,C") {
+				ObjectAdmin.addNewObject(
+					fieldLabelName = "Custom Object 185674 ${letter}",
+					fieldName = "CustomObject185674${letter}",
+					pluralLabelName = "Custom Objects 185674 ${letter}");
+
+				CreateObject.saveObject();
+			}
+		}
+
+		task ("When the user switches to model builder view") {
+			Click.pauseClickAt(
+				key_text = "View in Model Builder",
+				locator1 = "CustomerPortalSite#ANY_BUTTON");
+		}
+
+		task ("Then the object definitions will be listed in left sidebar") {
+			for (var letter : list "A,B,C") {
+				AssertVisible(
+					key_folderLabel = "Custom Folder 185674",
+					key_objectLabel = "Custom Object 185674 ${letter}",
+					locator1 = "ObjectModelBuilder#SELECT_OBJECT_IN_LEFT_SIDEBAR");
+			}
+		}
+
+		task ("and Then the object definition cards will be visible on the page") {
+			for (var letter : list "A,B,C") {
+				AssertVisible(
+					locator1 = "ObjectModelBuilder#OBJECT_DEFINITION_NODE",
+					objectLabel = "Custom Object 185674 ${letter}");
+			}
+		}
+	}
+
 }

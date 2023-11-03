@@ -226,6 +226,15 @@ public class ObjectValidationRuleSettingPersistenceTest {
 	}
 
 	@Test
+	public void testCountByN_V() throws Exception {
+		_persistence.countByN_V("", "");
+
+		_persistence.countByN_V("null", "null");
+
+		_persistence.countByN_V((String)null, (String)null);
+	}
+
+	@Test
 	public void testCountByOVRI_N_V() throws Exception {
 		_persistence.countByOVRI_N_V(RandomTestUtil.nextLong(), "", "");
 
@@ -575,6 +584,17 @@ public class ObjectValidationRuleSettingPersistenceTest {
 
 	private void _assertOriginalValues(
 		ObjectValidationRuleSetting objectValidationRuleSetting) {
+
+		Assert.assertEquals(
+			objectValidationRuleSetting.getName(),
+			ReflectionTestUtil.invoke(
+				objectValidationRuleSetting, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
+		Assert.assertEquals(
+			objectValidationRuleSetting.getValue(),
+			ReflectionTestUtil.invoke(
+				objectValidationRuleSetting, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "value"));
 
 		Assert.assertEquals(
 			Long.valueOf(

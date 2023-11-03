@@ -315,6 +315,12 @@ public class ObjectValidationRuleSettingLocalServiceUtil {
 		return getService().getObjectValidationRuleSettingsCount();
 	}
 
+	public static int getObjectValidationRuleSettingsCount(
+		String name, String value) {
+
+		return getService().getObjectValidationRuleSettingsCount(name, value);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

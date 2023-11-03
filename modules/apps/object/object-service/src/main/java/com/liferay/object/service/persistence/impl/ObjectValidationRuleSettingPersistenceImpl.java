@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -42,6 +43,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -2349,6 +2351,301 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	private static final String _FINDER_COLUMN_OVRI_N_NAME_3 =
 		"(objectValidationRuleSetting.name IS NULL OR objectValidationRuleSetting.name = '')";
 
+	private FinderPath _finderPathFetchByN_V;
+	private FinderPath _finderPathCountByN_V;
+
+	/**
+	 * Returns the object validation rule setting where name = &#63; and value = &#63; or throws a <code>NoSuchObjectValidationRuleSettingException</code> if it could not be found.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the matching object validation rule setting
+	 * @throws NoSuchObjectValidationRuleSettingException if a matching object validation rule setting could not be found
+	 */
+	@Override
+	public ObjectValidationRuleSetting findByN_V(String name, String value)
+		throws NoSuchObjectValidationRuleSettingException {
+
+		ObjectValidationRuleSetting objectValidationRuleSetting = fetchByN_V(
+			name, value);
+
+		if (objectValidationRuleSetting == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("name=");
+			sb.append(name);
+
+			sb.append(", value=");
+			sb.append(value);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectValidationRuleSettingException(sb.toString());
+		}
+
+		return objectValidationRuleSetting;
+	}
+
+	/**
+	 * Returns the object validation rule setting where name = &#63; and value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the matching object validation rule setting, or <code>null</code> if a matching object validation rule setting could not be found
+	 */
+	@Override
+	public ObjectValidationRuleSetting fetchByN_V(String name, String value) {
+		return fetchByN_V(name, value, true);
+	}
+
+	/**
+	 * Returns the object validation rule setting where name = &#63; and value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object validation rule setting, or <code>null</code> if a matching object validation rule setting could not be found
+	 */
+	@Override
+	public ObjectValidationRuleSetting fetchByN_V(
+		String name, String value, boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+		value = Objects.toString(value, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {name, value};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByN_V, finderArgs, this);
+		}
+
+		if (result instanceof ObjectValidationRuleSetting) {
+			ObjectValidationRuleSetting objectValidationRuleSetting =
+				(ObjectValidationRuleSetting)result;
+
+			if (!Objects.equals(name, objectValidationRuleSetting.getName()) ||
+				!Objects.equals(
+					value, objectValidationRuleSetting.getValue())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_N_V_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_N_V_NAME_2);
+			}
+
+			boolean bindValue = false;
+
+			if (value.isEmpty()) {
+				sb.append(_FINDER_COLUMN_N_V_VALUE_3);
+			}
+			else {
+				bindValue = true;
+
+				sb.append(_FINDER_COLUMN_N_V_VALUE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindValue) {
+					queryPos.add(value);
+				}
+
+				List<ObjectValidationRuleSetting> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByN_V, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {name, value};
+							}
+
+							_log.warn(
+								"ObjectValidationRuleSettingPersistenceImpl.fetchByN_V(String, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectValidationRuleSetting objectValidationRuleSetting =
+						list.get(0);
+
+					result = objectValidationRuleSetting;
+
+					cacheResult(objectValidationRuleSetting);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectValidationRuleSetting)result;
+		}
+	}
+
+	/**
+	 * Removes the object validation rule setting where name = &#63; and value = &#63; from the database.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the object validation rule setting that was removed
+	 */
+	@Override
+	public ObjectValidationRuleSetting removeByN_V(String name, String value)
+		throws NoSuchObjectValidationRuleSettingException {
+
+		ObjectValidationRuleSetting objectValidationRuleSetting = findByN_V(
+			name, value);
+
+		return remove(objectValidationRuleSetting);
+	}
+
+	/**
+	 * Returns the number of object validation rule settings where name = &#63; and value = &#63;.
+	 *
+	 * @param name the name
+	 * @param value the value
+	 * @return the number of matching object validation rule settings
+	 */
+	@Override
+	public int countByN_V(String name, String value) {
+		name = Objects.toString(name, "");
+		value = Objects.toString(value, "");
+
+		FinderPath finderPath = _finderPathCountByN_V;
+
+		Object[] finderArgs = new Object[] {name, value};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_N_V_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_N_V_NAME_2);
+			}
+
+			boolean bindValue = false;
+
+			if (value.isEmpty()) {
+				sb.append(_FINDER_COLUMN_N_V_VALUE_3);
+			}
+			else {
+				bindValue = true;
+
+				sb.append(_FINDER_COLUMN_N_V_VALUE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindValue) {
+					queryPos.add(value);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_N_V_NAME_2 =
+		"objectValidationRuleSetting.name = ? AND ";
+
+	private static final String _FINDER_COLUMN_N_V_NAME_3 =
+		"(objectValidationRuleSetting.name IS NULL OR objectValidationRuleSetting.name = '') AND ";
+
+	private static final String _FINDER_COLUMN_N_V_VALUE_2 =
+		"objectValidationRuleSetting.value = ?";
+
+	private static final String _FINDER_COLUMN_N_V_VALUE_3 =
+		"(objectValidationRuleSetting.value IS NULL OR objectValidationRuleSetting.value = '')";
+
 	private FinderPath _finderPathFetchByOVRI_N_V;
 	private FinderPath _finderPathCountByOVRI_N_V;
 
@@ -2690,6 +2987,14 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			objectValidationRuleSetting);
 
 		finderCache.putResult(
+			_finderPathFetchByN_V,
+			new Object[] {
+				objectValidationRuleSetting.getName(),
+				objectValidationRuleSetting.getValue()
+			},
+			objectValidationRuleSetting);
+
+		finderCache.putResult(
 			_finderPathFetchByOVRI_N_V,
 			new Object[] {
 				objectValidationRuleSetting.getObjectValidationRuleId(),
@@ -2787,6 +3092,15 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			objectValidationRuleSettingModelImpl) {
 
 		Object[] args = new Object[] {
+			objectValidationRuleSettingModelImpl.getName(),
+			objectValidationRuleSettingModelImpl.getValue()
+		};
+
+		finderCache.putResult(_finderPathCountByN_V, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByN_V, args, objectValidationRuleSettingModelImpl);
+
+		args = new Object[] {
 			objectValidationRuleSettingModelImpl.getObjectValidationRuleId(),
 			objectValidationRuleSettingModelImpl.getName(),
 			objectValidationRuleSettingModelImpl.getValue()
@@ -3379,6 +3693,16 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOVRI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectValidationRuleId", "name"}, false);
+
+		_finderPathFetchByN_V = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByN_V",
+			new String[] {String.class.getName(), String.class.getName()},
+			new String[] {"name", "value"}, true);
+
+		_finderPathCountByN_V = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_V",
+			new String[] {String.class.getName(), String.class.getName()},
+			new String[] {"name", "value"}, false);
 
 		_finderPathFetchByOVRI_N_V = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByOVRI_N_V",

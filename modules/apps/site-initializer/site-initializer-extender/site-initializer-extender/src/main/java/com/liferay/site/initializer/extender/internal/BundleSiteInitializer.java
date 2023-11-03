@@ -2023,7 +2023,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		List<ExpandoColumn> expandoColumns =
-			_expandoColumnLocalService.getExpandoColumns(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			_expandoColumnLocalService.getExpandoColumns(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ExpandoColumn expandoColumn : expandoColumns) {
 			stringUtilReplaceValues.put(

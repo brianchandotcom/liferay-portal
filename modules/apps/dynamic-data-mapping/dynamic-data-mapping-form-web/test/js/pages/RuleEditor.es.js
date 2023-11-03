@@ -5,7 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, getByText, render} from '@testing-library/react';
-import Select from 'dynamic-data-mapping-form-field-type/Select/Select.es';
+import Select from 'dynamic-data-mapping-form-field-type/Select/Select';
 import React from 'react';
 
 import {RuleEditor} from '../../../src/main/resources/META-INF/resources/admin/js/pages/RuleEditor.es';

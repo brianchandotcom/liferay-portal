@@ -183,6 +183,11 @@ public class SiteNavigationMenuItemWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public java.util.List<SiteNavigationMenuItem> getAncestors() {
+		return model.getAncestors();
+	}
+
 	/**
 	 * Returns the company ID of this site navigation menu item.
 	 *

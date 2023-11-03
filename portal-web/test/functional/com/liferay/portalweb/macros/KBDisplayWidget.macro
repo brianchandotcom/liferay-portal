@@ -357,9 +357,7 @@ definition {
 				locator1 = "KnowledgeBaseArticle#EDIT_ON_GITHUB",
 				value1 = "Edit On GitHub");
 
-			SelectWindow(
-				key_pageTitle = "Google",
-				locator1 = "Google#PAGE_TITLE");
+			SelectWindow(value1 = "title=Google");
 
 			var url = selenium.getLocation();
 
@@ -370,9 +368,7 @@ definition {
 				AssertLocation(value1 = "https://www.google.com/[#]gws_rd=ssl");
 			}
 
-			Close(
-				key_pageTitle = "Google",
-				locator1 = "Google#PAGE_TITLE");
+			Close(value1 = "title=Google");
 		}
 
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");

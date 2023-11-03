@@ -42,6 +42,7 @@ import org.frutilla.FrutillaRule;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,13 +62,16 @@ public class CommercePriceListIndexerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_indexer = _indexerRegistry.getIndexer(CommercePriceList.class);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
 		_user = UserTestUtil.addUser(_company);
-
-		_indexer = _indexerRegistry.getIndexer(CommercePriceList.class);
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
@@ -108,13 +112,13 @@ public class CommercePriceListIndexerTest {
 			true,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_commercePriceLists =
+		List<CommercePriceList> commercePriceLists =
 			_commercePriceListLocalService.getCommercePriceLists(
 				new long[] {commerceCatalog.getGroupId()},
 				_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
-			_commercePriceLists.toString(), 3, _commercePriceLists.size());
+			commercePriceLists.toString(), 3, commercePriceLists.size());
 
 		SearchContext searchContext = new SearchContext();
 
@@ -131,20 +135,18 @@ public class CommercePriceListIndexerTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
+	private static Indexer<CommercePriceList> _indexer;
+
+	@Inject
+	private static IndexerRegistry _indexerRegistry;
+
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
-
-	private List<CommercePriceList> _commercePriceLists;
 
 	@DeleteAfterTestRun
 	private Company _company;
 
 	private Group _group;
-	private Indexer<CommercePriceList> _indexer;
-
-	@Inject
-	private IndexerRegistry _indexerRegistry;
-
 	private User _user;
 
 }

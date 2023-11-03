@@ -50,7 +50,7 @@ public class FileEntry implements Serializable {
 	}
 
 	@Schema(
-		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fieldBase64`)"
+		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileBase64`)"
 	)
 	public String getFileBase64() {
 		return fileBase64;
@@ -76,7 +76,7 @@ public class FileEntry implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fieldBase64`)"
+		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileBase64`)"
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileBase64;

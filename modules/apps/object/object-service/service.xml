@@ -845,6 +845,10 @@
 			<finder-column name="objectValidationRuleId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="N_V" return-type="ObjectValidationRuleSetting">
+			<finder-column name="name" />
+			<finder-column name="value" />
+		</finder>
 		<finder name="OVRI_N_V" return-type="ObjectValidationRuleSetting" unique="true">
 			<finder-column name="objectValidationRuleId" />
 			<finder-column name="name" />

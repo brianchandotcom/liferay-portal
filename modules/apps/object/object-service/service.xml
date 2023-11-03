@@ -1048,5 +1048,6 @@
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
 		<exception>RequiredObjectRelationship</exception>
+		<exception>RequiredObjectValidationRuleSetting</exception>
 	</exceptions>
 </service-builder>

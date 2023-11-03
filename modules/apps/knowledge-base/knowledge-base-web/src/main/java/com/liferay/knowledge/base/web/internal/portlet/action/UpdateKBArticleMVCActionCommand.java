@@ -13,6 +13,7 @@ import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -150,11 +151,20 @@ public class UpdateKBArticleMVCActionCommand
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction");
 
+		String successMessage = StringPool.BLANK;
+
 		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 			String editURL = _buildEditURL(
 				actionRequest, actionResponse, kbArticle);
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, editURL);
+
+			successMessage = _language.format(
+				_portal.getHttpServletRequest(actionRequest),
+				"x-was-successfully-saved-as-draft",
+				new Object[] {
+					"<strong>" + HtmlUtil.escape(title) + "</strong>"
+				});
 		}
 		else {
 			String redirect = _portal.escapeRedirect(
@@ -172,19 +182,28 @@ public class UpdateKBArticleMVCActionCommand
 				Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 					themeDisplay.getLocale());
 
-				MultiSessionMessages.add(
-					actionRequest, "kbArticleScheduledSuccessMessage",
-					_language.format(
-						_portal.getHttpServletRequest(actionRequest),
-						"x-will-be-published-on-x",
-						new Object[] {
-							"<strong>" + HtmlUtil.escape(title) + "</strong>",
-							dateTimeFormat.format(displayDate)
-						}));
-
-				hideDefaultSuccessMessage(actionRequest);
+				successMessage = _language.format(
+					_portal.getHttpServletRequest(actionRequest),
+					"x-will-be-published-on-x",
+					new Object[] {
+						"<strong>" + HtmlUtil.escape(title) + "</strong>",
+						dateTimeFormat.format(displayDate)
+					});
+			}
+			else {
+				successMessage = _language.format(
+					_portal.getHttpServletRequest(actionRequest),
+					"x-was-successfully-published",
+					new Object[] {
+						"<strong>" + HtmlUtil.escape(title) + "</strong>"
+					});
 			}
 		}
+
+		MultiSessionMessages.add(
+			actionRequest, "kbArticleSuccessMessage", successMessage);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private String _buildEditURL(

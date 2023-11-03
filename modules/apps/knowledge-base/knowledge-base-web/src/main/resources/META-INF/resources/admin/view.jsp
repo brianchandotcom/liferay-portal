@@ -133,16 +133,16 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 </div>
 
 <%
-String kbArticleScheduledSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "kbArticleScheduledSuccessMessage"));
+String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "kbArticleSuccessMessage"));
 %>
 
-<c:if test="<%= Validator.isNotNull(kbArticleScheduledSuccessMessage) %>">
+<c:if test="<%= Validator.isNotNull(kbArticleSuccessMessage) %>">
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
 				"autoClose", 20000
 			).put(
-				"message", kbArticleScheduledSuccessMessage
+				"message", kbArticleSuccessMessage
 			).build()
 		%>'
 		module="admin/js/utils/openToast"

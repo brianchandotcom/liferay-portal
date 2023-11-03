@@ -93,7 +93,8 @@ const GetAppFlow = () => {
 		if (cartUtil?.cartItems?.length) {
 			setLicenseSelected(true);
 			setEnablePurchaseButton(true);
-		} else {
+		}
+		else {
 			setEnablePurchaseButton(false);
 			setLicenseSelected(false);
 		}

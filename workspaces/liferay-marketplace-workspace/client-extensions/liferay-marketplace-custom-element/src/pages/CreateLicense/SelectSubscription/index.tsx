@@ -52,7 +52,9 @@ const SelectSubscription = ({
 					licenseKey.startDate
 				)} - ${expirationDate}`,
 				selected: selectedSubscriptionValue?.name === licenseKey.name,
-				title: <h3 className="mt-0">{licenseKey.name}</h3>,
+				title: (
+					<h3 className="mt-0 text-capitalize">{licenseKey.name}</h3>
+				),
 				value: licenseKey,
 			};
 		});

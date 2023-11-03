@@ -47,6 +47,15 @@ export function RuleBuilderActionSection({
 
 	const actionsRefMap = useMemo(() => new Map(), []);
 
+	const onAddAction = () => {
+		setActions((previousActions) => [
+			...previousActions,
+			{id: uuidv4()} as Action,
+		]);
+
+		sendMessage(Liferay.Language.get('action-added'));
+	};
+
 	const onDeleteAction = (action: Action, index: number) => {
 		if (actions.length === 1) {
 			setActions([{id: action.id} as Action]);
@@ -123,13 +132,7 @@ export function RuleBuilderActionSection({
 				<ClayButton
 					className="mt-4"
 					displayType="secondary"
-					onClick={() => {
-						setActions((previousActions) => [
-							...previousActions,
-							{id: uuidv4()} as Action,
-						]);
-						sendMessage(Liferay.Language.get('action-added'));
-					}}
+					onClick={onAddAction}
 					size="sm"
 				>
 					{Liferay.Language.get('add-action')}
@@ -157,6 +160,15 @@ export function RuleBuilderConditionSection({
 	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
 
 	const conditionRefMap = useMemo(() => new Map(), []);
+
+	const onAddCondition = () => {
+		setConditions((previousConditions) => [
+			...previousConditions,
+			{id: uuidv4()} as Condition,
+		]);
+
+		sendMessage(Liferay.Language.get('condition-added'));
+	};
 
 	const onDeleteCondition = (condition: Condition, index: number) => {
 		if (conditions.length === 1) {
@@ -277,14 +289,7 @@ export function RuleBuilderConditionSection({
 				<ClayButton
 					className="mt-4"
 					displayType="secondary"
-					onClick={() => {
-						setConditions((previousConditions) => [
-							...previousConditions,
-							{id: uuidv4()} as Condition,
-						]);
-
-						sendMessage(Liferay.Language.get('condition-added'));
-					}}
+					onClick={onAddCondition}
 					size="sm"
 				>
 					{Liferay.Language.get('add-condition')}

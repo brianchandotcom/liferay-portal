@@ -48,6 +48,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192724. The page should comply with WCAG 2.1 AA standard."
+	@priority = 3
+	test ViewAccessibilityOfDisplayPageTemplateMakeACopyAction {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a user has a published display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				statusKey = "APPROVED",
+				subType = "Basic Web Content");
+		}
+
+		task ("When the user opens the dropdown menu of display page template in the Page Templates admin") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Display Page Name",
+				locator1 = "Card#SPECIFIC_CARD_ELLIPSIS");
+		}
+
+		task ("Then the make a copy action should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//li[normalize-space()='Make a Copy']");
+
+			MenuItem.click(menuItem = "Make a Copy");
+
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//li[normalize-space()='Display Page']");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Make a Copy");
+
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//li[normalize-space()='Display Page With Permissions']");
+		}
+	}
+
 	@description = "This is a test for LPS-173150 and LPS-175120. View the accessibility of page template import."
 	@priority = 3
 	test ViewAccessibilityOfPageTemplateImport {

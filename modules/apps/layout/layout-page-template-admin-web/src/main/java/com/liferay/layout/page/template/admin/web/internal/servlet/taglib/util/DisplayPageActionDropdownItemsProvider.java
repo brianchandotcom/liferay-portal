@@ -9,6 +9,9 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -66,6 +69,10 @@ public class DisplayPageActionDropdownItemsProvider {
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+
+		_infoItemServiceRegistry =
+			(InfoItemServiceRegistry)renderRequest.getAttribute(
+				InfoItemServiceRegistry.class.getName());
 
 		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
 			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
@@ -191,6 +198,7 @@ public class DisplayPageActionDropdownItemsProvider {
 			dropdownItem.putData("action", "changeContentType");
 
 			if (usagesCount > 0) {
+				dropdownItem.putData("assetType", _getTypeLabel());
 				dropdownItem.putData("viewUsagesURL", _getViewUsagesURL());
 			}
 			else {
@@ -611,6 +619,22 @@ public class DisplayPageActionDropdownItemsProvider {
 		};
 	}
 
+	private String _getTypeLabel() {
+		InfoItemDetailsProvider<?> infoItemDetailsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class,
+				_layoutPageTemplateEntry.getClassName());
+
+		if (infoItemDetailsProvider == null) {
+			return StringPool.BLANK;
+		}
+
+		InfoItemClassDetails infoItemClassDetails =
+			infoItemDetailsProvider.getInfoItemClassDetails();
+
+		return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getUpdateLayoutPageTemplateEntryPreviewActionUnsafeConsumer() {
 
@@ -684,6 +708,7 @@ public class DisplayPageActionDropdownItemsProvider {
 	private final Layout _draftLayout;
 	private final boolean _existsMappedContentType;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final ItemSelector _itemSelector;
 	private final LayoutPageTemplateAdminWebConfiguration
 		_layoutPageTemplateAdminWebConfiguration;

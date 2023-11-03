@@ -124,6 +124,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">
 								<liferay-site-navigation:breadcrumb
 									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curArticle.getFolder(), request, true, liferayPortletResponse) %>"
+									cssClass="c-pl-0 c-pt-0"
 								/>
 							</c:if>
 
@@ -213,6 +214,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							>
 								<liferay-site-navigation:breadcrumb
 									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curArticle.getFolder(), request, true, liferayPortletResponse) %>"
+									cssClass="c-pl-0 c-pt-0"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:if>
@@ -355,6 +357,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							<c:if test="<%= journalDisplayContext.isSearch() && ((curFolder.getParentFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curFolder.getParentFolder(), ActionKeys.VIEW)) %>">
 								<liferay-site-navigation:breadcrumb
 									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder.getParentFolder(), request, true, liferayPortletResponse) %>"
+									cssClass="c-pl-0 c-pt-0"
 								/>
 							</c:if>
 						</liferay-ui:search-container-column-text>
@@ -437,6 +440,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							>
 								<liferay-site-navigation:breadcrumb
 									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder.getParentFolder(), request, true, liferayPortletResponse) %>"
+									cssClass="c-pl-0 c-pt-0"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:if>

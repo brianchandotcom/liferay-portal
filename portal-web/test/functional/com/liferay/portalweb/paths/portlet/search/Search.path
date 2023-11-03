@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLEAR_FACET_BUTTON</td>
+	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${key_facetName}')]]//button[contains(.,'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOM_FILTER_WIDGET_VALUE_INPUT</td>
 	<td>//div[contains(@class,'input-text-wrapper')]//input[contains(@name,'${key_name}')]</td>
 	<td></td>

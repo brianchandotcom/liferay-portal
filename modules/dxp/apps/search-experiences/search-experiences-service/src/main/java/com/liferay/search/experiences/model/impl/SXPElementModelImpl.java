@@ -77,10 +77,11 @@ public class SXPElementModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"description", Types.VARCHAR}, {"elementDefinitionJSON", Types.CLOB},
-		{"hidden_", Types.BOOLEAN}, {"readOnly", Types.BOOLEAN},
-		{"schemaVersion", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"type_", Types.INTEGER}, {"version", Types.VARCHAR},
-		{"status", Types.INTEGER}
+		{"fallbackDescription", Types.VARCHAR},
+		{"fallbackTitle", Types.VARCHAR}, {"hidden_", Types.BOOLEAN},
+		{"readOnly", Types.BOOLEAN}, {"schemaVersion", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"version", Types.VARCHAR}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,6 +99,8 @@ public class SXPElementModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("elementDefinitionJSON", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("fallbackDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fallbackTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("hidden_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("readOnly", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("schemaVersion", Types.VARCHAR);
@@ -108,7 +111,7 @@ public class SXPElementModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SXPElement (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,sxpElementId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description STRING null,elementDefinitionJSON TEXT null,hidden_ BOOLEAN,readOnly BOOLEAN,schemaVersion VARCHAR(75) null,title STRING null,type_ INTEGER,version VARCHAR(75) null,status INTEGER)";
+		"create table SXPElement (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,sxpElementId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description STRING null,elementDefinitionJSON TEXT null,fallbackDescription VARCHAR(75) null,fallbackTitle VARCHAR(75) null,hidden_ BOOLEAN,readOnly BOOLEAN,schemaVersion VARCHAR(75) null,title STRING null,type_ INTEGER,version VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table SXPElement";
 
@@ -292,6 +295,10 @@ public class SXPElementModelImpl
 				"description", SXPElement::getDescription);
 			attributeGetterFunctions.put(
 				"elementDefinitionJSON", SXPElement::getElementDefinitionJSON);
+			attributeGetterFunctions.put(
+				"fallbackDescription", SXPElement::getFallbackDescription);
+			attributeGetterFunctions.put(
+				"fallbackTitle", SXPElement::getFallbackTitle);
 			attributeGetterFunctions.put("hidden", SXPElement::getHidden);
 			attributeGetterFunctions.put("readOnly", SXPElement::getReadOnly);
 			attributeGetterFunctions.put(
@@ -349,6 +356,13 @@ public class SXPElementModelImpl
 				"elementDefinitionJSON",
 				(BiConsumer<SXPElement, String>)
 					SXPElement::setElementDefinitionJSON);
+			attributeSetterBiConsumers.put(
+				"fallbackDescription",
+				(BiConsumer<SXPElement, String>)
+					SXPElement::setFallbackDescription);
+			attributeSetterBiConsumers.put(
+				"fallbackTitle",
+				(BiConsumer<SXPElement, String>)SXPElement::setFallbackTitle);
 			attributeSetterBiConsumers.put(
 				"hidden",
 				(BiConsumer<SXPElement, Boolean>)SXPElement::setHidden);
@@ -705,6 +719,46 @@ public class SXPElementModelImpl
 		}
 
 		_elementDefinitionJSON = elementDefinitionJSON;
+	}
+
+	@JSON
+	@Override
+	public String getFallbackDescription() {
+		if (_fallbackDescription == null) {
+			return "";
+		}
+		else {
+			return _fallbackDescription;
+		}
+	}
+
+	@Override
+	public void setFallbackDescription(String fallbackDescription) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_fallbackDescription = fallbackDescription;
+	}
+
+	@JSON
+	@Override
+	public String getFallbackTitle() {
+		if (_fallbackTitle == null) {
+			return "";
+		}
+		else {
+			return _fallbackTitle;
+		}
+	}
+
+	@Override
+	public void setFallbackTitle(String fallbackTitle) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_fallbackTitle = fallbackTitle;
 	}
 
 	@JSON
@@ -1119,6 +1173,8 @@ public class SXPElementModelImpl
 		sxpElementImpl.setModifiedDate(getModifiedDate());
 		sxpElementImpl.setDescription(getDescription());
 		sxpElementImpl.setElementDefinitionJSON(getElementDefinitionJSON());
+		sxpElementImpl.setFallbackDescription(getFallbackDescription());
+		sxpElementImpl.setFallbackTitle(getFallbackTitle());
 		sxpElementImpl.setHidden(isHidden());
 		sxpElementImpl.setReadOnly(isReadOnly());
 		sxpElementImpl.setSchemaVersion(getSchemaVersion());
@@ -1156,6 +1212,10 @@ public class SXPElementModelImpl
 			this.<String>getColumnOriginalValue("description"));
 		sxpElementImpl.setElementDefinitionJSON(
 			this.<String>getColumnOriginalValue("elementDefinitionJSON"));
+		sxpElementImpl.setFallbackDescription(
+			this.<String>getColumnOriginalValue("fallbackDescription"));
+		sxpElementImpl.setFallbackTitle(
+			this.<String>getColumnOriginalValue("fallbackTitle"));
 		sxpElementImpl.setHidden(
 			this.<Boolean>getColumnOriginalValue("hidden_"));
 		sxpElementImpl.setReadOnly(
@@ -1317,6 +1377,24 @@ public class SXPElementModelImpl
 			sxpElementCacheModel.elementDefinitionJSON = null;
 		}
 
+		sxpElementCacheModel.fallbackDescription = getFallbackDescription();
+
+		String fallbackDescription = sxpElementCacheModel.fallbackDescription;
+
+		if ((fallbackDescription != null) &&
+			(fallbackDescription.length() == 0)) {
+
+			sxpElementCacheModel.fallbackDescription = null;
+		}
+
+		sxpElementCacheModel.fallbackTitle = getFallbackTitle();
+
+		String fallbackTitle = sxpElementCacheModel.fallbackTitle;
+
+		if ((fallbackTitle != null) && (fallbackTitle.length() == 0)) {
+			sxpElementCacheModel.fallbackTitle = null;
+		}
+
 		sxpElementCacheModel.hidden = isHidden();
 
 		sxpElementCacheModel.readOnly = isReadOnly();
@@ -1423,6 +1501,8 @@ public class SXPElementModelImpl
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _elementDefinitionJSON;
+	private String _fallbackDescription;
+	private String _fallbackTitle;
 	private boolean _hidden;
 	private boolean _readOnly;
 	private String _schemaVersion;
@@ -1475,6 +1555,8 @@ public class SXPElementModelImpl
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put(
 			"elementDefinitionJSON", _elementDefinitionJSON);
+		_columnOriginalValues.put("fallbackDescription", _fallbackDescription);
+		_columnOriginalValues.put("fallbackTitle", _fallbackTitle);
 		_columnOriginalValues.put("hidden_", _hidden);
 		_columnOriginalValues.put("readOnly", _readOnly);
 		_columnOriginalValues.put("schemaVersion", _schemaVersion);
@@ -1529,19 +1611,23 @@ public class SXPElementModelImpl
 
 		columnBitmasks.put("elementDefinitionJSON", 1024L);
 
-		columnBitmasks.put("hidden_", 2048L);
+		columnBitmasks.put("fallbackDescription", 2048L);
 
-		columnBitmasks.put("readOnly", 4096L);
+		columnBitmasks.put("fallbackTitle", 4096L);
 
-		columnBitmasks.put("schemaVersion", 8192L);
+		columnBitmasks.put("hidden_", 8192L);
 
-		columnBitmasks.put("title", 16384L);
+		columnBitmasks.put("readOnly", 16384L);
 
-		columnBitmasks.put("type_", 32768L);
+		columnBitmasks.put("schemaVersion", 32768L);
 
-		columnBitmasks.put("version", 65536L);
+		columnBitmasks.put("title", 65536L);
 
-		columnBitmasks.put("status", 131072L);
+		columnBitmasks.put("type_", 131072L);
+
+		columnBitmasks.put("version", 262144L);
+
+		columnBitmasks.put("status", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

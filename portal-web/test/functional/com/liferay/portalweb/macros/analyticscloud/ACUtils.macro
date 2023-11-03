@@ -1027,7 +1027,8 @@ definition {
 		var localStorageItem = selenium.getEval(${javaScript});
 	}
 
-	macro tearDownAC {
+	@summary = "Default summary"
+	macro tearDownAC() {
 
 		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
 

@@ -254,6 +254,27 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro createObjectRelatedToAnotherObject(en_US_plural_label = null, name = null, relatedObject = null, relatedObjectErc=null, relationship=null) {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${name},${relationship},${relatedObject},${relatedObjectErc}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/${en_US_plural_label} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"name": "${name}",
+					"r_${relationship}_c_${relatedObject}ERC": "${relatedObjectErc}"
+				}
+		''';
+
+		var objectId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${objectId};
+	}
+
+	@summary = "Default summary"
 	macro createStudentRelatedToAccount(accountId = null, name = null) {
 		Variables.assertDefined(parameterList = "${name},${accountId}");
 

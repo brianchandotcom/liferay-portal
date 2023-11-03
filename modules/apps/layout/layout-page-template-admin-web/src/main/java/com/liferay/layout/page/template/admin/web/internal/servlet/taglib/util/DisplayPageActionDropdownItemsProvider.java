@@ -205,6 +205,12 @@ public class DisplayPageActionDropdownItemsProvider {
 				dropdownItem.putData(
 					"changeContentTypeURL",
 					_getChangeContentTypeURL(_themeDisplay.getURLCurrent()));
+				dropdownItem.putData(
+					"classNameId",
+					String.valueOf(_layoutPageTemplateEntry.getClassNameId()));
+				dropdownItem.putData(
+					"classTypeId",
+					String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
 			}
 
 			dropdownItem.setLabel(
@@ -430,6 +436,12 @@ public class DisplayPageActionDropdownItemsProvider {
 				dropdownItem.putData(
 					"changeContentTypeURL",
 					_getChangeContentTypeURL(editDisplayPageURL));
+				dropdownItem.putData(
+					"classNameId",
+					String.valueOf(_layoutPageTemplateEntry.getClassNameId()));
+				dropdownItem.putData(
+					"classTypeId",
+					String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
 				dropdownItem.putData("hasMissingType", Boolean.TRUE.toString());
 				dropdownItem.putData("hasUsages", Boolean.FALSE.toString());
 			}

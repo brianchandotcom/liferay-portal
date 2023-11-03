@@ -1089,11 +1089,21 @@ definition {
 	macro viewVersions(dropDownItems = null,dropDownLabel = null) {
 		Click(
 			key_dropdownLabel = ${dropDownLabel},
-			locator1 = "CustomerPortalSite#VERSION_DROPDOWN");
+			locator1 = "CustomerPortalSite#DROPDOWN_ICON");
+
+		if (isSet(modalVersion)) {
+			for (var dropDownItem : list ${dropDownItems}) {
+				AssertVisible(
+					key_dropdownItem = ${dropDownItem},
+					key_dropdownLabel = ${dropDownLabel},
+					locator1 = "CustomerPortalSite#VERSION_DROPDOWN_MODAL");
+			}
+		}
 
 		for (var dropDownItem : list ${dropDownItems}) {
 			AssertVisible(
-				key_text = ${dropDownItem},
+				key_dropdownItem = ${dropDownItem},
+				key_dropdownLabel = ${dropDownLabel},
 				locator1 = "CustomerPortalSite#VERSION_DROPDOWN");
 		}
 	}

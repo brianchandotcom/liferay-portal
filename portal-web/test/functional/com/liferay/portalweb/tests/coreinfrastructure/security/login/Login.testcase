@@ -235,7 +235,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given: Login and enable OTP and Sign Out as Instance Admin") {
-			User.firstLoginUI();
+			User.firstLoginPG();
 
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
 
@@ -546,7 +546,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given: User opens the portal with a set admin password and logs in") {
-			User.firstLoginUI();
+			User.firstLoginPG();
 		}
 
 		task ("When: User start to create a virtuali instance") {

@@ -269,18 +269,17 @@ export default function PredefinedValuesTable({
 					getLocalizableLabel(creationLanguageId, label, name),
 				getName: ({name}: ObjectField) => name,
 				header: Liferay.Language.get('add-fields'),
-				items: currentObjectDefinitionFields.map(
-					(currentObjectDefinitionField) => {
-						if (!currentObjectDefinitionField.localized) {
-							return {
-								...currentObjectDefinitionField,
-								disableCheckbox:
-									currentObjectDefinitionField.required &&
-									!disableRequiredChecked,
-							};
-						}
-					}
-				),
+				items: currentObjectDefinitionFields
+					.filter(
+						(currentObjectDefinitionField) =>
+							!currentObjectDefinitionField.localized
+					)
+					.map((currentObjectDefinitionField) => ({
+						...currentObjectDefinitionField,
+						disableCheckbox:
+							currentObjectDefinitionField.required &&
+							!disableRequiredChecked,
+					})),
 				onSave: (items: ObjectField[]) => {
 					const predefinedValuesMap = new Map<
 						string,

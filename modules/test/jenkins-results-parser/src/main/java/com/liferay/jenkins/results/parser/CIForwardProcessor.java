@@ -201,6 +201,20 @@ public class CIForwardProcessor {
 				"Unable to forward pull request", exception);
 		}
 
+		PullRequest forwardedPullRequest = new PullRequest(
+			forwardedPullRequestURL);
+
+		try {
+			for (String suiteTestResultGitHubComment :
+					_getSuiteTestResultGitHubComments()) {
+
+				forwardedPullRequest.addComment(suiteTestResultGitHubComment);
+			}
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(forwardedPullRequestURL)) {
 			_pullRequest.addComment(
 				_getSuccessCommentBody(forwardedPullRequestURL));
@@ -311,17 +325,6 @@ public class CIForwardProcessor {
 			sb.append("\n");
 			sb.append("Original pull request comment:\n");
 			sb.append(pullRequestBody);
-			sb.append("\n\n\n");
-		}
-
-		Set<String> suiteTestResultGithubComments =
-			_getSuiteTestResultGithubComments();
-
-		for (String suiteTestResultGithubComment :
-				suiteTestResultGithubComments) {
-
-			sb.append("\n\n\n");
-			sb.append(suiteTestResultGithubComment);
 		}
 
 		return sb.toString();
@@ -556,8 +559,8 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
-	private Set<String> _getSuiteTestResultGithubComments() throws IOException {
-		Set<String> suiteTestResultGithubComments = new HashSet<>();
+	private Set<String> _getSuiteTestResultGitHubComments() throws IOException {
+		Set<String> suiteTestResultGitHubComments = new HashSet<>();
 
 		Set<String> testSuiteNames = new HashSet<>();
 
@@ -599,13 +602,13 @@ public class CIForwardProcessor {
 					continue;
 				}
 
-				suiteTestResultGithubComments.add(commentBody);
+				suiteTestResultGitHubComments.add(commentBody);
 
 				break;
 			}
 		}
 
-		return suiteTestResultGithubComments;
+		return suiteTestResultGitHubComments;
 	}
 
 	private String _getUnsuccessfulCommentBody() throws IOException {

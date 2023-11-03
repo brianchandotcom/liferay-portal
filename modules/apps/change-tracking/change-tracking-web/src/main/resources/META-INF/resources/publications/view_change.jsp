@@ -28,7 +28,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-change"));
 	<div>
 		<react:component
 			module="publications/js/views/ChangeTrackingChangesToolbar"
-			props="<%= viewChangesDisplayContext.getReactData() %>"
+			props="<%= viewChangesDisplayContext.getToolbarReactData() %>"
 		/>
 	</div>
 

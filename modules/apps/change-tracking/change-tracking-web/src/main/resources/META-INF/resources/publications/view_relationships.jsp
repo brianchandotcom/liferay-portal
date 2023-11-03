@@ -10,8 +10,6 @@
 <%
 ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext)request.getAttribute(CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT);
 
-Map<String, Object> reactData = viewChangesDisplayContext.getReactData();
-
 portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
 
 portletDisplay.setShowBackIcon(true);
@@ -23,7 +21,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 	<div>
 		<react:component
 			module="publications/js/views/ChangeTrackingChangesToolbar"
-			props="<%= reactData %>"
+			props="<%= viewChangesDisplayContext.getToolbarReactData() %>"
 		/>
 	</div>
 
@@ -34,7 +32,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 	<clay:container-fluid>
 		<react:component
 			module="publications/js/views/ChangeTrackingRelationshipsView"
-			props="<%= reactData %>"
+			props="<%= viewChangesDisplayContext.getToolbarReactData() %>"
 		/>
 	</clay:container-fluid>
 </div>

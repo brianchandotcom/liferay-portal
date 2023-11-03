@@ -128,7 +128,6 @@ public class TableMapperTest {
 
 		_serviceRegistration = _bundleContext.registerService(
 			FinderCache.class, Mockito.mock(FinderCache.class), null);
-
 		_tableMapperImpl = new TableMapperImpl<>(
 			_TABLE_NAME, _COMPANY_COLUMN_NAME, _LEFT_COLUMN_NAME,
 			_RIGHT_COLUMN_NAME, Left.class, Right.class, _leftBasePersistence,

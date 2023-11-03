@@ -32,6 +32,16 @@ public class SavedContentEntryLocalServiceWrapper
 		_savedContentEntryLocalService = savedContentEntryLocalService;
 	}
 
+	@Override
+	public SavedContentEntry addSavedContentEntry(
+			long groupId, long userId, String className, long classPK,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _savedContentEntryLocalService.addSavedContentEntry(
+			groupId, userId, className, classPK, serviceContext);
+	}
+
 	/**
 	 * Adds the saved content entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -230,6 +240,14 @@ public class SavedContentEntryLocalServiceWrapper
 	public SavedContentEntry fetchSavedContentEntry(long savedContentEntryId) {
 		return _savedContentEntryLocalService.fetchSavedContentEntry(
 			savedContentEntryId);
+	}
+
+	@Override
+	public SavedContentEntry fetchSavedContentEntry(
+		long groupId, long userId, String className, long classPK) {
+
+		return _savedContentEntryLocalService.fetchSavedContentEntry(
+			groupId, userId, className, classPK);
 	}
 
 	/**

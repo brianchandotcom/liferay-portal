@@ -634,24 +634,56 @@ definition {
 
 		var script = StringUtil.replace(${script}, ${single_quote}, ${escape_quotes});
 
-		var curl = '''
-			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-validation-rules \
-				-u ${userLoginInfo} \
-				-H Content-Type: application/json \
-				-d '{
-					"active": "true",
-					"engine": "${validationType}",
-					"errorLabel": {
-						"en_US": "${errorMessage}"
-					},
-					"name": {
-						"en_US": "${labelName}"
-					},
-					"outputType": "fullValidation",
-					"script": "${script}",
-					"system": false
-				}'
-		''';
+		if (${outputValidationType} == "partialValidation") {
+			var objectFieldERC = JSONObject.getObjectFieldERC(
+				fieldName = ${fieldName},
+				objectName = ${objectName});
+
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-validation-rules \
+					-u ${userLoginInfo} \
+					-H Content-Type: application/json \
+					-d '{
+						"active": "true",
+						"engine": "${validationType}",
+						"errorLabel": {
+							"en_US": "${errorMessage}"
+						},
+						"name": {
+							"en_US": "${labelName}"
+						},
+						"objectValidationRuleSettings": [
+							{
+								"name": "outputObjectFieldExternalReferenceCode",
+								"value": "${objectFieldERC}"
+							}
+						],
+						"outputType": "${outputValidationType}",
+						"script": "${script}",
+						"system": false
+					}'
+			''';
+		}
+		else {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-validation-rules \
+					-u ${userLoginInfo} \
+					-H Content-Type: application/json \
+					-d '{
+						"active": "true",
+						"engine": "${validationType}",
+						"errorLabel": {
+							"en_US": "${errorMessage}"
+						},
+						"name": {
+							"en_US": "${labelName}"
+						},
+						"outputType": "fullValidation",
+						"script": "${script}",
+						"system": false
+					}'
+			''';
+		}
 
 		JSONCurlUtil.post(${curl});
 	}

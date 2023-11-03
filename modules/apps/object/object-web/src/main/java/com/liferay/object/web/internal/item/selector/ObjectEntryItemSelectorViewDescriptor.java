@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -92,14 +94,56 @@ public class ObjectEntryItemSelectorViewDescriptor
 		throws PortalException {
 
 		SearchContainer<ObjectEntry> searchContainer = new SearchContainer<>(
-			_portletRequest, _portletURL, null, "no-entries-were-found");
+			_portletRequest, null, null, "cur",
+			ParamUtil.getInteger(_portletRequest, "cur"),
+			ParamUtil.getInteger(_portletRequest, "delta"), _portletURL, null,
+			"no-entries-were-found");
 
 		try {
-			searchContainer.setResultsAndTotal(
-				_getObjectEntries(
-					ParamUtil.getLong(_portletRequest, "objectDefinitionId"),
-					searchContainer.getCur(), searchContainer.getDelta(),
-					ParamUtil.getString(_portletRequest, "keywords")));
+			if (ParamUtil.getLong(_portletRequest, "objectDefinitionId") != 0) {
+				searchContainer.setResultsAndTotal(
+					ArrayList::new, searchContainer.getEnd());
+
+				String objectRelationshipType = ParamUtil.getString(
+					_portletRequest, "objectRelationshipType");
+
+				if (Validator.isNull(objectRelationshipType)) {
+					return searchContainer;
+				}
+
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							_objectDefinition.getClassName(),
+							CompanyThreadLocal.getCompanyId(),
+							objectRelationshipType);
+
+				List<ObjectEntry> baseModels =
+					objectRelatedModelsProvider.getUnrelatedModels(
+						_objectDefinition.getCompanyId(),
+						ParamUtil.getLong(_portletRequest, "groupId"),
+						_objectDefinition,
+						ParamUtil.getLong(_portletRequest, "objectEntryId"),
+						ParamUtil.getLong(
+							_portletRequest, "objectRelationshipId"),
+						searchContainer.getStart(), searchContainer.getEnd());
+
+				searchContainer.setResultsAndTotal(
+					() -> baseModels,
+					objectRelatedModelsProvider.getUnrelatedModelsCount(
+						_objectDefinition.getCompanyId(),
+						ParamUtil.getLong(_portletRequest, "groupId"),
+						_objectDefinition,
+						ParamUtil.getLong(_portletRequest, "objectEntryId"),
+						ParamUtil.getLong(
+							_portletRequest, "objectRelationshipId")));
+			}
+			else {
+				searchContainer.setResultsAndTotal(
+					_getObjectEntries(
+						searchContainer.getCur(), searchContainer.getDelta(),
+						ParamUtil.getString(_portletRequest, "keywords")));
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -139,37 +183,22 @@ public class ObjectEntryItemSelectorViewDescriptor
 	}
 
 	private List<ObjectEntry> _getObjectEntries(
-			long objectDefinitionId, int curPage, int pageSize, String search)
+			int curPage, int pageSize, String search)
 		throws Exception {
 
-		if (objectDefinitionId == 0) {
-			Group scopeGroup = _themeDisplay.getScopeGroup();
+		Group scopeGroup = _themeDisplay.getScopeGroup();
 
-			Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> page =
-				_objectEntryManager.getObjectEntries(
-					_themeDisplay.getCompanyId(), _objectDefinition,
-					scopeGroup.getGroupKey(), null, _getDTOConverterContext(),
-					StringPool.BLANK, Pagination.of(curPage, pageSize), search,
-					null);
+		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> page =
+			_objectEntryManager.getObjectEntries(
+				_themeDisplay.getCompanyId(), _objectDefinition,
+				scopeGroup.getGroupKey(), null, _getDTOConverterContext(),
+				StringPool.BLANK, Pagination.of(curPage, pageSize), search,
+				null);
 
-			return TransformUtil.transform(
-				page.getItems(),
-				objectEntry -> ObjectEntryUtil.toObjectEntry(
-					_objectDefinition.getObjectDefinitionId(), objectEntry));
-		}
-
-		ObjectRelatedModelsProvider objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				_objectDefinition.getClassName(),
-				_objectDefinition.getCompanyId(),
-				ParamUtil.getString(_portletRequest, "objectRelationshipType"));
-
-		return objectRelatedModelsProvider.getUnrelatedModels(
-			_objectDefinition.getCompanyId(),
-			ParamUtil.getLong(_portletRequest, "groupId"), _objectDefinition,
-			ParamUtil.getLong(_portletRequest, "objectEntryId"),
-			ParamUtil.getLong(_portletRequest, "objectRelationshipId"),
-			getSearchContainer().getStart(), getSearchContainer().getEnd());
+		return TransformUtil.transform(
+			page.getItems(),
+			objectEntry -> ObjectEntryUtil.toObjectEntry(
+				_objectDefinition.getObjectDefinitionId(), objectEntry));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -135,29 +135,29 @@ public class ModelConverterUtil {
 		SCIMUserSchemaExtensionBuilder scimUserSchemaExtensionBuilder =
 			SCIMUserSchemaExtensionBuilder.getInstance();
 
-		AttributeSchema extensionAttributeSchema =
+		AttributeSchema attributeSchema =
 			scimUserSchemaExtensionBuilder.getExtensionSchema();
 
 		ComplexAttribute complexAttribute = new ComplexAttribute(
-			extensionAttributeSchema.getName());
+			attributeSchema.getName());
 
 		complexAttribute.setSubAttributesList(
 			HashMapBuilder.<String, Attribute>put(
 				"birthday",
 				_createSimpleAttribute(
-					extensionAttributeSchema.getSubAttributeSchema("birthday"),
+					attributeSchema.getSubAttributeSchema("birthday"),
 					DateUtil.getDate(
 						scimUser.getBirthday(), "yyyy-MM-dd",
 						scimUser.getLocale()))
 			).put(
 				"male",
 				_createSimpleAttribute(
-					extensionAttributeSchema.getSubAttributeSchema("male"),
+					attributeSchema.getSubAttributeSchema("male"),
 					scimUser.isMale())
 			).build());
 
 		return (ComplexAttribute)DefaultAttributeFactory.createAttribute(
-			extensionAttributeSchema, complexAttribute);
+			attributeSchema, complexAttribute);
 	}
 
 	private static SimpleAttribute _createSimpleAttribute(
@@ -173,7 +173,7 @@ public class ModelConverterUtil {
 	}
 
 	private static Date _getBirthday(Locale locale, User user) {
-		Supplier<Date> defaultBirthdayDateSupplier = () -> {
+		Supplier<Date> supplier = () -> {
 			Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar(
 				1970, Calendar.JANUARY, 1);
 
@@ -181,24 +181,23 @@ public class ModelConverterUtil {
 		};
 
 		try {
-			ComplexAttribute liferayUserComplexAttribute =
+			ComplexAttribute complexAttribute =
 				(ComplexAttribute)user.getAttribute(
 					_LIFERAY_USER_SCHEMA_EXTENSION_URI);
 
-			if (liferayUserComplexAttribute == null) {
-				return defaultBirthdayDateSupplier.get();
+			if (complexAttribute == null) {
+				return supplier.get();
 			}
 
-			SimpleAttribute birthdayAttribute =
-				(SimpleAttribute)liferayUserComplexAttribute.getSubAttribute(
-					"birthday");
+			SimpleAttribute simpleAttribute =
+				(SimpleAttribute)complexAttribute.getSubAttribute("birthday");
 
-			if (birthdayAttribute == null) {
-				return defaultBirthdayDateSupplier.get();
+			if (simpleAttribute == null) {
+				return supplier.get();
 			}
 
 			return DateUtil.parseDate(
-				"yyyy-MM-dd", birthdayAttribute.getStringValue(), locale);
+				"yyyy-MM-dd", simpleAttribute.getStringValue(), locale);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -206,7 +205,7 @@ public class ModelConverterUtil {
 			}
 		}
 
-		return defaultBirthdayDateSupplier.get();
+		return supplier.get();
 	}
 
 	private static String _getEmailAddress(User user) {

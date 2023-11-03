@@ -19,7 +19,7 @@ Map<String, String> emailDefinitionTerms = journalConfigurationDisplayContext.ge
 %>
 
 <clay:container-fluid
-	cssClass="container-form-lg"
+	cssClass="container-form-lg journal-configuration"
 >
 	<clay:row>
 		<clay:col

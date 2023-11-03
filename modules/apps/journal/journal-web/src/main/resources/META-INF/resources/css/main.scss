@@ -1,4 +1,5 @@
 @import 'atlas-variables';
+@import 'cadmin-variables';
 
 @import '../ddm_template_editor/components/PropertiesPanel';
 
@@ -249,5 +250,14 @@ $productMenuWidth: 320px;
 
 	.nav-tabs + .tab-content .tab-pane {
 		padding: 0.5rem;
+	}
+}
+
+html#{$cadmin-selector} .cadmin .journal-configuration .panel-unstyled {
+	padding: 0 20px;
+
+	.panel-body,
+	dl {
+		padding: 0;
 	}
 }

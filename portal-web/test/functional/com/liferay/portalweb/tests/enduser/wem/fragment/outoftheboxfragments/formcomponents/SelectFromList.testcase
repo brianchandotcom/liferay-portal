@@ -360,6 +360,78 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194759. The user could see hidden options on dropdown menu of Select from List by vertical scrollbar."
+	@priority = 4
+	test ViewHiddenOptionsOnDropdownMenuByScrollbar {
+		task ("Given a page designer has an object where a picklist field has 15 items") {
+			Picklist.addPicklistViaAPI(picklistName = "Components");
+
+			for (var componentName : list "Adapt Media,Analystics Cloud,Collections,Clay,Content Dashboard,Control Menu,Forms,Data Engine,Categories,Item Selector,Page Templates,Product Menu,Recycle Bin,Site Settings,Simulation Menu,OpenAI") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = ${componentName},
+					itemName = ${componentName},
+					picklistName = "Components");
+			}
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Feature Request",
+				objectName = "FeatureRequest",
+				pluralLabelName = "Feature Requests");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Project Components",
+				fieldName = "type",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "FeatureRequest",
+				picklistName = "Components");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "FeatureRequest");
+		}
+
+		task ("When the page designer maps the Form Container to object") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Feature Request");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer can see hidden options on the dropdown list of select from list by scrollbar at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(
+				index = 1,
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'dropdown-menu') and contains(@class,'show')]",
+				locator2 = "height",
+				value1 = "500px");
+
+			ScrollWebElementIntoView(
+				key_menuItem = "OpenAI",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			MenuItem.viewVisible(menuItem = "OpenAI");
+		}
+	}
+
 	@description = "This is a test for LPS-194759. The user could see more than 10 options on dropdown menu of Select from List."
 	@priority = 4
 	test ViewMoreThan10OptionsOnDropdownMenu {

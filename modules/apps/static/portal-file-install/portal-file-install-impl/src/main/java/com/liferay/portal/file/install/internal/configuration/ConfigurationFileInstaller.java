@@ -15,8 +15,6 @@ import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.file.install.internal.Util;
 import com.liferay.portal.file.install.properties.ConfigurationProperties;
 import com.liferay.portal.file.install.properties.ConfigurationPropertiesFactory;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,8 +36,6 @@ import java.util.Enumeration;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.sql.DataSource;
-
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -50,11 +46,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfigurationFileInstaller implements FileInstaller {
 
 	public ConfigurationFileInstaller(
-		ConfigurationAdmin configurationAdmin, DataSource dataSource,
-		String encoding) {
+		ConfigurationAdmin configurationAdmin, String encoding) {
 
 		_configurationAdmin = configurationAdmin;
-		_dataSource = dataSource;
 		_encoding = encoding;
 
 		_configsDirPath = Util.getFilePath(
@@ -460,8 +454,6 @@ public class ConfigurationFileInstaller implements FileInstaller {
 
 	private final String _configsDirPath;
 	private final ConfigurationAdmin _configurationAdmin;
-	private final DataSource _dataSource;
-	private final DB _db = DBManagerUtil.getDB();
 	private final String _encoding;
 
 }

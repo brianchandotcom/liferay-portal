@@ -44,7 +44,8 @@ export function BillingAddress({
 			(emptyValues === 1 && billingAddress.street2 === '')
 		) {
 			setEnablePurchaseButton(true);
-		} else {
+		}
+		else {
 			setEnablePurchaseButton(false);
 		}
 	}, [billingAddress, setEnablePurchaseButton]);

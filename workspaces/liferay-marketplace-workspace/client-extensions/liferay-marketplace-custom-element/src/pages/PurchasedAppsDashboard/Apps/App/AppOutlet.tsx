@@ -53,7 +53,7 @@ const AppNavbar = () => {
 	);
 };
 
-const AppHeader = ({productSpecifications, selectedApp}: any) => {
+const AppHeader = ({productSpecifications, selectedApp = {}}: any) => {
 	const appVersion = useMemo(
 		() => getProductVersionFromSpecifications(productSpecifications as []),
 		[productSpecifications]
@@ -116,7 +116,7 @@ const AppHeader = ({productSpecifications, selectedApp}: any) => {
 const AppOutlet = () => {
 	const {appId: productId} = useParams();
 
-	const {data = []} = useSWR(`/apps/app/${productId}`, () =>
+	const {data = []} = useSWR(`/apps/app/${productId}/product`, () =>
 		Promise.all([
 			HeadlessCommerceAdminCatalogImpl.getProduct(productId as string),
 			HeadlessCommerceAdminCatalogImpl.getProductSpecifications(

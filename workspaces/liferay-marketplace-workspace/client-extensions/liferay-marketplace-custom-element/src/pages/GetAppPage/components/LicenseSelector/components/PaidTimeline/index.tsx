@@ -52,10 +52,9 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 								tier?.tierPrice.length && tier.skuId === sku.id
 						);
 
-						const licenseTypeName = sku.skuOptions.find(
+						const skuOption = sku.skuOptions.find(
 							(skuOption) =>
-								skuOption.value.toLocaleLowerCase() ===
-								sku.sku.toLocaleLowerCase()
+								skuOption.key === 'dxp-license-usage-type'
 						);
 
 						return (
@@ -64,11 +63,11 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 									cartUtil={cartUtil}
 									licenseDescription={
 										skuInfo[
-											sku.sku.toLocaleLowerCase() as keyof typeof skuInfo
+											skuOption?.value?.toLocaleLowerCase() as keyof typeof skuInfo
 										]
 									}
 									licensetiers={tierPricesFiltered}
-									lisenceType={licenseTypeName?.value}
+									lisenceType={skuOption?.value ?? sku.sku}
 									productId={productId}
 									sku={sku}
 								/>

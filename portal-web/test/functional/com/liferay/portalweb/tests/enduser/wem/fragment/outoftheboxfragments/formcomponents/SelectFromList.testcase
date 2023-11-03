@@ -432,7 +432,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-194759. The user could see more than 10 options on dropdown menu of Select from List."
+	@description = "This is a test for LPS-194759. The user could see more than 10 options on dropdown menu of Select from List. The user cannot see loading animation when click the toggle button of Select from List."
 	@priority = 4
 	test ViewMoreThan10OptionsOnDropdownMenu {
 		task ("Given a page designer has an object where a picklist field has 11 items") {
@@ -485,6 +485,8 @@ definition {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@id,'fragment-')]/div[contains(@class,'select-from-list')]//button[*[name()='svg'][contains(@class,'icon-caret-double')]]//span[contains(@class,'icon-loading')]");
 
 			Click(
 				index = 1,

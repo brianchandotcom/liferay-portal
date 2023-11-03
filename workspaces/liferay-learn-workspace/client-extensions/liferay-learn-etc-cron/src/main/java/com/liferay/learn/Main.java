@@ -154,7 +154,9 @@ public class Main {
 			"> \n>");
 
 		if (Validator.isNotNull(message)) {
-			slackMessage += ":red-alert:Import job finished\n" + message;
+			slackMessage +=
+				":red-alert:Import job finished with return code 1\n>" +
+					message;
 		}
 		else {
 			slackMessage += ":sunflower:Import job finished with return code 0";
@@ -424,7 +426,7 @@ public class Main {
 			}
 
 			throw new Exception(
-				_errorMessages.size() + "entries in error log file");
+				_errorMessages.size() + " entries in error log file");
 		}
 	}
 

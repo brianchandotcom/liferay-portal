@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,6 +34,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 	private long _getSXPBlueprintIdByLargeValue(String largeValue)
 		throws Exception {
+
+		if (Validator.isNull(largeValue)) {
+			return 0;
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringBundler.concat(

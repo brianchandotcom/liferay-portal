@@ -228,6 +228,62 @@ public class SXPElement implements Serializable {
 	protected String externalReferenceCode;
 
 	@Schema
+	public String getFallbackDescription() {
+		return fallbackDescription;
+	}
+
+	public void setFallbackDescription(String fallbackDescription) {
+		this.fallbackDescription = fallbackDescription;
+	}
+
+	@JsonIgnore
+	public void setFallbackDescription(
+		UnsafeSupplier<String, Exception> fallbackDescriptionUnsafeSupplier) {
+
+		try {
+			fallbackDescription = fallbackDescriptionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fallbackDescription;
+
+	@Schema
+	public String getFallbackTitle() {
+		return fallbackTitle;
+	}
+
+	public void setFallbackTitle(String fallbackTitle) {
+		this.fallbackTitle = fallbackTitle;
+	}
+
+	@JsonIgnore
+	public void setFallbackTitle(
+		UnsafeSupplier<String, Exception> fallbackTitleUnsafeSupplier) {
+
+		try {
+			fallbackTitle = fallbackTitleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fallbackTitle;
+
+	@Schema
 	public Boolean getHidden() {
 		return hidden;
 	}
@@ -603,6 +659,34 @@ public class SXPElement implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		if (fallbackDescription != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fallbackDescription\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fallbackDescription));
+
+			sb.append("\"");
+		}
+
+		if (fallbackTitle != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fallbackTitle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fallbackTitle));
 
 			sb.append("\"");
 		}

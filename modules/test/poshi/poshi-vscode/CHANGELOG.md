@@ -2,6 +2,8 @@
 
 ## [0.3.9]
 
+- POSHI-668: Enables completion by default
+
 ## [0.3.8]
 
 - Fixes broken Marketplace presentation issues

@@ -28,7 +28,7 @@
 		"configuration": {
 			"properties": {
 				"poshi.completion.enabled": {
-					"default": false,
+					"default": true,
 					"description": "Specifies whether or not to enable auto-completion.",
 					"type": "boolean"
 				},

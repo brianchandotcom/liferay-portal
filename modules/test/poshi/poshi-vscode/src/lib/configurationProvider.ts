@@ -16,7 +16,7 @@ vscode.workspace.onDidChangeConfiguration(
 );
 
 export function isCompletionEnabled(): boolean {
-	return configuration.get('completion.enabled', false);
+	return configuration.get('completion.enabled', true);
 }
 export function isSourceFormatterEnabled(): boolean {
 	return configuration.get('sourceFormatter.enabled', false);

@@ -73,7 +73,7 @@ This is a work in progress. If enabled, it is recommended that you disable forma
 ```json
 "poshi.completion.enabled": {
     "description": "Specifies whether or not to enable auto-completion.",
-    "default": false,
+    "default": true,
     "type": "boolean"
 },
 "poshi.goToDefinition.enabled": {

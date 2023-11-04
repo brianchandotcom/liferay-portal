@@ -33,6 +33,8 @@ definition {
 		LexiconCard.clickCardTitleLink(card = ${masterLayoutName});
 
 		PageEditor.assertFragmentSidebarLoaded();
+
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 	}
 
 	@summary = "Default summary"

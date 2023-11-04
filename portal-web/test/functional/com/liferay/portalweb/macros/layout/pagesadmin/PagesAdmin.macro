@@ -743,6 +743,10 @@ definition {
 		Button.click(button = "Save");
 
 		Alert.viewSuccessMessage();
+
+		PageEditor.assertFragmentSidebarLoaded();
+
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 	}
 
 	@summary = "Default summary"

@@ -157,6 +157,8 @@ public class JournalConfigurationAction
 		validateEmail(actionRequest, "emailArticleApprovalGranted");
 		validateEmail(actionRequest, "emailArticleApprovalRequested");
 		validateEmail(actionRequest, "emailArticleExpired");
+		validateEmail(actionRequest, "emailArticleMovedFromFolder");
+		validateEmail(actionRequest, "emailArticleMovedToFolder");
 		validateEmail(actionRequest, "emailArticleReview");
 		validateEmail(actionRequest, "emailArticleUpdated");
 

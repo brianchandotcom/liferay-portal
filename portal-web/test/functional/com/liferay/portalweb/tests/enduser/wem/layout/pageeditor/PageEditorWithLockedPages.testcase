@@ -193,6 +193,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when access to edit mode of a locked display page template."
+	@priority = 4
+	test RedirectToPageInUseWhenEditLockedDisplayPageTemplate {
+		task ("Given a page designer has a locked display page template") {
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer edits the locked display page template") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			Navigator.gotoNavItem(navItem = "Display Page Templates");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit");
+		}
+
+		task ("Then the page designer should be redirected to the Page in Use") {
+			AssertVisible(
+				key_title = "Page in Use",
+				locator1 = "Header#H1_TITLE");
+
+			Button.click(button = "Go to Page Templates");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Page Templates");
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when access to edit mode of a locked master page."
 	@priority = 4
 	test RedirectToPageInUseWhenEditLockedMasterPage {

@@ -37,6 +37,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when access to edit mode of a locked collection page."
+	@priority = 4
+	test RedirectToPageInUseWhenEditLockedCollectionPage {
+		task ("Given a page designer has a locked collection page") {
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addCollectionPage(
+				collectionName = "Most Viewed Assets",
+				pageName = "Test Page Name",
+				tabName = "Collection Providers");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Welcome to Liferay");
+		}
+
+		task ("When the page designer edits the locked collection page") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#EDIT_PENCIL");
+		}
+
+		task ("Then the page designer should be redirected to the Page in Use") {
+			AssertVisible(
+				key_title = "Page in Use",
+				locator1 = "Header#H1_TITLE");
+
+			Button.click(button = "Go to Test Page Name");
+
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when access to edit mode of a locked content page."
 	@priority = 5
 	test RedirectToPageInUseWhenEditLockedContentPage {

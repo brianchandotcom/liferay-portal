@@ -202,9 +202,9 @@ public class ScimUserUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-		}
 
-		return _getBirthday();
+			return _getBirthday();
+		}
 	}
 
 	private static String _getEmailAddress(User user) {
@@ -251,9 +251,9 @@ public class ScimUserUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-		}
 
-		return true;
+			return true;
+		}
 	}
 
 	private static void _validate(ScimUser scimUser) throws Exception {

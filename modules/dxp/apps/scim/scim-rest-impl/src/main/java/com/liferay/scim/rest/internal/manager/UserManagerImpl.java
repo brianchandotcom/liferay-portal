@@ -37,8 +37,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.scim.client.configuration.ScimClientOAuth2ApplicationConfiguration;
 import com.liferay.scim.client.util.ScimClientUtil;
-import com.liferay.scim.rest.internal.ScimUser;
-import com.liferay.scim.rest.internal.util.ModelConverterUtil;
+import com.liferay.scim.rest.internal.model.ScimUser;
+import com.liferay.scim.rest.internal.util.ScimUserUtil;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -146,7 +146,7 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		try {
-			return ModelConverterUtil.toUser(scimUser);
+			return ScimUserUtil.toUser(scimUser);
 		}
 		catch (Exception exception) {
 			throw new CharonException(exception.getMessage(), exception);
@@ -237,10 +237,10 @@ public class UserManagerImpl implements UserManager {
 				CompanyThreadLocal.getCompanyId());
 
 			ScimUser scimUser = _addOrUpdateScimUser(
-				ModelConverterUtil.toScimUser(
+				ScimUserUtil.toScimUser(
 					company.getCompanyId(), company.getLocale(), user));
 
-			return ModelConverterUtil.toUser(scimUser);
+			return ScimUserUtil.toUser(scimUser);
 		}
 		catch (Exception exception) {
 			throw new CharonException(

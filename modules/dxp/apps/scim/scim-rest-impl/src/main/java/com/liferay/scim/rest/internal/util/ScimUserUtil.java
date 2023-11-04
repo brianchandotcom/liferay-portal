@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.scim.rest.internal.ScimUser;
+import com.liferay.scim.rest.internal.model.ScimUser;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -45,7 +45,7 @@ import org.wso2.charon3.core.utils.AttributeUtil;
 /**
  * @author Rafael Praxedes
  */
-public class ModelConverterUtil {
+public class ScimUserUtil {
 
 	public static ScimUser toScimUser(long companyId, Locale locale, User user)
 		throws Exception {
@@ -282,7 +282,6 @@ public class ModelConverterUtil {
 	private static final String _LIFERAY_USER_SCHEMA_EXTENSION_URI =
 		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ModelConverterUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ScimUserUtil.class);
 
 }

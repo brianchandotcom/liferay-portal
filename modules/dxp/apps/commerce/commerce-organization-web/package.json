@@ -3,6 +3,7 @@
 		"@clayui/autocomplete": "3.106.1",
 		"@clayui/button": "3.106.1",
 		"@clayui/data-provider": "3.106.1",
+		"@clayui/date-picker": "3.106.1",
 		"@clayui/drop-down": "3.106.1",
 		"@clayui/form": "3.106.1",
 		"@clayui/icon": "3.106.1",
@@ -14,6 +15,7 @@
 		"d3": "5.9.3",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
+		"moment": "2.29.4",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},

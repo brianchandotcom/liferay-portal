@@ -23,6 +23,7 @@ import '../style/main.scss';
 function OrganizationChart({
 	namespace,
 	pageSize,
+	pathImage,
 	rootOrganizationId,
 	selectLogoURL,
 	spritemap,
@@ -113,6 +114,7 @@ function OrganizationChart({
 			{Liferay.FeatureFlags['COMMERCE-12192'] && (
 				<InfoPanelProvider
 					namespace={namespace}
+					pathImage={pathImage}
 					selectLogoURL={selectLogoURL}
 					spritemap={spritemap}
 				/>
@@ -180,12 +182,14 @@ function OrganizationChart({
 
 OrganizationChart.defaultProps = {
 	pageSize: 10,
+	pathImage: '/image',
 	rootOrganizationId: 0,
 };
 
 OrganizationChart.propTypes = {
 	namespace: PropTypes.string,
 	pageSize: PropTypes.number,
+	pathImage: PropTypes.string.isRequired,
 	rootOrganizationId: PropTypes.string,
 	selectLogoURL: PropTypes.string.isRequired,
 	spritemap: PropTypes.string.isRequired,

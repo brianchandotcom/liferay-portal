@@ -418,17 +418,33 @@ class D3OrganizationChart {
 
 		this._clearDiscoveredNodes(this._discoveredNodes, this._nodesGroup);
 
-		if (d.data.type === MODEL_TYPE_MAP.user) {
-			this._createTransition();
-
-			return this._recenterViewport(d);
-		}
-
 		Liferay.fire(`${this._namespace}${INFO_PANEL_OPEN_EVENT}`, {
 			data: d.data,
 			mode: INFO_PANEL_MODE_MAP.click,
 			type: d.data.type,
 		});
+
+		if (d.data.type === MODEL_TYPE_MAP.user) {
+			this._createTransition();
+
+			this._nodesGroup
+				.selectAll('.chart-item')
+				.filter((node) => {
+					return this._selectedNodes.has(node.data.chartNodeId);
+				})
+				.classed('selected', false);
+
+			this._selectedNodes.clear();
+
+			this._nodesGroup
+				.selectAll('.chart-item')
+				.filter((node) => {
+					return d.data.chartNodeId === node.data.chartNodeId;
+				})
+				.classed('selected', true);
+
+			return this._recenterViewport(d);
+		}
 
 		if (!hasPermission(d.data, ACTION_KEYS[d.data.type].MOVE)) {
 			return this._handleNodeClick(d3.event, d);

@@ -20,6 +20,8 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 			HashMapBuilder.<String, Object>put(
 				"namespace", randomNamespace
 			).put(
+				"pathImage", themeDisplay.getPathImage()
+			).put(
 				"rootOrganizationId", commerceOrganizationDisplayContext.getRootOrganizationId()
 			).put(
 				"selectLogoURL", commerceOrganizationDisplayContext.getSelectLogoURL()

@@ -8,13 +8,19 @@ import React from 'react';
 
 import {INFO_PANEL_MODE_MAP} from '../utils/constants';
 import EditAccountInfoPanel from './EditAccountInfoPanel';
+import EditUserInfoPanel from './EditUserInfoPanel';
 import ViewAccountInfoPanel from './ViewAccountInfoPanel';
+import ViewUserInfoPanel from './ViewUserInfoPanel';
 
 function GenericInfoPanel(props) {
 	const Views = {
 		account: {
 			edit: EditAccountInfoPanel,
 			view: ViewAccountInfoPanel,
+		},
+		user: {
+			edit: EditUserInfoPanel,
+			view: ViewUserInfoPanel,
 		},
 	};
 
@@ -32,6 +38,7 @@ GenericInfoPanel.propTypes = {
 	data: PropTypes.object.isRequired,
 	mode: PropTypes.string.isRequired,
 	namespace: PropTypes.string.isRequired,
+	pathImage: PropTypes.string.isRequired,
 	selectLogoURL: PropTypes.string.isRequired,
 	spritemap: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,

@@ -1002,6 +1002,11 @@ components:
                     format: uri
                     readOnly: true
                     type: string
+                imageId:
+                    description:
+                        The user's profile image id.
+                    format: int64
+                    type: integer
                 jobTitle:
                     description:
                         The user's job title.
@@ -1013,6 +1018,15 @@ components:
                         type: string
                     readOnly: true
                     type: array
+                language:
+                    description:
+                        The user's preferred language.
+                    readOnly: true
+                    type: string
+                languageId:
+                    description:
+                        The user's preferred language id.
+                    type: string
                 lastLoginDate:
                     description:
                         The last time the user logged in.

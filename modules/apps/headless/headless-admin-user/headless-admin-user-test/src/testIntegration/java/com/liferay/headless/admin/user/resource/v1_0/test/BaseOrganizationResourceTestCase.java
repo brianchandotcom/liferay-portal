@@ -3455,6 +3455,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("imageId", additionalAssertFieldName)) {
+				if (userAccount.getImageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("jobTitle", additionalAssertFieldName)) {
 				if (userAccount.getJobTitle() == null) {
 					valid = false;
@@ -3465,6 +3473,24 @@ public abstract class BaseOrganizationResourceTestCase {
 
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
 				if (userAccount.getKeywords() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"languageDisplayName", additionalAssertFieldName)) {
+
+				if (userAccount.getLanguageDisplayName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("languageId", additionalAssertFieldName)) {
+				if (userAccount.getLanguageId() == null) {
 					valid = false;
 				}
 
@@ -4118,6 +4144,16 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("imageId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getImageId(), userAccount2.getImageId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("jobTitle", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getJobTitle(),
@@ -4133,6 +4169,30 @@ public abstract class BaseOrganizationResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getKeywords(),
 						userAccount2.getKeywords())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"languageDisplayName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getLanguageDisplayName(),
+						userAccount2.getLanguageDisplayName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("languageId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getLanguageId(),
+						userAccount2.getLanguageId())) {
 
 					return false;
 				}
@@ -4829,7 +4889,10 @@ public abstract class BaseOrganizationResourceTestCase {
 				honorificSuffix = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				image = RandomTestUtil.randomString();
+				imageId = RandomTestUtil.randomLong();
 				jobTitle = RandomTestUtil.randomString();
+				languageDisplayName = RandomTestUtil.randomString();
+				languageId = RandomTestUtil.randomString();
 				lastLoginDate = RandomTestUtil.nextDate();
 				name = RandomTestUtil.randomString();
 				password = RandomTestUtil.randomString();

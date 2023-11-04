@@ -188,6 +188,8 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccount.setHonorificSuffix(regex);
 		userAccount.setImage(regex);
 		userAccount.setJobTitle(regex);
+		userAccount.setLanguageDisplayName(regex);
+		userAccount.setLanguageId(regex);
 		userAccount.setName(regex);
 		userAccount.setPassword(regex);
 		userAccount.setProfileURL(regex);
@@ -210,6 +212,8 @@ public abstract class BaseUserAccountResourceTestCase {
 		Assert.assertEquals(regex, userAccount.getHonorificSuffix());
 		Assert.assertEquals(regex, userAccount.getImage());
 		Assert.assertEquals(regex, userAccount.getJobTitle());
+		Assert.assertEquals(regex, userAccount.getLanguageDisplayName());
+		Assert.assertEquals(regex, userAccount.getLanguageId());
 		Assert.assertEquals(regex, userAccount.getName());
 		Assert.assertEquals(regex, userAccount.getPassword());
 		Assert.assertEquals(regex, userAccount.getProfileURL());
@@ -3786,6 +3790,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("imageId", additionalAssertFieldName)) {
+				if (userAccount.getImageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("jobTitle", additionalAssertFieldName)) {
 				if (userAccount.getJobTitle() == null) {
 					valid = false;
@@ -3796,6 +3808,24 @@ public abstract class BaseUserAccountResourceTestCase {
 
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
 				if (userAccount.getKeywords() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"languageDisplayName", additionalAssertFieldName)) {
+
+				if (userAccount.getLanguageDisplayName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("languageId", additionalAssertFieldName)) {
+				if (userAccount.getLanguageId() == null) {
 					valid = false;
 				}
 
@@ -4204,6 +4234,16 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("imageId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getImageId(), userAccount2.getImageId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("jobTitle", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getJobTitle(),
@@ -4219,6 +4259,30 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getKeywords(),
 						userAccount2.getKeywords())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"languageDisplayName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getLanguageDisplayName(),
+						userAccount2.getLanguageDisplayName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("languageId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getLanguageId(),
+						userAccount2.getLanguageId())) {
 
 					return false;
 				}
@@ -5064,6 +5128,11 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("imageId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("jobTitle")) {
 			Object object = userAccount.getJobTitle();
 
@@ -5113,6 +5182,98 @@ public abstract class BaseUserAccountResourceTestCase {
 		if (entityFieldName.equals("keywords")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("languageDisplayName")) {
+			Object object = userAccount.getLanguageDisplayName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("languageId")) {
+			Object object = userAccount.getLanguageId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("lastLoginDate")) {
@@ -5386,7 +5547,12 @@ public abstract class BaseUserAccountResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				imageId = RandomTestUtil.randomLong();
 				jobTitle = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				languageDisplayName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				languageId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				lastLoginDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

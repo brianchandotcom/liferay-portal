@@ -19,6 +19,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Site;
 import com.liferay.headless.admin.user.dto.v1_0.Subscription;
 import com.liferay.headless.admin.user.dto.v1_0.Ticket;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccountFullNameDefinition;
 import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
@@ -34,6 +35,7 @@ import com.liferay.headless.admin.user.resource.v1_0.SegmentUserResource;
 import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
 import com.liferay.headless.admin.user.resource.v1_0.TicketResource;
+import com.liferay.headless.admin.user.resource.v1_0.UserAccountFullNameDefinitionResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
@@ -181,6 +183,15 @@ public class Query {
 
 		_userAccountResourceComponentServiceObjects =
 			userAccountResourceComponentServiceObjects;
+	}
+
+	public static void
+		setUserAccountFullNameDefinitionResourceComponentServiceObjects(
+			ComponentServiceObjects<UserAccountFullNameDefinitionResource>
+				userAccountFullNameDefinitionResourceComponentServiceObjects) {
+
+		_userAccountFullNameDefinitionResourceComponentServiceObjects =
+			userAccountFullNameDefinitionResourceComponentServiceObjects;
 	}
 
 	public static void setUserGroupResourceComponentServiceObjects(
@@ -1119,7 +1130,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeUserAccountByExternalReferenceCode(accountExternalReferenceCode: ___, externalReferenceCode: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeUserAccountByExternalReferenceCode(accountExternalReferenceCode: ___, externalReferenceCode: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, imageId, jobTitle, keywords, languageDisplayName, languageId, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Gets a user by their external reference code to an account by external reference code"
@@ -1199,7 +1210,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountUserAccount(accountId: ___, userAccountId: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountUserAccount(accountId: ___, userAccountId: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, imageId, jobTitle, keywords, languageDisplayName, languageId, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Gets a user assigned to an account")
 	public UserAccount accountUserAccount(
@@ -1217,7 +1228,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {myUserAccount{accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {myUserAccount{accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, imageId, jobTitle, keywords, languageDisplayName, languageId, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves information about the user who made the request."
@@ -1315,7 +1326,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccountByEmailAddress(emailAddress: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccountByEmailAddress(emailAddress: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, imageId, jobTitle, keywords, languageDisplayName, languageId, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public UserAccount userAccountByEmailAddress(
@@ -1332,7 +1343,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccountByExternalReferenceCode(externalReferenceCode: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccountByExternalReferenceCode(externalReferenceCode: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, imageId, jobTitle, keywords, languageDisplayName, languageId, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public UserAccount userAccountByExternalReferenceCode(
@@ -1376,7 +1387,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccount(userAccountId: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccount(userAccountId: ___){accountBriefs, actions, additionalName, alternateName, birthDate, currentPassword, customFields, dashboardURL, dateCreated, dateModified, emailAddress, externalReferenceCode, familyName, givenName, honorificPrefix, honorificSuffix, id, image, imageId, jobTitle, keywords, languageDisplayName, languageId, lastLoginDate, name, organizationBriefs, password, profileURL, roleBriefs, siteBriefs, status, userAccountContactInformation, userGroupBriefs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the user account.")
 	public UserAccount userAccount(
@@ -1388,6 +1399,26 @@ public class Query {
 			this::_populateResourceContext,
 			userAccountResource -> userAccountResource.getUserAccount(
 				userAccountId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccountFullNameDefinition(languageId: ___){userAccountFullNameDefinitionFields}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the user account full name definition."
+	)
+	public UserAccountFullNameDefinition userAccountFullNameDefinition(
+			@GraphQLName("languageId") String languageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountFullNameDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountFullNameDefinitionResource ->
+				userAccountFullNameDefinitionResource.
+					getUserAccountFullNameDefinition(languageId));
 	}
 
 	/**
@@ -2916,6 +2947,41 @@ public class Query {
 
 	}
 
+	@GraphQLName("UserAccountFullNameDefinitionPage")
+	public class UserAccountFullNameDefinitionPage {
+
+		public UserAccountFullNameDefinitionPage(
+			Page userAccountFullNameDefinitionPage) {
+
+			actions = userAccountFullNameDefinitionPage.getActions();
+
+			items = userAccountFullNameDefinitionPage.getItems();
+			lastPage = userAccountFullNameDefinitionPage.getLastPage();
+			page = userAccountFullNameDefinitionPage.getPage();
+			pageSize = userAccountFullNameDefinitionPage.getPageSize();
+			totalCount = userAccountFullNameDefinitionPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<UserAccountFullNameDefinition> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("UserGroupPage")
 	public class UserGroupPage {
 
@@ -3243,6 +3309,26 @@ public class Query {
 		userAccountResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			UserAccountFullNameDefinitionResource
+				userAccountFullNameDefinitionResource)
+		throws Exception {
+
+		userAccountFullNameDefinitionResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		userAccountFullNameDefinitionResource.setContextCompany(_company);
+		userAccountFullNameDefinitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		userAccountFullNameDefinitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		userAccountFullNameDefinitionResource.setContextUriInfo(_uriInfo);
+		userAccountFullNameDefinitionResource.setContextUser(_user);
+		userAccountFullNameDefinitionResource.setGroupLocalService(
+			_groupLocalService);
+		userAccountFullNameDefinitionResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
 	private void _populateResourceContext(UserGroupResource userGroupResource)
 		throws Exception {
 
@@ -3297,6 +3383,9 @@ public class Query {
 		_ticketResourceComponentServiceObjects;
 	private static ComponentServiceObjects<UserAccountResource>
 		_userAccountResourceComponentServiceObjects;
+	private static ComponentServiceObjects
+		<UserAccountFullNameDefinitionResource>
+			_userAccountFullNameDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<UserGroupResource>
 		_userGroupResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WebUrlResource>

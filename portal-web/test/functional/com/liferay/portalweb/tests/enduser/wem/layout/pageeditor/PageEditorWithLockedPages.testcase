@@ -130,4 +130,58 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when access to edit mode of a locked master page."
+	@priority = 4
+	test RedirectToPageInUseWhenEditLockedMasterPage {
+		task ("Given a page designer has a locked master page") {
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Master Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Button",
+				scope = "Master");
+		}
+
+		task ("When the page designer edits the locked master page") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Master Page Template");
+		}
+
+		task ("Then the page designer should be redirected to the Page in Use") {
+			AssertVisible(
+				key_title = "Page in Use",
+				locator1 = "Header#H1_TITLE");
+
+			Button.click(button = "Go to Page Templates");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Page Templates");
+
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Master Page Template");
+		}
+	}
+
 }

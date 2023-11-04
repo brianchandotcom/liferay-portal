@@ -53,7 +53,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -61,6 +63,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -138,11 +141,13 @@ public class UserResourceDTOConverter
 						contact.getSuffixListTypeId(),
 						dtoConverterContext.getLocale());
 				id = user.getUserId();
+				imageId = user.getPortraitId();
 				jobTitle = user.getJobTitle();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						User.class.getName(), user.getUserId()),
 					AssetTag.NAME_ACCESSOR);
+				languageId = user.getLanguageId();
 				lastLoginDate = user.getLastLoginDate();
 				name = user.getFullName();
 				organizationBriefs = TransformUtil.transformToArray(
@@ -210,6 +215,18 @@ public class UserResourceDTOConverter
 						};
 
 						return user.getPortraitURL(themeDisplay);
+					});
+				setLanguageDisplayName(
+					() -> {
+						if (Validator.isNull(user.getLanguageId())) {
+							return null;
+						}
+
+						Locale locale = LocaleUtil.fromLanguageId(
+							user.getLanguageId());
+
+						return locale.getDisplayName(
+							dtoConverterContext.getLocale());
 					});
 				setProfileURL(
 					() -> {

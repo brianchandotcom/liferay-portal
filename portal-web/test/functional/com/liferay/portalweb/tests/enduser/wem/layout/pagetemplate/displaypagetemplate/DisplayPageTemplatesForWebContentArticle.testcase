@@ -26,19 +26,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONGroup.tearDownNonDefaultGroups();
-		}
-	}
-
 	@description = "This is a test for LPS-90999. A user can access to edit the display page template at view mode."
 	@priority = 5
 	test AccessToEditDisplayPageTemplateAtViewMode {

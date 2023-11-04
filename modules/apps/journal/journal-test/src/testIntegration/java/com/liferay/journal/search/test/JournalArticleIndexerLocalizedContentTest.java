@@ -14,7 +14,9 @@ import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -94,7 +96,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 		String originalContent = RandomTestUtil.randomString();
 		String translatedContent = RandomTestUtil.randomString();
 
-		_journalArticleSearchFixture.addArticle(
+		JournalArticle journalArticle = _journalArticleSearchFixture.addArticle(
 			new JournalArticleBlueprint() {
 				{
 					setGroupId(_group.getGroupId());
@@ -164,6 +166,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 		FieldValuesAssert.assertFieldValues(
 			localizedTitleStrings, name -> name.startsWith("localized_title"),
 			searchResponse);
+		FieldValuesAssert.assertFieldValues(
+			_getLocalizedUrlTitlesMap(journalArticle),
+			name -> name.startsWith("urlTitle_"), searchResponse);
 	}
 
 	@Test
@@ -395,6 +400,30 @@ public class JournalArticleIndexerLocalizedContentTest {
 			document, document.toString());
 	}
 
+	private Map<String, String> _getLocalizedUrlTitlesMap(
+			JournalArticle journalArticle)
+		throws Exception {
+
+		Map<String, String> localizedUrlTitlesMap = new HashMap<>();
+
+		for (Locale locale :
+				_language.getAvailableLocales(_group.getGroupId())) {
+
+			String localizedKey = StringBundler.concat(
+				"urlTitle_", locale.getLanguage(), StringPool.UNDERLINE,
+				locale.getCountry());
+
+			String urlTitle = journalArticle.getUrlTitle(locale);
+
+			localizedUrlTitlesMap.put(localizedKey, urlTitle);
+			localizedUrlTitlesMap.put(
+				localizedKey + "_String_sortable",
+				StringUtil.toLowerCase(urlTitle));
+		}
+
+		return localizedUrlTitlesMap;
+	}
+
 	private Map<String, String> _withSortableValues(Map<String, String> map) {
 		Map<String, String> values = new HashMap<>();
 
@@ -427,6 +456,9 @@ public class JournalArticleIndexerLocalizedContentTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

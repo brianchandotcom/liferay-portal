@@ -266,7 +266,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"apiURL", _getAPIURL(fdsEntryObjectEntry, httpServletRequest)
 			).put(
 				"creationMenu",
-				_getCreationActionsJSONObject(
+				_getCreationMenuJSONObject(
 					fdsViewObjectDefinition, fdsViewObjectEntry)
 			).put(
 				"filters",
@@ -331,7 +331,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return _interpolateURL(sb.toString(), httpServletRequest);
 	}
 
-	private JSONObject _getCreationActionsJSONObject(
+	private JSONObject _getCreationMenuJSONObject(
 			ObjectDefinition fdsViewObjectDefinition,
 			ObjectEntry fdsViewObjectEntry)
 		throws Exception {

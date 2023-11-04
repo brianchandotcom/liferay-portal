@@ -319,8 +319,7 @@ public class LiferayContextController extends ContextController {
 
 		try {
 			if (eventListener == null) {
-				throw new IllegalArgumentException(
-					"Event listener is null");
+				throw new IllegalArgumentException("Event listener is null");
 			}
 
 			List<Class<? extends EventListener>> eventListenerClasses =
@@ -361,7 +360,8 @@ public class LiferayContextController extends ContextController {
 
 			_listenerRegistrations.add(listenerRegistration);
 
-			_eventListeners.put(eventListenerClasses, listenerRegistration);
+			_httpSessionListeners.put(
+				eventListenerClasses, listenerRegistration);
 		}
 		finally {
 			if (listenerRegistration == null) {
@@ -390,16 +390,16 @@ public class LiferayContextController extends ContextController {
 				"Invalid prefix \"" + prefix + "\"");
 		}
 
-		String[] patterns = ArrayUtil.toStringArray(
+		String[] servletPatterns = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				serviceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN)));
 
-		if (patterns.length < 1) {
+		if (servletPatterns.length < 1) {
 			throw new IllegalArgumentException("Patterns must contain a value");
 		}
 
-		for (String pattern : patterns) {
+		for (String pattern : servletPatterns) {
 			ContextController.checkPattern(pattern);
 		}
 
@@ -413,7 +413,7 @@ public class LiferayContextController extends ContextController {
 
 		ResourceDTO resourceDTO = new ResourceDTO();
 
-		resourceDTO.patterns = _sort(patterns);
+		resourceDTO.servletPatterns = _sort(servletPatterns);
 		resourceDTO.prefix = prefix;
 		resourceDTO.serviceId = serviceId;
 		resourceDTO.servletContextId = _contextServiceId;
@@ -542,7 +542,7 @@ public class LiferayContextController extends ContextController {
 		_servletServiceTracker.close();
 
 		_endpointRegistrations.clear();
-		_eventListeners.clear();
+		_httpSessionListeners.clear();
 		_filterRegistrations.clear();
 		_listenerRegistrations.clear();
 		_servletContextHelperDataContext.destroy();
@@ -668,7 +668,7 @@ public class LiferayContextController extends ContextController {
 
 	@Override
 	public EventListeners getEventListeners() {
-		return _eventListeners;
+		return _httpSessionListeners;
 	}
 
 	@Override
@@ -716,7 +716,8 @@ public class LiferayContextController extends ContextController {
 
 		String sessionId = httpSession.getId();
 
-		HttpSessionAdaptor httpSessionAdaptor = _activeHttpSessionAdaptors.get(sessionId);
+		HttpSessionAdaptor httpSessionAdaptor = _activeHttpSessionAdaptors.get(
+			sessionId);
 
 		if (httpSessionAdaptor != null) {
 			return httpSessionAdaptor;
@@ -726,24 +727,25 @@ public class LiferayContextController extends ContextController {
 			httpSession, servletContext, this);
 
 		HttpSessionAdaptor previousHttpSessionAdaptor =
-			_activeHttpSessionAdaptors.putIfAbsent(sessionId, httpSessionAdaptor);
+			_activeHttpSessionAdaptors.putIfAbsent(
+				sessionId, httpSessionAdaptor);
 
 		if (previousHttpSessionAdaptor != null) {
 			return previousHttpSessionAdaptor;
 		}
 
-		List<HttpSessionListener> listeners = _eventListeners.get(
-			HttpSessionListener.class);
+		List<HttpSessionListener> httpSessionListeners =
+			_httpSessionListeners.get(HttpSessionListener.class);
 
-		if (listeners.isEmpty()) {
+		if (httpSessionListeners.isEmpty()) {
 			return httpSessionAdaptor;
 		}
 
 		HttpSessionEvent httpSessionEvent = new HttpSessionEvent(
 			httpSessionAdaptor);
 
-		for (HttpSessionListener listener : listeners) {
-			listener.sessionCreated(httpSessionEvent);
+		for (HttpSessionListener httpSessionListener : httpSessionListeners) {
+			httpSessionListener.sessionCreated(httpSessionEvent);
 		}
 
 		return httpSessionAdaptor;
@@ -797,8 +799,8 @@ public class LiferayContextController extends ContextController {
 		}
 		catch (IllegalStateException illegalStateException) {
 
-			// this can happen if the whiteboard bundle is in the process of
-			// stopping and the framework is in the middle of auto-unregistering
+			// This can happen if the whiteboard bundle is in the process of
+			// stopping and the framework is in the middle of autounregistering
 			// any services the bundle forgot to unregister on stop
 
 			if (_log.isDebugEnabled()) {
@@ -816,29 +818,27 @@ public class LiferayContextController extends ContextController {
 	private FilterDTO _createFilterDTO(
 		ServiceReference<Filter> filterServiceReference, Filter filter) {
 
-		String[] patterns = ArrayUtil.toStringArray(
+		String[] servletPatterns = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN)));
-
 		String[] regexes = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_REGEX)));
-
 		String[] servletNames = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET)));
 
-		if ((patterns.length == 0) && (regexes.length == 0) &&
+		if ((servletPatterns.length == 0) && (regexes.length == 0) &&
 			(servletNames.length == 0)) {
 
 			throw new IllegalArgumentException(
-				"Patterns, regex or servletNames must contain a value");
+				"Patterns, regex, and servlet names must contain a value");
 		}
 
-		for (String pattern : patterns) {
+		for (String pattern : servletPatterns) {
 			ContextController.checkPattern(pattern);
 		}
 
@@ -858,7 +858,7 @@ public class LiferayContextController extends ContextController {
 			}
 			catch (IllegalArgumentException illegalArgumentException) {
 				throw new IllegalArgumentException(
-					"Invalid dispatcher '" + dispatcher + "'",
+					"Invalid dispatcher \"" + dispatcher + "\"",
 					illegalArgumentException);
 			}
 		}
@@ -880,7 +880,7 @@ public class LiferayContextController extends ContextController {
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
 				filter),
 			clazz.getName());
-		filterDTO.patterns = _sort(patterns);
+		filterDTO.servletPatterns = _sort(servletPatterns);
 		filterDTO.regexs = regexes;
 		filterDTO.serviceId = (long)filterServiceReference.getProperty(
 			Constants.SERVICE_ID);
@@ -910,7 +910,7 @@ public class LiferayContextController extends ContextController {
 
 		ServletContextAdaptor servletContextAdaptor = new ServletContextAdaptor(
 			this, bundle, servletContextHelper,
-			_servletContextHelperDataContext, _eventListeners,
+			_servletContextHelperDataContext, _httpSessionListeners,
 			AccessController.getContext());
 
 		return servletContextAdaptor.createServletContext();
@@ -919,35 +919,33 @@ public class LiferayContextController extends ContextController {
 	private ObjectValuePair<ServletDTO, ErrorPageDTO> _createServletDTOs(
 		ServiceReference<Servlet> serviceReference, Servlet servlet) {
 
-		String[] patterns = ArrayUtil.toStringArray(
-			StringPlus.asList(
-				serviceReference.getProperty(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN)));
-
-		String[] errorPages = ArrayUtil.toStringArray(
+		String[] servletErrorPages = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				serviceReference.getProperty(
 					HttpWhiteboardConstants.
 						HTTP_WHITEBOARD_SERVLET_ERROR_PAGE)));
-
 		String servletName = (String)serviceReference.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
+		String[] servletPatterns = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				serviceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN)));
 
-		if ((patterns.length == 0) && (errorPages.length == 0) &&
-			(servletName == null)) {
+		if ((servletErrorPages.length == 0) && (servletName == null) &&
+			(servletPatterns.length == 0)) {
 
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"One of the service properties ",
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE,
 					", ", HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-					", ",
+					", and ",
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
-					" must contain a value."));
+					" must contain a value"));
 		}
 
-		for (String pattern : patterns) {
-			ContextController.checkPattern(pattern);
+		for (String servletPattern : servletPatterns) {
+			ContextController.checkPattern(servletPattern);
 		}
 
 		ServletDTO servletDTO = new ServletDTO();
@@ -959,7 +957,7 @@ public class LiferayContextController extends ContextController {
 			serviceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
 		servletDTO.name = ServiceProperties.parseName(servletName, servlet);
-		servletDTO.patterns = _sort(patterns);
+		servletDTO.servletPatterns = _sort(servletPatterns);
 		servletDTO.serviceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
 		servletDTO.servletContextId = _contextServiceId;
@@ -967,7 +965,7 @@ public class LiferayContextController extends ContextController {
 
 		ErrorPageDTO errorPageDTO = null;
 
-		if (errorPages.length > 0) {
+		if (servletErrorPages.length > 0) {
 			errorPageDTO = new ErrorPageDTO();
 
 			errorPageDTO.asyncSupported = servletDTO.asyncSupported;
@@ -976,7 +974,7 @@ public class LiferayContextController extends ContextController {
 
 			List<String> exceptions = new ArrayList<>();
 
-			for (String errorPage : errorPages) {
+			for (String errorPage : servletErrorPages) {
 				try {
 					if (Objects.equals(errorPage, "4xx")) {
 						for (long code = 400; code < 500; code++) {
@@ -1140,15 +1138,14 @@ public class LiferayContextController extends ContextController {
 	private static final Pattern _contextNamePattern = Pattern.compile(
 		"^([a-zA-Z_0-9\\-]+\\.)*[a-zA-Z_0-9\\-]+$");
 
-	private final ConcurrentMap<String, HttpSessionAdaptor> _activeHttpSessionAdaptors =
-		new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, HttpSessionAdaptor>
+		_activeHttpSessionAdaptors = new ConcurrentHashMap<>();
 	private final BundleContext _bundleContext;
 	private final String _contextName;
 	private final String _contextPath;
 	private final long _contextServiceId;
 	private final Set<EndpointRegistration<?>> _endpointRegistrations =
 		new ConcurrentSkipListSet<>();
-	private final EventListeners _eventListeners = new EventListeners();
 	private final Set<FilterRegistration> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final ServiceTracker<Filter, AtomicReference<FilterRegistration>>
@@ -1160,6 +1157,7 @@ public class LiferayContextController extends ContextController {
 	private final ServiceTracker
 		<EventListener, AtomicReference<ListenerRegistration>>
 			_httpSessionIdListenerServiceTracker;
+	private final EventListeners _httpSessionListeners = new EventListeners();
 	private final ServiceTracker
 		<EventListener, AtomicReference<ListenerRegistration>>
 			_httpSessionListenerServiceTracker;

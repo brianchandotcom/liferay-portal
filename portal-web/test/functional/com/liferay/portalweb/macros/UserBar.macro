@@ -27,6 +27,21 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro gotoMySite(siteName = null) {
+		Click(
+			key_dropdownItem = "My Sites",
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Navigator.gotoNavItem(navItem = "My Sites");
+
+		LexiconCard.clickCardTitle(card = ${siteName});
+
+		SelectFrameTop();
+	}
+
+	@summary = "Default summary"
 	macro openUserOrganizations() {
 		UserBar.gotoDropdown();
 

@@ -118,6 +118,69 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182022. The content page shouldn’t be locked when edit the displayed content."
+	@priority = 4
+	test CannotLockContentPageWhenEditDisplayedContent {
+		task ("Given a page designer has a content page with displayed content") {
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer edit the displayed content") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
+				itemName = "Web Content Title",
+				menuItem = "Edit");
+
+			WebContent.addCP(webContentTitle = "Welcome to Liferay");
+		}
+
+		task ("Then the content page shouldn't be locked") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ContentPages.gotoPageEditor();
+
+			ContentPages.viewFragmentText(
+				assetType = "journal",
+				fragmentName = "Content Display",
+				text = "Web Content Content");
+		}
+	}
+
 	@description = "This is a test for LPS-182022. The user could edit the master page or style book used by a locked content page."
 	@priority = 4
 	test EditMasterPageOrStyleBookUsedByLockedContentPage {

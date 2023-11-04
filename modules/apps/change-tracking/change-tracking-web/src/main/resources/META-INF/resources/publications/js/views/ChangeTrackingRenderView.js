@@ -22,7 +22,7 @@ import {
 	navigate as navigateUtil,
 	openConfirmModal,
 } from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import ExperienceDropdown from '../components/ExperienceDropdown';
 
@@ -133,7 +133,6 @@ export default function ChangeTrackingRenderView({
 	defaultLocale,
 	description,
 	discardURL,
-	getCache,
 	handleNavigation,
 	handleShowHideable,
 	initialDataURL,
@@ -144,12 +143,10 @@ export default function ChangeTrackingRenderView({
 	showHideable,
 	spritemap,
 	title,
-	updateCache,
 }) {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
 	const CHANGE_TYPE_MODIFIED = 'modified';
-	const CHANGE_TYPE_PRODUCTION = 'production';
 	const CONTENT_TYPE_CHILDREN = 'children';
 	const CONTENT_TYPE_PARENTS = 'parents';
 	const CONTENT_TYPE_RENDER = 'data';
@@ -172,111 +169,7 @@ export default function ChangeTrackingRenderView({
 		view: VIEW_UNIFIED,
 	});
 
-	const dataURLRef = useRef(null);
-
 	useEffect(() => {
-		if (dataURL === dataURLRef.current) {
-			return;
-		}
-
-		dataURLRef.current = dataURL;
-
-		let cachedData = null;
-
-		if (getCache) {
-			cachedData = getCache();
-		}
-
-		if (
-			cachedData &&
-			cachedData.changeType &&
-			!selectedSegmentsExperienceId
-		) {
-			if (cachedData.changeType === CHANGE_TYPE_PRODUCTION) {
-				setState({
-					children: childEntries,
-					contentType: CONTENT_TYPE_RENDER,
-					parents: parentEntries,
-					renderData: cachedData,
-					view: VIEW_LEFT,
-				});
-
-				setLoading(false);
-
-				return;
-			}
-
-			const newState = {
-				children: childEntries,
-				contentType: CONTENT_TYPE_PREVIEW,
-				parents: parentEntries,
-				renderData: cachedData,
-				view: VIEW_UNIFIED,
-			};
-
-			if (
-				!Object.prototype.hasOwnProperty.call(
-					cachedData,
-					'leftPreview'
-				) &&
-				!Object.prototype.hasOwnProperty.call(
-					cachedData,
-					'leftLocalizedPreview'
-				) &&
-				!Object.prototype.hasOwnProperty.call(
-					cachedData,
-					'rightPreview'
-				) &&
-				!Object.prototype.hasOwnProperty.call(
-					cachedData,
-					'rightLocalizedPreview'
-				)
-			) {
-				newState.contentType = CONTENT_TYPE_RENDER;
-			}
-
-			if (
-				!Object.prototype.hasOwnProperty.call(cachedData, 'leftTitle')
-			) {
-				newState.view = VIEW_RIGHT;
-			}
-			else if (
-				!Object.prototype.hasOwnProperty.call(cachedData, 'rightTitle')
-			) {
-				newState.view = VIEW_LEFT;
-			}
-
-			if (
-				newState.view === VIEW_UNIFIED &&
-				((newState.contentType === CONTENT_TYPE_RENDER &&
-					!Object.prototype.hasOwnProperty.call(
-						cachedData,
-						'unifiedRender'
-					) &&
-					!Object.prototype.hasOwnProperty.call(
-						cachedData,
-						'unifiedLocalizedRender'
-					)) ||
-					(newState.contentType === CONTENT_TYPE_PREVIEW &&
-						!Object.prototype.hasOwnProperty.call(
-							cachedData,
-							'unifiedPreview'
-						) &&
-						!Object.prototype.hasOwnProperty.call(
-							cachedData,
-							'unifiedLocalizedPreview'
-						)))
-			) {
-				newState.view = VIEW_SPLIT;
-			}
-
-			setState(newState);
-
-			setLoading(false);
-
-			return;
-		}
-
 		setLoading(true);
 
 		fetch(dataURL)
@@ -293,10 +186,6 @@ export default function ChangeTrackingRenderView({
 					});
 
 					return;
-				}
-
-				if (updateCache) {
-					updateCache(json);
 				}
 
 				const newState = {
@@ -375,14 +264,7 @@ export default function ChangeTrackingRenderView({
 					},
 				});
 			});
-	}, [
-		childEntries,
-		dataURL,
-		getCache,
-		parentEntries,
-		selectedSegmentsExperienceId,
-		updateCache,
-	]);
+	}, [childEntries, dataURL, parentEntries, selectedSegmentsExperienceId]);
 
 	let currentLocale = selectedLocale;
 	let currentTitle = title;

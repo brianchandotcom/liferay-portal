@@ -180,7 +180,7 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 				<aui:button-row>
 					<aui:button type="submit" />
 
-					<aui:button href="<%= backURL %>" type="cancel" />
+					<aui:button href="<%= journalConfigurationDisplayContext.getBackURL() %>" type="cancel" />
 				</aui:button-row>
 			</aui:form>
 		</clay:col>

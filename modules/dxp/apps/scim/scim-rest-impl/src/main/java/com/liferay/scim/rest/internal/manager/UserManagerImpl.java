@@ -14,11 +14,11 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -413,6 +413,8 @@ public class UserManagerImpl implements UserManager {
 						properties);
 				}
 			}
+
+			return null;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -423,10 +425,8 @@ public class UserManagerImpl implements UserManager {
 					exception);
 			}
 
-			throw new SystemException(exception);
+			return ReflectionUtil.throwException(exception);
 		}
-
-		return null;
 	}
 
 	private void _saveScimClientId(
@@ -482,6 +482,8 @@ public class UserManagerImpl implements UserManager {
 			scimUser.setMiddleName(portalUser.getMiddleName());
 			scimUser.setModifiedDate(portalUser.getModifiedDate());
 			scimUser.setScreenName(portalUser.getScreenName());
+
+			return scimUser;
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -490,10 +492,8 @@ public class UserManagerImpl implements UserManager {
 					portalException);
 			}
 
-			throw new SystemException(portalException);
+			return ReflectionUtil.throwException(portalException);
 		}
-
-		return scimUser;
 	}
 
 	private com.liferay.portal.kernel.model.User _updatePortalUser(

@@ -317,6 +317,16 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getImageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageId\": ");
+
+			sb.append(userAccount.getImageId());
+		}
+
 		if (userAccount.getJobTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -353,6 +363,34 @@ public class UserAccountSerDes {
 			}
 
 			sb.append("]");
+		}
+
+		if (userAccount.getLanguageDisplayName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"languageDisplayName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userAccount.getLanguageDisplayName()));
+
+			sb.append("\"");
+		}
+
+		if (userAccount.getLanguageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"languageId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userAccount.getLanguageId()));
+
+			sb.append("\"");
 		}
 
 		if (userAccount.getLastLoginDate() != null) {
@@ -691,6 +729,13 @@ public class UserAccountSerDes {
 			map.put("image", String.valueOf(userAccount.getImage()));
 		}
 
+		if (userAccount.getImageId() == null) {
+			map.put("imageId", null);
+		}
+		else {
+			map.put("imageId", String.valueOf(userAccount.getImageId()));
+		}
+
 		if (userAccount.getJobTitle() == null) {
 			map.put("jobTitle", null);
 		}
@@ -703,6 +748,22 @@ public class UserAccountSerDes {
 		}
 		else {
 			map.put("keywords", String.valueOf(userAccount.getKeywords()));
+		}
+
+		if (userAccount.getLanguageDisplayName() == null) {
+			map.put("languageDisplayName", null);
+		}
+		else {
+			map.put(
+				"languageDisplayName",
+				String.valueOf(userAccount.getLanguageDisplayName()));
+		}
+
+		if (userAccount.getLanguageId() == null) {
+			map.put("languageId", null);
+		}
+		else {
+			map.put("languageId", String.valueOf(userAccount.getLanguageId()));
 		}
 
 		if (userAccount.getLastLoginDate() == null) {
@@ -928,6 +989,12 @@ public class UserAccountSerDes {
 					userAccount.setImage((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "imageId")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setImageId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "jobTitle")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setJobTitle((String)jsonParserFieldValue);
@@ -937,6 +1004,19 @@ public class UserAccountSerDes {
 				if (jsonParserFieldValue != null) {
 					userAccount.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "languageDisplayName")) {
+
+				if (jsonParserFieldValue != null) {
+					userAccount.setLanguageDisplayName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "languageId")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setLanguageId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "lastLoginDate")) {

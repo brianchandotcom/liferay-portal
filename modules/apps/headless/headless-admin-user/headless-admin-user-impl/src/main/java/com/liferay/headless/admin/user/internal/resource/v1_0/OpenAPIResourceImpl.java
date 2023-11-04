@@ -113,6 +113,8 @@ public class OpenAPIResourceImpl {
 
 			add(UserAccountResourceImpl.class);
 
+			add(UserAccountFullNameDefinitionResourceImpl.class);
+
 			add(UserGroupResourceImpl.class);
 
 			add(WebUrlResourceImpl.class);

@@ -1535,6 +1535,80 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-91552. View content displayed in Asset Publisher with pagination on associated display page."
+	@priority = 5
+	test ViewPaginationContentViaAP {
+		property portal.acceptance = "true";
+
+		task ("Add 3 basic web content articles") {
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content ${count}",
+					groupName = "Test Site Name",
+					title = "WC Title ${count}");
+			}
+		}
+
+		task ("Add Display Page and mark it as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			AssetPublisherPortlet.configurePaginationPG(
+				paginationNumber = 2,
+				paginationType = "Regular");
+
+			Portlet.saveAndCloseConfig();
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Select Display Page Name as Specific Display Page Template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			for (var count : list "1,2,3") {
+				WebContentNavigator.gotoEditCP(webContentTitle = "WC Title ${count}");
+
+				WebContent.editDisplayPage(
+					pageName = "Display Page Name",
+					pageType = "Display Page Templates");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("Add widget pages with Asset Publisher") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("View paginated web content via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC Title 1");
+
+			AssetPublisherPortlet.changePagination(
+				currentPageNumber = "2 of 2",
+				paginationItem = 2);
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "WC Content 1",
+				assetTitle = "WC Title 1");
+		}
+	}
+
 	@description = "This is a test for LPS-146373. New prefixes for email,phone and none options can be used on Display Page Templates."
 	@priority = 3
 	test ViewPrefixesForEmailAndPhoneAndNoneOptions {

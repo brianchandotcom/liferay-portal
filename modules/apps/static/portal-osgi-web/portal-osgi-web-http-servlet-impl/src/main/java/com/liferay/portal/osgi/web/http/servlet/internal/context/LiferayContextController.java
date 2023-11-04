@@ -255,7 +255,7 @@ public class LiferayContextController extends ContextController {
 
 		try {
 			if (filter == null) {
-				throw new IllegalArgumentException("Filter can not be null");
+				throw new IllegalArgumentException("Filter is null");
 			}
 
 			addedRegisteredObject = registeredObjects.add(filter);

@@ -407,7 +407,7 @@ public class UserManagerImpl implements UserManager {
 					ConfigurationFactoryUtil.getCompanyId(
 						_companyLocalService, properties);
 
-				if (configurationCompanyId == companyId) {
+				if (companyId == configurationCompanyId) {
 					return ConfigurableUtil.createConfigurable(
 						ScimClientOAuth2ApplicationConfiguration.class,
 						properties);

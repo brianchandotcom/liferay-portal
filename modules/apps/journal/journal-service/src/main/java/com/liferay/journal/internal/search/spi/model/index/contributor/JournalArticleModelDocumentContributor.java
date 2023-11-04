@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -125,7 +126,9 @@ public class JournalArticleModelDocumentContributor
 			document.addLocalizedKeyword(
 				"localized_title",
 				_localization.populateLocalizationMap(
-					journalArticle.getTitleMap(),
+					HashMapBuilder.putAll(
+						journalArticle.getTitleMap()
+					).build(),
 					journalArticle.getDefaultLanguageId(),
 					journalArticle.getGroupId()),
 				true, true);

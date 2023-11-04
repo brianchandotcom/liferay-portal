@@ -89,12 +89,8 @@ public class ViewChangeMVCRenderCommand implements MVCRenderCommand {
 		long ctCollectionId = ParamUtil.getLong(
 			renderRequest, "ctCollectionId");
 
-		long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
-
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
-
-		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
 
 		try {
 			if ((ctCollection == null) ||
@@ -104,42 +100,6 @@ public class ViewChangeMVCRenderCommand implements MVCRenderCommand {
 
 				return "/publications/view_publications.jsp";
 			}
-
-			ViewChangesDisplayContext viewChangesDisplayContext =
-				new ViewChangesDisplayContext(
-					activeCtCollectionId, _basePersistenceRegistry,
-					_ctClosureFactory, ctCollection, _ctCollectionLocalService,
-					_getCTConfiguration(themeDisplay.getCompanyId()),
-					_ctDisplayRendererRegistry, _ctEntryLocalService,
-					_ctSchemaVersionLocalService, _groupLocalService, _language,
-					_portal,
-					new PublicationsDisplayContext(
-						_ctCollectionLocalService, _ctDisplayRendererRegistry,
-						_ctPreferencesLocalService, _ctRemoteLocalService,
-						_portal.getHttpServletRequest(renderRequest), _language,
-						_publicationHelper, renderRequest, renderResponse),
-					_publishSchedulerSnapshot.get(), renderRequest,
-					renderResponse, _userLocalService);
-
-			renderRequest.setAttribute(
-				CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT,
-				viewChangesDisplayContext);
-
-			if (ctEntry == null) {
-				return "/publications/view_changes.jsp";
-			}
-
-			LiferayPortletRequest liferayPortletRequest =
-				LiferayPortletUtil.getLiferayPortletRequest(renderRequest);
-
-			DynamicServletRequest dynamicServletRequest =
-				(DynamicServletRequest)
-					liferayPortletRequest.getHttpServletRequest();
-
-			dynamicServletRequest.setParameter(
-				"entry",
-				String.valueOf(ctEntry.getModelClassNameId()) + "-" +
-					String.valueOf(ctEntry.getModelClassPK()));
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -148,6 +108,58 @@ public class ViewChangeMVCRenderCommand implements MVCRenderCommand {
 
 			return "/publications/view_changes.jsp";
 		}
+
+		long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
+
+		long modelClassNameId = 0;
+		long modelClassPK = 0;
+
+		if (ctEntryId == 0) {
+			modelClassNameId = ParamUtil.getLong(
+				renderRequest, "modelClassNameId");
+			modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
+		}
+		else {
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
+
+			if (ctEntry == null) {
+				return "/publications/view_changes.jsp";
+			}
+
+			modelClassNameId = ctEntry.getModelClassNameId();
+			modelClassPK = ctEntry.getModelClassPK();
+		}
+
+		LiferayPortletRequest liferayPortletRequest =
+			LiferayPortletUtil.getLiferayPortletRequest(renderRequest);
+
+		DynamicServletRequest dynamicServletRequest =
+			(DynamicServletRequest)
+				liferayPortletRequest.getHttpServletRequest();
+
+		dynamicServletRequest.setParameter(
+			"entry",
+			String.valueOf(modelClassNameId) + "-" +
+				String.valueOf(modelClassPK));
+
+		ViewChangesDisplayContext viewChangesDisplayContext =
+			new ViewChangesDisplayContext(
+				activeCtCollectionId, _basePersistenceRegistry,
+				_ctClosureFactory, ctCollection, _ctCollectionLocalService,
+				_getCTConfiguration(themeDisplay.getCompanyId()),
+				_ctDisplayRendererRegistry, _ctEntryLocalService,
+				_ctSchemaVersionLocalService, _groupLocalService, _language,
+				_portal,
+				new PublicationsDisplayContext(
+					_ctCollectionLocalService, _ctDisplayRendererRegistry,
+					_ctPreferencesLocalService, _ctRemoteLocalService,
+					_portal.getHttpServletRequest(renderRequest), _language,
+					_publicationHelper, renderRequest, renderResponse),
+				_publishSchedulerSnapshot.get(), renderRequest, renderResponse,
+				_userLocalService);
+
+		renderRequest.setAttribute(
+			CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT, viewChangesDisplayContext);
 
 		return "/publications/view_change.jsp";
 	}

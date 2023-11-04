@@ -175,6 +175,10 @@ public class ViewChangesDisplayContext {
 		return portletURL.toString();
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollection.getCtCollectionId();
+	}
+
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -408,6 +412,18 @@ public class ViewChangesDisplayContext {
 		).put(
 			"changeTypesFromURL",
 			ParamUtil.getString(_renderRequest, "changeTypes")
+		).put(
+			"changeURL",
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/change_tracking/view_change"
+			).setParameter(
+				"ctCollectionId", _ctCollection.getCtCollectionId()
+			).setParameter(
+				"showHideable",
+				ParamUtil.getBoolean(_renderRequest, "showHideable")
+			).buildString()
 		).put(
 			"collaboratorsData",
 			_publicationsDisplayContext.getCollaboratorsReactData(

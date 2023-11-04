@@ -6,12 +6,13 @@
 import ClayAlert from '@clayui/alert';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayLayout from '@clayui/layout';
-import {sub} from 'frontend-js-web';
+import {createPortletURL, navigate as navigateUtil, sub} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
 export default function ChangeTrackingChangeView({
+	changeURL,
 	changes,
 	columnFromURL,
 	contextView,
@@ -240,8 +241,8 @@ export default function ChangeTrackingChangeView({
 					const model = modelsRef.current[keys[i]];
 
 					if (
-						model.modelClassNameId === modelClassNameId &&
-						model.modelClassPK === modelClassPK
+						String(model.modelClassNameId) === modelClassNameId &&
+						String(model.modelClassPK) === modelClassPK
 					) {
 						if (!contextView) {
 							return model;
@@ -486,45 +487,17 @@ export default function ChangeTrackingChangeView({
 	};
 
 	const navigate = useCallback(
-		(nodeId, resetPage) => {
+		(nodeId) => {
 			const node = getNode(nodeId);
 
-			const page = resetPage ? 1 : renderState.page;
-
-			pushState(
-				getPath(
-					ascendingState,
-					columnState,
-					renderState.delta,
-					getEntryParam(node),
-					renderState.nav,
-					page,
-					renderState.showHideable
-				)
-			);
-
-			setRenderState({
-				changes: filterNodes(renderState.showHideable),
-				children: node.children,
-				delta: renderState.delta,
-				id: nodeId,
-				nav: renderState.nav,
-				node,
-				page,
-				parents: node.parents,
-				showHideable: renderState.showHideable,
+			const newChangeURL = createPortletURL(changeURL, {
+				modelClassNameId: node.modelClassNameId,
+				modelClassPK: node.modelClassPK,
 			});
 
-			window.scrollTo(0, 0);
+			navigateUtil(newChangeURL.toString());
 		},
-		[
-			ascendingState,
-			columnState,
-			filterNodes,
-			getNode,
-			getPath,
-			renderState,
-		]
+		[changeURL, getNode]
 	);
 
 	const setParameter = useCallback(
@@ -680,9 +653,7 @@ export default function ChangeTrackingChangeView({
 											renderState.node.modelClassPK
 									]
 								}
-								handleNavigation={(nodeId) =>
-									navigate(nodeId, true)
-								}
+								handleNavigation={(nodeId) => navigate(nodeId)}
 								handleShowHideable={handleShowHideableToggle}
 								initialDataURL={getDataURL(renderState.node)}
 								moveChangesURL={getMoveChangesURL(

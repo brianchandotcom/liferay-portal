@@ -20,12 +20,11 @@ import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
+import {createPortletURL, navigate as navigateUtil, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
 
 import WorkflowStatusLabel from '../components/WorkflowStatusLabel';
-import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
 const DIRECTION_NEXT = 'next';
 const DIRECTION_PREV = 'prev';
@@ -87,26 +86,22 @@ const DrilldownMenu = ({
 
 export default function ChangeTrackingChangesView({
 	changeTypesFromURL,
+	changeURL,
 	changes,
 	columnFromURL,
 	contextView,
 	ctCollectionId,
 	ctMappingInfos,
-	dataURL,
-	defaultLocale,
 	deltaFromURL,
-	discardURL,
 	entryFromURL,
 	expired,
 	keywordsFromURL,
 	modelData,
-	moveChangesURL,
 	namespace,
 	navigationFromURL,
 	orderByTypeFromURL,
 	pageFromURL,
 	showAllItemsEnabled,
-	showDropdown,
 	showHideableFromURL,
 	siteNames,
 	sitesFromURL,
@@ -199,8 +194,6 @@ export default function ChangeTrackingChangesView({
 	params.delete(PARAM_USERS);
 
 	const basePathRef = useRef(pathname + '?' + params.toString());
-
-	const renderCacheRef = useRef({});
 
 	const getNodeId = useCallback(
 		(modelKey) => {
@@ -418,8 +411,8 @@ export default function ChangeTrackingChangesView({
 					const model = modelsRef.current[keys[i]];
 
 					if (
-						model.modelClassNameId === modelClassNameId &&
-						model.modelClassPK === modelClassPK
+						String(model.modelClassNameId) === modelClassNameId &&
+						String(model.modelClassPK) === modelClassPK
 					) {
 						if (!contextView) {
 							return model;
@@ -848,53 +841,17 @@ export default function ChangeTrackingChangesView({
 	};
 
 	const navigate = useCallback(
-		(nodeId, resetPage) => {
+		(nodeId) => {
 			const node = getNode(nodeId);
 
-			const page = resetPage ? 1 : renderState.page;
-
-			pushState(
-				getPath(
-					ascendingState,
-					columnState,
-					renderState.delta,
-					getEntryParam(node),
-					filtersState,
-					resultsKeywords,
-					renderState.nav,
-					page,
-					renderState.showHideable
-				)
-			);
-
-			setRenderState({
-				changes: filterNodes(
-					filtersState,
-					resultsKeywords,
-					renderState.showHideable
-				),
-				children: node.children,
-				delta: renderState.delta,
-				id: nodeId,
-				nav: renderState.nav,
-				node,
-				page,
-				parents: node.parents,
-				showHideable: renderState.showHideable,
+			const newChangeURL = createPortletURL(changeURL, {
+				modelClassNameId: node.modelClassNameId,
+				modelClassPK: node.modelClassPK,
 			});
 
-			window.scrollTo(0, 0);
+			navigateUtil(newChangeURL.toString());
 		},
-		[
-			ascendingState,
-			columnState,
-			filtersState,
-			filterNodes,
-			getNode,
-			getPath,
-			renderState,
-			resultsKeywords,
-		]
+		[changeURL, getNode]
 	);
 
 	const handlePopState = useCallback(
@@ -1631,59 +1588,6 @@ export default function ChangeTrackingChangesView({
 			</DrilldownMenu>
 		);
 	};
-
-	const setParameter = useCallback(
-		(url, name, value) => {
-			return (
-				url + '&' + namespace + name + '=' + encodeURIComponent(value)
-			);
-		},
-		[namespace]
-	);
-
-	const getDataURL = (node) => {
-		if (node.ctEntryId) {
-			return setParameter(dataURL, 'ctEntryId', node.ctEntryId);
-		}
-
-		const url = setParameter(
-			dataURL,
-			'modelClassNameId',
-			node.modelClassNameId
-		);
-
-		return setParameter(url, 'modelClassPK', node.modelClassPK);
-	};
-
-	const getDiscardURL = useCallback(
-		(node) => {
-			const url = setParameter(
-				discardURL,
-				'modelClassNameId',
-				node.modelClassNameId
-			);
-
-			return setParameter(url, 'modelClassPK', node.modelClassPK);
-		},
-		[discardURL, setParameter]
-	);
-
-	const getMoveChangesURL = useCallback(
-		(node) => {
-			if (!Liferay.FeatureFlags['LPS-171364'] || !node.movable) {
-				return null;
-			}
-
-			const url = setParameter(
-				moveChangesURL,
-				'modelClassNameId',
-				node.modelClassNameId
-			);
-
-			return setParameter(url, 'modelClassPK', node.modelClassPK);
-		},
-		[moveChangesURL, setParameter]
-	);
 
 	const getTableRows = (nodes) => {
 		const rows = [];
@@ -2729,50 +2633,7 @@ export default function ChangeTrackingChangesView({
 				)}
 
 				<div className="publications-changes-content row">
-					<div className="col-md-12">
-						{renderState.node.modelClassNameId && (
-							<ChangeTrackingRenderView
-								childEntries={renderState.children}
-								ctEntry={!!renderState.node.ctEntryId}
-								defaultLocale={defaultLocale}
-								description={
-									renderState.node.description
-										? renderState.node.description
-										: renderState.node.typeName
-								}
-								discardURL={getDiscardURL(renderState.node)}
-								getCache={() =>
-									renderCacheRef.current[
-										renderState.node.modelClassNameId +
-											'-' +
-											renderState.node.modelClassPK
-									]
-								}
-								handleNavigation={(nodeId) =>
-									navigate(nodeId, true)
-								}
-								handleShowHideable={handleShowHideableToggle}
-								initialDataURL={getDataURL(renderState.node)}
-								moveChangesURL={getMoveChangesURL(
-									renderState.node
-								)}
-								parentEntries={renderState.parents}
-								showDropdown={showDropdown}
-								showHideable={renderState.showHideable}
-								spritemap={spritemap}
-								title={renderState.node.title}
-								updateCache={(data) => {
-									renderCacheRef.current[
-										renderState.node.modelClassNameId +
-											'-' +
-											renderState.node.modelClassPK
-									] = data;
-								}}
-							/>
-						)}
-
-						{renderTable()}
-					</div>
+					<div className="col-md-12">{renderTable()}</div>
 				</div>
 			</div>
 		);

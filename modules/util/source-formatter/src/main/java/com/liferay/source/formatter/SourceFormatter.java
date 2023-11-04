@@ -683,145 +683,89 @@ public class SourceFormatter {
 				continue;
 			}
 
-			if (!commitMessage.contains("## Alternatives") ||
-				!commitMessage.contains("## What") ||
-				!commitMessage.contains("## Why")) {
+			String[] breakingChangeReports = commitMessage.split("\n----");
 
-				throw new Exception(
-					StringBundler.concat(
-						"Found formatting issues:\n", "The commit message ",
-						"contains '# breaking_change_report' must have '## ",
-						"What## Why' and '## Alternatives'"));
-			}
+			for (String breakingChangeReport : breakingChangeReports) {
+				int alternativesCount = StringUtil.count(
+					breakingChangeReport, "## Alternatives");
+				int whatCount = StringUtil.count(
+					breakingChangeReport, "## What");
+				int whyCount = StringUtil.count(breakingChangeReport, "## Why");
 
-			_containsSplitLine(
-				commitMessage, "# breaking_change_report", "----");
-			_containsSplitLine(
-				commitMessage, "## What", "# breaking_change_report", "----");
+				if ((alternativesCount != 1) || (whatCount != 1) ||
+					(whyCount != 1)) {
 
-			Matcher matcher = _followWhatPattern1.matcher(commitMessage);
-
-			if (matcher.find()) {
-				throw new Exception(
-					"Commit message \n'" + commitMessage +
-						"' error.\nA '##What' should only contains one file.");
-			}
-
-			matcher = _followWhatPattern2.matcher(commitMessage);
-
-			if (!matcher.find()) {
-				throw new Exception(
-					"Commit message \n'" + commitMessage +
-						"' error.\nThe full file path should follow '##What'.");
-			}
-
-			String expectCommitMessage = commitMessage.replaceAll(
-				"([^\n])(\n#)", "$1\n$2");
-
-			expectCommitMessage = expectCommitMessage.replaceAll(
-				"(\n#{1,2})[^ #]", "$1 $2");
-
-			expectCommitMessage = expectCommitMessage.replaceAll(
-				"(\n#.+\n)([^\n])", "$1\n$2");
-
-			expectCommitMessage = expectCommitMessage.replaceAll(
-				"([^\n])(\n-+)", "$1\n$2");
-
-			expectCommitMessage = expectCommitMessage.replaceAll(
-				"(\n-+\n)([^\n\\\\Z])", "$1\n$2");
-
-			StringBundler sb = new StringBundler();
-			String[] catalogs = {"What", "Why", "Alternatives"};
-
-			int index = -1;
-
-			for (String line : StringUtil.splitLines(expectCommitMessage)) {
-				if (!line.startsWith("#") && !line.startsWith("-")) {
-					sb.append(line);
-					sb.append(StringPool.NEW_LINE);
-
-					continue;
-				}
-
-				if (line.equals("# breaking_change_report")) {
-					index = 0;
-
-					sb.append(line);
-					sb.append(StringPool.NEW_LINE);
-
-					continue;
-				}
-
-				if ((!line.startsWith("##") && !line.startsWith("-")) ||
-					(index == -1) || (line.startsWith("##") && (index > 2))) {
-
-					throw new Exception(
-						"Commit message \n'" + commitMessage +
-							"' error.\nerror breaking_change_report style");
-				}
-
-				if (line.startsWith("##")) {
-					int spaceIndex = line.indexOf(StringPool.SPACE, 3);
-
-					if (spaceIndex == -1) {
-						spaceIndex = line.length();
-					}
-
-					String catalogName = line.substring(3, spaceIndex);
-
-					if (!catalogName.equals(catalogs[index])) {
-						throw new Exception(
-							StringBundler.concat(
-								"Commit message \n'", commitMessage,
-								"' error.\nExpect '", catalogs[index],
-								"' but is '", catalogName, "'"));
-					}
-
-					index++;
-
-					sb.append(line);
-					sb.append(StringPool.NEW_LINE);
-
-					continue;
-				}
-
-				if (index < 2) {
 					throw new Exception(
 						StringBundler.concat(
-							"Commit message \n'", commitMessage,
-							"' error.\nFor breaking_change_report commit, ",
-							"'What' and 'Why' is necessary"));
+							"Found formatting issues:\n", "Each breaking ",
+							"change report should have one, and only one '## ",
+							"What', '## Why' and '## Alternatives'. Use ",
+							"'----' to split each breaking change."));
 				}
 
-				sb.append("----");
-				sb.append(StringPool.NEW_LINE);
+				if (!((breakingChangeReport.indexOf("## What") <
+						breakingChangeReport.indexOf("## Why")) &&
+					  (breakingChangeReport.indexOf("## Why") <
+						  breakingChangeReport.indexOf("## Alternatives")))) {
 
-				index = -1;
-			}
+					throw new Exception(
+						StringBundler.concat(
+							"Found formatting issues:\n", "Incorrect order of ",
+							"headers: The correct order should be '## What' | ",
+							"'## Why' | '## Alternatives'"));
+				}
 
-			if ((index != -1) && (index < 2)) {
-				throw new Exception(
-					StringBundler.concat(
-						"Commit message \n'", commitMessage,
-						"' error.\nFor breaking_change_report commit, 'What' ",
-						"and 'Why' is necessary"));
-			}
+				String previousLine = null;
 
-			if (sb.index() > 0) {
-				sb.setIndex(sb.index() - 1);
-			}
+				String[] lines = breakingChangeReport.split("\n");
 
-			expectCommitMessage = sb.toString();
+				for (int i = 0; i < lines.length; i++) {
+					String trimmedLine = StringUtil.trimLeading(lines[i]);
 
-			if (!expectCommitMessage.endsWith("\n----")) {
-				expectCommitMessage = expectCommitMessage + "\n\n----";
-			}
+					if (trimmedLine.startsWith("# breaking_change_report") ||
+						trimmedLine.startsWith("## Alternatives") ||
+						trimmedLine.startsWith("## What") ||
+						trimmedLine.startsWith("## Why")) {
 
-			if (!StringUtil.equals(expectCommitMessage, commitMessage)) {
-				throw new Exception(
-					StringBundler.concat(
-						"Commit message \n'", commitMessage,
-						"' error.\nExpect\n", expectCommitMessage));
+						String nextLine = null;
+
+						if (i < (lines.length - 1)) {
+							nextLine = lines[i + 1].trim();
+						}
+
+						if ((nextLine.length() != 0) ||
+							(previousLine.length() != 0)) {
+
+							throw new Exception(
+								StringBundler.concat(
+									"Found formatting issues:\n", "There ",
+									"should be an empty line after/before '# ",
+									"breaking_change_report', '## What', '## ",
+									"Why' and '## Alternatives'"));
+						}
+					}
+
+					if (trimmedLine.startsWith("## What")) {
+						if (trimmedLine.length() > 7) {
+							throw new Exception(
+								StringBundler.concat(
+									"Found formatting issues:\n", "There ",
+									"should be a line break after '## What'"));
+						}
+
+						Matcher matcher = _whatPattern.matcher(
+							breakingChangeReport);
+
+						if (matcher.find()) {
+							throw new Exception(
+								StringBundler.concat(
+									"Found formatting issues:\n", "'## What' ",
+									"block should contain only one file"));
+						}
+					}
+
+					previousLine = trimmedLine;
+				}
 			}
 		}
 	}
@@ -836,54 +780,6 @@ public class SourceFormatter {
 		}
 
 		return false;
-	}
-
-	private void _containsSplitLine(
-			String commitMessage, String catalogName, String... spiltContents)
-		throws Exception {
-
-		int startPos = commitMessage.indexOf(catalogName);
-
-		if (startPos == -1) {
-			throw new Exception(
-				StringBundler.concat(
-					"Commit message \n'", commitMessage, "' error,\n'",
-					catalogName, "' is necessary."));
-		}
-
-		while (true) {
-			int endPos = commitMessage.indexOf(catalogName, startPos + 1);
-
-			if (endPos == -1) {
-				break;
-			}
-
-			String content = commitMessage.substring(startPos, endPos);
-
-			StringBundler sb = new StringBundler();
-
-			for (String spiltContent : spiltContents) {
-				if (!content.contains(spiltContent)) {
-					sb.append(StringPool.APOSTROPHE);
-					sb.append(spiltContent);
-					sb.append(StringPool.APOSTROPHE);
-					sb.append(StringPool.SPACE);
-					sb.append("and ");
-				}
-			}
-
-			if (sb.index() > 0) {
-				sb.setIndex(sb.index() - 1);
-
-				throw new Exception(
-					StringBundler.concat(
-						"Commit message \n'", commitMessage,
-						"' error,\nThere should be ", sb, "between multiple '",
-						catalogName, "'"));
-			}
-
-			startPos = endPos;
-		}
 	}
 
 	private void _excludeWorkingDirCheckoutPrivateApps(File portalDir)
@@ -1526,10 +1422,8 @@ public class SourceFormatter {
 
 	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
 
-	private static final Pattern _followWhatPattern1 = Pattern.compile(
+	private static final Pattern _whatPattern = Pattern.compile(
 		"## What\\s+(([\\w\\-]+/)*\\w+\\.\\w+[\n, ]){2,}\n");
-	private static final Pattern _followWhatPattern2 = Pattern.compile(
-		"## What ([\\w\\-]+/)*\\w+\\.\\w+\n");
 
 	private List<String> _allFileNames;
 	private final List<String> _modifiedFileNames =

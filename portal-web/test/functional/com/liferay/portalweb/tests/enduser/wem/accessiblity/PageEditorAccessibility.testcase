@@ -6,7 +6,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Echo Accessibility";
-	property testray.main.component.name = "Content Pages";
+	property testray.main.component.name = "Page Editor";
 
 	static var randomSiteName = StringUtil.randomString(8);
 
@@ -806,6 +806,68 @@ definition {
 			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
 
 			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
+		}
+	}
+
+	@description = "This is a test for LPS-182022. The Page In Use should comply with the WCAG 2.1 AA standard."
+	@priority = 4
+	test ViewAccessibilityOfPageInUse {
+		property custom.properties = "feature.flag.LPS-180328=true";
+
+		task ("Given a page designer has a locked content page") {
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = ${randomSiteName},
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer redirects to the Page in Use") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = ${randomSiteName});
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#EDIT_PENCIL");
+
+			AssertVisible(
+				key_title = "Page in Use",
+				locator1 = "Header#H1_TITLE");
+		}
+
+		task ("Then the Page in Use should have correct accessibility") {
+			AssertAccessible();
 		}
 	}
 

@@ -320,15 +320,15 @@ public class LiferayContextController extends ContextController {
 		try {
 			if (eventListener == null) {
 				throw new IllegalArgumentException(
-					"EventListener can not be null");
+					"Event listener is null");
 			}
 
-			List<Class<? extends EventListener>> listenerClasses =
+			List<Class<? extends EventListener>> eventListenerClasses =
 				_getListenerClasses(serviceReference);
 
-			if (listenerClasses.isEmpty()) {
+			if (eventListenerClasses.isEmpty()) {
 				throw new IllegalArgumentException(
-					"EventListener does not implement a supported type");
+					"Event listener does not implement a supported interface");
 			}
 
 			for (ListenerRegistration curListenerRegistration :
@@ -347,11 +347,11 @@ public class LiferayContextController extends ContextController {
 					eventListenerServiceHolder.getBundle()));
 
 			listenerRegistration = new ListenerRegistration(
-				eventListenerServiceHolder, listenerClasses,
-				_createListenerDTO(serviceReference, listenerClasses),
+				eventListenerServiceHolder, eventListenerClasses,
+				_createListenerDTO(serviceReference, eventListenerClasses),
 				servletContext, this);
 
-			if (listenerClasses.contains(ServletContextListener.class)) {
+			if (eventListenerClasses.contains(ServletContextListener.class)) {
 				ServletContextListener servletContextListener =
 					(ServletContextListener)listenerRegistration.getT();
 
@@ -361,7 +361,7 @@ public class LiferayContextController extends ContextController {
 
 			_listenerRegistrations.add(listenerRegistration);
 
-			_eventListeners.put(listenerClasses, listenerRegistration);
+			_eventListeners.put(eventListenerClasses, listenerRegistration);
 		}
 		finally {
 			if (listenerRegistration == null) {
@@ -891,7 +891,7 @@ public class LiferayContextController extends ContextController {
 
 	private ListenerDTO _createListenerDTO(
 		ServiceReference<EventListener> serviceReference,
-		List<Class<? extends EventListener>> listenerClasses) {
+		List<Class<? extends EventListener>> eventListenerClasses) {
 
 		ListenerDTO listenerDTO = new ListenerDTO();
 
@@ -899,7 +899,7 @@ public class LiferayContextController extends ContextController {
 			Constants.SERVICE_ID);
 		listenerDTO.servletContextId = _contextServiceId;
 		listenerDTO.types = TransformUtil.transformToArray(
-			listenerClasses, Class::getName, String.class);
+			eventListenerClasses, Class::getName, String.class);
 
 		return listenerDTO;
 	}

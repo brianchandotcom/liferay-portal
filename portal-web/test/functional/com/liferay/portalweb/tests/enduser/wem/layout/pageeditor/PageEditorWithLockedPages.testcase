@@ -303,4 +303,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when access to edit mode of a locked utility page."
+	@priority = 4
+	test RedirectToPageInUseWhenEditLockedUtilityPage {
+		task ("Given a page designer has a locked utility page") {
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer edits the locked utility page") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "404 Error Utility Page");
+		}
+
+		task ("Then the page designer should be redirected to the Page in Use") {
+			AssertVisible(
+				key_title = "Page in Use",
+				locator1 = "Header#H1_TITLE");
+
+			Button.click(button = "Go to Pages");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Pages");
+
+			LexiconCard.viewCardPresent(card = "404 Error Utility Page");
+		}
+	}
+
 }

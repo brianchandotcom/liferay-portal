@@ -527,20 +527,19 @@ public class LiferayContextController extends ContextController {
 		}
 
 		_filterServiceTracker.close();
+		_httpSessionAttributeListenerServiceTracker.close();
 
 		if (_httpSessionIdListenerServiceTracker != null) {
 			_httpSessionIdListenerServiceTracker.close();
 		}
 
-		_resourceServiceTracker.close();
-		_servletServiceTracker.close();
-
-		_httpSessionAttributeListenerServiceTracker.close();
 		_httpSessionListenerServiceTracker.close();
+		_resourceServiceTracker.close();
 		_servletContextAttributeListenerServiceTracker.close();
 		_servletContextListenerServiceTracker.close();
 		_servletRequestAttributeListenerServiceTracker.close();
 		_servletRequestListenerServiceTracker.close();
+		_servletServiceTracker.close();
 
 		_endpointRegistrations.clear();
 		_eventListeners.clear();

@@ -124,8 +124,7 @@ public class LiferayContextController extends ContextController {
 		catch (URISyntaxException uriSyntaxException) {
 			IllegalContextPathException illegalContextPathException =
 				new IllegalContextPathException(
-					"The context path '" + contextPath +
-						"' is not valid URI path syntax",
+					"The context path \"" + contextPath + "\" is invalid",
 					DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 
 			illegalContextPathException.addSuppressed(uriSyntaxException);

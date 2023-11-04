@@ -62,6 +62,25 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="redirect" type="hidden" value="<%= journalConfigurationDisplayContext.getRedirect() %>" />
 
+					<liferay-ui:error embed="<%= false %>" key="emailArticleAddedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleAddedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleApprovalDeniedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleApprovalDeniedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleApprovalGrantedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleApprovalGrantedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleApprovalRequestedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleApprovalRequestedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleExpiredBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleExpiredSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleMovedFromFolderBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleMovedFromFolderSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleMovedToFolderBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleMovedToFolderSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleReviewBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleReviewSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleUpdatedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailArticleUpdatedSubject" message="please-enter-a-valid-subject" />
+
 					<c:choose>
 						<c:when test='<%= Objects.equals(journalConfigurationDisplayContext.getNavigation(), "web-content-added") %>'>
 							<div class="c-px-1">

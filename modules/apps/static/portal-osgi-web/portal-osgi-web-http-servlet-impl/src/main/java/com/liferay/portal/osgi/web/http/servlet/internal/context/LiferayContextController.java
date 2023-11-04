@@ -382,12 +382,12 @@ public class LiferayContextController extends ContextController {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
 
 		if (prefix == null) {
-			throw new IllegalArgumentException("Prefix can not be null");
+			throw new IllegalArgumentException("Prefix is null");
 		}
 
 		if (prefix.endsWith(Const.SLASH) && !prefix.equals(Const.SLASH)) {
 			throw new IllegalArgumentException(
-				"Invalid prefix '" + prefix + "'");
+				"Invalid prefix \"" + prefix + "\"");
 		}
 
 		String[] patterns = ArrayUtil.toStringArray(

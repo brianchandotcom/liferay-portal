@@ -418,9 +418,8 @@ public class UserManagerImpl implements UserManager {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to get the ",
-						"ScimClientOAuth2ApplicationConfiguration for the ",
-						"companyId ", companyId),
+						"Unable to get the SCIM client OAuth 2 application ",
+						"configuration for company ", companyId),
 					exception);
 			}
 

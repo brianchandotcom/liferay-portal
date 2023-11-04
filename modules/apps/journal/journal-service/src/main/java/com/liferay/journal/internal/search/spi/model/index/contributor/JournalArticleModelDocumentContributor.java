@@ -168,13 +168,15 @@ public class JournalArticleModelDocumentContributor
 			}
 		}
 
-		for (String titleAvailableLanguageId : titleAvailableLanguageIds) {
+		for (Locale locale :
+				_language.getAvailableLocales(journalArticle.getGroupId())) {
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
 			try {
 				document.addKeywordSortable(
-					_localization.getLocalizedName(
-						"urlTitle", titleAvailableLanguageId),
-					journalArticle.getUrlTitle(
-						LocaleUtil.fromLanguageId(titleAvailableLanguageId)));
+					_localization.getLocalizedName("urlTitle", languageId),
+					journalArticle.getUrlTitle(locale));
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -182,7 +184,7 @@ public class JournalArticleModelDocumentContributor
 						StringBundler.concat(
 							"Unable to get friendly URL for article ID ",
 							journalArticle.getId(), " and language ID ",
-							titleAvailableLanguageId),
+							languageId),
 						portalException);
 				}
 			}

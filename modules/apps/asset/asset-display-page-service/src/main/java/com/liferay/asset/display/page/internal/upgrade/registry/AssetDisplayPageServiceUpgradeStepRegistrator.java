@@ -84,6 +84,12 @@ public class AssetDisplayPageServiceUpgradeStepRegistrator
 		registry.register("2.3.2", "3.0.0", new UpgradeAssetDisplayPageEntry());
 
 		registry.register("3.0.0", "3.0.1", new DummyUpgradeProcess());
+
+		registry.register(
+			"3.0.1", "3.1.0",
+			new com.liferay.asset.display.page.internal.upgrade.v3_1_0.
+				AssetDisplayLayoutUpgradeProcess(
+					_layoutPageTemplateEntryLocalService));
 	}
 
 	@Reference

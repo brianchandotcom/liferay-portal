@@ -788,17 +788,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			_getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSSortRelationship"),
-			(ObjectEntry objectEntry) -> _getSortsJSONObject(objectEntry));
-	}
+			(ObjectEntry objectEntry) -> {
+				Map<String, Object> properties = objectEntry.getProperties();
 
-	private JSONObject _getSortsJSONObject(ObjectEntry objectEntry) {
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		return JSONUtil.put(
-			"direction", properties.get("sortingDirection")
-		).put(
-			"key", properties.get("fieldName")
-		);
+				return JSONUtil.put(
+					"direction", properties.get("sortingDirection")
+				).put(
+					"key", properties.get("fieldName")
+				);
+			});
 	}
 
 	private String _getValue(

@@ -231,8 +231,6 @@ definition {
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
-			Navigator.gotoNavTab(navTab = "Style Book");
-
 			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
 
 			PageEditor.publish();

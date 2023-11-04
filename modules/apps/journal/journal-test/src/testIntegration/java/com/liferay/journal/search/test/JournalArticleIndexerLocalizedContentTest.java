@@ -120,29 +120,24 @@ public class JournalArticleIndexerLocalizedContentTest {
 				}
 			});
 
-		Map<String, String> titleStrings = HashMapBuilder.put(
-			"title_en_US", originalTitle
-		).put(
-			"title_hu_HU", translatedTitle
-		).build();
-
-		Map<String, String> contentStrings = HashMapBuilder.put(
-			"content_en_US", originalContent
-		).put(
-			"content_hu_HU", translatedContent
-		).build();
-
-		String searchTerm = "nev";
-
 		SearchResponse searchResponse =
 			_indexerFixture.searchOnlyOneSearchResponse(
-				searchTerm, LocaleUtil.HUNGARY);
+				"nev", LocaleUtil.HUNGARY);
 
 		FieldValuesAssert.assertFieldValues(
-			titleStrings, name -> name.startsWith("title_"), searchResponse);
+			HashMapBuilder.put(
+				"title_en_US", originalTitle
+			).put(
+				"title_hu_HU", translatedTitle
+			).build(),
+			name -> name.startsWith("title_"), searchResponse);
 		FieldValuesAssert.assertFieldValues(
-			contentStrings, name -> name.startsWith("content_"),
-			searchResponse);
+			HashMapBuilder.put(
+				"content_en_US", originalContent
+			).put(
+				"content_hu_HU", translatedContent
+			).build(),
+			name -> name.startsWith("content_"), searchResponse);
 		FieldValuesAssert.assertFieldValues(
 			_getLocalizedKeywordSorteableMap(
 				originalTitle, "localized_title", false,
@@ -212,28 +207,20 @@ public class JournalArticleIndexerLocalizedContentTest {
 				}
 			});
 
-		String articleId = journalArticle.getArticleId();
-
-		Map<String, String> titleStrings = HashMapBuilder.put(
-			"title_en_US", originalTitle
-		).put(
-			"title_pt_BR", translatedTitle
-		).build();
-
-		Map<String, String> contentStrings = Collections.emptyMap();
-
-		Map<String, String> ddmContentStrings = Collections.emptyMap();
-
-		String searchTerm = articleId;
-
 		SearchResponse searchResponse =
 			_indexerFixture.searchOnlyOneSearchResponse(
-				searchTerm, LocaleUtil.BRAZIL);
+				journalArticle.getArticleId(), LocaleUtil.BRAZIL);
 
 		FieldValuesAssert.assertFieldValues(
-			titleStrings, name -> name.startsWith("title"), searchResponse);
+			HashMapBuilder.put(
+				"title_en_US", originalTitle
+			).put(
+				"title_pt_BR", translatedTitle
+			).build(),
+			name -> name.startsWith("title"), searchResponse);
 		FieldValuesAssert.assertFieldValues(
-			contentStrings, name -> name.startsWith("content"), searchResponse);
+			Collections.emptyMap(), name -> name.startsWith("content"),
+			searchResponse);
 
 		FieldValuesAssert.assertFieldValues(
 			_getLocalizedKeywordSorteableMap(
@@ -247,7 +234,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 				}),
 			name -> name.startsWith("localized_title"), searchResponse);
 		FieldValuesAssert.assertFieldValues(
-			ddmContentStrings, name -> name.startsWith("ddm__text"),
+			Collections.emptyMap(), name -> name.startsWith("ddm__text"),
 			searchResponse);
 	}
 

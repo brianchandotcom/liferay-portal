@@ -11,10 +11,23 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Given site scoped custom object University with name text field is created and published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "University",
+				en_US_plural_label = "Universities",
+				name = "University",
+				objectDefinitionExternalReferenceCode = "University",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "univeristyName",
+				scope = "site");
+		}
 	}
 
 	tearDown {
 		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects();
 
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
@@ -32,7 +45,7 @@ definition {
 				baseURL = "my-app",
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
-				mainObjectDefinitionErc = "L_API_APPLICATION",
+				mainObjectDefinitionErc = "University",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
 				schemaName = "testSchema",
@@ -151,39 +164,45 @@ definition {
 				baseURL = "my-app",
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
-				mainObjectDefinitionErc = "L_API_APPLICATION",
+				mainObjectDefinitionErc = "University",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
-				schemaName = "testSchema",
+				schemaName = "testSchemaSite",
 				scopeKey = "site",
 				status = "published",
 				title = "My-app");
 
-			var endpointId1 = JSONUtil.getWithJSONPath(${responseFromApplication}, "$.apiApplicationToAPIEndpoints[*].id");
-			var schemaId1 = JSONUtil.getWithJSONPath(${responseFromApplication}, "$.apiApplicationToAPISchemas[*].id");
+			var siteScopedEndpointId = JSONUtil.getWithJSONPath(${responseFromApplication}, "$.apiApplicationToAPIEndpoints[*].id");
+			var siteScopedSchemaId = JSONUtil.getWithJSONPath(${responseFromApplication}, "$.apiApplicationToAPISchemas[*].id");
 
 			SchemaAPI.relateRequestSchemaToEndpointByIds(
-				endpointId = ${endpointId1},
-				requestSchemaId = ${schemaId1});
+				endpointId = ${siteScopedEndpointId},
+				requestSchemaId = ${siteScopedSchemaId});
 
 			SchemaAPI.relateResponseSchemaToEndpointByIds(
-				endpointId = ${endpointId1},
-				responseSchemaId = ${schemaId1});
+				endpointId = ${siteScopedEndpointId},
+				responseSchemaId = ${siteScopedSchemaId});
 
-			var responseFromEndpoint = EndpointAPI.createAPIEndpoint(
+			var companyScopedEndpointResponse = EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 
-			var endpointId2 = JSONPathUtil.getIdValue(response = ${responseFromEndpoint});
+			var companyScopedEndpointId = JSONPathUtil.getIdValue(response = ${companyScopedEndpointResponse});
+			var responseCompanyScopedSchema = SchemaAPI.createAPISchema(
+				externalReferenceCode = "My-app",
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "testSchemaCompany");
+
+			var companyScopedSchemaId = JSONPathUtil.getIdValue(response = ${responseCompanyScopedSchema});
 
 			SchemaAPI.relateRequestSchemaToEndpointByIds(
-				endpointId = ${endpointId2},
-				requestSchemaId = ${schemaId1});
+				endpointId = ${companyScopedEndpointId},
+				requestSchemaId = ${companyScopedSchemaId});
 
 			SchemaAPI.relateResponseSchemaToEndpointByIds(
-				endpointId = ${endpointId2},
-				responseSchemaId = ${schemaId1});
+				endpointId = ${companyScopedEndpointId},
+				responseSchemaId = ${companyScopedSchemaId});
 		}
 
 		task ("When I navigate to /o/c/{apiApplication}") {
@@ -194,7 +213,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
 				method = "getScopeScopeKeyTestendpointPage",
-				service = "testSchema",
+				service = "testSchemaSite",
 				value1 = "/testendpoint");
 		}
 
@@ -202,7 +221,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
 				method = "getMyendpointPage",
-				service = "testSchema",
+				service = "testSchemaCompany",
 				value1 = "/myendpoint");
 		}
 	}

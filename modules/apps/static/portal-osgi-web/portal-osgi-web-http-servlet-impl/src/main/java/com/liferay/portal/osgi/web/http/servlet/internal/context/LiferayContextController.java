@@ -623,6 +623,7 @@ public class LiferayContextController extends ContextController {
 
 		if (match == Match.EXTENSION) {
 			servletPath = servletPath + pathInfo;
+
 			pathInfo = null;
 		}
 

@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Portal Workflow Metrics REST Implementation
 Bundle-SymbolicName: com.liferay.portal.workflow.metrics.rest.impl
-Bundle-Version: 3.0.79
+Bundle-Version: 3.0.80
 -dsannotations-options: inherit

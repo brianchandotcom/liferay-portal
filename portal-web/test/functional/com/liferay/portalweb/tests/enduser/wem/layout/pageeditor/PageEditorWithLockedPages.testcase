@@ -421,6 +421,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when back to page editor of a locked content page."
+	@priority = 4
+	test RedirectToPageInUseWhenBackToPageEditorOfLockedContentPage {
+		task ("Given a page designer accesses to the configuration page via page editor") {
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ContentPages.gotoPageEditor();
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+		}
+
+		task ("When the content page is locked") {
+			SelectWindow(value1 = "title=Test Page Name - Test Site Name - ${siteName} (Editing)");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Then the page designer should be redirected to the Page in Use after back to page editor") {
+			SelectWindow(value1 = "title=General - General - Test Page Name - Test Site Name - ${siteName} (Configuring)");
+
+			Navigator.gotoBack();
+
+			AssertVisible(
+				key_title = "Page in Use",
+				locator1 = "Header#H1_TITLE");
+
+			Button.click(button = "Go to Test Page Name");
+
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when discard the draft of a locked content page."
 	@priority = 4
 	test RedirectToPageInUseWhenDiscardDraftOfLockedContentPage {

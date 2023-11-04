@@ -463,7 +463,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		Set<ObjectEntry> fdsFilterObjectEntries = new TreeSet<>(
+		Set<ObjectEntry> objectEntries = new TreeSet<>(
 			new ObjectEntryComparator(
 				ListUtil.toList(
 					ListUtil.fromString(
@@ -473,24 +473,23 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 						StringPool.COMMA),
 					Long::parseLong)));
 
-		fdsFilterObjectEntries.addAll(
+		objectEntries.addAll(
 			_getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSClientExtensionFilter"));
-		fdsFilterObjectEntries.addAll(
+		objectEntries.addAll(
 			_getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSDateFilterRelationship"));
-		fdsFilterObjectEntries.addAll(
+		objectEntries.addAll(
 			_getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSDynamicFilterRelationship"));
 
 		return JSONUtil.toJSONArray(
-			fdsFilterObjectEntries,
-			(ObjectEntry fdsFilterObjectEntry) -> {
-				Map<String, Object> properties =
-					fdsFilterObjectEntry.getProperties();
+			objectEntries,
+			(ObjectEntry objectEntry) -> {
+				Map<String, Object> properties = objectEntry.getProperties();
 
 				String type = MapUtil.getString(properties, "type");
 

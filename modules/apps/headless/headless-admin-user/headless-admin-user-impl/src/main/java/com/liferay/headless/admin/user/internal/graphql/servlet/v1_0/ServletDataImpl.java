@@ -20,6 +20,7 @@ import com.liferay.headless.admin.user.internal.resource.v1_0.SegmentUserResourc
 import com.liferay.headless.admin.user.internal.resource.v1_0.SiteResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.SubscriptionResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.TicketResourceImpl;
+import com.liferay.headless.admin.user.internal.resource.v1_0.UserAccountFullNameDefinitionResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.UserAccountResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.UserGroupResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.WebUrlResourceImpl;
@@ -36,6 +37,7 @@ import com.liferay.headless.admin.user.resource.v1_0.SegmentUserResource;
 import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
 import com.liferay.headless.admin.user.resource.v1_0.TicketResource;
+import com.liferay.headless.admin.user.resource.v1_0.UserAccountFullNameDefinitionResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
@@ -119,6 +121,8 @@ public class ServletDataImpl implements ServletData {
 			_ticketResourceComponentServiceObjects);
 		Query.setUserAccountResourceComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects);
+		Query.setUserAccountFullNameDefinitionResourceComponentServiceObjects(
+			_userAccountFullNameDefinitionResourceComponentServiceObjects);
 		Query.setUserGroupResourceComponentServiceObjects(
 			_userGroupResourceComponentServiceObjects);
 		Query.setWebUrlResourceComponentServiceObjects(
@@ -1050,6 +1054,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class, "getUserAccount"));
 					put(
+						"query#userAccountFullNameDefinition",
+						new ObjectValuePair<>(
+							UserAccountFullNameDefinitionResourceImpl.class,
+							"getUserAccountFullNameDefinition"));
+					put(
 						"query#userUserGroups",
 						new ObjectValuePair<>(
 							UserGroupResourceImpl.class, "getUserUserGroups"));
@@ -1326,5 +1335,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TicketResource>
 		_ticketResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<UserAccountFullNameDefinitionResource>
+		_userAccountFullNameDefinitionResourceComponentServiceObjects;
 
 }

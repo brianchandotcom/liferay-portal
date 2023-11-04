@@ -575,6 +575,34 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	@Schema(description = "The user's profile image id.")
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
+	}
+
+	@JsonIgnore
+	public void setImageId(
+		UnsafeSupplier<Long, Exception> imageIdUnsafeSupplier) {
+
+		try {
+			imageId = imageIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The user's profile image id.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long imageId;
+
 	@Schema(description = "The user's job title.")
 	public String getJobTitle() {
 		return jobTitle;
@@ -630,6 +658,62 @@ public class UserAccount implements Serializable {
 	@GraphQLField(description = "A list of keywords describing the user.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
+
+	@Schema(description = "The user's preferred language.")
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	@JsonIgnore
+	public void setLanguage(
+		UnsafeSupplier<String, Exception> languageUnsafeSupplier) {
+
+		try {
+			language = languageUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The user's preferred language.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String language;
+
+	@Schema(description = "The user's preferred language id.")
+	public String getLanguageId() {
+		return languageId;
+	}
+
+	public void setLanguageId(String languageId) {
+		this.languageId = languageId;
+	}
+
+	@JsonIgnore
+	public void setLanguageId(
+		UnsafeSupplier<String, Exception> languageIdUnsafeSupplier) {
+
+		try {
+			languageId = languageIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The user's preferred language id.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String languageId;
 
 	@Schema(description = "The last time the user logged in.")
 	public Date getLastLoginDate() {
@@ -1216,6 +1300,16 @@ public class UserAccount implements Serializable {
 			sb.append("\"");
 		}
 
+		if (imageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageId\": ");
+
+			sb.append(imageId);
+		}
+
 		if (jobTitle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1252,6 +1346,34 @@ public class UserAccount implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (language != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"language\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(language));
+
+			sb.append("\"");
+		}
+
+		if (languageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"languageId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(languageId));
+
+			sb.append("\"");
 		}
 
 		if (lastLoginDate != null) {

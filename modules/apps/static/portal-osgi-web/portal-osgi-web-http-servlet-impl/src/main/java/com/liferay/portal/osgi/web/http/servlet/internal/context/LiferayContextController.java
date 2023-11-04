@@ -469,7 +469,7 @@ public class LiferayContextController extends ContextController {
 
 		try {
 			if (servlet == null) {
-				throw new IllegalArgumentException("Servlet cannot be null");
+				throw new IllegalArgumentException("Servlet is null");
 			}
 
 			addedRegisteredObject = registeredObjects.add(servlet);
@@ -514,7 +514,7 @@ public class LiferayContextController extends ContextController {
 	@Override
 	public void destroy() {
 		Collection<HttpSessionAdaptor> httpSessionAdaptors =
-			_activeSessions.values();
+			_activeHttpSessionAdaptors.values();
 
 		Iterator<HttpSessionAdaptor> iterator = httpSessionAdaptors.iterator();
 
@@ -526,25 +526,26 @@ public class LiferayContextController extends ContextController {
 			iterator.remove();
 		}
 
-		_resourceServiceTracker.close();
-		_servletServiceTracker.close();
 		_filterServiceTracker.close();
 
 		if (_httpSessionIdListenerServiceTracker != null) {
 			_httpSessionIdListenerServiceTracker.close();
 		}
 
+		_resourceServiceTracker.close();
+		_servletServiceTracker.close();
+
 		_httpSessionAttributeListenerServiceTracker.close();
 		_httpSessionListenerServiceTracker.close();
-		_servletRequestAttributeListenerServiceTracker.close();
-		_servletRequestListenerServiceTracker.close();
 		_servletContextAttributeListenerServiceTracker.close();
 		_servletContextListenerServiceTracker.close();
+		_servletRequestAttributeListenerServiceTracker.close();
+		_servletRequestListenerServiceTracker.close();
 
 		_endpointRegistrations.clear();
+		_eventListeners.clear();
 		_filterRegistrations.clear();
 		_listenerRegistrations.clear();
-		_eventListeners.clear();
 		_servletContextHelperDataContext.destroy();
 
 		_shutdown = true;
@@ -552,7 +553,7 @@ public class LiferayContextController extends ContextController {
 
 	@Override
 	public Map<String, HttpSessionAdaptor> getActiveSessions() {
-		return _activeSessions;
+		return _activeHttpSessionAdaptors;
 	}
 
 	@Override
@@ -715,7 +716,7 @@ public class LiferayContextController extends ContextController {
 
 		String sessionId = httpSession.getId();
 
-		HttpSessionAdaptor httpSessionAdaptor = _activeSessions.get(sessionId);
+		HttpSessionAdaptor httpSessionAdaptor = _activeHttpSessionAdaptors.get(sessionId);
 
 		if (httpSessionAdaptor != null) {
 			return httpSessionAdaptor;
@@ -725,7 +726,7 @@ public class LiferayContextController extends ContextController {
 			httpSession, servletContext, this);
 
 		HttpSessionAdaptor previousHttpSessionAdaptor =
-			_activeSessions.putIfAbsent(sessionId, httpSessionAdaptor);
+			_activeHttpSessionAdaptors.putIfAbsent(sessionId, httpSessionAdaptor);
 
 		if (previousHttpSessionAdaptor != null) {
 			return previousHttpSessionAdaptor;
@@ -784,7 +785,7 @@ public class LiferayContextController extends ContextController {
 
 	@Override
 	public void removeActiveSession(String sessionId) {
-		_activeSessions.remove(sessionId);
+		_activeHttpSessionAdaptors.remove(sessionId);
 	}
 
 	@Override
@@ -1139,7 +1140,7 @@ public class LiferayContextController extends ContextController {
 	private static final Pattern _contextNamePattern = Pattern.compile(
 		"^([a-zA-Z_0-9\\-]+\\.)*[a-zA-Z_0-9\\-]+$");
 
-	private final ConcurrentMap<String, HttpSessionAdaptor> _activeSessions =
+	private final ConcurrentMap<String, HttpSessionAdaptor> _activeHttpSessionAdaptors =
 		new ConcurrentHashMap<>();
 	private final BundleContext _bundleContext;
 	private final String _contextName;

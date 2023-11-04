@@ -37,6 +37,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when discard the draft of a locked content page."
+	@priority = 4
+	test RedirectToPageInUseWhenDiscardDraftOfLockedContentPage {
+		task ("Given a page designer has a locked content page") {
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page designer discards draft of the locked content page") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
+
+			MenuItem.clickNoError(menuItem = "Discard Draft");
+
+			AssertConfirm(value1 = "Are you sure you want to discard the current draft and apply the latest published changes?");
+		}
+
+		task ("Then the page designer should be redirected to the Page in Use") {
+			AssertVisible(
+				key_title = "Page in Use",
+				locator1 = "Header#H1_TITLE");
+
+			Button.click(button = "Go Back");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Pages");
+
+			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when access to edit mode of a locked collection page."
 	@priority = 4
 	test RedirectToPageInUseWhenEditLockedCollectionPage {

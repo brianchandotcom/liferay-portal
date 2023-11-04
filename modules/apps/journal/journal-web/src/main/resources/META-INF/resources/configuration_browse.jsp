@@ -40,6 +40,7 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 			</h1>
 
 			<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
+				<portlet:param name="navigation" value="<%= journalConfigurationDisplayContext.getNavigation() %>" />
 				<portlet:param name="serviceName" value="<%= JournalConstants.SERVICE_NAME %>" />
 				<portlet:param name="settingsScope" value="group" />
 			</liferay-portlet:actionURL>

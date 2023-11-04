@@ -15,6 +15,7 @@ function LogoSelector({
 	label,
 	logoId: initialLogoId,
 	logoURL: initialLogoURL,
+	name,
 	namespace,
 	onChange,
 	selectLogoURL,
@@ -58,12 +59,12 @@ function LogoSelector({
 	useEffect(() => {
 		onChange({
 			target: {
-				name: 'logoId',
+				name,
 				value: parseInt(values.fileEntryId, 10) || 0,
 			},
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values]);
+	}, [name, values]);
 
 	useEffect(() => {
 		const handleChangeLogo = ({
@@ -157,6 +158,7 @@ LogoSelector.defaultProps = {
 	disabled: false,
 	label: Liferay.Language.get('image'),
 	logoId: 0,
+	name: 'logoId',
 };
 
 LogoSelector.propTypes = {
@@ -165,6 +167,7 @@ LogoSelector.propTypes = {
 	label: PropTypes.string,
 	logoId: PropTypes.number,
 	logoURL: PropTypes.string,
+	name: PropTypes.string.isRequired,
 	namespace: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
 	selectLogoURL: PropTypes.string.isRequired,

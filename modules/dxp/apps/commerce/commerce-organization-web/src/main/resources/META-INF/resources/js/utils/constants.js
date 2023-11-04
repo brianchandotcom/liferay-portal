@@ -22,8 +22,10 @@ export const ACTION_KEYS = {
 	},
 	user: {
 		ADD_ENTITIES: 'update',
-		DELETE: 'delete',
-		REMOVE: 'update',
+		DELETE: 'delete-user-account',
+		REMOVE: 'patch-user-account',
+		UPDATE: 'patch-user-account',
+		VIEW: 'get-user-account',
 	},
 };
 export const BRIEFS_KEYS_MAP = {
@@ -36,6 +38,20 @@ export const COUNTER_KEYS_MAP = {
 	organization: 'numberOfOrganizations',
 	user: 'numberOfUsers',
 };
+export const DEFAULT_IMAGE_PATHS_MAP = {
+	account: '/organization_logo?img_id=0',
+	user: '/user_portrait?img_id=0',
+};
+export const DEFAULT_USER_ACCOUNT_FULL_NAME_DEFINITION_FIELDS = [
+	{
+		key: 'first-name',
+		required: true,
+	},
+	{
+		key: 'last-name',
+		required: true,
+	},
+];
 export const DRAGGING_THRESHOLD = 50;
 export const DX = 90;
 export const DY = 400;

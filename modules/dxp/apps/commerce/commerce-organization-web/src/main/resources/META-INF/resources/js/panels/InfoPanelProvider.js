@@ -15,7 +15,7 @@ import {
 } from '../utils/constants';
 import GenericInfoPanel from './GenericInfoPanel';
 
-function InfoPanelProvider({namespace, selectLogoURL, spritemap}) {
+function InfoPanelProvider({namespace, pathImage, selectLogoURL, spritemap}) {
 	const [active, setActive] = useState(false);
 	const [panelData, setPanelData] = useState({});
 
@@ -30,7 +30,7 @@ function InfoPanelProvider({namespace, selectLogoURL, spritemap}) {
 	const updatePanelView = useCallback(
 		({data, mode, type}) => {
 			if (mode === INFO_PANEL_MODE_MAP.click) {
-				if (!active || type !== MODEL_TYPE_MAP.account) {
+				if (!active || type === MODEL_TYPE_MAP.organization) {
 					return;
 				}
 				mode = INFO_PANEL_MODE_MAP.view;
@@ -88,6 +88,7 @@ function InfoPanelProvider({namespace, selectLogoURL, spritemap}) {
 							}}
 							namespace={namespace}
 							{...panelData}
+							pathImage={pathImage}
 							selectLogoURL={selectLogoURL}
 							spritemap={spritemap}
 							updatePanelViewHandler={updatePanelView}
@@ -101,6 +102,7 @@ function InfoPanelProvider({namespace, selectLogoURL, spritemap}) {
 
 InfoPanelProvider.propTypes = {
 	namespace: PropTypes.string.isRequired,
+	pathImage: PropTypes.string.isRequired,
 	selectLogoURL: PropTypes.string.isRequired,
 	spritemap: PropTypes.string.isRequired,
 };

@@ -16,6 +16,7 @@ import {updateAccount} from '../data/accounts';
 import LogoSelector from '../utils/LogoSelector';
 import {
 	ACTION_KEYS,
+	DEFAULT_IMAGE_PATHS_MAP,
 	INFO_PANEL_MODE_MAP,
 	MODEL_TYPE_MAP,
 	SYMBOLS_MAP,
@@ -25,6 +26,7 @@ import {hasPermission, localizeModelType} from '../utils/index';
 function EditAccountInfoPanel({
 	data,
 	namespace,
+	pathImage,
 	selectLogoURL,
 	spritemap,
 	type,
@@ -137,7 +139,10 @@ function EditAccountInfoPanel({
 					defaultIcon={`${spritemap}#${SYMBOLS_MAP[type]}`}
 					disabled={isLoading}
 					logoId={accountData.logoId}
-					logoURL={accountData.logoURL}
+					logoURL={
+						accountData.logoURL ||
+						pathImage + DEFAULT_IMAGE_PATHS_MAP.account
+					}
 					namespace={namespace}
 					onChange={onChangeHandler}
 					selectLogoURL={selectLogoURL}
@@ -310,6 +315,7 @@ EditAccountInfoPanel.defaultProps = {
 EditAccountInfoPanel.propTypes = {
 	data: PropTypes.object.isRequired,
 	namespace: PropTypes.string,
+	pathImage: PropTypes.string.isRequired,
 	selectLogoURL: PropTypes.string,
 	spritemap: PropTypes.string.isRequired,
 	type: PropTypes.string,

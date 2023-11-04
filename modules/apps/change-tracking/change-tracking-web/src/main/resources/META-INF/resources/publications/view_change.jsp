@@ -8,11 +8,17 @@
 <%@ include file="/publications/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext)request.getAttribute(CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT);
 
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(
+	PortletURLBuilder.createRenderURL(
+		renderResponse
+	).setMVCRenderCommandName(
+		"/change_tracking/view_changes"
+	).setParameter(
+		"ctCollectionId", viewChangesDisplayContext.getCtCollectionId()
+	).buildString());
+
 portletDisplay.setShowBackIcon(true);
 
 renderResponse.setTitle(LanguageUtil.get(request, "review-change"));

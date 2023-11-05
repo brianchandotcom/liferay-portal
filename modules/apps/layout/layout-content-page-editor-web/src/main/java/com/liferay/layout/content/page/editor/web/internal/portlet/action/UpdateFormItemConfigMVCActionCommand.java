@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -117,9 +118,10 @@ public class UpdateFormItemConfigMVCActionCommand
 			if (formStyledLayoutStructureItem.getClassNameId() > 0) {
 				addedFragmentEntryLinks =
 					_formItemManager.addFragmentEntryLinks(
-						formStyledLayoutStructureItem, httpServletRequest,
-						jsonObject, layoutStructure, segmentsExperienceId,
-						themeDisplay);
+						jsonObject, formStyledLayoutStructureItem,
+						themeDisplay.getLayout(), layoutStructure,
+						themeDisplay.getLocale(), segmentsExperienceId,
+						ServiceContextFactory.getInstance(httpServletRequest));
 			}
 		}
 

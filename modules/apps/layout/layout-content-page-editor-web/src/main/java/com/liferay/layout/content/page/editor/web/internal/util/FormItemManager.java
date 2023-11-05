@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,9 +47,8 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,10 +60,10 @@ import org.osgi.service.component.annotations.Reference;
 public class FormItemManager {
 
 	public List<FragmentEntryLink> addFragmentEntryLinks(
+			JSONObject errorJSONObject,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			HttpServletRequest httpServletRequest, JSONObject jsonObject,
-			LayoutStructure layoutStructure, long segmentsExperienceId,
-			ThemeDisplay themeDisplay)
+			Layout layout, LayoutStructure layoutStructure, Locale locale,
+			long segmentsExperienceId, ServiceContext serviceContext)
 		throws Exception {
 
 		FragmentCollectionContributor fragmentCollectionContributor =
@@ -74,10 +71,10 @@ public class FormItemManager {
 				getFragmentCollectionContributor("INPUTS");
 
 		if (fragmentCollectionContributor == null) {
-			jsonObject.put(
+			errorJSONObject.put(
 				"errorMessage",
 				_language.get(
-					themeDisplay.getLocale(),
+					locale,
 					"your-form-could-not-be-loaded-because-fragments-are-not-" +
 						"available"));
 
@@ -86,20 +83,16 @@ public class FormItemManager {
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 		DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem =
-			_getMasterDropZoneLayoutStructureItem(themeDisplay.getLayout());
+			_getMasterDropZoneLayoutStructureItem(layout);
 		TreeSet<String> missingInputTypes = new TreeSet<>();
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
 
 		JSONObject defaultInputFragmentEntryKeysJSONObject =
 			_defaultInputFragmentEntryHelper.
-				getDefaultInputFragmentEntryKeysJSONObject(
-					themeDisplay.getScopeGroupId());
+				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId());
 
 		for (InfoField<?> infoField :
 				_getInfoFields(
-					formStyledLayoutStructureItem,
-					themeDisplay.getScopeGroupId())) {
+					formStyledLayoutStructureItem, layout.getGroupId())) {
 
 			if (!infoField.isEditable()) {
 				continue;
@@ -108,8 +101,7 @@ public class FormItemManager {
 			InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 			FragmentEntry fragmentEntry = _getFragmentEntry(
-				themeDisplay.getCompanyId(),
-				defaultInputFragmentEntryKeysJSONObject,
+				layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
 				infoFieldType.getName());
 
 			if ((fragmentEntry == null) ||
@@ -117,8 +109,7 @@ public class FormItemManager {
 					fragmentEntry.getFragmentEntryKey(),
 					masterDropZoneLayoutStructureItem)) {
 
-				missingInputTypes.add(
-					infoFieldType.getLabel(themeDisplay.getLocale()));
+				missingInputTypes.add(infoFieldType.getLabel(locale));
 
 				continue;
 			}
@@ -126,13 +117,12 @@ public class FormItemManager {
 			addedFragmentEntryLinks.add(
 				_addFragmentEntryLink(
 					formStyledLayoutStructureItem.getItemId(), fragmentEntry,
-					infoField, layoutStructure, segmentsExperienceId,
-					serviceContext, themeDisplay));
+					infoField, layout, layoutStructure, segmentsExperienceId,
+					serviceContext));
 		}
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			themeDisplay.getCompanyId(),
-			defaultInputFragmentEntryKeysJSONObject,
+			layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
 			DefaultInputFragmentEntryConfigurationProvider.
 				FORM_INPUT_SUBMIT_BUTTON);
 
@@ -141,31 +131,30 @@ public class FormItemManager {
 				fragmentEntry.getFragmentEntryKey(),
 				masterDropZoneLayoutStructureItem)) {
 
-			missingInputTypes.add(
-				_language.get(themeDisplay.getLocale(), "submit-button"));
+			missingInputTypes.add(_language.get(locale, "submit-button"));
 		}
 		else {
 			addedFragmentEntryLinks.add(
 				_addFragmentEntryLink(
 					formStyledLayoutStructureItem.getItemId(), fragmentEntry,
-					null, layoutStructure, segmentsExperienceId, serviceContext,
-					themeDisplay));
+					null, layout, layoutStructure, segmentsExperienceId,
+					serviceContext));
 		}
 
 		if (missingInputTypes.size() == 1) {
-			jsonObject.put(
+			errorJSONObject.put(
 				"errorMessage",
 				_language.format(
-					themeDisplay.getLocale(),
+					locale,
 					"some-fragments-are-missing.-x-fields-cannot-have-an-" +
 						"associated-fragment-or-cannot-be-available-in-master",
 					missingInputTypes.first()));
 		}
 		else if (missingInputTypes.size() > 1) {
-			jsonObject.put(
+			errorJSONObject.put(
 				"errorMessage",
 				_language.format(
-					themeDisplay.getLocale(),
+					locale,
 					"some-fragments-are-missing.-x-and-x-fields-cannot-have-" +
 						"an-associated-fragment-or-cannot-be-available-in-" +
 							"master",
@@ -219,16 +208,15 @@ public class FormItemManager {
 
 	private FragmentEntryLink _addFragmentEntryLink(
 			String formItemId, FragmentEntry fragmentEntry,
-			InfoField<?> infoField, LayoutStructure layoutStructure,
-			long segmentsExperienceId, ServiceContext serviceContext,
-			ThemeDisplay themeDisplay)
+			InfoField<?> infoField, Layout layout,
+			LayoutStructure layoutStructure, long segmentsExperienceId,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				themeDisplay.getScopeGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-				themeDisplay.getPlid(), fragmentEntry.getCss(),
+				layout.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
+				segmentsExperienceId, layout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),

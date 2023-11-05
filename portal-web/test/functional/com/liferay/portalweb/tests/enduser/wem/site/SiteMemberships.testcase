@@ -346,29 +346,15 @@ definition {
 		}
 
 		task ("Assign created user to organization in user admin") {
-			User.openUsersAdmin();
-
-			UsersAndOrganizationsNavigator.gotoOrganizations();
-
-			Organization.assignUser(
-				orgName = "Organization Name 1",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userName = "userfn userln",
-				userScreenName = "usersn");
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name 1",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign default user to organization in user admin") {
-			User.openUsersAdmin();
-
-			UsersAndOrganizationsNavigator.gotoOrganizations();
-
-			Organization.assignUser(
-				orgName = "Organization Name 1",
-				userFirstName = "Test",
-				userLastName = "Test",
-				userName = "Test Test",
-				userScreenName = "test");
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name 1",
+				userEmailAddress = "test@liferay.com");
 		}
 
 		task ("Allow manual memebership management for Organization Name 1") {

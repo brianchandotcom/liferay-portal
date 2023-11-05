@@ -12,27 +12,6 @@ definition {
 		User.firstLoginPG();
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONUser.tearDownNonAdminUsers();
-
-			Site.tearDownCP();
-
-			Organization.tearDownCP();
-
-			Team.tearDownCP();
-
-			PagesAdmin.tearDownCP();
-
-			UserGroup.tearDownCP();
-		}
-	}
-
 	@description = "Export and import work in organization and add child site from imported site template."
 	@priority = 5
 	test AddChildSiteFromImportedSiteTemplate {

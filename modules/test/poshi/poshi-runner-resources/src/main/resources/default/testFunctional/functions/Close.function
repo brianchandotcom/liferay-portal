@@ -12,7 +12,7 @@ definition {
 
 		selenium.close();
 
-		selenium.pause("5000");
+		selenium.pause("3000");
 
 		selenium.selectWindow();
 	}

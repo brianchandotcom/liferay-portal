@@ -28,6 +28,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -64,7 +65,7 @@ public class FormItemManager {
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			Layout layout, LayoutStructure layoutStructure, Locale locale,
 			long segmentsExperienceId, ServiceContext serviceContext)
-		throws Exception {
+		throws PortalException {
 
 		FragmentCollectionContributor fragmentCollectionContributor =
 			_fragmentCollectionContributorRegistry.
@@ -211,7 +212,7 @@ public class FormItemManager {
 			InfoField<?> infoField, Layout layout,
 			LayoutStructure layoutStructure, long segmentsExperienceId,
 			ServiceContext serviceContext)
-		throws Exception {
+		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
@@ -291,7 +292,7 @@ public class FormItemManager {
 	private List<InfoField<?>> _getInfoFields(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			long groupId)
-		throws Exception {
+		throws PortalException {
 
 		String itemClassName = _infoSearchClassMapperRegistry.getClassName(
 			_portal.getClassName(

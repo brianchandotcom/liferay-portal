@@ -12,23 +12,6 @@ definition {
 		User.firstLoginPG();
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Organization.tearDownCP();
-
-			Site.tearDownCP();
-
-			UserGroup.tearDownCP();
-
-			JSONUser.tearDownNonAdminUsers();
-		}
-	}
-
 	@description = "Assert could assign user to new site in site memberships admin."
 	@priority = 4
 	test AddMember {

@@ -14,19 +14,6 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			WebContentStructures.tearDownCP(siteScopeName = "Global");
-		}
-	}
-
 	@description = "This is a use case for LPS-82492."
 	@priority = 5
 	test AddCreatedStructureForImportedTemplate {

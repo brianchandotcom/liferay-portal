@@ -12,8 +12,6 @@ definition {
 
 		User.firstLoginPG();
 
-		Navigator.openURL();
-
 		task ("Create an user using JSONWS") {
 			JSONUser.addUser(
 				jobTitle = "Test Engineer1",
@@ -34,8 +32,6 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Experience Content Page",
 			type = "content");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 	}
 
 	@description = "LPS-103102 Bug: Segmentation is not working after remove the user section"
@@ -92,9 +88,9 @@ definition {
 		}
 
 		task ("Create an experience for each segment in the Content Page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -170,9 +166,9 @@ definition {
 		}
 
 		task ("Edit the default experience") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -247,7 +243,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Edit page to add heading fragment") {
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -301,7 +299,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add an Experience for that page") {
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addExperience(
 				experienceName = "NewExp1",
@@ -343,7 +343,9 @@ definition {
 	@priority = 4
 	test AddNewExperienceAfterCancelEditExperience {
 		task ("Given a page editor has an experience") {
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addExperience(
 				experienceName = "Test Exp",
@@ -3214,7 +3216,9 @@ definition {
 		}
 
 		task ("Add an Experience") {
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addExperience(
 				experienceName = "Experience Name",
@@ -3628,17 +3632,10 @@ definition {
 	@description = "LPS-90586: Validate if the Default experience doesn't offer a delete button"
 	@priority = 3
 	test CheckDefaultDeleteButton {
-		task ("Add Content Page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Content Page",
-				type = "content");
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
 		task ("Create an experience and add on content page") {
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addExperience(
 				experienceName = "Name Experience",
@@ -4195,7 +4192,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create an experience and add on content page") {
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addExperience(
 				experienceName = "NewAnyoneExperience",
@@ -4262,15 +4261,10 @@ definition {
 		}
 
 		task ("Set permissions for this role") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Experiences Test Role Test");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
-				resourceName = "com.liferay.segments",
-				roleTitle = "Experiences Test Role Test");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE:com.liferay.segments,MANAGE_SEGMENTS_ENTRIES",
+				roleTitle = "Experiences Test Role Test",
+				roleType = "regular");
 		}
 
 		task ("Create a Segment") {
@@ -4350,15 +4344,10 @@ definition {
 		}
 
 		task ("Set permissions for this role") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Experiences Test Role Test");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
-				resourceName = "com.liferay.segments",
-				roleTitle = "Experiences Test Role Test");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE:com.liferay.segments,MANAGE_SEGMENTS_ENTRIES",
+				roleTitle = "Experiences Test Role Test",
+				roleType = "regular");
 		}
 
 		task ("Create a Segment") {
@@ -5377,7 +5366,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Try to create new experience without name") {
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
 			PageEditor.addExperience(
 				experienceName = "",

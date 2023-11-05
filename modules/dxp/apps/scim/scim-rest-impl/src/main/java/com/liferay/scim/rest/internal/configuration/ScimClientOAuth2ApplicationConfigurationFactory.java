@@ -90,7 +90,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					_localOAuthClient.requestTokens(
 						_oAuth2Application,
-						userLocalService.getGuestUser(
+						_userLocalService.getGuestUser(
 							companyId
 						).getUserId()));
 
@@ -128,18 +128,15 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 		}
 	}
 
-	@Reference
-	protected UserLocalService userLocalService;
-
 	private OAuth2Application _getOrAddOAuth2Application(
 			long companyId,
 			ScimClientOAuth2ApplicationConfiguration
 				scimClientOAuth2ApplicationConfiguration)
 		throws Exception {
 
-		User user = userLocalService.getGuestUser(companyId);
+		User user = _userLocalService.getGuestUser(companyId);
 
-		User clientCredentialUser = userLocalService.getUserByScreenName(
+		User clientCredentialUser = _userLocalService.getUserByScreenName(
 			companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
 
 		String clientId = ScimClientUtil.generateScimClientId(
@@ -200,5 +197,8 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	private volatile ServiceRegistration<BearerTokenProvider>
 		_serviceRegistration;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

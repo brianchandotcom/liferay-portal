@@ -93,15 +93,17 @@ definition {
 	@priority = 5
 	test ChangeDisplayStyleOfCollections {
 		task ("Given a site designer has collections") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("When the site designer navigates to the Collections admin") {
@@ -204,23 +206,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Dynamic");
 		}
 
-		task ("Create a first variation for the collection and filter web contents by category") {
+		task ("Create a dynamic Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
 
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "All Types");
+		}
+
+		task ("Create a first variation for the collection and filter web contents by category") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
@@ -339,23 +339,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Dynamic");
 		}
 
-		task ("Create a first variation for the collection and filter web contents by category") {
+		task ("Create a dynamic Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
 
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "All Types");
+		}
+
+		task ("Create a first variation for the collection and filter web contents by category") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
@@ -467,23 +465,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Manual");
 		}
 
-		task ("Create a first variation for the collection and select web contents") {
+		task ("Create a manual Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
 
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+		}
+
+		task ("Create a first variation for the collection and select web contents") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.selectAsset(
@@ -569,23 +565,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Manual");
 		}
 
-		task ("Create a first variation for the collection and select web contents") {
+		task ("Create a manual Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
 
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+		}
+
+		task ("Create a first variation for the collection and select web contents") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.selectAsset(
@@ -676,22 +670,20 @@ definition {
 				var index = ${index} + 1;
 			}
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 		}
 
 		task ("Add a Dynamic Collection based on Web Content Article and new structure") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "WC Structure Name",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Enable Filter by Field and Choose Select from List field") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
 			AssetListsAdmin.configureFilterByField(fieldName = "Select from List");
 
 			Select(
@@ -783,17 +775,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Naviate to Collection Admin") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Configure default variation") {
@@ -861,17 +849,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -904,17 +888,13 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -976,17 +956,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -1020,17 +996,13 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -1064,17 +1036,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -1106,17 +1074,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -1163,17 +1127,13 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -1249,17 +1209,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Naviate to Collection Admin") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Configure default variation") {
@@ -1359,17 +1315,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Naviate to Collection Admin") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Configure default variation") {
@@ -1467,20 +1419,10 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Naviate to Collection Admin") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-		}
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
 
-		task ("Configure default variation") {
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
 				itemType = "Web Content Article");
@@ -1588,17 +1530,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Naviate to Collection Admin") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Configure default variation") {
@@ -1704,17 +1642,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Naviate to Collection Admin") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Configure default variation") {
@@ -1818,20 +1752,10 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Naviate to Collection Admin") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-		}
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
 
-		task ("Configure default variation") {
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
 				itemType = "Web Content Article");
@@ -1921,18 +1845,16 @@ definition {
 			}
 
 			task ("Create a manual Collection") {
-				JSONAssetlist.addManualAssetListEntryWithItemType(
-					groupName = "Test Site Name",
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+				AssetListsAdmin.configureItemTypeInManualCollection(
 					itemSubtype = "All Subtypes",
-					itemType = "Web Content Article",
-					title = "Manual Collection Test");
+					itemType = "Web Content Article");
 			}
 
 			task ("Create a variation for the collection and select a web content") {
-				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-				AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 				AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment Name");
 
 				AssetListsAdmin.selectAsset(
@@ -1985,17 +1907,14 @@ definition {
 		}
 
 		task ("Add a dynamic collection with All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a category filter rule") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
 			AssetListsAdmin.addCategoriesFilter(
 				categoryNameList = "Category Name 1",
 				queryAndOperator = "Any",
@@ -2060,6 +1979,670 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
+	@priority = 4
+	test FilterWebContentViaAssetPublisherWithAssetListByContainsAllGroupedKeywords {
+		property portal.acceptance = "true";
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var queryAndOperator = "All";
+		var queryContains = "Contains";
+		var matchingList = "1 2 3 4,2 3 4";
+		var notMatchingList = "1,1 2,1 2 3,1 3 4,3 4,4";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupId = ${groupId},
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Create filter rule for asset list") {
+			AssetListsAdmin.addKeywordsFilter(
+				keyWords = "\"2 3\" \"3 4\"",
+				queryAndOperator = ${queryAndOperator},
+				queryContains = ${queryContains});
+		}
+
+		task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+		}
+
+		task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+			IFrame.closeFrame();
+
+			for (var text : list ${matchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC WebContent Title ${text}");
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+					value1 = "WC WebContent Content ${text}");
+			}
+		}
+
+		task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+			for (var text : list ${notMatchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+			}
+		}
+	}
+
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
+	@priority = 4
+	test FilterWebContentViaAssetPublisherWithAssetListByContainsAnyGroupedKeywords {
+		property portal.acceptance = "true";
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var queryAndOperator = "Any";
+		var queryContains = "Contains";
+		var matchingList = "1 2 3,1 2 3 4,2 3 4,3 4";
+		var notMatchingList = "1 2,1,4";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupId = ${groupId},
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Create filter rule for asset list") {
+			AssetListsAdmin.addKeywordsFilter(
+				keyWords = "\"2 3\" \"3 4\"",
+				queryAndOperator = ${queryAndOperator},
+				queryContains = ${queryContains});
+		}
+
+		task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+		}
+
+		task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+			IFrame.closeFrame();
+
+			for (var text : list ${matchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC WebContent Title ${text}");
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+					value1 = "WC WebContent Content ${text}");
+			}
+		}
+
+		task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+			for (var text : list ${notMatchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+			}
+		}
+	}
+
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
+	@priority = 4
+	test FilterWebContentViaAssetPublisherWithAssetListByDoesNotContainAllGroupedKeywords {
+		property portal.acceptance = "true";
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var queryAndOperator = "All";
+		var queryContains = "Does Not Contain";
+		var matchingList = "1,1 2,1 2 3,3 4,4";
+		var notMatchingList = "1 2 3 4,1 3 4";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupId = ${groupId},
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Create filter rule for asset list") {
+			AssetListsAdmin.addKeywordsFilter(
+				keyWords = "\"2 3\" \"3 4\"",
+				queryAndOperator = ${queryAndOperator},
+				queryContains = ${queryContains});
+		}
+
+		task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+		}
+
+		task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+			IFrame.closeFrame();
+
+			for (var text : list ${matchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC WebContent Title ${text}");
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+					value1 = "WC WebContent Content ${text}");
+			}
+		}
+
+		task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+			for (var text : list ${notMatchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+			}
+		}
+	}
+
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
+	@priority = 4
+	test FilterWebContentViaAssetPublisherWithAssetListByDoesNotContainAnyGroupedKeywords {
+		property portal.acceptance = "true";
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var queryAndOperator = "Any";
+		var queryContains = "Does Not Contain";
+		var matchingList = "1,1 2,4";
+		var notMatchingList = "1 2 3,1 2 3 4,2 3 4,3 4";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupId = ${groupId},
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Create filter rule for asset list") {
+			AssetListsAdmin.addKeywordsFilter(
+				keyWords = "\"2 3\" \"3 4\"",
+				queryAndOperator = ${queryAndOperator},
+				queryContains = ${queryContains});
+		}
+
+		task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+		}
+
+		task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+			IFrame.closeFrame();
+
+			for (var text : list ${matchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC WebContent Title ${text}");
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+					value1 = "WC WebContent Content ${text}");
+			}
+		}
+
+		task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+			for (var text : list ${notMatchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+			}
+		}
+	}
+
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
+	@priority = 5
+	test FilterWebContentViaAssetPublisherWithAssetListContainsAllKeywords {
+		property portal.acceptance = "true";
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var queryAndOperator = "All";
+		var queryContains = "Contains";
+		var matchingList = "1 2 3,1 2 3 4,2 3 4";
+		var notMatchingList = "1,1 2,1 3 4,3 4,4";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupId = ${groupId},
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Create filter rule for asset list") {
+			AssetListsAdmin.addKeywordsFilter(
+				keyWords = "2 3",
+				queryAndOperator = ${queryAndOperator},
+				queryContains = ${queryContains});
+		}
+
+		task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+		}
+
+		task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+			IFrame.closeFrame();
+
+			for (var text : list ${matchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC WebContent Title ${text}");
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+					value1 = "WC WebContent Content ${text}");
+			}
+		}
+
+		task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+			for (var text : list ${notMatchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+			}
+		}
+	}
+
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
+	@priority = 5
+	test FilterWebContentViaAssetPublisherWithAssetListContainsAnyKeywords {
+		property portal.acceptance = "true";
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var queryAndOperator = "Any";
+		var queryContains = "Contains";
+		var matchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
+		var notMatchingList = "1,4";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupId = ${groupId},
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Create filter rule for asset list") {
+			AssetListsAdmin.addKeywordsFilter(
+				keyWords = "2 3",
+				queryAndOperator = ${queryAndOperator},
+				queryContains = ${queryContains});
+		}
+
+		task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+		}
+
+		task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+			IFrame.closeFrame();
+
+			for (var text : list ${matchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC WebContent Title ${text}");
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+					value1 = "WC WebContent Content ${text}");
+			}
+		}
+
+		task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+			for (var text : list ${notMatchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+			}
+		}
+	}
+
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
+	@priority = 5
+	test FilterWebContentViaAssetPublisherWithAssetListDoesNotContainAllKeywords {
+		property portal.acceptance = "true";
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var queryAndOperator = "All";
+		var queryContains = "Does Not Contain";
+		var matchingList = "1,1 2,3 4,4";
+		var notMatchingList = "1 2 3,1 2 3 4,1 3 4";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupId = ${groupId},
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Create filter rule for asset list") {
+			AssetListsAdmin.addKeywordsFilter(
+				keyWords = "2 3",
+				queryAndOperator = ${queryAndOperator},
+				queryContains = ${queryContains});
+		}
+
+		task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+		}
+
+		task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+			IFrame.closeFrame();
+
+			for (var text : list ${matchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC WebContent Title ${text}");
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+					value1 = "WC WebContent Content ${text}");
+			}
+		}
+
+		task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+			for (var text : list ${notMatchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+			}
+		}
+	}
+
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
+	@priority = 5
+	test FilterWebContentViaAssetPublisherWithAssetListDoesNotContainAnyKeywords {
+		property portal.acceptance = "true";
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		var queryAndOperator = "Any";
+		var queryContains = "Does Not Contain";
+		var matchingList = "1,4";
+		var notMatchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
+
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${groupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupId = ${groupId},
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+		}
+
+		task ("Create filter rule for asset list") {
+			AssetListsAdmin.addKeywordsFilter(
+				keyWords = "2 3",
+				queryAndOperator = ${queryAndOperator},
+				queryContains = ${queryContains});
+		}
+
+		task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+		}
+
+		task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+			IFrame.closeFrame();
+
+			for (var text : list ${matchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_TITLE",
+					value1 = "WC WebContent Title ${text}");
+
+				AssertTextEquals(
+					locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+					value1 = "WC WebContent Content ${text}");
+			}
+		}
+
+		task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+			for (var text : list ${notMatchingList}) {
+				var key_assetTitle = "WC WebContent Title ${text}";
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+				AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
+			}
+		}
+	}
+
 	@description = "LPS-141797 Given a user belonging to Segment 1 When there's a variation of a manual collection targeting segment 1, and it is not prioritized above the Anyone variation Then the user belonging to that segment will see only the assets included in 'Anyone' in Asset Publisher"
 	@priority = 3
 	test ManualCollectionInAssetPublisherSegmentNotPrioritized {
@@ -2085,18 +2668,16 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Navigate to collection created") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2169,18 +2750,16 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Navigate to collection created") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2261,18 +2840,16 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Navigate to collection created") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2359,18 +2936,16 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Navigate to collection created") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2449,18 +3024,16 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Navigate to collection created") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2547,18 +3120,16 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Navigate to collection created") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Collection Test",
 				assetType = "Basic Web Content",
@@ -2643,17 +3214,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -2685,17 +3252,13 @@ definition {
 		}
 
 		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -2776,18 +3339,16 @@ definition {
 		}
 
 		task ("Create a dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a first variation for the collection and filter web contents by category") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
@@ -2875,18 +3436,16 @@ definition {
 		}
 
 		task ("Create a manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a first variation for the collection and select web contents") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.selectAsset(
@@ -2949,18 +3508,16 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment Test 1");
 		}
 
@@ -2995,17 +3552,13 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -3068,18 +3621,16 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
@@ -3169,17 +3720,13 @@ definition {
 		}
 
 		task ("Create a manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to Collection created") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Open New Personalized Variation modal") {
@@ -3258,18 +3805,16 @@ definition {
 		}
 
 		task ("Create a manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.selectAsset(
 				assetName = "WC WebContent Title",
 				assetType = "Basic Web Content");
@@ -3374,18 +3919,16 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
 		}
 
@@ -3455,18 +3998,16 @@ definition {
 		}
 
 		task ("Create a manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
 		}
 
@@ -3515,18 +4056,16 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment for VariationNameIsShown Test");
 		}
 
@@ -3595,17 +4134,14 @@ definition {
 		}
 
 		task ("Add a dynamic collection with All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Assert the 2 vocabularies in Collection Category Filter") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
 			Panel.expandPanel(panel = "Filter");
 
 			Select(
@@ -3684,23 +4220,25 @@ definition {
 
 				WebContentStructures.addCP(structureName = "WC Structure Name");
 
-				DataEngine.addField(
-					fieldFieldLabel = "Text",
-					fieldName = "Text");
+				DataEngine.addField(fieldName = "Text");
 
 				WebContentStructures.saveCP();
 			}
 
 			task ("Add a Dynamic Collection based on Web Content Article and WC Structure Name") {
-				JSONAssetlist.addDynamicAssetListEntryWithItemType(
-					groupName = "Test Site Name",
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+				AssetListsAdmin.configureItemTypeInDynamicCollection(
 					itemSubtype = "WC Structure Name",
-					itemType = "Web Content Article",
-					title = "Dynamic Collection");
+					itemType = "Web Content Article");
 			}
 		}
 
 		task ("When the collection creator deletes the wc structure name") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+
 			WebContentStructures.deleteCP(structureName = "WC Structure Name");
 		}
 
@@ -3784,23 +4322,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Dynamic");
 		}
 
-		task ("Create a first variation for the collection") {
+		task ("Create a dynamic Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
 
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+		}
+
+		task ("Create a first variation for the collection") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
@@ -3873,23 +4409,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher and") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Dynamic");
 		}
 
-		task ("Create a first variation for the collection") {
+		task ("Create a dynamic Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
 
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+		}
+
+		task ("Create a first variation for the collection") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
@@ -3998,23 +4532,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher and") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Manual");
 		}
 
-		task ("Create a first variation for the collection and select web contents") {
+		task ("Create a manual Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
 
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+		}
+
+		task ("Create a first variation for the collection and select web contents") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.selectAsset(
@@ -4088,22 +4620,18 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a Manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher and") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Manual");
 		}
 
-		task ("Navigate to collection created") {
+		task ("Create a Manual Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a variation") {
@@ -4204,23 +4732,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher and") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Dynamic");
 		}
 
-		task ("Create a first variation for the collection") {
+		task ("Create a dynamic Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
 
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+		}
+
+		task ("Create a first variation for the collection") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
@@ -4341,23 +4867,21 @@ definition {
 				text = "Test");
 		}
 
-		task ("Create a manual Collection") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
 		task ("Configure Assets to combine all segments in asset publisher and") {
 			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Manual");
 		}
 
-		task ("Create a first variation for the collection and select web contents") {
+		task ("Create a manual Collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection Test");
 
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+		}
+
+		task ("Create a first variation for the collection and select web contents") {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
 
 			AssetListsAdmin.selectAsset(
@@ -4437,18 +4961,16 @@ definition {
 		}
 
 		task ("Create a Dynamic Collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a personalized variation to collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "Segment With Test User");
 		}
 
@@ -4472,18 +4994,16 @@ definition {
 	@priority = 4
 	test ViewDropdownMenuIconsInCollectionsAdmin {
 		task ("Given a Collection creator has a dynamic collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("When the Collection creator opens the dropdown menu of Anyone") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 		}
 
@@ -4538,16 +5058,19 @@ definition {
 		property asset.publisher.selection.style = "asset-list";
 
 		task ("Given a site designer accesses to the Select Collection modal of Asset Publisher") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Manual Collection");
+				itemType = "Web Content Article");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -4663,15 +5186,17 @@ definition {
 	@priority = 3
 	test ViewTooltipWhenHoverOnCollectionIcon {
 		task ("Given a site designer has collections") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("When the site designer hovers on the dynamic collection icon under table style") {
@@ -4815,15 +5340,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the site designer has collections") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("When the site designer select the dynamic collection on a Collection Display") {
@@ -4933,15 +5460,17 @@ definition {
 	@priority = 5
 	test ViewVariationsIndicatorInCollectionsAdmin {
 		task ("Given a site designer has collections") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("When the site designer changes the display style to cards in the Collections admin") {
@@ -5029,15 +5558,17 @@ definition {
 	@priority = 5
 	test ViewVariationsIndicatorOnSelectModal {
 		task ("Given a site designer has collections") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("When the site designer opens the Select modal of Collection Display") {
@@ -5146,222 +5677,6 @@ definition {
 				columnName = "variations",
 				tableEntry = "Manual Collection",
 				tableEntryInfo = 3);
-		}
-	}
-
-	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
-	@priority = 4
-	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
-		property portal.acceptance = "true";
-
-		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
-
-		task ("Create public page") {
-			JSONLayout.addPublicLayout(
-				groupId = ${groupId},
-				layoutName = "Asset Publisher Page");
-		}
-
-		task ("Add an Asset Publisher portlet to the created public page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupId = ${groupId},
-				layoutName = "Asset Publisher Page",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Create web content articles") {
-			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
-				JSONWebcontent.addWebContent(
-					content = "WC WebContent Content ${text}",
-					groupId = ${groupId},
-					title = "WC WebContent Title ${text}");
-			}
-		}
-
-		for (var rule : list "Contains All,Contains Any,Does Not Contain All,Does Not Contain Any") {
-			if (${rule} == "Contains All") {
-				var queryAndOperator = "All";
-				var queryContains = "Contains";
-				var matchingList = "1 2 3 4,2 3 4";
-				var notMatchingList = "1,1 2,1 2 3,1 3 4,3 4,4";
-			}
-			else if (${rule} == "Contains Any") {
-				var queryAndOperator = "Any";
-				var queryContains = "Contains";
-				var matchingList = "1 2 3,1 2 3 4,2 3 4,3 4";
-				var notMatchingList = "1 2,1,4";
-			}
-			else if (${rule} == "Does Not Contain All") {
-				var queryAndOperator = "All";
-				var queryContains = "Does Not Contain";
-				var matchingList = "1,1 2,1 2 3,3 4,4";
-				var notMatchingList = "1 2 3 4,1 3 4";
-			}
-			else if (${rule} == "Does Not Contain Any") {
-				var queryAndOperator = "Any";
-				var queryContains = "Does Not Contain";
-				var matchingList = "1,1 2,4";
-				var notMatchingList = "1 2 3,1 2 3 4,2 3 4,3 4";
-			}
-
-			task ("Create a dynamic asset list") {
-				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-				AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
-
-				AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
-			}
-
-			task ("Create filter rule for asset list") {
-				AssetListsAdmin.addKeywordsFilter(
-					keyWords = "\"2 3\" \"3 4\"",
-					queryAndOperator = ${queryAndOperator},
-					queryContains = ${queryContains});
-			}
-
-			task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
-				Navigator.gotoSitePage(
-					pageName = "Asset Publisher Page",
-					siteName = "Test Site Name");
-
-				AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
-			}
-
-			task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
-				Navigator.gotoSitePage(
-					pageName = "Asset Publisher Page",
-					siteName = "Test Site Name");
-
-				for (var text : list ${matchingList}) {
-					var key_assetTitle = "WC WebContent Title ${text}";
-
-					AssertTextEquals(
-						locator1 = "AP#ASSET_ABSTRACT_TITLE",
-						value1 = "WC WebContent Title ${text}");
-
-					AssertTextEquals(
-						locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-						value1 = "WC WebContent Content ${text}");
-				}
-			}
-
-			task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
-				for (var text : list ${notMatchingList}) {
-					var key_assetTitle = "WC WebContent Title ${text}";
-
-					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
-
-					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
-				}
-			}
-		}
-	}
-
-	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
-	@priority = 5
-	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
-		property portal.acceptance = "true";
-
-		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
-
-		task ("Create public page") {
-			JSONLayout.addPublicLayout(
-				groupId = ${groupId},
-				layoutName = "Asset Publisher Page");
-		}
-
-		task ("Add an Asset Publisher portlet to the created public page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupId = ${groupId},
-				layoutName = "Asset Publisher Page",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Create web content articles") {
-			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
-				JSONWebcontent.addWebContent(
-					content = "WC WebContent Content ${text}",
-					groupId = ${groupId},
-					title = "WC WebContent Title ${text}");
-			}
-		}
-
-		for (var rule : list "Contains All,Contains Any,Does Not Contain All,Does Not Contain Any") {
-			if (${rule} == "Contains All") {
-				var queryAndOperator = "All";
-				var queryContains = "Contains";
-				var matchingList = "1 2 3,1 2 3 4,2 3 4";
-				var notMatchingList = "1,1 2,1 3 4,3 4,4";
-			}
-			else if (${rule} == "Contains Any") {
-				var queryAndOperator = "Any";
-				var queryContains = "Contains";
-				var matchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
-				var notMatchingList = "1,4";
-			}
-			else if (${rule} == "Does Not Contain All") {
-				var queryAndOperator = "All";
-				var queryContains = "Does Not Contain";
-				var matchingList = "1,1 2,3 4,4";
-				var notMatchingList = "1 2 3,1 2 3 4,1 3 4";
-			}
-			else if (${rule} == "Does Not Contain Any") {
-				var queryAndOperator = "Any";
-				var queryContains = "Does Not Contain";
-				var matchingList = "1,4";
-				var notMatchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
-			}
-
-			task ("Create a dynamic asset list") {
-				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-				AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
-
-				AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
-			}
-
-			task ("Create filter rule for asset list") {
-				AssetListsAdmin.addKeywordsFilter(
-					keyWords = "2 3",
-					queryAndOperator = ${queryAndOperator},
-					queryContains = ${queryContains});
-			}
-
-			task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
-				Navigator.gotoSitePage(
-					pageName = "Asset Publisher Page",
-					siteName = "Test Site Name");
-
-				AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
-			}
-
-			task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
-				Navigator.gotoSitePage(
-					pageName = "Asset Publisher Page",
-					siteName = "Test Site Name");
-
-				for (var text : list ${matchingList}) {
-					var key_assetTitle = "WC WebContent Title ${text}";
-
-					AssertTextEquals(
-						locator1 = "AP#ASSET_ABSTRACT_TITLE",
-						value1 = "WC WebContent Title ${text}");
-
-					AssertTextEquals(
-						locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-						value1 = "WC WebContent Content ${text}");
-				}
-			}
-
-			task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
-				for (var text : list ${notMatchingList}) {
-					var key_assetTitle = "WC WebContent Title ${text}";
-
-					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
-
-					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION");
-				}
-			}
 		}
 	}
 

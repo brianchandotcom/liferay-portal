@@ -2297,8 +2297,6 @@ definition {
 		}
 
 		task ("Then there's warning message inside Friendly URL section") {
-			Pause(value1 = 60000);
-
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
 				value1 = "Warning:The URL used in English (United States), Chinese (China) and German (Germany) already exists in other sites or asset libraries.");

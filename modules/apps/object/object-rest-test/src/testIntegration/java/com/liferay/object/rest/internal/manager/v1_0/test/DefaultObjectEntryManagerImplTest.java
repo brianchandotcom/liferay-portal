@@ -2013,9 +2013,6 @@ public class DefaultObjectEntryManagerImplTest
 			_tree.iterator(), objectDefinitionLocalService,
 			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 0));
 
-		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
-
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
@@ -2812,9 +2809,6 @@ public class DefaultObjectEntryManagerImplTest
 
 		Tree objectEntriesTree = _createAccountRestrictedObjectEntryTree(
 			accountEntry1, StringPool.BLANK);
-
-		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
 
 		_user = _addUser();
 

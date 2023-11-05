@@ -2807,17 +2807,17 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Tree objectEntriesTree = _createAccountRestrictedObjectEntryTree(
+		Tree tree = _createAccountRestrictedObjectEntryTree(
 			accountEntry1, StringPool.BLANK);
 
 		_user = _addUser();
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		Node rootNode = objectEntriesTree.getRootNode();
+		Node rootNode = tree.getRootNode();
 
 		TreeTestUtil.forEachNodeObjectEntry(
-			objectEntriesTree.iterator(), _objectEntryLocalService,
+			tree.iterator(), _objectEntryLocalService,
 			objectEntry -> {
 				ObjectDefinition objectDefinition =
 					objectDefinitionLocalService.fetchObjectDefinition(
@@ -2842,7 +2842,7 @@ public class DefaultObjectEntryManagerImplTest
 			_rootObjectDefinition, ActionKeys.UPDATE, _buyerRole);
 
 		TreeTestUtil.forEachNodeObjectEntry(
-			objectEntriesTree.iterator(), _objectEntryLocalService,
+			tree.iterator(), _objectEntryLocalService,
 			objectEntry -> {
 				ObjectDefinition objectDefinition =
 					objectDefinitionLocalService.fetchObjectDefinition(

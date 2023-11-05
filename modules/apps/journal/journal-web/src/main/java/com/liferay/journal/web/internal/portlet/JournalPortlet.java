@@ -55,7 +55,6 @@ import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
-import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
@@ -184,10 +183,6 @@ public class JournalPortlet extends MVCPortlet {
 				_configurationProvider.getSystemConfiguration(
 					DDMWebConfiguration.class));
 			renderRequest.setAttribute(
-				FFJournalAutoSaveDraftConfiguration.class.getName(),
-				_configurationProvider.getSystemConfiguration(
-					FFJournalAutoSaveDraftConfiguration.class));
-			renderRequest.setAttribute(
 				JournalFileUploadsConfiguration.class.getName(),
 				_configurationProvider.getSystemConfiguration(
 					JournalFileUploadsConfiguration.class));
@@ -224,10 +219,6 @@ public class JournalPortlet extends MVCPortlet {
 		resourceRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		try {
-			resourceRequest.setAttribute(
-				FFJournalAutoSaveDraftConfiguration.class.getName(),
-				_configurationProvider.getSystemConfiguration(
-					FFJournalAutoSaveDraftConfiguration.class));
 			resourceRequest.setAttribute(
 				JournalWebConfiguration.class.getName(),
 				_configurationProvider.getSystemConfiguration(

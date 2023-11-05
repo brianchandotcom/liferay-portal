@@ -59,7 +59,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				<li class="tbar-item">
 					<div class="c-gap-3 form-group-sm journal-article-button-row mb-0 tbar-section text-right">
 						<c:choose>
-							<c:when test="<%= journalEditArticleDisplayContext.isJournalArticleAutoSaveDraftEnabled() %>">
+							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-141392") %>'>
 								<div class="align-items-center d-none mx-3 small" id="<portlet:namespace />savingChangesIndicator">
 									<liferay-ui:message key="saving" />
 
@@ -104,7 +104,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						</c:if>
 
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
-							<c:if test="<%= !journalEditArticleDisplayContext.isJournalArticleAutoSaveDraftEnabled() && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>">
+							<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-141392") && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>'>
 								<clay:button
 									data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "/journal/add_article" : "/journal/update_article" %>'
 									displayType="secondary"

@@ -34,10 +34,13 @@ definition {
 		}
 
 		task ("Add a page template collection and content page template to the first site") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name 1-staging",
-				layoutPageTemplateCollectionName = "Page Template Collection",
+			var groupId = JSONGroupSetter.setGroupId(
+				groupName = "Test Site Name 1 (Staging)",
 				site = "false");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupId = ${groupId},
+				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-1-staging");
 
@@ -67,9 +70,8 @@ definition {
 
 		task ("Add a content page with a Title fragment to the first site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name 1 (Staging)",
+				groupId = ${groupId},
 				layoutName = "Test Regular Content Page",
-				site = "false",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
@@ -87,24 +89,21 @@ definition {
 
 		task ("Add a navigation menu to the first site") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name 1 (Staging)",
-				site = "false",
+				groupId = ${groupId},
 				siteNavigationMenuName = "Test Navigation Menu Name");
 		}
 
 		task ("Add both content pages to the navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name 1 (Staging)",
+				groupId = ${groupId},
 				privateLayout = "false",
-				site = "false",
 				siteNavigationMenuItemName = "Test Template Content Page",
 				siteNavigationMenuName = "Test Navigation Menu Name",
 				type = "layout");
 
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name 1 (Staging)",
+				groupId = ${groupId},
 				privateLayout = "false",
-				site = "false",
 				siteNavigationMenuItemName = "Test Regular Content Page",
 				siteNavigationMenuName = "Test Navigation Menu Name",
 				type = "layout");
@@ -112,8 +111,7 @@ definition {
 
 		task ("Add a URL item to the navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name 1 (Staging)",
-				site = "false",
+				groupId = ${groupId},
 				siteNavigationMenuItemName = "Liferay",
 				siteNavigationMenuName = "Test Navigation Menu Name",
 				type = "url",
@@ -137,8 +135,7 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name 1-staging",
-				site = "false",
+				groupId = ${groupId},
 				subType = "Basic Web Content");
 		}
 
@@ -199,19 +196,6 @@ definition {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-1-staging");
 
 			Staging.publishCustomPublication();
-		}
-	}
-
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name 1");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name 2");
 		}
 	}
 

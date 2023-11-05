@@ -19,13 +19,15 @@ definition {
 
 	@summary = "Default summary"
 	macro setSiteNavigationMenuId(groupName = null, site = null, siteNavigationMenuName = null, grandParentGroupName = null, parentGroupName = null) {
-		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
+		Variables.assertDefined(parameterList = ${siteNavigationMenuName});
 
-		var groupId = JSONSitenavigationSetter.setGroupId(
-			grandParentGroupName = ${grandParentGroupName},
-			groupName = ${groupName},
-			parentGroupName = ${parentGroupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONSitenavigationSetter.setGroupId(
+				grandParentGroupName = ${grandParentGroupName},
+				groupName = ${groupName},
+				parentGroupName = ${parentGroupName},
+				site = ${site});
+		}
 
 		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(
 			groupId = ${groupId},

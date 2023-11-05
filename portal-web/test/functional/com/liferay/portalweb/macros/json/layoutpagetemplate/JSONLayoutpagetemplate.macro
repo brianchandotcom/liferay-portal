@@ -136,13 +136,15 @@ definition {
 
 	@summary = "Default summary"
 	macro addLayoutPageTemplateCollection(layoutPageTemplateType = null, grandParentGroupName = null, workflowAction = null, parentGroupName = null, groupName = null, site = null, assetCategoryIds = null, layoutPageTemplateCollectionName = null, assetTagNames = null) {
-		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateCollectionName}");
+		Variables.assertDefined(parameterList = ${layoutPageTemplateCollectionName});
 
-		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			grandParentGroupName = ${grandParentGroupName},
-			groupKey = ${groupName},
-			parentGroupName = ${parentGroupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+				grandParentGroupName = ${grandParentGroupName},
+				groupKey = ${groupName},
+				parentGroupName = ${parentGroupName},
+				site = ${site});
+		}
 
 		if (isSet(description)) {
 			var description = ${description};

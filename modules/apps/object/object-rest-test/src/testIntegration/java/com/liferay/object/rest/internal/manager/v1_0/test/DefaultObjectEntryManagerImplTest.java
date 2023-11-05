@@ -499,11 +499,11 @@ public class DefaultObjectEntryManagerImplTest
 						"Id")),
 				null, null, null, null));
 
-		_objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
+		_tree = TreeTestUtil.createObjectDefinitionTree(
 			objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
-		Node rootNode = _objectDefinitionTree.getRootNode();
+		Node rootNode = _tree.getRootNode();
 
 		_rootObjectDefinition =
 			objectDefinitionLocalService.enableAccountEntryRestricted(
@@ -1005,7 +1005,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry, _buyerRole, _user);
 
-		Node rootNode = _objectDefinitionTree.getRootNode();
+		Node rootNode = _tree.getRootNode();
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext,
@@ -1025,7 +1025,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.fetchObjectDefinition(
 				companyId, "C_AA");
 
-		Node childNode = _objectDefinitionTree.getNode(
+		Node childNode = _tree.getNode(
 			objectDefinition.getObjectDefinitionId());
 
 		Edge edge = childNode.getEdge();
@@ -1373,7 +1373,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Tree objectEntriesTree = _createAccountRestrictedObjectEntryTree(
+		Tree tree = _createAccountRestrictedObjectEntryTree(
 			accountEntry1, StringPool.BLANK);
 
 		_addResourcePermission(
@@ -1383,10 +1383,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		Node rootNode = objectEntriesTree.getRootNode();
+		Node rootNode = tree.getRootNode();
 
 		TreeTestUtil.forEachNodeObjectEntry(
-			objectEntriesTree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
 			_objectEntryLocalService,
 			objectEntry -> {
 				ObjectDefinition objectDefinition =
@@ -1408,7 +1408,7 @@ public class DefaultObjectEntryManagerImplTest
 			_rootObjectDefinition, ActionKeys.DELETE, _buyerRole);
 
 		TreeTestUtil.forEachNodeObjectEntry(
-			objectEntriesTree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
 			_objectEntryLocalService,
 			objectEntry -> {
 				ObjectDefinition objectDefinition =
@@ -2010,7 +2010,7 @@ public class DefaultObjectEntryManagerImplTest
 		_user = _addUser();
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_objectDefinitionTree.iterator(), objectDefinitionLocalService,
+			_tree.iterator(), objectDefinitionLocalService,
 			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 0));
 
 		_addResourcePermission(
@@ -2019,13 +2019,13 @@ public class DefaultObjectEntryManagerImplTest
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_objectDefinitionTree.iterator(), objectDefinitionLocalService,
+			_tree.iterator(), objectDefinitionLocalService,
 			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 1));
 
 		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_objectDefinitionTree.iterator(), objectDefinitionLocalService,
+			_tree.iterator(), objectDefinitionLocalService,
 			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 2));
 	}
 
@@ -3702,8 +3702,6 @@ public class DefaultObjectEntryManagerImplTest
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition3;
 
-	private Tree _objectDefinitionTree;
-
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
@@ -3734,6 +3732,7 @@ public class DefaultObjectEntryManagerImplTest
 	private RoleLocalService _roleLocalService;
 
 	private ObjectDefinition _rootObjectDefinition;
+	private Tree _tree;
 
 	@Inject
 	private TreeFactory _treeFactory;

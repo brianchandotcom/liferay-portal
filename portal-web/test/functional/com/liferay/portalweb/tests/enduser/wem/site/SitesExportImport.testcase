@@ -47,14 +47,6 @@ definition {
 
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Comments");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Navigator.gotoNavTab(navTab = "Asset Selection");
-
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_DYNAMIC");
-
-			Alert.viewSuccessMessage();
-
 			IFrame.closeFrame();
 
 			AssetPublisherPortlet.configureScope(globalSite = "Global");

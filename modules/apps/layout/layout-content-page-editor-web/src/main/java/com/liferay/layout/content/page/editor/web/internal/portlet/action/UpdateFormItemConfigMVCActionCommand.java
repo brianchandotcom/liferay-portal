@@ -113,7 +113,7 @@ public class UpdateFormItemConfigMVCActionCommand
 
 			removedLayoutStructureItemsJSONArray =
 				_formItemManager.removeLayoutStructureItemsJSONArray(
-					layoutStructure, formStyledLayoutStructureItem);
+					formStyledLayoutStructureItem, layoutStructure);
 
 			if (formStyledLayoutStructureItem.getClassNameId() > 0) {
 				addedFragmentEntryLinks =

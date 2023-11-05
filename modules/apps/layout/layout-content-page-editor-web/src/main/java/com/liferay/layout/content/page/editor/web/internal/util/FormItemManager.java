@@ -170,8 +170,8 @@ public class FormItemManager {
 	}
 
 	public JSONArray removeLayoutStructureItemsJSONArray(
-		LayoutStructure layoutStructure,
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		LayoutStructure layoutStructure) {
 
 		JSONArray fragmentEntryLinkIdsJSONArray =
 			_jsonFactory.createJSONArray();

@@ -88,7 +88,7 @@ public class FormItemManager {
 		TreeSet<String> missingInputTypes = new TreeSet<>();
 
 		JSONObject defaultInputFragmentEntryKeysJSONObject =
-			_defaultInputFragmentEntryHelper.
+			_defaultInputFragmentEntryConfigurationProvider.
 				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId());
 
 		for (InfoField<?> infoField :
@@ -379,7 +379,7 @@ public class FormItemManager {
 
 	@Reference
 	private DefaultInputFragmentEntryConfigurationProvider
-		_defaultInputFragmentEntryHelper;
+		_defaultInputFragmentEntryConfigurationProvider;
 
 	@Reference
 	private FragmentCollectionContributorRegistry

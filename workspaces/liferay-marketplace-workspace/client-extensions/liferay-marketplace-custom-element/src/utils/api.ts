@@ -291,7 +291,7 @@ export async function getAccountInfo({accountId}: {accountId: number}) {
 	return response.json();
 }
 
-export async function getAccountInfoFromCommerce(accountId: number) {
+export async function getAccountInfoFromCommerce(accountId?: number) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountId}`,
 		{headers, method: 'GET'}
@@ -622,7 +622,7 @@ export async function getProductById({
 	productId,
 }: {
 	nestedFields?: string;
-	productId: string | number;
+	productId?: string | number;
 }) {
 	let url = `${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}`;
 

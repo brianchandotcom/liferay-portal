@@ -79,7 +79,7 @@ export async function userAccountChecker(verifiedAccounts: string[]) {
 }
 
 export function getThumbnailByProductAttachment(
-	attachments: Partial<ProductAttachment>[]
+	attachments?: Partial<ProductAttachment>[]
 ): string | undefined {
 	if (!Array.isArray(attachments)) {
 		return undefined;

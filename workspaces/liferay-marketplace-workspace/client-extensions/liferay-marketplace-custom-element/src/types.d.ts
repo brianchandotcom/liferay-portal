@@ -111,6 +111,8 @@ type Cart = {
 	orderTypeExternalReferenceCode: string;
 	orderTypeId: number;
 	paymentMethod: string;
+	paymentStatusInfo: {[key: string]: string};
+	paymentStatusLabel: string;
 	purchaseOrderNumber?: string;
 	shippingAddress: BillingAddress;
 	summary: {

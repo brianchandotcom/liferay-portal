@@ -507,8 +507,44 @@ public abstract class BaseTierPriceResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<TierPrice, TierPrice, Exception>
+			tierPriceUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				tierPriceUnsafeFunction =
+					tierPrice -> postPriceEntryByExternalReferenceCodeTierPrice(
+						(String)parameters.get("externalReferenceCode"),
+						tierPrice);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (tierPriceUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for TierPrice");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				tierPrices, tierPriceUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				tierPrices, tierPriceUnsafeFunction::apply);
+		}
+		else {
+			for (TierPrice tierPrice : tierPrices) {
+				tierPriceUnsafeFunction.apply(tierPrice);
+			}
+		}
 	}
 
 	@Override
@@ -523,7 +559,7 @@ public abstract class BaseTierPriceResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

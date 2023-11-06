@@ -1212,10 +1212,6 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 									(Long)parameters.get("siteId"),
 									knowledgeBaseFolder);
 						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [siteId]");
-						}
 					}
 
 					return persistedKnowledgeBaseFolder;

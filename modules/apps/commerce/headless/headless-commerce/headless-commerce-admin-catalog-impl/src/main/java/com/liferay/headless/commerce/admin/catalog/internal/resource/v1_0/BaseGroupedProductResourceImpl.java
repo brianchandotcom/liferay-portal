@@ -389,8 +389,44 @@ public abstract class BaseGroupedProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<GroupedProduct, GroupedProduct, Exception>
+			groupedProductUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				groupedProductUnsafeFunction = groupedProduct ->
+					postProductByExternalReferenceCodeGroupedProduct(
+						(String)parameters.get("externalReferenceCode"),
+						groupedProduct);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (groupedProductUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for GroupedProduct");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				groupedProducts, groupedProductUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				groupedProducts, groupedProductUnsafeFunction::apply);
+		}
+		else {
+			for (GroupedProduct groupedProduct : groupedProducts) {
+				groupedProductUnsafeFunction.apply(groupedProduct);
+			}
+		}
 	}
 
 	@Override
@@ -405,7 +441,7 @@ public abstract class BaseGroupedProductResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

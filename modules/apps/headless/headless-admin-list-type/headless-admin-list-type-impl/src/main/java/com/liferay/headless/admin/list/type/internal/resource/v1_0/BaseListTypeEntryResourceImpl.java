@@ -635,9 +635,15 @@ public abstract class BaseListTypeEntryResourceImpl
 							(String)parameters.get("listTypeDefinitionId")),
 						listTypeEntry);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				listTypeEntryUnsafeFunction = listTypeEntry ->
+					postListTypeDefinitionByExternalReferenceCodeListTypeEntry(
+						(String)parameters.get("externalReferenceCode"),
+						listTypeEntry);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [listTypeDefinitionId]");
+					"One of the following parameters must be specified: [listTypeDefinitionId, externalReferenceCode]");
 			}
 		}
 

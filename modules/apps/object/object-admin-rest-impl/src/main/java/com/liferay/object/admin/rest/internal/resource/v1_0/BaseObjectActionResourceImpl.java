@@ -665,9 +665,15 @@ public abstract class BaseObjectActionResourceImpl
 							(String)parameters.get("objectDefinitionId")),
 						objectAction);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				objectActionUnsafeFunction = objectAction ->
+					postObjectDefinitionByExternalReferenceCodeObjectAction(
+						(String)parameters.get("externalReferenceCode"),
+						objectAction);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [objectDefinitionId]");
+					"One of the following parameters must be specified: [objectDefinitionId, externalReferenceCode]");
 			}
 		}
 

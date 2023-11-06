@@ -1639,7 +1639,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [assetLibraryId, siteId, assetLibraryId]");
+								"One of the following parameters must be specified: [assetLibraryId]");
 						}
 					}
 

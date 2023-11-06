@@ -685,8 +685,44 @@ public abstract class BaseAccountAddressResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<AccountAddress, AccountAddress, Exception>
+			accountAddressUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				accountAddressUnsafeFunction = accountAddress ->
+					postAccountByExternalReferenceCodeAccountAddress(
+						(String)parameters.get("externalReferenceCode"),
+						accountAddress);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (accountAddressUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for AccountAddress");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accountAddresses, accountAddressUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountAddresses, accountAddressUnsafeFunction::apply);
+		}
+		else {
+			for (AccountAddress accountAddress : accountAddresses) {
+				accountAddressUnsafeFunction.apply(accountAddress);
+			}
+		}
 	}
 
 	@Override
@@ -701,7 +737,7 @@ public abstract class BaseAccountAddressResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

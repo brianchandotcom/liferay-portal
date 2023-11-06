@@ -1866,7 +1866,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [messageBoardThreadId, messageBoardThreadId]");
+								"One of the following parameters must be specified: [messageBoardThreadId]");
 						}
 					}
 

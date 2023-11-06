@@ -709,9 +709,15 @@ public abstract class BaseObjectFieldResourceImpl
 							(String)parameters.get("objectDefinitionId")),
 						objectField);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				objectFieldUnsafeFunction = objectField ->
+					postObjectDefinitionByExternalReferenceCodeObjectField(
+						(String)parameters.get("externalReferenceCode"),
+						objectField);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [objectDefinitionId]");
+					"One of the following parameters must be specified: [objectDefinitionId, externalReferenceCode]");
 			}
 		}
 

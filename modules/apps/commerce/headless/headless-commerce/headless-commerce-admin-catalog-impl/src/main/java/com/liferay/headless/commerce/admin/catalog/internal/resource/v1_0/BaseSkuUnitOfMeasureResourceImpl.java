@@ -418,8 +418,44 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<SkuUnitOfMeasure, SkuUnitOfMeasure, Exception>
+			skuUnitOfMeasureUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				skuUnitOfMeasureUnsafeFunction = skuUnitOfMeasure ->
+					postSkuByExternalReferenceCodeSkuUnitOfMeasure(
+						(String)parameters.get("externalReferenceCode"),
+						skuUnitOfMeasure);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (skuUnitOfMeasureUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for SkuUnitOfMeasure");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				skuUnitOfMeasures, skuUnitOfMeasureUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				skuUnitOfMeasures, skuUnitOfMeasureUnsafeFunction::apply);
+		}
+		else {
+			for (SkuUnitOfMeasure skuUnitOfMeasure : skuUnitOfMeasures) {
+				skuUnitOfMeasureUnsafeFunction.apply(skuUnitOfMeasure);
+			}
+		}
 	}
 
 	@Override
@@ -434,7 +470,7 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

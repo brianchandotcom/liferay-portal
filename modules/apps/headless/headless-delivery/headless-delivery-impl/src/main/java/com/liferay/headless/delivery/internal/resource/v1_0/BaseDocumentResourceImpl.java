@@ -2133,7 +2133,7 @@ public abstract class BaseDocumentResourceImpl
 						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [documentFolderId, assetLibraryId, siteId, documentFolderId, assetLibraryId]");
+								"One of the following parameters must be specified: [documentFolderId, assetLibraryId]");
 						}
 					}
 

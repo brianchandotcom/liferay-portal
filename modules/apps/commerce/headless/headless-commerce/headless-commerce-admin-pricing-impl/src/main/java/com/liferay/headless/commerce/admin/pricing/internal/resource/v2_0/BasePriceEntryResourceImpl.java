@@ -532,8 +532,45 @@ public abstract class BasePriceEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<PriceEntry, PriceEntry, Exception>
+			priceEntryUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				priceEntryUnsafeFunction =
+					priceEntry ->
+						postPriceListByExternalReferenceCodePriceEntry(
+							(String)parameters.get("externalReferenceCode"),
+							priceEntry);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (priceEntryUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for PriceEntry");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceEntries, priceEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceEntries, priceEntryUnsafeFunction::apply);
+		}
+		else {
+			for (PriceEntry priceEntry : priceEntries) {
+				priceEntryUnsafeFunction.apply(priceEntry);
+			}
+		}
 	}
 
 	@Override
@@ -548,7 +585,7 @@ public abstract class BasePriceEntryResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

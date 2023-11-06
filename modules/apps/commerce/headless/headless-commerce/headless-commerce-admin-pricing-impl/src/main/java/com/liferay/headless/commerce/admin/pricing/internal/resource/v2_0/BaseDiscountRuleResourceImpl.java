@@ -417,8 +417,45 @@ public abstract class BaseDiscountRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<DiscountRule, DiscountRule, Exception>
+			discountRuleUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				discountRuleUnsafeFunction =
+					discountRule ->
+						postDiscountByExternalReferenceCodeDiscountRule(
+							(String)parameters.get("externalReferenceCode"),
+							discountRule);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (discountRuleUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for DiscountRule");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountRules, discountRuleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountRules, discountRuleUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountRule discountRule : discountRules) {
+				discountRuleUnsafeFunction.apply(discountRule);
+			}
+		}
 	}
 
 	@Override
@@ -433,7 +470,7 @@ public abstract class BaseDiscountRuleResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

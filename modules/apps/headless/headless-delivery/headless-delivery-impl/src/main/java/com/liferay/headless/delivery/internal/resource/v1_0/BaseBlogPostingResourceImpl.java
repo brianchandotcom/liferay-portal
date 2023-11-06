@@ -1334,10 +1334,6 @@ public abstract class BaseBlogPostingResourceImpl
 							persistedBlogPosting = postSiteBlogPosting(
 								(Long)parameters.get("siteId"), blogPosting);
 						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [siteId]");
-						}
 					}
 
 					return persistedBlogPosting;

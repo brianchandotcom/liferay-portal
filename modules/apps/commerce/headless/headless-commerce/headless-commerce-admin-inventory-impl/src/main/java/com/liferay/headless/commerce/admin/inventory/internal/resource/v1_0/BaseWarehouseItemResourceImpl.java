@@ -617,8 +617,44 @@ public abstract class BaseWarehouseItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<WarehouseItem, WarehouseItem, Exception>
+			warehouseItemUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				warehouseItemUnsafeFunction = warehouseItem ->
+					postWarehouseByExternalReferenceCodeWarehouseItem(
+						(String)parameters.get("externalReferenceCode"),
+						warehouseItem);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (warehouseItemUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for WarehouseItem");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				warehouseItems, warehouseItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				warehouseItems, warehouseItemUnsafeFunction::apply);
+		}
+		else {
+			for (WarehouseItem warehouseItem : warehouseItems) {
+				warehouseItemUnsafeFunction.apply(warehouseItem);
+			}
+		}
 	}
 
 	@Override
@@ -633,7 +669,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

@@ -623,9 +623,15 @@ public abstract class BaseObjectRelationshipResourceImpl
 								(String)parameters.get("objectDefinitionId")),
 							objectRelationship);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				objectRelationshipUnsafeFunction = objectRelationship ->
+					postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+						(String)parameters.get("externalReferenceCode"),
+						objectRelationship);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [objectDefinitionId]");
+					"One of the following parameters must be specified: [objectDefinitionId, externalReferenceCode]");
 			}
 		}
 

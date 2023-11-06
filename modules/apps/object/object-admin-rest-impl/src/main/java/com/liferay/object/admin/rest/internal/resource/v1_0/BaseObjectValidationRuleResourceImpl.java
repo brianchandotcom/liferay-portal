@@ -726,9 +726,15 @@ public abstract class BaseObjectValidationRuleResourceImpl
 							(String)parameters.get("objectDefinitionId")),
 						objectValidationRule);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				objectValidationRuleUnsafeFunction = objectValidationRule ->
+					postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+						(String)parameters.get("externalReferenceCode"),
+						objectValidationRule);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [objectDefinitionId]");
+					"One of the following parameters must be specified: [objectDefinitionId, externalReferenceCode]");
 			}
 		}
 

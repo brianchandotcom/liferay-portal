@@ -281,8 +281,44 @@ public abstract class BaseDiagramResourceImpl
 			Collection<Diagram> diagrams, Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<Diagram, Diagram, Exception> diagramUnsafeFunction =
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				diagramUnsafeFunction =
+					diagram -> postProductByExternalReferenceCodeDiagram(
+						(String)parameters.get("externalReferenceCode"),
+						diagram);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (diagramUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Diagram");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				diagrams, diagramUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				diagrams, diagramUnsafeFunction::apply);
+		}
+		else {
+			for (Diagram diagram : diagrams) {
+				diagramUnsafeFunction.apply(diagram);
+			}
+		}
 	}
 
 	@Override
@@ -295,7 +331,7 @@ public abstract class BaseDiagramResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

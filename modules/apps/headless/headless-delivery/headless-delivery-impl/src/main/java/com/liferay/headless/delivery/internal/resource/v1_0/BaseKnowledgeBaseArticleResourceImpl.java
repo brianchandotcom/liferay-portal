@@ -1924,7 +1924,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [knowledgeBaseFolderId, siteId, knowledgeBaseFolderId]");
+								"One of the following parameters must be specified: [knowledgeBaseFolderId]");
 						}
 					}
 

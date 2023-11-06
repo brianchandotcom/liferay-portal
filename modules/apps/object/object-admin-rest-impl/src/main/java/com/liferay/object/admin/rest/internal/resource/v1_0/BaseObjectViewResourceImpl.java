@@ -610,9 +610,15 @@ public abstract class BaseObjectViewResourceImpl
 							(String)parameters.get("objectDefinitionId")),
 						objectView);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				objectViewUnsafeFunction = objectView ->
+					postObjectDefinitionByExternalReferenceCodeObjectView(
+						(String)parameters.get("externalReferenceCode"),
+						objectView);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [objectDefinitionId]");
+					"One of the following parameters must be specified: [objectDefinitionId, externalReferenceCode]");
 			}
 		}
 

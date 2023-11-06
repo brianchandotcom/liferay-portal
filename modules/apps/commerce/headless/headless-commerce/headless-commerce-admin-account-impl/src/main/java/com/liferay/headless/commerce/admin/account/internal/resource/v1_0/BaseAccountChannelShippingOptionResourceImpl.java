@@ -445,8 +445,51 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction
+			<AccountChannelShippingOption, AccountChannelShippingOption,
+			 Exception> accountChannelShippingOptionUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				accountChannelShippingOptionUnsafeFunction =
+					accountChannelShippingOption ->
+						postAccountByExternalReferenceCodeAccountChannelShippingOption(
+							(String)parameters.get("externalReferenceCode"),
+							accountChannelShippingOption);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (accountChannelShippingOptionUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for AccountChannelShippingOption");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accountChannelShippingOptions,
+				accountChannelShippingOptionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountChannelShippingOptions,
+				accountChannelShippingOptionUnsafeFunction::apply);
+		}
+		else {
+			for (AccountChannelShippingOption accountChannelShippingOption :
+					accountChannelShippingOptions) {
+
+				accountChannelShippingOptionUnsafeFunction.apply(
+					accountChannelShippingOption);
+			}
+		}
 	}
 
 	@Override
@@ -465,7 +508,7 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

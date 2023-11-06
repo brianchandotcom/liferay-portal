@@ -580,9 +580,15 @@ public abstract class BaseObjectLayoutResourceImpl
 							(String)parameters.get("objectDefinitionId")),
 						objectLayout);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				objectLayoutUnsafeFunction = objectLayout ->
+					postObjectDefinitionByExternalReferenceCodeObjectLayout(
+						(String)parameters.get("externalReferenceCode"),
+						objectLayout);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [objectDefinitionId]");
+					"One of the following parameters must be specified: [objectDefinitionId, externalReferenceCode]");
 			}
 		}
 

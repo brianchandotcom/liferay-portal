@@ -2626,7 +2626,7 @@ public abstract class BaseStructuredContentResourceImpl
 						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [structuredContentFolderId, assetLibraryId, siteId, structuredContentFolderId, assetLibraryId]");
+								"One of the following parameters must be specified: [structuredContentFolderId, assetLibraryId]");
 						}
 					}
 

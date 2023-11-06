@@ -395,8 +395,40 @@ public abstract class BasePinResourceImpl
 			Collection<Pin> pins, Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<Pin, Pin, Exception> pinUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				pinUnsafeFunction =
+					pin -> postProductByExternalReferenceCodePin(
+						(String)parameters.get("externalReferenceCode"), pin);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (pinUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Pin");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(pins, pinUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(pins, pinUnsafeFunction::apply);
+		}
+		else {
+			for (Pin pin : pins) {
+				pinUnsafeFunction.apply(pin);
+			}
+		}
 	}
 
 	@Override
@@ -410,7 +442,7 @@ public abstract class BasePinResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

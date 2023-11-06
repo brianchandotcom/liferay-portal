@@ -12,6 +12,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -747,6 +748,19 @@ public abstract class BaseOrderItemResourceImpl
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				orderItemUnsafeFunction =
+					orderItem -> postOrderByExternalReferenceCodeOrderItem(
+						(String)parameters.get("externalReferenceCode"),
+						orderItem);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
@@ -755,6 +769,40 @@ public abstract class BaseOrderItemResourceImpl
 				orderItemUnsafeFunction =
 					orderItem -> putOrderItemByExternalReferenceCode(
 						orderItem.getExternalReferenceCode(), orderItem);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				orderItemUnsafeFunction = orderItem -> {
+					OrderItem persistedOrderItem = null;
+
+					try {
+						OrderItem getOrderItem =
+							getOrderItemByExternalReferenceCode(
+								orderItem.getExternalReferenceCode());
+
+						patchOrderItem(
+							getOrderItem.getId() != null ?
+								getOrderItem.getId() :
+									_parseLong(
+										(String)parameters.get("orderItemId")),
+							orderItem);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("externalReferenceCode")) {
+							persistedOrderItem =
+								postOrderByExternalReferenceCodeOrderItem(
+									(String)parameters.get(
+										"externalReferenceCode"),
+									orderItem);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
+					}
+
+					return persistedOrderItem;
+				};
 			}
 		}
 
@@ -791,7 +839,7 @@ public abstract class BaseOrderItemResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("UPSERT");
+		return SetUtil.fromArray("UPSERT", "INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

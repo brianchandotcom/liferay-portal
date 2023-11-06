@@ -669,8 +669,40 @@ public abstract class BaseSkuResourceImpl
 			Collection<Sku> skus, Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<Sku, Sku, Exception> skuUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			if (parameters.containsKey("externalReferenceCode")) {
+				skuUnsafeFunction =
+					sku -> postProductByExternalReferenceCodeSku(
+						(String)parameters.get("externalReferenceCode"), sku);
+			}
+			else {
+				throw new NotSupportedException(
+					"One of the following parameters must be specified: [externalReferenceCode]");
+			}
+		}
+
+		if (skuUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Sku");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(skus, skuUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(skus, skuUnsafeFunction::apply);
+		}
+		else {
+			for (Sku sku : skus) {
+				skuUnsafeFunction.apply(sku);
+			}
+		}
 	}
 
 	@Override
@@ -684,7 +716,7 @@ public abstract class BaseSkuResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

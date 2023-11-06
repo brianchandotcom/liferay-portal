@@ -1159,7 +1159,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [taxonomyVocabularyId, taxonomyVocabularyId]");
+								"One of the following parameters must be specified: [taxonomyVocabularyId]");
 						}
 					}
 

@@ -19,7 +19,7 @@ const LabelStatus = ({provisioning, provisioningLabel}: LabelStatusProps) => {
 	return (
 		<>
 			<ClayIcon
-				className={classNames('mx-1 label-status-icon', {
+				className={classNames('mx-2 label-status-icon', {
 					'label-status-icon-completed':
 						provisioningLabel === OrderStatus.COMPLETED,
 					'label-status-icon-pending':

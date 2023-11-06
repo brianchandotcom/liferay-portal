@@ -373,6 +373,14 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long companyId, String externalReferenceCode, long groupId) {
+
+		AssetCategoryLocalServiceUtil.fetchAssetCategoryByExternalReferenceCode(companyId, externalReferenceCode);
+		AssetCategoryLocalServiceUtil.fetchAssetCategoryByExternalReferenceCode(externalReferenceCode, groupId);
+		_assetCategoryLocalService.fetchAssetCategoryByExternalReferenceCode(companyId, externalReferenceCode);
+	}
+
+	public void method(
 		long userId, String className, long classPK, String number,
 		String extension, long listTypeId, boolean primary) {
 

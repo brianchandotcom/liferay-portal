@@ -10,7 +10,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 
@@ -47,9 +46,7 @@ public class SharingDropdownItemFactoryImpl
 
 	@Override
 	public DropdownItem createManageCollaboratorsDropdownItem(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		String className, long classPK, HttpServletRequest httpServletRequest) {
 
 		return DropdownItemBuilder.setHref(
 			() -> {
@@ -68,10 +65,9 @@ public class SharingDropdownItemFactoryImpl
 
 	@Override
 	public UnsafeConsumer<DropdownContextItem, Exception>
-			createShareActionUnsafeConsumer(
-				String className, long classPK,
-				HttpServletRequest httpServletRequest)
-		throws PortalException {
+		createShareActionUnsafeConsumer(
+			String className, long classPK,
+			HttpServletRequest httpServletRequest) {
 
 		DropdownItem shareDropdownItem = createShareDropdownItem(
 			className, classPK, httpServletRequest);
@@ -96,9 +92,7 @@ public class SharingDropdownItemFactoryImpl
 
 	@Override
 	public DropdownItem createShareDropdownItem(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		String className, long classPK, HttpServletRequest httpServletRequest) {
 
 		return DropdownItemBuilder.setHref(
 			() -> {

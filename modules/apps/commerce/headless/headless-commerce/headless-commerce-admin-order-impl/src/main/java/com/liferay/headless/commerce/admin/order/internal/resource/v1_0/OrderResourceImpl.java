@@ -812,11 +812,15 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 					order.getPrintedNote(), commerceOrder.getPrintedNote()));
 		}
 
-		commerceOrder = _commercePaymentEngine.updateOrderPaymentStatus(
-			commerceOrder.getCommerceOrderId(),
-			GetterUtil.getInteger(
-				order.getPaymentStatus(), commerceOrder.getPaymentStatus()),
-			commerceOrder.getTransactionId(), StringPool.BLANK);
+		if ((order.getPaymentStatus() != null) &&
+			(order.getPaymentStatus() != commerceOrder.getPaymentStatus())) {
+
+			commerceOrder = _commercePaymentEngine.updateOrderPaymentStatus(
+				commerceOrder.getCommerceOrderId(),
+				GetterUtil.getInteger(
+					order.getPaymentStatus(), commerceOrder.getPaymentStatus()),
+				commerceOrder.getTransactionId(), StringPool.BLANK);
+		}
 
 		Map<String, ?> customFields = order.getCustomFields();
 

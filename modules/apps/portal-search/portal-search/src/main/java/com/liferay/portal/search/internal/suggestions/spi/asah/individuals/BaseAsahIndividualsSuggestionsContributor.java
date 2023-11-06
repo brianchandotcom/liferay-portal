@@ -6,6 +6,7 @@
 package com.liferay.portal.search.internal.suggestions.spi.asah.individuals;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -35,11 +36,55 @@ public abstract class BaseAsahIndividualsSuggestionsContributor
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		asahIndividualsConfiguration = ConfigurableUtil.createConfigurable(
+		_asahIndividualsConfiguration = ConfigurableUtil.createConfigurable(
 			AsahIndividualsConfiguration.class, properties);
 	}
 
-	protected String getHashedEmail(long userId) {
+	@Override
+	protected int getCharacterThreshold(Map<String, Object> attributes) {
+		if (attributes == null) {
+			return _CHARACTER_THRESHOLD;
+		}
+
+		return MapUtil.getInteger(
+			attributes, "characterThreshold", _CHARACTER_THRESHOLD);
+	}
+
+	@Override
+	protected JSONObject getJSONObject(
+		AnalyticsConfiguration analyticsConfiguration,
+		Map<String, Object> attributes, String basePath, String path,
+		SearchContext searchContext, String sort,
+		SuggestionsContributorConfiguration
+			suggestionsContributorConfiguration) {
+
+		return AsahIndividualsWebCacheItem.get(
+			analyticsConfiguration, _asahIndividualsConfiguration,
+			_getContentType(attributes), searchContext.getCompanyId(),
+			getDisplayLanguageId(attributes, searchContext.getLocale()),
+			StringBundler.concat(
+				basePath, StringPool.FORWARD_SLASH,
+				_getHashedEmail(searchContext.getUserId())),
+			path, getGroupId(searchContext),
+			getMinCounts(attributes, _MIN_COUNTS), _getPage(attributes),
+			_getRangeKey(attributes),
+			GetterUtil.getInteger(
+				suggestionsContributorConfiguration.getSize(), 5),
+			sort);
+	}
+
+	@Reference
+	protected Portal portal;
+
+	private String _getContentType(Map<String, Object> attributes) {
+		if (attributes == null) {
+			return StringPool.BLANK;
+		}
+
+		return MapUtil.getString(attributes, "contentType", StringPool.BLANK);
+	}
+
+	private String _getHashedEmail(long userId) {
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 
@@ -65,39 +110,6 @@ public abstract class BaseAsahIndividualsSuggestionsContributor
 		return StringPool.BLANK;
 	}
 
-	@Override
-	protected JSONObject getJSONObject(
-		AnalyticsConfiguration analyticsConfiguration,
-		Map<String, Object> attributes, String basePath, String path,
-		SearchContext searchContext, String sort,
-		SuggestionsContributorConfiguration
-			suggestionsContributorConfiguration) {
-
-		return AsahIndividualsWebCacheItem.get(
-			analyticsConfiguration, asahIndividualsConfiguration,
-			_getContentType(attributes), searchContext.getCompanyId(),
-			getDisplayLanguageId(attributes, searchContext.getLocale()),
-			basePath, path, getGroupId(searchContext), getMinCounts(attributes),
-			_getPage(attributes), _getRangeKey(attributes),
-			GetterUtil.getInteger(
-				suggestionsContributorConfiguration.getSize(), 5),
-			sort);
-	}
-
-	protected volatile AsahIndividualsConfiguration
-		asahIndividualsConfiguration;
-
-	@Reference
-	protected Portal portal;
-
-	private String _getContentType(Map<String, Object> attributes) {
-		if (attributes == null) {
-			return StringPool.BLANK;
-		}
-
-		return MapUtil.getString(attributes, "contentType", StringPool.BLANK);
-	}
-
 	private int _getPage(Map<String, Object> attributes) {
 		if (attributes == null) {
 			return 0;
@@ -111,12 +123,16 @@ public abstract class BaseAsahIndividualsSuggestionsContributor
 			return 0;
 		}
 
-		// what should be the default?
-
 		return MapUtil.getInteger(attributes, "rangeKey", 0);
 	}
 
+	private static final int _CHARACTER_THRESHOLD = 0;
+
+	private static final int _MIN_COUNTS = 1;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAsahIndividualsSuggestionsContributor.class);
+
+	private volatile AsahIndividualsConfiguration _asahIndividualsConfiguration;
 
 }

@@ -68,7 +68,7 @@ definition {
 				zipCode = "12.345-67");
 		}
 
-		task ("When the employee user create a request") {
+		task ("When the Employee user creates a request") {
 			EVPRequest.fillRequestForm(
 				grantAmount = 20,
 				grantRequestType = "Proposed",
@@ -82,7 +82,7 @@ definition {
 			EVPUtils.viewSuccessMessage();
 		}
 
-		task ("Then the employee user view a Request Created and also view Organization Created") {
+		task ("Then the Employee user can see the Request and Organization Created on listing") {
 			EVPNavigator.goToNavItem(navItem = "Request");
 
 			EVPUtils.viewStatus(
@@ -100,7 +100,7 @@ definition {
 	@description = "LPS-162894 - Verify that is not possible to submit the form without fill all required fields"
 	@priority = 3
 	test CannotSubmitFormWithoutFillRequiredField {
-		task ("When the user submit an organization form without a required field filled in") {
+		task ("When the Employee user submits an organization form without a required field filled in") {
 			EVPOrganization.goToCreateOrganization();
 
 			Button.click(button = "Submit");
@@ -115,10 +115,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-162894 - Verify that after submit the form, when click on 'Done' button, will be redirected back to 'Organization' page"
+	@description = "LPS-162894 - Verify that after submit the form, when click on 'Done' button, will view a 'Thank you' message and be redirected back to 'Organization' page"
 	@priority = 2
 	test CanSeeRedirectionToOrganizationPageAfterCreateOrganization {
-		task ("When the employee user create an organization") {
+		task ("When the Employee user creates an organization") {
 			EVPOrganization.goToCreateOrganization();
 
 			EVPOrganization.fillOrganizationForm(
@@ -138,10 +138,8 @@ definition {
 				zipCode = "12.345-67");
 		}
 
-		task ("Then The employee user is Redirection to page Organization") {
-			EVPNavigator.assertActiveBreadcrumb(activeItem = "Organization");
-		}
-	}
+		task ("Then The Employee user view a 'Thank you' message and is Redirected to page Organization") {
+			EVPUtils.viewSuccessMessage();
 
 	@description = "LPS-162894 - Verify that the user can create a new organization and a 'Thank you' message will be displayed"
 	@priority = 5

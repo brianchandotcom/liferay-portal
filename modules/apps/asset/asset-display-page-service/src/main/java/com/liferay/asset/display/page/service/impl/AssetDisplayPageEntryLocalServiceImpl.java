@@ -14,9 +14,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -84,7 +82,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
 		assetDisplayPageEntry.setPlid(
-			_getPlid(groupId, classNameId, classPK, layoutPageTemplateEntryId));
+			_getPlid(classNameId, classPK, layoutPageTemplateEntryId));
 
 		assetDisplayPageEntry = assetDisplayPageEntryPersistence.update(
 			assetDisplayPageEntry);
@@ -223,7 +221,6 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		assetDisplayPageEntry.setType(type);
 
 		long plid = _getPlid(
-			assetDisplayPageEntry.getGroupId(),
 			assetDisplayPageEntry.getClassNameId(),
 			assetDisplayPageEntry.getClassPK(), layoutPageTemplateEntryId);
 
@@ -247,8 +244,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 	}
 
 	private long _getPlid(
-		long groupId, long classNameId, long classPK,
-		long layoutPageTemplateEntryId) {
+		long classNameId, long classPK, long layoutPageTemplateEntryId) {
 
 		String className = _portal.getClassName(classNameId);
 
@@ -260,25 +256,9 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(className, classPK));
-
-		if (layoutDisplayPageObjectProvider == null) {
-			return LayoutConstants.DEFAULT_PLID;
-		}
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId);
-
-		if (layoutPageTemplateEntry == null) {
-			layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchDefaultLayoutPageTemplateEntry(
-						groupId, classNameId,
-						layoutDisplayPageObjectProvider.getClassTypeId());
-		}
 
 		if (layoutPageTemplateEntry != null) {
 			return layoutPageTemplateEntry.getPlid();

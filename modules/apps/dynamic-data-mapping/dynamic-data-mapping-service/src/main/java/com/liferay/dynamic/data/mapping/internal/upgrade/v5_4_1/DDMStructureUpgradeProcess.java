@@ -116,6 +116,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 					1,
 					DDMFormSerializeUtil.serialize(
 						ddmForm, _ddmFormSerializer));
+
 				updatePreparedStatement.setLong(
 					2, resultSet.getLong(idColumnName));
 

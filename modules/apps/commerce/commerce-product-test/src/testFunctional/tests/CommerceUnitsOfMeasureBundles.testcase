@@ -167,20 +167,20 @@ definition {
 
 		task ("Then 2 cart items are present, each with the respective information shown") {
 			FrontStore.viewMiniCartItem(
-				bundledItems = "Blue(1 × ABS Sensor UOM1KEY)",
+				bundledItems = "1 × ABS Sensor UOM1KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
 				cartItemPriceValue = "30.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE",
-				optionName = "Color");
+				cartItemSku = "BLUE");
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "White(1 × ABS Sensor UOM2KEY)",
+				bundledItems = "1 × ABS Sensor UOM2KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "white",
 				cartItemPromoPriceValue = "20.00",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE",
-				optionName = "Color");
+				cartItemSku = "WHITE");
 		}
 	}
 
@@ -365,20 +365,20 @@ definition {
 
 		task ("Then 2 cart items are present, each with the respective information shown") {
 			FrontStore.viewMiniCartItem(
-				bundledItems = "Blue(1 × ABS Sensor uom1)",
+				bundledItems = "1 × ABS Sensor uom1",
 				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
 				cartItemPriceValue = "70.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE",
-				optionName = "Color");
+				cartItemSku = "BLUE");
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "White(1 × ABS Sensor uom2)",
+				bundledItems = "1 × ABS Sensor uom2",
 				cartItemName = "Bundled Product",
+				cartItemOption = "white",
 				cartItemPriceValue = "60.00",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE",
-				optionName = "Color");
+				cartItemSku = "WHITE");
 		}
 	}
 
@@ -524,20 +524,20 @@ definition {
 
 		task ("Then assert the prices are the same as in the product detail") {
 			FrontStore.viewMiniCartItem(
-				bundledItems = "Blue(1 × ABS Sensor UOM1KEY)",
+				bundledItems = "1 × ABS Sensor UOM1KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
 				cartItemPriceValue = "50.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE",
-				optionName = "Color");
+				cartItemSku = "BLUE");
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "White(1 × ABS Sensor UOM2KEY)",
+				bundledItems = "1 × ABS Sensor UOM2KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "white",
 				cartItemPromoPriceValue = "26.67",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE",
-				optionName = "Color");
+				cartItemSku = "WHITE");
 		}
 	}
 
@@ -664,20 +664,20 @@ definition {
 			CommerceNavigator.gotoMiniCart();
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "Blue(2 × ABS Sensor UOM1KEY)",
+				bundledItems = "2 × ABS Sensor UOM1KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
 				cartItemPriceValue = "50.00",
 				cartItemQuantity = 2,
-				cartItemSku = "BLUE",
-				optionName = "Color");
+				cartItemSku = "BLUE");
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "White(1 × ABS Sensor UOM2KEY)",
+				bundledItems = "1 × ABS Sensor UOM2KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "white",
 				cartItemPromoPriceValue = "26.67",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE",
-				optionName = "Color");
+				cartItemSku = "WHITE");
 		}
 
 		task ("When adding WHITE(UOM2) using the quick add to cart") {
@@ -688,20 +688,20 @@ definition {
 
 		task ("Then asserts WHITE's quantity in the mini-cart is updated correctly") {
 			FrontStore.viewMiniCartItem(
-				bundledItems = "Blue(2 × ABS Sensor UOM1KEY)",
+				bundledItems = "2 × ABS Sensor UOM1KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
 				cartItemPriceValue = "50.00",
 				cartItemQuantity = 2,
-				cartItemSku = "BLUE",
-				optionName = "Color");
+				cartItemSku = "BLUE");
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "White(2 × ABS Sensor UOM2KEY)",
+				bundledItems = "2 × ABS Sensor UOM2KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "white",
 				cartItemPromoPriceValue = "26.66",
 				cartItemQuantity = 2,
-				cartItemSku = "WHITE",
-				optionName = "Color");
+				cartItemSku = "WHITE");
 		}
 	}
 
@@ -851,20 +851,20 @@ definition {
 
 		task ("Then 2 cart items are present, each with the respective information shown") {
 			FrontStore.viewMiniCartItem(
-				bundledItems = "Blue(1 × ABS Sensor UOM1KEY)",
+				bundledItems = "1 × ABS Sensor UOM1KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
 				cartItemPriceValue = "70.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE",
-				optionName = "Color");
+				cartItemSku = "BLUE");
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "White(2 × ABS Sensor UOM1KEY)",
+				bundledItems = "2 × ABS Sensor UOM1KEY",
 				cartItemName = "Bundled Product",
+				cartItemOption = "white",
 				cartItemPriceValue = "80.00",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE",
-				optionName = "Color");
+				cartItemSku = "WHITE");
 		}
 	}
 

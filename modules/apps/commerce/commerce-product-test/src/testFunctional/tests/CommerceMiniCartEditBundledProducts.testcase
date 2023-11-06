@@ -669,6 +669,35 @@ definition {
 				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_BODY_VERTICAL_ELLIPSIS");
 		}
 
+		task ("But if the buyer adds another non-bundled product to the cart(e.g. Brake Fluid)") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-fluid");
+
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Package Quantity:12",
+				productName = "Brake Fluid",
+				productSku = "MIN93016A");
+		}
+
+		task ("Then there is 'Show Options' panel but no Edit action button for the non-bundled product") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementPresent(
+				key_cartItemSku = "MIN93016A",
+				key_index = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED");
+
+			AssertElementNotPresent(
+				key_cartItemSku = "MIN93016A",
+				key_index = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_BODY_VERTICAL_ELLIPSIS");
+
+			AssertElementPresent(
+				key_cartItemSku = "MIN93016A",
+				locator1 = "CommerceAccelerators#MINI_CART_REMOVE_ITEM");
+		}
+
 		task ("When the Edit Bundled Product panel is opened for an order item") {
 			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "BLUE");
 
@@ -1018,6 +1047,11 @@ definition {
 
 				var cartItemQuantity = StringUtil.extractFirst(${valueList}, ":");
 				var bundledItemQuantity = StringUtil.extractLast(${valueList}, ":");
+
+				Click(
+					key_cartItemSku = "BLUE",
+					key_index = 1,
+					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_HIDE_OPTIONS_PANEL_EXPANDED");
 
 				FrontStore.changeQuantityByUsingKeyArrows(
 					arrowAction = ${arrowAction},

@@ -903,16 +903,25 @@ definition {
 					key_cartItemSku = ${cartItemSku},
 					key_index = ${index},
 					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED");
+
+				for (var bundledItem : list ${bundledItems}) {
+					AssertElementPresent(
+						key_cartItemName = ${optionName},
+						locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
+
+					AssertElementPresent(
+						key_cartItemSku = ${bundledItem},
+						locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+				}
 			}
-
-			for (var bundledItem : list ${bundledItems}) {
-				AssertElementPresent(
-					key_cartItemName = ${optionName},
-					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
-
-				AssertElementPresent(
-					key_cartItemSku = ${bundledItems},
-					locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+			else {
+				for (var bundledItem : list ${bundledItems}) {
+					AssertTextEquals.assertPartialText(
+						key_cartItemSku = ${cartItemSku},
+						key_index = ${index},
+						locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS_N",
+						value1 = ${bundledItem});
+				}
 			}
 		}
 
@@ -953,26 +962,27 @@ definition {
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_THUMBNAIL");
 
-		if (isSet(cartItemOption)) {
+		if (isSet(cartItemOption) && isSet(optionName)) {
 			for (var cartItemOption : list ${cartItemOption}) {
 				var optionName = StringUtil.extractFirst(${cartItemOption}, ":");
 				var optionValue = StringUtil.extractLast(${cartItemOption}, ":");
 
-				if (isSet(index)) {
-					AssertElementPresent(
-						key_cartItemName = ${optionName},
-						key_cartItemSku = ${optionValue},
-						key_index = ${index},
-						locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_SKU_INDEX");
-				}
-				else {
-					AssertElementPresent(
-						key_cartItemName = ${optionName},
-						key_cartItemSku = ${optionValue},
-						locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_SKU");
-				}
+				AssertElementPresent(
+					key_cartItemName = ${optionName},
+					key_cartItemSku = ${optionValue},
+					key_index = ${index},
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_SKU_INDEX");
 
 				echo("The option [${optionName}] with the value [${optionValue}] is present");
+			}
+		}
+		else if (isSet(cartItemOption) && !(isSet(optionName))) {
+			for (var cartItemOption : list ${cartItemOption}) {
+				AssertTextEquals.assertPartialText(
+					key_cartItemSku = ${cartItemSku},
+					key_index = ${index},
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA_N",
+					value1 = ${cartItemOption});
 			}
 		}
 	}

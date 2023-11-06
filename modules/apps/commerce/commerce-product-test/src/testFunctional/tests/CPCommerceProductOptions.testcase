@@ -1870,60 +1870,6 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-12700 Verify that is not possible to view the accordion 'Show Option' in case the product has not options"
-	@priority = 4
-	test CanForProductsWithNoOptionsTheAccordionDisappear {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "false";
-
-		task ("Given a Minium site with a buyer user is created") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
-		task ("And the buyer logs in on Minium") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer add to the cart U-Joint with an option") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
-
-			FrontStore.addToCartFromProductDetails(
-				productName = "U-Joint",
-				productSku = "MIN55861");
-		}
-
-		task ("Then the accordion is not present") {
-			CommerceNavigator.gotoMiniCart();
-
-			AssertElementNotPresent(
-				key_userName = "Show Options",
-				locator1 = "Sharing#MANAGE_COLLABORATORS_NAME");
-
-			FrontStore.viewMiniCartItem(
-				cartItemName = "U-Joint",
-				cartItemQuantity = 1,
-				cartItemSku = "MIN55861");
-		}
-	}
-
 	@description = "This is a test for COMMERCE-10798. As a Product Manager, I want to be able to search and select a simple product's SKU from all catalogs and link it to an option value in a bundled product."
 	@priority = 4
 	test CanLinkDifferentCatalogSKUsToOptionValue {
@@ -2136,6 +2082,60 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12700 Verify that is not possible to view the accordion 'Show Option' in case the product has no options"
+	@priority = 4
+	test CannotViewTheAccordionForProductsWithNoOptions {
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the buyer logs in on Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer adds to the cart U-Joint without an option") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			FrontStore.addToCartFromProductDetails(
+				productName = "U-Joint",
+				productSku = "MIN55861");
+		}
+
+		task ("Then the accordion is not present") {
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementNotPresent(
+				key_userName = "Show Options",
+				locator1 = "Sharing#MANAGE_COLLABORATORS_NAME");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-12167.User can see SKU updated on the product details page when values are selected from multiple options."
 	@priority = 5
 	test CanSKUUpdateSuccessfullyWhenSelectingValuesFromMultipleOptions {
@@ -2308,9 +2308,9 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-12701 Verify that is possible to view and use the accordion 'Show Options' for the bundle products with UOM"
+	@description = "COMMERCE-12701 Verify that is possible to view and use the accordion 'Show Options' for the bundled products with UOM"
 	@priority = 5
-	test CanUseTheAccordionForBundleProductsWithUOM {
+	test CanUseTheAccordionForBundledProductsWithUOM {
 		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
@@ -2331,7 +2331,7 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("Given 1 UOMs are created to MIN93015") {
+		task ("And 1 UOM is created to MIN93015") {
 			CommerceJSONSKUsAPI._addCommerceUOM(
 				basePrice = 30,
 				productSKU = "MIN93015",
@@ -2339,7 +2339,7 @@ definition {
 				uomName = "UOM1");
 		}
 
-		task ("And a new Bundled product with an optionand Dynamic Price Type is created") {
+		task ("And a new bundled product with an optional Dynamic Price Type is created") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Minium",
 				productName = "Bundled Product",
@@ -2411,7 +2411,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
 		}
 
-		task ("When the buyer adds to the cart the product with the option value that is linked to another product") {
+		task ("And the buyer adds to the cart the product with the option value that is linked to another product") {
 			FrontStore.addToCartFromProductDetails(
 				optionNamesAndValues = "Option Select from List:Value",
 				productName = "Bundled Product",
@@ -2440,7 +2440,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-12699 Verify that is possible to view and use the accordion 'Show Options' for the Define Externally bundle products"
+	@description = "COMMERCE-12699 Verify that is possible to view and use the accordion 'Show Options' for the Define Externally bundled products"
 	@priority = 5
 	test CanUseTheAccordionForDefineExternallyProducts {
 		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
@@ -2484,7 +2484,7 @@ definition {
 				productName = "U-Joint");
 		}
 
-		task ("When the admin enables the Define Externally toggle with a category") {
+		task ("And the admin enables the Define Externally toggle with a category") {
 			CommerceEntry.gotoMenuTab(menuTab = "Options");
 
 			CommerceProductOptions.editProductOption(
@@ -2496,7 +2496,7 @@ definition {
 				productOptionPriceType = "true");
 		}
 
-		task ("And the buyer logs in on MInium") {
+		task ("And the buyer logs in on Minium") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -2505,7 +2505,7 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 		}
 
-		task ("When the buyer add to the cart U-Joint with an option") {
+		task ("When the buyer adds to the cart U-Joint with an option") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
 
 			FrontStore.addToCartFromProductDetails(
@@ -2561,7 +2561,7 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("Given 7 Options, one for each type") {
+		task ("And 7 options, one for each type are created") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Minium",
 				productName = "Simple Product",
@@ -2679,7 +2679,7 @@ definition {
 				cartItemSku = "Simple Product_default");
 		}
 
-		task ("Then all the information inside is correct based on how the buyers compiled the values") {
+		task ("Then all the information inside is correct based on how the buyer compiled the values") {
 			for (var entriesList : list "select from the list:select from the list option value,date:2023-10-23,numeric:10,text:Text Content,multiple selection:multiple selection option value,single selection:single selection option value,boolean:option-boolean-selection-key") {
 				var optionName = StringUtil.extractFirst(${entriesList}, ":");
 				var optionValue = StringUtil.extractLast(${entriesList}, ":");

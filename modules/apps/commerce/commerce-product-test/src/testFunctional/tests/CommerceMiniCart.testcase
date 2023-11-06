@@ -429,8 +429,8 @@ definition {
 
 		task ("Then the buyer can check the alt attribute is present on the mini-cart and in the checkout") {
 			AssertElementPresent(
-				key_productSku = "MIN55861",
-				locator1 = "CommerceFrontStore#PRODUCT_IMAGE_MINI_CART_WITH_ALT_ATTRIBUTE");
+				key_cartItemSku = "MIN55861",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_THUMBNAIL");
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 

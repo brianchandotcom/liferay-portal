@@ -169,6 +169,37 @@ definition {
 		LexiconCard.viewCardThumbnail(card = "Document_4.jpg");
 	}
 
+	@description = "This test ensures that a user is able to upload a file to another asset library that is bigger than the File Max Size Limit in the asset library."
+	@priority = 4
+	test CanNotLimitMaxFileSizeForDepotFromOtherDepot {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name 1");
+
+		Depot.configureMaximumFileSize(
+			depotName = "Test Depot Name 1",
+			fieldValue = 65536);
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name 2");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name 2");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "Commerce_Blue.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name 2");
+
+		LexiconCard.viewSpecificCardThumbnail(
+			card = "Commerce_Blue.jpg",
+			imageFileName = "Commerce_Blue.jpg");
+	}
+
 	@description = "This test ensures that when setting the Maximum File Size at different levels(Site, System Settings and Instance Settings), the lower limit from instance settings will take effect."
 	@e2etest
 	@priority = 4

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.persistence.PortalPreferenceValuePersistence;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.PortalPreferencesLocalServiceBaseImpl;
 import com.liferay.portlet.PortalPreferenceKey;
@@ -125,6 +126,20 @@ public class PortalPreferencesLocalServiceImpl
 			portalPreferences.getPortalPreferencesId());
 
 		return super.deletePortalPreferences(portalPreferences);
+	}
+
+	@Override
+	public PortalPreferences fetchCompanyPortalPreferences(long companyId) {
+		for (PortalPreferences portalPreferences :
+				portalPreferencesPersistence.findByOwnerType(
+					PortletKeys.PREFS_OWNER_TYPE_COMPANY)) {
+
+			if (portalPreferences.getOwnerId() == companyId) {
+				return portalPreferences;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

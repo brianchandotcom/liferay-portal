@@ -184,8 +184,8 @@ public class ObjectFolderItemLocalServiceTest {
 	@Test
 	public void testDeleteObjectFolderItem() throws Exception {
 
-		// Object definition 1 belongs to object folder B, but object definition
-		// 1's related object definitions do not belong to object folder B
+		// Object definition 1 does not belong to object folder B, but object
+		// definition 1's related object definitions belong to object folder B
 
 		_objectFolderItemLocalService.deleteObjectFolderItem(
 			_objectDefinition1.getObjectDefinitionId(),
@@ -196,7 +196,7 @@ public class ObjectFolderItemLocalServiceTest {
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectFolderB.getObjectFolderId()));
 
-		// Object definition 2 does not belong to object folder B
+		// Object definition 2 belongs to object folder B
 
 		_objectFolderItemLocalService.deleteObjectFolderItem(
 			_objectDefinition2.getObjectDefinitionId(),
@@ -207,7 +207,9 @@ public class ObjectFolderItemLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(),
 				_objectFolderB.getObjectFolderId()));
 
-		// Object definition 4 belongs to object folder B
+		// Object definition 4 does not belong to object folder B and object
+		// definition 4's related object definitions do not belong to object
+		// folder B
 
 		ObjectFolderItem objectFolderItem =
 			_objectFolderItemLocalService.addObjectFolderItem(

@@ -3,7 +3,6 @@ import Card from 'shared/components/Card';
 import GeoMap from 'shared/components/geo-map/GeoMapCard';
 import React from 'react';
 import {compose} from 'redux';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {HOC_CARD_PROPTYPES} from 'shared/util/proptypes';
 import {PropTypes} from 'prop-types';
 import {withEmpty, withError, withLoading} from 'shared/hoc/util';
@@ -15,7 +14,7 @@ import {withEmpty, withError, withLoading} from 'shared/hoc/util';
 const withLocationsCard = (
 	withLocations,
 	withCountries,
-	{documentationTitle, documentationUrl, title}
+	{documentationTitle, documentationUrl, id, title}
 ) => {
 	const LocationsGeoMap = compose(
 		withLocations(),
@@ -63,7 +62,7 @@ const withLocationsCard = (
 	}) => (
 		<BaseCard
 			className={className}
-			id={Containers.SessionsByLocationCard}
+			id={id}
 			label={label}
 			legacyDropdownRangeKey={legacyDropdownRangeKey}
 			minHeight={536}

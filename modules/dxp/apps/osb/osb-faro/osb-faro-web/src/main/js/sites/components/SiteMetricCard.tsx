@@ -9,6 +9,7 @@ import {
 	SessionDurationMetric,
 	SessionsPerVisitorMetric
 } from 'shared/components/metric-card/metrics';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {getSiteMetricsChartData} from 'shared/components/metric-card/util';
 import {
 	SitesMetricQuery,
@@ -32,6 +33,7 @@ const SitesMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 		<MetricBaseCard<TChartData>
 			chartDataMapFn={getSiteMetricsChartData}
 			{...props}
+			id={Containers.SiteActivityCard}
 			metrics={metrics}
 			queries={{
 				MetricQuery: SitesMetricQuery,

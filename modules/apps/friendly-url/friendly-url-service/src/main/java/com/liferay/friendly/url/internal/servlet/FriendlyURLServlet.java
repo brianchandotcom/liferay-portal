@@ -348,19 +348,17 @@ public class FriendlyURLServlet extends HttpServlet {
 		catch (LayoutPermissionException | NoSuchLayoutException exception) {
 			Layout redirectLayout = null;
 
-			if (layoutFriendlyURL == null) {
-				if (exception instanceof LayoutPermissionException) {
-					List<Layout> layouts = layoutService.getLayouts(
-						group.getGroupId(), _private,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 1);
+			if (exception instanceof LayoutPermissionException) {
+				List<Layout> layouts = layoutService.getLayouts(
+					group.getGroupId(), _private,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 1);
 
-					if (!layouts.isEmpty()) {
-						redirectLayout = layouts.get(0);
-					}
+				if (!layouts.isEmpty()) {
+					redirectLayout = layouts.get(0);
 				}
-				else {
-					redirectLayout = defaultLayout;
-				}
+			}
+			else if (layoutFriendlyURL == null) {
+				redirectLayout = defaultLayout;
 			}
 			else {
 				List<Layout> layouts = layoutLocalService.getLayouts(
@@ -391,24 +389,20 @@ public class FriendlyURLServlet extends HttpServlet {
 					group, _normalizeFriendlyURL(layoutFriendlyURL));
 			}
 
-			if (exception instanceof LayoutPermissionException ||
-				exception instanceof NoSuchLayoutException) {
+			if (Validator.isNotNull(
+				PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
-				if (Validator.isNotNull(
-						PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
-
-					if (exception instanceof NoSuchLayoutException) {
-						throw exception;
-					}
-
-					throw new NoSuchLayoutException(exception);
+				if (exception instanceof NoSuchLayoutException) {
+					throw exception;
 				}
 
-				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-				httpServletRequest.setAttribute(
-					NoSuchLayoutException.class.getName(), Boolean.TRUE);
+				throw new NoSuchLayoutException(exception);
 			}
+
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			httpServletRequest.setAttribute(
+				NoSuchLayoutException.class.getName(), Boolean.TRUE);
 
 			layoutFriendlyURL = null;
 		}

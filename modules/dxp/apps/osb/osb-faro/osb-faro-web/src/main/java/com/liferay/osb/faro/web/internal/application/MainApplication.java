@@ -15,6 +15,7 @@ import com.liferay.osb.faro.web.internal.controller.main.NotificationController;
 import com.liferay.osb.faro.web.internal.controller.main.OAuth2Controller;
 import com.liferay.osb.faro.web.internal.controller.main.PreferencesController;
 import com.liferay.osb.faro.web.internal.controller.main.ProjectController;
+import com.liferay.osb.faro.web.internal.controller.main.ReportController;
 import com.liferay.osb.faro.web.internal.controller.main.UserController;
 
 import java.util.HashSet;
@@ -53,6 +54,7 @@ public class MainApplication extends BaseApplication {
 		controllers.add(_oAuth2Controller);
 		controllers.add(_preferencesController);
 		controllers.add(_projectController);
+		controllers.add(_reportController);
 		controllers.add(_userController);
 
 		return controllers;
@@ -84,6 +86,9 @@ public class MainApplication extends BaseApplication {
 
 	@Reference
 	private ProjectController _projectController;
+
+	@Reference
+	private ReportController _reportController;
 
 	@Reference
 	private UserController _userController;

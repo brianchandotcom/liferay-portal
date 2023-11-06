@@ -52,10 +52,7 @@ definition {
 		task ("And I assert that the Liferay Staff user is able to visualize all projects") {
 			CustomerPortal.tableListInHomepage(projectList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0,Test Account No SLA");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			Navigator.gotoNavTab(navTab = "Organizations");
 
@@ -83,10 +80,7 @@ definition {
 		}
 
 		task ("Then I assert that the user is not a Liferay Staff") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "test");
 

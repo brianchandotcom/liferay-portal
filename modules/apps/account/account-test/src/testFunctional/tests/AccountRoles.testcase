@@ -1179,10 +1179,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given: An Organization is created Logging Message Audit Message Processor and Output to Console is enabled") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			Organization.openOrganizationsAdmin();
 
@@ -1323,10 +1320,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given: A User is created Logging Message Audit Message Processor and Output to Console is enabled") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.createUser(
 				userEmailAddress = "joebloggs@liferay.com",
@@ -1467,10 +1461,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given: A User is created Logging Message Audit Message Processor and Output to Console is enabled") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.createUser(
 				userEmailAddress = "joebloggs@liferay.com",
@@ -1505,10 +1496,7 @@ definition {
 		}
 
 		task ("When: A Role is assigned to the previously created User, then unassign the User from the Role and all of this happens in the User Settings Menu") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.assignRegularRoleCP(
 				roleTitle = "Power User",

@@ -527,10 +527,7 @@ definition {
 		}
 
 		task ("Assign the second user to the created site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.editUserSiteCP(
 				siteName = "Site Name",

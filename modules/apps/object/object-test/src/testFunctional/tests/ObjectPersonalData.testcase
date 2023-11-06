@@ -70,10 +70,7 @@ definition {
 		}
 
 		task ("When the admin user anonymizes the user's personal data in Users and Organizations") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.deletePersonalDataCP(
 				userFirstName = "userfn",
@@ -226,10 +223,7 @@ definition {
 		}
 
 		task ("When the admin user deletes the user's personal data and reactivates the user in Users and Organizations") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.deletePersonalDataCP(
 				userFirstName = "userfn",
@@ -309,10 +303,7 @@ definition {
 		}
 
 		task ("When the admin user exports the personal data of the user in Users and Organizations") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.exportPersonalDataCP(
 				userFirstName = "userfn",

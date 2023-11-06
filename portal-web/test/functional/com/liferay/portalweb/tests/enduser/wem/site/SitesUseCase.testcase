@@ -538,10 +538,7 @@ definition {
 		}
 
 		task ("Add a user and set require password reset") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin(baseURL = "http://www.baker.com:8080");
 
 			User.addCP(
 				userEmailAddress = "user1@liferay.com",

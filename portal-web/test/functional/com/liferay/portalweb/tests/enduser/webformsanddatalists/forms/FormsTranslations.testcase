@@ -547,10 +547,7 @@ definition {
 		}
 
 		task ("and When the user changes the user default language") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.editDisplaySettingsCP(
 				languageName = "português (Brasil)",

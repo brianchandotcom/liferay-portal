@@ -398,10 +398,7 @@ definition {
 		}
 
 		task ("Then the action is triggered and a user is added") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			LexiconEntry.viewEntryName(rowEntry = "newusertest");
 		}

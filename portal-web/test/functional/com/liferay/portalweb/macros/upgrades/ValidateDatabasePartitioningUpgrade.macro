@@ -9,10 +9,7 @@ definition {
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
 		User.viewCP(
 			userEmailAddress = "test1@www.able.com",
@@ -20,10 +17,7 @@ definition {
 			userLastName = "Test1",
 			userScreenName = "test1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
 		User.searchCP(searchTerm = "test2");
 
@@ -64,10 +58,7 @@ definition {
 			specificURL = "http://www.baker.com:8080",
 			userEmailAddress = "test@www.baker.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin(baseURL = "http://www.baker.com:8080");
 
 		User.viewCP(
 			userEmailAddress = "test2@www.baker.com",
@@ -75,10 +66,7 @@ definition {
 			userLastName = "Test2",
 			userScreenName = "test2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin(baseURL = "http://www.baker.com:8080");
 
 		User.searchCP(searchTerm = "test1");
 

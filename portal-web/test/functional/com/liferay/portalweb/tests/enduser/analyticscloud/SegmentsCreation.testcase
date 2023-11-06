@@ -393,10 +393,7 @@ definition {
 		}
 
 		task ("Edit the user custom field") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "user3");
 
@@ -521,10 +518,7 @@ definition {
 		}
 
 		task ("Edit job title field of one of the users") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "user3");
 
@@ -1008,10 +1002,7 @@ definition {
 
 		task ("Edit the users age") {
 			for (var userName : list ${userScreenNames}) {
-				ApplicationsMenu.gotoPortlet(
-					category = "Users",
-					panel = "Control Panel",
-					portlet = "Users and Organizations");
+				User.openUsersAdmin();
 
 				UserNavigator.gotoUser(userScreenName = ${userName});
 

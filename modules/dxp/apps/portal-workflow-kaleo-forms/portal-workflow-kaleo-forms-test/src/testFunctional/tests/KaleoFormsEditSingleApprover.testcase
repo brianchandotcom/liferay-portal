@@ -120,10 +120,7 @@ definition {
 
 		Role.add(roleTitle = "Updater Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.addCP(
 			userEmailAddress = "user1@liferay.com",
@@ -131,10 +128,7 @@ definition {
 			userLastName = "Creator",
 			userScreenName = "creator");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "user1@liferay.com",
@@ -150,10 +144,7 @@ definition {
 			assigneeType = "Users",
 			roleTitle = "Administrator");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.addCP(
 			userEmailAddress = "user2@liferay.com",
@@ -161,10 +152,7 @@ definition {
 			userLastName = "Reviewer",
 			userScreenName = "reviewer");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "user2@liferay.com",
@@ -190,10 +178,7 @@ definition {
 			assigneeType = "Users",
 			roleTitle = "Reviewer Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.addCP(
 			userEmailAddress = "user3@liferay.com",
@@ -201,10 +186,7 @@ definition {
 			userLastName = "Updater",
 			userScreenName = "updater");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "user3@liferay.com",

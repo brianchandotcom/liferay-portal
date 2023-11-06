@@ -105,10 +105,7 @@ definition {
 	@summary = "Validates data persistence and that the basic portal functionalities are working correctly across multiple instances after an upgrade is executed"
 	macro viewVirtualInstancesUpgrade() {
 		task ("Assert user on default instance") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.viewCP(
 				userEmailAddress = "userea1@liferay.com",
@@ -193,10 +190,7 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
 			User.viewCP(
 				userEmailAddress = "userea2@www.able.com",
@@ -291,10 +285,7 @@ definition {
 				specificURL = "http://www.baker.com:8080",
 				userEmailAddress = "test@www.baker.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin(baseURL = "http://www.baker.com:8080");
 
 			User.viewCP(
 				userEmailAddress = "userea3@www.baker.com",

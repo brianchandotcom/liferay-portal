@@ -620,7 +620,10 @@ definition {
 	@description = "This is a use case for LPS-157661. It asserts that account avatar can be added in creation."
 	@priority = 4
 	test CanAddAccountWithAvatar {
-		Account.openAccountsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
 
 		Account.addBusinessAccount(
 			accountLogo = "marketplace_icon.png",

@@ -39,10 +39,7 @@ definition {
 	@priority = 4
 	test ViewProductMenuIconInvisibleInGlobalAppAfterEnableLive {
 		task ("View product menu icon is not shown in Control Panel apps") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
 		}

@@ -32,10 +32,7 @@ definition {
 	@description = "LPS-102664 - Verify that the user can reassign several tasks to a different users and All Items page is updated accordingly"
 	@priority = 4
 	test AllItemsPageIsUpdatedAfterReassignTasksToDifferentUser {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.addCP(
 			userEmailAddress = "usertest@liferay.com",
@@ -43,10 +40,7 @@ definition {
 			userLastName = "Test",
 			userScreenName = "usertest");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.assignRegularRoleCP(
 			roleTitle = "Administrator",

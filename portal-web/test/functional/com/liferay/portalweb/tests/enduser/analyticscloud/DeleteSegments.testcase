@@ -404,10 +404,7 @@ definition {
 				userLastName = "ac",
 				userScreenName = "ac");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "ac");
 
@@ -423,10 +420,7 @@ definition {
 		}
 
 		task ("Redefine the value of the custom field") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "ac");
 

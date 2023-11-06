@@ -9,7 +9,7 @@ import CreateLicense from '../CreateLicense';
 import Apps from './Apps';
 import App from './Apps/App/App';
 import AppOutlet from './Apps/App/AppOutlet';
-import Licenses from './Apps/App/Licenses';
+import Licenses from './Apps/Licenses/Licenses';
 import Members from './Members';
 import PurchasedAppsDashboardOutlet from './PurchasedAppsDashboardOutlet';
 import Solutions from './Solutions';

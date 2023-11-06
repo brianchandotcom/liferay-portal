@@ -28,7 +28,7 @@ const AppNavbar = () => {
 	const routeParams = location.pathname.split('/').filter(Boolean);
 
 	return (
-		<div className="mb-4 navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+		<div className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 			<ul className="navbar-nav">
 				<NavLink
 					className={({isActive}) =>

@@ -1,0 +1,29 @@
+.licenses {
+	.date-cell {
+		color: #282934;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 16px;
+	}
+
+	.status-cell {
+		&-icon {
+			&.active {
+				color: #4aab3b;
+			}
+
+			&.expired {
+				color: #da1414;
+			}
+		}
+
+		span {
+			color: #6c6c75;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 16px;
+		}
+	}
+}

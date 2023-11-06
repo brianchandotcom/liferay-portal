@@ -5,15 +5,14 @@
 
 package com.liferay.portal.security.content.security.policy.internal.servlet.taglib;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
+import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfigurationUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -55,7 +54,9 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 		printWriter.print("{}; window.Liferay.CSP = {nonce: '");
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
-			_getContentSecurityPolicyConfiguration(httpServletRequest);
+			ContentSecurityPolicyConfigurationUtil.
+				getContentSecurityPolicyConfiguration(
+					_configurationProvider, httpServletRequest, _portal);
 
 		String policy = contentSecurityPolicyConfiguration.policy();
 
@@ -69,27 +70,6 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
-	}
-
-	private ContentSecurityPolicyConfiguration
-		_getContentSecurityPolicyConfiguration(
-			HttpServletRequest httpServletRequest) {
-
-		try {
-			long groupId = _portal.getScopeGroupId(httpServletRequest);
-
-			if (groupId > 0) {
-				return _configurationProvider.getGroupConfiguration(
-					ContentSecurityPolicyConfiguration.class, groupId);
-			}
-
-			return _configurationProvider.getCompanyConfiguration(
-				ContentSecurityPolicyConfiguration.class,
-				_portal.getCompanyId(httpServletRequest));
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
 	}
 
 	@Reference

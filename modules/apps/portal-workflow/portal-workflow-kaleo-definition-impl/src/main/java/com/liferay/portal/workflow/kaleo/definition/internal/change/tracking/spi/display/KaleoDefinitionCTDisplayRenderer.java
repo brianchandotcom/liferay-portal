@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 
@@ -71,13 +72,13 @@ public class KaleoDefinitionCTDisplayRenderer
 	}
 
 	@Override
-	public String renderPreview(
-		DisplayContext<KaleoDefinition> displayContext) {
+	public String renderPreview(DisplayContext<KaleoDefinition> displayContext)
+		throws WorkflowException {
 
 		KaleoDefinition kaleoDefinition = displayContext.getModel();
 
 		return StringBundler.concat(
-			"<pre>", HtmlUtil.escapeAttribute(kaleoDefinition.getContent()),
+			"<pre>", HtmlUtil.escapeAttribute(kaleoDefinition.getXmlContent()),
 			"</pre>");
 	}
 

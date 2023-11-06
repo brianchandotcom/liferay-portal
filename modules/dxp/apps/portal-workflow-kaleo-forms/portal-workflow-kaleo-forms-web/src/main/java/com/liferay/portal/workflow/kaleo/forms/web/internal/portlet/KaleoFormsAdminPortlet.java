@@ -331,7 +331,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 					serviceContext.getCompanyId(), name, version);
 
 			jsonObject.put(
-				"content", kaleoDefinitionVersion.getContent()
+				"content", kaleoDefinitionVersion.getXmlContent()
 			).put(
 				"name", kaleoDefinitionVersion.getName()
 			).put(

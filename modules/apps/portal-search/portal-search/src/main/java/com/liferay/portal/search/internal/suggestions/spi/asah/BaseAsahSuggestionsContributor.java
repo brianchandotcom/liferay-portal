@@ -76,14 +76,8 @@ public abstract class BaseAsahSuggestionsContributor {
 		return destinationBaseURL + itemJSONObject.getString("keywords");
 	}
 
-	protected int getCharacterThreshold(Map<String, Object> attributes) {
-		if (attributes == null) {
-			return _CHARACTER_THRESHOLD;
-		}
-
-		return MapUtil.getInteger(
-			attributes, "characterThreshold", _CHARACTER_THRESHOLD);
-	}
+	protected abstract int getCharacterThreshold(
+		Map<String, Object> attributes);
 
 	protected String getDisplayLanguageId(
 		Map<String, Object> attributes, Locale locale) {
@@ -114,12 +108,12 @@ public abstract class BaseAsahSuggestionsContributor {
 		SuggestionsContributorConfiguration
 			suggestionsContributorConfiguration);
 
-	protected int getMinCounts(Map<String, Object> attributes) {
+	protected int getMinCounts(Map<String, Object> attributes, int minCounts) {
 		if (attributes == null) {
-			return _MIN_COUNTS;
+			return minCounts;
 		}
 
-		return MapUtil.getInteger(attributes, "minCounts", _MIN_COUNTS);
+		return MapUtil.getInteger(attributes, "minCounts", minCounts);
 	}
 
 	protected List<Suggestion> getSuggestions(
@@ -142,6 +136,12 @@ public abstract class BaseAsahSuggestionsContributor {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject itemJSONObject = jsonArray.getJSONObject(i);
 
+			String text = getText(itemJSONObject);
+
+			if (Validator.isBlank(text)) {
+				continue;
+			}
+
 			suggestions.add(
 				suggestionBuilderFactory.builder(
 				).attribute(
@@ -149,7 +149,7 @@ public abstract class BaseAsahSuggestionsContributor {
 				).score(
 					1.0F
 				).text(
-					getText(destinationBaseURL, itemJSONObject)
+					text
 				).build());
 		}
 
@@ -203,9 +203,7 @@ public abstract class BaseAsahSuggestionsContributor {
 		).build();
 	}
 
-	protected String getText(
-		String destinationBaseURL, JSONObject itemJSONObject) {
-
+	protected String getText(JSONObject itemJSONObject) {
 		return itemJSONObject.getString("keywords");
 	}
 
@@ -235,10 +233,6 @@ public abstract class BaseAsahSuggestionsContributor {
 	@Reference
 	protected SuggestionsContributorResultsBuilderFactory
 		suggestionsContributorResultsBuilderFactory;
-
-	private static final int _CHARACTER_THRESHOLD = 2;
-
-	private static final int _MIN_COUNTS = 5;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAsahSuggestionsContributor.class);

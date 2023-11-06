@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.internal.configuration.AsahSearchKeywordsConfiguration;
 import com.liferay.portal.search.internal.suggestions.spi.asah.BaseAsahSuggestionsContributor;
 import com.liferay.portal.search.internal.web.cache.AsahSearchKeywordsWebCacheItem;
@@ -27,8 +28,18 @@ public abstract class BaseAsahKeywordsSuggestionsContributor
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		asahSearchKeywordsConfiguration = ConfigurableUtil.createConfigurable(
+		_asahSearchKeywordsConfiguration = ConfigurableUtil.createConfigurable(
 			AsahSearchKeywordsConfiguration.class, properties);
+	}
+
+	@Override
+	protected int getCharacterThreshold(Map<String, Object> attributes) {
+		if (attributes == null) {
+			return _CHARACTER_THRESHOLD;
+		}
+
+		return MapUtil.getInteger(
+			attributes, "characterThreshold", _CHARACTER_THRESHOLD);
 	}
 
 	@Override
@@ -40,16 +51,21 @@ public abstract class BaseAsahKeywordsSuggestionsContributor
 			suggestionsContributorConfiguration) {
 
 		return AsahSearchKeywordsWebCacheItem.get(
-			analyticsConfiguration, basePath, asahSearchKeywordsConfiguration,
+			analyticsConfiguration, basePath, _asahSearchKeywordsConfiguration,
 			searchContext.getCompanyId(),
 			getDisplayLanguageId(attributes, searchContext.getLocale()),
-			getGroupId(searchContext), getMinCounts(attributes), path,
+			getGroupId(searchContext), getMinCounts(attributes, _MIN_COUNTS),
+			path,
 			GetterUtil.getInteger(
 				suggestionsContributorConfiguration.getSize(), 5),
 			sort);
 	}
 
-	protected volatile AsahSearchKeywordsConfiguration
-		asahSearchKeywordsConfiguration;
+	private static final int _CHARACTER_THRESHOLD = 2;
+
+	private static final int _MIN_COUNTS = 5;
+
+	private volatile AsahSearchKeywordsConfiguration
+		_asahSearchKeywordsConfiguration;
 
 }

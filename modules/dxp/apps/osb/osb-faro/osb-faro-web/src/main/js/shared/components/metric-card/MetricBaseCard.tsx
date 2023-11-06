@@ -3,7 +3,6 @@ import Card from 'shared/components/Card';
 import MetricChart from './MetricChart';
 import MetricTabs from './MetricTabs';
 import React, {createContext, useContext, useReducer} from 'react';
-import {Containers} from '../download-report/DownloadPDFReport';
 import {DocumentNode} from 'graphql';
 import {getMetricsChartData} from './util';
 import {Interval, RangeSelectors, Router} from 'shared/types';
@@ -64,6 +63,7 @@ function MetricBaseCard<TChartData>({
 	chartDataMapFn = getMetricsChartData,
 	label,
 	legacyDropdownRangeKey = false,
+	id,
 	metrics,
 	queries,
 	showIntervals = false,
@@ -99,7 +99,7 @@ function MetricBaseCard<TChartData>({
 			<MetricContextActions.Provider value={actions}>
 				<BaseCard
 					className='analytics-metrics-card'
-					id={Containers.MainMetricsCard}
+					id={id}
 					label={label}
 					legacyDropdownRangeKey={legacyDropdownRangeKey}
 					minHeight={605}

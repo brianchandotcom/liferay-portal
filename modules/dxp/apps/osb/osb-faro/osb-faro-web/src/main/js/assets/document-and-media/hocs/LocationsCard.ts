@@ -2,6 +2,7 @@ import getLocationsMapper, {
 	getLocationsMapperCountries
 } from 'cerebro-shared/hocs/mappers/locations';
 import URLConstants from 'shared/util/url-constants';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
 import {gql} from 'apollo-boost';
 import {graphql} from '@apollo/react-hoc';
@@ -70,6 +71,7 @@ export default withLocationsCard(
 		),
 		documentationUrl:
 			URLConstants.SitesDashboardDocumentsAndMediaDownloadByLocation,
+		id: Containers.ViewsByLocationCard,
 		title: Liferay.Language.get(
 			'there-are-no-downloads-on-the-selected-period'
 		)

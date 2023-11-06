@@ -116,7 +116,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 					{matchedRoute === Routes.SITES && (
 						<DownloadPDFReport
 							containers={[
-								Containers.MainMetricsCard,
+								Containers.SiteActivityCard,
 								Containers.TopPagesCard,
 								Containers.AcquisitionsCard,
 								Containers.VisitorsByTimeCard,

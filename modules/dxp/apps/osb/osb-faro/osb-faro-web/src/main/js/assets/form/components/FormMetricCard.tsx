@@ -13,6 +13,7 @@ import {
 	AssetMetricQuery,
 	AssetTabsQuery
 } from 'shared/components/metric-card/queries';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const NAME = 'form';
@@ -30,6 +31,7 @@ const FormMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 	return (
 		<MetricBaseCard
 			{...props}
+			id={Containers.VisitorsBehaviorCard}
 			metrics={metrics}
 			queries={{
 				MetricQuery: AssetMetricQuery(NAME),

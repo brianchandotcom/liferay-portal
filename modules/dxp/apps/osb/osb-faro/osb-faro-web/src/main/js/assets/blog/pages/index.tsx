@@ -1,16 +1,20 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
+import DownloadPDFReport, {
+	Containers
+} from 'shared/components/download-report/DownloadPDFReport';
 import Filter from '../hocs/Filter';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {ENABLE_GLOBAL_FILTER} from 'shared/util/constants';
+import {getMatchedRoute, Routes} from 'shared/util/router';
 import {getRangeSelectorsFromQuery} from 'shared/util/util';
 import {pickBy} from 'lodash';
 import {Router} from 'shared/types';
-import {Routes} from 'shared/util/router';
+import {sub} from 'shared/util/lang';
 import {Switch} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 
@@ -23,6 +27,19 @@ const KnownIndividuals = lazy(
 			/* webpackChunkName: "BlogsKnownIndividuals" */ './KnownIndividuals'
 		)
 );
+
+const NAV_ITEMS = [
+	{
+		exact: true,
+		label: Liferay.Language.get('overview'),
+		route: Routes.ASSETS_BLOGS_OVERVIEW
+	},
+	{
+		exact: true,
+		label: Liferay.Language.get('known-individuals'),
+		route: Routes.ASSETS_BLOGS_KNOWN_INDIVIDUALS
+	}
+];
 
 const Blog: React.FC<{
 	className: string;
@@ -62,18 +79,7 @@ const Blog: React.FC<{
 				<BasePage.Header.TitleSection title={decodedTitle} />
 
 				<BasePage.Header.NavBar
-					items={[
-						{
-							exact: true,
-							label: Liferay.Language.get('overview'),
-							route: Routes.ASSETS_BLOGS_OVERVIEW
-						},
-						{
-							exact: true,
-							label: Liferay.Language.get('known-individuals'),
-							route: Routes.ASSETS_BLOGS_KNOWN_INDIVIDUALS
-						}
-					]}
+					items={NAV_ITEMS}
 					routeParams={{
 						assetId,
 						channelId,
@@ -84,6 +90,23 @@ const Blog: React.FC<{
 					routeQueries={pickBy(rangeSelectorsFromQuery)}
 				/>
 			</BasePage.Header>
+
+			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_BLOGS_OVERVIEW && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadPDFReport
+							containers={[Containers.VisitorsBehaviorCard]}
+							disabled={false}
+							subtitle={selectedChannel?.name}
+							title={
+								sub(Liferay.Language.get('x-dashboard'), [
+									decodedTitle
+								]) as string
+							}
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
 
 			<BasePage.Context.Provider
 				value={{

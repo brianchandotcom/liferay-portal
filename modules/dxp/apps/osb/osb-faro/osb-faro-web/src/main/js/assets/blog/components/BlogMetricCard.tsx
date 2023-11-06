@@ -14,6 +14,7 @@ import {
 	ReadingTimeMetric,
 	ViewsMetric
 } from 'shared/components/metric-card/metrics';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const NAME = 'blog';
@@ -31,6 +32,7 @@ const BlogMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 	return (
 		<MetricBaseCard
 			{...props}
+			id={Containers.VisitorsBehaviorCard}
 			metrics={metrics}
 			queries={{
 				MetricQuery: AssetMetricQuery(NAME),

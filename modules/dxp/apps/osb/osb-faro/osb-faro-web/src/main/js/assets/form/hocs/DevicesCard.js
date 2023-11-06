@@ -1,6 +1,7 @@
 import getDevicesMapper from 'cerebro-shared/hocs/mappers/devices';
 import URLConstants from 'shared/util/url-constants';
 import {BROWSER_FRAGMENT, DEVICE_FRAGMENT} from 'shared/queries/fragments';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {gql} from 'apollo-boost';
 import {graphql} from '@apollo/react-hoc';
 import {withDevicesCard} from 'shared/hoc/DevicesCard';
@@ -57,6 +58,7 @@ export default withDevicesCard(withFormsDevices, {
 		'learn-more-about-submissions-by-technology'
 	),
 	documentationUrl: URLConstants.SitesDashboardFormsSubmissionsByTechnology,
+	id: Containers.ViewsByTechnologyCard,
 	title: Liferay.Language.get(
 		'there-are-no-submissions-on-the-selected-period'
 	)

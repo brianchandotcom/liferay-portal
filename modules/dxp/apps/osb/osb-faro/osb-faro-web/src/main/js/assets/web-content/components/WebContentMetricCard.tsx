@@ -6,6 +6,7 @@ import {
 	AssetMetricQuery,
 	AssetTabsQuery
 } from 'shared/components/metric-card/queries';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {Metric, ViewsMetric} from 'shared/components/metric-card/metrics';
 import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
@@ -19,6 +20,7 @@ const WebContentMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 	return (
 		<MetricBaseCard
 			{...props}
+			id={Containers.VisitorsBehaviorCard}
 			metrics={metrics}
 			queries={{
 				MetricQuery: AssetMetricQuery(NAME),

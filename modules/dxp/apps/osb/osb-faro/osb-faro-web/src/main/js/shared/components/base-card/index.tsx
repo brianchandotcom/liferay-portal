@@ -22,6 +22,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 	children,
 	className,
 	headerProps = {},
+	id,
 	label,
 	legacyDropdownRangeKey = true,
 	minHeight,
@@ -46,7 +47,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 	};
 
 	return (
-		<Card className={className} minHeight={minHeight}>
+		<Card className={className} id={id} minHeight={minHeight}>
 			<Header
 				{...otherProps}
 				label={label}

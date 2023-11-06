@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.preview.video.internal.processor;
 
 import com.liferay.document.library.kernel.background.task.DLBackgroundTaskExecutorNames;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.VideoConverter;
 import com.liferay.document.library.kernel.util.VideoProcessor;
+import com.liferay.document.library.preview.processor.DLPreviewableProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.image.ImageToolUtil;

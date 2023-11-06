@@ -31,7 +31,6 @@ export function PurchasedAppsDashboardTableRow({
 		name,
 		orderId,
 		orderTypeExternalReferenceCode,
-		productId,
 		project,
 		provisioning,
 		provisioningLabel,
@@ -161,7 +160,7 @@ export function PurchasedAppsDashboardTableRow({
 						)}
 						<DropDown.Item
 							onClick={() => {
-								navigate(`/app/${productId}/licenses`);
+								navigate(`/order/${orderId}/licenses`);
 							}}
 						>
 							Manage License Key(s)

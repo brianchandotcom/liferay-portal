@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {addParams, fetch, openModal} from 'frontend-js-web';
+import {addParams, fetch, navigate, openModal} from 'frontend-js-web';
 
 export default function propsTransformer({additionalProps, ...props}) {
-	const {redirect: signInRedirect, signInURL} = additionalProps;
+	const {signInURL} = additionalProps;
 
 	const signInLink = document.querySelector('.sign-in > div > button');
 
@@ -27,8 +27,8 @@ export default function propsTransformer({additionalProps, ...props}) {
 	};
 
 	let loading = false;
-	let redirect = false;
 	let html = '';
+	let {redirect} = additionalProps;
 	let modalOpen = false;
 
 	const fetchModalSignIn = function () {
@@ -71,13 +71,13 @@ export default function propsTransformer({additionalProps, ...props}) {
 		onClick() {
 			fetchModalSignIn();
 
-			if (signInLink && !signInRedirect) {
-				if (redirect) {
-					Liferay.Util.navigate(signInURL);
+			if (redirect) {
+				navigate(signInURL);
 
-					return;
-				}
+				return;
+			}
 
+			if (signInLink) {
 				openModal({
 					bodyHTML: html ? html : '<span class="loading-animation">',
 					containerProps: {

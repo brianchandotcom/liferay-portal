@@ -1478,7 +1478,7 @@ public abstract class BaseBuild implements Build {
 		_jenkinsMaster = null;
 		_jenkinsSlave = null;
 		_result = null;
-		_statusModifiedTime = 0;
+		_statusModifiedTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		if (_buildUpdater != null) {
 			_buildUpdater.reset();

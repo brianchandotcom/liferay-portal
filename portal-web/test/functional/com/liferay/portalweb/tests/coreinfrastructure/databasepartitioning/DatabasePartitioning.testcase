@@ -438,10 +438,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin();
 
 		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
 

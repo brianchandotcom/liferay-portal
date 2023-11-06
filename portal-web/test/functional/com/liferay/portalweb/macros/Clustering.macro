@@ -45,10 +45,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin(baseURL = "http://localhost:${nodePort}");
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "DEBUG",

@@ -692,8 +692,8 @@ public class SourceFormatter {
 					breakingChangeReport, "## What");
 				int whyCount = StringUtil.count(breakingChangeReport, "## Why");
 
-				if ((alternativesCount != 1) || (whatCount != 1) ||
-					(whyCount != 1)) {
+				if (((alternativesCount != 0) && (alternativesCount != 1)) ||
+					(whatCount != 1) || (whyCount != 1)) {
 
 					throw new Exception(
 						StringBundler.concat(
@@ -703,10 +703,11 @@ public class SourceFormatter {
 							"'----' to split each breaking change."));
 				}
 
-				if (!((breakingChangeReport.indexOf("## What") <
-						breakingChangeReport.indexOf("## Why")) &&
-					  (breakingChangeReport.indexOf("## Why") <
-						  breakingChangeReport.indexOf("## Alternatives")))) {
+				if ((breakingChangeReport.indexOf("## What") >
+						breakingChangeReport.indexOf("## Why")) ||
+					(breakingChangeReport.contains("## Alternatives") &&
+					 (breakingChangeReport.indexOf("## Why") >
+						 breakingChangeReport.indexOf("## Alternatives")))) {
 
 					throw new Exception(
 						StringBundler.concat(
@@ -733,8 +734,9 @@ public class SourceFormatter {
 							nextLine = lines[i + 1].trim();
 						}
 
-						if ((nextLine.length() != 0) ||
-							(previousLine.length() != 0)) {
+						if (((nextLine != null) && !nextLine.isEmpty()) ||
+							((previousLine != null) &&
+							 !previousLine.isEmpty())) {
 
 							throw new Exception(
 								StringBundler.concat(

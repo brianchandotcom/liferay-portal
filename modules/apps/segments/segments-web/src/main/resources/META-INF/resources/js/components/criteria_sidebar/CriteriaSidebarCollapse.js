@@ -114,7 +114,7 @@ const CriteriaSidebarCollapse = ({
 						onExpandedChange={_handleClick(key, active)}
 					>
 						<ClayPanel.Body className="c-px-0">
-							<p className="c-pt-1 c-px-4 text-secondary">
+							<p className="c-pt-1 text-secondary">
 								{Liferay.Language.get(
 									'inherited-attributes-are-not-taken-into-account-to-include-members-in-segments'
 								)}

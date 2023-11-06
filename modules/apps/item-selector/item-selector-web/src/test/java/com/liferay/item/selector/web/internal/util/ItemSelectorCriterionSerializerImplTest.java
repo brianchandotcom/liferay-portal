@@ -12,6 +12,7 @@ import com.liferay.item.selector.web.internal.TestStringItemSelectorReturnType;
 import com.liferay.item.selector.web.internal.TestURLItemSelectorReturnType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -23,6 +24,8 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Iván Zaera
@@ -41,6 +44,9 @@ public class ItemSelectorCriterionSerializerImplTest {
 
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			_testStringItemSelectorReturnType, _testURLItemSelectorReturnType);
+
+		_stubItemSelectorCriterionSerializerImpl.activate(
+			SystemBundleUtil.getBundleContext());
 
 		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testFileEntryItemSelectorReturnType);
@@ -128,6 +134,11 @@ public class ItemSelectorCriterionSerializerImplTest {
 			ItemSelectorReturnType itemSelectorReturnType) {
 
 			super.addItemSelectorReturnType(itemSelectorReturnType);
+		}
+
+		@Override
+		protected void activate(BundleContext bundleContext) {
+			super.activate(bundleContext);
 		}
 
 	}

@@ -64,6 +64,8 @@ public class ItemSelectorImplTest {
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			_testURLItemSelectorReturnType);
 
+		_stubItemSelectorCriterionSerializerImpl.activate(_bundleContext);
+
 		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testFileEntryItemSelectorReturnType);
 		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
@@ -364,6 +366,11 @@ public class ItemSelectorImplTest {
 			ItemSelectorReturnType itemSelectorReturnType) {
 
 			super.addItemSelectorReturnType(itemSelectorReturnType);
+		}
+
+		@Override
+		protected void activate(BundleContext bundleContext) {
+			super.activate(bundleContext);
 		}
 
 	}

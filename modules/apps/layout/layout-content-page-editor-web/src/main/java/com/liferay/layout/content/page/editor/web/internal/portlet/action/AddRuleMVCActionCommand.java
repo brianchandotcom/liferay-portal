@@ -55,6 +55,15 @@ public class AddRuleMVCActionCommand
 						layoutStructure.addLayoutStructureRule(
 							ParamUtil.getString(actionRequest, "name"));
 
+					layoutStructureRule.setActionsJSONArray(
+						_jsonFactory.createJSONArray(
+							ParamUtil.getString(actionRequest, "actions")));
+					layoutStructureRule.setConditionsJSONArray(
+						_jsonFactory.createJSONArray(
+							ParamUtil.getString(actionRequest, "conditions")));
+					layoutStructureRule.setConditionType(
+						ParamUtil.getString(actionRequest, "conditionType"));
+
 					jsonObject.put("addedRuleId", layoutStructureRule.getId());
 				}));
 

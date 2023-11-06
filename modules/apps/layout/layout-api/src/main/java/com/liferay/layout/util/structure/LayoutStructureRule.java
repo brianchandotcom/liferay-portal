@@ -6,8 +6,11 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
@@ -18,12 +21,31 @@ public class LayoutStructureRule {
 
 	public static LayoutStructureRule of(JSONObject jsonObject) {
 		return new LayoutStructureRule(
-			jsonObject.getString("id"), jsonObject.getString("name"));
+			jsonObject.getJSONArray("actions"),
+			jsonObject.getJSONArray("conditions"),
+			jsonObject.getString("conditionType"), jsonObject.getString("id"),
+			jsonObject.getString("name"));
+	}
+
+	public LayoutStructureRule(
+		JSONArray actionsJSONArray, JSONArray conditionsJSONArray,
+		String conditionType, String id, String name) {
+
+		_actionsJSONArray = actionsJSONArray;
+		_conditionsJSONArray = conditionsJSONArray;
+
+		if (Validator.isNotNull(conditionType)) {
+			_conditionType = conditionType;
+		}
+
+		_id = id;
+		_name = name;
 	}
 
 	public LayoutStructureRule(String id, String name) {
-		_id = id;
-		_name = name;
+		this(
+			JSONFactoryUtil.createJSONArray(),
+			JSONFactoryUtil.createJSONArray(), null, id, name);
 	}
 
 	@Override
@@ -47,6 +69,22 @@ public class LayoutStructureRule {
 		return false;
 	}
 
+	public JSONArray getActionsJSONArray() {
+		return _actionsJSONArray;
+	}
+
+	public JSONArray getConditionsJSONArray() {
+		return _conditionsJSONArray;
+	}
+
+	public String getConditionType() {
+		if (Validator.isNull(_conditionType)) {
+			return "all";
+		}
+
+		return _conditionType;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -60,6 +98,18 @@ public class LayoutStructureRule {
 		return HashUtil.hash(0, getId());
 	}
 
+	public void setActionsJSONArray(JSONArray actionsJSONArray) {
+		_actionsJSONArray = actionsJSONArray;
+	}
+
+	public void setConditionsJSONArray(JSONArray conditionsJSONArray) {
+		_conditionsJSONArray = conditionsJSONArray;
+	}
+
+	public void setConditionType(String conditionType) {
+		_conditionType = conditionType;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -70,6 +120,12 @@ public class LayoutStructureRule {
 
 	public JSONObject toJSONObject() {
 		return JSONUtil.put(
+			"actions", _actionsJSONArray
+		).put(
+			"conditions", _conditionsJSONArray
+		).put(
+			"conditionType", _conditionType
+		).put(
 			"id", getId()
 		).put(
 			"name", getName()
@@ -83,6 +139,9 @@ public class LayoutStructureRule {
 		return jsonObject.toString();
 	}
 
+	private JSONArray _actionsJSONArray;
+	private JSONArray _conditionsJSONArray;
+	private String _conditionType = "all";
 	private String _id;
 	private String _name;
 

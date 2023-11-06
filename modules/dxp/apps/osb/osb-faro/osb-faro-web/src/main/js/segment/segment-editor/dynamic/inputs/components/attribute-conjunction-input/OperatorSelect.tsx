@@ -59,7 +59,7 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 				}}
 				selectedKey={operatorName}
 			>
-				{({label, value}) => <Option key={value}>{label}</Option>}
+				{item => <Option key={item as string}>{item}</Option>}
 			</Picker>
 		</Form.GroupItem>
 	);

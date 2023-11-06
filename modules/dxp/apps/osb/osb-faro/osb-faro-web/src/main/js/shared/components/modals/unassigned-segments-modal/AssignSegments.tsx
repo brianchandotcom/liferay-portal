@@ -97,7 +97,7 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 				required
 				selectedKey={channelMappings[id]}
 			>
-				{({label, value}) => <Option key={value}>{label}</Option>}
+				{item => <Option key={item as string}>{item}</Option>}
 			</Picker>
 		</td>
 	);

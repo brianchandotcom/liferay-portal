@@ -3,6 +3,7 @@ import BaseCard from 'shared/components/base-card';
 import Card from '../Card';
 import React from 'react';
 import {AssetAudienceReportQuery, PageAudienceReportQuery} from './queries';
+import {Containers} from '../download-report/DownloadPDFReport';
 import {IAudienceReportBaseCardProps, Name} from './types';
 
 function AudienceReportBaseCard({
@@ -15,6 +16,7 @@ function AudienceReportBaseCard({
 	return (
 		<BaseCard
 			className='analytics-audience-report-card'
+			id={Containers.AudienceCard}
 			label={Liferay.Language.get('audience')}
 			legacyDropdownRangeKey={false}
 			minHeight={536}

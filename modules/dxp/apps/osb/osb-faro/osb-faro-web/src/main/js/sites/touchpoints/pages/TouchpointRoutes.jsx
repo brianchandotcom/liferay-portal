@@ -1,6 +1,9 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
+import DownloadPDFReport, {
+	Containers
+} from 'shared/components/download-report/DownloadPDFReport';
 import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import Filter from '../hocs/Filter';
 import getCN from 'classnames';
@@ -15,6 +18,7 @@ import {pickBy} from 'lodash';
 import {PropTypes} from 'prop-types';
 import {Switch} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
+import {useDataSource} from 'shared/hooks/useDataSource';
 
 const KnownIndividuals = lazy(() =>
 	import(
@@ -49,21 +53,16 @@ const NAV_ITEMS = [
 ];
 
 function TouchpointRoutes({className, router}) {
+	const dataSourceStates = useDataSource();
 	const rangeSelectors = getRangeSelectorsFromQuery(router.query);
-
 	const {channelId, groupId, title, touchpoint} = router.params;
-
 	const [filters, setFilters] = useState({});
 	const [pathRangeSelectors, setPathRangeSelectors] = useState(
 		rangeSelectors
 	);
-
 	const {selectedChannel} = useChannelContext();
-
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
-
 	const decodedTitle = decodeURIComponent(title);
-
 	const decodedTouchpoint = decodeURIComponent(touchpoint);
 
 	useEffect(() => {
@@ -111,25 +110,46 @@ function TouchpointRoutes({className, router}) {
 				/>
 			</BasePage.Header>
 
+			{matchedRoute === Routes.SITES_TOUCHPOINTS_OVERVIEW && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadPDFReport
+							containers={[
+								Containers.VisitorsBehaviorCard,
+								Containers.AudienceCard,
+								Containers.ViewsByLocationCard,
+								Containers.ViewsByTechnologyCard
+							]}
+							disabled={dataSourceStates.empty}
+							subtitle={`${
+								selectedChannel.name
+							} | ${Liferay.Language.get('page-dashboard')}`}
+							title={decodedTitle}
+							url={decodedTouchpoint}
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
+
 			<BasePage.Context.Provider
 				value={{
 					filters,
 					router
 				}}
 			>
-				<BasePage.SubHeader>
-					{ENABLE_GLOBAL_FILTER && (
-						<Filter onChange={setFilters} router={router} />
-					)}
+				{matchedRoute === Routes.SITES_TOUCHPOINTS_PATH && (
+					<BasePage.SubHeader>
+						{ENABLE_GLOBAL_FILTER && (
+							<Filter onChange={setFilters} router={router} />
+						)}
 
-					{matchedRoute === Routes.SITES_TOUCHPOINTS_PATH && (
 						<DropdownRangeKey
 							legacy={false}
 							onChange={setPathRangeSelectors}
 							rangeSelectors={pathRangeSelectors}
 						/>
-					)}
-				</BasePage.SubHeader>
+					</BasePage.SubHeader>
+				)}
 
 				<BasePage.Body>
 					<Suspense fallback={<Loading />}>

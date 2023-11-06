@@ -11,6 +11,7 @@ import {
 	ViewsMetric,
 	VisitorsMetric
 } from 'shared/components/metric-card/metrics';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	PageMetricQuery,
 	PageMetricTabsQuery
@@ -32,6 +33,7 @@ const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 	return (
 		<MetricBaseCard
 			{...props}
+			id={Containers.VisitorsBehaviorCard}
 			metrics={metrics}
 			queries={{
 				MetricQuery: PageMetricQuery,

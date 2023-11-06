@@ -745,26 +745,25 @@ public class SourceFormatter {
 						}
 					}
 
-					if (trimmedLine.startsWith("## What")) {
-						if (trimmedLine.length() > 7) {
-							throw new Exception(
-								StringBundler.concat(
-									"Found formatting issues:\n", "There ",
-									"should be a line break after '## What'"));
-						}
+					if (trimmedLine.startsWith("## What") &&
+						(trimmedLine.length() > 7)) {
 
-						Matcher matcher = _whatPattern.matcher(
-							breakingChangeReport);
-
-						if (matcher.find()) {
-							throw new Exception(
-								StringBundler.concat(
-									"Found formatting issues:\n", "'## What' ",
-									"block should contain only one file"));
-						}
+						throw new Exception(
+							StringBundler.concat(
+								"Found formatting issues:\n", "There should ",
+								"be a line break after '## What'"));
 					}
 
 					previousLine = trimmedLine;
+				}
+
+				Matcher matcher = _whatPattern.matcher(breakingChangeReport);
+
+				if (matcher.find()) {
+					throw new Exception(
+						StringBundler.concat(
+							"Found formatting issues:\n", "'## What' section ",
+							"should contain only one file"));
 				}
 			}
 		}

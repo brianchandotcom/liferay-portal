@@ -141,7 +141,7 @@ public class UserManagerImpl implements UserManager {
 		ScimUser scimUser = _fetchScimUser(
 			CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
 
-		if (scimUser == null) {
+		if ((scimUser == null) || !scimUser.isActive()) {
 			throw new NotFoundException("No user found with user ID " + userId);
 		}
 

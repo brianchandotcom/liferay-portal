@@ -282,7 +282,7 @@ public class LiferayContextController extends ContextController {
 				filterRegistration.init(
 					new FilterConfigImpl(
 						filterDTO.name, filterDTO.initParams,
-						_createServletContext(
+						_createServletContextAdaptor(
 							filterServiceHolder.getBundle(),
 							_getServletContextHelper(
 								filterServiceHolder.getBundle()))));
@@ -340,7 +340,7 @@ public class LiferayContextController extends ContextController {
 				}
 			}
 
-			ServletContext servletContext = _createServletContext(
+			ServletContext servletContext = _createServletContextAdaptor(
 				eventListenerServiceHolder.getBundle(),
 				_getServletContextHelper(
 					eventListenerServiceHolder.getBundle()));
@@ -431,7 +431,8 @@ public class LiferayContextController extends ContextController {
 			resourceRegistration.init(
 				new ServletConfigImpl(
 					resourceRegistration.getName(), new HashMap<>(),
-					_createServletContext(bundle, servletContextHelper)));
+					_createServletContextAdaptor(
+						bundle, servletContextHelper)));
 		}
 		catch (ServletException servletException) {
 			if (_log.isDebugEnabled()) {
@@ -490,7 +491,7 @@ public class LiferayContextController extends ContextController {
 				servletRegistration.init(
 					new ServletConfigImpl(
 						servletDTO.name, servletDTO.initParams,
-						_createServletContext(
+						_createServletContextAdaptor(
 							servletServiceHolder.getBundle(),
 							curServletContextHelper)));
 
@@ -893,7 +894,7 @@ public class LiferayContextController extends ContextController {
 		return listenerDTO;
 	}
 
-	private ServletContext _createServletContext(
+	private ServletContext _createServletContextAdaptor(
 		Bundle bundle, ServletContextHelper servletContextHelper) {
 
 		ServletContextAdaptor servletContextAdaptor = new ServletContextAdaptor(

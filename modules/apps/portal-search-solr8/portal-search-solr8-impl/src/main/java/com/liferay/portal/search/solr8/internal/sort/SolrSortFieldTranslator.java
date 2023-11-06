@@ -16,12 +16,9 @@ import com.liferay.portal.search.sort.SortVisitor;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Bryan Engler
  */
-@Component(service = SolrSortFieldTranslator.class)
 public class SolrSortFieldTranslator
 	implements SortFieldTranslator<SolrQuery.SortClause>,
 			   SortVisitor<SolrQuery.SortClause> {

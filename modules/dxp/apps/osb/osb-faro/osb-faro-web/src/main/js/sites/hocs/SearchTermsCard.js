@@ -4,6 +4,7 @@ import SearchTermsQuery from 'shared/queries/SearchTermsQuery';
 import URLConstants from 'shared/util/url-constants';
 import {compositionListColumns} from 'shared/util/table-columns';
 import {CompositionTypes} from 'shared/util/constants';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	getMapResultToProps,
 	mapCardPropsToOptions
@@ -62,6 +63,7 @@ const SearchTermsCard = props => {
 	return (
 		<CardWithRangeKey
 			className='search-terms-card-root'
+			id={Containers.SearchTermsCard}
 			label={Liferay.Language.get('search-terms')}
 			legacyDropdownRangeKey={false}
 		>

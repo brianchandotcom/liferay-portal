@@ -19,6 +19,7 @@ const CardWithRangeKey = compose(withRangeKey)(
 	({
 		children,
 		className,
+		id,
 		label,
 		legacyDropdownRangeKey = true,
 		onRangeSelectorsChange,
@@ -26,7 +27,7 @@ const CardWithRangeKey = compose(withRangeKey)(
 		rangeSelectors,
 		...otherProps
 	}: ICardWithRangeKeyProps) => (
-		<Card className={className}>
+		<Card className={className} id={id}>
 			<Card.Header className='align-items-center d-flex justify-content-between'>
 				<Card.Title>{label}</Card.Title>
 

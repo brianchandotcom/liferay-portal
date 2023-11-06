@@ -5,6 +5,7 @@ import OperatingSystem from 'shared/components/OperatingSystem';
 import React, {useCallback, useState} from 'react';
 import WebBrowser from 'shared/components/WebBrowser';
 import {compose} from 'redux';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {HOC_CARD_PROPTYPES} from 'shared/util/proptypes';
 import {PropTypes} from 'prop-types';
 import {withEmpty, withError, withLoading} from 'shared/hoc';
@@ -145,6 +146,7 @@ const withDevicesCard = (
 		return (
 			<BaseCard
 				className={className}
+				id={Containers.SessionTechnologyCard}
 				label={label}
 				legacyDropdownRangeKey={legacyDropdownRangeKey}
 				minHeight={536}

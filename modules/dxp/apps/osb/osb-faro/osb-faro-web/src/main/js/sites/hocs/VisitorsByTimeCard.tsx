@@ -12,6 +12,7 @@ import ReactDOMServer from 'react-dom/server';
 import URLConstants from 'shared/util/url-constants';
 import VisitorsByTimeQuery from 'shared/queries/VisitorsByTimeQuery';
 import {compose} from 'shared/hoc';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {graphql} from '@apollo/react-hoc';
 import {IBasePageContext} from 'shared/types';
 import {
@@ -96,8 +97,7 @@ const HeatmapChartWithData = compose<any>(
 	})
 )(HeatmapChart);
 
-interface IVisitorsByTimeCardProps {
-	className: string;
+interface IVisitorsByTimeCardProps extends React.HTMLAttributes<HTMLElement> {
 	label: string;
 }
 
@@ -112,6 +112,7 @@ const VisitorsByTimeCard: React.FC<IVisitorsByTimeCardProps> = ({
 	return (
 		<CardWithRangeKey
 			className={className}
+			id={Containers.VisitorsByTimeCard}
 			label={label}
 			legacyDropdownRangeKey={false}
 		>

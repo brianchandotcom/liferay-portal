@@ -15,6 +15,7 @@ import {ACQUISITION_LABEL_MAP} from 'shared/util/lang';
 import {AcquisitionTypes, CompositionTypes} from 'shared/util/constants';
 import {ApolloError} from 'apollo-client';
 import {compositionListColumns} from 'shared/util/table-columns';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {RangeSelectors} from 'shared/types';
 import {useQuery} from '@apollo/react-hooks';
@@ -80,6 +81,7 @@ const AcquisitionsCard: React.FC<IAcquisitionsCardProps> = ({
 }) => (
 	<CardWithRangeKey
 		className={className}
+		id={Containers.AcquisitionsCard}
 		label={label}
 		legacyDropdownRangeKey={legacyDropdownRangeKey}
 	>

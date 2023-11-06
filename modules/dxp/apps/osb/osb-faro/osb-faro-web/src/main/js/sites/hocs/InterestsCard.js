@@ -7,6 +7,7 @@ import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {compositionListColumns} from 'shared/util/table-columns';
 import {CompositionTypes, RangeKeyTimeRanges} from 'shared/util/constants';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	getMapResultToProps,
 	mapCardPropsToOptions
@@ -70,6 +71,7 @@ const InterestsCard = () => {
 	return (
 		<CardWithRangeKey
 			className='interests-card-root'
+			id={Containers.InterestsCard}
 			label={Liferay.Language.get('interests')}
 			legacyDropdownRangeKey={false}
 			rangeKeys={rangeKeys}

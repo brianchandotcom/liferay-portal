@@ -7,6 +7,7 @@ import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useContext, useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {compose} from 'shared/hoc';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	DAY,
 	INTERVAL_OPTIONS,
@@ -72,7 +73,10 @@ const CohortAnalysisCard = () => {
 	} = router;
 
 	return (
-		<Card className='cohort-analysis-card-root'>
+		<Card
+			className='cohort-analysis-card-root'
+			id={Containers.CohortAnalysisCard}
+		>
 			<Card.Header>
 				<Card.Title>
 					{Liferay.Language.get('cohort-analysis')}

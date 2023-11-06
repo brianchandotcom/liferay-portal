@@ -52,6 +52,7 @@ const Card: React.FC<ICardProps> & {
 	children,
 	className,
 	horizontal = false,
+	id,
 	minHeight,
 	pageDisplay = false
 }) => {
@@ -63,6 +64,7 @@ const Card: React.FC<ICardProps> & {
 	return (
 		<div
 			className={classes}
+			id={id}
 			style={minHeight && {minHeight: `${minHeight}px`}}
 		>
 			{children}

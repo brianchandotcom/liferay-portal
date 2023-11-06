@@ -11,7 +11,6 @@ import './PurchasedAppsDashboardTableRow.scss';
 
 import DropDown from '@clayui/drop-down/lib/DropDown';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import classNames from 'classnames';
 import {useNavigate} from 'react-router-dom';
 
 import {OrderStatus} from '../../enums/OrderStatus';
@@ -19,6 +18,7 @@ import {orderType} from '../../enums/orderType';
 import i18n from '../../i18n';
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboard/PurchasedAppsDashboardOutlet';
 import {showAppImage} from '../../utils/util';
+import LabelStatus from '../LabelStatus/LabelStatus';
 
 interface PurchasedAppsDashboardTableRowProps {
 	item: PurchasedAppProps;
@@ -52,7 +52,7 @@ export function PurchasedAppsDashboardTableRow({
 		<ClayTable.Row
 			className="dashboard-table-row"
 			onClick={() => {
-				navigate(`/app/${productId}`);
+				navigate(`/order/${orderId}`);
 			}}
 		>
 			<ClayTable.Cell>
@@ -120,25 +120,10 @@ export function PurchasedAppsDashboardTableRow({
 
 			<ClayTable.Cell>
 				<div className="dashboard-table-row-provisioning-container">
-					<ClayIcon
-						className={classNames(
-							'dashboard-table-row-provisioning-icon',
-							{
-								'dashboard-table-row-provisioning-icon-completed':
-									provisioningLabel === OrderStatus.COMPLETED,
-								'dashboard-table-row-provisioning-icon-pending':
-									provisioningLabel === OrderStatus.PENDING,
-								'dashboard-table-row-provisioning-icon-processing':
-									provisioningLabel ===
-									OrderStatus.PROCESSING,
-							}
-						)}
-						symbol="circle"
+					<LabelStatus
+						provisioning={provisioning}
+						provisioningLabel={provisioningLabel}
 					/>
-
-					<span className="dashboard-table-row-provisioning-text">
-						{provisioning}
-					</span>
 				</div>
 			</ClayTable.Cell>
 
@@ -159,7 +144,7 @@ export function PurchasedAppsDashboardTableRow({
 									disabled={orderStatusIsNotCompleted}
 									onClick={() =>
 										navigate(
-											`/app/${productId}/order/${orderId}/create-license`
+											`/order/${orderId}/create-license`
 										)
 									}
 									title={

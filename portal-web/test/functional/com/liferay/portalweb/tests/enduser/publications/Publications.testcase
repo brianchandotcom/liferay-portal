@@ -893,10 +893,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin();
 
 		var script = TestCase.getFileContent(fileName = "AddManyDocuments.groovy");
 
@@ -2136,10 +2133,7 @@ definition {
 		}
 
 		task ("Clear database cache and excute reindex") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Server Administration");
+			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
 

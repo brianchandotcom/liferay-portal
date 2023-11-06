@@ -151,10 +151,7 @@ definition {
 
 	@summary = "TearDown DM File Upload settings"
 	macro tearDownDMFileUploadSettings() {
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin();
 
 		Navigator.gotoNavItem(navItem = "File Uploads");
 
@@ -169,10 +166,7 @@ definition {
 
 	@summary = "TearDown Mail server settings"
 	macro tearDownMailServerSettings() {
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin();
 
 		Navigator.gotoNavItem(navItem = "Mail");
 

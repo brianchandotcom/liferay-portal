@@ -36,10 +36,7 @@ definition {
 
 		AntCommands.runCommand("build-test-elasticsearch7.xml", "add-ltr-linear-regression-model -Dbackup.index=.ltrstore -Delasticsearch.port=9200");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin();
 
 		var script = TestCase.getFileContent(fileName = "blogs-ltr-subset.groovy");
 

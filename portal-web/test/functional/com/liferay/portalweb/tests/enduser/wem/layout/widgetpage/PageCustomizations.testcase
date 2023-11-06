@@ -236,10 +236,7 @@ definition {
 		var roleKey = StringUtil.randomString(8);
 
 		task ("Clean up permissions in server administration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Server Administration");
+			ServerAdministration.openServerAdmin();
 
 			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clean up permissions");
 		}

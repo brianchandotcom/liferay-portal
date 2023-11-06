@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -39,7 +40,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -449,7 +449,7 @@ public class CommerceDiscountCalculationV2Impl
 		throws PortalException {
 
 		if ((Validator.isBlank(discountCouponCode) ||
-			 Objects.equals(couponCode, discountCouponCode)) &&
+			 StringUtil.equalsIgnoreCase(couponCode, discountCouponCode)) &&
 			_commerceDiscountUsageEntryLocalService.
 				validateDiscountLimitationUsage(
 					CommerceUtil.getCommerceAccountId(commerceContext),

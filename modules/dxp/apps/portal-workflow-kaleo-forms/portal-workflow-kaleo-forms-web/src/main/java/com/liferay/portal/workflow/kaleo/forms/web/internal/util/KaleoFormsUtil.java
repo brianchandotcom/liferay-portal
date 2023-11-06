@@ -6,6 +6,7 @@
 package com.liferay.portal.workflow.kaleo.forms.web.internal.util;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -17,9 +18,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.workflow.WorkflowNode;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair;
@@ -28,13 +27,14 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServ
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 import javax.portlet.PortletSession;
 
@@ -125,10 +125,20 @@ public class KaleoFormsUtil {
 		int workflowDefinitionVersion = GetterUtil.getInteger(
 			workflowDefinitionParts[1]);
 
-		Document document = _getWorkflowDefinitionDocument(
-			companyId, workflowDefinitionName, workflowDefinitionVersion);
+		List<String> nodeNames = _getNodeNames(
+			companyId, workflowDefinitionName, workflowDefinitionVersion,
+			workflowNode -> {
+				if (Objects.equals(
+						workflowNode.getType(),
+						WorkflowNode.Type.INITIAL_STATE)) {
 
-		return _getInitalStateName(document.getRootElement());
+					return true;
+				}
+
+				return false;
+			});
+
+		return nodeNames.get(0);
 	}
 
 	/**
@@ -399,14 +409,6 @@ public class KaleoFormsUtil {
 		return false;
 	}
 
-	private static void _addTaskNames(Element element, List<String> taskNames) {
-		for (Element taskElement : element.elements("task")) {
-			taskNames.add(taskElement.elementTextTrim("name"));
-
-			_addTaskNames(taskElement, taskNames);
-		}
-	}
-
 	private static long _getDDMTemplateId(
 			long kaleoProcessId, long ddmStructureId, String workflowDefinition,
 			String taskName, PortletSession portletSession)
@@ -452,25 +454,25 @@ public class KaleoFormsUtil {
 		return LocaleUtil.toLanguageId(defaultLocale);
 	}
 
-	private static String _getInitalStateName(Element rootElement) {
-		for (Element element : rootElement.elements("state")) {
-			boolean initial = GetterUtil.getBoolean(
-				element.elementTextTrim("initial"));
+	private static List<String> _getNodeNames(
+			long companyId, String workflowDefinitionName,
+			int workflowDefinitionVersion,
+			Predicate<WorkflowNode> workflowNodePredicate)
+		throws Exception {
 
-			if (initial) {
-				return element.elementTextTrim("name");
-			}
-		}
+		WorkflowDefinition workflowDefinition =
+			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				companyId, workflowDefinitionName, workflowDefinitionVersion);
 
-		return null;
-	}
+		return TransformUtil.transform(
+			workflowDefinition.getWorkflowNodes(),
+			workflowNode -> {
+				if (workflowNodePredicate.test(workflowNode)) {
+					return workflowNode.getName();
+				}
 
-	private static List<String> _getTaskNames(Element rootElement) {
-		List<String> taskNames = new ArrayList<>();
-
-		_addTaskNames(rootElement, taskNames);
-
-		return taskNames;
+				return null;
+			});
 	}
 
 	private static List<String> _getTaskNames(
@@ -488,10 +490,17 @@ public class KaleoFormsUtil {
 		int workflowDefinitionVersion = GetterUtil.getInteger(
 			workflowDefinitionParts[1]);
 
-		Document document = _getWorkflowDefinitionDocument(
-			companyId, workflowDefinitionName, workflowDefinitionVersion);
+		return _getNodeNames(
+			companyId, workflowDefinitionName, workflowDefinitionVersion,
+			workflowNode -> {
+				if (Objects.equals(
+						workflowNode.getType(), WorkflowNode.Type.TASK)) {
 
-		return _getTaskNames(document.getRootElement());
+					return true;
+				}
+
+				return false;
+			});
 	}
 
 	private static String _getTaskSessionKey(
@@ -499,18 +508,6 @@ public class KaleoFormsUtil {
 
 		return StringBundler.concat(
 			ddmStructureId, workflowDefinition, taskName);
-	}
-
-	private static Document _getWorkflowDefinitionDocument(
-			long companyId, String workflowDefinitionName,
-			int workflowDefinitionVersion)
-		throws Exception {
-
-		WorkflowDefinition workflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				companyId, workflowDefinitionName, workflowDefinitionVersion);
-
-		return SAXReaderUtil.read(workflowDefinition.getContent());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(KaleoFormsUtil.class);

@@ -38,6 +38,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -169,12 +172,14 @@ public class KoroneikiRestController extends BaseRestController {
 
 				successCount++;
 
-				System.out.println(
-					"Create Account Purchased Key" + productPurchase);
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Account Product Purchase created " + productPurchase);
+				}
 			}
 			catch (Exception exception) {
-				System.out.println(
-					"Failed to create account purchase." + exception);
+				_log.error(
+					"Failed to create Account Product Purchase " + exception);
 			}
 		}
 
@@ -449,6 +454,9 @@ public class KoroneikiRestController extends BaseRestController {
 	private static final String[] _LICENSE_USAGE_TYPES = {
 		"developer", "standard", "trial"
 	};
+
+	private static final Log _log = LogFactory.getLog(
+		KoroneikiRestController.class);
 
 	private AccountResource _accountResource;
 

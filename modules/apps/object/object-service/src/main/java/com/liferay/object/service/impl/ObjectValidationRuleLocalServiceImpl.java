@@ -20,7 +20,7 @@ import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.exception.ObjectValidationRuleSettingNameException;
 import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.exception.ObjectValidationRuleSystemException;
-import com.liferay.object.exception.RequiredObjectFieldException;
+import com.liferay.object.exception.RequiredObjectValidationRuleSettingException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.internal.validation.rule.UniqueCompositeKeyObjectValidationRuleEngineImpl;
@@ -501,7 +501,7 @@ public class ObjectValidationRuleLocalServiceImpl
 					ObjectValidationRuleSettingConstants.
 						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID)) {
 
-				throw new RequiredObjectFieldException.
+				throw new RequiredObjectValidationRuleSettingException.
 					MustNotDeleteObjectFieldUniqueCompositeKeyPublishedObjectDefinition();
 			}
 

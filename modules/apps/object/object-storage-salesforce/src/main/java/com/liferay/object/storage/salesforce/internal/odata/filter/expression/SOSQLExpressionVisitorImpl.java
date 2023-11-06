@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
@@ -127,7 +128,12 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		if (!Objects.equals(
 				LiteralExpression.Type.DATE, literalExpression.getType()) &&
 			!Objects.equals(
-				LiteralExpression.Type.STRING, literalExpression.getType())) {
+				LiteralExpression.Type.STRING, literalExpression.getType()) &&
+			!Objects.equals(
+				LiteralExpression.Type.BOOLEAN, literalExpression.getType()) &&
+			!Objects.equals(
+				LiteralExpression.Type.DATE_TIME,
+				literalExpression.getType())) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -138,6 +144,12 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return StringUtil.replace(
 				literalExpression.getText(), StringPool.DOUBLE_APOSTROPHE,
 				StringPool.APOSTROPHE);
+		}
+
+		if (Objects.equals(
+				LiteralExpression.Type.BOOLEAN, literalExpression.getType())) {
+
+			return GetterUtil.getBoolean(literalExpression.getText());
 		}
 
 		return literalExpression.getText();

@@ -76,7 +76,7 @@ public class KaleoDefinitionVersionCTDisplayRenderer
 
 		return StringBundler.concat(
 			"<pre>",
-			HtmlUtil.escapeAttribute(kaleoDefinitionVersion.getContent()),
+			HtmlUtil.escapeAttribute(kaleoDefinitionVersion.getXmlContent()),
 			"</pre>");
 	}
 

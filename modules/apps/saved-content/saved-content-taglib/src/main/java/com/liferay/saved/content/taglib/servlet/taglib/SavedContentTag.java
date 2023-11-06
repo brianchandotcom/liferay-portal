@@ -5,8 +5,12 @@
 
 package com.liferay.saved.content.taglib.servlet.taglib;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,6 +34,7 @@ import com.liferay.saved.content.service.SavedContentEntryLocalServiceUtil;
 import com.liferay.saved.content.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -48,10 +53,6 @@ public class SavedContentTag extends IncludeTag {
 
 	public long getClassPK() {
 		return _classPK;
-	}
-
-	public String getContentTitle() {
-		return _contentTitle;
 	}
 
 	public long getGroupId() {
@@ -128,13 +129,50 @@ public class SavedContentTag extends IncludeTag {
 
 			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:label",
-				_getLabel(httpServletRequest));
+				_getLabel(httpServletRequest, themeDisplay));
+
 			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:saved", _saved);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private String _getContentTitle(Locale locale) {
+		if (Validator.isNotNull(_contentTitle)) {
+			return _contentTitle;
+		}
+
+		try {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(_className);
+
+			if (assetRendererFactory == null) {
+				return null;
+			}
+
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(_classPK);
+
+			if (assetRenderer == null) {
+				return null;
+			}
+
+			_contentTitle = assetRenderer.getTitle(locale);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get asset renderer for class ", _className,
+						" with primary key ", _classPK),
+					portalException);
+			}
+		}
+
+		return _contentTitle;
 	}
 
 	private Map<String, Object> _getData(
@@ -146,7 +184,7 @@ public class SavedContentTag extends IncludeTag {
 		).put(
 			"classPK", _classPK
 		).put(
-			"contentTitle", _contentTitle
+			"contentTitle", _getContentTitle(themeDisplay.getLocale())
 		).put(
 			"enabled", _isEnabled(themeDisplay)
 		).put(
@@ -162,13 +200,18 @@ public class SavedContentTag extends IncludeTag {
 		).build();
 	}
 
-	private String _getLabel(HttpServletRequest httpServletRequest) {
+	private String _getLabel(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
 		if (_saved) {
 			return LanguageUtil.format(
-				httpServletRequest, "remove-x", _contentTitle);
+				httpServletRequest, "remove-x",
+				_getContentTitle(themeDisplay.getLocale()));
 		}
 
-		return LanguageUtil.format(httpServletRequest, "save-x", _contentTitle);
+		return LanguageUtil.format(
+			httpServletRequest, "save-x",
+			_getContentTitle(themeDisplay.getLocale()));
 	}
 
 	private String _getURL(HttpServletRequest httpServletRequest) {

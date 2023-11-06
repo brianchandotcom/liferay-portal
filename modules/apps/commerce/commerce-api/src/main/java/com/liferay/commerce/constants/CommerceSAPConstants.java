@@ -89,6 +89,8 @@ public class CommerceSAPConstants {
 				CLASS_NAME_COMMERCE_HEADLESS_PIN_RESOURCE,
 				"#getChannelProductPinsPage\n",
 				CLASS_NAME_COMMERCE_HEADLESS_PRODUCT_RESOURCE,
+				"#getChannelProduct\n",
+				CLASS_NAME_COMMERCE_HEADLESS_PRODUCT_RESOURCE,
 				"#getChannelProductsPage\n",
 				CLASS_NAME_COMMERCE_HEADLESS_SKU_RESOURCE,
 				"#postChannelProductSku\n", CLASS_NAME_COMMERCE_SEARCH_RESOURCE)

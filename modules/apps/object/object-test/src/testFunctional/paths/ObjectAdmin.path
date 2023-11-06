@@ -262,7 +262,7 @@
 	</tr>
 	<tr>
 		<td>SIDEBAR_ITEM</td>
-		<td>//*[contains(@class,'list-group-item')][*[normalize-space(text())='${folderLabel}']]</td>
+		<td>//*[contains(@class,'list-group-item')]//*[normalize-space(text())='${folderLabel}']</td>
 		<td></td>
 	</tr>
 	<tr>

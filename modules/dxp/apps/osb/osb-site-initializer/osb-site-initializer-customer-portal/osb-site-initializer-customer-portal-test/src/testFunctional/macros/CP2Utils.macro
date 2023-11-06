@@ -54,6 +54,19 @@ definition {
 			locator1 = "CP2Subscription#DROPDOWN_OPTIONS");
 	}
 
+	@summary = "Assert home page logged out on Customer Portal Site"
+	macro assertHomePageLoggedOutCP(pageTitle = null,navTab = null) {
+		AssertElementPresent(
+			key_title = ${pageTitle},
+			locator1 = "Header#H1_TITLE");
+
+		AssertElementPresent(
+			key_tab = ${navTab},
+			locator1 = "NavTab#TAB_LINK");
+
+		AssertElementPresent(locator1 = "CP2Utils#USER_SIGN_IN");
+	}
+
 	@summary = "Default summary"
 	macro assertNotChangeRole(role = null) {
 		AssertVisible(
@@ -505,6 +518,15 @@ definition {
 		}
 	}
 
+	@summary = "Select item in the User avatar Bar"
+	macro selectProfileMenuOption(dropdownItem = null) {
+		UserBar.gotoDropdown();
+
+		Click(
+			key_dropdownItem = ${dropdownItem},
+			locator1 = "CP2Utils#USER_AVATAR_DROPDOWN_ITEM");
+	}
+
 	@summary = "Default summary"
 	macro tearDownForCloudEntries(status = null) {
 		if (!(isSet(entry))) {
@@ -594,6 +616,15 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+	}
+
+	@summary = "View Login Okta page"
+	macro viewLoginOktaPage() {
+		AssertElementPresent(locator1 = "CustomerPortalSite#OKTA_USERNAME");
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#OKTA_PASSWORD");
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
 	}
 
 }

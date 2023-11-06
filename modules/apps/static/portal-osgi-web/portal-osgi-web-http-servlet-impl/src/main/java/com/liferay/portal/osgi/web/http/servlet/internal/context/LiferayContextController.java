@@ -751,37 +751,31 @@ public class LiferayContextController extends ContextController {
 	}
 
 	@Override
-	public boolean matches(org.osgi.framework.Filter filter) {
-		return filter.match(_serviceReference);
+	public boolean matches(org.osgi.framework.Filter osgiFilter) {
+		return osgiFilter.match(_serviceReference);
 	}
 
 	@Override
 	public boolean matches(ServiceReference<?> serviceReference) {
-		String contextSelect = (String)serviceReference.getProperty(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
+		String contextSelect = GetterUtil.getString(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT),
+			_DEFAULT_CONTEXT_SELECT);
 
 		if (_contextName.equals(contextSelect)) {
 			return true;
-		}
-
-		if (contextSelect == null) {
-			contextSelect = _DEFAULT_CONTEXT_SELECT;
 		}
 
 		if (!contextSelect.startsWith(Const.OPEN_PAREN)) {
 			return false;
 		}
 
-		org.osgi.framework.Filter targetFilter = null;
-
 		try {
-			targetFilter = FrameworkUtil.createFilter(contextSelect);
+			return matches(FrameworkUtil.createFilter(contextSelect));
 		}
 		catch (InvalidSyntaxException invalidSyntaxException) {
 			throw new IllegalArgumentException(invalidSyntaxException);
 		}
-
-		return matches(targetFilter);
 	}
 
 	@Override
@@ -797,11 +791,6 @@ public class LiferayContextController extends ContextController {
 			bundleContext.ungetService(_serviceReference);
 		}
 		catch (IllegalStateException illegalStateException) {
-
-			// This can happen if the whiteboard bundle is in the process of
-			// stopping and the framework is in the middle of autounregistering
-			// any services the bundle forgot to unregister on stop
-
 			if (_log.isDebugEnabled()) {
 				_log.debug(illegalStateException);
 			}

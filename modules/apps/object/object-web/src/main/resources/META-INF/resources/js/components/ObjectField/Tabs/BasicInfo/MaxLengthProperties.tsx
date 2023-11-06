@@ -130,7 +130,10 @@ export function MaxLengthProperties({
 						onChange={({target: {value}}) =>
 							onSettingsChange({
 								name: 'maxLength',
-								value: value && Number(value),
+								value:
+									Number(value) <= 280
+										? Number(value)
+										: (settings.maxLength as number),
 							})
 						}
 						onInput={({target: {value}}: any) =>

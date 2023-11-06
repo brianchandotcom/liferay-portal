@@ -410,8 +410,8 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	private PortletPreferences _fetchPreferences(long companyId) {
 		PortalPreferences portalPreferences =
-			_portalPreferencesLocalService.fetchPortalPreferences(
-				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+			_portalPreferencesLocalService.fetchCompanyPortalPreferences(
+				companyId);
 
 		if (portalPreferences == null) {
 			return _emptyPortletPreferences;

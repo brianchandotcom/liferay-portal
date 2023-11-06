@@ -431,7 +431,13 @@
 			},
 			"name": "submitDate",
 			"required": false,
-			"type": "DateTime"
+			"type": "DateTime",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			]
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"

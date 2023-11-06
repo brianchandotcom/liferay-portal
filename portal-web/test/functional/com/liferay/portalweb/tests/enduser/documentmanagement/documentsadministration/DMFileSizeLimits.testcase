@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that A user is not able to upload a file to an asset library that is bigger than the File Max Size Limit in the asset library."
+	@description = "This test ensures that a user is not able to upload a file to an asset library that is bigger than the File Max Size Limit in the asset library."
 	@priority = 4
 	test CanLimitMaxFileSizeForDepotAtDepotScope {
 		property test.liferay.virtual.instance = "false";

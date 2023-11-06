@@ -51,11 +51,27 @@ public class TicketAttachmentDownloadRestController extends BaseRestController {
 
 		log(jwt, _log);
 
-		JSONObject jsonObject = _fetchTicketAttachment(jwt, ticketAttachmentId);
+		JSONObject jsonObject = null;
 
-		if (jsonObject == null) {
+		try {
+			jsonObject = new JSONObject(
+				WebClient.create(
+					lxcDXPServerProtocol + "://" + lxcDXPMainDomain
+				).get(
+				).uri(
+					"/o/c/ticketattachments/" + Long.valueOf(ticketAttachmentId)
+				).accept(
+					MediaType.APPLICATION_JSON
+				).header(
+					HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block());
+		}
+		catch (Exception exception) {
 			return new ResponseEntity<>(
-				"Ticket attachment does not exist", HttpStatus.NOT_FOUND);
+				exception.getMessage(), HttpStatus.NOT_FOUND);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -66,45 +82,12 @@ public class TicketAttachmentDownloadRestController extends BaseRestController {
 		sb.append(jsonObject.optString("fileName"));
 
 		return new ResponseEntity<>(
-			_generateV4GetObjectSignedUrl(
+			_getDownloadURL(
 				jsonObject.optString("storageBucket"), sb.toString()),
 			HttpStatus.OK);
 	}
 
-	private JSONObject _fetchTicketAttachment(
-		Jwt jwt, String ticketAttachmentId) {
-
-		try {
-			String response = WebClient.create(
-				lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-			).get(
-			).uri(
-				"/o/c/ticketattachments/" + Long.valueOf(ticketAttachmentId)
-			).accept(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block();
-
-			return new JSONObject(response);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find ticket attachment with ID " +
-						ticketAttachmentId,
-					exception);
-			}
-		}
-
-		return null;
-	}
-
-	private String _generateV4GetObjectSignedUrl(
-			String bucketName, String objectName)
+	private String _getDownloadURL(String bucketName, String objectName)
 		throws Exception {
 
 		try (InputStream inputStream = new ByteArrayInputStream(

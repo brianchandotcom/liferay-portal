@@ -150,7 +150,7 @@ export function RuleBuilderActionSection({
 	);
 }
 
-type ConditionType = 'all' | 'any';
+export type ConditionType = 'all' | 'any';
 
 type RuleBuilderConditionProps = {
 	conditionType: ConditionType;

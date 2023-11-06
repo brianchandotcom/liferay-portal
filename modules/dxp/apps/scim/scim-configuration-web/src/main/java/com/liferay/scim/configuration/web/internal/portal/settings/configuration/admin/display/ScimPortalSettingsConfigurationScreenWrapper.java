@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
-import com.liferay.scim.client.util.ScimClientUtil;
 import com.liferay.scim.configuration.web.internal.constants.ScimConstants;
+import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.io.IOException;
 

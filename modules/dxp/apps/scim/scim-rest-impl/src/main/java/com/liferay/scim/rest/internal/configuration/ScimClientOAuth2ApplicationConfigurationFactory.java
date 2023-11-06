@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.scim.rest.internal.provider.ScimClientBearerTokenProvider;
-import com.liferay.scim.rest.internal.util.ScimClientUtil;
+import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Collection;
 import java.util.Collections;

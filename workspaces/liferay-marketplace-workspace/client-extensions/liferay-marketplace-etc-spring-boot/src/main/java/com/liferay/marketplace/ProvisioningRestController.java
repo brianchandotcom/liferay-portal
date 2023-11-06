@@ -93,6 +93,12 @@ public class ProvisioningRestController extends BaseRestController {
 			licenseType = AppLicenseKey.LicenseType.DEVELOPER;
 		}
 
+		Date startDate = productPurchase.getStartDate();
+
+		if (startDate == null) {
+			startDate = new Date();
+		}
+
 		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
 			jsonObject.getJSONObject(
 				"licenseEntry"
@@ -102,15 +108,15 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setCreateDate(new Date());
 		appLicenseKey.setExpirationDate(expirationDate);
 		appLicenseKey.setLicenseType(licenseType);
-		appLicenseKey.setOwner(jwt.getClaim("username"));
+		appLicenseKey.setOwner((String)jwt.getClaim("username"));
 		appLicenseKey.setProductId(productPurchase.getProductKey());
 		appLicenseKey.setProductName(
 			productPurchase.getProduct(
 			).getName());
 		appLicenseKey.setProductVersion(_getVersion(jsonObject, jwt));
-		appLicenseKey.setStartDate(productPurchase.getStartDate());
-		appLicenseKey.setUserName(jwt.getClaim("username"));
-		appLicenseKey.setUserUuid(jwt.getClaim("sub"));
+		appLicenseKey.setStartDate(startDate);
+		appLicenseKey.setUserName((String)jwt.getClaim("username"));
+		appLicenseKey.setUserUuid((String)jwt.getClaim("sub"));
 
 		return _appLicenseKeyResource.postAppLicenseKey(
 			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
@@ -141,7 +147,7 @@ public class ProvisioningRestController extends BaseRestController {
 
 		HttpInvoker.HttpResponse licenseKeyHttpResponse =
 			_appLicenseKeyResource.getAppLicenseKeyDownloadHttpResponse(
-				licenseKeyId);
+				appLicenseKey.getId());
 
 		return new ResponseEntity(
 			licenseKeyHttpResponse.getBinaryContent(), headers, HttpStatus.OK);

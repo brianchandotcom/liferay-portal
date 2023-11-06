@@ -95,6 +95,14 @@ public interface CPDefinitionOptionValueRelLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId, long cpInstanceId, String key,
+			Map<Locale, String> nameMap, boolean preselected,
+			BigDecimal deltaPrice, double priority, BigDecimal quantity,
+			String unitOfMeasureKey, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
 			long cpDefinitionOptionRelId, String key,
 			Map<Locale, String> nameMap, double priority,
 			ServiceContext serviceContext)

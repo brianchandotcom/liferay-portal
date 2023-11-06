@@ -703,12 +703,16 @@ public class LayoutStructure {
 	}
 
 	public LayoutStructureRule updateLayoutStructureRule(
-		String name, String ruleId) {
+		JSONArray actionsJSONArray, JSONArray conditionsJSONArray,
+		String conditionType, String name, String ruleId) {
 
 		LayoutStructureRule layoutStructureRule = _layoutStructureRulesMap.get(
 			ruleId);
 
 		if (layoutStructureRule != null) {
+			layoutStructureRule.setActionsJSONArray(actionsJSONArray);
+			layoutStructureRule.setConditionsJSONArray(conditionsJSONArray);
+			layoutStructureRule.setConditionType(conditionType);
 			layoutStructureRule.setName(name);
 		}
 

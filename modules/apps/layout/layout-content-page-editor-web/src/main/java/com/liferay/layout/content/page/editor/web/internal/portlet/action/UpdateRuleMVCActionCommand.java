@@ -7,6 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -18,6 +19,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sandro Chinea
@@ -47,8 +49,16 @@ public class UpdateRuleMVCActionCommand
 				ParamUtil.getLong(actionRequest, "segmentsExperienceId"),
 				themeDisplay.getPlid(),
 				layoutStructure -> layoutStructure.updateLayoutStructureRule(
+					_jsonFactory.createJSONArray(
+						ParamUtil.getString(actionRequest, "actions")),
+					_jsonFactory.createJSONArray(
+						ParamUtil.getString(actionRequest, "conditions")),
+					ParamUtil.getString(actionRequest, "conditionType"),
 					ParamUtil.getString(actionRequest, "name"),
 					ParamUtil.getString(actionRequest, "ruleId"))));
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

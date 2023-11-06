@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -22,21 +22,41 @@ public class ContentSecurityPolicyConfigurationUtil {
 			ConfigurationProvider configurationProvider,
 			HttpServletRequest httpServletRequest, Portal portal) {
 
+		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
+			(ContentSecurityPolicyConfiguration)httpServletRequest.getAttribute(
+				_CONFIGURATION);
+
+		if (contentSecurityPolicyConfiguration != null) {
+			return contentSecurityPolicyConfiguration;
+		}
+
 		try {
 			long groupId = portal.getScopeGroupId(httpServletRequest);
 
 			if (groupId > 0) {
-				return configurationProvider.getGroupConfiguration(
-					ContentSecurityPolicyConfiguration.class, groupId);
+				contentSecurityPolicyConfiguration =
+					configurationProvider.getGroupConfiguration(
+						ContentSecurityPolicyConfiguration.class, groupId);
 			}
-
-			return configurationProvider.getCompanyConfiguration(
-				ContentSecurityPolicyConfiguration.class,
-				portal.getCompanyId(httpServletRequest));
+			else {
+				contentSecurityPolicyConfiguration =
+					configurationProvider.getCompanyConfiguration(
+						ContentSecurityPolicyConfiguration.class,
+						portal.getCompanyId(httpServletRequest));
+			}
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
 		}
+
+		httpServletRequest.setAttribute(
+			_CONFIGURATION, contentSecurityPolicyConfiguration);
+
+		return contentSecurityPolicyConfiguration;
 	}
+
+	private static final String _CONFIGURATION =
+		ContentSecurityPolicyConfigurationUtil.class.getName() +
+			"CONFIGURATION";
 
 }

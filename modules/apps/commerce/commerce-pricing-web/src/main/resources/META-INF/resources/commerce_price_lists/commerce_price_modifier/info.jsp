@@ -121,11 +121,11 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 		window,
 		'<portlet:namespace />selectType',
 		() => {
-			var A = AUI();
+			const type = document.getElementById(
+				'<portlet:namespace />modifierType'
+			).value;
 
-			var type = A.one('#<portlet:namespace />modifierType').val();
-
-			var portletURL = new Liferay.PortletURL.createURL(
+			const portletURL = new Liferay.PortletURL.createURL(
 				'<%= currentURLObj %>'
 			);
 

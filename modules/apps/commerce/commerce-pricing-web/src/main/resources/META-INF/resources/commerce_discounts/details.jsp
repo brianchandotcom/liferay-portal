@@ -200,11 +200,11 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 		window,
 		'<portlet:namespace />selectType',
 		() => {
-			var A = AUI();
+			const type = document.getElementById(
+				'<portlet:namespace />usePercentage'
+			).value;
 
-			var type = A.one('#<portlet:namespace />usePercentage').val();
-
-			var portletURL = new Liferay.PortletURL.createURL(
+			const portletURL = new Liferay.PortletURL.createURL(
 				'<%= currentURLObj %>'
 			);
 
@@ -219,11 +219,10 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 		window,
 		'<portlet:namespace />selectTarget',
 		() => {
-			var A = AUI();
+			const type = document.getElementById('<portlet:namespace />target')
+				.value;
 
-			var type = A.one('#<portlet:namespace />target').val();
-
-			var portletURL = new Liferay.PortletURL.createURL(
+			const portletURL = new Liferay.PortletURL.createURL(
 				'<%= currentURLObj %>'
 			);
 

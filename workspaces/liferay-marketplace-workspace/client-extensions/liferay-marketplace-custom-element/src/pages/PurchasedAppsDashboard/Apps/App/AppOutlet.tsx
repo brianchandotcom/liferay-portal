@@ -6,18 +6,19 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useMemo} from 'react';
-import {NavLink, Outlet, useLocation, useParams} from 'react-router-dom';
-import useSWR from 'swr';
-
-import circleFullIcon from '../../../../assets/icons/circle_fill_icon.svg';
-import i18n from '../../../../i18n';
-import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
-	getProductVersionFromSpecifications,
-	getThumbnailByProductAttachment,
-	showAppImage,
-} from '../../../../utils/util';
+	NavLink,
+	Outlet,
+	useLocation,
+	useNavigate,
+	useParams,
+} from 'react-router-dom';
+
+import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
+import i18n from '../../../../i18n';
+import {getThumbnailByProductAttachment} from '../../../../utils/util';
+import useGetProductCreatorAccount from '../../../GetAppPage/hooks/useGetProductCreatorAccount';
+import OrderDetailsHeader from '../components/OrderDetailsHeader';
 
 const AppNavbar = () => {
 	const location = useLocation();
@@ -53,96 +54,48 @@ const AppNavbar = () => {
 	);
 };
 
-const AppHeader = ({productSpecifications, selectedApp = {}}: any) => {
-	const appVersion = useMemo(
-		() => getProductVersionFromSpecifications(productSpecifications as []),
-		[productSpecifications]
-	);
-
-	const thumbnail = getThumbnailByProductAttachment(selectedApp?.attachments);
-
-	return (
-		<div className="d-flex justify-content-between my-4 w-100">
-			<div className="d-flex">
-				<img
-					alt="App Logo"
-					className="app-details-page-app-info-logo"
-					src={showAppImage(thumbnail)}
-				/>
-
-				<div className="ml-2">
-					<span className="app-details-page-app-info-title">
-						{selectedApp.name?.en_US}
-					</span>
-
-					<div className="app-details-page-app-info-subtitle-container">
-						<span className="app-details-page-app-info-subtitle-text">
-							{appVersion}
-						</span>
-
-						<img
-							alt="status icon"
-							className={classNames(
-								'app-details-page-app-info-subtitle-icon',
-								{
-									'app-details-page-app-info-subtitle-icon-hidden':
-										selectedApp.status === 'Draft',
-									'app-details-page-app-info-subtitle-icon-pending':
-										selectedApp.status === 'Pending',
-									'app-details-page-app-info-subtitle-icon-published':
-										selectedApp.status === 'Approved',
-								}
-							)}
-							src={circleFullIcon}
-						/>
-
-						<span className="app-details-page-app-info-subtitle-text">
-							{selectedApp.status}
-						</span>
-					</div>
-				</div>
-			</div>
-
-			<div>
-				<ClayButton className="ml-4" displayType="secondary">
-					Manage App
-					<ClayIcon className="ml-2" symbol="caret-bottom-l" />
-				</ClayButton>
-			</div>
-		</div>
-	);
-};
-
 const AppOutlet = () => {
-	const {appId: productId} = useParams();
+	const navigate = useNavigate();
 
-	const {data = []} = useSWR(`/apps/app/${productId}/product`, () =>
-		Promise.all([
-			HeadlessCommerceAdminCatalogImpl.getProduct(productId as string),
-			HeadlessCommerceAdminCatalogImpl.getProductSpecifications(
-				productId as string
-			),
-		])
+	const {orderId} = useParams();
+
+	const {data, error, isLoading} = useGetProductByOrderId(orderId);
+
+	const appImage = getThumbnailByProductAttachment(
+		data?.product?.attachments
 	);
 
-	const [selectedApp, productSpecifications = []] = data ?? [];
+	const productCreatorAccount = useGetProductCreatorAccount(data?.product);
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	if (error) {
+		return <div>Error: {error.message}</div>;
+	}
 
 	return (
 		<div className="d-flex flex-column w-100">
-			<NavLink className="font-weight-bold small text-dark" to="..">
+			<ClayButton
+				className="align-items-center d-flex"
+				displayType="unstyled"
+				onClick={() => navigate('/')}
+			>
 				<ClayIcon className="mr-2" symbol="order-arrow-left" />
-				{i18n.translate('back-to-my-apps')}
-			</NavLink>
+				<h5 className="mt-1">{i18n.translate('back-to-my-apps')}</h5>
+			</ClayButton>
 
-			<AppHeader
-				productSpecifications={productSpecifications}
-				selectedApp={selectedApp}
+			<OrderDetailsHeader
+				hasOrderDescription={false}
+				hasOrderDetails={true}
+				orderDetails={data?.placedOrder}
+				productCreatorAccount={productCreatorAccount?.name}
+				productImage={appImage}
+				productName={data?.product?.name?.en_US}
 			/>
 			<AppNavbar />
-
-			<hr />
-
-			<Outlet context={{productSpecifications, selectedApp}} />
+			<Outlet />
 		</div>
 	);
 };

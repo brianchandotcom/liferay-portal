@@ -10,6 +10,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
@@ -74,8 +75,13 @@ public class AssetTagNamesFacetedSearcherTest
 			Arrays.asList(JournalArticle.class.getName(), User.class.getName()),
 			hits, searchContext);
 
-		Map<String, Integer> frequencies = Collections.singletonMap(
-			StringUtil.toLowerCase(tag), 1);
+		String tagName = tag;
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+			tagName = StringUtil.toLowerCase(tag);
+		}
+
+		Map<String, Integer> frequencies = Collections.singletonMap(tagName, 1);
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);
@@ -134,9 +140,13 @@ public class AssetTagNamesFacetedSearcherTest
 
 		Facet facet = _assetTagNamesFacetFactory.newInstance(searchContext);
 
-		String tagToLowerCase = StringUtil.toLowerCase(tag);
+		String tagName = tag;
 
-		facet.select(tagToLowerCase);
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+			tagName = StringUtil.toLowerCase(tag);
+		}
+
+		facet.select(tagName);
 
 		searchContext.addFacet(facet);
 
@@ -145,8 +155,7 @@ public class AssetTagNamesFacetedSearcherTest
 		assertEntryClassNames(
 			Arrays.asList(User.class.getName()), hits, searchContext);
 
-		Map<String, Integer> frequencies = Collections.singletonMap(
-			tagToLowerCase, 1);
+		Map<String, Integer> frequencies = Collections.singletonMap(tagName, 1);
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);

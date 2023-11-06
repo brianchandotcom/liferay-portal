@@ -103,6 +103,14 @@ public class KBArticleStagedModelDataHandler
 	}
 
 	@Override
+	public int[] getExportableStatuses() {
+		return new int[] {
+			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_SCHEDULED
+		};
+	}
+
+	@Override
 	protected boolean countStagedModel(
 		PortletDataContext portletDataContext, KBArticle kbArticle) {
 

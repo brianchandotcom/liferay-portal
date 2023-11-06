@@ -24,8 +24,8 @@ import './ReviewAndSubmitAppPage.scss';
 interface ReviewAndSubmitAppPageProps {
 	onClickBack: () => void;
 	onClickContinue: () => void;
-	productERC: string;
-	productId: number;
+	productERC?: string;
+	productId?: number;
 	readonly?: boolean;
 }
 

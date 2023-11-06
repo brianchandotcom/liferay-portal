@@ -600,7 +600,7 @@ export async function getProduct({
 	appERC,
 	nestedFields,
 }: {
-	appERC: string;
+	appERC?: string;
 	nestedFields?: string;
 }) {
 	let url = `/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}`;
@@ -694,7 +694,7 @@ export async function getProducts(nestedFields?: string) {
 	return (await response.json()) as {items: Product[]};
 }
 
-export async function getProductSKU({appProductId}: {appProductId: number}) {
+export async function getProductSKU({appProductId}: {appProductId?: number}) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/skus`,
 		{

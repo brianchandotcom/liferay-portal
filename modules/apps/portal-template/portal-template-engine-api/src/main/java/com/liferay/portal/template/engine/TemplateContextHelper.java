@@ -14,7 +14,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.image.ImageToolUtil_IW;
-import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
+import com.liferay.portal.kernel.audit.AuditMessageFactory;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -382,9 +382,7 @@ public class TemplateContextHelper {
 		// Audit message factory
 
 		try {
-			variables.put(
-				"auditMessageFactoryUtil",
-				AuditMessageFactoryUtil.getAuditMessageFactory());
+			variables.put("auditMessageFactoryUtil", new AuditMessageFactory());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);

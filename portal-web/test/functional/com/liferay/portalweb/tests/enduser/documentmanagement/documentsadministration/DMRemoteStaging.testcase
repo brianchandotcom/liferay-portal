@@ -753,10 +753,7 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin(baseURL = "http://localhost:9080");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
@@ -764,10 +761,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin(baseURL = "http://localhost:9080");
 
 		User.assignRegularRoleCP(
 			roleTitle = "Administrator",

@@ -547,10 +547,7 @@ definition {
 			userScreenName = "categorymanager",
 			userSiteMembership = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.assignRegularRoleCP(
 			roleTitle = "Category Manager",
@@ -918,10 +915,7 @@ definition {
 			userScreenName = "categorymanager",
 			userSiteMembership = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.assignRegularRoleCP(
 			roleTitle = "Category Manager",
@@ -1099,10 +1093,7 @@ definition {
 			userScreenName = "categorymanager",
 			userSiteMembership = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.assignRegularRoleCP(
 			roleTitle = "Category Manager",

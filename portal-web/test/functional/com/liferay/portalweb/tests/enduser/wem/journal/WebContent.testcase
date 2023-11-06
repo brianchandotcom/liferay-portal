@@ -1635,10 +1635,7 @@ definition {
 		}
 
 		task ("Impersonate the user") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.impersonateCP(userName = "userfn1");
 		}

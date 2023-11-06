@@ -224,10 +224,7 @@ definition {
 		}
 
 		task ("When the user Test Test goes into User and Organizations") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 		}
 
 		task ("And impersonates the user Administrator") {

@@ -504,10 +504,7 @@ definition {
 		}
 
 		task ("Define the value of custom field for new user") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "ac");
 
@@ -523,10 +520,7 @@ definition {
 		}
 
 		task ("Redefine the value of the custom field") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "ac");
 
@@ -708,10 +702,7 @@ definition {
 		}
 
 		task ("Go to a user and add information for the custom fields created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.editCustomFieldInformation(
 				customFieldName = ${customFieldDropdown},
@@ -719,10 +710,7 @@ definition {
 				customFieldValue = "Option2",
 				userScreenName = "ac");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.editCustomFieldInformation(
 				customFieldName = ${customFieldCheckbox},
@@ -730,10 +718,7 @@ definition {
 				customFieldValue = "QA",
 				userScreenName = "ac");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.editCustomFieldInformation(
 				customFieldName = ${customFieldRadio},

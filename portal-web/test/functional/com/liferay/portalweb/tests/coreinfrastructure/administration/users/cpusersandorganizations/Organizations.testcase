@@ -42,10 +42,7 @@ definition {
 				organizationName = "Suborganization Name ${count}",
 				parentOrganizationName = "Organization Name 1");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -466,10 +463,7 @@ definition {
 			var count = ${count} + 1;
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		for (var userScreenName : list "usersn1,usersn2,usersn3,usersn4,usersn5") {
 			var key_userScreenName = ${userScreenName};
@@ -558,10 +552,7 @@ definition {
 	@description = "Add a site to an organization, assign user to that organization and assert it displays in My Dashboard"
 	@priority = 4
 	test AssignUserToOrganizationWithSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		JSONOrganization.addOrganization(
 			organizationName = "Organization Name",
@@ -844,10 +835,7 @@ definition {
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
@@ -898,10 +886,7 @@ definition {
 	test DeleteOrganization {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -988,10 +973,7 @@ definition {
 
 	@priority = 4
 	test EditOrganizationSiteTeam {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
@@ -1062,10 +1044,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -1107,10 +1086,7 @@ definition {
 			userLastName = "userln1",
 			userScreenName = "usersn1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea1@liferay.com",
@@ -1259,10 +1235,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
@@ -1270,10 +1243,7 @@ definition {
 			assetType = "Sites",
 			assigneeName = "Site Name Alpha");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
@@ -1445,10 +1415,7 @@ definition {
 
 	@priority = 4
 	test SearchUsersInOrganization {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
@@ -1587,10 +1554,7 @@ definition {
 			organizationName = "United States",
 			userEmailAddress = "userea2@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.assignOrgRoleCP(
 			roleTitle = "Canada Orgrole",

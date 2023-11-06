@@ -504,10 +504,7 @@ definition {
 				userGroupDescription = "User Group Description",
 				userGroupName = "User Group Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UserNavigator.gotoUser(userScreenName = "usersn");
 
@@ -600,10 +597,7 @@ definition {
 				organizationName = "Organization Name",
 				userEmailAddress = "userea@liferay.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			UsersAndOrganizationsNavigator.gotoOrganizations();
 

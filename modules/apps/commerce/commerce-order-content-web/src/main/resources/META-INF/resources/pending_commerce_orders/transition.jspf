@@ -23,21 +23,23 @@
 		window,
 		'<portlet:namespace />transition',
 		(event) => {
-			var A = AUI();
+			const link = event.currentTarget;
 
-			var link = event.currentTarget;
+			const workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
 
-			var workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
-
-			var form = A.one('#<portlet:namespace />transitionFm');
-
-			A.one('#<portlet:namespace />transitionCommerceOrderId').val(
-				link.getData('commerceOrderId')
+			const form = document.getElementById(
+				'<portlet:namespace />transitionFm'
 			);
-			A.one('#<portlet:namespace />workflowTaskId').val(workflowTaskId);
-			A.one('#<portlet:namespace />transitionName').val(
-				link.getData('transitionName')
-			);
+
+			document.getElementById(
+				'<portlet:namespace />transitionCommerceOrderId'
+			).value = link.getData('commerceOrderId');
+			document.getElementById(
+				'<portlet:namespace />workflowTaskId'
+			).value = workflowTaskId;
+			document.getElementById(
+				'<portlet:namespace />transitionName'
+			).value = link.getData('transitionName');
 
 			if (workflowTaskId <= 0) {
 				submitForm(form);
@@ -45,13 +47,13 @@
 				return;
 			}
 
-			var transitionComments = A.one(
-				'#<portlet:namespace />transitionComments'
+			const transitionComments = document.getElementById(
+				'<portlet:namespace />transitionComments'
 			);
 
-			transitionComments.show();
+			transitionComments.classList.remove('hide');
 
-			var dialog = Liferay.Util.Window.getWindow({
+			const dialog = Liferay.Util.Window.getWindow({
 				dialog: {
 					bodyContent: form,
 					destroyOnHide: true,

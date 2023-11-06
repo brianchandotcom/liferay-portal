@@ -529,13 +529,10 @@ public class UserManagerImpl implements UserManager {
 			portalUser = _userLocalService.updateUser(portalUser);
 		}
 
-		if (portalUser.isActive() != scimUser.isActive()) {
-			int status =
-				scimUser.isActive() ? WorkflowConstants.STATUS_APPROVED :
-					WorkflowConstants.STATUS_INACTIVE;
-
+		if (!portalUser.isActive()) {
 			portalUser = _userLocalService.updateStatus(
-				portalUser.getUserId(), status, new ServiceContext());
+				portalUser.getUserId(), WorkflowConstants.STATUS_APPROVED,
+				new ServiceContext());
 		}
 
 		if (Validator.isNull(portalUserScimClientId)) {

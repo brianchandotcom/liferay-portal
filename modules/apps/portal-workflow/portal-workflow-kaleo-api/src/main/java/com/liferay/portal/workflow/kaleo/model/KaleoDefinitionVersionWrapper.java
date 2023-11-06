@@ -511,6 +511,11 @@ public class KaleoDefinitionVersionWrapper
 		return model.getVersion();
 	}
 
+	@Override
+	public String getXmlContent() {
+		return model.getXmlContent();
+	}
+
 	/**
 	 * Returns <code>true</code> if this kaleo definition version is approved.
 	 *

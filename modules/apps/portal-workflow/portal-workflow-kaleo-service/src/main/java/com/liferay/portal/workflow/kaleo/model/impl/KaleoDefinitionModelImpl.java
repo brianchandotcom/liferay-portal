@@ -785,6 +785,13 @@ public class KaleoDefinitionModelImpl
 			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
+	public String getXmlContent() {
+		return null;
+	}
+
+	public void setXmlContent(String xmlContent) {
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -1043,6 +1050,8 @@ public class KaleoDefinitionModelImpl
 
 		_setModifiedDate = false;
 
+		setXmlContent(null);
+
 		_columnBitmask = 0;
 	}
 
@@ -1132,6 +1141,10 @@ public class KaleoDefinitionModelImpl
 		kaleoDefinitionCacheModel.version = getVersion();
 
 		kaleoDefinitionCacheModel.active = isActive();
+
+		setXmlContent(null);
+
+		kaleoDefinitionCacheModel._xmlContent = getXmlContent();
 
 		return kaleoDefinitionCacheModel;
 	}

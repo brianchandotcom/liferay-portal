@@ -883,6 +883,13 @@ public class KaleoDefinitionVersionModelImpl
 		_statusDate = statusDate;
 	}
 
+	public String getXmlContent() {
+		return null;
+	}
+
+	public void setXmlContent(String xmlContent) {
+	}
+
 	@Override
 	public boolean isApproved() {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
@@ -1230,6 +1237,8 @@ public class KaleoDefinitionVersionModelImpl
 
 		_setModifiedDate = false;
 
+		setXmlContent(null);
+
 		_columnBitmask = 0;
 	}
 
@@ -1346,6 +1355,10 @@ public class KaleoDefinitionVersionModelImpl
 		else {
 			kaleoDefinitionVersionCacheModel.statusDate = Long.MIN_VALUE;
 		}
+
+		setXmlContent(null);
+
+		kaleoDefinitionVersionCacheModel._xmlContent = getXmlContent();
 
 		return kaleoDefinitionVersionCacheModel;
 	}

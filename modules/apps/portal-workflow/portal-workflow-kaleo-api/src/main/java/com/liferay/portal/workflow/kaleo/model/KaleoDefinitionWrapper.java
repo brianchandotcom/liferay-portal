@@ -422,6 +422,11 @@ public class KaleoDefinitionWrapper
 		return model.getVersion();
 	}
 
+	@Override
+	public String getXmlContent() {
+		return model.getXmlContent();
+	}
+
 	/**
 	 * Returns <code>true</code> if this kaleo definition is active.
 	 *

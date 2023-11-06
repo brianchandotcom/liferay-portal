@@ -1597,11 +1597,25 @@ public class KaleoDefinitionVersionPersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
+			KaleoDefinitionVersion cachedKaleoDefinitionVersion =
+				(KaleoDefinitionVersion)entityCache.getResult(
 					KaleoDefinitionVersionImpl.class,
-					kaleoDefinitionVersion.getPrimaryKey()) == null) {
+					kaleoDefinitionVersion.getPrimaryKey());
 
+			if (cachedKaleoDefinitionVersion == null) {
 				cacheResult(kaleoDefinitionVersion);
+			}
+			else {
+				KaleoDefinitionVersionModelImpl
+					kaleoDefinitionVersionModelImpl =
+						(KaleoDefinitionVersionModelImpl)kaleoDefinitionVersion;
+				KaleoDefinitionVersionModelImpl
+					cachedKaleoDefinitionVersionModelImpl =
+						(KaleoDefinitionVersionModelImpl)
+							cachedKaleoDefinitionVersion;
+
+				kaleoDefinitionVersionModelImpl.setXmlContent(
+					cachedKaleoDefinitionVersionModelImpl.getXmlContent());
 			}
 		}
 	}

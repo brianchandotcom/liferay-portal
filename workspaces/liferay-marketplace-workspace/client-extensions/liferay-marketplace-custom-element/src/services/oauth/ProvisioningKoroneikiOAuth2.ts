@@ -67,10 +67,10 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 		return response.json();
 	}
 
-	async getOrderLicenseKeys(orderId: string) {
-		return this.oAuth2Client.fetch(
+	async getOrderLicenseKeys(orderId: string): Promise<APIResponse<any>> {
+		return (this.oAuth2Client.fetch(
 			`/provisioning/order-license-keys/${orderId}`
-		);
+		) as unknown) as Promise<APIResponse<any>>;
 	}
 
 	async createLicenseKey(payload: LicenseTypePayload): Promise<LicenseKey> {
@@ -79,7 +79,6 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 			method: 'POST',
 
 			// Necessary due the response comes resolved already, not necessary to parse to .json()
-
 		}) as unknown) as Promise<LicenseKey>;
 	}
 

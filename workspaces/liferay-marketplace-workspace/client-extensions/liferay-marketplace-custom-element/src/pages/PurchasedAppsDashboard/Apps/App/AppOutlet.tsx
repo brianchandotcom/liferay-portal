@@ -96,8 +96,10 @@ const AppOutlet = () => {
 				order={data?.placedOrder}
 				productOwner={productCreatorAccount?.name}
 			/>
+
 			<AppNavbar />
-			<Outlet />
+
+			<Outlet context={data} />
 		</div>
 	);
 };

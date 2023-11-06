@@ -3,113 +3,182 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useState} from 'react';
+import {format, isBefore} from 'date-fns';
+import {useOutletContext, useParams} from 'react-router-dom';
+import useSWR from 'swr';
 
 import solutionsIcon from '../../../../assets/icons/bookmarks_icon.svg';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
-import StatusCell from '../../../../components/Table/StatusCell/StatusCell';
+import StatusCell from '../../../../components/Table/StatusCell';
 import Table from '../../../../components/Table/Table';
 import i18n from '../../../../i18n';
 
 import './Licenses.scss';
 
-const ROWS = [
-	{
-		columns: {
-			environment: {
-				description: 'Hourglass - Search Security - Standard',
-				value: 'Standard',
-			},
-			keyType: {
-				description: 'PLPRIWS318.Hourglass-portal.com',
-				value: 'On-Premise',
-			},
-			startDateEndDate: {
-				value: 'Sep 24, 2023 - Sep 24, 2024',
-			},
-			status: {
-				value: (
-					<StatusCell icon="circle" iconClass="active">
-						<span>Active</span>
-					</StatusCell>
-				),
-			},
-		},
-		id: Math.random().toString(),
-		onClickRow: () => {},
-	},
-	{
-		columns: {
-			environment: {
-				description: 'Hourglass - Search Security - Standard',
-				value: 'Standard',
-			},
-			keyType: {
-				description: '-',
-				value: 'On-Premise',
-			},
-			startDateEndDate: {
-				value: 'Sep 24, 2023 - Sep 24, 2024',
-			},
-			status: {
-				value: (
-					<StatusCell icon="circle" iconClass="expired">
-						<span>Expired</span>
-					</StatusCell>
-				),
-			},
-		},
-		id: Math.random().toString(),
-		onClickRow: () => {},
-	},
-];
+import classNames from 'classnames';
 
-const columns = [
-	{
-		bodyClass: 'border-0 cursor-pointer',
-		expanded: true,
-		header: {
-			description: 'Description',
-			name: 'Environment',
-			noWrap: true,
-		},
-		id: 'environment',
-	},
-	{
-		bodyClass: 'border-0 cursor-pointer',
-		header: {
-			description: 'Host Name',
-			name: 'Key Type',
-		},
-		id: 'keyType',
-	},
-	{
-		bodyClass: 'border-0 cursor-pointer',
-		header: {
-			name: 'Start Date - Exp. Date',
-		},
-		id: 'startDateEndDate',
-	},
-	{
-		bodyClass: 'border-0 cursor-pointer',
-		header: {
-			name: 'Status',
-		},
-		id: 'status',
-	},
-];
+import {OrderType} from '../../../../enums/OrderType';
+import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
+import useProvisioningKoroneikiOAuth2 from '../../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
+
+type TitleSubtitleHeaderProps = {
+	bold?: boolean;
+	subtitle: string;
+	title: string;
+};
+
+const TitleSubtitleHeader: React.FC<TitleSubtitleHeaderProps> = ({
+	bold = true,
+	subtitle,
+	title,
+}) => (
+	<>
+		<p
+			className={classNames('description m-1', {
+				'description-title font-weight-bold': bold,
+			})}
+		>
+			{title}
+		</p>
+
+		<p className="description m-1">{subtitle}</p>
+	</>
+);
+
+type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
 const Licenses = () => {
-	const [licenseKeys] = useState(ROWS);
+	const {orderId} = useParams();
+	const outletContext = useOutletContext<OutletContext['data']>();
+
+	const placedOrder = outletContext?.placedOrder;
+
+	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
+
+	const {data: licenseKeysResponse, isLoading} = useSWR(
+		`/order-license-key3s/${orderId}`,
+		async () => {
+			try {
+				return provisioningKoroneikiOAuth2.getOrderLicenseKeys(
+					orderId as string
+				);
+			} catch (error) {
+				return {
+					items: [],
+					totalCount: 0,
+				};
+			}
+		}
+	);
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	const rows = licenseKeysResponse?.items ?? [];
 
 	return (
-		<div className="licenses">
-			{licenseKeys.length ? (
+		<div className="licenses mt-4">
+			{rows.length ? (
 				<Table
-					columns={columns}
+					columns={[
+						{
+							bodyClass: 'border-0 cursor-pointer',
+							expanded: true,
+							key: 'description',
+							noWrap: true,
+							render: (description, {licenseType}) => (
+								<TitleSubtitleHeader
+									subtitle={description}
+									title={licenseType}
+								/>
+							),
+							title: (
+								<TitleSubtitleHeader
+									subtitle="Description"
+									title="Environment"
+								/>
+							),
+						},
+						{
+							bodyClass: 'border-0 cursor-pointer',
+							key: 'hostName',
+							render: (hostName) => (
+								<TitleSubtitleHeader
+									subtitle={hostName || '-'}
+									title={
+										placedOrder?.orderTypeExternalReferenceCode ===
+										OrderType.DXP
+											? 'On-Premise'
+											: 'Cloud'
+									}
+								/>
+							),
+							title: (
+								<TitleSubtitleHeader
+									subtitle="Host Name"
+									title="Key Type"
+								/>
+							),
+						},
+						{
+							bodyClass: 'border-0 cursor-pointer',
+							key: 'startDate',
+							render: (startDate, {expirationDate}) => (
+								<TitleSubtitleHeader
+									bold={false}
+									subtitle={
+										expirationDate
+											? format(
+													new Date(expirationDate),
+													'MMM dd, yyyy'
+											  )
+											: 'DNE'
+									}
+									title={format(
+										new Date(startDate),
+										'MMM dd, yyyy'
+									)}
+								/>
+							),
+
+							title: (
+								<TitleSubtitleHeader
+									subtitle="Exp. Date"
+									title="Start Date -"
+								/>
+							),
+						},
+						{
+							bodyClass: 'border-0 cursor-pointer',
+							key: 'status',
+							render: (_, {active, expirationDate}) => {
+								const isActive =
+									active &&
+									isBefore(
+										new Date(),
+										new Date(expirationDate)
+									)
+										? 'active'
+										: 'inactive';
+
+								return (
+									<StatusCell
+										icon="circle"
+										iconClassName={
+											isActive ? 'active' : 'expired'
+										}
+									>
+										{isActive ? 'Activated' : 'Expired'}
+									</StatusCell>
+								);
+							},
+							title: 'Status',
+						},
+					]}
 					hasKebabButton
 					hasPagination
-					rows={licenseKeys}
+					rows={rows}
 				/>
 			) : (
 				<DashboardEmptyTable

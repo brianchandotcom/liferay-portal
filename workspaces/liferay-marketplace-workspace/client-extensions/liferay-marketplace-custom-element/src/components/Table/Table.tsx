@@ -9,152 +9,107 @@ import {ReactNode} from 'react';
 
 import './Table.scss';
 
-type TableProps = {
+type TableProps<T = any> = {
 	className?: string;
-	columns: TableColumn[];
+	columns: TableColumn<T>[];
 	hasKebabButton?: boolean;
 	hasPagination?: boolean;
-	isLoading?: boolean;
-	rows: TableRow[];
+	rows: T[];
 };
 
-type TableColumn = {
+type TableColumn<T = any> = {
 	align?: 'center' | 'left' | 'right';
 	bodyClass?: string;
 	columnTextAlignment?: 'center' | 'end' | 'start';
 	disableCustomClickOnRow?: boolean;
 	expanded?: boolean;
-	header: {
-		description?: string;
-		name: string;
-		noWrap?: boolean;
-		styles?: string;
-	};
-	id: string;
+	key: string;
 	noWrap?: boolean;
+	render?: (value: any, item: T) => ReactNode | string;
+	styles?: string;
+	title: ReactNode;
 	truncate?: boolean;
 };
 
-type TableRow = {
-	columns: {
-		[keys: string]: {
-			description?: string;
-			value: ReactNode;
-		};
-	};
-	id: string;
-	onClickRow?: () => void;
-};
-
-export default function Table({
+const Table: React.FC<TableProps> = ({
 	className,
 	columns,
 	hasKebabButton,
-	isLoading,
 	rows,
-}: TableProps) {
+}) => {
 	return (
-		<>
-			<ClayTable borderless className={`table ${className}`}>
-				<ClayTable.Head>
-					<ClayTable.Row className="border-bottom header-row">
-						{columns.map((column) => (
-							<ClayTable.Cell
-								align={column.align}
-								className={
-									column.header.styles ||
-									'bg-transparent font-weight-bold'
-								}
-								headingCell
-								key={column.id}
-								noWrap={column.header.noWrap}
-							>
-								{column.header.description ? (
-									<>
-										<p className="description-title m-0">
-											{column.header.name}
-										</p>
+		<ClayTable borderless className={className}>
+			<ClayTable.Head>
+				<ClayTable.Row className="border-bottom header-row">
+					{columns.map((column, index) => (
+						<ClayTable.Cell
+							align={column.align}
+							className="bg-transparent font-weight-bold"
+							headingCell
+							key={index}
+							noWrap={column.noWrap}
+						>
+							{column.title}
+						</ClayTable.Cell>
+					))}
 
-										<p className="description m-0">
-											{column.header.description}
-										</p>
-									</>
-								) : (
-									<span className="description-title">
-										{column.header.name}
-									</span>
-								)}
-							</ClayTable.Cell>
-						))}
+					{hasKebabButton && <ClayTable.Cell />}
+				</ClayTable.Row>
+			</ClayTable.Head>
 
-						{hasKebabButton && <ClayTable.Cell></ClayTable.Cell>}
-					</ClayTable.Row>
-				</ClayTable.Head>
-				{!isLoading && (
-					<ClayTable.Body className="table-body">
-						{rows.map((row, rowIndex) => (
-							<ClayTable.Row key={row.id || rowIndex}>
-								{columns.map((column, columnIndex) => (
-									<ClayTable.Cell
-										align={column.align}
-										className={column.bodyClass}
-										columnTextAlignment={
-											column.columnTextAlignment
+			<ClayTable.Body className="table-body">
+				{rows.map((row, rowIndex) => (
+					<ClayTable.Row key={row.id || rowIndex}>
+						{columns.map((column, columnIndex) => {
+							const data = row[column.key];
+
+							const value = column.render
+								? column.render(data, {
+										...row,
+										rowIndex,
+								  })
+								: data;
+
+							return (
+								<ClayTable.Cell
+									align={column.align}
+									className={column.bodyClass}
+									columnTextAlignment={
+										column.columnTextAlignment
+									}
+									expanded={column.expanded}
+									key={`${rowIndex}-${columnIndex}`}
+									noWrap={column.noWrap}
+									onClick={() => {
+										if (row.onClickRow) {
+											return row.onClickRow();
 										}
-										expanded={column.expanded}
-										key={`${rowIndex}-${columnIndex}`}
-										noWrap={column.noWrap}
-										onClick={() => {
-											if (
-												!column.disableCustomClickOnRow &&
-												row.onClickRow
-											) {
-												return row.onClickRow();
-											}
-										}}
-										truncate={column.truncate}
-									>
-										{row.columns[column.id].description ? (
-											<>
-												<p className="description-title m-0">
-													{
-														row.columns[column.id]
-															?.value
-													}
-												</p>
+									}}
+									truncate={column.truncate}
+								>
+									{value}
+								</ClayTable.Cell>
+							);
+						})}
 
-												<p className="description m-0">
-													{
-														row.columns[column.id]
-															?.description
-													}
-												</p>
-											</>
-										) : (
-											row.columns[column.id]?.value
-										)}
-									</ClayTable.Cell>
-								))}
-
-								{hasKebabButton && (
-									<ClayTable.Cell
-										className="border-0"
-										columnTextAlignment="center"
-									>
-										<ClayButtonWithIcon
-											aria-label="Menu"
-											displayType={null}
-											onClick={() => {}}
-											symbol="ellipsis-v"
-											title="Menu"
-										/>
-									</ClayTable.Cell>
-								)}
-							</ClayTable.Row>
-						))}
-					</ClayTable.Body>
-				)}
-			</ClayTable>
-		</>
+						{hasKebabButton && (
+							<ClayTable.Cell
+								className="border-0"
+								columnTextAlignment="center"
+							>
+								<ClayButtonWithIcon
+									aria-label="Menu"
+									displayType={null}
+									symbol="ellipsis-v"
+									title="Menu"
+								/>
+							</ClayTable.Cell>
+						)}
+					</ClayTable.Row>
+				))}
+			</ClayTable.Body>
+		</ClayTable>
 	);
-}
+};
+
+export default Table;

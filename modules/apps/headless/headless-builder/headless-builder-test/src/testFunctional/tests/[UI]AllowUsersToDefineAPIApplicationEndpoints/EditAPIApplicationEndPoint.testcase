@@ -11,6 +11,16 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Given API Application with endpoint of scope 'Company' created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
 	}
 
 	tearDown {
@@ -28,16 +38,6 @@ definition {
 	@priority = 4
 	test CannotModifyMethodOfCretaedEndpoint {
 		property portal.acceptance = "true";
-
-		task ("Given API Application with endpoint created") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				endpointName = "testendpoint",
-				endpointPath = "/testendpoint",
-				relatedEndpoint = "true",
-				status = "published",
-				title = "My-app");
-		}
 
 		task ("When when going to Edit endpoint") {
 			APIBuilderUI.goToEditRelatedEntryInEditApplication(
@@ -57,16 +57,6 @@ definition {
 	@priority = 4
 	test CanRelateEndpointWithSchema {
 		property portal.acceptance = "true";
-
-		task ("Given API Application with endpoint created") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				endpointName = "testendpoint",
-				endpointPath = "/testendpoint",
-				relatedEndpoint = "true",
-				status = "published",
-				title = "My-app");
-		}
 
 		task ("And Given API Schema in API Application") {
 			SchemaAPI.createAPISchema(
@@ -138,16 +128,6 @@ definition {
 				relationshipName = "universityStudents");
 		}
 
-		task ("And Given API Application with endpoint of scope 'Company' created") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				endpointName = "testendpoint",
-				endpointPath = "/testendpoint",
-				relatedEndpoint = "true",
-				status = "published",
-				title = "My-app");
-		}
-
 		task ("And Given Schema with properties: 'name' of university, 'name' of Student, ERC of university, ERC of student") {
 			SchemaAPI.createAPISchema(
 				externalReferenceCode = "My-app",
@@ -194,16 +174,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given API Application with two endpoints created") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				status = "published",
-				title = "My-app");
-
-			EndpointAPI.createNAPIEndpoints(
+			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "testendpoint",
-				numberOfEndpoints = 2,
-				path = "/testendpoint");
+				name = "testendpoint1",
+				path = "/testendpoint1");
 		}
 
 		task ("And Given one API Schema in API Application") {
@@ -216,7 +190,7 @@ definition {
 		task ("And Given modifying endpoint1 with API Schema") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				entity = "Endpoints",
-				name = "testendpoint1",
+				name = "testendpoint",
 				schemaName = "testSchema",
 				title = "My-app");
 		}
@@ -224,7 +198,7 @@ definition {
 		task ("When modifying endpoint2 wit the same API Schema") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
 				entity = "Endpoints",
-				name = "testendpoint2",
+				name = "testendpoint1",
 				schemaName = "testSchema",
 				title = "My-app");
 		}
@@ -245,16 +219,6 @@ definition {
 	@priority = 4
 	test CanUpdateEndpoint {
 		property portal.acceptance = "true";
-
-		task ("Given API Application with endpoint created") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				endpointName = "testendpoint",
-				endpointPath = "/testendpoint",
-				relatedEndpoint = "true",
-				status = "published",
-				title = "My-app");
-		}
 
 		task ("When editing Path and Description of an endpoint") {
 			APIBuilderUI.addAndPublishEndpointInfo(

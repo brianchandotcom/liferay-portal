@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URL;
 
+import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -121,19 +122,17 @@ public class KoroneikiRestController extends BaseRestController {
 			ProductPurchase productPurchase = new ProductPurchase();
 
 			if (StringUtil.equals(licenseType, "Subscription")) {
-				productPurchase.setEndDate(
-					Date.from(
-						commerceOrderStartDate.plusYears(
-							1
-						).toInstant()));
-			}
+				Instant instant = commerceOrderStartDate.plusYears(
+					1
+				).toInstant();
 
-			if (StringUtil.equals(licenseType, "Trial")) {
-				productPurchase.setEndDate(
-					Date.from(
-						commerceOrderStartDate.plusMonths(
-							1
-						).toInstant()));
+				if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
+					instant = commerceOrderStartDate.plusMonths(
+						1
+					).toInstant();
+				}
+
+				productPurchase.setEndDate(Date.from(instant));
 			}
 
 			productPurchase.setStartDate(
@@ -264,7 +263,7 @@ public class KoroneikiRestController extends BaseRestController {
 			}
 
 			ProductPurchase[] productPurchases =
-					productPurchaseView.getProductPurchases();
+				productPurchaseView.getProductPurchases();
 
 			ProductPurchase productPurchase = productPurchases[0];
 

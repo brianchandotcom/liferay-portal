@@ -1,0 +1,15 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":not-site-initializer:createClientExtensionConfig"
+
+	doLast {
+		Project siteInitializerProject = project(":not-site-initializer")
+
+		File clientExtensionBuildDir = siteInitializerProject.file("${siteInitializerProject.buildDir}/liferay-client-extension-build")
+
+		File siteInitializerDir = siteInitializerProject.file("${clientExtensionBuildDir}/site-initializer")
+
+		assert !siteInitializerDir.exists() : "A site-initializer directory was created for a non-site-initializer project"
+	}
+}

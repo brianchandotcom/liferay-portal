@@ -1,0 +1,7 @@
+alt-oauth:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: alt-oauth
+    scopes:
+        - Liferay.Headless.Site.everything
+    type: oAuthApplicationHeadlessServer

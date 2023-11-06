@@ -360,8 +360,7 @@ public class LiferayContextController extends ContextController {
 
 			_listenerRegistrations.add(listenerRegistration);
 
-			_httpSessionListeners.put(
-				eventListenerClasses, listenerRegistration);
+			_eventListeners.put(eventListenerClasses, listenerRegistration);
 		}
 		finally {
 			if (listenerRegistration == null) {
@@ -542,7 +541,7 @@ public class LiferayContextController extends ContextController {
 		_servletServiceTracker.close();
 
 		_endpointRegistrations.clear();
-		_httpSessionListeners.clear();
+		_eventListeners.clear();
 		_filterRegistrations.clear();
 		_listenerRegistrations.clear();
 		_servletContextHelperDataContext.destroy();
@@ -668,7 +667,7 @@ public class LiferayContextController extends ContextController {
 
 	@Override
 	public EventListeners getEventListeners() {
-		return _httpSessionListeners;
+		return _eventListeners;
 	}
 
 	@Override
@@ -734,8 +733,8 @@ public class LiferayContextController extends ContextController {
 			return previousHttpSessionAdaptor;
 		}
 
-		List<HttpSessionListener> httpSessionListeners =
-			_httpSessionListeners.get(HttpSessionListener.class);
+		List<HttpSessionListener> httpSessionListeners = _eventListeners.get(
+			HttpSessionListener.class);
 
 		if (httpSessionListeners.isEmpty()) {
 			return httpSessionAdaptor;
@@ -910,7 +909,7 @@ public class LiferayContextController extends ContextController {
 
 		ServletContextAdaptor servletContextAdaptor = new ServletContextAdaptor(
 			this, bundle, servletContextHelper,
-			_servletContextHelperDataContext, _httpSessionListeners,
+			_servletContextHelperDataContext, _eventListeners,
 			AccessController.getContext());
 
 		return servletContextAdaptor.createServletContext();
@@ -1146,6 +1145,7 @@ public class LiferayContextController extends ContextController {
 	private final long _contextServiceId;
 	private final Set<EndpointRegistration<?>> _endpointRegistrations =
 		new ConcurrentSkipListSet<>();
+	private final EventListeners _eventListeners = new EventListeners();
 	private final Set<FilterRegistration> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final ServiceTracker<Filter, AtomicReference<FilterRegistration>>
@@ -1157,7 +1157,6 @@ public class LiferayContextController extends ContextController {
 	private final ServiceTracker
 		<EventListener, AtomicReference<ListenerRegistration>>
 			_httpSessionIdListenerServiceTracker;
-	private final EventListeners _httpSessionListeners = new EventListeners();
 	private final ServiceTracker
 		<EventListener, AtomicReference<ListenerRegistration>>
 			_httpSessionListenerServiceTracker;

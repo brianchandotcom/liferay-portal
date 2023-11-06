@@ -72,6 +72,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -2312,8 +2313,11 @@ public class AssetPublisherDisplayContext {
 		}
 
 		for (int i = 0; i < assetTagNames.length; i++) {
-			assetTagNames[i] = StringUtil.toLowerCase(
-				StringUtil.trim(assetTagNames[i]));
+			assetTagNames[i] = StringUtil.trim(assetTagNames[i]);
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+				assetTagNames[i] = StringUtil.toLowerCase(assetTagNames[i]);
+			}
 		}
 
 		return assetTagNames;

@@ -1048,7 +1048,7 @@ definition {
 		Staging.deletePublishTemplate(publishTemplateName = "Publish Template Name");
 	}
 
-	@description = "This is a use case for LPS-194891. The name of multiple published Web Contents are NOT displayed in the Publication Summary even when the actions are different."
+	@description = "This is a use case for LPS-190064 (TC-3). The name of multiple published Web Contents are NOT displayed in the Publication Summary even when the actions are different."
 	@priority = 4
 	test DifferentlyModifiedWebContentTitlesAreNotDisplayedInPublicationSummary {
 		property custom.properties = "feature.flag.LPS-165481=true";
@@ -1117,7 +1117,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-194891. The name of a Drafted Web Content is NOT displayed in the Publication Summary."
+	@description = "This is a use case for LPS-190064 (TC-5). The name of a Drafted Web Content is NOT displayed in the Publication Summary."
 	@priority = 4
 	test DraftedWebContentTitleIsNotDisplayedInPublicationSummary {
 		property custom.properties = "feature.flag.LPS-165481=true";
@@ -1369,7 +1369,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-194891. The name of multiple published Web Contents are NOT displayed in the Publication Summary."
+	@description = "This is a use case for LPS-190064 (TC-2). The name of multiple published Web Contents are NOT displayed in the Publication Summary."
 	@priority = 4
 	test MultipleWebContentTitlesAreNotDisplayedInPublicationSummary {
 		property custom.properties = "feature.flag.LPS-165481=true";
@@ -2536,7 +2536,7 @@ definition {
 			publicationTitle = "Content Update");
 	}
 
-	@description = "This is a use case for LPS-194891. The name of a solely published Web Content that is inside of a Web Content Folder is displayed in the Publication Summary without the title of the folder."
+	@description = "This is a use case for LPS-190064 (TC-4). The name of a solely published Web Content that is inside of a Web Content Folder is displayed in the Publication Summary without the title of the folder."
 	@priority = 4
 	test SingleFolderedWebContentTitleIsProperlyDisplayedInPublicationSummary {
 		property custom.properties = "feature.flag.LPS-165481=true";
@@ -2581,7 +2581,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-194891. The name of a solely published Web Content is displayed in the Publication Summary without any UI break."
+	@description = "This is a use case for LPS-190064 (TC-1). The name of a solely published Web Content is displayed in the Publication Summary without any UI break."
 	@priority = 4
 	test SingleWebContentTitleIsProperlyDisplayedInPublicationSummary {
 		property custom.properties = "feature.flag.LPS-165481=true";

@@ -6,8 +6,15 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.PageRule;
+import com.liferay.headless.delivery.dto.v1_0.PageRuleAction;
+import com.liferay.headless.delivery.dto.v1_0.PageRuleCondition;
+import com.liferay.layout.converter.ConditionTypeConverter;
 import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -28,11 +35,58 @@ public class PageRulesUtil {
 			layoutStructureRules,
 			layoutStructureRule -> new PageRule() {
 				{
+					conditionType = ConditionType.create(
+						ConditionTypeConverter.convertToExternalValue(
+							layoutStructureRule.getConditionType()));
 					id = layoutStructureRule.getId();
 					name = layoutStructureRule.getName();
+					pageRuleActions = JSONUtil.toArray(
+						layoutStructureRule.getActionsJSONArray(),
+						jsonObject -> _toPageRuleAction(jsonObject),
+						exception -> {
+							if (_log.isWarnEnabled()) {
+								_log.warn(exception);
+							}
+						},
+						PageRuleAction.class);
+					pageRuleConditions = JSONUtil.toArray(
+						layoutStructureRule.getConditionsJSONArray(),
+						jsonObject -> _toPageRuleCondition(jsonObject),
+						exception -> {
+							if (_log.isWarnEnabled()) {
+								_log.warn(exception);
+							}
+						},
+						PageRuleCondition.class);
 				}
 			},
 			PageRule.class);
 	}
+
+	private static PageRuleAction _toPageRuleAction(JSONObject jsonObject) {
+		return new PageRuleAction() {
+			{
+				action = jsonObject.getString("action");
+				id = jsonObject.getString("id");
+				itemId = jsonObject.getString("itemId");
+				type = jsonObject.getString("type");
+			}
+		};
+	}
+
+	private static PageRuleCondition _toPageRuleCondition(
+		JSONObject jsonObject) {
+
+		return new PageRuleCondition() {
+			{
+				condition = jsonObject.getString("condition");
+				id = jsonObject.getString("id");
+				type = jsonObject.getString("type");
+				value = jsonObject.getString("value");
+			}
+		};
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(PageRulesUtil.class);
 
 }

@@ -8,6 +8,7 @@ package com.liferay.layout.page.template.internal.service;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceWrapper;
+import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -33,10 +34,12 @@ public class LayoutPageTemplateStructureRelFragmentEntryLinkLocalServiceWrapper
 		FragmentEntryLink fragmentEntryLink = super.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues);
 
-		_layoutLocalService.updateStatus(
-			PrincipalThreadLocal.getUserId(), fragmentEntryLink.getPlid(),
-			WorkflowConstants.STATUS_DRAFT,
-			ServiceContextThreadLocal.getServiceContext());
+		if (UpdateLayoutStatusThreadLocal.isUpdateLayoutStatus()) {
+			_layoutLocalService.updateStatus(
+				PrincipalThreadLocal.getUserId(), fragmentEntryLink.getPlid(),
+				WorkflowConstants.STATUS_DRAFT,
+				ServiceContextThreadLocal.getServiceContext());
+		}
 
 		return fragmentEntryLink;
 	}

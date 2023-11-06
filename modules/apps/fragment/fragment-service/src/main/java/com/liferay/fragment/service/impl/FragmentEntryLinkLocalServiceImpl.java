@@ -21,6 +21,7 @@ import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
+import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -617,15 +618,17 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public void updateClassedModel(long plid) {
-		try {
-			_layoutLocalService.updateStatus(
-				PrincipalThreadLocal.getUserId(), plid,
-				WorkflowConstants.STATUS_DRAFT,
-				ServiceContextThreadLocal.getServiceContext());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+		if (UpdateLayoutStatusThreadLocal.isUpdateLayoutStatus()) {
+			try {
+				_layoutLocalService.updateStatus(
+					PrincipalThreadLocal.getUserId(), plid,
+					WorkflowConstants.STATUS_DRAFT,
+					ServiceContextThreadLocal.getServiceContext());
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
 			}
 		}
 	}

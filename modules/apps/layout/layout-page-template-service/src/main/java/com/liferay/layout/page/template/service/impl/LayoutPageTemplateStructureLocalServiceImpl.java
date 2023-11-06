@@ -12,6 +12,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureLocalServiceBaseImpl;
 import com.liferay.layout.page.template.util.CheckUnlockedLayoutThreadLocal;
+import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -226,9 +227,11 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 	private void _updateLayoutStatus(long userId, long plid)
 		throws PortalException {
 
-		_layoutLocalService.updateStatus(
-			userId, plid, WorkflowConstants.STATUS_DRAFT,
-			ServiceContextThreadLocal.getServiceContext());
+		if (UpdateLayoutStatusThreadLocal.isUpdateLayoutStatus()) {
+			_layoutLocalService.updateStatus(
+				userId, plid, WorkflowConstants.STATUS_DRAFT,
+				ServiceContextThreadLocal.getServiceContext());
+		}
 	}
 
 	@Reference

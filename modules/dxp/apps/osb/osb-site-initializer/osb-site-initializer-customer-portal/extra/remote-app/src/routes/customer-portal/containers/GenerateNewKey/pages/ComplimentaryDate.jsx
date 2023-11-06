@@ -4,8 +4,9 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
-import {ClayCheckbox} from '@clayui/form';
-import {useCallback, useMemo, useState} from 'react';
+import {ClayCheckbox, ClayInput, ClaySelect} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import useProvisioningLicenseKeys from '~/common/hooks/useProvisioningLicenseKeys';
@@ -13,16 +14,20 @@ import {putSubscriptionInKey} from '~/common/services/liferay/rest/raysource/Lic
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
+import useGetPurposeComplimentaryKeyList from './hooks/useGetPurposeComplimentaryKeyList';
 
 const now = new Date();
 const NAVIGATION_YEARS_RANGE = 2;
+const SELECTED_PURPOSE_OTHER = 'Other, please specify';
 
 const ComplimentaryDate = ({
 	accountKey,
 	deactivateKeysConfirm,
 	infoSelectedKey,
+	purposeDescription,
 	sessionId,
 	setInfoSelectedKey,
+	setPurposeDescription,
 	setStep,
 	urlPreviousPage,
 }) => {
@@ -32,6 +37,15 @@ const ComplimentaryDate = ({
 	const [selectedSubscription] = useState(
 		infoSelectedKey?.selectedSubscription
 	);
+	const purposeComplimentaryKeyList = useGetPurposeComplimentaryKeyList();
+	const [selectedPurpose, setSelectedPurpose] = useState('');
+
+	useEffect(() => {
+		if (purposeComplimentaryKeyList.length) {
+			setPurposeDescription(purposeComplimentaryKeyList[0]?.value);
+		}
+	}, [purposeComplimentaryKeyList]);
+
 	const [expandedOnOrAfter, setExpandedOnOrAfter] = useState(false);
 	const [selectedStartDate, setSelectedStartDate] = useState(currentDate);
 	const [isLoadingGenerateKey, setIsLoadingGenerateKey] = useState(false);
@@ -235,6 +249,7 @@ const ComplimentaryDate = ({
 							<Button
 								disabled={
 									!checkBoxConfirmationTerms ||
+									!purposeDescription ||
 									!selectedStartDate ||
 									hasDateLimitExceeded ||
 									isLoadingGenerateKey
@@ -323,7 +338,62 @@ const ComplimentaryDate = ({
 						)}
 					</p>
 
-					<h5 className="mt-5">
+					<h5>{i18n.translate('purpose-of-complimentary-key')}</h5>
+
+					<div className="position-relative">
+						<ClaySelect
+							className="mr-2 pr-6 w-100"
+							onChange={({target}) => {
+								setSelectedPurpose(target.value);
+								setPurposeDescription(() =>
+									target.value === SELECTED_PURPOSE_OTHER
+										? ''
+										: target.value
+								);
+							}}
+							value={selectedPurpose}
+						>
+							{[
+								...purposeComplimentaryKeyList,
+								{
+									label: i18n.translate(
+										'other-please-specify'
+									),
+									value: SELECTED_PURPOSE_OTHER,
+								},
+							]?.map((item) => (
+								<ClaySelect.Option
+									key={item.label}
+									label={item.label}
+								/>
+							))}
+						</ClaySelect>
+
+						<ClayIcon
+							aria-label="Caret Icon Bottom"
+							className="select-icon"
+							symbol="caret-bottom"
+						/>
+					</div>
+
+					{selectedPurpose === SELECTED_PURPOSE_OTHER && (
+						<div className="pt-3">
+							<ClayInput
+								component="textarea"
+								name="description"
+								onChange={(event) =>
+									setPurposeDescription(event.target.value)
+								}
+								placeholder={i18n.translate(
+									'enter-the-purpose'
+								)}
+								type="text"
+								value={purposeDescription}
+							/>
+						</div>
+					)}
+
+					<h5 className="mt-4">
 						{i18n.translate('confirmation-terms')}
 					</h5>
 
@@ -347,6 +417,8 @@ const ComplimentaryDate = ({
 							)}
 						</label>
 					</div>
+
+					<div className="dropdown-divider mt-6"></div>
 				</div>
 			</Layout>
 		</div>

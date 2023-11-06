@@ -38,6 +38,7 @@ const GenerateNewKey = ({
 	const [alreadyDeactivated, setAlreadyDeactivated] = useState(false);
 
 	const {state} = useLocation();
+	const [purposeDescription, setPurposeDescription] = useState('');
 
 	useEffect(() => {
 		setHasQuickLinksPanel(false);
@@ -81,7 +82,9 @@ const GenerateNewKey = ({
 		[STEP_TYPES.generateKeys]: (
 			<RequiredInformation
 				accountKey={project?.accountKey}
+				hasKeyComplimentary={hasKeyComplimentary}
 				infoSelectedKey={infoSelectedKey}
+				purposeDescription={purposeDescription}
 				sessionId={sessionId}
 				setStep={setStep}
 				urlPreviousPage={urlPreviousPage}
@@ -114,6 +117,7 @@ const GenerateNewKey = ({
 				filterCheckedActivationKeys
 				infoSelectedKey={infoSelectedKey}
 				productGroupName={productGroupName}
+				purposeDescription={purposeDescription}
 				sessionId={sessionId}
 				setDeactivateKeysStatus={(value) =>
 					setStatus((previousStatus) => ({
@@ -122,6 +126,7 @@ const GenerateNewKey = ({
 					}))
 				}
 				setInfoSelectedKey={setInfoSelectedKey}
+				setPurposeDescription={setPurposeDescription}
 				setStep={setStep}
 				urlPreviousPage={urlPreviousPage}
 			/>

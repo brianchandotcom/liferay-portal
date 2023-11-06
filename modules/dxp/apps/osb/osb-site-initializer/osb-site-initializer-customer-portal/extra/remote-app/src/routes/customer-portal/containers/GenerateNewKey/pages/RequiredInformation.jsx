@@ -43,7 +43,9 @@ const getLicenseEntryTypeSelected = (infoSelectedKey) => {
 const RequiredInformation = ({
 	accountKey,
 	errors,
+	hasKeyComplimentary,
 	infoSelectedKey,
+	purposeDescription,
 	sessionId,
 	setErrors,
 	setStep,
@@ -326,10 +328,16 @@ const RequiredInformation = ({
 							)}
 						</label>
 					</div>
-
-					<div className="dropdown-divider"></div>
 				</>
 			);
+		}
+	};
+
+	const handleDescription = () => {
+		if (hasKeyComplimentary) {
+			values.description = purposeDescription;
+
+			return values.description;
 		}
 	};
 
@@ -428,20 +436,25 @@ const RequiredInformation = ({
 								<div className="mb-3">
 									<div className="cp-input-generate-label">
 										<Input
+											component="textarea"
+											disabled={hasKeyComplimentary}
 											label={i18n.translate(
 												'description'
 											)}
 											name="description"
 											placeholder="e.g. Liferay Dev Environment – ECOM DXP 7.2 "
 											type="text"
+											value={handleDescription()}
 										/>
 									</div>
 
-									<h6 className="font-weight-normal ml-3 mr-0 mt-1">
-										{i18n.translate(
-											'include-a-description-to-uniquely-identify-this-environment-this-cannot-be-edited-later'
-										)}
-									</h6>
+									{!hasKeyComplimentary && (
+										<h6 className="font-weight-normal ml-3 mr-0 mt-1">
+											{i18n.translate(
+												'include-a-description-to-uniquely-identify-this-environment-this-cannot-be-edited-later'
+											)}
+										</h6>
+									)}
 								</div>
 							</div>
 
@@ -553,6 +566,8 @@ const RequiredInformation = ({
 									</ClayTooltipProvider>
 
 									<CheckboxSubscriptionNotification />
+
+									<div className="dropdown-divider"></div>
 								</div>
 							) : (
 								<div className="mx-6">

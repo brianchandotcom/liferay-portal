@@ -152,6 +152,27 @@ public class LiferayContextController extends ContextController {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX,
 			servletContextHelperDataContext.getServletContext());
 
+		_httpSessionAttributeListenerServiceTracker = new ServiceTracker<>(
+			bundleContext, HttpSessionAttributeListener.class.getName(),
+			new ContextListenerTrackerCustomizer(
+				bundleContext, httpServletEndpointController, this));
+
+		_httpSessionAttributeListenerServiceTracker.open();
+
+		_httpSessionIdListenerServiceTracker = new ServiceTracker<>(
+			bundleContext, HttpSessionIdListener.class.getName(),
+			new ContextListenerTrackerCustomizer(
+				bundleContext, httpServletEndpointController, this));
+
+		_httpSessionIdListenerServiceTracker.open();
+
+		_httpSessionListenerServiceTracker = new ServiceTracker<>(
+			bundleContext, HttpSessionListener.class.getName(),
+			new ContextListenerTrackerCustomizer(
+				bundleContext, httpServletEndpointController, this));
+
+		_httpSessionListenerServiceTracker.open();
+
 		_servletContextAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContextAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
@@ -179,27 +200,6 @@ public class LiferayContextController extends ContextController {
 				bundleContext, httpServletEndpointController, this));
 
 		_servletRequestListenerServiceTracker.open();
-
-		_httpSessionAttributeListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, HttpSessionAttributeListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
-				bundleContext, httpServletEndpointController, this));
-
-		_httpSessionAttributeListenerServiceTracker.open();
-
-		_httpSessionIdListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, HttpSessionIdListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
-				bundleContext, httpServletEndpointController, this));
-
-		_httpSessionIdListenerServiceTracker.open();
-
-		_httpSessionListenerServiceTracker = new ServiceTracker<>(
-			bundleContext, HttpSessionListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
-				bundleContext, httpServletEndpointController, this));
-
-		_httpSessionListenerServiceTracker.open();
 
 		_filterServiceTracker = new ServiceTracker<>(
 			bundleContext, Filter.class,
@@ -516,16 +516,16 @@ public class LiferayContextController extends ContextController {
 			iterator.remove();
 		}
 
-		_filterServiceTracker.close();
-		_httpSessionAttributeListenerServiceTracker.close();
-		_httpSessionIdListenerServiceTracker.close();
-		_httpSessionListenerServiceTracker.close();
-		_resourceServiceTracker.close();
-		_servletContextAttributeListenerServiceTracker.close();
-		_servletContextListenerServiceTracker.close();
-		_servletRequestAttributeListenerServiceTracker.close();
-		_servletRequestListenerServiceTracker.close();
 		_servletServiceTracker.close();
+		_resourceServiceTracker.close();
+		_filterServiceTracker.close();
+		_httpSessionListenerServiceTracker.close();
+		_httpSessionIdListenerServiceTracker.close();
+		_httpSessionAttributeListenerServiceTracker.close();
+		_servletRequestListenerServiceTracker.close();
+		_servletRequestAttributeListenerServiceTracker.close();
+		_servletContextListenerServiceTracker.close();
+		_servletContextAttributeListenerServiceTracker.close();
 
 		_endpointRegistrations.clear();
 		_eventListeners.clear();

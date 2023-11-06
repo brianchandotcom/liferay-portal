@@ -302,8 +302,14 @@ public class AssetPublisherDisplayContext {
 				_allAssetTagNames, getCompilerTagNames());
 		}
 
-		_allAssetTagNames = ArrayUtil.distinct(
-			_allAssetTagNames, new StringComparator());
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+			_allAssetTagNames = ArrayUtil.distinct(
+				_allAssetTagNames, new StringComparator());
+		}
+		else {
+			_allAssetTagNames = ArrayUtil.distinct(
+				_allAssetTagNames, new StringComparator(true, true));
+		}
 
 		return _allAssetTagNames;
 	}

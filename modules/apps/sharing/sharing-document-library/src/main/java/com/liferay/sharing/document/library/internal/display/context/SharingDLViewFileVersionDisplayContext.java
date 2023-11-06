@@ -10,11 +10,9 @@ import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplay
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -136,53 +134,32 @@ public class SharingDLViewFileVersionDisplayContext
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
 			if (_isSharingEnabled()) {
-				UnsafeConsumer<DropdownContextItem, Exception> unsafeConsumer =
-					_sharingDropdownItemFactory.createShareActionUnsafeConsumer(
-						DLFileEntryConstants.getClassName(),
-						_fileEntry.getFileEntryId(), _httpServletRequest);
-
-				if (i >= dropdownItems.size()) {
-					dropdownItems.addAll(
-						DropdownItemListBuilder.addContext(
-							unsafeConsumer
-						).build());
-				}
-				else {
-					dropdownItems.addAll(
-						i,
-						DropdownItemListBuilder.addContext(
-							unsafeConsumer
-						).build());
-				}
+				dropdownItems.addAll(
+					Math.min(i, dropdownItems.size()),
+					DropdownItemListBuilder.addContext(
+						_sharingDropdownItemFactory.
+							createShareActionUnsafeConsumer(
+								DLFileEntryConstants.getClassName(),
+								_fileEntry.getFileEntryId(),
+								_httpServletRequest)
+					).build());
 			}
 			else {
-				DropdownItem copyLinkDropdownItem =
+				dropdownItems.add(
+					Math.min(i, dropdownItems.size()),
 					_sharingDropdownItemFactory.createCopyLinkDropdownItem(
 						DLFileEntryConstants.getClassName(),
-						_fileEntry.getFileEntryId(), _httpServletRequest);
-
-				if (i >= dropdownItems.size()) {
-					dropdownItems.add(copyLinkDropdownItem);
-				}
-				else {
-					dropdownItems.add(i, copyLinkDropdownItem);
-				}
+						_fileEntry.getFileEntryId(), _httpServletRequest));
 			}
 
 			return dropdownItems;
 		}
 
-		DropdownItem sharingDropdownItem =
+		dropdownItems.add(
+			Math.min(i, dropdownItems.size()),
 			_sharingDropdownItemFactory.createShareDropdownItem(
 				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest);
-
-		if (i >= dropdownItems.size()) {
-			dropdownItems.add(sharingDropdownItem);
-		}
-		else {
-			dropdownItems.add(i, sharingDropdownItem);
-		}
+				_fileEntry.getFileEntryId(), _httpServletRequest));
 
 		return dropdownItems;
 	}

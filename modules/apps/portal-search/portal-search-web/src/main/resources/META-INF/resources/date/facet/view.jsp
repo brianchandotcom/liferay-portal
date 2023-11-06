@@ -10,12 +10,9 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.date.facet.configuration.DateFacetPortletInstanceConfiguration" %><%@
@@ -61,137 +58,7 @@ DateFacetPortletInstanceConfiguration dateFacetPortletInstanceConfiguration = da
 			displayStyle="<%= dateFacetPortletInstanceConfiguration.displayStyle() %>"
 			displayStyleGroupId="<%= dateFacetDisplayContext.getDisplayStyleGroupId() %>"
 			entries="<%= dateFacetDisplayContext.getBucketDisplayContexts() %>"
-		>
-			<liferay-ui:panel-container
-				extended="<%= true %>"
-				id='<%= liferayPortletResponse.getNamespace() + "facetDatePanelContainer" %>'
-				markupView="lexicon"
-				persistState="<%= true %>"
-			>
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="search-facet"
-					id='<%= liferayPortletResponse.getNamespace() + "facetDatePanel" %>'
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="<%= dateFacetDisplayContext.getDisplayCaption() %>"
-				>
-					<c:if test="<%= !dateFacetDisplayContext.isNothingSelected() %>">
-						<clay:button
-							cssClass="btn-unstyled c-mb-4 facet-clear-btn"
-							displayType="link"
-							id='<%= liferayPortletResponse.getNamespace() + "facetDateClear" %>'
-							onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-						>
-							<strong><liferay-ui:message key="clear" /></strong>
-						</clay:button>
-					</c:if>
-
-					<ul class="date list-unstyled">
-
-						<%
-						for (BucketDisplayContext bucketDisplayContext : dateFacetDisplayContext.getBucketDisplayContexts()) {
-						%>
-
-							<li class="facet-value">
-								<a href="<%= HtmlUtil.escapeHREF(bucketDisplayContext.getFilterValue()) %>">
-									<span class="term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-										<c:choose>
-											<c:when test="<%= bucketDisplayContext.isSelected() %>">
-												<strong><liferay-ui:message key="<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>" /></strong>
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:message key="<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>" />
-											</c:otherwise>
-										</c:choose>
-									</span>
-
-									<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
-										<small class="term-count">
-											(<%= bucketDisplayContext.getFrequency() %>)
-										</small>
-									</c:if>
-								</a>
-							</li>
-
-						<%
-						}
-						%>
-
-						<li class="facet-value">
-							<a href="<%= HtmlUtil.escapeHREF(customRangeBucketDisplayContext.getFilterValue()) %>" id="<portlet:namespace /><%= customRangeBucketDisplayContext.getBucketText() %>-toggleLink">
-								<span class="term-name <%= customRangeBucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-									<c:choose>
-										<c:when test="<%= customRangeBucketDisplayContext.isSelected() %>">
-											<strong><liferay-ui:message key="<%= HtmlUtil.escape(customRangeBucketDisplayContext.getBucketText()) %>" />&hellip;</strong>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message key="<%= HtmlUtil.escape(customRangeBucketDisplayContext.getBucketText()) %>" />&hellip;
-										</c:otherwise>
-									</c:choose>
-								</span>
-
-								<c:if test="<%= customRangeBucketDisplayContext.isSelected() %>">
-									<small class="term-count">
-										(<%= customRangeBucketDisplayContext.getFrequency() %>)
-									</small>
-								</c:if>
-							</a>
-						</li>
-						<li class="<%= !dateFacetCalendarDisplayContext.isSelected() ? "hide" : StringPool.BLANK %> date-custom-range" id="<portlet:namespace />customRange">
-							<clay:col
-								id='<%= liferayPortletResponse.getNamespace() + "customRangeFrom" %>'
-								md="6"
-							>
-								<aui:field-wrapper label="from">
-									<liferay-ui:input-date
-										cssClass="date-facet-custom-range-input-date-from"
-										dayParam="fromDay"
-										dayValue="<%= dateFacetCalendarDisplayContext.getFromDayValue() %>"
-										disabled="<%= false %>"
-										firstDayOfWeek="<%= dateFacetCalendarDisplayContext.getFromFirstDayOfWeek() %>"
-										monthParam="fromMonth"
-										monthValue="<%= dateFacetCalendarDisplayContext.getFromMonthValue() %>"
-										name="fromInput"
-										yearParam="fromYear"
-										yearValue="<%= dateFacetCalendarDisplayContext.getFromYearValue() %>"
-									/>
-								</aui:field-wrapper>
-							</clay:col>
-
-							<clay:col
-								id='<%= liferayPortletResponse.getNamespace() + "customRangeTo" %>'
-								md="6"
-							>
-								<aui:field-wrapper label="to">
-									<liferay-ui:input-date
-										cssClass="date-facet-custom-range-input-date-to"
-										dayParam="toDay"
-										dayValue="<%= dateFacetCalendarDisplayContext.getToDayValue() %>"
-										disabled="<%= false %>"
-										firstDayOfWeek="<%= dateFacetCalendarDisplayContext.getToFirstDayOfWeek() %>"
-										monthParam="toMonth"
-										monthValue="<%= dateFacetCalendarDisplayContext.getToMonthValue() %>"
-										name="toInput"
-										yearParam="toYear"
-										yearValue="<%= dateFacetCalendarDisplayContext.getToYearValue() %>"
-									/>
-								</aui:field-wrapper>
-							</clay:col>
-
-							<clay:button
-								cssClass="date-facet-custom-range-filter-button"
-								disabled="<%= dateFacetCalendarDisplayContext.isRangeBackwards() %>"
-								displayType="secondary"
-								id='<%= liferayPortletResponse.getNamespace() + "searchCustomRangeButton" %>'
-								label="search"
-								name='<%= liferayPortletResponse.getNamespace() + "searchCustomRangeButton" %>'
-							/>
-						</li>
-					</ul>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
-		</liferay-ddm:template-renderer>
+		/>
 	</aui:form>
 
 	<aui:script use="liferay-search-date-facet">

@@ -63,7 +63,6 @@ JSONArray rangesJSONArray = dateFacetPortletPreferences.getRangesJSONArray();
 					displayStyle="<%= dateFacetPortletInstanceConfiguration.displayStyle() %>"
 					displayStyleGroupId="<%= dateFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
-					showEmptyOption="<%= true %>"
 				/>
 			</div>
 		</liferay-frontend:fieldset>

@@ -5,11 +5,13 @@
 
 package com.liferay.portal.search.web.internal.date.facet.portlet.display.template;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.search.web.internal.date.facet.configuration.DateFacetWebTemplateConfiguration;
 import com.liferay.portal.search.web.internal.date.facet.constants.DateFacetPortletKeys;
 import com.liferay.portal.search.web.internal.date.facet.display.context.DateFacetDisplayContext;
 import com.liferay.portal.search.web.internal.date.facet.portlet.DateFacetPortlet;
@@ -21,13 +23,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.web.internal.date.facet.configuration.DateFacetWebTemplateConfiguration",
 	property = "javax.portlet.name=" + DateFacetPortletKeys.DATE_FACET,
 	service = TemplateHandler.class
 )
@@ -37,6 +42,11 @@ public class DateFacetPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return DateFacetPortlet.class.getName();
+	}
+
+	@Override
+	public String getDefaultTemplateKey() {
+		return _dateFacetWebTemplateConfiguration.dateFacetTemplateKeyDefault();
 	}
 
 	@Override
@@ -99,11 +109,22 @@ public class DateFacetPortletDisplayTemplateHandler
 		return templateVariableGroups;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_dateFacetWebTemplateConfiguration =
+			ConfigurableUtil.createConfigurable(
+				DateFacetWebTemplateConfiguration.class, properties);
+	}
+
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/portal/search/web/internal/date/facet/portlet" +
 			"/display/template/dependencies/portlet-display-templates.xml";
 	}
+
+	private volatile DateFacetWebTemplateConfiguration
+		_dateFacetWebTemplateConfiguration;
 
 	@Reference
 	private Language _language;

@@ -28,11 +28,12 @@
 
 	.criteria-sidebar-item-root {
 		background-color: $white;
-		border-left: 3px solid transparent;
+		border-left: 4px solid transparent;
+		border-radius: 4px;
 		font-size: 0.875rem;
 		transition: $segmentsTransition;
-		transition-property: border-color, opacity;
-		will-change: border-color, opacity;
+		transition-property: border-color, box-shadow, opacity, transform;
+		will-change: border-color, box-shadow, opacity;
 
 		.lexicon-icon-drag {
 			color: $secondary-l1;
@@ -46,9 +47,14 @@
 			cursor: grabbing;
 		}
 
-		&:hover {
+		&:hover,
+		&:focus-visible {
 			border-color: $blue;
+			box-shadow: 0 0 0 2px $primary-l1,
+				0 4px 8px fade_out($gray-900, 0.9);
 			cursor: grab;
+			outline: 0;
+			transform: translateX(-4px);
 
 			@include generatePropertyGroupLoop(
 				$propertyGroupsColors,

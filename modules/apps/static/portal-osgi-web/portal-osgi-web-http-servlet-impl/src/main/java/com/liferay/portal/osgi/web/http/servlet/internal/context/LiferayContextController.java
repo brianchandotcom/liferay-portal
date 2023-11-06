@@ -1042,39 +1042,40 @@ public class LiferayContextController extends ContextController {
 	private List<Class<? extends EventListener>> _getListenerClasses(
 		ServiceReference<EventListener> serviceReference) {
 
-		List<String> objectClassList = StringPlus.asList(
+		List<Class<? extends EventListener>> listenerClasses =
+			new ArrayList<>();
+
+		List<String> objectClasses = StringPlus.asList(
 			serviceReference.getProperty(Constants.OBJECTCLASS));
 
-		List<Class<? extends EventListener>> classes = new ArrayList<>();
-
-		if (objectClassList.contains(ServletContextListener.class.getName())) {
-			classes.add(ServletContextListener.class);
+		if (objectClasses.contains(ServletContextListener.class.getName())) {
+			listenerClasses.add(ServletContextListener.class);
 		}
 
-		if (objectClassList.contains(
+		if (objectClasses.contains(
 				ServletContextAttributeListener.class.getName())) {
 
-			classes.add(ServletContextAttributeListener.class);
+			listenerClasses.add(ServletContextAttributeListener.class);
 		}
 
-		if (objectClassList.contains(ServletRequestListener.class.getName())) {
-			classes.add(ServletRequestListener.class);
+		if (objectClasses.contains(ServletRequestListener.class.getName())) {
+			listenerClasses.add(ServletRequestListener.class);
 		}
 
-		if (objectClassList.contains(
+		if (objectClasses.contains(
 				ServletRequestAttributeListener.class.getName())) {
 
-			classes.add(ServletRequestAttributeListener.class);
+			listenerClasses.add(ServletRequestAttributeListener.class);
 		}
 
-		if (objectClassList.contains(HttpSessionListener.class.getName())) {
-			classes.add(HttpSessionListener.class);
+		if (objectClasses.contains(HttpSessionListener.class.getName())) {
+			listenerClasses.add(HttpSessionListener.class);
 		}
 
-		if (objectClassList.contains(
+		if (objectClasses.contains(
 				HttpSessionAttributeListener.class.getName())) {
 
-			classes.add(HttpSessionAttributeListener.class);
+			listenerClasses.add(HttpSessionAttributeListener.class);
 		}
 
 		ServletContext servletContext =
@@ -1082,12 +1083,12 @@ public class LiferayContextController extends ContextController {
 
 		if ((servletContext.getMajorVersion() >= 3) &&
 			(servletContext.getMinorVersion() > 0) &&
-			objectClassList.contains(HttpSessionIdListener.class.getName())) {
+			objectClasses.contains(HttpSessionIdListener.class.getName())) {
 
-			classes.add(HttpSessionIdListener.class);
+			listenerClasses.add(HttpSessionIdListener.class);
 		}
 
-		return classes;
+		return listenerClasses;
 	}
 
 	private ServletContextHelper _getServletContextHelper(Bundle bundle) {

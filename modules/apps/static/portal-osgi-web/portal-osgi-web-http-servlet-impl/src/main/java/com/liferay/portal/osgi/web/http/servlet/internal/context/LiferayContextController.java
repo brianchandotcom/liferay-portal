@@ -144,10 +144,10 @@ public class LiferayContextController extends ContextController {
 
 		_contextPath = contextPath;
 
-		_contextServiceId = (long)serviceReference.getProperty(
+		_servletContextHelperServiceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
 
-		_initParams = ServiceProperties.parseInitParams(
+		_servletContextInitParams = ServiceProperties.parseInitParams(
 			serviceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX,
 			servletContextHelperDataContext.getServletContext());
@@ -415,7 +415,7 @@ public class LiferayContextController extends ContextController {
 		resourceDTO.prefix = resourcePrefix;
 		resourceDTO.serviceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
-		resourceDTO.servletContextId = _contextServiceId;
+		resourceDTO.servletContextId = _servletContextHelperServiceId;
 
 		ResourceRegistration resourceRegistration = new ResourceRegistration(
 			new ContextController.ServiceHolder<>(
@@ -701,7 +701,7 @@ public class LiferayContextController extends ContextController {
 
 	@Override
 	public Map<String, String> getInitParams() {
-		return _initParams;
+		return _servletContextInitParams;
 	}
 
 	@Override
@@ -883,7 +883,7 @@ public class LiferayContextController extends ContextController {
 		filterDTO.regexs = filterRegexes;
 		filterDTO.serviceId = (long)filterServiceReference.getProperty(
 			Constants.SERVICE_ID);
-		filterDTO.servletContextId = _contextServiceId;
+		filterDTO.servletContextId = _servletContextHelperServiceId;
 		filterDTO.servletNames = _sort(filterServletNames);
 
 		return filterDTO;
@@ -897,7 +897,7 @@ public class LiferayContextController extends ContextController {
 
 		listenerDTO.serviceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
-		listenerDTO.servletContextId = _contextServiceId;
+		listenerDTO.servletContextId = _servletContextHelperServiceId;
 		listenerDTO.types = TransformUtil.transformToArray(
 			eventListenerClasses, Class::getName, String.class);
 
@@ -959,7 +959,7 @@ public class LiferayContextController extends ContextController {
 		servletDTO.patterns = _sort(servletPatterns);
 		servletDTO.serviceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
-		servletDTO.servletContextId = _contextServiceId;
+		servletDTO.servletContextId = _servletContextHelperServiceId;
 		servletDTO.servletInfo = servlet.getServletInfo();
 
 		ErrorPageDTO errorPageDTO = null;
@@ -1005,7 +1005,7 @@ public class LiferayContextController extends ContextController {
 			errorPageDTO.initParams = servletDTO.initParams;
 			errorPageDTO.name = servletDTO.name;
 			errorPageDTO.serviceId = servletDTO.serviceId;
-			errorPageDTO.servletContextId = _contextServiceId;
+			errorPageDTO.servletContextId = _servletContextHelperServiceId;
 			errorPageDTO.servletInfo = servlet.getServletInfo();
 		}
 
@@ -1141,7 +1141,6 @@ public class LiferayContextController extends ContextController {
 	private final BundleContext _bundleContext;
 	private final String _contextName;
 	private final String _contextPath;
-	private final long _contextServiceId;
 	private final Set<EndpointRegistration<?>> _endpointRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final EventListeners _eventListeners = new EventListeners();
@@ -1159,7 +1158,6 @@ public class LiferayContextController extends ContextController {
 	private final ServiceTracker
 		<EventListener, AtomicReference<ListenerRegistration>>
 			_httpSessionListenerServiceTracker;
-	private final Map<String, String> _initParams;
 	private final Set<ListenerRegistration> _listenerRegistrations =
 		new HashSet<>();
 	private final ServiceTracker<Object, AtomicReference<ResourceRegistration>>
@@ -1170,6 +1168,8 @@ public class LiferayContextController extends ContextController {
 			_servletContextAttributeListenerServiceTracker;
 	private final ServletContextHelperDataContext
 		_servletContextHelperDataContext;
+	private final long _servletContextHelperServiceId;
+	private final Map<String, String> _servletContextInitParams;
 	private final ServiceTracker
 		<EventListener, AtomicReference<ListenerRegistration>>
 			_servletContextListenerServiceTracker;

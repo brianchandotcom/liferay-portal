@@ -2738,10 +2738,7 @@ definition {
 		task ("Given: Add a new user and add the user's first name in the email verification notification template") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "User Authentication",

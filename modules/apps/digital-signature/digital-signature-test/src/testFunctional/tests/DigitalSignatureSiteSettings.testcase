@@ -11,10 +11,7 @@ definition {
 		User.firstLoginUI();
 
 		task ("Configure digital signature with credentials") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Digital Signature",

@@ -11,10 +11,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Go to Click to chat configuration page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Click to Chat",

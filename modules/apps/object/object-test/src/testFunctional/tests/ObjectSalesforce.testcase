@@ -27,10 +27,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given portal configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Feature Flags",
@@ -41,10 +38,7 @@ definition {
 				key_featureFlag = "LPS-135430",
 				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Third Party",
@@ -156,10 +150,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given portal configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Feature Flags",
@@ -170,10 +161,7 @@ definition {
 				key_featureFlag = "LPS-135430",
 				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Third Party",
@@ -343,10 +331,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given portal configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Feature Flags",
@@ -357,10 +342,7 @@ definition {
 				key_featureFlag = "LPS-135430",
 				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Third Party",
@@ -436,10 +418,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given portal configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Feature Flags",
@@ -450,10 +429,7 @@ definition {
 				key_featureFlag = "LPS-135430",
 				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Third Party",
@@ -530,10 +506,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the DXP configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Feature Flags",
@@ -544,10 +517,7 @@ definition {
 				key_featureFlag = "LPS-135430",
 				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Third Party",

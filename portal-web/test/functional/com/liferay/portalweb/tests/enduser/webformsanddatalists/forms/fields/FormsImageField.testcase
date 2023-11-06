@@ -548,10 +548,7 @@ definition {
 		}
 
 		task ("When the user changes the value of the "Guest Upload Maximum File Size" setting to 5 in the Instance Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Forms",

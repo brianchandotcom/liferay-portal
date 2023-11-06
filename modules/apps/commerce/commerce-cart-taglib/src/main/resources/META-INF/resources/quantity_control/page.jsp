@@ -61,17 +61,18 @@ BigDecimal quantity = commerceOrderItem.getQuantity();
 		window,
 		'<%= portletNamespace + randomNamespace %>updateQuantity',
 		() => {
-			var A = AUI();
+			const form = document.getElementById(
+				'<%= portletNamespace + randomNamespace %>Fm'
+			);
 
-			var form = A.one('#<%= portletNamespace + randomNamespace %>Fm');
-
-			var quantity = form.one(
+			const quantity = form.querySelector(
 				'#<%= portletNamespace + randomNamespace %>Quantity'
 			);
 
-			form.one('#<%= portletNamespace %>quantity').val(quantity.val());
+			form.querySelector('#<%= portletNamespace %>quantity').value =
+				quantity.value;
 
-			submitForm(document.<%= portletNamespace + randomNamespace %>Fm);
+			submitForm(form);
 		},
 		['aui-base']
 	);
@@ -79,7 +80,9 @@ BigDecimal quantity = commerceOrderItem.getQuantity();
 
 <c:if test="<%= updateOnChange %>">
 	<aui:script use="aui-base">
-		var form = A.one('#<%= portletNamespace + randomNamespace %>Fm');
+		const form = document.getElementById(
+			'<%= portletNamespace + randomNamespace %>Fm'
+		);
 
 		form.delegate(
 			'change',

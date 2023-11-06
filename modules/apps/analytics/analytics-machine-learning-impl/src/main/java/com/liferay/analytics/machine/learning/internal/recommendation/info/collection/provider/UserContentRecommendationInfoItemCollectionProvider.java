@@ -69,16 +69,16 @@ public class UserContentRecommendationInfoItemCollectionProvider
 		Pagination pagination = collectionQuery.getPagination();
 
 		try {
-			long[] categoryIds = null;
+			long[] assetCategoryIds = null;
 
 			CategoriesInfoFilter categoriesInfoFilter =
 				collectionQuery.getInfoFilter(CategoriesInfoFilter.class);
 
 			if (categoriesInfoFilter != null) {
-				categoryIds = ArrayUtil.append(
+				assetCategoryIds = ArrayUtil.append(
 					categoriesInfoFilter.getCategoryIds());
 
-				categoryIds = ArrayUtil.unique(categoryIds);
+				assetCategoryIds = ArrayUtil.unique(assetCategoryIds);
 			}
 
 			long[] classNameIds = _getClassNameIds(collectionQuery);
@@ -89,7 +89,7 @@ public class UserContentRecommendationInfoItemCollectionProvider
 			long count =
 				_userContentRecommendationManager.
 					getUserContentRecommendationsCount(
-						categoryIds, classNameIds,
+						assetCategoryIds, classNameIds,
 						serviceContext.getCompanyId(),
 						serviceContext.getUserId());
 
@@ -103,7 +103,7 @@ public class UserContentRecommendationInfoItemCollectionProvider
 				TransformUtil.transform(
 					_userContentRecommendationManager.
 						getUserContentRecommendations(
-							categoryIds, classNameIds,
+							assetCategoryIds, classNameIds,
 							serviceContext.getCompanyId(),
 							serviceContext.getUserId(), pagination.getStart(),
 							pagination.getEnd()),

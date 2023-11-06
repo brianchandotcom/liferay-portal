@@ -5,8 +5,10 @@
 
 import ClayLabel from '@clayui/label';
 
+import purchasedAppIcon from '../../../../assets/icons/purchased_app_icon.svg';
 import LabelStatus from '../../../../components/LabelStatus/LabelStatus';
-
+import {OrderType} from '../../../../enums/OrderType';
+import {OrderAppTypeEnum} from '../../enums/OrderAppTypeEnum';
 interface OrderDetailsStatusDescriptionProps {
 	orderDetails?: Cart;
 	productCreatorAccount?: string;
@@ -16,6 +18,16 @@ const OrderDetailsStatusDescription = ({
 	orderDetails,
 	productCreatorAccount,
 }: OrderDetailsStatusDescriptionProps) => {
+	const getOrderDetailsType = () => {
+		if (orderDetails?.orderTypeExternalReferenceCode === OrderType.DXP) {
+			return OrderAppTypeEnum.DXPAPP;
+		}
+
+		return OrderAppTypeEnum.CLOUDAPP;
+	};
+
+	const orderDetailsType = getOrderDetailsType();
+
 	return (
 		<div className="align-items-center d-flex">
 			<div className="order-details-publisher">
@@ -28,7 +40,10 @@ const OrderDetailsStatusDescription = ({
 				/>
 			</div>
 			<ClayLabel className="rounded" displayType="info" large>
-				{orderDetails?.orderTypeExternalReferenceCode}
+				<div className="align-items-center d-flex">
+					<img className="mr-1" src={purchasedAppIcon} />
+					{orderDetailsType}
+				</div>
 			</ClayLabel>
 		</div>
 	);

@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface SharingDropdownItemFactory {
 
+	public DropdownItem createCopyLinkDropdownItem(
+		String className, long classPK, HttpServletRequest httpServletRequest);
+
 	public DropdownItem createManageCollaboratorsDropdownItem(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)

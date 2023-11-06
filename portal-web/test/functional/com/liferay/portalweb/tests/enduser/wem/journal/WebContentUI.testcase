@@ -193,7 +193,11 @@ definition {
 		}
 
 		task ("Then the site designer could filter search results by status in Versions panel") {
-			Navigator.gotoNavTab(navTab = "Versions (1)");
+			Click(
+				buttonId = "JournalPortlet_searchResults",
+				locator1 = "Button#BUTTON_ID");
+
+			MenuItem.click(menuItem = "Versions");
 
 			WaitForPageLoad();
 

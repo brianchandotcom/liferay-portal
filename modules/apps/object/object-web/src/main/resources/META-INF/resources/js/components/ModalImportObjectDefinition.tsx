@@ -57,6 +57,7 @@ export default function ModalImportObjectDefinition({
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setVisible(false);
+			setError('');
 			setExternalReferenceCode('');
 			setFile({
 				fileName: '',
@@ -255,13 +256,22 @@ export default function ModalImportObjectDefinition({
 										const objectDefinitionJSON = JSON.parse(
 											fileReader.result as string
 										) as {externalReferenceCode: string};
-
+										setError('');
 										setExternalReferenceCode(
 											objectDefinitionJSON.externalReferenceCode
 										);
 									}
 									catch (error) {
+										setError(
+											Liferay.Language.get(
+												'the-structure-failed-to-import'
+											)
+										);
 										setExternalReferenceCode('');
+										setFile({
+											fileName: '',
+											inputFile: null,
+										});
 									}
 								};
 							}

@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import java.util.Date;
 
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-
 import java.util.ArrayList;
 
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -21,6 +19,8 @@ import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.search.Sort;
 
 import com.liferay.document.library.util.DLURLHelperUtil;
+
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,6 +64,12 @@ public class UpgradeCatchAllCheck {
 	public void method(AssetCategory<?> assetCategory) {
 		AssetCategory::getCategoryId;
 		assetCategory.getCategoryId;
+	}
+
+	public void method(CommerceAddress commerceAddress) {
+		CommerceAddressLocalServiceUtil.updateCommerceAddress(commerceAddress.getCommerceAddressId(), commerceAddress.getName(), commerceAddress.getDescription(), commerceAddress.getStreet1(), commerceAddress.getStreet2(), commerceAddress.getStreet3(), commerceAddress.getCity(), commerceAddress.getZip(), commerceAddress.getRegionId(), commerceAddress.getCountryId(), commerceAddress.getPhoneNumber(), commerceAddress.getType(), ServiceContextThreadLocal.getServiceContext());
+		CommerceAddressLocalServiceUtil.updateCommerceAddress(null);
+		_commerceAddressLocalService.updateCommerceAddress(commerceAddress.getCommerceAddressId(), commerceAddress.getName(), commerceAddress.getDescription(), commerceAddress.getStreet1(), commerceAddress.getStreet2(), commerceAddress.getStreet3(), commerceAddress.getCity(), commerceAddress.getZip(), commerceAddress.getRegionId(), commerceAddress.getCountryId(), commerceAddress.getPhoneNumber(), commerceAddress.getType(), ServiceContextThreadLocal.getServiceContext());
 	}
 
 	public void method(
@@ -466,6 +472,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceAddressLocalService _commerceAddressLocalService;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

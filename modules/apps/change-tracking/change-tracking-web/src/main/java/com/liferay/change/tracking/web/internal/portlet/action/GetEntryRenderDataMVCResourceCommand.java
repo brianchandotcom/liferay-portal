@@ -667,7 +667,12 @@ public class GetEntryRenderDataMVCResourceCommand
 		if (ctEntry.getModelClassNameId() ==
 				_classNameLocalService.getClassNameId(Layout.class)) {
 
-			_getSegmentExperiences(ctEntry, httpServletRequest, jsonObject);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctEntry.getCtCollectionId())) {
+
+				_getSegmentExperiences(ctEntry, httpServletRequest, jsonObject);
+			}
 		}
 
 		return jsonObject;

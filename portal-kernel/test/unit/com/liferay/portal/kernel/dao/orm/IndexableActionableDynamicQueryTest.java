@@ -32,14 +32,13 @@ public class IndexableActionableDynamicQueryTest {
 
 	@Before
 	public void setUp() {
+		_indexWriterHelperServiceRegistration = _bundleContext.registerService(
+			IndexWriterHelper.class, indexWriterHelper, null);
 		_serviceRegistration = _bundleContext.registerService(
 			PortalExecutorManager.class,
 			Mockito.mock(PortalExecutorManager.class), null);
 
 		indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
-
-		_indexWriterHelperServiceRegistration = _bundleContext.registerService(
-			IndexWriterHelper.class, indexWriterHelper, null);
 
 		IndexerRegistry indexerRegistry = Mockito.mock(IndexerRegistry.class);
 

@@ -61,6 +61,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143093. Item types configuration for a collection"
+	@priority = 4
+	test AddAssetsToManualCollectionForSelectedItemTypes {
+		task ("Given the option of Select Types, under Multiple Item Types") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+
+			Select(
+				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+				value1 = "Select Types...");
+		}
+
+		task ("When selecting some types for the Available box") {
+			for (var key_type : list "Blogs Entry,Web Content Article") {
+				Click.clickNoMouseOver(locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE_SELECTED");
+			}
+
+			Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_AVAILABLE");
+
+			PortletEntry.save();
+		}
+
+		task ("Then only selected types are shown in the selection button.") {
+			Button.clickSelect();
+
+			for (var menuItem : list "Calendar Event,Basic Document,Translation,Web Content Folder") {
+				MenuItem.verifyVisible(menuItem = ${menuItem});
+			}
+
+			for (var menuItem : list "Blogs Entry,Web Content Article") {
+				MenuItem.viewNotPresent(menuItem = ${menuItem});
+			}
+		}
+	}
+
 	@description = "Assert that the UI correctly displays a useful error message when an Asset List is added with a duplicate name."
 	@priority = 3
 	test AddDuplicateAssetList {

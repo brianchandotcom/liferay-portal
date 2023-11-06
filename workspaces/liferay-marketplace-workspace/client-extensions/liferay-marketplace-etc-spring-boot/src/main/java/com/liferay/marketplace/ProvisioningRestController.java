@@ -30,6 +30,8 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.StatusLine;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -262,8 +264,7 @@ public class ProvisioningRestController extends BaseRestController {
 			}
 		}
 		catch (Exception exception) {
-			System.out.println(
-				"Unable to set SKU Version" + exception.getMessage());
+			_log.error("Unable to set SKU Version" + exception.getMessage());
 		}
 
 		return version;
@@ -290,6 +291,9 @@ public class ProvisioningRestController extends BaseRestController {
 			koroneikiURL.getProtocol()
 		).build();
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		ProvisioningRestController.class);
 
 	private AppLicenseKeyResource _appLicenseKeyResource;
 

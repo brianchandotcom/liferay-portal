@@ -1564,6 +1564,11 @@ definition {
 
 		Navigator.gotoAccountSettings();
 
+		AssertTextPresent(
+			key_publicationName = "Publication Name (Editing in Production)",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+			value1 = "Publication Name (Editing in Production)");
+
 		User.editUserInformation(userScreenNameEdit = "testscreen");
 
 		User.viewUserInformation(
@@ -1571,6 +1576,8 @@ definition {
 			userFirstName = "Test",
 			userLastName = "Test",
 			userScreenName = "testscreen");
+
+		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.workOnProduction();
 

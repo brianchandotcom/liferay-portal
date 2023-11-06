@@ -138,6 +138,15 @@ public class KoroneikiRestController extends BaseRestController {
 				productPurchase.setEndDate(Date.from(instant));
 			}
 
+			ExternalLink externalLink = new ExternalLink();
+
+			externalLink.setDomain("salesforce");
+			externalLink.setEntityId(
+				String.valueOf(commerceOrderJSONObject.getLong("id")));
+			externalLink.setEntityName("opportunity");
+
+			productPurchase.setExternalLinks(new ExternalLink[] {externalLink});
+
 			productPurchase.setStartDate(
 				Date.from(commerceOrderStartDate.toInstant()));
 			productPurchase.setPerpetual(
@@ -146,17 +155,6 @@ public class KoroneikiRestController extends BaseRestController {
 				skuMap.get(orderItemJSONObject.getString("sku")));
 			productPurchase.setStatus(ProductPurchase.Status.APPROVED);
 			productPurchase.setQuantity(orderItemJSONObject.getInt("quantity"));
-
-			ExternalLink externalLink = new ExternalLink();
-
-			externalLink.setDomain("salesforce");
-			externalLink.setEntityId(
-				String.valueOf(commerceOrderJSONObject.getLong("id")));
-			externalLink.setEntityName("opportunity");
-
-			ExternalLink[] externalLinks = {externalLink};
-
-			productPurchase.setExternalLinks(externalLinks);
 
 			try {
 				productPurchase =

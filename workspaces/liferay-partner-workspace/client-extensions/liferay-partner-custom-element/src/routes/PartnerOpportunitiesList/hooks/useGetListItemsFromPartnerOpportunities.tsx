@@ -22,7 +22,8 @@ export default function useGetListItemsFromPartnerOpportunities(
 	sort: string
 ) {
 	const swrResponse = useGet<LiferayItems<DealRegistrationDTO[]>>(
-		filtersTerm && `/o/${LiferayAPIs.OBJECT}/${ResourceName.OPPORTUNITIES_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}`
+		filtersTerm &&
+			`/o/${LiferayAPIs.OBJECT}/${ResourceName.OPPORTUNITIES_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}`
 	);
 
 	const listItems = useMemo(

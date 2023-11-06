@@ -27,12 +27,12 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -224,35 +224,39 @@ public class ObjectFolderItemLocalServiceTest {
 
 	@Test
 	public void testDeleteObjectFolderItemByObjectDefinitionId() {
-		Assert.assertNotNull(
-			_objectFolderItemLocalService.
-				getObjectFolderItemsByObjectDefinitionId(
-					_objectDefinition1.getObjectDefinitionId()));
+		Assert.assertTrue(
+			ListUtil.isNotEmpty(
+				_objectFolderItemLocalService.
+					getObjectFolderItemsByObjectDefinitionId(
+						_objectDefinition1.getObjectDefinitionId())));
 
 		_objectFolderItemLocalService.
 			deleteObjectFolderItemByObjectDefinitionId(
 				_objectDefinition1.getObjectDefinitionId());
 
-		Assert.assertEquals(
-			Collections.emptyList(),
-			_objectFolderItemLocalService.
-				getObjectFolderItemsByObjectDefinitionId(
-					_objectDefinition1.getObjectDefinitionId()));
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_objectFolderItemLocalService.
+					getObjectFolderItemsByObjectDefinitionId(
+						_objectDefinition1.getObjectDefinitionId())));
 	}
 
 	@Test
 	public void testDeleteObjectFolderItemByObjectFolderId() {
-		Assert.assertNotNull(
-			_objectFolderItemLocalService.getObjectFolderItemsByObjectFolderId(
-				_objectFolderA.getObjectFolderId()));
+		Assert.assertTrue(
+			ListUtil.isNotEmpty(
+				_objectFolderItemLocalService.
+					getObjectFolderItemsByObjectFolderId(
+						_objectFolderA.getObjectFolderId())));
 
 		_objectFolderItemLocalService.deleteObjectFolderItemByObjectFolderId(
 			_objectFolderA.getObjectFolderId());
 
-		Assert.assertEquals(
-			Collections.emptyList(),
-			_objectFolderItemLocalService.getObjectFolderItemsByObjectFolderId(
-				_objectFolderA.getObjectFolderId()));
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_objectFolderItemLocalService.
+					getObjectFolderItemsByObjectFolderId(
+						_objectFolderA.getObjectFolderId())));
 	}
 
 	@Test

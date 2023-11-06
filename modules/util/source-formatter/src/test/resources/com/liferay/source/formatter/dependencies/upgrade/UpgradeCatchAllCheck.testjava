@@ -49,6 +49,12 @@ public class UpgradeCatchAllCheck {
 		assetCategory.getLeftCategoryId;
 	}
 
+	public void method(CommerceAddress commerceAddress) {
+		CommerceAddressLocalServiceUtil.updateCommerceAddress(commerceAddress);
+		CommerceAddressLocalServiceUtil.updateCommerceAddress(null);
+		_commerceAddressLocalService.updateCommerceAddress(commerceAddress);
+	}
+
 	public void method(
 		CommerceAddress commerceAddress, Country country, Region region) {
 
@@ -449,6 +455,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceAddressLocalService _commerceAddressLocalService;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

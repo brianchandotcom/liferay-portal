@@ -63,6 +63,18 @@
 		"to": "setA2"
 	},
 	{
+		"classNames": [
+			"CommerceAddressLocalService",
+			"CommerceAddressLocalServiceUtil"
+		],
+		"from": "updateCommerceAddress(CommerceAddress)",
+		"issueKey": "LPS-186925",
+		"newImports": [
+			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
+		],
+		"to": "updateCommerceAddress(param#0#.getCommerceAddressId(), param#0#.getName(), param#0#.getDescription(), param#0#.getStreet1(), param#0#.getStreet2(), param#0#.getStreet3(), param#0#.getCity(), param#0#.getZip(), param#0#.getRegionId(), param#0#.getCountryId(), param#0#.getPhoneNumber(), param#0#.getType(), ServiceContextThreadLocal.getServiceContext())"
+	},
+	{
 		"from": "DLUtil.getImagePreviewURL",
 		"issueKey": "LPS-187531",
 		"newImports": [

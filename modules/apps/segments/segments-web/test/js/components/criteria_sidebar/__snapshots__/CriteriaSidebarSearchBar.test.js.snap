@@ -10,18 +10,18 @@ exports[`CriteriaSidebarSearchBar renders 1`] = `
     >
       <input
         aria-label="search-properties"
-        class="form-control input-group-inset input-group-inset-after"
+        class="form-control form-control-sm input-group-inset input-group-inset-after"
         data-testid="search-input"
         placeholder="search-properties"
         type="text"
         value=""
       />
       <div
-        class="input-group-inset-item input-group-inset-item-after"
+        class="c-pr-0 input-group-inset-item input-group-inset-item-after"
       >
         <button
           aria-label="search-properties"
-          class="btn btn-unstyled"
+          class="mr-1 pr-2 btn btn-unstyled"
           data-testid="search-button"
           title="search-properties"
           type="button"
@@ -44,7 +44,7 @@ exports[`CriteriaSidebarSearchBar renders 1`] = `
 exports[`CriteriaSidebarSearchBar renders a button with a times icon when an input is entered 1`] = `
 <button
   aria-label="clear-search"
-  class="btn btn-unstyled"
+  class="mr-1 pr-2 btn btn-unstyled"
   data-testid="search-button"
   title="clear-search"
   type="button"

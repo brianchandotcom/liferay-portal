@@ -451,18 +451,18 @@ exports[`SegmentEdit renders with given values 1`] = `
                 >
                   <input
                     aria-label="search-properties"
-                    class="form-control input-group-inset input-group-inset-after"
+                    class="form-control form-control-sm input-group-inset input-group-inset-after"
                     data-testid="search-input"
                     placeholder="search-properties"
                     type="text"
                     value=""
                   />
                   <div
-                    class="input-group-inset-item input-group-inset-item-after"
+                    class="c-pr-0 input-group-inset-item input-group-inset-item-after"
                   >
                     <button
                       aria-label="search-properties"
-                      class="btn btn-unstyled"
+                      class="mr-1 pr-2 btn btn-unstyled"
                       data-testid="search-button"
                       title="search-properties"
                       type="button"
@@ -541,7 +541,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                       class="panel-body c-px-0"
                     >
                       <p
-                        class="c-pt-1 c-px-4 text-secondary"
+                        class="c-pt-1 text-secondary"
                       >
                         inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
                       </p>
@@ -549,12 +549,12 @@ exports[`SegmentEdit renders with given values 1`] = `
                         class="c-pl-0"
                       >
                         <li
-                          class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--first-test-values-group"
+                          class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--first-test-values-group"
                           draggable="true"
                           tabindex="0"
                         >
                           <span
-                            class="inline-item"
+                            class="c-p-2 inline-item"
                           >
                             <svg
                               class="lexicon-icon lexicon-icon-drag"

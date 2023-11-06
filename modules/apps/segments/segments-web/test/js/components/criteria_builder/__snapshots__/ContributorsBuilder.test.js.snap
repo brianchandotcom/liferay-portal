@@ -30,18 +30,18 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
             >
               <input
                 aria-label="search-properties"
-                class="form-control input-group-inset input-group-inset-after"
+                class="form-control form-control-sm input-group-inset input-group-inset-after"
                 data-testid="search-input"
                 placeholder="search-properties"
                 type="text"
                 value=""
               />
               <div
-                class="input-group-inset-item input-group-inset-item-after"
+                class="c-pr-0 input-group-inset-item input-group-inset-item-after"
               >
                 <button
                   aria-label="search-properties"
-                  class="btn btn-unstyled"
+                  class="mr-1 pr-2 btn btn-unstyled"
                   data-testid="search-button"
                   title="search-properties"
                   type="button"
@@ -120,7 +120,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   class="panel-body c-px-0"
                 >
                   <p
-                    class="c-pt-1 c-px-4 text-secondary"
+                    class="c-pt-1 text-secondary"
                   >
                     inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
                   </p>
@@ -128,12 +128,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     class="c-pl-0"
                   >
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -163,12 +163,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Ancestor Organization IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -198,12 +198,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Class PK
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -233,12 +233,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Company ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -268,12 +268,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Date Modified
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -303,12 +303,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Email Address
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -338,12 +338,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       First Name
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -373,12 +373,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Group ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -408,12 +408,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Group IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -443,12 +443,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Job Title
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -478,12 +478,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Last Name
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -513,12 +513,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Organization IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -548,12 +548,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Role IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -583,12 +583,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Scope Group ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -618,12 +618,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Screen Name
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -653,12 +653,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Team IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -688,12 +688,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       User Group IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -723,12 +723,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       User ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -814,7 +814,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   class="panel-body c-px-0"
                 >
                   <p
-                    class="c-pt-1 c-px-4 text-secondary"
+                    class="c-pt-1 text-secondary"
                   >
                     inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
                   </p>
@@ -822,12 +822,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     class="c-pl-0"
                   >
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -857,12 +857,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Class PK
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -892,12 +892,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Company ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -927,12 +927,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Date Modified
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -962,12 +962,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Name
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -997,12 +997,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Name Tree Path
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1032,12 +1032,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Organization ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1067,12 +1067,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                       Parent Organization ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1200,18 +1200,18 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
             >
               <input
                 aria-label="search-properties"
-                class="form-control input-group-inset input-group-inset-after"
+                class="form-control form-control-sm input-group-inset input-group-inset-after"
                 data-testid="search-input"
                 placeholder="search-properties"
                 type="text"
                 value=""
               />
               <div
-                class="input-group-inset-item input-group-inset-item-after"
+                class="c-pr-0 input-group-inset-item input-group-inset-item-after"
               >
                 <button
                   aria-label="search-properties"
-                  class="btn btn-unstyled"
+                  class="mr-1 pr-2 btn btn-unstyled"
                   data-testid="search-button"
                   title="search-properties"
                   type="button"
@@ -1290,7 +1290,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   class="panel-body c-px-0"
                 >
                   <p
-                    class="c-pt-1 c-px-4 text-secondary"
+                    class="c-pt-1 text-secondary"
                   >
                     inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
                   </p>
@@ -1298,12 +1298,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     class="c-pl-0"
                   >
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1333,12 +1333,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Ancestor Organization IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1368,12 +1368,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Class PK
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1403,12 +1403,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Company ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1438,12 +1438,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Date Modified
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1473,12 +1473,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Email Address
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1508,12 +1508,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       First Name
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1543,12 +1543,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Group ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1578,12 +1578,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Group IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1613,12 +1613,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Job Title
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1648,12 +1648,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Last Name
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1683,12 +1683,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Organization IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1718,12 +1718,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Role IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1753,12 +1753,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Scope Group ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1788,12 +1788,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Screen Name
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1823,12 +1823,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Team IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1858,12 +1858,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       User Group IDs
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1893,12 +1893,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       User ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1984,7 +1984,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   class="panel-body c-px-0"
                 >
                   <p
-                    class="c-pt-1 c-px-4 text-secondary"
+                    class="c-pt-1 text-secondary"
                   >
                     inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
                   </p>
@@ -1992,12 +1992,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     class="c-pl-0"
                   >
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2027,12 +2027,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Class PK
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2062,12 +2062,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Company ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2097,12 +2097,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Date Modified
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2132,12 +2132,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Name
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2167,12 +2167,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Name Tree Path
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2202,12 +2202,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Organization ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2237,12 +2237,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                       Parent Organization ID
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--user-organization"
+                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
                       tabindex="0"
                     >
                       <span
-                        class="inline-item"
+                        class="c-p-2 inline-item"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"

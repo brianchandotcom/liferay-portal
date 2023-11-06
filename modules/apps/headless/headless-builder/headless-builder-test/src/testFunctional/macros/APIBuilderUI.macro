@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAndPublishSchemaProperties(relatedPlaceHolderName = null, fieldName = null, relatedPropertyName = null, relatedFieldName = null, propertyName = null, placeHolderName = null, name = null, relatedObjectName = null, title = null, entity = null) {
+	macro addAndPublishSchemaProperties(fieldName = null, relatedPropertyName = null, relatedFieldName = null, propertyName = null, name = null, relatedObjectName = null, title = null, entity = null) {
 		Variables.assertDefined(parameterList = "${name},${entity},${title}");
 
 		APIBuilderUI.goToEditRelatedEntryInEditApplication(
@@ -76,20 +76,9 @@ definition {
 			locator1 = "APIBuilder#PROPERTY_CONTAINER");
 
 		if (isSet(propertyName)) {
-			MouseOver(
-				key_commentValue = ${fieldName},
-				locator1 = "PublicationsChanges#COMMENT_VALUE");
-
-			Click(
-				key_text = "pencil",
-				locator1 = "Icon#ANY");
-
-			Type(
-				key_placeHolder = "Enter name",
-				locator1 = "TextInput#ANY_PLACEHOLDER",
-				value1 = ${propertyName});
-
-			Click(locator1 = "Button#UPDATE");
+			APIBuilderUI.editSchemaProperty(
+				fieldName = ${fieldName},
+				propertyName = ${propertyName});
 		}
 
 		if (IsElementPresent(locator1 = "APIBuilder#VIEW_RELATED_OBJECTS")) {
@@ -104,20 +93,9 @@ definition {
 				locator1 = "APIBuilder#PROPERTY_CONTAINER");
 
 			if (isSet(relatedPropertyName)) {
-				MouseOver(
-					key_commentValue = ${relatedFieldName},
-					locator1 = "PublicationsChanges#COMMENT_VALUE");
-
-				Click(
-					key_text = "pencil",
-					locator1 = "Icon#ANY");
-
-				Type(
-					key_placeHolder = "Enter name",
-					locator1 = "TextInput#ANY_PLACEHOLDER",
-					value1 = ${relatedPropertyName});
-
-				Click(locator1 = "Button#UPDATE");
+				APIBuilderUI.editSchemaProperty(
+					fieldName = ${relatedFieldName},
+					propertyName = ${relatedPropertyName});
 			}
 		}
 
@@ -312,6 +290,26 @@ definition {
 		if (isSet(confirmDeletion)) {
 			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
 		}
+	}
+
+	@summary = "Default summary"
+	macro editSchemaProperty(fieldName = null, propertyName = null) {
+		Variables.assertDefined(parameterList = "${fieldName},${propertyName}");
+
+		MouseOver(
+			key_commentValue = ${fieldName},
+			locator1 = "PublicationsChanges#COMMENT_VALUE");
+
+		Click(
+			key_text = "pencil",
+			locator1 = "Icon#ANY");
+
+		Type(
+			key_placeHolder = "Enter name",
+			locator1 = "TextInput#ANY_PLACEHOLDER",
+			value1 = ${propertyName});
+
+		Click(locator1 = "Button#UPDATE");
 	}
 
 	@summary = "Default summary"

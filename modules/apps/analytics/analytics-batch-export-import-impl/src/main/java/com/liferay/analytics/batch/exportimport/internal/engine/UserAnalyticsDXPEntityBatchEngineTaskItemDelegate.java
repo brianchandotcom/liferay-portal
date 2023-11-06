@@ -109,6 +109,8 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
 				companyId);
 
+		Predicate predicate = null;
+
 		if (!analyticsConfiguration.syncAllContacts()) {
 			String[] syncedOrganizationIds =
 				analyticsConfiguration.syncedOrganizationIds();
@@ -116,14 +118,11 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
 				joinStep = joinStep.leftJoinOn(
 					Users_OrgsTable.INSTANCE,
-					Users_OrgsTable.INSTANCE.userId.eq(
-						userTableAlias.userId
-					).and(
-						Users_OrgsTable.INSTANCE.organizationId.in(
-							TransformUtil.transform(
-								syncedOrganizationIds, Long::parseLong,
-								Long.class))
-					));
+					Users_OrgsTable.INSTANCE.userId.eq(userTableAlias.userId));
+
+				predicate = Users_OrgsTable.INSTANCE.organizationId.in(
+					TransformUtil.transform(
+						syncedOrganizationIds, Long::parseLong, Long.class));
 			}
 
 			String[] syncedUserGroupIds =
@@ -133,13 +132,13 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				joinStep = joinStep.leftJoinOn(
 					Users_UserGroupsTable.INSTANCE,
 					Users_UserGroupsTable.INSTANCE.userId.eq(
-						userTableAlias.userId
-					).and(
-						Users_UserGroupsTable.INSTANCE.userGroupId.in(
-							TransformUtil.transform(
-								syncedUserGroupIds, Long::parseLong,
-								Long.class))
-					));
+						userTableAlias.userId));
+
+				predicate = Predicate.or(
+					predicate,
+					Users_UserGroupsTable.INSTANCE.userGroupId.in(
+						TransformUtil.transform(
+							syncedUserGroupIds, Long::parseLong, Long.class)));
 			}
 		}
 
@@ -149,8 +148,9 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				userTableAlias.screenName.neq(
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
 				).and(
-					userTableAlias.status.neq(
-						WorkflowConstants.STATUS_INACTIVE)
+					userTableAlias.status.neq(WorkflowConstants.STATUS_INACTIVE)
+				).and(
+					Predicate.withParentheses(predicate)
 				)));
 	}
 
@@ -170,6 +170,8 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
 				companyId);
 
+		Predicate predicate = null;
+
 		if (!analyticsConfiguration.syncAllContacts()) {
 			String[] syncedOrganizationIds =
 				analyticsConfiguration.syncedOrganizationIds();
@@ -177,14 +179,11 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
 				joinStep = joinStep.leftJoinOn(
 					Users_OrgsTable.INSTANCE,
-					Users_OrgsTable.INSTANCE.userId.eq(
-						userTableAlias.userId
-					).and(
-						Users_OrgsTable.INSTANCE.organizationId.in(
-							TransformUtil.transform(
-								syncedOrganizationIds, Long::parseLong,
-								Long.class))
-					));
+					Users_OrgsTable.INSTANCE.userId.eq(userTableAlias.userId));
+
+				predicate = Users_OrgsTable.INSTANCE.organizationId.in(
+					TransformUtil.transform(
+						syncedOrganizationIds, Long::parseLong, Long.class));
 			}
 
 			String[] syncedUserGroupIds =
@@ -194,13 +193,13 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				joinStep = joinStep.leftJoinOn(
 					Users_UserGroupsTable.INSTANCE,
 					Users_UserGroupsTable.INSTANCE.userId.eq(
-						userTableAlias.userId
-					).and(
-						Users_UserGroupsTable.INSTANCE.userGroupId.in(
-							TransformUtil.transform(
-								syncedUserGroupIds, Long::parseLong,
-								Long.class))
-					));
+						userTableAlias.userId));
+
+				predicate = Predicate.or(
+					predicate,
+					Users_UserGroupsTable.INSTANCE.userGroupId.in(
+						TransformUtil.transform(
+							syncedUserGroupIds, Long::parseLong, Long.class)));
 			}
 		}
 
@@ -210,8 +209,9 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				userTableAlias.screenName.neq(
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
 				).and(
-					userTableAlias.status.neq(
-						WorkflowConstants.STATUS_INACTIVE)
+					userTableAlias.status.neq(WorkflowConstants.STATUS_INACTIVE)
+				).and(
+					Predicate.withParentheses(predicate)
 				))
 		).limit(
 			(pagination.getPage() - 1) * pagination.getPageSize(),

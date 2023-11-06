@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-ticket-user-batch-relationship:
+    name: Liferay Ticket User Batch Relationship
+    oAuthApplicationHeadlessServer: liferay-ticke-user-batch-relationship-oauth-application-headless-server
+    type: batch
+liferay-ticke-user-batch-relationship-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Ticket User Batch Relationship OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

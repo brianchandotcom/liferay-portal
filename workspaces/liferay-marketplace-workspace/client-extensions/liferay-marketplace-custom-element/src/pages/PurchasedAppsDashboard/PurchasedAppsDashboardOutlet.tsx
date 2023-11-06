@@ -155,7 +155,7 @@ const PurchasedAppsDashboardOutlet = () => {
 					orderTypeExternalReferenceCode:
 						order.orderTypeExternalReferenceCode,
 					productId: order.placedOrderItems[0].productId,
-					provisioning: order.orderStatusInfo.label_i18n,
+					provisioning: order.orderStatusInfo.label,
 					provisioningLabel: order.orderStatusInfo.label,
 					purchasedBy: order.author,
 					purchasedDate: formattedDate,

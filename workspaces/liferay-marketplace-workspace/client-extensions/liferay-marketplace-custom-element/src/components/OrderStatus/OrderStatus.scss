@@ -1,4 +1,4 @@
-.label-status-icon {
+.order-status-icon {
 	height: 0.5rem;
 	width: 0.5rem;
 
@@ -15,9 +15,10 @@
 	}
 }
 
-.label-status-text {
+.order-status-text {
 	color: #6c6c75;
 	font-size: 0.813rem;
 	font-weight: 600;
 	line-height: 1rem;
+	text-transform: capitalize;
 }

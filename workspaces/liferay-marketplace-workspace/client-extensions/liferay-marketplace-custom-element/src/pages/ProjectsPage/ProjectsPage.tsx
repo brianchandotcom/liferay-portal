@@ -167,7 +167,7 @@ export function ProjectsPage({
 								projectName={
 									projectOrder.customFields['Project Name']
 								}
-								status={projectOrder.orderStatusInfo.label_i18n}
+								status={projectOrder.orderStatusInfo.label}
 							/>
 						);
 					}}

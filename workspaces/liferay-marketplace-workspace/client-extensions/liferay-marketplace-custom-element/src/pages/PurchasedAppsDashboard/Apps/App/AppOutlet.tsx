@@ -20,7 +20,7 @@ import {getThumbnailByProductAttachment} from '../../../../utils/util';
 import useGetProductCreatorAccount from '../../../GetAppPage/hooks/useGetProductCreatorAccount';
 import OrderDetailsHeader from '../components/OrderDetailsHeader';
 
-('./App.scss');
+import './App.scss';
 
 const AppNavbar = () => {
 	const location = useLocation();
@@ -91,10 +91,10 @@ const AppOutlet = () => {
 			<OrderDetailsHeader
 				hasOrderDescription={false}
 				hasOrderDetails={true}
-				orderDetails={data?.placedOrder}
-				productCreatorAccount={productCreatorAccount?.name}
-				productImage={appImage}
-				productName={data?.product?.name?.en_US}
+				image={appImage}
+				name={data?.product?.name?.en_US}
+				order={data?.placedOrder}
+				productOwner={productCreatorAccount?.name}
 			/>
 			<AppNavbar />
 			<Outlet />

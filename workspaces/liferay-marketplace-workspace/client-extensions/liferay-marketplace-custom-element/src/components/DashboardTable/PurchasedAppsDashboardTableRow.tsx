@@ -13,12 +13,11 @@ import DropDown from '@clayui/drop-down/lib/DropDown';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useNavigate} from 'react-router-dom';
 
-import {OrderStatus} from '../../enums/OrderStatus';
 import {OrderType} from '../../enums/OrderType';
 import i18n from '../../i18n';
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboard/PurchasedAppsDashboardOutlet';
 import {showAppImage} from '../../utils/util';
-import LabelStatus from '../LabelStatus/LabelStatus';
+import OrderStatus, {OrderStatuses} from '../OrderStatus/OrderStatus';
 
 interface PurchasedAppsDashboardTableRowProps {
 	item: PurchasedAppProps;
@@ -45,7 +44,7 @@ export function PurchasedAppsDashboardTableRow({
 	const navigate = useNavigate();
 
 	const orderStatusIsNotCompleted =
-		provisioningLabel !== OrderStatus.COMPLETED;
+		provisioningLabel !== OrderStatuses.COMPLETED;
 
 	return (
 		<ClayTable.Row
@@ -56,28 +55,21 @@ export function PurchasedAppsDashboardTableRow({
 		>
 			<ClayTable.Cell>
 				<div className="dashboard-table-row-name-container">
-					<div>
-						<img
-							alt="App Image"
-							className="dashboard-table-row-name-logo"
-							src={showAppImage(thumbnail)}
-						/>
-					</div>
+					<img
+						alt="App Image"
+						className="dashboard-table-row-name-logo"
+						src={showAppImage(thumbnail)}
+					/>
 
 					<div>
 						<span className="dashboard-table-row-name-text">
 							{name}
 						</span>
 
-						{version ? (
-							<>
-								<br></br>
-								<span className="dashboard-table-row-name-version">
-									{version}
-								</span>
-							</>
-						) : (
-							<></>
+						{version && (
+							<span className="dashboard-table-row-name-version mt-2">
+								{version}
+							</span>
 						)}
 					</div>
 				</div>
@@ -109,20 +101,17 @@ export function PurchasedAppsDashboardTableRow({
 				</div>
 			</ClayTable.Cell>
 
-			{project ? (
+			{project && (
 				<ClayTable.Cell>
 					<span className="dashboard-table-row-text">{project}</span>
 				</ClayTable.Cell>
-			) : (
-				<></>
 			)}
 
 			<ClayTable.Cell>
 				<div className="dashboard-table-row-provisioning-container">
-					<LabelStatus
-						provisioning={provisioning}
-						provisioningLabel={provisioningLabel}
-					/>
+					<OrderStatus orderStatus={provisioning}>
+						{provisioningLabel}
+					</OrderStatus>
 				</div>
 			</ClayTable.Cell>
 

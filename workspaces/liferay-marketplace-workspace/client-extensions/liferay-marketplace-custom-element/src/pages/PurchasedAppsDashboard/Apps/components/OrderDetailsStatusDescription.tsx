@@ -6,51 +6,46 @@
 import ClayLabel from '@clayui/label';
 
 import purchasedAppIcon from '../../../../assets/icons/purchased_app_icon.svg';
-import LabelStatus from '../../../../components/LabelStatus/LabelStatus';
+import OrderStatus from '../../../../components/OrderStatus';
 import {OrderType} from '../../../../enums/OrderType';
 import {OrderAppTypeEnum} from '../../enums/OrderAppTypeEnum';
-interface OrderDetailsStatusDescriptionProps {
-	orderDetails?: Cart;
-	productCreatorAccount?: string;
-}
+
+type OrderDetailsStatusDescriptionProps = {
+	order?: Cart;
+	productOwner?: string;
+};
+
+const getOrderDetailsType = (orderTypeExternalReferenceCode: string) =>
+	orderTypeExternalReferenceCode === OrderType.DXP
+		? OrderAppTypeEnum.DXPAPP
+		: OrderAppTypeEnum.CLOUDAPP;
 
 const OrderDetailsStatusDescription = ({
-	orderDetails,
-	productCreatorAccount,
-}: OrderDetailsStatusDescriptionProps) => {
-	const getOrderDetailsType = () => {
-		if (orderDetails?.orderTypeExternalReferenceCode === OrderType.DXP) {
-			return OrderAppTypeEnum.DXPAPP;
-		}
+	order,
+	productOwner,
+}: OrderDetailsStatusDescriptionProps) => (
+	<div className="align-items-center d-flex">
+		<div className="order-details-publisher">{productOwner}</div>
 
-		return OrderAppTypeEnum.CLOUDAPP;
-	};
-
-	const orderDetailsType = getOrderDetailsType();
-
-	return (
-		<div className="align-items-center d-flex">
-			<div className="order-details-publisher">
-				{productCreatorAccount}
-			</div>
-			<div className="align-items-center app-details-status d-flex mx-3">
-				<LabelStatus
-					provisioning={orderDetails?.paymentStatusInfo.label_i18n}
-					provisioningLabel={orderDetails?.paymentStatusLabel}
-				/>
-			</div>
-			<ClayLabel className="rounded" displayType="info" large>
-				<div className="align-items-center d-flex">
-					<img
-						alt="Purchased Order Icon"
-						className="mr-1"
-						src={purchasedAppIcon}
-					/>
-					{orderDetailsType}
-				</div>
-			</ClayLabel>
+		<div className="align-items-center app-details-status d-flex mx-3">
+			<OrderStatus orderStatus={order?.paymentStatusInfo.label}>
+				{order?.paymentStatusLabel}
+			</OrderStatus>
 		</div>
-	);
-};
+
+		<ClayLabel className="rounded" displayType="info" large>
+			<div className="align-items-center d-flex">
+				<img
+					alt="Purchased Order Icon"
+					className="mr-1"
+					src={purchasedAppIcon}
+				/>
+				{getOrderDetailsType(
+					order?.orderTypeExternalReferenceCode as string
+				)}
+			</div>
+		</ClayLabel>
+	</div>
+);
 
 export default OrderDetailsStatusDescription;

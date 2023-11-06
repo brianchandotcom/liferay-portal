@@ -108,7 +108,7 @@ public class TicketAttachmentDownloadRestController extends BaseRestController {
 		throws Exception {
 
 		try (InputStream inputStream = new ByteArrayInputStream(
-				_serviceAccountKey.getBytes())) {
+				_gcsServiceAccountKey.getBytes())) {
 
 			ServiceAccountCredentials serviceAccountCredentials =
 				ServiceAccountCredentials.fromStream(inputStream);
@@ -135,7 +135,7 @@ public class TicketAttachmentDownloadRestController extends BaseRestController {
 	private static final Log _log = LogFactory.getLog(
 		TicketAttachmentDownloadRestController.class);
 
-	@Value("${gcs.service.account.key}")
-	private String _serviceAccountKey;
+	@Value("${liferay.customer.gcs.service.account.key}")
+	private String _gcsServiceAccountKey;
 
 }

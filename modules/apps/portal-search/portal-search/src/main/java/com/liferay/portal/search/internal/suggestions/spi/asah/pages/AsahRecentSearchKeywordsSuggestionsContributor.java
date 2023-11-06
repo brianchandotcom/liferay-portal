@@ -3,20 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.suggestions.spi;
+package com.liferay.portal.search.internal.suggestions.spi.asah.pages;
 
-import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.spi.suggestions.SuggestionsContributor;
-import com.liferay.portal.search.suggestions.SuggestionBuilderFactory;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
-import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilderFactory;
+import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -39,20 +36,10 @@ public class AsahRecentSearchKeywordsSuggestionsContributor
 			suggestionsContributorConfiguration) {
 
 		return getSuggestionsContributorResults(
-			_analyticsSettingsManager, searchContext,
+			AsahSuggestionsConstants.PAGES,
+			AsahSuggestionsConstants.SEARCH_KEYWORDS, searchContext,
 			"lastModifiedDate,desc,counts,desc,keywords,asc",
-			_suggestionBuilderFactory, suggestionsContributorConfiguration,
-			_suggestionsContributorResultsBuilderFactory);
+			suggestionsContributorConfiguration);
 	}
-
-	@Reference
-	private AnalyticsSettingsManager _analyticsSettingsManager;
-
-	@Reference
-	private SuggestionBuilderFactory _suggestionBuilderFactory;
-
-	@Reference
-	private SuggestionsContributorResultsBuilderFactory
-		_suggestionsContributorResultsBuilderFactory;
 
 }

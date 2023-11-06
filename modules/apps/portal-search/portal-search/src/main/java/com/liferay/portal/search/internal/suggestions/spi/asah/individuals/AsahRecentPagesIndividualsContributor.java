@@ -3,21 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.suggestions.spi;
+package com.liferay.portal.search.internal.suggestions.spi.asah.individuals;
 
-import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.spi.suggestions.SuggestionsContributor;
-import com.liferay.portal.search.suggestions.SuggestionBuilderFactory;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
-import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilderFactory;
+import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
@@ -40,25 +37,20 @@ public class AsahRecentPagesIndividualsContributor
 			suggestionsContributorConfiguration) {
 
 		return getSuggestionsContributorResults(
-			_analyticsSettingsManager, "recent-pages", "individuals",
-			searchContext,
-			"visits,displayLanguageId,lastVisitDate,firstVisitDate,url",
-			_suggestionBuilderFactory, suggestionsContributorConfiguration,
-			_suggestionsContributorResultsBuilderFactory,
-			_portalUtil.getUserId(liferayPortletRequest));
+			AsahSuggestionsConstants.INDIVIDUALS,
+			AsahSuggestionsConstants.RECENT_PAGES, searchContext,
+			"lastVisitDate,visits,displayLanguageId,firstVisitDate,url",
+			suggestionsContributorConfiguration);
 	}
 
-	@Reference
-	private AnalyticsSettingsManager _analyticsSettingsManager;
+	protected String getAssetURL(
+		String destinationBaseURL, JSONObject itemJSONObject) {
 
-	@Reference
-	private PortalUtil _portalUtil;
+		return itemJSONObject.getString("url");
+	}
 
-	@Reference
-	private SuggestionBuilderFactory _suggestionBuilderFactory;
-
-	@Reference
-	private SuggestionsContributorResultsBuilderFactory
-		_suggestionsContributorResultsBuilderFactory;
+	protected String getText(JSONObject itemJSONObject) {
+		return itemJSONObject.getString("title");
+	}
 
 }

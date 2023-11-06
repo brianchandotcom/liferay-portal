@@ -177,9 +177,9 @@ export default function DatePicker({
 				<div
 					data-tooltip-align="top"
 					{...getTooltipTitle({placeholder, value: formattedDate})}
-					aria-required={otherProps.required}
 				>
 					<ClayDatePicker
+						aria-required={otherProps.required}
 						ariaLabels={{
 							buttonChooseDate: `${Liferay.Language.get(
 								'select-date'

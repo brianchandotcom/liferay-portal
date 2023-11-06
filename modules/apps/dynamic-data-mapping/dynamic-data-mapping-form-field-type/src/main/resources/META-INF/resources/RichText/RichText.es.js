@@ -168,9 +168,10 @@ const RichText = ({
 			style={readOnly ? {pointerEvents: 'none'} : null}
 			visible={visible}
 		>
-			<ClayInput.Group aria-required={otherProps.required}>
+			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClassicEditor
+						aria-required={otherProps.required}
 						className="w-100"
 						contents={
 							currentValue

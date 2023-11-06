@@ -11,6 +11,7 @@ import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {setJSONArrayValue} from '../util/setters.es';
 
 const Switcher = ({
+	accessibleProps,
 	checked,
 	disabled,
 	inline,
@@ -28,6 +29,7 @@ const Switcher = ({
 	>
 		<label className="simple-toggle-switch toggle-switch">
 			<input
+				{...accessibleProps}
 				checked={checked}
 				className="toggle-switch-check"
 				disabled={disabled}
@@ -89,9 +91,10 @@ const CheckboxMultiple = ({
 	};
 
 	return (
-		<div {...accessibleProps} className="lfr-ddm-checkbox-multiple">
+		<div className="lfr-ddm-checkbox-multiple">
 			{options.map((option, index) => (
 				<Toggle
+					{...accessibleProps}
 					checked={displayValues.includes(option.value)}
 					disabled={disabled}
 					inline={inline}

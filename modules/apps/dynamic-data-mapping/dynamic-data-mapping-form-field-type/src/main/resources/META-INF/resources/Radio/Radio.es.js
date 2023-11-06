@@ -57,14 +57,10 @@ const Radio = ({
 
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
-			<div
-				aria-required={otherProps.required}
-				className="ddm__radio"
-				onBlur={onBlur}
-				onFocus={onFocus}
-			>
+			<div className="ddm__radio" onBlur={onBlur} onFocus={onFocus}>
 				{options.map((option, index) => (
 					<ClayRadio
+						aria-required={otherProps.required}
 						checked={currentValue === option.value}
 						disabled={disabled}
 						inline={inline}

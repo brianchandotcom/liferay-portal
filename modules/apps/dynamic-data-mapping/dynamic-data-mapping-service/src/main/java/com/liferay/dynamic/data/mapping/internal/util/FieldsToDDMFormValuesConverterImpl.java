@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -209,6 +210,10 @@ public class FieldsToDDMFormValuesConverterImpl
 		Field ddmField, Locale locale, int index) {
 
 		Serializable fieldValue = ddmField.getValue(locale, index);
+
+		if (fieldValue == null) {
+			return StringPool.BLANK;
+		}
 
 		if (fieldValue instanceof Date) {
 			Date valueDate = (Date)fieldValue;

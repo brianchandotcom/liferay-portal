@@ -335,7 +335,7 @@ export function ObjectDefinitionNode({
 
 							openToast({
 								message: Liferay.Language.get(
-									'field-successfully-added'
+									'the-field-was-successfully-added'
 								),
 								type: 'success',
 							});

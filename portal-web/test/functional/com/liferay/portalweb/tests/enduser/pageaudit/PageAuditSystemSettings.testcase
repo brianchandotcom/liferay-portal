@@ -367,10 +367,7 @@ definition {
 		}
 
 		task ("Go to Instance Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			Click(
 				key_itemName = "Pages",

@@ -53,10 +53,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the Instance Settings Admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("And the user accesses the Feature Flag option") {
@@ -101,10 +98,7 @@ definition {
 	@priority = 4
 	test CanAssertDataSetFragmentInPage {
 		task ("Given the Instance Settings Admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("And the user accesses the Feature Flag option") {
@@ -168,10 +162,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the Instance Settings Admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("And the user accesses the Feature Flag option") {
@@ -214,10 +205,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the Instance Settings Admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("And the user accesses the Feature Flag option") {
@@ -254,10 +242,7 @@ definition {
 	@priority = 3
 	test CanConfirmTextInDataSetFF {
 		task ("Given the Instance Settings Admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("When the user accesses the Feature Flag option") {
@@ -279,10 +264,7 @@ definition {
 	@priority = 3
 	test ConfirmEnableAndDisabledFFDataSetClientExtension {
 		task ("Given the Instance Settings Admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("And the user accesses the Feature Flag option") {
@@ -323,12 +305,7 @@ definition {
 		}
 
 		task ("Given the Instance Settings Admin page") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("And the user accesses the Feature Flag option") {
@@ -373,10 +350,7 @@ definition {
 	@priority = 3
 	test ConfirmEnableAndDisabledFFDataSetInFragments {
 		task ("Given the Instance Settings Admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("And the user accesses the Feature Flag option") {
@@ -413,12 +387,7 @@ definition {
 		}
 
 		task ("Given the Instance Settings Admin page") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("And the user accesses the Feature Flag option") {
@@ -434,8 +403,6 @@ definition {
 				title_row = "Data Set Manager",
 				toggle_state = "Enabled");
 		}
-
-		Navigator.openURL();
 
 		task ("When the user go to edit the home page again") {
 			Navigator.openURL();

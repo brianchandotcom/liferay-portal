@@ -415,10 +415,7 @@ definition {
 	@description = "LRQA-71601 - Verify that the translation icon has the Instance Language by default"
 	@priority = 4
 	test TranslationIconHasInstanceLanguageByDefault {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Localization",

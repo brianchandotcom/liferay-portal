@@ -548,10 +548,7 @@ definition {
 	@priority = 3
 	test CanHideApplicationThatShouldnotBeUsedInPublication {
 		task ("Go to Publications Instance Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Publications",

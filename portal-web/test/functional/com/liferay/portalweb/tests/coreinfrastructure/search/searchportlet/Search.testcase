@@ -2268,10 +2268,7 @@ definition {
 	@description = "This is a use case for LPS-186456 - SearchBar Instance Setting is not updating."
 	@priority = 3
 	test SearchInstanceSettingsAreUpdatedWhenSaved {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Search",

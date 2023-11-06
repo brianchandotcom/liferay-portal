@@ -1005,9 +1005,10 @@ public class LiferayContextController extends ContextController {
 	private DispatchTargets _getDispatchTargets(
 		String requestURI, String extension, String queryString, Match match) {
 
-		int pos = requestURI.lastIndexOf('/');
+		int index = requestURI.lastIndexOf('/');
 
 		String servletPath = requestURI;
+
 		String pathInfo = null;
 
 		if (match == Match.DEFAULT_SERVLET) {
@@ -1024,22 +1025,15 @@ public class LiferayContextController extends ContextController {
 				return dispatchTargets;
 			}
 
-			if (match == Match.EXACT) {
+			if ((match == Match.EXACT) || (index == -1)) {
 				break;
 			}
 
-			if (pos > -1) {
-				String newServletPath = requestURI.substring(0, pos);
-				pathInfo = requestURI.substring(pos);
+			servletPath = requestURI.substring(0, index);
 
-				servletPath = newServletPath;
+			pathInfo = requestURI.substring(index);
 
-				pos = servletPath.lastIndexOf('/');
-
-				continue;
-			}
-
-			break;
+			index = servletPath.lastIndexOf('/');
 		}
 
 		return null;

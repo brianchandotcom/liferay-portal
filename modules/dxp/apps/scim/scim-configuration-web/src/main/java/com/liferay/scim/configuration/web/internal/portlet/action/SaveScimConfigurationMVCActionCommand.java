@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.scim.client.util.ScimClientUtil;
 import com.liferay.scim.configuration.web.internal.constants.ScimConstants;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
+import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Dictionary;
 

@@ -40,8 +40,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.scim.rest.internal.configuration.ScimClientOAuth2ApplicationConfiguration;
 import com.liferay.scim.rest.internal.model.ScimUser;
-import com.liferay.scim.rest.internal.util.ScimClientUtil;
 import com.liferay.scim.rest.internal.util.ScimUserUtil;
+import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Calendar;
 import java.util.Map;

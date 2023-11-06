@@ -86,6 +86,53 @@ definition {
 		LexiconCard.viewNoCardThumbnail(card = "Commerce_Blue.jpg");
 	}
 
+	@description = "This test ensures that a user is not able to upload a file to an asset library that is bigger than the lower limit when the File Max Size Limit is set in both system settings and asset library settings."
+	@priority = 4
+	test CanLimitMaxFileSizeForDepotByTheLowerLimitBetweenDepotAndSystem {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		DMDocument.updateMaximumFileSize(fieldValue = 65536);
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "Commerce_Blue.jpg",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 64 KB");
+
+		Depot.configureMaximumFileSize(
+			depotName = "Test Depot Name",
+			fieldValue = 16384);
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.jpg",
+			dmDocumentTitle = "Document_3.jpg",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 16 KB");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconCard.viewNoCardThumbnail(card = "Commerce_Blue.jpg");
+
+		LexiconCard.viewNoCardThumbnail(card = "Document_3.jpg");
+
+		LexiconCard.viewSpecificCardThumbnail(
+			card = "Document_1.jpg",
+			imageFileName = "Document_1.jpg");
+	}
+
 	@description = "This test ensures that a file that exceed the set maximum size cannot be uploaded via Media Gallery."
 	@priority = 3
 	test CanLimitMaxFileSizeInMediaGallery {

@@ -52,23 +52,23 @@ definition {
 			CustomObjectAPI.createObjectRelatedToAnotherObject(
 				en_US_plural_label = "subjects",
 				name = "abc",
-				relatedObject = "student",
 				relatedObjectErc = "abc",
-				relationship = "studentSubjects");
+				relatedObjectName = "student",
+				relationshipName = "studentSubjects");
 
 			CustomObjectAPI.createObjectRelatedToAnotherObject(
 				en_US_plural_label = "subjects",
 				name = "zzzz",
-				relatedObject = "student",
 				relatedObjectErc = "bbbabc",
-				relationship = "studentSubjects");
+				relatedObjectName = "student",
+				relationshipName = "studentSubjects");
 
 			CustomObjectAPI.createObjectRelatedToAnotherObject(
 				en_US_plural_label = "subjects",
 				name = "bbbabc",
-				relatedObject = "student",
 				relatedObjectErc = "zzzz",
-				relationship = "studentSubjects");
+				relatedObjectName = "student",
+				relationshipName = "studentSubjects");
 		}
 
 		task ("And Given apiApplication with an endpoint of scope Company created and published") {
@@ -121,7 +121,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given setting the Filters to 'contains(name,'abc')'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(name,'abc')",
 				entity = "Endpoints",
 				fieldName = "filter",
@@ -154,7 +154,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given setting the Filters to 'contains(studentSubjects/name,'abc')'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(studentSubjects/name,'abc')",
 				entity = "Endpoints",
 				fieldName = "filter",
@@ -171,7 +171,7 @@ definition {
 		}
 
 		task ("When I empty the Filter box in endpoint configuration") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "",
 				entity = "Endpoints",
 				fieldName = "filter",
@@ -212,7 +212,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given setting the Filters to 'contains(studentSubjects/name,'abc') and name eq 'zzzz'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(studentSubjects/name,'abc') and name eq 'zzzz'",
 				entity = "Endpoints",
 				fieldName = "filter",
@@ -229,7 +229,7 @@ definition {
 		}
 
 		task ("When I empty the Filters") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "",
 				entity = "Endpoints",
 				fieldName = "filter",
@@ -262,7 +262,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When setting the Filters to 'externalReferenceCode eq 'abc''") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "externalReferenceCode eq 'abc'",
 				entity = "Endpoints",
 				fieldName = "filter",
@@ -284,7 +284,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When setting the Filters to 'contains(name,'abc')'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(name,'abc')",
 				entity = "Endpoints",
 				fieldName = "filter",
@@ -306,7 +306,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When setting the Filters to 'contains(studentSubjects/name,'abc')'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "contains(studentSubjects/name,'abc')",
 				entity = "Endpoints",
 				fieldName = "filter",

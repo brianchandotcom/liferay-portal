@@ -347,6 +347,18 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro configureMaximumFileSize(fieldValue = null, depotName = null) {
+		DepotNavigator.openDepotSettingsGeneral(depotName = ${depotName});
+
+		Type(
+			key_fieldLabel = "File Max Size",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = ${fieldValue});
+
+		PortletEntry.save();
+	}
+
+	@summary = "Default summary"
 	macro configureRecycleBin(recycleBin = null) {
 		Panel.expandPanel(panel = "Recycle Bin");
 

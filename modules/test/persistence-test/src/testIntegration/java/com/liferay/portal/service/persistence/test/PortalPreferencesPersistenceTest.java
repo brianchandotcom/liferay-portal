@@ -145,6 +145,13 @@ public class PortalPreferencesPersistenceTest {
 	}
 
 	@Test
+	public void testCountByOwnerType() throws Exception {
+		_persistence.countByOwnerType(RandomTestUtil.nextInt());
+
+		_persistence.countByOwnerType(0);
+	}
+
+	@Test
 	public void testCountByO_O() throws Exception {
 		_persistence.countByO_O(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());

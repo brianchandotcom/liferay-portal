@@ -367,6 +367,7 @@ create index IX_9FF9CC4E on PortalPreferenceValue (portalPreferencesId, key_[$CO
 create index IX_4C7A38C4 on PortalPreferenceValue (portalPreferencesId, namespace[$COLUMN_LENGTH:255$]);
 
 create index IX_D1F795F1 on PortalPreferences (ownerId, ownerType);
+create index IX_FBB40A2B on PortalPreferences (ownerType);
 
 create unique index IX_12B5E51D on Portlet (companyId, portletId[$COLUMN_LENGTH:200$]);
 

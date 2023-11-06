@@ -55,7 +55,7 @@ const ProductCard = ({
 
 						<div className="sub-text">
 							{getValueFromSpecifications(
-								product.productSpecifications,
+								product?.productSpecifications,
 								'latest-version'
 							)}{' '}
 							by {creatorAccount?.name}

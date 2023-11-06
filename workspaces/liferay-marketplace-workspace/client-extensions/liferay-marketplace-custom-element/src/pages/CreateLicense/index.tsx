@@ -13,11 +13,11 @@ import {z} from 'zod';
 
 import FooterButtons from '../../components/FooterButtons';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
 import {Liferay} from '../../liferay/liferay';
 import zodSchema from '../../schema/zod';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
-import useGetProductById from '../GetAppPage/hooks/useGetProductById';
 import useGetProductCreatorAccount from '../GetAppPage/hooks/useGetProductCreatorAccount';
 import useProvisioningKoroneikiOAuth2 from '../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
 import {formatDate} from '../PublishedAppsDashboard/PublishedDashboardPageUtil';
@@ -75,10 +75,13 @@ const stepsInformation: StepsInformation = {
 const CreateLicense = () => {
 	const [loading, setLoading] = useState(false);
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
-	const {appId, orderId} = useParams();
+	const {orderId} = useParams();
 	const {myUserAccount} = useMarketplaceContext();
-	const {product} = useGetProductById('attachments', appId);
+	const {data} = useGetProductByOrderId(orderId);
+
 	const navigate = useNavigate();
+	const product = data?.product;
+
 	const productCreatorAccount = useGetProductCreatorAccount(product);
 	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
 
@@ -112,7 +115,7 @@ const CreateLicense = () => {
 
 			setValue(
 				'description',
-				`${givenName} ${familyName} - ${product?.name?.en_US} - ${subscription?.name}`
+				`${givenName} ${familyName} - ${product.name?.en_US} - ${subscription?.name}`
 			);
 		}
 	}, [myUserAccount, product, setValue, subscription?.name]);

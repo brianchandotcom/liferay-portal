@@ -1,0 +1,23 @@
+.label-status-icon {
+	height: 0.5rem;
+	width: 0.5rem;
+
+	&-completed {
+		color: #4aab3b;
+	}
+
+	&-processing {
+		color: #2e5aac;
+	}
+
+	&-pending {
+		color: #b95000;
+	}
+}
+
+.label-status-text {
+	color: #6c6c75;
+	font-size: 0.813rem;
+	font-weight: 600;
+	line-height: 1rem;
+}

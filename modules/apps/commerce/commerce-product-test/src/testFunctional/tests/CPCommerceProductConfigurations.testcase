@@ -784,10 +784,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given the localization for the Friendly URL is changed") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Localization",
@@ -1065,10 +1062,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given the localization for the Friendly URL is changed") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Localization",

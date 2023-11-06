@@ -499,10 +499,7 @@ definition {
 	test EditAndDeleteWithDifferentInstanceLanguage {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -683,10 +680,7 @@ definition {
 			key_ddlDataDefinitionName = "WC Structure Title - en-US",
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Localization",

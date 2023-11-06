@@ -141,10 +141,7 @@ definition {
 		}
 
 		task ("Assert that the Virtual Instance is not connected with AC") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
 
 			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
 

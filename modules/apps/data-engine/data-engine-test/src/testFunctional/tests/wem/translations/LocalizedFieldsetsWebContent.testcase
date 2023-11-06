@@ -617,10 +617,7 @@ definition {
 	@description = "This test ensures create, translate and edit with different instance language."
 	@priority = 5
 	test LocalizedFieldsetWithDifferentInstanceLanguage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -789,10 +786,7 @@ definition {
 			category = "Content & Data",
 			portlet = "Web Content");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Localization",

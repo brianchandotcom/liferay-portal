@@ -393,10 +393,7 @@ definition {
 		}
 
 		task ("Naviagte to Instance Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+			PortalSettings.openInstanceSettingsAdmin();
 		}
 
 		task ("Disable OpenSSO Configuration") {

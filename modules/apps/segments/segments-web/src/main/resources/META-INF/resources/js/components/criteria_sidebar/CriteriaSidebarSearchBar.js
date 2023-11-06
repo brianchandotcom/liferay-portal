@@ -19,7 +19,7 @@ export default function CriteriaSidebarSearchBar({onChange, searchValue}) {
 			<div className="input-group-item">
 				<input
 					aria-label={Liferay.Language.get('search-properties')}
-					className="form-control input-group-inset input-group-inset-after"
+					className="form-control form-control-sm input-group-inset input-group-inset-after"
 					data-testid="search-input"
 					onChange={(event) => onChange(event.target.value)}
 					placeholder={Liferay.Language.get('search-properties')}
@@ -27,13 +27,14 @@ export default function CriteriaSidebarSearchBar({onChange, searchValue}) {
 					value={searchValue}
 				/>
 
-				<div className="input-group-inset-item input-group-inset-item-after">
+				<div className="c-pr-0 input-group-inset-item input-group-inset-item-after">
 					<ClayButton
 						aria-label={
 							searchValue
 								? Liferay.Language.get('clear-search')
 								: Liferay.Language.get('search-properties')
 						}
+						className="mr-1 pr-2"
 						data-testid="search-button"
 						displayType="unstyled"
 						onClick={searchValue ? handleClear : undefined}

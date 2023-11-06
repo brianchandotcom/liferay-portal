@@ -34,13 +34,13 @@ function CriteriaSidebarItem({
 	return connectDragSource(
 		<li
 			className={classNames(
-				'align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex ',
+				'align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex ',
 				{dragging},
 				className
 			)}
 			tabIndex="0"
 		>
-			<span className="inline-item">
+			<span className="c-p-2 inline-item">
 				<ClayIcon symbol="drag" />
 			</span>
 

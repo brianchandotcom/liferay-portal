@@ -451,7 +451,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	public boolean isShowBreadcrumb() {
 		Group group = _themeDisplay.getScopeGroup();
 
-		if (!group.isSite()) {
+		if (group.isLayout()) {
 			return false;
 		}
 

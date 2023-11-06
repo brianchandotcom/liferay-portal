@@ -36,13 +36,6 @@
 
 		.lexicon-icon-drag {
 			color: $secondary-l1;
-			opacity: 0;
-			transition: opacity $segmentsTransition;
-			will-change: opacity;
-		}
-
-		&:hover .lexicon-icon-drag {
-			opacity: 1;
 		}
 
 		&.dragging {

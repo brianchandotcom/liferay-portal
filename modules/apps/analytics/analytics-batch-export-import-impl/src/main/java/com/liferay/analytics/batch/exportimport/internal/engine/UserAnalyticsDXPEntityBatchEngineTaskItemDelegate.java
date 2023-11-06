@@ -189,8 +189,8 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 						WorkflowConstants.STATUS_INACTIVE)
 				))
 		).limit(
-			pagination.getPage() * pagination.getPageSize(),
-			(pagination.getPage() + 1) * pagination.getPageSize()
+			(pagination.getPage() - 1) * pagination.getPageSize(),
+			pagination.getPage() * pagination.getPageSize()
 		);
 	}
 

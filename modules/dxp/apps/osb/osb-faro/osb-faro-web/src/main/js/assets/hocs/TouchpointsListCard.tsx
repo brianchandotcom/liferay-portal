@@ -4,6 +4,7 @@ import React from 'react';
 import TouchpointsListCard from 'assets/components/TouchpointsListCard';
 import URLConstants from 'shared/util/url-constants';
 import {compose} from 'redux';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {graphql} from '@apollo/react-hoc';
 import {
 	mapPropsToOptions,
@@ -55,6 +56,7 @@ const TouchpointListWithBaseCard: React.FC<ITouchpointsListCardProps> = ({
 }) => (
 	<BaseCard
 		className='analytics-touchpoints-list-card'
+		id={Containers.AssetAppearsOnCard}
 		label={label}
 		legacyDropdownRangeKey={legacyDropdownRangeKey}
 		minHeight={536}

@@ -41,7 +41,11 @@ const OrderDetailsStatusDescription = ({
 			</div>
 			<ClayLabel className="rounded" displayType="info" large>
 				<div className="align-items-center d-flex">
-					<img alt='Purchased Order Icon' className="mr-1" src={purchasedAppIcon} />
+					<img
+						alt="Purchased Order Icon"
+						className="mr-1"
+						src={purchasedAppIcon}
+					/>
 					{orderDetailsType}
 				</div>
 			</ClayLabel>

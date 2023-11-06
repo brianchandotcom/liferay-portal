@@ -1876,6 +1876,10 @@ definition {
 		}
 
 		task ("Edit variant page and add some fragment to the page") {
+			Click(
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
+
 			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(
@@ -1913,6 +1917,10 @@ definition {
 		}
 
 		task ("Edit variant page and add some fragment to the page") {
+			Click(
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
+
 			ContentPages.gotoPageEditor();
 
 			PageEditor.addFragment(

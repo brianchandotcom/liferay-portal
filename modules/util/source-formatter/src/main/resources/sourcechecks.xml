@@ -1704,10 +1704,6 @@
 			<category name="Upgrade" />
 			<description name="Run code to delete StorageTypeAware interface" />
 		</check>
-		<check name="UpgradeJavaUpdateCommerceAddressCheck">
-			<category name="Upgrade" />
-			<description name="Replace parameter in updateCommerceAddress method by other parameters list" />
-		</check>
 		<check name="UpgradeJSPFieldSetGroupCheck">
 			<category name="Upgrade" />
 			<description name="Run code to remove 'fieldset-group' tag" />

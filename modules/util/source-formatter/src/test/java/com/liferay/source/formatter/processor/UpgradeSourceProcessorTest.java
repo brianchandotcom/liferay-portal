@@ -220,11 +220,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaUpdateCommerceAddressCheck() throws Exception {
-		test("upgrade/UpgradeJavaUpdateCommerceAddressCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJSPFieldSetGroupCheck() throws Exception {
 		test("upgrade/UpgradeJSPFieldSetGroupCheck.testjsp");
 	}

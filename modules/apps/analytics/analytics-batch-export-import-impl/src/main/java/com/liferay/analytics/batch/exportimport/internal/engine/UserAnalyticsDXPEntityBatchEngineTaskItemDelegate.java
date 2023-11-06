@@ -22,8 +22,8 @@ import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
-import com.liferay.portal.kernel.model.Users_GroupsTable;
 import com.liferay.portal.kernel.model.Users_OrgsTable;
+import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -106,18 +106,19 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 					));
 			}
 
-			String[] syncedGroupIds =
+			String[] syncedUserGroupIds =
 				analyticsConfiguration.syncedUserGroupIds();
 
-			if (!ArrayUtil.isEmpty(syncedGroupIds)) {
+			if (!ArrayUtil.isEmpty(syncedUserGroupIds)) {
 				joinStep = joinStep.innerJoinON(
-					Users_GroupsTable.INSTANCE,
-					Users_GroupsTable.INSTANCE.userId.eq(
+					Users_UserGroupsTable.INSTANCE,
+					Users_UserGroupsTable.INSTANCE.userId.eq(
 						UserTable.INSTANCE.userId
 					).and(
-						Users_GroupsTable.INSTANCE.groupId.in(
+						Users_UserGroupsTable.INSTANCE.userGroupId.in(
 							TransformUtil.transform(
-								syncedGroupIds, Long::parseLong, Long.class))
+								syncedUserGroupIds, Long::parseLong,
+								Long.class))
 					));
 			}
 		}
@@ -163,18 +164,19 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 					));
 			}
 
-			String[] syncedGroupIds =
+			String[] syncedUserGroupIds =
 				analyticsConfiguration.syncedUserGroupIds();
 
-			if (!ArrayUtil.isEmpty(syncedGroupIds)) {
+			if (!ArrayUtil.isEmpty(syncedUserGroupIds)) {
 				joinStep = joinStep.innerJoinON(
-					Users_GroupsTable.INSTANCE,
-					Users_GroupsTable.INSTANCE.userId.eq(
+					Users_UserGroupsTable.INSTANCE,
+					Users_UserGroupsTable.INSTANCE.userId.eq(
 						UserTable.INSTANCE.userId
 					).and(
-						Users_GroupsTable.INSTANCE.groupId.in(
+						Users_UserGroupsTable.INSTANCE.userGroupId.in(
 							TransformUtil.transform(
-								syncedGroupIds, Long::parseLong, Long.class))
+								syncedUserGroupIds, Long::parseLong,
+								Long.class))
 					));
 			}
 		}

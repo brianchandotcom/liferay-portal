@@ -35,6 +35,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -680,9 +681,17 @@ public class TemplateInfoItemFieldSetProviderTest {
 				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
-		_assertExpectedNames(
-			(String)infoFieldValue.getValue(LocaleUtil.US),
-			StringUtil.toLowerCase(tagName1), StringUtil.toLowerCase(tagName2));
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+			_assertExpectedNames(
+				(String)infoFieldValue.getValue(LocaleUtil.US),
+				StringUtil.toLowerCase(tagName1),
+				StringUtil.toLowerCase(tagName2));
+		}
+		else {
+			_assertExpectedNames(
+				(String)infoFieldValue.getValue(LocaleUtil.US), tagName1,
+				tagName2);
+		}
 	}
 
 	@Test

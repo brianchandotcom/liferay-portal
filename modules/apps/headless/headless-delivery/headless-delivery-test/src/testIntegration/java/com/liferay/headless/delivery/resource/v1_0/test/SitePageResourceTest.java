@@ -66,6 +66,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -880,9 +881,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Assert.assertEquals(Arrays.toString(tags), 2, tags.length);
 
-		for (String keyword : keywords) {
-			Assert.assertTrue(
-				ArrayUtil.contains(tags, StringUtil.toLowerCase(keyword)));
+		if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+			for (String keyword : keywords) {
+				Assert.assertTrue(ArrayUtil.contains(tags, keyword));
+			}
+		}
+		else {
+			for (String keyword : keywords) {
+				Assert.assertTrue(
+					ArrayUtil.contains(tags, StringUtil.toLowerCase(keyword)));
+			}
 		}
 	}
 

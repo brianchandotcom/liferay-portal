@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -189,10 +190,18 @@ public class
 
 		String className = DLFileEntryConstants.getClassName();
 
-		Assert.assertArrayEquals(
-			new String[] {StringUtil.toLowerCase(assetTagName)},
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()));
+		if (!_featureFlagManager.isEnabled("LPS-194362")) {
+			Assert.assertArrayEquals(
+				new String[] {StringUtil.toLowerCase(assetTagName)},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
+		else {
+			Assert.assertArrayEquals(
+				new String[] {assetTagName},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(),
@@ -230,10 +239,18 @@ public class
 
 		String className = DLFileEntryConstants.getClassName();
 
-		Assert.assertArrayEquals(
-			new String[] {StringUtil.toLowerCase(assetTagName)},
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()));
+		if (!_featureFlagManager.isEnabled("LPS-194362")) {
+			Assert.assertArrayEquals(
+				new String[] {StringUtil.toLowerCase(assetTagName)},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
+		else {
+			Assert.assertArrayEquals(
+				new String[] {assetTagName},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
@@ -363,10 +380,18 @@ public class
 
 		String className = DLFileEntryConstants.getClassName();
 
-		Assert.assertArrayEquals(
-			new String[] {StringUtil.toLowerCase(assetTagName)},
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()));
+		if (!_featureFlagManager.isEnabled("LPS-194362")) {
+			Assert.assertArrayEquals(
+				new String[] {StringUtil.toLowerCase(assetTagName)},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
+		else {
+			Assert.assertArrayEquals(
+				new String[] {assetTagName},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _targetParentFolder.getFolderId(),
@@ -649,6 +674,9 @@ public class
 
 	@DeleteAfterTestRun
 	private Group _childGroup;
+
+	@Inject
+	private FeatureFlagManager _featureFlagManager;
 
 	private Folder _newParentFolder;
 

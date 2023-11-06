@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -167,10 +168,18 @@ public class
 
 		String className = DLFileEntryConstants.getClassName();
 
-		Assert.assertArrayEquals(
-			new String[] {StringUtil.toLowerCase(assetTagName)},
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()));
+		if (!_featureFlagManager.isEnabled("LPS-194362")) {
+			Assert.assertArrayEquals(
+				new String[] {StringUtil.toLowerCase(assetTagName)},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
+		else {
+			Assert.assertArrayEquals(
+				new String[] {assetTagName},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
@@ -251,10 +260,18 @@ public class
 
 		String className = DLFileEntryConstants.getClassName();
 
-		Assert.assertArrayEquals(
-			new String[] {StringUtil.toLowerCase(assetTagName)},
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()));
+		if (!_featureFlagManager.isEnabled("LPS-194362")) {
+			Assert.assertArrayEquals(
+				new String[] {StringUtil.toLowerCase(assetTagName)},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
+		else {
+			Assert.assertArrayEquals(
+				new String[] {assetTagName},
+				_assetTagLocalService.getTagNames(
+					className, fileEntry1.getFileEntryId()));
+		}
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
@@ -437,6 +454,9 @@ public class
 	private Group _depotGroup;
 
 	private Folder _depotParentFolder;
+
+	@Inject
+	private FeatureFlagManager _featureFlagManager;
 
 	@DeleteAfterTestRun
 	private Group _group;

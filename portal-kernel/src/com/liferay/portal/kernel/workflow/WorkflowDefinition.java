@@ -65,6 +65,8 @@ public interface WorkflowDefinition extends WorkflowModel {
 
 	public List<WorkflowTransition> getWorkflowTransitions();
 
+	public String getXmlContent();
+
 	public boolean isActive();
 
 }

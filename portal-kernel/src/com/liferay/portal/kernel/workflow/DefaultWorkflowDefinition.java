@@ -111,6 +111,10 @@ public class DefaultWorkflowDefinition
 		return _workflowTransitions;
 	}
 
+	public String getXmlContent() {
+		return _xmlContent;
+	}
+
 	@Override
 	public boolean isActive() {
 		return _active;
@@ -182,6 +186,10 @@ public class DefaultWorkflowDefinition
 		_workflowTransitions = workflowTransitions;
 	}
 
+	public void setXmlContent(String xmlContent) {
+		_xmlContent = xmlContent;
+	}
+
 	private boolean _active;
 	private long _companyId;
 	private String _content;
@@ -198,5 +206,6 @@ public class DefaultWorkflowDefinition
 	private long _workflowDefinitionId;
 	private List<WorkflowNode> _workflowNodes;
 	private List<WorkflowTransition> _workflowTransitions;
+	private String _xmlContent;
 
 }

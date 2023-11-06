@@ -105,6 +105,11 @@ public class WorkflowDefinitionImpl implements WorkflowDefinition {
 	}
 
 	@Override
+	public String getXmlContent() {
+		return null;
+	}
+
+	@Override
 	public boolean isActive() {
 		return _active;
 	}

@@ -5,7 +5,11 @@
 
 package com.liferay.portal.workflow.kaleo.model.impl;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.cache.CacheField;
+import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil;
 
@@ -23,5 +27,24 @@ public class KaleoDefinitionImpl extends KaleoDefinitionBaseImpl {
 		return KaleoDefinitionVersionLocalServiceUtil.
 			getKaleoDefinitionVersions(getCompanyId(), getName());
 	}
+
+	@Override
+	public String getXmlContent() {
+		if (_xmlContent != null) {
+			return _xmlContent;
+		}
+
+		try {
+			_xmlContent = WorkflowDefinitionContentUtil.toXML(getContent());
+		}
+		catch (WorkflowException workflowException) {
+			ReflectionUtil.throwException(workflowException);
+		}
+
+		return _xmlContent;
+	}
+
+	@CacheField(propagateToInterface = true)
+	private String _xmlContent;
 
 }

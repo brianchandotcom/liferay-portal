@@ -199,6 +199,9 @@ public interface PortalPreferencesLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PortalPreferences fetchCompanyPortalPreferences(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PortalPreferences fetchPortalPreferences(long portalPreferencesId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

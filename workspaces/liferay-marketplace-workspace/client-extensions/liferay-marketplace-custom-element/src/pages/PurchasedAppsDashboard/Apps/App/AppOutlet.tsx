@@ -20,6 +20,8 @@ import {getThumbnailByProductAttachment} from '../../../../utils/util';
 import useGetProductCreatorAccount from '../../../GetAppPage/hooks/useGetProductCreatorAccount';
 import OrderDetailsHeader from '../components/OrderDetailsHeader';
 
+('./App.scss');
+
 const AppNavbar = () => {
 	const location = useLocation();
 
@@ -76,7 +78,7 @@ const AppOutlet = () => {
 	}
 
 	return (
-		<div className="d-flex flex-column w-100">
+		<div className="app-details-header d-flex flex-column w-100">
 			<ClayButton
 				className="align-items-center d-flex"
 				displayType="unstyled"

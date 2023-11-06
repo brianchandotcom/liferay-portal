@@ -14,7 +14,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useNavigate} from 'react-router-dom';
 
 import {OrderStatus} from '../../enums/OrderStatus';
-import {orderType} from '../../enums/orderType';
+import {OrderType} from '../../enums/OrderType';
 import i18n from '../../i18n';
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboard/PurchasedAppsDashboardOutlet';
 import {showAppImage} from '../../utils/util';
@@ -137,7 +137,7 @@ export function PurchasedAppsDashboardTableRow({
 					}
 				>
 					<DropDown.ItemList>
-						{orderTypeExternalReferenceCode === orderType.DXP && (
+						{orderTypeExternalReferenceCode === OrderType.DXP && (
 							<ClayTooltipProvider>
 								<DropDown.Item
 									data-tooltip-align="left"
@@ -176,7 +176,7 @@ export function PurchasedAppsDashboardTableRow({
 							{i18n.translate('access-console')}
 						</DropDown.Item>
 
-						{orderTypeExternalReferenceCode === orderType.DXP && (
+						{orderTypeExternalReferenceCode === OrderType.DXP && (
 							<ClayTooltipProvider>
 								<DropDown.Item
 									data-tooltip-align="left"

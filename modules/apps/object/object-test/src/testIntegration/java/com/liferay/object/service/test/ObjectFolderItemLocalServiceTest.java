@@ -169,7 +169,6 @@ public class ObjectFolderItemLocalServiceTest {
 				_objectDefinition4.getObjectDefinitionId()
 			},
 			_objectFolderC.getObjectFolderId());
-
 		_assertObjectFolderItems(
 			new Long[] {
 				objectDefinition.getObjectDefinitionId(),
@@ -185,8 +184,30 @@ public class ObjectFolderItemLocalServiceTest {
 	@Test
 	public void testDeleteObjectFolderItem() throws Exception {
 
-		// Object folder item is deleted when this and its related object
-		// definitions are linked to that object folder
+		// Object definition 1 belongs to object folder B, but object definition
+		// 1's related object definitions do not belong to object folder B
+
+		_objectFolderItemLocalService.deleteObjectFolderItem(
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectFolderB.getObjectFolderId());
+
+		Assert.assertNotNull(
+			_objectFolderItemLocalService.getObjectFolderItem(
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectFolderB.getObjectFolderId()));
+
+		// Object definition 2 does not belong to object folder B
+
+		_objectFolderItemLocalService.deleteObjectFolderItem(
+			_objectDefinition2.getObjectDefinitionId(),
+			_objectFolderB.getObjectFolderId());
+
+		Assert.assertNotNull(
+			_objectFolderItemLocalService.getObjectFolderItem(
+				_objectDefinition2.getObjectDefinitionId(),
+				_objectFolderB.getObjectFolderId()));
+
+		// Object definition 4 belongs to object folder B
 
 		ObjectFolderItem objectFolderItem =
 			_objectFolderItemLocalService.addObjectFolderItem(
@@ -199,30 +220,6 @@ public class ObjectFolderItemLocalServiceTest {
 		Assert.assertNull(
 			_objectFolderItemLocalService.fetchObjectFolderItem(
 				objectFolderItem.getObjectFolderItemId()));
-
-		// Object folder item is not deleted when its object definition is not
-		// linked to that object folder
-
-		_objectFolderItemLocalService.deleteObjectFolderItem(
-			_objectDefinition2.getObjectDefinitionId(),
-			_objectFolderB.getObjectFolderId());
-
-		Assert.assertNotNull(
-			_objectFolderItemLocalService.getObjectFolderItem(
-				_objectDefinition2.getObjectDefinitionId(),
-				_objectFolderB.getObjectFolderId()));
-
-		// Object folder item is not deleted when its related object definitions
-		// are not linked to that object folder
-
-		_objectFolderItemLocalService.deleteObjectFolderItem(
-			_objectDefinition1.getObjectDefinitionId(),
-			_objectFolderB.getObjectFolderId());
-
-		Assert.assertNotNull(
-			_objectFolderItemLocalService.getObjectFolderItem(
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectFolderB.getObjectFolderId()));
 	}
 
 	@Test

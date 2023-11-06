@@ -9,9 +9,12 @@ import com.liferay.portal.servlet.filters.weblogic.WebLogicIncludeServletRespons
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Shuyang Zhou
  */
+@Component(service = WebLogicIncludeServletResponseFactory.class)
 public class WebLogicIncludeServletResponseFactoryImpl
 	implements WebLogicIncludeServletResponseFactory {
 

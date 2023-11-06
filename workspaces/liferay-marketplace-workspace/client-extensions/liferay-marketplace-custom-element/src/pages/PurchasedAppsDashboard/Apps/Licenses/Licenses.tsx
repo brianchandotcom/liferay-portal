@@ -62,7 +62,8 @@ const Licenses = () => {
 				return provisioningKoroneikiOAuth2.getOrderLicenseKeys(
 					orderId as string
 				);
-			} catch (error) {
+			}
+			catch (error) {
 				return {
 					items: [],
 					totalCount: 0,

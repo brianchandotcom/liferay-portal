@@ -55,7 +55,8 @@ export function ReviewAndSubmitAppPage({
 			productResponse.categories.forEach((category: any) => {
 				if (category.vocabulary === 'marketplace app category') {
 					productCategories.push(category.name);
-				} else if (category.vocabulary === 'marketplace app tags') {
+				}
+				else if (category.vocabulary === 'marketplace app tags') {
 					productTags.push(category.name);
 				}
 			});

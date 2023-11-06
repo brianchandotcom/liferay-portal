@@ -413,7 +413,7 @@ public class LiferayContextController extends ContextController {
 
 		ResourceDTO resourceDTO = new ResourceDTO();
 
-		resourceDTO.servletPatterns = _sort(servletPatterns);
+		resourceDTO.patterns = _sort(servletPatterns);
 		resourceDTO.prefix = prefix;
 		resourceDTO.serviceId = serviceId;
 		resourceDTO.servletContextId = _contextServiceId;
@@ -880,7 +880,7 @@ public class LiferayContextController extends ContextController {
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
 				filter),
 			clazz.getName());
-		filterDTO.servletPatterns = _sort(servletPatterns);
+		filterDTO.patterns = _sort(servletPatterns);
 		filterDTO.regexs = regexes;
 		filterDTO.serviceId = (long)filterServiceReference.getProperty(
 			Constants.SERVICE_ID);
@@ -957,7 +957,7 @@ public class LiferayContextController extends ContextController {
 			serviceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
 		servletDTO.name = ServiceProperties.parseName(servletName, servlet);
-		servletDTO.servletPatterns = _sort(servletPatterns);
+		servletDTO.patterns = _sort(servletPatterns);
 		servletDTO.serviceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
 		servletDTO.servletContextId = _contextServiceId;

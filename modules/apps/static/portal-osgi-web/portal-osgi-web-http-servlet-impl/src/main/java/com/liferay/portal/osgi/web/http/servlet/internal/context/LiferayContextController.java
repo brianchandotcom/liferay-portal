@@ -187,22 +187,12 @@ public class LiferayContextController extends ContextController {
 
 		_httpSessionAttributeListenerServiceTracker.open();
 
-		ServletContext servletContext =
-			httpServletEndpointController.getParentServletContext();
+		_httpSessionIdListenerServiceTracker = new ServiceTracker<>(
+			bundleContext, HttpSessionIdListener.class.getName(),
+			new ContextListenerTrackerCustomizer(
+				bundleContext, httpServletEndpointController, this));
 
-		if ((servletContext.getMajorVersion() >= 3) &&
-			(servletContext.getMinorVersion() > 0)) {
-
-			_httpSessionIdListenerServiceTracker = new ServiceTracker<>(
-				bundleContext, HttpSessionIdListener.class.getName(),
-				new ContextListenerTrackerCustomizer(
-					bundleContext, httpServletEndpointController, this));
-
-			_httpSessionIdListenerServiceTracker.open();
-		}
-		else {
-			_httpSessionIdListenerServiceTracker = null;
-		}
+		_httpSessionIdListenerServiceTracker.open();
 
 		_httpSessionListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, HttpSessionListener.class.getName(),
@@ -528,11 +518,7 @@ public class LiferayContextController extends ContextController {
 
 		_filterServiceTracker.close();
 		_httpSessionAttributeListenerServiceTracker.close();
-
-		if (_httpSessionIdListenerServiceTracker != null) {
-			_httpSessionIdListenerServiceTracker.close();
-		}
-
+		_httpSessionIdListenerServiceTracker.close();
 		_httpSessionListenerServiceTracker.close();
 		_resourceServiceTracker.close();
 		_servletContextAttributeListenerServiceTracker.close();
@@ -1078,13 +1064,7 @@ public class LiferayContextController extends ContextController {
 			listenerClasses.add(HttpSessionAttributeListener.class);
 		}
 
-		ServletContext servletContext =
-			_servletContextHelperDataContext.getServletContext();
-
-		if ((servletContext.getMajorVersion() >= 3) &&
-			(servletContext.getMinorVersion() > 0) &&
-			objectClasses.contains(HttpSessionIdListener.class.getName())) {
-
+		if (objectClasses.contains(HttpSessionIdListener.class.getName())) {
 			listenerClasses.add(HttpSessionIdListener.class);
 		}
 

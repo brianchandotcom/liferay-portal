@@ -8,7 +8,7 @@ import {Container} from '@clayui/layout';
 import classNames from 'classnames';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
-import React, {FormEvent, useEffect, useRef, useState} from 'react';
+import React, {FormEvent, useState} from 'react';
 
 import {ErrorMessage} from './ErrorMessage';
 import {FormContent} from './FormContent';
@@ -49,7 +49,6 @@ export default function AICreatorModal({
 		opener.Liferay.fire('closeModal');
 	};
 
-	const modalContentRef = useRef<HTMLDivElement>(null);
 	const [status, setStatus] = useState<RequestStatus>({type: 'idle'});
 	const [text, setText] = useState<string | null>(null);
 
@@ -108,12 +107,8 @@ export default function AICreatorModal({
 			});
 	};
 
-	useEffect(() => {
-		modalContentRef.current?.focus();
-	});
-
 	return (
-		<div className="h-100" ref={modalContentRef} tabIndex={-1}>
+		<div className="h-100" tabIndex={-1}>
 			{status.type === 'loading' ? <LoadingMessage /> : null}
 
 			<ClayForm

@@ -44,7 +44,6 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -377,7 +376,7 @@ public class UserManagerImpl implements UserManager {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
 					String.format(
-						"(%s=%s*)", Constants.SERVICE_PID,
+						"(%s=%s*)", ConfigurationAdmin.SERVICE_FACTORYPID,
 						ScimClientOAuth2ApplicationConfiguration.class.
 							getName()));
 

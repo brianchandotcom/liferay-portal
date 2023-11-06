@@ -46,10 +46,14 @@ export default function setDataRecord(
 				!!localizedValue?.[languageId].length) ||
 			(localizedValueEdited && localizedValueEdited[languageId]);
 
+		const isValidValue = (value) => {
+			return value === '' || !value?.length || value === false;
+		};
+
 		if (
 			!edited &&
 			Liferay.ThemeDisplay.getDefaultLanguageId() === languageId &&
-			(value === '' || !value.length || value === false)
+			isValidValue(value)
 		) {
 			delete localizedValue[languageId];
 		}

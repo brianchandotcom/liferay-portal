@@ -6,12 +6,6 @@
 				"name": "Home",
 				"privateLayout": false,
 				"type": "layout"
-			},
-			{
-				"friendlyURL": "/NewMovie",
-				"name": "New Movie",
-				"privateLayout": false,
-				"type": "layout"
 			}
 		],
 		"name": "Primary",

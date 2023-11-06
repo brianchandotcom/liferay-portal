@@ -25,6 +25,35 @@ public class PageRule implements Cloneable, Serializable {
 		return PageRuleSerDes.toDTO(json);
 	}
 
+	public ConditionType getConditionType() {
+		return conditionType;
+	}
+
+	public String getConditionTypeAsString() {
+		if (conditionType == null) {
+			return null;
+		}
+
+		return conditionType.toString();
+	}
+
+	public void setConditionType(ConditionType conditionType) {
+		this.conditionType = conditionType;
+	}
+
+	public void setConditionType(
+		UnsafeSupplier<ConditionType, Exception> conditionTypeUnsafeSupplier) {
+
+		try {
+			conditionType = conditionTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ConditionType conditionType;
+
 	public String getId() {
 		return id;
 	}
@@ -63,6 +92,50 @@ public class PageRule implements Cloneable, Serializable {
 
 	protected String name;
 
+	public PageRuleAction[] getPageRuleActions() {
+		return pageRuleActions;
+	}
+
+	public void setPageRuleActions(PageRuleAction[] pageRuleActions) {
+		this.pageRuleActions = pageRuleActions;
+	}
+
+	public void setPageRuleActions(
+		UnsafeSupplier<PageRuleAction[], Exception>
+			pageRuleActionsUnsafeSupplier) {
+
+		try {
+			pageRuleActions = pageRuleActionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected PageRuleAction[] pageRuleActions;
+
+	public PageRuleCondition[] getPageRuleConditions() {
+		return pageRuleConditions;
+	}
+
+	public void setPageRuleConditions(PageRuleCondition[] pageRuleConditions) {
+		this.pageRuleConditions = pageRuleConditions;
+	}
+
+	public void setPageRuleConditions(
+		UnsafeSupplier<PageRuleCondition[], Exception>
+			pageRuleConditionsUnsafeSupplier) {
+
+		try {
+			pageRuleConditions = pageRuleConditionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected PageRuleCondition[] pageRuleConditions;
+
 	@Override
 	public PageRule clone() throws CloneNotSupportedException {
 		return (PageRule)super.clone();
@@ -92,6 +165,39 @@ public class PageRule implements Cloneable, Serializable {
 
 	public String toString() {
 		return PageRuleSerDes.toJSON(this);
+	}
+
+	public static enum ConditionType {
+
+		ALL("All"), ANY("Any");
+
+		public static ConditionType create(String value) {
+			for (ConditionType conditionType : values()) {
+				if (Objects.equals(conditionType.getValue(), value) ||
+					Objects.equals(conditionType.name(), value)) {
+
+					return conditionType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ConditionType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

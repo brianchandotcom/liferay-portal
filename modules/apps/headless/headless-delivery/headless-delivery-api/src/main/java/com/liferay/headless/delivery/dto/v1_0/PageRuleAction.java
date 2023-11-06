@@ -5,11 +5,9 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -29,8 +27,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,45 +35,36 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "Represents a definition of a Page Rule.", value = "PageRule"
+	description = "Represents a definition of a Page Rule Action.",
+	value = "PageRuleAction"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageRule")
-public class PageRule implements Serializable {
+@XmlRootElement(name = "PageRuleAction")
+public class PageRuleAction implements Serializable {
 
-	public static PageRule toDTO(String json) {
-		return ObjectMapperUtil.readValue(PageRule.class, json);
+	public static PageRuleAction toDTO(String json) {
+		return ObjectMapperUtil.readValue(PageRuleAction.class, json);
 	}
 
-	public static PageRule unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(PageRule.class, json);
+	public static PageRuleAction unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(PageRuleAction.class, json);
 	}
 
-	@Schema(description = "The custom name of a Page rule.")
-	@Valid
-	public ConditionType getConditionType() {
-		return conditionType;
+	@Schema(description = "The page rule action's action.")
+	public String getAction() {
+		return action;
 	}
 
-	@JsonIgnore
-	public String getConditionTypeAsString() {
-		if (conditionType == null) {
-			return null;
-		}
-
-		return conditionType.toString();
-	}
-
-	public void setConditionType(ConditionType conditionType) {
-		this.conditionType = conditionType;
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	@JsonIgnore
-	public void setConditionType(
-		UnsafeSupplier<ConditionType, Exception> conditionTypeUnsafeSupplier) {
+	public void setAction(
+		UnsafeSupplier<String, Exception> actionUnsafeSupplier) {
 
 		try {
-			conditionType = conditionTypeUnsafeSupplier.get();
+			action = actionUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -87,11 +74,11 @@ public class PageRule implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The custom name of a Page rule.")
+	@GraphQLField(description = "The page rule action's action.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ConditionType conditionType;
+	protected String action;
 
-	@Schema(description = "The page rule ID.")
+	@Schema(description = "The page rule action's ID.")
 	public String getId() {
 		return id;
 	}
@@ -113,23 +100,25 @@ public class PageRule implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The page rule ID.")
+	@GraphQLField(description = "The page rule action's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
 
-	@Schema(description = "The custom name of a Page rule.")
-	public String getName() {
-		return name;
+	@Schema(description = "The page rule condition's item ID.")
+	public String getItemId() {
+		return itemId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setItemId(
+		UnsafeSupplier<String, Exception> itemIdUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			itemId = itemIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -139,27 +128,23 @@ public class PageRule implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The custom name of a Page rule.")
+	@GraphQLField(description = "The page rule condition's item ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String itemId;
 
-	@Schema(description = "A list of actions of a Page rule.")
-	@Valid
-	public PageRuleAction[] getPageRuleActions() {
-		return pageRuleActions;
+	@Schema(description = "The page rule action's type.")
+	public String getType() {
+		return type;
 	}
 
-	public void setPageRuleActions(PageRuleAction[] pageRuleActions) {
-		this.pageRuleActions = pageRuleActions;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@JsonIgnore
-	public void setPageRuleActions(
-		UnsafeSupplier<PageRuleAction[], Exception>
-			pageRuleActionsUnsafeSupplier) {
-
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
-			pageRuleActions = pageRuleActionsUnsafeSupplier.get();
+			type = typeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -169,39 +154,9 @@ public class PageRule implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "A list of actions of a Page rule.")
+	@GraphQLField(description = "The page rule action's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageRuleAction[] pageRuleActions;
-
-	@Schema(description = "A list of conditions of a Page rule.")
-	@Valid
-	public PageRuleCondition[] getPageRuleConditions() {
-		return pageRuleConditions;
-	}
-
-	public void setPageRuleConditions(PageRuleCondition[] pageRuleConditions) {
-		this.pageRuleConditions = pageRuleConditions;
-	}
-
-	@JsonIgnore
-	public void setPageRuleConditions(
-		UnsafeSupplier<PageRuleCondition[], Exception>
-			pageRuleConditionsUnsafeSupplier) {
-
-		try {
-			pageRuleConditions = pageRuleConditionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "A list of conditions of a Page rule.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageRuleCondition[] pageRuleConditions;
+	protected String type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -209,13 +164,13 @@ public class PageRule implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof PageRule)) {
+		if (!(object instanceof PageRuleAction)) {
 			return false;
 		}
 
-		PageRule pageRule = (PageRule)object;
+		PageRuleAction pageRuleAction = (PageRuleAction)object;
 
-		return Objects.equals(toString(), pageRule.toString());
+		return Objects.equals(toString(), pageRuleAction.toString());
 	}
 
 	@Override
@@ -230,16 +185,16 @@ public class PageRule implements Serializable {
 
 		sb.append("{");
 
-		if (conditionType != null) {
+		if (action != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"conditionType\": ");
+			sb.append("\"action\": ");
 
 			sb.append("\"");
 
-			sb.append(conditionType);
+			sb.append(_escape(action));
 
 			sb.append("\"");
 		}
@@ -258,58 +213,32 @@ public class PageRule implements Serializable {
 			sb.append("\"");
 		}
 
-		if (name != null) {
+		if (itemId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"itemId\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(itemId));
 
 			sb.append("\"");
 		}
 
-		if (pageRuleActions != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageRuleActions\": ");
+			sb.append("\"type\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < pageRuleActions.length; i++) {
-				sb.append(String.valueOf(pageRuleActions[i]));
+			sb.append(_escape(type));
 
-				if ((i + 1) < pageRuleActions.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (pageRuleConditions != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"pageRuleConditions\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < pageRuleConditions.length; i++) {
-				sb.append(String.valueOf(pageRuleConditions[i]));
-
-				if ((i + 1) < pageRuleConditions.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -319,48 +248,10 @@ public class PageRule implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageRule",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageRuleAction",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("ConditionType")
-	public static enum ConditionType {
-
-		ALL("All"), ANY("Any");
-
-		@JsonCreator
-		public static ConditionType create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (ConditionType conditionType : values()) {
-				if (Objects.equals(conditionType.getValue(), value)) {
-					return conditionType;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private ConditionType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

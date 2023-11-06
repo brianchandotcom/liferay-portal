@@ -254,8 +254,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createObjectRelatedToAnotherObject(en_US_plural_label = null, name = null, relatedObject = null, relatedObjectErc=null, relationship=null) {
-		Variables.assertDefined(parameterList = "${en_US_plural_label},${name},${relationship},${relatedObject},${relatedObjectErc}");
+	macro createObjectRelatedToAnotherObject(en_US_plural_label = null, name = null, relatedObject = null, relatedObjectErc=null, relationshipName=null) {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${name},${relationshipName},${relatedObjectName},${relatedObjectErc}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -265,7 +265,7 @@ definition {
 				-H Content-Type: application/json \
 				-d {
 					"name": "${name}",
-					"r_${relationship}_c_${relatedObject}ERC": "${relatedObjectErc}"
+					"r_${relationshipName}_c_${relatedObjectName}ERC": "${relatedObjectErc}"
 				}
 		''';
 

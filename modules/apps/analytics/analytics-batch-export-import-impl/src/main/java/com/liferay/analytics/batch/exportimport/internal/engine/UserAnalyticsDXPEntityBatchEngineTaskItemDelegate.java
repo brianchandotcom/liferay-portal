@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -77,12 +78,31 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 					contextCompany.getCompanyId(), parameters)));
 	}
 
+	private Predicate _buildPredicate(
+		UserTable userTable, long companyId,
+		Map<String, Serializable> parameters) {
+
+		Predicate predicate = userTable.companyId.eq(companyId);
+
+		Serializable resourceLastModifiedDate = parameters.get(
+			"resourceLastModifiedDate");
+
+		if (resourceLastModifiedDate == null) {
+			return predicate;
+		}
+
+		return predicate.and(
+			userTable.modifiedDate.gt((Date)resourceLastModifiedDate));
+	}
+
 	private DSLQuery _createCountDSLQuery(
 		long companyId, Map<String, Serializable> parameters) {
 
+		UserTable userTableAlias = UserTable.INSTANCE.as("userTable");
+
 		JoinStep joinStep = DSLQueryFactoryUtil.count(
 		).from(
-			UserTable.INSTANCE
+			userTableAlias
 		);
 
 		AnalyticsConfiguration analyticsConfiguration =
@@ -97,7 +117,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				joinStep = joinStep.innerJoinON(
 					Users_OrgsTable.INSTANCE,
 					Users_OrgsTable.INSTANCE.userId.eq(
-						UserTable.INSTANCE.userId
+						userTableAlias.userId
 					).and(
 						Users_OrgsTable.INSTANCE.organizationId.in(
 							TransformUtil.transform(
@@ -113,7 +133,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				joinStep = joinStep.innerJoinON(
 					Users_UserGroupsTable.INSTANCE,
 					Users_UserGroupsTable.INSTANCE.userId.eq(
-						UserTable.INSTANCE.userId
+						userTableAlias.userId
 					).and(
 						Users_UserGroupsTable.INSTANCE.userGroupId.in(
 							TransformUtil.transform(
@@ -125,11 +145,11 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return joinStep.where(
 			Predicate.and(
-				buildPredicate(UserTable.INSTANCE, companyId, parameters),
-				UserTable.INSTANCE.screenName.neq(
+				_buildPredicate(userTableAlias, companyId, parameters),
+				userTableAlias.screenName.neq(
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
 				).and(
-					UserTable.INSTANCE.status.neq(
+					userTableAlias.status.neq(
 						WorkflowConstants.STATUS_INACTIVE)
 				)));
 	}
@@ -138,9 +158,12 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		long companyId, Pagination pagination,
 		Map<String, Serializable> parameters) {
 
+		UserTable userTableAlias = UserTable.INSTANCE.as("userTable");
+
 		JoinStep joinStep = DSLQueryFactoryUtil.select(
+			userTableAlias
 		).from(
-			UserTable.INSTANCE
+			userTableAlias
 		);
 
 		AnalyticsConfiguration analyticsConfiguration =
@@ -155,7 +178,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				joinStep = joinStep.innerJoinON(
 					Users_OrgsTable.INSTANCE,
 					Users_OrgsTable.INSTANCE.userId.eq(
-						UserTable.INSTANCE.userId
+						userTableAlias.userId
 					).and(
 						Users_OrgsTable.INSTANCE.organizationId.in(
 							TransformUtil.transform(
@@ -171,7 +194,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				joinStep = joinStep.innerJoinON(
 					Users_UserGroupsTable.INSTANCE,
 					Users_UserGroupsTable.INSTANCE.userId.eq(
-						UserTable.INSTANCE.userId
+						userTableAlias.userId
 					).and(
 						Users_UserGroupsTable.INSTANCE.userGroupId.in(
 							TransformUtil.transform(
@@ -183,11 +206,11 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return joinStep.where(
 			Predicate.and(
-				buildPredicate(UserTable.INSTANCE, companyId, parameters),
-				UserTable.INSTANCE.screenName.neq(
+				_buildPredicate(userTableAlias, companyId, parameters),
+				userTableAlias.screenName.neq(
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
 				).and(
-					UserTable.INSTANCE.status.neq(
+					userTableAlias.status.neq(
 						WorkflowConstants.STATUS_INACTIVE)
 				))
 		).limit(

@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.xstream.XStreamConverterRegistryUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
 import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.AuthToken;
@@ -53,20 +54,6 @@ public class IntegrationPointTest {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
-	}
-
-	@Test
-	public void testServiceProxyFactoryIntegrationPoint() {
-		AuthToken authToken = ProxyFactory.newDummyInstance(AuthToken.class);
-
-		_serviceRegistration = _bundleContext.registerService(
-			AuthToken.class, authToken,
-			MapUtil.singletonDictionary("service.ranking", Integer.MAX_VALUE));
-
-		Assert.assertSame(
-			authToken,
-			ReflectionTestUtil.getFieldValue(
-				AuthTokenUtil.class, "_authToken"));
 	}
 
 	@Test
@@ -117,6 +104,20 @@ public class IntegrationPointTest {
 		Assert.assertTrue(
 			"Mock sanitizer not found in " + sanitizers,
 			sanitizers.removeIf(item -> sanitizer == item));
+	}
+
+	@Test
+	public void testSnapshotIntegrationPoint() {
+		AuthToken authToken = ProxyFactory.newDummyInstance(AuthToken.class);
+
+		_serviceRegistration = _bundleContext.registerService(
+			AuthToken.class, authToken,
+			MapUtil.singletonDictionary("service.ranking", Integer.MAX_VALUE));
+
+		Snapshot authTokenSnapshot = (Snapshot)ReflectionTestUtil.getFieldValue(
+			AuthTokenUtil.class, "_authTokenSnapshot");
+
+		Assert.assertSame(authToken, authTokenSnapshot.get());
 	}
 
 	private static BundleContext _bundleContext;

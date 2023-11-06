@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import java.util.List;
 
@@ -28,18 +29,26 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
 	public void onAfterCreate(Company company) throws ModelListenerException {
-		FeatureFlagsBag featureFlagsBag =
-			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(
-				company.getCompanyId());
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				FeatureFlagsBag featureFlagsBag =
+					_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(
+						company.getCompanyId());
 
-		List<FeatureFlag> deprecationFeatureFlags =
-			featureFlagsBag.getFeatureFlags(
-				FeatureFlagType.DEPRECATION.getPredicate());
+				List<FeatureFlag> deprecationFeatureFlags =
+					featureFlagsBag.getFeatureFlags(
+						FeatureFlagType.DEPRECATION.getPredicate());
 
-		for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
-			_featureFlagsBagProvider.setEnabled(
-				company.getCompanyId(), deprecationFeatureFlag.getKey(), false);
-		}
+				for (FeatureFlag deprecationFeatureFlag :
+						deprecationFeatureFlags) {
+
+					_featureFlagsBagProvider.setEnabled(
+						company.getCompanyId(), deprecationFeatureFlag.getKey(),
+						false);
+				}
+
+				return null;
+			});
 	}
 
 	@Reference

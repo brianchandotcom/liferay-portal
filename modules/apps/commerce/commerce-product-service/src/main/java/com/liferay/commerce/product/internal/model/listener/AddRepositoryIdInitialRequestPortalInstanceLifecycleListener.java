@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class PortalInstanceLifecycleListenerImpl
+public class AddRepositoryIdInitialRequestPortalInstanceLifecycleListener
 	extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Override
@@ -132,7 +132,7 @@ public class PortalInstanceLifecycleListenerImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalInstanceLifecycleListenerImpl.class);
+		AddRepositoryIdInitialRequestPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;

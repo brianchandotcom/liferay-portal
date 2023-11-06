@@ -1,0 +1,87 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testAccount = "Test Account LXC - SM";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts and associate user") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+
+			JSONAccountRole.associateUser(
+				accountEntryName = ${testAccount},
+				accountRole = "Account Administrator",
+				userEmailAddress = "test@liferay.com");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		CustomerPortal.customerPortalTearDown();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Automation ID: LPS-198965 | Test Summary: Assert that the error message appears when the user does not exist in OKTA"
+	@priority = 3
+	test AssertErrorMessageWhenUserDoesNotExistInOKTA {
+		task ("Given that the user go to the Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("And the user goes to the team members page") {
+			CustomerPortal.search(searchItem = "Test Account LXC - SM");
+
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
+
+			CP2Utils.onboardingFlow();
+
+			CP2NavigationMenu.goToTeamMembers();
+		}
+
+		task ("When the user invite a team member with domain liferay that already exist") {
+			CustomerPortal.clickAtButton(text = "Invite");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				firstName = "Test1",
+				lastName = "Test2",
+				position = 0,
+				positionNumber = 0,
+				rowEmail = "test12@liferay.com",
+				rowRole = "Administrator");
+
+			CP2TeamMembers.clickTeamMembersSendInvitation();
+		}
+
+		task ("Then the message error is displayed") {
+			Alert.viewWarningSpecific(warningMessage = "Unable to invite Test1");
+		}
+	}
+
+}

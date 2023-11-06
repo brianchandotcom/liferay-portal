@@ -73,10 +73,6 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 			SharingConfiguration sharingConfiguration =
 				_getSharingConfiguration(httpServletRequest);
 
-			if (!sharingConfiguration.isEnabled()) {
-				return parentDLViewFileVersionDisplayContext;
-			}
-
 			FileEntry fileEntry = null;
 
 			if (fileVersion != null) {

@@ -74,10 +74,6 @@ public class SharingDLViewFileVersionDisplayContext
 	public List<DropdownItem> getActionDropdownItems() throws PortalException {
 		List<DropdownItem> dropdownItems = super.getActionDropdownItems();
 
-		if (!_isShowShareAction() || !_sharingConfiguration.isEnabled()) {
-			return dropdownItems;
-		}
-
 		return _addSharingDropdownItem(dropdownItems);
 	}
 
@@ -139,23 +135,38 @@ public class SharingDLViewFileVersionDisplayContext
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
-			UnsafeConsumer<DropdownContextItem, Exception> unsafeConsumer =
-				_sharingDropdownItemFactory.createShareActionUnsafeConsumer(
-					DLFileEntryConstants.getClassName(),
-					_fileEntry.getFileEntryId(), _httpServletRequest);
+			if (_isSharingEnabled()) {
+				UnsafeConsumer<DropdownContextItem, Exception> unsafeConsumer =
+					_sharingDropdownItemFactory.createShareActionUnsafeConsumer(
+						DLFileEntryConstants.getClassName(),
+						_fileEntry.getFileEntryId(), _httpServletRequest);
 
-			if (i >= dropdownItems.size()) {
-				dropdownItems.addAll(
-					DropdownItemListBuilder.addContext(
-						unsafeConsumer
-					).build());
+				if (i >= dropdownItems.size()) {
+					dropdownItems.addAll(
+						DropdownItemListBuilder.addContext(
+							unsafeConsumer
+						).build());
+				}
+				else {
+					dropdownItems.addAll(
+						i,
+						DropdownItemListBuilder.addContext(
+							unsafeConsumer
+						).build());
+				}
 			}
 			else {
-				dropdownItems.addAll(
-					i,
-					DropdownItemListBuilder.addContext(
-						unsafeConsumer
-					).build());
+				DropdownItem copyLinkDropdownItem =
+					_sharingDropdownItemFactory.createCopyLinkDropdownItem(
+						DLFileEntryConstants.getClassName(),
+						_fileEntry.getFileEntryId(), _httpServletRequest);
+
+				if (i >= dropdownItems.size()) {
+					dropdownItems.add(copyLinkDropdownItem);
+				}
+				else {
+					dropdownItems.add(i, copyLinkDropdownItem);
+				}
 			}
 
 			return dropdownItems;
@@ -204,15 +215,24 @@ public class SharingDLViewFileVersionDisplayContext
 
 		if (i < dropdownItems.size()) {
 			if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
-				dropdownItems.addAll(
-					i,
-					DropdownItemListBuilder.addContext(
-						_sharingDropdownItemFactory.
-							createShareActionUnsafeConsumer(
-								DLFileEntryConstants.getClassName(),
-								_fileEntry.getFileEntryId(),
-								_httpServletRequest)
-					).build());
+				if (_isSharingEnabled()) {
+					dropdownItems.addAll(
+						i,
+						DropdownItemListBuilder.addContext(
+							_sharingDropdownItemFactory.
+								createShareActionUnsafeConsumer(
+									DLFileEntryConstants.getClassName(),
+									_fileEntry.getFileEntryId(),
+									_httpServletRequest)
+						).build());
+				}
+				else {
+					dropdownItems.add(
+						i,
+						_sharingDropdownItemFactory.createCopyLinkDropdownItem(
+							DLFileEntryConstants.getClassName(),
+							_fileEntry.getFileEntryId(), _httpServletRequest));
+				}
 			}
 			else {
 				dropdownItems.add(
@@ -226,6 +246,14 @@ public class SharingDLViewFileVersionDisplayContext
 		}
 
 		return false;
+	}
+
+	private boolean _isSharingEnabled() throws PortalException {
+		if (!_isShowShareAction() || !_sharingConfiguration.isEnabled()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isShowActions() throws PortalException {

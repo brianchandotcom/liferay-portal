@@ -107,9 +107,7 @@ definition {
 			}
 		}
 
-		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
+		PortletEntry.save();
 	}
 
 	@summary = "Default summary"

@@ -728,6 +728,23 @@ public class ObjectRelationshipLocalServiceTest {
 		return systemObjectDefinition;
 	}
 
+	private ObjectDefinition _addAndPublishCustomObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+	}
+
 	private ObjectRelationship _addObjectRelationshipSystemObjectDefinition()
 		throws Exception {
 

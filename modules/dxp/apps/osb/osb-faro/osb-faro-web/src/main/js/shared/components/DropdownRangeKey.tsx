@@ -9,6 +9,7 @@ import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
 import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
+import {useHistory} from 'react-router-dom';
 
 const {
 	Last7Days,
@@ -69,6 +70,25 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 	});
 	const [seeMore, setSeeMore] = useState(false);
 	const [showDatePicker, setShowDatePicker] = useState(false);
+	const history = useHistory();
+
+	useEffect(() => {
+		const unlisten = history.listen(location => {
+			const query = new URLSearchParams(location.search);
+
+			if (query.get('downloadReport')) {
+				onChange({
+					rangeEnd: query.get('rangeEnd'),
+					rangeKey: RangeKeyTimeRanges.CustomRange,
+					rangeStart: query.get('rangeStart')
+				});
+			}
+		});
+
+		return () => {
+			unlisten();
+		};
+	}, []);
 
 	useEffect(() => {
 		if (customDateRange && customDateRange.end && customDateRange.start) {

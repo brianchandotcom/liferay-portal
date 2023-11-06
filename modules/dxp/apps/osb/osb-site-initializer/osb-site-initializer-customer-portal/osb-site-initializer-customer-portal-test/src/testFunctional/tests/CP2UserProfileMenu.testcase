@@ -1,0 +1,56 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Automation ID: LPS-198008 | Test Summary: Assert that the user can out logged of the customer portal site"
+	@priority = 3
+	test AssertThatUserCanOutLoggedOfSite {
+		task ("Given that the User goes to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When the User click on sign out button") {
+			CP2Utils.selectProfileMenuOption(dropdownItem = "Sign Out");
+		}
+
+		task ("Then the user can see the home page logged out of the Customer Portal Site") {
+			CP2Utils.assertHomePageLoggedOutCP(
+				navTab = "Home",
+				pageTitle = "Liferay DXP");
+		}
+	}
+
+}

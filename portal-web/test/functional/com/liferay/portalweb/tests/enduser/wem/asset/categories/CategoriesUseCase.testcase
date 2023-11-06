@@ -790,6 +790,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-187080. Changing the category filter 'Vocabulary' setting from 'All' to 'Filter' may not work properly."
+	@priority = 3
+	test FilterCategoryFilterByVocabularies {
+		task ("Given a user has a Category Filter widget on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Category Filter");
+		}
+
+		task ("When the user filters Category Filter by vocabularies") {
+			Portlet.gotoPortletOptions(
+				portletName = "Category Filter",
+				portletOption = "Configuration");
+
+			IFrame.selectModalFrame();
+
+			Select(
+				key_fieldLabel = "Vocabularies",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Filter");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could see categories on Category Filter") {
+			Portlet.expandTree();
+
+			AssertVisible(
+				key_nodeName = "Category Name",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+	}
+
 	@description = "Search categories in vocabulary."
 	@priority = 4
 	test SearchCategoryInVocabulary {

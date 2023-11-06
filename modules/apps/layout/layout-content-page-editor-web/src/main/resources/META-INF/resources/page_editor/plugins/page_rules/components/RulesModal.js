@@ -93,6 +93,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 			dispatch(
 				updateRule({
 					actions,
+					conditionType,
 					conditions,
 					name,
 					ruleId: editingRule.id,

@@ -5,6 +5,7 @@
 
 import {Action} from '../../plugins/page_rules/components/Action';
 import {Condition} from '../../plugins/page_rules/components/Condition';
+import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
 import {State} from '../../types/State';
 import updateNetwork from '../actions/updateNetwork';
 import updateRuleAction from '../actions/updateRule';
@@ -12,12 +13,19 @@ import RulesService from '../services/RulesService';
 
 type Props = {
 	actions: Action[];
+	conditionType: ConditionType;
 	conditions: Condition[];
 	name: string;
 	ruleId: string;
 };
 
-export default function updateRule({actions, conditions, name, ruleId}: Props) {
+export default function updateRule({
+	actions,
+	conditionType,
+	conditions,
+	name,
+	ruleId,
+}: Props) {
 	return (
 		dispatch: (
 			action: ReturnType<typeof updateNetwork | typeof updateRuleAction>
@@ -28,6 +36,7 @@ export default function updateRule({actions, conditions, name, ruleId}: Props) {
 
 		return RulesService.updateRule({
 			actions,
+			conditionType,
 			conditions,
 			name,
 			onNetworkStatus: dispatch,

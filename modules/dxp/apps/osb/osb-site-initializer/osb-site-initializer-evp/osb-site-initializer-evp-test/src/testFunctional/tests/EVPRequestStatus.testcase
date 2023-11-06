@@ -21,44 +21,50 @@ definition {
 			EVPUtils.addEVPSite();
 		}
 
-		task ("Add Liferay Manager Role, so user can see Requests and Organizations") {
-			for (var userEmailAddress : list "manager@liferay.com,finance@liferay.com") {
+		task ("Add Liferay Manager role, so user can see Requests and Organizations") {
+			for (var userEmailAddress : list "finance@liferay.com,manager@liferay.com") {
 				JSONRole.assignRoleToUser(
 					roleTitle = "Liferay Manager",
 					userEmailAddress = ${userEmailAddress});
 			}
 		}
 
-		task ("Create an organization and request") {
-			EVPUtils.gotoEVP();
-
-			EVPOrganization.goToCreateOrganization();
-
-			EVPOrganization.fillOrganizationForm(
+		task ("Create an organization") {
+			JSONEVP.createOrganization(
+				accountOwnerName = "User 1",
 				bankingInfo = "Bank Test",
 				city = "City Test",
-				contactEmail = "test@liferay.com",
+				contactEmail = "OrganizationTest@liferay.com",
 				contactName = "Contact Test",
 				contactPhone = 12345,
 				country = "Country Test",
-				createRequest = "true",
+				emailAddress = "employee@liferay.com",
+				key_status = "awaitingApprovalOnEvp",
 				organizationName = "Organization Test",
 				organizationSite = "www.test.com.br",
 				smallDescription = "Description Test",
 				state = "State Test",
+				status = "Awaiting Approval On EVP",
 				street = "Street Test",
 				taxId = 12345,
 				zipCode = "12.345-67");
+	}
 
-			EVPRequest.fillRequestForm(
-				grantAmount = 20,
+		task ("Create new request") {
+			JSONEVP.createRequest(
+				emailAddress = "employee@liferay.com",
+				fullName = "Employee User",
+				grantAmount = 10,
 				grantRequestType = "Proposed",
-				organization = "Organization Test",
+				grantRequestTypeKey = "proposed",
+				messageEVPManager = ${messageEVPManager},
+				organizationId = 35152,
 				phoneNumber = 12345,
-				requestBehalf = "Global/Local Poor",
 				requestDescription = "Request Description Test",
-				requestPurposes = "Basic Education",
-				requestType = "Grant");
+				requestStatus = "Awaiting Approval On EVP",
+				requestStatusKey = "awaitingApprovalOnEvp",
+				requestType = "Grant",
+				requestTypeKey = "grant");
 		}
 	}
 
@@ -75,10 +81,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-181773 - Verify that the request status change to 'Awaiting Payment Confirmation' after clicking in 'Approve'"
+	@description = "LPS-181773 - Verify that the request status changes to 'Awaiting Payment Confirmation' after clicking on 'Approve'"
 	@priority = 4
 	test CanFinanceUserChangeStatusAfterApprove {
-		task ("Given that the Manager user go to request page") {
+		task ("Given that the manager user goes to request page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
@@ -88,7 +94,7 @@ definition {
 			EVPNavigator.goToNavItem(navItem = "Request");
 		}
 
-		task ("And the manager user approve the request created") {
+		task ("And the manager user approves the request created") {
 			EVPRequest.goToRequestOption(
 				key_option = "Review",
 				organizationName = "Organization Test");
@@ -98,7 +104,7 @@ definition {
 				typeMessage = "Your request has been approved!");
 		}
 
-		task ("And after logging with finance user, he goes to request page") {
+		task ("When the finance user goes to request page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
 				userLoginFullName = "Finance User");
@@ -108,7 +114,7 @@ definition {
 			EVPNavigator.goToNavItem(navItem = "Request");
 		}
 
-		task ("When the finance user approve the request created") {
+		task ("And the finance user approves the request created") {
 			EVPRequest.goToRequestOption(
 				key_option = "Review",
 				organizationName = "Organization Test");
@@ -118,17 +124,17 @@ definition {
 				typeMessage = "Your request has been approved!");
 		}
 
-		task ("Then the status will be changed to 'Awaiting Payment Confirmation'") {
+		task ("Then the status changes to 'Awaiting Payment Confirmation'") {
 			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting Payment Confirmation");
 		}
 	}
 
-	@description = "LPS-181773 - Verify that the request status change to 'Awaiting More Info From Employee' after clicking in 'Request More Info'"
+	@description = "LPS-181773 - Verify that the request status changes to 'Awaiting More Info From Employee' after clicking on 'Request More Info'"
 	@priority = 4
 	test CanManagerUserChangeStatusAfterNeedMoreInfo {
-		task ("Given that Sign as Manager user and go to request page") {
+		task ("Given the manager user goes to request page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
@@ -148,17 +154,17 @@ definition {
 				typeMessage = "Request more information.");
 		}
 
-		task ("Then the status will be updated to 'Awaiting More Info From Employee'") {
+		task ("Then the status changes to 'Awaiting More Info From Employee'") {
 			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting More Info From Employee");
 		}
 	}
 
-	@description = "LPS-181773 - Verify that the request status change to 'Rejected' after clicking in 'Reject'"
+	@description = "LPS-181773 - Verify that the request status changes to 'Rejected' after clicking on 'Reject'"
 	@priority = 4
 	test CanManagerUserChangeStatusAfterReject {
-		task ("Given that Sign as Manager user and go to request page") {
+		task ("Given the Manager user goes to request page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
@@ -168,7 +174,7 @@ definition {
 			EVPNavigator.goToNavItem(navItem = "Request");
 		}
 
-		task ("When the manager user reject the request created") {
+		task ("When the manager user rejects the request created") {
 			EVPRequest.goToRequestOption(
 				key_option = "Review",
 				organizationName = "Organization Test");
@@ -178,17 +184,17 @@ definition {
 				typeMessage = "Your request has been Reject");
 		}
 
-		task ("Then the status will be updated to 'Rejected'") {
+		task ("Then the status changes to 'Rejected'") {
 			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Rejected");
 		}
 	}
 
-	@description = "LPS-181773 - Verify that the Employee can not see 'Review' button when request are in 'Awaiting Approval On EVP' status"
+	@description = "LPS-181773 - Verify that the Employee can not see 'Review' button when request is in 'Awaiting Approval On Evp' status"
 	@priority = 4
-	test CanNotEmployeeUserSeeReviewInAwaitingApprovalOnEvptatus {
-		task ("Given that the employee user is logged") {
+	test CanNotEmployeeUserSeeReviewInAwaitingApprovalOnEVPStatus {
+		task ("Given that the employee user is logged in") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "employee@liferay.com",
 				userLoginFullName = "Employee User");

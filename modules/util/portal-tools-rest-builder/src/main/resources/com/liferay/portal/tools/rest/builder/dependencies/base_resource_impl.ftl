@@ -125,6 +125,7 @@ public abstract class Base${schemaName}ResourceImpl
 		generatePatchMethods = false
 		getParentBatchJavaMethodSignatures = []
 		postParentBatchJavaMethodSignatures = []
+		postParentByERCBatchJavaMethodSignatures = []
 	/>
 
 	<#list javaMethodSignatures as javaMethodSignature>
@@ -166,6 +167,8 @@ public abstract class Base${schemaName}ResourceImpl
 					<#assign postBatchJavaMethodSignature = javaMethodSignature />
 				</#if>
 			</#if>
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + "ByExternalReferenceCode" + schemaName)>
+			<#assign postParentByERCBatchJavaMethodSignatures = postParentByERCBatchJavaMethodSignatures + [javaMethodSignature] />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "putByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "ByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
@@ -497,10 +500,44 @@ public abstract class Base${schemaName}ResourceImpl
 						</#list>
 					</#if>
 
+					<#if postParentByERCBatchJavaMethodSignatures?has_content>
+						<#list postParentByERCBatchJavaMethodSignatures as parentBatchJavaMethodSignature>
+							<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
+
+							<#if postParentBatchJavaMethodSignatures?has_content>
+								else
+							</#if>
+
+							if (parameters.containsKey("${parentBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
+								<#if stringUtil.equals(javaDataType, parentBatchJavaMethodSignature.returnType)>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${parentBatchJavaMethodSignature.methodName}(
+								<#else>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${parentBatchJavaMethodSignature.methodName}(
+								</#if>
+
+								<@getPOSTBatchJavaMethodParameters
+									javaMethodParameters=parentBatchJavaMethodSignature.javaMethodParameters
+									schemaVarName=schemaVarName
+								/>
+
+								);
+
+								<#if !stringUtil.equals(javaDataType, parentBatchJavaMethodSignature.returnType)>
+										return null;
+									};
+								</#if>
+							}
+
+							<#if parentBatchJavaMethodSignature?has_next>
+								else
+							</#if>
+						</#list>
+					</#if>
+
 					<#if postAssetLibraryBatchJavaMethodSignature??>
 						<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"] />
 
-						<#if postParentBatchJavaMethodSignatures?has_content>
+						<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content>
 							else
 						</#if>
 
@@ -528,7 +565,7 @@ public abstract class Base${schemaName}ResourceImpl
 					<#if postSiteBatchJavaMethodSignature??>
 						<#assign parentParameterNames = parentParameterNames + ["siteId"] />
 
-						<#if postParentBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
+						<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
 							else
 						</#if>
 
@@ -634,7 +671,11 @@ public abstract class Base${schemaName}ResourceImpl
 									</#list>
 									);
 
-									persisted${schemaName} = patch${schemaName}(
+									<#if stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
+										persisted${schemaName} = patch${schemaName}(
+									<#else>
+										patch${schemaName}(
+									</#if>
 
 									<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 										<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
@@ -662,7 +703,9 @@ public abstract class Base${schemaName}ResourceImpl
 									);
 								}
 								catch (NoSuchModelException noSuchModelException) {
-									<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content>
+									<#assign parentParameterNames = [] />
+
+									<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content && !postParentByERCBatchJavaMethodSignatures?has_content>
 										persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
 
 										<@getPOSTBatchJavaMethodParameters
@@ -673,11 +716,33 @@ public abstract class Base${schemaName}ResourceImpl
 										);
 									</#if>
 
-									<#if postParentBatchJavaMethodSignatures?has_content>
+									<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content>
 										<#list postParentBatchJavaMethodSignatures as parentBatchJavaMethodSignature>
 											<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
 
 											if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
+												persisted${schemaName} = ${parentBatchJavaMethodSignature.methodName}(
+
+												<@getPOSTBatchJavaMethodParameters
+													javaMethodParameters=parentBatchJavaMethodSignature.javaMethodParameters
+													schemaVarName=schemaVarName
+												/>
+												);
+
+											}
+											<#if parentBatchJavaMethodSignature?has_next>
+												else
+											</#if>
+										</#list>
+
+										<#list postParentByERCBatchJavaMethodSignatures as parentBatchJavaMethodSignature>
+											<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
+
+											<#if postParentBatchJavaMethodSignatures?has_content>
+												else
+											</#if>
+
+											if (parameters.containsKey("${parentBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
 												persisted${schemaName} = ${parentBatchJavaMethodSignature.methodName}(
 
 												<@getPOSTBatchJavaMethodParameters
@@ -709,7 +774,7 @@ public abstract class Base${schemaName}ResourceImpl
 									<#if postAssetLibraryBatchJavaMethodSignature??>
 										<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"] />
 
-										<#if postParentBatchJavaMethodSignatures?has_content>
+										<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content>
 											else
 										</#if>
 
@@ -726,7 +791,7 @@ public abstract class Base${schemaName}ResourceImpl
 									</#if>
 
 									<#if postSiteBatchJavaMethodSignature??>
-										<#if postParentBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
+										<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
 											else
 										</#if>
 

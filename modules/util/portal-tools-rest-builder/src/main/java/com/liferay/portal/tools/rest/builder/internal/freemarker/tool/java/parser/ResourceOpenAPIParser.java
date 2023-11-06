@@ -357,7 +357,12 @@ public class ResourceOpenAPIParser {
 				parentSchemaName = "";
 			}
 
-			if (methodName.equals("post" + parentSchemaName + schemaName)) {
+			if (methodName.equals("post" + parentSchemaName + schemaName) ||
+				methodName.equals(
+					StringBundler.concat(
+						"post", parentSchemaName, "ByExternalReferenceCode",
+						schemaName))) {
+
 				createStrategies.add("INSERT");
 			}
 			else if ((methodName.equals("putByExternalReferenceCode") ||

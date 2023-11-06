@@ -1649,10 +1649,6 @@
 			<description name="Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface" />
 			<weight>1</weight>
 		</check>
-		<check name="UpgradeJavaFetchAssetCategoryByExternalReferenceCodeCheck">
-			<category name="Upgrade" />
-			<description name="Adds a message about the breaking change made on method `fetchAssetCategoryByExternalReferenceCode` of `AssetCategoryLocalService` and `AssetCategoryLocalServiceUtil` classes." />
-		</check>
 		<check name="UpgradeJavaGetFDSTableSchemaParameterCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method 'getFDSTableSchema' of 'FDSTableSchema'" />

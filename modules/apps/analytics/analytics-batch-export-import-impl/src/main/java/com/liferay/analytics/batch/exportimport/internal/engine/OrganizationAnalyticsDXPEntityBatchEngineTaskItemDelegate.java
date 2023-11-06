@@ -78,8 +78,8 @@ public class OrganizationAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		).where(
 			buildPredicate(OrganizationTable.INSTANCE, companyId, parameters)
 		).limit(
-			pagination.getPage() * pagination.getPageSize(),
-			(pagination.getPage() + 1) * pagination.getPageSize()
+			(pagination.getPage() - 1) * pagination.getPageSize(),
+			pagination.getPage() * pagination.getPageSize()
 		);
 	}
 

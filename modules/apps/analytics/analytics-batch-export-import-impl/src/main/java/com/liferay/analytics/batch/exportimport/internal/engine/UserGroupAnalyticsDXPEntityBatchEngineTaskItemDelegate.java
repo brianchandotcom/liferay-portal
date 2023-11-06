@@ -78,8 +78,8 @@ public class UserGroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		).where(
 			buildPredicate(UserGroupTable.INSTANCE, companyId, parameters)
 		).limit(
-			pagination.getPage() * pagination.getPageSize(),
-			(pagination.getPage() + 1) * pagination.getPageSize()
+			(pagination.getPage() - 1) * pagination.getPageSize(),
+			pagination.getPage() * pagination.getPageSize()
 		);
 	}
 

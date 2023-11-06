@@ -4,15 +4,21 @@ definition {
 	macro addDataSetView(dataSetViewName = null) {
 		PageEditor.gotoConfiguration(fragmentName = "Data Set");
 
-		Click.javaScriptClick(locator1 = "DataSet#SELECT_DATA_SET_VIEW");
+		Click.mouseOverClick(
+			ariaLabel = "Select Data Set View",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		if (IsElementPresent(key_menuItem = "Select Data Set View...", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			MenuItem.click(menuItem = "Select Data Set View...");
+		}
 
 		SelectFrame(
 			key_title = "Select",
 			locator1 = "IFrame#MODAL_ANY");
 
-		Click.clickAtNotVisible(
-			key_radioOption = ${dataSetViewName},
-			locator1 = "CommerceEntry#RADIO_BUTTON");
+		Click.mouseOverClick(
+			key_itemName = ${dataSetViewName},
+			locator1 = "DataSet#NAME_OF_VIEWS");
 
 		Button.clickSave();
 	}

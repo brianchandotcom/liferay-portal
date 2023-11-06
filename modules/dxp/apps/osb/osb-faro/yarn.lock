@@ -9759,14 +9759,6 @@ metal-position@^2.1.0:
     metal "^2.0.0"
     metal-dom "^2.0.0"
 
-metal-position@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/metal-position/-/metal-position-2.1.2.tgz#3643a7f83a6b5a39061841858b058935390bd13c"
-  integrity sha512-XvE1AQoySYFGG0sc3unZWfK97UKOvHvg/asq2k1Oh+vs1NGD9PhhGBQKiD0/Rix85ICHEeLUVzS0WGQr5wdapQ==
-  dependencies:
-    metal "^2.16.6"
-    metal-dom "^2.16.6"
-
 metal-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/metal-promise/-/metal-promise-2.0.1.tgz#28ff43210e4c69e5fff51dbf201e4ae2fe6f83d5"

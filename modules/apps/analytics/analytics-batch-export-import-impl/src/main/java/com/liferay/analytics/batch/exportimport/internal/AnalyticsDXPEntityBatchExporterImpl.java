@@ -10,6 +10,7 @@ import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConsta
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -87,6 +88,9 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			Instant instant = nextFireDate.toInstant();
 
 			ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("UTC"));
+
+			_dispatchLogLocalService.deleteDispatchLogs(
+				dispatchTrigger.getDispatchTriggerId());
 
 			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
 
@@ -169,6 +173,9 @@ public class AnalyticsDXPEntityBatchExporterImpl
 		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
 	)
 	private Destination _destination;
+
+	@Reference
+	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

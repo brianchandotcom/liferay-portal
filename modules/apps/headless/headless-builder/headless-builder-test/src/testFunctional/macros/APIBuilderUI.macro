@@ -127,6 +127,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "API Builder");
 
+		WaitForElementPresent(
+			key_objectLabel = "API Builder",
+			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+
 		Click(
 			key_title = ${key_title},
 			locator1 = "APIBuilder#DROPDOWN_MENU");
@@ -361,6 +365,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "API Builder");
 
+		WaitForElementPresent(
+			key_objectLabel = "API Builder",
+			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+
 		Click(
 			key_title = ${key_title},
 			locator1 = "APIBuilder#DROPDOWN_MENU");
@@ -392,6 +400,8 @@ definition {
 		APIBuilderUI.goToEditAPIApplicationPage(key_title = ${key_title});
 
 		Click.pauseClickAt(locator1 = "APIBuilder#PUBLISH_BUTTON");
+
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Default summary"

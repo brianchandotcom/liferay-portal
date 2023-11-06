@@ -247,7 +247,7 @@ public class DBInspector {
 	public boolean hasTable(String tableName, boolean caseSensitive)
 		throws Exception {
 
-		return _hasTable(tableName, "TABLE", caseSensitive);
+		return _hasElement(tableName, "TABLE", caseSensitive);
 	}
 
 	public boolean hasView(String viewName) throws Exception {
@@ -257,7 +257,7 @@ public class DBInspector {
 	public boolean hasView(String viewName, boolean caseSensitive)
 		throws Exception {
 
-		return _hasTable(viewName, "VIEW", caseSensitive);
+		return _hasElement(viewName, "VIEW", caseSensitive);
 	}
 
 	public boolean isControlTable(String tableName) {
@@ -402,7 +402,7 @@ public class DBInspector {
 			normalizeName(tableName, databaseMetaData), columnName);
 	}
 
-	private boolean _hasTable(
+	private boolean _hasElement(
 			String elementName, String elementType, boolean caseSensitive)
 		throws Exception {
 

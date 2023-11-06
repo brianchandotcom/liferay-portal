@@ -748,12 +748,12 @@ public class SourceFormatter {
 					}
 
 					if (trimmedLine.startsWith("## What") &&
-						(trimmedLine.length() > 7)) {
+						(trimmedLine.length() == 7)) {
 
 						throw new Exception(
 							StringBundler.concat(
 								"Found formatting issues:\n", "There should ",
-								"be a line break after '## What'"));
+								"be file path after '## What'"));
 					}
 
 					previousLine = trimmedLine;

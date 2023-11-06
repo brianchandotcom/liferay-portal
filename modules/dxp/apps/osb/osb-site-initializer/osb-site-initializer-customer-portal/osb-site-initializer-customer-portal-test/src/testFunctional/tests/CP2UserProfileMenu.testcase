@@ -35,6 +35,24 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-198009 | Test Summary: Assert that when the user clicks on Account Settings in top right corner, the user is redirected to the login page"
+	@priority = 3
+	test AssertThatClickOnAccountSettingsIsRedirectedToLoginPage {
+		task ("Given that the User goes to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When the User click on Account Settings button") {
+			CP2Utils.selectProfileMenuOption(dropdownItem = "Account Settings");
+
+			Navigator.selectSpecificWindow(windowTitle = "liferay_default - Sign In");
+		}
+
+		task ("Then the user is redirection to login okta page") {
+			CP2Utils.viewLoginOktaPage();
+		}
+	}
+
 	@description = "Automation ID: LPS-198008 | Test Summary: Assert that the user can out logged of the customer portal site"
 	@priority = 3
 	test AssertThatUserCanOutLoggedOfSite {

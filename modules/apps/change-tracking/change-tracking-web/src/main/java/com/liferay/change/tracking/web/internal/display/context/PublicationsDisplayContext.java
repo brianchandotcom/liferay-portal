@@ -455,7 +455,7 @@ public class PublicationsDisplayContext {
 				).buildString(),
 				"times-circle", "delete",
 				_language.get(_httpServletRequest, "delete"), "get", "delete",
-				"async"),
+				null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse

@@ -2,7 +2,7 @@ import Constants, {DataSourceTypes, EntityTypes} from '../util/constants';
 import pathToRegexp from 'path-to-regexp';
 import Uri from 'metal-uri';
 import {invert, isEmpty, isString, memoize} from 'lodash';
-import {matchPath, useLocation} from 'react-router-dom';
+import {matchPath} from 'react-router-dom';
 
 const {cur: defaultCur, orderDefault} = Constants.pagination;
 
@@ -521,13 +521,4 @@ export function resetPaginationParams(
 
 export function reloadPage() {
 	window.location.reload();
-}
-
-/**
- * Custom hook to get a specific query param
- * @param {string} paramName
- */
-export function useRouteQuery(paramName) {
-	const query = new URLSearchParams(useLocation().search);
-	return query.get(paramName);
 }

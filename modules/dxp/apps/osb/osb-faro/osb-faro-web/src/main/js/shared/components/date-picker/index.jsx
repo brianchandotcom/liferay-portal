@@ -15,6 +15,7 @@ import {sub} from 'shared/util/lang';
 export default class DatePicker extends React.Component {
 	static defaultProps = {
 		disabled: false,
+		displayLabel: true,
 		minDate: moment().subtract(100, 'years'),
 		onSelect: noop,
 		showTimeSelector: false
@@ -30,6 +31,7 @@ export default class DatePicker extends React.Component {
 			}
 		},
 		disabled: PropTypes.bool,
+		displayLabel: PropTypes.bool,
 		maxDate: PropTypes.instanceOf(moment),
 		maxRange: PropTypes.number,
 		minDate: PropTypes.instanceOf(moment),
@@ -173,6 +175,7 @@ export default class DatePicker extends React.Component {
 				className,
 				date,
 				disabled,
+				displayLabel,
 				maxDate,
 				maxRange,
 				minDate,
@@ -193,7 +196,7 @@ export default class DatePicker extends React.Component {
 
 		return (
 			<div aria-disabled={disabled} className={getCN(classes, className)}>
-				{isRange(date) && (
+				{displayLabel && isRange(date) && (
 					<label>
 						{date.start && !date.end
 							? Liferay.Language.get('end-date')

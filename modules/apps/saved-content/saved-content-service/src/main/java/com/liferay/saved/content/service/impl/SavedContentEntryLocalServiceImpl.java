@@ -40,8 +40,10 @@ public class SavedContentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		long classNameId = _classNameLocalService.getClassNameId(className);
+
 		_validate(
-			serviceContext.getScopeGroupId(), userId, className, classPK);
+			serviceContext.getScopeGroupId(), userId, classNameId, classPK);
 
 		long savedContentEntryId = counterLocalService.increment(
 			SavedContentEntry.class.getName());
@@ -61,8 +63,7 @@ public class SavedContentEntryLocalServiceImpl
 		savedContentEntry.setCreateDate(date);
 		savedContentEntry.setModifiedDate(date);
 
-		savedContentEntry.setClassNameId(
-			_classNameLocalService.getClassNameId(className));
+		savedContentEntry.setClassNameId(classNameId);
 		savedContentEntry.setClassPK(classPK);
 
 		savedContentEntry = savedContentEntryPersistence.update(
@@ -103,13 +104,12 @@ public class SavedContentEntryLocalServiceImpl
 	}
 
 	private void _validate(
-			long groupId, long userId, String className, long classPK)
+			long groupId, long userId, long classNameId, long classPK)
 		throws DuplicateSavedContentEntryException {
 
 		SavedContentEntry savedContentEntry =
 			savedContentEntryPersistence.fetchByG_U_C_C(
-				groupId, userId,
-				_classNameLocalService.getClassNameId(className), classPK);
+				groupId, userId, classNameId, classPK);
 
 		if (savedContentEntry != null) {
 			throw new DuplicateSavedContentEntryException();

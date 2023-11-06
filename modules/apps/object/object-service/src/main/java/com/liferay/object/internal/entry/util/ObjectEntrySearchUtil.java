@@ -103,11 +103,7 @@ public class ObjectEntrySearchUtil {
 		if (dbType.equals(ObjectFieldConstants.DB_TYPE_INTEGER) ||
 			dbType.equals(ObjectFieldConstants.DB_TYPE_LONG)) {
 
-			long valueLong = GetterUtil.getLong(value);
-
-			if (valueLong != 0L) {
-				return column.eq(valueLong);
-			}
+			return column.eq(GetterUtil.getLong(value));
 		}
 		else if (dbType.equals(ObjectFieldConstants.DB_TYPE_STRING)) {
 			return column.eq(value);

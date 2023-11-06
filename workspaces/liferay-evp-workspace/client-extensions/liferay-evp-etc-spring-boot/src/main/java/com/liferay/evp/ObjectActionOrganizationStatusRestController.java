@@ -104,7 +104,7 @@ public class ObjectActionOrganizationStatusRestController
 		}
 
 		put(
-			itemsJSONArray.toString(), jwt,
+			itemsJSONArray, jwt,
 			uriBuilder -> uriBuilder.path(
 				"/o/c/evprequests/batch"
 			).build());

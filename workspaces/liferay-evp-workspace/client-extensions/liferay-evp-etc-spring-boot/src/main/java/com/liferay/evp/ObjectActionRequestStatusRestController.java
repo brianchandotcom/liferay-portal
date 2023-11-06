@@ -32,10 +32,10 @@ public class ObjectActionRequestStatusRestController
 	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
-		JSONObject evpRequestJSONObject = new JSONObject(json);
+		JSONObject jsonObject = new JSONObject(json);
 
 		JSONObject objectEntryDTOEVPRequestJSONObject =
-			evpRequestJSONObject.getJSONObject("objectEntryDTOEVPRequest");
+			jsonObject.getJSONObject("objectEntryDTOEVPRequest");
 
 		JSONObject propertiesJSONObject =
 			objectEntryDTOEVPRequestJSONObject.getJSONObject("properties");
@@ -49,25 +49,24 @@ public class ObjectActionRequestStatusRestController
 				"/o/c/evporganizations/" + evpOrganizationId
 			).build());
 
-		String evpOrganizationStatus = evpOrganizationJSONObject.getJSONObject(
+		String organizationStatus = evpOrganizationJSONObject.getJSONObject(
 			"organizationStatus"
 		).getString(
 			"key"
 		);
 
-		if (evpOrganizationStatus.equals("awaitingApprovalOnEVP")) {
-			HashMap<String, HashMap<String, String>> map =
-				HashMapBuilder.<String, HashMap<String, String>>put(
-					"requestStatus",
-					HashMapBuilder.put(
-						"key", "awaitOrganizationReview"
-					).put(
-						"name", "Awaiting Organization Review"
-					).build()
-				).build();
-
+		if (organizationStatus.equals("awaitingApprovalOnEVP")) {
 			put(
-				new JSONObject(map), jwt,
+				new JSONObject(
+					HashMapBuilder.<String, HashMap<String, String>>put(
+						"requestStatus",
+						HashMapBuilder.put(
+							"key", "awaitOrganizationReview"
+						).put(
+							"name", "Awaiting Organization Review"
+						).build()
+					).build()),
+				jwt,
 				uriBuilder -> uriBuilder.path(
 					"/o/c/evprequests/" +
 						objectEntryDTOEVPRequestJSONObject.getLong("id")

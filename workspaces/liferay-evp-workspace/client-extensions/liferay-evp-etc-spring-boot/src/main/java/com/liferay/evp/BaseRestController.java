@@ -26,7 +26,7 @@ public abstract class BaseRestController {
 
 	protected JSONObject get(Jwt jwt, Function<UriBuilder, URI> uriFunction) {
 		return new JSONObject(
-			getWebClient(
+			_getWebClient(
 			).get(
 			).uri(
 				uriBuilder -> uriFunction.apply(uriBuilder)
@@ -40,25 +40,10 @@ public abstract class BaseRestController {
 			).block());
 	}
 
-	protected WebClient getWebClient() {
-		return WebClient.builder(
-		).baseUrl(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-		).exchangeStrategies(
-			ExchangeStrategies.builder(
-			).codecs(
-				clientCodecConfigurer -> clientCodecConfigurer.defaultCodecs(
-				).maxInMemorySize(
-					5 * 1024 * 1024
-				)
-			).build()
-		).build();
-	}
-
 	protected void put(
 		Object bodyValue, Jwt jwt, Function<UriBuilder, URI> uriFunction) {
 
-		getWebClient(
+		_getWebClient(
 		).put(
 		).uri(
 			uriBuilder -> uriFunction.apply(uriBuilder)
@@ -81,5 +66,20 @@ public abstract class BaseRestController {
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	protected String lxcDXPServerProtocol;
+
+	private WebClient _getWebClient() {
+		return WebClient.builder(
+		).baseUrl(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
+		).exchangeStrategies(
+			ExchangeStrategies.builder(
+			).codecs(
+				clientCodecConfigurer -> clientCodecConfigurer.defaultCodecs(
+				).maxInMemorySize(
+					5 * 1024 * 1024
+				)
+			).build()
+		).build();
+	}
 
 }

@@ -5,104 +5,64 @@
 
 import {addParams, fetch, navigate, openModal} from 'frontend-js-web';
 
-export default function propsTransformer({additionalProps, ...props}) {
-	const {signInURL} = additionalProps;
+async function fetchModalContent(url) {
+	try {
+		const modalSignInURL = addParams('windowState=exclusive', url);
 
-	const signInLink = document.querySelector('.sign-in > div > button');
+		const response = await fetch(modalSignInURL);
+		const responseText = await response.text();
 
-	const modalSignInURL = addParams('windowState=exclusive', signInURL);
-
-	const setModalContent = function (html) {
-		const modalBody = document.querySelector('.liferay-modal-body');
-
-		if (modalBody) {
-			const fragment = document
-				.createRange()
-				.createContextualFragment(html);
-
-			modalBody.innerHTML = '';
-
-			modalBody.appendChild(fragment);
+		return responseText;
+	}
+	catch (error) {
+		if (process.env.NODE_ENV === 'development') {
+			console.error(error);
 		}
-	};
 
-	let loading = false;
-	let html = '';
-	let {redirect} = additionalProps;
-	let modalOpen = false;
+		return '';
+	}
+}
 
-	const fetchModalSignIn = function () {
-		if (loading || html) {
+export default function propsTransformer({
+	additionalProps: {redirect, signInURL},
+	...props
+}) {
+	const onClick = async () => {
+		if (redirect) {
+			navigate(signInURL);
+
 			return;
 		}
 
-		loading = true;
+		const modalContentPromise = fetchModalContent(signInURL);
 
-		fetch(modalSignInURL)
-			.then((response) => {
-				return response.text();
-			})
-			.then((response) => {
-				if (!loading) {
-					return;
+		openModal({
+			bodyHTML: '<span class="loading-animation"></span>',
+			containerProps: {className: ''},
+			onOpen: async () => {
+				const modalBody = document.querySelector('.liferay-modal-body');
+
+				try {
+					const modalContent = await modalContentPromise;
+
+					if (modalBody && modalContent) {
+						modalBody.innerHTML = modalContent;
+					}
+					else {
+						navigate(signInURL);
+					}
 				}
-
-				loading = false;
-
-				if (!response) {
-					redirect = true;
-
-					return;
+				catch (error) {
+					navigate(signInURL);
 				}
-
-				html = response;
-
-				if (modalOpen) {
-					setModalContent(response);
-				}
-			})
-			.catch(() => {
-				redirect = true;
-			});
+			},
+			size: 'md',
+			title: Liferay.Language.get('sign-in'),
+		});
 	};
 
 	return {
 		...props,
-		onClick() {
-			fetchModalSignIn();
-
-			if (redirect) {
-				navigate(signInURL);
-
-				return;
-			}
-
-			if (signInLink) {
-				openModal({
-					bodyHTML: html ? html : '<span class="loading-animation">',
-					containerProps: {
-						className: '',
-					},
-					onClose() {
-						loading = false;
-						redirect = false;
-						html = '';
-						modalOpen = false;
-					},
-					onOpen() {
-						modalOpen = true;
-
-						if (
-							html &&
-							document.querySelector('.loading-animation')
-						) {
-							setModalContent(html);
-						}
-					},
-					size: 'md',
-					title: Liferay.Language.get('sign-in'),
-				});
-			}
-		},
+		onClick,
 	};
 }

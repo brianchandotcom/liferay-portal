@@ -377,29 +377,31 @@ public class LiferayContextController extends ContextController {
 
 		_checkShutdown();
 
-		String prefix = (String)serviceReference.getProperty(
+		String resourcePrefix = (String)serviceReference.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
 
-		if (prefix == null) {
+		if (resourcePrefix == null) {
 			throw new IllegalArgumentException("Prefix is null");
 		}
 
-		if (prefix.endsWith(Const.SLASH) && !prefix.equals(Const.SLASH)) {
+		if (resourcePrefix.endsWith(Const.SLASH) &&
+			!resourcePrefix.equals(Const.SLASH)) {
+
 			throw new IllegalArgumentException(
-				"Invalid prefix \"" + prefix + "\"");
+				"Invalid prefix \"" + resourcePrefix + "\"");
 		}
 
-		String[] servletPatterns = ArrayUtil.toStringArray(
+		String[] resourcePatterns = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				serviceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN)));
 
-		if (servletPatterns.length < 1) {
+		if (resourcePatterns.length < 1) {
 			throw new IllegalArgumentException("Patterns must contain a value");
 		}
 
-		for (String pattern : servletPatterns) {
-			ContextController.checkPattern(pattern);
+		for (String resourcePattern : resourcePatterns) {
+			ContextController.checkPattern(resourcePattern);
 		}
 
 		Bundle bundle = serviceReference.getBundle();
@@ -407,22 +409,20 @@ public class LiferayContextController extends ContextController {
 		ServletContextHelper servletContextHelper = _getServletContextHelper(
 			bundle);
 
-		long serviceId = (long)serviceReference.getProperty(
-			Constants.SERVICE_ID);
-
 		ResourceDTO resourceDTO = new ResourceDTO();
 
-		resourceDTO.patterns = _sort(servletPatterns);
-		resourceDTO.prefix = prefix;
-		resourceDTO.serviceId = serviceId;
+		resourceDTO.patterns = _sort(resourcePatterns);
+		resourceDTO.prefix = resourcePrefix;
+		resourceDTO.serviceId = (long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
 		resourceDTO.servletContextId = _contextServiceId;
 
 		ResourceRegistration resourceRegistration = new ResourceRegistration(
 			new ContextController.ServiceHolder<>(
 				new ResourceServlet(
-					prefix, servletContextHelper,
+					resourcePrefix, servletContextHelper,
 					AccessController.getContext()),
-				bundle, serviceId,
+				bundle, resourceDTO.serviceId,
 				GetterUtil.getInteger(
 					serviceReference.getProperty(Constants.SERVICE_RANKING))),
 			resourceDTO, servletContextHelper, this, null);
@@ -817,59 +817,59 @@ public class LiferayContextController extends ContextController {
 	private FilterDTO _createFilterDTO(
 		ServiceReference<Filter> filterServiceReference, Filter filter) {
 
-		String[] servletPatterns = ArrayUtil.toStringArray(
+		String[] filterPatterns = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN)));
-		String[] regexes = ArrayUtil.toStringArray(
+		String[] filterRegexes = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_REGEX)));
-		String[] servletNames = ArrayUtil.toStringArray(
+		String[] filterServletNames = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET)));
 
-		if ((servletPatterns.length == 0) && (regexes.length == 0) &&
-			(servletNames.length == 0)) {
+		if ((filterPatterns.length == 0) && (filterRegexes.length == 0) &&
+			(filterServletNames.length == 0)) {
 
 			throw new IllegalArgumentException(
 				"Patterns, regex, and servlet names must contain a value");
 		}
 
-		for (String pattern : servletPatterns) {
-			ContextController.checkPattern(pattern);
+		for (String filterPattern : filterPatterns) {
+			ContextController.checkPattern(filterPattern);
 		}
 
-		String[] dispatchers = ArrayUtil.toStringArray(
+		String[] filterDispatcherTypes = ArrayUtil.toStringArray(
 			StringPlus.asList(
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.
 						HTTP_WHITEBOARD_FILTER_DISPATCHER)));
 
-		if (dispatchers.length == 0) {
-			dispatchers = _DEFAULT_DISPATCHERS;
+		if (filterDispatcherTypes.length == 0) {
+			filterDispatcherTypes = _DEFAULT_DISPATCHERS;
 		}
 
-		for (String dispatcher : dispatchers) {
+		for (String filterDispatcherType : filterDispatcherTypes) {
 			try {
-				DispatcherType.valueOf(dispatcher);
+				DispatcherType.valueOf(filterDispatcherType);
 			}
 			catch (IllegalArgumentException illegalArgumentException) {
 				throw new IllegalArgumentException(
-					"Invalid dispatcher \"" + dispatcher + "\"",
+					"Invalid dispatcher \"" + filterDispatcherType + "\"",
 					illegalArgumentException);
 			}
 		}
 
-		Class<?> clazz = filter.getClass();
+		Class<?> filterClass = filter.getClass();
 
 		FilterDTO filterDTO = new FilterDTO();
 
 		filterDTO.asyncSupported = ServiceProperties.parseBoolean(
 			filterServiceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED);
-		filterDTO.dispatcher = _sort(dispatchers);
+		filterDTO.dispatcher = _sort(filterDispatcherTypes);
 		filterDTO.initParams = ServiceProperties.parseInitParams(
 			filterServiceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
@@ -878,13 +878,13 @@ public class LiferayContextController extends ContextController {
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
 				filter),
-			clazz.getName());
-		filterDTO.patterns = _sort(servletPatterns);
-		filterDTO.regexs = regexes;
+			filterClass.getName());
+		filterDTO.patterns = _sort(filterPatterns);
+		filterDTO.regexs = filterRegexes;
 		filterDTO.serviceId = (long)filterServiceReference.getProperty(
 			Constants.SERVICE_ID);
 		filterDTO.servletContextId = _contextServiceId;
-		filterDTO.servletNames = _sort(servletNames);
+		filterDTO.servletNames = _sort(filterServletNames);
 
 		return filterDTO;
 	}
@@ -969,26 +969,24 @@ public class LiferayContextController extends ContextController {
 
 			errorPageDTO.asyncSupported = servletDTO.asyncSupported;
 
-			Set<Long> errorCodes = new LinkedHashSet<>();
+			Set<Long> httpErrorCodes = new LinkedHashSet<>();
 
-			List<String> exceptions = new ArrayList<>();
+			List<String> exceptionErrorPages = new ArrayList<>();
 
-			for (String errorPage : servletErrorPages) {
+			for (String servletErrorPage : servletErrorPages) {
 				try {
-					if (Objects.equals(errorPage, "4xx")) {
+					if (Objects.equals(servletErrorPage, "4xx")) {
 						for (long code = 400; code < 500; code++) {
-							errorCodes.add(code);
+							httpErrorCodes.add(code);
 						}
 					}
-					else if (Objects.equals(errorPage, "5xx")) {
+					else if (Objects.equals(servletErrorPage, "5xx")) {
 						for (long code = 500; code < 600; code++) {
-							errorCodes.add(code);
+							httpErrorCodes.add(code);
 						}
 					}
 					else {
-						long code = Long.parseLong(errorPage);
-
-						errorCodes.add(code);
+						httpErrorCodes.add(Long.parseLong(servletErrorPage));
 					}
 				}
 				catch (NumberFormatException numberFormatException) {
@@ -996,13 +994,14 @@ public class LiferayContextController extends ContextController {
 						_log.debug(numberFormatException);
 					}
 
-					exceptions.add(errorPage);
+					exceptionErrorPages.add(servletErrorPage);
 				}
 			}
 
 			errorPageDTO.errorCodes = TransformUtil.transformToLongArray(
-				errorCodes, errorCode -> errorCode);
-			errorPageDTO.exceptions = exceptions.toArray(new String[0]);
+				httpErrorCodes, errorCode -> errorCode);
+			errorPageDTO.exceptions = exceptionErrorPages.toArray(
+				new String[0]);
 			errorPageDTO.initParams = servletDTO.initParams;
 			errorPageDTO.name = servletDTO.name;
 			errorPageDTO.serviceId = servletDTO.serviceId;

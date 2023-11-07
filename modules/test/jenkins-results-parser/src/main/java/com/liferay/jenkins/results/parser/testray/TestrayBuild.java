@@ -220,9 +220,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		URL topLevelBuildReportURL = getTopLevelBuildReportURL();
 
-		if ((topLevelBuildReportURL == null) ||
-			!JenkinsResultsParserUtil.exists(topLevelBuildReportURL)) {
-
+		if (topLevelBuildReportURL == null) {
 			return null;
 		}
 
@@ -239,12 +237,24 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		}
 
 		try {
-			return new URL(
+			URL url = new URL(
 				JenkinsResultsParserUtil.combine(
 					"http://", matcher.group("topLevelMasterHostname"),
 					"/userContent/jobs/", matcher.group("topLevelJobName"),
 					"/builds/", matcher.group("topLevelBuildNumber"),
 					"/build-report.json.gz"));
+
+			if (JenkinsResultsParserUtil.exists(url)) {
+				return url;
+			}
+
+			url = new URL(matcher.group());
+
+			if (JenkinsResultsParserUtil.exists(url)) {
+				return url;
+			}
+
+			return null;
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

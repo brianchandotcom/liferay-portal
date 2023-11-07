@@ -724,10 +724,7 @@ public class SourceFormatter {
 
 				if ((whatPosition > whyPosition) ||
 					((alternativesPosition != -1) &&
-					 ((whatPosition > breakingChangeReport.indexOf(
-						 "## Alternatives")) ||
-					  (whyPosition > breakingChangeReport.indexOf(
-						  "## Alternatives"))))) {
+					 (whyPosition > alternativesPosition))) {
 
 					throw new Exception(
 						StringBundler.concat(
@@ -739,7 +736,7 @@ public class SourceFormatter {
 				String[] lines = breakingChangeReport.split("\n");
 
 				for (String line : lines) {
-					String trimmedLine = StringUtil.trimLeading(lines[i]);
+					String trimmedLine = StringUtil.trimLeading(line);
 
 					if (trimmedLine.startsWith("## What") &&
 						(trimmedLine.length() == 7)) {

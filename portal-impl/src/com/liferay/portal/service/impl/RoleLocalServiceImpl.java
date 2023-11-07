@@ -333,7 +333,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			String description = LocalizationUtil.getXml(
 				Collections.singletonMap(
 					defaultLanguageId,
-					_getPropertySystemDescription(name, "system.role.")),
+					_getPropertyDescription(name, "system.role.")),
 				defaultLanguageId, "Description");
 
 			int type = RoleConstants.TYPE_REGULAR;
@@ -351,8 +351,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			String description = LocalizationUtil.getXml(
 				Collections.singletonMap(
 					defaultLanguageId,
-					_getPropertySystemDescription(
-						name, "system.organization.role.")),
+					_getPropertyDescription(name, "system.organization.role.")),
 				defaultLanguageId, "Description");
 
 			int type = RoleConstants.TYPE_ORGANIZATION;
@@ -369,7 +368,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			String description = LocalizationUtil.getXml(
 				Collections.singletonMap(
 					defaultLanguageId,
-					_getPropertySystemDescription(name, "system.site.role.")),
+					_getPropertyDescription(name, "system.site.role.")),
 				defaultLanguageId, "Description");
 
 			int type = RoleConstants.TYPE_SITE;
@@ -2135,18 +2134,18 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		}
 	}
 
-	private String _getPropertySystemDescription(String name, String property) {
-		String propertySystemDescription = PropsUtil.get(
+	private String _getPropertyDescription(String name, String property) {
+		String propertyDescription = PropsUtil.get(
 			StringBundler.concat(
 				property,
 				StringUtil.replace(name, CharPool.SPACE, CharPool.PERIOD),
 				".description"));
 
-		if (Validator.isNull(propertySystemDescription)) {
+		if (Validator.isNull(propertyDescription)) {
 			return StringPool.BLANK;
 		}
 
-		return propertySystemDescription;
+		return propertyDescription;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

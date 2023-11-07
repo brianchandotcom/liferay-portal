@@ -2,6 +2,9 @@
 	"cpu": 1.0,
 	"env": {
 		"ANONYMOUS_LOGIN": "false",
+		"ARTEMIS_CLUSTER_PASSWORD": "artemis-cluster",
+		"ARTEMIS_CLUSTER_SLAVE": "false",
+		"ARTEMIS_CLUSTER_USER": "artemis-cluster",
 		"ARTEMIS_PASSWORD": "artemis",
 		"ARTEMIS_USER": "artemis"
 	},

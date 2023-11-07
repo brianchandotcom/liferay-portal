@@ -30,11 +30,14 @@ public class IndexableActionableDynamicQueryTest {
 
 	@Before
 	public void setUp() {
+		_indexerRegistryServiceRegistration = _bundleContext.registerService(
+			IndexerRegistry.class, Mockito.mock(IndexerRegistry.class), null);
 		_indexWriterHelperServiceRegistration = _bundleContext.registerService(
 			IndexWriterHelper.class, indexWriterHelper, null);
-		_serviceRegistration = _bundleContext.registerService(
-			PortalExecutorManager.class,
-			Mockito.mock(PortalExecutorManager.class), null);
+		_portalExecutorManagerServiceRegistration =
+			_bundleContext.registerService(
+				PortalExecutorManager.class,
+				Mockito.mock(PortalExecutorManager.class), null);
 
 		indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
@@ -45,16 +48,13 @@ public class IndexableActionableDynamicQueryTest {
 		).thenReturn(
 			Mockito.mock(Indexer.class)
 		);
-
-		_indexerRegistryServiceRegistration = _bundleContext.registerService(
-			IndexerRegistry.class, Mockito.mock(IndexerRegistry.class), null);
 	}
 
 	@After
 	public void tearDown() {
+		_portalExecutorManagerServiceRegistration.unregister();
 		_indexWriterHelperServiceRegistration.unregister();
 		_indexerRegistryServiceRegistration.unregister();
-		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -102,11 +102,12 @@ public class IndexableActionableDynamicQueryTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static ServiceRegistration<IndexWriterHelper>
-		_indexWriterHelperServiceRegistration;
 
 	private ServiceRegistration<IndexerRegistry>
 		_indexerRegistryServiceRegistration;
-	private ServiceRegistration<?> _serviceRegistration;
+	private ServiceRegistration<IndexWriterHelper>
+		_indexWriterHelperServiceRegistration;
+	private ServiceRegistration<PortalExecutorManager>
+		_portalExecutorManagerServiceRegistration;
 
 }

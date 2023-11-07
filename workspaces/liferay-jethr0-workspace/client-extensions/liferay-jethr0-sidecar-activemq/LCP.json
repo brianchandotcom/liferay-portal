@@ -16,10 +16,6 @@
 			"port": 8161
 		}
 	},
-	"loadBalancer": {
-		"cdn": false,
-		"targetPort": 8161
-	},
 	"memory": 1024,
 	"ports": [
 		{

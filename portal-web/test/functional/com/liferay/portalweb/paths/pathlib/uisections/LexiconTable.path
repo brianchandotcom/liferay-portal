@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_BUTTON</td>
-	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'action-column')]//button[normalize-space()='${key_text}']</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'action-column')]//button[normalize-space()='${key_text}'] | //td[normalize-space(text())='${key_tableEntry}']//following-sibling::td//button[normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

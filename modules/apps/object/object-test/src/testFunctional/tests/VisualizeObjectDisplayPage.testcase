@@ -816,7 +816,7 @@ definition {
 		Select(
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "Display Page URL");
+			value1 = "Default");
 
 		PageEditor.publish();
 

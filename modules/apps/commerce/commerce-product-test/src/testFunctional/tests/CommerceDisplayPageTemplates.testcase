@@ -864,7 +864,7 @@ definition {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
 				contentType = "Product",
 				displayPageName = "Test Commerce Product Display Page Template",
-				fieldsList = "Display Page URL,Display Date,Expiration Date",
+				fieldsList = "Default,Display Date,Expiration Date",
 				fragmentName = "Heading",
 				groupName = "Minium",
 				menuItem = "Mark as Default",

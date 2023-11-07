@@ -719,7 +719,7 @@ definition {
 		task ("Add From Content Field link to Container") {
 			PageEditor.editLayoutContainer(
 				entryTitle = "Web Content Title",
-				field = "Display Page URL",
+				field = "Default",
 				link = "Mapped URL",
 				navItem = "Web Content",
 				panel = "General");

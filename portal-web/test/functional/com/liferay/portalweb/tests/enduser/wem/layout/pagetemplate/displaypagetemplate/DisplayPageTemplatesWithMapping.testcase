@@ -622,7 +622,7 @@ definition {
 		task ("Map multiple fields to editable fields") {
 			var n = 1;
 
-			for (var fieldName : list "Title,Content,Author Name,Display Page URL,Tags") {
+			for (var fieldName : list "Title,Content,Author Name,Default,Tags") {
 				PageEditorMapping.mapEditableTextToField(
 					contributed = "false",
 					field = ${fieldName},
@@ -753,7 +753,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(
 				entryTitle = ${objectEntryId},
-				field = "Display Page URL",
+				field = "Default",
 				navItem = "${labelName}s");
 
 			PageEditor.publish();
@@ -875,7 +875,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(
 				entryTitle = ${objectEntryId},
-				field = "Display Page URL",
+				field = "Default",
 				navItem = "${labelName}2s");
 
 			PageEditor.publish();
@@ -1006,7 +1006,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(
 				entryTitle = ${objectEntryId},
-				field = "Display Page URL",
+				field = "Default",
 				navItem = "${labelName}2s");
 
 			PageEditor.publish();
@@ -1142,7 +1142,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(
 				entryTitle = ${objectEntryId1},
-				field = "Display Page URL",
+				field = "Default",
 				navItem = "${labelName}1s");
 
 			PageEditor.publish();
@@ -1557,7 +1557,7 @@ definition {
 			AssertElementPresent(
 				key_fieldLabel = "Field",
 				key_groupLabel = "Display Page",
-				key_value = "Display Page URL",
+				key_value = "Default",
 				locator1 = "Select#GROUPED_SELECT_VALUE");
 
 			for (var field : list "All Categories,Topic,Tags") {
@@ -1621,7 +1621,7 @@ definition {
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
-			for (var field : list "Display Page URL,Description,Display Date") {
+			for (var field : list "Default,Description,Display Date") {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Configuration",

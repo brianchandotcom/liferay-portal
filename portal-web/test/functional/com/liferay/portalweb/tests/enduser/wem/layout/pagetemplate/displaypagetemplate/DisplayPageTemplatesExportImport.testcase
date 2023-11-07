@@ -357,7 +357,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(
 				entryTitle = ${objectEntryId},
-				field = "Display Page URL",
+				field = "Default",
 				navItem = "${labelName}2s");
 
 			PageEditor.publish();
@@ -500,7 +500,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(
 				entryTitle = ${objectEntryId},
-				field = "Display Page URL",
+				field = "Default",
 				navItem = "${labelName}2s");
 
 			PageEditor.publish();
@@ -644,7 +644,7 @@ definition {
 
 			PageEditorEditableLink.mapURLToAsset(
 				entryTitle = ${objectEntryId},
-				field = "Display Page URL",
+				field = "Default",
 				navItem = "${labelName}2s");
 
 			PageEditor.publish();

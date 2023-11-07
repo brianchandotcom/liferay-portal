@@ -80,6 +80,9 @@ public class ObjectFolderItemLocalServiceTest {
 
 	@Test
 	public void testAddObjectFolderItem() throws Exception {
+
+		// Add object folder item
+
 		long objectDefinitionId = RandomTestUtil.randomLong();
 
 		AssertUtils.assertFailure(
@@ -297,7 +300,6 @@ public class ObjectFolderItemLocalServiceTest {
 				_objectDefinition3.getObjectDefinitionId()
 			},
 			_objectFolderA.getObjectFolderId());
-
 		_assertObjectFolderItems(
 			new Long[] {
 				_objectDefinition1.getObjectDefinitionId(),

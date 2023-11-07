@@ -379,10 +379,11 @@ const PriceRow = ({children, priceName}) => {
 const PriceRows = ({price}) => {
 	const hasPromoPrice = isNonnull(price?.promoPrice);
 	const hasDiscountPercentage = isNonnull(price?.discountPercentage);
+	const priceOnApplication = price.priceOnApplication;
 
 	return (
 		<>
-			{price ? (
+			{price && !priceOnApplication && (
 				<div className="mini-cart-prices mt-4">
 					<PriceRow priceName={Liferay.Language.get('price-list')}>
 						<span
@@ -429,8 +430,18 @@ const PriceRows = ({price}) => {
 						</span>
 					</PriceRow>
 				</div>
-			) : (
-				<></>
+			)}
+
+			{price && priceOnApplication && (
+				<div className="mini-cart-prices mt-4">
+					<PriceRow
+						priceName={Liferay.Language.get('price-as-configured')}
+					>
+						<span className="price-on-application price-value text-3">
+							{Liferay.Language.get('price-on-application')}
+						</span>
+					</PriceRow>
+				</div>
 			)}
 		</>
 	);

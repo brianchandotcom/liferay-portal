@@ -160,6 +160,7 @@ function EditItem() {
 
 	const hasDiscount = isNonnull(price.discountPercentage);
 	const hasPromoPrice = isNonnull(price.promoPrice);
+	const priceOnApplication = price.priceOnApplication;
 
 	return (
 		<>
@@ -191,70 +192,90 @@ function EditItem() {
 							/>
 						</ClayForm>
 					) : null}
+
+					{priceOnApplication && (
+						<div className="mini-cart-prices mt-4">
+							<PriceRow
+								priceName={Liferay.Language.get(
+									'price-as-configured'
+								)}
+							>
+								<span className="price-on-application price-value text-3">
+									{Liferay.Language.get(
+										'price-on-application'
+									)}
+								</span>
+							</PriceRow>
+						</div>
+					)}
 				</div>
 
 				<div>
-					<div className="mini-cart-prices p-4">
-						<PriceRow
-							priceName={Liferay.Language.get('list-price')}
-						>
-							{hasPromoPrice || hasDiscount ? (
-								<span className="price-line-through">
-									{price.priceFormatted}
-								</span>
-							) : (
-								<span>{price.priceFormatted}</span>
-							)}
-						</PriceRow>
-
-						{hasPromoPrice ? (
+					{!priceOnApplication && (
+						<div className="mini-cart-prices p-4">
 							<PriceRow
-								priceName={Liferay.Language.get('promo-price')}
+								priceName={Liferay.Language.get('list-price')}
 							>
-								{hasDiscount ? (
+								{hasPromoPrice || hasDiscount ? (
 									<span className="price-line-through">
-										{price.promoPriceFormatted}
+										{price.priceFormatted}
 									</span>
 								) : (
-									<span>{price.promoPriceFormatted}</span>
+									<span>{price.priceFormatted}</span>
 								)}
 							</PriceRow>
-						) : null}
 
-						{hasDiscount ? (
+							{hasPromoPrice ? (
+								<PriceRow
+									priceName={Liferay.Language.get(
+										'promo-price'
+									)}
+								>
+									{hasDiscount ? (
+										<span className="price-line-through">
+											{price.promoPriceFormatted}
+										</span>
+									) : (
+										<span>{price.promoPriceFormatted}</span>
+									)}
+								</PriceRow>
+							) : null}
+
+							{hasDiscount ? (
+								<PriceRow
+									priceName={Liferay.Language.get('discount')}
+								>
+									<span className="price-discount">
+										{`-${price.discountPercentage}%`}
+									</span>
+								</PriceRow>
+							) : null}
+
 							<PriceRow
-								priceName={Liferay.Language.get('discount')}
+								priceName={Liferay.Language.get(
+									'price-as-configured'
+								)}
 							>
-								<span className="price-discount">
-									{`-${price.discountPercentage}%`}
+								<span className="text-7">
+									{price.finalPriceFormatted}
 								</span>
 							</PriceRow>
-						) : null}
+						</div>
+					)}
+				</div>
 
-						<PriceRow
-							priceName={Liferay.Language.get(
-								'price-as-configured'
-							)}
-						>
-							<span className="text-7">
-								{price.finalPriceFormatted}
-							</span>
-						</PriceRow>
-					</div>
+				<div className="mini-cart-footer px-4 py-2 text-right">
+					<ClayButton
+						className="mr-3"
+						displayType="secondary"
+						onClick={() => setEditedItem(null)}
+					>
+						{Liferay.Language.get('cancel')}
+					</ClayButton>
 
-					<div className="mini-cart-footer px-4 py-2 text-right">
-						<ClayButton
-							className="mr-3"
-							displayType="secondary"
-							onClick={() => setEditedItem(null)}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton disabled={disabled} onClick={handleSave}>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-					</div>
+					<ClayButton disabled={disabled} onClick={handleSave}>
+						{Liferay.Language.get('save')}
+					</ClayButton>
 				</div>
 			</div>
 		</>

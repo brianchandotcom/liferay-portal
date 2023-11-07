@@ -566,10 +566,7 @@ definition {
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
 	@priority = 3
 	test ClickOnProcessIdColumnToSeeItemDetailsPage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -623,10 +620,7 @@ definition {
 	@description = "LPS-86652 - Verify that every column displays the correct info for a item"
 	@priority = 5
 	test ColumnsDiplayCorrectInfo {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -653,10 +647,7 @@ definition {
 	@description = "LPS-86652 - Validate that the correct number of entries is showed when user chooses 4, 8, 20, 40, 60"
 	@priority = 3
 	test CorrectNumberOfEntriesDisplayedWhenPaginationEdited {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -747,10 +738,7 @@ definition {
 			userLastName = "user2",
 			userScreenName = "user2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -800,10 +788,7 @@ definition {
 	@description = "LPS-130217 - Verify that the header title Creation Date is underline and bold on mouse hover"
 	@priority = 2
 	test CreationDateTitleIsUnderlineAndBold {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -830,10 +815,7 @@ definition {
 	@description = "LPS-130217 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number"
 	@priority = 3
 	test DefinitionIsPreservedWhenChangesPagination {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -873,10 +855,7 @@ definition {
 	@description = "LPS-86652 - Verify that the correct columns are displayed ID, Due Date, Item Subject, Process Step, Assignee, Created By, Creation Date"
 	@priority = 5
 	test DisplayColumns {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -935,10 +914,7 @@ definition {
 		}
 
 		task ("When the workflow is configured to an asset and the asset is created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1001,10 +977,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1107,10 +1080,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1279,10 +1249,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1314,10 +1281,7 @@ definition {
 	@description = "LPS-94146 - Verify that user can close the filters shown as tags clicking on x and the result is applied on items list"
 	@priority = 4
 	test FiltersCanBeClosedAndResultAppliedOnList {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1456,10 +1420,7 @@ definition {
 	test IconOnModalTitleIsGreyWhenItemIsCompletedNoSLA {
 		property ci.retries.disabled = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1522,10 +1483,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1585,10 +1543,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1674,10 +1629,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1759,10 +1711,7 @@ definition {
 	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: No SLA"
 	@priority = 3
 	test ItemModalPlacesIconReferringToSlaStatusNoSla {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1793,10 +1742,7 @@ definition {
 			definitionsJobInterval = 1,
 			slaJobInterval = 1);
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1848,10 +1794,7 @@ definition {
 			definitionsJobInterval = 1,
 			slaJobInterval = 1);
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -1898,10 +1841,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2067,10 +2007,7 @@ definition {
 	@description = "LPS-98517 - Verify that a long username that exceeds 240px in the assignee dropdown option is placed in more than one line, respecting the alignment of the field"
 	@priority = 3
 	test LongUserNameIsDisplayedInMoreThanOneLineInDropdown {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2129,10 +2066,7 @@ definition {
 	@description = "LPS-92053 - Verify that the Go to submission page button opens the submission page in another tab"
 	@priority = 4
 	test OpenSubmissionPageInAnotherTab {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2272,10 +2206,7 @@ definition {
 	@description = "LPS-130166 - Verify that the popover is not displayd when hovering untracked items on Due Date column item"
 	@priority = 3
 	test PopoverIsNotDisplayedForUntrackedItems {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2308,10 +2239,7 @@ definition {
 	@description = "LPS-130217 - Verify that user is able to click on the table header title to order items by Creation Date: old-new / new-old"
 	@priority = 4
 	test ReorderEntriesClickingCreationDateColumn {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2497,10 +2425,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when one of the sections has no entries, the section title is completely removed"
 	@priority = 4
 	test SectionIsRemovedWhenItHasNoEntries {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2575,10 +2500,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Similar Single Approver Process");
 
@@ -2721,10 +2643,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed, the summary section should hide the info Current Step and replace it with End Date"
 	@priority = 3
 	test SummarySectionDisplaysEndDateInsteadOfCurrentStep {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2828,10 +2747,7 @@ definition {
 		}
 
 		task ("and Given a multi task process configured to an asset") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
 
@@ -2841,10 +2757,7 @@ definition {
 
 			Button.clickPublish();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2904,10 +2817,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
 
@@ -2937,10 +2847,7 @@ definition {
 	@description = "LPS-92053 - Verify that the Go to submission page button, on hover, displays a tooltip saying Open page in new tab"
 	@priority = 3
 	test TooltipIsDisplayedWhenHoveringButton {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -3090,10 +2997,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -3128,10 +3032,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
 
@@ -3206,10 +3107,7 @@ definition {
 	@description = "This is a use case for LPS-98825."
 	@priority = 5
 	test ViewMyWorkflowTasksOrderResults {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -3265,10 +3163,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -3345,10 +3240,7 @@ definition {
 		}
 
 		task ("When a blog entry is created with a Single Approver Workflow") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Navigator.gotoNavItem(navItem = "Configuration");
 

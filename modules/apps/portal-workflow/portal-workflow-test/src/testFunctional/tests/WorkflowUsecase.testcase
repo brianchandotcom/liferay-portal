@@ -46,10 +46,7 @@ definition {
 
 	@priority = 4
 	test AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -296,10 +293,7 @@ definition {
 		property test.run.type = "single";
 		property testray.component.names = "Training";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Double Approver Definition");
 
@@ -463,10 +457,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Category Specific");
 
@@ -820,10 +811,7 @@ definition {
 				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView(baseURL = "http://www.able.com:8080");
 		}
 
 		task ("Then the add button is not present") {
@@ -865,10 +853,7 @@ definition {
 				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView(baseURL = "http://www.able.com:8080");
 
 			Workflow.addNewDefinition(workflowDefinitionTitle = "Workflow Definition for Able");
 
@@ -881,10 +866,7 @@ definition {
 		task ("Then the workflow can be published") {
 			Button.clickPublish();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView(baseURL = "http://www.able.com:8080");
 
 			AssertVisible(
 				key_workflowDefinitionTitle = "Workflow Definition for Able",
@@ -896,10 +878,7 @@ definition {
 	test UnpublishAndDeleteUploadedDefinition {
 		property test.liferay.virtual.instance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Uploaded Definition");
 
@@ -913,10 +892,7 @@ definition {
 
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "New Uploaded Definition");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Uploaded Definition");
 
@@ -926,17 +902,11 @@ definition {
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Uploaded Definition");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "New Uploaded Definition");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Uploaded Definition");
 
@@ -1021,10 +991,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Invalid Definition");
 
@@ -1142,10 +1109,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Calendar Event");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

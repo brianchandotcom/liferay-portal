@@ -32,10 +32,7 @@ definition {
 	@description = "LPS-105495 - Verify that the user can transition tasks adding a comment to it"
 	@priority = 4
 	test CanAddCommentToATransitionTask {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -75,10 +72,7 @@ definition {
 	@description = "LPS-108138 - Verify that users can bulk-transition pending tasks assigned to themselves from more than 1 instance via Workflow Metrics"
 	@priority = 4
 	test CanBulkTransitionPendingTasksFromMultipleInstances {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -233,10 +227,7 @@ definition {
 	test MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce {
 		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -298,10 +289,7 @@ definition {
 	@description = "LPS-108138 - Verify that the message -Select a transition- and -All steps require a transition to be selected to complete this action.- are displayed when the user clicks on Done without selecting all transitions"
 	@priority = 3
 	test MessageIsDisplayedWhenSomeTransitionIsNotSelected {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -345,10 +333,7 @@ definition {
 	@description = "LPS-108138 - Verify that, in -Choose Transition Per Step- modal, the user can add comments when transitioning tasks"
 	@priority = 4
 	test OnChooseTransitionPerStepCanAddCommentToATransitionTask {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -403,10 +388,7 @@ definition {
 	@description = "LPS-108138 - Verify that users can filter the tasks to be transitioned by steps"
 	@priority = 3
 	test OnChooseTransitionPerStepCanFilterByStep {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -494,10 +476,7 @@ definition {
 	@description = "LPS-108138 - Verify that only the tasks selected on -Select Steps to Transition- are being considered to be transitioned in the -Choose Transition Per Step- step"
 	@priority = 4
 	test OnlySelectedTasksAreConsideredToBeTransitioned {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -550,10 +529,7 @@ definition {
 	@description = "LPS-108138 - Verify that when there are 11 or more instances to be transitioned with the same step, only the first 10 instances are displayed with the -Show All/Show Less- buttons available to be selected"
 	@priority = 3
 	test ShowAllLessButtonAvailable {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -640,10 +616,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -655,10 +628,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -709,10 +679,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Transitions Definition");
 

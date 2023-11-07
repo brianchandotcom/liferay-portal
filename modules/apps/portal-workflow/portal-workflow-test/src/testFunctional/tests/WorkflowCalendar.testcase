@@ -318,10 +318,7 @@ definition {
 	@description = "Verify that the user can assign a Workflow to Calendar Event"
 	@priority = 5
 	test CanAssignWorkflowToCalendarEvent {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

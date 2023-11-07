@@ -51,10 +51,7 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		NavItem.gotoConfiguration();
 

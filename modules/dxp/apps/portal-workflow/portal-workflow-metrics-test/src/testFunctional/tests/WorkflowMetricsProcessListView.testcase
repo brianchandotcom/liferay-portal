@@ -60,10 +60,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		for (var newWorkflow : list "1,2,3") {
 			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow ${newWorkflow}");
@@ -95,10 +92,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		for (var newWorkflow : list "1,2,3") {
 			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow ${newWorkflow}");
@@ -134,10 +128,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 1");
 
@@ -217,10 +208,7 @@ definition {
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver B");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -306,10 +294,7 @@ definition {
 	@description = "LPS-88573 - Verify that when an instance from Asset is added to the list of process, the count number should be reflected on the Process List"
 	@priority = 5
 	test TableDisplaysCorrectNumbersWhenAssetAdded {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -343,10 +328,7 @@ definition {
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Test Workflow");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

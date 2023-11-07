@@ -738,10 +738,7 @@ definition {
 	test CanCheckDraftProductStatusWithWorkflow {
 		property portal.acceptance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
@@ -761,10 +758,7 @@ definition {
 			publishProduct = "false");
 
 		task ("Disable Single Approver for avoid issue on CI") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 

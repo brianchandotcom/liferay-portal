@@ -44,10 +44,7 @@ definition {
 	@description = "LPS-98518 - Verify that there is an image besides the assignee name that is retrieved from the global user profile picture (add, delete, update)"
 	@priority = 3
 	test AssigneeImagesRetrievedFromGlobalUserProfile {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -133,10 +130,7 @@ definition {
 	@description = "LPS-97669 - Verify the user can search for a assignee with name containing non-ASCII chars (eg: japanese chars) using the search bar"
 	@priority = 3
 	test CanSearchNonAsciiChars {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -263,10 +257,7 @@ definition {
 	@description = "LPS-98518 - Verify that the filters values inside (Workload by Assignee) are alphabetically sorted"
 	@priority = 2
 	test FiltersAreAlphabeticallySorted {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -328,10 +319,7 @@ definition {
 	@description = "LPS-98518 - Verify that the filters inside (Workload by Assignee) are applied only after the user moves the cursor out of the dropdown card"
 	@priority = 3
 	test FiltersAreAppliedAfterUserMovesCursorOutOfDropdownCard {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -382,10 +370,7 @@ definition {
 	@description = "LPS-97669 - Verify that a long username is placed in more than one line, respecting the alignment of the field inside Workload by Assignee card"
 	@priority = 3
 	test LongUsernameIsPlacedInMoreThanOneLine {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -434,10 +419,7 @@ definition {
 	@description = "LPS-97669 - Verify that there is a percentage indication out of the total amount of assigned tasks when the tab On Time is selected"
 	@priority = 5
 	test PercentageIndicationOnOnTimeTab {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -482,10 +464,7 @@ definition {
 	@description = "LPS-97669 - Verify that there is a percentage indication out of the total amount of assigned tasks when the tab Overdue is selected"
 	@priority = 5
 	test PercentageIndicationOnOverdueTab {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -541,10 +520,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "12 Transitions Definition");
 
@@ -599,10 +575,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "12 transitions");
 
@@ -644,10 +617,7 @@ definition {
 	@description = "LPS-103368 - Verify that the user can filter the results inside (Workload by Assignee) page by assignee names that contain non-ascii chars (such as ç,é,コン, etc) using the search field"
 	@priority = 3
 	test SearchFieldAcceptsNonAsciiChars {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -700,10 +670,7 @@ definition {
 	@description = "LPS-98518 - Verify that, in (Workload by Assignee) page, the search field has a hint with the message: (Search for assignee name...)"
 	@priority = 3
 	test SearchFieldContainsHintMessage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -741,10 +708,7 @@ definition {
 			definitionsJobInterval = 1,
 			slaJobInterval = 1);
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -849,10 +813,7 @@ definition {
 	@description = "LPS-97669 - Verify there is no percentage indication out of the total amount of assigned tasks when the tab Total is selected"
 	@priority = 4
 	test ThereIsNoPercentageIndicationOnTotalTab {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -883,10 +844,7 @@ definition {
 	@description = "LPS-103365 - Verify that when the user clicks on the username or item number of the table inside (Workload by Assignee) page, the user is directed to the All Items page with the appropriate filters applied"
 	@priority = 4
 	test UserIsDirectedToAllItemsPage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

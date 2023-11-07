@@ -64,10 +64,7 @@ definition {
 	@description = "Verify that the user can reject a Web Content Article"
 	@priority = 3
 	test CanRejectWebContentArticle {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -109,10 +106,7 @@ definition {
 	@description = "Verify that a Web Content draft is not submitted as a Workflow task"
 	@priority = 3
 	test CanSaveAsDraft {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

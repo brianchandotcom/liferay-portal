@@ -28,10 +28,7 @@ definition {
 	@description = "This is a test for LRQA-69712. Verify that the user can approve a new account by Notifications."
 	@priority = 3
 	test CanApproveByNotifications {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -78,10 +75,7 @@ definition {
 	@description = "This is a test for LRQA-69708. Verify that the user can delete a new account when there is a Workflow assigned."
 	@priority = 3
 	test CanDeleteUser {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -134,10 +128,7 @@ definition {
 	@description = "This is a test for LRQA-69710. Verify that the user can see the actual state of the user in the workflow process after approve."
 	@priority = 3
 	test CanSeeStateAfterApprove {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -180,10 +171,7 @@ definition {
 	@description = "This is a test for LRQA-69711. Verify that the user can see the actual state of the user in the workflow process after reject."
 	@priority = 3
 	test CanSeeStateAfterReject {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -228,10 +216,7 @@ definition {
 	@description = "This is a test for LRQA-69709. Verify that the user can see the actual state of the user in the workflow process before assigning to itself."
 	@priority = 4
 	test CanSeeStateBeforeAssign {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -266,10 +251,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -329,10 +311,7 @@ definition {
 	test ViewUserPreview {
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

@@ -175,10 +175,7 @@ definition {
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
 		if (${testRunEnvironment} == "EE") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Draft");
 

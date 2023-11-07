@@ -178,10 +178,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to workflow configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Navigator.gotoNavItem(navItem = "Configuration");
 		}

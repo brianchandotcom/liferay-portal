@@ -609,10 +609,7 @@ definition {
 
 	@summary = "Default summary"
 	macro disableProductSingleApproverWorkflow() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
@@ -691,10 +688,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enableProductSingleApproverWorkflow() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 

@@ -93,4 +93,44 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-200044 | Test Summary: Assert that the administrator can add team member with a new domain"
+	@priority = 4
+	test AssertThatTheAdmCanAddTeamMemberWithNewDomain {
+		task ("Given that go to the Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("And I enter the test account and go to Team Members page") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2Utils.onboardingFlow();
+
+			CP2NavigationMenu.goToTeamMembers();
+		}
+
+		task ("When add a new team member with a new domain") {
+			CustomerPortal.clickAtButton(text = "Invite");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				firstName = "Test",
+				lastName = "Test2",
+				position = 0,
+				positionNumber = 0,
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
+
+			Alert.viewWarningSpecific(warningMessage = "Is test01@project.com part of your organization? It looks like project.com is a new domain name.");
+
+			CP2TeamMembers.clickTeamMembersSendInvitation();
+		}
+
+		task ("Then should be see the team member created") {
+			CP2TeamMembers.assertTheInvitedUser(
+				name = "Test Test2",
+				status = "Invited");
+		}
+	}
+
 }

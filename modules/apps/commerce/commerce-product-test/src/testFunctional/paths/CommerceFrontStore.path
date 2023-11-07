@@ -156,6 +156,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_MAIN_IMAGE</td>
+	<td>//div[@class='card main-image']//source[contains(@srcset,'${key_fsProductImage}')]/..//img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_THUMBNAIL_IMAGE</td>
+	<td>//div[@class='gallery-thumbnails']//source[contains(@srcset,'${key_fsProductImage}')]/..//img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAX_QUANTITY_SELECTOR_PRODUCT_DETAILS</td>
 	<td>//div[contains(@class,"product-detail")]//div[contains(@class,"add-to-cart")]//input[contains(@max, '${key_value}')]</td>
 	<td></td>

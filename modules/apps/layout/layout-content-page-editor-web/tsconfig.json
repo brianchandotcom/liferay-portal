@@ -1,5 +1,5 @@
 {
-	"@generated": "03063c6420a880be385e51b35241acd0a8cf347a",
+	"@generated": "109e0c993736e731aa262b77a67d3150df8056fc",
 	"@overrides": {
 		"compilerOptions": {
 			"lib": [
@@ -23,6 +23,9 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"@liferay/cookies-banner-web": [
+				"../../cookies/cookies-banner-web/src/main/resources/META-INF/resources/js/index.d.ts"
+			],
 			"@liferay/frontend-icons-web": [
 				"../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
@@ -60,6 +63,9 @@
 		"../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../cookies/cookies-banner-web"
+		},
 		{
 			"path": "../../frontend-icons/frontend-icons-web"
 		},

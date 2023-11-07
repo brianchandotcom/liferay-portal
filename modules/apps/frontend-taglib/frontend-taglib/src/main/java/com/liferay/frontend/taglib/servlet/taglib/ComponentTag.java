@@ -5,36 +5,33 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
-import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
-import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
-import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
+import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
+import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -263,17 +260,13 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		AbsolutePortalURLBuilder absolutePortalURLBuilder =
-			absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				httpServletRequest);
-
 		esImports.add(
 			ESImportUtil.getESImport(
-				absolutePortalURLBuilder, "ComponentModule", module
-			)
-		);
+				absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+					httpServletRequest),
+				"ComponentModule", module));
 
-		StringBundler contentSB = new StringBundler(14);
+		StringBundler contentSB = new StringBundler(12);
 
 		contentSB.append("Liferay.component('");
 
@@ -329,7 +322,8 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 			JspWriter jspWriter = pageContext.getOut();
 
 			scriptData.writeTo(jspWriter);
-		} else {
+		}
+		else {
 			ScriptData scriptData = (ScriptData)httpServletRequest.getAttribute(
 				WebKeys.AUI_SCRIPT_DATA);
 

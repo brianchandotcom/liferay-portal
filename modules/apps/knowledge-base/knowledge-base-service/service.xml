@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" change-tracking-enabled="true" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.knowledge.base">
 	<namespace>KB</namespace>
-	<entity local-service="true" name="KBArticle" remote-service="true" uuid="true">
+	<entity local-service="true" name="KBArticle" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -199,6 +199,12 @@
 			<finder-column name="latest" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_P_L_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="parentResourcePrimKey" />
+			<finder-column name="latest" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
 		<finder name="G_KBFI_UT_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="kbFolderId" />
@@ -267,11 +273,11 @@
 			<finder-column arrayable-operator="OR" name="status" />
 		</finder>
 	</entity>
-	<entity external-reference-code="group" local-service="true" name="KBFolder" remote-service="true" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="KBFolder" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="kbFolderId" primary="true" type="long" />
+		<column container-model="true" name="kbFolderId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -287,11 +293,15 @@
 
 		<!-- Other fields -->
 
-		<column name="parentKBFolderId" type="long" />
+		<column name="parentKBFolderId" parent-container-model="true" type="long" />
 		<column name="name" type="String" />
 		<column name="urlTitle" type="String" />
 		<column name="description" type="String" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -311,6 +321,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="parentKBFolderId" />
 			<finder-column name="urlTitle" />
+		</finder>
+		<finder name="G_P_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentKBFolderId" />
+			<finder-column name="status" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="KBTemplate" remote-service="true" uuid="true">

@@ -6,7 +6,9 @@
 package com.liferay.knowledge.base.model.impl;
 
 import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.model.KBFolderModel;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
@@ -18,6 +20,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,23 +29,12 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 
 	@Override
 	public List<Long> getAncestorKBFolderIds() throws PortalException {
-		List<Long> ancestorFolderIds = new ArrayList<>();
+		return _getAncestorData(KBFolderModel::getKbFolderId);
+	}
 
-		ancestorFolderIds.add(getKbFolderId());
-
-		KBFolder kbFolder = this;
-
-		while (!kbFolder.isRoot()) {
-			kbFolder = kbFolder.getParentKBFolder();
-
-			if (kbFolder == null) {
-				break;
-			}
-
-			ancestorFolderIds.add(kbFolder.getKbFolderId());
-		}
-
-		return ancestorFolderIds;
+	@Override
+	public List<KBFolder> getAncestors() throws PortalException {
+		return _getAncestorData(Function.identity());
 	}
 
 	@Override
@@ -105,6 +97,31 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 		}
 
 		return false;
+	}
+
+	private <T> List<T> _getAncestorData(Function<KBFolder, T> function)
+		throws PortalException {
+
+		List<T> ancestorData = new ArrayList<>();
+
+		KBFolder kbFolder = this;
+
+		while (!kbFolder.isRoot()) {
+			try {
+				kbFolder = kbFolder.getParentKBFolder();
+
+				ancestorData.add(function.apply(kbFolder));
+			}
+			catch (NoSuchFolderException noSuchFolderException) {
+				if (kbFolder.isInTrash()) {
+					break;
+				}
+
+				throw noSuchFolderException;
+			}
+		}
+
+		return ancestorData;
 	}
 
 	private long _classNameId;

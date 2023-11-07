@@ -11,7 +11,9 @@ import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleC
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBArticleModel;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 /**
  * @author Peter Shin
@@ -73,22 +76,28 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 	}
 
 	@Override
+	public List<KBArticle> getAncestorKBArticles() throws PortalException {
+		return _getAncestorData(Function.identity());
+	}
+
+	@Override
 	public List<Long> getAncestorResourcePrimaryKeys() throws PortalException {
 		List<Long> ancestorResourcePrimaryKeys = new ArrayList<>();
 
 		ancestorResourcePrimaryKeys.add(getResourcePrimKey());
+		ancestorResourcePrimaryKeys.addAll(
+			_getAncestorData(KBArticleModel::getResourcePrimKey));
 
-		KBArticle kbArticle = this;
-
-		while (!kbArticle.isRoot()) {
-			kbArticle = kbArticle.getParentKBArticle();
-
-			if (kbArticle == null) {
-				break;
-			}
-
-			ancestorResourcePrimaryKeys.add(kbArticle.getResourcePrimKey());
+		if (getKbFolderId() == KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return ancestorResourcePrimaryKeys;
 		}
+
+		ancestorResourcePrimaryKeys.add(getKbFolderId());
+
+		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
+			getKbFolderId());
+
+		ancestorResourcePrimaryKeys.addAll(kbFolder.getAncestorKBFolderIds());
 
 		return ancestorResourcePrimaryKeys;
 	}
@@ -167,16 +176,12 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 
 	@Override
 	public KBArticle getParentKBArticle() throws PortalException {
-		long parentResourcePrimKey = getParentResourcePrimKey();
-
-		if ((parentResourcePrimKey <= 0) ||
-			(getParentResourceClassNameId() != getClassNameId())) {
-
+		if (!hasParentKBArticle()) {
 			return null;
 		}
 
 		return KBArticleLocalServiceUtil.getLatestKBArticle(
-			parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+			getParentResourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -209,6 +214,17 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 	}
 
 	@Override
+	public boolean hasParentKBArticle() {
+		if ((getParentResourcePrimKey() <= 0) ||
+			(getParentResourceClassNameId() != getClassNameId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isFirstVersion() {
 		if (getVersion() == KBArticleConstants.DEFAULT_VERSION) {
 			return true;
@@ -231,6 +247,31 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 		}
 
 		return false;
+	}
+
+	private <T> List<T> _getAncestorData(Function<KBArticle, T> function)
+		throws PortalException {
+
+		List<T> ancestorData = new ArrayList<>();
+
+		KBArticle kbArticle = this;
+
+		while (kbArticle.hasParentKBArticle()) {
+			try {
+				kbArticle = kbArticle.getParentKBArticle();
+
+				ancestorData.add(function.apply(kbArticle));
+			}
+			catch (NoSuchArticleException noSuchArticleException) {
+				if (kbArticle.isInTrash()) {
+					break;
+				}
+
+				throw noSuchArticleException;
+			}
+		}
+
+		return ancestorData;
 	}
 
 	private long _attachmentsFolderId;

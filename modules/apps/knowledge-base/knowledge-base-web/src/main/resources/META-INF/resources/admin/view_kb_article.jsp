@@ -9,6 +9,12 @@
 
 <liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
+<portlet:actionURL name="/knowledge_base/restore_kb_object" var="restoreTrashEntriesURL" />
+
+<liferay-trash:undo
+	portletURL="<%= restoreTrashEntriesURL %>"
+/>
+
 <div class="knowledge-base-admin-content">
 	<liferay-util:include page="/admin/common/view_kb_article.jsp" servletContext="<%= application %>" />
 </div>

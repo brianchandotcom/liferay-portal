@@ -17,6 +17,12 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey",
 KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, renderResponse, portletConfig, trashHelper);
 %>
 
+<portlet:actionURL name="/knowledge_base/restore_kb_object" var="restoreTrashEntriesURL" />
+
+<liferay-trash:undo
+	portletURL="<%= restoreTrashEntriesURL %>"
+/>
+
 <liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
 <div class="knowledge-base-admin-content">

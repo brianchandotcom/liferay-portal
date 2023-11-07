@@ -1,0 +1,42 @@
+.mkt-license-details-content {
+	@mixin paragraph-box($background-color) {
+		background-color: $background-color;
+		border-radius: 8px !important;
+		font-size: 13px;
+		max-width: fit-content;
+	}
+
+	@mixin wrap($width) {
+		width: $width;
+		word-break: break-word;
+	}
+
+	.license-paragraph-danger {
+		@include paragraph-box(#ffebe6);
+	}
+
+	.license-paragraph-gray {
+		@include paragraph-box(#f7f7f8);
+	}
+
+	.license-paragraph-lighten {
+		@include paragraph-box(#e7efff);
+	}
+
+	.license-paragraph-success {
+		@include paragraph-box(#eef8ec);
+	}
+
+	.wrap-ip {
+		@include wrap(100px);
+	}
+
+	.wrap-mac {
+		@include wrap(145px);
+	}
+
+	small {
+		color: #54555f;
+		font-size: 13px;
+	}
+}

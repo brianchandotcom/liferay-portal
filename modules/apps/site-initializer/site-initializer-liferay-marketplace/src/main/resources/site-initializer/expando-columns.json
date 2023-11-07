@@ -1,10 +1,7 @@
 [
 	{
 		"dataType": 16,
-		"defaultValue": [
-			"No",
-			"Yes"
-		],
+		"defaultValue": ["No", "Yes"],
 		"modelResource": "com.liferay.commerce.product.model.CPAttachmentFileEntry",
 		"name": "App Icon",
 		"properties": {
@@ -779,14 +776,14 @@
 		}
 	},
 	{
-		"dataType": 20,
+		"dataType": 15,
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Profile",
 		"properties": {
 			"height": "150",
 			"hidden": false,
 			"indexType": 2,
-			"localizeField": true,
+			"localizeField": false,
 			"localizeFieldName": true,
 			"secret": false,
 			"visibleWithUpdatePermission": false,
@@ -935,10 +932,7 @@
 	},
 	{
 		"dataType": 16,
-		"defaultValue": [
-			"No",
-			"Yes"
-		],
+		"defaultValue": ["No", "Yes"],
 		"modelResource": "com.liferay.commerce.product.model.CPAttachmentFileEntry",
 		"name": "Source Files",
 		"properties": {

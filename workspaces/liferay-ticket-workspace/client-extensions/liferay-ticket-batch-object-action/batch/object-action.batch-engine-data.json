@@ -3,7 +3,7 @@
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectAction",
 		"parameters": {
 			"containsHeaders": "true",
-			"createStrategy": "UPSERT",
+			"createStrategy": "INSERT",
 			"externalReferenceCode": "J3Y7_TICKET",
 			"onErrorFail": "false",
 			"taskItemDelegateName": "DEFAULT",

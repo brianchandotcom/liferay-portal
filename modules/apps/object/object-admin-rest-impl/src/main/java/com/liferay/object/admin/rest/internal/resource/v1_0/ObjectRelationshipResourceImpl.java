@@ -261,6 +261,30 @@ public class ObjectRelationshipResourceImpl
 					objectRelationship.getLabel())));
 	}
 
+	@Override
+	public ObjectRelationship putObjectRelationshipByExternalReferenceCode(
+			String externalReferenceCode, ObjectRelationship objectRelationship)
+		throws Exception {
+
+		com.liferay.object.model.ObjectRelationship
+			serviceBuilderObjectRelationship =
+				_objectRelationshipService.
+					fetchObjectRelationshipByExternalReferenceCode(
+						externalReferenceCode, contextCompany.getCompanyId(),
+						objectRelationship.getObjectDefinitionId1());
+
+		objectRelationship.setExternalReferenceCode(externalReferenceCode);
+
+		if (serviceBuilderObjectRelationship != null) {
+			return putObjectRelationship(
+				serviceBuilderObjectRelationship.getObjectRelationshipId(),
+				objectRelationship);
+		}
+
+		return postObjectDefinitionObjectRelationship(
+			objectRelationship.getObjectDefinitionId1(), objectRelationship);
+	}
+
 	private com.liferay.object.model.ObjectDefinition _getObjectDefinition2(
 			long objectFolderId, ObjectRelationship objectRelationship)
 		throws Exception {

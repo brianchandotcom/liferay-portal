@@ -4,10 +4,8 @@
 	<dynamic-element field-reference="content" index-type="text" instance-id="GKKObGjN" name="content" type="rich_text">
 		<dynamic-content language-id="en_US">
 			<![CDATA[
-				<p>For more information from what can be loaded check here:&nbsp;
-					<a href="https://github.com/liferay/liferay-portal/tree/master/modules/apps/site-initializer/site-initializer-extender/site-initializer-extender-test-bundle-1/src/main/resources/site-initializer">https://github.com/liferay/liferay-portal/tree/master/modules/apps/site-initializer/site-initializer-extender/site-initializer-extender-test-bundle-1/src/main/resources/site-initializer</a>
-				</p>
-			<p>Site Initializer is not the final solution, it's an alternative to batch to fill the product gap.</p>]]>
+				Go to this <a href="https://github.com/liferay/liferay-portal/tree/master/modules/apps/site-initializer/site-initializer-extender/site-initializer-extender-test-bundle-1/src/main/resources/site-initializer" target="_blank">link</a> to see what else can be imported by site initializers.
+			]]>
 		</dynamic-content>
 	</dynamic-element>
 </root>

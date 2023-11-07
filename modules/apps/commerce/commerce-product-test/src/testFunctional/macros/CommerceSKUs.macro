@@ -50,6 +50,72 @@ definition {
 		Refresh();
 	}
 
+	@summary = "This macro can be used to add a product SKU with/without UOM to a Price List"
+	macro addSKUPriceEntry(key_index = null, priceList = null, unitPrice = null, uomKey = null) {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(priceList)) {
+			Select(
+				key_fieldLabel = "Price List",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = ${priceList});
+		}
+
+		if (isSet(uomKey)) {
+			Select(
+				key_fieldLabel = "Unit of Measure",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = ${uomKey});
+		}
+
+		if (isSet(unitPrice)) {
+			Type(
+				key_fieldLabel = "Unit Price",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = ${unitPrice});
+		}
+
+		if (isSet(addNewEntry)) {
+			Button.click(button = "Add Entry");
+
+			if (isSet(newEntryPriceList)) {
+				Select(
+					key_fieldLabel = "Price List",
+					key_index = ${key_index},
+					locator1 = "CommerceEntry#LABEL_SELECT_BY_INDEX",
+					value1 = ${newEntryPriceList});
+			}
+
+			if (isSet(newEntryUomKey)) {
+				Select(
+					key_fieldLabel = "Unit of Measure",
+					key_index = ${key_index},
+					locator1 = "CommerceEntry#LABEL_SELECT_BY_INDEX",
+					value1 = ${newEntryUomKey});
+			}
+
+			if (isSet(newEntryUnitPrice)) {
+				Type(
+					key_fieldLabel = "Unit Price",
+					key_indexNumber = ${key_index},
+					locator1 = "TextInput#GENERIC_NUMBER_INPUT_N",
+					value1 = ${newEntryUnitPrice});
+			}
+		}
+
+		SelectFrame.selectFrameTop();
+
+		Click(
+			key_text = "Add",
+			locator1 = "Button#ANY");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+	}
+
 	@summary = "Default summary"
 	macro editSkuERC(skuERC = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");

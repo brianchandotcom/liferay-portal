@@ -133,4 +133,46 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-200043 | Test Summary: Assert that the administrator is redirection to the okta login page when click on the link that appears in the message of alert "
+	@priority = 3
+	test AssertThatTheLinkRedirectedToOktaLoginPage {
+		task ("Given that go to the Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("And I enter the test account and go to Team Members page") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2Utils.onboardingFlow();
+
+			CP2NavigationMenu.goToTeamMembers();
+		}
+
+		task ("And add a new team member with a new domain") {
+			CustomerPortal.clickAtButton(text = "Invite");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				firstName = "Test",
+				lastName = "Test2",
+				position = 0,
+				positionNumber = 0,
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
+		}
+
+		task ("When click on the Account Settings link.") {
+			CP2Utils.clickInTextLink(
+				key_indexNumber = 2,
+				key_text = "Account Settings");
+
+			Navigator.selectSpecificWindow(windowTitle = "liferay_default - Sign In");
+		}
+
+		task ("Then is redirecting to the okta login page.") {
+			CP2Utils.viewLoginOktaPage();
+		}
+	}
+
 }

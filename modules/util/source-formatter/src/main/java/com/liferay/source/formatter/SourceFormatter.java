@@ -705,19 +705,23 @@ public class SourceFormatter {
 
 				int alternativesCount = StringUtil.count(
 					breakingChangeReport, "## Alternatives");
+				int breakingChangeReportCount = StringUtil.count(
+					breakingChangeReport, "# breaking_change_report");
 				int whatCount = StringUtil.count(
 					breakingChangeReport, "## What");
 				int whyCount = StringUtil.count(breakingChangeReport, "## Why");
 
 				if (((alternativesCount != 0) && (alternativesCount != 1)) ||
-					(whatCount != 1) || (whyCount != 1)) {
+					(breakingChangeReportCount != 1) || (whatCount != 1) ||
+					(whyCount != 1)) {
 
 					throw new Exception(
 						StringBundler.concat(
 							"Found formatting issues:\n", "Each breaking ",
-							"change report should have one, and only one '## ",
-							"What', '## Why' and '## Alternatives'. Use ",
-							"'----' to split each breaking change."));
+							"change report should have one, and only one # ",
+							"breaking_change_report '## What', '## Why' and '",
+							"## Alternatives'(Optional). Use '----' to split ",
+							"each breaking change."));
 				}
 
 				if ((breakingChangeReport.indexOf("## What") >

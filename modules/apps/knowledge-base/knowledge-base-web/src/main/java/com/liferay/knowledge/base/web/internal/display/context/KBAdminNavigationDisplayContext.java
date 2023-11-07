@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.LiferayPortletUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,7 +64,7 @@ public class KBAdminNavigationDisplayContext {
 
 	public KBAdminNavigationDisplayContext(
 			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+			RenderResponse renderResponse, TrashHelper trashHelper)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
@@ -80,7 +81,7 @@ public class KBAdminNavigationDisplayContext {
 			PortalUtil.getLiferayPortletRequest(
 				(PortletRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST)),
-			_liferayPortletResponse);
+			_liferayPortletResponse, trashHelper);
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {

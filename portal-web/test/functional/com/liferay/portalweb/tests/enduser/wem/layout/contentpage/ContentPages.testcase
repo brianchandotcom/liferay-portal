@@ -1878,22 +1878,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-194241. The Locked Pages of Site Settings should comply with WCAG 2.1 AA standard."
-	@priority = 3
-	test ViewLockedPagesAccessibilityOfSiteSettings {
-		property custom.properties = "feature.flag.LPS-180328=true";
-
-		task ("When accessing the Locked Pages of Site Settings") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Locked Pages");
-		}
-
-		task ("Then it is possible to check that the page is accessible") {
-			AssertAccessible();
-		}
-	}
-
 	@description = "This is for LPS-106813. Widgets inherited from content page template will inherit permissions set in content page template."
 	@priority = 4
 	test ViewPermissionsOfAssetPublisherInheritedFromContentPageTemplate {

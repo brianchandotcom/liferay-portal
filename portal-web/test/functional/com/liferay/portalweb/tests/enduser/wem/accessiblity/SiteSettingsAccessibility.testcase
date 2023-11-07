@@ -1,0 +1,45 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Site Settings";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-194241. The Locked Pages of Site Settings should comply with WCAG 2.1 AA standard."
+	@priority = 3
+	test ViewAccessibilityOfLockedPages {
+		task ("Given a site administrator accesses to the site settings") {
+			Site.openSiteSettingsAdmin(siteURLKey = "Test Site Name");
+		}
+
+		task ("When the site administrator navigates to the Locked Pages") {
+			Click(
+				key_itemName = "Pages",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Navigator.gotoNavTab(navTab = "Locked Pages");
+		}
+
+		task ("Then the Locked Pages should have correct accessibility") {
+			AssertAccessible();
+		}
+	}
+
+}

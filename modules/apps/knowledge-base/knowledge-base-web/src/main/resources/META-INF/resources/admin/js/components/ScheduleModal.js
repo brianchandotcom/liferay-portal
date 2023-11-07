@@ -61,7 +61,7 @@ export default function ScheduleModal({
 
 	const handleScheduleButtonOnClick = () => {
 		onModalClose();
-		callback(displayDate);
+		callback(displayDate.trim());
 	};
 
 	const publisNowButtonOnClick = () => {

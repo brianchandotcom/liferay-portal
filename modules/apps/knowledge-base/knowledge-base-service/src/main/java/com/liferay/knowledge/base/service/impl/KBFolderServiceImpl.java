@@ -11,6 +11,7 @@ import com.liferay.knowledge.base.service.base.KBFolderServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -194,6 +195,18 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 			getPermissionChecker(), kbFolderId, KBActionKeys.MOVE_KB_FOLDER);
 
 		kbFolderLocalService.moveKBFolder(kbFolderId, parentKBFolderId);
+	}
+
+	@Override
+	public KBFolder moveKBFolderToTrash(long kbFolderId)
+		throws PortalException {
+
+		_kbFolderModelResourcePermission.check(
+			getPermissionChecker(),
+			kbFolderLocalService.getKBFolder(kbFolderId), ActionKeys.DELETE);
+
+		return kbFolderLocalService.moveKBFolderToTrash(
+			getUserId(), kbFolderId);
 	}
 
 	@Override

@@ -691,19 +691,11 @@ public class SourceFormatter {
 						"'----'"));
 			}
 
+			_checkMissingEmptyLinesAroundHeaders(commitMessage);
+
 			String[] breakingChangeReports = commitMessage.split("\n----");
 
 			for (String breakingChangeReport : breakingChangeReports) {
-				if (!breakingChangeReport.endsWith("\n") ||
-					(breakingChangeReport.startsWith("\n") &&
-					 !breakingChangeReport.startsWith("\n\n"))) {
-
-					throw new Exception(
-						StringBundler.concat(
-							"Found formatting issues:\n", "There should be an ",
-							"empty line after/before '----'"));
-				}
-
 				int alternativesCount = StringUtil.count(
 					breakingChangeReport, "## Alternatives");
 				int breakingChangeReportCount = StringUtil.count(
@@ -744,35 +736,10 @@ public class SourceFormatter {
 							"'## Why' | '## Alternatives'"));
 				}
 
-				String previousLine = StringPool.BLANK;
-
 				String[] lines = breakingChangeReport.split("\n");
 
-				for (int i = 0; i < lines.length; i++) {
+				for (String line : lines) {
 					String trimmedLine = StringUtil.trimLeading(lines[i]);
-
-					if (trimmedLine.startsWith("# breaking_change_report") ||
-						trimmedLine.startsWith("## Alternatives") ||
-						trimmedLine.startsWith("## What") ||
-						trimmedLine.startsWith("## Why")) {
-
-						String nextLine = StringPool.BLANK;
-
-						if (i < (lines.length - 1)) {
-							nextLine = lines[i + 1].trim();
-						}
-
-						if ((nextLine.length() != 0) ||
-							(previousLine.length() != 0)) {
-
-							throw new Exception(
-								StringBundler.concat(
-									"Found formatting issues:\n", "There ",
-									"should be an empty line after/before '# ",
-									"breaking_change_report', '## What', '## ",
-									"Why' and '## Alternatives'"));
-						}
-					}
 
 					if (trimmedLine.startsWith("## What") &&
 						(trimmedLine.length() == 7)) {
@@ -782,8 +749,6 @@ public class SourceFormatter {
 								"Found formatting issues:\n", "There should ",
 								"be one file path after '## What'"));
 					}
-
-					previousLine = trimmedLine;
 				}
 
 				Matcher matcher = _whatPattern.matcher(breakingChangeReport);
@@ -794,6 +759,35 @@ public class SourceFormatter {
 							"Found formatting issues:\n", "'## What' section ",
 							"should contain only one file"));
 				}
+			}
+		}
+	}
+
+	private void _checkMissingEmptyLinesAroundHeaders(String commitMessage)
+		throws Exception {
+
+		for (String header : _BREAKING_CHANGE_REPORT_HEADER_NAMES) {
+			int x = commitMessage.indexOf(header);
+
+			if (x == -1) {
+				continue;
+			}
+
+			int lineNumber = SourceUtil.getLineNumber(commitMessage, x);
+
+			String nextLine = SourceUtil.getLine(commitMessage, lineNumber + 1);
+			String previousLine = SourceUtil.getLine(
+				commitMessage, lineNumber - 1);
+
+			if (((nextLine != null) && (nextLine.length() != 0)) ||
+				((previousLine != null) && (previousLine.length() != 0))) {
+
+				throw new Exception(
+					StringBundler.concat(
+						"Found formatting issues:\n", "There should be an ",
+						"empty line after/before '----', # ",
+						"'breaking_change_report', '## What', '## Why' and ",
+						"'## Alternatives'"));
 			}
 		}
 	}
@@ -1444,6 +1438,11 @@ public class SourceFormatter {
 			}
 		}
 	}
+
+	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {
+		"----", "## Alternatives", "# breaking_change_report", "## What",
+		"## Why"
+	};
 
 	private static final String _PROPERTIES_FILE_NAME =
 		"source-formatter.properties";

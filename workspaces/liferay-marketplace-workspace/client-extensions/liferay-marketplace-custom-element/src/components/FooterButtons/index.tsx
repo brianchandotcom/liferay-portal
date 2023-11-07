@@ -5,8 +5,10 @@
 
 import {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 
-type ButtonProps = {
+export type ButtonProps = {
+	appendIcon?: string;
 	className?: string;
 	disabled?: boolean;
 	displayType: DisplayType | string;
@@ -14,7 +16,8 @@ type ButtonProps = {
 	text?: string;
 };
 
-type FooterButtonsProps = {
+export type FooterButtonsProps = {
+	appendIcon?: string;
 	className?: string;
 	dataButtons: {
 		cancelButton: ButtonProps;
@@ -22,8 +25,8 @@ type FooterButtonsProps = {
 		nextButton: ButtonProps;
 	};
 	onClickCancel?: () => void;
-	onClickCustomizedButton: () => void;
-	onClickNext: () => void;
+	onClickCustomizedButton?: () => void;
+	onClickNext?: () => void;
 };
 
 const FooterButtons = ({
@@ -50,10 +53,13 @@ const FooterButtons = ({
 			<div className="d-flex justify-content-end">
 				{customizedButton?.show && (
 					<ClayButton
+						className={customizedButton?.className}
 						displayType={
 							customizedButton?.displayType as DisplayType
 						}
-						onClick={() => onClickCustomizedButton()}
+						onClick={() =>
+							onClickCustomizedButton && onClickCustomizedButton()
+						}
 					>
 						{customizedButton?.text}
 					</ClayButton>
@@ -64,8 +70,16 @@ const FooterButtons = ({
 						className={nextButton?.className}
 						disabled={nextButton?.disabled}
 						displayType={nextButton?.displayType as DisplayType}
-						onClick={() => onClickNext()}
+						onClick={() => onClickNext && onClickNext()}
 					>
+						{nextButton?.appendIcon && (
+							<span className="inline-item inline-item-after mx-2">
+								<ClayIcon
+									aria-label={`Icon ${nextButton?.appendIcon}}`}
+									symbol={nextButton?.appendIcon}
+								/>
+							</span>
+						)}
 						{customizedButton?.show ? nextButton?.text : 'Continue'}
 					</ClayButton>
 				)}

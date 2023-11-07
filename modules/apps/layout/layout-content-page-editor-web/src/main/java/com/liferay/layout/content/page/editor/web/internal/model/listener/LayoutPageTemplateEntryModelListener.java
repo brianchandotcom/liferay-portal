@@ -12,8 +12,10 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -127,8 +129,10 @@ public class LayoutPageTemplateEntryModelListener
 	private void _updateFragmentEntryLinkEditableValues(
 		FragmentEntryLink fragmentEntryLink) {
 
+		JSONObject editableValuesJSONObject = null;
+
 		try {
-			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+			editableValuesJSONObject = _jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 
 			for (String fragmentEntryProcessorKey :
@@ -144,15 +148,23 @@ public class LayoutPageTemplateEntryModelListener
 
 				_removeMappedFields(editableFragmentEntryProcessorJSONObject);
 			}
-
-			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				editableValuesJSONObject.toString());
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
+		}
+
+		if (editableValuesJSONObject == null) {
+			return;
+		}
+
+		try (SafeCloseable safeCloseable =
+				UpdateLayoutStatusThreadLocal.setWithSafeCloseable(false)) {
+
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				editableValuesJSONObject.toString());
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -185,7 +197,9 @@ public class LayoutPageTemplateEntryModelListener
 				layoutStructureItem.getItemId());
 		}
 
-		try {
+		try (SafeCloseable safeCloseable =
+				UpdateLayoutStatusThreadLocal.setWithSafeCloseable(false)) {
+
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
 					layout.getGroupId(), layout.getPlid(), segmentsExperienceId,

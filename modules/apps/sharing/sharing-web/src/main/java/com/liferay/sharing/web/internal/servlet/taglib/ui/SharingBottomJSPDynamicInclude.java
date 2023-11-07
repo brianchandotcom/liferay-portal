@@ -9,10 +9,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sharing.configuration.SharingConfiguration;
-import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.web.internal.util.SharingJavaScriptThreadLocal;
 
 import java.io.IOException;
@@ -45,17 +41,7 @@ public class SharingBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		SharingConfiguration sharingConfiguration =
-			_sharingConfigurationFactory.getGroupSharingConfiguration(
-				themeDisplay.getScopeGroup());
-
-		if (sharingConfiguration.isEnabled()) {
-			super.include(httpServletRequest, httpServletResponse, key);
-		}
+		super.include(httpServletRequest, httpServletResponse, key);
 	}
 
 	@Override
@@ -78,8 +64,5 @@ public class SharingBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.sharing.web)")
 	private ServletContext _servletContext;
-
-	@Reference
-	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 }

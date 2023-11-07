@@ -175,6 +175,51 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title");
 	}
 
+	@description = "This validates that the redirect URL message can be disabled in System Settings"
+	@priority = 3
+	test CanDisableLocalizedRedirectMessage {
+		property test.liferay.virtual.instance = "false";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			siteURLKey = "test-site-name");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "es-ES,es-ES",
+			localizedFriendlyURLList = "/pagina-de-prueba,/nueva-pagina-de-prueba",
+			localizedNameList = "Pagina de prueba,-");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Friendly URL Redirection",
+			configurationScope = "Virtual Instance Scope");
+
+		Uncheck(
+			checkboxName = "Show Alternative Layout Friendly URL Message",
+			key_tableEntry = "Show Alternative Layout Friendly URL Message",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/pagina-de-prueba");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
+
+		AssertVisible(
+			key_pageName = "Pagina de prueba",
+			locator1 = "Home#PAGE_ACTIVE");
+
+		AssertNotVisible(locator1 = "Message#INFO");
+	}
+
 	@description = "This ensures that Users can re-add the same friendly URL for different languages in a layout."
 	@priority = 5
 	test CanReAddSameFriendlyURLForDifferentLanguageInLayoutAfterRemoveTheTranslation {
@@ -366,6 +411,8 @@ definition {
 		AssertVisible(
 			key_pageName = "Pagina de prueba",
 			locator1 = "Home#PAGE_ACTIVE");
+
+		AssertVisible(locator1 = "Message#INFO");
 	}
 
 	@description = "This ensures that the old friendlyURL can be removed from the history."

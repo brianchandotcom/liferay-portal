@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LABEL_SELECT_BY_INDEX</td>
+	<td>xpath=(//label[contains(text(),'${key_fieldLabel}')]/..//select)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LABEL_GENERIC_SELECT_POSITION</td>
 	<td>//label[contains(text(),'${key_fieldLabel}')]/..//select/option['${row}']</td>
 	<td></td>

@@ -74,9 +74,9 @@ public class ValidationHelper {
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					Collections.singletonList(objectDefinitionName),
 					String.format(
-						"An %s must be related to an API endpoint",
+						"The %s must be related to an API endpoint",
 						objectDefinitionName),
-					"an-x-must-be-related-to-an-api-endpoint");
+					"the-x-must-be-related-to-an-api-endpoint");
 			}
 
 			com.liferay.object.rest.dto.v1_0.ObjectEntry
@@ -98,10 +98,10 @@ public class ValidationHelper {
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					Collections.singletonList(objectDefinitionName),
 					String.format(
-						"An API %s can only be associated to API endpoints " +
+						"The %s can only be associated to API endpoints " +
 							"with a \"collection\" retrieve type",
 						objectDefinitionName),
-					"an-x-can-only-be-associated-to-api-endpoints-with-a-" +
+					"the-x-can-only-be-associated-to-api-endpoints-with-a-" +
 						"\"collection\"-retrieve-type");
 			}
 

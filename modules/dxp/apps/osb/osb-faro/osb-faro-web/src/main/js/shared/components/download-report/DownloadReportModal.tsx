@@ -26,6 +26,7 @@ interface IDownloadReportModal {
 	observer: any;
 	onClose: () => void;
 	onSubmit: () => void;
+	requiredDateRange?: boolean;
 }
 
 export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
@@ -36,7 +37,8 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	infoMessage,
 	observer,
 	onClose,
-	onSubmit
+	onSubmit,
+	requiredDateRange = false
 }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -193,7 +195,12 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 							</ClayButton>
 
 							<ClayButton
-								disabled={disabled || submitDisabled}
+								disabled={
+									(requiredDateRange &&
+										!Object.keys(dateRange).length) ||
+									disabled ||
+									submitDisabled
+								}
 								type='submit'
 							>
 								{Liferay.Language.get('download')}

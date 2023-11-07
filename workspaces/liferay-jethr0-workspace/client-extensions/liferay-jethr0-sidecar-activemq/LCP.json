@@ -1,5 +1,10 @@
 {
 	"cpu": 1.0,
+	"env": {
+		"ANONYMOUS_LOGIN": "false",
+		"ARTEMIS_PASSWORD": "artemis",
+		"ARTEMIS_USER": "artemis"
+	},
 	"id": "__PROJECT_ID__",
 	"kind": "Deployment",
 	"livenessProbe": {
@@ -14,6 +19,12 @@
 	},
 	"memory": 1024,
 	"ports": [
+		{
+			"external": true,
+			"port": 8161,
+			"protocol": "TCP",
+			"targetPort": 8161
+		},
 		{
 			"external": true,
 			"port": 61616,

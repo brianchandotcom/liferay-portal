@@ -1082,50 +1082,9 @@ public class CTCollectionLocalServiceImpl
 
 				String primaryKeyName = iterator.next();
 
-				StringBundler sb = new StringBundler(
-					(2 * ctEntries.size()) + 7);
-
-				sb.append("delete from ");
-				sb.append(ctPersistence.getTableName());
-				sb.append(" where ctCollectionId = ");
-				sb.append(ctCollection.getCtCollectionId());
-				sb.append(" and ");
-				sb.append(primaryKeyName);
-				sb.append(" in (");
-
-				for (CTEntry ctEntry : ctEntries) {
-					sb.append(ctEntry.getModelClassPK());
-					sb.append(", ");
-				}
-
-				sb.setStringAt(")", sb.index() - 1);
-
-				Connection connection = _currentConnection.getConnection(
-					ctPersistence.getDataSource());
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(sb.toString())) {
-
-					preparedStatement.executeUpdate();
-				}
-				catch (Exception exception) {
-					throw new SystemException(exception);
-				}
-
-				for (String mappingTableName :
-						ctPersistence.getMappingTableNames()) {
-
-					sb.setStringAt(mappingTableName, 1);
-
-					try (PreparedStatement preparedStatement =
-							connection.prepareStatement(sb.toString())) {
-
-						preparedStatement.executeUpdate();
-					}
-					catch (Exception exception) {
-						throw new SystemException(exception);
-					}
-				}
+				_processDiscardEntriesQuery(
+					ctCollection.getCtCollectionId(), ctEntries, ctPersistence,
+					primaryKeyName);
 
 				return null;
 			});
@@ -1138,12 +1097,24 @@ public class CTCollectionLocalServiceImpl
 			_ctEntryPersistence.remove(ctEntry);
 		}
 
-		for (CTAutoResolutionInfo ctAutoResolutionInfo :
-				_ctAutoResolutionInfoPersistence.findByC_MCNI_SMCPK(
-					ctCollection.getCtCollectionId(), classNameId,
-					ArrayUtil.toLongArray(modelClassPKs))) {
+		int processedClassPKs = 0;
 
-			_ctAutoResolutionInfoPersistence.remove(ctAutoResolutionInfo);
+		while (processedClassPKs < modelClassPKs.size()) {
+			int batchSize = Math.min(
+				modelClassPKs.size() - processedClassPKs, _BATCH_SIZE);
+
+			for (CTAutoResolutionInfo ctAutoResolutionInfo :
+					_ctAutoResolutionInfoPersistence.findByC_MCNI_SMCPK(
+						ctCollection.getCtCollectionId(), classNameId,
+						ArrayUtil.toLongArray(
+							modelClassPKs.subList(
+								processedClassPKs,
+								processedClassPKs + batchSize)))) {
+
+				_ctAutoResolutionInfoPersistence.remove(ctAutoResolutionInfo);
+			}
+
+			processedClassPKs += batchSize;
 		}
 
 		Indexer<?> indexer = _indexerRegistry.getIndexer(
@@ -1357,6 +1328,66 @@ public class CTCollectionLocalServiceImpl
 		}
 	}
 
+	private void _processDiscardEntriesQuery(
+		long ctCollectionId, List<CTEntry> ctEntries,
+		CTPersistence<?> ctPersistence, String primaryKeyName) {
+
+		StringBundler sb = new StringBundler((2 * ctEntries.size()) + 7);
+
+		sb.append("delete from ");
+		sb.append(ctPersistence.getTableName());
+		sb.append(" where ctCollectionId = ");
+		sb.append(ctCollectionId);
+		sb.append(" and ");
+		sb.append(primaryKeyName);
+		sb.append(" in (");
+
+		int i = 0;
+
+		for (CTEntry ctEntry : ctEntries) {
+			if (i == _BATCH_SIZE) {
+				sb.setStringAt(")", sb.index() - 1);
+				sb.append(" or ");
+				sb.append(primaryKeyName);
+				sb.append(" in (");
+
+				i = 0;
+			}
+
+			sb.append(ctEntry.getModelClassPK());
+			sb.append(", ");
+
+			i++;
+		}
+
+		sb.setStringAt(")", sb.index() - 1);
+
+		Connection connection = _currentConnection.getConnection(
+			ctPersistence.getDataSource());
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sb.toString())) {
+
+			preparedStatement.executeUpdate();
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+
+		for (String mappingTableName : ctPersistence.getMappingTableNames()) {
+			sb.setStringAt(mappingTableName, 1);
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sb.toString())) {
+
+				preparedStatement.executeUpdate();
+			}
+			catch (Exception exception) {
+				throw new SystemException(exception);
+			}
+		}
+	}
+
 	private void _validate(String name, String description)
 		throws PortalException {
 
@@ -1381,6 +1412,8 @@ public class CTCollectionLocalServiceImpl
 				"Description is too long");
 		}
 	}
+
+	private static final int _BATCH_SIZE = 1000;
 
 	private static final int[] _STATUSES = {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED,

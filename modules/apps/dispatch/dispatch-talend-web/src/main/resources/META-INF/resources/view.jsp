@@ -64,13 +64,17 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(Dispatch
 </div>
 
 <aui:script>
-	AUI().ready((A) => {
-		A.one('#<portlet:namespace />removeIconId').on('click', (event) => {
+	document
+		.getElementById('<portlet:namespace />removeIconId')
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			A.one('#<portlet:namespace />talendArchiveFile').removeClass('hide');
+			document
+				.getElementById('<portlet:namespace />talendArchiveFile')
+				.classList.remove('hide');
 
-			A.one('#<portlet:namespace />talendArchiveFileName').addClass('hide');
+			document
+				.getElementById('<portlet:namespace />talendArchiveFileName')
+				.classList.add('hide');
 		});
-	});
 </aui:script>

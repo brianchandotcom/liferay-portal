@@ -11,7 +11,9 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -57,6 +59,18 @@ public class AssetDisplayPagesItemSelectorCustomView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "display-page-templates");
+	}
+
+	@Override
+	public boolean isVisible(
+		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

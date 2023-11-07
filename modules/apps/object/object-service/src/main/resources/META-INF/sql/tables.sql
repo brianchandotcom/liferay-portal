@@ -245,6 +245,7 @@ create table ObjectLayoutTab (
 create table ObjectRelationship (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	objectRelationshipId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

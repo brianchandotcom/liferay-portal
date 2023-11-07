@@ -30,15 +30,16 @@ public class ObjectRelationshipServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectRelationship addObjectRelationship(
-			long objectDefinitionId1, long objectDefinitionId2,
-			long parameterObjectFieldId, String deletionType,
+			String externalReferenceCode, long objectDefinitionId1,
+			long objectDefinitionId2, long parameterObjectFieldId,
+			String deletionType,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean system, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipService.addObjectRelationship(
-			objectDefinitionId1, objectDefinitionId2, parameterObjectFieldId,
-			deletionType, labelMap, name, system, type);
+			externalReferenceCode, objectDefinitionId1, objectDefinitionId2,
+			parameterObjectFieldId, deletionType, labelMap, name, system, type);
 	}
 
 	@Override
@@ -99,14 +100,14 @@ public class ObjectRelationshipServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectRelationship updateObjectRelationship(
-			long objectRelationshipId, long parameterObjectFieldId,
-			String deletionType, boolean edge,
+			String externalReferenceCode, long objectRelationshipId,
+			long parameterObjectFieldId, String deletionType, boolean edge,
 			java.util.Map<java.util.Locale, String> labelMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipService.updateObjectRelationship(
-			objectRelationshipId, parameterObjectFieldId, deletionType, edge,
-			labelMap);
+			externalReferenceCode, objectRelationshipId, parameterObjectFieldId,
+			deletionType, edge, labelMap);
 	}
 
 	@Override

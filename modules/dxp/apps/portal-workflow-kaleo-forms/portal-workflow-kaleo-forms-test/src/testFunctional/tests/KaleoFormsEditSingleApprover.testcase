@@ -257,8 +257,6 @@ definition {
 			nodeNotificationsType = "Email",
 			roleTitle = "Reviewer Name");
 
-		//KaleoDesigner.selectNode(nodeNodeLabel = "update");
-
 		KaleoDesigner.editNodeAssignments(
 			nodeAssignmentType = "Role",
 			roleTitle = "Updater Name");

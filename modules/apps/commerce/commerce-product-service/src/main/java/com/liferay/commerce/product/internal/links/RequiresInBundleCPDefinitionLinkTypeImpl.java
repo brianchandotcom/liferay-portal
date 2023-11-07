@@ -15,11 +15,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(service = CPDefinitionLinkType.class)
-public class ExcludeCPDefinitionLinkTypeImpl implements CPDefinitionLinkType {
+public class RequiresInBundleCPDefinitionLinkTypeImpl
+	implements CPDefinitionLinkType {
 
 	@Override
 	public String getType() {
-		return CPDefinitionLinkTypeConstants.EXCLUDE;
+		return CPDefinitionLinkTypeConstants.REQUIRES_IN_BUNDLE;
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class ExcludeCPDefinitionLinkTypeImpl implements CPDefinitionLinkType {
 
 	@Override
 	public boolean isBiDirectional() {
-		return true;
+		return false;
 	}
 
 }

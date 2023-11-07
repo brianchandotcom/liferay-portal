@@ -10,8 +10,9 @@ package com.liferay.commerce.product.constants;
  */
 public class CPDefinitionLinkTypeConstants {
 
-	public static final String EXCLUDE = "exclude";
+	public static final String INCOMPATIBLE_IN_BUNDLE =
+		"incompatible-in-bundle";
 
-	public static final String INCLUDE = "include";
+	public static final String REQUIRES_IN_BUNDLE = "requires-in-bundle";
 
 }

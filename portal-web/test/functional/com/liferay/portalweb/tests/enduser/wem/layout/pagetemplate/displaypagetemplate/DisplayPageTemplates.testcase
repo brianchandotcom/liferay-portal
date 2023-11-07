@@ -170,6 +170,8 @@ definition {
 				displayPageName = "Display Page Name",
 				item = "Configure");
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			Theme.configureLookAndFeelSpecificLook();
 
 			Theme.changeCurrentTheme(themeName = "Speedwell");
@@ -191,6 +193,8 @@ definition {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
 			SelectWindow.selectPopUp(value1 = "null");
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.viewCurrentTheme(themeName = "Speedwell");
 		}

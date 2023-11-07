@@ -5,29 +5,36 @@
 
 import {openConfirmModal} from 'frontend-js-web';
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
+export default function propsTransformer({
+	additionalProps: {trashEnabled},
+	portletNamespace,
+	...otherProps
+}) {
 	return {
 		...otherProps,
 		onActionButtonClick(event, {item}) {
-			const action = item?.data?.action;
+			if (item?.data?.action === 'deleteEntries') {
+				const form = document.getElementById(`${portletNamespace}fm`);
 
-			if (action === 'deleteEntries') {
-				openConfirmModal({
-					message: Liferay.Language.get(
-						'are-you-sure-you-want-to-delete-the-selected-entries'
-					),
-					onConfirm: (isConfirmed) => {
-						if (isConfirmed) {
-							const form = document.getElementById(
-								`${portletNamespace}fm`
-							);
+				if (!form) {
+					return;
+				}
 
-							if (form) {
+				if (trashEnabled) {
+					submitForm(form);
+				}
+				else {
+					openConfirmModal({
+						message: Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-the-selected-entries'
+						),
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
 								submitForm(form);
 							}
-						}
-					},
-				});
+						},
+					});
+				}
 			}
 		},
 	};

@@ -779,7 +779,7 @@ public class SourceFormatter {
 						throw new Exception(
 							StringBundler.concat(
 								"Found formatting issues:\n", "There should ",
-								"be file path after '## What'"));
+								"be one file path after '## What'"));
 					}
 
 					previousLine = trimmedLine;

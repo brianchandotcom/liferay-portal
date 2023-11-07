@@ -11,6 +11,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+const DIFFERENCE_IN_YEARS = 1;
+
 export function isValidDate(dateString) {
 
 	// Regular expression for the 'yyyy-MM-dd HH:mm' format
@@ -35,7 +37,7 @@ export function isValidDate(dateString) {
 	const dateYear = date.getFullYear();
 	const currentYear = currenDate.getFullYear();
 
-	if (dateYear > currentYear + 1) {
+	if (dateYear > currentYear + DIFFERENCE_IN_YEARS) {
 		return false;
 	}
 
@@ -103,7 +105,7 @@ export default function ScheduleModal({
 						timeZone={timeZone}
 						value={displayDate}
 						years={{
-							end: currentYear + 1,
+							end: currentYear + DIFFERENCE_IN_YEARS,
 							start: currentYear,
 						}}
 					/>

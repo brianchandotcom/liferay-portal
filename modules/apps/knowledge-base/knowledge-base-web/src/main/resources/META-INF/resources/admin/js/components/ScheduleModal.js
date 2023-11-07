@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-function isValidDate(dateString) {
+export function isValidDate(dateString) {
 
 	// Regular expression for the 'yyyy-MM-dd HH:mm' format
 

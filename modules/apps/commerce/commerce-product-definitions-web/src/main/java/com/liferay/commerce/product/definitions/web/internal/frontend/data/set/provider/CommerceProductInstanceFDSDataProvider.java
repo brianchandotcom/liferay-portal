@@ -14,11 +14,14 @@ import com.liferay.commerce.product.definitions.web.internal.constants.CommerceP
 import com.liferay.commerce.product.definitions.web.internal.model.Sku;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPJSONUtil;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -100,6 +103,19 @@ public class CommerceProductInstanceFDSDataProvider
 					cpInstance.getCompanyId(), cpDefinition.getGroupId(),
 					cpInstance.getSku(), StringPool.BLANK);
 
+			String availableQuantity = String.valueOf(stockQuantity);
+
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchPrimaryCPInstanceUnitOfMeasure(
+						cpInstance.getCPInstanceId());
+
+			if (cpInstanceUnitOfMeasure != null) {
+				availableQuantity = String.valueOf(
+					_commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure, stockQuantity));
+			}
+
 			String statusDisplayStyle = StringPool.BLANK;
 
 			if (cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) {
@@ -120,7 +136,7 @@ public class CommerceProductInstanceFDSDataProvider
 							cpInstance.getCPDefinitionId(),
 							jsonArray.toString(), locale)),
 					HtmlUtil.escape(_formatPrice(cpInstance, locale)),
-					cpDefinitionName, stockQuantity.intValue(),
+					cpDefinitionName, availableQuantity,
 					new LabelField(
 						statusDisplayStyle,
 						_language.get(
@@ -234,6 +250,9 @@ public class CommerceProductInstanceFDSDataProvider
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
+
+	@Reference
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 
@@ -242,6 +261,10 @@ public class CommerceProductInstanceFDSDataProvider
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private Language _language;

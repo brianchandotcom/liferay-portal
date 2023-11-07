@@ -9,6 +9,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServ
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.commerce.warehouse.web.internal.display.context.CommerceInventoryWarehouseItemsDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -63,7 +64,8 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 				commerceInventoryWarehouseItemsDisplayContext =
 					new CommerceInventoryWarehouseItemsDisplayContext(
 						_commerceInventoryWarehouseItemService,
-						_commerceInventoryWarehouseService, _cpInstanceService,
+						_commerceInventoryWarehouseService,
+						_commerceQuantityFormatter, _cpInstanceService,
 						httpServletRequest, _portal);
 
 			httpServletRequest.setAttribute(
@@ -89,6 +91,9 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

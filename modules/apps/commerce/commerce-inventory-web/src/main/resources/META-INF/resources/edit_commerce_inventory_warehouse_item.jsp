@@ -31,20 +31,12 @@ CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventor
 
 			<aui:model-context bean="<%= commerceInventoryWarehouseItem %>" model="<%= CommerceInventoryWarehouseItem.class %>" />
 
-			<%
-			BigDecimal quantity = commerceInventoryWarehouseItem.getQuantity();
-			%>
-
-			<aui:input ignoreRequestValue="<%= true %>" label="quantity-on-hand" name="quantity" type="text" value="<%= quantity.intValue() %>">
+			<aui:input ignoreRequestValue="<%= true %>" label="quantity-on-hand" name="quantity" type="text" value="<%= commerceInventoryDisplayContext.getFormattedQuantity(commerceInventoryWarehouseItem.getQuantity()) %>">
 				<aui:validator name="min">0</aui:validator>
 				<aui:validator name="number" />
 			</aui:input>
 
-			<%
-			BigDecimal reservedQuantity = commerceInventoryWarehouseItem.getReservedQuantity();
-			%>
-
-			<aui:input ignoreRequestValue="<%= true %>" label="safety-stock-quantity" name="reservedQuantity" type="text" value="<%= reservedQuantity.intValue() %>">
+			<aui:input ignoreRequestValue="<%= true %>" label="safety-stock-quantity" name="reservedQuantity" type="text" value="<%= commerceInventoryDisplayContext.getFormattedQuantity(commerceInventoryWarehouseItem.getReservedQuantity()) %>">
 				<aui:validator name="min">0</aui:validator>
 				<aui:validator name="number" />
 			</aui:input>

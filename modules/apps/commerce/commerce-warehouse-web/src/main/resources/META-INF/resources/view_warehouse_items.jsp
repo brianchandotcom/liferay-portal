@@ -98,7 +98,7 @@ if (Validator.isNotNull(backURL)) {
 									</c:if>
 
 									<td>
-										<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" min="0" name="commerceInventoryWarehouseItemQuantity" type="text" value="<%= quantity.intValue() %>" wrapperCssClass="mb-0" />
+										<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" min="0" name="commerceInventoryWarehouseItemQuantity" type="text" value="<%= commerceInventoryWarehouseItemsDisplayContext.getFormattedQuantity(commerceInventoryWarehouseItem) %>" wrapperCssClass="mb-0" />
 									</td>
 									<td class="text-center">
 										<aui:button cssClass="warehouse-save-btn" name='<%= "saveButton" + curIndex %>' primary="<%= true %>" value="save" />

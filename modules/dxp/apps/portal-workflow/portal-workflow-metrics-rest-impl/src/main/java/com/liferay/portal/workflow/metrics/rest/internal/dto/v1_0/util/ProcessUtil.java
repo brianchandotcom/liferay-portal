@@ -67,11 +67,14 @@ public class ProcessUtil {
 			if (StringUtil.startsWith(key, "title_") &&
 				!StringUtil.endsWith(key, "_sortable")) {
 
-				Field field = entry.getValue();
+				String languageTag = _toLanguageTag(
+					StringUtil.removeSubstring(key, "title_"));
 
-				titleMap.put(
-					_toLanguageTag(StringUtil.removeSubstring(key, "title_")),
-					String.valueOf(field.getValue()));
+				if (languageTag != null) {
+					Field field = entry.getValue();
+
+					titleMap.put(languageTag, String.valueOf(field.getValue()));
+				}
 			}
 		}
 
@@ -93,7 +96,11 @@ public class ProcessUtil {
 	}
 
 	private static String _toLanguageTag(String languageId) {
-		Locale locale = LocaleUtil.fromLanguageId(languageId);
+		Locale locale = LocaleUtil.fromLanguageId(languageId, true, false);
+
+		if (locale == null) {
+			return null;
+		}
 
 		return locale.toLanguageTag();
 	}

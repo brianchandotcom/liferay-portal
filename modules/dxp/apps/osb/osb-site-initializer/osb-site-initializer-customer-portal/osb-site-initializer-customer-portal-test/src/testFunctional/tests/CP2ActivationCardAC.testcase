@@ -239,7 +239,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150374 | Test Summary: Verify activation form link name: Go to Workspace"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 3
 	test IfGoToWorkspaceLinkWorks {
 
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150370 | Test Summary: Verify the page subtitle: Almost there! Setup Analytics Cloud by finishing the activation form"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 3
 	test PageSubtitleAlmostThereIsPresent {
 
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150372 | Test Summary: Verify the page subtitle: Your Analytics Cloud workspace is being set up and will be available soon"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 3
 	test PageSubtitleYourAnalyticsCloud {
 

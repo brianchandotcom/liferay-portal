@@ -44,7 +44,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143790 | Test Summary: Assert if the project card contains Project name"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 4
 	test AssertCardProjectNameLessThan5 {
 
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143778 | Test Summary: Assert the name of the project card"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 4
 	test AssertCardProjectNameMoreThan5 {
 
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143791 | Test Summary: Assert if the project card contains Status"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 4
 	test AssertCardStatusLessThan5 {
 
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143779 | Test Summary: Assert if the project card contains Status"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 4
 	test AssertCardStatusMoreThan5 {
 
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143792 | Test Summary: Assert if the project card contains Subscription End Date"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 4
 	test AssertCardSubscriptionEndDateLessThan5 {
 
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143780 | Test Summary: Assert if the project card contains Subscription End Date"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 4
 	test AssertCardSubscriptionEndDateMoreThan5 {
 
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143785 | Test Summary: Check if when the user clicks on the card he is directed to another page"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 5
 	test VerifyCardDirectsToAnotherPageMoreThan5 {
 
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143781 | Test Summary: Verify if the projects are displayed as a list"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 5
 	test VerifyIfProjectsDisplayedAsAList {
 
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143793 | Test Summary: Verify if the projects are displayed as cards"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 5
 	test VerifyIfProjectsDisplayedAsCards {
 
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143782 | Test Summary: Verify if when more than 5 projects are chosen the search bar will be visible"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 3
 	test VerifyIfSearchIsVisible {
 
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143784 | Test Summary: Verify if the number of projects is being showed by side of the search bar"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 3
 	test VerifyProjectsNumberBySideOfSearchBar {
 
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143795 | Test Summary: Assert the name of the project card"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 2
 	test VerifyUserName {
 
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143794 | Test Summary: Check if when the user clicks on the card he is directed to another page"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 4
 	test VerifyWhenCardIsClickedGoesAnotherPage {
 

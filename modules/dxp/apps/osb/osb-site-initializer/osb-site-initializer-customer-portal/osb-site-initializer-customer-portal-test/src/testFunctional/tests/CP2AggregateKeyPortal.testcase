@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150697 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
-	@ignore= "true"
+	@ignore = "true"
 	@priority = 4
 	test AggregateKeyInDropdownMenuIsDeactivated {
 

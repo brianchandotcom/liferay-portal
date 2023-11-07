@@ -1139,11 +1139,8 @@ public class DLFileEntryLocalServiceImpl
 			dynamicQuery -> {
 				Property companyIdProperty = PropertyFactoryUtil.forName(
 					"companyId");
-				Property mimeTypeProperty = PropertyFactoryUtil.forName(
-					"mimeType");
 
 				dynamicQuery.add(companyIdProperty.eq(companyId));
-				dynamicQuery.add(mimeTypeProperty.in(mimeTypes));
 
 				if (classNameId > 0) {
 					Property classNameIdProperty = PropertyFactoryUtil.forName(
@@ -1151,6 +1148,11 @@ public class DLFileEntryLocalServiceImpl
 
 					dynamicQuery.add(classNameIdProperty.eq(classNameId));
 				}
+
+				Property mimeTypeProperty = PropertyFactoryUtil.forName(
+					"mimeType");
+
+				dynamicQuery.add(mimeTypeProperty.in(mimeTypes));
 
 				if (maximumSize >= 0) {
 					Property sizeProperty = PropertyFactoryUtil.forName("size");

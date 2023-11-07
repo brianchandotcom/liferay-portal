@@ -192,7 +192,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"An API filter can only be associated to API endpoints with " +
+				"The API filter can only be associated to API endpoints with " +
 					"a \"collection\" retrieve type."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
@@ -210,7 +210,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "An API filter must be related to an API endpoint."
+				"title", "The API filter must be related to an API endpoint."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

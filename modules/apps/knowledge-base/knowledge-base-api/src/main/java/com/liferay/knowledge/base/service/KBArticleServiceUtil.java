@@ -344,6 +344,12 @@ public class KBArticleServiceUtil {
 			priority);
 	}
 
+	public static KBArticle moveKBArticleToTrash(long resourcePrimKey)
+		throws PortalException {
+
+		return getService().moveKBArticleToTrash(resourcePrimKey);
+	}
+
 	public static KBArticle revertKBArticle(
 			long resourcePrimKey, int version,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

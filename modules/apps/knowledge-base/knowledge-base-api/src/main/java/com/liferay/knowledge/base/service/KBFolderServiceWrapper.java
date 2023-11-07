@@ -158,6 +158,13 @@ public class KBFolderServiceWrapper
 	}
 
 	@Override
+	public KBFolder moveKBFolderToTrash(long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbFolderService.moveKBFolderToTrash(kbFolderId);
+	}
+
+	@Override
 	public KBFolder updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description,

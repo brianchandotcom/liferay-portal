@@ -235,6 +235,9 @@ public interface KBArticleService extends BaseService {
 			long parentResourcePrimKey, double priority)
 		throws PortalException;
 
+	public KBArticle moveKBArticleToTrash(long resourcePrimKey)
+		throws PortalException;
+
 	public KBArticle revertKBArticle(
 			long resourcePrimKey, int version, ServiceContext serviceContext)
 		throws PortalException;

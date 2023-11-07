@@ -113,6 +113,8 @@ public interface KBFolderService extends BaseService {
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException;
 
+	public KBFolder moveKBFolderToTrash(long kbFolderId) throws PortalException;
+
 	public KBFolder updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description,

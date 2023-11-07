@@ -1207,8 +1207,6 @@ definition {
 	@description = "This ensures that users can delete a version entry from the Version History page."
 	@priority = 5
 	test CanDeleteSpecifiedFileVersionFromVersionsPage {
-		property custom.properties = "feature.flag.LPS-175915=true";
-
 		var documentId = JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document Version 1.0",
@@ -1243,7 +1241,7 @@ definition {
 	@description = "This test ensures that users can download different document versions from the Versions tab in the info panel."
 	@priority = 4
 	test CanDownloadDifferentVersions {
-		property custom.properties = "dl.actions.visible=true${line.separator}feature.flag.LPS-175915=true";
+		property custom.properties = "dl.actions.visible=true";
 
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
@@ -1371,8 +1369,6 @@ definition {
 	@description = "This ensures that users can download a version entry from the Version History page."
 	@priority = 5
 	test CanDownloadSpecifiedFileVersionFromVersionsPage {
-		property custom.properties = "feature.flag.LPS-175915=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document Version 1.0",
@@ -2892,8 +2888,6 @@ definition {
 	@description = "This ensures that users can preview a version entry from the Version History page."
 	@priority = 5
 	test CanPreviewSpecifiedFileVersionFromVersionPage {
-		property custom.properties = "feature.flag.LPS-175915=true";
-
 		var documentId = JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document Version 1.0",
@@ -3107,8 +3101,6 @@ definition {
 	@description = "This ensures that users can revert a version entry from the Version History page."
 	@priority = 4
 	test CanRevertSpecifiedFileVersionFromVersionsPage {
-		property custom.properties = "feature.flag.LPS-175915=true";
-
 		var documentId = JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document Version 1.0",
@@ -3414,8 +3406,6 @@ definition {
 	@description = "This ensures that all action buttons are present in kebab menu of a document in DM."
 	@priority = 4
 	test CanViewAllActionsInKebabMenu {
-		property custom.properties = "feature.flag.LPS-175915=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -3435,8 +3425,6 @@ definition {
 	@description = "This ensures that All the version entries are ordered by version with the latest version at the top in the version history page."
 	@priority = 4
 	test CanViewAllFileVersionsFromVersionsPage {
-		property custom.properties = "feature.flag.LPS-175915=true";
-
 		var documentId = JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document Version 1.0",
@@ -3836,7 +3824,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanViewOlderVersion {
-		property custom.properties = "dl.actions.visible=true${line.separator}feature.flag.LPS-175915=true";
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(

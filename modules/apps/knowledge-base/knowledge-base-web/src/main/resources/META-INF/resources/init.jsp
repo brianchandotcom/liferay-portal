@@ -22,6 +22,7 @@ taglib uri="http://liferay.com/tld/rss" prefix="liferay-rss" %><%@
 taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/social-bookmarks" prefix="liferay-social-bookmarks" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
@@ -176,6 +177,8 @@ page import="javax.portlet.WindowState" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-trash:defineObjects />
 
 <portlet:defineObjects />
 

@@ -8,7 +8,7 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, renderRequest, renderResponse);
+KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, renderRequest, renderResponse, trashHelper);
 %>
 
 <div class="knowledge-base-vertical-bar <%= kbAdminNavigationDisplayContext.isProductMenuOpen() ? StringPool.BLANK : "expanded" %>" id="<portlet:namespace />verticalBarId">

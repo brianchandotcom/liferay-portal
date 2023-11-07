@@ -453,6 +453,14 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static LayoutPageTemplateEntry getLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId)
+		throws PortalException {
+
+		return getService().getLayoutPageTemplateEntry(
+			layoutPageTemplateEntryId);
+	}
+
+	public static LayoutPageTemplateEntry getLayoutPageTemplateEntry(
 			long groupId, String layoutPageTemplateEntryKey)
 		throws PortalException {
 

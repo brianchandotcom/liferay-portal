@@ -201,6 +201,14 @@ definition {
 			locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 	}
 
+	@summary = "Click on text link"
+	macro clickInTextLink(key_text = null,key_indexNumber = null) {
+		Click(
+			key_indexNumber = ${key_indexNumber},
+			key_text = ${key_text},
+			locator1 = "Link#ANY_N");
+	}
+
 	@summary = "Default summary"
 	macro closeModal() {
 		Click(locator1 = "CP2Utils#CLOSE_BUTTON");

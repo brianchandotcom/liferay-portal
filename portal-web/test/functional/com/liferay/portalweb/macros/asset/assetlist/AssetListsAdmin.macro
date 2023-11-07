@@ -255,6 +255,16 @@ definition {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 				value1 = ${itemType});
+
+			if (isSet(moveToAvailableItemTypeList)) {
+				for (var moveToAvailableItemType : list ${moveToAvailableItemTypeList}) {
+					Click(
+						key_contentName = ${moveToAvailableItemType},
+						locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT");
+
+					Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_AVAILABLE");
+				}
+			}
 		}
 
 		if (isSet(itemSubtype)) {
@@ -282,6 +292,16 @@ definition {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 				value1 = ${itemType});
+
+			if (isSet(moveToAvailableItemTypeList)) {
+				for (var moveToAvailableItemType : list ${moveToAvailableItemTypeList}) {
+					Click(
+						key_contentName = ${moveToAvailableItemType},
+						locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT");
+
+					Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_AVAILABLE");
+				}
+			}
 		}
 
 		if (isSet(itemSubtype)) {

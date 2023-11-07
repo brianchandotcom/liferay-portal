@@ -1,14 +1,14 @@
 assemble:
     - from: batch
       into: batch
-liferay-ticket-assigntome-batch-action:
-    name: Liferay Ticket AssignToMe Batch Action
-    oAuthApplicationHeadlessServer: liferay-ticket-assigntome-batch-action-oauth-application-headless-server
+liferay-ticket-batch-action:
+    name: Liferay Ticket Batch Action
+    oAuthApplicationHeadlessServer: liferay-ticket-batch-action-oauth-application-headless-server
     type: batch
-liferay-ticket-assigntome-batch-action-oauth-application-headless-server:
+liferay-ticket-batch-action-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Ticket AssignToMe Batch Action OAuth Application Headless Server
+    name: Liferay Ticket Batch Action OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Batch.Engine.everything
         - Liferay.Object.Admin.REST.everything

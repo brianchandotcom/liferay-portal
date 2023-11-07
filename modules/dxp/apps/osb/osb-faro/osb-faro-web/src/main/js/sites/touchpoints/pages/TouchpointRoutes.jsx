@@ -1,6 +1,7 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
+import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
 import DownloadPDFReport, {
 	Containers
 } from 'shared/components/download-report/DownloadPDFReport';
@@ -126,6 +127,19 @@ function TouchpointRoutes({className, router}) {
 							} | ${Liferay.Language.get('page-dashboard')}`}
 							title={decodedTitle}
 							url={decodedTouchpoint}
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
+
+			{matchedRoute === Routes.SITES_TOUCHPOINTS_KNOWN_INDIVIDUALS && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadCSVReport
+							assetId={decodedTouchpoint}
+							assetType='page'
+							disabled={dataSourceStates.empty}
+							type='individual'
 						/>
 					</div>
 				</BasePage.SubHeader>

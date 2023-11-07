@@ -15,10 +15,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 	}
 
 	tearDown {
@@ -76,10 +73,7 @@ definition {
 			Navigator.gotoBack();
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		ACLoading.waitForLoadingComplete();
 
@@ -108,10 +102,7 @@ definition {
 			Navigator.gotoBack();
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "4 Entries");
 
@@ -190,10 +181,7 @@ definition {
 
 		Navigator.gotoBack();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		WorkflowMetricsProcessListView.assertPaginationBar();
 	}
@@ -224,10 +212,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry B");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		Click(
 			key_value = "down",
@@ -243,10 +228,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsProcessListView#CLEAR_SEARCH");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		Click(
 			key_assigneeName = "Total Pending",
@@ -362,10 +344,7 @@ definition {
 			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		while ((IsElementNotPresent(key_value = "down", locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER")) && (maxIterations = "20")) {
 			Refresh();

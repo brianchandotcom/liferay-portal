@@ -364,10 +364,7 @@ definition {
 
 	@summary = "Default summary"
 	macro checkWorkflowReports(key_overdueValue = null,key_onTimeValue = null,key_totalPendingValue = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_VALUE_OVERDUE",

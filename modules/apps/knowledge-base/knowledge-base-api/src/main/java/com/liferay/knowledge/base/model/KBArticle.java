@@ -53,6 +53,9 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<KBArticle> getAncestorKBArticles()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<Long> getAncestorResourcePrimaryKeys()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -79,6 +82,8 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getViewCount();
+
+	public boolean hasParentKBArticle();
 
 	public boolean isFirstVersion();
 

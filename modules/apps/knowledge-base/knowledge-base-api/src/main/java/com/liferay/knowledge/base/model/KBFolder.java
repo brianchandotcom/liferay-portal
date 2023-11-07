@@ -50,6 +50,9 @@ public interface KBFolder extends KBFolderModel, PersistedModel {
 	public java.util.List<Long> getAncestorKBFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<KBFolder> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public long getClassNameId();
 
 	public KBFolder getParentKBFolder()

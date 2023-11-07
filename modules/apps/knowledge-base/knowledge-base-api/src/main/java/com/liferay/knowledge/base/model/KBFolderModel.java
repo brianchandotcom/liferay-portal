@@ -7,10 +7,13 @@ package com.liferay.knowledge.base.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
@@ -30,8 +33,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KBFolderModel
-	extends BaseModel<KBFolder>, CTModel<KBFolder>, ExternalReferenceCodeModel,
-			MVCCModel, ShardedModel, StagedGroupedModel {
+	extends BaseModel<KBFolder>, ContainerModel, CTModel<KBFolder>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -322,6 +326,207 @@ public interface KBFolderModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the status of this kb folder.
+	 *
+	 * @return the status of this kb folder
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this kb folder.
+	 *
+	 * @param status the status of this kb folder
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this kb folder.
+	 *
+	 * @return the status by user ID of this kb folder
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this kb folder.
+	 *
+	 * @param statusByUserId the status by user ID of this kb folder
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this kb folder.
+	 *
+	 * @return the status by user uuid of this kb folder
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this kb folder.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this kb folder
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this kb folder.
+	 *
+	 * @return the status by user name of this kb folder
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this kb folder.
+	 *
+	 * @param statusByUserName the status by user name of this kb folder
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this kb folder.
+	 *
+	 * @return the status date of this kb folder
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this kb folder.
+	 *
+	 * @param statusDate the status date of this kb folder
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the class primary key of the trash entry for this kb folder.
+	 *
+	 * @return the class primary key of the trash entry for this kb folder
+	 */
+	@Override
+	public long getTrashEntryClassPK();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this kb folder is in the Recycle Bin; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInTrash();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is approved.
+	 *
+	 * @return <code>true</code> if this kb folder is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is denied.
+	 *
+	 * @return <code>true</code> if this kb folder is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is a draft.
+	 *
+	 * @return <code>true</code> if this kb folder is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is expired.
+	 *
+	 * @return <code>true</code> if this kb folder is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is inactive.
+	 *
+	 * @return <code>true</code> if this kb folder is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is incomplete.
+	 *
+	 * @return <code>true</code> if this kb folder is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is pending.
+	 *
+	 * @return <code>true</code> if this kb folder is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this kb folder is scheduled.
+	 *
+	 * @return <code>true</code> if this kb folder is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
+
+	/**
+	 * Returns the container model ID of this kb folder.
+	 *
+	 * @return the container model ID of this kb folder
+	 */
+	@Override
+	public long getContainerModelId();
+
+	/**
+	 * Sets the container model ID of this kb folder.
+	 *
+	 * @param containerModelId the container model ID of this kb folder
+	 */
+	@Override
+	public void setContainerModelId(long containerModelId);
+
+	/**
+	 * Returns the container name of this kb folder.
+	 *
+	 * @return the container name of this kb folder
+	 */
+	@Override
+	public String getContainerModelName();
+
+	/**
+	 * Returns the parent container model ID of this kb folder.
+	 *
+	 * @return the parent container model ID of this kb folder
+	 */
+	@Override
+	public long getParentContainerModelId();
+
+	/**
+	 * Sets the parent container model ID of this kb folder.
+	 *
+	 * @param parentContainerModelId the parent container model ID of this kb folder
+	 */
+	@Override
+	public void setParentContainerModelId(long parentContainerModelId);
 
 	@Override
 	public KBFolder cloneWithOriginalValues();

@@ -2121,6 +2121,33 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectLayout"
             tags: ["ObjectLayout"]
+    "/object-relationships/by-external-reference-code/{externalReferenceCode}":
+        put:
+            operationId: putObjectRelationshipByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectRelationship"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectRelationship"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectRelationship"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectRelationship"
+            tags: ["ObjectRelationship"]
     "/object-relationships/{objectRelationshipId}":
         delete:
             operationId: deleteObjectRelationship

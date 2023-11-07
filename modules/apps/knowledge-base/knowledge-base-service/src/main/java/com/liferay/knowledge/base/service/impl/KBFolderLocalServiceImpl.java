@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,6 +34,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.exception.RestoreEntryException;
+import com.liferay.trash.exception.TrashEntryException;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.model.TrashVersion;
+import com.liferay.trash.service.TrashEntryLocalService;
+import com.liferay.trash.service.TrashVersionLocalService;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -105,6 +114,14 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 
 	@Override
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException {
+		return deleteKBFolder(kbFolderId, true);
+	}
+
+	@Override
+	public KBFolder deleteKBFolder(
+			long kbFolderId, boolean includeTrashedEntries)
+		throws PortalException {
+
 		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
 
 		_kbArticleLocalService.deleteKBArticles(
@@ -114,7 +131,11 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 			kbFolder.getGroupId(), kbFolder.getKbFolderId());
 
 		for (KBFolder childKBFolder : childKBFolders) {
-			deleteKBFolder(childKBFolder.getKbFolderId());
+			if (includeTrashedEntries ||
+				!_trashHelper.isInTrashExplicitly(childKBFolder)) {
+
+				deleteKBFolder(childKBFolder);
+			}
 		}
 
 		_resourceLocalService.deleteResource(
@@ -122,6 +143,15 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 			ResourceConstants.SCOPE_INDIVIDUAL, kbFolder.getKbFolderId());
 
 		_expandoRowLocalService.deleteRows(kbFolder.getKbFolderId());
+
+		if (_trashHelper.isInTrashExplicitly(kbFolder)) {
+			_trashEntryLocalService.deleteEntry(
+				KBFolder.class.getName(), kbFolder.getKbFolderId());
+		}
+		else {
+			_trashVersionLocalService.deleteTrashVersion(
+				KBFolder.class.getName(), kbFolder.getKbFolderId());
+		}
 
 		return kbFolderPersistence.remove(kbFolder);
 	}
@@ -187,8 +217,27 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 			long groupId, long parentKBFolderId, int start, int end)
 		throws PortalException {
 
-		return kbFolderPersistence.findByG_P(
-			groupId, parentKBFolderId, start, end);
+		return kbFolderPersistence.findByG_P_S(
+			groupId, parentKBFolderId, WorkflowConstants.STATUS_APPROVED, start,
+			end);
+	}
+
+	@Override
+	public List<Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey) {
+
+		return getKBFoldersAndKBArticles(
+			groupId, parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public List<Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+
+		return kbFolderFinder.findF_A_ByG_P(
+			groupId, parentResourcePrimKey, queryDefinition);
 	}
 
 	@Override
@@ -221,7 +270,16 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
+	public int getKBFoldersCount(
+			long groupId, long parentKBFolderId, int status)
+		throws PortalException {
+
+		return kbFolderPersistence.countByG_P_S(
+			groupId, parentKBFolderId, status);
+	}
+
+	@Override
+	public KBFolder moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException {
 
 		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
@@ -264,6 +322,110 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 						QueryUtil.ALL_POS, null));
 			}
 		}
+
+		return kbFolder;
+	}
+
+	@Override
+	public KBFolder moveKBFolderFromTrash(
+			long userId, long kbFolderId, long parentKBFolderId)
+		throws PortalException {
+
+		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
+
+		if (!kbFolder.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
+		if (_trashHelper.isInTrashExplicitly(kbFolder)) {
+			restoreKBFolderFromTrash(userId, kbFolderId);
+		}
+		else {
+
+			// KB folder
+
+			TrashVersion trashVersion = _trashVersionLocalService.fetchVersion(
+				KBFolder.class.getName(), kbFolderId);
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
+			updateStatus(userId, kbFolder, status);
+
+			// Trash
+
+			if (trashVersion != null) {
+				_trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
+
+			// KB folders and articles
+
+			_restoreDependentsFromTrash(kbFolder);
+		}
+
+		return moveKBFolder(kbFolderId, parentKBFolderId);
+	}
+
+	public KBFolder moveKBFolderToTrash(long userId, long kbFolderId)
+		throws PortalException {
+
+		// KB folder
+
+		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
+
+		if (kbFolder.isInTrash()) {
+			throw new TrashEntryException();
+		}
+
+		int oldStatus = kbFolder.getStatus();
+
+		kbFolder = updateStatus(
+			userId, kbFolder, WorkflowConstants.STATUS_IN_TRASH);
+
+		// Trash
+
+		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
+			userId, kbFolder.getGroupId(), KBFolder.class.getName(),
+			kbFolder.getKbFolderId(), kbFolder.getUuid(), null, oldStatus, null,
+			null);
+
+		// KB folders and articles
+
+		_moveDependentsToTrash(kbFolder, trashEntry.getEntryId());
+
+		return kbFolder;
+	}
+
+	public KBFolder restoreKBFolderFromTrash(long userId, long kbFolderId)
+		throws PortalException {
+
+		// KB folder
+
+		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
+
+		if (!kbFolder.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
+			KBFolder.class.getName(), kbFolderId);
+
+		kbFolder = updateStatus(userId, kbFolder, trashEntry.getStatus());
+
+		// KB folders and articles
+
+		_restoreDependentsFromTrash(kbFolder);
+
+		// Trash
+
+		_trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
+
+		return kbFolder;
 	}
 
 	@Override
@@ -288,6 +450,31 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		kbFolder.setExpandoBridgeAttributes(serviceContext);
 
 		return kbFolderPersistence.update(kbFolder);
+	}
+
+	@Override
+	public KBFolder updateStatus(long userId, KBFolder kbFolder, int status)
+		throws PortalException {
+
+		// KB folder
+
+		User user = _userLocalService.getUser(userId);
+
+		kbFolder.setStatus(status);
+		kbFolder.setStatusByUserId(userId);
+		kbFolder.setStatusByUserName(user.getFullName());
+		kbFolder.setStatusDate(new Date());
+
+		kbFolder = kbFolderPersistence.update(kbFolder);
+
+		// Indexer
+
+		Indexer<KBFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			KBFolder.class);
+
+		indexer.reindex(kbFolder);
+
+		return kbFolder;
 	}
 
 	private void _addKBFolderResources(
@@ -330,6 +517,112 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		}
 
 		return uniqueUrlTitle;
+	}
+
+	private void _moveDependentsToTrash(
+			KBFolder parentKBFolder, long trashEntryId)
+		throws PortalException {
+
+		List<Object> objects = getKBFoldersAndKBArticles(
+			parentKBFolder.getGroupId(), parentKBFolder.getKbFolderId());
+
+		for (Object object : objects) {
+			if (object instanceof KBArticle) {
+				_kbArticleLocalService.moveDependentKBArticleToTrash(
+					(KBArticle)object, trashEntryId);
+			}
+			else {
+
+				// KB folder
+
+				KBFolder kbFolder = (KBFolder)object;
+
+				if (kbFolder.isInTrash()) {
+					continue;
+				}
+
+				int oldStatus = kbFolder.getStatus();
+
+				kbFolder.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+				kbFolder = kbFolderPersistence.update(kbFolder);
+
+				// Trash
+
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					_trashVersionLocalService.addTrashVersion(
+						trashEntryId, KBFolder.class.getName(),
+						kbFolder.getKbFolderId(), oldStatus, null);
+				}
+
+				// KB folders and articles
+
+				_moveDependentsToTrash(kbFolder, trashEntryId);
+
+				// Indexer
+
+				Indexer<KBFolder> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(KBFolder.class);
+
+				indexer.reindex(kbFolder);
+			}
+		}
+	}
+
+	private void _restoreDependentsFromTrash(KBFolder parentKBFolder)
+		throws PortalException {
+
+		List<Object> objects = getKBFoldersAndKBArticles(
+			parentKBFolder.getGroupId(), parentKBFolder.getKbFolderId(),
+			WorkflowConstants.STATUS_IN_TRASH);
+
+		for (Object object : objects) {
+			if (object instanceof KBArticle) {
+				_kbArticleLocalService.restoreDependentKBArticleFromTrash(
+					(KBArticle)object);
+			}
+			else {
+
+				// KB folder
+
+				KBFolder kbFolder = (KBFolder)object;
+
+				if (!_trashHelper.isInTrashImplicitly(kbFolder)) {
+					continue;
+				}
+
+				TrashVersion trashVersion =
+					_trashVersionLocalService.fetchVersion(
+						KBFolder.class.getName(), kbFolder.getKbFolderId());
+
+				int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+				if (trashVersion != null) {
+					oldStatus = trashVersion.getStatus();
+				}
+
+				kbFolder.setStatus(oldStatus);
+
+				kbFolder = kbFolderPersistence.update(kbFolder);
+
+				// KB folders and articles
+
+				_restoreDependentsFromTrash(kbFolder);
+
+				// Trash
+
+				if (trashVersion != null) {
+					_trashVersionLocalService.deleteTrashVersion(trashVersion);
+				}
+
+				// Indexer
+
+				Indexer<KBFolder> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(KBFolder.class);
+
+				indexer.reindex(kbFolder);
+			}
+		}
 	}
 
 	private void _validateName(long groupId, long parentKBFolderId, String name)
@@ -408,6 +701,15 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
+
+	@Reference
+	private TrashVersionLocalService _trashVersionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

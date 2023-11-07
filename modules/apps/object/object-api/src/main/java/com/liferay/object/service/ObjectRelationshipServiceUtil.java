@@ -58,6 +58,16 @@ public class ObjectRelationshipServiceUtil {
 		return getService().deleteObjectRelationship(objectRelationshipId);
 	}
 
+	public static ObjectRelationship
+			fetchObjectRelationshipByExternalReferenceCode(
+				String externalReferenceCode, long companyId,
+				long objectDefinitionId1)
+		throws PortalException {
+
+		return getService().fetchObjectRelationshipByExternalReferenceCode(
+			externalReferenceCode, companyId, objectDefinitionId1);
+	}
+
 	public static ObjectRelationship getObjectRelationship(
 			long objectRelationshipId)
 		throws PortalException {

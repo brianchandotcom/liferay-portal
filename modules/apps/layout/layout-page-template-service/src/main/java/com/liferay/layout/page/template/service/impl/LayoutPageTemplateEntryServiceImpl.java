@@ -720,6 +720,24 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry getLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry != null) {
+			_layoutPageTemplateEntryModelResourcePermission.check(
+				getPermissionChecker(), layoutPageTemplateEntry,
+				ActionKeys.VIEW);
+		}
+
+		return layoutPageTemplateEntry;
+	}
+
+	@Override
+	public LayoutPageTemplateEntry getLayoutPageTemplateEntry(
 			long groupId, String layoutPageTemplateEntryKey)
 		throws PortalException {
 

@@ -60,9 +60,9 @@ definition {
 
 			task ("Select the fragment from Form Components") {
 				Click(
-					key_class = "btn-secondary",
-					key_index = 11,
-					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+					key_tableEntry = "Submit Button",
+					key_text = "Select",
+					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -112,9 +112,9 @@ definition {
 
 			task ("Open the Select Fragment modal for Submit Button field type") {
 				Click(
-					key_class = "btn-secondary",
-					key_index = 11,
-					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+					key_tableEntry = "Submit Button",
+					key_text = "Select",
+					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 			}
 
 			task ("Select the new fragment from current site") {
@@ -299,9 +299,9 @@ definition {
 
 			task ("Select the fragment from Form Components") {
 				Click(
-					key_class = "btn-secondary",
-					key_index = 11,
-					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+					key_tableEntry = "Submit Button",
+					key_text = "Select",
+					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 			}
@@ -450,9 +450,9 @@ definition {
 
 			task ("Select the heading fragment from Basic Components") {
 				Click(
-					key_class = "btn-secondary",
-					key_index = 11,
-					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+					key_tableEntry = "Submit Button",
+					key_text = "Select",
+					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

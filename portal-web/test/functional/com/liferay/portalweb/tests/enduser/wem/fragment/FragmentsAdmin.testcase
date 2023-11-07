@@ -939,9 +939,9 @@ definition {
 
 			task ("Open the Select Fragment modal for Text field type") {
 				Click(
-					key_class = "btn-secondary",
-					key_index = 10,
-					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+					key_tableEntry = "Text",
+					key_text = "Select",
+					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 			}
 
 			task ("View two tabs shown on modal, Default, Global") {
@@ -1045,9 +1045,9 @@ definition {
 
 			task ("Open the Select Fragment modal for Text field type") {
 				Click(
-					key_class = "btn-secondary",
-					key_index = 10,
-					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+					key_tableEntry = "Text",
+					key_text = "Select",
+					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 			}
 
 			task ("View three tabs shown on modal, Default, Global and current site") {
@@ -1333,9 +1333,9 @@ definition {
 
 			task ("Open the Select Fragment modal for Text field type") {
 				Click(
-					key_class = "btn-secondary",
-					key_index = 10,
-					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+					key_tableEntry = "Text",
+					key_text = "Select",
+					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 			}
 
 			task ("View only the copy of fragment is available in form fragment selector") {
@@ -1401,9 +1401,9 @@ definition {
 		task ("Then view only same type form fragments display in form fragment selector") {
 			task ("Open the Select Fragment modal for Text field type") {
 				Click(
-					key_class = "btn-secondary",
-					key_index = 10,
-					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+					key_tableEntry = "Text",
+					key_text = "Select",
+					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 			}
 
 			task ("Select the copy of fragment from current site") {

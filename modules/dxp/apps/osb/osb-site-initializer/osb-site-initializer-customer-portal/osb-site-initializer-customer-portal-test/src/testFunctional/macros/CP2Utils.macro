@@ -55,11 +55,7 @@ definition {
 	}
 
 	@summary = "Assert home page logged out on Customer Portal Site"
-	macro assertHomePageLoggedOutCP(pageTitle = null,navTab = null) {
-		AssertElementPresent(
-			key_title = ${pageTitle},
-			locator1 = "Header#H1_TITLE");
-
+	macro assertHomePageLoggedOutCP(navTab = null) {
 		AssertElementPresent(
 			key_tab = ${navTab},
 			locator1 = "NavTab#TAB_LINK");
@@ -172,6 +168,13 @@ definition {
 		var key_product = ${product};
 
 		Click(locator1 = "CP2Utils#BUTTON_MANAGE_USERS");
+	}
+
+	@summary = "Click on user avatar"
+	macro clickAtDropdownUserAvatar() {
+		Click(locator1 = "CP2Utils#USER_AVATAR_DROPDOWN");
+
+		AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
 	}
 
 	@summary = "Default summary"
@@ -396,23 +399,6 @@ definition {
 		Refresh();
 	}
 
-	@summary = "Click on user avatar"
-	macro gotoDropdown() {
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_PORTRAIT")) {
-			Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_PORTRAIT");
-		}
-		else if (IsElementPresent(key_portletName = "account-menu-id", locator1 = "Button#LANGUAGE_DROPDOWN")) {
-			Click(
-				key_portletName = "account-menu-id",
-				locator1 = "Button#LANGUAGE_DROPDOWN");
-		}
-		else {
-			Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_ICON");
-		}
-
-		AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
-	}
-
 	@summary = "Default summary"
 	macro goToDXPProductAndAssertAction() {
 		CP2NavigationMenu.goToProductActivation();
@@ -537,7 +523,7 @@ definition {
 
 	@summary = "Select item in the User avatar Bar"
 	macro selectProfileMenuOption(dropdownItem = null) {
-		CP2Utils.gotoDropdown();
+		CP2Utils.clickAtDropdownUserAvatar();
 
 		Click(
 			key_dropdownItem = ${dropdownItem},

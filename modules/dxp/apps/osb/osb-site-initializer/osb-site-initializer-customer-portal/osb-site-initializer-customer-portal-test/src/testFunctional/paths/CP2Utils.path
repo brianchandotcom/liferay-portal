@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_AVATAR_DROPDOWN</td>
+	<td>//*[name()='svg'][@role='presentation']//following::span[@class='account-dropdown-icon opacity-30 pr-2']//*[name()='svg']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SIGN_IN</td>
 	<td>//span[contains(@class,'sign-in')]</td>
 	<td></td>

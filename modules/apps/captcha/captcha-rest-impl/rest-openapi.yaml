@@ -2,13 +2,9 @@ components:
     schemas:
         SimpleCaptcha:
             properties:
-                image:
-                    type: string
-                token:
-                    type: string
-        SimpleCaptchaForm:
-            properties:
                 answer:
+                    type: string
+                image:
                     type: string
                 token:
                     type: string
@@ -25,9 +21,9 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/simple-captcha":
+    "/simple-captcha-challenge":
         get:
-            operationId: getSimpleCaptcha
+            operationId: getSimpleCaptchaChallenge
             responses:
                 200:
                     content:
@@ -40,16 +36,17 @@ paths:
                     description:
                         Send a captcha token and image.
             tags: ["SimpleCaptcha"]
+    "/simple-captcha-response":
         post:
-            operationId: postSimpleCaptcha
+            operationId: postSimpleCaptchaResponse
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/SimpleCaptchaForm"
+                            $ref: "#/components/schemas/SimpleCaptcha"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/SimpleCaptchaForm"
+                            $ref: "#/components/schemas/SimpleCaptcha"
             responses:
                 204:
                     content:

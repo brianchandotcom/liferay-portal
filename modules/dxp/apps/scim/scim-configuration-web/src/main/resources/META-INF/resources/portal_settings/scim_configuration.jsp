@@ -29,7 +29,7 @@ if (paramToken == null) {
 	for (String matcherField : ScimConstants.MATCHER_FIELD) {
 	%>
 
-			<aui:option localizeLabel="false" label="<%= HtmlUtil.escape(matcherField) %>" value="<%= matcherField %>" />
+			<aui:option label="<%= matcherField %>" localizeLabel="<%= false %>" value="<%= matcherField %>" />
 
 	<%
 	}

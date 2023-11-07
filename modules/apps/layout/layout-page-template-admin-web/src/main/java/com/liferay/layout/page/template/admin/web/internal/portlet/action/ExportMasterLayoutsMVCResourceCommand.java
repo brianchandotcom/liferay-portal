@@ -10,6 +10,7 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -52,13 +53,15 @@ public class ExportMasterLayoutsMVCResourceCommand
 		}
 	}
 
-	public String getFileName(long[] layoutPageTemplateEntryIds) {
+	public String getFileName(long[] layoutPageTemplateEntryIds)
+		throws PortalException {
+
 		String fileNamePrefix = "master-pages-";
 
 		if (layoutPageTemplateEntryIds.length == 1) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntry(layoutPageTemplateEntryIds[0]);
+				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+					layoutPageTemplateEntryIds[0]);
 
 			fileNamePrefix =
 				"master-page-" +

@@ -1909,7 +1909,7 @@ definition {
 		task ("Add a dynamic collection with All Types") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}

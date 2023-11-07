@@ -307,10 +307,7 @@ definition {
 
 		User.loginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.deleteCP(virtualHost = "www.able.com");
 
@@ -588,10 +585,7 @@ definition {
 		}
 
 		task ("Go to Control Panel > Virtual Instances and verify that the virtual instance is present in the UI") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.viewCP(virtualHost = "www.able.com");
 		}

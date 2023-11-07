@@ -70,10 +70,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a new Virtual Instance is created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",

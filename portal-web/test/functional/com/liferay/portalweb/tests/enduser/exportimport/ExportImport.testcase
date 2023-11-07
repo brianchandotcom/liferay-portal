@@ -441,10 +441,7 @@ definition {
 		}
 
 		task ("When: User adds a new virtual instance") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",
@@ -504,10 +501,7 @@ definition {
 		}
 
 		task ("When: User adds a new virtual instance") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",

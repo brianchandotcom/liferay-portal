@@ -548,10 +548,7 @@ definition {
 		}
 
 		task ("When: User start to create a virtuali instance") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			LexiconEntry.gotoAdd();
 		}

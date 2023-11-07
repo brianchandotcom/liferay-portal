@@ -34,10 +34,7 @@ definition {
 
 		UserTracker.viewAccessedURL(friendlyURL = "http://localhost:8080/web/guest/home");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",
@@ -73,10 +70,7 @@ definition {
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
 			value1 = 4);
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",
@@ -103,10 +97,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
 			mailDomain = "www.baker.com",
@@ -168,10 +159,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",

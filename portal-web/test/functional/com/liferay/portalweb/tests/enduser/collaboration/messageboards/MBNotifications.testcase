@@ -455,12 +455,7 @@ definition {
 			userName = PropsUtil.get("email.address.2"),
 			userPassword = PropsUtil.get("email.password.2"));
 
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.editCP(
 			mailDomain = "gmail.com",

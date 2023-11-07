@@ -546,10 +546,7 @@ definition {
 			dmDocumentTitle = "Apple 1",
 			groupName = "Guest");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",

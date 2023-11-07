@@ -1,0 +1,26 @@
+.cp-ticket-attachments-table-wrapper {
+	thead {
+		top: 0;
+		z-index: 999;
+	}
+}
+
+.page-link:hover {
+	z-index: 0;
+}
+
+.remove-user-modal {
+	.modal-header,
+	.modal-footer,
+	.modal-body {
+		border-width: 0;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	.custom-control {
+		margin-bottom: 0;
+	}
+}

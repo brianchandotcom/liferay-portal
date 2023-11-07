@@ -114,7 +114,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"An API sort can only be associated to API endpoints with a " +
+				"The API sort can only be associated to API endpoints with a " +
 					"\"collection\" retrieve type."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
@@ -132,7 +132,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "An API sort must be related to an API endpoint."
+				"title", "The API sort must be related to an API endpoint."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

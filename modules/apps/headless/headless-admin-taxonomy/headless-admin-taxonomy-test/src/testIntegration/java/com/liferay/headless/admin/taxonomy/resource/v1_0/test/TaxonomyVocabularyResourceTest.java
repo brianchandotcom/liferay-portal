@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -155,15 +156,15 @@ public class TaxonomyVocabularyResourceTest
 				testDepotEntry.getDepotEntryId(), null, null, null,
 				Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-		assertEquals(
+		assertContains(
 			new TaxonomyVocabulary() {
 				{
 					name = taxonomyVocabulary.getName();
 				}
 			},
-			page.fetchFirstItem());
+			(List<TaxonomyVocabulary>)page.getItems());
 
 		assertValid(page);
 	}

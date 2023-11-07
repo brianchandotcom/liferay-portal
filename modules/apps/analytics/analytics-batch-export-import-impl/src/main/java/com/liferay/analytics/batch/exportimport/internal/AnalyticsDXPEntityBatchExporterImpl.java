@@ -83,16 +83,16 @@ public class AnalyticsDXPEntityBatchExporterImpl
 				continue;
 			}
 
+			_dispatchLogLocalService.deleteDispatchLogs(
+				dispatchTrigger.getDispatchTriggerId());
+
+			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
+
 			Date nextFireDate = dispatchTrigger.getNextFireDate();
 
 			Instant instant = nextFireDate.toInstant();
 
 			ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("UTC"));
-
-			_dispatchLogLocalService.deleteDispatchLogs(
-				dispatchTrigger.getDispatchTriggerId());
-
-			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
 
 			_addDispatchTrigger(
 				companyId, dispatchTriggerName,

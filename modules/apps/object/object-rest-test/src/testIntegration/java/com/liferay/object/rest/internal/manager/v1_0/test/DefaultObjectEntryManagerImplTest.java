@@ -508,7 +508,7 @@ public class DefaultObjectEntryManagerImplTest
 		_rootObjectDefinition =
 			objectDefinitionLocalService.enableAccountEntryRestricted(
 				_objectRelationshipLocalService.addObjectRelationship(
-					adminUser.getUserId(),
+					null, adminUser.getUserId(),
 					accountEntryObjectDefinition.getObjectDefinitionId(),
 					rootNode.getPrimaryKey(), 0,
 					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -1293,7 +1293,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
-				null, objectRelationship.getObjectRelationshipId(), 0,
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				objectRelationship.getLabelMap());
 
@@ -1333,7 +1334,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
-				null, objectRelationship.getObjectRelationshipId(), 0,
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				objectRelationship.getLabelMap());
 

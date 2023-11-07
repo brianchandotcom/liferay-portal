@@ -215,7 +215,7 @@ public class ObjectRelationshipLocalServiceTest {
 				".\" Object fields and object relationships cannot have the ",
 				"same name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -230,7 +230,7 @@ public class ObjectRelationshipLocalServiceTest {
 				".\" Object fields and object relationships cannot have the ",
 				"same name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -245,7 +245,7 @@ public class ObjectRelationshipLocalServiceTest {
 				".\" Object fields and object relationships cannot have the ",
 				"same name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -260,7 +260,7 @@ public class ObjectRelationshipLocalServiceTest {
 				".\" Object fields and object relationships cannot have the ",
 				"same name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -603,7 +603,8 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipReverseException.class,
 			"Reverse object relationships cannot be updated",
 			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				null, reverseObjectRelationship.getObjectRelationshipId(), 0,
+				reverseObjectRelationship.getExternalReferenceCode(),
+				reverseObjectRelationship.getObjectRelationshipId(), 0,
 				reverseObjectRelationship.getDeletionType(), false,
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString())));

@@ -170,7 +170,7 @@ public class ObjectRelationshipResourceImpl
 
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(
-				objectDefinition1.getObjectDefinitionId(),
+				null, objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(),
 				objectRelationship.getParameterObjectFieldId(),
 				objectRelationship.getDeletionTypeAsString(),
@@ -205,7 +205,7 @@ public class ObjectRelationshipResourceImpl
 
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(
-				objectDefinitionId, objectDefinitionId2,
+				null, objectDefinitionId, objectDefinitionId2,
 				GetterUtil.getLong(
 					objectRelationship.getParameterObjectFieldId()),
 				objectRelationship.getDeletionTypeAsString(),
@@ -249,7 +249,7 @@ public class ObjectRelationshipResourceImpl
 
 		return _toObjectRelationship(
 			_objectRelationshipService.updateObjectRelationship(
-				objectRelationshipId,
+				null, objectRelationshipId,
 				GetterUtil.getLong(
 					objectRelationship.getParameterObjectFieldId()),
 				objectRelationship.getDeletionTypeAsString(),

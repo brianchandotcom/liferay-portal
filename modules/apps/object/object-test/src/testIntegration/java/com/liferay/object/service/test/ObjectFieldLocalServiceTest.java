@@ -292,7 +292,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -342,7 +342,7 @@ public class ObjectFieldLocalServiceTest {
 
 		objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -1700,7 +1700,8 @@ public class ObjectFieldLocalServiceTest {
 		// Deletion type disassociate
 
 		_objectRelationshipLocalService.updateObjectRelationship(
-			null, objectRelationship.getObjectRelationshipId(),
+			objectRelationship.getExternalReferenceCode(),
+			objectRelationship.getObjectRelationshipId(),
 			objectRelationship.getParameterObjectFieldId(),
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 			objectRelationship.getLabelMap());
@@ -1720,7 +1721,8 @@ public class ObjectFieldLocalServiceTest {
 		// Deletion type prevent
 
 		_objectRelationshipLocalService.updateObjectRelationship(
-			null, objectRelationship.getObjectRelationshipId(),
+			objectRelationship.getExternalReferenceCode(),
+			objectRelationship.getObjectRelationshipId(),
 			objectRelationship.getParameterObjectFieldId(),
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			objectRelationship.getLabelMap());

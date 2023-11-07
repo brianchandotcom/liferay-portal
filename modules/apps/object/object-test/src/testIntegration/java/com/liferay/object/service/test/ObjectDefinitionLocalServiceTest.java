@@ -1554,7 +1554,7 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			_objectDefinitionLocalService.enableAccountEntryRestricted(
 				_objectRelationshipLocalService.addObjectRelationship(
-					TestPropsValues.getUserId(),
+					null, TestPropsValues.getUserId(),
 					_objectDefinitionLocalService.fetchSystemObjectDefinition(
 						"AccountEntry"
 					).getObjectDefinitionId(),
@@ -1577,7 +1577,7 @@ public class ObjectDefinitionLocalServiceTest {
 			"Custom object definitions can only be restricted by account entry",
 			() -> _objectDefinitionLocalService.enableAccountEntryRestricted(
 				_objectRelationshipLocalService.addObjectRelationship(
-					TestPropsValues.getUserId(),
+					null, TestPropsValues.getUserId(),
 					_addCustomObjectDefinition(
 						"Test" + RandomTestUtil.randomString()
 					).getObjectDefinitionId(),
@@ -2538,7 +2538,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,

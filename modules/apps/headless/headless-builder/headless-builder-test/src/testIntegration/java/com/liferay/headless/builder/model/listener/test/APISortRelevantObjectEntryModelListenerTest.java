@@ -69,7 +69,6 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				"headless-builder/sorts", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -90,7 +89,6 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				"headless-builder/sorts", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"

@@ -632,7 +632,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				Http.Method.PUT
 			).toString(),
 			JSONCompareMode.STRICT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"

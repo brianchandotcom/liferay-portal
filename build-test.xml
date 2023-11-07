@@ -15095,8 +15095,6 @@ if (ppstate.equals("normal")) {
 				</and>
 			</not>
 			<then>
-				<setup-libs />
-
 				<delete failonerror="false" file="${test.ext.properties.file}" />
 
 				<if>

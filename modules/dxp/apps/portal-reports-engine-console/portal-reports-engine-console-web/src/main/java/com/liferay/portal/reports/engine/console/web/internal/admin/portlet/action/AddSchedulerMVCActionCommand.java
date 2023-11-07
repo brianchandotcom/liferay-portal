@@ -113,8 +113,7 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyy-MM-dd");
 
-			String type = ParamUtil.getString(
-				actionRequest, "useVariable" + key);
+			String type = definitionReportParameterJSONObject.getString("type");
 
 			if (type.equals("startDate")) {
 				value = dateFormat.format(startCalendar.getTime());
@@ -128,14 +127,10 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 			else {
-				value = ParamUtil.getString(
-					actionRequest, "parameterValue" + key);
+				value = definitionReportParameterJSONObject.getString("value");
 
 				if (Validator.isNull(value)) {
-					Calendar calendar = ReportsEngineConsoleUtil.getDate(
-						actionRequest, key, false);
-
-					value = dateFormat.format(calendar.getTime());
+					value = StringPool.BLANK;
 				}
 			}
 

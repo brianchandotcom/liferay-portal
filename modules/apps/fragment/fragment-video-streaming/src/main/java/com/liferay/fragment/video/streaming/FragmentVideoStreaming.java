@@ -8,28 +8,91 @@ package com.liferay.fragment.video.streaming;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Locale;
-
 /**
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  */
 @Component(service = FragmentRenderer.class)
 public class FragmentVideoStreaming implements FragmentRenderer {
+
 	@Override
 	public String getCollectionKey() {
 		return "content-display";
+	}
+
+	@Override
+	public String getConfiguration(
+		FragmentRendererContext fragmentRendererContext) {
+
+		return JSONUtil.put(
+			"fieldSets",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"label", "url"
+						).put(
+							"name", "url"
+						).put(
+							"type", "text"
+						),
+						JSONUtil.put(
+							"label", "autoplay"
+						).put(
+							"name", "autoplay"
+						).put(
+							"type", "checkbox"
+						),
+						JSONUtil.put(
+							"label", "loop"
+						).put(
+							"name", "loop"
+						).put(
+							"type", "checkbox"
+						),
+						JSONUtil.put(
+							"label", "mute"
+						).put(
+							"name", "mute"
+						).put(
+							"type", "checkbox"
+						),
+						JSONUtil.put(
+							"label", "width"
+						).put(
+							"name", "videoWidth"
+						).put(
+							"type", "text"
+						),
+						JSONUtil.put(
+							"label", "height"
+						).put(
+							"name", "videoHeight"
+						).put(
+							"type", "text"
+						))
+				).put(
+					"label",
+					_language.format(
+						fragmentRendererContext.getLocale(), "video-options",
+						"video-options", true)
+				))
+		).toString();
 	}
 
 	@Override
@@ -74,8 +137,7 @@ public class FragmentVideoStreaming implements FragmentRenderer {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Unable to render video streaming fragment", exception);
+			_log.error("Unable to render video streaming fragment", exception);
 		}
 	}
 
@@ -89,4 +151,5 @@ public class FragmentVideoStreaming implements FragmentRenderer {
 		target = "(osgi.web.symbolicname=com.liferay.fragment.video.streaming)"
 	)
 	private ServletContext _servletContext;
+
 }

@@ -12,8 +12,6 @@ definition {
 
 		User.firstLoginPG();
 
-		SearchAdministration.executeReindex();
-
 		task ("Given create an API application through Control Panel > Object > API Builder") {
 			APIBuilderUI.createAPIApplication(
 				addByPlus = "true",

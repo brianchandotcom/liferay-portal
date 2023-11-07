@@ -74,27 +74,6 @@ if (dispatchTrigger != null) {
 	</div>
 </clay:container-fluid>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectType',
-		() => {
-			var A = AUI();
-
-			var processType = A.one(<portlet:namespace />type).val();
-
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			portletURL.setParameter('type', processType);
-
-			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
-	);
-</aui:script>
-
 <aui:script use="aui-ace-editor">
 	var STR_VALUE = 'value';
 

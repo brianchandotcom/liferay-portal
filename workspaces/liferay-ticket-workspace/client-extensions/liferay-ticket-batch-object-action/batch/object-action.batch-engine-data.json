@@ -18,7 +18,7 @@
 			"active": true,
 			"description": "",
 			"errorMessage": {
-				"en_US": "We found a problem when assigning the ticket."
+				"en_US": "Unable to assign ticket."
 			},
 			"label": {
 				"en_US": "Assign Ticket to Me"

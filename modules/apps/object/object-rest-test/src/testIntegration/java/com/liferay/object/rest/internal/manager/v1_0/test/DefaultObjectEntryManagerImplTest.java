@@ -1157,7 +1157,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
-				null, objectRelationship.getObjectRelationshipId(), 0,
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				objectRelationship.getLabelMap());
 
@@ -1197,7 +1198,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
-				null, objectRelationship.getObjectRelationshipId(), 0,
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				objectRelationship.getLabelMap());
 

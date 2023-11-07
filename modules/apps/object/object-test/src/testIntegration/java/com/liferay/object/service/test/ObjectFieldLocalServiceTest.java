@@ -1582,7 +1582,8 @@ public class ObjectFieldLocalServiceTest {
 		// Deletion type disassociate
 
 		_objectRelationshipLocalService.updateObjectRelationship(
-			null, objectRelationship.getObjectRelationshipId(),
+			objectRelationship.getExternalReferenceCode(),
+			objectRelationship.getObjectRelationshipId(),
 			objectRelationship.getParameterObjectFieldId(),
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 			objectRelationship.getLabelMap());
@@ -1602,7 +1603,8 @@ public class ObjectFieldLocalServiceTest {
 		// Deletion type prevent
 
 		_objectRelationshipLocalService.updateObjectRelationship(
-			null, objectRelationship.getObjectRelationshipId(),
+			objectRelationship.getExternalReferenceCode(),
+			objectRelationship.getObjectRelationshipId(),
 			objectRelationship.getParameterObjectFieldId(),
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			objectRelationship.getLabelMap());

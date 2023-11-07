@@ -660,7 +660,7 @@ definition {
 
 		task ("Map the Display Page URL field to a Heading fragment then publish") {
 			PageEditorMapping.mapEditableTextToField(
-				field = "Display Page URL",
+				field = "Default",
 				fragmentName = "Heading",
 				id = "element-text");
 

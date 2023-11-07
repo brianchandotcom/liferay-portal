@@ -694,7 +694,7 @@ definition {
 
 		task ("Mapping the Display Page URL field to link editable field") {
 			PageEditorMapping.mapEditableTextToField(
-				field = "Display Page URL",
+				field = "Default",
 				fragmentName = "Button",
 				id = "link");
 		}

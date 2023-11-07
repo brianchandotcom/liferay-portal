@@ -84,7 +84,7 @@ definition {
 				id = "02-02-title");
 
 			PageEditorMapping.mapEditableTextToField(
-				field = "Display Page URL",
+				field = "Default",
 				fragmentName = "Slider",
 				id = "02-03-subtitle");
 		}

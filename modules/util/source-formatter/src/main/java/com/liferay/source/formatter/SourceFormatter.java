@@ -683,9 +683,23 @@ public class SourceFormatter {
 				continue;
 			}
 
+			if (!commitMessage.endsWith("\n----")) {
+				throw new Exception(
+					StringBundler.concat(
+						"Found formatting issues:\n", "There should be end ",
+						"with '----'"));
+			}
+
 			String[] breakingChangeReports = commitMessage.split("\n----");
 
 			for (String breakingChangeReport : breakingChangeReports) {
+				if (!breakingChangeReport.endsWith("\n")) {
+					throw new Exception(
+						StringBundler.concat(
+							"Found formatting issues:\n", "There should be an ",
+							"empty line before '----'"));
+				}
+
 				int alternativesCount = StringUtil.count(
 					breakingChangeReport, "## Alternatives");
 				int whatCount = StringUtil.count(
@@ -716,6 +730,10 @@ public class SourceFormatter {
 							"'## Why' | '## Alternatives'"));
 				}
 
+				while (breakingChangeReport.startsWith("\n")) {
+					breakingChangeReport = breakingChangeReport.substring(1);
+				}
+
 				String previousLine = null;
 
 				String[] lines = breakingChangeReport.split("\n");
@@ -735,8 +753,7 @@ public class SourceFormatter {
 						}
 
 						if (((nextLine != null) && !nextLine.isEmpty()) ||
-							((previousLine != null) &&
-							 !previousLine.isEmpty())) {
+							(previousLine == null) || !previousLine.isEmpty()) {
 
 							throw new Exception(
 								StringBundler.concat(

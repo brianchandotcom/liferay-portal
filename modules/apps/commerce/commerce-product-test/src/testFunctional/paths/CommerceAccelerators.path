@@ -630,6 +630,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_EDIT_ITEM_PRICE_ON_APPLICATION</td>
+	<td>//div[contains(@class,'mini-cart-prices mt-4')]//span[contains(@class,'price-on-application price-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_QUANTITY_N</td>
 	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../../div[contains(@class,'mini-cart-item-quantity')]//input)[${key_index}]</td>
 	<td></td>

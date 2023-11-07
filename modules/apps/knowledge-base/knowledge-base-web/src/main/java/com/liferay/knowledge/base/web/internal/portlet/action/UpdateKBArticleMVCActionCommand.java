@@ -181,7 +181,7 @@ public class UpdateKBArticleMVCActionCommand
 
 			if (kbArticle.isScheduled()) {
 				Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
-					themeDisplay.getLocale());
+					themeDisplay.getLocale(), user.getTimeZone());
 
 				successMessage = _language.format(
 					_portal.getHttpServletRequest(actionRequest),

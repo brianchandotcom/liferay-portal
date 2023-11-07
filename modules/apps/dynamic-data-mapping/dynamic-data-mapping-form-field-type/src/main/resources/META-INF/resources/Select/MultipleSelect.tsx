@@ -68,6 +68,11 @@ const MultipleSelection = ({
 							event.preventDefault();
 						}
 					}}
+					placeholder={
+						!items.length
+							? Liferay.Language.get('choose-options')
+							: ''
+					}
 					sourceItems={options}
 				>
 					{(item) => (

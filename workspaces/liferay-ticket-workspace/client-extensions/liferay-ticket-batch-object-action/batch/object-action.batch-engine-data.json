@@ -4,7 +4,7 @@
 		"companyId": 0,
 		"parameters": {
 			"containsHeaders": "true",
-			"createStrategy": "INSERT",
+			"createStrategy": "UPSERT",
 			"externalReferenceCode": "J3Y7_TICKET",
 			"onErrorFail": "false",
 			"taskItemDelegateName": "DEFAULT",

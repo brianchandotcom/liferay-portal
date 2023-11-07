@@ -8,21 +8,23 @@ package com.liferay.change.tracking.rest.internal.dto.v1_0.converter;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.Status;
-import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,36 +58,23 @@ public class CTEntryDTOConverter
 		return _toCTEntry(dtoConverterContext, ctEntry);
 	}
 
-	private Group _getGroup(long ctCollectionId, long groupId) {
+	private String _getLocalizedValue(Field field, Locale locale) {
+		return MapUtil.getWithFallbackKey(
+			field.getLocalizedValues(), locale, LocaleUtil.getDefault());
+	}
+
+	private String _getSiteName(
+		long ctCollectionId, Locale locale, Long groupId) {
+
+		if (groupId == null) {
+			return null;
+		}
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollectionId)) {
 
-			return _groupLocalService.fetchGroup(groupId);
-		}
-	}
-
-	private Long _getSiteId(long ctCollectionId, BaseModel<?> model) {
-		if (model instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)model;
-
-			Group group = _getGroup(ctCollectionId, groupedModel.getGroupId());
-
-			if (group != null) {
-				return group.getGroupId();
-			}
-		}
-
-		return null;
-	}
-
-	private String _getSiteName(
-		long ctCollectionId, Locale locale, BaseModel<?> model) {
-
-		if (model instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)model;
-
-			Group group = _getGroup(ctCollectionId, groupedModel.getGroupId());
+			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (group != null) {
 				return group.getName(locale);
@@ -100,15 +89,11 @@ public class CTEntryDTOConverter
 			com.liferay.change.tracking.model.CTEntry ctEntry)
 		throws Exception {
 
-		long ctCollectionId = ctEntry.getCtCollectionId();
+		Indexer<com.liferay.change.tracking.model.CTEntry> indexer =
+			_indexerRegistry.getIndexer(
+				com.liferay.change.tracking.model.CTEntry.class);
 
-		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
-			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-		}
-
-		T model = _ctDisplayRendererRegistry.fetchCTModel(
-			ctCollectionId, CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+		Document document = indexer.getDocument(ctEntry);
 
 		return new CTEntry() {
 			{
@@ -116,47 +101,46 @@ public class CTEntryDTOConverter
 				changeType = _language.get(
 					dtoConverterContext.getLocale(),
 					CTConstants.getCTChangeTypeLabel(
-						_ctDisplayRendererRegistry.getChangeType(
-							ctEntry, model)));
+						Integer.valueOf(document.get("changeType"))));
 				ctCollectionId = ctEntry.getCtCollectionId();
 				dateCreated = ctEntry.getCreateDate();
 				dateModified = ctEntry.getModifiedDate();
-				hideable = _ctDisplayRendererRegistry.isHideable(
-					model, ctEntry.getModelClassNameId());
+				hideable = Boolean.valueOf(document.get("hideable"));
 				id = ctEntry.getCtEntryId();
 				modelClassNameId = ctEntry.getModelClassNameId();
 				modelClassPK = ctEntry.getModelClassPK();
 				ownerId = ctEntry.getUserId();
 				ownerName = ctEntry.getUserName();
-				siteId = _getSiteId(ctEntry.getCtCollectionId(), model);
+
+				Long groupId = null;
+
+				if (document.hasField(Field.GROUP_ID)) {
+					groupId = Long.valueOf(document.get(Field.GROUP_ID));
+				}
+
+				siteId = groupId;
 				siteName = _getSiteName(
-					ctEntry.getCtCollectionId(),
-					dtoConverterContext.getLocale(), model);
-				status = _toStatus(dtoConverterContext.getLocale(), model);
-				title = _ctDisplayRendererRegistry.getTitle(
-					ctEntry.getCtCollectionId(), ctEntry,
+					ctCollectionId, dtoConverterContext.getLocale(), groupId);
+
+				status = _toStatus(dtoConverterContext.getLocale(), document);
+				title = _getLocalizedValue(
+					document.getField("title"),
 					dtoConverterContext.getLocale());
-				typeName = _ctDisplayRendererRegistry.getTypeName(
-					dtoConverterContext.getLocale(),
-					ctEntry.getModelClassNameId());
+				typeName = _getLocalizedValue(
+					document.getField("typeName"),
+					dtoConverterContext.getLocale());
 			}
 		};
 	}
 
-	private Status _toStatus(Locale locale, BaseModel<?> model)
+	private Status _toStatus(Locale locale, Document document)
 		throws Exception {
 
-		if (model == null) {
+		if (!document.hasField(Field.STATUS)) {
 			return null;
 		}
 
-		Map<String, Object> modelAttributes = model.getModelAttributes();
-
-		if (!modelAttributes.containsKey("status")) {
-			return null;
-		}
-
-		int status = (int)modelAttributes.get("status");
+		int status = Integer.valueOf(document.get(Field.STATUS));
 
 		String statusLabel = WorkflowConstants.getStatusLabel(status);
 
@@ -170,10 +154,10 @@ public class CTEntryDTOConverter
 	}
 
 	@Reference
-	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private Language _language;

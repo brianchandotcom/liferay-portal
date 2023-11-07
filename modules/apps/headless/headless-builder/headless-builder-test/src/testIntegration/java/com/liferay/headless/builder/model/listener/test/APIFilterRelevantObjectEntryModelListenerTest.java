@@ -148,6 +148,47 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).toString(),
 			JSONCompareMode.LENIENT);
 
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"Object entry value exceeds the maximum length of 1000 " +
+					"characters for object field \"oDataFilter\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"objectFieldERC", RandomTestUtil.randomString()
+				).put(
+					"oDataFilter", RandomTestUtil.randomString(1001)
+				).put(
+					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+					_API_ENDPOINT_ERC
+				).toString(),
+				"headless-builder/filters", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The API endpoint already has an associated API filter."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"objectFieldERC", RandomTestUtil.randomString()
+				).put(
+					"oDataFilter", "test ne 1"
+				).put(
+					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+					_API_ENDPOINT_ERC
+				).toString(),
+				"headless-builder/filters", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
@@ -220,45 +261,6 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				).put(
 					"r_apiEndpointToAPIFilters_c_apiEndpointId",
 					RandomTestUtil.randomLong()
-				).toString(),
-				"headless-builder/filters", Http.Method.POST
-			).toString(),
-			JSONCompareMode.LENIENT);
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				"Object entry value exceeds the maximum length of 1000 " +
-					"characters for object field \"oDataFilter\""
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"objectFieldERC", RandomTestUtil.randomString()
-				).put(
-					"oDataFilter", RandomTestUtil.randomString(1001)
-				).put(
-					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
-					_API_ENDPOINT_ERC
-				).toString(),
-				"headless-builder/filters", Http.Method.POST
-			).toString(),
-			JSONCompareMode.LENIENT);
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				"The API endpoint already has an associated API filter."
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"objectFieldERC", RandomTestUtil.randomString()
-				).put(
-					"oDataFilter", "test ne 1"
-				).put(
-					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
-					_API_ENDPOINT_ERC
 				).toString(),
 				"headless-builder/filters", Http.Method.POST
 			).toString(),

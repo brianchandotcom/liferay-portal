@@ -535,7 +535,7 @@
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] .nav-item:hover {\nbackground-color: #EDF3FE !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] .nav-item:hover {\nbackground-color: #EDF3FE !important;\n}\n\n.dropdown-menu {\nmin-width: 130px;\n}",
 													"fragment": {
 														"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
 													},
@@ -646,6 +646,28 @@
 									}
 								],
 								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"minHeight": "50vh"
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentSettings": {
+										"unallowedFragments": [
+										]
+									}
+								},
+								"type": "DropZone"
 							}
 						],
 						"type": "Section"
@@ -785,317 +807,318 @@
 					},
 					{
 						"definition": {
-							"fragmentSettings": {
-								"unallowedFragments": [
-								]
+							"indexed": true,
+							"layout": {
 							}
-						},
-						"type": "DropZone"
-					},
-					{
-						"definition": {
-							"fragment": {
-								"key": "marketplace-footer",
-								"siteKey": "[$GROUP_KEY$]"
-							},
-							"fragmentConfig": {
-								"footerNavigationMenuId": 0
-							},
-							"fragmentFields": [
-							],
-							"indexed": true
 						},
 						"pageElements": [
 							{
 								"definition": {
+									"fragment": {
+										"key": "marketplace-footer",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"footerNavigationMenuId": 0
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"description": {
-																"value_i18n": {
-																	"en_US": ""
-																}
-															},
-															"url": {
-																"value_i18n": {
-																	"en_US": "/documents/d/[$GROUP_KEY$]/facebook-svg?download=true"
-																}
-															}
-														},
-														"fragmentLink": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
 															"value": {
-																"href": {
-																	"value_i18n": {
-																		"en_US": "https://www.facebook.com/liferay/"
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "/documents/d/[$GROUP_KEY$]/facebook-svg?download=true"
+																		}
 																	}
 																},
-																"target": "Blank"
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "https://www.facebook.com/liferay/"
+																			}
+																		},
+																		"target": "Blank"
+																	}
+																}
 															}
 														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
-								"pageElements": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"description": {
-																"value_i18n": {
-																	"en_US": ""
-																}
-															},
-															"url": {
-																"value_i18n": {
-																	"en_US": "/documents/d/[$GROUP_KEY$]/github-svg?download=true"
-																}
-															}
-														},
-														"fragmentLink": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
 															"value": {
-																"href": {
-																	"value_i18n": {
-																		"en_US": "https://github.com/liferay"
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "/documents/d/[$GROUP_KEY$]/github-svg?download=true"
+																		}
 																	}
 																},
-																"target": "Blank"
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "https://github.com/liferay"
+																			}
+																		},
+																		"target": "Blank"
+																	}
+																}
 															}
 														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
-								"pageElements": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"description": {
-																"value_i18n": {
-																	"en_US": ""
-																}
-															},
-															"url": {
-																"value_i18n": {
-																	"en_US": "/documents/d/[$GROUP_KEY$]/instagram-svg?download=true"
-																}
-															}
-														},
-														"fragmentLink": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
 															"value": {
-																"href": {
-																	"value_i18n": {
-																		"en_US": "https://www.instagram.com/liferayinc/"
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "/documents/d/[$GROUP_KEY$]/instagram-svg?download=true"
+																		}
 																	}
 																},
-																"target": "Blank"
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "https://www.instagram.com/liferayinc/"
+																			}
+																		},
+																		"target": "Blank"
+																	}
+																}
 															}
 														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
-								"pageElements": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"description": {
-																"value_i18n": {
-																	"en_US": ""
-																}
-															},
-															"url": {
-																"value_i18n": {
-																	"en_US": "/documents/d/[$GROUP_KEY$]/linkedin-svg?download=true"
-																}
-															}
-														},
-														"fragmentLink": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
 															"value": {
-																"href": {
-																	"value_i18n": {
-																		"en_US": "https://www.linkedin.com/company/83609?trk=NUS_CMPY_TWIT"
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "/documents/d/[$GROUP_KEY$]/linkedin-svg?download=true"
+																		}
 																	}
 																},
-																"target": "Blank"
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "https://www.linkedin.com/company/83609?trk=NUS_CMPY_TWIT"
+																			}
+																		},
+																		"target": "Blank"
+																	}
+																}
 															}
 														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
-								"pageElements": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"description": {
-																"value_i18n": {
-																	"en_US": ""
-																}
-															},
-															"url": {
-																"value_i18n": {
-																	"en_US": "/documents/d/[$GROUP_KEY$]/twitter-svg?download=true"
-																}
-															}
-														},
-														"fragmentLink": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
 															"value": {
-																"href": {
-																	"value_i18n": {
-																		"en_US": "https://www.twitter.com/liferay"
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "/documents/d/[$GROUP_KEY$]/twitter-svg?download=true"
+																		}
 																	}
 																},
-																"target": "Blank"
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "https://www.twitter.com/liferay"
+																			}
+																		},
+																		"target": "Blank"
+																	}
+																}
 															}
 														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
-								"pageElements": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"description": {
-																"value_i18n": {
-																	"en_US": ""
-																}
-															},
-															"url": {
-																"value_i18n": {
-																	"en_US": "/documents/d/[$GROUP_KEY$]/youtube-svg?download=true"
-																}
-															}
-														},
-														"fragmentLink": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
 															"value": {
-																"href": {
-																	"value_i18n": {
-																		"en_US": "https://www.youtube.com/user/liferayinc"
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "/documents/d/[$GROUP_KEY$]/youtube-svg?download=true"
+																		}
 																	}
 																},
-																"target": "Blank"
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "https://www.youtube.com/user/liferayinc"
+																			}
+																		},
+																		"target": "Blank"
+																	}
+																}
 															}
 														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
 									}
 								],
-								"type": "FragmentDropZone"
+								"type": "Fragment"
 							}
 						],
-						"type": "Fragment"
+						"type": "Section"
 					}
 				],
 				"type": "Section"

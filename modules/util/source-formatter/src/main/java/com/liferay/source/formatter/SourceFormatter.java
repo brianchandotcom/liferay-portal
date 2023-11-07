@@ -686,8 +686,9 @@ public class SourceFormatter {
 			if (!commitMessage.endsWith("\n----")) {
 				throw new Exception(
 					StringBundler.concat(
-						"Found formatting issues:\n", "There should be end ",
-						"with '----'"));
+						"Found formatting issues:\n", "Commit message ",
+						"contains '# breaking_change_report' should end with ",
+						"'----'"));
 			}
 
 			String[] breakingChangeReports = commitMessage.split("\n----");

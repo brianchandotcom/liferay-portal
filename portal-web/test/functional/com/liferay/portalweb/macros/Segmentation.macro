@@ -424,10 +424,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoRoleAssigneeSegments(roleName = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role._goToRoleAssigneeType(
 			assigneeType = "Segments",

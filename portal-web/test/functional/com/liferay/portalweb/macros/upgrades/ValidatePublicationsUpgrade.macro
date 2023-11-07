@@ -100,10 +100,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewPublicationsUserRolePermissions() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		AssertClick(
 			key_itemName = "Publications User",

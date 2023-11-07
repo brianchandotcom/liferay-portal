@@ -1212,10 +1212,7 @@ definition {
 		}
 
 		task ("When: A Role is assigned to the previously created Organization, then unassign the Organization from the Role") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			RoleNavigator.gotoRoleType(roleType = "Regular");
 
@@ -1281,10 +1278,7 @@ definition {
 		}
 
 		task ("When: A Role is assigned to the previously created Site, then unassign the Site from the Role") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			RoleNavigator.gotoRoleType(roleType = "Regular");
 
@@ -1352,10 +1346,7 @@ definition {
 		}
 
 		task ("When: A Role is assigned to the previously created User, then unassign the User from the Role") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			RoleNavigator.gotoRoleType(roleType = "Regular");
 
@@ -1419,10 +1410,7 @@ definition {
 		}
 
 		task ("When: A Role is assigned to the previously created User Group, then unassign the User Group from the Role") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			RoleNavigator.gotoRoleType(roleType = "Regular");
 

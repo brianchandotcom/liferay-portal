@@ -1416,10 +1416,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoRolesAndSelectCustomObject(roleName = null, key_itemName = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Search.searchCP(searchTerm = ${roleName});
 

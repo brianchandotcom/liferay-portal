@@ -3155,10 +3155,7 @@ definition {
 		}
 
 		task ("When check the object entries in define permissions tab of a regular role") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			RoleNavigator.gotoDefineRolePermissions(roleTitle = "Portal Content Reviewer");
 

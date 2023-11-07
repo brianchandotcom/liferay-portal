@@ -711,7 +711,7 @@ public class SourceFormatter {
 					breakingChangeReport, "## What");
 				int whyCount = StringUtil.count(breakingChangeReport, "## Why");
 
-				if (((alternativesCount != 0) && (alternativesCount != 1)) ||
+				if ((alternativesCount > 1) ||
 					(breakingChangeReportCount != 1) || (whatCount != 1) ||
 					(whyCount != 1)) {
 
@@ -726,7 +726,7 @@ public class SourceFormatter {
 
 				if ((breakingChangeReport.indexOf("## What") >
 						breakingChangeReport.indexOf("## Why")) ||
-					(breakingChangeReport.contains("## Alternatives") &&
+					((alternativesCount == 1) &&
 					 (breakingChangeReport.indexOf("## Why") >
 						 breakingChangeReport.indexOf("## Alternatives")))) {
 

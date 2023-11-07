@@ -14,10 +14,12 @@ import com.liferay.portal.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.dao.jdbc.util.StatementWrapper;
 import com.liferay.portal.db.partition.sql.DBPartitionMySQL;
+import com.liferay.portal.db.partition.sql.DBPartitionPostgreSQL;
 import com.liferay.portal.db.partition.sql.DBPartitionSQL;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -280,6 +282,13 @@ public class DBPartitionUtil {
 		if (!db.isSupportsDBPartition()) {
 			throw new Error(
 				"Database partition is not supported for " + db.getDBType());
+		}
+
+		if (db.getDBType() == DBType.MYSQL) {
+			_dbPartitionSQL = new DBPartitionMySQL();
+		}
+		else if (db.getDBType() == DBType.POSTGRESQL) {
+			_dbPartitionSQL = new DBPartitionPostgreSQL();
 		}
 
 		try (Connection connection = dataSource.getConnection()) {
@@ -849,8 +858,7 @@ public class DBPartitionUtil {
 		DBPartitionUtil.class);
 
 	private static final List<Long> _companyIds = new CopyOnWriteArrayList<>();
-	private static final DBPartitionSQL _dbPartitionSQL =
-		new DBPartitionMySQL();
+	private static DBPartitionSQL _dbPartitionSQL;
 	private static volatile long _defaultCompanyId;
 	private static String _defaultSchemaName;
 

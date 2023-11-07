@@ -31,6 +31,11 @@ public class DateFacetPortletFeatureFlagHandler implements FeatureFlagListener {
 	protected void activate(ComponentContext componentContext) {
 		_componentContext = componentContext;
 
+		/*
+		If this line is still throwing the error, it could be removed for now
+		and the feature would just be toggled on/off by System Settings UI,
+		basically ignroing the portal property on startup
+		*/
 		_enable(FeatureFlagManagerUtil.isEnabled("LPS-153839"));
 	}
 

@@ -1220,52 +1220,9 @@ public class CTCollectionLocalServiceImpl
 
 				String primaryKeyName = iterator.next();
 
-				StringBundler sb = new StringBundler(
-					(2 * ctEntries.size()) + 7);
-
-				sb.append("update ");
-				sb.append(ctPersistence.getTableName());
-				sb.append(" set ctCollectionId = ");
-				sb.append(toCTCollectionId);
-				sb.append(" where ctCollectionId = ");
-				sb.append(fromCTCollectionId);
-				sb.append(" and ");
-				sb.append(primaryKeyName);
-				sb.append(" in (");
-
-				for (CTEntry ctEntry : ctEntries) {
-					sb.append(ctEntry.getModelClassPK());
-					sb.append(", ");
-				}
-
-				sb.setStringAt(")", sb.index() - 1);
-
-				Connection connection = _currentConnection.getConnection(
-					ctPersistence.getDataSource());
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(sb.toString())) {
-
-					preparedStatement.executeUpdate();
-				}
-				catch (Exception exception) {
-					throw new SystemException(exception);
-				}
-
-				for (String mappingTableName :
-						ctPersistence.getMappingTableNames()) {
-
-					sb.setStringAt(mappingTableName, 1);
-
-					try (PreparedStatement preparedStatement =
-							connection.prepareStatement(sb.toString())) {
-
-						preparedStatement.executeUpdate();
-					}
-					catch (Exception exception) {
-						throw new SystemException(exception);
-					}
-				}
+				_processMoveEntriesQuery(
+					fromCTCollectionId, toCTCollectionId, ctEntries,
+					ctPersistence, primaryKeyName);
 
 				return null;
 			});
@@ -1280,14 +1237,26 @@ public class CTCollectionLocalServiceImpl
 			_ctEntryPersistence.update(ctEntry);
 		}
 
-		for (CTAutoResolutionInfo ctAutoResolutionInfo :
-				_ctAutoResolutionInfoPersistence.findByC_MCNI_SMCPK(
-					fromCTCollectionId, classNameId,
-					ArrayUtil.toLongArray(modelClassPKs))) {
+		int processedClassPKs = 0;
 
-			ctAutoResolutionInfo.setCtCollectionId(toCTCollectionId);
+		while (processedClassPKs < modelClassPKs.size()) {
+			int batchSize = Math.min(
+				modelClassPKs.size() - processedClassPKs, _BATCH_SIZE);
 
-			_ctAutoResolutionInfoPersistence.update(ctAutoResolutionInfo);
+			for (CTAutoResolutionInfo ctAutoResolutionInfo :
+					_ctAutoResolutionInfoPersistence.findByC_MCNI_SMCPK(
+						fromCTCollectionId, classNameId,
+						ArrayUtil.toLongArray(
+							modelClassPKs.subList(
+								processedClassPKs,
+								processedClassPKs + batchSize)))) {
+
+				ctAutoResolutionInfo.setCtCollectionId(toCTCollectionId);
+
+				_ctAutoResolutionInfoPersistence.update(ctAutoResolutionInfo);
+			}
+
+			processedClassPKs += batchSize;
 		}
 
 		Indexer<?> indexer = _indexerRegistry.getIndexer(
@@ -1338,6 +1307,68 @@ public class CTCollectionLocalServiceImpl
 		sb.append(ctPersistence.getTableName());
 		sb.append(" where ctCollectionId = ");
 		sb.append(ctCollectionId);
+		sb.append(" and ");
+		sb.append(primaryKeyName);
+		sb.append(" in (");
+
+		int i = 0;
+
+		for (CTEntry ctEntry : ctEntries) {
+			if (i == _BATCH_SIZE) {
+				sb.setStringAt(")", sb.index() - 1);
+				sb.append(" or ");
+				sb.append(primaryKeyName);
+				sb.append(" in (");
+
+				i = 0;
+			}
+
+			sb.append(ctEntry.getModelClassPK());
+			sb.append(", ");
+
+			i++;
+		}
+
+		sb.setStringAt(")", sb.index() - 1);
+
+		Connection connection = _currentConnection.getConnection(
+			ctPersistence.getDataSource());
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sb.toString())) {
+
+			preparedStatement.executeUpdate();
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+
+		for (String mappingTableName : ctPersistence.getMappingTableNames()) {
+			sb.setStringAt(mappingTableName, 1);
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sb.toString())) {
+
+				preparedStatement.executeUpdate();
+			}
+			catch (Exception exception) {
+				throw new SystemException(exception);
+			}
+		}
+	}
+
+	private void _processMoveEntriesQuery(
+		long fromCTCollectionId, long toCTCollectionId, List<CTEntry> ctEntries,
+		CTPersistence<?> ctPersistence, String primaryKeyName) {
+
+		StringBundler sb = new StringBundler((2 * ctEntries.size()) + 7);
+
+		sb.append("update ");
+		sb.append(ctPersistence.getTableName());
+		sb.append(" set ctCollectionId = ");
+		sb.append(toCTCollectionId);
+		sb.append(" where ctCollectionId = ");
+		sb.append(fromCTCollectionId);
 		sb.append(" and ");
 		sb.append(primaryKeyName);
 		sb.append(" in (");

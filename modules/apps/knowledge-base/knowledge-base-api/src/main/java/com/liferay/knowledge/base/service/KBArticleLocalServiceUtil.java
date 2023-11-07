@@ -684,6 +684,21 @@ public class KBArticleLocalServiceUtil {
 		getService().incrementViewCount(userId, resourcePrimKey, increment);
 	}
 
+	public static void moveDependentKBArticlesToTrash(
+			KBArticle parentKBArticle, long trashEntryId)
+		throws PortalException {
+
+		getService().moveDependentKBArticlesToTrash(
+			parentKBArticle, trashEntryId);
+	}
+
+	public static void moveDependentKBArticleToTrash(
+			KBArticle kbArticle, long trashEntryId)
+		throws PortalException {
+
+		getService().moveDependentKBArticleToTrash(kbArticle, trashEntryId);
+	}
+
 	public static void moveKBArticle(
 			long userId, long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -692,6 +707,41 @@ public class KBArticleLocalServiceUtil {
 		getService().moveKBArticle(
 			userId, resourcePrimKey, parentResourceClassNameId,
 			parentResourcePrimKey, priority);
+	}
+
+	public static void moveKBArticleFromTrash(
+			long userId, long kbArticleId, long parentResourceClassNameId,
+			long parentResourcePrimKey)
+		throws PortalException {
+
+		getService().moveKBArticleFromTrash(
+			userId, kbArticleId, parentResourceClassNameId,
+			parentResourcePrimKey);
+	}
+
+	public static KBArticle moveKBArticleToTrash(long userId, long kbArticleId)
+		throws PortalException {
+
+		return getService().moveKBArticleToTrash(userId, kbArticleId);
+	}
+
+	public static void restoreDependentKBArticleFromTrash(KBArticle kbArticle)
+		throws PortalException {
+
+		getService().restoreDependentKBArticleFromTrash(kbArticle);
+	}
+
+	public static void restoreDependentKBArticlesFromTrash(
+			KBArticle parentKBArticle)
+		throws PortalException {
+
+		getService().restoreDependentKBArticlesFromTrash(parentKBArticle);
+	}
+
+	public static void restoreKBArticleFromTrash(long userId, long kbArticleId)
+		throws PortalException {
+
+		getService().restoreKBArticleFromTrash(userId, kbArticleId);
 	}
 
 	public static KBArticle revertKBArticle(
@@ -795,6 +845,13 @@ public class KBArticleLocalServiceUtil {
 
 	public static void updatePriority(long resourcePrimKey, double priority) {
 		getService().updatePriority(resourcePrimKey, priority);
+	}
+
+	public static KBArticle updateStatus(
+			long userId, long resourcePrimKey, int status)
+		throws PortalException {
+
+		return getService().updateStatus(userId, resourcePrimKey, status);
 	}
 
 	public static KBArticle updateStatus(

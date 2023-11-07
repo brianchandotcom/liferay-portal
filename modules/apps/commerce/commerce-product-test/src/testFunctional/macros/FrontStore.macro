@@ -831,6 +831,10 @@ definition {
 				value1 = ${cartItemDiscountValue});
 		}
 
+		if (${cartItemPriceOnApplication} == "true") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_PRICE_ON_APPLICATION");
+		}
+
 		if (isSet(cartItemPriceAsConfiguredValue)) {
 			AssertTextEquals(
 				key_priceField = "Price as Configured",

@@ -1542,6 +1542,48 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONCompareMode.LENIENT);
 	}
 
+	@Test
+	public void testGetWithSystemObjectFields() throws Exception {
+		ObjectField systemObjectFieldCreator =
+			_objectFieldLocalService.getObjectField(
+				_objectDefinition1.getObjectDefinitionId(), "creator");
+
+		ObjectField systemObjectFieldId =
+			_objectFieldLocalService.getObjectField(
+				_objectDefinition1.getObjectDefinitionId(), "id");
+
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
+			APIApplication.Endpoint.Scope.COMPANY,
+			systemObjectFieldCreator.getExternalReferenceCode(),
+			systemObjectFieldId.getExternalReferenceCode());
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, "externalReferenceCode",
+			RandomTestUtil.randomString());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		jsonObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId(), jsonObject.getInt("id"));
+
+		JSONObject creatorJSONObject = jsonObject.getJSONObject("creator");
+
+		Assert.assertEquals(
+			objectEntry.getUserName(), creatorJSONObject.getString("name"));
+	}
+
 	private void _addAggregationObjectField(
 			ObjectDefinition objectDefinition, String relationshipName)
 		throws Exception {
@@ -1607,6 +1649,71 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"objectRelationshipNames",
 								objectRelationshipName1 + "," +
 									objectRelationshipName2
+							))
+					).put(
+						"description", "description"
+					).put(
+						"externalReferenceCode", apiSchemaExternalReferenceCode
+					).put(
+						"mainObjectDefinitionERC",
+						objectDefinitionExternalReferenceCode
+					).put(
+						"name", "name"
+					))
+			).put(
+				"applicationStatus", "unpublished"
+			).put(
+				"baseURL", baseURL
+			).put(
+				"externalReferenceCode", apiApplicationExternalReferenceCode
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		_relateAPIEndpointWithAPISchemas(
+			apiEndpointExternalReferenceCode, apiSchemaExternalReferenceCode);
+	}
+
+	private void _addAPIApplication(
+			String apiApplicationExternalReferenceCode,
+			String apiEndpointExternalReferenceCode, String baseURL,
+			String objectDefinitionExternalReferenceCode, String path,
+			String pathParameter, String retrieveType,
+			APIApplication.Endpoint.Scope scope,
+			String systemObjectFieldCreatorExternalReferenceCode,
+			String systemObjectFieldIdExternalReferenceCode)
+		throws Exception {
+
+		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
+
+		assertSuccessfulHttpCode(
+			JSONUtil.put(
+				"apiApplicationToAPIEndpoints",
+				_createAPIEndpoint(
+					apiEndpointExternalReferenceCode, path, pathParameter,
+					retrieveType, scope)
+			).put(
+				"apiApplicationToAPISchemas",
+				JSONUtil.put(
+					JSONUtil.put(
+						"apiSchemaToAPIProperties",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"description", "description"
+							).put(
+								"name", "id"
+							).put(
+								"objectFieldERC",
+								systemObjectFieldIdExternalReferenceCode
+							),
+							JSONUtil.put(
+								"description", "description"
+							).put(
+								"name", "creator"
+							).put(
+								"objectFieldERC",
+								systemObjectFieldCreatorExternalReferenceCode
 							))
 					).put(
 						"description", "description"

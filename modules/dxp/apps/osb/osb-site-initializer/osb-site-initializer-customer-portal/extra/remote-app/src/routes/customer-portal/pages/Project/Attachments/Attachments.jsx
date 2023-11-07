@@ -6,9 +6,13 @@
 import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../common/I18n';
+import useCurrentKoroneikiAccount from '../../../../../common/hooks/useCurrentKoroneikiAccount';
+import TicketAttachmentsTable from './components/TicketAttachmentsTable/TicketAttachmentsTable';
 
 const Attachments = () => {
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {data, loading} = useCurrentKoroneikiAccount();
+	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 
 	useEffect(() => {
 		setHasQuickLinksPanel(false);
@@ -22,6 +26,13 @@ const Attachments = () => {
 			<p className="text-neutral-7 text-paragraph-sm">
 				Add a short description.
 			</p>
+
+			<div className="mt-4">
+				<TicketAttachmentsTable
+					koroneikiAccount={koroneikiAccount}
+					loading={loading}
+				/>
+			</div>
 		</>
 	);
 };

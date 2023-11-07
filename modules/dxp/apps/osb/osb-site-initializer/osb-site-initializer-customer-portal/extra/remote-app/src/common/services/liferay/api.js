@@ -41,4 +41,20 @@ const getHighPriorityContacts = async (filter) => {
 	return response.json();
 };
 
-export {getHighPriorityContacts, fetchHeadless};
+const getTicketAttachments = async (page, pageSize, search) => {
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		const response = await fetch(
+			`${HEADLESS_BASE_URL}${`c/ticketattachments/?page=${page}&pageSize=${pageSize}&search=${search}`}`,
+			{
+				headers: {
+					'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+					'Cache-Control': 'max-age=30, stale-while-revalidate=30',
+					'x-csrf-token': Liferay.authToken,
+				},
+			}
+		);
+
+		return response;
+}
+
+export {getHighPriorityContacts, getTicketAttachments, fetchHeadless};

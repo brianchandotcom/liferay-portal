@@ -1029,47 +1029,47 @@ public class LiferayContextController extends ContextController {
 	private List<Class<? extends EventListener>> _getEventListenerClasses(
 		ServiceReference<EventListener> serviceReference) {
 
-		List<Class<? extends EventListener>> listenerClasses =
+		List<Class<? extends EventListener>> eventListenerClasses =
 			new ArrayList<>();
 
 		List<String> objectClasses = StringPlus.asList(
 			serviceReference.getProperty(Constants.OBJECTCLASS));
 
 		if (objectClasses.contains(ServletContextListener.class.getName())) {
-			listenerClasses.add(ServletContextListener.class);
+			eventListenerClasses.add(ServletContextListener.class);
 		}
 
 		if (objectClasses.contains(
 				ServletContextAttributeListener.class.getName())) {
 
-			listenerClasses.add(ServletContextAttributeListener.class);
+			eventListenerClasses.add(ServletContextAttributeListener.class);
 		}
 
 		if (objectClasses.contains(ServletRequestListener.class.getName())) {
-			listenerClasses.add(ServletRequestListener.class);
+			eventListenerClasses.add(ServletRequestListener.class);
 		}
 
 		if (objectClasses.contains(
 				ServletRequestAttributeListener.class.getName())) {
 
-			listenerClasses.add(ServletRequestAttributeListener.class);
+			eventListenerClasses.add(ServletRequestAttributeListener.class);
 		}
 
 		if (objectClasses.contains(HttpSessionListener.class.getName())) {
-			listenerClasses.add(HttpSessionListener.class);
+			eventListenerClasses.add(HttpSessionListener.class);
 		}
 
 		if (objectClasses.contains(
 				HttpSessionAttributeListener.class.getName())) {
 
-			listenerClasses.add(HttpSessionAttributeListener.class);
+			eventListenerClasses.add(HttpSessionAttributeListener.class);
 		}
 
 		if (objectClasses.contains(HttpSessionIdListener.class.getName())) {
-			listenerClasses.add(HttpSessionIdListener.class);
+			eventListenerClasses.add(HttpSessionIdListener.class);
 		}
 
-		return listenerClasses;
+		return eventListenerClasses;
 	}
 
 	private ServletContextHelper _getServletContextHelper(Bundle bundle) {

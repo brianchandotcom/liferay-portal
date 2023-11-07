@@ -410,7 +410,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				objectFolders,
 				rightSidebarType,
 				selectedObjectFolder,
-				selectedObjectRelationshipEdgeId,
+				selectedObjectRelationshipId,
 			} = action.payload;
 
 			const newLeftSidebarItems = objectFolders.map((objectFolder) => {
@@ -506,7 +506,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 												objectRelationshipId:
 													objectRelationship.id,
 												selected:
-													selectedObjectRelationshipEdgeId ===
+													selectedObjectRelationshipId ===
 													objectRelationship.id,
 												selfObjectRelationships,
 												sourceY: 0,

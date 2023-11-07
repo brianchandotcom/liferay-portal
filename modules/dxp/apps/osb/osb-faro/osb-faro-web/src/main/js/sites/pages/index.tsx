@@ -135,8 +135,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 					{matchedRoute === Routes.SITES_TOUCHPOINTS && (
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
-							subtitle={selectedChannelName}
-							title={Liferay.Language.get('sites-dashboard')}
+							type='page'
 						/>
 					)}
 				</div>

@@ -175,6 +175,19 @@ definition {
 				var optionValues = StringUtil.replaceFirst(${optionValues}, "${optionValue},", "");
 			}
 
+			if (isSet(shoppingExperienceImageGallery)) {
+				if (${shoppingExperienceImageGallery} == "true") {
+					Check.checkToggleSwitch(
+						key_toggleSwitchLabel = "Use in Shopping Experience Image Gallery",
+						locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				}
+				else {
+					Uncheck.uncheckToggleSwitch(
+						key_toggleSwitchLabel = "Use in Shopping Experience Image Gallery",
+						locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				}
+			}
+
 			CommerceEntry.publishProductImage();
 
 			Click(locator1 = "Icon#CLOSE");

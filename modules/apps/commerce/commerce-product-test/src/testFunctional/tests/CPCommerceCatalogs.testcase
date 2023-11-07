@@ -50,6 +50,8 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		Navigator.gotoBack();
+
 		Click.clickNoWaitForVisible(
 			key_value = "Test Catalog",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -65,6 +67,8 @@ definition {
 			locator1 = "WCPreview#PREVIEW_IMAGE");
 
 		Button.clickSave();
+
+		Navigator.gotoBack();
 
 		Click.clickNoWaitForVisible(
 			key_value = "Test Catalog",
@@ -220,6 +224,8 @@ definition {
 		SelectFrameTop();
 
 		Alert.viewSuccessMessage();
+
+		Navigator.gotoBack();
 
 		ClickNoError(
 			key_entryName = "Test Catalog Edited",

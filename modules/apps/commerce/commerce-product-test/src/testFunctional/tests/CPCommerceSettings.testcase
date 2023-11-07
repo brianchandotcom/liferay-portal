@@ -206,6 +206,8 @@ definition {
 		task ("Then the injected script is not executed, even if page is refreshed") {
 			AssertAlertNotPresent();
 
+			Navigator.gotoBack();
+
 			AssertElementPresent(
 				key_entry = ${regionName},
 				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
@@ -518,6 +520,8 @@ definition {
 			entryName = "Test Region");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Navigator.gotoBack();
 
 		AssertElementPresent(
 			key_entry = "Test Region",

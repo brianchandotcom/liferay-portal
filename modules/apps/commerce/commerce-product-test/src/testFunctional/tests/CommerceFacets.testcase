@@ -739,6 +739,8 @@ definition {
 				Button.clickSave();
 
 				CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+				Navigator.gotoBack();
 			}
 		}
 

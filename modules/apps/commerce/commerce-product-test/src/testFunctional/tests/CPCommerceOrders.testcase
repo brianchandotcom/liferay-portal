@@ -2629,7 +2629,7 @@ definition {
 		}
 
 		task ("Then the status of the order is Partially Shipped") {
-			Click(locator1 = "Icon#BACK");
+			CommerceOrders.openOrdersAdmin();
 
 			AssertElementPresent(
 				key_orderStatus = "Partially Shipped",
@@ -2647,7 +2647,7 @@ definition {
 		}
 
 		task ("Then the status of the order is updated as Shipped") {
-			Click(locator1 = "Icon#BACK");
+			CommerceOrders.openOrdersAdmin();
 
 			AssertElementPresent(
 				key_orderStatus = "Shipped",

@@ -29,6 +29,8 @@ definition {
 			specificationDescription = "Specification-1 Description",
 			specificationTitle = "specification-1");
 
+		Navigator.gotoBack();
+
 		CommerceEntry.viewSpecificationLabels(
 			specificationDescription = "Specification-1 Description",
 			specificationTitle = "specification-1");
@@ -42,6 +44,8 @@ definition {
 		CommerceEntry.createNewSpecificationGroups(
 			specificationDescription = "Specification-1 Description",
 			specificationTitle = "specification-1");
+
+		Navigator.gotoBack();
 
 		CommerceEntry.viewSpecificationGroups(
 			specificationDescription = "Specification-1 Description",

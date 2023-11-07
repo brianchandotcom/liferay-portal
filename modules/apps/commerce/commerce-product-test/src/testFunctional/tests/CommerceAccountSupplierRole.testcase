@@ -442,6 +442,8 @@ definition {
 		task ("Then Supplier Account 1 is linked successfully to the catalog") {
 			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
+			Navigator.gotoBack();
+
 			CommerceNavigator.gotoEntry(entryName = "Minium");
 
 			AssertTextEquals(
@@ -3743,6 +3745,8 @@ definition {
 				catalogCurrency = "Euro",
 				catalogLanguage = "Catalan (Spain)",
 				catalogNewName = "Minium 2");
+
+			Navigator.gotoBack();
 
 			Click(
 				key_firstColumnValue = "Minium 2",

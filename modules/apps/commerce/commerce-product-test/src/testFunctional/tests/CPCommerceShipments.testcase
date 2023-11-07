@@ -491,9 +491,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "test@liferay.com");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -509,7 +507,7 @@ definition {
 		}
 
 		task ("Then the shipment Base Tracking URL can be added") {
-			Navigator.gotoNavTab(navTab = "Shipments");
+			CommerceShipments.openShipmentsAdmin();
 
 			Click(
 				key_text = "Shipped",
@@ -691,7 +689,7 @@ definition {
 		}
 
 		task ("And the shipping method and tracking URL are correct") {
-			Navigator.gotoNavTab(navTab = "Shipments");
+			CommerceShipments.openShipmentsAdmin();
 
 			Click(
 				key_text = "Shipped",
@@ -1378,9 +1376,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "test@liferay.com");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -1396,7 +1392,7 @@ definition {
 		}
 
 		task ("Then the shipment Carrier Details can be edited") {
-			Navigator.gotoNavTab(navTab = "Shipments");
+			CommerceShipments.openShipmentsAdmin();
 
 			Click(
 				key_text = "Shipped",
@@ -2028,7 +2024,7 @@ definition {
 		}
 
 		task ("Then from the Shipment portlet the tracking URL is present as Base Tracking URL") {
-			Navigator.gotoNavTab(navTab = "Shipments");
+			CommerceShipments.openShipmentsAdmin();
 
 			Click(
 				key_text = "Shipped",
@@ -2047,8 +2043,6 @@ definition {
 	@priority = 5
 	test CreateMultipleShipmentsForOneOrder {
 		property portal.acceptance = "true";
-
-		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -2109,11 +2103,7 @@ definition {
 			category = "Order Management",
 			portlet = "Orders");
 
-		ClickNoError(
-			key_orderStatus = "Pending",
-			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
-
-		CommerceEntry.clickNoError(menuItem = "View");
+		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
 		Click(
 			key_index = "Accept Order",
@@ -2123,27 +2113,27 @@ definition {
 			productSkuList = "MIN55857,MIN55858,MIN55859",
 			warehouseName = "Italy");
 
-		Click(locator1 = "Icon#BACK");
+		CommerceOrders.openOrdersAdmin();
 
 		AssertElementPresent(
 			key_orderStatus = "Partially Shipped",
 			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
 
-		ClickNoError(
-			key_orderStatus = "Partially Shipped",
-			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
-
-		CommerceEntry.clickNoError(menuItem = "View");
+		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Partially Shipped");
 
 		CommerceOrders.createShipment(
 			productSkuList = "MIN55860,MIN55861",
 			warehouseName = "Italy");
 
+		CommerceOrders.openOrdersAdmin();
+
+		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Shipped");
+
 		Click(
 			key_index = "Completed",
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
-		Click(locator1 = "Icon#BACK");
+		Navigator.gotoBack();
 
 		AssertElementPresent(
 			key_orderStatus = "Completed",
@@ -2625,8 +2615,6 @@ definition {
 	test SearchShipment {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -2686,16 +2674,20 @@ definition {
 				productSkuList = "MIN55861",
 				warehouseName = "Italy");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Shipments");
-
-			Click(
-				key_rowNumber = 1,
-				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+			CommerceShipments.openShipmentsAdmin();
 
 			if (${i} == 1) {
+				Click(
+					key_rowNumber = 1,
+					locator1 = "CommerceNavigation#ENTRY_NAME_N");
+
 				var ship1Id = selenium.getText("CommerceEntry#HEADER_ID");
 			}
 			else {
+				Click(
+					key_rowNumber = 2,
+					locator1 = "CommerceNavigation#ENTRY_NAME_N");
+
 				var ship2Id = selenium.getText("CommerceEntry#HEADER_ID");
 			}
 		}

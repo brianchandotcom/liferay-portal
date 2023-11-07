@@ -91,6 +91,8 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		Navigator.gotoBack();
+
 		AssertElementPresent(
 			key_rowEntry = "Test",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
@@ -126,6 +128,8 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		Navigator.gotoBack();
 
 		AssertElementPresent(
 			key_rowEntry = "Test",

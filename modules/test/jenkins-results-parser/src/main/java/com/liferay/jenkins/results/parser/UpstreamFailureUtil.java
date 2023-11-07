@@ -137,7 +137,15 @@ public class UpstreamFailureUtil {
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				upstreamBranchName, (File)null, "liferay-portal");
 
+		int buildCount = 0;
+
 		for (TestrayBuild testrayBuild : testrayRoutine.getTestrayBuilds()) {
+			if (buildCount > 25) {
+				break;
+			}
+
+			buildCount++;
+
 			if (!gitWorkingDirectory.refContainsSHA(
 					"HEAD", testrayBuild.getPortalSHA())) {
 

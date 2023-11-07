@@ -100,6 +100,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -143,6 +144,7 @@ import java.util.zip.ZipInputStream;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -161,6 +163,11 @@ public class BatchEngineBrokerTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -382,10 +389,8 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			_objectDefinition1, TestPropsValues.getUserId());
 
-		Group group = GroupTestUtil.addGroup();
-
 		_addObjectEntry(
-			TestPropsValues.getCompanyId(), group.getGroupId(),
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
 			_objectDefinition1, TestPropsValues.getUserId());
 
 		BatchPlannerPlan batchPlannerPlan =
@@ -568,12 +573,20 @@ public class BatchEngineBrokerTest {
 		_testImportSiteScopeObjectEntry(
 			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
 
-		Group group = GroupTestUtil.addGroup();
+		// global group
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group globalGroup = company.getGroup();
+
+		_testImportSiteScopeObjectEntry(
+			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
 
 		// different group
 
 		_testImportSiteScopeObjectEntry(
-			group.getGroupId(), _OBJECT_ENTRY_ERC_2);
+			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
 	}
 
 	private Company _addCompany(long companyId, String webId) throws Exception {
@@ -1212,6 +1225,8 @@ public class BatchEngineBrokerTest {
 
 	private static final String _OBJECT_ENTRY_ERC_2 = "TEST-OBJECT-ENTRY-2";
 
+	private static final String _OBJECT_ENTRY_ERC_3 = "TEST-OBJECT-ENTRY-3";
+
 	private static final Map<String, List<String>> _ignoredImportFields =
 		HashMapBuilder.<String, List<String>>put(
 			"objectActions", Arrays.asList("dateCreated", "dateModified", "id")
@@ -1331,6 +1346,9 @@ public class BatchEngineBrokerTest {
 
 	@Inject
 	private com.liferay.portal.kernel.util.File _file;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;

@@ -227,7 +227,7 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		_layoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(
+			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntry(
 				getLayoutPageTemplateEntryId());
 
 		return _layoutPageTemplateEntry;

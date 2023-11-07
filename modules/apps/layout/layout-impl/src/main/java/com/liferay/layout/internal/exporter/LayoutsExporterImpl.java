@@ -167,8 +167,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 		for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+					layoutPageTemplateEntryId);
 
 			if (layoutPageTemplateEntry.isDraft() ||
 				(layoutPageTemplateEntry.getType() != type)) {

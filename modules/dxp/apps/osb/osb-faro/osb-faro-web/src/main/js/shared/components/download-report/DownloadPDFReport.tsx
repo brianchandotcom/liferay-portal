@@ -11,6 +11,8 @@ export enum Containers {
 	AssetAppearsOnCard = 'assetAppearsOnCardRoot',
 	AudienceCard = 'audienceCardRoot',
 	CohortAnalysisCard = 'cohortAnalysisCardRoot',
+	DownloadsByLocationCard = 'downloadsByLocationCardRoot',
+	DownloadsByTechnologyCard = 'downloadsByTechnologyCardRoot',
 	InterestsCard = 'interestsCardRoot',
 	SearchTermsCard = 'searchTermsCardRoot',
 	SessionsByLocationCard = 'SessionsByLocationCardRoot',
@@ -39,6 +41,14 @@ export const CONTAINERS: {[key in Containers]: TContainer} = {
 	[Containers.CohortAnalysisCard]: {
 		label: Liferay.Language.get('cohort-analysis'),
 		layout: 1
+	},
+	[Containers.DownloadsByLocationCard]: {
+		label: Liferay.Language.get('downloads-by-location'),
+		layout: 2
+	},
+	[Containers.DownloadsByTechnologyCard]: {
+		label: Liferay.Language.get('downloads-by-technology'),
+		layout: 2
 	},
 	[Containers.InterestsCard]: {
 		label: Liferay.Language.get('interests'),

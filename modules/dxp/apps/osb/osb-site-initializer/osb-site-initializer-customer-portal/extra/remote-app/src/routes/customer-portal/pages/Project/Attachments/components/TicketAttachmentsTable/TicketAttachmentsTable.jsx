@@ -3,12 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
+import i18n from '../../../../../../../common/I18n';
 import Table from '../../../../../../../common/components/Table';
 import {getTicketAttachments} from '../../../../../../../common/services/liferay/api'
 import useMyUserAccountByAccountExternalReferenceCode from '../../../../Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 import getAttachmentFormattedDateTime from './utils/getAttachmentFormattedDateTime';
 import {getColumns} from './utils/getColumns';
+import getSortedTicketAttachments from './utils/getSortedTicketAttachments';
+import usePagination from './hooks/usePaginationTicketAttachments';
+import useSort from './hooks/useSortTicketAttachments';
 
 const TicketAttachmentsTable = ({
 	koroneikiAccount,
@@ -29,21 +33,34 @@ const TicketAttachmentsTable = ({
 
 	const [ticketAttachments, setTicketAttachments] = useState();
 
+	const {handleSortChange, sortConfig} = useSort();
+
+	const {paginationConfig, sortedTicketAttachmentsFilteredPerPage} = usePagination(sortConfig, ticketAttachments);
+
 	useEffect(() => {
+		const fetchTicketAttachments = async () => {
+			const ticketAttachmentsResponse = await getTicketAttachments(koroneikiAccount?.accountKey);
+
+			const ticketAttachmentsData = await ticketAttachmentsResponse.json();
+
+			const ticketAttachments = ticketAttachmentsData.items.map(ticketAttachment => ({
+				accountKey: ticketAttachment.accountKey,
+				creatorName: ticketAttachment.creator.name,
+				dateCreated: ticketAttachment.dateCreated,
+				fileName: ticketAttachment.fileName,
+				fileSize: ticketAttachment.fileSize,
+				storageBucket: ticketAttachment.storageBucket,
+				zendeskTicketId: ticketAttachment.zendeskTicketId
+			}));
+
+			setTicketAttachments(ticketAttachments);
+		};
 		fetchTicketAttachments();
-	}, []);
-
-	const fetchTicketAttachments = async () => {
-		const ticketAttachmentsResponse = await getTicketAttachments(1, 5, koroneikiAccount.accountKey);
-
-		const ticketAttachmentsData = await ticketAttachmentsResponse.json();
-
-		setTicketAttachments(ticketAttachmentsData.items);
-	};
+	}, [koroneikiAccount?.accountKey, paginationConfig.activePage, paginationConfig.itemsPerPage]);
 
 	return (
 		<>
-			{(ticketAttachments !== undefined && !loading) ? (
+			{(sortedTicketAttachmentsFilteredPerPage !== undefined && !loading) ? (
 				<div className="cp-ticket-attachments-table-wrapper">
 					<Table
 						className="border-0"
@@ -51,34 +68,41 @@ const TicketAttachmentsTable = ({
 							loggedUserAccount?.selectedAccountSummary
 								.hasAdministratorRole
 						)}
+						handleSortChange={handleSortChange}
 						hasPagination
+						hasSorting
 						isLoading={loading}
-						rows={ticketAttachments?.map(
+						paginationConfig={paginationConfig}
+						rows={sortedTicketAttachmentsFilteredPerPage?.map(
 							(ticketAttachment) => ({
 								attached: (
 									<div className="d-flex flex-column">
 										<div className="m-0 text-neutral-10 text-truncate">
-											{ticketAttachment.dateCreated}
+											{getAttachmentFormattedDateTime(ticketAttachment?.dateCreated)}
 										</div>
 
 										<div className="m-0 text-neutral-7 text-paragraph-sm text-truncate">
-											By {ticketAttachment.creator.name}
+											{i18n.translate('by')}
+
+											<span> </span>
+
+											{ticketAttachment?.creatorName}
 										</div>
 									</div>
 								),
 								fileName: (
-									<a className="m-0 text-truncate" href={ticketAttachment.storageBucket}>
-										{ticketAttachment.fileName}
+									<a className="m-0 text-truncate" href={ticketAttachment?.storageBucket}>
+										{ticketAttachment?.fileName}
 									</a>
 								),
 								fileSize: (
 									<div className="m-0 text-neutral-10 text-paragraph text-truncate">
-										{ticketAttachment.fileSize}
+										{ticketAttachment?.fileSize}
 									</div>
 								),
 								ticket: (
 									<a className="m-0 text-truncate" href="/link-to-ticket">
-										{ticketAttachment.zendeskTicketId}
+										{ticketAttachment?.zendeskTicketId}
 									</a>
 								),
 							})

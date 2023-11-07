@@ -41,10 +41,10 @@ const getHighPriorityContacts = async (filter) => {
 	return response.json();
 };
 
-const getTicketAttachments = async (page, pageSize, search) => {
+const getTicketAttachments = async (search) => {
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(
-			`${HEADLESS_BASE_URL}${`c/ticketattachments/?page=${page}&pageSize=${pageSize}&search=${search}`}`,
+			`${HEADLESS_BASE_URL}${`c/ticketattachments/?search=${search}`}`,
 			{
 				headers: {
 					'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),

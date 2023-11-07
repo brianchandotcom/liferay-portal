@@ -4,18 +4,16 @@
  */
 
 import i18n from '../../../../../../../../common/I18n';
-import {FilterIcon} from '../../../../../../../../common/icons/filter_icon'
 
 const getInitialColumns = () => [
 	{
 		accessor: 'ticket',
 		bodyClass: 'border-0',
+		filterIdentifier: 'zendeskTicketId',
 		header: {
 			name: (
 				<div className="align-items-center d-flex">
 					<div className="mr-2">{i18n.translate('ticket')}</div>
-
-					<FilterIcon/>
 				</div>
 			),
 			styles:
@@ -26,13 +24,11 @@ const getInitialColumns = () => [
 	{
 		accessor: 'fileName',
 		bodyClass: 'border-0',
-
+		filterIdentifier: 'fileName',
 		header: {
 			name: (
 				<div className="align-items-center d-flex">
 					<div className="mr-2">{i18n.translate('file-name')}</div>
-
-					<FilterIcon/>
 				</div>
 			),
 			styles:
@@ -43,12 +39,11 @@ const getInitialColumns = () => [
 	{
 		accessor: 'fileSize',
 		bodyClass: 'border-0',
+		filterIdentifier: 'fileSize',
 		header: {
 			name: (
 				<div className="align-items-center d-flex">
 					<div className="mr-2">{i18n.translate('file-size')}</div>
-
-					<FilterIcon/>
 				</div>
 			),
 			styles:
@@ -59,12 +54,11 @@ const getInitialColumns = () => [
 	{
 		accessor: 'attached',
 		bodyClass: 'border-0',
+		filterIdentifier: 'dateCreated',
 		header: {
 			name: (
 				<div className="align-items-center d-flex">
 					<div className="mr-2">{i18n.translate('attached')}</div>
-
-					<FilterIcon/>
 				</div>
 			),
 			styles:
@@ -83,8 +77,8 @@ const optionColumn = {
 	},
 };
 
-export function getColumns(hasAccountAdministrator) {
-	const columns = getInitialColumns();
+export function getColumns(hasAccountAdministrator, handleConfigChange) {
+	const columns = getInitialColumns(handleConfigChange);
 
 	if (hasAccountAdministrator) {
 		return [...columns, optionColumn];

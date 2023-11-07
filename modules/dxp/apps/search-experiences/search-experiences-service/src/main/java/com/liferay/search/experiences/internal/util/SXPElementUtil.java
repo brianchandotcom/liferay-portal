@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -67,8 +68,16 @@ public class SXPElementUtil {
 				sxpElement.getExternalReferenceCode(), user.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(
 					sxpElement.getDescription_i18n()),
-				String.valueOf(sxpElement.getElementDefinition()), true,
-				_SCHEMA_VERSION,
+				String.valueOf(sxpElement.getElementDefinition()),
+				sxpElement.getDescription_i18n(
+				).get(
+					LocaleUtil.US.toString()
+				),
+				sxpElement.getTitle_i18n(
+				).get(
+					LocaleUtil.US.toString()
+				),
+				true, _SCHEMA_VERSION,
 				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
 				new ServiceContext() {
 					{

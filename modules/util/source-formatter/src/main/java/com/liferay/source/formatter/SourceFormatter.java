@@ -724,11 +724,17 @@ public class SourceFormatter {
 							"each breaking change."));
 				}
 
-				if ((breakingChangeReport.indexOf("## What") >
-						breakingChangeReport.indexOf("## Why")) ||
-					((alternativesCount == 1) &&
-					 (breakingChangeReport.indexOf("## Why") >
-						 breakingChangeReport.indexOf("## Alternatives")))) {
+				int alternativesPosition = breakingChangeReport.indexOf(
+					"## Alternatives");
+				int whatPosition = breakingChangeReport.indexOf("## What");
+				int whyPosition = breakingChangeReport.indexOf("## Why");
+
+				if ((whatPosition > whyPosition) ||
+					((alternativesPosition != -1) &&
+					 ((whatPosition > breakingChangeReport.indexOf(
+						 "## Alternatives")) ||
+					  (whyPosition > breakingChangeReport.indexOf(
+						  "## Alternatives"))))) {
 
 					throw new Exception(
 						StringBundler.concat(
@@ -737,7 +743,7 @@ public class SourceFormatter {
 							"'## Why' | '## Alternatives'"));
 				}
 
-				String previousLine = null;
+				String previousLine = StringPool.BLANK;
 
 				String[] lines = breakingChangeReport.split("\n");
 
@@ -749,15 +755,14 @@ public class SourceFormatter {
 						trimmedLine.startsWith("## What") ||
 						trimmedLine.startsWith("## Why")) {
 
-						String nextLine = null;
+						String nextLine = StringPool.BLANK;
 
 						if (i < (lines.length - 1)) {
 							nextLine = lines[i + 1].trim();
 						}
 
-						if (((nextLine != null) && !nextLine.isEmpty()) ||
-							((previousLine != null) &&
-							 !previousLine.isEmpty())) {
+						if ((nextLine.length() != 0) ||
+							(previousLine.length() != 0)) {
 
 							throw new Exception(
 								StringBundler.concat(

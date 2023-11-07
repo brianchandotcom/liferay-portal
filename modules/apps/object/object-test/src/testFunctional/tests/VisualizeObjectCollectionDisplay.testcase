@@ -118,10 +118,8 @@ definition {
 			pageTemplateName = "Blank Display Page");
 
 		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Collection Display");
-
-		VisualizeObjectCollectionDisplay.addFieldForCollectionDisplay(fragmentName = "Heading");
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
@@ -174,22 +172,19 @@ definition {
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
 			fieldLabelName = "Text",
-			fieldName = "text",
+			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject302");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject302");
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "text",
-			objectName = "CustomObject302",
-			value = "Test Text 1");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "text",
-			objectName = "CustomObject302",
-			value = "Test Text 2");
+		for (var entryName : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject302",
+				value = "Entry ${entryName}");
+		}
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
 			contentType = "Custom Object 302",
@@ -203,13 +198,14 @@ definition {
 			fragmentName = "Collection Display",
 			infoListProviderName = "Custom Objects 302");
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		Refresh();
 
-		VisualizeObjectCollectionDisplay.addFieldForCollectionDisplay(fragmentName = "Heading");
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Basic Components",
+			entryTitle = "",
+			fragmentName = "Heading");
 
 		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectCollectionDisplay.addFieldInsideCollectionDisplay();
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Text");
 
@@ -217,13 +213,11 @@ definition {
 
 		VisualizeObjectDisplayPage.openDisplayPage(displayPageName = "Blank Display Page");
 
-		AssertElementPresent(
-			key_entries = "Test Text 1",
-			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
-
-		AssertElementPresent(
-			key_entries = "Test Text 2",
-			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
+		for (var entryName : list "A,B") {
+			AssertElementPresent(
+				key_entries = "Entry ${entryName}",
+				locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
+		}
 	}
 
 }

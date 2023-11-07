@@ -510,12 +510,14 @@ definition {
 				field = "Custom Integer Field",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Sum",
+				functionType = "Sum",
 				relationship = "Relationship");
 
 			ObjectAdmin.goToDetailsTab();
 
-			CreateObject.selectTitleField(fieldLabel = "Custom Aggregation");
+			CreateObject.selectTitleField(
+				currentOption = "ID",
+				fieldLabel = "Custom Aggregation");
 
 			CreateObject.saveObject();
 
@@ -4321,13 +4323,14 @@ definition {
 				field = "Custom Long Integer Field",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Sum",
-				functionType = "Max",
+				functionType = "Sum",
 				relationship = "Relationship");
 
 			ObjectAdmin.goToDetailsTab();
 
-			CreateObject.selectTitleField(fieldLabel = "Custom Aggregation");
+			CreateObject.selectTitleField(
+				currentOption = "ID",
+				fieldLabel = "Custom Aggregation");
 
 			CreateObject.saveObject();
 
@@ -4513,7 +4516,9 @@ definition {
 
 			ObjectAdmin.goToDetailsTab();
 
-			CreateObject.selectTitleField(fieldLabel = "Custom Aggregation");
+			CreateObject.selectTitleField(
+				currentOption = "ID",
+				fieldLabel = "Custom Aggregation");
 
 			CreateObject.saveObject();
 

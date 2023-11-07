@@ -195,10 +195,7 @@ definition {
 
 		// Add new virtual instance to be the SP site
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		for (var virtualHostName : list ${virtualHosts}) {
 			PortalInstances.addCP(

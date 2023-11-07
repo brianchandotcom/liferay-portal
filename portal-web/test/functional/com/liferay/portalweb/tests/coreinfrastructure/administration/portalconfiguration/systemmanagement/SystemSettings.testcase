@@ -293,10 +293,7 @@ definition {
 		}
 
 		task ("And a new Virtual Instance is created and login to add the new site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",

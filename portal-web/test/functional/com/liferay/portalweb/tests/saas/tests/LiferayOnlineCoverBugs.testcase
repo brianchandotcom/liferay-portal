@@ -35,10 +35,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Assert the Virtual Instance created by Json is present") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.viewCP(virtualHost = "www.able.com");
 
@@ -99,10 +96,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Go to Virtual Instances") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 		}
 
 		task ("Delete the Virtual Instance created") {
@@ -125,10 +119,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Go to Virtual Instances") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 		}
 
 		task ("Create a new Virtual instance using localhost") {
@@ -167,10 +158,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Assert the Virtual Instance created by Json is present") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.viewCP(virtualHost = "www.able.com");
 

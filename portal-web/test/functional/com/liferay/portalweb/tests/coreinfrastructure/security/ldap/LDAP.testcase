@@ -680,10 +680,7 @@ definition {
 		task ("Given: The main instance and a virtual instance is connected to the same LDAP Server") {
 			var enableSettingList = "enabled,required";
 
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
+			PortalInstances.openVirtualInstancesAdmin();
 
 			PortalInstances.addCP(
 				mailDomain = "www.able.com",

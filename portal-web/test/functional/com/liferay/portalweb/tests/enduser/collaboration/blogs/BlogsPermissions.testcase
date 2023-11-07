@@ -1071,7 +1071,7 @@ definition {
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWithOrgRoleByDefault {
 		Permissions.setUpOrgRoleLoginUserPG(
@@ -1423,7 +1423,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#SUBSCRIBE");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactorneeded
 	test CannotSubscribeToEntryWhenRegRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1619,7 +1619,7 @@ definition {
 		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactorneeded
 	test CannotViewEntryAfterOwnerRoleInlinePermissionsAreRemoved {
 		Permissions.setUpRegRoleLoginUserPG(

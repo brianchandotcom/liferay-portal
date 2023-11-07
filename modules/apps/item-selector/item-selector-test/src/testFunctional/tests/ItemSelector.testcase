@@ -1048,7 +1048,7 @@ definition {
 
 	@description = "This ensures that the location info of depot web content can be viewed through WCD on a connected site."
 	@ignore = "true"
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewCorrectWCLocationInfo {
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -1093,7 +1093,7 @@ definition {
 	}
 
 	@description = "This ensures that the location info of the documents can be viewed through Blogs on a connected site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewDocumentsCorrectLocationInfo {
 		HeadlessSite.addSite(siteName = "Site Name");

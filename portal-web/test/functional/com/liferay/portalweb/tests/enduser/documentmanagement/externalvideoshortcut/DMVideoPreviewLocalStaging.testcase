@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "This test ensures that a web content can be published successfully after editing the embedded video."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishWCAfterEditingEmbeddedVideo {
 		property portal.acceptance = "true";
@@ -135,7 +135,7 @@ definition {
 
 	@description = "This test ensures that a video reference can be removed after republishing a KB article"
 	@e2etest
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRemoveVideoReferenceAfterRepublishingKBArticle {
 		property portal.acceptance = "true";

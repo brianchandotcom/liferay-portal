@@ -32,7 +32,7 @@ definition {
 
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for local staging."
 	@e2e
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanBePublishedViaLocalStaging {
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -112,7 +112,7 @@ definition {
 
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for remote staging."
 	@e2e
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanBePublishedViaRemoteStaging {
 		property app.server.bundles.size = "1";
@@ -478,7 +478,7 @@ definition {
 	}
 
 	@description = "This ensures that images are excluded with the dynamic selection that does not contain the keyword "Image" in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanExcludeImagesDynamically {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -535,7 +535,7 @@ definition {
 	}
 
 	@description = "This ensures that the asset types will not be displayed when disabling the applications."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotDisplayDisabledApplications {
 		JSONAssetlist.addDynamicAssetListEntry(
@@ -617,7 +617,7 @@ definition {
 	}
 
 	@description = "This ensures that user can not select the collection in depot after disabling Collections."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotSelectAfterDisablingCollections {
 		JSONAssetlist.addManualAssetListEntry(
@@ -709,7 +709,7 @@ definition {
 	}
 
 	@description = "This ensures that an image can be selected from other site scope through dynamic selection that does not contain the keyword."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSelectDMFromOtherScopeDynamically {
 		HeadlessSite.addSite(siteName = "Test Site Name");
@@ -773,7 +773,7 @@ definition {
 	}
 
 	@description = "This ensures that the documents with document type can be selected through Collections in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSelectDocumentsWithTypeManually {
 		for (var i : list "1,2") {
@@ -822,7 +822,7 @@ definition {
 	}
 
 	@description = "This ensures that multiple documents can be selected through Collections in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSelectMultipleDMManually {
 		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
@@ -879,7 +879,7 @@ definition {
 	}
 
 	@description = "This ensures that multiple web content can be selected through Collections in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSelectMultipleWCManually {
 		for (var i : list "1,2,3") {

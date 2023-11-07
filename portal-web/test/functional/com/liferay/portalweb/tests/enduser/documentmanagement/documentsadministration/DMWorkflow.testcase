@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-84593. It ensures that a user cannot delete the dismissed notification after deleting the pending file."
-	@priority = 5
+	@priority = 4
 	test CannotDeleteDismissedNotificationAfterDeletingPendingFile {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

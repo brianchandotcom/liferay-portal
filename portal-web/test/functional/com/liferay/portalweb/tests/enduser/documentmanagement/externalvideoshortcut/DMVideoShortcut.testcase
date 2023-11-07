@@ -87,11 +87,9 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be added with Facebook."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddFacebookVideo {
-		property portal.acceptance = "true";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(
@@ -105,7 +103,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Facebook video added via item selector can be embedded when adding a KB."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddFacebookVideoToKBViaItemSelector {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -126,7 +124,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed an external video in a KB article."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddKBArticleWithEmbeddedVideo {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -154,11 +152,9 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed a Twitch live stream in a KB article."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddKBArticleWithTwitchStream {
-		property portal.acceptance = "true";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(
@@ -185,11 +181,9 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be added with Twitch live stream."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddTwitchLiveStream {
-		property portal.acceptance = "true";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(
@@ -204,7 +198,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Twitch video added via item selector can be embedded when adding a WC."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddTwitchToWCViaItemSelector {
 		JSONDepot.addDepot(
@@ -302,7 +296,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed an external Twitch video in a WC article."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddWCWithEmbeddedTwitchVideo {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -338,7 +332,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed an external video in web content."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddWCWithEmbeddedVideo {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -525,7 +519,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be edited with a YouTube shortened URL."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditYoutubeWithShortenedURL {
 		property portal.acceptance = "true";
@@ -556,7 +550,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut associated with a category can be searched."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanSearchForCategory {
 		JSONLayout.addPublicLayout(
@@ -654,7 +648,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut associated with a tag can be searched."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSearchForTag {
 		JSONLayout.addPublicLayout(
@@ -910,7 +904,7 @@ definition {
 	}
 
 	@description = "This ensures that the thumbnail of Vimeo video can be viewed in DM."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewVimeoThumbnail {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -931,7 +925,7 @@ definition {
 	}
 
 	@description = "This ensures that the thumbnail of YouTube video can be viewed in DM. It also asserts the icon of External Video Shortcut."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewYouTubeThumbnail {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

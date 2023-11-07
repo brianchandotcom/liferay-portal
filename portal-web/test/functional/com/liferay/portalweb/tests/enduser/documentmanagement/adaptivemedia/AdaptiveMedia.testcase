@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This ensures that the SVG image can be added and optimized in a blog entry."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAdaptSVGImageInBlogsEntry {
 		JSONDocument.addFileWithUploadedFile(
@@ -199,7 +199,7 @@ definition {
 		AdaptiveMedia.adaptAllImages();
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteDisabledResolution {
 		AdaptiveMedia.openToAddImageResolution();
@@ -279,7 +279,7 @@ definition {
 		AdaptiveMedia.viewNoImageResolution();
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotAddImageResolutionWithNoDimensions {
 		AdaptiveMedia.openToAddImageResolution();
@@ -295,7 +295,7 @@ definition {
 		AdaptiveMedia.viewNoImageResolution(imageName = "testResolutionNoDimensions");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotAddNonNumericWidthOrHeight {
 		AdaptiveMedia.openAdaptiveMediaAdmin();
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78626. It ensures that a reloaded image can be viewed after changing the screen resolution."
-	@priority = 5
+	@priority = 4
 	test CanRenderImageAfterChangingScreenResolution {
 		var fileEntryId = JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -375,7 +375,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.adaptive.media.exception.AMRuntimeException");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test DisabledResolutionsWillNotAdaptNewImages {
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -424,7 +424,7 @@ definition {
 		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "9/10");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ImageMustBeReadaptedForUpdatedResolutionToTakeEffect {
 		AdaptiveMedia.openToAddImageResolution();

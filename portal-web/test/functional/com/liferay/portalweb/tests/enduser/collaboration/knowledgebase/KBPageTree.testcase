@@ -111,7 +111,7 @@ definition {
 	}
 
 	@description = "This test ensures that a subfolder is displayed in the KB page tree when the parent folder is expanded."
-	@priority = 5
+	@priority = 4
 	test CanViewSubFolderThroughPageTreePanel {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "This test ensures that the KB page tree is opened after opening sections, and it is collapsed after opening the product menu."
-	@priority = 5
+	@priority = 3
 	test PageTreeIsCollapsedAfterOpeningProductMenu {
 		task ("Check that opening and closing the Folders and Articles section works as expected") {
 			KBAdmin.openKBAdmin(siteURLKey = "guest");

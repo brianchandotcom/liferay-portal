@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with collections to an asset library."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedDepotWithCollectionsCanBeImportedToDepot {
 		JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with collections to a site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedDepotWithCollectionsCanBeImportedToSite {
 		JSONAssetlist.addManualAssetListEntry(
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with customize document to an asset library."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedDepotWithCustomizeDMCanBeImportedToDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library customize web content to an asset library."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedDepotWithCustomizeWCCanBeImportedToDepot {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with document to a site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedDepotWithDMCanBeImportedToSite {
 		JSONDocument.addFile(
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with web content to a site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedDepotWithWCCanBeImportedToSite {
 		JSONWebcontent.addWebContent(
@@ -312,7 +312,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the site with collections to a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedSiteWithCollectionsCanBeImportedToDepot {
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the site with document to a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedSiteWithDMCanBeImportedToDepot {
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the site with web content to a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ExportedSiteWithWCCanBeImportedToDepot {
 		HeadlessSite.addSite(siteName = "Site Name");

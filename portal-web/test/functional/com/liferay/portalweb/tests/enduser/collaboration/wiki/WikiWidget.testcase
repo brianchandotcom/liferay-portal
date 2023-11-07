@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "This ensures that a link added with another page URL can navigate to the page after clicking the link."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNavigateToOtherPageByEditorLink {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";

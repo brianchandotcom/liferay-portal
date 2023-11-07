@@ -286,7 +286,7 @@ definition {
 	}
 
 	@description = "This test ensures that a blog entry created with an internal video embedded in it can be exported and imported."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanImportExportedBlogWithEmbeddedVideo {
 		property test.liferay.virtual.instance = "false";
@@ -328,7 +328,7 @@ definition {
 	}
 
 	@description = "This test ensures that a kb article created with an internal video embedded in it can be exported and imported."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanImportExportedKBWithEmbeddedVideo {
 		property portal.acceptance = "true";
@@ -385,10 +385,9 @@ definition {
 	}
 
 	@description = "This test ensures that a web content created with an internal video embedded in it can be exported and imported."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanImportExportedWebContentWithEmbeddedVideo {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -448,10 +447,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot internal video cannot be viewed from the disconnected site."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanViewFromDisconnectedSite {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -58,7 +58,7 @@ definition {
 			mentionsUserScreenName = "usersn");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewMentionViaMBThreadReply {
 		JSONMBMessage.addMessage(
@@ -79,7 +79,7 @@ definition {
 			mentionsUserScreenName = "usersn");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactorneeded
 	test CanViewMentionViaUpdatedMBThread {
 		JSONMBMessage.addMessage(

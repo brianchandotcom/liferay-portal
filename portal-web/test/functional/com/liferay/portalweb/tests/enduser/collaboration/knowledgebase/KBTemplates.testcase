@@ -76,7 +76,7 @@ definition {
 
 	@description = "This test ensures that the template can be added by center new button."
 	@e2etest
-	@priority = 5
+	@priority = 4
 	test CanAddTemplateThroughCenterNewButton {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit the kb template from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanEditTemplateEntryViaNavigationPane {
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit the kb template permissions from the center pane."
-	@priority = 5
+	@priority = 4
 	test CanEditTemplatePermissionsViaCenterPane {
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit the kb template permissions from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanEditTemplatePermissionsViaNavigationPane {
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit the kb template from the center pane."
-	@priority = 5
+	@priority = 4
 	test CanEditTemplateViaCenterPane {
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
@@ -260,7 +260,7 @@ definition {
 	}
 
 	@description = "This test checks checks that the correct actions appear in the management toolbar for a KB template and that it is editable."
-	@priority = 5
+	@priority = 4
 	test CanEditTemplateViaToolbar {
 		property custom.properties = "feature.flag.LPS-166643=true";
 
@@ -290,7 +290,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can preview the kb template from the center pane."
-	@priority = 5
+	@priority = 4
 	test CanPreviewTemplateViaCenterPane {
 		property portal.acceptance = "true";
 

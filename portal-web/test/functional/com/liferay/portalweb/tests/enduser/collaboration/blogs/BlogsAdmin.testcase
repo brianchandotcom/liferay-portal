@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-67664. It ensures that a user can order blog entries by display date."
-	@priority = 4
+	@priority = 3
 	test CanOrderByDisplayDate {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

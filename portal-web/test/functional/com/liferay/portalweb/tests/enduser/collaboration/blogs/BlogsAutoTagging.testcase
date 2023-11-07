@@ -83,7 +83,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-98324. It ensures that Auto tags can be added and removed via Gogo Shell."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanAddAndRemoveAutoTagViaGogoShell {
 		property test.liferay.virtual.instance = "false";
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@description = "This test ensures that if a user manual adds a tag when adding a blog entry, the entry will not be autotagged."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotAutoTagForManuallyAddedEntry {
 		property test.liferay.virtual.instance = "false";

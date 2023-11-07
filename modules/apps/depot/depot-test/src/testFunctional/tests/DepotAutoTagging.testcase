@@ -165,7 +165,7 @@ definition {
 	}
 
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a depot that has auto-tagging disabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDisableForImage {
 		property test.liferay.virtual.instance = "false";
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "This test asserts that no auto-tag is generated when a text document is uploaded to a depot that has auto-tagging disabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDisableForTextDocument {
 		property test.liferay.virtual.instance = "false";
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@description = "This test asserts that no auto-tag is generated when a web content article is uploaded to a depot that has auto-tagging disabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDisableForWebContent {
 		property test.liferay.virtual.instance = "false";

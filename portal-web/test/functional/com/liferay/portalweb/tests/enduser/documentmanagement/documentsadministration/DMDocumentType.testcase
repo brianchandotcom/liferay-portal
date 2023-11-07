@@ -883,7 +883,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-127092. It ensures that the translated document type can be localized properly."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanViewLocalizedDocumentType {
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");

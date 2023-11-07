@@ -706,7 +706,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
-	@priority = 5
+	@priority = 4
 	test CanNavigateToRemoteLiveViaToolbar {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1609,7 +1609,7 @@ definition {
 	}
 
 	@description = "This ensures that the document info is displayed correctly after publishing and republishing."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewRepublishedDocumentInfo {
 		property portal.acceptance = "true";
@@ -1866,7 +1866,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-155795. It ensures that an image that was published on a site can still be accessed after remote staging is disabled."
-	@priority = 5
+	@priority = 4
 	test ImageIsStillAccessibleAfterDisablingStaging {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

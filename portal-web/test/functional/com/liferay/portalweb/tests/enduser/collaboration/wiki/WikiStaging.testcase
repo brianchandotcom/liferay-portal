@@ -83,7 +83,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-73992. It asserts removed wiki attachment file can not be viewed after publishing."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotViewRemovedAttachmentAfterPublishing {
 		JSONLayout.addWidgetToPublicLayout(
@@ -292,7 +292,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-73471. It asserts the renamed child page can be viewed after publishing."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanViewRenamedChildPageAfterPublishing {
 		JSONWiki.addWikiPage(

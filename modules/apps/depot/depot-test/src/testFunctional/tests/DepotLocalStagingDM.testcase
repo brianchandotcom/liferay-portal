@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs cover image when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteBlogCoverImage {
 		JSONDocument.addFileWithUploadedFile(
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs inline image when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteBlogInlineImage {
 		JSONDocument.addFileWithUploadedFile(
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteBlogSmallImage {
 		JSONDocument.addFileWithUploadedFile(
@@ -459,7 +459,7 @@ definition {
 	}
 
 	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling local staging. Skip the instance for performance improvement."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteDocumentWithCustomField {
 		property test.liferay.virtual.instance = "false";
@@ -549,7 +549,7 @@ definition {
 	}
 
 	@description = "This ensures that the image in depot can be removed and republished in open graph when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteOpenGraphImage {
 		JSONDocument.addFileWithUploadedFile(
@@ -838,7 +838,7 @@ definition {
 	}
 
 	@description = "This ensures that the blog image from a depot can be edited and republished when enabling local staging. Skip the instance for performance improvement."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditBlogCoverImage {
 		property test.liferay.virtual.instance = "false";
@@ -934,7 +934,7 @@ definition {
 	}
 
 	@description = "This ensures that the blog inline image from a depot can be edited and republished when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditBlogInlineImage {
 		for (var num : list "1,2") {
@@ -1027,7 +1027,7 @@ definition {
 	}
 
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditBlogSmallImage {
 		for (var num : list "1,2") {
@@ -1112,7 +1112,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditDMImage {
 		property test.liferay.virtual.instance = "false";
@@ -1279,7 +1279,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling local staging. Skip the instance for performance improvement."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditDocumentWithCustomField {
 		property test.liferay.virtual.instance = "false";
@@ -1479,7 +1479,7 @@ definition {
 	}
 
 	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditOpenGraphImage {
 		for (var num : list "1,2") {
@@ -1560,7 +1560,7 @@ definition {
 	}
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling local staging. Skip the instance for performance improvement."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditWCImage {
 		property test.liferay.virtual.instance = "false";
@@ -1666,7 +1666,7 @@ definition {
 	}
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotSearchForPendingDocument {
 		JSONFolder.addFolder(
@@ -1706,7 +1706,7 @@ definition {
 	}
 
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotSelectUnavailableStructure {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -1796,7 +1796,7 @@ definition {
 	}
 
 	@description = "This ensures that a pending image in depot cannot be found in staging site when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotViewPendingImage {
 		JSONFolder.addFolder(
@@ -2204,7 +2204,7 @@ definition {
 	}
 
 	@description = "This ensures that a document using a custom document type from a depot can be published in the staging site when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishDMWithDocumentType {
 		property test.liferay.virtual.instance = "false";
@@ -2283,7 +2283,7 @@ definition {
 	}
 
 	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishDocumentFolder {
 		property test.liferay.virtual.instance = "false";
@@ -2363,7 +2363,7 @@ definition {
 	}
 
 	@description = "This ensures that a document stored in a DM folder of asset library can be published in DM widget when local staging is enabled."
-	@priority = 5
+	@priority = 4
 	test CanPublishDocumentFromFolderViaWidget {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2961,7 +2961,7 @@ definition {
 	}
 
 	@description = "This ensures that the shortcut to an image in the depot can be added and published in the staging site when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishImageShortcut {
 		JSONDocument.addFileWithUploadedFile(
@@ -3057,7 +3057,7 @@ definition {
 	}
 
 	@description = "This ensures that an image with custom field in depot can be published in staging site when enabling local staging. Skip the instance for performance improvement."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishImageWithCustomField {
 		property test.liferay.virtual.instance = "false";
@@ -3325,7 +3325,7 @@ definition {
 	}
 
 	@description = "This ensures that a document can be accessed in a staged site through the item selector after it has been approved when enabling local staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewApprovedDocument {
 		JSONFolder.addFolder(
@@ -3747,7 +3747,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling local staging, also covers LPS-122243."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewImageAfterScopedFilter {
 		JSONDocument.addFileWithUploadedFile(
@@ -3773,7 +3773,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154418. It validates that an image with a custom friendlyURL can be correctly rendered in the Blog content field on a site after its friendlyURL is edited and published from an asset library"
-	@priority = 5
+	@priority = 4
 	test CanViewImageFromBlogsContentFieldAfterFriendlyURLIsUpdated {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -3997,7 +3997,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-120955. It validates that a depot cannot be connected to a staged site."
-	@priority = 5
+	@priority = 3
 	test DepotCannotBeConnectedToAStagedSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -4011,7 +4011,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-155796. It ensures that an image that was published in a depot can still be accessed after local staging is disabled."
-	@priority = 5
+	@priority = 3
 	test ImageIsStillAccessibleAfterDisablingStaging {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",

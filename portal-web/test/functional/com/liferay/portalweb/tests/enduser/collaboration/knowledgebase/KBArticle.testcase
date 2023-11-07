@@ -312,7 +312,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can delete article in the table view."
-	@priority = 5
+	@priority = 4
 	test CanDeleteArticleInTableView {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit article in the table view."
-	@priority = 5
+	@priority = 4
 	test CanEditArticleInTableView {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -352,7 +352,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can edit the kb entry permissions from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanEditArticlePermissionsFromNavigationPane {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -724,7 +724,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can print the kb entry by clicking the ellipsis on the kb entry."
-	@priority = 5
+	@priority = 3
 	test CanPreviewPrintContent {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -739,7 +739,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can replace the attachment for an article via the new configuration pane."
-	@priority = 5
+	@priority = 4
 	test CanReplaceArticleAttachment {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -777,7 +777,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can replace the category for an article via the new configuration pane."
-	@priority = 5
+	@priority = 4
 	test CanReplaceArticleCategory {
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -823,7 +823,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can replace the related asset for an article via the new configuration pane."
-	@priority = 5
+	@priority = 4
 	test CanReplaceArticleRelatedAsset {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -868,7 +868,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can replace the tag for an article via the new configuration pane."
-	@priority = 5
+	@priority = 4
 	test CanReplaceArticleTag {
 		JSONKnowledgeBase.addkBArticle(
 			assetTagNames = "Tag1",
@@ -898,7 +898,7 @@ definition {
 	}
 
 	@description = "This test ensures that the KB article is expired when the user clicks the "Expire" in the ellipses drop-menu."
-	@priority = 5
+	@priority = 4
 	test CanRepublishAnExpiredArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
@@ -1147,7 +1147,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can subscribe to a kb article by clicking the ellipsis on the kb entry."
-	@priority = 5
+	@priority = 4
 	test CanSubscribeToArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -1166,7 +1166,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can subscribe to a kb article from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanSubscribeToArticleFromNavigationPane {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -1191,7 +1191,7 @@ definition {
 	}
 
 	@description = "This test ensures that suggestion form is displayed on the KB article preview page when the KB article has suggestions."
-	@priority = 5
+	@priority = 4
 	test CanViewArticlesWithSuggestions {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -1603,7 +1603,7 @@ definition {
 	}
 
 	@description = "This test ensures that some article info only display in panel."
-	@priority = 5
+	@priority = 3
 	test SomeArticleInfoOnlyDisplayInPanel {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",

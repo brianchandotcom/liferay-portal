@@ -129,7 +129,7 @@ definition {
 
 	@description = "This ensures that a depot can be deleted in the list view."
 	@e2e
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanDeleteInListView {
 		JSONDepot.addDepot(
@@ -147,7 +147,7 @@ definition {
 
 	@description = "This ensures that a depot can be deleted in the table view."
 	@e2e
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanDeleteInTableView {
 		JSONDepot.addDepot(
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can deselect depots and delete the reselected ones in cards view."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanDeselectAndDeleteInCardsView {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
@@ -290,7 +290,7 @@ definition {
 
 	@description = "This ensures that a depot can be edited in the list view."
 	@e2e
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanEditInListView {
 		JSONDepot.addDepot(
@@ -324,7 +324,7 @@ definition {
 
 	@description = "This ensures that a depot can be edited in the table view."
 	@e2e
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanEditInTableView {
 		JSONDepot.addDepot(
@@ -433,7 +433,7 @@ definition {
 	// May need to update test after LPS-133688 is fixed
 
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotAddDuplicateWithEscapeCharacters {
 		DepotNavigator.openDepotAdmin();
@@ -457,7 +457,7 @@ definition {
 	}
 
 	@description = "This ensures that users cannot create the same name as another site name."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotAddNameThatDuplicatesSite {
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -504,7 +504,7 @@ definition {
 	}
 
 	@description = "This ensures that users cannot create a site with the same name as an existing depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotAddSiteThatDuplicatesName {
 		JSONDepot.addDepot(
@@ -519,7 +519,7 @@ definition {
 	}
 
 	@description = "This ensures that users cannot edit repository name same as another repository name."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotRenameWithDuplicateTitle {
 		JSONDepot.addDepot(
@@ -543,7 +543,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot's description can be searched."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSearchForDepotDescription {
 		JSONDepot.addDepot(
@@ -576,7 +576,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot's title can be searched."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSearchForDepotTitle {
 		for (var depotName : list "Depot 1,Depot 2,Depot 3") {
@@ -668,7 +668,7 @@ definition {
 	}
 
 	@description = "This ensures that the number of connected sites can be viewed in the card view."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanViewConnectionsInCardView {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
@@ -721,7 +721,7 @@ definition {
 	}
 
 	@description = "This ensures that the number of connected sites can be viewed in the table view."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanViewConnectionsInTableView {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {

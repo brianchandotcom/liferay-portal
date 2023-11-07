@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can see translation options after move one more available language to current."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewOptionsWithOneMoreLanguage {
 		JSONWebcontent.addWebContent(

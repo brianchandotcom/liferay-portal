@@ -28,7 +28,7 @@ definition {
 	}
 
 	@description = "This test ensures that user cannot copy a file with a size that exceeds the limit set in the destination site."
-	@priority = 5
+	@priority = 4
 	test CannotCopyFileThatExceedsMaxSizeInDestinationSite {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "This test ensures that user cannot copy a file with a size that exceeds the limit set in site settings."
-	@priority = 5
+	@priority = 4
 	test CannotCopyFileThatExceedsMaxSizeInTargetSite {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "This test ensures that the instance limit for file size copying will override the system limit"
-	@priority = 5
+	@priority = 4
 	test InstanceLimitOverridesSystemLimit {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@description = "This test ensures that the site limit for file size copying will override the instance limit"
-	@priority = 5
+	@priority = 4
 	test SiteLimitOverridesInstanceLimit {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

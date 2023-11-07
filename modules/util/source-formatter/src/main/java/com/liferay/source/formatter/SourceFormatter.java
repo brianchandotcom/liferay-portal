@@ -711,9 +711,9 @@ public class SourceFormatter {
 					throw new Exception(
 						StringBundler.concat(
 							"Found formatting issues:\n", "Each breaking ",
-							"change report should have one, and only one # ",
-							"breaking_change_report '## What', '## Why' and '",
-							"## Alternatives'(Optional). Use '----' to split ",
+							"change report should have one, and only one '# ",
+							"breaking_change_report', '## What', '## Why' and ",
+							"'## Alternatives'(Optional). Use '----' to split ",
 							"each breaking change."));
 				}
 
@@ -782,9 +782,9 @@ public class SourceFormatter {
 				throw new Exception(
 					StringBundler.concat(
 						"Found formatting issues:\n", "There should be an ",
-						"empty line after/before '----', # ",
-						"'breaking_change_report', '## What', '## Why' and ",
-						"'## Alternatives'"));
+						"empty line after/before '----', '# ",
+						"breaking_change_report', '## What', '## Why' and '## ",
+						"Alternatives'"));
 			}
 		}
 	}

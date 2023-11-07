@@ -59,10 +59,7 @@ definition {
 		}
 
 		task ("Assert permissions of each widgets in Home page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			LexiconTable.clickEllipsisItem(
 				item = "Go to Pages",

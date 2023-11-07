@@ -254,10 +254,7 @@ definition {
 
 	@priority = 4
 	test DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -283,10 +280,7 @@ definition {
 
 		CalendarEvent.view(eventTitle = "Site Name Calendar Event Regular");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.deactivateCP(
 			siteName = "Site Name",
@@ -300,10 +294,7 @@ definition {
 
 		CalendarEvent.view(eventTitle = "Site Name Calendar Event Regular");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.deleteCP(siteName = "Site Name");
 
@@ -617,10 +608,7 @@ definition {
 
 	@priority = 3
 	test ViewSiteNameUpdate {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 

@@ -346,12 +346,7 @@ definition {
 				userEmailAddress = "test@liferay.com",
 				userPassword = "test");
 
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin(baseURL = "http://www.able.com:8080");
 
 			Site.addBlankCP(siteName = "Site Name");
 

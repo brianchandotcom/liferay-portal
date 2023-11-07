@@ -293,10 +293,7 @@ definition {
 	@description = "This is a use case for LPS-55171."
 	@priority = 3
 	test ViewInactive {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 

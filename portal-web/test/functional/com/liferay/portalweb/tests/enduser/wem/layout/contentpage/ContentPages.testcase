@@ -633,10 +633,7 @@ definition {
 			}
 
 			task ("Delete the Button fragment of master template") {
-				ApplicationsMenu.gotoPortlet(
-					category = "Sites",
-					panel = "Control Panel",
-					portlet = "Sites");
+				Site.openSitesAdmin();
 
 				LexiconTable.clickEllipsisItem(
 					item = "Go to Pages",

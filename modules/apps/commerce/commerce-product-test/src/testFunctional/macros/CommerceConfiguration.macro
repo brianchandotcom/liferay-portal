@@ -254,10 +254,7 @@ definition {
 
 	@summary = "Default summary"
 	macro commerceInitializersTearDown() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		CommerceJSONSitesAPI._deleteCommerceSites();
 	}

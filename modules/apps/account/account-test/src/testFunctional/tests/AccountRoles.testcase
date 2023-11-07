@@ -1248,10 +1248,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given: A Site is created Logging Message Audit Message Processor and Output to Console is enabled") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addCP(
 				siteName = "POWER SITE",

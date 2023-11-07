@@ -62,13 +62,13 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 </aui:fieldset>
 
 <aui:script use="aui-base">
-	var ratingsSettingsContainer = A.one(
-		'#<portlet:namespace />ratingsSettingsContainer'
+	const ratingsSettingsContainer = document.getElementById(
+		'<portlet:namespace />ratingsSettingsContainer'
 	);
 
 	var ratingsTypeChanged = false;
 
-	ratingsSettingsContainer.delegate(
+	ratingsSettingsContainer.addEventListener(
 		'change',
 		(event) => {
 			ratingsTypeChanged = true;
@@ -76,9 +76,9 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 		'select'
 	);
 
-	var form = A.one('#<portlet:namespace />fm');
+	const form = document.getElementById('<portlet:namespace />fm');
 
-	form.on('submit', (event) => {
+	form.addEventListener('submit', (event) => {
 		if (ratingsTypeChanged) {
 			Liferay.Util.openConfirmModal({
 				message:

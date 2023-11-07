@@ -604,6 +604,46 @@ public class KBFolderServiceHttp {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBFolder moveKBFolderToTrash(
+			HttpPrincipal httpPrincipal, long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				KBFolderServiceUtil.class, "moveKBFolderToTrash",
+				_moveKBFolderToTrashParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, kbFolderId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.knowledge.base.model.KBFolder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 			HttpPrincipal httpPrincipal, long parentResourceClassNameId,
 			long parentResourcePrimKey, long kbFolderId, String name,
@@ -614,7 +654,7 @@ public class KBFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				KBFolderServiceUtil.class, "updateKBFolder",
-				_updateKBFolderParameterTypes14);
+				_updateKBFolderParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, parentResourceClassNameId, parentResourcePrimKey,
@@ -692,7 +732,9 @@ public class KBFolderServiceHttp {
 		new Class[] {long.class, long.class};
 	private static final Class<?>[] _moveKBFolderParameterTypes13 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateKBFolderParameterTypes14 =
+	private static final Class<?>[] _moveKBFolderToTrashParameterTypes14 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateKBFolderParameterTypes15 =
 		new Class[] {
 			long.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

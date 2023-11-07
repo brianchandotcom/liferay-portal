@@ -388,6 +388,13 @@ public class KBArticleServiceWrapper
 	}
 
 	@Override
+	public KBArticle moveKBArticleToTrash(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleService.moveKBArticleToTrash(resourcePrimKey);
+	}
+
+	@Override
 	public KBArticle revertKBArticle(
 			long resourcePrimKey, int version,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

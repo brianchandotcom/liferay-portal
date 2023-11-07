@@ -113,6 +113,13 @@ public class KBFolderLocalServiceUtil {
 		return getService().deleteKBFolder(kbFolderId);
 	}
 
+	public static KBFolder deleteKBFolder(
+			long kbFolderId, boolean includeTrashedEntries)
+		throws PortalException {
+
+		return getService().deleteKBFolder(kbFolderId, includeTrashedEntries);
+	}
+
 	public static void deleteKBFolders(long groupId) throws PortalException {
 		getService().deleteKBFolders(groupId);
 	}
@@ -350,6 +357,20 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	public static List<Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey) {
+
+		return getService().getKBFoldersAndKBArticles(
+			groupId, parentResourcePrimKey);
+	}
+
+	public static List<Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey, int status) {
+
+		return getService().getKBFoldersAndKBArticles(
+			groupId, parentResourcePrimKey, status);
+	}
+
+	public static List<Object> getKBFoldersAndKBArticles(
 		long groupId, long parentResourcePrimKey, int status, int start,
 		int end, OrderByComparator<?> orderByComparator) {
 
@@ -411,6 +432,14 @@ public class KBFolderLocalServiceUtil {
 		return getService().getKBFoldersCount(groupId, parentKBFolderId);
 	}
 
+	public static int getKBFoldersCount(
+			long groupId, long parentKBFolderId, int status)
+		throws PortalException {
+
+		return getService().getKBFoldersCount(
+			groupId, parentKBFolderId, status);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -429,10 +458,31 @@ public class KBFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void moveKBFolder(long kbFolderId, long parentKBFolderId)
+	public static KBFolder moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException {
 
-		getService().moveKBFolder(kbFolderId, parentKBFolderId);
+		return getService().moveKBFolder(kbFolderId, parentKBFolderId);
+	}
+
+	public static KBFolder moveKBFolderFromTrash(
+			long userId, long kbFolderId, long parentKBFolderId)
+		throws PortalException {
+
+		return getService().moveKBFolderFromTrash(
+			userId, kbFolderId, parentKBFolderId);
+	}
+
+	public static KBFolder moveKBFolderToTrash(long userId, long kbFolderId)
+		throws PortalException {
+
+		return getService().moveKBFolderToTrash(userId, kbFolderId);
+	}
+
+	public static KBFolder restoreKBFolderFromTrash(
+			long userId, long kbFolderId)
+		throws PortalException {
+
+		return getService().restoreKBFolderFromTrash(userId, kbFolderId);
 	}
 
 	/**
@@ -458,6 +508,13 @@ public class KBFolderLocalServiceUtil {
 		return getService().updateKBFolder(
 			parentResourceClassNameId, parentResourcePrimKey, kbFolderId, name,
 			description, serviceContext);
+	}
+
+	public static KBFolder updateStatus(
+			long userId, KBFolder kbFolder, int status)
+		throws PortalException {
+
+		return getService().updateStatus(userId, kbFolder, status);
 	}
 
 	public static KBFolderLocalService getService() {

@@ -30,6 +30,7 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFo
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.rss.util.RSSUtil;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.trash.TrashHelper;
 
 import java.util.List;
 import java.util.Objects;
@@ -64,11 +66,13 @@ public class KBDropdownItemsProvider {
 	public KBDropdownItemsProvider(
 		KBGroupServiceConfiguration kbGroupServiceConfiguration,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		TrashHelper trashHelper) {
 
 		_kbGroupServiceConfiguration = kbGroupServiceConfiguration;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_trashHelper = trashHelper;
 
 		_currentURL = String.valueOf(
 			PortletURLUtil.getCurrent(
@@ -81,7 +85,15 @@ public class KBDropdownItemsProvider {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		this(null, liferayPortletRequest, liferayPortletResponse);
+		this(null, liferayPortletRequest, liferayPortletResponse, null);
+	}
+
+	public KBDropdownItemsProvider(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		TrashHelper trashHelper) {
+
+		this(null, liferayPortletRequest, liferayPortletResponse, trashHelper);
 	}
 
 	public List<DropdownItem> getKBArticleDropdownItems(KBArticle kbArticle) {
@@ -405,39 +417,22 @@ public class KBDropdownItemsProvider {
 			KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "delete");
-			dropdownItem.putData(
-				"deleteURL",
-				PortletURLBuilder.createActionURL(
-					_liferayPortletResponse
-				).setActionName(
-					"/knowledge_base/delete_kb_article"
-				).setRedirect(
-					() -> {
-						PortletDisplay portletDisplay =
-							_themeDisplay.getPortletDisplay();
+			if (FeatureFlagManagerUtil.isEnabled("LPS-188058") &&
+				_trashHelper.isTrashEnabled(kbArticle.getGroupId())) {
 
-						if (!Objects.equals(
-								portletDisplay.getRootPortletId(),
-								KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+				dropdownItem.setHref(
+					_getDeleteActionURL(
+						Constants.MOVE_TO_TRASH, kbArticle,
+						selectedItemAncestorIds));
+			}
+			else {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL",
+					_getDeleteActionURL(
+						Constants.DELETE, kbArticle, selectedItemAncestorIds));
+			}
 
-							return _createKbHomeRenderURL();
-						}
-
-						if (((selectedItemAncestorIds == null) &&
-							 _isKBArticleSelected(kbArticle)) ||
-							((selectedItemAncestorIds != null) &&
-							 selectedItemAncestorIds.contains(
-								 kbArticle.getResourcePrimKey()))) {
-
-							return _getParentNodeURL(kbArticle);
-						}
-
-						return _currentURL;
-					}
-				).setParameter(
-					"resourcePrimKey", kbArticle.getResourcePrimKey()
-				).buildString());
 			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(
@@ -472,30 +467,22 @@ public class KBDropdownItemsProvider {
 			KBFolder kbFolder, List<Long> selectedItemAncestorIds) {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "delete");
-			dropdownItem.putData(
-				"deleteURL",
-				PortletURLBuilder.createActionURL(
-					_liferayPortletResponse
-				).setActionName(
-					"/knowledge_base/delete_kb_folder"
-				).setRedirect(
-					() -> {
-						if (((selectedItemAncestorIds == null) &&
-							 _isKBFolderSelected(kbFolder)) ||
-							((selectedItemAncestorIds != null) &&
-							 selectedItemAncestorIds.contains(
-								 kbFolder.getKbFolderId()))) {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-188058") &&
+				_trashHelper.isTrashEnabled(kbFolder.getGroupId())) {
 
-							return _createKBFolderRenderURL(
-								kbFolder.getParentKBFolderId());
-						}
+				dropdownItem.setHref(
+					_getDeleteActionURL(
+						Constants.MOVE_TO_TRASH, kbFolder,
+						selectedItemAncestorIds));
+			}
+			else {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL",
+					_getDeleteActionURL(
+						Constants.DELETE, kbFolder, selectedItemAncestorIds));
+			}
 
-						return _currentURL;
-					}
-				).setParameter(
-					"kbFolderId", kbFolder.getKbFolderId()
-				).buildString());
 			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(
@@ -530,6 +517,71 @@ public class KBDropdownItemsProvider {
 				LanguageUtil.get(
 					_liferayPortletRequest.getHttpServletRequest(), "delete"));
 		};
+	}
+
+	private String _getDeleteActionURL(
+		String cmd, KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
+
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/knowledge_base/delete_kb_article"
+		).setCMD(
+			cmd
+		).setRedirect(
+			() -> {
+				PortletDisplay portletDisplay =
+					_themeDisplay.getPortletDisplay();
+
+				if (!Objects.equals(
+						portletDisplay.getRootPortletId(),
+						KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+
+					return _createKbHomeRenderURL();
+				}
+
+				if (((selectedItemAncestorIds == null) &&
+					 _isKBArticleSelected(kbArticle)) ||
+					((selectedItemAncestorIds != null) &&
+					 selectedItemAncestorIds.contains(
+						 kbArticle.getResourcePrimKey()))) {
+
+					return _getParentNodeURL(kbArticle);
+				}
+
+				return _currentURL;
+			}
+		).setParameter(
+			"resourcePrimKey", kbArticle.getResourcePrimKey()
+		).buildString();
+	}
+
+	private String _getDeleteActionURL(
+		String cmd, KBFolder kbFolder, List<Long> selectedItemAncestorIds) {
+
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/knowledge_base/delete_kb_folder"
+		).setCMD(
+			cmd
+		).setRedirect(
+			() -> {
+				if (((selectedItemAncestorIds == null) &&
+					 _isKBFolderSelected(kbFolder)) ||
+					((selectedItemAncestorIds != null) &&
+					 selectedItemAncestorIds.contains(
+						 kbFolder.getKbFolderId()))) {
+
+					return _createKBFolderRenderURL(
+						kbFolder.getParentKBFolderId());
+				}
+
+				return _currentURL;
+			}
+		).setParameter(
+			"kbFolderId", kbFolder.getKbFolderId()
+		).buildString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -1455,5 +1507,6 @@ public class KBDropdownItemsProvider {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
+	private final TrashHelper _trashHelper;
 
 }

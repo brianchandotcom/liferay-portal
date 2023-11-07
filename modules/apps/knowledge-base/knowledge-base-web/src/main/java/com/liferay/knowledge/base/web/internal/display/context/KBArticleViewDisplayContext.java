@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -41,13 +42,13 @@ public class KBArticleViewDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		RenderResponse renderResponse) {
+		RenderResponse renderResponse, TrashHelper trashHelper) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 
 		_kbDropdownItemsProvider = new KBDropdownItemsProvider(
-			liferayPortletRequest, liferayPortletResponse);
+			liferayPortletRequest, liferayPortletResponse, trashHelper);
 	}
 
 	public int getChildKBArticlesCount(long groupId, KBArticle kbArticle) {

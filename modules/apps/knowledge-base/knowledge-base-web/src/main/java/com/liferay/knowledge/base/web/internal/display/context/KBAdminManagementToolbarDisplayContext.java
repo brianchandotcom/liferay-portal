@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +74,7 @@ public class KBAdminManagementToolbarDisplayContext {
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			RenderRequest renderRequest, RenderResponse renderResponse,
-			PortletConfig portletConfig)
+			PortletConfig portletConfig, TrashHelper trashHelper)
 		throws PortalException, PortletException {
 
 		_httpServletRequest = httpServletRequest;
@@ -82,6 +83,7 @@ public class KBAdminManagementToolbarDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_portletConfig = portletConfig;
+		_trashHelper = trashHelper;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -638,5 +640,6 @@ public class KBAdminManagementToolbarDisplayContext {
 	private final RenderResponse _renderResponse;
 	private SearchContainer<Object> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
+	private final TrashHelper _trashHelper;
 
 }

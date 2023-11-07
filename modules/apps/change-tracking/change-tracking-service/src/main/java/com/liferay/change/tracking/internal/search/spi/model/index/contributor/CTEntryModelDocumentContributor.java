@@ -101,11 +101,17 @@ public class CTEntryModelDocumentContributor
 
 		Map<Locale, String> map = new HashMap<>();
 
+		long ctCollectionId = ctEntry.getCtCollectionId();
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
+			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		}
+
 		for (Locale locale : locales) {
 			map.put(
 				locale,
 				_ctDisplayRendererRegistry.getTitle(
-					ctEntry.getCtCollectionId(), ctEntry, locale));
+					ctCollectionId, ctEntry, locale));
 		}
 
 		return map;

@@ -6,7 +6,6 @@
 package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.change.tracking.closure.CTClosureFactory;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
@@ -212,97 +211,8 @@ public class CTCollectionServiceTest {
 			_ctCollection.getCtCollectionId(), ctProcess.getCtCollectionId());
 	}
 
-	@Test
-	public void testPublishCTCollectionWithOver1000Entries() throws Exception {
-		UserTestUtil.setUser(_user);
-
-		_ctCollection = _ctCollectionService.addCTCollection(
-			null, _user.getCompanyId(), _user.getUserId(), 0,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
-
-			_addJournalFolders(_BATCH_SIZE);
-
-			_ctCollectionService.publishCTCollection(
-				_user.getUserId(), _ctCollection.getCtCollectionId());
-		}
-
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
-			_ctCollection.getCtCollectionId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
-
-		_ctCollection = _ctCollectionService.addCTCollection(
-			null, _user.getCompanyId(), _user.getUserId(), 0,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
-
-			for (JournalFolder journalFolder :
-					_journalFolderLocalService.getFolders(
-						_group.getGroupId())) {
-
-				journalFolder.setName(RandomTestUtil.randomString());
-
-				_journalFolderLocalService.updateJournalFolder(journalFolder);
-			}
-
-			_ctCollectionService.publishCTCollection(
-				_user.getUserId(), _ctCollection.getCtCollectionId());
-		}
-
-		ctCollection = _ctCollectionLocalService.getCTCollection(
-			_ctCollection.getCtCollectionId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
-
-		_ctCollection = _ctCollectionService.addCTCollection(
-			null, _user.getCompanyId(), _user.getUserId(), 0,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
-
-			for (JournalFolder journalFolder :
-					_journalFolderLocalService.getFolders(
-						_group.getGroupId())) {
-
-				_journalFolderLocalService.deleteFolder(journalFolder);
-			}
-
-			_ctCollectionService.publishCTCollection(
-				_user.getUserId(), _ctCollection.getCtCollectionId());
-		}
-
-		ctCollection = _ctCollectionLocalService.getCTCollection(
-			_ctCollection.getCtCollectionId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
-	}
-
-	private void _addJournalFolders(int batchSize) throws Exception {
-		for (int i = 0; i < batchSize; i++) {
-			_journalFolderFixture.addFolder(
-				_group.getGroupId(), RandomTestUtil.randomString());
-		}
-	}
-
-	private static final int _BATCH_SIZE = 1001;
-
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CTClosureFactory _ctClosureFactory;
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

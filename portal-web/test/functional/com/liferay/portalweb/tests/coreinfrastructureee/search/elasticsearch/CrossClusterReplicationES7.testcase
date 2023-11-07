@@ -266,10 +266,7 @@ definition {
 
 		CrossClusterReplication.cleanWorkflowIndex(workflowIndexName = "workflow-metrics-processes");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
@@ -290,10 +287,7 @@ definition {
 
 		CrossClusterReplication.cleanWorkflowIndex(workflowIndexName = "workflow-metrics-sla-instance-results");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		AssertElementNotPresent(
 			key_workflowProcessName = "Single Approver",

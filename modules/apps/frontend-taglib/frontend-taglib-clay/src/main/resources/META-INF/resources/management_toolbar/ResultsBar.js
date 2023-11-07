@@ -86,20 +86,17 @@ const ResultsBar = ({
 						ref={resultsBarRef}
 						tabIndex={-1}
 					>
-						<span
-							className="text-truncate"
-							dangerouslySetInnerHTML={{
-								__html: sub(
-									getResultText(
-										searchValue,
-										itemsTotal,
-										filterLabelItems?.length || 0
-									),
+						<span className="text-truncate">
+							{sub(
+								getResultText(
+									searchValue,
 									itemsTotal,
-									`<strong>"${searchValue}"</strong>`
+									filterLabelItems?.length || 0
 								),
-							}}
-						></span>
+								itemsTotal,
+								<strong>{`"${searchValue}"`}</strong>
+							)}
+						</span>
 					</span>
 				</ManagementToolbar.ResultsBarItem>
 

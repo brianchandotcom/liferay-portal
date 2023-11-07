@@ -50,7 +50,7 @@ export default function ScheduleModal({
 	callback = noop,
 	displayDate: initialDisplayDate,
 	scheduled,
-	timeZone,
+	timezone,
 	observer,
 	onModalClose = noop,
 }) {
@@ -102,7 +102,7 @@ export default function ScheduleModal({
 						onChange={setDisplayDate}
 						placeholder="yyyy-MM-dd HH:mm"
 						time
-						timeZone={timeZone}
+						timezone={timezone}
 						value={displayDate}
 						years={{
 							end: currentYear + DIFFERENCE_IN_YEARS,
@@ -166,4 +166,5 @@ ScheduleModal.propTypes = {
 	observer: PropTypes.object.isRequired,
 	onModalClose: PropTypes.func,
 	scheduled: PropTypes.bool,
+	timezone: PropTypes.string,
 };

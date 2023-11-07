@@ -1,0 +1,96 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testAccount = "Test Account LXC - SM";
+	var testproduct = "LXC - SM";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+
+			JSONAccountRole.associateUser(
+				accountEntryName = ${testAccount},
+				accountRole = "Account Administrator",
+				userEmailAddress = "test@liferay.com");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		CustomerPortal.customerPortalTearDown();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Automation ID: LPS-200042 | Test Summary: Assert that the administrator can see the alert when add two team member with a new domain"
+	@priority = 3
+	test AssertThatAlertAppearsWhenAddTwoTeamMemberWithNewDomain {
+		task ("Given that go to the Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("And I enter the test account and go to Team Members page") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2Utils.onboardingFlow();
+
+			CP2NavigationMenu.goToTeamMembers();
+		}
+
+		task ("When add a new team member and the administrator fulfill the field “email” in the invitation form with a new domain") {
+			CustomerPortal.clickAtButton(text = "Invite");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				firstName = "Test",
+				lastName = "Test2",
+				position = 0,
+				positionNumber = 0,
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				firstName = "Test01",
+				lastName = "Test",
+				position = 1,
+				positionNumber = 1,
+				rowEmail = "test02@project.com",
+				rowRole = "User");
+		}
+
+		task ("Then an alert should be displayed in the two fields") {
+			Alert.viewWarningSpecific(warningMessage = "Is test01@project.com part of your organization? It looks like project.com is a new domain name.");
+
+			Alert.viewWarningSpecific(warningMessage = "Is test02@project.com part of your organization? It looks like project.com is a new domain name.");
+		}
+	}
+
+}

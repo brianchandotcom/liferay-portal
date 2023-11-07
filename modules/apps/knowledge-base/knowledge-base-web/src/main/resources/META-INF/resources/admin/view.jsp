@@ -14,7 +14,7 @@ long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClass
 
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, renderResponse, portletConfig);
+KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, renderResponse, portletConfig, trashHelper);
 %>
 
 <liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
@@ -22,6 +22,11 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 <div class="knowledge-base-admin-content">
 	<clay:management-toolbar
 		actionDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
+		additionalProps='<%=
+			HashMapBuilder.<String, Object>put(
+				"trashEnabled", kbAdminManagementToolbarDisplayContext.isTrashEnabled()
+			).build()
+		%>'
 		clearResultsURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 		creationMenu="<%= kbAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 		disabled="<%= kbAdminManagementToolbarDisplayContext.isDisabled() %>"
@@ -71,6 +76,7 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 			<liferay-portlet:actionURL name="/knowledge_base/delete_kb_articles_and_folders" varImpl="deleteKBArticlesAndFoldersURL" />
 
 			<aui:form action="<%= deleteKBArticlesAndFoldersURL %>" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= kbAdminManagementToolbarDisplayContext.isTrashEnabled() ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 				<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />

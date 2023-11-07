@@ -6,11 +6,19 @@
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,20 +44,58 @@ public class DeleteKBArticlesAndFoldersMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteKBArticleResourcePrimKeys = ParamUtil.getLongValues(
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		long[] kbArticleResourcePrimKeys = ParamUtil.getLongValues(
 			actionRequest, "rowIdsKBArticle");
-
-		for (long deleteKBArticleResourcePrimKey :
-				deleteKBArticleResourcePrimKeys) {
-
-			_kbArticleService.deleteKBArticle(deleteKBArticleResourcePrimKey);
-		}
-
-		long[] deleteKBFolderIds = ParamUtil.getLongValues(
+		long[] kbFolderIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsKBFolder");
 
-		for (long deleteKBFolderId : deleteKBFolderIds) {
-			_kbFolderService.deleteKBFolder(deleteKBFolderId);
+		if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+			_moveToTrash(actionRequest, kbArticleResourcePrimKeys, kbFolderIds);
+		}
+		else {
+			_delete(kbArticleResourcePrimKeys, kbFolderIds);
+		}
+	}
+
+	private void _delete(long[] kbArticleResourcePrimKeys, long[] kbFolderIds)
+		throws Exception {
+
+		for (long kbArticleResourcePrimKey : kbArticleResourcePrimKeys) {
+			_kbArticleService.deleteKBArticle(kbArticleResourcePrimKey);
+		}
+
+		for (long kbFolderId : kbFolderIds) {
+			_kbFolderService.deleteKBFolder(kbFolderId);
+		}
+	}
+
+	private void _moveToTrash(
+			ActionRequest actionRequest, long[] kbArticleResourcePrimKeys,
+			long[] kbFolderIds)
+		throws Exception {
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long kbArticleResourcePrimKey : kbArticleResourcePrimKeys) {
+			KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+				kbArticleResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+			trashedModels.add(
+				_kbArticleService.moveKBArticleToTrash(
+					kbArticle.getKbArticleId()));
+		}
+
+		for (long kbFolderId : kbFolderIds) {
+			trashedModels.add(_kbFolderService.moveKBFolderToTrash(kbFolderId));
+		}
+
+		if (!trashedModels.isEmpty()) {
+			addDeleteSuccessData(
+				actionRequest,
+				HashMapBuilder.<String, Object>put(
+					"trashedModels", trashedModels
+				).build());
 		}
 	}
 

@@ -171,9 +171,9 @@ definition {
 		}
 
 		task ("And can view the option values set in the Edit Bundled Product panel") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "BLUE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "BLUE");
 
-			FrontStore.viewMiniCartEditBundledProduct(
+			FrontStore.viewMiniCartEditProductOption(
 				boolean = "enabled:checkbox",
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "Blue",
@@ -188,7 +188,7 @@ definition {
 		}
 
 		task ("When editing the option values in the Edit Bundled Product panel") {
-			FrontStore.editMiniCartItemBundledProduct(
+			FrontStore.editMiniCartItemProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "Blue",
 				date = "10/20/2023",
@@ -409,7 +409,7 @@ definition {
 		}
 
 		task ("When the buyer edits WHITE as the bundled product option") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "BLUE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "BLUE");
 
 			Select(
 				key_optionName = "Color",
@@ -418,7 +418,7 @@ definition {
 		}
 
 		task ("Then can view the order item updated for WHITE has the correct linked sku and promo price in both the Edit Bundled Product panel and the mini-cart") {
-			FrontStore.viewMiniCartEditBundledProduct(
+			FrontStore.viewMiniCartEditProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "White",
 				cartItemPriceAsConfiguredValue = "$ 100.00",
@@ -437,7 +437,7 @@ definition {
 		}
 
 		task ("When the buyer edits BLACK as the bundled product option") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "WHITE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "WHITE");
 
 			Select(
 				key_optionName = "Color",
@@ -446,7 +446,7 @@ definition {
 		}
 
 		task ("Then can view the order item updated for BLACK has the correct linked sku and price with POA in both the Edit Bundled Product panel and the mini-cart") {
-			FrontStore.viewMiniCartEditBundledProduct(
+			FrontStore.viewMiniCartEditProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "Black",
 				cartItemPriceAsConfiguredValue = "0.00",
@@ -468,7 +468,7 @@ definition {
 		}
 
 		task ("When the buyer edits RED as the bundled product option") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "BLACK");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "BLACK");
 
 			Select(
 				key_optionName = "Color",
@@ -477,7 +477,7 @@ definition {
 		}
 
 		task ("Then can view the order item updated for RED has the correct linked sku and discount in both the Edit Bundled Product panel and the mini-cart") {
-			FrontStore.viewMiniCartEditBundledProduct(
+			FrontStore.viewMiniCartEditProductOption(
 				cartItemDiscountValue = "-50%",
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "Red",
@@ -498,7 +498,7 @@ definition {
 		}
 
 		task ("When the buyer edits GREEN as the bundled product option") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "RED");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "RED");
 
 			Select(
 				key_optionName = "Color",
@@ -688,18 +688,18 @@ definition {
 				key_index = 1,
 				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED");
 
-			AssertElementNotPresent(
+			AssertElementPresent(
 				key_cartItemSku = "MIN93016A",
 				key_index = 1,
 				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_BODY_VERTICAL_ELLIPSIS");
 
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_cartItemSku = "MIN93016A",
 				locator1 = "CommerceAccelerators#MINI_CART_REMOVE_ITEM");
 		}
 
 		task ("When the Edit Bundled Product panel is opened for an order item") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "BLUE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "BLUE");
 
 			AssertVisible(
 				key_productName = "Bundled Product",
@@ -881,7 +881,7 @@ definition {
 		}
 
 		task ("When the buyer edits BLUE as the bundled product option") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "BLUE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "BLUE");
 
 			// The assertion for the PriceAsConfigured price in the Edit Bundled Product panel needs to be added after the COMMERCE-12493 is fixed
 
@@ -890,7 +890,7 @@ definition {
 				locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT",
 				value1 = "White");
 
-			FrontStore.viewMiniCartEditBundledProduct(
+			FrontStore.viewMiniCartEditProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "White",
 				cartItemPriceAsConfiguredValue = "$ 33.33",
@@ -903,7 +903,7 @@ definition {
 
 			CommerceNavigator.gotoMiniCart();
 
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "WHITE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "WHITE");
 
 			// The assertion for the PriceAsConfigured price in the Edit Bundled Product panel needs to be added after the COMMERCE-12493 is fixed
 
@@ -912,7 +912,7 @@ definition {
 				locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT",
 				value1 = "Blue");
 
-			FrontStore.viewMiniCartEditBundledProduct(
+			FrontStore.viewMiniCartEditProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "Blue",
 				cartItemPriceAsConfiguredValue = "$ 50.00",
@@ -1178,7 +1178,7 @@ definition {
 		task ("And tries to edit the option value to BLUE in the Edit Bundled Product panel in the mini-cart of the order item sku White") {
 			CommerceNavigator.gotoMiniCart();
 
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "WHITE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "WHITE");
 
 			Select(
 				key_optionName = "Color",
@@ -1318,9 +1318,9 @@ definition {
 		}
 
 		task ("When the buyer selects Blue(itself) again and saves the change in the order item's Edit page") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "BLUE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "BLUE");
 
-			FrontStore.editMiniCartItemBundledProduct(
+			FrontStore.editMiniCartItemProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "Blue");
 		}
@@ -1382,9 +1382,9 @@ definition {
 		}
 
 		task ("But if the buyer edits the Blue to White in the edit bundled product panel and save") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "BLUE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "BLUE");
 
-			FrontStore.editMiniCartItemBundledProduct(
+			FrontStore.editMiniCartItemProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "White");
 		}
@@ -1440,9 +1440,9 @@ definition {
 		}
 
 		task ("And can see the List Price and Price as Configured fields are still the single prices, will not update with the quantities in the Edit Bundled Product panel") {
-			FrontStore.gotoEditMiniCartItemBundledProduct(cartItemSku = "WHITE");
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "WHITE");
 
-			FrontStore.viewMiniCartEditBundledProduct(
+			FrontStore.viewMiniCartEditProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "White",
 				cartItemPriceAsConfiguredValue = "$ 50.00",

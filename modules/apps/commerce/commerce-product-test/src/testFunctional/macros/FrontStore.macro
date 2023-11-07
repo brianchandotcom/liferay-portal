@@ -471,8 +471,8 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editMiniCartItemBundledProduct(date = null, boolean = null, multipleSelectionValuesChecked = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, numeric = null, cartItemOptionValue = null, text = null, singleSelectionValueNotChecked = null, singleSelectionValueChecked = null) {
+	@summary = "This macro edits product options of an order item from the minicart"
+	macro editMiniCartItemProductOption(date = null, boolean = null, multipleSelectionValuesChecked = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, numeric = null, cartItemOptionValue = null, text = null, singleSelectionValueNotChecked = null, singleSelectionValueChecked = null) {
 		Select(
 			key_optionName = ${cartItemOptionName},
 			locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT",
@@ -544,8 +544,8 @@ definition {
 		return ${newItemCount};
 	}
 
-	@summary = "Default summary"
-	macro gotoEditMiniCartItemBundledProduct(cartItemSku = null) {
+	@summary = "This macro goes to the edit section of an order item with options from the minicart"
+	macro gotoEditMiniCartItemProductOption(cartItemSku = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -813,8 +813,8 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewMiniCartEditBundledProduct(date = null, multipleSelectionValuesChecked = null, cartItemPromoPriceValue = null, cartItemPriceAsConfiguredValue = null, numeric = null, cartItemPriceValue = null, singleSelectionValueNotChecked = null, boolean = null, cartItemPriceInactiveValue = null, cartItemDiscountValue = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, cartItemOptionValue = null, text = null, singleSelectionValueChecked = null) {
+	@summary = "This macro views product options of an order item from the minicart"
+	macro viewMiniCartEditProductOption(date = null, multipleSelectionValuesChecked = null, cartItemPromoPriceValue = null, cartItemPriceAsConfiguredValue = null, numeric = null, cartItemPriceValue = null, singleSelectionValueNotChecked = null, boolean = null, cartItemPriceInactiveValue = null, cartItemDiscountValue = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, cartItemOptionValue = null, text = null, singleSelectionValueChecked = null) {
 		AssertVisible(
 			key_productName = "Bundled Product",
 			locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_PANEL");

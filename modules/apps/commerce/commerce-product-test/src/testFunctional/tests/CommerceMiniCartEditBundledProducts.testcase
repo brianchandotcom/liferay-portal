@@ -390,6 +390,13 @@ definition {
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
 
+			Select(
+				key_optionName = "Color",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = "Black - $ 10.00");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_ON_APPLICATION");
+
 			FrontStore.addToCartFromProductDetails(
 				optionNamesAndValues = "Color:Blue",
 				productName = "Bundled Product",
@@ -449,8 +456,7 @@ definition {
 			FrontStore.viewMiniCartEditProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "Black",
-				cartItemPriceAsConfiguredValue = "0.00",
-				cartItemPriceValue = "0.00");
+				cartItemPriceOnApplication = "true");
 
 			Button.clickSave();
 

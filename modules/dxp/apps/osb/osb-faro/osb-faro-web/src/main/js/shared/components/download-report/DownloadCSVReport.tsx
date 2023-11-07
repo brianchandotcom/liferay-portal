@@ -1,25 +1,32 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {createOrderByField} from 'shared/util/pagination';
 import {DownloadReportButton} from './DownloadReportButton';
 import {DownloadReportModal} from './DownloadReportModal';
 import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
 import {useModal} from '@clayui/modal';
+import {useParams} from 'react-router-dom';
 
 export interface IDownloadReport {
+	assetId?: string;
+	assetType?: string;
 	disabled: boolean;
-	subtitle: string;
-	title: string;
+	type: string;
 }
 
-const DownloadCSVReport: React.FC<IDownloadReport> = ({disabled}) => {
+const DownloadCSVReport: React.FC<IDownloadReport> = ({
+	assetId,
+	assetType,
+	disabled,
+	type
+}) => {
 	const {observer, onOpenChange, open} = useModal();
-	const [loading, setLoading] = useState(false);
+	const {channelId, groupId} = useParams();
 
 	return (
 		<div className='download-report'>
 			<DownloadReportButton
 				disabled={disabled}
-				loading={loading}
 				onClick={() => onOpenChange(true)}
 			/>
 
@@ -47,14 +54,43 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({disabled}) => {
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onSubmit={() => {
-						setLoading(true);
+						const searchParams = new URLSearchParams(
+							location.search
+						);
 
-						// TEMP - Implement CSV request
+						const field = searchParams.get('field');
+						const query = searchParams.get('query');
+						const rangeEnd = searchParams.get('rangeEnd');
+						const rangeStart = searchParams.get('rangeStart');
+						const sortOrder = searchParams.get('sortOrder');
 
-						setTimeout(() => {
-							setLoading(false);
-						}, 1000);
+						const a = document.createElement('a');
+
+						let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}&fromDate=${rangeStart}&toDate=${rangeEnd}`;
+
+						if (assetId) {
+							url += `&assetId=${encodeURIComponent(assetId)}`;
+						}
+
+						if (assetType) {
+							url += `&assetType=${assetType}`;
+						}
+
+						if (field && sortOrder) {
+							url += `&orderByFields=${JSON.stringify(
+								createOrderByField(field, sortOrder)
+							)}`;
+						}
+
+						if (query) {
+							url += `&query=${query}`;
+						}
+
+						a.href = url;
+
+						a.click();
 					}}
+					requiredDateRange
 				/>
 			)}
 		</div>

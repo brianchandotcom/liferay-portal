@@ -217,7 +217,7 @@ definition {
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "All Types");
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a first variation for the collection and filter web contents by category") {
@@ -350,7 +350,7 @@ definition {
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "All Types");
+				itemType = "Web Content Article");
 		}
 
 		task ("Create a first variation for the collection and filter web contents by category") {

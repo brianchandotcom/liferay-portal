@@ -64,7 +64,7 @@ export default function DefaultObjectRelationshipEdge({
 	const [labelBgStyle, setLabelBgStyle] = useState(
 		getInitialLabelBgStyle(selected)
 	);
-	const {edges, nodes} = useStoreState((state) => state);
+	const {nodes} = useStoreState((state) => state);
 
 	const sourceNode = useMemo(() => nodes.find((node) => node.id === source), [
 		source,
@@ -179,8 +179,6 @@ export default function DefaultObjectRelationshipEdge({
 				onClick={() => {
 					dispatch({
 						payload: {
-							objectDefinitionNodes: nodes,
-							objectRelationshipEdges: edges,
 							selectedObjectRelationshipId: objectRelationshipId,
 						},
 						type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,

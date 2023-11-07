@@ -4,7 +4,7 @@
  */
 
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import {Edge, Node, isEdge} from 'react-flow-renderer';
+import {Edge, Node, isEdge, isNode} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {manyMarkerId} from '../Edges/ManyMarker';
@@ -867,19 +867,17 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 		}
 
 		case TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE: {
-			const {
-				objectDefinitionNodes,
-				objectRelationshipEdges,
-				selectedObjectRelationshipId,
-			} = action.payload;
+			const {selectedObjectRelationshipId} = action.payload;
 
 			const {elements} = state;
 
-			const edges = objectRelationshipEdges
-				? objectRelationshipEdges
-				: (elements.filter((element) => isEdge(element)) as Edge<
-						ObjectRelationshipEdgeData
-				  >[]);
+			const edges = elements.filter((element) => isEdge(element)) as Edge<
+				ObjectRelationshipEdgeData
+			>[];
+
+			const nodes = elements.filter((element) => isNode(element)) as Node<
+				ObjectDefinitionNodeData
+			>[];
 
 			const selectedObjectRelationshipEdge = edges.find(
 				(objectRelationshipEdge) =>
@@ -900,15 +898,15 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				})
 			) as Edge<ObjectRelationshipEdgeData>[];
 
-			const selectedObjectDefinitionNode = objectDefinitionNodes.find(
+			const selectedObjectDefinitionNode = nodes.find(
 				(objectDefinitionNode) => objectDefinitionNode.data?.selected
 			);
 
-			const newObjectDefinitionNodes = objectDefinitionNodes;
+			const newObjectDefinitionNodes = nodes;
 
 			if (selectedObjectDefinitionNode?.data) {
 				const {objectFields} = selectedObjectDefinitionNode.data;
-				const selectedObjectDefinitionNodeIndex = objectDefinitionNodes.findIndex(
+				const selectedObjectDefinitionNodeIndex = nodes.findIndex(
 					(objectDefinitionNode) =>
 						objectDefinitionNode.data?.selected
 				);

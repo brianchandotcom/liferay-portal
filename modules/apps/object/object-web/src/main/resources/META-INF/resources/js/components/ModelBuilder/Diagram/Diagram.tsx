@@ -190,7 +190,7 @@ function DiagramBuilder({
 			payload: {
 				...payload,
 				rightSidebarType: 'objectRelationshipDetails',
-				selectedObjectRelationshipEdgeId: newObjectRelationshipId,
+				selectedObjectRelationshipId: newObjectRelationshipId,
 			},
 			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
 		});

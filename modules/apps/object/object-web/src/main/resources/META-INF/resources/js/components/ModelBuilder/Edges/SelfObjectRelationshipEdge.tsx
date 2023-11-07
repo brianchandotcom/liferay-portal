@@ -63,7 +63,7 @@ export default function SelfObjectRelationshipEdge({
 	const [labelBgStyle, setLabelBgStyle] = useState(
 		getInitialLabelBgStyle(selected)
 	);
-	const {edges, nodes} = useStoreState((state) => state);
+	const {nodes} = useStoreState((state) => state);
 
 	const sourceTargetNode = useMemo(
 		() => nodes.find((node) => node.id === source),
@@ -174,8 +174,6 @@ export default function SelfObjectRelationshipEdge({
 										onClick={() => {
 											dispatch({
 												payload: {
-													objectDefinitionNodes: nodes,
-													objectRelationshipEdges: edges,
 													selectedObjectRelationshipId:
 														selfObjectRelationship.id,
 												},
@@ -220,8 +218,6 @@ export default function SelfObjectRelationshipEdge({
 					onClick={() => {
 						dispatch({
 							payload: {
-								objectDefinitionNodes: nodes,
-								objectRelationshipEdges: edges,
 								selectedObjectRelationshipId: objectRelationshipId,
 							},
 							type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,

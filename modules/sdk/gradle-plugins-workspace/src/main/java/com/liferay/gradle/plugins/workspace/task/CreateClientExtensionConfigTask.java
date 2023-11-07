@@ -56,6 +56,7 @@ import org.gradle.api.file.RegularFile;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskOutputs;
@@ -73,12 +74,17 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		_lcpJsonFile = _addTaskOutputFile("LCP.json");
 		_pluginPackagePropertiesFile = _addTaskOutputFile(
 			_PLUGIN_PACKAGE_PROPERTIES_PATH);
-		_siteInitializerJsonFile = _addTaskOutputFile(
-			_SITE_INITIALIZER_JSON_PATH);
 	}
 
 	public void addClientExtension(ClientExtension clientExtension) {
 		_clientExtensions.add(clientExtension);
+
+		if (Objects.equals(clientExtension.type, "siteInitializer") &&
+			(_siteInitializerJsonFile == null)) {
+
+			_siteInitializerJsonFile = _addTaskOutputFile(
+				_SITE_INITIALIZER_JSON_PATH);
+		}
 	}
 
 	public void addClientExtensionProperties(
@@ -216,6 +222,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return GradleUtil.toFile(_project, _pluginPackagePropertiesFile);
 	}
 
+	@Optional
 	@OutputFile
 	public File getSiteInitializerJsonFile() {
 		return GradleUtil.toFile(_project, _siteInitializerJsonFile);
@@ -624,7 +631,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private final Object _pluginPackagePropertiesFile;
 	private final Project _project = getProject();
-	private final Object _siteInitializerJsonFile;
+	private Object _siteInitializerJsonFile;
 	private String _type = "frontend";
 
 }

@@ -1,5 +1,30 @@
 components:
     schemas:
+        AnalyticsUserContentRecommendation:
+            properties:
+                assetCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                createDate:
+                    format: date
+                    type: string
+                jobId:
+                    type: string
+                rank:
+                    format: int32
+                    type: integer
+                recommendedAssetEntryId:
+                    format: int64
+                    type: integer
+                score:
+                    format: float
+                    type: number
+                userId:
+                    format: int64
+                    type: integer
+            type: object
         AssetEntity:
             properties:
                 assetCategoryIds:

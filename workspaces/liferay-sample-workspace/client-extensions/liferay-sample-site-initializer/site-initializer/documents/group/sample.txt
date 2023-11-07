@@ -1,0 +1,3 @@
+For more information from what can be loaded check here: https://github.com/liferay/liferay-portal/tree/master/modules/apps/site-initializer/site-initializer-extender/site-initializer-extender-test-bundle-1/src/main/resources/site-initializer
+
+Site Initializer is not the final solution, it's an alternative to batch to fill the product gap.

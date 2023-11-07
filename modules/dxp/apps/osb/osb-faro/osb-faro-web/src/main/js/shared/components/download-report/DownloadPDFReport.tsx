@@ -18,6 +18,8 @@ export enum Containers {
 	SessionsByLocationCard = 'SessionsByLocationCardRoot',
 	SessionTechnologyCard = 'SessionTechnologyCardRoot',
 	SiteActivityCard = 'SiteActivityCardRoot',
+	SubmissionsByLocationCard = 'SubmissionsByLocationCardRoot',
+	SubmissionsByTechnologyCard = 'SubmissionsByTechnologyCard',
 	TopPagesCard = 'topPagesCardRoot',
 	ViewsByLocationCard = 'viewsByLocationCardRoot',
 	ViewsByTechnologyCard = 'viewsByTechnologyCardRoot',
@@ -68,6 +70,14 @@ export const CONTAINERS: {[key in Containers]: TContainer} = {
 	},
 	[Containers.SiteActivityCard]: {
 		label: Liferay.Language.get('site-activity'),
+		layout: 2
+	},
+	[Containers.SubmissionsByLocationCard]: {
+		label: Liferay.Language.get('submissions-by-location'),
+		layout: 2
+	},
+	[Containers.SubmissionsByTechnologyCard]: {
+		label: Liferay.Language.get('submissions-by-technology'),
 		layout: 2
 	},
 	[Containers.TopPagesCard]: {

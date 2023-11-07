@@ -68,7 +68,7 @@ export default withLocationsCard(
 			'learn-more-about-submissions-by-location'
 		),
 		documentationUrl: URLConstants.SitesDashboardFormsSubmissionsByLocation,
-		id: Containers.ViewsByTechnologyCard,
+		id: Containers.SubmissionsByLocationCard,
 		title: Liferay.Language.get(
 			'there-are-no-submissions-on-the-selected-period'
 		)

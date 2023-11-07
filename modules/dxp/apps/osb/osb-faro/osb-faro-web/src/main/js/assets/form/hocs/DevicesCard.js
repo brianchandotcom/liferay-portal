@@ -58,7 +58,7 @@ export default withDevicesCard(withFormsDevices, {
 		'learn-more-about-submissions-by-technology'
 	),
 	documentationUrl: URLConstants.SitesDashboardFormsSubmissionsByTechnology,
-	id: Containers.ViewsByTechnologyCard,
+	id: Containers.SubmissionsByTechnologyCard,
 	title: Liferay.Language.get(
 		'there-are-no-submissions-on-the-selected-period'
 	)

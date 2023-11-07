@@ -12,7 +12,6 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -139,13 +138,14 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				String filterString = StringBundler.concat(
-					"(&(service.factoryPid=", ScimConstants.CONFIGURATION_PID,
-					")(", ScimConstants.PARAM_COMPANY_ID, "=",
-					themeDisplay.getCompanyId(), "))");
-
 				Configuration[] configurations =
-					_configurationAdmin.listConfigurations(filterString);
+					_configurationAdmin.listConfigurations(
+						String.format(
+							"(&(%s=%s)(%s=%s))",
+							ConfigurationAdmin.SERVICE_FACTORYPID,
+							ScimConstants.CONFIGURATION_PID,
+							ScimConstants.PARAM_COMPANY_ID,
+							themeDisplay.getCompanyId()));
 
 				if (configurations != null) {
 					configuration = configurations[0];

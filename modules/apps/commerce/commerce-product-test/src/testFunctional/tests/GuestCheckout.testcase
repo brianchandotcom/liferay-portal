@@ -506,10 +506,7 @@ definition {
 
 		User.loginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Account.openAccountsAdmin();
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Guest Account 1",
@@ -599,10 +596,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Account.openAccountsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Address Name");
 
@@ -1126,10 +1120,7 @@ definition {
 
 		User.loginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Account.openAccountsAdmin();
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Buyer User",
@@ -1573,10 +1564,7 @@ definition {
 
 		User.loginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Account.openAccountsAdmin();
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Guest Account",

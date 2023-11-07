@@ -1388,10 +1388,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given: A User Group is created Logging Message Audit Message Processor and Output to Console is enabled") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "User Groups");
+			UserGroup.openUserGroupsAdmin();
 
 			UserGroup.addCP(userGroupName = "User Group Name");
 

@@ -18,10 +18,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addAndViewBusinessAccount(accountTaxId = null, accountDescription = null, accountName = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Account.openAccountsAdmin();
 
 		Account.addBusinessAccount(
 			accountDescription = ${accountDescription},

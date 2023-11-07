@@ -121,10 +121,7 @@ definition {
 	test ApprovedWebContentIsDisplayed {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavTab(navTab = "Configuration");
 
@@ -330,10 +327,7 @@ definition {
 	test PendingWebContentIsNotDisplayed {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavTab(navTab = "Configuration");
 
@@ -415,10 +409,7 @@ definition {
 	test RejectedWebContentIsNotDisplayed {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavTab(navTab = "Configuration");
 

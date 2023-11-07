@@ -562,10 +562,7 @@ definition {
 
 	@summary = "Default summary"
 	macro duplicateNotPublishedWorkflow(workflowName = null, workflowCopyName = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Click(
 			key_workflowDefinitionTitle = ${workflowName},
@@ -580,10 +577,7 @@ definition {
 
 	@summary = "Default summary"
 	macro duplicateSingleApproverWorkflow(workflowName = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Click(
 			key_workflowDefinitionTitle = "Single Approver",
@@ -726,8 +720,10 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openWorkflowListView() {
-		Navigator.openSpecificURL(url = "/group/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_tab=workflows");
+	macro openWorkflowListView(baseURL = null) {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_tab=workflows");
 	}
 
 	@summary = "Default summary"
@@ -936,10 +932,7 @@ definition {
 
 	@summary = "Default summary"
 	macro tearDownPortalWorkflow() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -971,20 +964,14 @@ definition {
 
 	@summary = "Default summary"
 	macro tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS")) {
 			Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = ${workflowDefinitionTitle});
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = ${workflowDefinitionTitle});
 		}
@@ -992,10 +979,7 @@ definition {
 
 	@summary = "Default summary"
 	macro tearDownWorkflowDefinitions() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_EXTRA")) {
 			if (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_DEFINITION_EXTRA_ELLIPSIS")) {

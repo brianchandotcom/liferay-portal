@@ -33,10 +33,7 @@ definition {
 
 	@summary = "Default summary"
 	macro applyWorkflow() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

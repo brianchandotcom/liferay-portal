@@ -31,10 +31,7 @@ definition {
 	@description = "Verify can filter by completed tasks"
 	@priority = 3
 	test CanFilterByCompletedTasks {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -110,10 +107,7 @@ definition {
 	@description = "Verify can filter by pending tasks"
 	@priority = 3
 	test CanFilterByPendingTasks {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -166,10 +160,7 @@ definition {
 	@description = "Verify if the Clear option cleans the search results"
 	@priority = 3
 	test ClearOptionCleanSearchResults {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -226,10 +217,7 @@ definition {
 	@description = "Verify if the table is organized by Asset Title, Asset Type, Status, Definition, Last Activity Date and End Date columns"
 	@priority = 4
 	test ColumnsAreDisplayed {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -312,10 +300,7 @@ definition {
 	@description = "Verify the kebab menu is not displayed when task is completed"
 	@priority = 4
 	test CompletedTaskCannnotBeWithdrawn {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -344,10 +329,7 @@ definition {
 	@description = "Verify the kebab menu is not displayed on details page when task is completed"
 	@priority = 4
 	test CompletedTaskCannnotBeWithdrawnThroughDetailsPage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -376,10 +358,7 @@ definition {
 	@description = "Verify that clicking on the task name takes you to a details page"
 	@priority = 4
 	test DetailsPageIsDisplayeed {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -418,10 +397,7 @@ definition {
 	@description = "Verify if when the task is pending, the "End Date" field is blank"
 	@priority = 3
 	test EndDateIsBlankWhenTaskPending {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -452,10 +428,7 @@ definition {
 	@description = "Verify if when the task is approved, the "End Date" field is filled"
 	@priority = 3
 	test EndDateIsFilledWhenTaskCompleted {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -498,10 +471,7 @@ definition {
 	@description = "Verify that when having 5 tasks on the screen, a pagination bar is displayed"
 	@priority = 3
 	test PaginationBarIsDisplayed {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -534,10 +504,7 @@ definition {
 	@description = "Verify that a task can be withdrawn"
 	@priority = 4
 	test TaskCanBeWithdrawn {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -574,10 +541,7 @@ definition {
 	@description = "Verify that a task can be withdrawn through details page"
 	@priority = 4
 	test TaskCanBeWithdrawnThroughDetailsPage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -614,10 +578,7 @@ definition {
 	@description = "Verify that the task changes to approved"
 	@priority = 4
 	test TaskIsApprovedOnTheTable {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -710,10 +671,7 @@ definition {
 	@description = "Verify if the tasks are grouped into pending and completed"
 	@priority = 3
 	test TasksAreGroupedByPendingAndCompleted {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -768,10 +726,7 @@ definition {
 	@description = "Verify if clicking the arrow changes the order of the table (asc - desc)"
 	@priority = 3
 	test ViewAscDescSequenceSubmissions {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

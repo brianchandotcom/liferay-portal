@@ -431,17 +431,11 @@ definition {
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

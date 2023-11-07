@@ -223,10 +223,7 @@ definition {
 
 		KaleoFormsAdmin.publishWorkflow(workflowDefinitionTitle = "Workflow Definition Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Workflow Definition Title");
 	}

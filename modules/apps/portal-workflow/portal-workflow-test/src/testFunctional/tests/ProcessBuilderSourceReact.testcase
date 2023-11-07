@@ -59,10 +59,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a user navigates to Workflow Process Builder") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Workflow.addNewDefinition(workflowDefinitionTitle = "");
 		}

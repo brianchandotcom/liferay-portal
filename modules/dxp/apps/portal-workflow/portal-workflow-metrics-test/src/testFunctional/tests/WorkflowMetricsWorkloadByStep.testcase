@@ -32,10 +32,7 @@ definition {
 	@description = "LPS-86642 - Verify that, when the workflow has pending items, the columns are populated with numbers"
 	@priority = 5
 	test ColumnsWithNumbersWhenWorkflowHasPendingItems {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -82,10 +79,7 @@ definition {
 	@description = "LPS-86642 - Verify that when there is no SLA defined for the process, the card should display only the Total Pending column populated"
 	@priority = 4
 	test OnlyTotalPendingColumnIsPopulatedWhenNoSLA {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -127,10 +121,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -186,10 +177,7 @@ definition {
 			definitionsJobInterval = 1,
 			slaJobInterval = 1);
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -247,10 +235,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a workflow with parallel branches") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+			Workflow.openWorkflowListView();
 
 			Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
 

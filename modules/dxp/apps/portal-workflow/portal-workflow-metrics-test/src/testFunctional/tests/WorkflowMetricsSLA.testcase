@@ -62,10 +62,7 @@ definition {
 			entryContent = "Test content",
 			entryTitle = "Test blog");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -113,10 +110,7 @@ definition {
 	@description = "LPS-89014 - Verify that creating a SLA will not be reflected in completed instances"
 	@priority = 4
 	test CreatingSLANotReflectCompletedInstances {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -410,10 +404,7 @@ definition {
 			entryContent = "Test content",
 			entryTitle = "Test blog");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -694,10 +685,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -868,10 +856,7 @@ definition {
 
 		Click(locator1 = "Icon#BACK");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -933,10 +918,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -948,10 +930,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -1270,10 +1249,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

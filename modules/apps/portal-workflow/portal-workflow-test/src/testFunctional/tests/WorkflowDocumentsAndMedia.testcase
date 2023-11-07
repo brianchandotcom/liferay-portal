@@ -140,10 +140,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Quarterly Reports Review Process");
 

@@ -579,10 +579,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Fork Reviews Workflow");
 
@@ -2171,10 +2168,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 1");
 
@@ -2492,10 +2486,7 @@ definition {
 			key_slaTitle = "SLA Name",
 			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Uploaded Definition");
 

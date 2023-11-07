@@ -38,10 +38,7 @@ definition {
 	@description = "Verify that the user can delete a Not Published process"
 	@priority = 3
 	test CanDeleteUnpublishedWorkflow {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -64,10 +61,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Click(
 			key_workflowDefinitionTitle = "Single Approver",
@@ -96,10 +90,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Document_1.doc");
 
@@ -130,10 +121,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.uploadDefinition(
 			workflowDefinitionFile = "1-workflow-definition.xml",
@@ -147,10 +135,7 @@ definition {
 	@description = "Verify that, when the definition is published, the Delete option is not present in kebab menu"
 	@priority = 4
 	test CanNotDeletePublishedWorkflow {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -177,10 +162,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -193,10 +175,7 @@ definition {
 			Alert.viewErrorMessage(errorMessage = "Please name your workflow before publishing.");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		AssertVisible(
 			key_workflowDefinitionTitle = "Single Approver",
@@ -233,10 +212,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.uploadDefinition(
 			workflowDefinitionFile = "2-workflow-definition.xml",
@@ -255,10 +231,7 @@ definition {
 		property test.run.environment = "EE";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Click(
 			key_workflowDefinitionTitle = "Single Approver",
@@ -291,10 +264,7 @@ definition {
 		property test.run.environment = "EE";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Click(
 			key_workflowDefinitionTitle = "Single Approver",
@@ -329,10 +299,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		LexiconEntry.gotoAdd();
 
@@ -340,10 +307,7 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow saved.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "Untitled Workflow");
 	}
@@ -354,10 +318,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
 
@@ -365,10 +326,7 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow saved.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow");
 	}
@@ -379,10 +337,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Single Approver");
 
@@ -413,10 +368,7 @@ definition {
 		property test.run.environment = "EE";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Single Approver");
 
@@ -432,10 +384,7 @@ definition {
 	@description = "Verify that the user can select Unpublish option in the kebab menu for a particular definition"
 	@priority = 3
 	test CanSelectUnpublish {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -447,10 +396,7 @@ definition {
 	@description = "Verify that when clicking the info icon, the process details and revision history are displayed"
 	@priority = 3
 	test CanViewDetailsAndHistory {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -477,10 +423,7 @@ definition {
 		property test.run.environment = "EE";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -505,10 +448,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
 
@@ -531,10 +471,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
@@ -573,10 +510,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
@@ -634,10 +568,7 @@ definition {
 	@description = "Verify that the time format in Details tab is following the system language"
 	@priority = 3
 	test TimeFormatFollowsSystemLanguageInDetails {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Click(
 			key_workflowDefinitionTitle = "Single Approver",
@@ -692,10 +623,7 @@ definition {
 	@description = "Verify that the time format in Revision History tab is following the system language"
 	@priority = 4
 	test TimeFormatFollowsSystemLanguageInRevision {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Click(
 			key_workflowDefinitionTitle = "Single Approver",

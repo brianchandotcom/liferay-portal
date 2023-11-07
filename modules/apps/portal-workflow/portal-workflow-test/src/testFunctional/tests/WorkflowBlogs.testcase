@@ -124,10 +124,7 @@ definition {
 	@description = "Verify that a workflow can be assigned to Blog Entry in the Portal configurations"
 	@priority = 4
 	test CanAssignWorkflowThroughPortalConfiguration {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -141,10 +138,7 @@ definition {
 	@description = "Verify that the user can assign a Workflow to Blog Entry"
 	@priority = 5
 	test CanAssignWorkflowToBlogEntry {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -170,10 +164,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs 1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 

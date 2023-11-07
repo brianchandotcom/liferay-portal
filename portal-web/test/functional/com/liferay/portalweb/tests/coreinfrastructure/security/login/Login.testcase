@@ -194,10 +194,7 @@ definition {
 		task ("Login and go to control panel - roles") {
 			User.firstLoginUI();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 		}
 	}
 

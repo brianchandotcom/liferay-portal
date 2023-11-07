@@ -86,10 +86,7 @@ definition {
 
 		Refresh();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		for (var termType : list "Delivery,Payment") {
 			CommercePermissions.removeAccountRolePermission(
@@ -234,10 +231,7 @@ definition {
 			roleTitle = "Operations Manager",
 			userScreenName = "buyeruser");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		CommercePermissions.removeRegularRolePermission(
 			permission = "Manage Order Delivery Terms",
@@ -367,10 +361,7 @@ definition {
 			roleTitle = "Operations Manager",
 			userScreenName = "buyeruser");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		CommercePermissions.removeRegularRolePermission(
 			permission = "Manage Order Payment Terms",

@@ -574,10 +574,7 @@ definition {
 		task ("When the user creates a new Role and add a title in Portuguese") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			LexiconEntry.gotoAdd();
 

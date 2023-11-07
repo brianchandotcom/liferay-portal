@@ -102,10 +102,7 @@ definition {
 		}
 
 		task ("Assign the segment to the role created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.addAssignee(
 				assigneeName = "Segment global usersn",
@@ -246,10 +243,7 @@ definition {
 		}
 
 		task ("Assign the segment to the role created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.addAssignee(
 				assigneeName = "Segment global usersn",
@@ -357,10 +351,7 @@ definition {
 		}
 
 		task ("Go to the role segments assignee's section") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role._goToRoleAssigneeType(
 				assigneeType = "Segments",
@@ -407,10 +398,7 @@ definition {
 		}
 
 		task ("Assign the segment to the role created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.addAssignee(
 				assigneeName = "Segment global usersn",
@@ -478,10 +466,7 @@ definition {
 		}
 
 		task ("Go to the role segments assignee's section") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role._goToRoleAssigneeType(
 				assigneeType = "Segments",
@@ -620,10 +605,7 @@ definition {
 		}
 
 		task ("Assign the segment to the role created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role.addAssignee(
 				assigneeName = "Segment global usersn",
@@ -698,10 +680,7 @@ definition {
 		}
 
 		task ("Go to the role segments assignee's section") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Role.openRolesAdmin();
 
 			Role._goToRoleAssigneeType(
 				assigneeType = "Segments",

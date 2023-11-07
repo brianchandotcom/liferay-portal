@@ -106,17 +106,11 @@ definition {
 		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.add(roleTitle = "Reviewer Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.add(roleTitle = "Updater Name");
 
@@ -134,10 +128,7 @@ definition {
 			userEmailAddress = "user1@liferay.com",
 			userScreenName = "creator");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssigneeInKaleoForms(
 			assigneeName = "creator",
@@ -158,20 +149,14 @@ definition {
 			userEmailAddress = "user2@liferay.com",
 			userScreenName = "reviewer");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssigneeInKaleoForms(
 			assigneeName = "reviewer",
 			assigneeType = "Users",
 			roleTitle = "Administrator");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssigneeInKaleoForms(
 			assigneeName = "reviewer",
@@ -192,20 +177,14 @@ definition {
 			userEmailAddress = "user3@liferay.com",
 			userScreenName = "updater");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssigneeInKaleoForms(
 			assigneeName = "updater",
 			assigneeType = "Users",
 			roleTitle = "Administrator");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.addAssigneeInKaleoForms(
 			assigneeName = "updater",

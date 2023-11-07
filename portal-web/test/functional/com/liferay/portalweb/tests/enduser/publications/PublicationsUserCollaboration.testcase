@@ -718,10 +718,7 @@ definition {
 	@description = "This is a use case for LPS-150313."
 	@priority = 4
 	test VerifyPublicationsUserPermissions {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		AssertClick(
 			key_itemName = "Publications User",

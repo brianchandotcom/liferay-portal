@@ -6,6 +6,7 @@
 package com.liferay.knowledge.base.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
@@ -24,11 +25,13 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Locale;
 
@@ -42,16 +45,18 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Peter Shin
  */
-public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
+public class KBArticleAssetRenderer
+	extends BaseJSPAssetRenderer<KBArticle> implements TrashRenderer {
 
 	public KBArticleAssetRenderer(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		HtmlParser htmlParser, KBArticle kbArticle) {
+		HtmlParser htmlParser, KBArticle kbArticle, TrashHelper trashHelper) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_htmlParser = htmlParser;
 		_kbArticle = kbArticle;
+		_trashHelper = trashHelper;
 	}
 
 	@Override
@@ -88,6 +93,14 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 	}
 
 	@Override
+	public String getPortletId() {
+		AssetRendererFactory<KBArticle> assetRendererFactory =
+			getAssetRendererFactory();
+
+		return assetRendererFactory.getPortletId();
+	}
+
+	@Override
 	public int getStatus() {
 		return _kbArticle.getStatus();
 	}
@@ -106,7 +119,16 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _kbArticle.getTitle();
+		if (_trashHelper == null) {
+			return _kbArticle.getTitle();
+		}
+
+		return _trashHelper.getOriginalTitle(_kbArticle.getTitle());
+	}
+
+	@Override
+	public String getType() {
+		return KBArticleAssetRendererFactory.TYPE;
 	}
 
 	@Override
@@ -238,5 +260,6 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		_assetDisplayPageFriendlyURLProvider;
 	private final HtmlParser _htmlParser;
 	private final KBArticle _kbArticle;
+	private final TrashHelper _trashHelper;
 
 }

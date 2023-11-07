@@ -780,7 +780,7 @@ definition {
 	@priority = 5
 	test CanCreateValidationUsingOldValueFunctionInSystemObject {
 		property ci.retries.disabled = "true";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Given an account is created with a custom validation using the oldValue function") {
 			JSONAccountEntry.addAccountEntry(

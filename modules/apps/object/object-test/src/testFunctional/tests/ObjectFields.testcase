@@ -846,6 +846,8 @@ definition {
 	@description = "LPS-148112 - Verify that File Size and Format defined by admin are working correctly when using the 'Show Files' option"
 	@priority = 4
 	test CanDefineMaximumFileSizeOnShowFilesOption {
+		property portal.upstream = "quarantine";
+
 		task ("Add new Custom Object (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 153423",

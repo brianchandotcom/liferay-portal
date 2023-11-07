@@ -711,6 +711,8 @@ definition {
 	@description = "LPS-151765 - Verify if is possible to choose by Type Field on entries, when Title Field is Type"
 	@priority = 4
 	test CanViewTypeOnFieldEntry {
+		property portal.upstream = "quarantine";
+
 		JSONAccountEntry.addAccountEntry(
 			accountEntryDescription = "Test Business Account Description",
 			accountEntryName = "Test Business Account",

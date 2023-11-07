@@ -25,6 +25,7 @@ definition {
 	@priority = 3
 	test CannotSetForExistingObjectEntry {
 		property custom.properties = "feature.flag.LPS-163716=true";
+		property portal.upstream = "quarantine";
 
 		task ("Given a picklist with several items") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist 181207");

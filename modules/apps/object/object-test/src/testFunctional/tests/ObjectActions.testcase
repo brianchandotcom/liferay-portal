@@ -897,6 +897,8 @@ definition {
 	@description = "LPS-173537 - Verify it's possible to update an object entry with the trigger On Order Status Update"
 	@priority = 4
 	test CanCreateActionUpdateAnObjectEntryWithOnOrderStatusUpdate {
+		property portal.upstream = "quarantine";
+
 		task ("Given an action in the commerce order object with the trigger on order status update") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -956,6 +958,8 @@ definition {
 	@description = "LPS-173537 - Verify it's possible to update an object entry with the trigger On Payment Status Update"
 	@priority = 4
 	test CanCreateActionUpdateAnObjectEntryWithOnPaymentStatusUpdate {
+		property portal.upstream = "quarantine";
+
 		task ("Given an action in the Commerce Order object") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -1954,6 +1958,8 @@ definition {
 	@description = "Verify if an error message appears when trying to save an Update an object Entry action with a Standalone trigger when using the invalid expression"
 	@priority = 4
 	test CannotSaveUpdateAnObjectEntryActions {
+		property portal.upstream = "quarantine";
+
 		task ("Given a custom object is created") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 175620",

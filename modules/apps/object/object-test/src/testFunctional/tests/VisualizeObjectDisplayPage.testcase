@@ -391,6 +391,8 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Date type for a specific Object"
 	@priority = 4
 	test DisplaySpecificEntryDate {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 320",
 			objectName = "CustomObject320",

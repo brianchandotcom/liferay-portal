@@ -5,12 +5,16 @@
 
 package com.liferay.knowledge.base.util;
 
+import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -21,17 +25,21 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -40,11 +48,72 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
 public class KnowledgeBaseUtil {
+
+	public static String getKBArticleAbsolutePath(
+			PortletRequest portletRequest, long kbArticleId)
+		throws PortalException {
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
+			kbArticleId);
+
+		String kbFolderAbsolutePath = getKBFolderAbsolutePath(
+			portletRequest, kbArticle.getKbFolderId());
+
+		if (!kbArticle.hasParentKBArticle()) {
+			return kbFolderAbsolutePath;
+		}
+
+		List<KBArticle> kbArticles = kbArticle.getAncestorKBArticles();
+
+		StringBundler sb = new StringBundler((kbArticles.size() * 3) + 2);
+
+		sb.append(kbFolderAbsolutePath);
+		sb.append(StringPool.SPACE);
+
+		Collections.reverse(kbArticles);
+
+		for (KBArticle currentKBArticle : kbArticles) {
+			sb.append(StringPool.RAQUO_CHAR);
+			sb.append(StringPool.SPACE);
+			sb.append(currentKBArticle.getTitle());
+		}
+
+		return sb.toString();
+	}
+
+	public static String getKBArticleControlPanelLink(
+			PortletRequest portletRequest, long resourcePrimKey)
+		throws PortalException {
+
+		long classNameId = PortalUtil.getClassNameId(
+			KBArticleConstants.getClassName());
+
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/knowledge_base/view"
+		).setParameter(
+			"parentResourceClassNameId", classNameId
+		).setParameter(
+			"parentResourcePrimKey", resourcePrimKey
+		).setParameter(
+			"resourceClassNameId", classNameId
+		).setParameter(
+			"resourcePrimKey", resourcePrimKey
+		).setParameter(
+			"selectedItemId", resourcePrimKey
+		).buildString();
+	}
 
 	public static String getKBArticleURL(
 		long plid, long resourcePrimKey, int status, String portalURL,
@@ -70,6 +139,68 @@ public class KnowledgeBaseUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static String getKBFolderAbsolutePath(
+			PortletRequest portletRequest, long kbFolderId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (kbFolderId == KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return themeDisplay.translate("home");
+		}
+
+		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
+
+		List<KBFolder> kbFolders = kbFolder.getAncestors();
+
+		StringBundler sb = new StringBundler((kbFolders.size() * 3) + 5);
+
+		sb.append(themeDisplay.translate("home"));
+		sb.append(StringPool.SPACE);
+
+		Collections.reverse(kbFolders);
+
+		for (KBFolder currrentKBFolder : kbFolders) {
+			sb.append(StringPool.RAQUO_CHAR);
+			sb.append(StringPool.SPACE);
+			sb.append(currrentKBFolder.getName());
+		}
+
+		sb.append(StringPool.RAQUO_CHAR);
+		sb.append(StringPool.SPACE);
+		sb.append(kbFolder.getName());
+
+		return sb.toString();
+	}
+
+	public static String getKBFolderControlPanelLink(
+			PortletRequest portletRequest, long kbFolderId)
+		throws PortalException {
+
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/knowledge_base/view"
+		).buildPortletURL();
+
+		if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			portletURL.setParameter(
+				"parentResourceClassNameId",
+				String.valueOf(
+					PortalUtil.getClassNameId(
+						KBFolderConstants.getClassName())));
+			portletURL.setParameter(
+				"parentResourcePrimKey", String.valueOf(kbFolderId));
+			portletURL.setParameter(
+				"selectedItemId", String.valueOf(kbFolderId));
+		}
+
+		return portletURL.toString();
 	}
 
 	public static long getKBFolderId(

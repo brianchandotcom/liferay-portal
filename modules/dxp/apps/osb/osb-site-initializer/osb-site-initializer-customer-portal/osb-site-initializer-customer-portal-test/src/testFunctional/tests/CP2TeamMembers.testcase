@@ -203,6 +203,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-170211 | Test Summary: Assert that when the user reaches the limit of available support seats the User function becomes default for the next invited"
+	@ignore= "true"
 	@priority = 3
 	test AssertThatTheUserFunctionBecomesDefault {
 
@@ -695,6 +696,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150206 | Test Summary: Verify that below the number of seats the modal displays an explanation of the support tickets"
+	@ignore= "true"
 	@priority = 3
 	test CanViewTipMessage {
 

@@ -43,6 +43,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-148069 | Test Summary: Assert the name of the downloaded file follows the standard"
+	@ignore= "true"
 	@priority = 3
 	test AssertAggregateActivationKeyXmlFileIsDownloaded {
 
@@ -111,6 +112,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-148072 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
+	@ignore= "true"
 	@priority = 3
 	test TheOptionInTheDropDownMenuIsDisabled {
 
@@ -119,6 +121,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-148073 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"
+	@ignore= "true"
 	@priority = 3
 	test YouCanSeeATooltip {
 

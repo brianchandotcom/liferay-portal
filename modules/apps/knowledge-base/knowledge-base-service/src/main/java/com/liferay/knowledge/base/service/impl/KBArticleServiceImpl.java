@@ -397,8 +397,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return kbArticlePersistence.filterFindByG_P_L(
-				groupId, parentResourcePrimKey, true, start, end,
+			return kbArticlePersistence.filterFindByG_P_L_NotS(
+				groupId, parentResourcePrimKey, true,
+				WorkflowConstants.STATUS_IN_TRASH, start, end,
 				orderByComparator);
 		}
 		else if (status == WorkflowConstants.STATUS_APPROVED) {
@@ -473,8 +474,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		long groupId, long parentResourcePrimKey, int status) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return kbArticlePersistence.filterCountByG_P_L(
-				groupId, parentResourcePrimKey, true);
+			return kbArticlePersistence.filterCountByG_P_L_NotS(
+				groupId, parentResourcePrimKey, true,
+				WorkflowConstants.STATUS_IN_TRASH);
 		}
 		else if (status == WorkflowConstants.STATUS_APPROVED) {
 			return kbArticlePersistence.filterCountByG_P_M(
@@ -724,6 +726,17 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		kbArticleLocalService.moveKBArticle(
 			getUserId(), resourcePrimKey, parentResourceClassNameId,
 			parentResourcePrimKey, priority);
+	}
+
+	@Override
+	public KBArticle moveKBArticleToTrash(long resourcePrimKey)
+		throws PortalException {
+
+		_kbArticleModelResourcePermission.check(
+			getPermissionChecker(), resourcePrimKey, ActionKeys.DELETE);
+
+		return kbArticleLocalService.moveKBArticleToTrash(
+			getUserId(), resourcePrimKey);
 	}
 
 	@Override
@@ -999,8 +1012,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		List<KBArticle> curKBArticles = null;
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			curKBArticles = kbArticlePersistence.filterFindByG_P_L(
-				groupId, resourcePrimKey, true, QueryUtil.ALL_POS,
+			curKBArticles = kbArticlePersistence.filterFindByG_P_L_NotS(
+				groupId, resourcePrimKey, true,
+				WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, orderByComparator);
 		}
 		else if (status == WorkflowConstants.STATUS_APPROVED) {

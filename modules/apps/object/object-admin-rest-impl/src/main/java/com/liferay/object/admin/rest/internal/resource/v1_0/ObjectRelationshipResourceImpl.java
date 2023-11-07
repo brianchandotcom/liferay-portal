@@ -170,7 +170,8 @@ public class ObjectRelationshipResourceImpl
 
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(
-				null, objectDefinition1.getObjectDefinitionId(),
+				objectRelationship.getExternalReferenceCode(),
+				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(),
 				objectRelationship.getParameterObjectFieldId(),
 				objectRelationship.getDeletionTypeAsString(),
@@ -205,7 +206,8 @@ public class ObjectRelationshipResourceImpl
 
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(
-				null, objectDefinitionId, objectDefinitionId2,
+				objectRelationship.getExternalReferenceCode(),
+				objectDefinitionId, objectDefinitionId2,
 				GetterUtil.getLong(
 					objectRelationship.getParameterObjectFieldId()),
 				objectRelationship.getDeletionTypeAsString(),
@@ -249,7 +251,8 @@ public class ObjectRelationshipResourceImpl
 
 		return _toObjectRelationship(
 			_objectRelationshipService.updateObjectRelationship(
-				null, objectRelationshipId,
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationshipId,
 				GetterUtil.getLong(
 					objectRelationship.getParameterObjectFieldId()),
 				objectRelationship.getDeletionTypeAsString(),

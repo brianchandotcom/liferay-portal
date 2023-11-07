@@ -97,7 +97,13 @@ const DocumentAndMedia: React.FC<{
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadPDFReport
-							containers={[Containers.VisitorsBehaviorCard]}
+							containers={[
+								Containers.VisitorsBehaviorCard,
+								Containers.AudienceCard,
+								Containers.DownloadsByLocationCard,
+								Containers.DownloadsByTechnologyCard,
+								Containers.AssetAppearsOnCard
+							]}
 							disabled={false}
 							subtitle={selectedChannel?.name}
 							title={

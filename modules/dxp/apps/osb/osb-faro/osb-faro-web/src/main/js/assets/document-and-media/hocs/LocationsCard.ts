@@ -71,7 +71,7 @@ export default withLocationsCard(
 		),
 		documentationUrl:
 			URLConstants.SitesDashboardDocumentsAndMediaDownloadByLocation,
-		id: Containers.ViewsByLocationCard,
+		id: Containers.DownloadsByLocationCard,
 		title: Liferay.Language.get(
 			'there-are-no-downloads-on-the-selected-period'
 		)

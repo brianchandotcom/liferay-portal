@@ -55,7 +55,8 @@
 			KBFolder
 		WHERE
 			(KBFolder.groupId = ?) AND
-			(KBFolder.parentKBFolderId = ?)
+			(KBFolder.parentKBFolderId = ?) AND
+			([$STATUS$])
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findA_ByG_P">
 		SELECT
@@ -107,6 +108,7 @@
 			KBFolder
 		WHERE
 			(KBFolder.groupId = ?) AND
-			(KBFolder.parentKBFolderId = ?)
+			(KBFolder.parentKBFolderId = ?) AND
+			([$STATUS$])
 	</sql>
 </custom-sql>

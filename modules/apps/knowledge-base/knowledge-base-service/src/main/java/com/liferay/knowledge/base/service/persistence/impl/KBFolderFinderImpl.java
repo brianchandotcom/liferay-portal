@@ -139,6 +139,7 @@ public class KBFolderFinderImpl
 			queryPos.add(queryDefinition.getStatus());
 			queryPos.add(groupId);
 			queryPos.add(parentResourcePrimKey);
+			queryPos.add(queryDefinition.getStatus());
 
 			int count = 0;
 
@@ -252,6 +253,7 @@ public class KBFolderFinderImpl
 			queryPos.add(queryDefinition.getStatus());
 			queryPos.add(groupId);
 			queryPos.add(parentResourcePrimKey);
+			queryPos.add(queryDefinition.getStatus());
 
 			List<Object> models = new ArrayList<>();
 

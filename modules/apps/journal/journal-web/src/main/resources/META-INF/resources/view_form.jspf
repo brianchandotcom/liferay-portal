@@ -5,7 +5,7 @@
  */
 --%>
 
-<c:if test='<%= !journalDisplayContext.isSearch() && !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() && (!FeatureFlagManagerUtil.isEnabled("LPS-194763") || (FeatureFlagManagerUtil.isEnabled("LPS-194763") && (journalDisplayContext.getDDMStructureId() == 0))) %>'>
+<c:if test='<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() && !journalDisplayContext.isSearch() && (!FeatureFlagManagerUtil.isEnabled("LPS-194763") || (FeatureFlagManagerUtil.isEnabled("LPS-194763") && (journalDisplayContext.getDDMStructureId() == 0))) %>'>
 	<liferay-site-navigation:breadcrumb
 		breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, false, liferayPortletResponse) %>"
 	/>

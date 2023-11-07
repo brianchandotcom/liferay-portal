@@ -14,6 +14,7 @@ import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.math.BigDecimal;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,19 +46,21 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		CommerceInventoryWarehouseItemService
 			commerceInventoryWarehouseItemService,
 		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
+		CommerceQuantityFormatter commerceQuantityFormatter,
 		CPInstanceService cpInstanceService,
 		HttpServletRequest httpServletRequest, Portal portal) {
 
 		_commerceInventoryWarehouseItemService =
 			commerceInventoryWarehouseItemService;
 		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
+		_commerceQuantityFormatter = commerceQuantityFormatter;
 		_cpInstanceService = cpInstanceService;
 		_portal = portal;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
 
-	public String getBackURL() throws PortalException {
+	public String getBackURL() {
 		RenderRequest renderRequest = _cpRequestHelper.getRenderRequest();
 
 		String lifecycle = (String)renderRequest.getAttribute(
@@ -126,6 +131,22 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		return cpInstanceUnitOfMeasureKeys;
 	}
 
+	public String getFormattedQuantity(
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem) {
+
+		if (commerceInventoryWarehouseItem == null) {
+			return StringPool.BLANK;
+		}
+
+		BigDecimal formattedQuantity = _commerceQuantityFormatter.format(
+			_cpRequestHelper.getCompanyId(),
+			commerceInventoryWarehouseItem.getQuantity(),
+			commerceInventoryWarehouseItem.getSku(),
+			commerceInventoryWarehouseItem.getUnitOfMeasureKey());
+
+		return formattedQuantity.toString();
+	}
+
 	public String getUpdateCommerceInventoryWarehouseItemTaglibOnClick(
 		long commerceInventoryWarehouseId,
 		long commerceInventoryWarehouseItemId, long mvccVersion, int index) {
@@ -165,6 +186,7 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 	private List<CommerceInventoryWarehouse> _commerceInventoryWarehouses;
 	private final CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
+	private final CommerceQuantityFormatter _commerceQuantityFormatter;
 	private CPInstance _cpInstance;
 	private final CPInstanceService _cpInstanceService;
 	private final CPRequestHelper _cpRequestHelper;

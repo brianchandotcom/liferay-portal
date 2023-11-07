@@ -94,6 +94,25 @@ public class ObjectRelationshipServiceImpl
 	}
 
 	@Override
+	public ObjectRelationship fetchObjectRelationshipByExternalReferenceCode(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId1)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipLocalService.
+				fetchObjectRelationshipByExternalReferenceCode(
+					externalReferenceCode, companyId, objectDefinitionId1);
+
+		if (objectRelationship != null) {
+			_objectDefinitionModelResourcePermission.check(
+				getPermissionChecker(), objectDefinitionId1, ActionKeys.VIEW);
+		}
+
+		return objectRelationship;
+	}
+
+	@Override
 	public ObjectRelationship getObjectRelationship(long objectRelationshipId)
 		throws PortalException {
 

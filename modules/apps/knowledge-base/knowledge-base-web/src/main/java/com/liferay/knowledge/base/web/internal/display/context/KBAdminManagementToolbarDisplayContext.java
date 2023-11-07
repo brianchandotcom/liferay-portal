@@ -460,6 +460,16 @@ public class KBAdminManagementToolbarDisplayContext {
 		return !isSearch();
 	}
 
+	public boolean isTrashEnabled() throws PortalException {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-188058") &&
+			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private SearchContainer<Object> _createSearchContainer()
 		throws PortalException, PortletException {
 

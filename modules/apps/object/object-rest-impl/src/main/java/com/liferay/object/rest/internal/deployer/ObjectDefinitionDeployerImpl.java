@@ -13,9 +13,6 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
-import com.liferay.object.rest.internal.jaxrs.exception.mapper.FileExtensionExceptionMapper;
-import com.liferay.object.rest.internal.jaxrs.exception.mapper.FileNameExceptionMapper;
-import com.liferay.object.rest.internal.jaxrs.exception.mapper.FileSizeExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectAssetCategoryExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryManagerHttpExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryStatusExceptionMapper;
@@ -588,40 +585,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		String jaxRsApplicationName, ObjectDefinition objectDefinition) {
 
 		return Arrays.asList(
-			_bundleContext.registerService(
-				ExceptionMapper.class, new FileExtensionExceptionMapper(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
-				).put(
-					"osgi.jaxrs.extension", "true"
-				).put(
-					"osgi.jaxrs.name",
-					objectDefinition.getOSGiJaxRsName(
-						"FileExtensionExceptionMapper")
-				).build()),
-			_bundleContext.registerService(
-				ExceptionMapper.class, new FileNameExceptionMapper(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
-				).put(
-					"osgi.jaxrs.extension", "true"
-				).put(
-					"osgi.jaxrs.name",
-					objectDefinition.getOSGiJaxRsName("FileNameExceptionMapper")
-				).build()),
-			_bundleContext.registerService(
-				ExceptionMapper.class, new FileSizeExceptionMapper(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
-				).put(
-					"osgi.jaxrs.extension", "true"
-				).put(
-					"osgi.jaxrs.name",
-					objectDefinition.getOSGiJaxRsName("FileSizeExceptionMapper")
-				).build()),
 			_bundleContext.registerService(
 				ExceptionMapper.class, new ObjectAssetCategoryExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(

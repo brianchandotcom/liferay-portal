@@ -41,6 +41,9 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.EntityExtension
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.XmlMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.dynamic.feature.StatusDynamicFeature;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.DocumentFileExtensionExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.DocumentFileNameExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.DocumentFileSizeExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.DuplicateExternalReferenceCodeExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.IllegalArgumentExceptionMapper;
@@ -106,6 +109,9 @@ public class VulcanFeature implements Feature {
 		featureContext.register(CacheContainerResponseFilter.class);
 		featureContext.register(CTContainerRequestFilter.class);
 		featureContext.register(DateParamConverterProvider.class);
+		featureContext.register(DocumentFileExtensionExceptionMapper.class);
+		featureContext.register(DocumentFileNameExceptionMapper.class);
+		featureContext.register(DocumentFileSizeExceptionMapper.class);
 		featureContext.register(EntityExtensionContainerResponseFilter.class);
 		featureContext.register(EntityExtensionWriterInterceptor.class);
 		featureContext.register(ExceptionMapper.class);

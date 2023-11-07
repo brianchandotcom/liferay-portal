@@ -1,7 +1,6 @@
 {
 	"configuration": {
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
-		"companyId": 0,
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
@@ -10,7 +9,6 @@
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
 		},
-		"userId": 0,
 		"version": "v1.0"
 	},
 	"items": [
@@ -22,12 +20,6 @@
 			"name": "assignee",
 			"objectDefinitionExternalReferenceCode1": "L_USER",
 			"objectDefinitionExternalReferenceCode2": "J3Y7_TICKET",
-			"objectDefinitionModifiable2": true,
-			"objectDefinitionName2": "J3Y7Ticket",
-			"objectDefinitionSystem2": false,
-			"parameterObjectFieldId": 0,
-			"parameterObjectFieldName": "",
-			"reverse": false,
 			"type": "oneToMany"
 		}
 	]

@@ -1398,6 +1398,10 @@ public class DefaultObjectEntryManagerImpl
 			ServiceContext serviceContext)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174455")) {
+			return;
+		}
+
 		Object propertyValue = objectEntry.getPropertyValue(
 			objectField.getName());
 

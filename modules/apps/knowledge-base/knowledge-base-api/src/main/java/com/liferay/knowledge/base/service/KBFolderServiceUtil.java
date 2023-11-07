@@ -142,6 +142,12 @@ public class KBFolderServiceUtil {
 		getService().moveKBFolder(kbFolderId, parentKBFolderId);
 	}
 
+	public static KBFolder moveKBFolderToTrash(long kbFolderId)
+		throws PortalException {
+
+		return getService().moveKBFolderToTrash(kbFolderId);
+	}
+
 	public static KBFolder updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description,

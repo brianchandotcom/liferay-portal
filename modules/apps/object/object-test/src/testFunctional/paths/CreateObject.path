@@ -57,7 +57,7 @@
 	</tr>
 	<tr>
 		<td>TITLE_FIELD</td>
-		<td>//label[contains(.,'Title Field')]/following-sibling::div//input</td>
+		<td>//label[contains(.,'Title Field')]//..//button</td>
 		<td></td>
 	</tr>
 	<tr>

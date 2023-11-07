@@ -4945,9 +4945,7 @@ definition {
 		}
 
 		task ("Select the segment on Simulation panel") {
-			Check.checkNotVisible(
-				checkboxName = "Name Segment",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			MobileDevice.previewBy(segment = "Name Segment");
 		}
 
 		task ("Assert that element is present not present in Default experience") {
@@ -5008,9 +5006,7 @@ definition {
 		}
 
 		task ("Select the segment on Simulation panel") {
-			Check.checkNotVisible(
-				checkboxName = "Name Segment",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			MobileDevice.previewBy(segment = "Name Segment");
 		}
 
 		task ("Assert that element is present at page") {
@@ -5075,9 +5071,7 @@ definition {
 		}
 
 		task ("Select the segment on Simulation panel") {
-			Check.checkNotVisible(
-				checkboxName = "Name Segment",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			MobileDevice.previewBy(segment = "Name Segment");
 		}
 
 		task ("Assert that element is present") {

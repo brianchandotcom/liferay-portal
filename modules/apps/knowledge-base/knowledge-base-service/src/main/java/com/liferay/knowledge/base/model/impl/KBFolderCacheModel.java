@@ -67,7 +67,7 @@ public class KBFolderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,14 @@ public class KBFolderCacheModel
 		sb.append(description);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -183,6 +191,23 @@ public class KBFolderCacheModel
 			kbFolderImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		kbFolderImpl.setStatus(status);
+		kbFolderImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			kbFolderImpl.setStatusByUserName("");
+		}
+		else {
+			kbFolderImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			kbFolderImpl.setStatusDate(null);
+		}
+		else {
+			kbFolderImpl.setStatusDate(new Date(statusDate));
+		}
+
 		kbFolderImpl.resetOriginalValues();
 
 		return kbFolderImpl;
@@ -212,6 +237,12 @@ public class KBFolderCacheModel
 		urlTitle = objectInput.readUTF();
 		description = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -276,6 +307,19 @@ public class KBFolderCacheModel
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -294,5 +338,9 @@ public class KBFolderCacheModel
 	public String urlTitle;
 	public String description;
 	public long lastPublishDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

@@ -45,6 +45,7 @@ create index IX_66C3047B on KBFolder (companyId, ctCollectionId);
 create unique index IX_698CF996 on KBFolder (externalReferenceCode[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 create index IX_95BD27BB on KBFolder (groupId, parentKBFolderId, ctCollectionId);
 create index IX_2B78DFBA on KBFolder (groupId, parentKBFolderId, name[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_90582DA1 on KBFolder (groupId, parentKBFolderId, status, ctCollectionId);
 create index IX_41B62C58 on KBFolder (groupId, parentKBFolderId, urlTitle[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_932548BD on KBFolder (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_D675D487 on KBFolder (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);

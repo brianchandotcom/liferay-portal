@@ -301,6 +301,13 @@ public class KBArticleWrapper
 	}
 
 	@Override
+	public java.util.List<KBArticle> getAncestorKBArticles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAncestorKBArticles();
+	}
+
+	@Override
 	public java.util.List<Long> getAncestorResourcePrimaryKeys()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -667,6 +674,16 @@ public class KBArticleWrapper
 	}
 
 	/**
+	 * Returns the class primary key of the trash entry for this kb article.
+	 *
+	 * @return the class primary key of the trash entry for this kb article
+	 */
+	@Override
+	public long getTrashEntryClassPK() {
+		return model.getTrashEntryClassPK();
+	}
+
+	/**
 	 * Returns the url title of this kb article.
 	 *
 	 * @return the url title of this kb article
@@ -729,6 +746,11 @@ public class KBArticleWrapper
 	@Override
 	public long getViewCount() {
 		return model.getViewCount();
+	}
+
+	@Override
+	public boolean hasParentKBArticle() {
+		return model.hasParentKBArticle();
 	}
 
 	/**
@@ -794,6 +816,16 @@ public class KBArticleWrapper
 	@Override
 	public boolean isIncomplete() {
 		return model.isIncomplete();
+	}
+
+	/**
+	 * Returns <code>true</code> if this kb article is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this kb article is in the Recycle Bin; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInTrash() {
+		return model.isInTrash();
 	}
 
 	/**

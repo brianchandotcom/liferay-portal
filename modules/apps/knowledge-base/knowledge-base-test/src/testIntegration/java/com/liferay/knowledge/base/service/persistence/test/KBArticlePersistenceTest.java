@@ -704,6 +704,24 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P_L_NotS() throws Exception {
+		_persistence.countByG_P_L_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_P_L_NotS(
+			0L, 0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByG_P_L_NotSArrayable() throws Exception {
+		_persistence.countByG_P_L_NotS(
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+	}
+
+	@Test
 	public void testCountByG_KBFI_UT_ST() throws Exception {
 		_persistence.countByG_KBFI_UT_ST(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",

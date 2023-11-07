@@ -72,7 +72,7 @@ definition {
 	}
 
 	@description = "This checks that an administrator will receive a notification when a blog entry is flagged."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanViewEmailNotificationForFlaggedEntry {
 		property test.smtp.server.enabled = "true";
@@ -101,7 +101,7 @@ definition {
 			subject = "Inappropriate Content Flagged in ${siteName}");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewEmailNotificationsAfterAddingAndUpdatingEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

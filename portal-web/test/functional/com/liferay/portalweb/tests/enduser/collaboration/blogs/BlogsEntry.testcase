@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-70143."
-	@priority = 4
+	@priority = 3
 	@refactorneeded
 	test AddBlogsEntryWithDMLink {
 		JSONDocument.addFileWithUploadedFile(
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@description = "This is a usecase for LPS-75241. It checks that an embedded video can be added to a blog."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddWithEmbeddedVideo {
 		property testray.component.names = "WYSIWYG";
@@ -420,7 +420,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-126756. It ensures that a blog entry can be added with a static gif."
-	@priority = 5
+	@priority = 3
 	@refactorneeded
 	test CanAddWithStaticGif {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -446,7 +446,7 @@ definition {
 
 	@description = "This checks that basic text can be inputted and displayed in the most common fields in a blog entry."
 	@e2etest
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanAddWithSubtitle {
 		JSONLayout.addPublicLayout(
@@ -567,7 +567,7 @@ definition {
 	}
 
 	@description = "This checks that a blog entry can be automatically saved as a draft."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAutomaticallySaveEntryAsDraft {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -591,7 +591,7 @@ definition {
 
 	@description = "This checks that a user can change the publish date for a scheduled entry to the present and publish it."
 	@e2etest
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanChangeAScheduledEntryToThePresentAndPublish {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
@@ -727,7 +727,7 @@ definition {
 	}
 
 	@description = "This checks that blog entries can be deleted through the UI."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteMultipleEntriesSequentially {
 		JSONBlog.addEntry(
@@ -860,7 +860,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-108029. It ensures that a blog entry can be edited from the search result."
-	@priority = 4
+	@priority = 3
 	@refactorneeded
 	test CanEditViaSearchResults {
 		JSONBlog.addEntry(
@@ -1133,7 +1133,7 @@ definition {
 	}
 
 	@description = "This this a use case for LPS-69240. It checks that a blog entry with a URL that duplicates an existing one cannot be published."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CannotAddDuplicateCustomURLThroughUI {
 		JSONBlog.addEntry(
@@ -1170,7 +1170,7 @@ definition {
 	}
 
 	@description = "This checks that a blog entry cannot be published if the custom abstracted is selected but empty."
-	@priority = 4
+	@priority = 3
 	@refactorneeded
 	test CannotAddWhenCustomAbstractIsSelectedButEmpty {
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
@@ -1219,7 +1219,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-147320. It checks that Javascript cannot be executed in the code view."
-	@priority = 4
+	@priority = 3
 	test CannotExecuteXSSInCodeView {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1341,7 +1341,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82204. View blogs entry with XSS custom abstract."
-	@priority = 5
+	@priority = 3
 	test CannotExecuteXSSInCustomAbstractViaAP {
 		property testray.component.names = "Security";
 
@@ -1379,7 +1379,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-49419. It validates that BBCode cannot be injected into a blog comment using Pingback."
-	@priority = 4
+	@priority = 3
 	test CannotInjectBBCodeIntoCommentUsingPingback {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
@@ -1566,7 +1566,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-80502. It asserts that user can search a draft blog entry."
-	@priority = 5
+	@priority = 4
 	test CanSearchForDraftEntry {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1678,7 +1678,7 @@ definition {
 	}
 
 	@description = "This ensures that an external video in the Blogs content field can be rendered correctly when publication is enabled."
-	@priority = 5
+	@priority = 4
 	test CanViewInlineVideoWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1760,7 +1760,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90966. It checks that the caption link will keep persisting."
-	@priority = 4
+	@priority = 3
 	test LinkToImageInCaptionPersistsAfterBeingAdded {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -1844,7 +1844,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69240. It checks that when blog entries are duplicated their custom URL's are unique."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test ShouldHaveUniqueURLForDuplicate {
 		var portalURL = PropsUtil.get("portal.url");
@@ -1883,7 +1883,7 @@ definition {
 	}
 
 	@description = "This checks that a string that is over 255 characters in the title will be trimmed to 255."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test ShouldTrimTitleTo255CharactersWhenOver {
 		JSONLayout.addPublicLayout(
@@ -1913,7 +1913,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test TitleWillNotExecuteXSS {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");

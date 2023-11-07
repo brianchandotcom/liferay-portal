@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This test asserts that no document shows in FTP mode after deleting it in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotViewDocumentAfterDeleting {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "This test asserts that Not Found error returns when visiting FTP mode if indexing is disabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotViewDocumentWhenDisabled {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");

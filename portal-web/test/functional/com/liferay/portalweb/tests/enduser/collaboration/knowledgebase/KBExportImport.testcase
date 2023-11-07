@@ -46,7 +46,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can import content to a KB folder rom the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanImportArticleViaNavigationPane {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",

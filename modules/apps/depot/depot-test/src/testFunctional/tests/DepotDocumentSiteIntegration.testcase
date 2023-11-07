@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through Blogs on a connected site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddImageViaBlogs {
 		DepotNavigator.openDepotAdmin();
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through page creation on a connected site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddImageViaContentPage {
 		JSONDocument.addFileWithUploadedFile(
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through web content on a connected site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddImageViaWebContent {
 		JSONDocument.addFileWithUploadedFile(

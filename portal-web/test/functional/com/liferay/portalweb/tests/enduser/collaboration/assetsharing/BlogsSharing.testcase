@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "This case ensures that sharing permissions can be updated through Shared by Me."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanChangePermissionsViaSharedByMe {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "This test ensures that when a blog entry that was shared is deleted, it cannot be accessed."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotViewDeletedEntryViaNotification {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");

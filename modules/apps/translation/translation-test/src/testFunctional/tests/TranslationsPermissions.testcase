@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can translate a Web content to the language she has permissions."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanTranslateWCWithSpecificLanguagesPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

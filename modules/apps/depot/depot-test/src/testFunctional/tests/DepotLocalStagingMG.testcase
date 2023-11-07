@@ -603,7 +603,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in a DM folder of asset library can be published in Media Gallery when local staging is enabled."
-	@priority = 5
+	@priority = 4
 	test CanPublishImageFromFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

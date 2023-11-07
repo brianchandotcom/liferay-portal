@@ -191,7 +191,7 @@ definition {
 	}
 
 	@description = "This is a usecase for LPS-83229. This is the only small image test for blogs."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRemoveSmallImage {
 		property testray.component.names = "WYSIWYG";
@@ -536,7 +536,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in the Blogs content field can be rendered correctly when publication is enabled."
-	@priority = 5
+	@priority = 4
 	test CanViewInlineImageWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -582,7 +582,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in the Blogs small image can be rendered correctly after moving it to a folder."
-	@priority = 4
+	@priority = 3
 	test CanViewSmallImageAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -623,7 +623,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-67276. It ensures that the success message for the cover image does not display after publishing with the empty required fields."
-	@priority = 4
+	@priority = 3
 	test SuccessMessageForCoverImageDoesNotDisplayAfterPublishingWithEmptyRequiredFields {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

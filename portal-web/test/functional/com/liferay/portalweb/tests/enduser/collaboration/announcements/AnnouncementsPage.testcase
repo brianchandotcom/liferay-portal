@@ -106,7 +106,7 @@ definition {
 			entryURL = "http://www.liferay.com");
 	}
 
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanAddAnnouncementsEntryPriorityImportant {
 		JSONAnnouncement.addAnnouncement(
@@ -207,7 +207,7 @@ definition {
 		AnnouncementsEntry.viewNoAdmin();
 	}
 
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanViewAnnouncementsEntryWithDistributedScope {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -431,7 +431,7 @@ definition {
 
 	@description = "This test ensures that the announcement widget follows W3C accessibility standards."
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test WidgetFollowsAccessibilityStandards {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",

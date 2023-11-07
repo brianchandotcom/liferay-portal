@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This ensures that the comment of an asset can be subscribed automatically when the setting is true."
-	@priority = 5
+	@priority = 4
 	test CanConfigureDiscussionSubscribeAtInstanceLevel {
 		Comments.openToCommentsConfiguration();
 
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "This ensures that the comment of an asset will not be subscribed automatically when the setting is false."
-	@priority = 5
+	@priority = 4
 	test CanConfigureDiscussionSubscribeAtSystemLevel {
 		Comments.openToCommentsConfiguration();
 
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@description = "This ensures that changing the comments configuraton in one instance does not affect the value in another instance."
-	@priority = 5
+	@priority = 4
 	test InstanceLevelConfigurationsAreIndependentFromOneAnother {
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",

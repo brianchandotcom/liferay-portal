@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-68599. Skip the instance for performance improvement."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddCommentToWorkflowSubmission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

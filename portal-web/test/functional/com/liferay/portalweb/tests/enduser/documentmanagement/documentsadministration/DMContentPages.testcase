@@ -69,11 +69,10 @@ definition {
 
 	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete on a content page."
 	@e2etest
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanCreateTagUsingAutocomplete {
 		property custom.properties = "dl.actions.visible=true";
-		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

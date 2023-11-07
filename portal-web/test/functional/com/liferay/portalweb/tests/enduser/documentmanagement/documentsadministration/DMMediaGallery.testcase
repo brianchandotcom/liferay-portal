@@ -107,7 +107,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddMultipleFolders {
 		Navigator.gotoPage(pageName = "Media Gallery Page");
@@ -163,7 +163,7 @@ definition {
 			mgDocumentTitleEdit = "DM Document Title Edit");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditSubfolder {
 		JSONFolder.addFolder(

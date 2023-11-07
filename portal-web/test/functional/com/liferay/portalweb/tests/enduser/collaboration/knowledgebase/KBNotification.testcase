@@ -91,7 +91,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can subscribe to the KB home folder from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanSubscribeToHomeFolderViaNavigationPane {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

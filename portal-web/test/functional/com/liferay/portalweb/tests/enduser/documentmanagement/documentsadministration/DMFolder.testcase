@@ -320,7 +320,7 @@ definition {
 		DMFolder.deletePG(dmFolderName = "DM Folder Name");
 	}
 
-	@priority = 5
+	@priority = 3
 	test CanDeleteRatingForFolder {
 		var responseFromFolder = DocumentFolderAPI.addDocumentFolder(
 			groupName = "Guest",
@@ -337,11 +337,10 @@ definition {
 		Ratings.revokeStarsRating();
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteSubFolderInSite {
 		property custom.properties = "dl.actions.visible=true";
-		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -386,7 +385,7 @@ definition {
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Name");
 	}
 
-	@priority = 5
+	@priority = 3
 	test CanEditRatingForFolder {
 		var responseFromFolder = DocumentFolderAPI.addDocumentFolder(
 			groupName = "Guest",

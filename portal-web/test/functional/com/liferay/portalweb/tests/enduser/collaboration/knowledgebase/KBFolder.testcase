@@ -240,7 +240,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can delete folder in the table view."
-	@priority = 5
+	@priority = 4
 	test CanDeleteFolderInTableView {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can delete a KB folder from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanDeleteFolderViaNavigationPane {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -298,7 +298,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit folder in the table view."
-	@priority = 5
+	@priority = 4
 	test CanEditFolderInTableView {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -320,7 +320,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can manage permissions for a KB folder from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanEditFolderPermissionsViaNavigationPane {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -368,7 +368,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit a KB folder from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanEditFolderViaNavigationPane {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -389,7 +389,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can manage permissions for the KB home folder from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanEditHomeFolderPermissionsViaNavigationPane {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can move a KB folder from the navigation pane."
-	@priority = 5
+	@priority = 4
 	test CanMoveFolderViaNavigationPane {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -568,7 +568,7 @@ definition {
 	}
 
 	@description = "This test ensures that some folder info only display in panel."
-	@priority = 5
+	@priority = 3
 	test SomeFolderInfoOnlyDisplayInPanel {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",

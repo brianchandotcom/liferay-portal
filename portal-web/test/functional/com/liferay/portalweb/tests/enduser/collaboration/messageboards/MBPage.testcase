@@ -43,7 +43,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanAddCategoryWithDescription {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -59,7 +59,7 @@ definition {
 			categoryName = "MB Category Name");
 	}
 
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanAddCategoryWithUTF8Characters {
 		JSONMBMessage.addCategory(
@@ -86,7 +86,7 @@ definition {
 		MessageboardsThread.viewThreadAttachment(mbAttachmentFileList = "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4");
 	}
 
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanAddMultipleCategories {
 		for (var categoryName : list "MB Category1 Name,MB Category2 Name") {
@@ -101,7 +101,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanAddThreadInCategoryAsQuestion {
 		JSONMBMessage.addCategory(
@@ -172,7 +172,7 @@ definition {
 			threadSubject = "Thread Subject");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteCategory {
 		JSONMBMessage.addCategory(
@@ -203,7 +203,7 @@ definition {
 		MessageboardsThread.deletePG(threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditCategory {
 		JSONMBMessage.addCategory(
@@ -223,7 +223,7 @@ definition {
 		MessageboardsCategory.viewPG(categoryName = "MB Category Name Edit");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditThreadSubjectAndBody {
 		JSONMBMessage.addMessage(
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-67722."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanReplyAfterDownloadingMBThreadAttachmentTwice {
 		JSONMBMessage.addMessage(
@@ -279,7 +279,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanReplyToThreadAsGuest {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "This ensures that an MB thread can be searched via category."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSearchForThreadWithCategory {
 		JSONCategory.addVocabulary(
@@ -450,7 +450,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanViewMBThreadReplyViaMoreMessages {
 		property custom.properties = "discussion.comments.delta.value=5";
@@ -645,7 +645,7 @@ definition {
 	}
 
 	@description = "This ensures that users can view subcategory subscription Via My Subscriptions, also covers LPS-127707."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanViewSubcategorySubscriptionViaMySubscriptionsPage {
 		property database.types = "oracle";
@@ -701,7 +701,7 @@ definition {
 			subscribedThread = "MB Subcategory Name 2");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewThread {
 		JSONMBMessage.addMessage(
@@ -769,7 +769,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanViewThreadStatistics {
 		JSONMBMessage.addMessage(
@@ -834,7 +834,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-77263."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewVisualStateOfReadMBThread {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

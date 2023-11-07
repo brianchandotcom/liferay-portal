@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "This checks that users can add a comment to a blog entry through the page comment widget when a blog entry is displayed through a DPT."
-	@priority = 5
+	@priority = 3
 	test CanAddCommentToBlogEntryWhenEntryIsDisplayedWithDPT {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
@@ -732,7 +732,7 @@ definition {
 	}
 
 	@description = "This test checks that blog entry can be added with special charaters."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewEntryWithSpecialCharacters {
 		BlogsNavigator.openToAddEntry(
@@ -757,7 +757,7 @@ definition {
 	}
 
 	@description = "Basic test that ensures reading time displays when enabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewReadingTime {
 		property test.liferay.virtual.instance = "false";
@@ -783,7 +783,7 @@ definition {
 	}
 
 	@description = "This checks that the comment section is hidden when viewing a blog entry through the blogs widget in a DPT."
-	@priority = 5
+	@priority = 4
 	test CommentsSectionOfBlogsWidgetIsHiddenWhenViewingEntryInDPT {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -824,7 +824,7 @@ definition {
 	}
 
 	@description = "This is a usecase for LPS-66970. It checks that both the old and new blog URLs lead to the current entry."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test ViewBlogEntryViaEditedCustomURL {
 		JSONBlog.addEntry(

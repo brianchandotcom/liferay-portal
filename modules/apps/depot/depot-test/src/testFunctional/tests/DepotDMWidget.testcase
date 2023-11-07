@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "This ensures that a subfolder stored in the asset library folder can be accessed via DM widget on a connected site."
-	@priority = 5
+	@priority = 4
 	test CanAccessSubfolderFromSiteWidget {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

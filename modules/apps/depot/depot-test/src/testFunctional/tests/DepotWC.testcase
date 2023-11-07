@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "This test deletes multiple web content in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteMultipleWebContent {
 		for (var i : list "1,2,3") {
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@description = "This ensures that web content with structure can be restored to a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRestoreWebContentWithStructure {
 		JSONDepot.addDepot(

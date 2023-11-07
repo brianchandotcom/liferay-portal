@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs cover image when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteBlogCoverImage {
 		property test.liferay.virtual.instance = "false";
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs inline image when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteBlogInlineImage {
 		property test.liferay.virtual.instance = "false";
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteBlogSmallImage {
 		property test.liferay.virtual.instance = "false";
@@ -582,7 +582,7 @@ definition {
 	}
 
 	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteDocumentWithCustomField {
 		property test.liferay.virtual.instance = "false";
@@ -718,7 +718,7 @@ definition {
 	}
 
 	@description = "This ensures that the image in depot can be removed and republished in open graph when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteOpenGraphImage {
 		property test.liferay.virtual.instance = "false";
@@ -1100,7 +1100,7 @@ definition {
 	}
 
 	@description = "This ensures that the blog image from a depot can be edited and republished when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditBlogCoverImage {
 		property test.liferay.virtual.instance = "false";
@@ -1211,7 +1211,7 @@ definition {
 	}
 
 	@description = "This ensures that the blog inline image from a depot can be edited and republished when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditBlogInlineImage {
 		property test.liferay.virtual.instance = "false";
@@ -1330,7 +1330,7 @@ definition {
 	}
 
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditBlogSmallImage {
 		property test.liferay.virtual.instance = "false";
@@ -1430,7 +1430,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditDMImage {
 		property test.liferay.virtual.instance = "false";
@@ -1628,7 +1628,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditDocumentWithCustomField {
 		property test.liferay.virtual.instance = "false";
@@ -2039,7 +2039,7 @@ definition {
 	}
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditWCImage {
 		property test.liferay.virtual.instance = "false";
@@ -2167,7 +2167,7 @@ definition {
 	}
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotSearchForPendingDocument {
 		property test.liferay.virtual.instance = "false";
@@ -2210,7 +2210,7 @@ definition {
 	}
 
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotSelectUnavailableStructure {
 		property test.liferay.virtual.instance = "false";
@@ -2290,7 +2290,7 @@ definition {
 	}
 
 	@description = "This ensures that a pending image in depot cannot be found in remote staging site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotViewPendingImage {
 		property test.liferay.virtual.instance = "false";
@@ -2749,7 +2749,7 @@ definition {
 	}
 
 	@description = "This ensures that a document using a custom document type from a depot can be published in the staging site when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishDMWithDocumentType {
 		property test.liferay.virtual.instance = "false";
@@ -2818,7 +2818,7 @@ definition {
 	}
 
 	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishDocumentFolder {
 		property test.liferay.virtual.instance = "false";
@@ -2887,7 +2887,7 @@ definition {
 	}
 
 	@description = "This ensures that a document stored in a DM folder of asset library can be published in DM widget when remote staging is enabled."
-	@priority = 5
+	@priority = 4
 	test CanPublishDocumentFromFolderViaWidget {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2950,7 +2950,7 @@ definition {
 	}
 
 	@description = "This ensures that a document stored in an asset library can be published in DM widget when remote staging is enabled."
-	@priority = 5
+	@priority = 4
 	test CanPublishDocumentViaWidget {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -3552,7 +3552,7 @@ definition {
 	}
 
 	@description = "This ensures that the shortcut to an image in the depot can be added and published in the staging site when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishImageShortcut {
 		property test.liferay.virtual.instance = "false";
@@ -3666,7 +3666,7 @@ definition {
 	}
 
 	@description = "This ensures that an image with custom field in depot can be published in remote staging site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishImageWithCustomField {
 		property test.liferay.virtual.instance = "false";
@@ -3975,7 +3975,7 @@ definition {
 	}
 
 	@description = "This ensures that a document can be accessed in a staged site through the item selector after it has been approved when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewApprovedDocument {
 		property test.liferay.virtual.instance = "false";
@@ -4386,7 +4386,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling remote staging."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewImageAfterScopedFilter {
 		property test.liferay.virtual.instance = "false";
@@ -4415,7 +4415,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154436. It ensures that an image with a custom friendlyURL can be correctly rendered in the Blog content field on a site after its friendlyURL is edited and published from an asset library."
-	@priority = 5
+	@priority = 4
 	test CanViewImageFromBlogsContentFieldAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -4663,7 +4663,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-155797. It ensures that an image that was published in a depot can still be accessed after remote staging is disabled."
-	@priority = 5
+	@priority = 3
 	test ImageIsStillAccessibleAfterDisablingStaging {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

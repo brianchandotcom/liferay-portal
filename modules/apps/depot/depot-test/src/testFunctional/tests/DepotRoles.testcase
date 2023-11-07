@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-113731. It ensures that roles and permissions from a library are removed after membership is revoked."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAccessALAfterRevokingMembership {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -518,7 +518,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library role can be edited."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewALAdminRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -580,7 +580,7 @@ definition {
 	}
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even it is automatically assigned to an existing site member after connecting site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewExistingSiteMemberAfterConnectingSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

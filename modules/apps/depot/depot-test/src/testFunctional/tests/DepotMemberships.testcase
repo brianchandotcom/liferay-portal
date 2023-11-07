@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library can be assigned to a user from the user profile."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAssignALFromUserProfile {
 		JSONUser.addUser(
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This ensures that an assigned asset library can be removed from the user profile."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRemoveALFromUserProfile {
 		JSONUser.addUser(
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "This ensures that an organization can be added and removed in the membership of an asset library."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRemoveOrganizationFromMemberships {
 		JSONOrganization.addOrganization(
@@ -195,11 +195,9 @@ definition {
 	}
 
 	@description = "This ensures that a user can be added and removed in the membership of an asset library."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRemoveUserFromMemberships {
-		property portal.acceptance = "true";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -227,7 +225,7 @@ definition {
 	}
 
 	@description = "This ensures that a user group can be added and removed in the membership of an asset library."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRemoveUserGroupFromMemberships {
 		JSONUserGroup.addUserGroup(userGroupName = "User Group Name");

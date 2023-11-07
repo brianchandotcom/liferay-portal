@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "This ensures that multiple child pages can be added to the front page."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanAddChildPagesToFrontPage {
 		JSONWiki.updateWikiPage(
@@ -191,7 +191,7 @@ definition {
 
 	@description = "This ensures that a front page can be added with HTML format."
 	@e2etest
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddFrontPageWithHTMLFormat {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
@@ -216,7 +216,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can add wiki page with HTML format via wiki widget."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddPageWithHTMLFormat {
 		WikiNavigator.gotoWidgetSpecificTabByURL(
@@ -319,7 +319,7 @@ definition {
 
 	@description = "This ensures that users can add wiki pages via wiki widget."
 	@e2etest
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddWikiPages {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
@@ -348,7 +348,7 @@ definition {
 	}
 
 	@description = "This ensures that a wiki page can be canceled when adding a wiki page."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanCancelAddingAPage {
 		WikiNavigator.openToAddPage(
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "This ensures that a wiki page can be canceled when editing a wiki page."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanCancelEditingAPage {
 		JSONWiki.addWikiPage(
@@ -476,7 +476,7 @@ definition {
 	}
 
 	@description = "This ensures that the front page can be deleted."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDeleteFrontPage {
 		JSONWiki.updateWikiPage(
@@ -516,7 +516,7 @@ definition {
 	}
 
 	@description = "This ensures that a draft page can be edited."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditDraftPage {
 		WikiNavigator.gotoWidgetSpecificTabByURL(
@@ -564,7 +564,7 @@ definition {
 	}
 
 	@description = "This ensures that the front page can be edited."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanEditFrontPage {
 		JSONWiki.updateWikiPage(
@@ -1026,7 +1026,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-190823. It checks that Javascript will not be executed from the child wiki page content when viewing the parent wiki page."
-	@priority = 4
+	@priority = 3
 	test XSSCannotBeExecutedFromChildWikiPageContent {
 		JSONWiki.addWikiPage(
 			groupName = "Guest",

@@ -38,7 +38,7 @@ definition {
 
 	@description = "This ensures that a depot can be connected to different types of sites."
 	@e2e
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanConnectMultipleSites {
 		Site.openSitesAdmin();
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanViewRestrictionWhenConnectingSites {
 		JSONDepot.addDepot(

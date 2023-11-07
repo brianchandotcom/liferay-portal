@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136910. It checks that bold text can be added in the editor."
-	@priority = 4
+	@priority = 3
 	test CanAddBoldText {
 		MessageboardsThread.addPG(
 			bold = "true",
@@ -133,7 +133,7 @@ definition {
 			pageName = "Message Boards Page");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddReply {
 		JSONMBMessage.addMessage(
@@ -155,7 +155,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanAddThreadWithUTF8Characters {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This ensures that a thread with 255 characters in the title can be added."
-	@priority = 4
+	@priority = 3
 	test CanAddTitleWith255Characters {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -215,7 +215,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanCancelEditOnThread {
 		JSONMBMessage.addMessage(
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanCancelThread {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -533,7 +533,7 @@ definition {
 			userName = "Test Test");
 	}
 
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRestoreThreadWithAttachment {
 		JSONMBMessage.addCategory(
@@ -595,7 +595,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-65368."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanViewBBCodeNoXSSWithRemoteServices {
 		property custom.properties = "message.boards.message.formats.default=bbcode";
@@ -687,7 +687,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in the MB content field can be rendered correctly when publication is enabled."
-	@priority = 5
+	@priority = 4
 	test CanViewImageInThreadWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -759,7 +759,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-65365."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test JavascriptIsNotExecutedInHTMLBody {
 		property custom.properties = "message.boards.message.formats.default=html";

@@ -87,7 +87,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can add an image to the subfolder of asset library via MG on a connected site."
-	@priority = 5
+	@priority = 4
 	test CanAddImageToSubFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

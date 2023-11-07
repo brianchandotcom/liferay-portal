@@ -297,7 +297,7 @@ definition {
 	}
 
 	@description = "This test makes sure that the documents can be filtered by category."
-	@priority = 5
+	@priority = 4
 	test CanFilterByCategory {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -451,7 +451,7 @@ definition {
 	}
 
 	@description = "This ensures that a document can be moved to a folder in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanMoveDocumentToFolder {
 		JSONDepot.addDepot(

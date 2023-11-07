@@ -23,10 +23,8 @@ definition {
 	}
 
 	@description = "LPS-186092 - Assert that the file upload page is accessible."
-	@priority = 5
+	@priority = 4
 	test AssertFileUploadPageIsAccessible {
-		property portal.acceptance = "true";
-
 		task ("When accessing the multiple files upload page") {
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",

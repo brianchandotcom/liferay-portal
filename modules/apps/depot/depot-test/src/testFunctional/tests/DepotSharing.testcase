@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This test ensures that sharing can be disabled in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanDisableDepotSharing {
 		JSONDocument.addFile(
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@description = "This test asserts that users get the proper notification based on depot sharing permissions granted to him."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewSharingNotifications {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");

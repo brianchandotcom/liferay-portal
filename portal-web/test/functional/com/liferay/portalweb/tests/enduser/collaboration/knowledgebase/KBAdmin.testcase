@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can view article in the table view."
-	@priority = 5
+	@priority = 4
 	test CanViewArticleInTableView {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -244,7 +244,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can view folder in the table view."
-	@priority = 5
+	@priority = 4
 	test CanViewFolderInTableView {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",

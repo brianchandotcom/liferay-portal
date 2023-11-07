@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can change the view permission to the comment permission via the manage collaborators."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanChangePermissionToCommentViaManageCollaborators {
 		JSONDocument.addFileWithUploadedFile(
@@ -100,11 +100,9 @@ definition {
 	}
 
 	@description = "This test asserts that a user can change the view permission to the update permission via the manage collaborators"
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanChangePermissionToUpdateViaManageCollaborators {
-		property portal.acceptance = "true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -151,7 +149,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94284 and LPS-105038. It ensures that the invalid email cannot be added if it has space, also covers the input field that still contains the invalid email after pressing enter."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CannotShareWithInvalidAddress {
 		JSONDocument.addFileWithUploadedFile(
@@ -252,7 +250,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-101927. It ensures that a user can reply to a comment on an image via shared content"
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanReplyToCommentViaSharedContent {
 		JSONUser.addUser(
@@ -340,7 +338,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94585. It ensures that users can share via Shared Content app."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanShareViaSharedContent {
 		JSONUser.addUser(
@@ -635,7 +633,7 @@ definition {
 	}
 
 	@description = "This test makes sure all collaborators will view all collaborators of the document that was shared to him. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewAndRemoveCollaborators {
 		JSONUser.addUser(
@@ -720,7 +718,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94858. It asserts deleted entry displays in a user's Shared Content using share button from info panel."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanViewDeletedEntryInSharedContent {
 		JSONDocument.addFileWithUploadedFile(
@@ -836,7 +834,7 @@ definition {
 	}
 
 	@description = "This test asserts only one entry displays in a user's Shared Content app when multiple users share the same document to him."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CanViewSingleEntryAfterMultipleSharing {
 		JSONRole.assignRoleToUser(

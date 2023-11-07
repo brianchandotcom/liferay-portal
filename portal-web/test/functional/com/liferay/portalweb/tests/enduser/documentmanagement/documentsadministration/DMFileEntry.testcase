@@ -319,10 +319,9 @@ definition {
 	}
 
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAutocompleteCategory {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -383,10 +382,9 @@ definition {
 	}
 
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAutoCompleteCategory {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -2602,7 +2600,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors."
-	@priority = 5
+	@priority = 4
 	test CannotUploadFileThatCausesOutOfMemoryErrors {
 		property testray.component.names = "Security";
 
@@ -2959,11 +2957,10 @@ definition {
 	}
 
 	@description = "This test ensures that a document with special characters in its title can be published successfully."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPublishTitleWithSpecialCharacters {
 		property custom.properties = "dl.actions.visible=true";
-		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -3074,10 +3071,9 @@ definition {
 	}
 
 	@description = "This test checks if file uploads can be restricted to .doc format."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanRestrictFileExtensionToDoc {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -3109,7 +3105,7 @@ definition {
 	}
 
 	@description = "This ensures that users can revert a version entry from the Version History page."
-	@priority = 5
+	@priority = 4
 	test CanRevertSpecifiedFileVersionFromVersionsPage {
 		property custom.properties = "feature.flag.LPS-175915=true";
 
@@ -3372,11 +3368,9 @@ definition {
 	}
 
 	@description = "This ensures that the user can search for document file name using partial text."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSearchForDocumentWithPartialText {
-		property portal.acceptance = "true";
-
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -3439,7 +3433,7 @@ definition {
 	}
 
 	@description = "This ensures that All the version entries are ordered by version with the latest version at the top in the version history page."
-	@priority = 5
+	@priority = 4
 	test CanViewAllFileVersionsFromVersionsPage {
 		property custom.properties = "feature.flag.LPS-175915=true";
 
@@ -3611,7 +3605,7 @@ definition {
 	}
 
 	@description = "This test ensures that the user can view an expired document."
-	@priority = 5
+	@priority = 4
 	test CanViewExpiredDocument {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
@@ -4474,7 +4468,7 @@ definition {
 	}
 
 	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test WillRejectForbiddenCharactersInFileName {
 		property portal.acceptance = "true";

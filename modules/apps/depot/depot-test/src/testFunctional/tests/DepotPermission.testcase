@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can only view memberships with view permissions."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAccessMembershipWithViewPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "This ensures that assets can be added to the asset library folder Via DM widget on a connected site."
-	@priority = 5
+	@priority = 4
 	test CanAddFileInDMWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "This ensures that an image can be added to asset library folder by a user with permissions via MG on a connected site."
-	@priority = 5
+	@priority = 4
 	test CanAddImageToFolderViaMG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can only add web content to the depot that has permissions set."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanAddWebContentPermissionWithinDepot {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -485,7 +485,7 @@ definition {
 	}
 
 	@description = "This ensures that assets stored in the asset library folder can be deleted by a user with permissions Via DM widget on a connected site."
-	@priority = 5
+	@priority = 4
 	test CanDeleteFileInDMWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -583,7 +583,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in asset library folder can be deleted by a user with permissions via MG on a connected site."
-	@priority = 5
+	@priority = 4
 	test CanDeleteImageInMG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -691,7 +691,7 @@ definition {
 	}
 
 	@description = "This ensures that assets stored in the asset library folder can be edited by a user with permissions Via DM widget on a connected site."
-	@priority = 5
+	@priority = 4
 	test CanEditFileInDMWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -793,7 +793,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in asset library folder can be edited by a user with permissions via MG on a connected site."
-	@priority = 5
+	@priority = 4
 	test CanEditImageInMG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1075,7 +1075,7 @@ definition {
 	}
 
 	@description = "This ensures that user can perform CRUD operations to depots with all permissions."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPerformActionsToDepotWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1134,7 +1134,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can perform operations to memberships with all permissions."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanPerformActionsToMembershipsWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1219,7 +1219,7 @@ definition {
 	}
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from Collections permissions."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanSelectAndDeselectScopeFromCollectionsPermissions {
 		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
@@ -1269,7 +1269,7 @@ definition {
 	}
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from DM permissions."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanSelectAndDeselectScopeFromDMPermissions {
 		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
@@ -1319,7 +1319,7 @@ definition {
 	}
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from WC permissions."
-	@priority = 5
+	@priority = 3
 	@refactordone
 	test CanSelectAndDeselectScopeFromWCPermissions {
 		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
@@ -1437,7 +1437,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can only view depots with view permissions."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewDepotWithViewPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1488,7 +1488,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can view documents on site and library with all sites and libraries scope view permissions."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewDocumentOnSiteAndLibrary {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1575,7 +1575,7 @@ definition {
 	}
 
 	@description = "This ensures that the unsupported application can not select a depot as the scope of the permission."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewScopeFromUnsupportedApplicationPermissions {
 		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");

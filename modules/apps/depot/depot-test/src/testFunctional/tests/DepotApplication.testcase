@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "This ensures that disabled DM and WC assets from a depot do not appear when using the item selector on a connected site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanNotSelectDisabledAssetsFromItemSelector {
 		HeadlessSite.addSite(siteName = "Test Site Name");
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CollectionsRemainAfterReactivating {
 		JSONAssetlist.addManualAssetListEntry(
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test DisabledAssetsRemainInCollections {
 		JSONWebcontent.addWebContent(
@@ -243,7 +243,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image persists in a site blog entry even after the depot DM application is disabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test DisabledImageRemainsInBlogs {
 		HeadlessSite.addSite(siteName = "Test Site Name");
@@ -285,7 +285,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot WC persists in the WCD even after the depot WC application is disabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test DisabledWCRemainsInWCD {
 		HeadlessSite.addSite(siteName = "Test Site Name");
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@description = "This ensures that the DM application can be viewed after reactivating in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test DMRemainsAfterReactivating {
 		JSONDocument.addFile(
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@description = "This ensures that the WC application can be viewed after reactivating in a depot."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test WCRemainsAfterReactivating {
 		JSONWebcontent.addWebContent(

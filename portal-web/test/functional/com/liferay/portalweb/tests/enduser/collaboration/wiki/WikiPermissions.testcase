@@ -320,7 +320,7 @@ definition {
 	}
 
 	@description = "This ensures that users can not add wiki assets with a regular role without permissions."
-	@priority = 4
+	@priority = 3
 	@refactordone
 	test CannotAddWikiAssetsWithRegularRoleWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

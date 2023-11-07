@@ -274,7 +274,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can mark all selected notifications as read via the management bar no matter if they are all in the same state or not."
-	@priority = 5
+	@priority = 4
 	test CanMarkNotificationsWithDifferentStatesAsRead {
 		Workflow.openWorkflowAdmin(siteURLKey = "guest");
 
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can mark all selected notifications as unread via the management bar no matter if they are all in the same state or not."
-	@priority = 5
+	@priority = 4
 	test CanMarkNotificationsWithDifferentStatesAsUnread {
 		Workflow.openWorkflowAdmin(siteURLKey = "guest");
 
@@ -334,7 +334,7 @@ definition {
 	}
 
 	@description = "This ensures that an obsolete notification can not be selected."
-	@priority = 5
+	@priority = 4
 	test CannotSelectObsoleteNotification {
 		Workflow.openWorkflowAdmin(siteURLKey = "guest");
 

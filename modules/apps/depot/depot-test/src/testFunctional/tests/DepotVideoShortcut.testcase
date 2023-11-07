@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot video shortcut associated with a tag cannot be searched on a connected site when searching is disabled."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CannotSearchDepotVideoShortcutWhenSearchingIsDisabled {
 		property test.liferay.virtual.instance = "false";
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanSearchVideoShortcutByTag {
 		property test.liferay.virtual.instance = "false";

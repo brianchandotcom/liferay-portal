@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This case ensures that the user can mention the other user in a comment."
-	@priority = 5
+	@priority = 4
 	@refactordone
 	test CanViewCommentMentionedUser {
 		JSONRole.assignRoleToUser(

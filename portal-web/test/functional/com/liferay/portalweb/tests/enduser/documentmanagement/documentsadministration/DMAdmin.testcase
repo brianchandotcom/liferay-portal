@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-91199. It checks that all files selected on different pages can be deleted."
-	@priority = 5
+	@priority = 4
 	test CanDeleteAllDocumentsOnDifferentPagesAtOnce {
 		for (var entryCount : list "1,2,3,4,5") {
 			JSONDocument.addFileWithUploadedFile(
@@ -148,7 +148,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-91861. It checks that the counts can be reset in management toolbar."
-	@priority = 5
+	@priority = 4
 	test CanResetCountsInManagementToolbar {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

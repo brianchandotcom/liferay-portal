@@ -1491,6 +1491,21 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro moveDefinitionFolder(definitionName = null,folderLabel = null) {
+		Click(
+			key_value = ${definitionName},
+			locator1 = "ObjectAdmin#BODY_VERTICAL_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "Move");
+
+		Click(
+			key_folderLabel = ${folderLabel},
+			locator1 = "ObjectAdmin#SELECT_MOVE_FOLDER");
+
+		Button.click(button = "Move");
+	}
+
+	@summary = "Default summary"
 	macro openMySubmissions() {
 		Navigator.openURL();
 

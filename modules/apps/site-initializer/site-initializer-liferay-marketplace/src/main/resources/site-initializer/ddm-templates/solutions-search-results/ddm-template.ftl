@@ -141,7 +141,7 @@
 					<a class="solution-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 rounded text-dark text-decoration-none" href=${productURL}>
 						<div class="align-items-center d-flex image-container justify-content-center mb-3">
 							<img
-								alt=${productName}
+								alt="${productName}"
 								class="solution-search-image rounded"
 								src=${productThumbnail1}
 							/>

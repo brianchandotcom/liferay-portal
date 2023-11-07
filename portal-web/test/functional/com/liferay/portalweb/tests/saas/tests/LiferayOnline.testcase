@@ -64,10 +64,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Go to Sites and add a new one") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Liferay Welcome Site",

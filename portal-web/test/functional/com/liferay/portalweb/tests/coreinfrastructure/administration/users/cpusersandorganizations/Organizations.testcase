@@ -226,10 +226,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.viewCP(
 			siteMember = "Organization",
@@ -558,10 +555,7 @@ definition {
 			organizationName = "Organization Name",
 			organizationSite = "true");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		LexiconEntry.viewEntryName(rowEntry = "Organization Name");
 
@@ -911,20 +905,14 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.viewCP(
 			siteMember = "Organization",
 			siteName = "Organization Name",
 			siteType = "Private");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.deleteCP(siteName = "Organization Name");
 	}
@@ -940,10 +928,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.viewCP(
 			siteMember = "Organization",
@@ -1178,10 +1163,7 @@ definition {
 			HeadlessSite.addSite(siteName = ${siteName});
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		for (var siteName : list "Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H") {
 			var key_siteName = ${siteName};
@@ -1210,10 +1192,7 @@ definition {
 
 	@priority = 4
 	test OrganizationSiteDefaultUserAssociations {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addCP(
 			siteName = "Site Name Alpha",

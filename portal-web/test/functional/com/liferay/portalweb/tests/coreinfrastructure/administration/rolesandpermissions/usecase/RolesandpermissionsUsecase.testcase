@@ -283,10 +283,7 @@ definition {
 				roleType = "site");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -509,10 +506,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addCP(
 			siteName = "google.com Name",
@@ -612,10 +606,7 @@ definition {
 		property custom.properties = "permissions.check.guest.enabled=false";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -757,10 +748,7 @@ definition {
 
 	@priority = 4
 	test TeamPermissionsSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -1351,10 +1339,7 @@ definition {
 			resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
 			roleTitle = "Roles Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 

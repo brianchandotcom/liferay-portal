@@ -109,10 +109,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Space Program Academy of Continuing Education");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.viewCP(
 			siteMember = "Organization",

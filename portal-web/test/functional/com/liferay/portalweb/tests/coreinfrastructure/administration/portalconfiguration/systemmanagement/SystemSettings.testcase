@@ -308,10 +308,7 @@ definition {
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin(baseURL = "http://www.able.com:8080");
 
 			Site.addCP(
 				siteName = "Site Name",

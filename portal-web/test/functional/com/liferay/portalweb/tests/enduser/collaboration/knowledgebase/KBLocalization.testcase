@@ -33,10 +33,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

@@ -57,10 +57,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -205,10 +202,7 @@ definition {
 
 	@priority = 4
 	test AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -1126,10 +1120,7 @@ definition {
 	@description = "This is a use case for LPS-59108."
 	@priority = 4
 	test ViewWorkflowConfigurationScope {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "New Site");
 

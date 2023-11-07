@@ -45,10 +45,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		HeadlessSite.addSite(siteName = "Site Test");
 
@@ -178,10 +175,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		HeadlessSite.addSite(siteName = "Site Test");
 

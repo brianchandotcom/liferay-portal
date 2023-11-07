@@ -1288,10 +1288,7 @@ definition {
 
 	@summary = "Default summary"
 	macro tearDownCP() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Search.searchCP(searchTerm = "Name");
 

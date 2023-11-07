@@ -2,10 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addLiferayboticsSite(siteName = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
 			siteName = ${siteName},

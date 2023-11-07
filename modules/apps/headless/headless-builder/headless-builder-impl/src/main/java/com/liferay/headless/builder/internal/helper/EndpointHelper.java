@@ -132,7 +132,11 @@ public class EndpointHelper {
 		).put(
 			"createDate", objectEntry.getDateCreated()
 		).put(
+			"creator", objectEntry.getCreator()
+		).put(
 			"externalReferenceCode", objectEntry.getExternalReferenceCode()
+		).put(
+			"id", objectEntry.getId()
 		).put(
 			"modifiedDate", objectEntry.getDateModified()
 		).build();

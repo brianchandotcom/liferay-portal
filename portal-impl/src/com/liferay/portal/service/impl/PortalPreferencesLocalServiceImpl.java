@@ -130,6 +130,10 @@ public class PortalPreferencesLocalServiceImpl
 
 	@Override
 	public PortalPreferences fetchCompanyPortalPreferences(long companyId) {
+
+		// This is counterintuitive but it is actually better for performance.
+		// See LPS-196350 and 2cd9801d2a243ecbc5c1025b614c9300ce53627d.
+
 		for (PortalPreferences portalPreferences :
 				portalPreferencesPersistence.findByOwnerType(
 					PortletKeys.PREFS_OWNER_TYPE_COMPANY)) {

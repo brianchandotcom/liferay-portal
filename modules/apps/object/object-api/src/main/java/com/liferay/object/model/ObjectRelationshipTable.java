@@ -30,6 +30,10 @@ public class ObjectRelationshipTable
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ObjectRelationshipTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectRelationshipTable, Long> objectRelationshipId =
 		createColumn(
 			"objectRelationshipId", Long.class, Types.BIGINT,

@@ -1480,6 +1480,68 @@ public interface ObjectRelationshipPersistence
 	public int countByDTN_R(String dbTableName, boolean reverse);
 
 	/**
+	 * Returns the object relationship where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId1 = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId1 the object definition id1
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public ObjectRelationship findByERC_C_ODI1(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId1)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Returns the object relationship where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId1 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId1 the object definition id1
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public ObjectRelationship fetchByERC_C_ODI1(
+		String externalReferenceCode, long companyId, long objectDefinitionId1);
+
+	/**
+	 * Returns the object relationship where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId1 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public ObjectRelationship fetchByERC_C_ODI1(
+		String externalReferenceCode, long companyId, long objectDefinitionId1,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the object relationship where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId1 = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId1 the object definition id1
+	 * @return the object relationship that was removed
+	 */
+	public ObjectRelationship removeByERC_C_ODI1(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId1)
+		throws NoSuchObjectRelationshipException;
+
+	/**
+	 * Returns the number of object relationships where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId1 = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId1 the object definition id1
+	 * @return the number of matching object relationships
+	 */
+	public int countByERC_C_ODI1(
+		String externalReferenceCode, long companyId, long objectDefinitionId1);
+
+	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
 	 *
 	 * @param objectDefinitionId1 the object definition id1

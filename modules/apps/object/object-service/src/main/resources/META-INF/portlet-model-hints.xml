@@ -256,6 +256,7 @@
 	<model name="com.liferay.object.model.ObjectRelationship">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="objectRelationshipId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

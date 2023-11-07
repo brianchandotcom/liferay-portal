@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -38,20 +38,19 @@ public class DBPartitionSQLUtil {
 	}
 
 	public static String getCreateTableSQL(
-		String defaultSchemaName, String schemaName, String tableName) {
+		String fromSchemaName, String toSchemaName, String tableName) {
 
 		return StringBundler.concat(
-			"create table if not exists ", schemaName, StringPool.PERIOD,
-			tableName, " like ", defaultSchemaName, StringPool.PERIOD,
-			tableName);
+			"create table if not exists ", toSchemaName, StringPool.PERIOD,
+			tableName, " like ", fromSchemaName, StringPool.PERIOD, tableName);
 	}
 
 	public static String getCreateViewSQL(
-		String defaultSchemaName, String schemaName, String viewName) {
+		String fromSchemaName, String toSchemaName, String viewName) {
 
 		return StringBundler.concat(
-			"create or replace view ", schemaName, StringPool.PERIOD, viewName,
-			" as select * from ", defaultSchemaName, StringPool.PERIOD,
+			"create or replace view ", toSchemaName, StringPool.PERIOD,
+			viewName, " as select * from ", fromSchemaName, StringPool.PERIOD,
 			viewName);
 	}
 

@@ -39,9 +39,6 @@ export default function getMDFListColumns(
 					row[MDFColumnKey.STATUS] === Status.DRAFT.name ||
 					row[MDFColumnKey.STATUS] === Status.REQUEST_MORE_INFO.name;
 
-				const currentMDFRequestHasValidStatusToDelete =
-					row[MDFColumnKey.STATUS] === Status.DRAFT.name;
-
 				if (currentValue === PermissionActionType.VIEW) {
 					previousValue.push({
 						icon: 'view',
@@ -76,7 +73,6 @@ export default function getMDFListColumns(
 
 				if (
 					currentValue === PermissionActionType.DELETE &&
-					currentMDFRequestHasValidStatusToDelete &&
 					row.STATUS === 'Approved'
 				) {
 					previousValue.push({

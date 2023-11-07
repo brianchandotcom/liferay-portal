@@ -76,6 +76,7 @@ function CheckboxMultiSelect({
 					<div className="autofit-row autofit-row-center">
 						<div className="autofit-col mr-3">
 							<ClayCheckbox
+								label={item.name}
 								checked={isChecked(items, item)}
 								onClick={(event: any) => {
 									event.stopPropagation();

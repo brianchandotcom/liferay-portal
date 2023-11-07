@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,8 +9,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -18,7 +16,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -171,9 +168,6 @@ public class SiteMembershipPolicyUtil {
 		return serviceTracker;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteMembershipPolicyUtil.class);
-
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 	private static final DCLSingleton
@@ -188,19 +182,7 @@ public class SiteMembershipPolicyUtil {
 		public SiteMembershipPolicy addingService(
 			ServiceReference<SiteMembershipPolicy> serviceReference) {
 
-			SiteMembershipPolicy siteMembershipPolicy =
-				_bundleContext.getService(serviceReference);
-
-			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
-				try {
-					siteMembershipPolicy.verifyPolicy();
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-				}
-			}
-
-			return siteMembershipPolicy;
+			return _bundleContext.getService(serviceReference);
 		}
 
 		@Override

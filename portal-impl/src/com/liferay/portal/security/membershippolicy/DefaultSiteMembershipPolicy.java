@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -33,6 +34,17 @@ import java.util.Map;
  * @author Sergio González
  */
 public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
+
+	public void afterPropertiesSet() {
+		if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
+			try {
+				verifyPolicy();
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+	}
 
 	@Override
 	public void checkMembership(

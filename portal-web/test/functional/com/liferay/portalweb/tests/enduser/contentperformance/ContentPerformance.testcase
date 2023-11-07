@@ -131,9 +131,9 @@ definition {
 	@priority = 3
 	test AuthorNotShowInWidgetPage {
 		task ("Create and go to Widget Page") {
-			PagesAdmin.addPage(
-				pageName = "Widget Page Name",
-				sitePageType = "Widget Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
 		}
@@ -291,11 +291,9 @@ definition {
 		}
 
 		task ("Create Widget Page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
-
-			PagesAdmin.addPage(
-				pageName = "Widget Page Name",
-				sitePageType = "Widget Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name");
 		}
 
 		task ("Navigate to Widget page") {
@@ -747,9 +745,9 @@ definition {
 	@priority = 4
 	test MetricsIconVisibleInWidgetPage {
 		task ("Create Widget Page") {
-			PagesAdmin.addPage(
-				pageName = "Widget Page Name",
-				sitePageType = "Widget Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name");
 		}
 
 		task ("Navigate to Widget page") {
@@ -1341,9 +1339,9 @@ definition {
 	@priority = 3
 	test PanelInformationInWidgetPage {
 		task ("Create Widget Page") {
-			PagesAdmin.addPage(
-				pageName = "Widget Page Name",
-				sitePageType = "Widget Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name");
 		}
 
 		task ("Navigate to Widget page") {

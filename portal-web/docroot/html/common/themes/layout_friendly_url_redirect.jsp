@@ -12,8 +12,6 @@ String alternativeLayoutFriendlyURL = (String)SessionMessages.get(request, "alte
 %>
 
 <c:if test="<%= Validator.isNotNull(alternativeLayoutFriendlyURL) %>">
-	<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" type="button">&times;</button>
-
 	<liferay-util:buffer
 		var="redirectedLink"
 	>

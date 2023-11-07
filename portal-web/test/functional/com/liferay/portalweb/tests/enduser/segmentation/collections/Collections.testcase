@@ -61,30 +61,22 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-143093. Item types configuration for a collection"
+	@description = "This is a test for LPS-143093. Add assets to manual collection for selected item types."
 	@priority = 4
 	test AddAssetsToManualCollectionForSelectedItemTypes {
-		task ("Given the option of Select Types, under Multiple Item Types") {
+		task ("Given a user has a manual collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
-
-			Select(
-				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-				value1 = "Select Types...");
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
 		}
 
-		task ("When selecting some types for the Available box") {
-			for (var key_type : list "Blogs Entry,Web Content Article") {
-				Click.clickNoMouseOver(locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE_SELECTED");
-			}
-
-			Click(locator1 = "APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_AVAILABLE");
-
-			PortletEntry.save();
+		task ("When the user selects item types") {
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemType = "Select Types...",
+				moveToAvailableItemTypeList = "Blogs Entry,Web Content Article");
 		}
 
-		task ("Then only selected types are shown in the selection button.") {
+		task ("Then only selected types are shown on the dropdown menu") {
 			Button.clickSelect();
 
 			for (var menuItem : list "Calendar Event,Basic Document,Translation,Web Content Folder") {

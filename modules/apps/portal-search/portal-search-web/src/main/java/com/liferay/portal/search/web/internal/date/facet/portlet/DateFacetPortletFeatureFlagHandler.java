@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.web.internal.date.facet.portlet;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import org.osgi.service.component.ComponentContext;
@@ -14,17 +15,39 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Petteri Karttunen
  */
-@Component(service = {})
-public class DateFacetPortletFeatureFlagHandler {
+@Component(
+	property = "featureFlagKey=LPS-153839", service = FeatureFlagListener.class
+)
+public class DateFacetPortletFeatureFlagHandler implements FeatureFlagListener {
+
+	@Override
+	public void onValue(
+		long companyId, String featureFlagKey, boolean enabled) {
+
+		_enable(enabled);
+	}
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-153839")) {
-			componentContext.enableComponent(DateFacetPortlet.class.getName());
+		_componentContext = componentContext;
+
+		_enable(FeatureFlagManagerUtil.isEnabled("LPS-153839"));
+	}
+
+	private void _enable(boolean enabled) {
+		if (_componentContext == null) {
+			return;
+		}
+
+		if (enabled) {
+			_componentContext.enableComponent(DateFacetPortlet.class.getName());
 		}
 		else {
-			componentContext.disableComponent(DateFacetPortlet.class.getName());
+			_componentContext.disableComponent(
+				DateFacetPortlet.class.getName());
 		}
 	}
+
+	private ComponentContext _componentContext;
 
 }

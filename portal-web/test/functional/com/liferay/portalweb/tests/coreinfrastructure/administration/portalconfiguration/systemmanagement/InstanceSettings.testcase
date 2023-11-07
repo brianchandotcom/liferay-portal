@@ -915,10 +915,7 @@ definition {
 
 	@priority = 4
 	test EditDefaultUserAssociationsUserGroups {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 

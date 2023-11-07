@@ -1259,17 +1259,11 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup Name",

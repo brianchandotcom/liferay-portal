@@ -1623,10 +1623,7 @@ definition {
 			siteName = "Minium135888",
 			siteTemplateName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Account.openAccountsAdmin();
 
 		Account.addBusinessAccount(
 			accountDescription = "Account Description",

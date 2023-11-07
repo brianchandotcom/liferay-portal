@@ -383,10 +383,7 @@ definition {
 			fileName = "space-groups.json",
 			tabName = "User Groups");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		Pagination.changePagination(itemsPerPage = 20);
 

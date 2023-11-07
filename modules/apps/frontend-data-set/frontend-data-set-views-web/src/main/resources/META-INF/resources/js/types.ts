@@ -14,6 +14,13 @@ export enum EFilterType {
 export enum EFieldFormat {
 	DATE = 'date',
 	DATE_TIME = 'date-time',
+	INT64 = 'int64',
+}
+
+export enum EFieldType {
+	ARRAY = 'array',
+	INTEGER = 'integer',
+	OBJECT = 'object',
 	STRING = 'string',
 }
 

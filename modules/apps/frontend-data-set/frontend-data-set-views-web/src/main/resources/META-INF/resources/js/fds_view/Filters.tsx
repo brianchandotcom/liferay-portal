@@ -24,6 +24,7 @@ import DateRangeFilterModalContent from '../components/modal_content/DateRangeFi
 import SelectionFilterModalContent from '../components/modal_content/SelectionFilter';
 import {
 	EFieldFormat,
+	EFieldType,
 	EFilterType,
 	IClientExtensionFilter,
 	IDateFilter,
@@ -592,7 +593,8 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 			(item) =>
 				filterType === EFilterType.CLIENT_EXTENSION ||
 				(filterType === EFilterType.SELECTION &&
-					item.format === EFieldFormat.STRING) ||
+					item.type === EFieldType.STRING &&
+					!item.format) ||
 				(filterType === EFilterType.DATE_RANGE &&
 					item.format === EFieldFormat.DATE)
 		);

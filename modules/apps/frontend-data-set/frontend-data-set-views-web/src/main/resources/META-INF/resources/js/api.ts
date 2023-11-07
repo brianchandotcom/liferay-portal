@@ -7,7 +7,7 @@ import {fetch} from 'frontend-js-web';
 
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
-import {EFieldFormat, IField, IPickList} from './types';
+import {EFieldFormat, EFieldType, IField, IPickList} from './types';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 const INVALID_FIELDS = ['actions', 'scopeKey', 'x-class-name', 'x-schema-name'];
@@ -17,7 +17,7 @@ const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
 interface IProperty {
 	$ref?: string;
 	format?: EFieldFormat;
-	type: string;
+	type: EFieldType;
 }
 
 interface IProperties {
@@ -55,11 +55,11 @@ function getValidFields({
 
 		const type = propertyValue.type;
 
-		if (type === 'array') {
+		if (type === EFieldType.ARRAY) {
 			return;
 		}
 
-		if (type === 'object' && propertyValue.$ref) {
+		if (type === EFieldType.OBJECT && propertyValue.$ref) {
 			if (Liferay.FeatureFlags['LPS-186871']) {
 				fields.push({
 					children: getValidFields({
@@ -76,7 +76,7 @@ function getValidFields({
 		}
 
 		fields.push({
-			format: properties[propertyKey].format,
+			format: propertyValue.format,
 			label: propertyKey,
 			name: propertyKey,
 			type,

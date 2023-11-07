@@ -99,10 +99,6 @@ export const CONTAINERS: {[key in Containers]: TContainer} = {
 	[Containers.VisitorsByTimeCard]: {
 		label: Liferay.Language.get('visitors-by-day-and-time'),
 		layout: 3
-	},
-	[Containers.VisitorsBehaviorCard]: {
-		label: Liferay.Language.get('visitors-behavior'),
-		layout: 1
 	}
 };
 

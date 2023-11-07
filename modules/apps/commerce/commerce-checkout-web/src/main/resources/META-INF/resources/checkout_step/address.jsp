@@ -160,16 +160,14 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 			window,
 			'<portlet:namespace />addStreetAddress',
 			function <portlet:namespace />addStreetAddress() {
-				var A = AUI();
-
-				var addStreetFields = A.one('.add-street-fields');
-				var addStreetLink = A.one('.add-street-link');
+				const addStreetFields = document.querySelector('.add-street-fields');
+				const addStreetLink = document.querySelector('.add-street-link');
 
 				if (addStreetFields) {
-					addStreetFields.show();
+					addStreetFields.classList.remove('hide');
 				}
 				if (addStreetLink) {
-					addStreetLink.hide();
+					addStreetLink.classList.add('hide');
 				}
 			},
 			['aui-base']
@@ -179,18 +177,27 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 			window,
 			'<portlet:namespace />clearAddressFields',
 			function <portlet:namespace />clearAddressFields() {
-				var A = AUI();
+				const addressFieldsInputs = document.querySelectorAll(
+					'.address-fields input'
+				);
+				const addressFieldsSelect = document.querySelectorAll(
+					'.address-fields select'
+				);
 
-				A.all('.address-fields select').set('selectedIndex', 0);
-				A.all('.address-fields input').val('');
+				addressFieldsInputs.forEach((input) => {
+					input.value = '';
+				});
 
-				var useAsBillingField = A.one('#<portlet:namespace />use-as-billing');
+				addressFieldsSelect.forEach((select) => {
+					select.selectedIndex = 0;
+				});
+
+				const useAsBillingField = document.getElementById(
+					'<portlet:namespace />use-as-billing'
+				);
 
 				if (useAsBillingField) {
-					useAsBillingField.attr(
-						'checked',
-						<%= baseAddressCheckoutStepDisplayContext.isShippingUsedAsBilling() %>
-					);
+					useAsBillingField.checked = <%= baseAddressCheckoutStepDisplayContext.isShippingUsedAsBilling() %>;
 				}
 			},
 			['aui-base']
@@ -200,16 +207,18 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 			window,
 			'<portlet:namespace />selectAddress',
 			function <portlet:namespace />selectAddress() {
-				var A = AUI();
-
-				var commerceAddress = A.one('#<portlet:namespace />commerceAddress');
-				var commerceAddressParamName = A.one(
-					'#<%= liferayPortletResponse.getNamespace() + paramName %>'
+				const commerceAddress = document.getElementById(
+					'<portlet:namespace />commerceAddress'
 				);
-				var newAddress = A.one('#<portlet:namespace />newAddress');
+				const commerceAddressParamName = document.getElementById(
+					'<%= liferayPortletResponse.getNamespace() + paramName %>'
+				);
+				const newAddress = document.getElementById(
+					'<portlet:namespace />newAddress'
+				);
 
 				if (newAddress && commerceAddress && commerceAddressParamName) {
-					var commerceAddressVal = commerceAddress.val();
+					const commerceAddressVal = commerceAddress.value;
 
 					if (commerceAddressVal === '0') {
 						<portlet:namespace />clearAddressFields();
@@ -220,15 +229,15 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 					}
 					else {
 						<portlet:namespace />updateAddressFields(
-							commerceAddress.get('selectedIndex')
+							commerceAddress.selectedIndex
 						);
 						Liferay.Form.get(
 							'<portlet:namespace />fm'
 						).formValidator.validate();
 					}
 
-					commerceAddressParamName.val(commerceAddressVal);
-					newAddress.val(Number(commerceAddressVal === '0'));
+					commerceAddressParamName.value = commerceAddressVal;
+					newAddress.value = Number(commerceAddressVal === '0');
 				}
 			},
 			['aui-base']
@@ -238,37 +247,32 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 			window,
 			'<portlet:namespace />toggleAddressFields',
 			function <portlet:namespace />toggleAddressFields(state) {
-				var A = AUI();
+				Liferay.Util.toggleDisabled(
+					document.querySelectorAll('.address-fields input'),
+					state
+				);
+				Liferay.Util.toggleDisabled(
+					document.querySelectorAll('.address-fields select'),
+					state
+				);
 
-				Liferay.Util.toggleDisabled(A.all('.address-fields input'), state);
-				Liferay.Util.toggleDisabled(A.all('.address-fields select'), state);
-
-				var commerceRegionIdSelect = A.one(
-					'#<portlet:namespace />regionId'
-				).getDOMNode();
-				var commerceRegionIdInput = A.one(
-					'#<portlet:namespace />commerceRegionIdInput'
-				).getDOMNode();
-				var commerceRegionIdName = A.one(
-					'#<portlet:namespace />commerceRegionIdName'
-				).getDOMNode();
-
-				commerceRegionIdSelect.setAttribute(
-					'name',
+				const commerceRegionIdInput = document.getElementById(
+					'<portlet:namespace />commerceRegionIdInput'
+				);
+				const commerceRegionIdName = document.getElementById(
+					'<portlet:namespace />commerceRegionIdName'
+				);
+				const commerceRegionIdSelect = document.getElementById(
 					'<portlet:namespace />regionId'
 				);
-				commerceRegionIdSelect.parentElement.classList.remove('d-none');
 
-				commerceRegionIdInput.setAttribute(
-					'name',
-					'commerceRegionIdInputDisabled'
-				);
+				commerceRegionIdInput.name = 'commerceRegionIdInputDisabled';
+				commerceRegionIdName.name = 'commerceRegionIdInputDisabled';
+				commerceRegionIdSelect.name = '<portlet:namespace />regionId';
+
 				commerceRegionIdInput.parentElement.classList.add('d-none');
-				commerceRegionIdName.setAttribute(
-					'name',
-					'commerceRegionIdInputDisabled'
-				);
 				commerceRegionIdName.parentElement.classList.add('d-none');
+				commerceRegionIdSelect.parentElement.classList.remove('d-none');
 			},
 			['aui-base']
 		);
@@ -281,31 +285,41 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 					return;
 				}
 
-				var A = AUI();
-
-				var commerceAddress = A.one('#<portlet:namespace />commerceAddress');
+				const commerceAddress = document.getElementById(
+					'<portlet:namespace />commerceAddress'
+				);
 
 				if (commerceAddress) {
 					<portlet:namespace />addStreetAddress();
 					<portlet:namespace />toggleAddressFields(true);
 
-					var city = A.one('#<portlet:namespace />city');
-					var countryId = A.one('#<portlet:namespace />countryId');
-					var commerceRegionIdInput = A.one(
-						'#<portlet:namespace />commerceRegionIdInput'
-					).getDOMNode();
-					var commerceRegionIdName = A.one(
-						'#<portlet:namespace />commerceRegionIdName'
-					).getDOMNode();
-					var commerceRegionIdSelect = A.one(
-						'#<portlet:namespace />regionId'
-					).getDOMNode();
-					var name = A.one('#<portlet:namespace />name');
-					var phoneNumber = A.one('#<portlet:namespace />phoneNumber');
-					var street1 = A.one('#<portlet:namespace />street1');
-					var street2 = A.one('#<portlet:namespace />street2');
-					var street3 = A.one('#<portlet:namespace />street3');
-					var zip = A.one('#<portlet:namespace />zip');
+					const city = document.getElementById('<portlet:namespace />city');
+					const countryId = document.getElementById(
+						'<portlet:namespace />countryId'
+					);
+					const commerceRegionIdInput = document.getElementById(
+						'<portlet:namespace />commerceRegionIdInput'
+					);
+					const commerceRegionIdName = document.getElementById(
+						'<portlet:namespace />commerceRegionIdName'
+					);
+					const commerceRegionIdSelect = document.getElementById(
+						'<portlet:namespace />regionId'
+					);
+					const name = document.getElementById('<portlet:namespace />name');
+					const phoneNumber = document.getElementById(
+						'<portlet:namespace />phoneNumber'
+					);
+					const street1 = document.getElementById(
+						'<portlet:namespace />street1'
+					);
+					const street2 = document.getElementById(
+						'<portlet:namespace />street2'
+					);
+					const street3 = document.getElementById(
+						'<portlet:namespace />street3'
+					);
+					const zip = document.getElementById('<portlet:namespace />zip');
 
 					if (
 						city &&
@@ -320,52 +334,38 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 						street3 &&
 						zip
 					) {
-						var selectedOption = commerceAddress
-							.get('options')
-							.item(selectedVal);
+						const selectedOption =
+							commerceAddress.options[commerceAddress.selectedIndex];
 
-						city.val(selectedOption.getData('city'));
-						countryId.val(selectedOption.getData('country'));
-						name.val(selectedOption.getData('name'));
-						phoneNumber.val(selectedOption.getData('phone-number'));
-						street1.val(selectedOption.getData('street-1'));
-						street2.val(selectedOption.getData('street-2'));
-						street3.val(selectedOption.getData('street-3'));
-						zip.val(selectedOption.getData('zip'));
+						city.value = selectedOption.dataset.city;
+						commerceRegionIdInput.value = selectedOption.dataset.region;
+						countryId.value = selectedOption.dataset.country;
+						name.value = selectedOption.dataset.name;
+						phoneNumber.value = selectedOption.dataset.phoneNumber;
+						street1.value = selectedOption.dataset['street-1'];
+						street2.value = selectedOption.dataset['street-2'];
+						street3.value = selectedOption.dataset['street-3'];
+						zip.value = selectedOption.dataset.zip;
 
-						commerceRegionIdSelect.setAttribute(
-							'name',
-							'commerceRegionIdSelectIgnore'
-						);
-						commerceRegionIdSelect.parentElement.classList.add('d-none');
+						commerceRegionIdInput.name = '<portlet:namespace />regionId';
+						commerceRegionIdName.name = 'commerceRegionIdNameIgnore';
+						commerceRegionIdSelect.name = 'commerceRegionIdSelectIgnore';
 
-						commerceRegionIdInput.value = selectedOption.getData('region');
-						commerceRegionIdInput.setAttribute(
-							'name',
-							'<portlet:namespace />regionId'
-						);
 						commerceRegionIdInput.parentElement.classList.add('d-none');
-
-						commerceRegionIdName.setAttribute(
-							'name',
-							'commerceRegionIdNameIgnore'
-						);
 						commerceRegionIdName.parentElement.classList.remove('d-none');
+						commerceRegionIdSelect.parentElement.classList.add('d-none');
 
 						Liferay.Service(
 							'/region/get-regions',
 							{
 								active: true,
-								countryId: parseInt(
-									selectedOption.getData('country'),
-									10
-								),
+								countryId: parseInt(selectedOption.dataset.country, 10),
 							},
 							function setUIOnlyInputRegionName(regions) {
-								for (var i = 0; i < regions.length; i++) {
+								for (let i = 0; i < regions.length; i++) {
 									if (
 										regions[i].regionId ===
-										selectedOption.getData('region')
+										selectedOption.dataset.region
 									) {
 										commerceRegionIdName.value = regions[i].name;
 
@@ -389,7 +389,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 					select: '<portlet:namespace />countryId',
 					selectData: function (callback) {
 						function injectCountryPlaceholder(list) {
-							var callbackList = [
+							const callbackList = [
 								{
 									countryId: '0',
 									nameCurrentValue:
@@ -425,7 +425,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 					select: '<portlet:namespace />regionId',
 					selectData: function (callback, selectKey) {
 						function injectRegionPlaceholder(list) {
-							var callbackList = [
+							const callbackList = [
 								{
 									regionId: '0',
 									name:

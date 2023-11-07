@@ -106,7 +106,7 @@ if (paramToken == null) {
 		genetareAccessToken.addEventListener('click', (event) => {
 			Liferay.Util.openConfirmModal({
 				message:
-					'<liferay-ui:message key="are-you-sure-you-want-to-generate-access-token" />',
+					'<liferay-ui:message key="are-you-sure-you-want-to-generate-a-new-access-token" />',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
 						var form = window.document['<portlet:namespace />fm'];
@@ -128,7 +128,7 @@ if (paramToken == null) {
 		revokeAccessToken.addEventListener('click', (event) => {
 			Liferay.Util.openConfirmModal({
 				message:
-					'<liferay-ui:message key="are-you-sure-you-want-to-revoke-access-tokens" />',
+					'<liferay-ui:message key="are-you-sure-you-want-to-revoke-all-access-tokens" />',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
 						var form = window.document['<portlet:namespace />fm'];

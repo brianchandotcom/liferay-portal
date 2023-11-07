@@ -1205,7 +1205,7 @@ public class CompanyLocalServiceTest {
 	private void _verifyRandomCompanyId(long companyId, long counterCompanyId) {
 		Assert.assertNotEquals(counterCompanyId, companyId);
 
-		Assert.assertTrue(companyId > 0);
+		Assert.assertTrue(companyId >= (long)Math.pow(10, 15));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -2072,7 +2072,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		while ((nextLong == 0) ||
 			   ArrayUtil.contains(PortalInstances.getCompanyIds(), nextLong)) {
 
-			nextLong = current.nextLong(1, Long.MAX_VALUE);
+			nextLong = current.nextLong((long)Math.pow(10, 15), Long.MAX_VALUE);
 		}
 
 		return nextLong;

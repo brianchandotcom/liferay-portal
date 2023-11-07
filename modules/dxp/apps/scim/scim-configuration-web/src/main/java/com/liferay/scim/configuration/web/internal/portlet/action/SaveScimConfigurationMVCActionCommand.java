@@ -8,12 +8,14 @@ package com.liferay.scim.configuration.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -24,14 +26,18 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.scim.configuration.web.internal.constants.ScimConstants;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
+import java.util.Date;
 import java.util.Dictionary;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -90,6 +96,46 @@ public class SaveScimConfigurationMVCActionCommand
 			JSONObject jsonObject = _jsonFactory.createJSONObject(tokens);
 
 			String accessToken = jsonObject.getString("access_token");
+
+			List<OAuth2Authorization> oAuth2Authorizations =
+				_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
+					oAuth2Application.getOAuth2ApplicationId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (OAuth2Authorization oAuth2Authorization :
+					oAuth2Authorizations) {
+
+				if (accessToken.equals(
+						oAuth2Authorization.getAccessTokenContent())) {
+
+					continue;
+				}
+
+				Date date = new Date();
+
+				Date accessTokenExpirationDate =
+					oAuth2Authorization.getAccessTokenExpirationDate();
+				Date refreshTokenExpirationDate =
+					oAuth2Authorization.getRefreshTokenExpirationDate();
+
+				if ((DateUtil.getDaysBetween(accessTokenExpirationDate, date) >
+						10) ||
+					(refreshTokenExpirationDate != null)) {
+
+					oAuth2Authorization.setAccessTokenExpirationDate(
+						new Date(
+							Math.min(
+								accessTokenExpirationDate.getTime(),
+								System.currentTimeMillis() + (Time.DAY * 10))));
+
+					oAuth2Authorization.setRefreshTokenContent(null);
+					oAuth2Authorization.setRefreshTokenCreateDate(null);
+					oAuth2Authorization.setRefreshTokenExpirationDate(null);
+
+					_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
+						oAuth2Authorization);
+				}
+			}
 
 			actionRequest.setAttribute(ScimConstants.PARAM_TOKEN, accessToken);
 		}

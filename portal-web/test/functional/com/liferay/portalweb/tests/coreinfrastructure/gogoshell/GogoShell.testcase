@@ -29,7 +29,7 @@ definition {
 	test AccessGogoShellCommandViaPortlet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -52,7 +52,7 @@ definition {
 	test CanRunDisconnectCommandViaTelnet {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		GogoShell.executeCommandViaTelnet(
 			command = "disconnect",
@@ -64,7 +64,7 @@ definition {
 	@priority = 3
 	test GogoShellCommandDisconnectNotSupported {
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -78,7 +78,7 @@ definition {
 	@priority = 4
 	test GogoShellPortletOnlyOnMainInstance {
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",
@@ -110,7 +110,7 @@ definition {
 	test OmniAdminCanAccessGogoShellCommandViaPortlet {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -142,7 +142,7 @@ definition {
 	test SiteAdminCannotAccessGogoShellPortlet {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.run.type = "sequential";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

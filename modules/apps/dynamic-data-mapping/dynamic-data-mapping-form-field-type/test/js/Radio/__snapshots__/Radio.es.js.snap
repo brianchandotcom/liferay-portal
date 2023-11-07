@@ -451,7 +451,6 @@ exports[`Field Radio is not required 1`] = `
     data-field-name="radioField"
   >
     <div
-      aria-required="false"
       class="ddm__radio"
     >
       <div
@@ -459,6 +458,7 @@ exports[`Field Radio is not required 1`] = `
       >
         <label>
           <input
+            aria-required="false"
             class="custom-control-input"
             name="radioField_0"
             role="radio"
@@ -481,6 +481,7 @@ exports[`Field Radio is not required 1`] = `
       >
         <label>
           <input
+            aria-required="false"
             class="custom-control-input"
             name="radioField_1"
             role="radio"

@@ -1137,6 +1137,34 @@ components:
                     readOnly: true
                     type: array
             type: object
+        UserAccountFullNameDefinition:
+            description:
+                Represents the definition of the user full name.
+            properties:
+                userAccountFullNameDefinitionFields:
+                    description:
+                        A list of the user's account.
+                    items:
+                        $ref: "#/components/schemas/UserAccountFullNameDefinitionField"
+                    readOnly: true
+                    type: array
+            type: object
+        UserAccountFullNameDefinitionField:
+            description:
+                Represents the definition of a single part of the user full name.
+            properties:
+                key:
+                    readOnly: true
+                    type: string
+                required:
+                    readOnly: true
+                    type: boolean
+                values:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+            type: object
         UserGroup:
             properties:
                 actions:
@@ -4608,6 +4636,26 @@ paths:
                                     $ref: "#/components/schemas/Segment"
                                 type: array
             tags: ["Segment"]
+    "/user-account-full-name-definition":
+        get:
+            description:
+                Retrieves the user account full name definition.
+            parameters:
+                - in: query
+                  name: languageId
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccountFullNameDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccountFullNameDefinition"
+            tags: ["UserAccountFullNameDefinition"]
     "/user-accounts":
         get:
             description:

@@ -837,8 +837,6 @@ public class LiferayContextController extends ContextController {
 			}
 		}
 
-		Class<?> filterClass = filter.getClass();
-
 		FilterDTO filterDTO = new FilterDTO();
 
 		filterDTO.asyncSupported = ServiceProperties.parseBoolean(
@@ -848,12 +846,16 @@ public class LiferayContextController extends ContextController {
 		filterDTO.initParams = ServiceProperties.parseInitParams(
 			filterServiceReference,
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
+
+		Class<?> filterClass = filter.getClass();
+
 		filterDTO.name = GetterUtil.getString(
 			ServiceProperties.parseName(
 				filterServiceReference.getProperty(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
 				filter),
 			filterClass.getName());
+
 		filterDTO.patterns = _sort(filterPatterns);
 		filterDTO.regexs = filterRegexes;
 		filterDTO.serviceId = (long)filterServiceReference.getProperty(

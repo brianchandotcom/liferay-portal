@@ -229,11 +229,11 @@ public class LiferayContextController extends ContextController {
 
 		_checkShutdown();
 
-		ContextController.ServiceHolder<Filter> filterServiceHolder =
+		ContextController.ServiceHolder<Filter> serviceHolder =
 			new ContextController.ServiceHolder<>(
 				_bundleContext.getServiceObjects(serviceReference));
 
-		Filter filter = filterServiceHolder.get();
+		Filter filter = serviceHolder.get();
 
 		FilterRegistration filterRegistration = null;
 
@@ -262,7 +262,7 @@ public class LiferayContextController extends ContextController {
 					serviceReference, filter);
 
 				filterRegistration = new FilterRegistration(
-					filterServiceHolder, filterDTO,
+					serviceHolder, filterDTO,
 					GetterUtil.getInteger(
 						serviceReference.getProperty(
 							Constants.SERVICE_RANKING)),
@@ -272,16 +272,16 @@ public class LiferayContextController extends ContextController {
 					new FilterConfigImpl(
 						filterDTO.name, filterDTO.initParams,
 						_createServletContextAdaptor(
-							filterServiceHolder.getBundle(),
+							serviceHolder.getBundle(),
 							_getServletContextHelper(
-								filterServiceHolder.getBundle()))));
+								serviceHolder.getBundle()))));
 
 				_filterRegistrations.add(filterRegistration);
 			}
 		}
 		finally {
 			if (filterRegistration == null) {
-				filterServiceHolder.release();
+				serviceHolder.release();
 
 				if (addedRegisteredObject) {
 					registeredObjects.remove(filter);
@@ -299,10 +299,10 @@ public class LiferayContextController extends ContextController {
 		_checkShutdown();
 
 		ContextController.ServiceHolder<EventListener>
-			eventListenerServiceHolder = new ContextController.ServiceHolder<>(
+			serviceHolder = new ContextController.ServiceHolder<>(
 				_bundleContext.getServiceObjects(serviceReference));
 
-		EventListener eventListener = eventListenerServiceHolder.get();
+		EventListener eventListener = serviceHolder.get();
 
 		ListenerRegistration listenerRegistration = null;
 
@@ -330,12 +330,12 @@ public class LiferayContextController extends ContextController {
 			}
 
 			ServletContext servletContext = _createServletContextAdaptor(
-				eventListenerServiceHolder.getBundle(),
+				serviceHolder.getBundle(),
 				_getServletContextHelper(
-					eventListenerServiceHolder.getBundle()));
+					serviceHolder.getBundle()));
 
 			listenerRegistration = new ListenerRegistration(
-				eventListenerServiceHolder, eventListenerClasses,
+				serviceHolder, eventListenerClasses,
 				_createListenerDTO(serviceReference, eventListenerClasses),
 				servletContext, this);
 
@@ -353,7 +353,7 @@ public class LiferayContextController extends ContextController {
 		}
 		finally {
 			if (listenerRegistration == null) {
-				eventListenerServiceHolder.release();
+				serviceHolder.release();
 			}
 		}
 
@@ -395,9 +395,6 @@ public class LiferayContextController extends ContextController {
 
 		Bundle bundle = serviceReference.getBundle();
 
-		ServletContextHelper servletContextHelper = _getServletContextHelper(
-			bundle);
-
 		ResourceDTO resourceDTO = new ResourceDTO();
 
 		resourceDTO.patterns = _sort(resourcePatterns);
@@ -405,6 +402,9 @@ public class LiferayContextController extends ContextController {
 		resourceDTO.serviceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
 		resourceDTO.servletContextId = _servletContextHelperServiceId;
+
+		ServletContextHelper servletContextHelper = _getServletContextHelper(
+			bundle);
 
 		ResourceRegistration resourceRegistration = new ResourceRegistration(
 			new ContextController.ServiceHolder<>(
@@ -443,11 +443,11 @@ public class LiferayContextController extends ContextController {
 
 		_checkShutdown();
 
-		ContextController.ServiceHolder<Servlet> servletServiceHolder =
+		ContextController.ServiceHolder<Servlet> serviceHolder =
 			new ContextController.ServiceHolder<>(
 				_bundleContext.getServiceObjects(serviceReference));
 
-		Servlet servlet = servletServiceHolder.get();
+		Servlet servlet = serviceHolder.get();
 
 		ServletRegistration servletRegistration = null;
 
@@ -470,10 +470,10 @@ public class LiferayContextController extends ContextController {
 				ServletDTO servletDTO = objectValuePair.getKey();
 
 				ServletContextHelper curServletContextHelper =
-					_getServletContextHelper(servletServiceHolder.getBundle());
+					_getServletContextHelper(serviceHolder.getBundle());
 
 				servletRegistration = new ServletRegistration(
-					servletServiceHolder, servletDTO,
+					serviceHolder, servletDTO,
 					objectValuePair.getValue(), curServletContextHelper, this,
 					null);
 
@@ -481,7 +481,7 @@ public class LiferayContextController extends ContextController {
 					new ServletConfigImpl(
 						servletDTO.name, servletDTO.initParams,
 						_createServletContextAdaptor(
-							servletServiceHolder.getBundle(),
+							serviceHolder.getBundle(),
 							curServletContextHelper)));
 
 				_endpointRegistrations.add(servletRegistration);
@@ -489,7 +489,7 @@ public class LiferayContextController extends ContextController {
 		}
 		finally {
 			if (servletRegistration == null) {
-				servletServiceHolder.release();
+				serviceHolder.release();
 
 				if (addedRegisteredObject) {
 					registeredObjects.remove(servlet);

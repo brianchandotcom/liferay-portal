@@ -23,7 +23,7 @@ const FieldRepeatableDND = ({children, field, index, nestedFieldIndex}) => {
 			return true;
 		},
 		item: {
-			id: field.fieldName,
+			id: field.name,
 			index,
 			nestedFieldIndex,
 			preview: () => (

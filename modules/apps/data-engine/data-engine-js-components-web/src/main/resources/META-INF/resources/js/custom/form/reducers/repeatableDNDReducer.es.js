@@ -94,7 +94,7 @@ export default function repeatableDNDReducer(state, action) {
 
 						if (
 							!fields.find(
-								(field) => field.fieldName === sourceFieldName
+								(field) => field.name === sourceFieldName
 							)
 						) {
 							return fields.map((field) => {

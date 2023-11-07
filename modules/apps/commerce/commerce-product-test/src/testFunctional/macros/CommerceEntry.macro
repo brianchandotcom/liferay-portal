@@ -1122,10 +1122,7 @@ definition {
 
 	@summary = "Default summary"
 	macro createNewAccountGroup(accountCriteriaType = null, accountsEntryName = null, user = null, accountGroupsEntryName = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Account.openAccountsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 

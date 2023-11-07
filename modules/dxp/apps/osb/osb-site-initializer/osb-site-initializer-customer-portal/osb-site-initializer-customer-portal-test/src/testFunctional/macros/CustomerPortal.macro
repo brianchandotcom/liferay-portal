@@ -293,10 +293,7 @@ definition {
 
 	@summary = "Change User Role"
 	macro changeUserRole(accountName = null,accountUserName = null,accountRoleTitle = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
+		Account.openAccountsAdmin();
 
 		Click(
 			key_accountName = ${accountName},

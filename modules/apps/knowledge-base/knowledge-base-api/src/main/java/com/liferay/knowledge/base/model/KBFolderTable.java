@@ -57,6 +57,14 @@ public class KBFolderTable extends BaseTable<KBFolderTable> {
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KBFolderTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<KBFolderTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<KBFolderTable, Long> statusByUserId = createColumn(
+		"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<KBFolderTable, String> statusByUserName = createColumn(
+		"statusByUserName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<KBFolderTable, Date> statusDate = createColumn(
+		"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private KBFolderTable() {
 		super("KBFolder", KBFolderTable::new);

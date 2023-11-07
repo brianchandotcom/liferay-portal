@@ -1273,6 +1273,21 @@ public class KBArticleModelImpl
 	}
 
 	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
+	}
+
+	@Override
+	public boolean isInTrash() {
+		if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
 	public boolean isApproved() {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			return true;

@@ -19,17 +19,6 @@ import java.sql.SQLException;
 public class DBPartitionMySQL implements DBPartitionSQL {
 
 	@Override
-	public String getCopyDataSQL(
-		String fromSchemaName, String toSchemaName, String tableName,
-		String whereClause) {
-
-		return StringBundler.concat(
-			"insert ", toSchemaName, StringPool.PERIOD, tableName,
-			" select * from ", fromSchemaName, StringPool.PERIOD, tableName,
-			whereClause);
-	}
-
-	@Override
 	public String getCreateSchemaSQL(Connection connection, String schemaName)
 		throws SQLException {
 

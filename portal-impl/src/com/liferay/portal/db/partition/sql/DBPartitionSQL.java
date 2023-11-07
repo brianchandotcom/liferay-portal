@@ -16,9 +16,15 @@ import java.sql.SQLException;
  */
 public interface DBPartitionSQL {
 
-	public String getCopyDataSQL(
+	public default String getCopyDataSQL(
 		String fromSchemaName, String toSchemaName, String tableName,
-		String whereClause);
+		String whereClause) {
+
+		return StringBundler.concat(
+			"insert into ", toSchemaName, StringPool.PERIOD, tableName,
+			" select * from ", fromSchemaName, StringPool.PERIOD, tableName,
+			whereClause);
+	}
 
 	public String getCreateSchemaSQL(Connection connection, String schemaName)
 		throws SQLException;

@@ -979,16 +979,30 @@ public class CommerceOrderContentDisplayContext {
 
 		try {
 			if (isOpenOrderContentPortlet()) {
-				_searchContainer.setResultsAndTotal(
-					() -> _commerceOrderService.getUserPendingCommerceOrders(
-						_cpRequestHelper.getCompanyId(),
-						_cpRequestHelper.getCommerceChannelGroupId(), keywords,
-						_searchContainer.getStart(), _searchContainer.getEnd()),
-					(int)
-						_commerceOrderService.getUserPendingCommerceOrdersCount(
-							_cpRequestHelper.getCompanyId(),
-							_cpRequestHelper.getCommerceChannelGroupId(),
-							keywords));
+				CommerceOrder commerceOrder =
+					_commerceOrderHttpHelper.getCurrentCommerceOrder(
+						_httpServletRequest);
+
+				if ((commerceOrder != null) && commerceOrder.isGuestOrder()) {
+					_searchContainer.setResultsAndTotal(
+						Collections.singletonList(commerceOrder));
+				}
+				else {
+					_searchContainer.setResultsAndTotal(
+						() ->
+							_commerceOrderService.getUserPendingCommerceOrders(
+								_cpRequestHelper.getCompanyId(),
+								_cpRequestHelper.getCommerceChannelGroupId(),
+								keywords, _searchContainer.getStart(),
+								_searchContainer.getEnd()),
+						(int)
+							_commerceOrderService.
+								getUserPendingCommerceOrdersCount(
+									_cpRequestHelper.getCompanyId(),
+									_cpRequestHelper.
+										getCommerceChannelGroupId(),
+									keywords));
+				}
 			}
 			else {
 				_searchContainer.setResultsAndTotal(

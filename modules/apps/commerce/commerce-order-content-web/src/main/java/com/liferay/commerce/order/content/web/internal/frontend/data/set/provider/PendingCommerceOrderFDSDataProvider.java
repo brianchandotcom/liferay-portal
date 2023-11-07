@@ -13,15 +13,19 @@ import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -60,7 +64,25 @@ public class PendingCommerceOrderFDSDataProvider
 			return Collections.emptyList();
 		}
 
+		String uuid = CookiesManagerUtil.getCookieValue(
+			CommerceOrder.class.getName() + StringPool.POUND +
+				commerceChannel.getGroupId(),
+			httpServletRequest);
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
+				uuid, commerceChannel.getGroupId());
+
 		CommerceGroupThreadLocal.set(commerceChannel.getGroup());
+
+		if ((commerceOrder != null) && commerceOrder.isGuestOrder()) {
+			return CommerceOrderFDSUtil.getOrders(
+				commerceChannel.getGroupId(),
+				Collections.singletonList(commerceOrder),
+				_commerceOrderStatusRegistry, _commerceOrderTypeService,
+				_groupLocalService, commerceChannel.getPriceDisplayType(), true,
+				themeDisplay);
+		}
 
 		List<CommerceOrder> commerceOrders =
 			_commerceOrderService.getUserOpenCommerceOrders(
@@ -92,6 +114,19 @@ public class PendingCommerceOrderFDSDataProvider
 			return 0;
 		}
 
+		String uuid = CookiesManagerUtil.getCookieValue(
+			CommerceOrder.class.getName() + StringPool.POUND +
+				commerceChannel.getGroupId(),
+			httpServletRequest);
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
+				uuid, commerceChannel.getGroupId());
+
+		if ((commerceOrder != null) && commerceOrder.isGuestOrder()) {
+			return 1;
+		}
+
 		return (int)_commerceOrderService.getUserPendingCommerceOrdersCount(
 			commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
 			fdsKeywords.getKeywords());
@@ -99,6 +134,9 @@ public class PendingCommerceOrderFDSDataProvider
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
@@ -111,5 +149,8 @@ public class PendingCommerceOrderFDSDataProvider
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

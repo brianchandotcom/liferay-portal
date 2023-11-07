@@ -5,6 +5,9 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -14,6 +17,8 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -87,6 +92,22 @@ public class LayoutPageTemplateEntryModelListener
 					draftLayout, segmentsExperience.getSegmentsExperienceId());
 			}
 		}
+
+		for (FragmentEntryLink fragmentEntryLink :
+				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+					layout.getGroupId(), layout.getPlid())) {
+
+			_updateFragmentEntryLinkEditableValues(fragmentEntryLink);
+		}
+
+		if (draftLayout != null) {
+			for (FragmentEntryLink fragmentEntryLink :
+					_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+						draftLayout.getGroupId(), draftLayout.getPlid())) {
+
+				_updateFragmentEntryLinkEditableValues(fragmentEntryLink);
+			}
+		}
 	}
 
 	private JSONObject _removeMappedFields(JSONObject jsonObject) {
@@ -101,6 +122,43 @@ public class LayoutPageTemplateEntryModelListener
 		}
 
 		return jsonObject;
+	}
+
+	private void _updateFragmentEntryLinkEditableValues(
+		FragmentEntryLink fragmentEntryLink) {
+
+		try {
+			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+
+			for (String fragmentEntryProcessorKey :
+					_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
+
+				JSONObject editableFragmentEntryProcessorJSONObject =
+					editableValuesJSONObject.getJSONObject(
+						fragmentEntryProcessorKey);
+
+				if (editableFragmentEntryProcessorJSONObject == null) {
+					continue;
+				}
+
+				_removeMappedFields(editableFragmentEntryProcessorJSONObject);
+			}
+
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				editableValuesJSONObject.toString());
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
 	}
 
 	private void _updateLayoutPageTemplateStructureData(
@@ -140,8 +198,18 @@ public class LayoutPageTemplateEntryModelListener
 		}
 	}
 
+	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
+		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+	};
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryModelListener.class);
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

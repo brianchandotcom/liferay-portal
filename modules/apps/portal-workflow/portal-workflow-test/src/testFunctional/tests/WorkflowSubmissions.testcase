@@ -68,10 +68,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
@@ -125,10 +122,7 @@ definition {
 
 		Workflow.completeWorkflowBlogInstance(key_workflowInstanceTitle = "Blogs Entry Title 1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
@@ -176,10 +170,7 @@ definition {
 			entryContent = "Test Content 2",
 			entryTitle = "Blogs Entry 2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		WorkflowSubmissions.searchSubmissions(searchValue = 1);
 
@@ -314,10 +305,7 @@ definition {
 
 		Workflow.completeWorkflowBlogInstance(key_workflowInstanceTitle = "Blogs Entry Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		AssertElementNotPresent(locator1 = "WorkflowSubmissions#SUBMISSIONS_DETAILS_PAGE_ELLIPSIS");
 
@@ -343,10 +331,7 @@ definition {
 
 		Workflow.completeWorkflowBlogInstance(key_workflowInstanceTitle = "Blogs Entry Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		Click(
 			key_taskName = "Blogs Entry Title",
@@ -370,10 +355,7 @@ definition {
 			entryContent = "Blogs Entry",
 			entryTitle = "Blogs Entry Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		Click(
 			key_title = "Blogs Entry Title",
@@ -409,10 +391,7 @@ definition {
 			entryContent = "Blogs Entry",
 			entryTitle = "Blogs Entry Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		AssertElementPresent(
 			key_text = "",
@@ -458,10 +437,7 @@ definition {
 			key_submissionName = "Blogs Entry 1",
 			locator1 = "WorkflowSubmissions#SUBMISSION_END_DATE");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		AssertElementPresent(
 			key_submissionName = "Blogs Entry 1",
@@ -489,10 +465,7 @@ definition {
 			var count = ${count} + 1;
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
 
@@ -520,10 +493,7 @@ definition {
 			entryContent = "Test content",
 			entryTitle = "Test Blog 2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		Click(
 			key_rowNumber = 1,
@@ -557,10 +527,7 @@ definition {
 			entryContent = "Test content",
 			entryTitle = "Test Blog 2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		Click(
 			key_taskName = "Test Blog 1",
@@ -590,10 +557,7 @@ definition {
 			entryContent = "Test Content 1",
 			entryTitle = "Blogs Entry 1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		AssertTextEquals(
 			key_submissionName = "Blogs Entry 1",
@@ -619,10 +583,7 @@ definition {
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_STATUS",
 			value1 = "Approved");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		AssertTextEquals(
 			key_submissionName = "Blogs Entry 1",
@@ -650,10 +611,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		AssertElementPresent(
 			key_workflowDefinitionTitle = "Blogs Entry Title",
@@ -699,10 +657,7 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		WorkflowSubmissions.viewSubmissionStatus(
 			submissionStatus = "Completed",
@@ -786,10 +741,7 @@ definition {
 	test ViewNoPublicationRequestsMessage {
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		AssertElementPresent(
 			key_emptyMessaage = "There are no publication requests.",

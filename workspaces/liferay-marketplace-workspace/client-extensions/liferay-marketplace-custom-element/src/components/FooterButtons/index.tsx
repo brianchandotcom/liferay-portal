@@ -12,6 +12,7 @@ export type ButtonProps = {
 	className?: string;
 	disabled?: boolean;
 	displayType: DisplayType | string;
+	onClick?: () => void;
 	show: boolean;
 	text?: string;
 };
@@ -24,18 +25,9 @@ export type FooterButtonsProps = {
 		customizedButton: ButtonProps;
 		nextButton: ButtonProps;
 	};
-	onClickCancel?: () => void;
-	onClickCustomizedButton?: () => void;
-	onClickNext?: () => void;
 };
 
-const FooterButtons = ({
-	className,
-	dataButtons,
-	onClickCancel,
-	onClickCustomizedButton,
-	onClickNext,
-}: FooterButtonsProps) => {
+const FooterButtons = ({className, dataButtons}: FooterButtonsProps) => {
 	const {cancelButton, customizedButton, nextButton} = dataButtons;
 
 	return (
@@ -44,7 +36,9 @@ const FooterButtons = ({
 				<ClayButton
 					className={cancelButton?.className}
 					displayType={cancelButton?.displayType as DisplayType}
-					onClick={() => onClickCancel && onClickCancel()}
+					onClick={() =>
+						cancelButton.onClick && cancelButton.onClick()
+					}
 				>
 					{cancelButton?.text ?? 'Cancel'}
 				</ClayButton>
@@ -58,7 +52,8 @@ const FooterButtons = ({
 							customizedButton?.displayType as DisplayType
 						}
 						onClick={() =>
-							onClickCustomizedButton && onClickCustomizedButton()
+							customizedButton.onClick &&
+							customizedButton.onClick()
 						}
 					>
 						{customizedButton?.text}
@@ -70,7 +65,9 @@ const FooterButtons = ({
 						className={nextButton?.className}
 						disabled={nextButton?.disabled}
 						displayType={nextButton?.displayType as DisplayType}
-						onClick={() => onClickNext && onClickNext()}
+						onClick={() =>
+							nextButton.onClick && nextButton.onClick()
+						}
 					>
 						{nextButton?.appendIcon && (
 							<span className="inline-item inline-item-after mx-2">

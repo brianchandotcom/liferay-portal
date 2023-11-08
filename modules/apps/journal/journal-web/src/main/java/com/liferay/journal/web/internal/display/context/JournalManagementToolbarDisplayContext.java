@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
@@ -111,6 +112,9 @@ public class JournalManagementToolbarDisplayContext
 		_journalWebConfiguration =
 			(JournalWebConfiguration)httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
+		_siteConnectedGroupGroupProvider =
+			(SiteConnectedGroupGroupProvider)httpServletRequest.getAttribute(
+				SiteConnectedGroupGroupProvider.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_translationURLProvider =
@@ -763,8 +767,8 @@ public class JournalManagementToolbarDisplayContext
 		).setParameter(
 			"vocabularyIds",
 			() -> ListUtil.toString(
-				_assetVocabularyLocalService.getCompanyVocabularies(
-					_themeDisplay.getCompanyId()),
+				_assetVocabularyLocalService.getGroupsVocabularies(
+					_getGroupIds()),
 				AssetVocabulary.VOCABULARY_ID_ACCESSOR)
 		).buildString();
 	}
@@ -782,9 +786,9 @@ public class JournalManagementToolbarDisplayContext
 		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
 			new AssetTagsItemSelectorCriterion();
 
-		assetTagsItemSelectorCriterion.setAllGroupIds(true);
 		assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new AssetTagsItemSelectorReturnType());
+		assetTagsItemSelectorCriterion.setGroupIds(_getGroupIds());
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
 		return String.valueOf(
@@ -960,6 +964,26 @@ public class JournalManagementToolbarDisplayContext
 		return _ddmStructureOrderByType;
 	}
 
+	private long[] _getGroupIds() {
+		if (_groupIds != null) {
+			return _groupIds;
+		}
+
+		try {
+			_groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						_themeDisplay.getScopeGroupId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return _groupIds;
+	}
+
 	private List<Integer> _getStatuses() {
 		List<Integer> statuses = new ArrayList<>();
 
@@ -1094,9 +1118,12 @@ public class JournalManagementToolbarDisplayContext
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private String _ddmStructureOrderByCol;
 	private String _ddmStructureOrderByType;
+	private long[] _groupIds;
 	private final ItemSelector _itemSelector;
 	private final JournalDisplayContext _journalDisplayContext;
 	private final JournalWebConfiguration _journalWebConfiguration;
+	private final SiteConnectedGroupGroupProvider
+		_siteConnectedGroupGroupProvider;
 	private final ThemeDisplay _themeDisplay;
 	private final TranslationURLProvider _translationURLProvider;
 	private final TrashHelper _trashHelper;

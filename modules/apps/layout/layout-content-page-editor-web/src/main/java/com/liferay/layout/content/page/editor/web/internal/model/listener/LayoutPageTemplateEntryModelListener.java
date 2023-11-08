@@ -14,6 +14,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.web.internal.util.FormItemManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -125,6 +127,17 @@ public class LayoutPageTemplateEntryModelListener
 				infoItemCapability -> Objects.equals(
 					infoItemCapability.getKey(),
 					EditPageInfoItemCapability.KEY))) {
+
+			return Collections.emptyList();
+		}
+
+		InfoPermissionProvider infoPermissionProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoPermissionProvider.class, className);
+
+		if ((infoPermissionProvider != null) &&
+			!infoPermissionProvider.hasViewPermission(
+				PermissionThreadLocal.getPermissionChecker())) {
 
 			return Collections.emptyList();
 		}

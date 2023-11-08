@@ -179,12 +179,13 @@ export function useDownloadCSV({
 	const field = searchParams.get('field');
 	const query = searchParams.get('query');
 	const rangeEnd = searchParams.get('rangeEnd');
+	const rangeKey = searchParams.get('rangeKey');
 	const rangeStart = searchParams.get('rangeStart');
 	const sortOrder = searchParams.get('sortOrder');
 
 	const a = document.createElement('a');
 
-	let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}&fromDate=${rangeStart}&toDate=${rangeEnd}`;
+	let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}&fromDate=${rangeStart}&rangeKey=${rangeKey}&toDate=${rangeEnd}`;
 
 	if (assetId) {
 		url += `&assetId=${encodeURIComponent(assetId)}`;

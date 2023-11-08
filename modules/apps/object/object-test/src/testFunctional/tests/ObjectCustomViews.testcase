@@ -1121,10 +1121,10 @@ definition {
 			DropdownMenuItem.click(menuItem = "Edit");
 
 			Click(locator1 = "ObjectCustomViews#CLEAR_FILTER");
-
+			
 			Click(
-				key_filterLabel = "Value",
-				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
+				key_labelName = "Value",
+				locator1 = "ObjectAdmin#CLAY_MULTI_SELECT_INPUT");
 
 			for (var filterValueList : list "Approved,Pending") {
 				Click.clickAtNotVisible(

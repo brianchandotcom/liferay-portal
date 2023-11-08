@@ -641,14 +641,19 @@
 		<td></td>
 	</tr>
 	<tr>
-	<td>SELECT_MOVE_FOLDER</td>
+		<td>SELECT_MOVE_FOLDER</td>
 		<td>//span[contains(@class,'move-object-definition-list-item-label') and contains(text(),'${key_folderLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>GO_TO_FOLDER</td>
 		<td>//div[contains(@class, 'autofit-col-expand') and contains(., 'key_folderName')]//*[contains(@title, 'Go to Folder')]</td>
-	<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CLAY_MULTI_SELECT_INPUT</td>
+		<td>//label[contains(.,'${key_labelName}')]//..//div[contains(@class,'input-group-item')]//input</td>
+		<td></td>
 	</tr>
 </tbody>
 </table>

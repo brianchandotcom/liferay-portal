@@ -1,0 +1,26 @@
+.deactivate-key-modal {
+	&-cancel-btn {
+		background: var(--action-neutral-inverted, #fff);
+		border: 1px solid var(--action-neutral-default, #2b3a4b);
+		border-radius: 8px;
+	}
+
+	&-confirm-btn {
+		background: var(--status-error-error, #da1414);
+		border: none;
+		border-radius: 8px;
+
+		&:hover {
+			background: var(--status-error-darken-1, #ae1010);
+		}
+	}
+
+	&-error-alert {
+		background: var(--status-error-lighten-2, #fbe3e3);
+	}
+
+	&-h2 {
+		color: var(--neutral-10, #282934);
+		font-size: 32px;
+	}
+}

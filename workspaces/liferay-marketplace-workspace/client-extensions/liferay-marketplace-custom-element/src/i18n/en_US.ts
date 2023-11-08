@@ -4,13 +4,19 @@
  */
 
 export default {
+	'a-request-will-be-sent-to-deactivate-the-selected-activation-key-from-now-on-it-will-be-hidden-and-no-longer-be-visible':
+		'A request will be sent to deactivate the selected activation key. From now on It will be hidden and no longer be visible.',
 	'access-console': 'Access Console',
 	'back-to-my-apps': 'Back to My Apps',
+	'confirm-&-deactivate-keys': 'Confirm & Deactivate Keys',
+	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
 	'details': 'Details',
 	'download-app': 'Download App',
+	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
+		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
 	'licenses': 'Licenses',
 	'manage': 'Manage',
 	'no-licenses-yet': 'No Licenses yet',
@@ -18,6 +24,8 @@ export default {
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'the-order-must-be-completed-before-licensing-this-app.':
 		'The order must be completed before licensing this app.',
+	'there-was-an-unexpected-error-while-attempting-to-deactivate-key-please-try-again-in-a-few-moments':
+		'There was an unexpected error while attempting to deactivate key. Please try again in a few moments.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
 };

@@ -497,22 +497,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRuleBuilderAction(positionNumber = null, value = null) {
-		AssertElementPresent(
-			key_positionNumber = ${positionNumber},
-			key_value = ${value},
-			locator1 = "FormRules#VIEW_RULE_BUILDER_ACTION_CONDITION");
-	}
-
-	@summary = "Default summary"
-	macro viewRuleBuilderCondition(positionNumber = null, value = null) {
-		AssertElementPresent(
-			key_positionNumber = ${positionNumber},
-			key_value = ${value},
-			locator1 = "FormRules#VIEW_RULE_BUILDER_ACTION_CONDITION");
-	}
-
-	@summary = "Default summary"
 	macro viewRuleCondition(condition = null, conditonRowNumber = null) {
 		AssertTextEquals(
 			key_condition = ${condition},

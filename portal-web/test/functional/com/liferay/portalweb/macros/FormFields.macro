@@ -1956,13 +1956,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPredefinedValueDropdownContent(key_textContent = null) {
-		AssertElementPresent(
-			key_textContent = ${key_textContent},
-			locator1 = "FormFields#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST_DROPDOWN_CONTENT");
-	}
-
-	@summary = "Default summary"
 	macro viewPublishedFormFieldByIndex(fieldLabel = null, index = null) {
 		AssertElementPresent(
 			key_fieldLabel = ${fieldLabel},

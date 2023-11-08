@@ -611,10 +611,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Upload the custom layout") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "App Manager");
+			AppManager.openAppManagerAdmin();
 
 			AppManager.uploadApp(
 				appName = "custom-layout-layouttpl",
@@ -723,10 +720,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Upload the custom layout") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "App Manager");
+			AppManager.openAppManagerAdmin();
 
 			AppManager.uploadApp(
 				appName = "custom-layout-layouttpl",
@@ -843,10 +837,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Upload the custom layout") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "App Manager");
+			AppManager.openAppManagerAdmin();
 
 			AppManager.uploadApp(
 				appName = "custom-layout-layouttpl",

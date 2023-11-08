@@ -16,6 +16,7 @@ export default interface Opportunity extends LiferayObject {
 	expirationDays?: number;
 	externalReferenceCode: string;
 	growthArr: number;
+	hasRenewal: boolean;
 	opportunityName: string;
 	opportunityOwner: string;
 	ownerName: string;

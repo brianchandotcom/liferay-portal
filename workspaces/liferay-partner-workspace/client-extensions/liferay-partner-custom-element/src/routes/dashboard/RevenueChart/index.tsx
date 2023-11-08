@@ -12,6 +12,7 @@ import {revenueChartColumnColors} from '../../../common/components/dashboard/uti
 import getRevenueChartColumns from '../../../common/components/dashboard/utils/getRevenueChartColumns';
 import {Liferay} from '../../../common/services/liferay';
 import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import {Filters} from '../../../common/utils/constants/filters';
 import {retry} from '../../../common/utils/retry';
 
 export default function () {
@@ -25,33 +26,9 @@ export default function () {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const growthRevenueResponseNewProject = await retry<Response>(() =>
+		const response = await retry<Response>(() =>
 			fetch(
-				"/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=type eq 'New Project Existing Business' and stage eq 'Closed Won'",
-				{
-					headers: {
-						'accept': 'application/json',
-						'x-csrf-token': Liferay.authToken,
-					},
-				}
-			)
-		);
-
-		const growthRevenueResponseNewBusiness = await retry<Response>(() =>
-			fetch(
-				"/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=type eq 'New Business' and stage eq 'Closed Won'",
-				{
-					headers: {
-						'accept': 'application/json',
-						'x-csrf-token': Liferay.authToken,
-					},
-				}
-			)
-		);
-
-		const renewalRevenueResponse = await retry<Response>(() =>
-			fetch(
-				"/o/c/opportunitysfs?&pageSize=200&sort=closeDate:desc&filter=type eq 'Existing Business' and stage eq 'Closed Won'",
+				`/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=${Filters.REVENUE_DASHBOARD.opportunities}`,
 				{
 					headers: {
 						'accept': 'application/json',
@@ -89,27 +66,19 @@ export default function () {
 
 		const currency = account ? account.currency : 'USD';
 
-		if (
-			growthRevenueResponseNewProject.ok &&
-			renewalRevenueResponse.ok &&
-			growthRevenueResponseNewBusiness.ok &&
-			currency
-		) {
-			const growthRevenueResponseNewProjectData = await growthRevenueResponseNewProject.json();
-			const growthRevenueResponseNewBusinessData = await growthRevenueResponseNewBusiness.json();
-			const renewalRevenueData = await renewalRevenueResponse.json();
+		if (response.ok) {
+			const closedWonOpportunities = await response.json();
 
 			setCurrencyData(currency);
 
 			getRevenueChartColumns(
 				currency,
-				growthRevenueResponseNewProjectData,
-				growthRevenueResponseNewBusinessData,
-				renewalRevenueData,
+				closedWonOpportunities,
 				setTitleChart,
 				setValueChart,
 				setColumnsRevenueChart
 			);
+
 			setLoading(false);
 
 			return;

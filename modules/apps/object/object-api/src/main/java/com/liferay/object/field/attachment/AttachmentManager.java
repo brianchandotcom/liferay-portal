@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 /**
  * @author Carlos Correa
  */
-public interface AttachmentValidator {
+public interface AttachmentManager {
 
 	public String[] getAcceptedFileExtensions(long objectFieldId);
 

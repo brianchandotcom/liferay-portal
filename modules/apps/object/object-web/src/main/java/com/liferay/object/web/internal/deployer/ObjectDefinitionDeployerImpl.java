@@ -50,7 +50,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
-import com.liferay.object.field.attachment.AttachmentValidator;
+import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -576,16 +576,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
+	@Reference
+	private AttachmentManager _attachmentManager;
+
 	private final AttachmentUploadFileEntryHandler
 		_attachmentUploadFileEntryHandler =
 			new AttachmentUploadFileEntryHandler();
 	private final AttachmentUploadResponseHandler
 		_attachmentUploadResponseHandler =
 			new AttachmentUploadResponseHandler();
-
-	@Reference
-	private AttachmentValidator _attachmentValidator;
-
 	private BundleContext _bundleContext;
 
 	@Reference(target = "(upload.response.handler.system.default=true)")
@@ -743,7 +742,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 			String fileName = uploadPortletRequest.getFileName("file");
 
-			_attachmentValidator.validateFileExtension(fileName, objectFieldId);
+			_attachmentManager.validateFileExtension(fileName, objectFieldId);
 
 			File file = null;
 
@@ -757,7 +756,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"File is null for " + fileName);
 				}
 
-				_attachmentValidator.validateFileSize(
+				_attachmentManager.validateFileSize(
 					fileName, file.length(), objectFieldId,
 					themeDisplay.isSignedIn());
 
@@ -815,7 +814,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				errorMessage = themeDisplay.translate(
 					"please-enter-a-file-with-a-valid-extension-x",
 					StringUtil.merge(
-						_attachmentValidator.getAcceptedFileExtensions(
+						_attachmentManager.getAcceptedFileExtensions(
 							ParamUtil.getLong(portletRequest, "objectFieldId")),
 						StringPool.COMMA_AND_SPACE));
 			}
@@ -824,7 +823,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
 						"than-x",
 					_language.formatStorageSize(
-						_attachmentValidator.getMaximumFileSize(
+						_attachmentManager.getMaximumFileSize(
 							ParamUtil.getLong(portletRequest, "objectFieldId"),
 							themeDisplay.isSignedIn()),
 						themeDisplay.getLocale()));

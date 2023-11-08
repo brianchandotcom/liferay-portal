@@ -1634,7 +1634,9 @@ public class JournalDisplayContext {
 				_getAssetTagNamesFilter(), BooleanClauseOccur.MUST);
 		}
 
-		if (isNavigationMine() && (_themeDisplay.getUserId() > 0)) {
+		if ((isNavigationMine() || isNavigationRecent()) &&
+			(_themeDisplay.getUserId() > 0)) {
+
 			booleanFilter.addTerm(
 				Field.USER_ID, String.valueOf(_themeDisplay.getUserId()),
 				BooleanClauseOccur.MUST);

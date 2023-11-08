@@ -57,7 +57,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		printWriter.write("<script");
 		printWriter.write(
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
 		printWriter.write(" data-senna-track=\"temporary\" type=\"");
 		printWriter.write(ContentTypes.TEXT_JAVASCRIPT);
@@ -91,7 +91,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write(String.valueOf(_details.waitTimeout() * 1000));
 		printWriter.write("};</script><script");
 		printWriter.write(
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
 		printWriter.write(" data-senna-track=\"permanent\" src=\"");
 

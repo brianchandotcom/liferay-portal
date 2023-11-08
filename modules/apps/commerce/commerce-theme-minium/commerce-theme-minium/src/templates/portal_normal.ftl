@@ -13,7 +13,7 @@
 
 	<#-- Instant redirect, when the page is hit directly or refreshed -->
 
-	<script ${nonceAttr}>
+	<script ${nonceAttribute}>
 		window.location.replace("${redirect_url}");
 	</script>
 

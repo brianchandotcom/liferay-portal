@@ -1,4 +1,4 @@
-<script [$NONCE_ATTR$] type="text/javascript">
+<script [$NONCE_ATTRIBUTE$] type="text/javascript">
 	Liferay.Loader.require(
 		"[$PACKAGE_NAME$]@[$PACKAGE_VERSION$]",
 		function(module) {

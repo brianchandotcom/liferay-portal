@@ -146,8 +146,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 				"iconTag",
 				iconTag.doTagAsString(httpServletRequest, httpServletResponse)
 			).put(
-				"nonceAttr",
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				"nonceAttribute",
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest)
 			).put(
 				"title", _language.get(resourceBundle, "page-audit")

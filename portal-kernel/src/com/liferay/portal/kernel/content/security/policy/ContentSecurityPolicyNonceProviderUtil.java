@@ -42,7 +42,9 @@ public class ContentSecurityPolicyNonceProviderUtil {
 		return contentSecurityPolicyNonceProvider.getNonce(httpServletRequest);
 	}
 
-	public static String getNonceAttr(HttpServletRequest httpServletRequest) {
+	public static String getNonceAttribute(
+		HttpServletRequest httpServletRequest) {
+
 		String nonce = getNonce(httpServletRequest);
 
 		if (Validator.isNull(nonce)) {

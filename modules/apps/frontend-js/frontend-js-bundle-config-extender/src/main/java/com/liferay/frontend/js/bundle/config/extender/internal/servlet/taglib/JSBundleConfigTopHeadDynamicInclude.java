@@ -54,7 +54,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		String nonce = ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+		String nonce = ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 			httpServletRequest);
 
 		if (Validator.isNotNull(nonce)) {

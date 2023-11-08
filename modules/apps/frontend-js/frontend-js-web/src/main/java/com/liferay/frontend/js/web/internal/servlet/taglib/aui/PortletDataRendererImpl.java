@@ -44,7 +44,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		if (!Validator.isBlank(rawCode)) {
 			writer.write("<script");
 			writer.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null));
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(null));
 			writer.write(" type=\"text/javascript\">\n");
 			writer.write(rawCode);
 			writer.write("\n</script>");
@@ -58,13 +58,13 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		if (esImportsMap.isEmpty()) {
 			writer.write("<script");
 			writer.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null));
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(null));
 			writer.write(">\n");
 		}
 		else {
 			writer.write("<script");
 			writer.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null));
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(null));
 			writer.write(" type=\"");
 			writer.write(FrontendESMUtil.getScriptType());
 			writer.write("\">\n");

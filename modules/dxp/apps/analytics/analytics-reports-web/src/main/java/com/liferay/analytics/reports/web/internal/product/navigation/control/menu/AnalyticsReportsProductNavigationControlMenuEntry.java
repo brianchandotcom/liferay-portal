@@ -144,8 +144,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 							httpServletRequest, httpServletResponse);
 					}
 				).put(
-					"nonceAttr",
-					ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					"nonceAttribute",
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 						httpServletRequest)
 				).put(
 					"portletNamespace", _portletNamespace

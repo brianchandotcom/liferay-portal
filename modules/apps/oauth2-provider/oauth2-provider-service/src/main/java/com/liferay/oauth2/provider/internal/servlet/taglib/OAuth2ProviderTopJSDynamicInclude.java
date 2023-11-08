@@ -73,7 +73,7 @@ public class OAuth2ProviderTopJSDynamicInclude implements DynamicInclude {
 
 		String string = StringBundler.concat(
 			"<script",
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest),
 			" data-senna-track=\"temporary\" type=\"",
 			ContentTypes.TEXT_JAVASCRIPT,

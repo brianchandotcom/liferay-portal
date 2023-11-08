@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
-import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -913,10 +912,7 @@ public class EditServerMVCActionCommand
 
 		roleMembershipPolicy.verifyPolicy();
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.verifyPolicy();
+		SiteMembershipPolicyUtil.verifyPolicy();
 
 		UserGroupMembershipPolicy userGroupMembershipPolicy =
 			_userGroupMembershipPolicyFactory.getUserGroupMembershipPolicy();

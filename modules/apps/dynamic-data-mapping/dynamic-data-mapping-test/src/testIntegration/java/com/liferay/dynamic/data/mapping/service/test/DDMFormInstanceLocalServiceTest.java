@@ -129,6 +129,10 @@ public class DDMFormInstanceLocalServiceTest extends BaseDDMServiceTestCase {
 		DDMFormInstanceVersion firstFormInstanceVersion =
 			formInstance.getFormInstanceVersion(formInstance.getVersion());
 
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			firstFormInstanceVersion.getStatus());
+
 		formInstance = DDMFormInstanceLocalServiceUtil.updateFormInstance(
 			formInstance.getFormInstanceId(), formInstance.getStructureId(),
 			formInstance.getNameMap(), formInstance.getDescriptionMap(),
@@ -139,11 +143,6 @@ public class DDMFormInstanceLocalServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertNotEquals(
 			firstFormInstanceVersion, secondFormInstanceVersion);
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			firstFormInstanceVersion.getStatus());
-
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			secondFormInstanceVersion.getStatus());

@@ -160,10 +160,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
 
-			if (Objects.equals(
-					node.getObjectDefinitionId(),
-					objectDefinition.getObjectDefinitionId())) {
-
+			if (node.isRoot()) {
 				continue;
 			}
 

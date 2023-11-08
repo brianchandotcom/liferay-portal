@@ -200,7 +200,7 @@ public class GitUtil {
 		List<String> commitMessages = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git log --pretty=format:%B--messageEnd " +
+			"git log --pretty=format:%H:%B--END_OF_COMMIT_MESSAGE-- " +
 				gitWorkingBranchLatestCommitId + "..HEAD");
 
 		String line = null;
@@ -208,7 +208,7 @@ public class GitUtil {
 		StringBundler sb = new StringBundler();
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.equals("--messageEnd")) {
+			if (line.equals("--END_OF_COMMIT_MESSAGE--")) {
 				if (sb.index() > 1) {
 					sb.setIndex(sb.index() - 1);
 				}

@@ -53,10 +53,7 @@ definition {
 		}
 
 		task ("Assert each deployed Client Extension sample appears in the Client Extensions admin page with the correct table values") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Custom Apps",
-				panel = "Applications",
-				portlet = "Client Extensions");
+			ClientExtension.openClientExtensionsAdmin();
 
 			for (var clientExtensionCombo : list "Liferay Sample Custom Element 1/Custom Element,Liferay Sample Custom Element 2/Custom Element,Liferay Sample Global CSS/CSS,Liferay Sample Global JS/JS,Counter App/IFrame,Liferay Sample Theme CSS 1/Theme CSS,Liferay Sample Theme Favicon/Theme Favicon,Liferay Sample Theme Spritemap 1/Theme SVG Spritemap") {
 				var clientExtensionName = StringUtil.extractFirst(${clientExtensionCombo}, "/");

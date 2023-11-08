@@ -47,6 +47,15 @@ definition {
 		return ${staticExtensionType};
 	}
 
+	@summary = "Navigate to Client Extensions Admin with url navigation"
+	macro openClientExtensionsAdmin(baseURL = null) {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet");
+
+		WaitForVisible(locator1 = "Button#PLUS");
+	}
+
 	@summary = "Default summary"
 	macro tearDownConfig(staticExtensionType = null) {
 		Variables.assertDefined(parameterList = ${staticExtensionType});

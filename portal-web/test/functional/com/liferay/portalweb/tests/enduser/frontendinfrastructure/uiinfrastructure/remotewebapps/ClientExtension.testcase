@@ -1038,10 +1038,7 @@ definition {
 	@priority = 4
 	test HasMandatoryFieldErrorMessagesWhenEmpty {
 		task ("Given Add IFrame Client Extensions admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Custom Apps",
-				panel = "Applications",
-				portlet = "Client Extensions");
+			ClientExtension.openClientExtensionsAdmin();
 
 			ClientExtensionGeneral.addType(type = "IFrame");
 		}

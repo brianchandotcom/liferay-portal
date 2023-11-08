@@ -207,7 +207,7 @@ public class ObjectActionLocalServiceTest {
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, false));
 		AssertUtils.assertFailure(
 			ObjectActionSystemException.class, false,
-			"Only allowed bundles can create system object actions",
+			"Only allowed bundles can add system object actions",
 			() -> _addObjectAction(
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				StringPool.BLANK, RandomTestUtil.randomString(),

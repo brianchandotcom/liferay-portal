@@ -62,7 +62,11 @@ if (paramToken == null) {
 		<label for="<portlet:namespace />genetareAccessToken">
 			<liferay-ui:message key="scim-generate-access-token" />
 
-			<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>' />
+			<span aria-label="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>">
+				<clay:icon
+					symbol="question-circle-full"
+				/>
+			</span>
 		</label>
 
 		<div class="input-group input-group-sm">
@@ -74,7 +78,11 @@ if (paramToken == null) {
 				<label for="<portlet:namespace />revokeAccessToken">
 					<liferay-ui:message key="scim-revoke-all" />
 
-					<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "scim-revoke-all-help") %>' />
+					<span aria-label="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>">
+						<clay:icon
+							symbol="question-circle-full"
+						/>
+					</span>
 				</label>
 
 				<div class="input-group input-group-sm">

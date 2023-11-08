@@ -102,7 +102,7 @@ public class JMSQueue {
 
 			if (masterHostname != null) {
 				textMessage.setStringProperty(
-					"jenkins-master-name", masterHostname);
+					"jenkinsMasterName", masterHostname);
 			}
 
 			textMessage.setText(message);
@@ -144,7 +144,7 @@ public class JMSQueue {
 				if (masterHostname != null) {
 					_messageConsumer = _session.createConsumer(
 						_queue,
-						"(jenkins-master-name = " + masterHostname + ")");
+						"(jenkinsMasterName = '" + masterHostname + "')");
 				}
 				else {
 					_messageConsumer = _session.createConsumer(_queue);

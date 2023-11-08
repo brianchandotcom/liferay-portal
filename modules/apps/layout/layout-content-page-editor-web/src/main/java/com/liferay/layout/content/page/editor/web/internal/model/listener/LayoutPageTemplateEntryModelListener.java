@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -128,6 +129,10 @@ public class LayoutPageTemplateEntryModelListener
 
 	private void _updateFragmentEntryLinkEditableValues(
 		FragmentEntryLink fragmentEntryLink) {
+
+		if (fragmentEntryLink.getType() == FragmentConstants.TYPE_INPUT) {
+			return;
+		}
 
 		JSONObject editableValuesJSONObject = null;
 

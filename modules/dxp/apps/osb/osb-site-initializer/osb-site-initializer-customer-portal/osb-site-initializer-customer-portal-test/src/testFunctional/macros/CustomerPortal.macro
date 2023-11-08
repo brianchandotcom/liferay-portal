@@ -551,6 +551,10 @@ definition {
 			var status = "";
 		}
 
+		WaitForElementPresent(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = ${title});
+
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
 			title = ${title});

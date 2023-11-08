@@ -8,6 +8,10 @@ import {fetch, openToast} from 'frontend-js-web';
 import {logError} from './logError';
 
 export function saveViewSettings({appURL, id, portletId, settings}) {
+	if (!appURL) {
+		return;
+	}
+
 	const url = new URL(`${appURL}/data-set/${id}/save-active-view-settings`);
 
 	url.searchParams.append('groupId', themeDisplay.getScopeGroupId());

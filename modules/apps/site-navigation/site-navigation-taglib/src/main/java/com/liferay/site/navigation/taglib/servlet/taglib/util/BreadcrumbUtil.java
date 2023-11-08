@@ -6,10 +6,6 @@
 package com.liferay.site.navigation.taglib.servlet.taglib.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringPool;
@@ -43,7 +39,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -374,31 +369,7 @@ public class BreadcrumbUtil {
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if (layoutDisplayPageObjectProvider != null) {
-			InfoItemServiceRegistry infoItemServiceRegistry =
-				ServletContextUtil.getInfoItemServiceRegistry();
-
-			InfoItemFieldValuesProvider infoItemFieldValuesProvider =
-				infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					layoutDisplayPageObjectProvider.getClassName());
-
-			InfoItemFieldValues infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(
-					layoutDisplayPageObjectProvider.getDisplayObject());
-
-			InfoFieldValue<Object> titleInfoFieldValue =
-				infoItemFieldValues.getInfoFieldValue("title");
-
-			if (titleInfoFieldValue != null) {
-				return String.valueOf(titleInfoFieldValue.getValue(locale));
-			}
-
-			InfoFieldValue<Object> nameInfoFieldValue =
-				infoItemFieldValues.getInfoFieldValue("name");
-
-			if (nameInfoFieldValue != null) {
-				return String.valueOf(nameInfoFieldValue.getValue(locale));
-			}
+			return layoutDisplayPageObjectProvider.getTitle(locale);
 		}
 
 		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(

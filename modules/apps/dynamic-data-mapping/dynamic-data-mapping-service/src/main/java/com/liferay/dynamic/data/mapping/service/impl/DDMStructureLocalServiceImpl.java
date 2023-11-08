@@ -2122,6 +2122,7 @@ public class DDMStructureLocalServiceImpl
 		DDMStructureVersion structureVersion;
 
 		if (updateVersion) {
+			latestStructureVersion.setDefinition(structure.getDefinition());
 			latestStructureVersion.setStatus(
 				GetterUtil.getInteger(
 					serviceContext.getAttribute("status"),

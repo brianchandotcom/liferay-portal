@@ -35,7 +35,9 @@ export function CreateAPIEndpointModalContent({
 		{}
 	);
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
+		parameter: false,
 		path: false,
+		retrieveType: false,
 		scope: false,
 	});
 
@@ -51,13 +53,22 @@ export function CreateAPIEndpointModalContent({
 	}, [localUIData]);
 
 	async function postData() {
+		let parameter: string | undefined = '';
+
+		if (localUIData.retrieveType?.key === 'singleElement') {
+			parameter = localUIData.parameter;
+		}
+
 		fetch(apiEndpointsURLPath, {
 			body: JSON.stringify({
 				...localUIData,
 				applicationStatus: {key: 'unpublished'},
 				name: localUIData.path,
 				...(localUIData.path && {
-					path: beginStringWithForwardSlash(localUIData.path),
+					path: beginStringWithForwardSlash(
+						localUIData.path +
+							beginStringWithForwardSlash(parameter)
+					),
 				}),
 				r_apiApplicationToAPIEndpoints_c_apiApplicationId: currentAPIApplicationId,
 				...(localUIData.scope?.key && {
@@ -101,7 +112,11 @@ export function CreateAPIEndpointModalContent({
 
 	function validateData() {
 		let isDataValid = true;
-		const mandatoryFields = ['scope', 'path'];
+		const mandatoryFields = ['scope', 'retrieveType', 'path'];
+
+		if (localUIData.retrieveType?.key === 'singleElement') {
+			mandatoryFields.push('parameter');
+		}
 
 		if (!Object.keys(localUIData).length) {
 			const errors = mandatoryFields.reduce(

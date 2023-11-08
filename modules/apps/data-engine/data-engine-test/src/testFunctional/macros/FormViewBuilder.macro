@@ -485,12 +485,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableCheckboxPredefined(fieldName = null) {
+	macro enableCheckboxPredefined(fieldName) {
 		var key_fieldName = ${fieldName};
 
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED")) {
+		if (IsElementNotPresent(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED")) {
 			Click(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED_LIST");
 		}
+
+		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST");
 
 		FormViewBuilder.viewCheckboxCheckedAtPredefinedValue(fieldName = ${fieldName});
 	}

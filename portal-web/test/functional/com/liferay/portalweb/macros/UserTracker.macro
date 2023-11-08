@@ -1,5 +1,12 @@
 definition {
 
+	@summary = "Navigate to the User Tracker Admin page with url navigation"
+	macro openMonitoringAdmin(baseURL = null) {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_monitoring_web_portlet_MonitoringPortlet");
+	}
+
 	@summary = "Assert the accessed URL"
 	macro viewAccessedURL(friendlyURL = null) {
 		var key_friendlyURL = ${friendlyURL};

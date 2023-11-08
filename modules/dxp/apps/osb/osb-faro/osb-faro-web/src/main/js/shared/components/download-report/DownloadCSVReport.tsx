@@ -1,11 +1,10 @@
 import React from 'react';
-import {createOrderByField} from 'shared/util/pagination';
 import {DownloadReportButton} from './DownloadReportButton';
 import {DownloadReportModal} from './DownloadReportModal';
 import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
+import {useDownloadCSV} from './utils';
 import {useModal} from '@clayui/modal';
-import {useParams} from 'react-router-dom';
 
 export interface IDownloadReport {
 	assetId?: string;
@@ -20,8 +19,8 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 	disabled,
 	type
 }) => {
+	const {onClick} = useDownloadCSV({assetId, assetType, type});
 	const {observer, onOpenChange, open} = useModal();
-	const {channelId, groupId} = useParams();
 
 	return (
 		<div className='download-report'>
@@ -54,41 +53,7 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onSubmit={() => {
-						const searchParams = new URLSearchParams(
-							location.search
-						);
-
-						const field = searchParams.get('field');
-						const query = searchParams.get('query');
-						const rangeEnd = searchParams.get('rangeEnd');
-						const rangeStart = searchParams.get('rangeStart');
-						const sortOrder = searchParams.get('sortOrder');
-
-						const a = document.createElement('a');
-
-						let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}&fromDate=${rangeStart}&toDate=${rangeEnd}`;
-
-						if (assetId) {
-							url += `&assetId=${encodeURIComponent(assetId)}`;
-						}
-
-						if (assetType) {
-							url += `&assetType=${assetType}`;
-						}
-
-						if (field && sortOrder) {
-							url += `&orderByFields=${JSON.stringify(
-								createOrderByField(field, sortOrder)
-							)}`;
-						}
-
-						if (query) {
-							url += `&query=${query}`;
-						}
-
-						a.href = url;
-
-						a.click();
+						onClick();
 					}}
 					requiredDateRange
 				/>

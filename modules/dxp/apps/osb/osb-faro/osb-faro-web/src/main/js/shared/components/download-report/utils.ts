@@ -1,8 +1,11 @@
 import html2canvas from 'html2canvas';
 import JsPDF from 'jspdf';
 import moment from 'moment';
+import {buildOrderByFields} from 'shared/util/pagination';
 import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
+import {INDIVIDUALS} from 'shared/util/router';
 import {TransformedContainer} from './DownloadPDFReport';
+import {useParams} from 'react-router-dom';
 
 export function formatDate(date) {
 	return moment(date).format(DEFAULT_DATE_FORMAT);
@@ -158,4 +161,54 @@ export function generateReport({
 
 		doc.save(docName);
 	});
+}
+
+export function useDownloadCSV({
+	assetId,
+	assetType,
+	type
+}: {
+	assetId?: string;
+	assetType?: string;
+	type: string;
+}) {
+	const {channelId, groupId} = useParams();
+
+	const searchParams = new URLSearchParams(location.search);
+
+	const field = searchParams.get('field');
+	const query = searchParams.get('query');
+	const rangeEnd = searchParams.get('rangeEnd');
+	const rangeStart = searchParams.get('rangeStart');
+	const sortOrder = searchParams.get('sortOrder');
+
+	const a = document.createElement('a');
+
+	let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}&fromDate=${rangeStart}&toDate=${rangeEnd}`;
+
+	if (assetId) {
+		url += `&assetId=${encodeURIComponent(assetId)}`;
+	}
+
+	if (assetType) {
+		url += `&assetType=${assetType}`;
+	}
+
+	if (field && sortOrder) {
+		const orderByFields = JSON.stringify(
+			buildOrderByFields({field, sortOrder}, INDIVIDUALS)
+		);
+
+		url += `&orderByFields=${encodeURIComponent(orderByFields)}`;
+	}
+
+	if (query) {
+		url += `&query=${query}`;
+	}
+
+	a.href = url;
+
+	return {
+		onClick: () => a.click()
+	};
 }

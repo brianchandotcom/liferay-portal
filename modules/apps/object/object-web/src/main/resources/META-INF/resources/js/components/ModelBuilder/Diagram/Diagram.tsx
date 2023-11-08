@@ -125,11 +125,7 @@ function DiagramBuilder({
 	);
 
 	const onNodeDragStop = async (node: Node<ObjectDefinitionNodeData>) => {
-		const objectFolder = await API.getObjectFolderByExternalReferenceCode(
-			selectedObjectFolder.externalReferenceCode
-		);
-
-		const updatedObjectFolderItems = objectFolder.objectFolderItems.map(
+		const updatedObjectFolderItems = selectedObjectFolder.objectFolderItems.map(
 			(objectFolderItem) => {
 				if (
 					objectFolderItem.objectDefinitionExternalReferenceCode ===
@@ -147,10 +143,7 @@ function DiagramBuilder({
 		);
 
 		const updatedObjectFolder = {
-			externalReferenceCode: selectedObjectFolder.externalReferenceCode,
-			id: selectedObjectFolder.id,
-			label: selectedObjectFolder.label,
-			name: selectedObjectFolder.name,
+			...selectedObjectFolder,
 			objectFolderItems: updatedObjectFolderItems,
 		};
 
@@ -167,6 +160,7 @@ function DiagramBuilder({
 				objectDefinitionNodes: nodes,
 				objectRelationshipEdges: edges,
 				updatedObjectDefinitionNodeId: node.data?.id as number,
+				updatedObjectFolder,
 			},
 			type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE_POSITION,
 		});

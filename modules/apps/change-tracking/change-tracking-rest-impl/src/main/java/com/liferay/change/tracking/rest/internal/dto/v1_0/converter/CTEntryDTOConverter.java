@@ -112,17 +112,6 @@ public class CTEntryDTOConverter
 				modelClassPK = ctEntry.getModelClassPK();
 				ownerId = ctEntry.getUserId();
 				ownerName = ctEntry.getUserName();
-
-				Long groupId = null;
-
-				if (document.hasField(Field.GROUP_ID)) {
-					groupId = Long.valueOf(document.get(Field.GROUP_ID));
-				}
-
-				siteId = groupId;
-				siteName = _getSiteName(
-					ctCollectionId, dtoConverterContext.getLocale(), groupId);
-
 				status = _toStatus(dtoConverterContext.getLocale(), document);
 				title = _getLocalizedValue(
 					document.getField("title"),
@@ -130,6 +119,23 @@ public class CTEntryDTOConverter
 				typeName = _getLocalizedValue(
 					document.getField("typeName"),
 					dtoConverterContext.getLocale());
+
+				setSiteId(
+					() -> {
+						Long groupId = null;
+
+						if (document.hasField(Field.GROUP_ID)) {
+							groupId = Long.valueOf(
+								document.get(Field.GROUP_ID));
+						}
+
+						setSiteName(
+							_getSiteName(
+								ctCollectionId, dtoConverterContext.getLocale(),
+								groupId));
+
+						return groupId;
+					});
 			}
 		};
 	}

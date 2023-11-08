@@ -132,6 +132,30 @@ definition {
 		}
 	}
 
+	@description = "LPS-185674 - Verify the user is able to search for a specific object definition in model builder view"
+	@priority = 4
+	test CanSearchForObjectDefinition {
+		task ("Given an user in model builder view") {
+			ObjectModelBuilder.openObjectFolderInModelBuilder();
+		}
+
+		task ("When the user searches for Account") {
+			Search.searchCP(searchTerm = "Account");
+		}
+
+		task ("Then only Account is seen") {
+			for (var objectLabel : list "Postal Address,Commerce Product,Organization,User,Commerce Order,Commerce Product") {
+				AssertElementNotPresent(
+					key_label = ${objectLabel},
+					locator1 = "ObjectModelBuilder#SELECT_OBJECT_IN_LEFT_SIDEBAR");
+
+				AssertElementPresent(
+					key_label = "Account",
+					locator1 = "ObjectModelBuilder#SELECT_OBJECT_IN_LEFT_SIDEBAR");
+			}
+		}
+	}
+
 	@description = "LPS-185679 - Verify the user can update a field in model builder view"
 	@priority = 5
 	test CanUpdateField {

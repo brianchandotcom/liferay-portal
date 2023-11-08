@@ -1539,9 +1539,7 @@ public class ContentPageEditorDisplayContext {
 				).setMVCRenderCommandName(
 					"/layout_admin/edit_layout"
 				).setRedirect(
-					ParamUtil.getString(
-						portal.getOriginalServletRequest(httpServletRequest),
-						"p_l_back_url")
+					themeDisplay.getURLCurrent()
 				).setBackURL(
 					themeDisplay.getURLCurrent()
 				).setParameter(

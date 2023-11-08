@@ -320,6 +320,214 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12773 | Verify that it is possible to use the toggle Shopping Experience Image Gallery to decide which image shows on the storefront product details"
+	@priority = 5
+	test CanViewImagesCorrectlyByUsingTheShoppingExperienceImageGalleryToggle {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium Site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new product with an option is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Simple_Product",
+				productType = "simple",
+				sku = "TESTSKU");
+
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "package-quantity",
+				optionName = "Package Quantity",
+				productName = "Simple_Product");
+		}
+
+		task ("And open the product admin details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Simple_Product");
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And disable the toggle Shopping Experience Image Gallery for an image") {
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addProductImages(
+				imageTitles = "Black",
+				optionValues = 6,
+				shoppingExperienceImageGallery = "false");
+
+			CommerceProductImages.addProductImages(
+				imageTitles = "White",
+				optionValues = 12,
+				shoppingExperienceImageGallery = "true");
+
+			CommerceProductImages.addProductImages(
+				imageTitles = "Blue",
+				optionValues = 24);
+		}
+
+		task ("And the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer opens the product details") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Simple_Product");
+		}
+
+		task ("Then only two images are present into the gallery") {
+			for (var optionValues : list "6,12,24") {
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "Package Quantity",
+					fsOptionValue = ${optionValues});
+
+				if (${optionValues} == 24) {
+					AssertElementPresent(
+						key_fsProductImage = "Blue",
+						locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+
+					for (var fsProductImage : list "White,Black") {
+						AssertElementNotPresent(
+							key_fsProductImage = ${fsProductImage},
+							locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+					}
+				}
+				else {
+					AssertElementPresent(
+						key_fsProductImage = "White",
+						locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+
+					for (var fsProductImage : list "Black,Blue") {
+						AssertElementNotPresent(
+							key_fsProductImage = ${fsProductImage},
+							locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+					}
+				}
+			}
+
+			for (var fsProductImage : list "White,Blue") {
+				AssertElementPresent(
+					key_fsProductImage = ${fsProductImage},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_THUMBNAIL_IMAGE");
+			}
+
+			AssertElementNotPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_THUMBNAIL_IMAGE");
+		}
+
+		task ("But if the admin enable again the toggle Shopping Experience Image Gallery for all the images") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Simple_Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Use in Shopping Experience Image Gallery",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			CommerceEntry.publishProductImage();
+		}
+
+		task ("Then three images will be presented in the gallery") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Simple_Product");
+
+			for (var optionValues : list "6,12,24") {
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "Package Quantity",
+					fsOptionValue = ${optionValues});
+
+				if (${optionValues} == 6) {
+					AssertElementPresent(
+						key_fsProductImage = "Black",
+						locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+
+					for (var fsProductImage : list "White,Blue") {
+						AssertElementNotPresent(
+							key_fsProductImage = ${fsProductImage},
+							locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+					}
+				}
+				else {
+					if (${optionValues} == 12) {
+						AssertElementPresent(
+							key_fsProductImage = "White",
+							locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+
+						for (var fsProductImage : list "Black,Blue") {
+							AssertElementNotPresent(
+								key_fsProductImage = ${fsProductImage},
+								locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+						}
+					}
+					else {
+						AssertElementPresent(
+							key_fsProductImage = "Blue",
+							locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+
+						for (var fsProductImage : list "Black,White") {
+							AssertElementNotPresent(
+								key_fsProductImage = ${fsProductImage},
+								locator1 = "CommerceFrontStore#FS_PRODUCT_MAIN_IMAGE");
+						}
+					}
+				}
+			}
+
+			for (var fsProductImage : list "White,Black,White") {
+				AssertElementPresent(
+					key_fsProductImage = ${fsProductImage},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_THUMBNAIL_IMAGE");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6031. EditAnAttachment"
 	@priority = 3
 	test EditAnAttachment {

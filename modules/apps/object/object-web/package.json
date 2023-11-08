@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@clayui/alert": "3.106.1",
 		"@clayui/button": "3.106.1",
+		"@clayui/card": "3.106.1",
 		"@clayui/core": "3.106.1",
 		"@clayui/drop-down": "3.106.1",
 		"@clayui/empty-state": "3.106.1",

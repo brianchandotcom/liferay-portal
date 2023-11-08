@@ -1,0 +1,29 @@
+.lfr-objects__model-builder-empty-object-folder-card {
+	&-body {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		padding-top: 1rem !important;
+	}
+
+	&-container {
+		border: 2px solid #d3d6e0;
+		box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+		left: calc(50% - (17.5rem / 2));
+		max-height: 10.125rem;
+		max-width: 17.5rem;
+		position: absolute;
+		top: calc(50% - (10.125rem / 2));
+		z-index: 5;
+	}
+
+	&-description {
+		color: #6b6c7e;
+		font-size: 14px;
+		text-align: center;
+	}
+
+	&-title {
+		margin-bottom: 1rem;
+	}
+}

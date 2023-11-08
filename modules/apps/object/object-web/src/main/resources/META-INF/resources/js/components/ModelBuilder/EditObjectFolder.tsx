@@ -13,6 +13,7 @@ import {getUpdatedModelBuilderStructurePayload} from '../ViewObjectDefinitions/o
 import Diagram from './Diagram/Diagram';
 import EditObjectFolderHeader from './EditObjectFolderHeader/EditObjectFolderHeader';
 import {ModalPublishObjectDefinitions} from './EditObjectFolderHeader/ModalPublishObjectDefinitions';
+import EmptyObjectFolderCard from './EmptyObjectFolderCard/EmptyObjectFolderCard';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
 import {useObjectFolderContext} from './ModelBuilderContext/objectFolderContext';
 import {TYPES} from './ModelBuilderContext/typesEnum';
@@ -34,6 +35,7 @@ export default function EditObjectFolder({
 	const [
 		{
 			elements,
+			isLoadingObjectFolder,
 			objectDefinitionsStorageTypes,
 			objectFolderName,
 			rightSidebarType,
@@ -179,6 +181,10 @@ export default function EditObjectFolder({
 			/>
 			<div className="lfr-objects__model-builder-content">
 				<LeftSidebar setShowModal={setShowModal} />
+
+				{!elements.length && !isLoadingObjectFolder && (
+					<EmptyObjectFolderCard setShowModal={setShowModal} />
+				)}
 
 				<Diagram />
 

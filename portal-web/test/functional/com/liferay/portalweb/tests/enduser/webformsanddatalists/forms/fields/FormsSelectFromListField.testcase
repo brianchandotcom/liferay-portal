@@ -458,8 +458,8 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		AssertElementPresent(
-			key_itemName = " ",
-			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+			key_menuItem = "",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
 	@description = "Verify that a list can be created using Autofill"
@@ -1212,13 +1212,15 @@ definition {
 
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
 
-		Form.viewSelectFromListOptionOnPreview(
-			optionValue = "Option 2",
-			rowPosition = 1);
+		Click(
+			key_fieldName = "Select from List",
+			locator1 = "FormFields#SELECT_FIELD");
 
-		Form.viewSelectFromListOptionOnPreview(
-			optionValue = "Option 1",
-			rowPosition = 2);
+		for (var options : list "Option 1,Option 2") {
+			AssertElementPresent(
+				key_menuItem = ${options},
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
 	}
 
 	@description = "Verify that options can be sorted alphabetically"
@@ -1261,14 +1263,10 @@ definition {
 			key_fieldName = "Select from List",
 			locator1 = "FormFields#SELECT_FIELD");
 
-		var iterator = 1;
-
-		for (var option : list "A,B,C") {
-			Form.viewSelectFromListOptionOnPreview(
-				optionValue = "Option ${option}",
-				rowPosition = ${iterator});
-
-			var iterator = ${iterator} + 1;
+		for (var options : list "A,B,C") {
+			AssertElementPresent(
+				key_menuItem = "Option ${options}",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
 	}
 

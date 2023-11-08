@@ -1,0 +1,21 @@
+.account-banner {
+	line-height: 16px;
+
+	&-email-text {
+		color: var(--neutral-08, #54555f);
+		font-size: 11px;
+		font-weight: 400;
+	}
+
+	&-name-text {
+		color: var(--neutral-10, #282934);
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	&-title-text {
+		color: var(--neutral-08, #54555f);
+		font-size: 14px;
+		font-weight: 600;
+	}
+}

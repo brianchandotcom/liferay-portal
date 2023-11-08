@@ -7,6 +7,8 @@ import ClaySticker from '@clayui/sticker';
 
 import emptyPictureIcon from '../../../assets/icons/empty_picture_icon.svg';
 
+import './index.scss';
+
 type UserAccount = {
 	emailAddress?: string;
 	image?: string;

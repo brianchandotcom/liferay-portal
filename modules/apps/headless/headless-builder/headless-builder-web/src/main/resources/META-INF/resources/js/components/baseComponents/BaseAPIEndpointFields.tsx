@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {Text} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -13,8 +14,10 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {Select} from '../fieldComponents/Select';
 import {fetchJSON} from '../utils/fetchUtil';
 import {
+	makeURLPathParameterString,
 	makeURLPathStringWithForwardSlashes,
 	removeLeadingForwardSlash,
+	stringBetweenCurlyBraces,
 } from '../utils/string';
 
 interface BaseAPIApplicationFieldsProps {
@@ -34,8 +37,48 @@ export default function BaseAPIEndpointFields({
 	editMode,
 	setData,
 }: BaseAPIApplicationFieldsProps) {
+	const [pathErrorMessage, setPathErrorMessage] = useState<string>('');
+	const [pathHasErrors, setPathHasErrors] = useState<boolean>(false);
+
+	const [retrieveTypeOptions, setRetrieveTypeOptions] = useState<
+		SelectOption[]
+	>([]);
 	const [scopeOptions, setScopeOptions] = useState<SelectOption[]>([]);
+
+	const [selectedRetrieveType, setSelectedRetrieveType] = useState<
+		SelectOption
+	>();
 	const [selectedScope, setSelectedScope] = useState<SelectOption>();
+
+	useEffect(() => {
+		setPathHasErrors(
+			displayError.path ||
+				(displayError.parameter &&
+					selectedRetrieveType?.value === 'singleElement')
+		);
+
+		if (
+			displayError.path &&
+			displayError.parameter &&
+			selectedRetrieveType?.value === 'singleElement'
+		) {
+			setPathErrorMessage(
+				Liferay.Language.get('please-enter-a-path-and-a-parameter')
+			);
+		}
+		else if (displayError.parameter) {
+			setPathErrorMessage(
+				Liferay.Language.get('please-enter-a-parameter')
+			);
+		}
+		else if (displayError.path) {
+			setPathErrorMessage(Liferay.Language.get('please-enter-a-path'));
+		}
+	}, [
+		displayError.path,
+		displayError.parameter,
+		selectedRetrieveType?.value,
+	]);
 
 	useEffect(() => {
 		fetchJSON<FetchedListType>({
@@ -56,7 +99,46 @@ export default function BaseAPIEndpointFields({
 				setScopeOptions(options);
 			}
 		});
+
+		fetchJSON<FetchedListType>({
+			input:
+				'/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/RETRIEVE_TYPE_PICKLIST',
+		}).then((response) => {
+			const options = response.listTypeEntries
+				? response.listTypeEntries.map((entry) => ({
+						label:
+							entry.key === 'singleElement'
+								? Liferay.Language.get('single-element')
+								: Liferay.Language.get('collection'),
+						value: entry.key,
+				  }))
+				: [];
+
+			if (options.length) {
+				setRetrieveTypeOptions(options);
+			}
+		});
 	}, []);
+
+	useEffect(() => {
+		if (data.retrieveType?.key && retrieveTypeOptions.length) {
+			setSelectedRetrieveType(
+				retrieveTypeOptions.find(
+					(option) => option.value === data.retrieveType?.key
+				)
+			);
+		}
+
+		if (data.retrieveType?.key === 'collection') {
+			setData((previousValue) => {
+				delete previousValue.parameter;
+				delete previousValue.pathParameter;
+				delete previousValue.pathParameterDescription;
+
+				return previousValue;
+			});
+		}
+	}, [data.retrieveType, retrieveTypeOptions, setData]);
 
 	useEffect(() => {
 		if (data.scope?.key && scopeOptions.length) {
@@ -66,13 +148,21 @@ export default function BaseAPIEndpointFields({
 		}
 	}, [data, scopeOptions]);
 
-	const handleSelectScope = (value: string) => {
+	const handleDropdownChange = (
+		itemKey: string,
+		value: string,
+		options: SelectOption[],
+		onChangeFn: Dispatch<SetStateAction<SelectOption | undefined>>
+	) => {
 		setData((previousValue) => ({
 			...previousValue,
-			scope: {key: value, name: ''},
+			[itemKey]: {key: value, value: ''},
 		}));
 
-		setSelectedScope(scopeOptions.find((option) => option.value === value));
+		onChangeFn({
+			label: options.find((option) => option.value === value)?.label!,
+			value,
+		});
 	};
 
 	const endpointDescriptionLabel = Liferay.Language.get(
@@ -84,12 +174,15 @@ export default function BaseAPIEndpointFields({
 			? `${window.location.origin}${basePath}${apiApplicationBaseURL}/scopes/{scopeKey}`
 			: `${window.location.origin}${basePath}${apiApplicationBaseURL}`;
 	const endpointPathLabel = Liferay.Language.get('enter-path');
+	const endpointParameterLabel = `{${Liferay.Language.get(
+		'enter-parameter'
+	)}}`;
 
 	return (
 		<ClayForm>
 			{(editMode ?? false) && (
-				<ClayForm.Group>
-					<label htmlFor="selectTrigger">
+				<ClayForm.Group className="disabled">
+					<label>
 						{Liferay.Language.get('method')}
 
 						<span className="ml-1 reference-mark text-warning">
@@ -110,6 +203,61 @@ export default function BaseAPIEndpointFields({
 
 			<ClayForm.Group
 				className={classNames({
+					'has-error': displayError.retrieveType,
+				})}
+			>
+				<label htmlFor="selectTrigger">
+					{Liferay.Language.get('retrieve-type')}
+
+					<span className="ml-1 reference-mark text-warning">
+						<ClayIcon symbol="asterisk" />
+					</span>
+				</label>
+
+				<Select
+					dropDownSearchAriaLabel={Liferay.Language.get(
+						'search-for-an-object-definition-or-use-the-arrow-keys-to-navigate-and-select-an-object-definition-from-the-list'
+					)}
+					invalid={displayError.scope}
+					onClick={(value) =>
+						handleDropdownChange(
+							'retrieveType',
+							value,
+							retrieveTypeOptions,
+							setSelectedRetrieveType
+						)
+					}
+					options={retrieveTypeOptions}
+					placeholder={Liferay.Language.get('select-type')}
+					required
+					searchable={false}
+					selectedOption={selectedRetrieveType}
+					triggerAriaLabel={
+						!selectedRetrieveType
+							? Liferay.Language.get(
+									Liferay.Language.get('select-type')
+							  )
+							: sub(
+									Liferay.Language.get('type-x-is-selected'),
+									selectedRetrieveType.label
+							  )
+					}
+				/>
+
+				{displayError.retrieveType && (
+					<ClayAlert
+						className="mt-2"
+						displayType="danger"
+						title={Liferay.Language.get(
+							'please-select-a-retrieve-type'
+						)}
+						variant="feedback"
+					></ClayAlert>
+				)}
+			</ClayForm.Group>
+
+			<ClayForm.Group
+				className={classNames({
 					'has-error': displayError.scope,
 				})}
 			>
@@ -127,7 +275,14 @@ export default function BaseAPIEndpointFields({
 						'search-for-an-object-definition-or-use-the-arrow-keys-to-navigate-and-select-an-object-definition-from-the-list'
 					)}
 					invalid={displayError.scope}
-					onClick={handleSelectScope}
+					onClick={(value) =>
+						handleDropdownChange(
+							'scope',
+							value,
+							scopeOptions,
+							setSelectedScope
+						)
+					}
 					options={scopeOptions}
 					placeholder={Liferay.Language.get('select-scope')}
 					required
@@ -145,21 +300,14 @@ export default function BaseAPIEndpointFields({
 					}
 				/>
 
-				<div className="feedback-container">
-					<ClayForm.FeedbackGroup>
-						{displayError.scope && (
-							<ClayForm.FeedbackItem className="mt-2">
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								<span id="selectScopeErrorMessage">
-									{Liferay.Language.get(
-										'please-select-a-scope'
-									)}
-								</span>
-							</ClayForm.FeedbackItem>
-						)}
-					</ClayForm.FeedbackGroup>
-				</div>
+				{displayError.scope && (
+					<ClayAlert
+						className="mt-2"
+						displayType="danger"
+						title={Liferay.Language.get('please-select-a-scope')}
+						variant="feedback"
+					></ClayAlert>
+				)}
 			</ClayForm.Group>
 
 			<ClayForm.Group
@@ -175,7 +323,7 @@ export default function BaseAPIEndpointFields({
 					</span>
 				</label>
 
-				<Text as="p" id="hostTextPreview" size={2} weight="lighter">
+				<Text as="p" color="secondary" id="hostTextPreview" size={3}>
 					{endpointPathHostTextPreview}
 				</Text>
 
@@ -207,31 +355,14 @@ export default function BaseAPIEndpointFields({
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 
-				{(editMode ?? false) && (
-					<ClayForm.FeedbackGroup>
-						<Text size={3} weight="lighter">
-							{Liferay.Language.get(
-								'the-url-can-be-modified-to-ensure-uniqueness'
-							)}
-						</Text>
-					</ClayForm.FeedbackGroup>
+				{pathHasErrors && (
+					<ClayAlert
+						className="mt-2"
+						displayType="danger"
+						title={pathErrorMessage}
+						variant="feedback"
+					></ClayAlert>
 				)}
-
-				<div className="feedback-container">
-					<ClayForm.FeedbackGroup>
-						{displayError.path && (
-							<ClayForm.FeedbackItem className="mt-2">
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								<span id="selectScopeErrorMessage">
-									{Liferay.Language.get(
-										'please-enter-a-path'
-									)}
-								</span>
-							</ClayForm.FeedbackItem>
-						)}
-					</ClayForm.FeedbackGroup>
-				</div>
 			</ClayForm.Group>
 
 			<ClayForm.Group>

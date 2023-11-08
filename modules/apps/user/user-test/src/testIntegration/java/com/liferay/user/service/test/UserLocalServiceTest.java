@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
+import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -527,6 +528,51 @@ public class UserLocalServiceTest {
 			_userLocalService.authenticateByEmailAddress(
 				user.getCompanyId(), user.getEmailAddress(), password, null,
 				null, null));
+	}
+
+	@Test
+	public void testPasswordHistoryCheckingLastPasswords() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		passwordPolicy.setHistory(true);
+		passwordPolicy.setHistoryCount(2);
+
+		_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
+
+		String password1 = "password1";
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				user.getGroupId(), user.getUserId()));
+
+		user = _userLocalService.updatePassword(
+			user.getUserId(), password1, password1, false, false);
+
+		String password2 = "password2";
+
+		user = _userLocalService.updatePassword(
+			user.getUserId(), password2, password2, false, false);
+
+		Assert.assertEquals(
+			Authenticator.SUCCESS,
+			_userLocalService.authenticateByEmailAddress(
+				user.getCompanyId(), user.getEmailAddress(), password2, null,
+				null, null));
+
+		try {
+			_userLocalService.updatePassword(
+				user.getUserId(), password1, password1, false, false);
+		}
+		catch (PortalException portalException) {
+			Assert.assertEquals(
+				UserPasswordException.MustNotBeRecentlyUsed.class,
+				portalException.getClass());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test

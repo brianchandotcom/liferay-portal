@@ -126,7 +126,7 @@ public class EditCOREntryMVCActionCommand extends BaseMVCActionCommand {
 						serviceContext);
 				}
 			}
-			else if (cmd.equals("delete_product")) {
+			else if (cmd.equals("deleteProduct")) {
 				COREntry corEntry = _corEntryService.getCOREntry(corEntryId);
 
 				_corEntryService.updateCOREntryTypeSettings(

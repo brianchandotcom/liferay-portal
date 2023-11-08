@@ -30,7 +30,7 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 					<liferay-frontend:component
 						context='<%=
 							HashMapBuilder.<String, Object>put(
-								"dataSetId", COREntryFDSNames.CONFIGURABLE_PRODUCTS
+								"dataSetId", COREntryFDSNames.COR_ENTRY_PRODUCTS_LIMITS
 							).put(
 								"rootPortletId", portletDisplay.getRootPortletId()
 							).put(
@@ -54,9 +54,9 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 									"corEntryId", String.valueOf(corEntryDisplayContext.getCOREntryId())
 								).build()
 							%>'
-							dataProviderKey="<%= COREntryFDSNames.CONFIGURABLE_PRODUCTS %>"
+							dataProviderKey="<%= COREntryFDSNames.COR_ENTRY_PRODUCTS_LIMITS %>"
 							formName="fm"
-							id="<%= COREntryFDSNames.CONFIGURABLE_PRODUCTS %>"
+							id="<%= COREntryFDSNames.COR_ENTRY_PRODUCTS_LIMITS %>"
 							itemsPerPage="<%= 10 %>"
 							showSearch="<%= false %>"
 						/>

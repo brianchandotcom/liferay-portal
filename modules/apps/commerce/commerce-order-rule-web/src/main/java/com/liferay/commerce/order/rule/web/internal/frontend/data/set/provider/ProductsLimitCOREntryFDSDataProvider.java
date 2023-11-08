@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "fds.data.provider.key=" + COREntryFDSNames.CONFIGURABLE_PRODUCTS,
+	property = "fds.data.provider.key=" + COREntryFDSNames.COR_ENTRY_PRODUCTS_LIMITS,
 	service = FDSDataProvider.class
 )
 public class ProductsLimitCOREntryFDSDataProvider

@@ -135,8 +135,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 				return StringPool.FALSE;
 			}
 		).put(
-			"nonceAttr",
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			"nonceAttribute",
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest)
 		).put(
 			"openProductMenuTitle",

@@ -112,7 +112,8 @@ public class NetvibesServlet extends HttpServlet {
 		sb.append("\" rel=\"stylesheet\" type=\"text/css\" ");
 		sb.append("/>");
 		sb.append("<script");
-		sb.append(ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null));
+		sb.append(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(null));
 		sb.append(" src=\"");
 		sb.append(_NETVIBES_JS);
 		sb.append("\" ");

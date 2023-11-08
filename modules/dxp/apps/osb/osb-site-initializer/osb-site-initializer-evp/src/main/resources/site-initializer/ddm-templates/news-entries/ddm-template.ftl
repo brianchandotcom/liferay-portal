@@ -80,7 +80,7 @@
 	</#if>
 </div>
 
-<script ${nonceAttr}>
+<script ${nonceAttribute}>
 	function handleClick(title){
 		const text = title.nextElementSibling.innerHTML;
 

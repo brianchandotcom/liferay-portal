@@ -79,7 +79,7 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 
 			printWriter.write("<script");
 			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 			printWriter.write(" src=\"");
 			printWriter.write(HtmlUtil.escapeHREF(keepAliveURL));

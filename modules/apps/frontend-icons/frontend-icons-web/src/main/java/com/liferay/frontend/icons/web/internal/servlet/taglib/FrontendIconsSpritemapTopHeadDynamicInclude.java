@@ -39,7 +39,7 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude
 
 		sb.append("<script");
 		sb.append(
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
 		sb.append(" data-senna-track=\"temporary\">");
 		sb.append("var Liferay = window.Liferay || {};");

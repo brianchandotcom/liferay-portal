@@ -82,7 +82,7 @@ public class ClientExtensionTopJSDynamicInclude implements DynamicInclude {
 
 			printWriter.print("<script");
 			printWriter.print(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 
 			String loadType = typeSettingsUnicodeProperties.getProperty(

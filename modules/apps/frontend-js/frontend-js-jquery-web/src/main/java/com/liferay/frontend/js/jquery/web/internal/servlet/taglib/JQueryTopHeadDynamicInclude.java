@@ -66,7 +66,7 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 		if (themeDisplay.isThemeJsFastLoad()) {
 			printWriter.print("<script");
 			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 			printWriter.print(" data-senna-track=\"permanent\" src=\"");
 

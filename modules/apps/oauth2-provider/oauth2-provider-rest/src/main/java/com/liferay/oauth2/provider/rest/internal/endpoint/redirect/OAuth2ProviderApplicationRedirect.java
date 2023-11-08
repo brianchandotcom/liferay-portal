@@ -45,7 +45,7 @@ public class OAuth2ProviderApplicationRedirect {
 			StringBundler.concat(
 				"<html><head><title>Liferay OAuth2 Redirect</title></head>",
 				"<body><script",
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null),
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(null),
 				" type=\"text/javascript\">window.postMessage(",
 				JSONUtil.put(
 					"code", HtmlUtil.escapeJS(code)

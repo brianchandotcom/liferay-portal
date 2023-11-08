@@ -148,8 +148,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 				"iconTag",
 				iconTag.doTagAsString(httpServletRequest, httpServletResponse)
 			).put(
-				"nonceAttr",
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				"nonceAttribute",
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest)
 			).put(
 				"portletNamespace", _portletNamespace

@@ -97,7 +97,8 @@ public class PortletDependencyImpl implements PortletDependency {
 			else if (_type == Type.JAVASCRIPT) {
 				sb.append("<script");
 				sb.append(
-					ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null));
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+						null));
 				sb.append(" src=\"");
 				sb.append(_getURL());
 				sb.append("\" type=\"text/javascript\"></script>");

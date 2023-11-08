@@ -35,9 +35,9 @@ $dateUtil.getCurrentDate($date_format, $locale)#end
 
 #macro (js $file_name)
 	#if ($file_name == $js_main_file)
-		<script $nonceAttr id="mainLiferayThemeJavaScript" src="$file_name" type="text/javascript"></script>
+		<script $nonceAttribute id="mainLiferayThemeJavaScript" src="$file_name" type="text/javascript"></script>
 	#else
-		<script $nonceAttr src="$file_name" type="text/javascript"></script>
+		<script $nonceAttribute src="$file_name" type="text/javascript"></script>
 	#end
 #end
 

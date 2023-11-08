@@ -54,7 +54,7 @@ public class ViewCounterTransformerListener extends BaseTransformerListener {
 			s, _COUNTER_TOKEN,
 			StringBundler.concat(
 				"<script",
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null),
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(null),
 				" type=\"text/javascript\">",
 				"Liferay.Service('/assetentry/increment-view-counter',",
 				"{userId:0, className:'",

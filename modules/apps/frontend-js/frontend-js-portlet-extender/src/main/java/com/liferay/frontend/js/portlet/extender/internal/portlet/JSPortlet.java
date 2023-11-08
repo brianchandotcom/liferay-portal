@@ -72,7 +72,7 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 				StringUtil.replace(
 					_TPL_JAVA_SCRIPT,
 					new String[] {
-						"[$CONTEXT_PATH$]", "[$NONCE_ATTR$]",
+						"[$CONTEXT_PATH$]", "[$NONCE_ATTRIBUTE$]",
 						"[$PACKAGE_NAME$]", "[$PACKAGE_VERSION$]",
 						"[$PORTLET_ELEMENT_ID$]",
 						"[$PORTLET_INSTANCE_CONFIGURATION$]",
@@ -80,8 +80,9 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 					},
 					new String[] {
 						renderRequest.getContextPath(),
-						ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
-							_portal.getHttpServletRequest(renderRequest)),
+						ContentSecurityPolicyNonceProviderUtil.
+							getNonceAttribute(
+								_portal.getHttpServletRequest(renderRequest)),
 						_packageName, _packageVersion, portletElementId,
 						_getPortletInstanceConfiguration(renderRequest),
 						renderResponse.getNamespace(), _getSystemConfiguration()

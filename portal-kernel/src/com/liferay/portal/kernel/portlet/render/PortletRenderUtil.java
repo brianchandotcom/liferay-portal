@@ -490,7 +490,7 @@ public class PortletRenderUtil {
 
 		printWriter.print("<script");
 		printWriter.print(
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null));
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(null));
 		printWriter.print(" src=\"");
 		printWriter.print(HtmlUtil.escapeAttribute(javaScriptPath));
 		printWriter.print("\" type=\"");

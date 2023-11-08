@@ -296,7 +296,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		if (Validator.isNotNull(fragmentEntryLink.getJs())) {
 			sb.append("<script");
 			sb.append(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 			sb.append(">(function() {const configuration = ");
 			sb.append(configuration);

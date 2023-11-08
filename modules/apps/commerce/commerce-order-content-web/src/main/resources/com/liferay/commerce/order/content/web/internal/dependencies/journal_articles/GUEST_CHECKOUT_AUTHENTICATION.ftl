@@ -2,7 +2,7 @@
 
 	<#-- Instant redirect, when the page is hit directly or refreshed -->
 
-	<script ${nonceAttr}>
+	<script ${nonceAttribute}>
 		if (Liferay.ThemeDisplay.isSignedIn()) {
 			window.location.replace("${commerceOrderHttpHelper.getCommerceCheckoutPortletURL(request)}");
 		}

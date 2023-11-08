@@ -81,9 +81,9 @@ ${dateUtil.getCurrentDate(format, locale)}</#macro>
 	file_name
 >
 	<#if file_name == js_main_file>
-		<script ${nonceAttr} id="mainLiferayThemeJavaScript" src="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, file_name))}" type="text/javascript"></script>
+		<script ${nonceAttribute} id="mainLiferayThemeJavaScript" src="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, file_name))}" type="text/javascript"></script>
 	<#else>
-		<script ${nonceAttr} src="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, file_name))}" type="text/javascript"></script>
+		<script ${nonceAttribute} src="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, file_name))}" type="text/javascript"></script>
 	</#if>
 </#macro>
 

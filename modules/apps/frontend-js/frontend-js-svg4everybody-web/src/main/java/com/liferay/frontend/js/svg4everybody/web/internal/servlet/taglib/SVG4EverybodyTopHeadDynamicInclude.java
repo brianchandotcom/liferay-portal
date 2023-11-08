@@ -103,7 +103,7 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 		for (String jsFileName : _JS_FILE_NAMES) {
 			printWriter.print("<script");
 			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 			printWriter.print(" data-senna-track=\"permanent\" src=\"");
 

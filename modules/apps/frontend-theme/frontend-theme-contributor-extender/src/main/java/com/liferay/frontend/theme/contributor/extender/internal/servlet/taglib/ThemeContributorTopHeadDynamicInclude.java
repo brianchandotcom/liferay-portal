@@ -236,7 +236,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		printWriter.write("<script");
 		printWriter.write(
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
 		printWriter.write(" data-senna-track=\"permanent\" src=\"");
 
@@ -274,7 +274,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		for (String resourceURL : resourceURLs) {
 			printWriter.write("<script");
 			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 			printWriter.write(" data-senna-track=\"permanent\" src=\"");
 			printWriter.write(

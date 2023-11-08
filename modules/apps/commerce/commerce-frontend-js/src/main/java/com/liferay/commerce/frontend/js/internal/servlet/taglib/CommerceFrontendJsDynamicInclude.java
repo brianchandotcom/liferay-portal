@@ -82,7 +82,7 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 
 		return StringBundler.concat(
 			"<script",
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest),
 			" data-senna-track=\"temporary\">var Liferay = window.Liferay || ",
 			"{}; Liferay.CommerceContext = ",

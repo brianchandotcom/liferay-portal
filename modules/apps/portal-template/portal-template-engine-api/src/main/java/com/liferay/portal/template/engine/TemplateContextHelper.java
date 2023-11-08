@@ -206,8 +206,8 @@ public class TemplateContextHelper {
 		// CSP nonce
 
 		contextObjects.put(
-			"nonceAttr",
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			"nonceAttribute",
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
 
 		// Request

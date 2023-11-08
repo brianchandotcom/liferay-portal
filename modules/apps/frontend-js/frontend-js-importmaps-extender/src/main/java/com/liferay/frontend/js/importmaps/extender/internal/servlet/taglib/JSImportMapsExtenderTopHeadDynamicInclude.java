@@ -65,7 +65,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 			printWriter.print("<script");
 			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 			printWriter.print(" type=\"");
 
@@ -84,12 +84,12 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		if (_jsImportMapsConfiguration.enableESModuleShims()) {
 			printWriter.print("<script");
 			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 			printWriter.print(" type=\"esms-options\">{\"shimMode\": ");
 			printWriter.print("true}</script><script");
 			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 					httpServletRequest));
 			printWriter.print(" src=\"");
 

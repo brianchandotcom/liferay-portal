@@ -33,26 +33,6 @@
 			"name": "J3Y7Ticket",
 			"objectActions": [
 				{
-					"active": false,
-					"conditionExpression": "ticketStatus == 'open'",
-					"description": "",
-					"errorMessage": {
-					},
-					"label": {
-						"en_US": "Liferay Ticket Etc Spring Boot Object Action Ticket"
-					},
-					"name": "LiferayTicketEtcDocumentationReferral",
-					"objectActionExecutorKey": "function#liferay-ticket-etc-spring-boot-object-action-ticket",
-					"objectActionTriggerKey": "onAfterAdd",
-					"parameters": {
-					},
-					"status": {
-						"code": 0,
-						"label": "never-ran",
-						"label_i18n": "Never Ran"
-					}
-				},
-				{
 					"active": true,
 					"errorMessage": {
 						"en_US": "Unable to assign ticket."
@@ -60,7 +40,7 @@
 					"label": {
 						"en_US": "Assign Ticket to Me"
 					},
-					"name": "assignTicketToMe",
+					"name": "AssignTicketToMe",
 					"objectActionExecutorKey": "update-object-entry",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
@@ -69,7 +49,7 @@
 							{
 								"inputAsValue": false,
 								"label": {
-									"en_US": "User To J3Y7 Ticket"
+									"en_US": "User to J3Y7 Ticket"
 								},
 								"name": "r_userToJ3Y7Ticket_userId",
 								"value": "currentUserId"
@@ -80,6 +60,26 @@
 						"code": 1,
 						"label": "success",
 						"label_i18n": "Success"
+					}
+				},
+				{
+					"active": false,
+					"conditionExpression": "ticketStatus == 'open'",
+					"description": "",
+					"errorMessage": {
+					},
+					"label": {
+						"en_US": "Liferay Ticket Etc Spring Boot Object Action Ticket"
+					},
+					"name": "SpringBootObjectActionTicket",
+					"objectActionExecutorKey": "function#liferay-ticket-etc-spring-boot-object-action-ticket",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					}
 				}
 			],

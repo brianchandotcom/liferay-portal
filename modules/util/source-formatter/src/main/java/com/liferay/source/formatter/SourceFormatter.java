@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
@@ -782,8 +783,8 @@ public class SourceFormatter {
 			String nextLine = SourceUtil.getLine(parts[1], lineNumber + 1);
 			String previousLine = SourceUtil.getLine(parts[1], lineNumber - 1);
 
-			if (((nextLine != null) && (nextLine.length() != 0)) ||
-				((previousLine != null) && (previousLine.length() != 0))) {
+			if (Validator.isNotNull(nextLine) ||
+				Validator.isNotNull(previousLine)) {
 
 				throw new Exception(
 					StringBundler.concat(

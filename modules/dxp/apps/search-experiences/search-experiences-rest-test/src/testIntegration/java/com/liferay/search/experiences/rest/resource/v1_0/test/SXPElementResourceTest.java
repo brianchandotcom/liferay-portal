@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
 import com.liferay.search.experiences.rest.client.serdes.v1_0.ElementDefinitionSerDes;
+import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +37,37 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
+
+	@Test
+	public void testCopySXPElementVerifyFallbackFields() throws Exception {
+		SXPElement sxpElement = randomSXPElement();
+
+		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
+			sxpElement);
+
+		HttpInvoker.HttpResponse postSXPElementCopyHttpResponse =
+			sxpElementResource.postSXPElementCopyHttpResponse(
+				postSXPElement.getId());
+
+		com.liferay.search.experiences.model.SXPElement copySXPElementModel =
+			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+				SXPElement.toDTO(
+					postSXPElementCopyHttpResponse.getContent()
+				).getExternalReferenceCode(),
+				testCompany.getCompanyId());
+
+		com.liferay.search.experiences.model.SXPElement inicialSXPElementModel =
+			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+				postSXPElement.getExternalReferenceCode(),
+				testCompany.getCompanyId());
+
+		Assert.assertEquals(
+			inicialSXPElementModel.getFallbackDescription(),
+			copySXPElementModel.getFallbackDescription());
+		Assert.assertEquals(
+			"Copy of " + inicialSXPElementModel.getFallbackTitle(),
+			copySXPElementModel.getFallbackTitle());
+	}
 
 	@Override
 	@Test
@@ -198,6 +230,86 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		sxpElementResource.postSXPElementValidate("{}");
 	}
 
+	@Test
+	public void testSXPElementImportWithFallbackFields() throws Exception {
+		SXPElement sxpElement = randomSXPElement();
+
+		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
+			sxpElement);
+
+		HttpInvoker.HttpResponse sxpElementExportHttpResponse =
+			sxpElementResource.getSXPElementExportHttpResponse(
+				postSXPElement.getId());
+
+		SXPElement sxpElementExported = SXPElement.toDTO(
+			sxpElementExportHttpResponse.getContent());
+
+		sxpElementExported.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
+		HttpInvoker.HttpResponse postSXPElementHttpResponse =
+			sxpElementResource.postSXPElementHttpResponse(sxpElementExported);
+
+		com.liferay.search.experiences.model.SXPElement
+			importedSXPElementModel =
+				_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+					SXPElement.toDTO(
+						postSXPElementHttpResponse.getContent()
+					).getExternalReferenceCode(),
+					testCompany.getCompanyId());
+
+		com.liferay.search.experiences.model.SXPElement inicialSXPElementModel =
+			_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+				postSXPElement.getExternalReferenceCode(),
+				testCompany.getCompanyId());
+
+		Assert.assertEquals(
+			inicialSXPElementModel.getFallbackDescription(),
+			importedSXPElementModel.getFallbackDescription());
+		Assert.assertEquals(
+			inicialSXPElementModel.getFallbackTitle(),
+			importedSXPElementModel.getFallbackTitle());
+	}
+
+	@Test
+	public void testSXPElementImportWithoutFallbackFields() throws Exception {
+		SXPElement sxpElement = randomSXPElement();
+
+		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
+			sxpElement);
+
+		HttpInvoker.HttpResponse sxpElementExportHttpResponse =
+			sxpElementResource.getSXPElementExportHttpResponse(
+				postSXPElement.getId());
+
+		SXPElement sxpElementExported = SXPElement.toDTO(
+			sxpElementExportHttpResponse.getContent());
+
+		sxpElementExported.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
+		sxpElementExported.setFallbackDescription(StringPool.BLANK);
+		sxpElementExported.setFallbackTitle(StringPool.BLANK);
+
+		HttpInvoker.HttpResponse postSXPElementHttpResponse =
+			sxpElementResource.postSXPElementHttpResponse(sxpElementExported);
+
+		com.liferay.search.experiences.model.SXPElement
+			importedSXPElementModel =
+				_sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+					SXPElement.toDTO(
+						postSXPElementHttpResponse.getContent()
+					).getExternalReferenceCode(),
+					testCompany.getCompanyId());
+
+		Assert.assertEquals(
+			postSXPElement.getDescription(),
+			importedSXPElementModel.getFallbackDescription());
+		Assert.assertEquals(
+			postSXPElement.getTitle(),
+			importedSXPElementModel.getFallbackTitle());
+	}
+
 	protected static String getResourceAsString(
 		Class<?> clazz, String resourceName) {
 
@@ -345,5 +457,8 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 
 	@Inject
 	private Language _language;
+
+	@Inject
+	private SXPElementLocalService _sxpElementLocalService;
 
 }

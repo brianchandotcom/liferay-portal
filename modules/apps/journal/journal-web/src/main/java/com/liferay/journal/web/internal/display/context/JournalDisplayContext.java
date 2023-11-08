@@ -948,6 +948,12 @@ public class JournalDisplayContext {
 				"navigation", HtmlUtil.escapeJS(getNavigation()));
 		}
 
+		portletURL.setParameter(
+			"navigationMine", String.valueOf(isNavigationMine()));
+
+		portletURL.setParameter(
+			"navigationRecent", String.valueOf(isNavigationRecent()));
+
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
 
 		if (isNavigationStructure()) {

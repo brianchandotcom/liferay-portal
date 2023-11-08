@@ -50,6 +50,12 @@ public class DBManagerUtil {
 		return dbManager.getDBType();
 	}
 
+	public static DBType getDBType(DataSource dataSource) {
+		DBManager dbManager = _dbManager;
+
+		return dbManager.getDBType(dataSource);
+	}
+
 	public static DBType getDBType(Object dialect) {
 		DBManager dbManager = _dbManager;
 

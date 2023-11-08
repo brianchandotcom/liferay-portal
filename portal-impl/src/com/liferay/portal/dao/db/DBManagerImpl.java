@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.EnumMap;
@@ -144,6 +145,11 @@ public class DBManagerImpl implements DBManager {
 		}
 
 		return _db.getDBType();
+	}
+
+	@Override
+	public DBType getDBType(DataSource dataSource) {
+		return getDBType(DialectDetector.getDialect(dataSource));
 	}
 
 	@Override

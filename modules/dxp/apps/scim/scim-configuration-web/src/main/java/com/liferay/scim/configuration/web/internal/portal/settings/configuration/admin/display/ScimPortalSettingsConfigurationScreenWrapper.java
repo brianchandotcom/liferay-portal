@@ -136,7 +136,7 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-			Configuration configuration = null;
+			Dictionary<String, Object> properties = null;
 
 			try {
 				Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -151,16 +151,14 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					return;
 				}
 
-				configuration = configurations[0];
+				Configuration configuration = configurations[0];
+
+				properties = configuration.getProperties();
 			}
 			catch (Exception exception) {
 				ReflectionUtil.throwException(exception);
 			}
 
-					Dictionary<String, Object> properties =
-						configuration.getProperties();
-
-					if (properties != null) {
 						String applicationName = (String)properties.get(
 							ScimConstants.PARAM_APPLICATION_NAME);
 						String matcherField = (String)properties.get(
@@ -216,7 +214,6 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 										getMessage());
 							}
 						}
-					}
 		}
 
 	}

@@ -1,0 +1,45 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.user.dto.v1_0.UserAccount",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"alternateName": "adminadam",
+			"emailAddress": "admin.adam@liferay.com",
+			"externalReferenceCode": "ADMIN_ADAM",
+			"familyName": "Adam",
+			"givenName": "Admin",
+			"jobTitle": "Technical Administrator",
+			"name": "Admin Adam",
+			"password": "test"
+		},
+		{
+			"alternateName": "customer.carl",
+			"emailAddress": "customer.carl@liferay.com",
+			"externalReferenceCode": "CUSTOMER_CARL",
+			"familyName": "Carl",
+			"givenName": "Customer",
+			"jobTitle": "Customer",
+			"name": "Customer Carl",
+			"password": "test"
+		},
+		{
+			"alternateName": "support.sam",
+			"emailAddress": "support.sam@liferay.com",
+			"externalReferenceCode": "SUPPORT_SAM",
+			"familyName": "Sam",
+			"givenName": "Support",
+			"jobTitle": "Technical Support",
+			"name": "Support Sam",
+			"password": "test"
+		}
+	]
+}

@@ -4,9 +4,9 @@
  */
 
 import {format, isBefore} from 'date-fns';
+import {useCallback, useMemo, useState} from 'react';
 import {useOutletContext, useParams} from 'react-router-dom';
 import useSWR from 'swr';
-import {useMemo, useState} from 'react';
 
 import solutionsIcon from '../../../../assets/icons/bookmarks_icon.svg';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
@@ -16,16 +16,45 @@ import i18n from '../../../../i18n';
 
 import './Licenses.scss';
 
+import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import LicenceKeyModalContent from './LicenseModalContent';
+
 import Modal from '../../../../components/Modal';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-
 import {OrderType} from '../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
-import useProvisioningKoroneikiOAuth2 from '../../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
-import {useModal} from '@clayui/modal';
+import {getThumbnailByProductAttachment} from '../../../../utils/util';
 import AccountEmailInfo from '../../../CreateLicense/AccountInfo';
+import useProvisioningKoroneikiOAuth2 from '../../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
+import OrderDetailsHeader from '../components/OrderDetailsHeader';
+import LicenceKeyModalContent from './LicenseModalContent';
+
+export type LicenceKeyProps = {
+	active: boolean;
+	complimentary: boolean;
+	createDate: string;
+	description: string;
+	expirationDate: string;
+	hostName: string;
+	id: number;
+	ipAddresses: string;
+	key: string;
+	keyType: string;
+	licenseType: string;
+	licenseTypeAsString: string;
+	macAddresses: string;
+	modifiedDate: string;
+	modifiedUserName: string;
+	modifiedUserUuid: string;
+	orderId: string;
+	owner: string;
+	productId: string;
+	productName: string;
+	productVersion: string;
+	startDate: string;
+	userName: string;
+	userUuid: string;
+};
 
 type TitleSubtitleHeaderProps = {
 	bold?: boolean;
@@ -60,67 +89,27 @@ const Licenses = () => {
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
 	});
-	const [modalData, setModalData] = useState<any>();
+	const [modalData, setModalData] = useState<LicenceKeyProps>();
 	const {myUserAccount} = useMarketplaceContext();
 
 	const placedOrder = outletContext?.placedOrder;
+	const product = outletContext?.product;
 
 	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
 
-	console.log('orderId', orderId);
-
-	const {data: licenseKeysResponse, isLoading} = useSWR(
-		`/order-license-key3s/${orderId}`,
-		async () => {
-			try {
-				return provisioningKoroneikiOAuth2.getOrderLicenseKeys(
-					orderId as string
-				);
-			} catch (error) {
-				return {
-					items: [
-						{
-							active: true,
-							complimentary: false,
-							createDate: '2023-11-03T15:50:54Z',
-							description: 'Test Test - Liferay - Standard',
-							expirationDate: '2123-11-03T15:50:52Z',
-							hostName: 'localhost',
-							id: 483336,
-							ipAddresses: '',
-							key: '68c060298e1984661dc257b3e517cdbb154aca19a1e10ae43c5e61c3e018d1b2b44c017ad6d2a5680f666d72d0e7cbd6835a6d4823f46e3fbf39241933f31891e746091fe2dda53c04b6c70ed27beee12f68e6620325c3e949cfb3171fefbfb95b65712d565c1551340998102d418ceccb35db8dbfb45f9041c4cae483d8717b',
-							licenseType: 'production',
-							macAddresses: '',
-							modifiedDate: '2023-11-03T15:50:54Z',
-							modifiedUserName: 'test@liferay.com',
-							modifiedUserUuid: '20122',
-							orderId: '46858',
-							owner: 'test@liferay.com',
-							productId: 'KOR-26515372',
-							productName: 'Liferay Portal - Standard',
-							productVersion: '1.0.0',
-							startDate: '2023-11-03T15:50:52Z',
-							userName: 'test@liferay.com',
-							userUuid: '20122',
-						},
-					],
-					totalCount: 1,
-				};
-			}
-		}
+	const handleDownloadLicense = useCallback(
+		(id: number) => {
+			provisioningKoroneikiOAuth2.downloadLicenseKey(id);
+		},
+		[provisioningKoroneikiOAuth2]
 	);
-
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
-	const rows = licenseKeysResponse?.items ?? [];
 
 	const buttonsInfo = useMemo(
 		() => ({
 			cancelButton: {
 				className: 'ml-4',
 				displayType: 'unstyled',
+				onClick: onClose,
 				show: true,
 			},
 			customizedButton: {
@@ -134,31 +123,58 @@ const Licenses = () => {
 				className: 'ml-4 mr-1',
 				disabled: false,
 				displayType: 'primary',
+				onClick: () => handleDownloadLicense(modalData?.id as number),
 				show: true,
 				text: i18n.translate('download-key'),
 			},
 		}),
-		[]
+		[modalData, handleDownloadLicense, onClose]
 	);
 
-	const modalHeaderData = {
-		productName: 'Product Name',
-		description: 'Description',
-		title: 'Activation Key details',
-	};
+	const keyType =
+		placedOrder?.orderTypeExternalReferenceCode === OrderType.DXP
+			? 'On-Premise'
+			: 'Cloud';
 
-	const LicenseKeyDetailsHeader = () => (
-		<div className="d-flex justify-content-between flex-row">
+	const {data: licenseKeysResponse, isLoading} = useSWR(
+		`/order-license-keys/${orderId}`,
+		async () => {
+			try {
+				return provisioningKoroneikiOAuth2.getOrderLicenseKeys(
+					orderId as string
+				);
+			}
+			catch (error) {
+				return {
+					items: [],
+					totalCount: 0,
+				};
+			}
+		}
+	);
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	const rows = licenseKeysResponse?.items ?? [];
+
+	const LicenseDetailsModalHeader = () => (
+		<div className="d-flex flex-row justify-content-between">
 			<div className="flex-row mb-1">
-				<h6 className="text-primary text-uppercase font-weight-bold">
-					{modalHeaderData.title}
+				<h6 className="font-weight-bold text-primary text-uppercase">
+					Activation Key details
 				</h6>
 
-				<h2 className="text-neutral-10">
-					{modalHeaderData.productName}
-				</h2>
-
-				<p>{modalHeaderData.description}</p>
+				<OrderDetailsHeader
+					className="d-flex flex-row justify-content-between mt-3"
+					hasOrderDescription={modalData?.description}
+					image={getThumbnailByProductAttachment(
+						product?.attachments
+					)}
+					name={product?.name?.en_US}
+					version={modalData?.productVersion}
+				/>
 			</div>
 
 			<AccountEmailInfo userAccount={myUserAccount} />
@@ -169,10 +185,6 @@ const Licenses = () => {
 		<div className="licenses mt-4">
 			{rows.length ? (
 				<Table
-					onClickRow={(data) => {
-						setVisible(true);
-						setModalData(data);
-					}}
 					columns={[
 						{
 							bodyClass: 'border-0 cursor-pointer',
@@ -198,12 +210,7 @@ const Licenses = () => {
 							render: (hostName) => (
 								<TitleSubtitleHeader
 									subtitle={hostName || '-'}
-									title={
-										placedOrder?.orderTypeExternalReferenceCode ===
-										OrderType.DXP
-											? 'On-Premise'
-											: 'Cloud'
-									}
+									title={keyType}
 								/>
 							),
 							title: (
@@ -270,6 +277,12 @@ const Licenses = () => {
 					]}
 					hasKebabButton
 					hasPagination
+					onClickRow={(row) => {
+						row.keyType = keyType;
+
+						setVisible(true);
+						setModalData(row);
+					}}
 					rows={rows}
 				/>
 			) : (
@@ -285,18 +298,11 @@ const Licenses = () => {
 			)}
 
 			{visible && (
-				<Modal
-					buttonsInfo={buttonsInfo}
-					observer={observer}
-					onClose={onClose}
-					size="lg"
-				>
-					{
-						<LicenceKeyModalContent
-							Header={() => <LicenseKeyDetailsHeader />}
-							modalData={modalData!}
-						/>
-					}
+				<Modal buttonsInfo={buttonsInfo} observer={observer} size="lg">
+					<LicenceKeyModalContent
+						Header={() => <LicenseDetailsModalHeader />}
+						modalData={modalData as LicenceKeyProps}
+					/>
 				</Modal>
 			)}
 		</div>

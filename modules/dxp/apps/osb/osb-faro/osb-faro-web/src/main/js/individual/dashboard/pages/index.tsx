@@ -109,10 +109,10 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 								Containers.CurrentTotalsCard,
 								Containers.EnrichedProfilesCard,
 								Containers.ActiveIndividualsCard,
-								Containers.TopInterestsAsOfYesterday,
+								Containers.TopInterestsAsOfYesterdayCard,
 								Containers.DistributionBreakdownCard
 							]}
-							disabled={false}
+							disabled={dataSourceStates?.empty}
 							subtitle={selectedChannel?.name}
 							title={Liferay.Language.get(
 								'individuals-dashboard'

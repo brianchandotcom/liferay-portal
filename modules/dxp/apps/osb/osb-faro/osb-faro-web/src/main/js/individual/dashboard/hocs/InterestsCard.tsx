@@ -74,7 +74,7 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	return (
 		<Card
 			className='interests-card-root'
-			id={Containers.TopInterestsAsOfYesterday}
+			id={Containers.TopInterestsAsOfYesterdayCard}
 			minHeight={536}
 		>
 			<Card.Header>

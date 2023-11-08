@@ -6,6 +6,7 @@ import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {compositionListColumns} from 'shared/util/table-columns';
 import {CompositionTypes} from 'shared/util/constants';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	getMapResultToProps,
 	mapCardPropsToOptions
@@ -72,7 +73,11 @@ const TableWithData = withTableData(withData, {
 });
 
 const InterestsCard = ({channelId, groupId, id}) => (
-	<Card className='interests-card-root' minHeight={536}>
+	<Card
+		className='interests-card-root'
+		id={Containers.TopInterestsCard}
+		minHeight={536}
+	>
 		<Card.Header>
 			<Card.Title>{Liferay.Language.get('top-interests')}</Card.Title>
 		</Card.Header>

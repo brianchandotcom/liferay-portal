@@ -11,20 +11,24 @@ export enum Containers {
 	ActiveIndividualsCard = 'activeIndividualsCardRoot',
 	AssetAppearsOnCard = 'assetAppearsOnCardRoot',
 	AudienceCard = 'audienceCardRoot',
-	DistributionBreakdownCard = 'distributionBreakdownCardRoot',
 	CohortAnalysisCard = 'cohortAnalysisCardRoot',
 	CurrentTotalsCard = 'currentTotalsCardRoot',
+	DistributionBreakdownCard = 'distributionBreakdownCardRoot',
 	DownloadsByLocationCard = 'downloadsByLocationCardRoot',
 	DownloadsByTechnologyCard = 'downloadsByTechnologyCardRoot',
 	EnrichedProfilesCard = 'enrichedProfilesCardRoot',
 	InterestsCard = 'interestsCardRoot',
 	SearchTermsCard = 'searchTermsCardRoot',
+	SegmentCompositionCard = 'segmentCompositionCardRoot',
+	SegmentCriteriaCard = 'segmentCriteriaCardRoot',
+	SegmentMembershipCard = 'segmentMembershipCardRoot',
 	SessionsByLocationCard = 'sessionsByLocationCardRoot',
 	SessionTechnologyCard = 'sessionTechnologyCardRoot',
 	SiteActivityCard = 'siteActivityCardRoot',
 	SubmissionsByLocationCard = 'submissionsByLocationCardRoot',
-	SubmissionsByTechnologyCard = 'submissionsByTechnologyCard',
-	TopInterestsAsOfYesterday = 'topInterestsAsOfYesterday',
+	SubmissionsByTechnologyCard = 'submissionsByTechnologyCardRoot',
+	TopInterestsAsOfYesterdayCard = 'topInterestsAsOfYesterdayCardRoot',
+	TopInterestsCard = 'topInterestsCardRoot',
 	TopPagesCard = 'topPagesCardRoot',
 	ViewsByLocationCard = 'viewsByLocationCardRoot',
 	ViewsByTechnologyCard = 'viewsByTechnologyCardRoot',
@@ -81,6 +85,18 @@ export const CONTAINERS: {[key in Containers]: TContainer} = {
 		label: Liferay.Language.get('search-terms'),
 		layout: 3
 	},
+	[Containers.SegmentCompositionCard]: {
+		label: Liferay.Language.get('segment-composition'),
+		layout: 3
+	},
+	[Containers.SegmentCriteriaCard]: {
+		label: Liferay.Language.get('segment-criteria'),
+		layout: 3
+	},
+	[Containers.SegmentMembershipCard]: {
+		label: Liferay.Language.get('segment-membership'),
+		layout: 2
+	},
 	[Containers.SessionsByLocationCard]: {
 		label: Liferay.Language.get('sessions-by-location'),
 		layout: 2
@@ -101,7 +117,11 @@ export const CONTAINERS: {[key in Containers]: TContainer} = {
 		label: Liferay.Language.get('submissions-by-technology'),
 		layout: 2
 	},
-	[Containers.TopInterestsAsOfYesterday]: {
+	[Containers.TopInterestsCard]: {
+		label: Liferay.Language.get('top-interests'),
+		layout: 2
+	},
+	[Containers.TopInterestsAsOfYesterdayCard]: {
 		label: Liferay.Language.get('top-interests-as-of-yesterday'),
 		layout: 1
 	},

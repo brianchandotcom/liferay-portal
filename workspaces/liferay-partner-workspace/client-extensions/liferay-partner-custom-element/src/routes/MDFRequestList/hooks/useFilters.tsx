@@ -5,22 +5,27 @@
 
 import {useEffect, useState} from 'react';
 
-import useIsChannel from '../../../common/hooks/useIsChannel';
 import {Filters} from '../../../common/utils/constants/filters';
 import {getCamelCase} from '../../../common/utils/getCamelCase';
 import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 import getActivityPeriodFilterTerm from '../utils/getActivityPeriodFilterTerm';
 
-export default function useFilters() {
+export default function useFilters(
+	openRequestFilter: boolean,
+	isChannel?: boolean
+) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	const [filtersTerm, setFilterTerm] = useState('');
-	const {isChannel} = useIsChannel();
 
 	const mdfRequestRoleFilter = isChannel
-		? Filters.MDF_REQUEST_LISTING.channels
-		: Filters.MDF_REQUEST_LISTING.partners;
+		? openRequestFilter
+			? Filters.MDF_REQUEST_LISTING.channelsOpen
+			: Filters.MDF_REQUEST_LISTING.channelsCompleted
+		: openRequestFilter
+		? Filters.MDF_REQUEST_LISTING.partnersOpen
+		: Filters.MDF_REQUEST_LISTING.partnersCompleted;
 
 	const onFilter = (newFilters: Partial<typeof INITIAL_FILTER>) =>
 		setFilters((previousFilters) => ({...previousFilters, ...newFilters}));

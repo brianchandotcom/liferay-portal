@@ -8,7 +8,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useMemo} from 'react';
+import ClayTabs from '@clayui/tabs';
+import {useMemo, useState} from 'react';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
@@ -17,11 +18,11 @@ import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/co
 import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter/DateFilter';
 import Search from '../../common/components/TableHeader/Search/Search';
 import TableHeader from '../../common/components/TableHeader/TableHeader';
-import {LiferayPicklistName} from '../../common/enums/liferayPicklistName';
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {ObjectActionName} from '../../common/enums/objectActionName';
 import {PermissionActionType} from '../../common/enums/permissionActionType';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
+import useIsChannel from '../../common/hooks/useIsChannel';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
@@ -32,6 +33,7 @@ import {Liferay} from '../../common/services/liferay';
 import {LiferayAPIs} from '../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../common/services/liferay/common/interfaces/liferayItems';
 import useGet from '../../common/services/liferay/object/useGet';
+import {Filters} from '../../common/utils/constants/filters';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
@@ -44,10 +46,16 @@ type MDFRequestItem = {
 };
 
 const MDFRequestList = () => {
-	const {fieldEntries, userAccount} = useDynamicFieldEntries();
+	const {isChannel} = useIsChannel();
+	const [openRequestFilter, setOpenRequestFilter] = useState(true);
+
+	const {userAccount} = useDynamicFieldEntries();
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
 
-	const {filters, filtersTerm, onFilter, setFilters} = useFilters();
+	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
+		openRequestFilter,
+		isChannel
+	);
 	const pagination = usePagination();
 
 	const {data, isValidating, mutate} = useGet<LiferayItems<MDFRequestDTO[]>>(
@@ -149,9 +157,11 @@ const MDFRequestList = () => {
 			{
 				component: (
 					<CheckboxFilter
-						availableItems={fieldEntries[
-							LiferayPicklistName.MDF_REQUEST_STATUS
-						]?.map<string>((status) => status.label as string)}
+						availableItems={
+							openRequestFilter
+								? Filters.MDF_REQUEST_LISTING.openList
+								: Filters.MDF_REQUEST_LISTING.completedList
+						}
 						clearCheckboxes={!filters.status.value?.length}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({
@@ -196,7 +206,25 @@ const MDFRequestList = () => {
 
 	return (
 		<div className="border-0 my-4">
-			<h1>MDF Requests</h1>
+			<div className="align-items-center d-md-flex justify-content-between mb-3 mr-4">
+				<h1>MDF Requests</h1>
+				<ClayTabs className="h-100 nav nav-segment nav-tabs">
+					<ClayTabs.Item
+						active={openRequestFilter}
+						className="nav-item"
+						onClick={() => setOpenRequestFilter(true)}
+					>
+						Open
+					</ClayTabs.Item>
+					<ClayTabs.Item
+						active={!openRequestFilter}
+						className="nav-item"
+						onClick={() => setOpenRequestFilter(false)}
+					>
+						Completed
+					</ClayTabs.Item>
+				</ClayTabs>
+			</div>
 
 			<TableHeader>
 				<div className="d-flex">

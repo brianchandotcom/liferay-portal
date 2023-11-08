@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import './index.scss';
 
@@ -40,7 +40,7 @@ const ExtendBanner: React.FC<ExtendBannerProps> = ({subscription}) => (
 			<small className="col-6 col-md-4 font-weight-bold m-0">
 				Key type
 			</small>
-			<small className="col-6 col-md-4 subscription-banner-text">
+			<small className="col-6 col-md-4 subscription-banner-text text-capitalize">
 				{subscription?.name}
 			</small>
 		</div>
@@ -129,15 +129,57 @@ const CreateLicense = () => {
 		register,
 		required: true,
 	};
+	const handleNextButton = useCallback(
+		async (form: z.infer<typeof zodSchema.generateLicenseKey>) => {
+			setLoading(true);
+
+			try {
+				const licenseKey = await provisioningKoroneikiOAuth2.createLicenseKey(
+					{
+						licenseEntry: {
+							description: form.description,
+							hostName: form.hostname,
+							ipAddresses: form.ipAddress,
+							macAddresses: form.macAddress,
+							orderId: orderId as string,
+						},
+						productPurchaseKey: form.subscription
+							?.productPurchasedKey as string,
+						skuId: form.subscription?.skuId as number,
+						type: form.subscription?.name as string,
+					}
+				);
+
+				Liferay.Util.openToast({
+					message: 'License Key created successfully',
+					type: 'success',
+				});
+
+				navigate('/');
+
+				provisioningKoroneikiOAuth2.downloadLicenseKey(licenseKey.id);
+			} catch {
+				Liferay.Util.openToast({
+					message: 'Something went wrong to create a License Key',
+					type: 'danger',
+				});
+			}
+
+			setLoading(false);
+		},
+		[navigate, orderId, provisioningKoroneikiOAuth2]
+	);
 
 	const buttonsInfo = useMemo(
 		() => ({
 			cancelButton: {
 				displayType: 'unstyled',
+				onClick: () => navigate('..'),
 				show: true,
 			},
 			customizedButton: {
 				displayType: 'secondary',
+				onClick: () => setStep(StepCreateLicense.SUBSCRIPTION),
 				show: step !== StepCreateLicense.SUBSCRIPTION,
 				text: 'Back',
 			},
@@ -150,52 +192,27 @@ const CreateLicense = () => {
 					(disableContinueButton &&
 						step !== StepCreateLicense.SUBSCRIPTION),
 				displayType: 'primary',
+				onClick: () => {
+					if (step === StepCreateLicense.SUBSCRIPTION) {
+						return setStep(StepCreateLicense.LICENSE_KEY_DETAILS);
+					}
+
+					handleNextButton(getValues());
+				},
 				show: true,
 				text: 'Generate Key',
 			},
 		}),
-		[disableContinueButton, loading, step, subscription]
+		[
+			disableContinueButton,
+			getValues,
+			handleNextButton,
+			loading,
+			navigate,
+			step,
+			subscription,
+		]
 	);
-
-	const handleNextButton = async (
-		form: z.infer<typeof zodSchema.generateLicenseKey>
-	) => {
-		setLoading(true);
-
-		try {
-			const licenseKey = await provisioningKoroneikiOAuth2.createLicenseKey(
-				{
-					licenseEntry: {
-						description: form.description,
-						hostName: form.hostname,
-						ipAddresses: form.ipAddress,
-						macAddresses: form.macAddress,
-						orderId: orderId as string,
-					},
-					productPurchaseKey: form.subscription
-						?.productPurchasedKey as string,
-					skuId: form.subscription?.skuId as number,
-					type: form.subscription?.name as string,
-				}
-			);
-
-			Liferay.Util.openToast({
-				message: 'License Key created successfully',
-				type: 'success',
-			});
-
-			navigate('/');
-
-			provisioningKoroneikiOAuth2.downloadLicenseKey(licenseKey.id);
-		} catch {
-			Liferay.Util.openToast({
-				message: 'Something went wrong to create a License Key',
-				type: 'danger',
-			});
-		}
-
-		setLoading(false);
-	};
 
 	return (
 		<div className="align-items-center d-flex flex-column mb-6 mkt-create-license mt-6">
@@ -249,21 +266,6 @@ const CreateLicense = () => {
 				<FooterButtons
 					className="d-flex justify-content-between mt-6"
 					dataButtons={buttonsInfo}
-					onClickCancel={() => {
-						navigate('..');
-					}}
-					onClickCustomizedButton={() =>
-						setStep(StepCreateLicense.SUBSCRIPTION)
-					}
-					onClickNext={() => {
-						if (step === StepCreateLicense.SUBSCRIPTION) {
-							return setStep(
-								StepCreateLicense.LICENSE_KEY_DETAILS
-							);
-						}
-
-						handleNextButton(getValues());
-					}}
 				/>
 			</div>
 		</div>

@@ -247,21 +247,15 @@ definition {
 
 		Click(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
 
-		FormRules.viewRuleBuilderCondition(
-			positionNumber = 1,
-			value = "Text");
+		for (var i : list "1-Text,1-Is Empty,2-Require,2-Text") {
+			var positionNumber = StringUtil.extractFirst(${i}, "-");
+			var value = StringUtil.extractLast(${i}, "-");
 
-		FormRules.viewRuleBuilderCondition(
-			positionNumber = 2,
-			value = "Is Empty");
-
-		FormRules.viewRuleBuilderAction(
-			positionNumber = 1,
-			value = "Require");
-
-		FormRules.viewRuleBuilderAction(
-			positionNumber = 2,
-			value = "Text");
+			AssertElementPresent(
+				key_positionNumber = ${positionNumber},
+				key_value = ${value},
+				locator1 = "FormRules#VIEW_RULE_BUILDER_ACTION_CONDITION");
+		}
 	}
 
 	@description = "Verify that a Rule can be created"

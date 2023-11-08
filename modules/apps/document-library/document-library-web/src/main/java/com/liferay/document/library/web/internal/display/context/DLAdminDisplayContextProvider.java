@@ -7,6 +7,7 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.configuration.DLFileOrderConfigurationProvider;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
@@ -61,7 +62,8 @@ public class DLAdminDisplayContextProvider {
 		return new DLAdminManagementToolbarDisplayContext(
 			dlAdminDisplayContext, _dlTrashHelper, httpServletRequest,
 			_itemSelector, dlRequestHelper.getLiferayPortletRequest(),
-			dlRequestHelper.getLiferayPortletResponse());
+			dlRequestHelper.getLiferayPortletResponse(),
+			_siteConnectedGroupGroupProvider);
 	}
 
 	private AssetAutoTaggerConfiguration _getAssetAutoTaggerConfiguration(
@@ -93,6 +95,9 @@ public class DLAdminDisplayContextProvider {
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 	@Reference
 	private TrashHelper _trashHelper;

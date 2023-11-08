@@ -10,23 +10,23 @@ import {ReactNode} from 'react';
 import './Table.scss';
 
 type TableProps<T = any> = {
-	onClickRow?: (item: T) => void;
 	className?: string;
 	columns: TableColumn<T>[];
 	hasKebabButton?: boolean;
 	hasPagination?: boolean;
+	onClickRow?: (item: T) => void;
 	rows: T[];
 };
 
 type TableColumn<T = any> = {
 	align?: 'center' | 'left' | 'right';
 	bodyClass?: string;
-	onClick?: (item: T) => void;
 	columnTextAlignment?: 'center' | 'end' | 'start';
 	disableCustomClickOnRow?: boolean;
 	expanded?: boolean;
 	key: string;
 	noWrap?: boolean;
+	onClick?: (item: T) => void;
 	render?: (value: any, item: T) => ReactNode | string;
 	styles?: string;
 	title: ReactNode;
@@ -35,9 +35,9 @@ type TableColumn<T = any> = {
 
 const Table: React.FC<TableProps> = ({
 	className,
-	onClickRow = () => {},
 	columns,
 	hasKebabButton,
+	onClickRow = () => {},
 	rows,
 }) => (
 	<ClayTable borderless className={className}>
@@ -61,7 +61,10 @@ const Table: React.FC<TableProps> = ({
 
 		<ClayTable.Body className="table-body">
 			{rows.map((row, rowIndex) => (
-				<ClayTable.Row key={row.id || rowIndex} onClick={onClickRow}>
+				<ClayTable.Row
+					key={row.id || rowIndex}
+					onClick={() => onClickRow(row)}
+				>
 					{columns.map((column, columnIndex) => {
 						const data = row[column.key];
 

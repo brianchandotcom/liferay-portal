@@ -2,33 +2,41 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import classNames from 'classnames';
 
 import './index.scss';
-import {ModalDataProps} from '../Licenses';
+
+import {format, isBefore} from 'date-fns';
+
 import i18n from '../../../../../i18n';
+import {LicenceKeyProps} from '../Licenses';
 
 type LicenseKeyModalProps = {
-	modalData: ModalDataProps;
 	Header: React.FC;
+	modalData: LicenceKeyProps;
 };
 
-const LicenceKeyModalContent = ({modalData, Header}: LicenseKeyModalProps) => {
+const LicenceKeyModalContent = ({Header, modalData}: LicenseKeyModalProps) => {
 	const {
-		environmentType,
-		instanceSize,
-		keyType,
+		active,
+		expirationDate,
 		hostName,
 		ipAddresses,
+		keyType,
+		licenseType = '',
 		macAddresses,
-		status,
 		startDate,
-		expirationDate,
 	} = modalData;
+
+	const isActive =
+		active && isBefore(new Date(), new Date(expirationDate))
+			? 'active'
+			: 'inactive';
 
 	return (
 		<div className="container mkt-license-details-content">
-			<div className="mb-5 mt-3">
+			<div className="mb-7 mt-3">
 				<Header />
 			</div>
 
@@ -40,16 +48,16 @@ const LicenceKeyModalContent = ({modalData, Header}: LicenseKeyModalProps) => {
 						{i18n.translate('environment-type')}
 					</small>
 
-					<p className="license-paragraph-lighten align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1">
-						{environmentType}
+					<p className="align-items-center d-flex font-weight-bold license-paragraph-lighten mt-1 px-3 py-2 rounded text-capitalize">
+						{licenseType.toLowerCase()}
 					</p>
 
 					<small className="font-weight-bold">
 						{i18n.translate('instance-size')}
 					</small>
 
-					<p className="license-paragraph-lighten align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1">
-						{instanceSize}
+					<p className="align-items-center d-flex font-weight-bold license-paragraph-lighten mt-1 px-3 py-2 rounded">
+						1
 					</p>
 				</div>
 
@@ -60,7 +68,7 @@ const LicenceKeyModalContent = ({modalData, Header}: LicenseKeyModalProps) => {
 						{i18n.translate('key-type')}
 					</small>
 
-					<p className="license-paragraph-gray align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1">
+					<p className="align-items-center d-flex font-weight-bold license-paragraph-gray mt-1 px-3 py-2 rounded">
 						{keyType}
 					</p>
 
@@ -68,24 +76,24 @@ const LicenceKeyModalContent = ({modalData, Header}: LicenseKeyModalProps) => {
 						{i18n.translate('host-name')}
 					</small>
 
-					<p className="license-paragraph-gray align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1">
-						{hostName}
+					<p className="align-items-center d-flex font-weight-bold license-paragraph-gray mt-1 px-3 py-2 rounded">
+						{hostName || '-'}
 					</p>
 
 					<small className="font-weight-bold">
 						{i18n.translate('ip-addresses')}
 					</small>
 
-					<p className="license-paragraph-gray wrap-ip align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1">
-						{ipAddresses}
+					<p className="align-items-center d-flex font-weight-bold license-paragraph-gray mt-1 px-3 py-2 rounded wrap-ip">
+						{ipAddresses || '-'}
 					</p>
 
 					<small className="font-weight-bold">
 						{i18n.translate('mac-addresses')}
 					</small>
 
-					<p className="license-paragraph-gray wrap-mac align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1">
-						{macAddresses}
+					<p className="align-items-center d-flex font-weight-bold license-paragraph-gray mt-1 px-3 py-2 rounded wrap-mac">
+						{macAddresses || '-'}
 					</p>
 				</div>
 
@@ -100,30 +108,30 @@ const LicenceKeyModalContent = ({modalData, Header}: LicenseKeyModalProps) => {
 						className={classNames(
 							'align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1',
 							{
-								'text-success license-paragraph-success':
-									status === 'Activated',
-								'text-danger license-paragraph-danger':
-									status === 'Expired',
+								'text-danger license-paragraph-danger': !isActive,
+								'text-success license-paragraph-success': isActive,
 							}
 						)}
 					>
-						{status}
+						{isActive ? 'Activated' : 'Expired'}
 					</p>
 
 					<small className="font-weight-bold">
 						{i18n.translate('start-date')}
 					</small>
 
-					<p className="license-paragraph-gray align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1">
-						{startDate}
+					<p className="align-items-center d-flex font-weight-bold license-paragraph-gray mt-1 px-3 py-2 rounded">
+						{format(new Date(startDate), 'MMM dd, yyyy')}
 					</p>
 
 					<small className="font-weight-bold">
 						{i18n.translate('expiration-date')}
 					</small>
 
-					<p className="license-paragraph-gray align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1">
-						{expirationDate}
+					<p className="align-items-center d-flex font-weight-bold license-paragraph-gray mt-1 px-3 py-2 rounded">
+						{expirationDate
+							? format(new Date(expirationDate), 'MMM dd, yyyy')
+							: 'DNE'}
 					</p>
 				</div>
 			</div>

@@ -718,9 +718,9 @@ public class SourceFormatter {
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0], ":\n",
 							"Each breaking change report should have one, and ",
-							"only one '# breaking_change_report', , '## Why' ",
-							"and '## Alternatives'(Optional). Use '----' to ",
-							"split each breaking change."));
+							"only one '# breaking_change_report', '## What', ",
+							"'## Why' and '## Alternatives'(Optional). Use ",
+							"'----' to split each breaking change."));
 				}
 
 				int alternativesPosition = breakingChangeReport.indexOf(

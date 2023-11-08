@@ -15,6 +15,7 @@ import {
 } from 'shared/actions/preferences';
 import {Alert} from 'shared/types';
 import {connect, ConnectedProps} from 'react-redux';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {DistributionTab} from 'shared/util/records';
 import {List, Map} from 'immutable';
 import {PreferencesScopes} from 'shared/util/constants';
@@ -179,7 +180,11 @@ class DistributionCard extends React.Component<
 		const tabsCount = distributionTabsIList.size;
 
 		return (
-			<Card className='distribution-card-root' minHeight={536}>
+			<Card
+				className='distribution-card-root'
+				id={Containers.DistributionBreakdownCard}
+				minHeight={536}
+			>
 				{error && !showAddProperty && (
 					<ErrorDisplay
 						onReload={this.handleFetchDistributionTabs}

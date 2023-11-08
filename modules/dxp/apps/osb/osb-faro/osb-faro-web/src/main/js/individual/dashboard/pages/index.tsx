@@ -1,10 +1,13 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
+import DownloadPDFReport, {
+	Containers
+} from 'shared/components/download-report/DownloadPDFReport';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
-import {Routes} from 'shared/util/router';
+import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 
@@ -94,6 +97,26 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 					routeParams={{channelId, groupId}}
 				/>
 			</BasePage.Header>
+			{getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_INDIVIDUALS && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadPDFReport
+							containers={[
+								Containers.CurrentTotalsCard,
+								Containers.EnrichedProfilesCard,
+								Containers.ActiveIndividualsCard,
+								Containers.TopInterestsAsOfYesterday,
+								Containers.DistributionBreakdownCard
+							]}
+							disabled={false}
+							subtitle={selectedChannel?.name}
+							title={Liferay.Language.get(
+								'individuals-dashboard'
+							)}
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
 
 			<Suspense fallback={<Loading />}>
 				<Switch>

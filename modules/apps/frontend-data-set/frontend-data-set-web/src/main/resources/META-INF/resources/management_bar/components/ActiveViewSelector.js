@@ -4,57 +4,59 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import persistActiveView from '../../thunks/persistActiveView';
 import ViewsContext from '../../views/ViewsContext';
 
+const ActiveViewSelectorTrigger = React.forwardRef(
+	({symbol, ...otherProps}, ref) => (
+		<ClayButtonWithIcon
+			{...otherProps}
+			aria-label={Liferay.Language.get('show-view-options')}
+			className="nav-link nav-link-monospaced"
+			displayType="unstyled"
+			ref={ref}
+			symbol={symbol}
+			title={Liferay.Language.get('show-view-options')}
+		/>
+	)
+);
+
 function ActiveViewSelector({views}) {
 	const {appURL, id, portletId} = useContext(FrontendDataSetContext);
 	const [{activeView}, viewsDispatch] = useContext(ViewsContext);
 
-	const [active, setActive] = useState(false);
+	const handleSelectionChange = (value) => {
+		viewsDispatch(
+			persistActiveView({
+				activeViewName: value,
+				appURL,
+				id,
+				portletId,
+			})
+		);
+	};
 
 	return (
-		<ClayDropDown
-			active={active}
-			onActiveChange={setActive}
-			trigger={
-				<ClayButtonWithIcon
-					className="nav-link nav-link-monospaced"
-					displayType="unstyled"
-					symbol={activeView.thumbnail}
-					title={Liferay.Language.get('show-view-options')}
-				/>
-			}
+		<Picker
+			as={ActiveViewSelectorTrigger}
+			items={views}
+			onSelectionChange={handleSelectionChange}
+			selectedKey={activeView.name}
+			symbol={activeView.thumbnail}
 		>
-			<ClayDropDown.ItemList>
-				{views.map(({label, name, thumbnail}) => (
-					<ClayDropDown.Item
-						key={name}
-						onClick={(event) => {
-							event.preventDefault();
-							setActive(false);
-							viewsDispatch(
-								persistActiveView({
-									activeViewName: name,
-									appURL,
-									id,
-									portletId,
-								})
-							);
-						}}
-					>
-						<ClayIcon className="mr-3" symbol={thumbnail} />
+			{({label, name, thumbnail}) => (
+				<Option key={name} textValue={name}>
+					<ClayIcon className="mr-3" symbol={thumbnail} />
 
-						{label}
-					</ClayDropDown.Item>
-				))}
-			</ClayDropDown.ItemList>
-		</ClayDropDown>
+					{label}
+				</Option>
+			)}
+		</Picker>
 	);
 }
 

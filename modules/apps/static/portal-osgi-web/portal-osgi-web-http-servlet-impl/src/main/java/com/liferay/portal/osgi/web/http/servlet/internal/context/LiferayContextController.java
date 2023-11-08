@@ -149,42 +149,42 @@ public class LiferayContextController extends ContextController {
 			new ContextFilterTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_filterServiceTracker.open();
+		_filterServiceTracker.open(true);
 
 		_httpSessionAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, HttpSessionAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_httpSessionAttributeListenerServiceTracker.open();
+		_httpSessionAttributeListenerServiceTracker.open(true);
 
 		_httpSessionIdListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, HttpSessionIdListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_httpSessionIdListenerServiceTracker.open();
+		_httpSessionIdListenerServiceTracker.open(true);
 
 		_httpSessionListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, HttpSessionListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_httpSessionListenerServiceTracker.open();
+		_httpSessionListenerServiceTracker.open(true);
 
 		_resourceServiceTracker = new ServiceTracker<>(
 			bundleContext, Object.class,
 			new ContextResourceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_resourceServiceTracker.open();
+		_resourceServiceTracker.open(true);
 
 		_servletContextAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContextAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_servletContextAttributeListenerServiceTracker.open();
+		_servletContextAttributeListenerServiceTracker.open(true);
 
 		_servletContextHelperServiceId = (long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
@@ -198,28 +198,28 @@ public class LiferayContextController extends ContextController {
 			new ContextListenerTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_servletContextListenerServiceTracker.open();
+		_servletContextListenerServiceTracker.open(true);
 
 		_servletRequestAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletRequestAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_servletRequestAttributeListenerServiceTracker.open();
+		_servletRequestAttributeListenerServiceTracker.open(true);
 
 		_servletRequestListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletRequestListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_servletRequestListenerServiceTracker.open();
+		_servletRequestListenerServiceTracker.open(true);
 
 		_servletServiceTracker = new ServiceTracker<>(
 			bundleContext, Servlet.class,
 			new ContextServletTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
-		_servletServiceTracker.open();
+		_servletServiceTracker.open(true);
 	}
 
 	@Override

@@ -81,12 +81,7 @@ definition {
 		// Workaround for LPS-148998
 
 		while (IsElementPresent(locator1 = "Message#INFO")) {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Security",
-				panel = "Control Panel",
-				portlet = "Audit");
+			Audit.openAuditAdmin();
 
 			Click(locator1 = "Icon#ADVANCED_SEARCH");
 

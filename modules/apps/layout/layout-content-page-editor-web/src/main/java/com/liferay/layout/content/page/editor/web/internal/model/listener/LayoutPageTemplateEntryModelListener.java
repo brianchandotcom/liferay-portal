@@ -141,6 +141,12 @@ public class LayoutPageTemplateEntryModelListener
 		for (LayoutStructureItem layoutStructureItem :
 				ListUtil.copy(layoutStructure.getLayoutStructureItems())) {
 
+			if (layoutStructure.isItemMarkedForDeletion(
+					layoutStructureItem.getItemId())) {
+
+				continue;
+			}
+
 			if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
 				FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 					(FormStyledLayoutStructureItem)layoutStructureItem;

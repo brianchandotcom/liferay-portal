@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {getCamelCase} from '../getCamelCase';
+
 const todayDate = new Date();
 const currentYear = todayDate.getFullYear();
 
@@ -17,11 +19,56 @@ const previousToCurrentYearFilterDateCreated = `dateCreated ge ${previousFiscalY
 
 // const fiscalYearFilterCreatedDate = `createdDate ge ${currentFiscalYearStart}T00:00:00Z and createdDate le ${currentFiscalYearEnd}T23:59:59Z`;
 
-const mdfClaimStageClosed = `mdfClaimStatus ne 'draft' and mdfClaimStatus ne 'pendingMarketingReview' and mdfClaimStatus ne 'approved' and mdfClaimStatus ne 'inFinanceReview' and mdfClaimStatus ne 'moreInfoRequested' and mdfClaimStatus ne 'inDirectorReview'`;
-const mdfClaimStageOpen = `mdfClaimStatus ne 'claimPaid' and mdfClaimStatus ne 'canceled' and mdfClaimStatus ne 'rejected'`;
+const mdfRequestOpenListStatus = [
+	'Approved',
+	'Draft',
+	'Marketing Director Review',
+	'More Info Requested',
+	'Pending Marketing Review',
+];
 
-const mdfRequestStageClosed = `(mdfRequestStatus eq 'Closed' or mdfRequestStatus eq 'Canceled' or mdfRequestStatus eq 'Rejected'`;
-const mdfRequestStageOpen = `(mdfRequestStatus eq 'Draft' or mdfRequestStatus eq 'Pending Marketing Review' or mdfRequestStatus eq 'Approved' or mdfRequestStatus eq 'Marketing Director Review' or mdfRequestStatus eq 'More Info Requested')`;
+const mdfRequestCompletedListStatus = [
+	'Canceled',
+	'Completed',
+	'Expired',
+	'Rejected',
+];
+
+const mdfClaimOpenListStatus = [
+	'Pending Marketing Review',
+	'Approved',
+	'In Finance Review',
+	'In Director Review',
+	'More Info Requested',
+	'Draft',
+];
+
+const mdfClaimCompletedListStatus = ['Canceled', 'Rejected', 'Claim Paid'];
+
+const mdfRequestOpenFilter = mdfRequestCompletedListStatus
+	.map((status) => {
+		return `(mdfRequestStatus ne '${getCamelCase(status)}')`;
+	})
+	.join(' and ');
+
+const mdfRequestCompletedFilter = mdfRequestOpenListStatus
+	.map((status) => {
+		return `(mdfRequestStatus ne '${getCamelCase(status)}')`;
+	})
+	.join(' and ');
+
+const mdfClaimOpenFilter = mdfClaimCompletedListStatus
+	.map((status) => {
+		return `(mdfClaimStatus ne '${getCamelCase(status)}')`;
+	})
+	.join(' and ');
+
+const mdfClaimCompletedFilter = mdfClaimOpenListStatus
+	.map((status) => {
+		return `(mdfClaimStatus ne '${getCamelCase(status)}')`;
+	})
+	.join(' and ');
+
 const opportunityStageClosed = `stage ne 'Marketing Qualified' and stage ne 'Sales Accepted Opportunity' and stage ne 'Confirmation' and stage ne 'Justification / Solution Review' and stage ne 'Justification / Due Diligence' and stage ne 'Solution Validation' and stage ne 'GTM / Partnership Plan Validation' and stage ne 'Legal Review / Purchasing' and stage ne 'Legal Review' and stage ne 'Committed' and stage ne 'Pending' and stage ne 'Rolled into Opportunity'`;
 const opportunityStageOpen = `stage ne 'Closed Won' and stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity'`;
 
@@ -41,25 +88,25 @@ export const Filters = {
 		opportunities: `stage eq 'Closed Won' and ${fiscalYearFilterCloseDate}`,
 	},
 	MDF_CLAIM_LISTING: {
-		channelsClosed: `${mdfClaimStageClosed} and ${previousToCurrentYearFilterDateCreated}`,
-		channelsOpen: `${mdfClaimStageOpen} and mdfClaimStatus ne 'draft' and ${previousToCurrentYearFilterDateCreated}`,
-		partnerClosed: `${mdfClaimStageClosed} and ${fiscalYearFilterDateCreated} `,
-		partnerOpen: `${mdfClaimStageOpen}`,
+		channelsCompleted: `${mdfClaimCompletedFilter} and ${previousToCurrentYearFilterDateCreated}`,
+		channelsOpen: `${mdfClaimOpenFilter} and (mdfClaimStatus ne 'draft') and ${previousToCurrentYearFilterDateCreated}`,
+		completedList: mdfClaimCompletedListStatus,
+		openList: mdfClaimOpenListStatus,
+		partnersCompleted: `${mdfClaimCompletedFilter} and ${fiscalYearFilterDateCreated} `,
+		partnersOpen: `${mdfClaimOpenFilter}`,
 	},
 	MDF_DASHBOARD: {
 		fields: `accountEntry,mdfReqToActs,actToBgts,mdfReqToMDFClms&nestedFieldsDepth=2`,
 		requests: `mdfRequestStatus ne 'draft' and ${fiscalYearFilterSubmitDate}`,
 	},
-
 	MDF_REQUEST_LISTING: {
-		channels: `mdfRequestStatus ne 'draft' and ${previousToCurrentYearFilterDateCreated}`,
-		channelsClosed: `mdfRequestStatus ne 'draft' and ${mdfRequestStageClosed} and ${previousToCurrentYearFilterDateCreated}`,
-		channelsOpen: `mdfRequestStatus ne 'draft' and ${mdfRequestStageOpen} and ${previousToCurrentYearFilterDateCreated}`,
-		partners: `${fiscalYearFilterDateCreated}`,
-		partnersClosed: `${mdfRequestStageClosed} and ${fiscalYearFilterDateCreated}`,
-		partnersOpen: `${mdfRequestStageOpen} and ${fiscalYearFilterDateCreated}`,
+		channelsCompleted: `${mdfRequestCompletedFilter} and ${previousToCurrentYearFilterDateCreated}`,
+		channelsOpen: `${mdfRequestOpenFilter} and (mdfRequestStatus ne 'draft') and ${previousToCurrentYearFilterDateCreated}`,
+		completedList: mdfRequestCompletedListStatus,
+		openList: mdfRequestOpenListStatus,
+		partnersCompleted: `${mdfRequestCompletedFilter} and ${fiscalYearFilterDateCreated}`,
+		partnersOpen: `${mdfRequestOpenFilter} and ${fiscalYearFilterDateCreated}`,
 	},
-
 	OPPORTUNITY_LISTING: {
 		closedWIP: `${opportunityStageClosed} and ${fiscalYearFilterCloseDate}`,
 		openWIP: `${opportunityStageOpen}`,

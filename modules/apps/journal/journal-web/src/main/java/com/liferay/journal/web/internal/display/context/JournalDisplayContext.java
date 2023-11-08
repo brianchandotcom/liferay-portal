@@ -1993,6 +1993,8 @@ public class JournalDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
+	private Boolean _navigationMine;
+	private Boolean _navigationRecent;
 	private String _orderByCol;
 	private String _orderByType;
 	private Long _parentFolderId;

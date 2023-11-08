@@ -22,7 +22,7 @@ if (paramToken == null) {
 
 <aui:input label="application-name" name="applicationName" required="<%= true %>" type="text" value="<%= paramApplicationName %>" />
 
-<aui:select helpMessage="scim_matcherField-help" label="scim_matcherField" name="matcherField" required="<%= true %>" value="<%= paramMatcherField %>">
+<aui:select helpMessage="scim-matcher-field-help" label="scim-matcher-field" name="matcherField" required="<%= true %>" value="<%= paramMatcherField %>">
 	<aui:option label="" value="" />
 	<aui:option label="userName" localizeLabel="<%= false %>" value="userName" />
 	<aui:option label="email" localizeLabel="<%= false %>" value="email" />

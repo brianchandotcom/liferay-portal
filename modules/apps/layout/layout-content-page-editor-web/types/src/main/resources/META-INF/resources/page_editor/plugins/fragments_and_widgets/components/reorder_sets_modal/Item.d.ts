@@ -13,23 +13,11 @@ export interface Item {
 interface ItemProps {
 	index: number;
 	item: Item;
-	numberOfItems: number;
 	onDropItem: (
 		itemId: Item['id'],
 		index: number,
 		dragOverPosition?: DragOverPosition
 	) => void;
 }
-export declare function Item({
-	index,
-	item,
-	numberOfItems,
-	onDropItem,
-}: ItemProps): JSX.Element;
-export declare function ReorderDropdown({
-	index,
-	item,
-	numberOfItems,
-	onDropItem,
-}: ItemProps): JSX.Element;
+export declare function Item({index, item, onDropItem}: ItemProps): JSX.Element;
 export {};

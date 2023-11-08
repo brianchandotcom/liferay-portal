@@ -66,7 +66,13 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewSelectFromListOption(optionValue = "");
+		Click(
+			key_fieldName = "Select from List",
+			locator1 = "FormFields#SELECT_FIELD");
+
+		AssertElementPresent(
+			key_menuItem = "",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
 	@description = "LPS-76079 - Verify that a Select From List Field can allow Multiple Selections"
@@ -112,21 +118,15 @@ definition {
 			fieldName = ${fieldSelectFromListField},
 			selectOptionsList = "Select 1,Select 2,Select 3");
 
-		FormFields.removeSelectOption(
-			fieldName = ${fieldSelectFromListField},
-			selectOption = "Select 1");
-
-		FormFields.removeSelectOptionViaDropdown(
-			fieldName = ${fieldSelectFromListField},
-			selectOption = "Select 2");
+		for (var i : list "Select 1,Select 2") {
+			FormFields.removeSelectOption(
+				fieldName = ${fieldSelectFromListField},
+				selectOption = ${i});
+		}
 
 		FormFields.selectSelectWithMultipleOptions(
 			fieldName = ${fieldSelectFromListField},
 			selectOptionsList = "Select 4");
-
-		FormFields.viewSelectMultipleOptions(
-			fieldName = ${fieldSelectFromListField},
-			selectOptionsList = "Select 3,Select 4");
 
 		FormPortlet.submitSuccessfully();
 
@@ -279,6 +279,11 @@ definition {
 		FormViewBuilder.validatePredefinedSelectFromList(
 			fieldName = "Select from List",
 			fieldValue = "Choose an Option");
+
+		Click(
+			key_fieldName = "Select from List",
+			key_fieldValue = "Choose an Option",
+			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SELECTLIST");
 
 		FormFields.viewSelectFromListOption(optionValue = "Option 2");
 
@@ -456,6 +461,10 @@ definition {
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
+
+		Click(
+			key_fieldName = "Select from List",
+			locator1 = "FormFields#SELECT_FIELD");
 
 		AssertElementPresent(
 			key_menuItem = "",

@@ -6,4 +6,5 @@
 export enum OpportunityType {
 	EXISTING_BUSINESS = 'Existing Business',
 	NEW_BUSINESS = 'New Business',
+	NEW_PROJECT_EXISTING_BUSINESS = 'New Project Existing Business',
 }

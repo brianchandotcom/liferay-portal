@@ -40,7 +40,7 @@ export default function ModalContent({content, onClose}: IProps) {
 								content?.[
 									PartnerOpportunitiesColumnKey
 										.PARTNER_ACCOUNT_NAME
-								]
+								] as string
 							}
 							label="Partner Account Name"
 						/>
@@ -52,7 +52,7 @@ export default function ModalContent({content, onClose}: IProps) {
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.CURRENCY
-								]
+								] as string
 							}
 							label="Currency"
 						/>
@@ -64,7 +64,7 @@ export default function ModalContent({content, onClose}: IProps) {
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.PARTNER_NAME
-								]
+								] as string
 							}
 							label="Partner Name"
 						/>
@@ -76,7 +76,7 @@ export default function ModalContent({content, onClose}: IProps) {
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.ACCOUNT_NAME
-								]
+								] as string
 							}
 							label="Account Name"
 						/>
@@ -88,7 +88,7 @@ export default function ModalContent({content, onClose}: IProps) {
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.START_DATE
-								]
+								] as string
 							}
 							label="Start Date"
 						/>
@@ -100,7 +100,7 @@ export default function ModalContent({content, onClose}: IProps) {
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.END_DATE
-								]
+								] as string
 							}
 							label="End Date"
 						/>
@@ -112,7 +112,7 @@ export default function ModalContent({content, onClose}: IProps) {
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.CLOSE_DATE
-								]
+								] as string
 							}
 							label="Close Date"
 						/>
@@ -127,7 +127,7 @@ export default function ModalContent({content, onClose}: IProps) {
 								content?.[
 									PartnerOpportunitiesColumnKey
 										.SUBSCRIPTION_ARR
-								]
+								] as string
 							}
 							label="Subscription ARR"
 						/>
@@ -144,7 +144,7 @@ export default function ModalContent({content, onClose}: IProps) {
 								content?.[
 									PartnerOpportunitiesColumnKey
 										.PARTNER_REP_NAME
-								]
+								] as string
 							}
 							label="Partner Rep Name"
 						/>
@@ -159,7 +159,7 @@ export default function ModalContent({content, onClose}: IProps) {
 								content?.[
 									PartnerOpportunitiesColumnKey
 										.PARTNER_REP_EMAIL
-								]
+								] as string
 							}
 							label="Partner Rep Email"
 						/>
@@ -171,7 +171,7 @@ export default function ModalContent({content, onClose}: IProps) {
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.LIFERAY_REP
-								]
+								] as string
 							}
 							label="Liferay Rep"
 						/>
@@ -181,7 +181,9 @@ export default function ModalContent({content, onClose}: IProps) {
 						<ModalFormatedInformation
 							className="col mb-2"
 							information={
-								content?.[PartnerOpportunitiesColumnKey.STAGE]
+								content?.[
+									PartnerOpportunitiesColumnKey.STAGE
+								] as string
 							}
 							label="Stage"
 						/>
@@ -191,7 +193,9 @@ export default function ModalContent({content, onClose}: IProps) {
 						<ModalFormatedInformation
 							className="col mb-2"
 							information={
-								content?.[PartnerOpportunitiesColumnKey.TYPE]
+								content?.[
+									PartnerOpportunitiesColumnKey.TYPE
+								] as string
 							}
 							label="Type"
 						/>

@@ -8,11 +8,10 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
-import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
@@ -49,6 +48,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -93,6 +94,7 @@ public class DLAdminManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public DLAdminManagementToolbarDisplayContext(
+		AssetVocabularyService assetVocabularyService,
 		DLAdminDisplayContext dlAdminDisplayContext,
 		DLTrashHelper dlTrashHelper, HttpServletRequest httpServletRequest,
 		ItemSelector itemSelector, LiferayPortletRequest liferayPortletRequest,
@@ -103,6 +105,7 @@ public class DLAdminManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			dlAdminDisplayContext.getSearchContainer());
 
+		_assetVocabularyService = assetVocabularyService;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
 		_dlTrashHelper = dlTrashHelper;
 		_httpServletRequest = httpServletRequest;
@@ -193,7 +196,7 @@ public class DLAdminManagementToolbarDisplayContext
 		).add(
 			() ->
 				stagedActions && !user.isGuestUser() &&
-				_hasValidAssetVocabularies(_themeDisplay.getScopeGroupId()),
+				_hasValidAssetVocabularies(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "editCategories");
 
@@ -587,11 +590,8 @@ public class DLAdminManagementToolbarDisplayContext
 		).setParameter(
 			"vocabularyIds",
 			StringUtil.merge(
-				AssetVocabularyServiceUtil.getGroupsVocabularies(
-					SiteConnectedGroupGroupProviderUtil.
-						getCurrentAndAncestorSiteAndDepotGroupIds(
-							_themeDisplay.getScopeGroupId()),
-					DLFileEntryConstants.getClassName()),
+				_assetVocabularyService.getGroupsVocabularies(
+					_getGroupIds(), DLFileEntryConstants.getClassName()),
 				assetVocabulary -> String.valueOf(
 					assetVocabulary.getVocabularyId()),
 				StringPool.COMMA)
@@ -602,16 +602,13 @@ public class DLAdminManagementToolbarDisplayContext
 		return _dlAdminDisplayContext.getAssetTagIds();
 	}
 
-	private String _getAssetTagSelectorURL() throws PortalException {
+	private String _getAssetTagSelectorURL() {
 		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
 			new AssetTagsItemSelectorCriterion();
 
 		assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new AssetTagsItemSelectorReturnType());
-		assetTagsItemSelectorCriterion.setGroupIds(
-			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(
-					_themeDisplay.getScopeGroupId()));
+		assetTagsItemSelectorCriterion.setGroupIds(_getGroupIds());
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
 		return String.valueOf(
@@ -904,6 +901,26 @@ public class DLAdminManagementToolbarDisplayContext
 		return _dlAdminDisplayContext.getFolderId();
 	}
 
+	private long[] _getGroupIds() {
+		if (_groupIds != null) {
+			return _groupIds;
+		}
+
+		try {
+			_groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						_themeDisplay.getScopeGroupId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return _groupIds;
+	}
+
 	private String _getLabel(String key, String value) {
 		return String.format(
 			"%s: %s", LanguageUtil.get(_httpServletRequest, key),
@@ -971,19 +988,14 @@ public class DLAdminManagementToolbarDisplayContext
 		).buildString();
 	}
 
-	private boolean _hasValidAssetVocabularies(long scopeGroupId)
-		throws PortalException {
-
+	private boolean _hasValidAssetVocabularies() {
 		if (_hasValidAssetVocabularies != null) {
 			return _hasValidAssetVocabularies;
 		}
 
-		List<AssetVocabulary> assetVocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
-				SiteConnectedGroupGroupProviderUtil.
-					getCurrentAndAncestorSiteAndDepotGroupIds(scopeGroupId));
+		for (AssetVocabulary assetVocabulary :
+				_assetVocabularyService.getGroupVocabularies(_getGroupIds())) {
 
-		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			if (!assetVocabulary.isAssociatedToClassNameId(
 					ClassNameLocalServiceUtil.getClassNameId(
 						DLFileEntry.class.getName()))) {
@@ -1046,6 +1058,10 @@ public class DLAdminManagementToolbarDisplayContext
 		return false;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLAdminManagementToolbarDisplayContext.class.getName());
+
+	private final AssetVocabularyService _assetVocabularyService;
 	private final PortletURL _currentURLObj;
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
 	private final DLPortletInstanceSettingsHelper
@@ -1053,6 +1069,7 @@ public class DLAdminManagementToolbarDisplayContext
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashHelper _dlTrashHelper;
 	private List<LabelItem> _filterLabelItems;
+	private long[] _groupIds;
 	private Boolean _hasValidAssetVocabularies;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;

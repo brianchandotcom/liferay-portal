@@ -34,7 +34,7 @@ dependencies {
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 	implementation group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 #end
-	implementation(group: "org.hibernate.validator", name: "hibernate-validator", version: "6.0.14.Final") {
+	implementation(group: "org.hibernate.validator", name: "hibernate-validator", version: "6.2.5.Final") {
 		exclude group: "javax.validation", module: "validation-api"
 	}
 #if (${framework.equals("portletmvc4spring")})

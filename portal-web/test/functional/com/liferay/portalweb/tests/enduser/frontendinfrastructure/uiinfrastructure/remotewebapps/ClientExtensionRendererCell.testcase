@@ -12,10 +12,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given Client Extension admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Custom Apps",
-				panel = "Applications",
-				portlet = "Client Extensions");
+			ClientExtension.openClientExtensionsAdmin();
 		}
 
 		task ("When the user clicks on plus button") {

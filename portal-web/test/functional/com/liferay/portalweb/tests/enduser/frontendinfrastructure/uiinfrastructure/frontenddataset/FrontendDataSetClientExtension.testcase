@@ -254,10 +254,7 @@ definition {
 	@priority = 3
 	test CannotSeeClientExtensionNotDeployed {
 		task ("When you access the Client Extension admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Custom Apps",
-				panel = "Applications",
-				portlet = "Client Extensions");
+			ClientExtension.openClientExtensionsAdmin();
 		}
 
 		task ("Then the client extension is not present") {

@@ -314,6 +314,10 @@ public class JournalManagementToolbarDisplayContext
 		).setParameter(
 			"ddmStructureId", (String)null
 		).setParameter(
+			"navigationMine", (Boolean)null
+		).setParameter(
+			"navigationRecent", (Boolean)null
+		).setParameter(
 			"orderByCol", StringPool.BLANK
 		).setParameter(
 			"orderByType", StringPool.BLANK

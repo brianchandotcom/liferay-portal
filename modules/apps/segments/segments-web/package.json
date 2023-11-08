@@ -13,6 +13,7 @@
 		"@clayui/link": "3.106.1",
 		"@clayui/loading-indicator": "3.106.1",
 		"@clayui/panel": "3.106.1",
+		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"classnames": "2.3.1",
 		"date-fns": "2.29.3",

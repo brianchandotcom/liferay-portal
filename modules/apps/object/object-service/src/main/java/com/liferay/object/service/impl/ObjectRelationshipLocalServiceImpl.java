@@ -944,19 +944,19 @@ public class ObjectRelationshipLocalServiceImpl
 			boolean reverse, boolean system, String type)
 		throws PortalException {
 
+		_validateInvokerBundle(
+			"Only allowed bundles can add system object relationships", system);
+
 		User user = _userLocalService.getUser(userId);
 
 		_validateExternalReferenceCode(
 			externalReferenceCode, 0L, user.getCompanyId(),
 			objectDefinitionId1);
 
+		_validateName(objectDefinitionId1, name);
+
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
-
-		_validateInvokerBundle(
-			"Only allowed bundles can add system object relationships", system);
-
-		_validateName(objectDefinitionId1, name);
 
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);

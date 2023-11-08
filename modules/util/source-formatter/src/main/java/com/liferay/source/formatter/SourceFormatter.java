@@ -689,12 +689,12 @@ public class SourceFormatter {
 
 			String[] parts = commitMessage.split(":", 2);
 
-			if (!parts[1].endsWith("\n----")) {
+			if (!parts[1].endsWith("\n\n----")) {
 				throw new Exception(
 					StringBundler.concat(
 						"Found formatting issues in SHA ", parts[0], ":\n",
-						"The commit message contains '# ",
-						"breaking_change_report' should end with '----'"));
+						"The commit message contains '# breaking_change_report",
+						"' should end with '\\n\\n----'"));
 			}
 
 			_checkMissingEmptyLinesAroundHeaders(parts);

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -138,7 +139,7 @@ public class LayoutPageTemplateEntryModelListener
 		LayoutStructure layoutStructure) {
 
 		for (LayoutStructureItem layoutStructureItem :
-				layoutStructure.getLayoutStructureItems()) {
+				ListUtil.copy(layoutStructure.getLayoutStructureItems())) {
 
 			if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
 				FormStyledLayoutStructureItem formStyledLayoutStructureItem =

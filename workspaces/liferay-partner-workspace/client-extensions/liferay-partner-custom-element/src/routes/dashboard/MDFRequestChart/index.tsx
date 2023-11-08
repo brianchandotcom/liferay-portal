@@ -18,6 +18,7 @@ import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import usePermissionActions from '../../../common/hooks/usePermissionActions';
 import {Liferay} from '../../../common/services/liferay';
 import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import {Filters} from '../../../common/utils/constants/filters';
 import {retry} from '../../../common/utils/retry';
 
 const MDFRequestChart = () => {
@@ -35,7 +36,7 @@ const MDFRequestChart = () => {
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await retry<Response>(() =>
 			fetch(
-				`/o/c/mdfrequests?nestedFields=accountEntry,mdfReqToActs,actToBgts,mdfReqToMDFClms&nestedFieldsDepth=2&pageSize=9999&filter=mdfRequestStatus ne 'draft'`,
+				`/o/c/mdfrequests?pageSize=-1&nestedFields=${Filters.MDF_DASHBOARD.fields}&filter=${Filters.MDF_DASHBOARD.requests}`,
 				{
 					headers: {
 						'accept': 'application/json',

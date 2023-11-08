@@ -138,7 +138,9 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "test test");
 
-			CommerceInventory.openInventoryAdmin();
+			CommerceNavigator.gotoPortlet(
+				category = "Inventory Management",
+				portlet = "Inventory");
 
 			CommerceNavigator.searchEntry(entryName = "MIN93015");
 		}

@@ -3471,9 +3471,7 @@ definition {
 		}
 
 		task ("When the admin navigates to Commerce -> Inventory -> SKU (e.g. the one relating to the product from the Minium catalog) -> On Order tab") {
-			CommerceNavigator.gotoPortlet(
-				category = "Inventory Management",
-				portlet = "Inventory");
+			CommerceInventory.openInventoryAdmin();
 
 			AppBuilderAdmin.searchByItem(itemName = "MIN55861");
 
@@ -3497,9 +3495,7 @@ definition {
 		}
 
 		task ("When the admin navigates to Commerce -> Inventory -> SKU (the other one) -> On Order tab") {
-			CommerceNavigator.gotoPortlet(
-				category = "Inventory Management",
-				portlet = "Inventory");
+			CommerceInventory.openInventoryAdmin();
 
 			AppBuilderAdmin.searchByItem(itemName = "TESTSKU");
 

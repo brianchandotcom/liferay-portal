@@ -46,9 +46,7 @@ definition {
 
 		Button.clickSave();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Inventory");
+		CommerceInventory.openInventoryAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -139,9 +137,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Inventory");
+		CommerceInventory.openInventoryAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "MIN00673");
 
@@ -1221,9 +1217,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Inventory");
+		CommerceInventory.openInventoryAdmin();
 
 		AppBuilderAdmin.searchByItem(itemName = "MIN93015");
 
@@ -1280,9 +1274,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Inventory");
+		CommerceInventory.openInventoryAdmin();
 
 		Click(
 			key_entryName = "MIN00000",
@@ -1413,10 +1405,7 @@ definition {
 
 		SelectFrame.selectFrameTop();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Inventory Management",
-			panel = "Commerce",
-			portlet = "Inventory");
+		CommerceInventory.openInventoryAdmin();
 
 		Search.searchCP(searchTerm = "default");
 

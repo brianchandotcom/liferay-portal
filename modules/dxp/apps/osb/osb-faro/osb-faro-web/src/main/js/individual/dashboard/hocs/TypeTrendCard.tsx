@@ -3,6 +3,7 @@ import IndividualMetricsQuery from 'shared/queries/IndividualMetricsQuery';
 import React from 'react';
 import TypeTrend from '../components/TypeTrend';
 import {compose} from 'redux';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {graphql} from '@apollo/react-hoc';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {
@@ -26,7 +27,10 @@ const TypeTrendCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const {channelId} = useParams();
 
 	return (
-		<Card className='type-trend-card-root text-secondary'>
+		<Card
+			className='type-trend-card-root text-secondary'
+			id={Containers.CurrentTotalsCard}
+		>
 			<Card.Body>
 				<TypeTrendWithData
 					channelId={channelId}

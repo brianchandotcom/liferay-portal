@@ -8,18 +8,23 @@ import {useModal} from '@clayui/modal';
 
 export enum Containers {
 	AcquisitionsCard = 'acquisitionsCardRoot',
+	ActiveIndividualsCard = 'activeIndividualsCardRoot',
 	AssetAppearsOnCard = 'assetAppearsOnCardRoot',
 	AudienceCard = 'audienceCardRoot',
+	DistributionBreakdownCard = 'distributionBreakdownCardRoot',
 	CohortAnalysisCard = 'cohortAnalysisCardRoot',
+	CurrentTotalsCard = 'currentTotalsCardRoot',
 	DownloadsByLocationCard = 'downloadsByLocationCardRoot',
 	DownloadsByTechnologyCard = 'downloadsByTechnologyCardRoot',
+	EnrichedProfilesCard = 'enrichedProfilesCardRoot',
 	InterestsCard = 'interestsCardRoot',
 	SearchTermsCard = 'searchTermsCardRoot',
-	SessionsByLocationCard = 'SessionsByLocationCardRoot',
-	SessionTechnologyCard = 'SessionTechnologyCardRoot',
-	SiteActivityCard = 'SiteActivityCardRoot',
-	SubmissionsByLocationCard = 'SubmissionsByLocationCardRoot',
-	SubmissionsByTechnologyCard = 'SubmissionsByTechnologyCard',
+	SessionsByLocationCard = 'sessionsByLocationCardRoot',
+	SessionTechnologyCard = 'sessionTechnologyCardRoot',
+	SiteActivityCard = 'siteActivityCardRoot',
+	SubmissionsByLocationCard = 'submissionsByLocationCardRoot',
+	SubmissionsByTechnologyCard = 'submissionsByTechnologyCard',
+	TopInterestsAsOfYesterday = 'topInterestsAsOfYesterday',
 	TopPagesCard = 'topPagesCardRoot',
 	ViewsByLocationCard = 'viewsByLocationCardRoot',
 	ViewsByTechnologyCard = 'viewsByTechnologyCardRoot',
@@ -31,6 +36,10 @@ export const CONTAINERS: {[key in Containers]: TContainer} = {
 	[Containers.AcquisitionsCard]: {
 		label: Liferay.Language.get('acquisitions'),
 		layout: 2
+	},
+	[Containers.ActiveIndividualsCard]: {
+		label: Liferay.Language.get('active-individuals'),
+		layout: 1
 	},
 	[Containers.AssetAppearsOnCard]: {
 		label: Liferay.Language.get('asset-appears-on'),
@@ -44,12 +53,24 @@ export const CONTAINERS: {[key in Containers]: TContainer} = {
 		label: Liferay.Language.get('cohort-analysis'),
 		layout: 1
 	},
+	[Containers.CurrentTotalsCard]: {
+		label: Liferay.Language.get('current-totals'),
+		layout: 1
+	},
+	[Containers.DistributionBreakdownCard]: {
+		label: Liferay.Language.get('distribution-breakdown'),
+		layout: 1
+	},
 	[Containers.DownloadsByLocationCard]: {
 		label: Liferay.Language.get('downloads-by-location'),
 		layout: 2
 	},
 	[Containers.DownloadsByTechnologyCard]: {
 		label: Liferay.Language.get('downloads-by-technology'),
+		layout: 2
+	},
+	[Containers.EnrichedProfilesCard]: {
+		label: Liferay.Language.get('enriched-profiles'),
 		layout: 2
 	},
 	[Containers.InterestsCard]: {
@@ -79,6 +100,10 @@ export const CONTAINERS: {[key in Containers]: TContainer} = {
 	[Containers.SubmissionsByTechnologyCard]: {
 		label: Liferay.Language.get('submissions-by-technology'),
 		layout: 2
+	},
+	[Containers.TopInterestsAsOfYesterday]: {
+		label: Liferay.Language.get('top-interests-as-of-yesterday'),
+		layout: 1
 	},
 	[Containers.TopPagesCard]: {
 		label: Liferay.Language.get('top-pages'),

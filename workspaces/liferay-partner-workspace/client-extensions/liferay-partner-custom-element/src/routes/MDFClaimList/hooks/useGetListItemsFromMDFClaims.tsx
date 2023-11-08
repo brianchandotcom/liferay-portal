@@ -21,7 +21,8 @@ export default function useGetListItemsFromMDFClaims(
 	filtersTerm: string
 ) {
 	const swrResponse = useGet<LiferayItems<MDFClaimDTO[]>>(
-		`/o/${LiferayAPIs.OBJECT}/mdfclaims?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=dateCreated:desc`
+		filtersTerm &&
+			`/o/${LiferayAPIs.OBJECT}/mdfclaims?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=dateCreated:desc`
 	);
 
 	const listItems = useMemo(

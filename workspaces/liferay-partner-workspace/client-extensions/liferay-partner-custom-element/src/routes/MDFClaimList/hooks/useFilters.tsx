@@ -5,15 +5,26 @@
 
 import {useEffect, useState} from 'react';
 
+import useIsChannel from '../../../common/hooks/useIsChannel';
+import {Filters} from '../../../common/utils/constants/filters';
 import {getCamelCase} from '../../../common/utils/getCamelCase';
 import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 import getDateCreatedFilterTerm from '../utils/getDateCreatedFilterTerm';
 
-export default function useFilters() {
+export default function useFilters(openClaimsFilter: boolean) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	const [filtersTerm, setFilterTerm] = useState('');
+	const {isChannel} = useIsChannel();
+
+	const mdfClaimRoleFilter = isChannel
+		? openClaimsFilter
+			? Filters.MDF_CLAIM_LISTING.channelsOpen
+			: Filters.MDF_CLAIM_LISTING.channelsClosed
+		: openClaimsFilter
+		? Filters.MDF_CLAIM_LISTING.partnerOpen
+		: Filters.MDF_CLAIM_LISTING.partnerClosed;
 
 	const onFilter = (newFilters: Partial<typeof INITIAL_FILTER>) =>
 		setFilters((previousFilters) => ({...previousFilters, ...newFilters}));
@@ -21,6 +32,12 @@ export default function useFilters() {
 	useEffect(() => {
 		let initialFilter = '';
 		let hasFilter = false;
+
+		if (mdfClaimRoleFilter) {
+			initialFilter = initialFilter
+				? initialFilter.concat(mdfClaimRoleFilter)
+				: `${mdfClaimRoleFilter}`;
+		}
 
 		if (
 			filters.submitDate.dates.endDate ||
@@ -90,8 +107,9 @@ export default function useFilters() {
 		filters.searchTerm,
 		filters.status,
 		filters.type,
-
 		setFilters,
+		openClaimsFilter,
+		mdfClaimRoleFilter,
 	]);
 
 	return {filters, filtersTerm, onFilter, setFilters};

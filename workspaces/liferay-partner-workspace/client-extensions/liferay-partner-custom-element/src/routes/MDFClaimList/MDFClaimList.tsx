@@ -8,6 +8,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClayTabs from '@clayui/tabs';
+import {useState} from 'react';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
@@ -40,9 +42,13 @@ const BASE_PAGE = 1;
 const MAX_ITEMS = -1;
 
 const MDFClaimList = () => {
+	const [openClaimsFilter, setOpenClaimsFilter] = useState(true);
+
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
-	const {filters, filtersTerm, onFilter, setFilters} = useFilters();
+	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
+		openClaimsFilter
+	);
 
 	const pagination = usePagination();
 	const {data, isValidating, mutate} = useGetListItemsFromMDFClaims(
@@ -98,7 +104,25 @@ const MDFClaimList = () => {
 
 	return (
 		<div className="border-0 my-4">
-			<h1>MDF Claim</h1>
+			<div className="align-items-center d-md-flex justify-content-between mb-3 mr-4">
+				<h1>MDF Claim</h1>
+				<ClayTabs className="h-100 nav nav-segment nav-tabs">
+					<ClayTabs.Item
+						active={openClaimsFilter}
+						className="nav-item"
+						onClick={() => setOpenClaimsFilter(true)}
+					>
+						Open
+					</ClayTabs.Item>
+					<ClayTabs.Item
+						active={!openClaimsFilter}
+						className="nav-item"
+						onClick={() => setOpenClaimsFilter(false)}
+					>
+						Closed
+					</ClayTabs.Item>
+				</ClayTabs>
+			</div>
 
 			<TableHeader>
 				<div className="d-flex">

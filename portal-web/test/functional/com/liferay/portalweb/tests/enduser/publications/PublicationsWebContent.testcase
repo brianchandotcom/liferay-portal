@@ -139,6 +139,164 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
+	@description = "LPS-136380 - Add localization for translated titles and content."
+	@priority = 4
+	test CanReviewChangeForWebContentWithLocalization {
+		task ("Create new Publication and new structure with localization") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "Guest");
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.addLocalization(
+				locale = "de-DE",
+				localization1Name = "WC Struktur Name");
+
+			WebContentStructures.saveCP(structureName = "WC Struktur Name");
+		}
+
+		task ("Create new Template and new web content with localization and structure") {
+			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "Guest");
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name");
+
+			WebContentTemplates.localizeTemplateName(
+				locale = "de-DE",
+				localization1Name = "WC Vorlage Name",
+				templateName = "WC Template Name");
+
+			PortletEntry.save();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(webContentTitle = "WC Title");
+
+			PortletEntry.changeLocale(locale = "de-DE");
+
+			WebContent.addWithStructureCP(webContentTitle = "WC Titel");
+
+			PortletEntry.publish();
+		}
+
+		task ("Review changes of the Web Content") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Article",
+				changeSite = "Guest",
+				changeTitle = "WC Title",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Web Content Article",
+				changeTitle = "WC Title");
+
+			PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "WC Title",
+				publicationName = "Publication Name");
+
+			Click(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+			Click(
+				key_locale = "de_DE",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "WC Titel",
+				publicationName = "Publication Name");
+		}
+
+		task ("Review changes of the Template") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Dynamic Data Mapping Template",
+				changeSite = "Guest",
+				changeTitle = "WC Template Name",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Dynamic Data Mapping Template",
+				changeTitle = "WC Template Name");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "WC Template Name",
+				publicationName = "Publication Name");
+
+			Click(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+			Click(
+				key_locale = "de_DE",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "WC Vorlage Name",
+				publicationName = "Publication Name");
+		}
+
+		task ("Review changes of the Structure") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Dynamic Data Mapping Structure",
+				changeSite = "Guest",
+				changeTitle = "WC Structure Name",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Dynamic Data Mapping Structure",
+				changeTitle = "WC Structure Name");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "WC Structure Name",
+				publicationName = "Publication Name");
+
+			Click(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+			Click(
+				key_locale = "de_DE",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "WC Struktur Name",
+				publicationName = "Publication Name");
+		}
+	}
+
 	@description = "This is the use case for LPS-161037."
 	@priority = 4
 	test CanViewWebContentTimelineOverMultiplePublications {

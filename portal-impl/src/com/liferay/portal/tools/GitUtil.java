@@ -208,20 +208,20 @@ public class GitUtil {
 		StringBundler sb = new StringBundler();
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.equals("--END_OF_COMMIT_MESSAGE--")) {
-				if (sb.index() > 1) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				commitMessages.add(sb.toString());
-
-				sb = new StringBundler();
+			if (!line.equals("--END_OF_COMMIT_MESSAGE--")) {
+				sb.append(line);
+				sb.append(StringPool.NEW_LINE);
 
 				continue;
 			}
 
-			sb.append(line);
-			sb.append(StringPool.NEW_LINE);
+			if (sb.index() > 1) {
+				sb.setIndex(sb.index() - 1);
+
+				commitMessages.add(sb.toString());
+
+				sb.setIndex(0);
+			}
 		}
 
 		return commitMessages;

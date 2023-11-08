@@ -461,10 +461,7 @@ definition {
 
 		User.deleteCP();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Submissions");
+		ObjectAdmin.openSubmissions();
 
 		Workflow.viewDefaultWorkflowSubmissions();
 	}

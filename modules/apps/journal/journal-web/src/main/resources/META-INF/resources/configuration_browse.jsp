@@ -92,10 +92,19 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 
 					<c:choose>
 						<c:when test='<%= Objects.equals(journalConfigurationDisplayContext.getNavigation(), "structures") %>'>
-							<div class="c-px-4">
-								<div class="sheet-text">
-									<liferay-ui:message key="select-the-structures-you-want-to-highlight-in-web-content-administration-to-quickly-access-and-manage-all-its-contents" />
+							<div>
+								<div class="inline-item my-5 p-5 w-100">
+									<span aria-hidden="true" class="loading-animation"></span>
 								</div>
+
+								<react:component
+									module="js/configuration_browse/HighlightedDDMStructuresConfiguration"
+									props='<%=
+										HashMapBuilder.<String, Object>put(
+											"selectDDMStructureURL", journalConfigurationDisplayContext.getSelectDDMStructureURL()
+										).build()
+									%>'
+								/>
 							</div>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalConfigurationDisplayContext.getNavigation(), "web-content-added") %>'>

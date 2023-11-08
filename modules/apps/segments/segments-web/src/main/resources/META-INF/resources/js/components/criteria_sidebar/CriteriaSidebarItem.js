@@ -9,8 +9,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {DragSource as dragSource} from 'react-dnd';
 
+import useKeyboardNavigation from '../../hooks/useKeyboardNavigation';
 import {PROPERTY_TYPES} from '../../utils/constants';
 import {DragTypes} from '../../utils/drag-types';
+import {LIST_ITEM_TYPES} from '../../utils/listItemTypes';
 
 const TYPE_ICON_MAP = {
 	[PROPERTY_TYPES.BOOLEAN]: 'check-circle',
@@ -31,6 +33,10 @@ function CriteriaSidebarItem({
 	label,
 	type,
 }) {
+	const {isTarget, setElement} = useKeyboardNavigation({
+		type: LIST_ITEM_TYPES.listItem,
+	});
+
 	return connectDragSource(
 		<li
 			className={classNames(
@@ -38,9 +44,11 @@ function CriteriaSidebarItem({
 				{dragging},
 				className
 			)}
-			tabIndex="0"
+			ref={setElement}
+			role="menuitem"
+			tabIndex={isTarget ? 0 : -1}
 		>
-			<span className="c-p-2 inline-item">
+			<span className="c-p-2 inline-item" tabIndex={isTarget ? 0 : -1}>
 				<ClayIcon symbol="drag" />
 			</span>
 

@@ -157,7 +157,8 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			} catch (error) {
+			}
+			catch (error) {
 				return {
 					items: [],
 					totalCount: 0,

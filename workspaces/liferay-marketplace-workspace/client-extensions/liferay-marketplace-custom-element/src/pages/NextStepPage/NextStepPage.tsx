@@ -5,7 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {ReactNode, useState} from 'react';
+import {ReactNode, useCallback, useEffect, useState} from 'react';
 
 import catalogIcon from '../../assets/icons/catalog_icon.svg';
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
@@ -63,60 +63,58 @@ export function NextStepPage({
 	const [accountName, setAccountName] = useState<string>('');
 	const [appName, setAppName] = useState<string>('');
 	const [appLogo, setAppLogo] = useState<string>('');
-	const [paymentStatus, setPaymentStatus] = useState<string>('');
+
 	const [product, setProduct] = useState<Product>();
 	const [isTrial, setIsTrial] = useState<boolean>(false);
+	const [cart, setCart] = useState<any>({});
 
-	let cart;
-	let cartItems;
+	const paymentStatus = cart?.paymentStatusLabel;
 
-	const getCartInfo = async () => {
-		if (!appName) {
-			cart = await getCart(Number(orderId));
-			cartItems = await getCartItems(Number(orderId));
+	const getCartInfo = useCallback(async () => {
+		const [cart, cartItems] = await Promise.all([
+			getCart(Number(orderId)),
+			getCartItems(Number(orderId)),
+		]);
 
-			const item = cartItems.items[0];
+		const firstItem = cartItems.items[0];
 
-			if (
+		const isTrial = cartItems.items.some(
+			(item: any) =>
 				item.sku.endsWith('ts') ||
 				item.sku.toLowerCase().includes('trial')
-			) {
-				setIsTrial(true);
-			}
+		);
 
-			setPaymentStatus(cart.paymentStatusLabel);
-
-			const productId = item.productId;
-
-			const product = await getProductById({
-				nestedFields: 'attachments,productSpecifications',
-				productId,
-			});
-
-			setProduct(product);
-
-			const appIcon = getThumbnailByProductAttachment(
-				product.attachments
-			);
-
-			const formattedIcon = showAppImage(appIcon as string).replace(
-				(appIcon as string)?.split('/o')[0],
-				baseURL
-			);
-
-			setAppLogo(formattedIcon);
-			setAppName(item.name);
-
-			const currentAccountCommerce = await getAccountInfoFromCommerce(
-				cart.accountId
-			);
-
-			setAccountLogo(currentAccountCommerce.logoURL);
-			setAccountName(currentAccountCommerce.name);
+		if (isTrial) {
+			setIsTrial(true);
 		}
-	};
 
-	getCartInfo();
+		const product = await getProductById({
+			nestedFields: 'attachments,productSpecifications',
+			productId: firstItem?.productId,
+		});
+
+		const appIcon = getThumbnailByProductAttachment(product.attachments);
+
+		const formattedIcon = showAppImage(appIcon as string).replace(
+			(appIcon as string)?.split('/o')[0],
+			baseURL
+		);
+
+		const currentAccountCommerce = await getAccountInfoFromCommerce(
+			cart.accountId
+		);
+
+		setCart(cart);
+		setAppLogo(formattedIcon);
+		setAppName(firstItem.name);
+		setProduct(product);
+		setAccountLogo(currentAccountCommerce.logoURL);
+		setAccountName(currentAccountCommerce.name);
+	}, [orderId]);
+
+	useEffect(() => {
+		getCartInfo();
+	}, [getCartInfo]);
 
 	const {isPaidApp} = useProductPriceModel(product);
 
@@ -245,7 +243,7 @@ export function NextStepPage({
 								category="Application"
 								logo={appLogo ? appLogo : catalogIcon}
 								title={appName ?? ''}
-							></AccountAndAppCard>
+							/>
 
 							<div className="icon-container">
 								<ClayIcon

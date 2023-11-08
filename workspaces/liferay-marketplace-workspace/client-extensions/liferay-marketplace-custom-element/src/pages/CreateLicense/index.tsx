@@ -158,7 +158,8 @@ const CreateLicense = () => {
 				navigate('/');
 
 				provisioningKoroneikiOAuth2.downloadLicenseKey(licenseKey.id);
-			} catch {
+			}
+			catch {
 				Liferay.Util.openToast({
 					message: 'Something went wrong to create a License Key',
 					type: 'danger',

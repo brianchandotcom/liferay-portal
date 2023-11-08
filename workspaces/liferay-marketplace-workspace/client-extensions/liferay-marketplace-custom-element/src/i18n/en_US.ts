@@ -9,7 +9,7 @@ export default {
 	'access-console': 'Access Console',
 	'activation-status': 'Activation Status',
 	'back-to-my-apps': 'Back to My Apps',
-	'confirm-&-deactivate-keys': 'Confirm & Deactivate Keys',
+	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':

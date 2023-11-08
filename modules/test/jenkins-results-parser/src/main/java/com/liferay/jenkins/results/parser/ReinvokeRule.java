@@ -20,7 +20,7 @@ public class ReinvokeRule {
 
 	public static List<ReinvokeRule> getReinvokeRules() {
 		if (_reinvokeRules != null) {
-			return _reinvokeRules;
+			return new ArrayList<>(_reinvokeRules);
 		}
 
 		Properties buildProperties = null;
@@ -48,7 +48,7 @@ public class ReinvokeRule {
 			}
 		}
 
-		return _reinvokeRules;
+		return new ArrayList<>(_reinvokeRules);
 	}
 
 	public String getName() {

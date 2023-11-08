@@ -49,7 +49,7 @@ public class FaroUserComparator extends OrderByComparator<FaroUser> {
 					if (orderByField.getOrderBy() ==
 							OrderByField.OrderBy.desc) {
 
-						format += " NULLS LAST";
+						format += " nulls last";
 					}
 
 					return String.format(

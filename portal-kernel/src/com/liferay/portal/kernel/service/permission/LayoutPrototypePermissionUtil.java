@@ -5,6 +5,10 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -18,28 +22,40 @@ public class LayoutPrototypePermissionUtil {
 			String actionId)
 		throws PrincipalException {
 
-		_layoutPrototypePermission.check(
-			permissionChecker, layoutPrototypeId, actionId);
+		if (!contains(permissionChecker, layoutPrototypeId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, LayoutPrototype.class.getName(),
+				layoutPrototypeId, actionId);
+		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long layoutPrototypeId,
 		String actionId) {
 
-		return _layoutPrototypePermission.contains(
-			permissionChecker, layoutPrototypeId, actionId);
+		if (permissionChecker.hasPermission(
+				null, LayoutPrototype.class.getName(), layoutPrototypeId,
+				actionId)) {
+
+			return true;
+		}
+
+		for (LayoutPrototypePermission layoutPrototypePermission :
+				_layoutPrototypePermissions) {
+
+			if (layoutPrototypePermission.contains(
+					permissionChecker, layoutPrototypeId, actionId)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
-	public static LayoutPrototypePermission getLayoutPrototypePermission() {
-		return _layoutPrototypePermission;
-	}
-
-	public void setLayoutPrototypePermission(
-		LayoutPrototypePermission layoutPrototypePermission) {
-
-		_layoutPrototypePermission = layoutPrototypePermission;
-	}
-
-	private static LayoutPrototypePermission _layoutPrototypePermission;
+	private static final ServiceTrackerList<LayoutPrototypePermission>
+		_layoutPrototypePermissions = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			LayoutPrototypePermission.class, "(extended=true)");
 
 }

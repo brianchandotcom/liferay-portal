@@ -5,6 +5,7 @@ import IndividualSiteMetricsQuery from 'shared/queries/IndividualSiteMetricsQuer
 import IntervalSelector from 'shared/components/IntervalSelector';
 import React, {useCallback} from 'react';
 import {compose} from 'redux';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {graphql} from '@apollo/react-hoc';
 import {Interval} from 'shared/types';
 import {INTERVAL_KEY_MAP, isHourlyRangeKey} from 'shared/util/time';
@@ -44,7 +45,7 @@ const ActiveIndividualsCard: React.FC<IActiveIndividualsCardProps> = ({
 	const {channelId} = useParams();
 
 	return (
-		<Card minHeight={536}>
+		<Card id={Containers.ActiveIndividualsCard} minHeight={536}>
 			<Card.Header className='align-items-center d-flex justify-content-between'>
 				<Card.Title>
 					{Liferay.Language.get('active-individuals')}

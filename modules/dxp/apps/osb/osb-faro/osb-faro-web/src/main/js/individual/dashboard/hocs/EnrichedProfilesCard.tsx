@@ -3,6 +3,7 @@ import Card from 'shared/components/Card';
 import getCN from 'classnames';
 import InfoPopover from 'shared/components/InfoPopover';
 import React from 'react';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {DataSource} from 'shared/util/records';
 import {isFinite} from 'lodash';
 import {sub} from 'shared/util/lang';
@@ -61,6 +62,7 @@ const EnrichedProfilesCard: React.FC<IEnrichedProfilesCardProps> = ({
 				inverted: !contactsConfigured,
 				['text-secondary']: contactsConfigured
 			})}
+			id={Containers.EnrichedProfilesCard}
 		>
 			{contactsConfigured ? (
 				<>

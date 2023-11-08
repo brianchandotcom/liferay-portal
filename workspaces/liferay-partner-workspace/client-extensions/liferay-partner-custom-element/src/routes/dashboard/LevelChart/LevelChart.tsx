@@ -20,7 +20,7 @@ const LevelChart = () => {
 		currency,
 		headcount,
 		loading,
-		newProjectExistingBusiness,
+		opportunitiesCount,
 		partnerLevel,
 	} = useGetAccountInformation();
 
@@ -32,7 +32,7 @@ const LevelChart = () => {
 		if (
 			!account ||
 			!partnerLevel ||
-			newProjectExistingBusiness === undefined
+			opportunitiesCount === undefined
 		) {
 			return (
 				<ClayAlert
@@ -51,7 +51,7 @@ const LevelChart = () => {
 				checkedProperties={checkedProperties}
 				currency={currency}
 				headcount={headcount}
-				newProjectExistingBusiness={newProjectExistingBusiness}
+				opportunitiesCount={opportunitiesCount}
 				partnerLevel={partnerLevel}
 			/>
 		);

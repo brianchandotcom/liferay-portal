@@ -153,7 +153,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			).put(
 				"title",
 				"The API sort can only be associated to API endpoints with a " +
-					"\"collection\" retrieve type."
+					"retrieve type of \"collection\"."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

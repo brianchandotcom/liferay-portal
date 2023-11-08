@@ -129,7 +129,7 @@ definition {
 			var apiApplicationId = JSONPathUtil.getIdValue(response = ${response});
 
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}
@@ -183,14 +183,15 @@ definition {
 				endpointId = ${siteScopedEndpointId},
 				responseSchemaId = ${siteScopedSchemaId});
 
-			var companyScopedEndpointResponse = EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+			var responseFromEndpoint = EndpointAPI.createAPIEndpoint(
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 
-			var companyScopedEndpointId = JSONPathUtil.getIdValue(response = ${companyScopedEndpointResponse});
+			var companyScopedEndpointId = JSONPathUtil.getIdValue(response = ${responseFromEndpoint});
+
 			var responseCompanyScopedSchema = SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "testSchemaCompany");
 

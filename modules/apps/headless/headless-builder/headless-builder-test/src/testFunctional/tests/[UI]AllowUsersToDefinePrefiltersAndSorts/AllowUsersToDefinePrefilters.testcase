@@ -83,7 +83,7 @@ definition {
 
 		task ("And Given a schema based on Student object definition with student name, subject name as schema properties student_name, subject_name") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "studentErc",
 				name = "testSchema");
 

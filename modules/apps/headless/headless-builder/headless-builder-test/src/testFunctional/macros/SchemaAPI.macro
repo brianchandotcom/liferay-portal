@@ -41,20 +41,20 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPISchema(mainObjectDefinitionERC = null, name = null, virtualHost = null, externalReferenceCode = null) {
-		Variables.assertDefined(parameterList = "${mainObjectDefinitionERC},${name},${externalReferenceCode}");
+	macro createAPISchema(mainObjectDefinitionERC = null, name = null, virtualHost = null, apiApplicationERC = null) {
+		Variables.assertDefined(parameterList = "${mainObjectDefinitionERC},${name},${apiApplicationERC}");
 
-		if (!(isSet(externalReferenceCodeSchema))) {
-			var externalReferenceCodeSchema = ${name};
+		if (!(isSet(schemaERC))) {
+			var schemaERC = ${name};
 		}
 
 		var curl = SchemaAPI._curlAPISchema(virtualHost = ${virtualHost});
 		var body = '''
 			-d {
-				"externalReferenceCode": "${externalReferenceCodeSchema}",
+				"externalReferenceCode": "${schemaERC}",
 				"mainObjectDefinitionERC": "${mainObjectDefinitionERC}",
 				"name": "${name}",
-				"r_apiApplicationToAPISchemas_c_apiApplicationERC": "${externalReferenceCode}"
+				"r_apiApplicationToAPISchemas_c_apiApplicationERC": "${apiApplicationERC}"
 			}
 		''';
 
@@ -67,7 +67,7 @@ definition {
 
 	@summary = "Default summary"
 	macro createNAPISchemas(numberOfSchemas = null, mainObjectDefinitionERC = null, name = null, externalReferenceCode = null) {
-		Variables.assertDefined(parameterList = "${numberOfSchemas},${mainObjectDefinitionERC},${name},${externalReferenceCode}");
+		Variables.assertDefined(parameterList = "${numberOfSchemas},${mainObjectDefinitionERC},${name},${apiApplicationERC}");
 
 		var i = 0;
 
@@ -75,7 +75,7 @@ definition {
 			var i = ${i} + 1;
 
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = ${externalReferenceCode},
+				apiApplicationERC = ${apiApplicationERC},
 				mainObjectDefinitionERC = ${mainObjectDefinitionERC},
 				name = "${name}${i}");
 		}

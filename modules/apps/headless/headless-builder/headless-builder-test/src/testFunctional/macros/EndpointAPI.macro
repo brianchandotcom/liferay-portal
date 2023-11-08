@@ -25,8 +25,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIEndpoint(requestSchemaId = null, path = null, responseSchemaId = null, name = null, virtualHost = null, externalReferenceCode = null) {
-		Variables.assertDefined(parameterList = "${externalReferenceCode},${name},${path}");
+	macro createAPIEndpoint(requestSchemaId = null, path = null, responseSchemaId = null, name = null, virtualHost = null, apiApplicationERC = null) {
+		Variables.assertDefined(parameterList = "${apiApplicationERC},${name},${path}");
 
 		var curl = EndpointAPI._curlAPIEndpoint(virtualHost = ${virtualHost});
 
@@ -38,7 +38,7 @@ definition {
 			"httpMethod": "${httpMethod}",
 			"name": "${name}",
 			"path": "${path}",
-			"r_apiApplicationToAPIEndpoints_c_apiApplicationERC": "${externalReferenceCode}"
+			"r_apiApplicationToAPIEndpoints_c_apiApplicationERC": "${apiApplicationERC}"
 		''';
 
 		if (isSet(requestSchemaId)) {
@@ -57,8 +57,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createNAPIEndpoints(path = null, numberOfEndpoints = null, name = null, externalReferenceCode = null) {
-		Variables.assertDefined(parameterList = "${externalReferenceCode},${name},${numberOfEndpoints},${path}");
+	macro createNAPIEndpoints(path = null, numberOfEndpoints = null, name = null, apiApplicationERC = null) {
+		Variables.assertDefined(parameterList = "${apiApplicationERC},${name},${numberOfEndpoints},${path}");
 
 		var i = 0;
 
@@ -66,7 +66,7 @@ definition {
 			var i = ${i} + 1;
 
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = ${externalReferenceCode},
+				apiApplicationERC = ${apiApplicationERC},
 				name = "${name}${i}",
 				path = "${path}${i}");
 		}

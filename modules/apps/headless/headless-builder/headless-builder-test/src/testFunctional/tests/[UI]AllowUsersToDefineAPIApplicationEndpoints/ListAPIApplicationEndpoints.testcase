@@ -58,7 +58,7 @@ definition {
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}
@@ -88,7 +88,7 @@ definition {
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}
@@ -126,7 +126,7 @@ definition {
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}
@@ -158,7 +158,7 @@ definition {
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}
@@ -191,7 +191,7 @@ definition {
 
 		task ("And Given with postEndpointAPI to create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}
@@ -221,7 +221,7 @@ definition {
 
 		task ("And Given with postEndpointAPI to create two endpoints associate to the API application") {
 			EndpointAPI.createNAPIEndpoints(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				numberOfEndpoints = 2,
 				path = "/myendpoint");
@@ -252,7 +252,7 @@ definition {
 
 		task ("And Given postAPIEndpoint to create 11 endpoints associate to the API application") {
 			EndpointAPI.createNAPIEndpoints(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				numberOfEndpoints = 11,
 				path = "/myendpoint");
@@ -291,7 +291,7 @@ definition {
 
 		task ("And Given I create an edpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}
@@ -319,7 +319,7 @@ definition {
 
 		task ("When I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}

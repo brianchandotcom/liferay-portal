@@ -59,14 +59,14 @@ definition {
 				var scopeKey = "company";
 			}
 
-			if (!(isSet(externalReferenceCodeEndpoint))) {
-				var externalReferenceCodeEndpoint = ${endpointName};
+			if (!(isSet(endpointERC))) {
+				var endpointERC = ${endpointName};
 			}
 
 			if (isSet(retrieveType)) {
 				var relatedEndpoint = '''
 					"apiApplicationToAPIEndpoints": [{
-						"externalReferenceCode": "${externalReferenceCodeEndpoint}",
+						"externalReferenceCode": "${endpointERC}",
 						"httpMethod": "get",
 						"name": "${endpointName}",
 						"path": "${endpointPath}",
@@ -79,7 +79,7 @@ definition {
 			else {
 				var relatedEndpoint = '''
 					"apiApplicationToAPIEndpoints": [{
-						"externalReferenceCode": "${externalReferenceCodeEndpoint}",
+						"externalReferenceCode": "${endpointERC}",
 						"httpMethod": "get",
 						"name": "${endpointName}",
 						"path": "${endpointPath}",
@@ -91,8 +91,8 @@ definition {
 			var body = StringUtil.add(${body}, ", ${relatedEndpoint}", "");
 		}
 
-		if (!(isSet(externalReferenceCodeSchema))) {
-			var externalReferenceCodeSchema = ${schemaName};
+		if (!(isSet(schemaERC))) {
+			var schemaERC = ${schemaName};
 		}
 
 		if (isSet(relatedSchema)) {
@@ -104,7 +104,7 @@ definition {
 							"name": "${objectFieldErc}",
 							"description": "description"
 						}],
-						"externalReferenceCode": "${externalReferenceCodeSchema}",
+						"externalReferenceCode": "${schemaERC}",
 						"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
 						"name": "${schemaName}",
 						"description": "description"
@@ -114,7 +114,7 @@ definition {
 			else {
 				var relatedSchema = '''
 					"apiApplicationToAPISchemas": [{
-						"externalReferenceCode": "${externalReferenceCodeSchema}",
+						"externalReferenceCode": "${schemaERC}",
 						"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
 						"name": "${schemaName}"
 					}]

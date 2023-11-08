@@ -74,14 +74,14 @@ definition {
 
 		task ("And Given with postAPISchema to create a Schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "test",
+				apiApplicationERC = "test",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "mySchema");
 		}
 
 		task ("And Given with postAPIEndpoint to create an Endpoint associate to API application and Schema") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "test",
+				apiApplicationERC = "test",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}
@@ -128,14 +128,14 @@ definition {
 
 		task ("And Given with postAPISchema to create a Schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "test",
+				apiApplicationERC = "test",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "mySchema");
 		}
 
 		task ("And Given with postAPIEndpoint to create an Endpoint associate to API application and Schema") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "test",
+				apiApplicationERC = "test",
 				name = "myEndpoint",
 				path = "/myEndpoint");
 		}

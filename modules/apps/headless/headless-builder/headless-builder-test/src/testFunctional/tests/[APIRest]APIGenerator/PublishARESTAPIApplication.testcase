@@ -36,7 +36,7 @@ definition {
 
 		task ("And Given an API Schema 'AppTest' related to an Application by post request postAPISchema") {
 			var response = SchemaAPI.createAPISchema(
-				externalReferenceCode = "App-test",
+				apiApplicationERC = "App-test",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "AppTest");
 		}
@@ -45,7 +45,7 @@ definition {
 			var schemaId = JSONPathUtil.getIdValue(response = ${response});
 
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "App-test",
+				apiApplicationERC = "App-test",
 				name = "apptest",
 				path = "/apptest",
 				responseSchemaId = ${schemaId});
@@ -77,7 +77,7 @@ definition {
 
 		task ("And Given an API endpoint 'AppTest' related to an Application by post request postAPIEndpoint") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "App-test",
+				apiApplicationERC = "App-test",
 				name = "apptest",
 				path = "/apptest");
 		}
@@ -102,7 +102,7 @@ definition {
 
 		task ("And Given an API Schema 'AppTest' related to an Application by post request postAPISchema") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "App-test",
+				apiApplicationERC = "App-test",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "AppTest");
 		}

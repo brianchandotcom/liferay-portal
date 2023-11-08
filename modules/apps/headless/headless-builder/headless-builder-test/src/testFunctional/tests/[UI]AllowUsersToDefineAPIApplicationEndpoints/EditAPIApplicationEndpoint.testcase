@@ -60,7 +60,7 @@ definition {
 
 		task ("And Given API Schema in API Application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "testSchema");
 		}
@@ -130,7 +130,7 @@ definition {
 
 		task ("And Given Schema with properties: 'name' of university, 'name' of Student, ERC of university, ERC of student") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "university",
 				name = "testSchema");
 
@@ -175,14 +175,14 @@ definition {
 
 		task ("Given API Application with two endpoints created") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "testendpoint1",
 				path = "/testendpoint1");
 		}
 
 		task ("And Given one API Schema in API Application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "testSchema");
 		}

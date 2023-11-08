@@ -112,7 +112,7 @@ definition {
 
 		task ("And Given a Schema created in the API Application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "testSchema_1");
 		}
@@ -184,7 +184,7 @@ definition {
 
 		task ("And Given a Schema 'new' created in the API Application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "new");
 		}

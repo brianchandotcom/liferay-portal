@@ -60,7 +60,7 @@ definition {
 
 		task ("And Given I create a schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "mySchema");
 		}
@@ -93,7 +93,7 @@ definition {
 
 		task ("And Given I create a schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "mySchema");
 		}
@@ -125,7 +125,7 @@ definition {
 
 		task ("And Given with postAPISchema to create a schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "mySchema");
 		}
@@ -151,7 +151,7 @@ definition {
 
 		task ("And Given with postAPISchema to create two schemas associate to the API application") {
 			SchemaAPI.createNAPISchemas(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "testSchema",
 				numberOfSchemas = 2);
@@ -182,7 +182,7 @@ definition {
 
 		task ("And Given with postAPISchema to create two schemas associate to the API application") {
 			SchemaAPI.createNAPISchemas(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "testSchema",
 				numberOfSchemas = 2);
@@ -213,7 +213,7 @@ definition {
 
 		task ("And Given with postAPISchema to create 11 schemas associate to the API application") {
 			SchemaAPI.createNAPISchemas(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "testSchema",
 				numberOfSchemas = 11);
@@ -252,7 +252,7 @@ definition {
 
 		task ("And Given I create a schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "testSchema");
 		}
@@ -278,7 +278,7 @@ definition {
 
 		task ("When I create a schema associate to the API application") {
 			SchemaAPI.createAPISchema(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",
 				name = "mySchema");
 		}

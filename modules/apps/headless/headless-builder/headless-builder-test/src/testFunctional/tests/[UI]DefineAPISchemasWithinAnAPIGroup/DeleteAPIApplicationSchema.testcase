@@ -85,7 +85,7 @@ definition {
 
 		task ("And Given create an API Endpoint in the Application") {
 			EndpointAPI.createAPIEndpoint(
-				externalReferenceCode = "My-app",
+				apiApplicationERC = "My-app",
 				name = "myendpoint",
 				path = "/myendpoint");
 		}

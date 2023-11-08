@@ -10,6 +10,7 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
+import {useDataSource} from 'shared/hooks/useDataSource';
 
 const Distribution = lazy(
 	() =>
@@ -72,6 +73,7 @@ const NAV_ITEMS = [
 const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 	const {selectedChannel} = useChannelContext();
 	const {channelId, groupId} = useParams();
+	const dataSourceStates = useDataSource();
 
 	return (
 		<BasePage
@@ -105,10 +107,10 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 								Containers.CurrentTotalsCard,
 								Containers.EnrichedProfilesCard,
 								Containers.ActiveIndividualsCard,
-								Containers.TopInterestsAsOfYesterday,
+								Containers.TopInterestsAsOfYesterdayCard,
 								Containers.DistributionBreakdownCard
 							]}
-							disabled={false}
+							disabled={dataSourceStates?.empty}
 							subtitle={selectedChannel?.name}
 							title={Liferay.Language.get(
 								'individuals-dashboard'

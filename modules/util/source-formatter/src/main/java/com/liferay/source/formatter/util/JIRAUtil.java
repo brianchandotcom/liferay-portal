@@ -26,23 +26,33 @@ public class JIRAUtil {
 
 		outerLoop:
 		for (String commitMessage : commitMessages) {
-			if (commitMessage.startsWith("Revert ") ||
-				commitMessage.startsWith("artifact:ignore") ||
-				commitMessage.startsWith("build.gradle auto SF") ||
-				commitMessage.endsWith("/ci-merge.")) {
+			String[] parts = commitMessage.split(":", 2);
+
+			String commitMessageSubject = parts[1];
+
+			int x = parts[1].indexOf("\n");
+
+			if (x != -1) {
+				commitMessageSubject = commitMessageSubject.substring(0, x);
+			}
+
+			if (commitMessageSubject.startsWith("Revert ") ||
+				commitMessageSubject.startsWith("artifact:ignore") ||
+				commitMessageSubject.startsWith("build.gradle auto SF") ||
+				commitMessageSubject.endsWith("/ci-merge.")) {
 
 				continue;
 			}
 
 			for (String projectName : projectNames) {
-				if (commitMessage.startsWith(projectName)) {
+				if (commitMessageSubject.startsWith(projectName)) {
 					continue outerLoop;
 				}
 			}
 
 			throw new Exception(
 				StringBundler.concat(
-					"Found formatting issues:\n",
+					"Found formatting issues in SHA ", parts[0], "\n",
 					"At least one commit message is missing a reference to a ",
 					"required JIRA project: ",
 					StringUtil.merge(projectNames, StringPool.COMMA_AND_SPACE),

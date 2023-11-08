@@ -1419,23 +1419,26 @@ public class SourceFormatter {
 			commitMessages, _getPropertyValues("jira.project.keys"));
 
 		for (String commitMessage : commitMessages) {
+			String[] parts = commitMessage.split(":", 2);
+
 			for (String keyword :
 					_getPropertyValues("git.commit.vulnerability.keywords")) {
 
 				Pattern pattern = Pattern.compile(
 					"\\b_*(" + keyword + ")_*\\b", Pattern.CASE_INSENSITIVE);
 
-				Matcher matcher = pattern.matcher(commitMessage);
+				Matcher matcher = pattern.matcher(parts[1]);
 
 				if (matcher.find()) {
 					throw new Exception(
 						StringBundler.concat(
-							"Found formatting issues:\n", "The commit '",
-							commitMessage, "' contains the word '", keyword,
-							"', which could reveal potential security ",
-							"vulnerablities. Please see the vulnerability ",
-							"keywords that are specified in source-formatter.",
-							"properties in the liferay-portal repository."));
+							"Found formatting issues in SHA ", parts[0], ":\n",
+							"The commit '", parts[1], "' contains the word '",
+							keyword, "', which could reveal potential ",
+							"security vulnerablities. Please see the ",
+							"vulnerability keywords that are specified in ",
+							"source-formatter.properties in the ",
+							"liferay-portal repository."));
 				}
 			}
 		}

@@ -103,7 +103,7 @@ public class AuthenticationClientHttpRequestInterceptor
 
 		private static String _getScheme(HttpRequest httpRequest) {
 			String forwardedProtocol = _getHttpHeaderValue(
-				httpRequest.getHeaders(), "X-Forwarded-Origin-Proto");
+				httpRequest.getHeaders(), "X-Liferay-Origin-Forwarded-Proto");
 
 			if (forwardedProtocol != null) {
 				return forwardedProtocol;
@@ -116,7 +116,7 @@ public class AuthenticationClientHttpRequestInterceptor
 
 		private static String _getServerName(HttpRequest httpRequest) {
 			String forwardedHost = _getHttpHeaderValue(
-				httpRequest.getHeaders(), "X-Forwarded-Origin-Host");
+				httpRequest.getHeaders(), "X-Liferay-Origin-Forwarded-Host");
 
 			if (forwardedHost != null) {
 				return forwardedHost;
@@ -131,7 +131,7 @@ public class AuthenticationClientHttpRequestInterceptor
 			int serverPort = 0;
 
 			String forwardedPort = _getHttpHeaderValue(
-				httpRequest.getHeaders(), "X-Forwarded-Origin-Port");
+				httpRequest.getHeaders(), "X-Liferay-Origin-Forwarded-Port");
 
 			if (forwardedPort != null) {
 				serverPort = GetterUtil.getInteger(forwardedPort);

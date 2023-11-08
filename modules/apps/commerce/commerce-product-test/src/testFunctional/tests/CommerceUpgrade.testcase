@@ -56,9 +56,7 @@ definition {
 		}
 
 		task ("Assert that Master Base Price List and Minium Base Price List are present after the Upgrade") {
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Price Lists");
+			CommerceNavigator.goToPriceListAdmin();
 
 			for (var priceLists : list "Master Base Price List,Minium Base Price List") {
 				AssertElementPresent(

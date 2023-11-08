@@ -3466,9 +3466,7 @@ definition {
 
 		Button.clickSave();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 

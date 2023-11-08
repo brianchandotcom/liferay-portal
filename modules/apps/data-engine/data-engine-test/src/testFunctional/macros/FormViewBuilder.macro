@@ -630,13 +630,11 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectSelectOption(fieldName = null, selectOption = null) {
+	macro selectSelectOption(fieldName, selectOption) {
 		var key_fieldName = ${fieldName};
 		var key_selectOption = ${selectOption};
 
-		Click(
-			locator1 = "FormViewBuilder#SELECT_FIELD",
-			value1 = ${selectOption});
+		Click(locator1 = "FormViewBuilder#SELECT_FIELD");
 
 		Click(
 			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST",
@@ -644,16 +642,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectSelectOptionPredefined(selectOption = null) {
-		var key_selectOption = ${selectOption};
+	macro selectSelectOptionPredefined(selectOption) {
+		var key_menuItem = ${selectOption};
+
+		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST");
 
 		Click(
-			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST",
-			value1 = ${selectOption});
-
-		Click(
-			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST",
-			value1 = ${selectOption});
+			locator1 = "MenuItem#MENU_ITEM_SPECIFIC",
+			value1 = ${key_menuItem});
 	}
 
 	@summary = "Default summary"

@@ -15,84 +15,134 @@
 
 	[#assign mdfClaimStatusKey = (mdfClaim.mdfClaimStatus.key)! /]
 
-	[#if mdfClaimStatusKey != 'claimPaid' && (hasMarketingReviewAction || hasFinanceReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction || hasDirectorReviewAction || hasClaimPaidAction)]
-		<script>
-			const modalStatusTypes = {
-				canceled: 'Canceled',
-				inFinanceReview: 'In Finance Review',
-				inDirectorReview: 'In Director Review',
-				marketingDirectorReview: 'Marketing Director Review',
-				moreInfoRequested: 'More Info Requested',
-				pendingMarketingReview: 'Pending Marketing Review',
-				rejected: 'Rejected',
-			};
+	[#assign count = 0]
 
-			const updateClaimStatus = async (status) => {
-				const response = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
-					body: `{"mdfClaimStatus": "` + status + `"}`,
-					headers: {
-						'content-type': 'application/json',
-						'x-csrf-token': Liferay.authToken,
+	<script>
+		const modalStatusTypes = {
+			canceled: 'Canceled',
+			inFinanceReview: 'In Finance Review',
+			inDirectorReview: 'In Director Review',
+			marketingDirectorReview: 'Marketing Director Review',
+			moreInfoRequested: 'More Info Requested',
+			pendingMarketingReview: 'Pending Marketing Review',
+			rejected: 'Rejected',
+		};
+
+		const updateClaimStatus = async (status) => {
+			const response = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
+				body: `{"mdfClaimStatus": "` + status + `"}`,
+				headers: {
+					'content-type': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'PATCH',
+			});
+
+			if (response.ok) {
+				location.reload();
+
+				return;
+			}
+
+			Liferay.Util.openToast({
+				message: 'The MDF Claim Status cannot be changed.',
+				type: 'danger',
+			});
+		};
+
+		const updatePaidClaimStatus = async (status, payment, checkNumber) => {
+			const response = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
+				body:
+					`{"mdfClaimStatus": "` +
+					status +
+					`", "claimPaid": "` +
+					payment +
+					`", "checkNumber": "` +
+					checkNumber +
+					`"}`,
+				headers: {
+					'content-type': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'PATCH',
+			});
+
+			if (response.ok) {
+				location.reload();
+
+				return;
+			}
+
+			Liferay.Util.openToast({
+				message: 'The MDF Claim Status cannot be changed.',
+				type: 'danger',
+			});
+		};
+
+		const callClaimPaidModal = (status) => {
+			return Liferay.Util.openModal({
+				bodyHTML: `<form>
+								<div class="form-group">
+									<label for="claimPaidInput">Amount Paid</label>
+
+									<input class="form-control" id="claimPaidInput" placeholder="Amount Paid" type="number" />
+								</div>
+
+								<div class="form-group">
+									<label for="checkNumberInput">Check Number</label>
+
+									<input class="form-control" id="checkNumberInput" placeholder="Check Number" type="text" />
+								</div>
+							</form>`,
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('Cancel'),
+						type: 'cancel',
 					},
-					method: 'PATCH',
-				});
+					{
+						displayType: 'primary',
+						label: 'Submit',
 
-				if (response.ok) {
-					location.reload();
+						onClick() {
+							const checkNumber = document.getElementById(
+								'checkNumberInput'
+							).value;
+							const claimPaid = document.getElementById(
+								'claimPaidInput'
+							).value;
 
-					return;
-				}
+							if (checkNumber && claimPaid) {
+								return updatePaidClaimStatus(
+									status,
+									claimPaid,
+									checkNumber
+								);
+							}
 
-				Liferay.Util.openToast({
-					message: 'The MDF Claim Status cannot be changed.',
-					type: 'danger',
-				});
-			};
+							Liferay.Util.openToast({
+								message:
+									'The MDF Claim Status cannot be changed without the fields being filled.',
+								type: 'danger',
+							});
 
-			const updatePaidClaimStatus = async (status, payment, checkNumber) => {
-				const response = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
-					body:
-						`{"mdfClaimStatus": "` +
-						status +
-						`", "claimPaid": "` +
-						payment +
-						`", "checkNumber": "` +
-						checkNumber +
-						`"}`,
-					headers: {
-						'content-type': 'application/json',
-						'x-csrf-token': Liferay.authToken,
+						},
+						type: 'submit',
 					},
-					method: 'PATCH',
-				});
+				],
+				headerHTML: `<h1 class="m-0">Status Change</h1>`,
+				size: 'md',
+			});
+		};
 
-				if (response.ok) {
-					location.reload();
-
-					return;
-				}
-
-				Liferay.Util.openToast({
-					message: 'The MDF Claim Status cannot be changed.',
-					type: 'danger',
-				});
-			};
-
-			const callClaimPaidModal = (status) => {
+		const callMDFClaimModal = (status) => {
+			if (status !== 'approved') {
 				return Liferay.Util.openModal({
-					bodyHTML: `<form>
-									<div class="form-group">
-										<label for="claimPaidInput">Amount Paid</label>
+					bodyHTML: `<div class="form-group">
+									<label for="descriptionTextArea">Status change motivation:</label>
 
-										<input class="form-control" id="claimPaidInput" placeholder="Amount Paid" type="number" />
-									</div>
-
-									<div class="form-group">
-										<label for="checkNumberInput">Check Number</label>
-
-										<input class="form-control" id="checkNumberInput" placeholder="Check Number" type="text" />
-									</div>
-								</form>`,
+									<textarea class="form-control" id="descriptionTextArea" placeholder="Describe here..." type="text"></textarea>
+								</div>`,
 					buttons: [
 						{
 							displayType: 'secondary',
@@ -101,30 +151,28 @@
 						},
 						{
 							displayType: 'primary',
-							label: 'Submit',
-
+							label: modalStatusTypes[status],
 							onClick() {
-								const checkNumber = document.getElementById(
-									'checkNumberInput'
-								).value;
-								const claimPaid = document.getElementById(
-									'claimPaidInput'
-								).value;
+								const textarea = document.getElementById(
+									'descriptionTextArea'
+								);
 
-								if (checkNumber && claimPaid) {
-									return updatePaidClaimStatus(
-										status,
-										claimPaid,
-										checkNumber
-									);
+								if (textarea.value) {
+									const commentParagraph = document.querySelector("iframe").contentWindow.document.querySelector("body.portlet-page-comments p");
+									const postCommentButton = document.querySelector("button.btn-comment");
+
+									commentParagraph.innerHTML = Liferay.Util.escape(textarea.value);
+									postCommentButton.disabled = false;
+									postCommentButton.click();
+
+									return updateClaimStatus(status);
 								}
 
 								Liferay.Util.openToast({
 									message:
-										'The MDF Claim Status cannot be changed without the fields being filled.',
+										'The MDF Claim Status cannot be changed without a motivation.',
 									type: 'danger',
 								});
-
 							},
 							type: 'submit',
 						},
@@ -132,198 +180,181 @@
 					headerHTML: `<h1 class="m-0">Status Change</h1>`,
 					size: 'md',
 				});
-			};
+			}
 
-			const callMDFClaimModal = (status) => {
-				if (status !== 'approved') {
-					return Liferay.Util.openModal({
-						bodyHTML: `<div class="form-group">
-										<label for="descriptionTextArea">Status change motivation:</label>
+			return updateClaimStatus(status);
+		};
+	</script>
 
-										<textarea class="form-control" id="descriptionTextArea" placeholder="Describe here..." type="text"></textarea>
-									</div>`,
-						buttons: [
-							{
-								displayType: 'secondary',
-								label: Liferay.Language.get('Cancel'),
-								type: 'cancel',
-							},
-							{
-								displayType: 'primary',
-								label: modalStatusTypes[status],
-								onClick() {
-									const textarea = document.getElementById(
-										'descriptionTextArea'
-									);
+	<button aria-expanded="false" aria-haspopup="true" class="d-none btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFClaimStatus" type="button">
+		${mdfClaim.mdfClaimStatus.name} [@clay.icon symbol="caret-bottom" /]
+	</button>
 
-									if (textarea.value) {
-										const commentParagraph = document.querySelector("iframe").contentWindow.document.querySelector("body.portlet-page-comments p");
-										const postCommentButton = document.querySelector("button.btn-comment");
+	[#if hasApproveAction & mdfClaimStatusKey == 'pendingMarketingReview' | mdfClaimStatusKey == 'inDirectorReview']
+		<p class="mb-0 mt-2 text-neutral-8 text-paragraph-sm">Select <strong>In Finance Review</strong> to approve the claim </p>
+	[/#if]
 
-										commentParagraph.innerHTML = Liferay.Util.escape(textarea.value);
-										postCommentButton.disabled = false;
-										postCommentButton.click();
+	<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
 
-										return updateClaimStatus(status);
-									}
+		[#if mdfClaimStatusKey == 'pendingMarketingReview']
+			[#if hasRequestMoreInfoAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('moreInfoRequested')">
+					Request More Info
+				</li>
+			[/#if]
 
-									Liferay.Util.openToast({
-										message:
-											'The MDF Claim Status cannot be changed without a motivation.',
-										type: 'danger',
-									});
-								},
-								type: 'submit',
-							},
-						],
-						headerHTML: `<h1 class="m-0">Status Change</h1>`,
-						size: 'md',
-					});
-				}
+			[#if hasRejectAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('rejected')">
+					Rejected
+				</li>
+			[/#if]
 
-				return updateClaimStatus(status);
-			};
-		</script>
-
-		<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFClaimStatus" type="button">
-				${mdfClaim.mdfClaimStatus.name} [@clay.icon symbol="caret-bottom" /]
-		</button>
-
-		[#if hasApproveAction & mdfClaimStatusKey == 'pendingMarketingReview' | mdfClaimStatusKey == 'inDirectorReview']
-			<p class="mb-0 mt-2 text-neutral-8 text-paragraph-sm">Select <strong>In Finance Review</strong> to approve the claim </p>
+			[#if hasFinanceReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inFinanceReview')">
+					In Finance Review
+				</li>
+			[/#if]
 		[/#if]
 
-		<ul aria-labelledby="dropdownMDFClaimStatus" class="dropdown-menu" x-placement="bottom-start">
-			[#if mdfClaimStatusKey == 'pendingMarketingReview']
-				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('moreInfoRequested')">
-						Request More Info
-					</li>
-				[/#if]
+		[#if mdfClaimStatusKey == 'approved']
+			[#if hasFinanceReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inFinanceReview')">
+					In Finance Review
+				</li>
+			[/#if]
+		[/#if]
 
-				[#if hasRejectAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('rejected')">
-						Rejected
-					</li>
-				[/#if]
-
-				[#if hasFinanceReviewAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inFinanceReview')">
-						In Finance Review
-					</li>
-				[/#if]
+		[#if mdfClaimStatusKey == 'inFinanceReview']
+			[#if hasClaimPaidAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callClaimPaidModal('claimPaid')">
+					Claim Paid
+				</li>
 			[/#if]
 
-			[#if mdfClaimStatusKey == 'approved']
-				[#if hasFinanceReviewAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inFinanceReview')">
-						In Finance Review
-					</li>
-				[/#if]
+			[#if hasRequestMoreInfoAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('moreInfoRequested')">
+					Request More Info
+				</li>
 			[/#if]
 
-			[#if mdfClaimStatusKey == 'inFinanceReview']
-				[#if hasClaimPaidAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callClaimPaidModal('claimPaid')">
-						Claim Paid
-					</li>
-				[/#if]
-
-				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('moreInfoRequested')">
-						Request More Info
-					</li>
-				[/#if]
-
-				[#if hasRejectAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('rejected')">
-						Rejected
-					</li>
-				[/#if]
-
-				[#if hasDirectorReviewAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inDirectorReview')">
-						In Director Review
-					</li>
-				[/#if]
+			[#if hasRejectAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('rejected')">
+					Rejected
+				</li>
 			[/#if]
 
-			[#if mdfClaimStatusKey == 'moreInfoRequested']
-				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('pendingMarketingReview')">
-						Pending Marketing Review
-					</li>
-				[/#if]
+			[#if hasDirectorReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inDirectorReview')">
+					In Director Review
+				</li>
+			[/#if]
+		[/#if]
 
-				[#if hasApproveAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('approved')">
-						Approved
-					</li>
-				[/#if]
-
-				[#if hasClaimPaidAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callClaimPaidModal('claimPaid')">
-						Claim Paid
-					</li>
-				[/#if]
-
-				[#if hasFinanceReviewAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inFinanceReview')">
-						In Finance Review
-					</li>
-				[/#if]
-
-				[#if hasRejectAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('rejected')">
-						Rejected
-					</li>
-				[/#if]
+		[#if mdfClaimStatusKey == 'moreInfoRequested']
+			[#if hasMarketingReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('pendingMarketingReview')">
+					Pending Marketing Review
+				</li>
 			[/#if]
 
-			[#if mdfClaimStatusKey == 'rejected']
-				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('pendingMarketingReview')">
-						Pending Marketing Review
-					</li>
-				[/#if]
+			[#if hasApproveAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('approved')">
+					Approved
+				</li>
 			[/#if]
 
-			[#if mdfClaimStatusKey == 'draft']
-				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('pendingMarketingReview')">
-						Pending Marketing Review
-					</li>
-				[/#if]
+			[#if hasClaimPaidAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callClaimPaidModal('claimPaid')">
+					Claim Paid
+				</li>
 			[/#if]
 
-			[#if mdfClaimStatusKey == 'inDirectorReview']
-				[#if hasFinanceReviewAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inFinanceReview')">
-						In Finance Review
-					</li>
-				[/#if]
-
-				[#if hasRejectAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('rejected')">
-						Rejected
-					</li>
-				[/#if]
-
-				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('moreInfoRequested')">
-						Request More Info
-					</li>
-				[/#if]
+			[#if hasFinanceReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inFinanceReview')">
+					In Finance Review
+				</li>
 			[/#if]
 
-			[#if mdfClaimStatusKey == 'canceled']
-				[#if hasApproveAction]
-					<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('approved')">
-						Approved
-					</li>
-				[/#if]
+			[#if hasRejectAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('rejected')">
+					Rejected
+				</li>
 			[/#if]
-		</ul>
+		[/#if]
+
+		[#if mdfClaimStatusKey == 'rejected']
+			[#if hasMarketingReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('pendingMarketingReview')">
+					Pending Marketing Review
+				</li>
+			[/#if]
+		[/#if]
+
+		[#if mdfClaimStatusKey == 'draft']
+			[#if hasMarketingReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('pendingMarketingReview')">
+					Pending Marketing Review
+				</li>
+			[/#if]
+		[/#if]
+
+		[#if mdfClaimStatusKey == 'inDirectorReview']
+			[#if hasFinanceReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('inFinanceReview')">
+					In Finance Review
+				</li>
+			[/#if]
+
+			[#if hasRejectAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('rejected')">
+					Rejected
+				</li>
+			[/#if]
+
+			[#if hasRequestMoreInfoAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('moreInfoRequested')">
+					Request More Info
+				</li>
+			[/#if]
+		[/#if]
+
+		[#if mdfClaimStatusKey == 'canceled']
+			[#if hasApproveAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('approved')">
+					Approved
+				</li>
+			[/#if]
+		[/#if]
+
+	</ul>
+
+	[#assign hasActions = count > 0]
+
+	[#if hasActions]
+
+		<script>
+			document.querySelector('#dropdownMDFClaimStatus').classList.remove("d-none")
+		</script>
+
 	[#else]
 		Status: ${(mdfClaim.mdfClaimStatus.name)!}
 	[/#if]

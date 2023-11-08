@@ -62,13 +62,13 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-96845")) {
-			return;
-		}
-
 		ConfigurationFactoryUtil.executeAsCompany(
 			_companyLocalService, properties,
 			companyId -> {
+				if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-96845")) {
+					return;
+				}
+
 				ScimClientOAuth2ApplicationConfiguration
 					scimClientOAuth2ApplicationConfiguration =
 						ConfigurableUtil.createConfigurable(
@@ -106,9 +106,8 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	@Deactivate
 	protected void deactivate(Integer reason) throws PortalException {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-96845") ||
-			(reason !=
-				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED)) {
+		if (reason !=
+				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
 
 			return;
 		}

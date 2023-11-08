@@ -578,16 +578,52 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		List<DropdownItem> filterNavigationDropdownItems = getDropdownItems(
-			getNavigationEntriesMap(),
-			PortletURLBuilder.create(
-				getPortletURL()
-			).setKeywords(
-				StringPool.BLANK
-			).setParameter(
-				"ddmStructureId", (String)null
-			).buildPortletURL(),
-			getNavigationParam(), getNavigation());
+		List<DropdownItem> filterNavigationDropdownItems = new ArrayList<>();
+
+		filterNavigationDropdownItems.add(
+			DropdownItemBuilder.setActive(
+				_journalDisplayContext.isNavigationMine()
+			).setHref(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setNavigation(
+					"all"
+				).setParameter(
+					"ddmStructureId", (String)null
+				).setParameter(
+					"navigationMine", (Boolean)null
+				).setParameter(
+					"navigationRecent", (Boolean)null
+				).buildPortletURL()
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "all")
+			).build());
+
+		filterNavigationDropdownItems.add(
+			DropdownItemBuilder.setActive(
+				_journalDisplayContext.isNavigationMine()
+			).setHref(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"navigationMine", Boolean.TRUE
+				).buildPortletURL()
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "mine")
+			).build());
+
+		filterNavigationDropdownItems.add(
+			DropdownItemBuilder.setActive(
+				_journalDisplayContext.isNavigationRecent()
+			).setHref(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"navigationRecent", Boolean.TRUE
+				).buildPortletURL()
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "recent")
+			).build());
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-194763") ||
 			(FeatureFlagManagerUtil.isEnabled("LPS-194763") &&

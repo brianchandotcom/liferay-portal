@@ -158,9 +158,31 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 			catch (Exception exception) {
 				ReflectionUtil.throwException(exception);
 			}
-
 						String applicationName = (String)properties.get(
 							ScimConstants.PARAM_APPLICATION_NAME);
+
+						OAuth2Application oAuth2Application = null;
+
+						try {
+							oAuth2Application =
+								_oAuth2ApplicationLocalService.
+									getOAuth2Application(
+										themeDisplay.getCompanyId(),
+										ScimClientUtil.generateScimClientId(
+											applicationName));
+						}
+						catch (NoSuchOAuth2ApplicationException
+							noSuchOAuth2ApplicationException) {
+
+							if (_log.isInfoEnabled()) {
+								_log.info(
+									noSuchOAuth2ApplicationException.
+										getMessage());
+							}
+
+							return;
+						}
+
 						String matcherField = (String)properties.get(
 							ScimConstants.PARAM_MATCHER_FIELD);
 
@@ -170,17 +192,6 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 						httpServletRequest.setAttribute(
 							ScimConstants.PARAM_MATCHER_FIELD, matcherField);
 
-						String clientId = ScimClientUtil.generateScimClientId(
-							applicationName);
-						OAuth2Application oAuth2Application = null;
-
-						try {
-							oAuth2Application =
-								_oAuth2ApplicationLocalService.
-									getOAuth2Application(
-										themeDisplay.getCompanyId(), clientId);
-
-							if (oAuth2Application != null) {
 								List<OAuth2Authorization> oAuth2Authorizations =
 									_oAuth2AuthorizationLocalService.
 										getOAuth2Authorizations(
@@ -203,17 +214,6 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 									httpServletRequest.setAttribute(
 										ScimConstants.PARAM_TOKEN, accessToken);
 								}
-							}
-						}
-						catch (NoSuchOAuth2ApplicationException
-									noSuchOAuth2ApplicationException) {
-
-							if (_log.isInfoEnabled()) {
-								_log.info(
-									noSuchOAuth2ApplicationException.
-										getMessage());
-							}
-						}
 		}
 
 	}

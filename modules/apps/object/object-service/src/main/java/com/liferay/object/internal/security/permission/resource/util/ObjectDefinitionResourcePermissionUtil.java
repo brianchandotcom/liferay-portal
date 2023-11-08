@@ -89,8 +89,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 					objectDefinition.getPortletId(),
 					objectDefinition.getResourceName(),
 					_getRootDescendantNodeObjectDefinitionsModelResources(
-						objectActionLocalService, objectDefinition,
-						objectDefinitionPersistence, treeFactory)
+						objectActionLocalService, objectDefinitionPersistence,
+						objectDefinition, treeFactory)
 				}));
 
 		resourceActions.populateModelResources(document);
@@ -138,15 +138,14 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 	private static String _getRootDescendantNodeObjectDefinitionsModelResources(
 			ObjectActionLocalService objectActionLocalService,
-			ObjectDefinition objectDefinition,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
-			TreeFactory treeFactory)
+			ObjectDefinition rootNodeObjectDefinition, TreeFactory treeFactory)
 		throws Exception {
 
 		int weight = _INITIAL_WEIGHT;
 
 		Tree tree = treeFactory.create(
-			objectDefinition.getObjectDefinitionId());
+			rootNodeObjectDefinition.getObjectDefinitionId());
 
 		Iterator<Node> iterator = tree.iterator();
 
@@ -171,7 +170,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 					objectAction.getName(), "</action-key>");
 			}
 
-			String portletId = objectDefinition.getPortletId();
+			String portletId = rootNodeObjectDefinition.getPortletId();
 
 			ObjectDefinition rootDescendantNodeObjectDefinition =
 				objectDefinitionPersistence.findByPrimaryKey(

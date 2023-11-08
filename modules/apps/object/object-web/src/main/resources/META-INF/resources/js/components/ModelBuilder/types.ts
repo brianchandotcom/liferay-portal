@@ -128,6 +128,7 @@ export type TAction =
 				objectDefinitionNodes: Node<ObjectDefinitionNodeData>[];
 				objectRelationshipEdges: Edge<ObjectRelationshipEdgeData>[];
 				updatedObjectDefinitionNodeId: number;
+				updatedObjectFolder: ObjectFolder;
 			};
 			type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE_POSITION;
 	  }

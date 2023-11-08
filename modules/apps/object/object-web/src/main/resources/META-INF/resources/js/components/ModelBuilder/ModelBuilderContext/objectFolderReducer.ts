@@ -455,6 +455,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 
 			let newObjectDefinitionNodes: Node<ObjectDefinitionNodeData>[] = [];
 			const allEdges: Edge<ObjectRelationshipEdgeData>[] = [];
+			const updatedObjectFolderItems: ObjectFolderItem[] = [];
 
 			if (currentObjectFolder) {
 				const positionColumn = {positionX: 0, positionY: 0};
@@ -554,6 +555,13 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							positionColumn.positionX = 0;
 						}
 
+						updatedObjectFolderItems.push({
+							linkedObjectDefinition: objectFolderItem?.linkedObjectDefinition!,
+							objectDefinitionExternalReferenceCode: objectFolderItem?.objectDefinitionExternalReferenceCode!,
+							positionX,
+							positionY,
+						});
+
 						return {
 							data: {
 								...objectDefinition,
@@ -581,7 +589,10 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					...newObjectRelationshipEdges,
 				],
 				leftSidebarItems: newLeftSidebarItems,
-				selectedObjectFolder,
+				selectedObjectFolder: {
+					...selectedObjectFolder,
+					objectFolderItems: updatedObjectFolderItems,
+				},
 			};
 
 			if (rightSidebarType) {
@@ -839,6 +850,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				objectDefinitionNodes,
 				objectRelationshipEdges,
 				updatedObjectDefinitionNodeId,
+				updatedObjectFolder,
 			} = action.payload;
 
 			const newObjectDefinitionNodes = objectDefinitionNodes.map(
@@ -863,6 +875,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					...newObjectDefinitionNodes,
 					...objectRelationshipEdges,
 				],
+				selectedObjectFolder: updatedObjectFolder,
 			};
 		}
 

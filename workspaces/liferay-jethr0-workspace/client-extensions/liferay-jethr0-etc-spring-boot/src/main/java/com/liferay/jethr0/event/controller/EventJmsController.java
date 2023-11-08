@@ -32,14 +32,14 @@ import org.springframework.jms.core.MessagePostProcessor;
 public class EventJmsController {
 
 	@JmsListener(
-		destination = "${jethr0-jms-queue-jenkins-to-jethr0:jenkins-to-jethr0}"
+		destination = "${JETHR0_JMS_QUEUE_JENKINS_TO_JETHR0:jenkins-to-jethr0}"
 	)
 	public void processFromJenkins(String message) {
 		_process(message);
 	}
 
 	@JmsListener(
-		destination = "${jethr0-jms-queue-jrp-to-jethr0:jrp-to-jethr0}"
+		destination = "${JETHR0_JMS_QUEUE_JRP_TO_JETHR0:jrp-to-jethr0}"
 	)
 	public void processFromJRP(String message) {
 		_process(message);
@@ -144,10 +144,10 @@ public class EventJmsController {
 	@Autowired
 	private EventHandlerFactory _eventHandlerFactory;
 
-	@Value("${jethr0-jms-queue-jethr0-to-jenkins:jethr0-to-jenkins}")
+	@Value("${JETHR0_JMS_QUEUE_JETHR0_TO_JENKINS:jethr0-to-jenkins}")
 	private String _jmsQueueJethr0ToJenkins;
 
-	@Value("${jethr0-jms-queue-jethr0-to-jrp:jethr0-to-jrp}")
+	@Value("${JETHR0_JMS_QUEUE_JETHR0_TO_JRP:jethr0-to-jrp}")
 	private String _jmsQueueJethr0ToJRP;
 
 	@Autowired

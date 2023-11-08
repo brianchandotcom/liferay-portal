@@ -110,13 +110,13 @@ public class Jethr0SpringBootApplication {
 		return jmsTemplate;
 	}
 
-	@Value("${jethr0-jms-broker-url:tcp://localhost:61616}")
+	@Value("${JETHR0_JMS_BROKER_URL:tcp://localhost:61616}")
 	private String _jmsBrokerURL;
 
-	@Value("${jethr0-jms-user-name:admin}")
+	@Value("${JETHR0_JMS_USER_NAME:admin}")
 	private String _jmsUserName;
 
-	@Value("${jethr0-jms-user-password:admin}")
+	@Value("${JETHR0_JMS_USER_PASSWORD:admin}")
 	private String _jmsUserPassword;
 
 }

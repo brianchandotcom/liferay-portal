@@ -4,7 +4,7 @@
  */
 
 import {format, isBefore} from 'date-fns';
-import {useCallback, useMemo, useState} from 'react';
+import {ReactNode, useCallback, useMemo, useState} from 'react';
 import {useOutletContext, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
@@ -58,8 +58,8 @@ export type LicenceKeyProps = {
 
 type TitleSubtitleHeaderProps = {
 	bold?: boolean;
-	subtitle: string;
-	title: string;
+	subtitle?: string;
+	title: ReactNode;
 };
 
 const TitleSubtitleHeader: React.FC<TitleSubtitleHeaderProps> = ({
@@ -76,7 +76,7 @@ const TitleSubtitleHeader: React.FC<TitleSubtitleHeaderProps> = ({
 			{title}
 		</p>
 
-		<p className="description m-1">{subtitle}</p>
+		{subtitle && <p className="description m-1">{subtitle}</p>}
 	</>
 );
 
@@ -200,14 +200,18 @@ const Licenses = () => {
 				<Table
 					columns={[
 						{
-							bodyClass: 'border-0 cursor-pointer',
+							bodyClass:
+								'border-0 cursor-pointer text-capitalize',
 							expanded: true,
 							key: 'description',
 							noWrap: true,
-							render: (description, {licenseType}) => (
+							render: (
+								description,
+								{licenseType}: {licenseType: string}
+							) => (
 								<TitleSubtitleHeader
 									subtitle={description}
-									title={licenseType}
+									title={licenseType.toLowerCase()}
 								/>
 							),
 							title: (
@@ -237,27 +241,33 @@ const Licenses = () => {
 							bodyClass: 'border-0 cursor-pointer',
 							key: 'startDate',
 							render: (startDate, {expirationDate}) => (
-								<TitleSubtitleHeader
-									bold={false}
-									subtitle={
-										expirationDate
+								<div className="date-cell">
+									<p className="m-0">
+										{format(
+											new Date(startDate),
+											'MMM dd, yyyy'
+										)}{' '}
+										-
+									</p>
+
+									<p className="m-0">
+										{expirationDate
 											? format(
 													new Date(expirationDate),
 													'MMM dd, yyyy'
 											  )
-											: 'DNE'
-									}
-									title={format(
-										new Date(startDate),
-										'MMM dd, yyyy'
-									)}
-								/>
+											: 'DNE'}
+									</p>
+								</div>
 							),
-
 							title: (
 								<TitleSubtitleHeader
-									subtitle="Exp. Date"
-									title="Start Date -"
+									title={
+										<span>
+											Start Date -<br />
+											Exp. Date
+										</span>
+									}
 								/>
 							),
 						},
@@ -285,7 +295,7 @@ const Licenses = () => {
 									</StatusCell>
 								);
 							},
-							title: 'Status',
+							title: <TitleSubtitleHeader title="Status" />,
 						},
 					]}
 					hasKebabButton

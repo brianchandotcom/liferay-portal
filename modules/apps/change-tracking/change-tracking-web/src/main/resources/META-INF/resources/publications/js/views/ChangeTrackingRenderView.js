@@ -8,7 +8,6 @@ import ClayBadge from '@clayui/badge';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
-import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -134,13 +133,11 @@ export default function ChangeTrackingRenderView({
 	description,
 	discardURL,
 	handleNavigation,
-	handleShowHideable,
 	initialDataURL,
 	moveChangesURL,
 	parentEntries,
 	showDropdown,
 	showHeader = true,
-	showHideable,
 	spritemap,
 	title,
 }) {
@@ -797,30 +794,6 @@ export default function ChangeTrackingRenderView({
 		);
 	};
 
-	const renderShowHideableToggle = () => {
-		const elements = [];
-
-		elements.push(
-			<div className="autofit-col autofit-col-expand">
-				<div />
-			</div>
-		);
-
-		elements.push(
-			<div className="autofit-col">
-				<ClayToggle
-					label={Liferay.Language.get('show-all-items')}
-					onToggle={(showHideable) =>
-						handleShowHideable(showHideable)
-					}
-					toggled={showHideable}
-				/>
-			</div>
-		);
-
-		return elements;
-	};
-
 	const renderViewDropdown = () => {
 		if (
 			!Object.prototype.hasOwnProperty.call(
@@ -995,33 +968,31 @@ export default function ChangeTrackingRenderView({
 
 		let currentTypeName = '';
 
-		const filteredNodes = nodes
-			.filter((item) => showHideable || !item.hideable)
-			.sort((a, b) => {
-				const typeNameA = a.typeName.toLowerCase();
-				const typeNameB = b.typeName.toLowerCase();
+		const filteredNodes = nodes.sort((a, b) => {
+			const typeNameA = a.typeName.toLowerCase();
+			const typeNameB = b.typeName.toLowerCase();
 
-				if (typeNameA < typeNameB) {
-					return -1;
-				}
+			if (typeNameA < typeNameB) {
+				return -1;
+			}
 
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
+			if (typeNameA > typeNameB) {
+				return 1;
+			}
 
-				const titleA = a.title.toLowerCase();
-				const titleB = b.title.toLowerCase();
+			const titleA = a.title.toLowerCase();
+			const titleB = b.title.toLowerCase();
 
-				if (titleA < titleB) {
-					return -1;
-				}
+			if (titleA < titleB) {
+				return -1;
+			}
 
-				if (titleA > titleB) {
-					return 1;
-				}
+			if (titleA > titleB) {
+				return 1;
+			}
 
-				return 0;
-			});
+			return 0;
+		});
 
 		if (!filteredNodes.length) {
 			return (
@@ -1352,8 +1323,6 @@ export default function ChangeTrackingRenderView({
 						</div>
 
 						{renderDiffLegend()}
-
-						{renderShowHideableToggle()}
 					</div>
 				</td>
 			</tr>

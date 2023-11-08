@@ -191,9 +191,6 @@ public class ViewChangesDisplayContext {
 					"ctCollectionId", "{ctCollectionId}"
 				).setParameter(
 					"ctEntryId", "{id}"
-				).setParameter(
-					"showHideable",
-					ParamUtil.getBoolean(_renderRequest, "showHideable")
 				).buildString(),
 				"list-ul", "view-change",
 				_language.get(_httpServletRequest, "review-change"), "get",
@@ -371,15 +368,13 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
-		boolean showHideable = ParamUtil.getBoolean(
-			_renderRequest, "showHideable");
 		Map<Long, String> typeNameCacheMap = new HashMap<>();
 
 		for (Map.Entry<Long, Set<Long>> entry :
 				classNameIdClassPKsMap.entrySet()) {
 
 			_populateEntryValues(
-				modelInfoMap, entry.getKey(), entry.getValue(), showHideable,
+				modelInfoMap, entry.getKey(), entry.getValue(),
 				typeNameCacheMap);
 		}
 
@@ -416,9 +411,6 @@ public class ViewChangesDisplayContext {
 				"/change_tracking/view_change"
 			).setParameter(
 				"ctCollectionId", _ctCollection.getCtCollectionId()
-			).setParameter(
-				"showHideable",
-				ParamUtil.getBoolean(_renderRequest, "showHideable")
 			).buildString()
 		).put(
 			"contextView",
@@ -500,13 +492,6 @@ public class ViewChangesDisplayContext {
 					"ctCollectionId", _ctCollection.getCtCollectionId()
 				).buildString();
 			}
-		).put(
-			"navigationFromURL",
-			ParamUtil.getString(_renderRequest, "navigation")
-		).put(
-			"pageFromURL", ParamUtil.getString(_renderRequest, "page")
-		).put(
-			"showHideableFromURL", showHideable
 		).put(
 			"siteNames",
 			() -> {
@@ -1052,48 +1037,39 @@ public class ViewChangesDisplayContext {
 			boolean showHideable = ParamUtil.getBoolean(
 				_renderRequest, "showHideable");
 
-			if (showHideable) {
-				jsonArray.put(
-					JSONUtil.put(
-						"href",
-						PortletURLBuilder.createRenderURL(
-							_renderResponse
-						).setMVCRenderCommandName(
-							"/change_tracking/view_changes"
-						).setParameter(
-							"ctCollectionId", _ctCollection.getCtCollectionId()
-						).setParameter(
-							"showHideable", false
-						).buildString()
-					).put(
-						"label",
-						_language.get(
-							_httpServletRequest, "hide-system-changes")
-					).put(
-						"symbolLeft", "hidden"
-					));
-			}
-			else {
-				jsonArray.put(
-					JSONUtil.put(
-						"href",
-						PortletURLBuilder.createRenderURL(
-							_renderResponse
-						).setMVCRenderCommandName(
-							"/change_tracking/view_changes"
-						).setParameter(
-							"ctCollectionId", _ctCollection.getCtCollectionId()
-						).setParameter(
-							"showHideable", true
-						).buildString()
-					).put(
-						"label",
-						_language.get(
-							_httpServletRequest, "show-system-changes")
-					).put(
-						"symbolLeft", "view"
-					));
-			}
+			jsonArray.put(
+				JSONUtil.put(
+					"href",
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", _ctCollection.getCtCollectionId()
+					).setParameter(
+						"showHideable", !showHideable
+					).buildString()
+				).put(
+					"label",
+					() -> {
+						if (showHideable) {
+							return _language.get(
+								_httpServletRequest, "hide-system-changes");
+						}
+
+						return _language.get(
+							_httpServletRequest, "show-system-changes");
+					}
+				).put(
+					"symbolLeft",
+					() -> {
+						if (showHideable) {
+							return "hidden";
+						}
+
+						return "view";
+					}
+				));
 		}
 
 		if (CTCollectionPermission.contains(
@@ -1239,8 +1215,7 @@ public class ViewChangesDisplayContext {
 
 	private <T extends BaseModel<T>> void _populateEntryValues(
 			Map<ModelInfoKey, ModelInfo> modelInfoMap, long modelClassNameId,
-			Set<Long> classPKs, boolean showHideable,
-			Map<Long, String> typeNameCacheMap)
+			Set<Long> classPKs, Map<Long, String> typeNameCacheMap)
 		throws Exception {
 
 		Map<Serializable, T> baseModelMap = null;
@@ -1287,16 +1262,7 @@ public class ViewChangesDisplayContext {
 					continue;
 				}
 
-				boolean hideable = _ctDisplayRendererRegistry.isHideable(
-					model, modelClassNameId);
-
-				if (hideable && !showHideable) {
-					continue;
-				}
-
 				modelInfo._jsonObject = JSONUtil.put(
-					"hideable", hideable
-				).put(
 					"modelClassNameId", modelClassNameId
 				).put(
 					"modelClassPK", classPK
@@ -1388,13 +1354,6 @@ public class ViewChangesDisplayContext {
 					continue;
 				}
 
-				boolean hideable = _ctDisplayRendererRegistry.isHideable(
-					model, modelClassNameId);
-
-				if (hideable && !showHideable) {
-					continue;
-				}
-
 				Map<String, Object> modelAttributes =
 					model.getModelAttributes();
 
@@ -1407,8 +1366,6 @@ public class ViewChangesDisplayContext {
 					_ctDisplayRendererRegistry.getChangeType(ctEntry, model)
 				).put(
 					"ctEntryId", ctEntry.getCtEntryId()
-				).put(
-					"hideable", hideable
 				).put(
 					"modelClassNameId", ctEntry.getModelClassNameId()
 				).put(

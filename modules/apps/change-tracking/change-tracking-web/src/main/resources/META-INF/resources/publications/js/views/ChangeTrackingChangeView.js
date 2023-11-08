@@ -7,7 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayLayout from '@clayui/layout';
 import {createPortletURL, navigate as navigateUtil, sub} from 'frontend-js-web';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useRef} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
@@ -23,7 +23,6 @@ export default function ChangeTrackingChangeView({
 	modelData,
 	moveChangesURL,
 	namespace,
-	showHideableFromURL,
 	siteNames,
 	spritemap,
 	typeNames,
@@ -32,19 +31,6 @@ export default function ChangeTrackingChangeView({
 	const CHANGE_TYPE_ADDITION = 0;
 	const CHANGE_TYPE_DELETION = 1;
 	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
-	const PARAM_ENTRY = namespace + 'entry';
-	const PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
-
-	const pathname = window.location.pathname;
-
-	const search = window.location.search;
-
-	const params = new URLSearchParams(search);
-
-	params.delete(PARAM_ENTRY);
-	params.delete(PARAM_SHOW_HIDEABLE);
-
-	const basePathRef = useRef(pathname + '?' + params.toString());
 
 	const getNodeId = useCallback(
 		(modelKey) => {
@@ -322,79 +308,6 @@ export default function ChangeTrackingChangeView({
 
 	const initialNode = getNode(entryFromURL);
 
-	const initialShowHideable = initialNode.hideable
-		? true
-		: !!showHideableFromURL;
-
-	const filterNodes = useCallback(
-		(showHideable) => {
-			const nodes = getModels(changes);
-
-			return nodes.slice(0).filter((node) => {
-				if (!showHideable && node.hideable) {
-					return false;
-				}
-			});
-		},
-		[changes, getModels]
-	);
-
-	const initialNodes = filterNodes(initialShowHideable);
-
-	const [renderState, setRenderState] = useState({
-		changes: initialNodes,
-		children: initialNode.children,
-		id: initialNode.nodeId,
-		node: initialNode,
-		parents: initialNode.parents,
-		showHideable: initialShowHideable,
-	});
-
-	const getEntryParam = (node) => {
-		if (node.modelClassNameId) {
-			return node.modelClassNameId + '-' + node.modelClassPK;
-		}
-
-		return '';
-	};
-
-	const getPath = useCallback(
-		(entryParam, showHideable) => {
-			let path =
-				basePathRef.current +
-				'&' +
-				PARAM_SHOW_HIDEABLE +
-				'=' +
-				showHideable.toString();
-
-			if (entryParam) {
-				path = path + '&' + PARAM_ENTRY + '=' + entryParam;
-			}
-
-			return path;
-		},
-		[PARAM_ENTRY, PARAM_SHOW_HIDEABLE]
-	);
-
-	const pushState = (path) => {
-		if (Liferay.SPA && Liferay.SPA.app) {
-			Liferay.SPA.app.updateHistory_(
-				document.title,
-				path,
-				{
-					form: false,
-					path,
-					senna: true,
-				},
-				false
-			);
-
-			return;
-		}
-
-		window.history.pushState({path}, document.title, path);
-	};
-
 	const navigate = useCallback(
 		(nodeId) => {
 			const node = getNode(nodeId);
@@ -462,25 +375,6 @@ export default function ChangeTrackingChangeView({
 		[moveChangesURL, setParameter]
 	);
 
-	const handleShowHideableToggle = (showHideable) => {
-		const nodes = filterNodes(showHideable);
-
-		pushState(getPath(getEntryParam(renderState.node), showHideable));
-
-		setRenderState({
-			changes: nodes,
-			children: renderState.children,
-			id: renderState.id,
-			node: renderState.node,
-			parents: renderState.parents,
-			showHideable,
-		});
-
-		if (!showHideableFromURL) {
-			window.location.reload();
-		}
-	};
-
 	const renderExpiredBanner = () => {
 		if (!expired) {
 			return '';
@@ -506,28 +400,24 @@ export default function ChangeTrackingChangeView({
 
 				<div className="publications-changes-content row">
 					<div className="col-md-12">
-						{renderState.node.modelClassNameId ? (
+						{initialNode.modelClassNameId ? (
 							<ChangeTrackingRenderView
-								childEntries={renderState.children}
-								ctEntry={!!renderState.node.ctEntryId}
+								childEntries={initialNode.children}
+								ctEntry={!!initialNode.ctEntryId}
 								defaultLocale={defaultLocale}
 								description={
-									renderState.node.description
-										? renderState.node.description
-										: renderState.node.typeName
+									initialNode.description
+										? initialNode.description
+										: initialNode.typeName
 								}
-								discardURL={getDiscardURL(renderState.node)}
+								discardURL={getDiscardURL(initialNode)}
 								handleNavigation={(nodeId) => navigate(nodeId)}
-								handleShowHideable={handleShowHideableToggle}
-								initialDataURL={getDataURL(renderState.node)}
-								moveChangesURL={getMoveChangesURL(
-									renderState.node
-								)}
-								parentEntries={renderState.parents}
-								showDropdown={renderState.node.modelClassNameId}
-								showHideable={renderState.showHideable}
+								initialDataURL={getDataURL(initialNode)}
+								moveChangesURL={getMoveChangesURL(initialNode)}
+								parentEntries={initialNode.parents}
+								showDropdown={initialNode.modelClassNameId}
 								spritemap={spritemap}
-								title={renderState.node.title}
+								title={initialNode.title}
 							/>
 						) : (
 							<ClayLayout.Sheet>

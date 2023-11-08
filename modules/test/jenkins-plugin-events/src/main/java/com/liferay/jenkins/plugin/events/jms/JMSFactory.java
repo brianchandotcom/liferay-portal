@@ -13,7 +13,10 @@ import java.util.Map;
  */
 public class JMSFactory {
 
-	public static JMSQueue newJMSQueue(String jmsBrokerURL, String queueName) {
+	public static JMSQueue newJMSQueue(
+		String jmsBrokerURL, String queueName, String userName,
+		String userPassword) {
+
 		String key = jmsBrokerURL + "/" + queueName;
 
 		JMSQueue jmsQueue = _jmsQueues.get(key);
@@ -23,6 +26,9 @@ public class JMSFactory {
 
 			_jmsQueues.put(key, jmsQueue);
 		}
+
+		jmsQueue.setUserName(userName);
+		jmsQueue.setUserPassword(userPassword);
 
 		return _jmsQueues.get(key);
 	}

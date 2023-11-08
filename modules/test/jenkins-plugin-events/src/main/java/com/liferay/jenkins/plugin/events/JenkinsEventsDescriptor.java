@@ -107,7 +107,7 @@ public class JenkinsEventsDescriptor
 
 		if (_outboundJMSQueue == null) {
 			_outboundJMSQueue = JMSFactory.newJMSQueue(
-				getUrl(), outboundQueueName);
+				getUrl(), outboundQueueName, _userName, _userPassword);
 
 			_outboundJMSQueue.connect();
 		}
@@ -147,7 +147,7 @@ public class JenkinsEventsDescriptor
 		if ((_inboundQueueName != null) && !_inboundQueueName.isEmpty()) {
 			if (_inboundJMSQueue == null) {
 				_inboundJMSQueue = JMSFactory.newJMSQueue(
-					_url, _inboundQueueName);
+					_url, _inboundQueueName, _userName, _userPassword);
 			}
 			else {
 				_inboundJMSQueue.unsubscribe();
@@ -169,7 +169,7 @@ public class JenkinsEventsDescriptor
 		if ((_outboundQueueName != null) && !_outboundQueueName.isEmpty()) {
 			if (_outboundJMSQueue == null) {
 				_outboundJMSQueue = JMSFactory.newJMSQueue(
-					_url, _outboundQueueName);
+					_url, _outboundQueueName, _userName, _userPassword);
 
 				_outboundJMSQueue.connect();
 			}

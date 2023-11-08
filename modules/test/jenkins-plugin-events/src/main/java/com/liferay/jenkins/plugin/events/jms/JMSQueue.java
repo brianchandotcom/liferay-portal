@@ -36,7 +36,8 @@ public class JMSQueue {
 				_jmsBrokerURL);
 
 			try {
-				_connection = connectionFactory.createConnection();
+				_connection = connectionFactory.createConnection(
+					_userName, _userPassword);
 
 				_connection.start();
 
@@ -121,6 +122,14 @@ public class JMSQueue {
 		_queueName = queueName;
 	}
 
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public void setUserPassword(String userPassword) {
+		_userPassword = userPassword;
+	}
+
 	public void subscribe(MessageListener messageListener) {
 		connect();
 
@@ -191,5 +200,7 @@ public class JMSQueue {
 	private Queue _queue;
 	private String _queueName;
 	private Session _session;
+	private String _userName;
+	private String _userPassword;
 
 }

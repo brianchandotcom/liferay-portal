@@ -49,7 +49,6 @@ import java.io.IOException;
 import java.io.Writer;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -115,52 +114,54 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		Map<String, String> values;
-
-		try {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				_portal.getLocale(httpServletRequest), getClass());
-
-			IconTag iconTag = new IconTag();
-
-			iconTag.setCssClass("icon-monospaced");
-			iconTag.setSymbol("analytics");
-
-			values = HashMapBuilder.put(
-				"cssClass",
-				() -> {
-					if (isPanelStateOpen(
-							httpServletRequest,
-							ProductNavigationControlMenuEntryConstants.
-								SESSION_CLICKS_KEY)) {
-
-						return "active";
-					}
-
-					return StringPool.BLANK;
-				}
-			).put(
-				"iconTag",
-				iconTag.doTagAsString(httpServletRequest, httpServletResponse)
-			).put(
-				"nonceAttr",
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
-					httpServletRequest)
-			).put(
-				"portletNamespace", _portletNamespace
-			).put(
-				"title",
-				HtmlUtil.escape(
-					_language.get(resourceBundle, "content-performance"))
-			).build();
-		}
-		catch (JspException jspException) {
-			throw new IOException(jspException);
-		}
-
 		Writer writer = httpServletResponse.getWriter();
 
-		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
+		writer.write(
+			StringUtil.replace(
+				_ICON_TMPL_CONTENT, "${", "}",
+				HashMapBuilder.put(
+					"cssClass",
+					() -> {
+						if (isPanelStateOpen(
+								httpServletRequest,
+								ProductNavigationControlMenuEntryConstants.
+									SESSION_CLICKS_KEY)) {
+
+							return "active";
+						}
+
+						return StringPool.BLANK;
+					}
+				).put(
+					"iconTag",
+					() -> {
+						IconTag iconTag = new IconTag();
+
+						iconTag.setCssClass("icon-monospaced");
+						iconTag.setSymbol("analytics");
+
+						return iconTag.doTagAsString(
+							httpServletRequest, httpServletResponse);
+					}
+				).put(
+					"nonceAttr",
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+						httpServletRequest)
+				).put(
+					"portletNamespace", _portletNamespace
+				).put(
+					"title",
+					() -> {
+						ResourceBundle resourceBundle =
+							ResourceBundleUtil.getBundle(
+								_portal.getLocale(httpServletRequest),
+								getClass());
+
+						return HtmlUtil.escape(
+							_language.get(
+								resourceBundle, "content-performance"));
+					}
+				).build()));
 
 		return true;
 	}

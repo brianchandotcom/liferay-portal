@@ -310,11 +310,7 @@ export default function BaseAPIEndpointFields({
 				)}
 			</ClayForm.Group>
 
-			<ClayForm.Group
-				className={classNames({
-					'has-error': displayError.path,
-				})}
-			>
+			<ClayForm.Group>
 				<label htmlFor="endpointPathField">
 					{Liferay.Language.get('path')}
 
@@ -332,7 +328,12 @@ export default function BaseAPIEndpointFields({
 						<ClayInput.GroupText>/</ClayInput.GroupText>
 					</ClayInput.GroupItem>
 
-					<ClayInput.GroupItem append>
+					<ClayInput.GroupItem
+						append
+						className={classNames({
+							'has-error': displayError.path,
+						})}
+					>
 						<ClayInput
 							aria-label={endpointPathLabel}
 							id="endpointPathField"
@@ -353,6 +354,57 @@ export default function BaseAPIEndpointFields({
 							}
 						/>
 					</ClayInput.GroupItem>
+
+					{selectedRetrieveType?.value === 'singleElement' && (
+						<>
+							<ClayInput.GroupItem
+								prepend
+								shrink
+								style={{marginLeft: 0}}
+							>
+								<ClayInput.GroupText>/</ClayInput.GroupText>
+							</ClayInput.GroupItem>
+
+							<ClayInput.GroupItem
+								append
+								className={classNames({
+									'has-error': displayError.parameter,
+								})}
+							>
+								<ClayInput
+									aria-label={endpointParameterLabel}
+									id="endpointParameterField"
+									onBlur={() =>
+										setData((previousData) => ({
+											...previousData,
+											parameter: stringBetweenCurlyBraces(
+												removeLeadingForwardSlash(
+													previousData.parameter!
+												)
+											),
+										}))
+									}
+									onChange={({target: {value}}) =>
+										setData((previousData) => ({
+											...previousData,
+											parameter: makeURLPathParameterString(
+												value
+											),
+										}))
+									}
+									placeholder={endpointParameterLabel}
+									type="text"
+									value={
+										data.parameter
+											? removeLeadingForwardSlash(
+													data.parameter
+											  )
+											: ''
+									}
+								/>
+							</ClayInput.GroupItem>
+						</>
+					)}
 				</ClayInput.Group>
 
 				{pathHasErrors && (
@@ -395,7 +447,9 @@ export default function BaseAPIEndpointFields({
 			</ClayForm.Group>
 
 			<div aria-live="assertive" className="sr-only">
-				{(displayError.scope || displayError.path) && (
+				{(displayError.scope ||
+					displayError.retrieveType ||
+					pathHasErrors) && (
 					<span>
 						{Liferay.Language.get(
 							'there-are-errors-on-the-form-please-check-if-any-mandatory-fields-have-not-been-completed'

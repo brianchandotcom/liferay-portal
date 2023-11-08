@@ -9,11 +9,13 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.content.page.editor.web.internal.util.FormItemManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.lang.SafeCloseable;
@@ -63,7 +65,8 @@ public class LayoutPageTemplateEntryModelListener
 				 layoutPageTemplateEntry.getClassTypeId()))) {
 
 			try {
-				_removeContextReferences(layoutPageTemplateEntry);
+				_removeContextReferences(
+					layoutPageTemplateEntry, originalLayoutPageTemplateEntry);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -74,7 +77,8 @@ public class LayoutPageTemplateEntryModelListener
 	}
 
 	private void _removeContextReferences(
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			LayoutPageTemplateEntry originalLayoutPageTemplateEntry)
 		throws PortalException {
 
 		Layout layout = _layoutLocalService.getLayout(
@@ -88,11 +92,13 @@ public class LayoutPageTemplateEntryModelListener
 					layoutPageTemplateEntry.getPlid())) {
 
 			_updateLayoutPageTemplateStructureData(
-				layout, segmentsExperience.getSegmentsExperienceId());
+				layout, originalLayoutPageTemplateEntry,
+				segmentsExperience.getSegmentsExperienceId());
 
 			if (draftLayout != null) {
 				_updateLayoutPageTemplateStructureData(
-					draftLayout, segmentsExperience.getSegmentsExperienceId());
+					draftLayout, originalLayoutPageTemplateEntry,
+					segmentsExperience.getSegmentsExperienceId());
 			}
 		}
 
@@ -125,6 +131,39 @@ public class LayoutPageTemplateEntryModelListener
 		}
 
 		return jsonObject;
+	}
+
+	private void _removeMappings(
+		LayoutPageTemplateEntry originalLayoutPageTemplateEntry,
+		LayoutStructure layoutStructure) {
+
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
+
+			if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
+				FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+					(FormStyledLayoutStructureItem)layoutStructureItem;
+
+				if (Objects.equals(
+						formStyledLayoutStructureItem.getClassNameId(),
+						originalLayoutPageTemplateEntry.getClassNameId()) &&
+					Objects.equals(
+						formStyledLayoutStructureItem.getClassTypeId(),
+						originalLayoutPageTemplateEntry.getClassTypeId())) {
+
+					_formItemManager.removeLayoutStructureItemsJSONArray(
+						formStyledLayoutStructureItem, layoutStructure);
+
+					formStyledLayoutStructureItem.setClassNameId(0);
+					formStyledLayoutStructureItem.setClassTypeId(0);
+				}
+			}
+
+			layoutStructure.updateItemConfig(
+				_removeMappedFields(
+					layoutStructureItem.getItemConfigJSONObject()),
+				layoutStructureItem.getItemId());
+		}
 	}
 
 	private void _updateFragmentEntryLinkEditableValues(
@@ -179,7 +218,8 @@ public class LayoutPageTemplateEntryModelListener
 	}
 
 	private void _updateLayoutPageTemplateStructureData(
-		Layout layout, long segmentsExperienceId) {
+		Layout layout, LayoutPageTemplateEntry originalLayoutPageTemplateEntry,
+		long segmentsExperienceId) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -193,14 +233,7 @@ public class LayoutPageTemplateEntryModelListener
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-		for (LayoutStructureItem layoutStructureItem :
-				layoutStructure.getLayoutStructureItems()) {
-
-			layoutStructure.updateItemConfig(
-				_removeMappedFields(
-					layoutStructureItem.getItemConfigJSONObject()),
-				layoutStructureItem.getItemId());
-		}
+		_removeMappings(originalLayoutPageTemplateEntry, layoutStructure);
 
 		try (SafeCloseable safeCloseable =
 				UpdateLayoutStatusThreadLocal.setWithSafeCloseable(false)) {
@@ -223,6 +256,9 @@ public class LayoutPageTemplateEntryModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryModelListener.class);
+
+	@Reference
+	private FormItemManager _formItemManager;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

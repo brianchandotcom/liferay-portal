@@ -18,15 +18,16 @@ import CheckboxFilter from '../../common/components/TableHeader/Filter/component
 import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
 import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter';
 import Search from '../../common/components/TableHeader/Search';
-import {LiferayPicklistName} from '../../common/enums/liferayPicklistName';
 import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
 import {ObjectActionName} from '../../common/enums/objectActionName';
 import {PermissionActionType} from '../../common/enums/permissionActionType';
+import useIsChannel from '../../common/hooks/useIsChannel';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
 import {MDFClaimListItem} from '../../common/interfaces/mdfClaimListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
+import {Filters} from '../../common/utils/constants/filters';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
@@ -42,12 +43,15 @@ const BASE_PAGE = 1;
 const MAX_ITEMS = -1;
 
 const MDFClaimList = () => {
+	const {isChannel} = useIsChannel();
+
 	const [openClaimsFilter, setOpenClaimsFilter] = useState(true);
 
-	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
+	const {companiesEntries} = useDynamicFieldEntries();
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
-		openClaimsFilter
+		openClaimsFilter,
+		isChannel
 	);
 
 	const pagination = usePagination();
@@ -119,7 +123,7 @@ const MDFClaimList = () => {
 						className="nav-item"
 						onClick={() => setOpenClaimsFilter(false)}
 					>
-						Closed
+						Completed
 					</ClayTabs.Item>
 				</ClayTabs>
 			</div>
@@ -195,11 +199,13 @@ const MDFClaimList = () => {
 							{
 								component: (
 									<CheckboxFilter
-										availableItems={fieldEntries[
-											LiferayPicklistName.MDF_CLAIM_STATUS
-										]?.map<string>(
-											(status) => status.label as string
-										)}
+										availableItems={
+											openClaimsFilter
+												? Filters.MDF_CLAIM_LISTING
+														.openList
+												: Filters.MDF_CLAIM_LISTING
+														.completedList
+										}
 										clearCheckboxes={
 											!filters.status.value?.length
 										}

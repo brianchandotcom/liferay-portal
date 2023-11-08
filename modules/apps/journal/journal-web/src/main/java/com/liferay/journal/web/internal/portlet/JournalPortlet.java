@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
@@ -172,6 +173,9 @@ public class JournalPortlet extends MVCPortlet {
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONVERTER, _journalConverter);
+		renderRequest.setAttribute(
+			SiteConnectedGroupGroupProvider.class.getName(),
+			_siteConnectedGroupGroupProvider);
 		renderRequest.setAttribute(
 			TranslationPermission.class.getName(), _translationPermission);
 		renderRequest.setAttribute(
@@ -403,6 +407,9 @@ public class JournalPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.journal.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 	@Reference
 	private TranslationPermission _translationPermission;

@@ -255,13 +255,9 @@ public class AopConfigurableApplicationContextConfigurator
 				BasePersistenceImpl<?> basePersistenceImpl =
 					(BasePersistenceImpl<?>)bean;
 
-				if (basePersistenceImpl.getDataSource() == null) {
-					basePersistenceImpl.setDataSource(_dataSource);
-				}
+				basePersistenceImpl.setDataSource(_dataSource);
 
-				if (basePersistenceImpl.getDialect() == null) {
-					basePersistenceImpl.setSessionFactory(_sessionFactory);
-				}
+				basePersistenceImpl.setSessionFactory(_sessionFactory);
 			}
 
 			return bean;

@@ -64,6 +64,7 @@ public class ReportController extends BaseFaroController {
 			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam,
 			@QueryParam("query") String query,
+			@QueryParam("rangeKey") String rangeKey,
 			@QueryParam("toDate") String toDateString,
 			@PathParam("type") String type)
 		throws Exception {
@@ -114,49 +115,56 @@ public class ReportController extends BaseFaroController {
 		if (!StringUtil.equals(type, "individual") ||
 			Validator.isNotNull(assetType)) {
 
-			if (Validator.isBlank(fromDateString) ||
-				Validator.isBlank(toDateString)) {
+			if (StringUtil.equalsIgnoreCase(rangeKey, "CUSTOM")) {
+				if (Validator.isBlank(fromDateString) ||
+					Validator.isBlank(toDateString)) {
 
-				return _reportControllerResponseFactory.create(
-					"\"fromDate\" and \"toDate\" query parameters are " +
-						"mandatory and must be ISO 8601 compliant " +
+					return _reportControllerResponseFactory.create(
+						"\"fromDate\" and \"toDate\" query parameters are " +
+							"mandatory and must be ISO 8601 compliant " +
+								_ISO_8601_DATE_FORMAT,
+						Response.Status.BAD_REQUEST);
+				}
+
+				LocalDateTime fromLocalDateTime;
+				LocalDateTime toLocalDateTime;
+
+				try {
+					fromLocalDateTime = _toUTCLocalDateTime(
+						fromDateString, LocalTime.MIN);
+					toLocalDateTime = _toUTCLocalDateTime(
+						toDateString, LocalTime.MAX);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					return _reportControllerResponseFactory.create(
+						"Both dates in range must be ISO 8601 compliant " +
 							_ISO_8601_DATE_FORMAT,
-					Response.Status.BAD_REQUEST);
+						Response.Status.BAD_REQUEST);
+				}
+
+				if (fromLocalDateTime.isAfter(toLocalDateTime)) {
+					return _reportControllerResponseFactory.create(
+						"Wrong range date. \"fromDate\" cannot be after " +
+							"\"toDate\"",
+						Response.Status.BAD_REQUEST);
+				}
+
+				hashMapWrapper = hashMapWrapper.put(
+					"fromDate",
+					Collections.singletonList(
+						fromLocalDateTime.format(_dateTimeDateTimeFormatter))
+				).put(
+					"toDate",
+					Collections.singletonList(
+						toLocalDateTime.format(_dateTimeDateTimeFormatter))
+				);
 			}
-
-			LocalDateTime fromLocalDateTime;
-			LocalDateTime toLocalDateTime;
-
-			try {
-				fromLocalDateTime = _toUTCLocalDateTime(
-					fromDateString, LocalTime.MIN);
-				toLocalDateTime = _toUTCLocalDateTime(
-					toDateString, LocalTime.MAX);
+			else {
+				hashMapWrapper = hashMapWrapper.put(
+					"rangeKey", Collections.singletonList(rangeKey));
 			}
-			catch (Exception exception) {
-				_log.error(exception);
-
-				return _reportControllerResponseFactory.create(
-					"Both dates in range must be ISO 8601 compliant " +
-						_ISO_8601_DATE_FORMAT,
-					Response.Status.BAD_REQUEST);
-			}
-
-			if (fromLocalDateTime.isAfter(toLocalDateTime)) {
-				return _reportControllerResponseFactory.create(
-					"Wrong range date. \"fromDate\" cannot be after \"toDate\"",
-					Response.Status.BAD_REQUEST);
-			}
-
-			hashMapWrapper = hashMapWrapper.put(
-				"fromDate",
-				Collections.singletonList(
-					fromLocalDateTime.format(_dateTimeDateTimeFormatter))
-			).put(
-				"toDate",
-				Collections.singletonList(
-					toLocalDateTime.format(_dateTimeDateTimeFormatter))
-			);
 		}
 
 		Map<String, List<String>> queryParameters = hashMapWrapper.build();

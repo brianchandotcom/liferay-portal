@@ -217,7 +217,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -570,20 +569,19 @@ public class GraphQLServletExtender {
 					}
 
 				});
-		_graphQLRequestContextValidators = ServiceTrackerListFactory.open(
-			bundleContext, GraphQLRequestContextValidator.class);
 
-		_graphQLContributorServiceTracker = new ServiceTracker<>(
-			bundleContext, GraphQLContributor.class,
+		_graphQLContributorServiceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, GraphQLContributor.class, null,
 			new GraphQLContributorServiceTrackerCustomizer());
 
-		_graphQLContributorServiceTracker.open();
+		_graphQLRequestContextValidators = ServiceTrackerListFactory.open(
+			bundleContext, GraphQLRequestContextValidator.class);
 
 		_liferayMethodDataFetchingProcessor =
 			new LiferayMethodDataFetchingProcessor(
 				_bundleContext, _companyLocalService, _depotEntryLocalService,
 				_expressionConvert, _filterParserProvider,
-				_graphQLContributorServiceTracker, _groupLocalService,
+				_graphQLContributorServiceTrackerList, _groupLocalService,
 				_language, _paginationProvider, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _sortParserProvider,
@@ -718,7 +716,7 @@ public class GraphQLServletExtender {
 
 	@Deactivate
 	protected void deactivate() {
-		_graphQLContributorServiceTracker.close();
+		_graphQLContributorServiceTrackerList.close();
 
 		_graphQLRequestContextValidators.close();
 
@@ -1950,8 +1948,8 @@ public class GraphQLServletExtender {
 	@Reference
 	private FilterParserProvider _filterParserProvider;
 
-	private ServiceTracker<GraphQLContributor, GraphQLContributor>
-		_graphQLContributorServiceTracker;
+	private ServiceTrackerList<GraphQLContributor>
+		_graphQLContributorServiceTrackerList;
 	private GraphQLDTOContributorDataFetchingProcessor
 		_graphQLDTOContributorDataFetchingProcessor;
 	private ServiceTrackerMap<String, GraphQLDTOContributor>

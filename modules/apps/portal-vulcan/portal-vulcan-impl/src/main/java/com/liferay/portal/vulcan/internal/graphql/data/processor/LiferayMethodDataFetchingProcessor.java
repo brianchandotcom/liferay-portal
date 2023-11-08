@@ -8,6 +8,7 @@ package com.liferay.portal.vulcan.internal.graphql.data.processor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -85,7 +86,6 @@ import org.apache.cxf.message.MessageImpl;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Carlos Correa
@@ -97,8 +97,8 @@ public class LiferayMethodDataFetchingProcessor {
 		DepotEntryLocalService depotEntryLocalService,
 		ExpressionConvert<Filter> expressionConvert,
 		FilterParserProvider filterParserProvider,
-		ServiceTracker<GraphQLContributor, GraphQLContributor>
-			graphQLContributorServiceTracker,
+		ServiceTrackerList<GraphQLContributor>
+			graphQLContributorServiceTrackerList,
 		GroupLocalService groupLocalService, Language language,
 		PaginationProvider paginationProvider, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
@@ -113,7 +113,8 @@ public class LiferayMethodDataFetchingProcessor {
 		_depotEntryLocalService = depotEntryLocalService;
 		_expressionConvert = expressionConvert;
 		_filterParserProvider = filterParserProvider;
-		_graphQLContributorServiceTracker = graphQLContributorServiceTracker;
+		_graphQLContributorServiceTrackerList =
+			graphQLContributorServiceTrackerList;
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_paginationProvider = paginationProvider;
@@ -668,7 +669,7 @@ public class LiferayMethodDataFetchingProcessor {
 	}
 
 	private Object _getService(Class<?> clazz) {
-		for (Object service : _graphQLContributorServiceTracker.getServices()) {
+		for (Object service : _graphQLContributorServiceTrackerList) {
 			if (clazz.isAssignableFrom(service.getClass())) {
 				return service;
 			}
@@ -698,8 +699,8 @@ public class LiferayMethodDataFetchingProcessor {
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private final ExpressionConvert<Filter> _expressionConvert;
 	private final FilterParserProvider _filterParserProvider;
-	private final ServiceTracker<GraphQLContributor, GraphQLContributor>
-		_graphQLContributorServiceTracker;
+	private final ServiceTrackerList<GraphQLContributor>
+		_graphQLContributorServiceTrackerList;
 	private final GroupLocalService _groupLocalService;
 	private final Language _language;
 	private final PaginationProvider _paginationProvider;

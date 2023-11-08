@@ -18,10 +18,12 @@ export default function getFilteredRenewals(data: any) {
 		const differenceOfDays =
 			Math.floor(differenceOfTime / MILISECONDS_PER_DAY) + 1;
 
-		newRenewalsArray.push({
-			expirationDays: differenceOfDays,
-			...renewal,
-		});
+		if (renewal.hasRenewal) {
+			newRenewalsArray.push({
+				expirationDays: differenceOfDays,
+				...renewal,
+			});
+		}
 	});
 
 	return newRenewalsArray.slice(0, 4);

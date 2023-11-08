@@ -2260,10 +2260,7 @@ definition {
 			emailAddress = "test@liferay.com",
 			emailSenderName = "Joe Bloggs");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
+		PasswordPolicies.openPasswordPoliciesAdmin();
 
 		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 
@@ -2383,19 +2380,13 @@ definition {
 			userLastName = "test1",
 			userScreenName = "test1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
+		PasswordPolicies.openPasswordPoliciesAdmin();
 
 		PasswordPolicies.enableSyntaxChecking(
 			allowDictionaryWords = "false",
 			passwordPolicyName = "Default Password Policy");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
+		PasswordPolicies.openPasswordPoliciesAdmin();
 
 		PasswordPolicies.enableSyntaxChecking(
 			minimumAlphaNumeric = 0,
@@ -2421,10 +2412,7 @@ definition {
 
 		User.editPassword(newPassword = "tryingHARD");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
+		PasswordPolicies.openPasswordPoliciesAdmin();
 
 		PasswordPolicies.enableSyntaxChecking(
 			passwordPolicyName = "Default Password Policy",
@@ -2450,10 +2438,7 @@ definition {
 			userEmailAddress = "test1@liferay.com",
 			userScreenName = "test1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
+		PasswordPolicies.openPasswordPoliciesAdmin();
 
 		PasswordPolicies.enableSyntaxChecking(
 			minimumNumbers = 2,

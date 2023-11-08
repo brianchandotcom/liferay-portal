@@ -22,6 +22,7 @@ export default interface UserAccount {
 	familyName: string;
 	givenName: string;
 	id: number;
+	organizationBriefs: LiferayAccountBrief[];
 	roleBriefs: Role[];
 	userAccountContactInformation: UserAccountContactInformation;
 }

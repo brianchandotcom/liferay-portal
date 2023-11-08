@@ -67,10 +67,15 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 		return response.json();
 	}
 
-	async getOrderLicenseKeys(orderId: string): Promise<APIResponse<any>> {
-		return (this.oAuth2Client.fetch(
-			`/provisioning/order-license-keys/${orderId}`
-		) as unknown) as Promise<APIResponse<any>>;
+	async getOrderLicenseKeys(
+		orderId: string,
+		searchParams: URLSearchParams = new URLSearchParams()
+	): Promise<APIResponse<any>> {
+		const response = (await (this.oAuth2Client.fetch(
+			`/provisioning/order-license-keys/${orderId}?${searchParams.toString()}`
+		) as unknown)) as Promise<APIResponse<any>>;
+
+		return response;
 	}
 
 	async createLicenseKey(payload: LicenseTypePayload): Promise<LicenseKey> {

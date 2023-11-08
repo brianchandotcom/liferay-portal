@@ -82,7 +82,17 @@ const TitleSubtitleHeader: React.FC<TitleSubtitleHeaderProps> = ({
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
+const PAGE_SIZES = [
+	{label: 5},
+	{label: 10},
+	{label: 20},
+	{label: 30},
+	{label: 50},
+];
+
 const Licenses = () => {
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(5);
 	const {orderId} = useParams();
 	const outletContext = useOutletContext<OutletContext['data']>();
 	const [visible, setVisible] = useState<boolean>(false);
@@ -137,14 +147,17 @@ const Licenses = () => {
 			: 'Cloud';
 
 	const {data: licenseKeysResponse, isLoading} = useSWR(
-		`/order-license-keys/${orderId}`,
+		`/order-license-keys/${orderId}-${page}-${pageSize}`,
 		async () => {
 			try {
 				return provisioningKoroneikiOAuth2.getOrderLicenseKeys(
-					orderId as string
+					orderId as string,
+					new URLSearchParams({
+						page: page.toString(),
+						pageSize: pageSize.toString(),
+					})
 				);
-			}
-			catch (error) {
+			} catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -182,7 +195,7 @@ const Licenses = () => {
 	);
 
 	return (
-		<div className="licenses mt-4">
+		<div className="licenses mb-9 mt-4">
 			{rows.length ? (
 				<Table
 					columns={[
@@ -282,6 +295,15 @@ const Licenses = () => {
 
 						setVisible(true);
 						setModalData(row);
+					}}
+					paginationProps={{
+						active: page,
+						activeDelta: pageSize,
+						deltas: PAGE_SIZES,
+						onActiveChange: (page: number) => setPage(page),
+						onDeltaChange: (pageSize: number) =>
+							setPageSize(pageSize),
+						totalItems: licenseKeysResponse?.totalCount || 0,
 					}}
 					rows={rows}
 				/>

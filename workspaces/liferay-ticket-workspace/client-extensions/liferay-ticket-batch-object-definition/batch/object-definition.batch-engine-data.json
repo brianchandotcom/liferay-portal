@@ -36,20 +36,48 @@
 					"active": false,
 					"conditionExpression": "ticketStatus == 'open'",
 					"description": "",
-					"errorMessage": {
-					},
+					"errorMessage": {},
 					"label": {
 						"en_US": "Liferay Ticket Etc Spring Boot Object Action Ticket"
 					},
 					"name": "LiferayTicketEtcDocumentationReferral",
 					"objectActionExecutorKey": "function#liferay-ticket-etc-spring-boot-object-action-ticket",
 					"objectActionTriggerKey": "onAfterAdd",
-					"parameters": {
-					},
+					"parameters": {},
 					"status": {
 						"code": 0,
 						"label": "never-ran",
 						"label_i18n": "Never Ran"
+					}
+				},
+				{
+					"active": true,
+					"errorMessage": {
+						"en_US": "Unable to assign ticket."
+					},
+					"label": {
+						"en_US": "Assign Ticket to Me"
+					},
+					"name": "assignTicketToMe",
+					"objectActionExecutorKey": "update-object-entry",
+					"objectActionTriggerKey": "standalone",
+					"parameters": {
+						"objectDefinitionExternalReferenceCode": "J3Y7_TICKET",
+						"predefinedValues": [
+							{
+								"name": "r_userToJ3Y7Ticket_userId",
+								"inputAsValue": false,
+								"label": {
+									"en_US": "User To J3Y7 Ticket"
+								},
+								"value": "currentUserId"
+							}
+						]
+					},
+					"status": {
+						"code": 1,
+						"label": "success",
+						"label_i18n": "Success"
 					}
 				}
 			],
@@ -103,8 +131,7 @@
 						"en_US": "Description"
 					},
 					"name": "description",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"required": false,
 					"state": false,
 					"system": false,
@@ -122,8 +149,7 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "J3Y7_PRIORITIES",
 					"name": "priority",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"required": true,
 					"state": false,
 					"system": false,
@@ -141,8 +167,7 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "J3Y7_REGIONS",
 					"name": "region",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"required": true,
 					"state": false,
 					"system": false,
@@ -160,8 +185,7 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "J3Y7_RESOLUTIONS",
 					"name": "resolution",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"required": false,
 					"state": false,
 					"system": false,
@@ -178,8 +202,7 @@
 						"en_US": "Subject"
 					},
 					"name": "subject",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"required": true,
 					"state": false,
 					"system": false,
@@ -196,8 +219,7 @@
 						"en_US": "Suggestions"
 					},
 					"name": "suggestions",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"required": false,
 					"state": false,
 					"system": false,
@@ -503,22 +525,17 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "J3Y7_TYPES",
 					"name": "type",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"required": true,
 					"state": false,
 					"system": false,
 					"type": "String"
 				}
 			],
-			"objectLayouts": [
-			],
-			"objectRelationships": [
-			],
-			"objectValidationRules": [
-			],
-			"objectViews": [
-			],
+			"objectLayouts": [],
+			"objectRelationships": [],
+			"objectValidationRules": [],
+			"objectViews": [],
 			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {

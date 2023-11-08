@@ -15,9 +15,9 @@
 		{
 			"deletionType": "prevent",
 			"label": {
-				"en_US": "Assignee"
+				"en_US": "User to J3Y7 Ticket"
 			},
-			"name": "assignee",
+			"name": "userToJ3Y7Ticket",
 			"objectDefinitionExternalReferenceCode1": "L_USER",
 			"objectDefinitionExternalReferenceCode2": "J3Y7_TICKET",
 			"type": "oneToMany"

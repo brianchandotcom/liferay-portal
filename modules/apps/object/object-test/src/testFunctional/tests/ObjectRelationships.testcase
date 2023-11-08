@@ -1127,8 +1127,9 @@ definition {
 
 		task ("Then the Custom Object entry is updated") {
 			AssertElementPresent(
-				key_entry = "Entry C",
-				key_index = 3,
+				key_tableCell = 2,
+				key_tableRow = 3,
+				key_tableValue = "Entry C",
 				locator1 = "CreateObject#VIEW_ENTRY_FIELD_BY_INDEX");
 		}
 	}

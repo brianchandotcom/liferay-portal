@@ -41,7 +41,7 @@
 					"label": {
 						"en_US": "Liferay Ticket Etc Spring Boot Object Action Ticket"
 					},
-					"name": "LiferayTicketEtcDocumentationReferral",
+					"name": "LiferayTicketEtcSpringBootObjectActionTicket",
 					"objectActionExecutorKey": "function#liferay-ticket-etc-spring-boot-object-action-ticket",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {

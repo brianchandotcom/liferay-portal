@@ -27,7 +27,7 @@
 				"objectDefinitionExternalReferenceCode": "J3Y7_TICKET",
 				"predefinedValues": [
 					{
-						"name": "r_assignee_userId",
+						"name": "r_userToJ3Y7Ticket_userId",
 						"inputAsValue": false,
 						"label": {
 							"en_US": "Assignee"

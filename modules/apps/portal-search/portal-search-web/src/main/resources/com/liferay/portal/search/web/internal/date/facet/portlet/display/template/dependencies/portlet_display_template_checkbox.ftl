@@ -28,15 +28,15 @@
 				<#list entries as entry>
 					<li class="facet-value">
 						<div class="custom-checkbox custom-control">
-							<label class="facet-checkbox-label" for="${entry.getBucketText()}">
+							<label class="facet-checkbox-label" for="${namespace}${entry.getBucketText()}">
 								<input
 									autocomplete="off"
 									${(entry.isSelected())?then("checked", "")}
 									class="custom-control-input facet-term"
 									data-term-id="${htmlUtil.escape(entry.getBucketText())}"
 									disabled
-									id="${entry.getBucketText()}"
-									name="${entry.getBucketText()}"
+									id="${namespace}${entry.getBucketText()}"
+									name="${namespace}${entry.getBucketText()}"
 									onChange='Liferay.Search.FacetUtil.changeSelection(event);'
 									type="checkbox"
 								/>

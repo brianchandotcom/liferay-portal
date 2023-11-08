@@ -28,14 +28,14 @@
 				<#list entries as entry>
 					<li class="facet-value">
 						<div class="custom-control custom-radio">
-							<label class="facet-checkbox-label" for="${entry.getBucketText()}">
+							<label class="facet-checkbox-label" for="${namespace}${entry.getBucketText()}">
 								<input
 									autocomplete="off"
 									${(entry.isSelected())?then("checked", "")}
 									class="custom-control-input facet-term"
 									disabled
-									id="${entry.getBucketText()}"
-									name="${entry.getBucketText()}"
+									id="${namespace}${entry.getBucketText()}"
+									name="${namespace}${entry.getBucketText()}"
 									onChange='${"window.location.href = \"${entry.getFilterValue()}\";"}'
 									role="radio"
 									type="radio"
@@ -105,7 +105,7 @@
 							firstDayOfWeek=dateFacetCalendarDisplayContext.getFromFirstDayOfWeek()
 							monthParam="fromMonth"
 							monthValue=dateFacetCalendarDisplayContext.getFromMonthValue()
-							name="fromInput"
+							name="${namespace}fromInput"
 							yearParam="fromYear"
 							yearValue=dateFacetCalendarDisplayContext.getFromYearValue()
 						/>
@@ -122,7 +122,7 @@
 							firstDayOfWeek=dateFacetCalendarDisplayContext.getToFirstDayOfWeek()
 							monthParam="toMonth"
 							monthValue=dateFacetCalendarDisplayContext.getToMonthValue()
-							name="toInput"
+							name="${namespace}toInput"
 							yearParam="toYear"
 							yearValue=dateFacetCalendarDisplayContext.getToYearValue()
 						/>

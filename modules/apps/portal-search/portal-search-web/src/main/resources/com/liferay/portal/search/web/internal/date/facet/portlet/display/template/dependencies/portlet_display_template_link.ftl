@@ -69,7 +69,7 @@
 							firstDayOfWeek=dateFacetCalendarDisplayContext.getFromFirstDayOfWeek()
 							monthParam="fromMonth"
 							monthValue=dateFacetCalendarDisplayContext.getFromMonthValue()
-							name="fromInput"
+							name="${namespace}fromInput"
 							yearParam="fromYear"
 							yearValue=dateFacetCalendarDisplayContext.getFromYearValue()
 						/>
@@ -86,7 +86,7 @@
 							firstDayOfWeek=dateFacetCalendarDisplayContext.getToFirstDayOfWeek()
 							monthParam="toMonth"
 							monthValue=dateFacetCalendarDisplayContext.getToMonthValue()
-							name="toInput"
+							name="${namespace}toInput"
 							yearParam="toYear"
 							yearValue=dateFacetCalendarDisplayContext.getToYearValue()
 						/>

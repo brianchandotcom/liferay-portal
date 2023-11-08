@@ -42,10 +42,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given multiple custom object definitions created without publishing") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Objects");
+			ObjectAdmin.openObjectAdmin();
 
 			var i = 0;
 
@@ -71,10 +68,7 @@ definition {
 		}
 
 		task ("And Given all 20+ object deinifition entities available in Objects") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Objects");
+			ObjectAdmin.openObjectAdmin();
 
 			AssertTextEquals(
 				locator1 = "Pagination#RESULTS",

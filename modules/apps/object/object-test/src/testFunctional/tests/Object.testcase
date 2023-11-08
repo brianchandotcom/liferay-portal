@@ -224,7 +224,10 @@ definition {
 	@priority = 4
 	test CannotDeleteFieldsFromNativeObjects {
 		for (var systemObjects : list "Account,Commerce Product,Commerce Product Group,Commerce Order,Postal Address,User") {
-			ObjectAdmin.openObjectAdmin();
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Objects");
 
 			ObjectPortlet.selectSystemObject(label = ${systemObjects});
 

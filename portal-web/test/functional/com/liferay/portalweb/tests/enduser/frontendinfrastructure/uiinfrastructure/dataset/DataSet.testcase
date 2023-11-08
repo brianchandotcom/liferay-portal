@@ -1561,8 +1561,6 @@ definition {
 	@priority = 5
 	test ConfirmThatTheCreatedTranslationWorks {
 		task ("Given object created via API") {
-			Navigator.openURL();
-
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectAdmin.addObjectViaAPI(

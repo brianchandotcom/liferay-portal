@@ -72,10 +72,7 @@ definition {
 
 	@summary = "Default summary"
 	macro deleteDXPCloudEnvironments() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
+		ObjectAdmin.openObjectAdmin();
 
 		CustomerPortal.viewCPObjectCustomInfo(position = 14);
 

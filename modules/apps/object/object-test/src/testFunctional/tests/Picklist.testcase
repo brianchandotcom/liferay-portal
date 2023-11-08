@@ -934,8 +934,6 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 147729");
@@ -1007,8 +1005,6 @@ definition {
 		}
 
 		task ("Go to Custom Object and Fields tab") {
-			Navigator.openURL();
-
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 147728");
@@ -1077,8 +1073,6 @@ definition {
 			newLanguage = "pt_BR");
 
 		PortletEntry.save();
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 

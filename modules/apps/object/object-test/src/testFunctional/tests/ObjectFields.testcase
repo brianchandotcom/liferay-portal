@@ -185,8 +185,6 @@ definition {
 			objectName = "CustomObject151564",
 			pluralLabelName = "Custom Objects 151564");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151564");
@@ -220,8 +218,6 @@ definition {
 			panelCategoryKey = "site_administration.content",
 			pluralLabelName = "Custom Objects 151566",
 			scope = "site");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -313,8 +309,6 @@ definition {
 			labelName = "Custom Object 206",
 			objectName = "CustomObject206",
 			pluralLabelName = "Custom Objects 206");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -668,10 +662,7 @@ definition {
 		}
 
 		task ("Go to Objects and create Custom Object") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Objects");
+			ObjectAdmin.openObjectAdmin();
 
 			ObjectAdmin.addNewObject(
 				fieldLabelName = "Custom Object 162140",
@@ -3562,8 +3553,6 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
@@ -3697,8 +3686,6 @@ definition {
 			objectName = "CustomObject151560",
 			pluralLabelName = "Custom Objects 151560");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151560");
@@ -3725,8 +3712,6 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
@@ -3751,8 +3736,6 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -3867,8 +3850,6 @@ definition {
 			panelCategoryKey = "site_administration.content",
 			pluralLabelName = "Custom Objects 151568",
 			scope = "site");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -4095,8 +4076,6 @@ definition {
 			labelName = "Custom Object 151565",
 			objectName = "CustomObject151565",
 			pluralLabelName = "Custom Objects 151565");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -4390,8 +4369,6 @@ definition {
 			objectName = "CustomObject151561",
 			pluralLabelName = "Custom Objects 151561");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151561");
@@ -4581,8 +4558,6 @@ definition {
 			objectName = "CustomObject151558",
 			pluralLabelName = "Custom Objects 151558");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151558");
@@ -4607,8 +4582,6 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -4666,8 +4639,6 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 

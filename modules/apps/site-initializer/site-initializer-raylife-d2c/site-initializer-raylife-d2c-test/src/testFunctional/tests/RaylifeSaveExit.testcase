@@ -144,10 +144,7 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
+		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Raylife Application");
 

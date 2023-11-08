@@ -3202,10 +3202,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a object system") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Objects");
+			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectSystemObject(label = "Commerce Order");
 		}

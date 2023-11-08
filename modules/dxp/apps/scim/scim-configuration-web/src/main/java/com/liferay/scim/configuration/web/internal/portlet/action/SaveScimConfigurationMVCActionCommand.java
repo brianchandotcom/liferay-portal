@@ -30,13 +30,12 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.scim.configuration.web.internal.constants.ScimConstants;
-import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,10 +80,9 @@ public class SaveScimConfigurationMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String clientId = ScimClientUtil.generateScimClientId(
-			ParamUtil.getString(
-				actionRequest, ScimConstants.PARAM_APPLICATION_NAME));
+			ParamUtil.getString(actionRequest, "applicationName"));
 
-		if (ScimWebKeys.SCIM_GENERATE.equals(cmd)) {
+		if (Objects.equals(cmd, "generate")) {
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
 					themeDisplay.getCompanyId(), clientId);
@@ -136,9 +134,9 @@ public class SaveScimConfigurationMVCActionCommand
 				}
 			}
 
-			actionRequest.setAttribute(ScimConstants.PARAM_TOKEN, accessToken);
+			actionRequest.setAttribute("token", accessToken);
 		}
-		else if (ScimWebKeys.SCIM_REVOKE.equals(cmd)) {
+		else if (Objects.equals(cmd, "revoke")) {
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
 					themeDisplay.getCompanyId(), clientId);
@@ -152,9 +150,9 @@ public class SaveScimConfigurationMVCActionCommand
 					String.format(
 						"(&(%s=%s*)(%s=%s))",
 						ConfigurationAdmin.SERVICE_FACTORYPID,
-						ScimConstants.CONFIGURATION_PID,
-						ScimConstants.PARAM_COMPANY_ID,
-						themeDisplay.getCompanyId()));
+						"com.liferay.scim.rest.internal.configuration." +
+							"ScimClientOAuth2ApplicationConfiguration",
+						"companyId", themeDisplay.getCompanyId()));
 
 			if (configurations != null) {
 				Configuration configuration = configurations[0];
@@ -163,33 +161,31 @@ public class SaveScimConfigurationMVCActionCommand
 					configuration.getProperties();
 
 				properties.put(
-					ScimConstants.PARAM_APPLICATION_NAME,
-					ParamUtil.getString(
-						actionRequest, ScimConstants.PARAM_APPLICATION_NAME));
+					"applicationName",
+					ParamUtil.getString(actionRequest, "applicationName"));
 
 				properties.put(
-					ScimConstants.PARAM_MATCHER_FIELD,
-					ParamUtil.getString(
-						actionRequest, ScimConstants.PARAM_MATCHER_FIELD));
+					"matcherField",
+					ParamUtil.getString(actionRequest, "matcherField"));
 
 				configuration.update(properties);
 			}
 			else {
 				Configuration configuration =
 					_configurationAdmin.createFactoryConfiguration(
-						ScimConstants.CONFIGURATION_PID, StringPool.QUESTION);
+						"com.liferay.scim.rest.internal.configuration." +
+							"ScimClientOAuth2ApplicationConfiguration",
+						StringPool.QUESTION);
 
 				configuration.update(
 					HashMapDictionaryBuilder.<String, Object>put(
-						ScimConstants.PARAM_APPLICATION_NAME,
-						ParamUtil.getString(
-							actionRequest, ScimConstants.PARAM_APPLICATION_NAME)
-					).put(
-						ScimConstants.PARAM_MATCHER_FIELD,
-						ParamUtil.getString(
-							actionRequest, ScimConstants.PARAM_MATCHER_FIELD)
+						"applicationName",
+						ParamUtil.getString(actionRequest, "applicationName")
 					).put(
 						"companyId", themeDisplay.getCompanyId()
+					).put(
+						"matcherField",
+						ParamUtil.getString(actionRequest, "matcherField")
 					).build());
 			}
 		}

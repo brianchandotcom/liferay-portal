@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
-import com.liferay.scim.configuration.web.internal.constants.ScimConstants;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Dictionary;
@@ -44,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alvaro Saugar
  */
 @Component(
-	configurationPid = ScimConstants.CONFIGURATION_PID,
+	configurationPid = "com.liferay.scim.rest.internal.configuration.ScimClientOAuth2ApplicationConfiguration",
 	service = ConfigurationScreen.class
 )
 public class ScimPortalSettingsConfigurationScreenWrapper
@@ -142,9 +141,8 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 						String.format(
 							"(&(%s=%s)(%s=%s))",
 							ConfigurationAdmin.SERVICE_FACTORYPID,
-							ScimConstants.CONFIGURATION_PID,
-							ScimConstants.PARAM_COMPANY_ID,
-							themeDisplay.getCompanyId()));
+							"com.liferay.scim.rest.internal.configuration.ScimClientOAuth2ApplicationConfiguration",
+							"companyId", themeDisplay.getCompanyId()));
 
 				if (configurations == null) {
 					return;
@@ -158,8 +156,7 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 				ReflectionUtil.throwException(exception);
 			}
 
-			String applicationName = (String)properties.get(
-				ScimConstants.PARAM_APPLICATION_NAME);
+			String applicationName = (String)properties.get("applicationName");
 
 			OAuth2Application oAuth2Application = null;
 
@@ -192,17 +189,13 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					oAuth2Authorizations.get(0);
 
 				httpServletRequest.setAttribute(
-					ScimConstants.PARAM_TOKEN,
-					oAuth2Authorization.getAccessTokenContent());
+					"token", oAuth2Authorization.getAccessTokenContent());
 			}
 
-			String matcherField = (String)properties.get(
-				ScimConstants.PARAM_MATCHER_FIELD);
+			String matcherField = (String)properties.get("matcherField");
 
-			httpServletRequest.setAttribute(
-				ScimConstants.PARAM_APPLICATION_NAME, applicationName);
-			httpServletRequest.setAttribute(
-				ScimConstants.PARAM_MATCHER_FIELD, matcherField);
+			httpServletRequest.setAttribute("applicationName", applicationName);
+			httpServletRequest.setAttribute("matcherField", matcherField);
 		}
 
 	}

@@ -174,6 +174,7 @@ public class ObjectRelationshipResourceTest
 		ObjectRelationship objectRelationship =
 			super.randomObjectRelationship();
 
+		objectRelationship.setEdge(false);
 		objectRelationship.setName("a" + RandomTestUtil.randomString());
 		objectRelationship.setObjectDefinitionExternalReferenceCode1(
 			_objectDefinition1.getExternalReferenceCode());

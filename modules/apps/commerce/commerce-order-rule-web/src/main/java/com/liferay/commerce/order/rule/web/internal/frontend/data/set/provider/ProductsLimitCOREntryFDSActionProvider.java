@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "fds.data.provider.key=" + COREntryFDSNames.CONFIGURABLE_PRODUCTS,
+	property = "fds.data.provider.key=" + COREntryFDSNames.COR_ENTRY_PRODUCTS_LIMITS,
 	service = FDSActionProvider.class
 )
 public class ProductsLimitCOREntryFDSActionProvider
@@ -75,7 +75,7 @@ public class ProductsLimitCOREntryFDSActionProvider
 		).setActionName(
 			"/cor_entry/edit_cor_entry"
 		).setCMD(
-			"delete_product"
+			"deleteProduct"
 		).setRedirect(
 			ParamUtil.getString(
 				httpServletRequest, "currentUrl",

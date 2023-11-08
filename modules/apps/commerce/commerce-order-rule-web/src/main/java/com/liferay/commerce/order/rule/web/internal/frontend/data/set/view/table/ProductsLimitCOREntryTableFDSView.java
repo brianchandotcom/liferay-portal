@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "frontend.data.set.name=" + COREntryFDSNames.CONFIGURABLE_PRODUCTS,
+	property = "frontend.data.set.name=" + COREntryFDSNames.COR_ENTRY_PRODUCTS_LIMITS,
 	service = FDSView.class
 )
 public class ProductsLimitCOREntryTableFDSView extends BaseTableFDSView {

@@ -46,17 +46,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 		ClassLoader classLoader =
 			ObjectDefinitionResourcePermissionUtil.class.getClassLoader();
 
-		String objectActionPermissionKeys = StringPool.BLANK;
-
-		for (ObjectAction objectAction :
-				objectActionLocalService.getObjectActions(
-					objectDefinition.getObjectDefinitionId(),
-					ObjectActionTriggerConstants.KEY_STANDALONE)) {
-
-			objectActionPermissionKeys = StringBundler.concat(
-				objectActionPermissionKeys, "<action-key>",
-				objectAction.getName(), "</action-key>");
-		}
+		String objectActionPermissionKeys = _getObjectActionPermissionKeys(
+			objectActionLocalService, objectDefinition.getObjectDefinitionId());
 
 		String resourceActionsFileName =
 			"resource-actions/resource-actions.xml.tpl";
@@ -102,6 +93,25 @@ public class ObjectDefinitionResourcePermissionUtil {
 			resourceActions.populatePortletResource(
 				portlet, classLoader, document);
 		}
+	}
+
+	private static String _getObjectActionPermissionKeys(
+		ObjectActionLocalService objectActionLocalService,
+		long objectDefinitionId) {
+
+		String objectActionPermissionKeys = StringPool.BLANK;
+
+		for (ObjectAction objectAction :
+				objectActionLocalService.getObjectActions(
+					objectDefinitionId,
+					ObjectActionTriggerConstants.KEY_STANDALONE)) {
+
+			objectActionPermissionKeys = StringBundler.concat(
+				objectActionPermissionKeys, "<action-key>",
+				objectAction.getName(), "</action-key>");
+		}
+
+		return objectActionPermissionKeys;
 	}
 
 	private static String _getPermissionsGuestUnsupported(
@@ -158,17 +168,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 				continue;
 			}
 
-			String objectActionPermissionKeys = StringPool.BLANK;
-
-			for (ObjectAction objectAction :
-					objectActionLocalService.getObjectActions(
-						node.getObjectDefinitionId(),
-						ObjectActionTriggerConstants.KEY_STANDALONE)) {
-
-				objectActionPermissionKeys = StringBundler.concat(
-					objectActionPermissionKeys, "<action-key>",
-					objectAction.getName(), "</action-key>");
-			}
+			String objectActionPermissionKeys = _getObjectActionPermissionKeys(
+				objectActionLocalService, node.getObjectDefinitionId());
 
 			String portletId = rootNodeObjectDefinition.getPortletId();
 

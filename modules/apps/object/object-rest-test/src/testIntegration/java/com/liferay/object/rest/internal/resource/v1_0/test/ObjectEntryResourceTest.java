@@ -40,6 +40,8 @@ import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.rest.test.util.UserAccountTestUtil;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -4348,8 +4350,8 @@ public class ObjectEntryResourceTest {
 
 			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
-				_siteScopedObjectDefinition1.getRESTContextPath() + "/scopes/" +
-					RandomTestUtil.randomLong(),
+				_getEndpoint(
+					RandomTestUtil.randomLong(), _siteScopedObjectDefinition1),
 				Http.Method.GET);
 
 			Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
@@ -4357,8 +4359,8 @@ public class ObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
-			_siteScopedObjectDefinition1.getRESTContextPath() + "/scopes/" +
-				TestPropsValues.getGroupId(),
+			_getEndpoint(
+				TestPropsValues.getGroupId(), _siteScopedObjectDefinition1),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -4467,8 +4469,9 @@ public class ObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			StringBundler.concat(
-				_siteScopedObjectDefinition1.getRESTContextPath(), "/scopes/",
-				TestPropsValues.getGroupId(), "/by-external-reference-code/",
+				_getEndpoint(
+					TestPropsValues.getGroupId(), _siteScopedObjectDefinition1),
+				"/by-external-reference-code/",
 				_siteScopedObjectEntry1.getExternalReferenceCode()),
 			Http.Method.PATCH);
 
@@ -5693,6 +5696,20 @@ public class ObjectEntryResourceTest {
 		return URLCodec.encodeURL(string);
 	}
 
+	private String _getEndpoint(
+		long groupId, ObjectDefinition objectDefinition) {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			return objectDefinition.getRESTContextPath() + "/scopes/" + groupId;
+		}
+
+		return objectDefinition.getRESTContextPath();
+	}
+
 	private NestedFieldsContext _getNestedFieldsContext(String nestedFields) {
 		return new NestedFieldsContext(
 			1, ListUtil.fromString(nestedFields, StringPool.COMMA), null, null,
@@ -6298,6 +6315,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

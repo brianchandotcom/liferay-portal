@@ -53,8 +53,8 @@ public class JIRAUtil {
 			throw new Exception(
 				StringBundler.concat(
 					"Found formatting issues in SHA ", parts[0], "\n",
-					"At least one commit message is missing a reference to a ",
-					"required JIRA project: ",
+					"The commit message is missing a reference to a required ",
+					"JIRA project: ",
 					StringUtil.merge(projectNames, StringPool.COMMA_AND_SPACE),
 					". Please verify that the JIRA project keys are specified",
 					"in source-formatter.properties in the liferay-portal ",

@@ -271,7 +271,7 @@ public class TimerExecutorTest {
 		throws Exception {
 
 		Method executeTimerMethod = ReflectionUtil.getDeclaredMethod(
-			_timerExecutor.getClass(), "executeTimer", ExecutionContext.class);
+			_timerExecutor.getClass(), "_executeTimer", ExecutionContext.class);
 
 		executeTimerMethod.invoke(
 			_timerExecutor,
@@ -362,7 +362,7 @@ public class TimerExecutorTest {
 	private ServiceContext _serviceContext;
 
 	@Inject(
-		filter = "component.name=com.liferay.portal.workflow.kaleo.runtime.internal.timer.TimerExecutor",
+		filter = "component.name=com.liferay.portal.workflow.kaleo.runtime.internal.DefaultWorkflowEngineImpl",
 		type = Inject.NoType.class
 	)
 	private Object _timerExecutor;

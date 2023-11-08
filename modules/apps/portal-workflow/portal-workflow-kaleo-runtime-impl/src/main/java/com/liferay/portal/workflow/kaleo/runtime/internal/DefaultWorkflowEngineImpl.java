@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
+import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.definition.deployment.WorkflowDeployer;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowValidator;
@@ -47,14 +49,22 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
-import com.liferay.portal.workflow.kaleo.runtime.internal.timer.TimerExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateKaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoInstanceOrderByComparator;
+import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -209,7 +219,7 @@ public class DefaultWorkflowEngineImpl
 			executionContext.setKaleoTaskInstanceToken(
 				kaleoTimerInstanceToken.getKaleoTaskInstanceToken());
 
-			_timerExecutor.executeTimer(executionContext);
+			_executeTimer(executionContext);
 
 			kaleoTimerInstanceToken =
 				kaleoTimerInstanceTokenLocalService.getKaleoTimerInstanceToken(
@@ -793,6 +803,36 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
+	private void _executeTimer(ExecutionContext executionContext)
+		throws PortalException {
+
+		KaleoTimerInstanceToken kaleoTimerInstanceToken =
+			executionContext.getKaleoTimerInstanceToken();
+
+		KaleoTimer kaleoTimer = kaleoTimerInstanceToken.getKaleoTimer();
+
+		_kaleoActionExecutor.executeKaleoActions(
+			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
+			ExecutionType.ON_TIMER, executionContext);
+
+		List<KaleoTaskAssignment> kaleoTaskReassignments =
+			kaleoTimer.getKaleoTaskReassignments();
+
+		if (ListUtil.isNotEmpty(kaleoTaskReassignments)) {
+			_reassignKaleoTask(kaleoTaskReassignments, executionContext);
+		}
+
+		_notificationHelper.sendKaleoNotifications(
+			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
+			ExecutionType.ON_TIMER, executionContext);
+
+		if (!kaleoTimer.isRecurring()) {
+			kaleoTimerInstanceTokenLocalService.completeKaleoTimerInstanceToken(
+				kaleoTimerInstanceToken.getKaleoTimerInstanceTokenId(),
+				executionContext.getServiceContext());
+		}
+	}
+
 	private Definition _getDefinition(byte[] bytes) throws WorkflowException {
 		try {
 			_workflowModelParser.setValidate(false);
@@ -868,6 +908,31 @@ public class DefaultWorkflowEngineImpl
 		return versionParts[0];
 	}
 
+	private void _reassignKaleoTask(
+			List<KaleoTaskAssignment> kaleoTaskAssignments,
+			ExecutionContext executionContext)
+		throws PortalException {
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			executionContext.getKaleoTaskInstanceToken();
+
+		List<KaleoTaskAssignmentInstance> previousTaskAssignmentInstances =
+			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
+
+		kaleoTaskInstanceToken =
+			_kaleoTaskInstanceTokenLocalService.assignKaleoTaskInstanceToken(
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+				_aggregateKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
+					kaleoTaskAssignments, executionContext),
+				executionContext.getWorkflowContext(),
+				executionContext.getServiceContext());
+
+		_kaleoLogLocalService.addTaskAssignmentKaleoLogs(
+			previousTaskAssignmentInstances, kaleoTaskInstanceToken, null,
+			executionContext.getWorkflowContext(),
+			executionContext.getServiceContext());
+	}
+
 	private List<WorkflowInstance> _toWorkflowInstances(
 		List<KaleoInstance> kaleoInstances) {
 
@@ -894,19 +959,33 @@ public class DefaultWorkflowEngineImpl
 		DefaultWorkflowEngineImpl.class);
 
 	@Reference
+	private AggregateKaleoTaskAssignmentSelector
+		_aggregateKaleoTaskAssignmentSelector;
+
+	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private KaleoActionExecutor _kaleoActionExecutor;
+
+	@Reference
+	private KaleoLogLocalService _kaleoLogLocalService;
+
+	@Reference
 	private KaleoSignaler _kaleoSignaler;
+
+	@Reference
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 	@Reference
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 	@Reference
-	private TimerExecutor _timerExecutor;
+	private NotificationHelper _notificationHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
@@ -189,19 +190,18 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 			List<OAuth2Authorization> oAuth2Authorizations =
 				_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
 					oAuth2Application.getOAuth2ApplicationId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			OAuth2Authorization oAuth2Authorization;
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					OrderByComparatorFactoryUtil.create(
+						"OAuth2Authorization", "accessTokenExpirationDate",
+						"desc"));
 
 			if (!oAuth2Authorizations.isEmpty()) {
-				oAuth2Authorization = oAuth2Authorizations.get(
-					oAuth2Authorizations.size() - 1);
-
-				String accessToken =
-					oAuth2Authorization.getAccessTokenContent();
+				OAuth2Authorization oAuth2Authorization =
+					oAuth2Authorizations.get(0);
 
 				httpServletRequest.setAttribute(
-					ScimConstants.PARAM_TOKEN, accessToken);
+					ScimConstants.PARAM_TOKEN,
+					oAuth2Authorization.getAccessTokenContent());
 			}
 		}
 

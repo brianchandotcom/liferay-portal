@@ -543,13 +543,13 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 						} = objectFolderItem as ObjectFolderItem;
 
 						if (positionX === 0 && positionY === 0) {
-							positionX = positionColumn.positionX * 300 + 200;
-							positionY = positionColumn.positionY * 400 + 100;
+							positionX = positionColumn.positionX * 380 + 50;
+							positionY = positionColumn.positionY * 450 + 100;
 
 							positionColumn.positionX++;
 						}
 
-						if (index % 4 === 0 && index !== 0) {
+						if ((index + 1) % 4 === 0 && index !== 0) {
 							positionColumn.positionY++;
 							positionColumn.positionX = 0;
 						}

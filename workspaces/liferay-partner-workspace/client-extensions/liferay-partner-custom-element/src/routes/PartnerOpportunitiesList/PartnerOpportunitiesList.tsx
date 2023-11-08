@@ -20,7 +20,6 @@ import {PartnerOpportunitiesColumnKey} from '../../common/enums/partnerOpportuni
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
-import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import ModalContent from './components/ModalContent';
@@ -30,7 +29,6 @@ import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
 
 interface IProps {
 	closedOpportunitiesFilter: string;
-	columnsDates: TableColumn<PartnerOpportunitiesItem>[];
 	getFilteredItems: (
 		items: PartnerOpportunitiesItem[],
 		opportunitiesFilter: string
@@ -46,7 +44,6 @@ const MAX_ITEMS = 200;
 
 const PartnerOpportunitiesList = ({
 	closedOpportunitiesFilter,
-	columnsDates,
 	getFilteredItems,
 	name,
 	newButtonDeal,
@@ -96,10 +93,29 @@ const PartnerOpportunitiesList = ({
 			columnKey: PartnerOpportunitiesColumnKey.ACCOUNT_NAME,
 			label: 'Account Name',
 		},
-		...columnsDates,
 		{
 			columnKey: PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR,
 			label: 'Subscription ARR',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.STAGE,
+			label: 'Stage',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.CLOSE_DATE,
+			label: 'Close Date',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.START_DATE,
+			label: 'Start Date',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.END_DATE,
+			label: 'End Date',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.FISCAL_PERIOD,
+			label: 'Fiscal Period',
 		},
 		{
 			columnKey: PartnerOpportunitiesColumnKey.PARTNER_REP_NAME,
@@ -112,10 +128,6 @@ const PartnerOpportunitiesList = ({
 		{
 			columnKey: PartnerOpportunitiesColumnKey.LIFERAY_REP,
 			label: 'Liferay Rep',
-		},
-		{
-			columnKey: PartnerOpportunitiesColumnKey.STAGE,
-			label: 'Stage',
 		},
 	];
 

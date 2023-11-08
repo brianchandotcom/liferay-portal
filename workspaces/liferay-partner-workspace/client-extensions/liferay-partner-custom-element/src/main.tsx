@@ -9,7 +9,6 @@ import {SWRConfig} from 'swr';
 
 import {WebDAV} from './common/context/WebDAV';
 import {AppRouteType} from './common/enums/appRouteType';
-import {PartnerOpportunitiesColumnKey} from './common/enums/partnerOpportunitiesColumnKey';
 import {Filters} from './common/utils/constants/filters';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import DealRegistrationForm from './routes/DealRegistrationForm';
@@ -78,16 +77,6 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList
 			closedOpportunitiesFilter={Filters.OPPORTUNITY_LISTING.closedWIP}
-			columnsDates={[
-				{
-					columnKey: PartnerOpportunitiesColumnKey.START_DATE,
-					label: 'Start Date',
-				},
-				{
-					columnKey: PartnerOpportunitiesColumnKey.END_DATE,
-					label: 'End Date',
-				},
-			]}
 			getFilteredItems={(items, opportunitiesFilter) => {
 				if (
 					opportunitiesFilter ===
@@ -110,12 +99,6 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.RENEWALS_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList
 			closedOpportunitiesFilter={Filters.RENEWAL_LISTING.closedWIP}
-			columnsDates={[
-				{
-					columnKey: PartnerOpportunitiesColumnKey.CLOSE_DATE,
-					label: 'Close Date',
-				},
-			]}
 			getFilteredItems={(items, opportunitiesFilter) => {
 				if (opportunitiesFilter === Filters.RENEWAL_LISTING.closedWIP) {
 					return items.filter((item) => item['HAS-RENEWAL']);

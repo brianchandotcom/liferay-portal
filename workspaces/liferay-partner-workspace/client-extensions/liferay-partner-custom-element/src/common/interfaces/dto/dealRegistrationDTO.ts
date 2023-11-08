@@ -27,6 +27,7 @@ export default interface DealRegistrationDTO
 	additionalInformationAboutTheOpportunity?: string;
 	amount?: number;
 	closeDate?: string;
+	fiscalPeriod?: string;
 	growthArr?: number;
 	hasRenewal?: boolean;
 	isConverted?: boolean;

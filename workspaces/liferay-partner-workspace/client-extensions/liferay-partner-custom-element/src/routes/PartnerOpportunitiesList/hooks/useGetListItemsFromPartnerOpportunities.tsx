@@ -82,6 +82,9 @@ export default function useGetListItemsFromPartnerOpportunities(
 				[PartnerOpportunitiesColumnKey.HAS_RENEWAL]: item.hasRenewal
 					? item.hasRenewal
 					: false,
+				[PartnerOpportunitiesColumnKey.FISCAL_PERIOD]: item.fiscalPeriod
+					? item.fiscalPeriod
+					: '- ',
 			})),
 		[swrResponse.data?.items]
 	);

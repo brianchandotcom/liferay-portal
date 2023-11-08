@@ -1211,10 +1211,7 @@ definition {
 				groupName = "Guest",
 				layoutName = "Test Page Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Text Field",

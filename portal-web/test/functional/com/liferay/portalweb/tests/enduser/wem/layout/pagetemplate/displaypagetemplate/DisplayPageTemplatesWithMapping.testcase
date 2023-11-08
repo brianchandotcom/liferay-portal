@@ -137,10 +137,7 @@ definition {
 	@priority = 4
 	test MapCustomFieldToTextFragment {
 		task ("Add a custom field for Document") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Short Description",

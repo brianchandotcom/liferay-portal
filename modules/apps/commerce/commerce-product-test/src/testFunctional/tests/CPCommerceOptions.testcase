@@ -22,10 +22,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given a custom input field is created by the admin for commerce product option value") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Test Custom Input Field",

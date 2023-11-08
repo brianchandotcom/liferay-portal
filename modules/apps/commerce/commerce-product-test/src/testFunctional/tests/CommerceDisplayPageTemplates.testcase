@@ -1098,20 +1098,14 @@ definition {
 		var customField2Desc = "Custom Field Two Text";
 
 		task ("Given the admin already create the custom field 'Commerce Product' as text area") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CommerceConfiguration.addCP(
 				customFieldName = ${customField1Name},
 				customFieldType = "Text Area",
 				resourceName = "Product");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CommerceConfiguration.addCP(
 				customFieldName = ${customField2Name},

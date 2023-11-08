@@ -683,11 +683,11 @@ public class SourceFormatter {
 		throws Exception {
 
 		for (String commitMessage : commitMessages) {
-			if (!commitMessage.contains("# breaking_change_report")) {
+			String[] parts = commitMessage.split(":", 2);
+
+			if (!parts[1].contains("# breaking_change_report")) {
 				continue;
 			}
-
-			String[] parts = commitMessage.split(":", 2);
 
 			if (!parts[1].endsWith("\n\n----")) {
 				throw new Exception(

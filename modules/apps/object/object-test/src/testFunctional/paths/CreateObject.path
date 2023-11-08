@@ -122,7 +122,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_ENTRY_FIELD_BY_INDEX</td>
-		<td>//div[contains(@class,'dnd-td')][${key_index}]//span[contains(text(),'${key_entry}')]</td>
+		<td>//div[@class='dnd-tr'][${key_tableRow}]//div[@class='dnd-td'][${key_tableCell}]//span[contains(.,'${key_tableValue}')]|//div[@class='dnd-tr'][${key_tableRow}]//div[@class='dnd-td'][${key_tableCell}]//a[contains(.,'${key_tableValue}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -10,7 +10,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.constants.ScriptingNotificationRecipientConstants;
-import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.BaseKaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.util.Arrays;
@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -29,6 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = NotificationRecipientEvaluator.class
 )
 public class GroovyNotificationRecipientEvaluator
+	extends BaseKaleoScriptingEvaluator
 	implements NotificationRecipientEvaluator {
 
 	@Override
@@ -37,7 +37,7 @@ public class GroovyNotificationRecipientEvaluator
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		return _kaleoScriptingEvaluator.execute(
+		return execute(
 			executionContext, _outputNames,
 			kaleoNotificationRecipient.getRecipientScriptLanguage(),
 			kaleoNotificationRecipient.getRecipientScript());
@@ -48,8 +48,5 @@ public class GroovyNotificationRecipientEvaluator
 			ScriptingNotificationRecipientConstants.ROLES_RECIPIENT,
 			ScriptingNotificationRecipientConstants.USER_RECIPIENT,
 			WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
-
-	@Reference
-	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
 
 }

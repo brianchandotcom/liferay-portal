@@ -10,7 +10,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
 import com.liferay.portal.workflow.kaleo.runtime.constants.AssigneeConstants;
-import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.BaseKaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.util.Arrays;
@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -29,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ScriptingAssigneeSelector.class
 )
 public class GroovyScriptingAssigneeSelector
-	implements ScriptingAssigneeSelector {
+	extends BaseKaleoScriptingEvaluator implements ScriptingAssigneeSelector {
 
 	@Override
 	public Map<String, ?> getAssignees(
@@ -37,7 +36,7 @@ public class GroovyScriptingAssigneeSelector
 			KaleoTaskAssignment kaleoTaskAssignment)
 		throws PortalException {
 
-		return _kaleoScriptingEvaluator.execute(
+		return execute(
 			executionContext, _outputNames,
 			kaleoTaskAssignment.getAssigneeScriptLanguage(),
 			kaleoTaskAssignment.getAssigneeScript());
@@ -48,8 +47,5 @@ public class GroovyScriptingAssigneeSelector
 			AssigneeConstants.ROLES, AssigneeConstants.USER,
 			AssigneeConstants.USERS,
 			WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
-
-	@Reference
-	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
 
 }

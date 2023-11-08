@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
-import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.BaseKaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.util.Arrays;
@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -26,14 +25,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "scripting.language=groovy", service = ConditionEvaluator.class
 )
-public class GroovyConditionEvaluator implements ConditionEvaluator {
+public class GroovyConditionEvaluator
+	extends BaseKaleoScriptingEvaluator implements ConditionEvaluator {
 
 	@Override
 	public String evaluate(
 			KaleoCondition kaleoCondition, ExecutionContext executionContext)
 		throws PortalException {
 
-		Map<String, Object> results = _kaleoScriptingEvaluator.execute(
+		Map<String, Object> results = execute(
 			executionContext, _outputNames, kaleoCondition.getScriptLanguage(),
 			kaleoCondition.getScript());
 
@@ -53,8 +53,5 @@ public class GroovyConditionEvaluator implements ConditionEvaluator {
 	private static final Set<String> _outputNames = new HashSet<>(
 		Arrays.asList(
 			_RETURN_VALUE, WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
-
-	@Reference
-	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
 
 }

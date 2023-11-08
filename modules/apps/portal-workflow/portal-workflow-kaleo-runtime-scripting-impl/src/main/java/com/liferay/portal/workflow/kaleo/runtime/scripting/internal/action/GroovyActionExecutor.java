@@ -9,20 +9,20 @@ import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutorException;
-import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.BaseKaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
 @Component(service = ActionExecutor.class)
-public class GroovyActionExecutor implements ActionExecutor {
+public class GroovyActionExecutor
+	extends BaseKaleoScriptingEvaluator implements ActionExecutor {
 
 	public GroovyActionExecutor() {
 		_outputObjects.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
@@ -54,13 +54,10 @@ public class GroovyActionExecutor implements ActionExecutor {
 			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws Exception {
 
-		_kaleoScriptingEvaluator.execute(
+		execute(
 			executionContext, _outputObjects, kaleoAction.getScriptLanguage(),
 			kaleoAction.getScript());
 	}
-
-	@Reference
-	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;
 
 	private final Set<String> _outputObjects = new HashSet<>();
 

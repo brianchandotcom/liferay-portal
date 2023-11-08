@@ -637,9 +637,9 @@ definition {
 
 	@summary = "Default summary"
 	macro editValidation(validationErrorMessage = null, validationArgument = null, validationInput = null) {
-		ScrollWebElementIntoView(locator1 = "FormFields#VALIDATION_ARGUMENT_2");
+		ScrollWebElementIntoView(locator1 = "FormFields#VALIDATION_ARGUMENT");
 
-		Click(locator1 = "FormFields#VALIDATION_ARGUMENT_2");
+		Click(locator1 = "FormFields#VALIDATION_ARGUMENT");
 
 		MenuItem.click(menuItem = ${validationArgument});
 

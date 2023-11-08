@@ -290,6 +290,8 @@ public class BlogsEntryInfoItemFieldValuesProviderTest {
 
 		themeDisplay.setRequest(mockHttpServletRequest);
 
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
 
 		return themeDisplay;

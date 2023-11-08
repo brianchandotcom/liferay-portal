@@ -313,6 +313,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			_companyLocalService.getCompany(group.getCompanyId()));
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setSiteGroupId(group.getGroupId());
 		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
 		themeDisplay.setUser(TestPropsValues.getUser());
 

@@ -122,10 +122,20 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							</span>
 
 							<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">
-								<liferay-site-navigation:breadcrumb
-									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curArticle.getFolder(), request, true, liferayPortletResponse) %>"
-									cssClass="c-pl-0 c-pt-0"
-								/>
+								<c:choose>
+									<c:when test="<%= curArticle.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+										<liferay-site-navigation:breadcrumb
+											breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curArticle.getFolder(), request, true, liferayPortletResponse) %>"
+											cssClass="c-pl-0 c-pt-0"
+										/>
+									</c:when>
+									<c:otherwise>
+										<liferay-site-navigation:breadcrumb
+											breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(null, request, true, liferayPortletResponse) %>"
+											cssClass="c-pl-0 c-pt-0"
+										/>
+									</c:otherwise>
+								</c:choose>
 							</c:if>
 
 							<span class="text-default">
@@ -212,10 +222,20 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								cssClass="table-cell-expand-smallest table-cell-minw-200"
 								name="path"
 							>
-								<liferay-site-navigation:breadcrumb
-									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curArticle.getFolder(), request, true, liferayPortletResponse) %>"
-									cssClass="c-pl-0 c-pt-0"
-								/>
+								<c:choose>
+									<c:when test="<%= curArticle.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+										<liferay-site-navigation:breadcrumb
+											breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curArticle.getFolder(), request, true, liferayPortletResponse) %>"
+											cssClass="c-pl-0 c-pt-0"
+										/>
+									</c:when>
+									<c:otherwise>
+										<liferay-site-navigation:breadcrumb
+											breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(null, request, true, liferayPortletResponse) %>"
+											cssClass="c-pl-0 c-pt-0"
+										/>
+									</c:otherwise>
+								</c:choose>
 							</liferay-ui:search-container-column-text>
 						</c:if>
 

@@ -74,10 +74,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enablePricingPaypal() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Product Management",
-			panel = "Commerce",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Business Owners Policy");
 

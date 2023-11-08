@@ -1294,9 +1294,7 @@ definition {
 		}
 
 		task ("And for Diagram Test 1, create two pins, where the first is linked to an SKU (MIN93015), and the second one is linked to a Diagram (Diagram Test 2)") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = "Diagram");
 
@@ -1323,9 +1321,7 @@ definition {
 		}
 
 		task ("And for Diagram Test 2, create a visibility rule") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = "Diagram");
 

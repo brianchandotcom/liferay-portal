@@ -219,9 +219,7 @@ definition {
 		var product = "Transmission Cooler Line Assembly";
 
 		task ("Given a maximum quantity is configured for a product (e.g. maximum quantity 8 for MIN55860)") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = ${product});
 
@@ -324,9 +322,7 @@ definition {
 		var product = "Transmission Cooler Line Assembly";
 
 		task ("Given a minimum quantity is configured for a product (e.g. minimum quantity 3 for MIN55860)") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = ${product});
 

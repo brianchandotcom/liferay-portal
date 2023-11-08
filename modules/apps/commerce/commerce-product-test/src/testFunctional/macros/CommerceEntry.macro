@@ -2,10 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro activeProductPaymentSubscription(productName = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Product Management",
-			panel = "Commerce",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = ${productName});
 

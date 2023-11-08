@@ -26,9 +26,7 @@ definition {
 		// This test need to disable the versioning for that reason the 'skip.portal.instance' is necessary
 
 		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -92,9 +90,7 @@ definition {
 		}
 
 		task ("Then the admin will still see 3 products, one approved, one incomplete, one draft") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
 
@@ -115,9 +111,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -184,9 +178,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("When the Admin goes into the Commerce -> Products and create a new simple product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -215,9 +207,7 @@ definition {
 		}
 
 		task ("When the admin opens 'Hoses'") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			AppBuilderAdmin.searchByItem(itemName = "Hoses");
 
@@ -278,9 +268,7 @@ definition {
 		}
 
 		task ("But if the admin goes back on the product admin page and opens the 'Draft' Hoses and clicks on publish") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			AppBuilderAdmin.searchByItem(itemName = "Hoses");
 
@@ -339,9 +327,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the admin has already created a new simple product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -384,9 +370,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -438,9 +422,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -512,9 +494,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -573,9 +553,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given the admin has already created a new simple product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",

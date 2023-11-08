@@ -82,8 +82,6 @@ definition {
 		}
 
 		task ("And when user edits Custom Action name and Expression Builder condition and asserts action ran and received notification") {
-			Navigator.openURL();
-
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object1");

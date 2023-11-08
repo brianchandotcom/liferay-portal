@@ -1577,8 +1577,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given object created via API") {
-			Navigator.openURL();
-
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectAdmin.addObjectViaAPI(

@@ -2,10 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addProducts() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
+		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Account Subscription Group");
 

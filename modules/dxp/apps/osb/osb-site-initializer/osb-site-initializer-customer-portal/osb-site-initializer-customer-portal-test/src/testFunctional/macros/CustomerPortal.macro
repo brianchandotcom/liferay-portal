@@ -72,10 +72,7 @@ definition {
 
 	@summary = "Add CP Object"
 	macro addCPObject(title = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
+		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectObject(label = ${title});
 
@@ -511,10 +508,7 @@ definition {
 
 	@summary = "Delete CP Object"
 	macro deleteCPObject(title = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
+		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectObject(label = ${title});
 
@@ -792,10 +786,7 @@ definition {
 
 	@summary = "Show CP Object"
 	macro showCPObject(title = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
+		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectObject(label = ${title});
 

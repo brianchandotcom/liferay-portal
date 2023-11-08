@@ -672,8 +672,6 @@ definition {
 			objectName = "CustomObject12",
 			pluralLabelName = "Custom Objects 12");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 12");
@@ -1007,8 +1005,6 @@ definition {
 			labelName = "Custom Object 24",
 			objectName = "CustomObject24",
 			pluralLabelName = "Custom Objects 24");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -1704,8 +1700,6 @@ definition {
 			objectName = "CustomObject40",
 			pluralLabelName = "Custom Objects 40");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
@@ -1803,8 +1797,6 @@ definition {
 			objectName = "CustomObject45",
 			pluralLabelName = "Custom Objects 45");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 45");
@@ -1828,8 +1820,6 @@ definition {
 			labelName = "Custom Object 46",
 			objectName = "CustomObject46",
 			pluralLabelName = "Custom Objects 46");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -1988,8 +1978,6 @@ definition {
 			objectName = "CustomObject52",
 			pluralLabelName = "Custom Objects 52");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 52");
@@ -2082,8 +2070,6 @@ definition {
 			labelName = "Custom Object 55",
 			objectName = "CustomObject55",
 			pluralLabelName = "Custom Objects 55");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -2871,8 +2857,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 73");
 
 		PortletEntry.publish();
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -3886,8 +3870,6 @@ definition {
 			objectName = "CustomObject96",
 			pluralLabelName = "Custom Objects 96");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 96");
@@ -3916,8 +3898,6 @@ definition {
 			pluralLabelName = "Custom Objects 97");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject97");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -4005,8 +3985,6 @@ definition {
 			labelName = "Custom Object 100",
 			objectName = "CustomObject100",
 			pluralLabelName = "Custom Objects 100");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -4511,8 +4489,6 @@ definition {
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject109");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -5198,8 +5174,6 @@ definition {
 			objectName = "CustomObject118",
 			pluralLabelName = "Custom Objects 118");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 118");
@@ -5435,8 +5409,6 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 122");
@@ -5536,8 +5508,6 @@ definition {
 			tabName = "Relationship Tab");
 
 		CreateObject.saveObject();
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -5783,8 +5753,6 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject126");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 126");
@@ -5915,8 +5883,6 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 127");
@@ -6025,8 +5991,6 @@ definition {
 
 		CreateObject.saveObject();
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 128");
@@ -6105,8 +6069,6 @@ definition {
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 129");
@@ -6180,8 +6142,6 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject130");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 130");
@@ -6221,8 +6181,6 @@ definition {
 			labelName = "Custom Object 132",
 			objectName = "CustomObject132",
 			pluralLabelName = "Custom Objects 132");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -6409,8 +6367,6 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject137");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 137");
@@ -6437,8 +6393,6 @@ definition {
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject138");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -6705,8 +6659,6 @@ definition {
 			styleDisplay = "Table");
 
 		PageEditor.publish();
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -7891,8 +7843,6 @@ definition {
 
 		CreateObject.saveObject();
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 164");
@@ -7965,8 +7915,6 @@ definition {
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -8526,13 +8474,9 @@ definition {
 			key_tabName = "Relationship Tab",
 			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 
-		Navigator.openURL();
-
 		ObjectAdmin.openObjectAdmin();
 
 		CreateObject.activeCustomObject(objectLabel = "Custom Object B 173");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -8882,8 +8826,6 @@ definition {
 			optionName = "Site Builder");
 
 		PortletEntry.publish();
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 

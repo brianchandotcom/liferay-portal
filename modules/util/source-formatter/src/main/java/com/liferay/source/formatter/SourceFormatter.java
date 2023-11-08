@@ -324,8 +324,13 @@ public class SourceFormatter {
 		_init();
 
 		if (_sourceFormatterArgs.isValidateCommitMessages()) {
-			_checkBreakingChangeMessage();
-			_validateCommitMessages();
+			List<String> commitMessages =
+				GitUtil.getCurrentBranchCommitMessages(
+					_sourceFormatterArgs.getBaseDirName(),
+					_sourceFormatterArgs.getGitWorkingBranchName());
+
+			_checkBreakingChangeMessage(commitMessages);
+			_validateCommitMessages(commitMessages);
 		}
 
 		if (!_sourceFormatterArgs.isJavaParserEnabled()) {
@@ -673,10 +678,8 @@ public class SourceFormatter {
 			dependentFileNames, null);
 	}
 
-	private void _checkBreakingChangeMessage() throws Exception {
-		List<String> commitMessages = GitUtil.getFullBranchCommitMessages(
-			_sourceFormatterArgs.getBaseDirName(),
-			_sourceFormatterArgs.getGitWorkingBranchName());
+	private void _checkBreakingChangeMessage(List<String> commitMessages)
+		throws Exception {
 
 		for (String commitMessage : commitMessages) {
 			if (!commitMessage.contains("# breaking_change_report")) {
@@ -1409,10 +1412,8 @@ public class SourceFormatter {
 			sourceProcessor.getSourceMismatchExceptions());
 	}
 
-	private void _validateCommitMessages() throws Exception {
-		List<String> commitMessages = GitUtil.getCurrentBranchCommitMessages(
-			_sourceFormatterArgs.getBaseDirName(),
-			_sourceFormatterArgs.getGitWorkingBranchName());
+	private void _validateCommitMessages(List<String> commitMessages)
+		throws Exception {
 
 		JIRAUtil.validateJIRAProjectNames(
 			commitMessages, _getPropertyValues("jira.project.keys"));

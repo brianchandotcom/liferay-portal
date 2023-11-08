@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -159,17 +158,10 @@ public class MasterLayoutActionDropdownItemsProvider {
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
+					DropdownItemListBuilder.addContext(
 						() ->
 							(layoutPageTemplateEntryId > 0) &&
-							hasUpdatePermission &&
-							!FeatureFlagManagerUtil.isEnabled("LPS-197408"),
-						_getCopyMasterLayoutActionUnsafeConsumer()
-					).addContext(
-						() ->
-							(layoutPageTemplateEntryId > 0) &&
-							hasUpdatePermission &&
-							FeatureFlagManagerUtil.isEnabled("LPS-197408"),
+							hasUpdatePermission,
 						_getCopyMasterLayoutWithPermissionsActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -202,18 +194,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getCopyMasterLayoutActionUnsafeConsumer() {
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "copyMasterLayout");
-			dropdownItem.putData("copyMasterLayoutURL", _getCopyURL(false));
-			dropdownItem.setIcon("copy");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
-		};
 	}
 
 	private UnsafeConsumer<DropdownContextItem, Exception>

@@ -19,8 +19,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DateFacetWebTemplateConfiguration {
 
 	@Meta.AD(
-		deflt = "date-facet-link-ftl", name = "date-facet-template-key-default",
-		required = false
+		deflt = "date-facet-checkbox-ftl",
+		name = "date-facet-template-key-default", required = false
 	)
 	public String dateFacetTemplateKeyDefault();
 

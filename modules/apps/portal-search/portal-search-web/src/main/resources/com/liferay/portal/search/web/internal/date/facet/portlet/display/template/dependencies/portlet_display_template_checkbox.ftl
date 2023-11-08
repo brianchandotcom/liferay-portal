@@ -27,18 +27,18 @@
 			<#if entries?has_content>
 				<#list entries as entry>
 					<li class="facet-value">
-						<div class="custom-control custom-radio">
+						<div class="custom-checkbox custom-control">
 							<label class="facet-checkbox-label" for="${entry.getBucketText()}">
 								<input
 									autocomplete="off"
 									${(entry.isSelected())?then("checked", "")}
 									class="custom-control-input facet-term"
+									data-term-id="${htmlUtil.escape(entry.getBucketText())}"
 									disabled
 									id="${entry.getBucketText()}"
 									name="${entry.getBucketText()}"
-									onChange='${"window.location.href = \"${entry.getFilterValue()}\";"}'
-									role="radio"
-									type="radio"
+									onChange='Liferay.Search.FacetUtil.changeSelection(event);'
+									type="checkbox"
 								/>
 
 								<span class="custom-control-label term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
@@ -51,9 +51,11 @@
 									</span>
 								</span>
 
-								<small class="term-count">
-									(${entry.getFrequency()})
-								</small>
+								<#if entry.isFrequencyVisible()>
+									<small class="term-count">
+										(${entry.getFrequency()})
+									</small>
+								</#if>
 							</label>
 						</div>
 					</li>
@@ -61,18 +63,18 @@
 			</#if>
 
 			<li class="facet-value">
-				<div class="custom-control custom-radio">
+				<div class="custom-checkbox custom-control">
 					<label class="facet-checkbox-label" for="${namespace}${customRangeBucketDisplayContext.getBucketText()}">
 						<input
 							autocomplete="off"
 							${(customRangeBucketDisplayContext.isSelected())?then("checked", "")}
 							class="custom-control-input facet-term"
+							data-term-id="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}"
 							disabled
 							id="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
 							name="${namespace}${customRangeBucketDisplayContext.getBucketText()}"
-							onChange='${"window.location.href = \"${customRangeBucketDisplayContext.getFilterValue()}\";"}'
-							role="radio"
-							type="radio"
+							onChange='Liferay.Search.FacetUtil.changeSelection(event);'
+							type="checkbox"
 						/>
 
 						<span class="custom-control-label term-name ${(customRangeBucketDisplayContext.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
@@ -105,7 +107,7 @@
 							firstDayOfWeek=dateFacetCalendarDisplayContext.getFromFirstDayOfWeek()
 							monthParam="fromMonth"
 							monthValue=dateFacetCalendarDisplayContext.getFromMonthValue()
-							name="fromInput"
+							name="${namespace}fromInput"
 							yearParam="fromYear"
 							yearValue=dateFacetCalendarDisplayContext.getFromYearValue()
 						/>
@@ -122,7 +124,7 @@
 							firstDayOfWeek=dateFacetCalendarDisplayContext.getToFirstDayOfWeek()
 							monthParam="toMonth"
 							monthValue=dateFacetCalendarDisplayContext.getToMonthValue()
-							name="toInput"
+							name="${namespace}toInput"
 							yearParam="toYear"
 							yearValue=dateFacetCalendarDisplayContext.getToYearValue()
 						/>

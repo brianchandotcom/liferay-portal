@@ -74,6 +74,8 @@ DateFacetPortletInstanceConfiguration dateFacetPortletInstanceConfiguration = da
 			searchCustomRangeButton: A.one(
 				'#<portlet:namespace />searchCustomRangeButton'
 			),
+			searchCustomRangeToggleName:
+				'<portlet:namespace /><%= customRangeBucketDisplayContext.getBucketText() %>',
 			toInputDatePicker: Liferay.component(
 				'<portlet:namespace />toInputDatePicker'
 			),

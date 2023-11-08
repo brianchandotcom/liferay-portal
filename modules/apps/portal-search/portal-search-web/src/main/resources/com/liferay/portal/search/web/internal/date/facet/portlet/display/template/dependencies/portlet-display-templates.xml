@@ -2,6 +2,14 @@
 
 <root>
 	<template>
+		<template-key>date-facet-checkbox-ftl</template-key>
+		<name>portlet-display-template-name-checkbox-layout</name>
+		<description>portlet-display-template-description-facet-checkbox</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portal/search/web/internal/date/facet/portlet/display/template/dependencies/portlet_display_template_checkbox.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+	<template>
 		<template-key>date-facet-link-ftl</template-key>
 		<name>portlet-display-template-name-single-select-basic-link-layout</name>
 		<description>portlet-display-template-description-single-select-basic-link</description>

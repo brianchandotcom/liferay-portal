@@ -20,6 +20,8 @@ AUI.add(
 			instance.namespace = config.namespace;
 			instance.parameterName = config.parameterName;
 			instance.searchCustomRangeButton = config.searchCustomRangeButton;
+			instance.searchCustomRangeToggleName =
+				config.searchCustomRangeToggleName;
 			instance.toInputDatePicker = config.toInputDatePicker;
 			instance.toInputName = config.toInputName;
 
@@ -155,10 +157,16 @@ AUI.add(
 					.substr(1)
 					.split('&');
 
-				parameterArray = FacetUtil.removeURLParameters(
-					param,
-					parameterArray
+				const searchCustomRangeToggle = document.getElementById(
+					instance.searchCustomRangeToggleName
 				);
+
+				if (!searchCustomRangeToggle?.hasAttribute('data-term-id')) {
+					parameterArray = FacetUtil.removeURLParameters(
+						param,
+						parameterArray
+					);
+				}
 
 				parameterArray = FacetUtil.removeURLParameters(
 					paramFrom,

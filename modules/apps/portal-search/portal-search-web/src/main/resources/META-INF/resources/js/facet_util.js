@@ -6,6 +6,8 @@
 AUI.add(
 	'liferay-search-facet-util',
 	(A) => {
+		const CUSTOM_DATE_RANGE_BUCKET_TEXT = 'custom-range';
+
 		const FACET_TERM_CLASS = 'facet-term';
 
 		const FACET_TERM_SELECTED_CLASS = 'facet-term-selected';
@@ -213,11 +215,36 @@ AUI.add(
 				);
 
 				selections.forEach((item) => {
-					newParameters = FacetUtil.addURLParameter(
-						key,
-						item,
-						newParameters
-					);
+					if (item === CUSTOM_DATE_RANGE_BUCKET_TEXT) {
+
+						// For the special case of a date range facet, the
+						// termId is 'custom-range' and the parameters are
+						// prefixed with 'from' and 'to'.
+
+						const endDate = new Date();
+						const startDate = new Date(
+							endDate - 1000 * 60 * 60 * 24 // 24 hours
+						);
+
+						newParameters = FacetUtil.addURLParameter(
+							key + 'From',
+							startDate.toISOString().split('T')[0],
+							newParameters
+						);
+
+						newParameters = FacetUtil.addURLParameter(
+							key + 'To',
+							endDate.toISOString().split('T')[0],
+							newParameters
+						);
+					}
+					else {
+						newParameters = FacetUtil.addURLParameter(
+							key,
+							item,
+							newParameters
+						);
+					}
 				});
 
 				return newParameters;

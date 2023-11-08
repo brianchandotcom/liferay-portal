@@ -244,6 +244,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				"headless-builder/filters", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
+
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"

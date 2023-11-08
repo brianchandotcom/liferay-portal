@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -662,14 +661,11 @@ public class WorkflowMetricsSLAProcessorTest {
 		WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor =
 			new WorkflowMetricsSLAProcessor();
 
-		ReflectionTestUtil.setFieldValue(
-			workflowMetricsSLAProcessor, "_workflowMetricsSLACalendarRegistry",
-			_mockWorkflowMetricsSLACalendarRegistry());
-
 		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =
 			workflowMetricsSLAProcessor.process(
 				completionLocalDateTime, createLocalDateTime, documents, 0,
 				nowLocalDateTime, startNodeId,
+				_mockWorkflowMetricsSLACalendarRegistry(),
 				workflowMetricsSLADefinitionVersion,
 				lastWorkflowMetricsSLAInstanceResult);
 

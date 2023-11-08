@@ -2,10 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro configurationPaypal() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Store Management",
-			panel = "Commerce",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		while (IsElementNotPresent(key_entryName = "Raylife D2C Channel", locator1 = "CommerceNavigation#ENTRY_NAME")) {
 			Refresh();
@@ -56,10 +53,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enablePayPalPayment() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Store Management",
-			panel = "Commerce",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		while (IsElementNotPresent(key_entryName = "Raylife D2C Channel", locator1 = "CommerceNavigation#ENTRY_NAME")) {
 			Refresh();

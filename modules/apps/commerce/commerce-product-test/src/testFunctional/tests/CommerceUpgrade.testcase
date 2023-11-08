@@ -50,9 +50,7 @@ definition {
 		}
 
 		task ("Assert that Minium Portal channel is present after the Upgrade") {
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			AssertElementPresent(
 				key_entryName = "Minium Portal",

@@ -3,11 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+/// <reference types="react" />
+
 import './Diagram.scss';
-declare function DiagramBuilder({
-	setShowModal,
-}: {
-	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
-}): JSX.Element;
+declare function DiagramBuilder(): JSX.Element;
 export default DiagramBuilder;

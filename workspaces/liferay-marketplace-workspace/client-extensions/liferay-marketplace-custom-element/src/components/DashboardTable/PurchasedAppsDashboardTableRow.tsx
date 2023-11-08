@@ -50,7 +50,7 @@ export function PurchasedAppsDashboardTableRow({
 		<ClayTable.Row
 			className="dashboard-table-row"
 			onClick={() => {
-				navigate(`/order/${orderId}`);
+				navigate(`order/${orderId}`);
 			}}
 		>
 			<ClayTable.Cell>
@@ -132,7 +132,7 @@ export function PurchasedAppsDashboardTableRow({
 									disabled={orderStatusIsNotCompleted}
 									onClick={() =>
 										navigate(
-											`/order/${orderId}/create-license`
+											`order/${orderId}/create-license`
 										)
 									}
 									title={
@@ -149,7 +149,7 @@ export function PurchasedAppsDashboardTableRow({
 						)}
 						<DropDown.Item
 							onClick={() => {
-								navigate(`/order/${orderId}/licenses`);
+								navigate(`order/${orderId}/licenses`);
 							}}
 						>
 							Manage License Key(s)

@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
+import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 
 import appsIcon from '../../../assets/icons/apps_fill_icon.svg';
 import {
@@ -14,24 +14,17 @@ import {
 	DashboardTable,
 } from '../../../components/DashboardTable/DashboardTable';
 import {PublishedAppsDashboardTableRow} from '../../../components/DashboardTable/PublishedAppsDashboardTableRow';
-import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import {DashboardPage} from '../../DashBoardPage/DashboardPage';
 import {appTableHeaders} from '../PublishedDashboardPageUtil';
-
-const appMessages = {
-	description: 'Manage and publish apps on the Marketplace',
-	emptyStateMessage: {
-		description1: 'Publish apps and they will show up here.',
-		description2: 'Click on “New App” to start.',
-		title: 'No Apps Yet',
-	},
-	title: 'Apps',
-};
 
 const Apps = () => {
 	const [page, setPage] = useState(1);
 
-	const {catalogId, publishedAppTable} = useOutletContext<any>();
+	const {catalogId, publishedAppTable, selectedAccount} = useOutletContext<
+		any
+	>();
+	const {accountId} = useParams();
+	const navigate = useNavigate();
 
 	return (
 		<DashboardPage
@@ -41,14 +34,24 @@ const Apps = () => {
 					New App
 				</>
 			}
-			messages={appMessages}
+			messages={{
+				description: 'Manage and publish apps on the Marketplace',
+				title: 'Apps',
+			}}
 			onButtonClick={() => {
-				window.location.href =
-					getSiteURL() + `/create-new-app?catalogId=${catalogId}`;
+				navigate(
+					`/${
+						accountId ?? selectedAccount?.id
+					}/app/create?catalogId=${catalogId}`
+				);
 			}}
 		>
 			<DashboardTable<AppProps>
-				emptyStateMessage={appMessages.emptyStateMessage}
+				emptyStateMessage={{
+					description1: 'Publish apps and they will show up here.',
+					description2: 'Click on “New App” to start.',
+					title: 'No Apps Yet',
+				}}
 				icon={appsIcon}
 				items={publishedAppTable.items}
 				tableHeaders={appTableHeaders}

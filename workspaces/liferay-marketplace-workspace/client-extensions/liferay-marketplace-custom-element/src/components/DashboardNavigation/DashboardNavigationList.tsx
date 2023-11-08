@@ -7,22 +7,21 @@ import classNames from 'classnames';
 
 import './DashboardNavigationList.scss';
 
-import {NavLink, useLocation} from 'react-router-dom';
+import {NavLink, useLocation, useParams} from 'react-router-dom';
 
 import {DashboardListItems} from './DashboardNavigation';
 import {DashboardNavigationListItem} from './DashboardNavigationListItem';
 
 interface DashboardNavigationListProps {
-	accountId: string;
 	navigationItemMock: DashboardListItems;
 }
 
 export function DashboardNavigationList({
-	accountId,
 	navigationItemMock,
 }: DashboardNavigationListProps) {
 	const {itemIcon, itemTitle, items, path} = navigationItemMock;
 
+	const {accountId} = useParams();
 	const location = useLocation();
 
 	const isAppRoute =
@@ -37,7 +36,7 @@ export function DashboardNavigationList({
 							isActive || (path === '/' && isAppRoute),
 					})
 				}
-				to={`${path}${accountId ? `?accountId=${accountId}` : ''}`}
+				to={accountId ? `/${accountId}${path}` : path}
 			>
 				{({isActive}) => (
 					<>

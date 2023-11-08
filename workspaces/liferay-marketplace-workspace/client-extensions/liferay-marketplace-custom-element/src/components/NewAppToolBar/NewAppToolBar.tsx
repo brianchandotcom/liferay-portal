@@ -15,6 +15,8 @@ import {getAccountImage} from '../../utils/util';
 
 import './NewAppToolBar.scss';
 
+import {Link} from 'react-router-dom';
+
 interface NewAppToolBarProps {
 	accountImage?: string;
 	accountName: string;
@@ -23,6 +25,39 @@ interface NewAppToolBarProps {
 	enableDropdown?: boolean;
 }
 
+type Item = {
+	disabled?: boolean;
+	label?: string;
+	type?:
+		| 'checkbox'
+		| 'contextual'
+		| 'group'
+		| 'item'
+		| 'radio'
+		| 'radiogroup'
+		| 'divider';
+};
+
+const items: Item[] = [
+	{
+		disabled: true,
+		label: 'Publish app',
+	},
+	{
+		disabled: true,
+		label: 'Hide app',
+	},
+	{
+		label: 'Menu List Text',
+	},
+	{
+		type: 'divider',
+	},
+	{
+		label: 'Remove app',
+	},
+];
+
 export function NewAppToolBar({
 	accountImage,
 	accountName,
@@ -30,39 +65,6 @@ export function NewAppToolBar({
 	appName,
 	enableDropdown,
 }: NewAppToolBarProps) {
-	type Item = {
-		disabled?: boolean;
-		label?: string;
-		type?:
-			| 'checkbox'
-			| 'contextual'
-			| 'group'
-			| 'item'
-			| 'radio'
-			| 'radiogroup'
-			| 'divider';
-	};
-
-	const items: Item[] = [
-		{
-			disabled: true,
-			label: 'Publish app',
-		},
-		{
-			disabled: true,
-			label: 'Hide app',
-		},
-		{
-			label: 'Menu List Text',
-		},
-		{
-			type: 'divider',
-		},
-		{
-			label: 'Remove app',
-		},
-	];
-
 	return (
 		<div className="container new-app-tool-bar-container">
 			<ClayManagementToolbar.ItemList expand>
@@ -111,7 +113,7 @@ export function NewAppToolBar({
 
 			<ClayManagementToolbar.ItemList>
 				<ClayButton.Group className="new-app-tool-bar-button-container">
-					<a href="/dashboard">
+					<Link to="../">
 						<ClayButton
 							className="new-app-tool-bar-button-exit"
 							displayType={null}
@@ -120,7 +122,7 @@ export function NewAppToolBar({
 								Exit
 							</span>
 						</ClayButton>
-					</a>
+					</Link>
 
 					<button className="new-app-tool-bar-button-save-draft">
 						Save as draft

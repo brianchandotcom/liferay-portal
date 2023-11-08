@@ -5,7 +5,7 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import {getAccountImage} from '../../utils/util';
 import {DashboardNavigationList} from './DashboardNavigationList';
@@ -37,9 +37,6 @@ export function DashboardNavigation({
 	dashboardNavigationItems,
 }: DashboardNavigationProps) {
 	const navigate = useNavigate();
-	const [searchParams] = useSearchParams();
-
-	const accountId = searchParams.get('accountId');
 
 	return (
 		<div className="dashboard-navigation-container">
@@ -75,7 +72,7 @@ export function DashboardNavigation({
 					{accounts.map((account) => (
 						<ClayDropDown.Item
 							key={account.id}
-							onClick={() => navigate(`?accountId=${account.id}`)}
+							onClick={() => navigate(`/${account.id}`)}
 						>
 							{account.name}
 						</ClayDropDown.Item>
@@ -86,7 +83,6 @@ export function DashboardNavigation({
 			<div className="dashboard-navigation-body">
 				{dashboardNavigationItems.map((navigationMock, index) => (
 					<DashboardNavigationList
-						accountId={accountId as string}
 						key={index}
 						navigationItemMock={navigationMock}
 					/>

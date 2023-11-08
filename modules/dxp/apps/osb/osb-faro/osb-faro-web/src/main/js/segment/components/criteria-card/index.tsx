@@ -5,6 +5,7 @@ import CriteriaView from './CriteriaView';
 import getCN from 'classnames';
 import Label from 'shared/components/Label';
 import React from 'react';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {Segment} from 'shared/util/records';
 import {translateQueryToCriteria} from 'segment/segment-editor/dynamic/utils/odata';
 import {withReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
@@ -71,7 +72,10 @@ class CriteriaCard extends React.Component<
 		const hideOverflow = !expand && truncate;
 
 		return (
-			<Card className='criteria-card-root'>
+			<Card
+				className='criteria-card-root'
+				id={Containers.SegmentCriteriaCard}
+			>
 				<Card.Header>
 					<Card.Title>
 						{Liferay.Language.get('segment-criteria')}

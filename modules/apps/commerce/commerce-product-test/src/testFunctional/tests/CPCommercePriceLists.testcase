@@ -64,9 +64,7 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 			value1 = "100.00");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "pricelist1");
 
@@ -86,9 +84,7 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 			value1 = "80.00");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "pricelist1");
 
@@ -361,9 +357,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Account2");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -529,9 +523,7 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 			value1 = "7.45");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "pricelist1");
 
@@ -773,9 +765,7 @@ definition {
 
 		SelectFrameTop();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -804,9 +794,7 @@ definition {
 			productName = "Simple Jeans",
 			productType = "Simple");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Test Price List");
 
@@ -855,10 +843,7 @@ definition {
 
 		Navigator.openURL();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			panel = "Commerce",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -920,9 +905,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -965,10 +948,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			panel = "Commerce",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -1037,9 +1017,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 3");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -1873,9 +1851,7 @@ definition {
 		}
 
 		task ("When the Discount Manager navigates to Price Lists page") {
-			ApplicationsMenuHelper.gotoPortlet(
-				category = "Pricing",
-				portlet = "Price Lists");
+			CommerceNavigator.goToPriceListAdmin();
 		}
 
 		task ("Then the user is able to create a new price list") {
@@ -2009,10 +1985,7 @@ definition {
 		}
 
 		task ("When admin goes to the Price Lists section") {
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				panel = "Commerce",
-				portlet = "Price Lists");
+			CommerceNavigator.goToPriceListAdmin();
 		}
 
 		task ("Then verifies that there is no Delete button for Master and Minium Base Price Lists") {
@@ -2266,9 +2239,7 @@ definition {
 			entryName = "Test Group",
 			title = "Select Product Group");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -2355,9 +2326,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -2374,9 +2343,7 @@ definition {
 
 		SelectFrameTop();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Test Price List");
 
@@ -2422,9 +2389,7 @@ definition {
 
 		SelectFrameTop();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -2499,10 +2464,7 @@ definition {
 
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Pricing",
-			panel = "Commerce",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -2576,10 +2538,7 @@ definition {
 
 		Button.clickPublish();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Pricing",
-			panel = "Commerce",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		while ((IsTextEqual(key_name = "Test Price List", locator1 = "CommerceEntry#ASSERT_PRICE_LIST_STATUS", value1 = "APPROVED")) && (maxIterations = "40")) {
 
@@ -2629,10 +2588,7 @@ definition {
 
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Pricing",
-			panel = "Commerce",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -2793,10 +2749,7 @@ definition {
 
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Pricing",
-			panel = "Commerce",
-			portlet = "Price Lists");
+		CommerceNavigator.goToPriceListAdmin();
 
 		Click(locator1 = "Button#PLUS");
 

@@ -500,7 +500,7 @@ definition {
 
 		AssertElementPresent(
 			key_toggleSwitchLabel = "Switch 1",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			locator1 = "ToggleSwitch#TOGGLE_SWITCH_BY_LABEL");
 
 		Form.gotoAdvancedTab();
 
@@ -518,7 +518,7 @@ definition {
 
 		AssertElementPresent(
 			key_toggleSwitchLabel = "Switch 1",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			locator1 = "ToggleSwitch#TOGGLE_SWITCH_BY_LABEL");
 	}
 
 	@description = "Verify that options can be added"
@@ -638,7 +638,7 @@ definition {
 
 		AssertElementPresent(
 			key_toggleSwitchLabel = "Switch 1",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			locator1 = "ToggleSwitch#TOGGLE_SWITCH_BY_LABEL");
 
 		Form.save();
 
@@ -648,7 +648,7 @@ definition {
 
 		AssertElementPresent(
 			key_toggleSwitchLabel = "Switch 1",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			locator1 = "ToggleSwitch#TOGGLE_SWITCH_BY_LABEL");
 	}
 
 	@description = "Verify that options can be displayed both inline and as a list"
@@ -883,7 +883,9 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.viewPredefinedValueDropdownContent(key_textContent = "Choose Options");
+		AssertElementPresent(
+			key_textContent = "Choose Options",
+			locator1 = "FormFields#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST_DROPDOWN_CONTENT");
 	}
 
 	@description = "Verify that the Field Reference can be edited"

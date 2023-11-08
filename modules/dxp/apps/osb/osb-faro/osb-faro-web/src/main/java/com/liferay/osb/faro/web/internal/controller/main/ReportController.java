@@ -77,38 +77,6 @@ public class ReportController extends BaseFaroController {
 				Response.Status.BAD_REQUEST);
 		}
 
-		if (Validator.isBlank(fromDateString) ||
-			Validator.isBlank(toDateString)) {
-
-			return _reportControllerResponseFactory.create(
-				"\"fromDate\" and \"toDate\" query parameters are mandatory " +
-					"and must be ISO 8601 compliant " + _ISO_8601_DATE_FORMAT,
-				Response.Status.BAD_REQUEST);
-		}
-
-		LocalDateTime fromLocalDateTime;
-		LocalDateTime toLocalDateTime;
-
-		try {
-			fromLocalDateTime = _toUTCLocalDateTime(
-				fromDateString, LocalTime.MIN);
-			toLocalDateTime = _toUTCLocalDateTime(toDateString, LocalTime.MAX);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return _reportControllerResponseFactory.create(
-				"Both dates in range must be ISO 8601 compliant " +
-					_ISO_8601_DATE_FORMAT,
-				Response.Status.BAD_REQUEST);
-		}
-
-		if (fromLocalDateTime.isAfter(toLocalDateTime)) {
-			return _reportControllerResponseFactory.create(
-				"Wrong range date. \"fromDate\" cannot be after \"toDate\"",
-				Response.Status.BAD_REQUEST);
-		}
-
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
 
@@ -118,17 +86,13 @@ public class ReportController extends BaseFaroController {
 			orderByFields = orderByFieldsFaroParam.getValue();
 		}
 
-		Map<String, List<String>> queryParameters =
+		HashMapBuilder.HashMapWrapper<String, List<String>> hashMapWrapper =
 			HashMapBuilder.<String, List<String>>put(
 				"assetId", Collections.singletonList(assetId)
 			).put(
 				"assetType", Collections.singletonList(assetType)
 			).put(
 				"channelId", Collections.singletonList(channelId)
-			).put(
-				"fromDate",
-				Collections.singletonList(
-					fromLocalDateTime.format(_dateTimeDateTimeFormatter))
 			).put(
 				"query", Collections.singletonList(query)
 			).put(
@@ -149,11 +113,55 @@ public class ReportController extends BaseFaroController {
 						return fieldName + StringPool.COMMA +
 							orderByField.getOrderBy();
 					})
+			);
+
+		if (!StringUtil.equals(type, "individual")) {
+			if (Validator.isBlank(fromDateString) ||
+				Validator.isBlank(toDateString)) {
+
+				return _reportControllerResponseFactory.create(
+					"\"fromDate\" and \"toDate\" query parameters are " +
+						"mandatory and must be ISO 8601 compliant " +
+							_ISO_8601_DATE_FORMAT,
+					Response.Status.BAD_REQUEST);
+			}
+
+			LocalDateTime fromLocalDateTime;
+			LocalDateTime toLocalDateTime;
+
+			try {
+				fromLocalDateTime = _toUTCLocalDateTime(
+					fromDateString, LocalTime.MIN);
+				toLocalDateTime = _toUTCLocalDateTime(
+					toDateString, LocalTime.MAX);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				return _reportControllerResponseFactory.create(
+					"Both dates in range must be ISO 8601 compliant " +
+						_ISO_8601_DATE_FORMAT,
+					Response.Status.BAD_REQUEST);
+			}
+
+			if (fromLocalDateTime.isAfter(toLocalDateTime)) {
+				return _reportControllerResponseFactory.create(
+					"Wrong range date. \"fromDate\" cannot be after \"toDate\"",
+					Response.Status.BAD_REQUEST);
+			}
+
+			hashMapWrapper = hashMapWrapper.put(
+				"fromDate",
+				Collections.singletonList(
+					fromLocalDateTime.format(_dateTimeDateTimeFormatter))
 			).put(
 				"toDate",
 				Collections.singletonList(
 					toLocalDateTime.format(_dateTimeDateTimeFormatter))
-			).build();
+			);
+		}
+
+		Map<String, List<String>> queryParameters = hashMapWrapper.build();
 
 		StreamingOutput streamingOutput = outputStream -> {
 			try {

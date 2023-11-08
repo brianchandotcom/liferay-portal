@@ -4,10 +4,9 @@
  */
 
 import {useEffect, useState} from 'react';
-import {Outlet, useSearchParams} from 'react-router-dom';
+import {Outlet, useParams} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import {getCompanyId} from '../../liferay/constants';
 import {
 	getAccountInfoFromCommerce,
 	getAccounts,
@@ -49,8 +48,7 @@ const options: Intl.DateTimeFormatOptions = {
 };
 
 const PurchasedAppsDashboardOutlet = () => {
-	const [searchParams] = useSearchParams();
-	const accountId = searchParams.get('accountId');
+	const {accountId} = useParams();
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 
 	const [page, setPage] = useState<number>(1);
@@ -62,7 +60,10 @@ const PurchasedAppsDashboardOutlet = () => {
 		return accounts.items ?? [];
 	});
 
-	const selectedAccount = useAccountCached(accounts ?? [], accountId);
+	const selectedAccount = useAccountCached(
+		accounts ?? [],
+		accountId as string
+	);
 
 	useEffect(() => {
 		const getAccountCommerce = async () => {
@@ -106,7 +107,7 @@ const PurchasedAppsDashboardOutlet = () => {
 					className: 'com.liferay.commerce.product.model.CPInstance',
 					classPK: placeOrderItem.skuId,
 					columnName: 'version',
-					companyId: Number(getCompanyId()),
+					companyId: Number(Liferay.ThemeDisplay.getCompanyId()),
 					tableName: 'CUSTOM_FIELDS',
 				});
 

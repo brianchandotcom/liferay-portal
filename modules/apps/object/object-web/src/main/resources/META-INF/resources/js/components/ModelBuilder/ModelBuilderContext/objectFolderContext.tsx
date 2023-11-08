@@ -6,6 +6,7 @@
 import React, {createContext, useContext, useReducer} from 'react';
 import {Elements} from 'react-flow-renderer';
 
+import {DeletedObjectDefinition} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import {
 	LeftSidebarItem,
 	ObjectRelationshipEdgeData,
@@ -29,6 +30,7 @@ interface ObjectFolderContextProviderProps
 const ObjectFolderContext = createContext({} as ObjectFolderContextProps);
 
 const initialState = {
+	deleteObjectDefinition: {} as DeletedObjectDefinition,
 	elements: [] as Elements<
 		ObjectDefinitionNodeData | ObjectRelationshipEdgeData
 	>,

@@ -228,6 +228,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							...objectDefinitionNode.data,
 							objectFields: unselectedObjectFields,
 							selected: false,
+							showAllObjectFields: true,
 						},
 					};
 				}
@@ -568,6 +569,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 								objectFields: objectFieldsCustomSort(
 									objectDefinition.objectFields
 								),
+								showAllObjectFields: false,
 							},
 							id: objectDefinition.id.toString(),
 							position: {
@@ -649,6 +651,15 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				],
 				rightSidebarType: 'empty',
 				selectedObjectField: undefined,
+			};
+		}
+
+		case TYPES.SET_DELETE_OBJECT_DEFINITION: {
+			const {newDeleteObjectDefinition} = action.payload;
+
+			return {
+				...state,
+				deleteObjectDefinition: newDeleteObjectDefinition,
 			};
 		}
 
@@ -770,8 +781,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					);
 
 					if (
-						objectDefinitionNode.id ===
-						selectedObjectDefinitionId.toString()
+						objectDefinitionNode.id === selectedObjectDefinitionId
 					) {
 						selectedObjectDefinitionNode = {
 							...objectDefinitionNode,
@@ -947,6 +957,42 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				rightSidebarType: 'objectRelationshipDetails',
 				selectedObjectField: undefined,
 				selectedObjectRelationship: selectedObjectRelationshipEdge,
+			};
+		}
+
+		case TYPES.SET_SHOW_ALL_OBJECT_FIELDS: {
+			const {
+				objectDefinitionExternalReferenceCode,
+				objectDefinitionNodes,
+				objectRelationshipEdges,
+				showAllObjectFields,
+			} = action.payload;
+
+			const newObjectDefinitionNodes = objectDefinitionNodes.map(
+				(objectDefinitionNode) => {
+					if (
+						objectDefinitionNode?.data?.externalReferenceCode ===
+						objectDefinitionExternalReferenceCode
+					) {
+						return {
+							...objectDefinitionNode,
+							data: {
+								...objectDefinitionNode.data,
+								showAllObjectFields: !showAllObjectFields,
+							},
+						};
+					}
+
+					return objectDefinitionNode;
+				}
+			) as Node<ObjectDefinitionNodeData>[];
+
+			return {
+				...state,
+				elements: [
+					...newObjectDefinitionNodes,
+					...objectRelationshipEdges,
+				],
 			};
 		}
 

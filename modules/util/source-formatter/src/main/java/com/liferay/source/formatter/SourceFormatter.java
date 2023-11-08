@@ -683,17 +683,19 @@ public class SourceFormatter {
 				continue;
 			}
 
-			if (!commitMessage.endsWith("\n----")) {
+			String[] parts = commitMessage.split(":", 2);
+
+			if (!parts[1].endsWith("\n----")) {
 				throw new Exception(
 					StringBundler.concat(
-						"Found formatting issues:\n", "Commit message ",
-						"contains '# breaking_change_report' should end with ",
-						"'----'"));
+						"Found formatting issues in SHA ", parts[0], ":\n",
+						"Commit message contains '# breaking_change_report' ",
+						"should end with '----'"));
 			}
 
-			_checkMissingEmptyLinesAroundHeaders(commitMessage);
+			_checkMissingEmptyLinesAroundHeaders(parts);
 
-			String[] breakingChangeReports = commitMessage.split("\n----");
+			String[] breakingChangeReports = parts[1].split("\n----");
 
 			for (String breakingChangeReport : breakingChangeReports) {
 				int alternativesCount = StringUtil.count(
@@ -710,11 +712,11 @@ public class SourceFormatter {
 
 					throw new Exception(
 						StringBundler.concat(
-							"Found formatting issues:\n", "Each breaking ",
-							"change report should have one, and only one '# ",
-							"breaking_change_report', '## What', '## Why' and ",
-							"'## Alternatives'(Optional). Use '----' to split ",
-							"each breaking change."));
+							"Found formatting issues in SHA ", parts[0], ":\n",
+							"Each breaking change report should have one, and ",
+							"only one '# breaking_change_report', , '## Why' ",
+							"and '## Alternatives'(Optional). Use '----' to ",
+							"split each breaking change."));
 				}
 
 				int alternativesPosition = breakingChangeReport.indexOf(
@@ -728,9 +730,10 @@ public class SourceFormatter {
 
 					throw new Exception(
 						StringBundler.concat(
-							"Found formatting issues:\n", "Incorrect order of ",
-							"headers: The correct order should be '## What' | ",
-							"'## Why' | '## Alternatives'"));
+							"Found formatting issues in SHA ", parts[0], ":\n",
+							"Incorrect order of headers: The correct order ",
+							"should be '## What' | '## Why' | '## ",
+							"Alternatives'"));
 				}
 
 				String[] lines = breakingChangeReport.split("\n");
@@ -743,8 +746,10 @@ public class SourceFormatter {
 
 						throw new Exception(
 							StringBundler.concat(
-								"Found formatting issues:\n", "There should ",
-								"be one file path after '## What'"));
+								"Found formatting issues in SHA ", parts[0],
+								":\n",
+								"There should be one file path after '## ",
+								"What'"));
 					}
 				}
 
@@ -753,38 +758,37 @@ public class SourceFormatter {
 				if (matcher.find()) {
 					throw new Exception(
 						StringBundler.concat(
-							"Found formatting issues:\n", "'## What' section ",
-							"should contain only one file"));
+							"Found formatting issues in SHA ", parts[0], ":\n",
+							"'## What' section should contain only one file"));
 				}
 			}
 		}
 	}
 
-	private void _checkMissingEmptyLinesAroundHeaders(String commitMessage)
+	private void _checkMissingEmptyLinesAroundHeaders(String[] parts)
 		throws Exception {
 
 		for (String header : _BREAKING_CHANGE_REPORT_HEADER_NAMES) {
-			int x = commitMessage.indexOf(header);
+			int x = parts[1].indexOf(header);
 
 			if (x == -1) {
 				continue;
 			}
 
-			int lineNumber = SourceUtil.getLineNumber(commitMessage, x);
+			int lineNumber = SourceUtil.getLineNumber(parts[1], x);
 
-			String nextLine = SourceUtil.getLine(commitMessage, lineNumber + 1);
-			String previousLine = SourceUtil.getLine(
-				commitMessage, lineNumber - 1);
+			String nextLine = SourceUtil.getLine(parts[1], lineNumber + 1);
+			String previousLine = SourceUtil.getLine(parts[1], lineNumber - 1);
 
 			if (((nextLine != null) && (nextLine.length() != 0)) ||
 				((previousLine != null) && (previousLine.length() != 0))) {
 
 				throw new Exception(
 					StringBundler.concat(
-						"Found formatting issues:\n", "There should be an ",
-						"empty line after/before '----', '# ",
-						"breaking_change_report', '## What', '## Why' and '## ",
-						"Alternatives'"));
+						"Found formatting issues in SHA ", parts[0], ":\n",
+						"There should be an empty line after/before '----', ",
+						"'# breaking_change_report', '## What', '## Why' and ",
+						"'## Alternatives'"));
 			}
 		}
 	}

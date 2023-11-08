@@ -8,7 +8,6 @@ package com.liferay.osb.faro.web.internal.controller.main;
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
 import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
-import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.util.FaroThreadLocal;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.api.ReportControllerResponseFactory;
@@ -77,9 +76,6 @@ public class ReportController extends BaseFaroController {
 						"\"page\".",
 				Response.Status.BAD_REQUEST);
 		}
-
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
 
 		List<OrderByField> orderByFields = null;
 
@@ -169,7 +165,7 @@ public class ReportController extends BaseFaroController {
 				FaroThreadLocal.setCacheEnabled(false);
 
 				contactsEngineClient.getToOutputStream(
-					faroProject,
+					faroProjectLocalService.getFaroProjectByGroupId(groupId),
 					HashMapBuilder.put(
 						"Accept", "application/octet-stream, */*"
 					).build(),

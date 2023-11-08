@@ -692,8 +692,8 @@ public class SourceFormatter {
 				throw new Exception(
 					StringBundler.concat(
 						"Found formatting issues in SHA ", parts[0], ":\n",
-						"Commit message contains '# breaking_change_report' ",
-						"should end with '----'"));
+						"The commit message contains # ",
+						"'breaking_change_report' should end with '----'"));
 			}
 
 			_checkMissingEmptyLinesAroundHeaders(parts);
@@ -750,8 +750,7 @@ public class SourceFormatter {
 						throw new Exception(
 							StringBundler.concat(
 								"Found formatting issues in SHA ", parts[0],
-								":\n",
-								"There should be one file path after '## ",
+								":\nThere should be one file path after '## ",
 								"What'"));
 					}
 				}

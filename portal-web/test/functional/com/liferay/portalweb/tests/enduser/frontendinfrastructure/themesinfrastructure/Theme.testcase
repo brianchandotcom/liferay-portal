@@ -32,10 +32,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		AppManager.openAppManagerAdmin();
 
 		AppManager.uploadApp(
 			appName = "test-theme",
@@ -119,10 +116,7 @@ definition {
 
 		Theme.viewTestThemeBackgroundColor();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		AppManager.openAppManagerAdmin();
 
 		Search.searchCP(searchTerm = ${appName});
 
@@ -142,10 +136,7 @@ definition {
 			pageName = "Theme Test Page",
 			themeName = "Classic");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		AppManager.openAppManagerAdmin();
 
 		Search.searchCP(searchTerm = ${appName});
 
@@ -195,10 +186,7 @@ definition {
 
 		Theme.viewTestThemeBackgroundColor();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		AppManager.openAppManagerAdmin();
 
 		Search.searchCP(searchTerm = ${appName});
 

@@ -6,7 +6,6 @@
 package com.liferay.portal.search.web.internal.date.facet.portlet;
 
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;

@@ -21,7 +21,8 @@ export default function useGetListItemsFromDealRegistration(
 	sort: string
 ) {
 	const swrResponse = useGet<LiferayItems<DealRegistrationDTO[]>>(
-		`/o/${LiferayAPIs.OBJECT}/${ResourceName.LEADS_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}
+		filtersTerm &&
+			`/o/${LiferayAPIs.OBJECT}/${ResourceName.LEADS_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}
 			 `
 	);
 
@@ -46,12 +47,12 @@ export default function useGetListItemsFromDealRegistration(
 				[DealRegistrationColumnKey.ACCOUNT_NAME]: item.prospectAccountName
 					? item.prospectAccountName
 					: ' - ',
-				...getDealDates(item.dateCreated),
+				...getDealDates(item.dateCreated, item.dateCreated),
 
 				[DealRegistrationColumnKey.STATUS]: item.leadStatus
 					? getDealStatus(item.leadStatus)
 					: ' - ',
-				...getDealDates(item.dateCreated),
+				...getDealDates(item.dateCreated, item.dateCreated),
 				[DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME]: `${
 					item.primaryProspectFirstName
 						? item.primaryProspectFirstName
@@ -103,6 +104,9 @@ export default function useGetListItemsFromDealRegistration(
 				[DealRegistrationColumnKey.ADDITIONAL_CONTACTS]: item.additionalContacts
 					? item.additionalContacts
 					: ' - ',
+				[DealRegistrationColumnKey.ISCONVERTED]: item.isConverted
+					? item.isConverted
+					: false,
 			})),
 		[swrResponse.data?.items]
 	);

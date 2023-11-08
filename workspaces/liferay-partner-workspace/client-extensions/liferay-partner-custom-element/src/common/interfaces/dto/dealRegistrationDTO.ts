@@ -27,6 +27,9 @@ export default interface DealRegistrationDTO
 	additionalInformationAboutTheOpportunity?: string;
 	amount?: number;
 	closeDate?: string;
+	growthArr?: number;
+	hasRenewal?: boolean;
+	isConverted?: boolean;
 	leadExternalReferenceCode?: string;
 	leadQualificationExternalReferenceCode?: string;
 	leadStatus?: string;

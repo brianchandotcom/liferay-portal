@@ -6,9 +6,9 @@
 import getChartQuarterCount from './getDealsChartQuarterCount';
 
 export default function getLeadsChartValues(
-	rejectedLeads: any[],
 	submittedLeads: any[],
-	approvedLeads: any[]
+	approvedLeads: any[],
+	rejectedLeads: any[]
 ) {
 	return {
 		approved: approvedLeads?.reduce(

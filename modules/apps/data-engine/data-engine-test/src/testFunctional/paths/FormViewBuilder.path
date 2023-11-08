@@ -213,7 +213,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST</td>
-	<td>//div[contains(@data-field-name,'predefinedValue')]//div[contains(@class,'form-builder-select-field')]</td>
+	<td>//div[contains(@data-field-name,'predefinedValue')]//button[contains(@aria-labelledby, 'predefinedValue')] | //div[contains(@data-field-name,'predefinedValue')]//label[text()='Predefined Value']//following-sibling::div//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>PREDEFINED_VALUE_AT_FORM_SELECTLIST</td>
-	<td>//label[contains(text(),'${key_fieldName}')]/..//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/following-sibling::div//button[text()='${key_fieldValue}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -269,7 +269,7 @@
 
 <tr>
 	<td>SELECT_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}')]/following-sibling::div//div[contains(@class,'option-selected')]</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/following-sibling::div//div[contains(@class,'option-selected')] | //label[contains(text(),'${key_fieldName}')]/following-sibling::div//button[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -297,12 +297,12 @@
 </tr>
 <tr>
 	<td>CHECKBOX_PREDEFINED</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[contains(@label,'${key_fieldName}')]//input[contains(@type,'checkbox')]</td>
+	<td>//span[text()='${key_fieldName}']//parent::span/preceding-sibling::input[not(@disabled)]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHECKBOX_PREDEFINED_LIST</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[contains(@label,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//span[normalize-space(text())='${key_fieldName}']/../preceding-sibling::input</td>
 	<td></td>
 </tr>
 

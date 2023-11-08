@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD_TRIGGER</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//..//div[contains(@class,'select-field')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div/button[contains(@class, 'select')]</td>
 	<td></td>
 </tr>
 <tr>

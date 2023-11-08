@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_FIELD_PARAMETERS_EXTENDED</td>
-	<td>//ul[contains(@class, 'timeline')][1]//li[@class='timeline-item'][1+${key_conditionRowNumber}]//div[@class='panel-body']/div[@class='form-group-autofit' and //div[@class='option-selected' and text()='${key_conditionField}'] and //div[@class='option-selected' and text()='${key_conditionOperator}'] and //div[@class='option-selected' and text()='${key_conditionValueType}'] and //input[@type='text' and @value='${key_conditionFieldValue}']]</td>
+	<td>//ul[contains(@class, 'timeline')][1]//li[@class='timeline-item'][1+${key_conditionRowNumber}]//div[@class='panel-body']//div//descendant::div//button[text()='${key_conditionField}']/../../../../following-sibling::div//descendant::div//button[text()='${key_conditionOperator}']/../../../../following-sibling::div//descendant::div//button[text()='${key_conditionValueType}']/../../../../following-sibling::div//descendant::div//input[@value='${key_conditionFieldValue}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_FIELD</td>
-	<td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'ddm-field')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ACTION_FIELD</td>
-	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'ddm-field')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_FIELD</td>
-	<td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'option-selected')]</td>
+	<td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//button[contains(@class, 'select')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,7 +118,7 @@
 
 <tr>
 	<td>RULE_BUILDER_AUTOFILL_FROM_DATA_PROVIDER</td>
-	<td>//span[contains(.,'${key_dataProviderParameterName}')]/../following-sibling::div//div[contains(@class,'option-selected')]</td>
+	<td>//span[contains(., '${key_dataProviderParameterName}')]/../following-sibling::div//descendant::button[contains(@class, 'select')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -219,17 +219,17 @@
 </tr>
 <tr>
 	<td>RULE_ACTION_FIELD_VALUE</td>
-	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][1]//div[contains(@class,'select-field-trigger')]//div[contains(text(),"${key_selectActionValue}")]</td>
+	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][1]//div//descendant::button[text()='${key_selectActionValue}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_ACTION_TARGET_FIELD_VALUE</td>
-	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][2]//div[contains(@class,'select-field-trigger')]//div[contains(text(),"${key_selectActionTargetValue}")]</td>
+	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][2]//div//descendant::button[text()='${key_selectActionTargetValue}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_RULE_BUILDER_ACTION_CONDITION</td>
-	<td>//div[@class='form-group-item'][${key_positionNumber}]//div[contains(@class,'form-control results-chosen select-field-trigger')]//div[text()='${key_value}']</td>
+	<td>xpath=(//*[@class='form-group-autofit'])[${key_positionNumber}]//descendant::button[text()='${key_value}']</td>
 	<td></td>
 </tr>
 </tbody>

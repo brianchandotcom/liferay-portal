@@ -624,7 +624,7 @@
 </tr>
 <tr>
 	<td>DATA_PROVIDER_INPUT_PARAMETER_TYPE_FIELD</td>
-	<td>//div[contains(@data-field-name,'inputParameters')]//div[contains(@data-field-name,'inputParameterType')]//div[contains(@class,'form-builder-select-field')]</td>
+	<td>//div[contains(@data-field-name, 'inputParameters')]//button[contains(@aria-labelledby, 'inputParameters')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -652,12 +652,12 @@
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]//div[contains(@data-field-name,'outputParameterType')]//div[contains(@class,'form-builder-select-field')]</td>
+	<td>xpath=(//div[contains(@data-field-name, 'outputParameters')]//button[contains(@aria-labelledby, 'outputParameterType')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]/following-sibling::div//div[contains(@data-field-name,'outputParameterType')]//div[contains(@class,'form-builder-select-field')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]/following-sibling::div//div[contains(@data-field-name,'outputParameterType')]//button[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>

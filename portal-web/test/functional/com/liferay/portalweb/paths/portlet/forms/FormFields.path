@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ANY_DISABLED_SELECT_OPTION</td>
-	<td>//*[contains(@class, 'dropdown')]//*[contains(@class, 'disabled') and contains(text(), '${key_text}')]</td>
+	<td>//*[contains(@class, 'dropdown-menu-select')]//li//button[@disabled][text()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -172,7 +172,7 @@
 </tr>
 <tr>
 	<td>PREDEFINED_VALUE_AT_FORM_SELECT</td>
-	<td>//label[contains(text(),'${key_fieldName}')]/..//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')] | //label[contains(text(),'${key_fieldName}')]/following-sibling::div//button[contains(text(), '${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -240,7 +240,7 @@
 </tr>
 <tr>
 	<td>BOOLEAN_PREDEFINED_VALUE</td>
-	<td>//div[contains(@class,'form-builder-select-field input-group-container')]//div[contains(@class,'form-control results-chosen select-field-trigger')]//div[contains(@class,'option-selected')]</td>
+	<td>//button[contains(@aria-labelledby, 'predefinedValue')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -413,12 +413,12 @@
 </tr>
 <tr>
 	<td>OPTION_FROM_SELECTED_LIST</td>
-	<td>//li[contains(@aria-selected,'false')]//button[contains(@label,'${key_value}')]</td>
+	<td>//button[contains(@aria-selected, 'false')][text()='${key_value}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_PREDEFINED_SELECTOR</td>
-	<td>//label[contains(text(),'Predefined')]/..//div[contains(@class,'input-group-container') and //div[contains(text(),'${key_definedEntry}')]]</td>
+	<td>//label[contains(text(),'Predefined')]//following-sibling::div/button[text()='${key_definedEntry}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -831,12 +831,12 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div//div[contains(@class,'option-selected')] | //div[contains(@data-field-name,'${key_fieldName}') or contains(@for,'${key_fieldName}')]//following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]</td>
+	<td>//label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div//input[contains(@class, 'form-control')] | //label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div//button[contains(@class, 'form-control')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FIELD_DATA_PROVIDER_LIST</td>
-	<td>//div[contains(@class,'dropdown-menu')]//li[contains(.,'${key_fieldName}')]//following-sibling::li//button[contains(.,'${key_selectOption}')]</td>
+	<td>//*[text()='${key_fieldName}']/following-sibling::li//button[text()='${key_selectOption}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -876,7 +876,7 @@
 </tr>
 <tr>
 	<td>SELECT_SELECT_LIST_INDEX</td>
-	<td>xpath=//label[contains(text(),'${key_fieldLabel}')]/../../..//div[contains(@class,'ddm-field') and contains(@data-field-name,'SelectFromList')][${key_index}] | //div[@class="ddm-field"][${key_index}]//label[contains(text(),'${key_fieldLabel}')]/..//div[contains(@class,'option-selected')]</td>
+	<td>xpath=(//label[contains(text(), '${key_fieldLabel}')]/following-sibling::div//button[contains(@aria-labelledby, 'ddm')])[${key_index}] | (//div[@class="ddm-field"][${key_index}]//label[contains(text(), '${key_fieldLabel}')]/following-sibling::div/button[contains(@aria-labelledby, 'ddm')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -963,12 +963,7 @@
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT</td>
-	<td>//div[contains(@data-field-name,'selectedValidation')]//div[contains(@class,'select-field-trigger')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VALIDATION_ARGUMENT_2</td>
-	<td>//div[contains(@class,'form-control')]//div[contains(@class,'option-selected') and text()='Contains']</td>
+	<td>//div[contains(@data-field-name, 'selectedValidation')]//button[@aria-labelledby='selectedValidation_field']</td>
 	<td></td>
 </tr>
 <tr>
@@ -978,12 +973,12 @@
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT_OPTION_TARGET_INPUT</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//ul[contains(@class,'list-unstyled')]//button[text()='${key_validationArgument}']</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//descendant::button[text()='${key_validationArgument}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VALIDATION_INPUT</td>
-	<td>//div[contains(@class,'validation-input')]//span[normalize-space(text())='${key_validationInput}'] | //input[contains(@name,'parameter')]</td>
+	<td>//div[contains(@class,'validation-input')]//span[normalize-space(text())='${key_validationInput}'] | //input[contains(@name,'parameter') and contains(@class, 'form-control')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1146,7 +1141,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>UPLOAD_ON_WIDGET_ON_ANY_FIELD</td>
+	<td>UPLOAD_ON_WIDGET_ON_ANY_FIELD</td> xpath=(//label[text()='${key_fieldName}'][1]/following-sibling::div//descendant::span[text()='Select'])[${key_rowNumber}]
 	<td>//div[contains(@data-field-name,'${key_fieldName}')][${key_rowNumber}]//button[contains(.,'Select')] | //div[@class="ddm-field"][${key_rowNumber}]//span[text()='${key_fieldName}']/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
@@ -1224,7 +1219,7 @@
 
 <tr>
 	<td>SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST_DROPDOWN_CONTENT</td>
-	<td>//div[contains(@data-field-name,'predefinedValue')]//div[contains(@class,'form-builder-select-field')]//div[contains(text(),'${key_textContent}')]</td>
+	<td>//div[contains(@data-field-name,'predefinedValue')]//descendant::*[@placeholder='${key_textContent}' or text()='${key_textContent}'] </td>
 	<td></td>
 </tr>
 <tr>

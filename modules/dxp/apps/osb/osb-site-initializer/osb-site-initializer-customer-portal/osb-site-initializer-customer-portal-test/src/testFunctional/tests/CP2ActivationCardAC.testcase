@@ -33,6 +33,13 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
+		CP2Utils.tearDownForCloudEntries(
+			entry = "test@liferay.com",
+			entry1 = "test@liferay.com",
+			portlet = "Analytics Cloud Workspaces",
+			portlet1 = "Incident Report Contacts Analytics Cloud",
+			status = "In-Progress");
+
 		CustomerPortal.customerPortalTearDown();
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -247,22 +254,49 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-150370 | Test Summary: Verify the page subtitle: Almost there! Setup Analytics Cloud by finishing the activation form"
-	@ignore = "true"
+	@description = "Automation ID: LPS-150370 | Test Summary: Verify the page subtitles"
 	@priority = 3
-	test PageSubtitleAlmostThereIsPresent {
+	test AssertPageSubtitles {
+		task ("Given the user is given the Administrator role") {
+			Account.openAccountsAdmin();
 
-		// TODO LPS-150370 PageSubtitleAlmostThereIsPresent pending implementation
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		} 
+
+		task ("And the use go inside a project") { 
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2Utils.onboardingFlow();
+		}
+
+		task("When go to fulfill the Analytics form") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${product});
+
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+			Button.click(button = "Submit");
+		}
+
+		task("Then assert the message of almost activating"){
+			AssertElementPresent(locator1 = "CP2AnalyticsCloudSetup#SET_UP_AC");
+
+			Button.click(button = "Done");
+
+			AssertElementPresent(locator1 = "CP2AnalyticsCloudSetup#SET_UP_AC_SUBTITLE");
+		}
+		
 
 	}
-
-	@description = "Automation ID: LPS-150372 | Test Summary: Verify the page subtitle: Your Analytics Cloud workspace is being set up and will be available soon"
-	@ignore = "true"
-	@priority = 3
-	test PageSubtitleYourAnalyticsCloud {
-
-		// TODO LPS-150372 PageSubtitleYourAnalyticsCloud pending implementation
-
-	}
-
 }

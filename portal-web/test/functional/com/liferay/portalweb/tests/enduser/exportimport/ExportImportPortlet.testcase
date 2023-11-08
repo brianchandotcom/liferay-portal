@@ -349,9 +349,9 @@ definition {
 		}
 	}
 
-	@description = "Verify is possible export and import a DDL via Global."
+	@description = "Verify is possible export and import a blog via Global."
 	@priority = 3
-	test ExportImportDDLViaGlobal {
+	test ExportImportBlogsViaGlobal {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -363,92 +363,45 @@ definition {
 				layoutName = "Test Page");
 		}
 
-		task ("And: Add a new DDL data definition to the global site with a field") {
+		task ("And: Add a new blog to the global site") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Global");
+		}
+
+		task ("When: User export the blog then imports it to the default site") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
-
-			DDLDataDefinition.addCP(
-				ddlDataDefinitionDescription = "DDL Definition Description",
-				ddlDataDefinitionName = "DDL Definition");
-
-			DynamicDataMapping.addField(
-				field = "Text",
-				fieldFieldLabel = "Text Label",
-				fieldName = "TextName");
-
-			DDLDataDefinition.save();
-		}
-
-		task ("And: Add a new DDL to the global site with chosing the previously created DDL data definition") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
-
-			DDLList.addCP(
-				ddlListDescription = "DDL List Description",
-				ddlListName = "DDL List");
-
-			DDLDataDefinition.selectCP(ddlDataDefinitionName = "DDL Definition");
-
-			DDLDataDefinition.save();
-		}
-
-		task ("And: Populate the new DDL data definition's field with text") {
-			DDLRecord.addCP(
-				ddlDataDefinitionName = "DDL Definition",
-				ddlListName = "DDL List");
-
-			DDLRecord.populateFieldText(
-				ddlRecordFieldData = "DDL Definition Record",
-				field = "Text",
-				fieldFieldLabel = "Text Label",
-				fieldName = "TextName");
-
-			PortletEntry.publish();
-		}
-
-		task ("When: User export the DDL portlet then imports it to the default site") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+				portlet = "Blogs");
 
 			LAR.exportPortlet(
-				larFileName = "DDL.portlet.lar",
+				larFileName = "Blog.portlet.lar",
 				siteScopeName = "Global");
 
 			Navigator.openSiteURL(siteName = "Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+				portlet = "Blogs");
 
 			LAR.importPortlet(
-				larFileName = "DDL.portlet.lar",
+				larFileName = "Blog.portlet.lar",
 				siteName = "Site Name");
 		}
 
-		task ("Then: The populated DDL data definition will be present on the default site") {
-			Navigator.openURL();
-
-			Navigator.openSiteURL(siteName = "Site Name");
+		task ("Then: The blog will be present on the default site") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+				portlet = "Blogs");
 
-			DDLNavigator.gotoListRecords(ddlListName = "DDL List");
-
-			DDLRecord.viewFirstFieldCP(
-				ddlRecordFieldData = "DDL Definition Record",
-				field = "Text",
-				fieldFieldLabel = "Text Label");
+			AssertElementPresent(
+				key_entryTitle = "Blogs Entry Title",
+				locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
 		}
 	}
 

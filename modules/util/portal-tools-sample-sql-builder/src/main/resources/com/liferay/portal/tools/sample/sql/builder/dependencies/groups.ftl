@@ -59,7 +59,7 @@
 
 	<@insertGroup _groupModel=groupModel />
 
-	${csvFileWriter.write("repository", groupModel.friendlyURL + "," + groupId + ", " + groupModel.name + "\n")}
+	${csvFileWriter.write("repository", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + groupId + ", " + groupModel.name + "\n")}
 </#list>
 
 <#assign defaultSiteHomePageContentLayoutModels = dataFactory.newContentPageLayoutModels(guestGroupModel.groupId, "welcome") />

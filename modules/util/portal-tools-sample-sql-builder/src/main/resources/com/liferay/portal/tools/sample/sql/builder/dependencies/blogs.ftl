@@ -29,5 +29,5 @@
 
 	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(blogsEntryModel))}
 
-	${csvFileWriter.write("blog", virtualHostModel.hostname + "," + blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbRootMessageId + "\n")}
+	${csvFileWriter.write("blog", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbRootMessageId + "\n")}
 </#list>

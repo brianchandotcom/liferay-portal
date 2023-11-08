@@ -22,7 +22,7 @@ public interface ScimClientOAuth2ApplicationConfiguration {
 	@Meta.AD(type = Meta.Type.String)
 	public String applicationName();
 
-	@Meta.AD(type = Meta.Type.String)
+	@Meta.AD(optionValues = {"userName", "email"}, type = Meta.Type.String)
 	public String matcherField();
 
 }

@@ -28,24 +28,24 @@ public class JIRAUtil {
 		for (String commitMessage : commitMessages) {
 			String[] parts = commitMessage.split(":", 2);
 
-			String commitMessageSubject = parts[1];
+			String commitMessageTitle = parts[1];
 
 			int x = parts[1].indexOf("\n");
 
 			if (x != -1) {
-				commitMessageSubject = commitMessageSubject.substring(0, x);
+				commitMessageTitle = commitMessageTitle.substring(0, x);
 			}
 
-			if (commitMessageSubject.startsWith("Revert ") ||
-				commitMessageSubject.startsWith("artifact:ignore") ||
-				commitMessageSubject.startsWith("build.gradle auto SF") ||
-				commitMessageSubject.endsWith("/ci-merge.")) {
+			if (commitMessageTitle.startsWith("Revert ") ||
+				commitMessageTitle.startsWith("artifact:ignore") ||
+				commitMessageTitle.startsWith("build.gradle auto SF") ||
+				commitMessageTitle.endsWith("/ci-merge.")) {
 
 				continue;
 			}
 
 			for (String projectName : projectNames) {
-				if (commitMessageSubject.startsWith(projectName)) {
+				if (commitMessageTitle.startsWith(projectName)) {
 					continue outerLoop;
 				}
 			}

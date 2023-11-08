@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ReactNode, useState} from 'react';
+import {ReactNode} from 'react';
 
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {Header} from '../../components/Header/Header';

@@ -11,23 +11,27 @@ import './OrderDetailsHeader.scss';
 import OrderDetailsStatusDescription from './OrderDetailsStatusDescription';
 
 type OrderDetailsProps = {
-	hasOrderDescription?: boolean;
+	className: string;
+	hasOrderDescription?: string;
 	hasOrderDetails?: boolean;
 	image?: string;
 	name?: string;
 	order?: Cart;
 	productOwner?: string;
+	version?: string;
 };
 
 const OrderDetailsHeader: React.FC<OrderDetailsProps> = ({
+	className,
 	hasOrderDescription = false,
 	hasOrderDetails = false,
 	image,
 	name,
 	order,
 	productOwner,
+	version,
 }) => (
-	<div className="d-flex flex-row justify-content-between pb-3 pt-5">
+	<div className={className}>
 		<div className="d-flex flex-row">
 			<img
 				alt="App Icon"
@@ -38,7 +42,10 @@ const OrderDetailsHeader: React.FC<OrderDetailsProps> = ({
 			/>
 
 			<div className="align-items-center ml-4">
-				<h2 className="text-weight-bold">{name}</h2>
+				<div className="d-flex justify-content-start">
+					<h2 className="text-weight-bold">{name}</h2>
+					{version && <p className="ml-2 my-1">v{version}</p>}
+				</div>
 
 				{hasOrderDetails && (
 					<OrderDetailsStatusDescription
@@ -47,7 +54,11 @@ const OrderDetailsHeader: React.FC<OrderDetailsProps> = ({
 					/>
 				)}
 
-				{hasOrderDescription && <p>Order Description</p>}
+				{hasOrderDescription && (
+					<div className="header-description text-capitalize">
+						{hasOrderDescription}
+					</div>
+				)}
 			</div>
 		</div>
 	</div>

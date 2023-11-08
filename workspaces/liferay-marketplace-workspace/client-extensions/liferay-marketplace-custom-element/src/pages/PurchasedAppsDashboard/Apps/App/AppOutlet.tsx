@@ -89,7 +89,7 @@ const AppOutlet = () => {
 			</ClayButton>
 
 			<OrderDetailsHeader
-				hasOrderDescription={false}
+				className="d-flex flex-row justify-content-between pb-3 pt-5"
 				hasOrderDetails={true}
 				image={appImage}
 				name={data?.product?.name?.en_US}

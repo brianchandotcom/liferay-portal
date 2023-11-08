@@ -1309,19 +1309,25 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isNavigationMine() {
-		if (Objects.equals(getNavigation(), "mine")) {
-			return true;
+		if (_navigationMine != null) {
+			return _navigationMine;
 		}
 
-		return false;
+		_navigationMine = ParamUtil.getBoolean(
+			_httpServletRequest, "navigationMine");
+
+		return _navigationMine;
 	}
 
 	public boolean isNavigationRecent() {
-		if (Objects.equals(getNavigation(), "recent")) {
-			return true;
+		if (_navigationRecent != null) {
+			return _navigationRecent;
 		}
 
-		return false;
+		_navigationRecent = ParamUtil.getBoolean(
+			_httpServletRequest, "navigationRecent");
+
+		return _navigationRecent;
 	}
 
 	public boolean isNavigationStructure() {

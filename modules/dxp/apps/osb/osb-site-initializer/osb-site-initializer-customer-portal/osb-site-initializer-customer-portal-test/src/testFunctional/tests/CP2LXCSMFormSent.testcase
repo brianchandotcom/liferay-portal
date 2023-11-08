@@ -60,6 +60,7 @@ definition {
 	@priority = 4
 	test AssertThatTheLXCSMActivationFormHasAlreadyBeenSent {
 		property portal.acceptance = "true";
+
 		task ("Given that I go to the card activation page") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

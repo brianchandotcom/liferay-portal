@@ -118,6 +118,7 @@ definition {
 	@priority = 3
 	test CanUserSelectThreeStatuses {
 		property portal.acceptance = "true";
+
 		task ("Go to Customer Portal 2.0") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}

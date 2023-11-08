@@ -641,7 +641,9 @@ definition {
 
 		Click(locator1 = "FormFields#VALIDATION_ARGUMENT");
 
-		MenuItem.click(menuItem = ${validationArgument});
+		Click.javaScriptClick(
+			key_validationArgument = ${validationArgument},
+			locator1 = "FormFields#VALIDATION_ARGUMENT_OPTION_TARGET_INPUT");
 
 		if (isSet(validationInput)) {
 			Type(
@@ -1013,7 +1015,7 @@ definition {
 				value1 = ${selectOption});
 		}
 		else {
-			AssertClick(
+			Click.javaScriptClick(
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
 				value1 = ${selectOption});
 		}
@@ -1064,8 +1066,6 @@ definition {
 				checkboxName = ${selectOption},
 				locator1 = "FormFields#ANY_CHECKBOX_CHECKED");
 		}
-
-		Click(locator1 = "FormFields#SELECT_FIELD");
 	}
 
 	@summary = "Default summary"
@@ -1163,19 +1163,23 @@ definition {
 	@summary = "Default summary"
 	macro setInputMaskOnDecimal(decimalPlaces = null, decimalSeparator = null, prefix = null, suffix = null, thousandsSeparator = null) {
 		if (isSet(thousandsSeparator)) {
-			Click(
+			Click.javaScriptClick(
 				key_fieldName = "Thousands Separator",
 				locator1 = "FormFields#SELECT_FIELD");
 
-			MenuItem.click(menuItem = ${thousandsSeparator});
+			Click.javaScriptClick(
+				key_menuItem = ${thousandsSeparator},
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 
 		if (isSet(decimalSeparator)) {
-			Click(
+			Click.javaScriptClick(
 				key_fieldName = "Decimal Separator",
 				locator1 = "FormFields#SELECT_FIELD");
 
-			MenuItem.click(menuItem = ${decimalSeparator});
+			Click.javaScriptClick(
+				key_menuItem = ${decimalSeparator},
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 
 		if (isSet(decimalPlaces)) {

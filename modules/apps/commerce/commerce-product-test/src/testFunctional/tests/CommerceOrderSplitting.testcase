@@ -1762,7 +1762,8 @@ definition {
 				value1 = "orderStatus = 10");
 
 			AssertTextEquals(
-				locator1 = "ObjectAction#SELECT_ACTION_TYPE",
+				key_objectName = "Then",
+				locator1 = "CommerceEntry#COMBOBOX_BUTTON",
 				value1 = "Split Order by Catalog");
 		}
 	}
@@ -2654,11 +2655,14 @@ definition {
 				key_tabName = "Action Builder",
 				locator1 = "ObjectAction#TAB_GENERIC");
 
-			Click(locator1 = "ObjectAction#SELECT_ACTION_TYPE");
+			AssertClick(
+				key_objectName = "Then",
+				locator1 = "CommerceEntry#COMBOBOX_BUTTON",
+				value1 = "Split Order by Catalog");
 
 			Click(
-				key_type = "Update an Object Entry",
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+				key_optionName = "Update an Object Entry",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
 
 			PortletEntry.save();
 

@@ -40,7 +40,15 @@ public class PrincipalThreadLocal {
 		setName(String.valueOf(name));
 	}
 
+	public static void setName(long name, boolean resetCTCollectionId) {
+		setName(String.valueOf(name), resetCTCollectionId);
+	}
+
 	public static void setName(String name) {
+		setName(name, true);
+	}
+
+	public static void setName(String name, boolean resetCTCollectionId) {
 		if (Objects.equals(_name.get(), name)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Skip setName " + name);
@@ -55,7 +63,9 @@ public class PrincipalThreadLocal {
 
 		_name.set(name);
 
-		CTCollectionThreadLocal.removeCTCollectionId();
+		if (resetCTCollectionId) {
+			CTCollectionThreadLocal.removeCTCollectionId();
+		}
 	}
 
 	public static void setPassword(String password) {

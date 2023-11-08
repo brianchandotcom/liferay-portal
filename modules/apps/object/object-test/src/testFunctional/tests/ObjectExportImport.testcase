@@ -594,14 +594,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Scope");
 
-		AssertTextEquals(
-			key_currentOption = "Company",
-			key_labelName = "Scope",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
-
-		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_LINK",
-			value1 = "Control Panel > Object");
+		CreateObject.assertValuesOnScope(
+			valuePanelCategory = "Control Panel > Object",
+			valueScope = "Company");
 	}
 
 	@description = "LPS-142175 - Verify it is possible to publish an imported custom object"

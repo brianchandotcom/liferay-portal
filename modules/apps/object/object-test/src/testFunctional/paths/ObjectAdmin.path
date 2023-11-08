@@ -291,8 +291,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>RELATIONSHIPS_TYPE_DESCRIPTION</td>
-		<td>//div[text() = '${key_type}']/..//span[@class = 'text-small']</td>
+		<td>FIELD_DESCRIPTION</td>
+		<td>//span[contains(.,'${key_fieldLabel}')]//following-sibling::span[contains(.,'${key_descriptionLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

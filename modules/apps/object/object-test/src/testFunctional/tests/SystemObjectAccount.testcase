@@ -749,7 +749,7 @@ definition {
 
 		CreateObject.selectTitleField(
 			currentOption = "Name",
-			fieldLabel = "Type");
+			fieldLabel = "Entry Title Field");
 
 		CreateObject.saveObject();
 

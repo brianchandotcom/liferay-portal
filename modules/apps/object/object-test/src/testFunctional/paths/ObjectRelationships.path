@@ -42,7 +42,7 @@
 	</tr>
 	<tr>
 		<td>OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE</td>
-		<td>//input[@disabled][contains(@class,'form-control') and contains(@value,'${key_relation}')]</td>
+		<td>//button[@disabled][contains(@class,'form-control') and contains(.,'${key_relation}')]</td>
 		<td></td>
 	</tr>
 	<tr>

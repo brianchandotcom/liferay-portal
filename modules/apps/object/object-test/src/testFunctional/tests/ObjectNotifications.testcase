@@ -484,6 +484,7 @@ definition {
 
 			ObjectNotifications.configureUserNotificationTemplate(
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+				indexRecipient = 2,
 				name = "User Notification Template",
 				recipientType = "User",
 				subject = "Subject content",

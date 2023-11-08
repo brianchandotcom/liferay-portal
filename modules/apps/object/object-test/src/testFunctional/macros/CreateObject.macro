@@ -137,9 +137,10 @@ definition {
 
 	@summary = "Default summary"
 	macro assertValuesOnScope(valuePanelCategory = null, valueScope = null) {
-		AssertTextEquals(
-			locator1 = "CreateObject#VIEW_OBJECT_SCOPE",
-			value1 = ${valueScope});
+		AssertElementPresent(
+			key_currentOption = ${valueScope},
+			key_labelName = "Scope",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "CreateObject#PANEL_LINK",

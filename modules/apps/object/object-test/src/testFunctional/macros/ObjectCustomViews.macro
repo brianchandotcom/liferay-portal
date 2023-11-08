@@ -268,13 +268,10 @@ definition {
 
 		DropdownMenuItem.click(menuItem = "Edit");
 
-		Click(
-			key_sorting = ${actualSort},
-			locator1 = "ObjectCustomViews#EDIT_SORTING");
-
-		Click(
-			key_sortOption = ${newSortOption},
-			locator1 = "ObjectCustomViews#SORT_OPTION");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = ${actualSort},
+			labelName = "Sorting",
+			optionName = ${newSortOption});
 
 		Click(
 			key_tab = "Save",

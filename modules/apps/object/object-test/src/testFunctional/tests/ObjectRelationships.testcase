@@ -2229,8 +2229,8 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "User");
 
 		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "First Name");
+			currentOption = "First Name",
+			fieldLabel = "Screen Name");
 
 		CreateObject.saveObject();
 
@@ -2239,7 +2239,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "User");
 
 		AssertElementPresent(
-			key_currentOption = "First Name",
+			key_currentOption = "Screen Name",
 			key_labelName = "Entry Title Field",
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}

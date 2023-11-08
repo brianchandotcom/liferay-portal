@@ -634,6 +634,14 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro assertFieldDescription(description = null, type = null) {
+		AssertElementPresent(
+			key_descriptionLabel = ${description},
+			key_fieldLabel = ${type},
+			locator1 = "ObjectAdmin#FIELD_DESCRIPTION");
+	}
+
+	@summary = "Default summary"
 	macro assertKeywordAndText() {
 		AssertElementPresent(locator1 = "ObjectAdmin#SEARCHABLE_SECTION_TITLE");
 
@@ -750,14 +758,6 @@ definition {
 		var key_layoutLabel = ${layoutLabel};
 
 		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_LAYOUT_LABEL");
-	}
-
-	@summary = "Default summary"
-	macro assertRelationshipsTypeDescription(description = null, type = null) {
-		AssertTextEquals(
-			key_type = ${type},
-			locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_DESCRIPTION",
-			value1 = ${description});
 	}
 
 	@summary = "Default summary"
@@ -1655,11 +1655,25 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectObjectScope(fieldOption = null) {
-		ObjectAdmin.selectDropdownItem(
-			currentOption = "",
-			labelName = "Scope",
-			optionName = ${fieldOption});
+	macro selectObjectScope(optionName = null) {
+		Click(
+			key_currentOption = "",
+			key_labelName = "Scope",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+
+		if (${optionName} == "Company") {
+			Click(
+				index = 1,
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
+				value1 = "Company");
+		}
+
+		if (${optionName} == "Site") {
+			Click(
+				index = 2,
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
+				value1 = "Company");
+		}
 	}
 
 	@summary = "Default summary"
@@ -1691,39 +1705,39 @@ definition {
 
 	@summary = "Default summary"
 	macro viewDescriptionForEachFieldType() {
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Add a long integer up to 16 digits.",
 			type = "Long Integer");
 
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Add text up to 280 characters.",
 			type = "Text");
 
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Choose from a picklist.",
 			type = "Picklist");
 
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Add a date.",
 			type = "Date");
 
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Add an integer up to nine digits.",
 			type = "Integer");
 
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Add a high precision decimal number without rounding.",
 			type = "Precision Decimal");
 
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Add a decimal number that supports fractional portions.",
 			type = "Decimal");
 
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Select between true or false.",
 			type = "Boolean");
 
-		ObjectAdmin.assertRelationshipsTypeDescription(
+		ObjectAdmin.assertFieldDescription(
 			description = "Add text up to 65,000 characters.",
 			type = "Long Text");
 	}

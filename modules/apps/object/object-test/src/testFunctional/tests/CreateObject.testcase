@@ -724,7 +724,7 @@ definition {
 		ObjectAdmin.selectDropdownItem(
 			currentOption = "Select an option",
 			labelName = "Type",
-			optionName = ${type});
+			optionName = "One to Many");
 
 		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
 
@@ -3935,9 +3935,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 96");
 
-		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_LINK",
-			value1 = "Control Panel > Users");
+		CreateObject.assertValuesOnScope(
+			valuePanelCategory = "Control Panel > Users",
+			valueScope = "Company");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
@@ -3964,9 +3964,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 97");
 
-		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_LINK",
-			value1 = "Control Panel > Users");
+		CreateObject.assertValuesOnScope(
+			valuePanelCategory = "Control Panel > Users",
+			valueScope = "Company");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object plural label after it is published"
@@ -4043,7 +4043,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 100");
 
-		ObjectAdmin.selectObjectScope(fieldOption = "Site");
+		ObjectAdmin.selectObjectScope(optionName = "Site");
 
 		CreateObject.saveObject();
 
@@ -4118,8 +4118,6 @@ definition {
 			currentOption = "ID",
 			fieldLabel = "Custom Field");
 
-		ObjectAdmin.selectObjectScope(fieldOption = "Company");
-
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
 
 		CreateObject.saveObject();
@@ -4141,14 +4139,9 @@ definition {
 			key_labelName = "Entry Title Field",
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
-		AssertElementPresent(
-			key_currentOption = "Company",
-			key_labelName = "Scope",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
-
-		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_LINK",
-			value1 = "Control Panel > Object");
+		CreateObject.assertValuesOnScope(
+			valuePanelCategory = "Control Panel > Object",
+			valueScope = "Company");
 	}
 
 	@description = "LPS-135400 - Verify it is possible to update a Relationship"
@@ -4255,9 +4248,9 @@ definition {
 			fieldName = "ObjectEdit103",
 			pluralLabelName = "Objects Edit 103");
 
-		ObjectAdmin.selectObjectScope(fieldOption = "Company");
+		ObjectAdmin.selectObjectScope(optionName = "Site");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Navigation");
 
 		CreateObject.saveObject();
 
@@ -4266,8 +4259,8 @@ definition {
 		}
 
 		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Control Panel > Object",
-			valueScope = "Company");
+			valuePanelCategory = "Site Administration > Navigation",
+			valueScope = "Site");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view Entries with Custom Layout Created"
@@ -7856,7 +7849,10 @@ definition {
 
 		ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship");
 
-		CreateObject.assertSelectedValueInDeletionType(deletionType = "Prevent");
+		AssertElementPresent(
+			key_currentOption = "Prevent",
+			key_labelName = "Deletion Type",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"
@@ -9015,7 +9011,7 @@ definition {
 			fieldName = "ObjectEdit141685",
 			pluralLabelName = "Objects Edit 141685");
 
-		ObjectAdmin.selectObjectScope(fieldOption = "Site");
+		ObjectAdmin.selectObjectScope(optionName = "Site");
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Site Builder");
 

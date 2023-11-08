@@ -211,7 +211,7 @@ definition {
 				locator1 = "ObjectAdmin#PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Choose an Option",
+				currentOption = "Item Test 1",
 				labelName = "Default Value",
 				optionName = "Item Test 2");
 

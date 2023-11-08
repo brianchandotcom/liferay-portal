@@ -163,14 +163,9 @@ definition {
 				key_labelName = "Entry Title Field",
 				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
-			AssertTextEquals(
-				key_currentOption = "Site",
-				key_labelName = "Scope",
-				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
-
-			AssertTextEquals(
-				locator1 = "CreateObject#PANEL_LINK",
-				value1 = "Site Administration > Content & Data");
+			CreateObject.assertValuesOnScope(
+				valuePanelCategory = "Site Administration > Content & Data",
+				valueScope = "Site");
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 

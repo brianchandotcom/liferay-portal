@@ -48,13 +48,14 @@ definition {
 				kebabOption = "Bind",
 				objectLabel = "Custom Object 292");
 
-			Click(locator1 = "ObjectAction#SELECT_OPTION_TYPE");
-
-			Click(
-				key_columnOption = "Custom Object 195",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Select the Root Object Path",
+				optionName = "Custom Object 195");
 
 			Button.click(button = "Bind to Root");
+
+			WaitForPageLoad();
 		}
 
 		task ("When the user tries to delete the relationship between them") {

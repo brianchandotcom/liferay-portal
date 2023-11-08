@@ -25,7 +25,7 @@ import {
 	REMOVAL_TIMEOUT,
 	UNEXPECTED_ERROR,
 } from './util/constants';
-import {filterOptions, generateProductPageURL} from './util/index';
+import {filterOptions, generateProductPageURL, hasOptions} from './util/index';
 
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
@@ -320,7 +320,8 @@ function CartItem({
 			</div>
 
 			<div className={getClassName('mini-cart-item-actions')}>
-				{(Liferay.FeatureFlags['COMMERCE-9599'] && hasChildItems) ||
+				{(Liferay.FeatureFlags['COMMERCE-9599'] &&
+					hasOptions(rawOptions)) ||
 				(Liferay.FeatureFlags['COMMERCE-11287'] &&
 					hasSkuUnitOfMeasure) ? (
 					<ClayDropDown

@@ -1148,6 +1148,78 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	@Test
+	public void testPutObjectRelationshipByExternalReferenceCode()
+		throws Exception {
+
+		ObjectRelationship postObjectRelationship =
+			testPutObjectRelationshipByExternalReferenceCode_addObjectRelationship();
+
+		ObjectRelationship randomObjectRelationship =
+			randomObjectRelationship();
+
+		ObjectRelationship putObjectRelationship =
+			objectRelationshipResource.
+				putObjectRelationshipByExternalReferenceCode(
+					postObjectRelationship.getExternalReferenceCode(),
+					randomObjectRelationship);
+
+		assertEquals(randomObjectRelationship, putObjectRelationship);
+		assertValid(putObjectRelationship);
+
+		ObjectRelationship getObjectRelationship =
+			testPutObjectRelationshipByExternalReferenceCode_getObjectRelationship(
+				putObjectRelationship.getExternalReferenceCode());
+
+		assertEquals(randomObjectRelationship, getObjectRelationship);
+		assertValid(getObjectRelationship);
+
+		ObjectRelationship newObjectRelationship =
+			testPutObjectRelationshipByExternalReferenceCode_createObjectRelationship();
+
+		putObjectRelationship =
+			objectRelationshipResource.
+				putObjectRelationshipByExternalReferenceCode(
+					newObjectRelationship.getExternalReferenceCode(),
+					newObjectRelationship);
+
+		assertEquals(newObjectRelationship, putObjectRelationship);
+		assertValid(putObjectRelationship);
+
+		getObjectRelationship =
+			testPutObjectRelationshipByExternalReferenceCode_getObjectRelationship(
+				putObjectRelationship.getExternalReferenceCode());
+
+		assertEquals(newObjectRelationship, getObjectRelationship);
+
+		Assert.assertEquals(
+			newObjectRelationship.getExternalReferenceCode(),
+			putObjectRelationship.getExternalReferenceCode());
+	}
+
+	protected ObjectRelationship
+		testPutObjectRelationshipByExternalReferenceCode_getObjectRelationship(
+			String externalReferenceCode) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ObjectRelationship
+			testPutObjectRelationshipByExternalReferenceCode_createObjectRelationship()
+		throws Exception {
+
+		return randomObjectRelationship();
+	}
+
+	protected ObjectRelationship
+			testPutObjectRelationshipByExternalReferenceCode_addObjectRelationship()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteObjectRelationship() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectRelationship objectRelationship =

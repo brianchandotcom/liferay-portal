@@ -23,9 +23,7 @@ definition {
 		// TODO Review
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586; COMMERCE-6588
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -164,9 +162,7 @@ definition {
 	test AddShippingOptionFedEx {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -232,9 +228,7 @@ definition {
 	test AddShippingOptionFlatRate {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -296,9 +290,7 @@ definition {
 	test AddShippingOptionSettingVariableRate {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -353,9 +345,7 @@ definition {
 	test AddShippingOptionVariableRate {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -399,9 +389,7 @@ definition {
 	test AddTaxRateSettingsByAddressTaxCalculation {
 		property portal.acceptance = "true";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -477,9 +465,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -552,9 +538,7 @@ definition {
 			actual = ${createChannelErrorMessage},
 			expected = "{errorDescription=Invalid channel type, message=null, status=400}");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		IsElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 
@@ -578,9 +562,7 @@ definition {
 	test CanEditShippingMethodTrackingURL {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1117,9 +1099,7 @@ definition {
 
 		CommerceChannels.avalaraConnection();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1222,9 +1202,7 @@ definition {
 			channelType = "Site",
 			siteName = "Guest");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		Refresh();
 
@@ -1243,9 +1221,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1362,9 +1338,7 @@ definition {
 	test CreateNewNotificationTemplate {
 		property portal.acceptance = "true";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -1403,9 +1377,7 @@ definition {
 	test EditAuthorizePaymentMethod {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1456,9 +1428,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1505,9 +1475,7 @@ definition {
 	test EditMercanetPaymentMethod {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1551,9 +1519,7 @@ definition {
 	test EditMoneyOrderPaymentMethod {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1585,9 +1551,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1659,9 +1623,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1837,9 +1799,7 @@ definition {
 			key_name = "Add",
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1877,9 +1837,7 @@ definition {
 			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1899,9 +1857,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1943,9 +1899,7 @@ definition {
 		// TODO Review
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2026,9 +1980,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2098,9 +2050,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2163,9 +2113,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2236,9 +2184,7 @@ definition {
 	test RemoveTaxRateSettingsFixedTaxRateTaxCalculation {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2321,9 +2267,7 @@ definition {
 			CommerceEntry.assertCheckedSpecificToggle(name = ${nameList});
 		}
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2742,9 +2686,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When the sales channel detail page is reached") {
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 		}
 
 		task ("And the "Select File" in the Orders box is clicked and the jasper template is chosen for being uploaded") {
@@ -2752,9 +2694,7 @@ definition {
 
 			CommerceChannels.uploadPrintOrderTemplate(uploadFileName = "commerce_order.jrxml");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 		}
 
 		task ("Then the file name is shown next to the "Select File" button") {
@@ -2847,9 +2787,7 @@ definition {
 			key_name = "Add",
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2887,9 +2825,7 @@ definition {
 			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2967,9 +2903,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("When the sales channel detail page is reached") {
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 		}
 
 		task ("And the "Select File" in the Orders box is clicked, the jasper template is chosen for being uploaded, the file name is clicked, and the preview template is shown") {
@@ -2992,9 +2926,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a channel with a Print Order Template jasper file ") {
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 

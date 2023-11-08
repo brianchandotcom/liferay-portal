@@ -53,9 +53,7 @@ definition {
 
 		Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		Refresh();
 

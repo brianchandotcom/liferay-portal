@@ -30,9 +30,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -860,10 +858,7 @@ definition {
 		}
 
 		task ("Given the Admin has already configured Paypal as an active payment method and is configured into Sandbox with the Client ID and Client Secret") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -942,10 +937,7 @@ definition {
 
 			User.firstLoginPG();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1511,10 +1503,7 @@ definition {
 		}
 
 		task ("Given the Admin has already configured Paypal as an active payment method and is configured into Sandbox with the Client ID and Client Secret") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1646,10 +1635,7 @@ definition {
 		}
 
 		task ("Given the Admin has already configured Paypal as an active payment method and is configured into Sandbox with the Client ID and Client Secret") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1744,10 +1730,7 @@ definition {
 		}
 
 		task ("Given the Admin has already configured Paypal as an active payment method and is configured into Sandbox with the Client ID and Client Secret") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1838,10 +1821,7 @@ definition {
 		}
 
 		task ("And a payment method is activated") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -1962,10 +1942,7 @@ definition {
 		}
 
 		task ("And a payment method is activated") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2086,10 +2063,7 @@ definition {
 		}
 
 		task ("And a payment method is activated") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2333,10 +2307,7 @@ definition {
 		}
 
 		task ("And a payment method is activated") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -2516,10 +2487,7 @@ definition {
 		}
 
 		task ("And a payment method is activated") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Store Management",
-				panel = "Commerce",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -3527,9 +3495,7 @@ definition {
 
 		Button.clickPublish();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -3550,9 +3516,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -3621,9 +3585,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -3718,9 +3680,7 @@ definition {
 			siteName = "Minium2",
 			siteTemplateName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		AssertElementPresent(
 			key_entryName = "Minium Portal",
@@ -3984,9 +3944,7 @@ definition {
 			requirePasswordReset = "true",
 			userScreenName = "buyeruser");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -4113,9 +4071,7 @@ definition {
 			requirePasswordReset = "true",
 			userScreenName = "buyeruser");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 

@@ -671,9 +671,7 @@ definition {
 		var approvedCount = 0;
 
 		task ("Given the admin enabled the 'Buyer Order Approval Workflow' for Minium Portal") {
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 

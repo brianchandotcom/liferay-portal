@@ -21,9 +21,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -111,9 +109,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -225,9 +221,7 @@ definition {
 			keyName = "Test 2",
 			keyReferenceCode = "Test Reference 2");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -439,9 +433,7 @@ definition {
 			keyName = "Test 2",
 			keyReferenceCode = "Test Reference 2");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -561,9 +553,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -789,9 +779,7 @@ definition {
 			keyName = "Test",
 			keyReferenceCode = "Test Reference");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		Click(locator1 = "Button#PLUS");
 

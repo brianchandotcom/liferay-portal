@@ -73,10 +73,7 @@ definition {
 			requirePasswordReset = "false",
 			userScreenName = "buyeruser");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Store Management",
-			panel = "Commerce",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
@@ -184,10 +181,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			assigneeName = "Buyer");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Store Management",
-			panel = "Commerce",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 

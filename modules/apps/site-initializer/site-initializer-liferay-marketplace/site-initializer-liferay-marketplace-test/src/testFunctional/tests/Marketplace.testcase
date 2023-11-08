@@ -78,9 +78,7 @@ definition {
 	@priority = 4
 	test ChannelsAreCreatedForMP20 {
 		task ("Given that I go to the Channels page") {
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
+			CommerceChannels.openChannelsAdmin();
 
 			// Workaround
 

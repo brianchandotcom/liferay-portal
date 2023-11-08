@@ -42,9 +42,7 @@ definition {
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -139,9 +137,7 @@ definition {
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -269,9 +265,7 @@ definition {
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -399,9 +393,7 @@ definition {
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -501,9 +493,7 @@ definition {
 
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -623,9 +613,7 @@ definition {
 
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -740,9 +728,7 @@ definition {
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -869,9 +855,7 @@ definition {
 
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -978,9 +962,7 @@ definition {
 
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -1079,9 +1061,7 @@ definition {
 	test ViewDeliveryTermAttachedToOrder {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 
@@ -1170,9 +1150,7 @@ definition {
 	test ViewPaymentTermAttachedToOrder {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		CommerceChannels.openChannelsAdmin();
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
 

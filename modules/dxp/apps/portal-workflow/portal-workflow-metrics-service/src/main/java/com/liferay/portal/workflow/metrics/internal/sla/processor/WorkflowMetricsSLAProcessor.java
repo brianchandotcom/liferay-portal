@@ -30,19 +30,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(service = WorkflowMetricsSLAProcessor.class)
 public class WorkflowMetricsSLAProcessor {
 
 	public WorkflowMetricsSLAInstanceResult process(
 		LocalDateTime completionLocalDateTime,
 		LocalDateTime createLocalDateTime, List<Document> documents,
 		long instanceId, LocalDateTime nowLocalDateTime, long startNodeId,
+		WorkflowMetricsSLACalendarRegistry workflowMetricsSLACalendarRegistry,
 		WorkflowMetricsSLADefinitionVersion workflowMetricsSLADefinitionVersion,
 		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
 
@@ -69,7 +66,7 @@ public class WorkflowMetricsSLAProcessor {
 		}
 
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
-			_workflowMetricsSLACalendarRegistry.getWorkflowMetricsSLACalendar(
+			workflowMetricsSLACalendarRegistry.getWorkflowMetricsSLACalendar(
 				workflowMetricsSLADefinitionVersion.getCalendarKey());
 		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
 			_createWorkflowMetricsSLAStopwatch(
@@ -602,9 +599,5 @@ public class WorkflowMetricsSLAProcessor {
 
 	private final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-
-	@Reference
-	private WorkflowMetricsSLACalendarRegistry
-		_workflowMetricsSLACalendarRegistry;
 
 }

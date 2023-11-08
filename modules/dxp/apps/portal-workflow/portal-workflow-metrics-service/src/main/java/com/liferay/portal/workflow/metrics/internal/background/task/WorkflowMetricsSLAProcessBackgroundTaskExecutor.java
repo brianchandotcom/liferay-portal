@@ -54,6 +54,7 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVer
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
+import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarRegistry;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 import com.liferay.portal.workflow.metrics.util.comparator.WorkflowMetricsSLADefinitionVersionIdComparator;
 
@@ -586,7 +587,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 						document.getDate("createDate"), _dateTimeFormatter),
 					taskDocuments.get(document.getLong("instanceId")),
 					document.getLong("instanceId"), nowLocalDateTime,
-					startNodeId, workflowMetricsSLADefinitionVersion,
+					startNodeId, _workflowMetricsSLACalendarRegistry,
+					workflowMetricsSLADefinitionVersion,
 					workflowMetricsSLAInstanceResults.get(
 						document.getLong("instanceId")));
 
@@ -748,6 +750,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	private Sorts _sorts;
 
 	@Reference
+	private WorkflowMetricsSLACalendarRegistry
+		_workflowMetricsSLACalendarRegistry;
+
+	@Reference
 	private WorkflowMetricsSLADefinitionLocalService
 		_workflowMetricsSLADefinitionLocalService;
 
@@ -755,7 +761,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	private WorkflowMetricsSLADefinitionVersionLocalService
 		_workflowMetricsSLADefinitionVersionLocalService;
 
-	@Reference
-	private WorkflowMetricsSLAProcessor _workflowMetricsSLAProcessor;
+	private final WorkflowMetricsSLAProcessor _workflowMetricsSLAProcessor =
+		new WorkflowMetricsSLAProcessor();
 
 }

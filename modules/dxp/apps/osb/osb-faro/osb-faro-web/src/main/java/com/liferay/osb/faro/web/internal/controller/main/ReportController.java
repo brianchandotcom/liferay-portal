@@ -111,7 +111,9 @@ public class ReportController extends BaseFaroController {
 					})
 			);
 
-		if (!StringUtil.equals(type, "individual")) {
+		if (!StringUtil.equals(type, "individual") ||
+			Validator.isNotNull(assetType)) {
+
 			if (Validator.isBlank(fromDateString) ||
 				Validator.isBlank(toDateString)) {
 

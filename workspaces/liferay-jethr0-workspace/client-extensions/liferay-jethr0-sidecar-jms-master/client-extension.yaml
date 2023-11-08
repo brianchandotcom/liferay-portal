@@ -1,3 +1,3 @@
 assemble:
-    - from: data/
-      into: data
+  - include:
+      - data/*

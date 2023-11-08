@@ -20,11 +20,13 @@ export default function getActivityPeriodFilterTerm(
 		filterDates.push(`maxDateActivity le ${activityPeriod.dates.endDate}`);
 	}
 
-	return initialFilter.concat(
-		filterDates.join(
-			activityPeriod.dates.startDate > activityPeriod.dates.endDate
-				? ' or '
-				: ' and '
-		)
-	);
+	return initialFilter
+		.concat(' and ')
+		.concat(
+			filterDates.join(
+				activityPeriod.dates.startDate > activityPeriod.dates.endDate
+					? ' or '
+					: ' and '
+			)
+		);
 }

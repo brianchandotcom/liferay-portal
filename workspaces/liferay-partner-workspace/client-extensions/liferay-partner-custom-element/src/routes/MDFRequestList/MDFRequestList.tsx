@@ -51,13 +51,15 @@ const MDFRequestList = () => {
 	const pagination = usePagination();
 
 	const {data, isValidating, mutate} = useGet<LiferayItems<MDFRequestDTO[]>>(
-		`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=mdfReqToMDFClms&filter=${filtersTerm}&page=${pagination.activePage}&pageSize=${pagination.activeDelta}&sort=dateCreated:desc`
+		filtersTerm &&
+			`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=mdfReqToMDFClms&filter=${filtersTerm}&page=${pagination.activePage}&pageSize=${pagination.activeDelta}&sort=dateCreated:desc`
 	);
 
 	const {data: dataCSV} = useGet<LiferayItems<MDFRequestDTO[]>>(
-		`/o/${
-			LiferayAPIs.OBJECT
-		}/mdfrequests?nestedFields=mdfReqToMDFClms&filter=${filtersTerm}&page=${1}&pageSize=${-1}&sort=dateCreated:desc`
+		filtersTerm &&
+			`/o/${
+				LiferayAPIs.OBJECT
+			}/mdfrequests?nestedFields=mdfReqToMDFClms&filter=${filtersTerm}&page=${1}&pageSize=${-1}&sort=dateCreated:desc`
 	);
 
 	const mdfRequestItemsCSV = dataCSV?.items;

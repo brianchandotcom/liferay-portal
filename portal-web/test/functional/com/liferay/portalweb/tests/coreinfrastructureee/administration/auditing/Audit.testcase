@@ -441,17 +441,9 @@ definition {
 		task ("Given Login portal with wrong password login with correct password search LOGIN_FAILURE in Audit") {
 			User.logoutPG();
 
-			Navigator.gotoLoginPage();
-
-			Type.typePause(
-				locator1 = "TextInput#EMAIL_ADDRESS",
-				value1 = "test@liferay.com");
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test1");
-
-			Click(locator1 = "Button#SIGN_IN");
+			User.firstLoginUI(
+				password = "invalidPassword",
+				userEmailAddress = "test@liferay.com");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -881,17 +873,9 @@ definition {
 		task ("When: Login with a non-existing email address but an existing password") {
 			User.logoutPG();
 
-			Navigator.gotoLoginPage();
-
-			Type.typePause(
-				locator1 = "TextInput#EMAIL_ADDRESS",
-				value1 = "steve.jobs@liferay.com");
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test");
-
-			Click(locator1 = "Button#SIGN_IN");
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "invalidAddress@liferay.com");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -951,18 +935,10 @@ definition {
 		task ("When: Login with a non-existing Screen Name but an existing password") {
 			User.logoutPG();
 
-			Navigator.gotoLoginPage();
-
-			Type.typePause(
-				key_text = "Screen Name",
-				locator1 = "TextInput#ANY",
-				value1 = "steve");
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test");
-
-			Click(locator1 = "Button#SIGN_IN");
+			User.firstLoginUI(
+				authenticationMethod = "By Screen Name",
+				password = "test",
+				userScreenName = "inavlidScreenName");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -1025,18 +1001,10 @@ definition {
 		task ("When: Login with a non-existing user ID but an existing password") {
 			User.logoutPG();
 
-			Navigator.gotoLoginPage();
-
-			Type.typePause(
-				key_text = "ID",
-				locator1 = "TextInput#ANY",
-				value1 = 12345);
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test");
-
-			Click(locator1 = "Button#SIGN_IN");
+			User.firstLoginUI(
+				authenticationMethod = "By User ID",
+				password = "test",
+				userId = "inavlidUserId");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -1088,17 +1056,9 @@ definition {
 		task ("When: Login with a valid email address but an invalid password") {
 			User.logoutPG();
 
-			Navigator.gotoLoginPage();
-
-			Type.typePause(
-				locator1 = "TextInput#EMAIL_ADDRESS",
-				value1 = "test@liferay.com");
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test1");
-
-			Click(locator1 = "Button#SIGN_IN");
+			User.firstLoginUI(
+				password = "invalidPAssword",
+				userEmailAddress = "test@liferay.com");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -1159,18 +1119,10 @@ definition {
 		task ("When: Login with a valid Screen Name but an invalid password") {
 			User.logoutPG();
 
-			Navigator.gotoLoginPage();
-
-			Type.typePause(
-				key_text = "Screen Name",
-				locator1 = "TextInput#ANY",
-				value1 = "test");
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test1");
-
-			Click(locator1 = "Button#SIGN_IN");
+			User.firstLoginUI(
+				authenticationMethod = "By Screen Name",
+				password = "invalidPassword",
+				userScreenName = "test");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -1234,18 +1186,10 @@ definition {
 		task ("When: Login with a valid user ID but an invalid password") {
 			User.logoutPG();
 
-			Navigator.gotoLoginPage();
-
-			Type.typePause(
-				key_text = "ID",
-				locator1 = "TextInput#ANY",
-				value1 = ${userId});
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test1");
-
-			Click(locator1 = "Button#SIGN_IN");
+			User.firstLoginUI(
+				authenticationMethod = "By User ID",
+				password = "invalidPassword",
+				userId = ${userId});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
@@ -1314,17 +1258,9 @@ definition {
 		task ("When: Login with a valid email address from LDAP but an invalid password") {
 			User.logoutPG();
 
-			Navigator.gotoLoginPage();
-
-			Type.typePause(
-				locator1 = "TextInput#EMAIL_ADDRESS",
-				value1 = "testUser2@liferay.com");
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test1");
-
-			Click(locator1 = "Button#SIGN_IN");
+			User.firstLoginUI(
+				password = "invalidPassword",
+				userEmailAddress = "testUser2@liferay.com");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",

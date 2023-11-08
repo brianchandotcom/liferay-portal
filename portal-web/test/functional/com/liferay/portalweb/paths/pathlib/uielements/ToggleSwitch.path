@@ -90,6 +90,11 @@
 	<td>//*[@id="${key_featureFlag}"]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TOGGLE_SWITCH_BY_LABEL</td>
+	<td>//span[text()='${key_toggleSwitchLabel}']/preceding-sibling::input[contains(@class, 'toggle-switch')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

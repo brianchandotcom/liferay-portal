@@ -2155,10 +2155,10 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSelectFromListOption(optionValue = null) {
+	macro viewSelectFromListOption(optionValue) {
 		AssertElementPresent(
-			key_value = ${optionValue},
-			locator1 = "FormFields#OPTION_FROM_SELECTED_LIST");
+			key_menuItem = ${optionValue},
+			locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
 	}
 
 	@summary = "Default summary"

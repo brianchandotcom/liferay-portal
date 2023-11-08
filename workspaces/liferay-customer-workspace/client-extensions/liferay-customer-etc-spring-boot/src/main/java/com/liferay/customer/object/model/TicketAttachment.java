@@ -1,0 +1,111 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.customer.object.model;
+
+import org.json.JSONObject;
+
+/**
+ * @author Amos Fong
+ */
+public class TicketAttachment {
+
+	public static final int STATUS_APPROVED = 0;
+
+	public static final int STATUS_DRAFT = 2;
+
+	public static final String STORAGE_PROVIDER_GCS = "gcs";
+
+	public TicketAttachment(JSONObject jsonObject) {
+		_accountKey = jsonObject.getString("accountKey");
+		_fileName = jsonObject.getString("fileName");
+		_fileSize = jsonObject.getString("fileSize");
+		_gcsBucketName = jsonObject.getString("gcsBucketName");
+
+		_md5Checksum = jsonObject.getString("md5Checksum");
+
+		JSONObject statusJSONObject = jsonObject.getJSONObject("status");
+
+		_status = statusJSONObject.getInt("code");
+
+		_storageProvider = jsonObject.getString("storageProvider");
+		_ticketAttachmentId = jsonObject.getLong("id");
+		_type = jsonObject.optString("type");
+		_zendeskTicketId = jsonObject.getLong("zendeskTicketId");
+	}
+
+	public String getAccountKey() {
+		return _accountKey;
+	}
+
+	public String getFileName() {
+		return _fileName;
+	}
+
+	public String getFileSize() {
+		return _fileSize;
+	}
+
+	public String getGCSBucketName() {
+		return _gcsBucketName;
+	}
+
+	public String getGCSObjectName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("tickets/");
+		sb.append(_zendeskTicketId);
+		sb.append("/");
+		sb.append(_ticketAttachmentId);
+		sb.append("/");
+		sb.append(_fileName);
+
+		return sb.toString();
+	}
+
+	public String getMD5Checksum() {
+		return _md5Checksum;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public String getStorageProvider() {
+		return _storageProvider;
+	}
+
+	public long getTicketAttachmentId() {
+		return _ticketAttachmentId;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public long getZendeskTicketId() {
+		return _zendeskTicketId;
+	}
+
+	public boolean isApproved() {
+		if (_status == STATUS_APPROVED) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private final String _accountKey;
+	private final String _fileName;
+	private final String _fileSize;
+	private final String _gcsBucketName;
+	private final String _md5Checksum;
+	private final int _status;
+	private final String _storageProvider;
+	private final long _ticketAttachmentId;
+	private final String _type;
+	private final long _zendeskTicketId;
+
+}

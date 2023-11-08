@@ -495,7 +495,14 @@ public class JournalManagementToolbarDisplayContext
 				return null;
 			}
 		).setParameter(
-			"status", (String)null
+			"status",
+			() -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+					return _journalDisplayContext.getStatus();
+				}
+
+				return null;
+			}
 		).buildString();
 	}
 
@@ -580,52 +587,66 @@ public class JournalManagementToolbarDisplayContext
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
 		List<DropdownItem> filterNavigationDropdownItems = new ArrayList<>();
 
-		filterNavigationDropdownItems.add(
-			DropdownItemBuilder.setActive(
-				_journalDisplayContext.isNavigationMine()
-			).setHref(
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setNavigation(
-					"all"
-				).setParameter(
-					"ddmStructureId", (String)null
-				).setParameter(
-					"navigationMine", (Boolean)null
-				).setParameter(
-					"navigationRecent", (Boolean)null
-				).buildPortletURL()
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "all")
-			).build());
-
-		if (!_journalDisplayContext.isNavigationRecent()) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
 			filterNavigationDropdownItems.add(
 				DropdownItemBuilder.setActive(
 					_journalDisplayContext.isNavigationMine()
 				).setHref(
 					PortletURLBuilder.create(
 						getPortletURL()
+					).setNavigation(
+						"all"
 					).setParameter(
-						"navigationMine", Boolean.TRUE
+						"ddmStructureId", (String)null
+					).setParameter(
+						"navigationMine", (Boolean)null
+					).setParameter(
+						"navigationRecent", (Boolean)null
 					).buildPortletURL()
 				).setLabel(
-					LanguageUtil.get(httpServletRequest, "mine")
+					LanguageUtil.get(httpServletRequest, "all")
+				).build());
+
+			if (!_journalDisplayContext.isNavigationRecent()) {
+				filterNavigationDropdownItems.add(
+					DropdownItemBuilder.setActive(
+						_journalDisplayContext.isNavigationMine()
+					).setHref(
+						PortletURLBuilder.create(
+							getPortletURL()
+						).setParameter(
+							"navigationMine", Boolean.TRUE
+						).buildPortletURL()
+					).setLabel(
+						LanguageUtil.get(httpServletRequest, "mine")
+					).build());
+			}
+
+			filterNavigationDropdownItems.add(
+				DropdownItemBuilder.setActive(
+					_journalDisplayContext.isNavigationRecent()
+				).setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"navigationRecent", Boolean.TRUE
+					).buildPortletURL()
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "recent")
 				).build());
 		}
-
-		filterNavigationDropdownItems.add(
-			DropdownItemBuilder.setActive(
-				_journalDisplayContext.isNavigationRecent()
-			).setHref(
+		else {
+			filterNavigationDropdownItems = getDropdownItems(
+				getNavigationEntriesMap(),
 				PortletURLBuilder.create(
 					getPortletURL()
+				).setKeywords(
+					StringPool.BLANK
 				).setParameter(
-					"navigationRecent", Boolean.TRUE
-				).buildPortletURL()
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "recent")
-			).build());
+					"ddmStructureId", (String)null
+				).buildPortletURL(),
+				getNavigationParam(), getNavigation());
+		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-194763") ||
 			(FeatureFlagManagerUtil.isEnabled("LPS-194763") &&

@@ -1339,6 +1339,10 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isNavigationMine() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			return _isNavigationMine();
+		}
+
 		if (_navigationMine != null) {
 			return _navigationMine;
 		}
@@ -1350,6 +1354,10 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isNavigationRecent() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			return _isNavigationRecent();
+		}
+
 		if (_navigationRecent != null) {
 			return _navigationRecent;
 		}
@@ -1369,6 +1377,10 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isSearch() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			return _isSearch();
+		}
+
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
@@ -1490,91 +1502,94 @@ public class JournalDisplayContext {
 			return _articleSearchContainer;
 		}
 
-		if (!isSearch() && !isNavigationMine() && !isNavigationRecent() &&
-			(getDDMStructureId() <= 0) &&
-			(getHighlightedDDMStructureId() <= 0)) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			if (!isSearch() && !isNavigationMine() && !isNavigationRecent() &&
+				(getDDMStructureId() <= 0) &&
+				(getHighlightedDDMStructureId() <= 0)) {
 
-			SearchContainer<Object> articleAndFolderSearchContainer =
-				_getArticleAndFolderSearchContainer();
+				SearchContainer<Object> articleAndFolderSearchContainer =
+					_getArticleAndFolderSearchContainer();
 
-			articleAndFolderSearchContainer.setResultsAndTotal(
-				() -> JournalFolderServiceUtil.getFoldersAndArticles(
-					_themeDisplay.getScopeGroupId(), 0, getFolderId(),
-					getStatus(), _themeDisplay.getLocale(),
-					articleAndFolderSearchContainer.getStart(),
-					articleAndFolderSearchContainer.getEnd(),
-					articleAndFolderSearchContainer.getOrderByComparator()),
-				JournalFolderServiceUtil.getFoldersAndArticlesCount(
-					_themeDisplay.getScopeGroupId(), 0, getFolderId(),
-					getStatus()));
+				articleAndFolderSearchContainer.setResultsAndTotal(
+					() -> JournalFolderServiceUtil.getFoldersAndArticles(
+						_themeDisplay.getScopeGroupId(), 0, getFolderId(),
+						getStatus(), _themeDisplay.getLocale(),
+						articleAndFolderSearchContainer.getStart(),
+						articleAndFolderSearchContainer.getEnd(),
+						articleAndFolderSearchContainer.getOrderByComparator()),
+					JournalFolderServiceUtil.getFoldersAndArticlesCount(
+						_themeDisplay.getScopeGroupId(), 0, getFolderId(),
+						getStatus()));
 
-			_articleSearchContainer = articleAndFolderSearchContainer;
+				_articleSearchContainer = articleAndFolderSearchContainer;
 
-			return _articleSearchContainer;
-		}
+				return _articleSearchContainer;
+			}
 
-		if (!isSearch() && (isNavigationMine() || isNavigationRecent())) {
-			SearchContainer<JournalArticle> articleSearchContainer =
-				_getArticleSearchContainer();
+			if (!isSearch() && (isNavigationMine() || isNavigationRecent())) {
+				SearchContainer<JournalArticle> articleSearchContainer =
+					_getArticleSearchContainer();
 
-			articleSearchContainer.setResultsAndTotal(
-				() -> JournalArticleServiceUtil.getGroupArticles(
-					_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-					getFolderId(), getStatus(), false,
-					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(),
-					articleSearchContainer.getOrderByComparator()),
-				JournalArticleServiceUtil.getGroupArticlesCount(
-					_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-					getFolderId(), getStatus(), false));
+				articleSearchContainer.setResultsAndTotal(
+					() -> JournalArticleServiceUtil.getGroupArticles(
+						_themeDisplay.getScopeGroupId(),
+						_themeDisplay.getUserId(), getFolderId(), getStatus(),
+						false, articleSearchContainer.getStart(),
+						articleSearchContainer.getEnd(),
+						articleSearchContainer.getOrderByComparator()),
+					JournalArticleServiceUtil.getGroupArticlesCount(
+						_themeDisplay.getScopeGroupId(),
+						_themeDisplay.getUserId(), getFolderId(), getStatus(),
+						false));
 
-			_articleSearchContainer = articleSearchContainer;
+				_articleSearchContainer = articleSearchContainer;
 
-			return _articleSearchContainer;
-		}
+				return _articleSearchContainer;
+			}
 
-		if (!isSearch() && (getDDMStructureId() > 0)) {
-			SearchContainer<JournalArticle> articleSearchContainer =
-				_getArticleSearchContainer();
+			if (!isSearch() && (getDDMStructureId() > 0)) {
+				SearchContainer<JournalArticle> articleSearchContainer =
+					_getArticleSearchContainer();
 
-			articleSearchContainer.setResultsAndTotal(
-				() -> JournalArticleServiceUtil.getArticlesByStructureId(
-					_themeDisplay.getScopeGroupId(), getFolderId(),
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-					getDDMStructureId(), getStatus(),
-					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(),
-					articleSearchContainer.getOrderByComparator()),
-				JournalArticleServiceUtil.getArticlesCountByStructureId(
-					_themeDisplay.getScopeGroupId(), getFolderId(),
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-					getDDMStructureId(), getStatus()));
+				articleSearchContainer.setResultsAndTotal(
+					() -> JournalArticleServiceUtil.getArticlesByStructureId(
+						_themeDisplay.getScopeGroupId(), getFolderId(),
+						JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+						getDDMStructureId(), getStatus(),
+						articleSearchContainer.getStart(),
+						articleSearchContainer.getEnd(),
+						articleSearchContainer.getOrderByComparator()),
+					JournalArticleServiceUtil.getArticlesCountByStructureId(
+						_themeDisplay.getScopeGroupId(), getFolderId(),
+						JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+						getDDMStructureId(), getStatus()));
 
-			_articleSearchContainer = articleSearchContainer;
+				_articleSearchContainer = articleSearchContainer;
 
-			return _articleSearchContainer;
-		}
+				return _articleSearchContainer;
+			}
 
-		if (!isSearch() && (getHighlightedDDMStructureId() > 0)) {
-			SearchContainer<JournalArticle> articleSearchContainer =
-				_getArticleSearchContainer();
+			if (!isSearch() && (getHighlightedDDMStructureId() > 0)) {
+				SearchContainer<JournalArticle> articleSearchContainer =
+					_getArticleSearchContainer();
 
-			articleSearchContainer.setResultsAndTotal(
-				() -> JournalArticleServiceUtil.getArticlesByStructureId(
-					_themeDisplay.getScopeGroupId(),
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-					getHighlightedDDMStructureId(), getStatus(),
-					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(),
-					articleSearchContainer.getOrderByComparator()),
-				JournalArticleServiceUtil.getArticlesCountByStructureId(
-					_themeDisplay.getScopeGroupId(),
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-					getHighlightedDDMStructureId(), getStatus()));
+				articleSearchContainer.setResultsAndTotal(
+					() -> JournalArticleServiceUtil.getArticlesByStructureId(
+						_themeDisplay.getScopeGroupId(),
+						JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+						getHighlightedDDMStructureId(), getStatus(),
+						articleSearchContainer.getStart(),
+						articleSearchContainer.getEnd(),
+						articleSearchContainer.getOrderByComparator()),
+					JournalArticleServiceUtil.getArticlesCountByStructureId(
+						_themeDisplay.getScopeGroupId(),
+						JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+						getHighlightedDDMStructureId(), getStatus()));
 
-			_articleSearchContainer = articleSearchContainer;
+				_articleSearchContainer = articleSearchContainer;
 
-			return _articleSearchContainer;
+				return _articleSearchContainer;
+			}
 		}
 
 		SearchContainer<Object> articleAndFolderSearchContainer =
@@ -1658,18 +1673,22 @@ public class JournalDisplayContext {
 				_getAssetTagNamesFilter(), BooleanClauseOccur.MUST);
 		}
 
-		if (Objects.equals(_getSearchLocation(), "current-folder")) {
-			booleanFilter.add(
-				_getCurrentFolderFilter(), BooleanClauseOccur.MUST_NOT);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
+			if (Objects.equals(_getSearchLocation(), "current-folder")) {
+				booleanFilter.add(
+					_getCurrentFolderFilter(), BooleanClauseOccur.MUST_NOT);
+			}
+
+			if (!isSearch()) {
+				booleanFilter.addTerm(
+					Field.FOLDER_ID, String.valueOf(getFolderId()),
+					BooleanClauseOccur.MUST);
+			}
 		}
 
-		if (!isSearch()) {
-			booleanFilter.addTerm(
-				Field.FOLDER_ID, String.valueOf(getFolderId()),
-				BooleanClauseOccur.MUST);
-		}
-
-		if ((isNavigationMine() || isNavigationRecent()) &&
+		if ((isNavigationMine() ||
+			 (isNavigationRecent() &&
+			  FeatureFlagManagerUtil.isEnabled("LPS-196768"))) &&
 			(_themeDisplay.getUserId() > 0)) {
 
 			booleanFilter.addTerm(
@@ -1950,6 +1969,33 @@ public class JournalDisplayContext {
 		return _articleVersionsSearchContainer;
 	}
 
+	private boolean _isNavigationMine() {
+		if (Objects.equals(getNavigation(), "mine")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isNavigationRecent() {
+		if (Objects.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSearch() {
+		if (Validator.isNotNull(getKeywords()) ||
+			ArrayUtil.isNotEmpty(_getAssetCategoryIds()) ||
+			ArrayUtil.isNotEmpty(_getAssetTagNames())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _populateSearchContext(
 		int start, int end, SearchContext searchContext, boolean showVersions) {
 
@@ -2001,7 +2047,9 @@ public class JournalDisplayContext {
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
 
-		if (isNavigationStructure()) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			isNavigationStructure()) {
+
 			searchContext.setEntryClassNames(
 				new String[] {JournalArticle.class.getName()});
 		}

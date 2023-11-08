@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Charles May
@@ -15,19 +15,22 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class PermissionCheckerFactoryUtil {
 
 	public static PermissionChecker create(User user) {
-		return _permissionCheckerFactory.create(user);
+		PermissionCheckerFactory permissionCheckerFactory =
+			_permissionCheckerFactorySnapshot.get();
+
+		return permissionCheckerFactory.create(user);
 	}
 
 	public static PermissionCheckerFactory getPermissionCheckerFactory() {
-		return _permissionCheckerFactory;
+		return _permissionCheckerFactorySnapshot.get();
 	}
 
 	private PermissionCheckerFactoryUtil() {
 	}
 
-	private static volatile PermissionCheckerFactory _permissionCheckerFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PermissionCheckerFactory.class, PermissionCheckerFactoryUtil.class,
-			"_permissionCheckerFactory", false, true);
+	private static final Snapshot<PermissionCheckerFactory>
+		_permissionCheckerFactorySnapshot = new Snapshot<>(
+			PermissionCheckerFactoryUtil.class, PermissionCheckerFactory.class,
+			null, true);
 
 }

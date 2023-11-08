@@ -23,6 +23,7 @@ import java.sql.Connection;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.hibernate.SessionBuilder;
 import org.hibernate.engine.jdbc.spi.JdbcCoordinator;
@@ -53,25 +54,32 @@ public class SessionFactoryImpl implements SessionFactory {
 
 	@Override
 	public Session getCurrentSession() throws ORMException {
-		return wrapSession(_sessionFactoryImplementor.getCurrentSession());
+		SessionFactoryImplementor sessionFactoryImplementor =
+			getSessionFactoryImplementor();
+
+		return wrapSession(sessionFactoryImplementor.getCurrentSession());
 	}
 
 	@Override
 	public Dialect getDialect() throws ORMException {
-		JdbcServices jdbcServices =
-			_sessionFactoryImplementor.getJdbcServices();
+		SessionFactoryImplementor sessionFactoryImplementor =
+			getSessionFactoryImplementor();
+
+		JdbcServices jdbcServices = sessionFactoryImplementor.getJdbcServices();
 
 		return new DialectImpl(jdbcServices.getDialect());
 	}
 
 	public SessionFactoryImplementor getSessionFactoryImplementor() {
-		return _sessionFactoryImplementor;
+		return _sessionFactoryImplementorSupplier.get();
 	}
 
 	@Override
 	public Session openNewSession(Connection connection) throws ORMException {
-		SessionBuilder sessionBuilder =
-			_sessionFactoryImplementor.withOptions();
+		SessionFactoryImplementor sessionFactoryImplementor =
+			getSessionFactoryImplementor();
+
+		SessionBuilder sessionBuilder = sessionFactoryImplementor.withOptions();
 
 		return wrapSession(
 			sessionBuilder.connection(
@@ -83,11 +91,14 @@ public class SessionFactoryImpl implements SessionFactory {
 	public Session openSession() throws ORMException {
 		org.hibernate.Session session = null;
 
+		SessionFactoryImplementor sessionFactoryImplementor =
+			getSessionFactoryImplementor();
+
 		if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
-			session = _sessionFactoryImplementor.getCurrentSession();
+			session = sessionFactoryImplementor.getCurrentSession();
 		}
 		else {
-			session = _sessionFactoryImplementor.openSession();
+			session = sessionFactoryImplementor.openSession();
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -124,7 +135,13 @@ public class SessionFactoryImpl implements SessionFactory {
 	public void setSessionFactoryImplementor(
 		SessionFactoryImplementor sessionFactoryImplementor) {
 
-		_sessionFactoryImplementor = sessionFactoryImplementor;
+		setSessionFactoryImplementorSupplier(() -> sessionFactoryImplementor);
+	}
+
+	public void setSessionFactoryImplementorSupplier(
+		Supplier<SessionFactoryImplementor> sessionFactoryImplementorSupplier) {
+
+		_sessionFactoryImplementorSupplier = sessionFactoryImplementorSupplier;
 	}
 
 	protected Map<String, Class<?>> getPreloadClassLoaderClasses() {
@@ -169,6 +186,7 @@ public class SessionFactoryImpl implements SessionFactory {
 		ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), SessionCustomizer.class);
 	private ClassLoader _sessionFactoryClassLoader;
-	private SessionFactoryImplementor _sessionFactoryImplementor;
+	private Supplier<SessionFactoryImplementor>
+		_sessionFactoryImplementorSupplier;
 
 }

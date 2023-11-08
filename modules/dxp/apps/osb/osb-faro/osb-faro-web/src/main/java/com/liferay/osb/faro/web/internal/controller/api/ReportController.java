@@ -175,11 +175,11 @@ public class ReportController extends BaseFaroController {
 
 	private Map<String, String> _createHeaders(URI baseURI) {
 		return HashMapBuilder.put(
-			"X-Forwarded-Origin-Host", baseURI.getHost()
+			"X-Liferay-Origin-Forwarded-Host", baseURI.getHost()
 		).put(
-			"X-Forwarded-Origin-Port", String.valueOf(baseURI.getPort())
+			"X-Liferay-Origin-Forwarded-Port", String.valueOf(baseURI.getPort())
 		).put(
-			"X-Forwarded-Origin-Proto", baseURI.getScheme()
+			"X-Liferay-Origin-Forwarded-Proto", baseURI.getScheme()
 		).build();
 	}
 

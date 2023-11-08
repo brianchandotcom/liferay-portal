@@ -179,14 +179,6 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 				return;
 			}
 
-			String matcherField = (String)properties.get(
-				ScimConstants.PARAM_MATCHER_FIELD);
-
-			httpServletRequest.setAttribute(
-				ScimConstants.PARAM_APPLICATION_NAME, applicationName);
-			httpServletRequest.setAttribute(
-				ScimConstants.PARAM_MATCHER_FIELD, matcherField);
-
 			List<OAuth2Authorization> oAuth2Authorizations =
 				_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
 					oAuth2Application.getOAuth2ApplicationId(),
@@ -203,6 +195,14 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					ScimConstants.PARAM_TOKEN,
 					oAuth2Authorization.getAccessTokenContent());
 			}
+
+			String matcherField = (String)properties.get(
+				ScimConstants.PARAM_MATCHER_FIELD);
+
+			httpServletRequest.setAttribute(
+				ScimConstants.PARAM_APPLICATION_NAME, applicationName);
+			httpServletRequest.setAttribute(
+				ScimConstants.PARAM_MATCHER_FIELD, matcherField);
 		}
 
 	}

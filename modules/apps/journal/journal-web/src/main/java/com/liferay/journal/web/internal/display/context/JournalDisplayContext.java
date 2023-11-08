@@ -651,16 +651,6 @@ public class JournalDisplayContext {
 			));
 	}
 
-	public List<NavigationItem> getInfoPanelNavigationItems() {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "details"));
-			}
-		).build();
-	}
-
 	public List<TabsItem> getInfoPanelTabsItems(boolean journalArticle) {
 		return TabsItemListBuilder.add(
 			tabsItem -> {

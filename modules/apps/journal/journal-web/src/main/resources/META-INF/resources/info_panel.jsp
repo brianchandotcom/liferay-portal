@@ -77,43 +77,10 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 			</clay:content-row>
 		</div>
 
-		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
-				<clay:tabs
-					tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(false) %>"
-				>
-					<clay:tabs-panel>
-						<div class="sidebar-body">
-							<p class="sidebar-dt"><liferay-ui:message key="num-of-items" /></p>
-
-							<%
-							long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-							if (folder != null) {
-								folderId = folder.getFolderId();
-							}
-							%>
-
-							<p class="sidebar-dd">
-								<%= JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, journalDisplayContext.getStatus()) %>
-							</p>
-
-							<c:if test="<%= folder != null %>">
-								<p class="sidebar-dt"><liferay-ui:message key="created" /></p>
-
-								<p class="sidebar-dd">
-									<%= HtmlUtil.escape(folder.getUserName()) %>
-								</p>
-							</c:if>
-						</div>
-					</clay:tabs-panel>
-				</clay:tabs>
-			</c:when>
-			<c:otherwise>
-				<clay:navigation-bar
-					navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
-				/>
-
+		<clay:tabs
+			tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(false) %>"
+		>
+			<clay:tabs-panel>
 				<div class="sidebar-body">
 					<p class="sidebar-dt"><liferay-ui:message key="num-of-items" /></p>
 
@@ -137,8 +104,8 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						</p>
 					</c:if>
 				</div>
-			</c:otherwise>
-		</c:choose>
+			</clay:tabs-panel>
+		</clay:tabs>
 	</c:when>
 	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(articles) && (articles.size() == 1) %>">
 
@@ -187,310 +154,184 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				</clay:content-col>
 			</clay:content-row>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
-				<div class="d-flex">
-					<div>
-						<clay:label
-							displayType="info"
-							label='<%= LanguageUtil.format(request, "version-x", article.getVersion()) %>'
-						/>
-					</div>
-
-					<liferay-portal-workflow:status
-						showStatusLabel="<%= false %>"
-						status="<%= article.getStatus() %>"
+			<div class="d-flex">
+				<div>
+					<clay:label
+						displayType="info"
+						label='<%= LanguageUtil.format(request, "version-x", article.getVersion()) %>'
 					/>
 				</div>
-			</c:if>
+
+				<liferay-portal-workflow:status
+					showStatusLabel="<%= false %>"
+					status="<%= article.getStatus() %>"
+				/>
+			</div>
 		</div>
 
-		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
+		<%
+		JournalVersionTabDisplayContext journalVersionTabDisplayContext = new JournalVersionTabDisplayContext(assetDisplayPageFriendlyURLProvider, article, liferayPortletRequest, liferayPortletResponse, trashHelper);
+		%>
+
+		<clay:tabs
+			tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(true) %>"
+		>
+			<clay:tabs-panel>
+				<p class="sidebar-dt"><liferay-ui:message key="id" /></p>
+
+				<p class="sidebar-dd">
+					<%= HtmlUtil.escape(article.getArticleId()) %>
+				</p>
+
+				<p class="sidebar-dt"><liferay-ui:message key="title" /></p>
+
+				<p class="sidebar-dd">
+					<%= HtmlUtil.escape(article.getTitle(locale)) %>
+				</p>
 
 				<%
-				JournalVersionTabDisplayContext journalVersionTabDisplayContext = new JournalVersionTabDisplayContext(assetDisplayPageFriendlyURLProvider, article, liferayPortletRequest, liferayPortletResponse, trashHelper);
+				DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
 				%>
 
-				<clay:tabs
-					tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(true) %>"
-				>
-					<clay:tabs-panel>
-						<p class="sidebar-dt"><liferay-ui:message key="id" /></p>
+				<p class="sidebar-dt"><liferay-ui:message key="template" /></p>
 
-						<p class="sidebar-dd">
-							<%= HtmlUtil.escape(article.getArticleId()) %>
-						</p>
+				<p class="sidebar-dd">
+					<c:choose>
+						<c:when test="<%= ddmTemplate != null %>">
+							<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="no-template" />
+						</c:otherwise>
+					</c:choose>
+				</p>
 
-						<p class="sidebar-dt"><liferay-ui:message key="title" /></p>
+				<div class="lfr-asset-tags sidebar-dd">
+					<liferay-asset:asset-tags-summary
+						className="<%= JournalArticle.class.getName() %>"
+						classPK="<%= JournalArticleAssetRenderer.getClassPK(article) %>"
+						message="tags"
+					/>
+				</div>
 
-						<p class="sidebar-dd">
-							<%= HtmlUtil.escape(article.getTitle(locale)) %>
-						</p>
+				<p class="sidebar-dt"><liferay-ui:message key="original-author" /></p>
 
-						<%
-						DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
-						%>
+				<p class="sidebar-dd">
+					<%= HtmlUtil.escape(journalDisplayContext.getOriginalAuthorUserName(article)) %>
+				</p>
 
-						<p class="sidebar-dt"><liferay-ui:message key="template" /></p>
+				<p class="sidebar-dt"><liferay-ui:message key="priority" /></p>
 
-						<p class="sidebar-dd">
-							<c:choose>
-								<c:when test="<%= ddmTemplate != null %>">
-									<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="no-template" />
-								</c:otherwise>
-							</c:choose>
-						</p>
+				<%
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), JournalArticleAssetRenderer.getClassPK(article));
+				%>
 
-						<div class="lfr-asset-tags sidebar-dd">
-							<liferay-asset:asset-tags-summary
-								className="<%= JournalArticle.class.getName() %>"
-								classPK="<%= JournalArticleAssetRenderer.getClassPK(article) %>"
-								message="tags"
-							/>
-						</div>
+				<p class="sidebar-dd">
+					<%= assetEntry.getPriority() %>
+				</p>
 
-						<p class="sidebar-dt"><liferay-ui:message key="original-author" /></p>
-
-						<p class="sidebar-dd">
-							<%= HtmlUtil.escape(journalDisplayContext.getOriginalAuthorUserName(article)) %>
-						</p>
-
-						<p class="sidebar-dt"><liferay-ui:message key="priority" /></p>
-
-						<%
-						AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), JournalArticleAssetRenderer.getClassPK(article));
-						%>
-
-						<p class="sidebar-dd">
-							<%= assetEntry.getPriority() %>
-						</p>
-
-						<c:if test="<%= article.getDisplayDate() != null %>">
-							<p class="sidebar-dt"><liferay-ui:message key="display-date" /></p>
-
-							<p class="sidebar-dd">
-								<%= dateTimeFormat.format(article.getDisplayDate()) %>
-							</p>
-						</c:if>
-
-						<p class="sidebar-dt"><liferay-ui:message key="expiration-date" /></p>
-
-						<%
-						Date expirationDate = article.getExpirationDate();
-						%>
-
-						<p class="sidebar-dd">
-							<c:choose>
-								<c:when test="<%= expirationDate != null %>">
-									<%= dateTimeFormat.format(expirationDate) %>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="never-expire" />
-								</c:otherwise>
-							</c:choose>
-						</p>
-
-						<p class="sidebar-dt"><liferay-ui:message key="review-date" /></p>
-
-						<%
-						Date reviewDate = article.getReviewDate();
-						%>
-
-						<p class="sidebar-dd">
-							<c:choose>
-								<c:when test="<%= reviewDate != null %>">
-									<%= dateTimeFormat.format(reviewDate) %>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="never-review" />
-								</c:otherwise>
-							</c:choose>
-						</p>
-					</clay:tabs-panel>
-
-					<clay:tabs-panel>
-						<ul class="list-group sidebar-list-group">
-
-							<%
-							for (JournalArticle articleVersion : JournalArticleServiceUtil.getArticlesByArticleId(article.getGroupId(), article.getArticleId(), 0, 10, new ArticleVersionComparator())) {
-							%>
-
-								<li class="list-group-item list-group-item-flex p-0">
-									<clay:content-col
-										cssClass="autofit-col-expand"
-									>
-										<div class="list-group-title">
-											<span class="text-3"><liferay-ui:message key="version" /> <%= articleVersion.getVersion() %></span>
-										</div>
-
-										<div class="list-group-subtitle">
-											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(articleVersion.getUserName()), dateTimeFormat.format(articleVersion.getStatusDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
-										</div>
-
-										<div>
-											<liferay-portal-workflow:status
-												showStatusLabel="<%= false %>"
-												status="<%= articleVersion.getStatus() %>"
-											/>
-										</div>
-									</clay:content-col>
-
-									<clay:content-col>
-										<clay:dropdown-actions
-											additionalProps='<%=
-												HashMapBuilder.<String, Object>put(
-													"trashEnabled", componentContext.get("trashEnabled")
-												).build()
-											%>'
-											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-											dropdownItems="<%= journalVersionTabDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
-											propsTransformer="js/ElementsDefaultPropsTransformer"
-										/>
-									</clay:content-col>
-								</li>
-
-							<%
-							}
-							%>
-
-						</ul>
-
-						<c:if test="<%= JournalArticleServiceUtil.getArticlesCountByArticleId(article.getGroupId(), article.getArticleId()) > 10 %>">
-							<div class="c-mt-3 d-flex justify-content-center">
-								<clay:link
-									displayType="secondary"
-									href="<%= journalVersionTabDisplayContext.getViewMoreURL() %>"
-									label="view-more"
-									type="button"
-								/>
-							</div>
-						</c:if>
-					</clay:tabs-panel>
-				</clay:tabs>
-			</c:when>
-			<c:otherwise>
-				<clay:navigation-bar
-					navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
-				/>
-
-				<div class="sidebar-body">
-					<p class="sidebar-dt"><liferay-ui:message key="id" /></p>
+				<c:if test="<%= article.getDisplayDate() != null %>">
+					<p class="sidebar-dt"><liferay-ui:message key="display-date" /></p>
 
 					<p class="sidebar-dd">
-						<%= HtmlUtil.escape(article.getArticleId()) %>
+						<%= dateTimeFormat.format(article.getDisplayDate()) %>
 					</p>
+				</c:if>
 
-					<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
-						<p class="sidebar-dt"><liferay-ui:message key="version" /></p>
+				<p class="sidebar-dt"><liferay-ui:message key="expiration-date" /></p>
 
-						<p class="sidebar-dd">
-							<%= article.getVersion() %>
-						</p>
+				<%
+				Date expirationDate = article.getExpirationDate();
+				%>
 
-						<p class="sidebar-dt"><liferay-ui:message key="status" /></p>
+				<p class="sidebar-dd">
+					<c:choose>
+						<c:when test="<%= expirationDate != null %>">
+							<%= dateTimeFormat.format(expirationDate) %>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="never-expire" />
+						</c:otherwise>
+					</c:choose>
+				</p>
 
-						<div class="sidebar-dd">
-							<liferay-portal-workflow:status
-								showStatusLabel="<%= false %>"
-								status="<%= article.getStatus() %>"
-							/>
-						</div>
-					</c:if>
+				<p class="sidebar-dt"><liferay-ui:message key="review-date" /></p>
 
-					<p class="sidebar-dt"><liferay-ui:message key="title" /></p>
+				<%
+				Date reviewDate = article.getReviewDate();
+				%>
 
-					<p class="sidebar-dd">
-						<%= HtmlUtil.escape(article.getTitle(locale)) %>
-					</p>
+				<p class="sidebar-dd">
+					<c:choose>
+						<c:when test="<%= reviewDate != null %>">
+							<%= dateTimeFormat.format(reviewDate) %>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="never-review" />
+						</c:otherwise>
+					</c:choose>
+				</p>
+			</clay:tabs-panel>
+
+			<clay:tabs-panel>
+				<ul class="list-group sidebar-list-group">
 
 					<%
-					DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
+					for (JournalArticle articleVersion : JournalArticleServiceUtil.getArticlesByArticleId(article.getGroupId(), article.getArticleId(), 0, 10, new ArticleVersionComparator())) {
 					%>
 
-					<p class="sidebar-dt"><liferay-ui:message key="template" /></p>
+						<li class="list-group-item list-group-item-flex p-0">
+							<clay:content-col
+								cssClass="autofit-col-expand"
+							>
+								<div class="list-group-title">
+									<span class="text-3"><liferay-ui:message key="version" /> <%= articleVersion.getVersion() %></span>
+								</div>
 
-					<p class="sidebar-dd">
-						<c:choose>
-							<c:when test="<%= ddmTemplate != null %>">
-								<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="no-template" />
-							</c:otherwise>
-						</c:choose>
-					</p>
+								<div class="list-group-subtitle">
+									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(articleVersion.getUserName()), dateTimeFormat.format(articleVersion.getStatusDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+								</div>
 
-					<div class="lfr-asset-tags sidebar-dd">
-						<liferay-asset:asset-tags-summary
-							className="<%= JournalArticle.class.getName() %>"
-							classPK="<%= JournalArticleAssetRenderer.getClassPK(article) %>"
-							message="tags"
+								<div>
+									<liferay-portal-workflow:status
+										showStatusLabel="<%= false %>"
+										status="<%= articleVersion.getStatus() %>"
+									/>
+								</div>
+							</clay:content-col>
+
+							<clay:content-col>
+								<clay:dropdown-actions
+									additionalProps='<%=
+										HashMapBuilder.<String, Object>put(
+											"trashEnabled", componentContext.get("trashEnabled")
+										).build()
+									%>'
+									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+									dropdownItems="<%= journalVersionTabDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
+									propsTransformer="js/ElementsDefaultPropsTransformer"
+								/>
+							</clay:content-col>
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+
+				<c:if test="<%= JournalArticleServiceUtil.getArticlesCountByArticleId(article.getGroupId(), article.getArticleId()) > 10 %>">
+					<div class="c-mt-3 d-flex justify-content-center">
+						<clay:link
+							displayType="secondary"
+							href="<%= journalVersionTabDisplayContext.getViewMoreURL() %>"
+							label="view-more"
+							type="button"
 						/>
 					</div>
-
-					<p class="sidebar-dt"><liferay-ui:message key="original-author" /></p>
-
-					<p class="sidebar-dd">
-						<%= HtmlUtil.escape(journalDisplayContext.getOriginalAuthorUserName(article)) %>
-					</p>
-
-					<p class="sidebar-dt"><liferay-ui:message key="priority" /></p>
-
-					<%
-					AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), JournalArticleAssetRenderer.getClassPK(article));
-					%>
-
-					<p class="sidebar-dd">
-						<%= assetEntry.getPriority() %>
-					</p>
-
-					<c:if test="<%= article.getDisplayDate() != null %>">
-						<p class="sidebar-dt"><liferay-ui:message key="display-date" /></p>
-
-						<p class="sidebar-dd">
-							<%= dateTimeFormat.format(article.getDisplayDate()) %>
-						</p>
-					</c:if>
-
-					<p class="sidebar-dt"><liferay-ui:message key="expiration-date" /></p>
-
-					<%
-					Date expirationDate = article.getExpirationDate();
-					%>
-
-					<p class="sidebar-dd">
-						<c:choose>
-							<c:when test="<%= expirationDate != null %>">
-								<%= dateTimeFormat.format(expirationDate) %>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="never-expire" />
-							</c:otherwise>
-						</c:choose>
-					</p>
-
-					<p class="sidebar-dt"><liferay-ui:message key="review-date" /></p>
-
-					<%
-					Date reviewDate = article.getReviewDate();
-					%>
-
-					<p class="sidebar-dd">
-						<c:choose>
-							<c:when test="<%= reviewDate != null %>">
-								<%= dateTimeFormat.format(reviewDate) %>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="never-review" />
-							</c:otherwise>
-						</c:choose>
-					</p>
-				</div>
-			</c:otherwise>
-		</c:choose>
+				</c:if>
+			</clay:tabs-panel>
+		</clay:tabs>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
@@ -505,27 +346,14 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 			</clay:content-row>
 		</div>
 
-		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
-				<clay:tabs
-					tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(false) %>"
-				>
-					<clay:tabs-panel>
-						<div class="sidebar-body">
-							<p class="sidebar-dt"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
-						</div>
-					</clay:tabs-panel>
-				</clay:tabs>
-			</c:when>
-			<c:otherwise>
-				<clay:navigation-bar
-					navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
-				/>
-
+		<clay:tabs
+			tabsItems="<%= journalDisplayContext.getInfoPanelTabsItems(false) %>"
+		>
+			<clay:tabs-panel>
 				<div class="sidebar-body">
 					<p class="sidebar-dt"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
 				</div>
-			</c:otherwise>
-		</c:choose>
+			</clay:tabs-panel>
+		</clay:tabs>
 	</c:otherwise>
 </c:choose>

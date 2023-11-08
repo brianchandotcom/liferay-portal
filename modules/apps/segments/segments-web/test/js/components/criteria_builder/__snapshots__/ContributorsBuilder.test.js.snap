@@ -69,12 +69,14 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
           >
             <div
               class="panel panel-unstyled"
+              id="user"
               role="tablist"
             >
               <button
                 aria-expanded="true"
                 class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
                 role="tab"
+                tabindex="0"
                 type="button"
               >
                 <div
@@ -130,10 +132,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -165,10 +169,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -200,10 +206,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -235,10 +243,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -270,10 +280,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -305,10 +317,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -340,10 +354,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -375,10 +391,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -410,10 +428,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -445,10 +465,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -480,10 +502,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -515,10 +539,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -550,10 +576,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -585,10 +613,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -620,10 +650,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -655,10 +687,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -690,10 +724,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -725,10 +761,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -763,12 +801,14 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
             </div>
             <div
               class="panel panel-unstyled"
+              id="user-organization"
               role="tablist"
             >
               <button
                 aria-expanded="false"
                 class="panel-header panel-header-link collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
                 role="tab"
+                tabindex="-1"
                 type="button"
               >
                 <div
@@ -824,10 +864,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -859,10 +901,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -894,10 +938,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -929,10 +975,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -964,10 +1012,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -999,10 +1049,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1034,10 +1086,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1069,10 +1123,12 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1239,12 +1295,14 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
           >
             <div
               class="panel panel-unstyled"
+              id="user"
               role="tablist"
             >
               <button
                 aria-expanded="true"
                 class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
                 role="tab"
+                tabindex="0"
                 type="button"
               >
                 <div
@@ -1300,10 +1358,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1335,10 +1395,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1370,10 +1432,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1405,10 +1469,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1440,10 +1506,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1475,10 +1543,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1510,10 +1580,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1545,10 +1617,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1580,10 +1654,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1615,10 +1691,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1650,10 +1728,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1685,10 +1765,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1720,10 +1802,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1755,10 +1839,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1790,10 +1876,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1825,10 +1913,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1860,10 +1950,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1895,10 +1987,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -1933,12 +2027,14 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
             </div>
             <div
               class="panel panel-unstyled"
+              id="user-organization"
               role="tablist"
             >
               <button
                 aria-expanded="false"
                 class="panel-header panel-header-link collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
                 role="tab"
+                tabindex="-1"
                 type="button"
               >
                 <div
@@ -1994,10 +2090,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2029,10 +2127,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2064,10 +2164,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2099,10 +2201,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2134,10 +2238,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2169,10 +2275,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2204,10 +2312,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"
@@ -2239,10 +2349,12 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     <li
                       class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
                       draggable="true"
-                      tabindex="0"
+                      role="menuitem"
+                      tabindex="-1"
                     >
                       <span
                         class="c-p-2 inline-item"
+                        tabindex="-1"
                       >
                         <svg
                           class="lexicon-icon lexicon-icon-drag"

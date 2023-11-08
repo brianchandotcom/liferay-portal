@@ -4,18 +4,16 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
-interface EditEndpointConfigurationProps {
-	currentAPIApplicationId: string;
+interface PathParameterConfigurationProps {
 	data: Partial<APIEndpointUIData>;
 	displayError: EndpointDataError;
-	schemaAPIURLPath: string;
+	selectedResponseBodySchema: SelectOption | undefined;
 	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
 }
-export default function EditEndpointConfiguration({
-	currentAPIApplicationId,
+export default function PathParameterConfiguration({
 	data,
 	displayError,
-	schemaAPIURLPath,
+	selectedResponseBodySchema,
 	setData,
-}: EditEndpointConfigurationProps): JSX.Element;
+}: PathParameterConfigurationProps): JSX.Element;
 export {};

@@ -16,6 +16,8 @@ export declare function beginStringWithForwardSlash(
 export declare function endStringWithForwardSlash(
 	str?: string
 ): string | undefined;
+export declare function getAllButLastParameterFromPath(path: string): string;
+export declare function getLastParameterFromPath(path: string): string;
 
 /**
  * Returns a substring of the received one, capped at maxLengh.
@@ -24,6 +26,11 @@ export declare function limitStringInputLengh(
 	str: string,
 	maxLengh: number
 ): string;
+
+/**
+ * Make valid url path parameter string (Only numbers, letters and curly braces).
+ */
+export declare function makeURLPathParameterString(str: string): string;
 
 /**
  * Make valid url path string (Only numbers, low case letters and dashes).
@@ -46,6 +53,13 @@ export declare function removeLeadingForwardSlash(str: string): string;
  * Replace blank spaces in string with dash.
  */
 export declare function replaceSpacesWithDash(str: string): string;
+
+/**
+ * Ensures that the string is between curly braces, if not, adds it.
+ */
+export declare function stringBetweenCurlyBraces(
+	str?: string | undefined
+): string | undefined;
 
 /**
  * If string is not wrapped in forward slashes, wrap it.

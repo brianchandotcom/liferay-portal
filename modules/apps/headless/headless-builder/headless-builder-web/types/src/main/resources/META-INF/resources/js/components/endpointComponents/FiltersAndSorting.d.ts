@@ -4,18 +4,12 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
-interface EditEndpointConfigurationProps {
-	currentAPIApplicationId: string;
+interface FiltersAndSortingProps {
 	data: Partial<APIEndpointUIData>;
-	displayError: EndpointDataError;
-	schemaAPIURLPath: string;
 	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
 }
-export default function EditEndpointConfiguration({
-	currentAPIApplicationId,
+export default function FiltersAndSorting({
 	data,
-	displayError,
-	schemaAPIURLPath,
 	setData,
-}: EditEndpointConfigurationProps): JSX.Element;
+}: FiltersAndSortingProps): JSX.Element;
 export {};

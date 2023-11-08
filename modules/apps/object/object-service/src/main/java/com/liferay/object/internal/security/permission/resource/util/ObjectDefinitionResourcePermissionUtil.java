@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Iterator;
-import java.util.Objects;
 
 /**
  * @author Carolina Barbosa
@@ -143,10 +142,6 @@ public class ObjectDefinitionResourcePermissionUtil {
 			ObjectDefinitionPersistence objectDefinitionPersistence,
 			TreeFactory treeFactory)
 		throws Exception {
-
-		if (!objectDefinition.isRootNode()) {
-			return StringPool.BLANK;
-		}
 
 		int weight = _INITIAL_WEIGHT;
 

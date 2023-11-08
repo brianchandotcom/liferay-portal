@@ -120,9 +120,9 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		Map<String, String> values;
-
 		try {
+			Writer writer = httpServletResponse.getWriter();
+
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				_portal.getLocale(httpServletRequest), getClass());
 
@@ -131,40 +131,41 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			iconTag.setCssClass("icon-monospaced");
 			iconTag.setSymbol("test");
 
-			values = HashMapBuilder.put(
-				"cssClass",
-				() -> {
-					if (isPanelStateOpen(
-							httpServletRequest,
-							ProductNavigationControlMenuEntryConstants.
-								SESSION_CLICKS_KEY)) {
+			writer.write(
+				StringUtil.replace(
+					_ICON_TMPL_CONTENT, "${", "}",
+					HashMapBuilder.put(
+						"cssClass",
+						() -> {
+							if (isPanelStateOpen(
+									httpServletRequest,
+									ProductNavigationControlMenuEntryConstants.
+										SESSION_CLICKS_KEY)) {
 
-						return "active";
-					}
+								return "active";
+							}
 
-					return StringPool.BLANK;
-				}
-			).put(
-				"iconTag",
-				iconTag.doTagAsString(httpServletRequest, httpServletResponse)
-			).put(
-				"nonceAttribute",
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					httpServletRequest)
-			).put(
-				"portletNamespace", _portletNamespace
-			).put(
-				"title",
-				HtmlUtil.escape(_language.get(resourceBundle, "ab-test"))
-			).build();
+							return StringPool.BLANK;
+						}
+					).put(
+						"iconTag",
+						iconTag.doTagAsString(
+							httpServletRequest, httpServletResponse)
+					).put(
+						"nonceAttribute",
+						ContentSecurityPolicyNonceProviderUtil.
+							getNonceAttribute(httpServletRequest)
+					).put(
+						"portletNamespace", _portletNamespace
+					).put(
+						"title",
+						HtmlUtil.escape(
+							_language.get(resourceBundle, "ab-test"))
+					).build()));
 		}
 		catch (JspException jspException) {
 			throw new IOException(jspException);
 		}
-
-		Writer writer = httpServletResponse.getWriter();
-
-		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
 
 		return true;
 	}

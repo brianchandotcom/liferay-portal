@@ -44,19 +44,6 @@ dependencies {
 }
 
 repositories {
-
-	String repositoryPrivateURL = System.getProperty("repository.private.url")
-
-	if (repositoryPrivateURL) {
-		maven {
-			credentials {
-				password System.properties["repository.private.password"]
-				username System.properties["repository.private.username"]
-			}
-			url repositoryPrivateURL
-		}
-	}
-
 	maven {
 		url new File(rootProject.projectDir, "../../.m2-tmp")
 	}

@@ -3219,9 +3219,7 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Discounts");
+		CommerceNavigator.goToDiscountAdmin();
 
 		Click(locator1 = "Button#PLUS");
 

@@ -6,6 +6,10 @@
 import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpportunitiesColumnKey';
 
 type PartnerOpportunitiesItem = {
-	[key in PartnerOpportunitiesColumnKey]?: string;
+	[key in PartnerOpportunitiesColumnKey]?:
+		| string
+		| boolean
+		| undefined
+		| number;
 };
 export default PartnerOpportunitiesItem;

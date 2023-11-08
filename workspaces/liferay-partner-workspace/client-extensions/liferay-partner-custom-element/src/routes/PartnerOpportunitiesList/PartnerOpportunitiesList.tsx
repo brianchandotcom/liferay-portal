@@ -8,6 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClayTabs from '@clayui/tabs';
 import {useState} from 'react';
 import {CSVLink} from 'react-csv';
 
@@ -28,10 +29,15 @@ import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFrom
 import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
 
 interface IProps {
+	closedOpportunitiesFilter: string;
 	columnsDates: TableColumn<PartnerOpportunitiesItem>[];
+	getFilteredItems: (
+		items: PartnerOpportunitiesItem[],
+		opportunitiesFilter: string
+	) => PartnerOpportunitiesItem[];
 	name: string;
 	newButtonDeal?: boolean;
-	renewalOpportunitiesFilter?: string;
+	openOpportunitiesFilter: string;
 	sort: string;
 }
 
@@ -39,15 +45,19 @@ const BASE_PAGE = 1;
 const MAX_ITEMS = 200;
 
 const PartnerOpportunitiesList = ({
+	closedOpportunitiesFilter,
 	columnsDates,
+	getFilteredItems,
 	name,
 	newButtonDeal,
-	renewalOpportunitiesFilter,
+	openOpportunitiesFilter,
 	sort,
 }: IProps) => {
-	const {filters, filtersTerm, onFilter} = useFilters(
-		renewalOpportunitiesFilter
+	const [opportunitiesFilter, setOpportunitiesFilter] = useState(
+		openOpportunitiesFilter
 	);
+
+	const {filters, filtersTerm, onFilter} = useFilters(opportunitiesFilter);
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<
 		PartnerOpportunitiesItem
@@ -71,8 +81,10 @@ const PartnerOpportunitiesList = ({
 	);
 
 	const {totalCount: totalPagination} = data;
-	const filteredData = data.items;
-	const filteredCSVData = dataCSV.items;
+	const filteredData =
+		data.items && getFilteredItems(data.items, opportunitiesFilter);
+	const filteredCSVData =
+		dataCSV.items && getFilteredItems(dataCSV.items, opportunitiesFilter);
 
 	const siteURL = useLiferayNavigate();
 	const columns = [
@@ -158,7 +170,31 @@ const PartnerOpportunitiesList = ({
 
 	return (
 		<div className="border-0 my-4">
-			<h1>{name}</h1>
+			<div className="align-items-center d-md-flex justify-content-between mb-3 mr-4">
+				<h1>{name}</h1>
+				<ClayTabs className="h-100 nav nav-segment nav-tabs">
+					<ClayTabs.Item
+						active={opportunitiesFilter === openOpportunitiesFilter}
+						className="nav-item"
+						onClick={() =>
+							setOpportunitiesFilter(openOpportunitiesFilter)
+						}
+					>
+						Open
+					</ClayTabs.Item>
+					<ClayTabs.Item
+						active={
+							opportunitiesFilter === closedOpportunitiesFilter
+						}
+						className="nav-item"
+						onClick={() =>
+							setOpportunitiesFilter(closedOpportunitiesFilter)
+						}
+					>
+						Closed
+					</ClayTabs.Item>
+				</ClayTabs>
+			</div>
 
 			<TableHeader>
 				<div className="d-flex">

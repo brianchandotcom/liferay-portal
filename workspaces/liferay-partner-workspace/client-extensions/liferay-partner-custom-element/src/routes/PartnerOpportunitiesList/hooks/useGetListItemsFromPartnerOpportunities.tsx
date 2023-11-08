@@ -66,15 +66,22 @@ export default function useGetListItemsFromPartnerOpportunities(
 				[PartnerOpportunitiesColumnKey.TYPE]: item.type
 					? item.type
 					: '- ',
-				[PartnerOpportunitiesColumnKey.CURRENCY]: item.currency?.name
-					? item.currency?.name
-					: '- ',
+				[PartnerOpportunitiesColumnKey.CURRENCY]:
+					item.currency && item.currency.name
+						? item.currency.name
+						: '- ',
 				[PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR]:
-					item.subscriptionArr && item.currency.key
+					item.subscriptionArr && item.currency && item.currency.key
 						? getIntlNumberFormat(item.currency).format(
 								item.subscriptionArr
 						  )
 						: '- ',
+				[PartnerOpportunitiesColumnKey.GROWTH_ARR]: item.growthArr
+					? item.growthArr
+					: '- ',
+				[PartnerOpportunitiesColumnKey.HAS_RENEWAL]: item.hasRenewal
+					? item.hasRenewal
+					: false,
 			})),
 		[swrResponse.data?.items]
 	);

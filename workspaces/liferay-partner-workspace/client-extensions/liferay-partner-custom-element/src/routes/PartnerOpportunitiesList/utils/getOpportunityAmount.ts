@@ -11,7 +11,7 @@ export default function getOpportunityAmount(
 	amount?: number,
 	currency?: LiferayPicklist
 ) {
-	if (amount) {
+	if (amount && currency) {
 		return {
 			[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: getIntlNumberFormat(
 				currency

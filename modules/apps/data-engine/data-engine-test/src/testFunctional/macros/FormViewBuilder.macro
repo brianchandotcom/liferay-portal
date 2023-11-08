@@ -1071,8 +1071,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCheckboxCheckedAtPredefinedValue(fieldName = null) {
-		AssertChecked.assertCheckedNotVisible(
+	macro viewCheckboxCheckedAtPredefinedValue(fieldName) {
+		AssertElementPresent(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED");
 	}

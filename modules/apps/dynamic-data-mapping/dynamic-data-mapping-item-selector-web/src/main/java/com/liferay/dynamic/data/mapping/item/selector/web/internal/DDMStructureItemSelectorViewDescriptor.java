@@ -155,6 +155,11 @@ public class DDMStructureItemSelectorViewDescriptor
 	}
 
 	@Override
+	public boolean isMultipleSelection() {
+		return _ddmStructureItemSelectorCriterion.isMultiSelection();
+	}
+
+	@Override
 	public boolean isShowBreadcrumb() {
 		return false;
 	}

@@ -64,7 +64,7 @@ public class ObjectDefinitionsControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private final ObjectDefinition _objectDefinition;

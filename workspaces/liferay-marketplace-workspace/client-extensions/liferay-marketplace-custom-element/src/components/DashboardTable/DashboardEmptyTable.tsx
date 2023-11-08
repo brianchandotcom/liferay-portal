@@ -23,7 +23,7 @@ export function DashboardEmptyTable({
 	title: string;
 }) {
 	return (
-		<div className="dashboard-empty-state">
+		<div className="dashboard-empty-state py-6">
 			<div className="dashboard-empty-state-background">
 				<img
 					alt={title}
@@ -34,7 +34,7 @@ export function DashboardEmptyTable({
 
 			<div className="dashboard-empty-state-title">{title}</div>
 
-			<div className="dashboard-empty-state-description mb-4">
+			<div className="dashboard-empty-state-description">
 				{description1 && (
 					<span className="dashboard-empty-state-description-first">
 						{description1}

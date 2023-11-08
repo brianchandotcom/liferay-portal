@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export const DEFAULT_LANGUAGE_ID: string = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 export const BUSINESS_TYPES_TO_SYMBOLS = {
 	'Aggregation': 'text',
 	'Attachment': 'file-script',

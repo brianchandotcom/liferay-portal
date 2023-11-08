@@ -7,6 +7,7 @@ import DownloadPDFReport, {
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
+import {DownloadIndividualReportModal} from 'shared/components/download-report/DownloadIndividualReportModal';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
@@ -71,9 +72,10 @@ const NAV_ITEMS = [
 ];
 
 const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
+	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
 	const {channelId, groupId} = useParams();
-	const dataSourceStates = useDataSource();
+	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 
 	return (
 		<BasePage
@@ -99,7 +101,7 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 					routeParams={{channelId, groupId}}
 				/>
 			</BasePage.Header>
-			{getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_INDIVIDUALS && (
+			{matchedRoute === Routes.CONTACTS_INDIVIDUALS && (
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadPDFReport
@@ -115,6 +117,15 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 							title={Liferay.Language.get(
 								'individuals-dashboard'
 							)}
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
+			{matchedRoute === Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadIndividualReportModal
+							disabled={dataSourceStates.empty}
 						/>
 					</div>
 				</BasePage.SubHeader>

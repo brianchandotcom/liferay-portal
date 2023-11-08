@@ -67,7 +67,7 @@ export function PurchasedAppsDashboardTableRow({
 						</span>
 
 						{version && (
-							<span className="dashboard-table-row-name-version mt-2">
+							<span className="dashboard-table-row-name-version ml-2 mt-2">
 								{version}
 							</span>
 						)}

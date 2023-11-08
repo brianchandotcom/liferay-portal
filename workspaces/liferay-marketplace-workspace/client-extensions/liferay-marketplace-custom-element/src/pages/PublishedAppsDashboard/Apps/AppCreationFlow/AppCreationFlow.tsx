@@ -5,23 +5,27 @@
 
 import {useState} from 'react';
 
-import {AppFlowList} from '../../components/NewAppFlowList/AppFlowList';
-import {NewAppToolBar} from '../../components/NewAppToolBar/NewAppToolBar';
-import {ChoosePricingModelPage} from '../ChoosePricingModelPage/ChoosePricingModelPage';
-import {CreateNewAppPage} from '../CreateNewAppPage/CreateNewAppPage';
-import {InformLicensingTermsPage} from '../InformLicensingTermsPage/InformLicensingTermsPage';
-import {InformLicensingTermsPricePage} from '../InformLicensingTermsPage/InformLicensingTermsPricePage';
-import {ProvideAppBuildPage} from '../ProvideAppBuildPage/ProvideAppBuildPage';
-import {ProvideAppSupportAndHelpPage} from '../ProvideAppSupportAndHelpPage/ProvideAppSupportAndHelpPage';
-import {ProvideVersionDetailsPage} from '../ProvideVersionDetailsPage/ProvideVersionDetailsPage';
-import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
-import {CustomizeAppStorefrontPage} from '../StorefrontPage/CustomizeAppStorefrontPage';
+import {AppFlowList} from '../../../../components/NewAppFlowList/AppFlowList';
+import {NewAppToolBar} from '../../../../components/NewAppToolBar/NewAppToolBar';
+import {ChoosePricingModelPage} from '../../../ChoosePricingModelPage/ChoosePricingModelPage';
+import {CreateNewAppPage} from '../../../CreateNewAppPage/CreateNewAppPage';
+import {InformLicensingTermsPage} from '../../../InformLicensingTermsPage/InformLicensingTermsPage';
+import {InformLicensingTermsPricePage} from '../../../InformLicensingTermsPage/InformLicensingTermsPricePage';
+import {ProvideAppBuildPage} from '../../../ProvideAppBuildPage/ProvideAppBuildPage';
+import {ProvideAppSupportAndHelpPage} from '../../../ProvideAppSupportAndHelpPage/ProvideAppSupportAndHelpPage';
+import {ProvideVersionDetailsPage} from '../../../ProvideVersionDetailsPage/ProvideVersionDetailsPage';
+import {ReviewAndSubmitAppPage} from '../../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+import {CustomizeAppStorefrontPage} from '../../../StorefrontPage/CustomizeAppStorefrontPage';
 import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
-import {Liferay} from '../../liferay/liferay';
-import {useAppContext} from '../../manage-app-state/AppManageState';
-import {DefineAppProfilePage} from '../DefineAppProfilePage/DefineAppProfilePage';
+
+import {useParams} from 'react-router-dom';
+
+import {Liferay} from '../../../../liferay/liferay';
+import {useAppContext} from '../../../../manage-app-state/AppManageState';
+import {DefineAppProfilePage} from '../../../DefineAppProfilePage/DefineAppProfilePage';
+import {useAccountCached} from '../../PublishedAppsDashboardOutlet';
 
 type SetAppFlowListStateProps = {
 	checkedItems?: string[];
@@ -34,6 +38,8 @@ export function AppCreationFlow() {
 		initialFLowListItems
 	);
 	const [currentFlow, setCurrentFlow] = useState('create');
+	const {accountId} = useParams();
+	const account = useAccountCached([], accountId as string);
 
 	const setAppFlowListState = ({
 		checkedItems,
@@ -69,7 +75,7 @@ export function AppCreationFlow() {
 	return (
 		<div className="app-creation-flow-container">
 			<NewAppToolBar
-				accountName="Acme Co."
+				accountName={account?.name}
 				enableDropdown={currentFlow === 'submit'}
 			/>
 
@@ -246,8 +252,7 @@ export function AppCreationFlow() {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -320,8 +325,7 @@ export function AppCreationFlow() {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

@@ -50,6 +50,50 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-150370 | Test Summary: Verify the page subtitles"
+	@priority = 3
+	test AssertPageSubtitles {
+		task ("Given the user is given the Administrator role") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("And the use go inside a project") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2Utils.onboardingFlow();
+		}
+
+		task ("When go to fulfill the Analytics form") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${product});
+
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then assert the message of almost activating") {
+			AssertElementPresent(locator1 = "CP2AnalyticsCloudSetup#SET_UP_AC");
+
+			Button.click(button = "Done");
+
+			AssertElementPresent(locator1 = "CP2AnalyticsCloudSetup#SET_UP_AC_SUBTITLE");
+		}
+	}
+
 	@description = "Automation ID: LPS-150373 | Test Summary: Verify if the card has the following details Active: Activation form status"
 	@ignore = "true"
 	@priority = 5
@@ -254,49 +298,4 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-150370 | Test Summary: Verify the page subtitles"
-	@priority = 3
-	test AssertPageSubtitles {
-		task ("Given the user is given the Administrator role") {
-			Account.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = ${testAccount});
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		} 
-
-		task ("And the use go inside a project") { 
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-
-			CustomerPortal.search(searchItem = ${testAccount});
-
-			CustomerPortal.enterOnProject(title = ${testAccount});
-
-			CP2Utils.onboardingFlow();
-		}
-
-		task("When go to fulfill the Analytics form") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = ${product});
-
-			CustomerPortal.clickOnFinishActivationButton();
-
-			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
-
-			Button.click(button = "Submit");
-		}
-
-		task("Then assert the message of almost activating"){
-			AssertElementPresent(locator1 = "CP2AnalyticsCloudSetup#SET_UP_AC");
-
-			Button.click(button = "Done");
-
-			AssertElementPresent(locator1 = "CP2AnalyticsCloudSetup#SET_UP_AC_SUBTITLE");
-		}
-		
-
-	}
 }

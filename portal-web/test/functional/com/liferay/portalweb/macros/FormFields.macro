@@ -658,10 +658,9 @@ definition {
 	macro editValidationTargetArgument(validationErrorMessage = null, validationArgument = null, validationInput = null) {
 		Click(locator1 = "FormFields#VALIDATION_ARGUMENT");
 
-		AssertClick(
+		Click.javaScriptClick(
 			key_validationArgument = ${validationArgument},
-			locator1 = "FormFields#VALIDATION_ARGUMENT_OPTION_TARGET_INPUT",
-			value1 = ${validationArgument});
+			locator1 = "FormFields#VALIDATION_ARGUMENT_OPTION_TARGET_INPUT");
 
 		if (isSet(validationInput)) {
 			Type(

@@ -32,8 +32,6 @@ import java.util.Objects;
  */
 public class ObjectDefinitionResourcePermissionUtil {
 
-	public static final int INITIAL_WEIGHT = 3;
-
 	public static void populateResourceActions(
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinition objectDefinition,
@@ -150,7 +148,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 			return StringPool.BLANK;
 		}
 
-		int weight = INITIAL_WEIGHT;
+		int weight = _INITIAL_WEIGHT;
 
 		Tree tree = treeFactory.create(
 			objectDefinition.getObjectDefinitionId());
@@ -208,5 +206,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 		return modelResources;
 	}
+
+	private static final int _INITIAL_WEIGHT = 3;
 
 }

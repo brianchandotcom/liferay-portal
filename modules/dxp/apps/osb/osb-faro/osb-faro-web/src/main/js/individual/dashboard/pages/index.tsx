@@ -4,9 +4,11 @@ import BundleRouter from 'route-middleware/BundleRouter';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
-import {Routes} from 'shared/util/router';
+import {DownloadIndividualReportModal} from 'shared/components/download-report/DownloadIndividualReportModal';
+import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
+import {useDataSource} from 'shared/hooks/useDataSource';
 
 const Distribution = lazy(
 	() =>
@@ -67,8 +69,10 @@ const NAV_ITEMS = [
 ];
 
 const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
+	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
 	const {channelId, groupId} = useParams();
+	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 
 	return (
 		<BasePage
@@ -94,6 +98,15 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 					routeParams={{channelId, groupId}}
 				/>
 			</BasePage.Header>
+			{matchedRoute === Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadIndividualReportModal
+							disabled={dataSourceStates.empty}
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
 
 			<Suspense fallback={<Loading />}>
 				<Switch>

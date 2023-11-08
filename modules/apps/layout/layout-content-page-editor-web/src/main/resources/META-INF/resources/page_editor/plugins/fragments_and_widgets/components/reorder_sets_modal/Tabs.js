@@ -106,7 +106,7 @@ export function Tabs({updateLists}) {
 						className="p-0"
 						id={getTabPanelId(id)}
 						key={id}
-						tabIndex={Liferay.FeatureFlags['LPS-196420'] ? -1 : 0}
+						tabIndex={0}
 					>
 						{items ? (
 							<ItemList

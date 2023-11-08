@@ -193,7 +193,7 @@ export function KeyboardDragAndDropContextProvider({
 				onKeyDown={onKeyDown}
 				ref={itemListElementRef}
 				role="list"
-				tabIndex={Liferay.FeatureFlags['LPS-196420'] ? 0 : -1}
+				tabIndex={0}
 			>
 				{children}
 			</div>

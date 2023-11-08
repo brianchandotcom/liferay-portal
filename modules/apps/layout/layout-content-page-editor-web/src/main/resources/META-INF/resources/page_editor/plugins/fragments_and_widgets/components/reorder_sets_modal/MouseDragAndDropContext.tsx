@@ -71,7 +71,7 @@ export function useMouseDropTarget(
 		drop(source, monitor) {
 			targetRectRef.current = null;
 
-			if (Liferay.FeatureFlags['LPS-196420'] && monitor.canDrop()) {
+			if (monitor.canDrop()) {
 				onDropItem(source.id, itemIndex, dragOverPosition);
 			}
 		},
@@ -82,24 +82,18 @@ export function useMouseDropTarget(
 				return;
 			}
 
-			if (Liferay.FeatureFlags['LPS-196420']) {
-				targetRectRef.current =
-					targetRectRef.current ||
-					targetRef.current!.getBoundingClientRect();
+			targetRectRef.current =
+				targetRectRef.current ||
+				targetRef.current!.getBoundingClientRect();
 
-				const targetMiddlePosition =
-					targetRectRef.current!.top +
-					targetRectRef.current!.height / 2;
+			const targetMiddlePosition =
+				targetRectRef.current!.top + targetRectRef.current!.height / 2;
 
-				if (monitor.getClientOffset()!.y < targetMiddlePosition) {
-					setDragOverPosition(DRAG_OVER_POSITIONS.top);
-				}
-				else {
-					setDragOverPosition(DRAG_OVER_POSITIONS.bottom);
-				}
+			if (monitor.getClientOffset()!.y < targetMiddlePosition) {
+				setDragOverPosition(DRAG_OVER_POSITIONS.top);
 			}
-			else if (monitor.canDrop()) {
-				onDropItem(source.id, itemIndex);
+			else {
+				setDragOverPosition(DRAG_OVER_POSITIONS.bottom);
 			}
 		},
 	});

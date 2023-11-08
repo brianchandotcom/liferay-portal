@@ -37,20 +37,16 @@ export function ItemList({
 
 		let updatedNextIndex = nextIndex;
 
-		if (Liferay.FeatureFlags['LPS-196420']) {
-			if (dragOverPosition === DRAG_OVER_POSITIONS.bottom) {
-				updatedNextIndex =
-					updatedNextIndex < nextItems.length
-						? updatedNextIndex + 1
-						: updatedNextIndex;
-			}
+		if (dragOverPosition === DRAG_OVER_POSITIONS.bottom) {
+			updatedNextIndex =
+				updatedNextIndex < nextItems.length
+					? updatedNextIndex + 1
+					: updatedNextIndex;
+		}
 
-			if (updatedNextIndex > index) {
-				updatedNextIndex =
-					updatedNextIndex > 0
-						? updatedNextIndex - 1
-						: updatedNextIndex;
-			}
+		if (updatedNextIndex > index) {
+			updatedNextIndex =
+				updatedNextIndex > 0 ? updatedNextIndex - 1 : updatedNextIndex;
 		}
 
 		nextItems.splice(index, 1);
@@ -67,7 +63,6 @@ export function ItemList({
 					index={index}
 					item={item}
 					key={item.id}
-					numberOfItems={items.length}
 					onDropItem={onDropItem}
 				/>
 			))}

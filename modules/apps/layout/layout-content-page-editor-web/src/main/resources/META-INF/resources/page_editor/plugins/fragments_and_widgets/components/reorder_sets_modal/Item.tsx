@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayCard from '@clayui/card';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {ContentCol} from '@clayui/layout';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
 import React, {RefObject} from 'react';
 
 import {
@@ -28,7 +26,6 @@ export interface Item {
 interface ItemProps {
 	index: number;
 	item: Item;
-	numberOfItems: number;
 	onDropItem: (
 		itemId: Item['id'],
 		index: number,
@@ -36,7 +33,7 @@ interface ItemProps {
 	) => void;
 }
 
-export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
+export function Item({index, item, onDropItem}: ItemProps) {
 	const dragButtonDescriptionId = useId();
 	const itemDescriptionId = useId();
 	const {name} = item;
@@ -85,38 +82,31 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 					<ClayCard.Body className="px-0">
 						<ClayCard.Row className="align-items-center">
 							<ContentCol gutters>
-								{Liferay.FeatureFlags['LPS-196420'] ? (
-									<ClayButton
-										aria-labelledby={`${dragButtonDescriptionId} ${itemDescriptionId}`}
-										data-item-id={item.id}
-										displayType="unstyled"
-										monospaced
-										ref={
-											(keyboardDragHandlerRef as unknown) as RefObject<
-												HTMLButtonElement
-											>
-										}
-										size="xs"
-										tabIndex={-1}
-									>
-										<ClayIcon
-											className="text-secondary"
-											symbol="drag"
-										/>
-
-										<span
-											className="sr-only"
-											id={dragButtonDescriptionId}
+								<ClayButton
+									aria-labelledby={`${dragButtonDescriptionId} ${itemDescriptionId}`}
+									data-item-id={item.id}
+									displayType="unstyled"
+									monospaced
+									ref={
+										(keyboardDragHandlerRef as unknown) as RefObject<
+											HTMLButtonElement
 										>
-											{Liferay.Language.get('reorder')}
-										</span>
-									</ClayButton>
-								) : (
+									}
+									size="xs"
+									tabIndex={-1}
+								>
 									<ClayIcon
 										className="text-secondary"
 										symbol="drag"
 									/>
-								)}
+
+									<span
+										className="sr-only"
+										id={dragButtonDescriptionId}
+									>
+										{Liferay.Language.get('reorder')}
+									</span>
+								</ClayButton>
 							</ContentCol>
 
 							<ContentCol expand>
@@ -129,58 +119,10 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 									{name}
 								</ClayCard.Description>
 							</ContentCol>
-
-							{!Liferay.FeatureFlags['LPS-196420'] && (
-								<ContentCol gutters>
-									<ReorderDropdown
-										index={index}
-										item={item}
-										numberOfItems={numberOfItems}
-										onDropItem={onDropItem}
-									/>
-								</ContentCol>
-							)}
 						</ClayCard.Row>
 					</ClayCard.Body>
 				</ClayCard>
 			</div>
 		</div>
-	);
-}
-
-export function ReorderDropdown({
-	index,
-	item,
-	numberOfItems,
-	onDropItem,
-}: ItemProps) {
-	const items = [
-		{
-			disabled: index === 0,
-			label: Liferay.Language.get('move-up'),
-			onClick: () => onDropItem(item.id, index - 1),
-			symbolLeft: 'angle-up',
-		},
-		{
-			disabled: index === numberOfItems - 1,
-			label: Liferay.Language.get('move-down'),
-			onClick: () => onDropItem(item.id, index + 1),
-			symbolLeft: 'angle-down',
-		},
-	];
-
-	return (
-		<ClayDropDownWithItems
-			items={items}
-			trigger={
-				<ClayButtonWithIcon
-					aria-label={sub(Liferay.Language.get('move-x'), item.name)}
-					className="text-secondary"
-					displayType="unstyled"
-					size="sm"
-					symbol="ellipsis-v"
-				/>
-			}
-		/>
 	);
 }

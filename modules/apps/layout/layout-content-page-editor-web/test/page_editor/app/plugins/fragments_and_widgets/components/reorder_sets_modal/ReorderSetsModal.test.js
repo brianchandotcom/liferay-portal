@@ -223,68 +223,58 @@ describe('ReorderSetsModal', () => {
 		expect(mockDispatch).not.toBeCalled();
 	});
 
-	describe('LPS-196420 accessible drag and drop', () => {
-		beforeEach(() => {
-			Liferay.FeatureFlags['LPS-196420'] = true;
+	it('allows focusing drag and drop icons', () => {
+		const {getByRole} = renderComponent();
+
+		act(() => jest.runAllTimers());
+
+		const reorderButton = getByRole('button', {
+			name: /reorder category 1/i,
 		});
 
-		afterEach(() => {
-			Liferay.FeatureFlags['LPS-196420'] = false;
+		reorderButton.focus();
+		expect(document.activeElement).toBe(reorderButton);
+	});
+
+	it('moves the focus using arrow keys', async () => {
+		const {getByRole} = renderComponent();
+
+		act(() => jest.runAllTimers());
+
+		const reorderButton = getByRole('button', {
+			name: /reorder category 1/i,
 		});
 
-		it('allows focusing drag and drop icons', () => {
-			const {getByRole} = renderComponent();
+		reorderButton.focus();
+		dispatchKey(reorderButton, 'keydown', 'ArrowDown');
 
-			act(() => jest.runAllTimers());
+		expect(document.activeElement).toBe(
+			getByRole('button', {
+				name: /reorder category 2/i,
+			})
+		);
+	});
 
-			const reorderButton = getByRole('button', {
-				name: /reorder category 1/i,
-			});
+	it('allows moving items using keyboard', () => {
+		const {getAllByText, getByRole, getByText} = renderComponent();
 
-			reorderButton.focus();
-			expect(document.activeElement).toBe(reorderButton);
+		act(() => jest.runAllTimers());
+
+		const reorderButton = getByRole('button', {
+			name: /reorder category 1/i,
 		});
 
-		it('moves the focus using arrow keys', async () => {
-			const {getByRole} = renderComponent();
+		reorderButton.focus();
 
-			act(() => jest.runAllTimers());
+		dispatchKey(reorderButton, 'keyup', 'Enter');
+		expect(getByText(/use-up-and-down-arrows/i)).toBeInTheDocument();
+		dispatchKey(reorderButton, 'keyup', 'ArrowDown');
 
-			const reorderButton = getByRole('button', {
-				name: /reorder category 1/i,
-			});
+		getAllByText(/targeting-x-of-x/i).forEach((element) =>
+			expect(element).toBeInTheDocument()
+		);
 
-			reorderButton.focus();
-			dispatchKey(reorderButton, 'keydown', 'ArrowDown');
-
-			expect(document.activeElement).toBe(
-				getByRole('button', {
-					name: /reorder category 2/i,
-				})
-			);
-		});
-
-		it('allows moving items using keyboard', () => {
-			const {getAllByText, getByRole, getByText} = renderComponent();
-
-			act(() => jest.runAllTimers());
-
-			const reorderButton = getByRole('button', {
-				name: /reorder category 1/i,
-			});
-
-			reorderButton.focus();
-
-			dispatchKey(reorderButton, 'keyup', 'Enter');
-			expect(getByText(/use-up-and-down-arrows/i)).toBeInTheDocument();
-			dispatchKey(reorderButton, 'keyup', 'ArrowDown');
-
-			getAllByText(/targeting-x-of-x/i).forEach((element) =>
-				expect(element).toBeInTheDocument()
-			);
-
-			dispatchKey(reorderButton, 'keyup', 'Enter');
-			expect(getByText(/x-placed-on-x-of-x/i)).toBeInTheDocument();
-		});
+		dispatchKey(reorderButton, 'keyup', 'Enter');
+		expect(getByText(/x-placed-on-x-of-x/i)).toBeInTheDocument();
 	});
 });

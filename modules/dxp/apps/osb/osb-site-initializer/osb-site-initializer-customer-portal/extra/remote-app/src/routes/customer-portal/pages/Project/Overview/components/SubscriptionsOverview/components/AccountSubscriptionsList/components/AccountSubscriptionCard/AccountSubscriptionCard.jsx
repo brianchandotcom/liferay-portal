@@ -26,6 +26,7 @@ import {
 import getDateCustomFormat from '../../../../../../../../../../../common/utils/getDateCustomFormat';
 
 const AccountSubscriptionCard = ({
+	IsPortalOrDXP,
 	loading,
 	logoPath: IconSVG,
 	onClick,
@@ -36,7 +37,8 @@ const AccountSubscriptionCard = ({
 
 	const {data: accountSubscriptionUsageData} = useGetAccountSubscriptionUsage(
 		accountSubscription?.accountKey,
-		accountSubscription?.productKey
+		accountSubscription?.productKey,
+		IsPortalOrDXP
 	);
 
 	const currentConsumption = useMemo(
@@ -58,7 +60,7 @@ const AccountSubscriptionCard = ({
 			</>
 		),
 		PurchasedAndProvisioned: (
-			<p className="d-flex justify-content-start m-0">
+			<span className="d-flex justify-content-start m-0">
 				{currentConsumption !== undefined
 					? `${currentConsumption} ${i18n.translate('of')} ${
 							accountSubscription?.quantity
@@ -66,7 +68,7 @@ const AccountSubscriptionCard = ({
 					: `0 ${i18n.translate('of')} ${
 							accountSubscription?.quantity
 					  }`}
-			</p>
+			</span>
 		),
 	};
 
@@ -222,7 +224,7 @@ const AccountSubscriptionCard = ({
 						<Skeleton className="mb-1" height={13} width={80} />
 					) : (
 						keysProvisionedContentInstanceSize && (
-							<p className="cp-account-subscription-card-info-bottom mb-0">
+							<div className="cp-account-subscription-card-info-bottom mb-0">
 								<p className="title-info-bottom">{`${i18n.translate(
 									'instance-size'
 								)}`}</p>
@@ -230,7 +232,7 @@ const AccountSubscriptionCard = ({
 								<p className="description-info-bottom">
 									{keysProvisionedContentInstanceSize}
 								</p>
-							</p>
+							</div>
 						)
 					)}
 
@@ -252,7 +254,7 @@ const AccountSubscriptionCard = ({
 						<Skeleton className="mb-3" height={24} width={160} />
 					) : (
 						accountSubscription.startDate && (
-							<p className="cp-account-subscription-card-info-bottom mb-0">
+							<div className="cp-account-subscription-card-info-bottom mb-0">
 								<p className="title-info-bottom">{`${i18n.translate(
 									'start-date'
 								)}`}</p>
@@ -263,7 +265,7 @@ const AccountSubscriptionCard = ({
 										FORMAT_DATE_TYPES.day2DMonthSYearN
 									)}
 								</p>
-							</p>
+							</div>
 						)
 					)}
 
@@ -271,7 +273,7 @@ const AccountSubscriptionCard = ({
 						<Skeleton className="mb-3" height={24} width={160} />
 					) : (
 						accountSubscription.endDate && (
-							<p className="cp-account-subscription-card-info-bottom mb-0">
+							<div className="cp-account-subscription-card-info-bottom mb-0">
 								<p className="title-info-bottom">{`${i18n.translate(
 									'expiration-date'
 								)}`}</p>
@@ -282,7 +284,7 @@ const AccountSubscriptionCard = ({
 										FORMAT_DATE_TYPES.day2DMonthSYearN
 									)}
 								</p>
-							</p>
+							</div>
 						)
 					)}
 				</div>

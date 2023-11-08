@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../../../common/I18n';
 import Skeleton from '../../../../../../../common/components/Skeleton';
@@ -13,6 +13,8 @@ import useAccountSubscriptionGroups from './hooks/useAccountSubscriptionGroups';
 import useAccountSubscriptions from './hooks/useAccountSubscriptions';
 
 const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
+	const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 	const [
 		{lastAccountSubcriptionGroup, setLastAccountSubscriptionGroup},
@@ -46,6 +48,11 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 			selectedStatus ? selectedStatus.join("', '") : undefined
 		);
 
+	const subscriptionsGroupSelected =
+		accountSubscriptionGroups?.items[selectedItemIndex]?.name;
+
+	const portalOrDXPSubscriptions = ['Portal', 'DXP'];
+
 	return (
 		<div>
 			{accountSubscriptionGroupsLoading ? (
@@ -68,9 +75,14 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 						loading={accountSubscriptionGroupsLoading}
 						onClickDropdownItem={handleDropdownOnClick}
 						onSelectNavItem={setLastAccountSubscriptionGroup}
+						selectedItemIndex={selectedItemIndex}
+						setSelectedItemIndex={setSelectedItemIndex}
 					/>
 
 					<AccountSubscriptionsList
+						IsPortalOrDXP={portalOrDXPSubscriptions.includes(
+							subscriptionsGroupSelected
+						)}
 						accountKey={koroneikiAccount?.accountKey}
 						accountSubscriptionGroup={lastAccountSubcriptionGroup}
 						accountSubscriptions={accountSubscriptions}

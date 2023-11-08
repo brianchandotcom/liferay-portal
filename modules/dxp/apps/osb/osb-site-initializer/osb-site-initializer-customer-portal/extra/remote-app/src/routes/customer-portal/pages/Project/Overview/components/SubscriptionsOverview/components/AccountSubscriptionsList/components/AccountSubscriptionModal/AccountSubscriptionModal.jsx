@@ -22,6 +22,7 @@ import getRows from './utils/getRows';
 const accountSubscriptionGroupNames = ['DXP', 'Portal'];
 
 const AccountSubscriptionModal = ({
+	IsPortalOrDXP,
 	accountKey,
 	accountSubscriptionGroup,
 	accountSubscriptionProductKey,
@@ -43,7 +44,8 @@ const AccountSubscriptionModal = ({
 		loading: accountSubscriptionUsageLoading,
 	} = useGetAccountSubscriptionUsage(
 		accountKey,
-		accountSubscriptionProductKey
+		accountSubscriptionProductKey,
+		IsPortalOrDXP
 	);
 
 	const totalCount = data?.orderItems.totalCount;

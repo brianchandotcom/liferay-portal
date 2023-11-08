@@ -12,6 +12,8 @@ const SubscriptionsNavbar = ({
 	loading,
 	onClickDropdownItem,
 	onSelectNavItem,
+	selectedItemIndex,
+	setSelectedItemIndex,
 }) => (
 	<div>
 		<AccountSubscriptionGroupsNav
@@ -19,6 +21,8 @@ const SubscriptionsNavbar = ({
 			disabled={disabled}
 			loading={loading}
 			onSelect={onSelectNavItem}
+			selectedItemIndex={selectedItemIndex}
+			setSelectedItemIndex={setSelectedItemIndex}
 		/>
 
 		<SubscriptionStatusDropdown

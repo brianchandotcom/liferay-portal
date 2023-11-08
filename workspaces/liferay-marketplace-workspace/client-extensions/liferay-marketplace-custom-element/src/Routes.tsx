@@ -4,10 +4,10 @@
  */
 
 import {Liferay} from './liferay/liferay';
-import {AppCreationFlow} from './pages/AppCreationFlow/AppCreationFlow';
 import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
 import GetAppPage from './pages/GetAppPage/GetAppPage';
 import {NextStepPage} from './pages/NextStepPage/NextStepPage';
+import {AppCreationFlow} from './pages/PublishedAppsDashboard/Apps/AppCreationFlow/AppCreationFlow';
 import PublishedAppsDashboardRouter from './pages/PublishedAppsDashboard/PublishedAppsDashboardRouter';
 import PurchasedAppsDashboardRouter from './pages/PurchasedAppsDashboard/PurchasedAppsDashboardRouter';
 import PurchasedSolutions from './pages/PurchasedSolutions/PurchasedSolutions';
@@ -32,7 +32,7 @@ export default function AppRoutes({route}: AppRoutesProps) {
 	const Route = Routes[route];
 
 	if (!Liferay.ThemeDisplay.isSignedIn() || !Route) {
-		return null;
+		return <h1>Page not found</h1>;
 	}
 
 	return <Route />;

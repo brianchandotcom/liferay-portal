@@ -43,10 +43,11 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 		}
 
 		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-			getActiveMQBrokerURL());
+			getJMSBrokerURL());
 
 		try {
-			_connection = connectionFactory.createConnection();
+			_connection = connectionFactory.createConnection(
+				getJMSUserName(), getJMSUserPassword());
 
 			_connection.start();
 		}
@@ -185,8 +186,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 			Session session = _connection.createSession(
 				false, Session.AUTO_ACKNOWLEDGE);
 
-			Queue queue = session.createQueue(
-				getActiveMQJRPToJethr0QueueName());
+			Queue queue = session.createQueue(getJMSJRPToJethr0QueueName());
 
 			MessageProducer messageProducer = session.createProducer(queue);
 
@@ -225,18 +225,18 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 		}
 
 		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-			getActiveMQBrokerURL());
+			getJMSBrokerURL());
 
 		try {
-			Connection connection = connectionFactory.createConnection();
+			Connection connection = connectionFactory.createConnection(
+				getJMSUserName(), getJMSUserPassword());
 
 			connection.start();
 
 			Session session = connection.createSession(
 				false, Session.AUTO_ACKNOWLEDGE);
 
-			Queue queue = session.createQueue(
-				getActiveMQJethr0ToJRPQueueName());
+			Queue queue = session.createQueue(getJMSJethr0ToJRPQueueName());
 
 			MessageConsumer messageConsumer = session.createConsumer(
 				queue, jethr0BuildUpdater.getMessageSelector());
@@ -284,18 +284,6 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 		_environment = _getEnvironment();
 	}
 
-	protected abstract String getActiveMQBrokerURL();
-
-	protected abstract String getActiveMQJethr0ToJRPQueueName();
-
-	protected abstract String getActiveMQJRPToJethr0QueueName();
-
-	protected abstract URL getActiveMQURL();
-
-	protected abstract String getActiveMQUserName();
-
-	protected abstract String getActiveMQUserPassword();
-
 	protected String getBuildPropertyString(String buildPropertyName) {
 		Environment environment = getEnvironment();
 
@@ -316,6 +304,16 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 			throw new RuntimeException(malformedURLException);
 		}
 	}
+
+	protected abstract String getJMSBrokerURL();
+
+	protected abstract String getJMSJethr0ToJRPQueueName();
+
+	protected abstract String getJMSJRPToJethr0QueueName();
+
+	protected abstract String getJMSUserName();
+
+	protected abstract String getJMSUserPassword();
 
 	protected abstract URL getLiferayDXPURL();
 

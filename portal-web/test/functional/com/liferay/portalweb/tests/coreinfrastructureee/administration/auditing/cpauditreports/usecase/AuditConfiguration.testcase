@@ -82,10 +82,7 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "Enabled");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		AssertElementNotPresent(locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION");
 
@@ -109,10 +106,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Audit");
+		Audit.openAuditAdmin();
 
 		AssertTextEquals(
 			key_resourceAction = "LOGIN",

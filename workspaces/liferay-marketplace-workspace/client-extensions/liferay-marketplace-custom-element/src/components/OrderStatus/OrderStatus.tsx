@@ -22,7 +22,7 @@ type OrderStatusProps = {
 const OrderStatus = ({children, orderStatus}: OrderStatusProps) => (
 	<>
 		<ClayIcon
-			className={classNames('mx-2 order-status-icon', {
+			className={classNames('mr-2 order-status-icon', {
 				'order-status-icon-completed':
 					orderStatus === OrderStatuses.COMPLETED,
 				'order-status-icon-pending':

@@ -1953,6 +1953,11 @@ public class JournalDisplayContext {
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
 
+		if (isNavigationStructure()) {
+			searchContext.setEntryClassNames(
+				new String[] {JournalArticle.class.getName()});
+		}
+
 		if (Objects.equals(_getSearchLocation(), "current-folder")) {
 			searchContext.setFolderIds(
 				Collections.singletonList(getFolderId()));

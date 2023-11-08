@@ -24,7 +24,7 @@ public class ContentSecurityPolicyConfigurationUtil {
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			(ContentSecurityPolicyConfiguration)httpServletRequest.getAttribute(
-				_CONFIGURATION);
+				ContentSecurityPolicyConfigurationUtil.class.getName());
 
 		if (contentSecurityPolicyConfiguration != null) {
 			return contentSecurityPolicyConfiguration;
@@ -50,13 +50,10 @@ public class ContentSecurityPolicyConfigurationUtil {
 		}
 
 		httpServletRequest.setAttribute(
-			_CONFIGURATION, contentSecurityPolicyConfiguration);
+			ContentSecurityPolicyConfigurationUtil.class.getName(),
+			contentSecurityPolicyConfiguration);
 
 		return contentSecurityPolicyConfiguration;
 	}
-
-	private static final String _CONFIGURATION =
-		ContentSecurityPolicyConfigurationUtil.class.getName() +
-			"CONFIGURATION";
 
 }

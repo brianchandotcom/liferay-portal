@@ -35,6 +35,16 @@
 	<td>//*[contains(@class, ' modal-dialog')]//*[contains(text(),'already submitted the Analytics Cloud')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SET_UP_AC</td>
+	<td>//div[contains(.,'Thank you for submitting this request!')]/p[contains(.,"Your Analytics Cloud workspace")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SET_UP_AC_SUBTITLE</td>
+	<td>//div//p[normalize-space(text())='Your Analytics Cloud workspace is being set up and will be available soon.']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

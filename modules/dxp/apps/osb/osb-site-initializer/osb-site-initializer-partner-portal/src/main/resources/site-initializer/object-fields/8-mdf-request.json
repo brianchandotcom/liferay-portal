@@ -360,6 +360,10 @@
 										"key": "marketingDirectorReview"
 									}
 								]
+							},
+							{
+								"key": "completed",
+								"objectStateTransitions": []
 							}
 						]
 					}

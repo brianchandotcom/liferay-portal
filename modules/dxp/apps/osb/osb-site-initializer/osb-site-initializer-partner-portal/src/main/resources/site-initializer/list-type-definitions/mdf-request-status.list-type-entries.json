@@ -62,5 +62,13 @@
 			"en-US": "Draft"
 		},
 		"type": "string"
+	},
+	{
+		"key": "completed",
+		"name": "Completed",
+		"name_i18n": {
+			"en-US": "Completed"
+		},
+		"type": "string"
 	}
 ]

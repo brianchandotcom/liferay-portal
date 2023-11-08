@@ -175,10 +175,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 						throw new ObjectEntryValuesException.InvalidObjectField(
 							null,
-							"Path parameters are not supported by API " +
-								"endpoints of the POST type",
-							"path-parameters-are-not-supported-by-api-" +
-								"endpoints-of-the-post-type");
+							"Path parameters are not supported by POST API " +
+								"endpoints",
+							"path-parameters-are-not-supported-by-post-api-" +
+								"endpoints");
 					}
 
 					_validateRegularPath(objectEntry, pathString);
@@ -205,10 +205,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 				if (Objects.equals(method, Http.Method.POST)) {
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"POST API endpoints must have a \"singleElement\" " +
-							"retrieveType",
-						"post-api-endpoints-must-have-a-\"singleElement\"-" +
-							"retrieveType");
+						"POST API endpoints retrieve type must be " +
+							"\"singleElement\"",
+						"post-api-endpoints-retrieve-type-must-be-" +
+							"\"singleElement\"");
 				}
 
 				_validateRegularPath(objectEntry, pathString);

@@ -759,8 +759,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"Path parameters are not supported by API endpoints of the " +
-					"POST type."
+				"Path parameters are not supported by POST API endpoints."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -802,8 +801,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"Path parameters are not supported by API endpoints of the " +
-					"POST type."
+				"Path parameters are not supported by POST API endpoints."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -841,7 +839,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"POST API endpoints must have a \"singleElement\" retrieveType."
+				"POST API endpoints retrieve type must be \"singleElement\"."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

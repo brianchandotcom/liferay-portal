@@ -11,7 +11,6 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -31,33 +30,6 @@ public class MappingTypesUtil {
 		String itemCapabilityKey, ThemeDisplay themeDisplay) {
 
 		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
-			for (InfoItemClassDetails infoItemClassDetails :
-					infoItemServiceRegistry.getInfoItemClassDetails(
-						themeDisplay.getScopeGroupId(), itemCapabilityKey,
-						themeDisplay.getPermissionChecker())) {
-
-				mappingTypesJSONArray.put(
-					JSONUtil.put(
-						"label",
-						infoItemClassDetails.getLabel(themeDisplay.getLocale())
-					).put(
-						"subtypes",
-						_getMappingFormVariationsJSONArray(
-							infoItemClassDetails, infoItemServiceRegistry,
-							themeDisplay.getScopeGroupId(),
-							themeDisplay.getLocale())
-					).put(
-						"value",
-						String.valueOf(
-							PortalUtil.getClassNameId(
-								infoItemClassDetails.getClassName()))
-					));
-			}
-
-			return mappingTypesJSONArray;
-		}
 
 		for (InfoItemClassDetails infoItemClassDetails :
 				infoItemServiceRegistry.getInfoItemClassDetails(

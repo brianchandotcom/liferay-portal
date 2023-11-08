@@ -140,14 +140,6 @@ const renderGeneralPanel = ({
 };
 
 describe('FragmentGeneralPanel', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = false;
-	});
-
 	afterEach(() => {
 		FragmentService.updateConfigurationValues.mockClear();
 		FragmentService.renderFragmentEntryLinkContent.mockClear();

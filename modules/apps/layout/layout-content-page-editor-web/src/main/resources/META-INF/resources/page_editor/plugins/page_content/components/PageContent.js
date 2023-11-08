@@ -250,7 +250,7 @@ export default function PageContent({
 			onMouseLeave={handleMouseLeave}
 			onMouseOver={handleMouseOver}
 		>
-			{Liferay.FeatureFlags['LPS-169923'] && isRestricted ? (
+			{isRestricted ? (
 				<div className="align-items-center d-flex">
 					<ClayIcon
 						className="flex-shrink-0 mr-3"

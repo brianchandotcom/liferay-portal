@@ -70,10 +70,7 @@ export function FragmentGeneralPanel({item}) {
 		[dispatch, fragmentEntryLink, languageId]
 	);
 
-	if (
-		Liferay.FeatureFlags['LPS-169923'] &&
-		restrictedItemIds.has(item.itemId)
-	) {
+	if (restrictedItemIds.has(item.itemId)) {
 		return (
 			<ClayAlert displayType="secondary" role={null}>
 				{Liferay.Language.get(

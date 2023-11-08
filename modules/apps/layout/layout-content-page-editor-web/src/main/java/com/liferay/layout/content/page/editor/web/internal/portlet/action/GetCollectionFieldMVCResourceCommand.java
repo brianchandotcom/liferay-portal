@@ -51,7 +51,6 @@ import com.liferay.layout.list.retriever.SegmentsEntryLayoutListRetriever;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -586,10 +585,6 @@ public class GetCollectionFieldMVCResourceCommand
 	private boolean _hasViewPermission(
 		HttpServletRequest httpServletRequest,
 		ListObjectReference listObjectReference) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
-			return true;
-		}
 
 		Class<? extends ListObjectReference> listObjectReferenceClass =
 			listObjectReference.getClass();

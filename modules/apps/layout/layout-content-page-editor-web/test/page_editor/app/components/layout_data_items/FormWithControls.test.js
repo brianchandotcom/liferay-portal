@@ -55,14 +55,6 @@ jest.mock(
 const DEFAULT_CONFIG = {classNameId: '0'};
 
 describe('FormWithControls', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = false;
-	});
-
 	it('renders a container inside a form', () => {
 		const {container} = render(
 			<StoreMother.Component>

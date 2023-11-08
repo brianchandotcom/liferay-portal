@@ -40,7 +40,6 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -668,10 +667,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		_hasViewPermission = true;
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
-			return _hasViewPermission;
-		}
 
 		LayoutListPermissionProviderRegistry
 			layoutListPermissionProviderRegistry =

@@ -258,14 +258,6 @@ const renderComponent = ({
 };
 
 describe('PageStructureSidebar', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = false;
-	});
-
 	it('has a warning message when there is no content', () => {
 		renderComponent({
 			masterRootItemChildren: [],

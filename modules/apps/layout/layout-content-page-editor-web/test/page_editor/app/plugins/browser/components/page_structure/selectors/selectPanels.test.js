@@ -68,14 +68,6 @@ const STATE = {
 };
 
 describe('selectPanels', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = false;
-	});
-
 	it('return advanced panel if the user has UPDATE_LAYOUT_ADVANCED_OPTIONS permissions', () => {
 		const nextState = {
 			...STATE,

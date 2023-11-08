@@ -272,10 +272,7 @@ export function CollectionGeneralPanel({item}) {
 		}
 	}, [collection, listStyle]);
 
-	if (
-		Liferay.FeatureFlags['LPS-169923'] &&
-		restrictedItemIds.has(item.itemId)
-	) {
+	if (restrictedItemIds.has(item.itemId)) {
 		return (
 			<ClayAlert displayType="secondary" role={null}>
 				{Liferay.Language.get(

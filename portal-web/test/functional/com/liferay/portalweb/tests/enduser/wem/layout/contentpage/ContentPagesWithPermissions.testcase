@@ -510,7 +510,7 @@ definition {
 	@description = "This is a test for LPS-173440. The user with Add Object Entry but without View permission for object cannot see mapped Collection Display or Content Display at view and preview mode."
 	@priority = 4
 	test CannotViewMappedCollectionDisplayOrContentDisplayWithAddObjectEntryButWithoutViewPermissionForObjectOnViewAndPreviewMode {
-		property custom.properties = "feature.flag.LPS-169923=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var labelName = StringUtil.randomString(8);
 
@@ -728,7 +728,7 @@ definition {
 	@description = "This is a test for LPS-173440. The user without View permission for object cannot see mapped Collection Display or Content Display at view and preview mode."
 	@priority = 4
 	test CannotViewMappedCollectionDisplayOrContentDisplayWithoutViewPermissionForObjectOnViewAndPreviewMode {
-		property custom.properties = "feature.flag.LPS-169923=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var labelName = StringUtil.randomString(8);
 
@@ -944,7 +944,7 @@ definition {
 	@description = "This is a test for LPS-173440. The user without View permission for object cannot see that object in Collection Display or Content Display selector."
 	@priority = 4
 	test CannotViewObjectInCollectionDisplayOrContentDisplayWithoutViewPermissionForObject {
-		property custom.properties = "feature.flag.LPS-169923=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var labelName = StringUtil.randomString(8);
 
@@ -1110,7 +1110,7 @@ definition {
 	@description = "This is a test for LPS-173440. The user with View and Add Object Entry permissions for object can see the mapped Collection Display or Content Display."
 	@priority = 4
 	test CanViewMappedCollectionDisplayAndContentDisplayWithAddObjectDefinitionAndViewPermissionForObject {
-		property custom.properties = "feature.flag.LPS-169923=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var labelName = StringUtil.randomString(8);
 
@@ -2206,7 +2206,7 @@ definition {
 	@description = "This is a test for LPS-173440. The user without View permission for object should see alert message on mapped Collection Display or Content Display at edit mode."
 	@priority = 4
 	test ViewAlertOnMappedCollectionDisplayOrContentDisplayWithoutViewPermissionForObjectAtEditMode {
-		property custom.properties = "feature.flag.LPS-169923=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var labelName = StringUtil.randomString(8);
 

@@ -24,7 +24,7 @@ export default function NoPageContents() {
 			item.type === LAYOUT_DATA_ITEM_TYPES.form && formIsRestricted(item)
 	);
 
-	return hasRestrictedForm && Liferay.FeatureFlags['LPS-169923'] ? (
+	return hasRestrictedForm ? (
 		<ClayAlert aria-live="polite" className="m-3" displayType="secondary">
 			{Liferay.Language.get(
 				'this-content-cannot-be-displayed-due-to-permission-restrictions'

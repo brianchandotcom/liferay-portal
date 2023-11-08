@@ -272,12 +272,8 @@ describe('ContentsSidebar', () => {
 	});
 
 	it('does not show the inline text belonging to a form without permissions', () => {
-		Liferay.FeatureFlags['LPS-169923'] = true;
-
 		renderPageContent({});
 
 		expect(screen.queryByText('A paragraph')).not.toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPS-169923'] = false;
 	});
 });

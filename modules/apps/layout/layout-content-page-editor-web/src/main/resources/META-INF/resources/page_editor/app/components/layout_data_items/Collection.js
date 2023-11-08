@@ -432,7 +432,7 @@ const Collection = React.memo(
 
 		let CollectionContent = null;
 
-		if (Liferay.FeatureFlags['LPS-169923'] && collection.isRestricted) {
+		if (collection.isRestricted) {
 			CollectionContent = (
 				<ClayAlert displayType="secondary" role={null}>
 					{Liferay.Language.get(

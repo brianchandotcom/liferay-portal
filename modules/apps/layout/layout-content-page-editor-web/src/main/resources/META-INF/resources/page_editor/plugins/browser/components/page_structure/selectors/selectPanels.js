@@ -278,24 +278,21 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
-		panelsIds =
-			Liferay.FeatureFlags['LPS-169923'] && formIsRestricted(activeItem)
-				? {
-						[PANEL_IDS.formGeneral]:
+		panelsIds = formIsRestricted(activeItem)
+			? {
+					[PANEL_IDS.formGeneral]:
+						state.selectedViewportSize === VIEWPORT_SIZES.desktop,
+			  }
+			: {
+					[PANEL_IDS.formAdvancedPanel]:
+						(canUpdateItemAdvancedConfiguration &&
 							state.selectedViewportSize ===
-							VIEWPORT_SIZES.desktop,
-				  }
-				: {
-						[PANEL_IDS.formAdvancedPanel]:
-							(canUpdateItemAdvancedConfiguration &&
-								state.selectedViewportSize ===
-									VIEWPORT_SIZES.desktop) ||
-							canUpdateCSSAdvancedOptions,
-						[PANEL_IDS.formGeneral]:
-							state.selectedViewportSize ===
-							VIEWPORT_SIZES.desktop,
-						[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
-				  };
+								VIEWPORT_SIZES.desktop) ||
+						canUpdateCSSAdvancedOptions,
+					[PANEL_IDS.formGeneral]:
+						state.selectedViewportSize === VIEWPORT_SIZES.desktop,
+					[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
+			  };
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 		const {fragmentEntryKey, fragmentEntryType} = state.fragmentEntryLinks[
@@ -323,10 +320,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
 
-		if (
-			Liferay.FeatureFlags['LPS-169923'] &&
-			state.restrictedItemIds.has(activeItem.itemId)
-		) {
+		if (state.restrictedItemIds.has(activeItem.itemId)) {
 			panelsIds = {
 				[PANEL_IDS.fragmentGeneral]: true,
 			};

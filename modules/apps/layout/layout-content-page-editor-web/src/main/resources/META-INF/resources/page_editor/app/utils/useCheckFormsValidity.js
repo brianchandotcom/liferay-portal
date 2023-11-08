@@ -154,7 +154,7 @@ export default function useCheckFormsValidity() {
 }
 
 function addError(validations, formItem, type) {
-	if (Liferay.FeatureFlags['LPS-169923'] && formIsRestricted(formItem)) {
+	if (formIsRestricted(formItem)) {
 		return;
 	}
 

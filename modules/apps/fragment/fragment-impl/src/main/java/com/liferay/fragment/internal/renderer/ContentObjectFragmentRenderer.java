@@ -26,7 +26,6 @@ import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -101,10 +100,6 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	public boolean hasViewPermission(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
-			return true;
-		}
 
 		JSONObject jsonObject = _getFieldValueJSONObject(
 			fragmentRendererContext);
@@ -222,15 +217,6 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (!_hasPermission(httpServletRequest, className, displayObject)) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
-				FragmentRendererUtil.printPortletMessageInfo(
-					httpServletRequest, httpServletResponse,
-					"you-do-not-have-permission-to-access-the-requested-" +
-						"resource");
-
-				return;
-			}
-
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
 				FragmentRendererUtil.printRestrictedContentMessage(
 					httpServletRequest, httpServletResponse);

@@ -34,18 +34,16 @@ const getEditableValues = (
 ) =>
 	Object.values(fragmentEntryLinks)
 		.filter((fragmentEntryLink) => {
-			if (Liferay.FeatureFlags['LPS-169923']) {
-				const item = getFragmentItem(
-					layoutData,
-					fragmentEntryLink.fragmentEntryLinkId
-				);
+			const item = getFragmentItem(
+				layoutData,
+				fragmentEntryLink.fragmentEntryLinkId
+			);
 
-				if (
-					item &&
-					hasRestrictedParent(item, layoutData, restrictedItemIds)
-				) {
-					return;
-				}
+			if (
+				item &&
+				hasRestrictedParent(item, layoutData, restrictedItemIds)
+			) {
+				return;
 			}
 
 			return (

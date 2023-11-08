@@ -129,14 +129,6 @@ const renderComponent = ({item = MAPPED_FORM_ITEM, successMessage} = {}) => {
 };
 
 describe('FormGeneralPanel', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = false;
-	});
-
 	beforeEach(() => {
 		updateFormItemConfig.mockClear();
 	});

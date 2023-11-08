@@ -54,28 +54,26 @@ function Form({children, item}) {
 		return <FormLoadingState />;
 	}
 
-	if (Liferay.FeatureFlags['LPS-169923']) {
-		if (formIsUnavailable(item)) {
-			return (
-				<ClayAlert
-					displayType="warning"
-					title={`${Liferay.Language.get('warning')}:`}
-				>
-					{Liferay.Language.get(
-						'this-content-is-currently-unavailable-or-has-been-deleted.-users-cannot-see-this-fragment'
-					)}
-				</ClayAlert>
-			);
-		}
-		else if (formIsRestricted(item)) {
-			return (
-				<ClayAlert displayType="secondary">
-					{Liferay.Language.get(
-						'this-content-cannot-be-displayed-due-to-permission-restrictions'
-					)}
-				</ClayAlert>
-			);
-		}
+	if (formIsUnavailable(item)) {
+		return (
+			<ClayAlert
+				displayType="warning"
+				title={`${Liferay.Language.get('warning')}:`}
+			>
+				{Liferay.Language.get(
+					'this-content-is-currently-unavailable-or-has-been-deleted.-users-cannot-see-this-fragment'
+				)}
+			</ClayAlert>
+		);
+	}
+	else if (formIsRestricted(item)) {
+		return (
+			<ClayAlert displayType="secondary">
+				{Liferay.Language.get(
+					'this-content-cannot-be-displayed-due-to-permission-restrictions'
+				)}
+			</ClayAlert>
+		);
 	}
 
 	const isMapped = formIsMapped(item);

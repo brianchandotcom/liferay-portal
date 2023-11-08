@@ -351,6 +351,37 @@
 			"name": "leadOwner",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "IsConverted",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "IsConverted"
+			},
+			"name": "isConverted",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"externalReferenceCode": "CreatedDate",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Created Date"
+			},
+			"name": "createdDate",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
+			"required": false,
+			"type": "DateTime"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:LeadSF$]"

@@ -22,11 +22,9 @@ const Legend = ({currency, currentValue, total, type}: IProps) => {
 
 	const formatLeftToTotal = () => {
 		if (leftToTotal) {
-			if (type === ChartTypes.ARR) {
-				return `${formatCurrency(leftToTotal, currency)} more`;
+			if (type !== ChartTypes.ARR) {
+				return `${leftToTotal} more project`;
 			}
-
-			return `${leftToTotal} more project`;
 		}
 
 		return '';

@@ -31,7 +31,7 @@ interface IPropsPartnershipLevel {
 	headcount: {
 		[keys: string]: number;
 	};
-	newProjectExistingBusiness: number;
+	opportunitiesCount: number;
 	partnerLevel: PartnerLevel;
 }
 
@@ -56,7 +56,7 @@ const PartnershipLevel = ({
 	checkedProperties,
 	currency,
 	headcount,
-	newProjectExistingBusiness,
+	opportunitiesCount,
 	partnerLevel,
 }: IPropsPartnershipLevel) => {
 	const getTotalARR = () => {
@@ -69,14 +69,19 @@ const PartnershipLevel = ({
 				.goalARR;
 		}
 
-		return aRRResults.aRRAmountTotal;
+		return aRRResults.growthArrTotal;
 	};
 
 	const getHeadcount = (partnerLevelKey: PartnershipLevels) => {
 		if (partnerLevel.partnerLevelType) {
-			return `${headcount.partnerMarketingUser}/${partnerLevelProperties[partnerLevelKey].partnerMarketingUser}
-             Marketing / ${headcount.partnerSalesUser}/${partnerLevelProperties[partnerLevelKey].partnerSalesUser} Sales`;
+			return `0/${partnerLevelProperties[partnerLevelKey].partnerMarketingUser}
+				Marketing & 0/${partnerLevelProperties[partnerLevelKey].partnerSalesUser} Sales`;
 		}
+
+		// if (partnerLevel.partnerLevelType) {
+		// 	return `${headcount.partnerMarketingUser}/${partnerLevelProperties[partnerLevelKey].partnerMarketingUser}
+		//		Marketing / ${headcount.partnerSalesUser}/${partnerLevelProperties[partnerLevelKey].partnerSalesUser} Sales`;
+		// }
 
 		return '';
 	};
@@ -128,7 +133,7 @@ const PartnershipLevel = ({
 						>
 							<LevelProgressBar
 								currency={currency}
-								currentValue={aRRResults.aRRAmountTotal}
+								currentValue={aRRResults.growthArrTotal}
 								total={getTotalARR()}
 								type={ChartTypes.ARR}
 							/>
@@ -142,14 +147,12 @@ const PartnershipLevel = ({
 
 									<LevelProgressBar
 										currency={currency}
-										currentValue={
-											newProjectExistingBusiness
-										}
+										currentValue={opportunitiesCount}
 										total={
 											partnerLevelProperties[
 												partnerLevel.partnerLevelType
 													.key
-											].newProjectExistingBusiness
+											].opportunitiesCount
 										}
 										type={ChartTypes.NP_OR_NB}
 									/>

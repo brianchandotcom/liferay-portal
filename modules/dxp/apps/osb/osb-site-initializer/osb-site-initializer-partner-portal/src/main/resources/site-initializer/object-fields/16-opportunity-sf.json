@@ -286,6 +286,18 @@
 			"name": "subscriptionArr",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "Has_Renewal_Indicator__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Has Renewal"
+			},
+			"name": "hasRenewal",
+			"required": false,
+			"type": "Boolean"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:OpportunitySF$]"

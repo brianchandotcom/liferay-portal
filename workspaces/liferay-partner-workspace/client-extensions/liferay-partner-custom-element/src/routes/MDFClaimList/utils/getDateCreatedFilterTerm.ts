@@ -26,11 +26,13 @@ export default function getDateCreatedFilterTerm(
 		);
 	}
 
-	return initialFilter.concat(
-		filterDates.join(
-			activityPeriod.dates.startDate > activityPeriod.dates.endDate
-				? ' or '
-				: ' and '
-		)
-	);
+	return initialFilter
+		.concat(' and ')
+		.concat(
+			filterDates.join(
+				activityPeriod.dates.startDate > activityPeriod.dates.endDate
+					? ' or '
+					: ' and '
+			)
+		);
 }

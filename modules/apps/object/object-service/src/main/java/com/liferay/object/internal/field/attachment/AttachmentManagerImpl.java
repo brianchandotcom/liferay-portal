@@ -14,7 +14,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
-import com.liferay.object.field.attachment.AttachmentValidator;
+import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -50,9 +50,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.object.configuration.ObjectConfiguration",
-	service = AttachmentValidator.class
+	service = AttachmentManager.class
 )
-public class AttachmentValidatorImpl implements AttachmentValidator {
+public class AttachmentManagerImpl implements AttachmentManager {
 
 	@Override
 	public String[] getAcceptedFileExtensions(long objectFieldId) {
@@ -260,7 +260,7 @@ public class AttachmentValidatorImpl implements AttachmentValidator {
 	private static final long _FILE_LENGTH_MB = 1024 * 1024;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AttachmentValidatorImpl.class);
+		AttachmentManagerImpl.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

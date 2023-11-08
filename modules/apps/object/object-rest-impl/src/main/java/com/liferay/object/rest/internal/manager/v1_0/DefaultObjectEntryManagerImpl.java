@@ -18,7 +18,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.NoSuchObjectEntryException;
-import com.liferay.object.field.attachment.AttachmentValidator;
+import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectAction;
@@ -1444,22 +1444,22 @@ public class DefaultObjectEntryManagerImpl
 							" is not supported");
 		}
 
-		_attachmentValidator.validateFileName(fileEntry.getName());
+		_attachmentManager.validateFileName(fileEntry.getName());
 
-		_attachmentValidator.validateFileExtension(
+		_attachmentManager.validateFileExtension(
 			fileEntry.getName(), objectField.getObjectFieldId());
 
 		byte[] content = Base64.decode(fileEntry.getFileBase64());
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		_attachmentValidator.validateFileSize(
+		_attachmentManager.validateFileSize(
 			fileEntry.getName(), content.length, objectField.getObjectFieldId(),
 			!user.isGuestUser());
 
 		long groupId = getGroupId(objectDefinition, scopeKey, true);
 
-		DLFolder dlFolder = _attachmentValidator.getDLFolder(
+		DLFolder dlFolder = _attachmentManager.getDLFolder(
 			objectField.getObjectFieldId(), objectField.getCompanyId(), groupId,
 			serviceContext, serviceContext.getUserId());
 
@@ -1769,7 +1769,7 @@ public class DefaultObjectEntryManagerImpl
 	private Aggregations _aggregations;
 
 	@Reference
-	private AttachmentValidator _attachmentValidator;
+	private AttachmentManager _attachmentManager;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -379,67 +379,76 @@ public class KoroneikiRestController extends BaseRestController {
 	}
 
 	private void _initResourceBuilders(Jwt jwt) throws Exception {
-		URL koroneikiURL = new URL(_koroneikiAuthURL);
+		URL liferayMarketplaceKoroneikiAuthURL = new URL(
+			_liferayMarketplaceKoroneikiAuthURL);
 
-		URL liferayURL = new URL(
+		URL liferayDXPURL = new URL(
 			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 
 		_accountResource = AccountResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+			liferayDXPURL.getHost(), liferayDXPURL.getPort(),
+			liferayDXPURL.getProtocol()
 		).build();
 
 		_orderItemResource = OrderItemResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+			liferayDXPURL.getHost(), liferayDXPURL.getPort(),
+			liferayDXPURL.getProtocol()
 		).build();
 
 		_orderResource = OrderResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+			liferayDXPURL.getHost(), liferayDXPURL.getPort(),
+			liferayDXPURL.getProtocol()
 		).build();
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
-			"API_TOKEN", _koroneikiAuthToken
+			"API_TOKEN", _liferayMarketplaceKoroneikiAuthToken
 		).endpoint(
-			koroneikiURL.getHost(), koroneikiURL.getPort(),
-			koroneikiURL.getProtocol()
+			liferayMarketplaceKoroneikiAuthURL.getHost(),
+			liferayMarketplaceKoroneikiAuthURL.getPort(),
+			liferayMarketplaceKoroneikiAuthURL.getProtocol()
 		).build();
 
 		_productPurchaseViewResource = ProductPurchaseViewResource.builder(
 		).header(
-			"API_TOKEN", _koroneikiAuthToken
+			"API_TOKEN", _liferayMarketplaceKoroneikiAuthToken
 		).endpoint(
-			koroneikiURL.getHost(), koroneikiURL.getPort(),
-			koroneikiURL.getProtocol()
+			liferayMarketplaceKoroneikiAuthURL.getHost(),
+			liferayMarketplaceKoroneikiAuthURL.getPort(),
+			liferayMarketplaceKoroneikiAuthURL.getProtocol()
 		).build();
 
 		_productResource = ProductResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+			liferayDXPURL.getHost(), liferayDXPURL.getPort(),
+			liferayDXPURL.getProtocol()
 		).build();
 
 		_productSpecificationResource = ProductSpecificationResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+			liferayDXPURL.getHost(), liferayDXPURL.getPort(),
+			liferayDXPURL.getProtocol()
 		).build();
 
 		_skuResource = SkuResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+			liferayDXPURL.getHost(), liferayDXPURL.getPort(),
+			liferayDXPURL.getProtocol()
 		).build();
 	}
 
@@ -458,11 +467,11 @@ public class KoroneikiRestController extends BaseRestController {
 
 	private AccountResource _accountResource;
 
-	@Value("${com.liferay.lxc.koroneiki.auth.token}")
-	private String _koroneikiAuthToken;
+	@Value("${liferay.marketplace.koroneiki.auth.token}")
+	private String _liferayMarketplaceKoroneikiAuthToken;
 
-	@Value("${com.liferay.lxc.koroneiki.auth.url}")
-	private String _koroneikiAuthURL;
+	@Value("${liferay.marketplace.koroneiki.auth.url}")
+	private String _liferayMarketplaceKoroneikiAuthURL;
 
 	private OrderItemResource _orderItemResource;
 	private OrderResource _orderResource;

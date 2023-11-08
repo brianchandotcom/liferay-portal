@@ -189,15 +189,18 @@ public class ProvisioningRestController extends BaseRestController {
 		}
 
 		HttpPost httpPost = new HttpPost(
-			new URL(_provisioningAuthURL) + "/o/oauth2/token");
+			new URL(_liferayMarketplaceProvisioningAuthURL) +
+				"/o/oauth2/token");
 
 		httpPost.setEntity(
 			new UrlEncodedFormEntity(
 				Arrays.asList(
 					new BasicNameValuePair(
-						"client_id", _provisioningAuthClientId),
+						"client_id",
+						_liferayMarketplaceProvisioningAuthClientId),
 					new BasicNameValuePair(
-						"client_secret", _provisioningAuthClientSecret),
+						"client_secret",
+						_liferayMarketplaceProvisioningAuthClientSecret),
 					new BasicNameValuePair(
 						"grant_type", "client_credentials"))));
 
@@ -271,24 +274,28 @@ public class ProvisioningRestController extends BaseRestController {
 	}
 
 	private void _initResourceBuilders() throws Exception {
-		URL koroneikiURL = new URL(_koroneikiAuthURL);
+		URL liferayMarketplaceKoroneikiAuthURL = new URL(
+			_liferayMarketplaceKoroneikiAuthURL);
 
-		URL provisioningURL = new URL(_provisioningAuthURL);
+		URL liferayMarketplaceProvisioningAuthURL = new URL(
+			_liferayMarketplaceProvisioningAuthURL);
 
 		_appLicenseKeyResource = AppLicenseKeyResource.builder(
 		).header(
 			"Authorization", _getOAuthAuthorization()
 		).endpoint(
-			provisioningURL.getHost(), provisioningURL.getPort(),
-			provisioningURL.getProtocol()
+			liferayMarketplaceProvisioningAuthURL.getHost(),
+			liferayMarketplaceProvisioningAuthURL.getPort(),
+			liferayMarketplaceProvisioningAuthURL.getProtocol()
 		).build();
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
-			"API_TOKEN", _koroneikiAuthToken
+			"API_TOKEN", _liferayMarketplaceKoroneikiAuthToken
 		).endpoint(
-			koroneikiURL.getHost(), koroneikiURL.getPort(),
-			koroneikiURL.getProtocol()
+			liferayMarketplaceKoroneikiAuthURL.getHost(),
+			liferayMarketplaceKoroneikiAuthURL.getPort(),
+			liferayMarketplaceKoroneikiAuthURL.getProtocol()
 		).build();
 	}
 
@@ -297,23 +304,23 @@ public class ProvisioningRestController extends BaseRestController {
 
 	private AppLicenseKeyResource _appLicenseKeyResource;
 
-	@Value("${com.liferay.lxc.koroneiki.auth.token}")
-	private String _koroneikiAuthToken;
+	@Value("${liferay.marketplace.koroneiki.auth.token}")
+	private String _liferayMarketplaceKoroneikiAuthToken;
 
-	@Value("${com.liferay.lxc.koroneiki.auth.url}")
-	private String _koroneikiAuthURL;
+	@Value("${liferay.marketplace.koroneiki.auth.url}")
+	private String _liferayMarketplaceKoroneikiAuthURL;
+
+	@Value("${liferay.marketplace.provisioning.auth.client.id}")
+	private String _liferayMarketplaceProvisioningAuthClientId;
+
+	@Value("${liferay.marketplace.provisioning.auth.client.secret}")
+	private String _liferayMarketplaceProvisioningAuthClientSecret;
+
+	@Value("${liferay.marketplace.provisioning.auth.url}")
+	private String _liferayMarketplaceProvisioningAuthURL;
 
 	private String _oauthAccessToken;
 	private long _oauthExpirationMillis;
 	private ProductPurchaseResource _productPurchaseResource;
-
-	@Value("${com.liferay.lxc.provisioning.auth.client.id}")
-	private String _provisioningAuthClientId;
-
-	@Value("${com.liferay.lxc.provisioning.auth.client.secret}")
-	private String _provisioningAuthClientSecret;
-
-	@Value("${com.liferay.lxc.provisioning.auth.url}")
-	private String _provisioningAuthURL;
 
 }

@@ -151,67 +151,35 @@ public class APIEndpointRelevantObjectEntryModelListener
 					apiApplicationId, responseAPISchemaId, scope);
 			}
 
-			String pathString = (String)values.get("path");
+			long requestAPISchemaId = GetterUtil.getLong(
+				values.get("r_requestAPISchemaToAPIEndpoints_c_apiSchemaId"));
+
+			if (requestAPISchemaId != 0) {
+				_validateAPISchema(apiApplicationId, requestAPISchemaId, scope);
+			}
 
 			Http.Method method = Http.Method.valueOf(
 				StringUtil.toUpperCase((String)values.get("httpMethod")));
 
-			if (Objects.equals(
-					APIApplication.Endpoint.RetrieveType.parse(
-						(String)values.get("retrieveType")),
-					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
-
-				String pathInParameterString = StringUtil.extractLast(
-					pathString, StringPool.FORWARD_SLASH);
-
-				String pathParameter = (String)values.get("pathParameter");
-
-				if (Objects.equals(method, Http.Method.POST)) {
-					Matcher curlyBraceMatcher = _curlyBracePattern.matcher(
-						pathInParameterString);
-
-					if (!Validator.isBlank(pathParameter) ||
-						curlyBraceMatcher.matches()) {
-
-						throw new ObjectEntryValuesException.InvalidObjectField(
-							null,
-							"Path parameters are not supported by POST API " +
-								"endpoints",
-							"path-parameters-are-not-supported-by-post-api-" +
-								"endpoints");
-					}
-
-					_validateRegularPath(objectEntry, pathString);
-				}
-				else {
-					_validateSingleElementPath(
-						objectEntry, pathParameter, pathString,
-						responseAPISchemaId);
-				}
-
-				if (Validator.isNull(pathParameter) &&
-					Validator.isNotNull(
-						(String)values.get("pathParameterDescription"))) {
-
-					throw new ObjectEntryValuesException.InvalidObjectField(
-						null,
-						"Path parameter description cannot be set with empty " +
-							"path parameter property",
-						"path-parameter-description-cannot-be-set-with-empty-" +
-							"path-parameter-property");
-				}
+			if (Objects.equals(method, Http.Method.POST)) {
+				_validatePOSTAPIEndpoint(objectEntry);
 			}
-			else {
-				if (Objects.equals(method, Http.Method.POST)) {
-					throw new ObjectEntryValuesException.InvalidObjectField(
-						null,
-						"POST API endpoints retrieve type must be " +
-							"\"singleElement\"",
-						"post-api-endpoints-retrieve-type-must-be-" +
-							"\"singleElement\"");
-				}
+			else if (Objects.equals(method, Http.Method.GET)) {
+				_validateGETAPIEndpoint(objectEntry, responseAPISchemaId);
+			}
 
-				_validateRegularPath(objectEntry, pathString);
+			String pathParameter = (String)values.get("pathParameter");
+
+			if (Validator.isNull(pathParameter) &&
+				Validator.isNotNull(
+					(String)values.get("pathParameterDescription"))) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
+					"Path parameter description cannot be set with empty " +
+						"path parameter property",
+					"path-parameter-description-cannot-be-set-with-empty-" +
+						"path-parameter-property");
 			}
 
 			String filterString = StringBundler.concat(
@@ -242,13 +210,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 						"path",
 					"there-is-an-api-endpoint-with-the-same-http-method-and-" +
 						"path");
-			}
-
-			long requestAPISchemaId = GetterUtil.getLong(
-				values.get("r_requestAPISchemaToAPIEndpoints_c_apiSchemaId"));
-
-			if (requestAPISchemaId != 0) {
-				_validateAPISchema(apiApplicationId, requestAPISchemaId, scope);
 			}
 		}
 		catch (Exception exception) {
@@ -315,8 +276,65 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
-	private void _validateRegularPath(
-			ObjectEntry objectEntry, String pathString)
+	private void _validateGETAPIEndpoint(
+			ObjectEntry objectEntry, long responseAPISchemaId)
+		throws Exception {
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		String pathString = (String)values.get("path");
+
+		if (Objects.equals(
+				APIApplication.Endpoint.RetrieveType.parse(
+					(String)values.get("retrieveType")),
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
+
+			String pathParameter = (String)values.get("pathParameter");
+
+			_validateSingleElementPath(
+				objectEntry, pathParameter, pathString, responseAPISchemaId);
+		}
+		else {
+			_validateSimplePath(objectEntry, pathString);
+		}
+	}
+
+	private void _validatePOSTAPIEndpoint(ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		if (Objects.equals(
+				APIApplication.Endpoint.RetrieveType.parse(
+					(String)values.get("retrieveType")),
+				APIApplication.Endpoint.RetrieveType.COLLECTION)) {
+
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				null,
+				"POST API endpoints retrieve type must be \"singleElement\"",
+				"post-api-endpoints-retrieve-type-must-be-\"singleElement\"");
+		}
+
+		String pathString = (String)values.get("path");
+
+		String pathInParameterString = StringUtil.extractLast(
+			pathString, StringPool.FORWARD_SLASH);
+
+		Matcher curlyBraceMatcher = _curlyBracePattern.matcher(
+			pathInParameterString);
+
+		String pathParameter = (String)values.get("pathParameter");
+
+		if (!Validator.isBlank(pathParameter) || curlyBraceMatcher.matches()) {
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				null, "Path parameters are not supported by POST API endpoints",
+				"path-parameters-are-not-supported-by-post-api-endpoints");
+		}
+
+		_validateSimplePath(objectEntry, pathString);
+	}
+
+	private void _validateSimplePath(ObjectEntry objectEntry, String pathString)
 		throws Exception {
 
 		Matcher matcher = _pathPattern.matcher(pathString);

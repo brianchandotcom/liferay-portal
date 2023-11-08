@@ -52,6 +52,10 @@ const SelectSubscription = ({
 
 	const navigate = useNavigate();
 	const {state} = useLocation();
+	const [
+		availableActivationKeysTotal,
+		setAvailableActivationKeysTotal,
+	] = useState();
 
 	useEffect(() => {
 		const fetchGenerateFormData = async () => {
@@ -189,14 +193,23 @@ const SelectSubscription = ({
 
 	const productName = [...new Set(productNames)].join(', ');
 
-	const inputDisplayName = productGroupName + ' ' + productName;
+	const selectedProductName = state.activationKeys?.map((item) => {
+		return item.productName;
+	});
+
+	const uniqueSelectedProductName = [...new Set(selectedProductName)].join(
+		', '
+	);
 
 	const productKey = typesProduct?.find(
 		(item) =>
 			item.licenseEntryDisplayName
 				.toLowerCase()
 				.replace(/[- ]+/g, '-') ===
-			inputDisplayName.toString().toLowerCase().replace(/[- ]+/g, '-')
+			uniqueSelectedProductName
+				.toString()
+				.toLowerCase()
+				.replace(/[- ]+/g, '-')
 	)?.productKey;
 
 	const mockedValuesForComplimentaryKeysOfTheSelectedKeys = useMemo(() => {
@@ -271,7 +284,7 @@ const SelectSubscription = ({
 		const licenseEntryType =
 			licenseEntryTypes?.includes('virtual-cluster') ||
 			licenseEntryTypes?.includes('oem') ||
-			licenseEntryTypes?.includes('Enterprise');
+			licenseEntryTypes?.includes('enterprise');
 
 		const selectedProductNames = [...new Set(licenseEntryTypes)]
 			.join(', ')
@@ -516,6 +529,9 @@ const SelectSubscription = ({
 					<Button
 						aria-label={i18n.translate('next')}
 						disabled={
+							(state.activationKeys.length >
+								availableActivationKeysTotal &&
+								!hasKeyComplimentary) ||
 							!selectedSubscription ||
 							isLoadingGenerateKey ||
 							!Object.keys(selectedSubscription).length
@@ -732,34 +748,6 @@ const SelectSubscription = ({
 									FORMAT_DATE_TYPES.day2DMonthSYearN
 								)}`;
 
-								const activationKeysStartDate = state.activationKeys?.map(
-									(item) => {
-										return item.startDate;
-									}
-								);
-
-								const uniqueVersionOfTheSelectedKey1 = [
-									...new Set(activationKeysStartDate),
-								].join(', ');
-
-								const activationKeysExpirationDate = state.activationKeys?.map(
-									(item) => {
-										return item.expirationDate;
-									}
-								);
-
-								const uniqueVersionOfTheSelectedKey2 = [
-									...new Set(activationKeysExpirationDate),
-								].join(', ');
-
-								const currentStartAndExpirationDate = `${getDateCustomFormat(
-									uniqueVersionOfTheSelectedKey1,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
-								)} - ${getDateCustomFormat(
-									uniqueVersionOfTheSelectedKey2,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
-								)}`;
-
 								const infoSelectedKey = {
 									index,
 									licenseEntryType: selectedKeyType,
@@ -789,7 +777,13 @@ const SelectSubscription = ({
 										return displayAlertType;
 									}
 
-									return selected && displayAlertType;
+									return (
+										selected &&
+										displayAlertType &&
+										setAvailableActivationKeysTotal(
+											numberOfActivationKeysAvailable
+										)
+									);
 								};
 
 								return (
@@ -808,11 +802,7 @@ const SelectSubscription = ({
 											0
 										}
 										key={index}
-										label={
-											state.id === 'renew'
-												? currentStartAndExpirationDate
-												: currentStartAndEndDate
-										}
+										label={currentStartAndEndDate}
 										onChange={(event) => {
 											setSelectedSubscription({
 												...event.target.value,

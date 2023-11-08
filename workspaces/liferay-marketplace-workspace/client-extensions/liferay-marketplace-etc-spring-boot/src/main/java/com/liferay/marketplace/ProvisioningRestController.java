@@ -183,7 +183,7 @@ public class ProvisioningRestController extends BaseRestController {
 
 	private String _getOAuthAuthorization() throws Exception {
 		if (Validator.isNotNull(_oauthAccessToken) &&
-			((_oauthExpirationMillis - 15000) < System.currentTimeMillis())) {
+			(System.currentTimeMillis() < (_oauthExpirationMillis - 15000))) {
 
 			return _oauthAccessToken;
 		}

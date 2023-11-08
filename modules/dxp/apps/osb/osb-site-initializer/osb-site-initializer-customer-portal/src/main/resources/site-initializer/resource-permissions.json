@@ -21,7 +21,8 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFolder",
 		"roleName": "User",
 		"scope": "1"
 	},
@@ -29,8 +30,15 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"primKey": "0",
-		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"CREATE_TOKEN"
+		],
+		"resourceName": "com.liferay.oauth2.provider.model.OAuth2Application",
 		"roleName": "User",
 		"scope": "1"
 	},
@@ -288,6 +296,22 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LiferayExperienceCloudPrimaryRegion$]",
 		"roleName": "Provisioning Admin",
 		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TicketAttachment$]",
+		"roleName": "Account Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TicketAttachment$]",
+		"roleName": "Requester",
+		"scope": "3"
 	},
 	{
 		"actionIds": [

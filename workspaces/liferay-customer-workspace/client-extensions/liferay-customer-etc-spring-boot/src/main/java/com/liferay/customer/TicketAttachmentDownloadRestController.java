@@ -5,28 +5,15 @@
 
 package com.liferay.customer;
 
-import com.google.auth.oauth2.ServiceAccountCredentials;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import java.net.URL;
-
-import java.util.concurrent.TimeUnit;
+import com.liferay.customer.google.service.GoogleCloudStorageWebService;
+import com.liferay.customer.object.model.TicketAttachment;
+import com.liferay.customer.object.service.TicketAttachmentWebService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.json.JSONObject;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -34,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Amos Fong
@@ -46,79 +32,41 @@ public class TicketAttachmentDownloadRestController extends BaseRestController {
 	@GetMapping
 	public ResponseEntity<String> get(
 			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("ticketAttachmentId") String ticketAttachmentId)
+			@PathVariable("ticketAttachmentId") long ticketAttachmentId)
 		throws Exception {
-
-		log(jwt, _log);
-
-		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = new JSONObject(
-				WebClient.create(
-					lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-				).get(
-				).uri(
-					"/o/c/ticketattachments/" + Long.valueOf(ticketAttachmentId)
-				).accept(
-					MediaType.APPLICATION_JSON
-				).header(
-					HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block());
+			TicketAttachment ticketAttachment =
+				_ticketAttachmentWebService.fetchTicketAttachment(
+					jwt, ticketAttachmentId);
+
+			if (ticketAttachment == null) {
+				return new ResponseEntity<>(
+					"Ticket attachment does not exist", HttpStatus.NOT_FOUND);
+			}
+
+			return new ResponseEntity<>(
+				_googleCloudStorageWebService.getDownloadURL(
+					ticketAttachment.getGCSBucketName(),
+					ticketAttachment.getGCSObjectName()),
+				HttpStatus.OK);
 		}
 		catch (Exception exception) {
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.NOT_FOUND);
-		}
+			_log.error(exception);
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("tickets/");
-		sb.append(jsonObject.optString("zendeskTicketId"));
-		sb.append("/");
-		sb.append(jsonObject.optString("fileName"));
-
-		return new ResponseEntity<>(
-			_getDownloadURL(
-				jsonObject.optString("storageBucket"), sb.toString()),
-			HttpStatus.OK);
-	}
-
-	private String _getDownloadURL(String bucketName, String objectName)
-		throws Exception {
-
-		try (InputStream inputStream = new ByteArrayInputStream(
-				_gcsServiceAccountKey.getBytes())) {
-
-			ServiceAccountCredentials serviceAccountCredentials =
-				ServiceAccountCredentials.fromStream(inputStream);
-
-			StorageOptions storageOptions = StorageOptions.newBuilder(
-			).setCredentials(
-				serviceAccountCredentials
-			).setProjectId(
-				serviceAccountCredentials.getProjectId()
-			).build();
-
-			Storage storage = storageOptions.getService();
-
-			URL url = storage.signUrl(
-				BlobInfo.newBuilder(
-					BlobId.of(bucketName, objectName)
-				).build(),
-				15, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
-
-			return url.toString();
+			return new ResponseEntity(
+				"There was an unexpected error",
+				HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	private static final Log _log = LogFactory.getLog(
 		TicketAttachmentDownloadRestController.class);
 
-	@Value("${liferay.customer.gcs.service.account.key}")
-	private String _gcsServiceAccountKey;
+	@Autowired
+	private GoogleCloudStorageWebService _googleCloudStorageWebService;
+
+	@Autowired
+	private TicketAttachmentWebService _ticketAttachmentWebService;
 
 }

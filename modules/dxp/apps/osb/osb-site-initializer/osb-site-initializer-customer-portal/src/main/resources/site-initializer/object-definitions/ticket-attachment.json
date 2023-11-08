@@ -15,7 +15,7 @@
 			"required": true
 		},
 		{
-			"DBType": "String",
+			"DBType": "Long",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -39,9 +39,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Storage Bucket"
+				"en-US": "Google Cloud Storage Bucket Name"
 			},
-			"name": "storageBucket",
+			"name": "gcsBucketName",
 			"required": true
 		},
 		{
@@ -69,10 +69,20 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en-US": "MD5 Checksum"
+			},
+			"name": "md5Checksum",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en-US": "Type"
 			},
 			"name": "type",
-			"required": true
+			"required": false
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

@@ -68,9 +68,7 @@ definition {
 		}
 
 		task ("Review the 2 orders created before the Upgrade on 7.3.10") {
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
 
@@ -81,9 +79,7 @@ definition {
 				productSku = "MIN93015",
 				productTotalPrice = "100.00");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Processing");
 

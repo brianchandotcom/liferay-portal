@@ -240,9 +240,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "buyer@liferay.com");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -368,9 +366,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "buyer@liferay.com");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -811,9 +807,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "test@liferay.com");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -1127,9 +1121,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "test@liferay.com");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -1211,9 +1203,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "test@liferay.com");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 

@@ -147,10 +147,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Order Management",
-			panel = "Commerce",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		AssertElementPresent(
 			key_status = "Approved",
@@ -587,10 +584,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Order Management",
-			panel = "Commerce",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		AssertElementPresent(
 			key_status = "Pending",
@@ -1671,9 +1665,7 @@ definition {
 
 		CommerceJSONOrdersAPI._deleteAllCommerceOrders();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		IsElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 

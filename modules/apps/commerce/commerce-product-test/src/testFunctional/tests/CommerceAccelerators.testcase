@@ -1265,9 +1265,7 @@ definition {
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
 
@@ -1278,9 +1276,7 @@ definition {
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -1403,9 +1399,7 @@ definition {
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
 
@@ -1416,9 +1410,7 @@ definition {
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -1539,9 +1531,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
 
@@ -1552,9 +1542,7 @@ definition {
 			productSku = "SPEED93015",
 			productTotalPrice = "100.00");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 

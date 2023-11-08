@@ -59,6 +59,7 @@ definition {
 	@description = "Automation ID: LPS-149144 | Test Summary: Verify if after a user submits the DXP Cloud activation form and then tries to resend it (or another user) in another browser window a helpful message is shown"
 	@priority = 4
 	test AssertThatTheLXCSMActivationFormHasAlreadyBeenSent {
+		property portal.acceptance = "true";
 		task ("Given that I go to the card activation page") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

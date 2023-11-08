@@ -46,6 +46,8 @@ definition {
 	@description = "Automation ID: LPS-145260 | Test Summary: Verify if when user completes the on-boarding flow or skips through it, Get Started page doesn't appears again"
 	@priority = 4
 	test GetStartedDontAppearASecondTime {
+		property portal.acceptance = "true";
+		
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 

@@ -235,6 +235,12 @@ public class LayoutActionProvider {
 		return backURL;
 	}
 
+	private String _getBackURLTitle() {
+		Layout layout = _themeDisplay.getLayout();
+
+		return layout.getName(_themeDisplay.getLocale());
+	}
+
 	private JSONObject _getConfigureJSONObject(Layout layout) {
 		return JSONUtil.put(
 			"href", _getConfigureLayoutURL(layout.getPlid())
@@ -601,12 +607,7 @@ public class LayoutActionProvider {
 				return redirect;
 			}
 		).setParameter(
-			"backURLTitle",
-			() -> {
-				Layout previousLayout = _themeDisplay.getLayout();
-
-				return previousLayout.getName(_themeDisplay.getLocale());
-			}
+			"backURLTitle", _getBackURLTitle()
 		).setParameter(
 			"collectionPK", layout.getTypeSettingsProperty("collectionPK")
 		).setParameter(

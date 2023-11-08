@@ -768,6 +768,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12716. As an admin, I can assert a placed order can be converted from processing to completed status via API"
+	@priority = 3
+	test CanAssertOrdersAreConvertedFromProcessingToCompletedViaAPI {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a business account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And a virtual product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productDescription = "Full Description",
+				productName = "Virtual Product",
+				productType = "Virtual",
+				shortDescription = "Short Description",
+				sku = "VIRTUALSKU");
+		}
+
+		task ("And the Money Order payment is activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And an order is placed") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "VIRTUALSKU:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2);
+		}
+
+		task ("And the admin accepts the order") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_orderStatus = "Processing",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+
+		task ("When the order status is updated from Processing to Completed via API") {
+			CommerceJSONOrdersAPI._patchCommerceOrder(orderStatus = 0);
+		}
+
+		task ("Then can also verify the status of the order is Completed via UI") {
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_orderStatus = "Completed",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+	}
+
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9358"
 	@priority = 5
 	test CanButtonRetryPaymentDisappearIfThePaymentMethodIsDisabled {

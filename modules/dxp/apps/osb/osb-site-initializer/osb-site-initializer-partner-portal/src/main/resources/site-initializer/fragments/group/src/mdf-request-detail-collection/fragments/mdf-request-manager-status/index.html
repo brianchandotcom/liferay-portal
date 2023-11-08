@@ -13,218 +13,242 @@
 
 	[#assign mdfRequestStatusKey = (mdfRequest.mdfRequestStatus.key)! /]
 
-	[#if mdfRequestStatusKey != 'approved' && (hasMarketingReviewAction || hasMarketingDirectorReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction)]
-		<script>
-			const modalStatusTypes = {
-				marketingDirectorReview: "Marketing Director Review",
-				moreInfoRequested: "Request More Info",
-				rejected: "Rejected",
-			}
+	[#assign count = 0]
 
-			const approveActivities = async () => {
-				[#list mdfRequest.mdfReqToActs as activity]
-					[#if activity.activityStatus.key == 'submitted']
-						await fetch('/o/c/activities/${activity.id}', {
-							body: `{"activityStatus": "approved"}`,
-							headers: {
-								'content-type': 'application/json',
-								'x-csrf-token': Liferay.authToken,
-							},
-							method: 'PATCH',
-						});
-					[/#if]
-				[/#list]
-			};
+	<script>
+		const modalStatusTypes = {
+			marketingDirectorReview: "Marketing Director Review",
+			moreInfoRequested: "Request More Info",
+			rejected: "Rejected",
+		}
 
-			const updateRequestStatus = async (status) => {
-				const responde = await fetch(
-					`/o/c/mdfrequests/${mdfRequestId}`,
-					{
-						body: `{"mdfRequestStatus": "` + status +`"}`,
+		const approveActivities = async () => {
+			[#list mdfRequest.mdfReqToActs as activity]
+				[#if activity.activityStatus.key == 'submitted']
+					await fetch('/o/c/activities/${activity.id}', {
+						body: `{"activityStatus": "approved"}`,
 						headers: {
 							'content-type': 'application/json',
 							'x-csrf-token': Liferay.authToken,
 						},
 						method: 'PATCH',
-					}
-				);
+					});
+				[/#if]
+			[/#list]
+		};
 
-				if (responde.ok) {
-					if (status === 'approved') {
-						await approveActivities();
-					}
+		const updateRequestStatus = async (status) => {
+			const responde = await fetch(
+				`/o/c/mdfrequests/${mdfRequestId}`,
+				{
+					body: `{"mdfRequestStatus": "` + status +`"}`,
+					headers: {
+						'content-type': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+					method: 'PATCH',
+				}
+			);
 
-					location.reload();
-
-					return;
+			if (responde.ok) {
+				if (status === 'approved') {
+					await approveActivities();
 				}
 
-				Liferay.Util.openToast({
-					message: 'The MDF Request Status cannot be changed.',
-					type: 'danger',
-				});
-			};
+				location.reload();
 
-			const callMDFRequestModal = (status) => {
-				const listDisplayModal = ["moreInfoRequested", "marketingDirectorReview", "rejected"]
+				return;
+			}
 
-				if(listDisplayModal.includes(status)){
-					return Liferay.Util.openModal({
-							bodyHTML: `<div class="form-group">
-										<label for="descriptionTextArea">Status change motivation:</label>
+			Liferay.Util.openToast({
+				message: 'The MDF Request Status cannot be changed.',
+				type: 'danger',
+			});
+		};
 
-										<textarea class="form-control" id="descriptionTextArea" placeholder="Describe here..." type="text"></textarea>
-									</div>`,
-							buttons: [
-								{
-									displayType: 'secondary',
-									label: Liferay.Language.get('Cancel'),
-									type: 'cancel',
+		const callMDFRequestModal = (status) => {
+			const listDisplayModal = ["moreInfoRequested", "marketingDirectorReview", "rejected"]
+
+			if(listDisplayModal.includes(status)){
+				return Liferay.Util.openModal({
+						bodyHTML: `<div class="form-group">
+									<label for="descriptionTextArea">Status change motivation:</label>
+
+									<textarea class="form-control" id="descriptionTextArea" placeholder="Describe here..." type="text"></textarea>
+								</div>`,
+						buttons: [
+							{
+								displayType: 'secondary',
+								label: Liferay.Language.get('Cancel'),
+								type: 'cancel',
+							},
+							{
+								displayType: 'primary',
+								label: modalStatusTypes[status],
+								onClick() {
+									const textarea = document.getElementById("descriptionTextArea");
+
+									if(textarea.value){
+										const commentParagraph = document.querySelector("iframe").contentWindow.document.querySelector("body.portlet-page-comments p");
+										const postCommentButton = document.querySelector("button.btn-comment");
+
+										commentParagraph.innerHTML = Liferay.Util.escape(textarea.value);
+										postCommentButton.disabled = false;
+										postCommentButton.click();
+
+										return updateRequestStatus(status);
+									}
+
+									Liferay.Util.openToast({
+										message: 'The MDF Request Status cannot be changed without a motivation.',
+										type: 'danger',
+									});
 								},
-								{
-									displayType: 'primary',
-									label: modalStatusTypes[status],
-									onClick() {
-										const textarea = document.getElementById("descriptionTextArea");
+								type: 'submit',
+							},
+						],
+						headerHTML: `<h1 class="m-0">Status Change</h1>`,
+						size: 'md',
+					});
+			}
 
-										if(textarea.value){
-											const commentParagraph = document.querySelector("iframe").contentWindow.document.querySelector("body.portlet-page-comments p");
-											const postCommentButton = document.querySelector("button.btn-comment");
+			return updateRequestStatus(status);
+		};
+	</script>
 
-											commentParagraph.innerHTML = Liferay.Util.escape(textarea.value);
-											postCommentButton.disabled = false;
-											postCommentButton.click();
+<button aria-expanded="false" aria-haspopup="true" class="d-none btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFRequestStatus" type="button">
+	${(mdfRequest.mdfRequestStatus.name)!} [@clay.icon symbol="caret-bottom" /]
+</button>
 
-											return updateRequestStatus(status);
-										}
+<ul aria-labelledby="dropdownMDFRequestStatus" class="dropdown-menu" x-placement="bottom-start">
+		[#if mdfRequestStatusKey == 'pendingMarketingReview']
+			[#if hasMarketingDirectorReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
+					Marketing Director Review
+				</li>
+			[/#if]
 
-										Liferay.Util.openToast({
-											message: 'The MDF Request Status cannot be changed without a motivation.',
-											type: 'danger',
-										});
-									},
-									type: 'submit',
-								},
-							],
-							headerHTML: `<h1 class="m-0">Status Change</h1>`,
-							size: 'md',
-						});
-				}
+			[#if hasRequestMoreInfoAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
+					Request More Info
+				</li>
+			[/#if]
 
-				return updateRequestStatus(status);
-			};
+			[#if hasRejectAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('rejected')">
+					Rejected
+				</li>
+			[/#if]
+
+			[#if hasApproveAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
+					Approved
+				</li>
+			[/#if]
+		[/#if]
+
+		[#if mdfRequestStatusKey == 'marketingDirectorReview']
+			[#if hasMarketingReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('pendingMarketingReview')">
+					Pending Marketing Review
+				</li>
+			[/#if]
+
+			[#if hasApproveAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
+					Approved
+				</li>
+			[/#if]
+
+			[#if hasRequestMoreInfoAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
+					Request More Info
+				</li>
+			[/#if]
+
+			[#if hasRejectAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('rejected')">
+					Rejected
+				</li>
+			[/#if]
+		[/#if]
+
+		[#if mdfRequestStatusKey == 'moreInfoRequested']
+			[#if hasMarketingDirectorReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
+					Marketing Director Review
+				</li>
+			[/#if]
+		[/#if]
+
+		[#if mdfRequestStatusKey == 'expired']
+			[#if hasMarketingDirectorReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
+					Marketing Director Review
+				</li>
+			[/#if]
+
+			[#if hasRequestMoreInfoAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
+					Request More Info
+				</li>
+			[/#if]
+		[/#if]
+
+		[#if mdfRequestStatusKey == 'rejected']
+			[#if hasMarketingReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('pendingMarketingReview')">
+					Pending Marketing Review
+				</li>
+			[/#if]
+
+			[#if hasMarketingDirectorReviewAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
+					Marketing Director Review
+				</li>
+			[/#if]
+
+			[#if hasRequestMoreInfoAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
+					Request More Info
+				</li>
+			[/#if]
+		[/#if]
+
+		[#if mdfRequestStatusKey == 'canceled']
+			[#if hasApproveAction]
+				[#assign count = count + 1]
+				<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
+					Approved
+				</li>
+			[/#if]
+		[/#if]
+	</ul>
+
+	[#assign hasActions = count > 0]
+
+	[#if hasActions]
+		<script>
+			document.querySelector('#dropdownMDFRequestStatus').classList.remove("d-none")
 		</script>
-
-	<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFRequestStatus" type="button">
-		${(mdfRequest.mdfRequestStatus.name)!} [@clay.icon symbol="caret-bottom" /]
-	</button>
-
-	<ul aria-labelledby="dropdownMDFRequestStatus" class="dropdown-menu" x-placement="bottom-start">
-			[#if mdfRequestStatusKey == 'pendingMarketingReview']
-				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
-						Marketing Director Review
-					</li>
-				[/#if]
-
-				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
-						Request More Info
-					</li>
-				[/#if]
-
-				[#if hasRejectAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('rejected')">
-						Rejected
-					</li>
-				[/#if]
-
-				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
-						Approved
-					</li>
-				[/#if]
-			[/#if]
-
-			[#if mdfRequestStatusKey == 'marketingDirectorReview']
-				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('pendingMarketingReview')">
-						Pending Marketing Review
-					</li>
-				[/#if]
-
-				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
-						Approved
-					</li>
-				[/#if]
-
-				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
-						Request More Info
-					</li>
-				[/#if]
-
-				[#if hasRejectAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('rejected')">
-						Rejected
-					</li>
-				[/#if]
-			[/#if]
-
-			[#if mdfRequestStatusKey == 'moreInfoRequested']
-				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
-						Marketing Director Review
-					</li>
-				[/#if]
-			[/#if]
-
-			[#if mdfRequestStatusKey == 'expired']
-				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
-						Marketing Director Review
-					</li>
-				[/#if]
-
-				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
-						Request More Info
-					</li>
-				[/#if]
-			[/#if]
-
-			[#if mdfRequestStatusKey == 'rejected']
-				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('pendingMarketingReview')">
-						Pending Marketing Review
-					</li>
-				[/#if]
-
-				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
-						Marketing Director Review
-					</li>
-				[/#if]
-
-				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
-						Request More Info
-					</li>
-				[/#if]
-			[/#if]
-
-			[#if mdfRequestStatusKey == 'canceled']
-				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
-						Approved
-					</li>
-				[/#if]
-			[/#if]
-		</ul>
 	[#else]
 		Status: ${(mdfRequest.mdfRequestStatus.name)!}
 	[/#if]
+
 [#else]
 	<div class="alert alert-info">
 		<p>To use this fragment either place it on a Display Page Template to see which attributes are available from <em>request.getAttribute("INFO_ITEM")</em>.</p>

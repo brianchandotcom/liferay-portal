@@ -8,6 +8,7 @@ import Form, {
 import FormSelectFieldInput from 'contacts/components/form/SelectFieldInput';
 import Loading, {Align} from 'shared/components/Loading';
 import React, {useRef, useState} from 'react';
+import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {DistributionTab} from 'shared/util/records';
 import {FieldContexts, FieldTypes} from 'shared/util/constants';
 import {
@@ -116,7 +117,10 @@ const AddPropertyForm = ({
 
 	return (
 		<Card.Body className='add-property-form-root'>
-			<div className='row d-flex flex-column flex-grow-1'>
+			<div
+				className='row d-flex flex-column flex-grow-1'
+				id={Containers.DistributionBreakdownCard}
+			>
 				<div className='col-xl-5 d-flex flex-column flex-grow-1'>
 					<div className='description'>
 						<h4>

@@ -24,13 +24,11 @@ import DefaultObjectRelationshipEdge from '../Edges/DefaultObjectRelationshipEdg
 import SelfObjectRelationshipEdge from '../Edges/SelfObjectRelationshipEdge';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
-import {EmptyNode} from '../ObjectDefinitionNode/EmptyNode';
 import {ObjectDefinitionNode} from '../ObjectDefinitionNode/ObjectDefinitionNode';
 
 import './Diagram.scss';
 
 const NODE_TYPES = {
-	emptyNode: EmptyNode,
 	objectDefinitionNode: ObjectDefinitionNode,
 };
 
@@ -39,11 +37,7 @@ const EDGE_TYPES = {
 	selfObjectRelationshipEdge: SelfObjectRelationshipEdge,
 };
 
-function DiagramBuilder({
-	setShowModal,
-}: {
-	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
-}) {
+function DiagramBuilder() {
 	const [
 		{
 			baseResourceURL,
@@ -71,20 +65,6 @@ function DiagramBuilder({
 			erc: string;
 		};
 	}>();
-
-	const emptyNode = [
-		{
-			data: {
-				setShowModal,
-			},
-			id: 'empty',
-			position: {
-				x: 400,
-				y: 400,
-			},
-			type: 'emptyNode',
-		},
-	];
 
 	const store = useStore();
 
@@ -220,13 +200,7 @@ function DiagramBuilder({
 				connectionLineType={ConnectionLineType.SmoothStep}
 				connectionMode={ConnectionMode.Loose}
 				edgeTypes={EDGE_TYPES}
-				elements={
-					!isLoadingObjectFolder
-						? elements.length
-							? elements
-							: emptyNode
-						: []
-				}
+				elements={elements}
 				minZoom={0.1}
 				nodeTypes={NODE_TYPES}
 				onConnect={onConnect}

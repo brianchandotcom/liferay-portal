@@ -180,7 +180,7 @@ export default function EditObjectFolder({
 			<div className="lfr-objects__model-builder-content">
 				<LeftSidebar setShowModal={setShowModal} />
 
-				<Diagram setShowModal={setShowModal} />
+				<Diagram />
 
 				<RightSideBar.Root>
 					{rightSidebarType === 'empty' && <RightSideBar.Empty />}

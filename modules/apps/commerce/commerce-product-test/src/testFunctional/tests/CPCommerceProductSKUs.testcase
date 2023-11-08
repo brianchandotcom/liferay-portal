@@ -21,9 +21,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Minium",
@@ -56,9 +54,7 @@ definition {
 	test AddASKUWithSubscriptions {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -476,9 +472,7 @@ definition {
 		}
 
 		task ("And admin is on the SKUs tab of the Products") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 		}
@@ -512,9 +506,7 @@ definition {
 		}
 
 		task ("And admin creates a new Simple Product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Minium",
@@ -744,9 +736,7 @@ definition {
 		}
 
 		task ("And admin edits and publishes SKU ERC of a product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
@@ -1062,9 +1052,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Minium",
@@ -1139,9 +1127,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",

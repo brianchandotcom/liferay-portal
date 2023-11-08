@@ -457,9 +457,7 @@ definition {
 		}
 
 		task ("And the admin selects a file for the virtual product along with the activation status") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = "Virtual");
 
@@ -620,9 +618,7 @@ definition {
 		}
 
 		task ("And the admin selects a file for the virtual product along with the activation status") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = "Virtual");
 
@@ -749,9 +745,7 @@ definition {
 		}
 
 		task ("And the admin selects a file for the virtual product along with the activation status") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = "Virtual");
 

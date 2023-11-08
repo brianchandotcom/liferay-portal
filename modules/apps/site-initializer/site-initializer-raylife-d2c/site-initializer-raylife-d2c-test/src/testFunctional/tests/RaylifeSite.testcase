@@ -101,9 +101,7 @@ definition {
 
 		Raylife.createRaylifeSite(siteName = ${testSiteName});
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		while (IsElementNotPresent(locator1 = "Raylife#PRODUCTS_NAME", productList = "General Liability,Professional Liability,Business Owners Policy")) {
 			Refresh();

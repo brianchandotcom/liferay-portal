@@ -40,9 +40,7 @@ definition {
 		}
 
 		task ("And a simple product with a new option is created") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Minium",
@@ -527,9 +525,7 @@ definition {
 				productName = "Simple T-Shirt",
 				productType = "Simple");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 		}
 
 		task ("And the admin navigates inside the product entry") {
@@ -579,9 +575,7 @@ definition {
 		}
 
 		task ("Then the changes are not saved on the corresponding option on the Simple T-Shirt 'Options' tab") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
 
@@ -622,9 +616,7 @@ definition {
 		}
 
 		task ("And a Single Selection option with a value is created within a product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
 
@@ -702,9 +694,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "test@liferay.com");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
 
@@ -1112,9 +1102,7 @@ definition {
 		}
 
 		task ("And the options are assigned to ABS Sensor product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
 
@@ -1319,9 +1307,7 @@ definition {
 		}
 
 		task ("And 1 option for each option field type is added to a product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
 
@@ -1792,9 +1778,7 @@ definition {
 				productName = "Simple T-Shirt",
 				productType = "Simple");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 		}
 
 		task ("And the admin navigates inside the product entry") {
@@ -2766,9 +2750,7 @@ definition {
 		}
 
 		task ("And assigning the options to ABS Sensor product") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
 
@@ -2810,9 +2792,7 @@ definition {
 		}
 
 		task ("And navigates to the ABS Sensor Product Detail page") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
 		}
@@ -3198,9 +3178,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
 
@@ -3291,9 +3269,7 @@ definition {
 			optionEntryName = "Color",
 			optionValuesList = "Black:1");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -3328,11 +3304,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Navigator.openURL();
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
 

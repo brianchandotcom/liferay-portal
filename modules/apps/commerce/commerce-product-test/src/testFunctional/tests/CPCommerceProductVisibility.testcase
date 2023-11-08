@@ -39,9 +39,7 @@ definition {
 			channelName = "Test Channel",
 			channelType = "Site");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -202,9 +200,7 @@ definition {
 
 		Button.clickSave();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -234,9 +230,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",

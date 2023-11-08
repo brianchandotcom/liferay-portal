@@ -56,9 +56,7 @@ definition {
 		}
 
 		task ("And creates a SKU Contributor option with type Select from List and 3 values for the option") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Simple Jeans");
 
@@ -230,9 +228,7 @@ definition {
 		}
 
 		task ("And generates all SKUs combinations from the 'SKUs' tab") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Simple Jeans");
 

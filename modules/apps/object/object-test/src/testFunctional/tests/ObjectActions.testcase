@@ -386,10 +386,7 @@ definition {
 		}
 
 		task ("When the user creates a Commerce Product entry") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Product Management",
-				panel = "Commerce",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",

@@ -38,9 +38,7 @@ definition {
 
 		echo("Creating new Product...");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productName = "Simple T-Shirt",

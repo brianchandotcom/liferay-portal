@@ -44,11 +44,7 @@ definition {
 		}
 
 		task ("Create a Commerce Product Group") {
-			Navigator.openURL();
-
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -113,11 +109,7 @@ definition {
 		}
 
 		task ("Create a Commerce Product") {
-			Navigator.openURL();
-
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",

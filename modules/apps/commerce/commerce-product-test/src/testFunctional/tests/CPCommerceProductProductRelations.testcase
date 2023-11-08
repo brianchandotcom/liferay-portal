@@ -19,9 +19,7 @@ definition {
 	test AddAProductRelations {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -109,9 +107,7 @@ definition {
 	test EditAProductRelations {
 		property portal.acceptance = "true";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		WaitForElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 
@@ -154,9 +150,7 @@ definition {
 	test RemoveAProductRelations {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -209,9 +203,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
 

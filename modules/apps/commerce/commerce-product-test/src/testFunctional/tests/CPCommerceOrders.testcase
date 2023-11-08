@@ -2071,9 +2071,7 @@ definition {
 		}
 
 		task ("And some product names are translated") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			for (var productName : list "U-Joint:Primero,Wheel Seal - Front:Segundo,Drive Shafts:Tercero,Bushings:Cuarto") {
 				var originalName = StringUtil.extractFirst(${productName}, ":");

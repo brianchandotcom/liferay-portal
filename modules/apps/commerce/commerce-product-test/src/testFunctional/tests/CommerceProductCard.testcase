@@ -192,9 +192,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = "U-Joint");
 
@@ -243,9 +241,7 @@ definition {
 		var multipleQuantity = 3;
 		var product = "U-Joint";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = ${product});
 
@@ -331,9 +327,7 @@ definition {
 		task ("And a minium site with a simple product") {
 			ApplicationsMenu.gotoSite(site = "Minium");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Minium",
@@ -388,9 +382,7 @@ definition {
 		task ("and can only be added when back orders are enabled.") {
 			User.firstLoginPG();
 
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 
@@ -442,9 +434,7 @@ definition {
 			userLastName = "User",
 			userScreenName = "buyeruser");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = "U-Joint");
 
@@ -716,9 +706,7 @@ definition {
 	test AssertProductNameIsTranslated {
 		property portal.acceptance = "true";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = "Shock Absorber");
 
@@ -763,9 +751,7 @@ definition {
 		var maximumQuantity = 4;
 		var product = "U-Joint";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceProducts.searchProduct(search = ${product});
 
@@ -832,9 +818,7 @@ definition {
 		var minimumQuantity = 3;
 		var product = "U-Joint";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = ${product});
 
@@ -1682,9 +1666,7 @@ definition {
 		var multipleQuantity = 5;
 		var product = "U-Joint";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		AppBuilderAdmin.searchByItem(itemName = ${product});
 
@@ -1767,9 +1749,7 @@ definition {
 		var multipleQuantity = 5;
 		var product = "U-Joint";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = ${product});
 

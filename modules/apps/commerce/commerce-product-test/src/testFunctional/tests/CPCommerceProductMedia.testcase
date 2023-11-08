@@ -19,9 +19,7 @@ definition {
 	test AddAnAttachment {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -47,9 +45,7 @@ definition {
 	test AddAnImage {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productName = "Simple T-Shirt",
@@ -87,9 +83,7 @@ definition {
 			optionEntryName = "Color",
 			optionValuesList = "Black:1");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -886,9 +880,7 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "Product Attachment");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -925,9 +917,7 @@ definition {
 	test EditAnImage {
 		property portal.acceptance = "true";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -980,9 +970,7 @@ definition {
 	test RemoveAnAttachment {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -1016,9 +1004,7 @@ definition {
 	test RemoveAnImage {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",

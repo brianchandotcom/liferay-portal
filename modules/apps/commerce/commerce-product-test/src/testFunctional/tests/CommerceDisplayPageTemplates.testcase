@@ -586,9 +586,7 @@ definition {
 		}
 
 		task ("And a product updated") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchProduct(search = "U-Joint");
 
@@ -659,9 +657,7 @@ definition {
 		}
 
 		task ("And some categories of the new vocabulary are selected inside a product (e.g. ABS Sensor)") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			Click(
 				key_entryName = "ABS Sensor",
@@ -754,10 +750,7 @@ definition {
 		}
 
 		task ("And a product with Delivery Subscription") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Product Management",
-				panel = "Commerce",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = ${productName});
 
@@ -910,10 +903,7 @@ definition {
 		}
 
 		task ("And a product with Payment Subscription") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Product Management",
-				panel = "Commerce",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.searchEntry(entryName = ${productName});
 
@@ -1061,9 +1051,7 @@ definition {
 		}
 
 		task ("And add 'Test Commerce Product Custom Field' inside the text area for the custom field for ABS Sensor") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			Click(
 				key_entryName = "ABS Sensor",

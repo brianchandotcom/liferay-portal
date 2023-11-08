@@ -151,9 +151,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 

@@ -2247,9 +2247,7 @@ definition {
 	test SearchProductDisplayPage {
 		property portal.acceptance = "true";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
 

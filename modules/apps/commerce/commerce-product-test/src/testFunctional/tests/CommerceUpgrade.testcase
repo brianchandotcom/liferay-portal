@@ -30,9 +30,7 @@ definition {
 		var shippingaddressCountry = "United States";
 
 		task ("Assert that the number of products after the Upgrade is correct (50)") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceEntry.viewPaginationResults(results = "Showing 1 to 10 of 50 entries.");
 		}

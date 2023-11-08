@@ -65,9 +65,7 @@ definition {
 	test AddDiagramProduct {
 		property portal.acceptance = "true";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -159,9 +157,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given a diagram product with an image") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -341,9 +337,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given a diagram product with an image") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
@@ -368,9 +362,7 @@ definition {
 		}
 
 		task ("When a user navigates to the product and adds a pin") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 
@@ -430,9 +422,7 @@ definition {
 	test RemoveDiagramProduct {
 		property portal.acceptance = "true";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -476,9 +466,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given a diagram product with an image") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
 			CPCommerceCatalog.newProductsEntry(
 				productCatalog = "Master",
@@ -571,9 +559,7 @@ definition {
 	test UploadANotMappedNewImage {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",
@@ -711,9 +697,7 @@ definition {
 
 		// TODO COMMERCE-8269 Test needs refactoring due to a failure locating the Reset Zoom button.
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",

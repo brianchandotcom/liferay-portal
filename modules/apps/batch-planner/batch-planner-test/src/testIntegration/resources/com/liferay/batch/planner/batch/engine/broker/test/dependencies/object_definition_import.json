@@ -83,7 +83,8 @@
 				"required": false,
 				"state": false,
 				"system": true,
-				"type": "String"
+				"type": "String",
+				"unique": false
 			},
 			{
 				"DBType": "Date",
@@ -105,7 +106,8 @@
 				"required": false,
 				"state": false,
 				"system": true,
-				"type": "Date"
+				"type": "Date",
+				"unique": false
 			},
 			{
 				"DBType": "String",
@@ -127,7 +129,8 @@
 				"required": false,
 				"state": false,
 				"system": true,
-				"type": "String"
+				"type": "String",
+				"unique": false
 			},
 			{
 				"DBType": "Long",
@@ -149,7 +152,8 @@
 				"required": false,
 				"state": false,
 				"system": true,
-				"type": "Long"
+				"type": "Long",
+				"unique": false
 			},
 			{
 				"DBType": "Date",
@@ -171,7 +175,8 @@
 				"required": false,
 				"state": false,
 				"system": true,
-				"type": "Date"
+				"type": "Date",
+				"unique": false
 			},
 			{
 				"DBType": "String",
@@ -193,7 +198,8 @@
 				"required": false,
 				"state": false,
 				"system": true,
-				"type": "String"
+				"type": "String",
+				"unique": false
 			},
 			{
 				"DBType": "Long",
@@ -231,7 +237,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "Long"
+				"type": "Long",
+				"unique": false
 			},
 			{
 				"DBType": "Boolean",
@@ -253,7 +260,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "Boolean"
+				"type": "Boolean",
+				"unique": false
 			},
 			{
 				"DBType": "Date",
@@ -275,7 +283,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "Date"
+				"type": "Date",
+				"unique": false
 			},
 			{
 				"DBType": "DateTime",
@@ -301,7 +310,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "DateTime"
+				"type": "DateTime",
+				"unique": false
 			},
 			{
 				"DBType": "Double",
@@ -323,7 +333,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "Double"
+				"type": "Double",
+				"unique": false
 			},
 			{
 				"DBType": "Integer",
@@ -345,7 +356,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "Integer"
+				"type": "Integer",
+				"unique": false
 			},
 			{
 				"DBType": "Long",
@@ -367,7 +379,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "Long"
+				"type": "Long",
+				"unique": false
 			},
 			{
 				"DBType": "Clob",
@@ -393,7 +406,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "Clob"
+				"type": "Clob",
+				"unique": false
 			},
 			{
 				"DBType": "BigDecimal",
@@ -415,7 +429,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "BigDecimal"
+				"type": "BigDecimal",
+				"unique": false
 			},
 			{
 				"DBType": "Clob",
@@ -437,7 +452,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "Clob"
+				"type": "Clob",
+				"unique": false
 			},
 			{
 				"DBType": "String",
@@ -459,7 +475,8 @@
 				"required": false,
 				"state": false,
 				"system": false,
-				"type": "String"
+				"type": "String",
+				"unique": false
 			}
 		],
 		"objectFolderExternalReferenceCode": "uncategorized",

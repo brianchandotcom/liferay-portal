@@ -8,6 +8,7 @@ package com.liferay.knowledge.base.web.internal.portlet.action;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -60,7 +61,9 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+		if (cmd.equals(Constants.MOVE_TO_TRASH) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-188058")) {
+
 			addDeleteSuccessData(
 				actionRequest,
 				HashMapBuilder.<String, Object>put(

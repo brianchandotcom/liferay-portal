@@ -93,7 +93,13 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 		).setActionName(
 			"/object_entries/edit_object_entry"
 		).setCMD(
-			"disassociateRelatedModels"
+			() -> {
+				if (objectEntry.getRootObjectEntryId() != 0) {
+					return "deleteRelatedModels";
+				}
+
+				return "disassociateRelatedModels";
+			}
 		).setRedirect(
 			ParamUtil.getString(
 				httpServletRequest, "currentUrl",

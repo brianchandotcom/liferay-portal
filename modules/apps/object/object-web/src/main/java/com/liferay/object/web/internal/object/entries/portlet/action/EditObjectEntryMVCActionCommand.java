@@ -66,6 +66,10 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 			_addOrUpdateObjectEntry(actionRequest, actionResponse);
 		}
+		else if (cmd.equals("deleteRelatedModels")) {
+			_objectEntryService.deleteObjectEntry(
+				ParamUtil.getLong(actionRequest, "relatedModelId"));
+		}
 		else if (cmd.equals("disassociateRelatedModels")) {
 			long objectRelationshipId = ParamUtil.getLong(
 				actionRequest, "objectRelationshipId");

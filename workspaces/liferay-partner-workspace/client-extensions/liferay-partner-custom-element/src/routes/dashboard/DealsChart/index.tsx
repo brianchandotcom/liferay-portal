@@ -20,6 +20,7 @@ import {ObjectActionName} from '../../../common/enums/objectActionName';
 import {PermissionActionType} from '../../../common/enums/permissionActionType';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import usePermissionActions from '../../../common/hooks/usePermissionActions';
+import {Filters} from '../../../common/utils/constants/filters';
 import {retry} from '../../../common/utils/retry';
 
 const DealsChart = () => {
@@ -34,9 +35,9 @@ const DealsChart = () => {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const responseApproved = await retry<Response>(() =>
+		const response = await retry<Response>(() =>
 			fetch(
-				"/o/c/leadsfs?pageSize=200&filter=leadType eq 'Partner Qualified Lead (PQL)' and leadStatus eq 'Qualified'",
+				`/o/c/leadsfs?pageSize=200&filter=${Filters.DEAL_DASHBOARD.deals}`,
 				{
 					headers: {
 						'accept': 'application/json',
@@ -46,42 +47,60 @@ const DealsChart = () => {
 			)
 		);
 
-		const responseRejected = await retry<Response>(() =>
-			fetch(
-				"/o/c/leadsfs?pageSize=200&filter=leadType eq 'Partner Qualified Lead (PQL)' and leadStatus eq 'CAM rejected'",
-				{
-					headers: {
-						'accept': 'application/json',
-						'x-csrf-token': Liferay.authToken,
-					},
+		if (response.ok) {
+			const currentYear = new Date().getFullYear();
+
+			const responseJSON = await response.json();
+
+			const approvedData = responseJSON.items.filter(
+				(lead: {
+					createdDate: string;
+					isConverted: boolean;
+					leadStatus: string;
+				}) => {
+					const createDateYear = new Date(
+						lead.createdDate
+					).getFullYear();
+
+					return (
+						lead.isConverted &&
+						createDateYear === currentYear
+					);
 				}
-			)
-		);
+			);
+			const rejectedData = responseJSON.items.filter(
+				(lead: {createdDate: string; leadStatus: string}) => {
+					const createDateYear = new Date(
+						lead.createdDate
+					).getFullYear();
 
-		const responseSubmitted = await retry<Response>(() =>
-			fetch(
-				"/o/c/leadsfs?pageSize=200&filter=leadType eq 'Partner Qualified Lead (PQL)' and leadStatus ne 'Qualified' and leadStatus ne 'CAM rejected'",
-				{
-					headers: {
-						'accept': 'application/json',
-						'x-csrf-token': Liferay.authToken,
-					},
+					return (
+						lead.leadStatus === 'CAM Rejected' &&
+						createDateYear === currentYear
+					);
 				}
-			)
-		);
+			);
+			const sumbittedData = responseJSON.items.filter(
+				(lead: {
+					createdDate: string;
+					isConverted: boolean;
+					leadStatus: string;
+				}) => {
+					const createDateYear = new Date(
+						lead.createdDate
+					).getFullYear();
 
-		if (
-			responseApproved.ok &&
-			responseRejected.ok &&
-			responseSubmitted.ok
-		) {
-			const approvedData = await responseApproved.json();
-			const rejectedData = await responseRejected.json();
-			const sumbittedData = await responseSubmitted.json();
+					return (
+						lead.leadStatus !== 'CAM Rejected' &&
+						!lead.isConverted &&
+						createDateYear === currentYear
+					);
+				}
+			);
 
-			setApprovedLeads(approvedData?.items);
-			setRejectedLeads(rejectedData?.items);
-			setSubmittedLeads(sumbittedData?.items);
+			setApprovedLeads(approvedData);
+			setRejectedLeads(rejectedData);
+			setSubmittedLeads(sumbittedData);
 
 			setLoading(false);
 
@@ -94,9 +113,9 @@ const DealsChart = () => {
 	}, []);
 
 	const leadsChartValues = getLeadsChartValues(
-		rejectedLeads,
 		submittedLeads,
-		approvedLeads
+		approvedLeads,
+		rejectedLeads
 	);
 
 	const Chart = () => {

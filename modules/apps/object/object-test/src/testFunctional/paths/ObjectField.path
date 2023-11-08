@@ -18,11 +18,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>FIELD_TYPE_DESCRIPTION</td>
-		<td>//div[text() = "${key_type}"]/..//span[@class = 'text-small']</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>VIEW_HOME_FOLDER</td>
 		<td>//span[@class='breadcrumb-text-truncate' and contains(text(),'${key_viewHomeFolder}')]</td>
 		<td></td>

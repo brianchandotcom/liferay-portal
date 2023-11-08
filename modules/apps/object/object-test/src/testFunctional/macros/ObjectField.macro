@@ -24,23 +24,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOptionAndDescriptionOnRequestFiles(description = null,option = null) {
-		Click(
-			key_currentOption = "Select an option",
-			key_labelName = "Request Files",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
-
-		AssertElementPresent(
-			key_optionName = ${option},
-			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
-
-		AssertTextEquals(
-			key_type = ${option},
-			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
-			value1 = ${description});
-	}
-
-	@summary = "Default summary"
 	macro checkLimitCharacters() {
 		Click(
 			key_labelName = "Limit Characters",

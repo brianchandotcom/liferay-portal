@@ -127,16 +127,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertSelectedValueInDeletionType(deletionType = null) {
-		WaitForSPARefresh();
-
-		AssertElementPresent(
-			key_fieldLabel = "Deletion Type",
-			key_value = ${deletionType},
-			locator1 = "CreateObject#ASSERT_DELETION_TYPE_VALUE");
-	}
-
-	@summary = "Default summary"
 	macro assertValuesOnObjectData(fieldLabel = null) {
 		var key_fieldType = "form-control";
 

@@ -1139,10 +1139,7 @@ definition {
 
 		Refresh();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Order Management",
-			panel = "Commerce",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		Click(
 			key_orderStatus = "Open",
@@ -1713,9 +1710,7 @@ definition {
 			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 

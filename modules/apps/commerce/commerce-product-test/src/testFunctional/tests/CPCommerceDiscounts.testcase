@@ -39,7 +39,9 @@ definition {
 			key_entryName = "Minium 2 Portal",
 			locator1 = "CommerceNavigation#ENTRY_NAME");
 
-		CommerceNavigator.goToDiscountAdmin();
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
 
 		Click(locator1 = "Button#PLUS");
 

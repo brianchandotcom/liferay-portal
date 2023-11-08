@@ -880,9 +880,7 @@ definition {
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
@@ -1251,9 +1249,7 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 		}
 
 		task ("Then the admin edits Billing and Shipping Address and can see the changes on the address") {
@@ -1429,7 +1425,9 @@ definition {
 		}
 
 		task ("When the admin goes to the Orders Admin") {
-			CommerceOrders.openOrdersAdmin();
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
 		}
 
 		task ("Then the admin can filter the order by Date Range") {
@@ -1525,9 +1523,7 @@ definition {
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
@@ -1657,9 +1653,7 @@ definition {
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
@@ -1752,9 +1746,7 @@ definition {
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
@@ -3548,9 +3540,7 @@ definition {
 			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -3558,9 +3548,7 @@ definition {
 			orderItemQuantity = 4,
 			orderItemSku = "MIN93015");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -3617,9 +3605,7 @@ definition {
 			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -3627,9 +3613,7 @@ definition {
 			orderItemQuantity = 4,
 			orderItemSku = "MIN93015");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -3739,9 +3723,7 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
 			value1 = "Commerce Account 2");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
@@ -4114,9 +4096,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "test@liferay.com");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		ClickNoError(
 			key_orderStatus = "Pending",
@@ -4282,9 +4262,7 @@ definition {
 			productName = "Mount",
 			productQuantity = 1);
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		CommerceNavigator.searchEntry(entryName = ${orderId});
 
@@ -4332,9 +4310,7 @@ definition {
 			productName = "Transmission Cooler Line Assembly",
 			productQuantity = 3);
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+		CommerceOrders.openOrdersAdmin();
 
 		Button.click(button = "Order Date");
 

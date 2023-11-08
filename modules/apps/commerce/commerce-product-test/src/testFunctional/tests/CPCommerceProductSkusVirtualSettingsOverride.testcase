@@ -391,9 +391,7 @@ definition {
 		}
 
 		task ("And the admin changes the order status to 'completed'") {
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -725,9 +723,7 @@ definition {
 		}
 
 		task ("And the admin changes the order status to 'completed'") {
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 

@@ -559,9 +559,7 @@ definition {
 		}
 
 		task ("When The user changes the order status.") {
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -750,9 +748,7 @@ definition {
 		}
 
 		task ("And when the order status is updated") {
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
@@ -939,9 +935,7 @@ definition {
 		}
 
 		task ("Then the action is triggered and the order status is updated") {
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
+			CommerceOrders.openOrdersAdmin();
 
 			AssertElementPresent(
 				key_value = "On Hold",
@@ -1089,7 +1083,9 @@ definition {
 		}
 
 		task ("When the user changes the order status") {
-			CommerceOrders.openOrdersAdmin();
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 

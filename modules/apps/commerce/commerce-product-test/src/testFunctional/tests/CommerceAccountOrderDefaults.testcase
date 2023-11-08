@@ -2731,9 +2731,7 @@ definition {
 				discountTitle = "Discount 1 10% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 1 10% off");
 
@@ -2755,9 +2753,7 @@ definition {
 				discountTitle = "Discount 2 20% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 2 20% off");
 
@@ -2779,9 +2775,7 @@ definition {
 				discountTitle = "Discount 3 30% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 3 30% off");
 
@@ -2851,9 +2845,7 @@ definition {
 				discountTitle = "Discount 1 10% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 1 10% off");
 
@@ -2875,9 +2867,7 @@ definition {
 				discountTitle = "Discount 2 20% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 2 20% off");
 
@@ -2899,9 +2889,7 @@ definition {
 				discountTitle = "Discount 3 30% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 3 30% off");
 
@@ -2975,9 +2963,7 @@ definition {
 				discountTitle = "Discount 1 10% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 1 10% off");
 
@@ -2999,9 +2985,7 @@ definition {
 				discountTitle = "Discount 2 20% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 2 20% off");
 
@@ -3023,9 +3007,7 @@ definition {
 				discountTitle = "Discount 3 30% off",
 				productName = "U-Joint");
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 3 30% off");
 

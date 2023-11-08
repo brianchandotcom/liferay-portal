@@ -1900,9 +1900,7 @@ definition {
 		}
 
 		task ("And given a product with a discount") {
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			Click(locator1 = "Button#PLUS");
 

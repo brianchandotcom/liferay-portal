@@ -74,9 +74,7 @@ definition {
 		}
 
 		task ("And the higher discount is deleted so the lower discount can be Applied") {
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceNavigator.goToDiscountAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Discount 2 30% off");
 

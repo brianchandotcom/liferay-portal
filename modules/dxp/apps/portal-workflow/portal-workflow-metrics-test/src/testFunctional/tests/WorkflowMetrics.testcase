@@ -2407,10 +2407,7 @@ definition {
 
 		Click(locator1 = "Button#CANCEL");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		AppManager.openAppManagerAdmin();
 
 		AppManager.uploadApp(
 			appName = ${appName},

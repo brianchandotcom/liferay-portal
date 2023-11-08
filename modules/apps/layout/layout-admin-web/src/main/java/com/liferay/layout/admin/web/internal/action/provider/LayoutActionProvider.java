@@ -289,6 +289,8 @@ public class LayoutActionProvider {
 				return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 			}
 		).setParameter(
+			"backURLTitle", _getBackURLTitle()
+		).setParameter(
 			"groupId", _themeDisplay.getScopeGroupId()
 		).setParameter(
 			"privateLayout", _isPrivateLayout()

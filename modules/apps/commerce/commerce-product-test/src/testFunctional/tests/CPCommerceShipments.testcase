@@ -262,9 +262,7 @@ definition {
 			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 
@@ -306,9 +304,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 

@@ -248,9 +248,7 @@ definition {
 		}
 
 		task ("And warehouse eligibility is set to No Channel for Minium Portal Channel") {
-			CommerceNavigator.gotoPortlet(
-				category = "Inventory Management",
-				portlet = "Warehouses");
+			CommerceNavigator.goToWarehousesAdmin();
 
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceNavigator.gotoEntry(entryName = ${warehouseName});
@@ -278,9 +276,7 @@ definition {
 		}
 
 		task ("And Minium 2 Portal Channel is eligible by default for the warehouses while Minium Portal Channel is not listed as eligible") {
-			CommerceNavigator.gotoPortlet(
-				category = "Inventory Management",
-				portlet = "Warehouses");
+			CommerceNavigator.goToWarehousesAdmin();
 
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceNavigator.gotoEntry(entryName = ${warehouseName});
@@ -358,9 +354,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 
@@ -414,9 +408,7 @@ definition {
 		}
 
 		task ("When the admin navigates into a warehouse entry") {
-			CommerceNavigator.gotoPortlet(
-				category = "Inventory Management",
-				portlet = "Warehouses");
+			CommerceNavigator.goToWarehousesAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Italy");
 		}
@@ -463,9 +455,7 @@ definition {
 		}
 
 		task ("And on Italy Warehouse, View permission is removed for User and Guest, given to Power User") {
-			CommerceNavigator.gotoPortlet(
-				category = "Inventory Management",
-				portlet = "Warehouses");
+			CommerceNavigator.goToWarehousesAdmin();
 
 			Click(
 				key_value = "Italy",
@@ -533,9 +523,7 @@ definition {
 		}
 
 		task ("And on Italy Warehouse, View permission is removed for User and Guest, and verify Power User does not have it") {
-			CommerceNavigator.gotoPortlet(
-				category = "Inventory Management",
-				portlet = "Warehouses");
+			CommerceNavigator.goToWarehousesAdmin();
 
 			Click(
 				key_value = "Italy",
@@ -899,9 +887,7 @@ definition {
 		var fieldLatitudeNumber = "12345.0";
 		var fieldLongitudeNumber = "12345.0";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		Click(locator1 = "AnalyticsCloudConnection#ADD_NEW_PROPERTY_BUTTON");
 
@@ -1153,9 +1139,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 
@@ -1269,9 +1253,7 @@ definition {
 
 		// TODO Review
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		Click(locator1 = "Button#PLUS");
 
@@ -1336,9 +1318,7 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 
@@ -1360,17 +1340,13 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 
 		Open.openInTheNewTab(value1 = ${portalURL});
 
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 
@@ -1404,10 +1380,7 @@ definition {
 
 		var key_inventoryName = "test new warehouse";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Inventory Management",
-			panel = "Commerce",
-			portlet = "Warehouses");
+		CommerceNavigator.goToWarehousesAdmin();
 
 		Click(locator1 = "Button#PLUS");
 

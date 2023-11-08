@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -41,6 +42,7 @@ import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
 import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
+import com.liferay.journal.web.internal.display.context.helper.JournalWebRequestHelper;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
@@ -663,6 +665,22 @@ public class JournalDisplayContext {
 			tabsItem -> tabsItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "versions"))
 		).build();
+	}
+
+	public JournalGroupServiceConfiguration
+		getJournalGroupServiceConfiguration() {
+
+		if (_journalGroupServiceConfiguration != null) {
+			return _journalGroupServiceConfiguration;
+		}
+
+		JournalWebRequestHelper journalWebRequestHelper =
+			new JournalWebRequestHelper(_httpServletRequest);
+
+		_journalGroupServiceConfiguration =
+			journalWebRequestHelper.getJournalGroupServiceConfiguration();
+
+		return _journalGroupServiceConfiguration;
 	}
 
 	public String getKeywords() {
@@ -1855,6 +1873,7 @@ public class JournalDisplayContext {
 	private Long _folderId;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
+	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
 	private final JournalHelper _journalHelper;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;

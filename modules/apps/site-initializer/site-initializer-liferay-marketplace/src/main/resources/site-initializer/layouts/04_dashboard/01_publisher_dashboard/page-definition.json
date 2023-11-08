@@ -3,8 +3,11 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginTop": "0"
+					},
 					"indexed": true,
-					"fragmentStyle": { "borderWidth": "0", "marginTop": "0" },
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,

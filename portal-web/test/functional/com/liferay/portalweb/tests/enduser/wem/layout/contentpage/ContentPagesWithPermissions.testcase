@@ -2116,10 +2116,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Add a custom field for Page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Text Field",

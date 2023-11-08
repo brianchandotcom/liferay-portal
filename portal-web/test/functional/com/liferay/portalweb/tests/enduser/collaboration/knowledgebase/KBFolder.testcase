@@ -488,10 +488,7 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test EditKBFolderWithCustomField {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Date",

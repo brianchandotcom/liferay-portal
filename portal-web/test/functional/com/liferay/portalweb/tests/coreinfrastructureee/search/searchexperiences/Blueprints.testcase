@@ -376,10 +376,7 @@ definition {
 			groupName = "Guest",
 			title = "Employee eyes only");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Employee",

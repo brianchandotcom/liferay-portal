@@ -733,10 +733,7 @@ definition {
 		}
 
 		task ("And given a custom field to Shipments") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Shipments Input Custom Field",
@@ -838,10 +835,7 @@ definition {
 		}
 
 		task ("Then deletes the custom field and verifies that Custom Fields tab in the shipments page is not visible") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.deleteCP(
 				customFieldName = "Shipments Input Custom Field",
@@ -886,10 +880,7 @@ definition {
 		}
 
 		task ("And given a custom field to Shipments") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Shipments Text Area",

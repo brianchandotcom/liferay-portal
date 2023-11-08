@@ -2108,10 +2108,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Add custom field in User") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Custom Fields");
+			CustomFields.openCustomFieldAdmin();
 
 			CustomFields.addCP(
 				customFieldName = "Business Unit",

@@ -1949,10 +1949,7 @@ definition {
 	@description = "This test adds a custom field for an account entry and asserts field can be updated."
 	@priority = 4
 	test CanEditAccountCustomField {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",

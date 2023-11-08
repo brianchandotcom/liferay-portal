@@ -36,10 +36,7 @@ public class BuildHistoryReport {
 			outputDir);
 
 		buildHistoryReport.addFilesFromResource(
-			"dependencies/metrics/", "css/report.css", "js/utils.js");
-		buildHistoryReport.addFilesFromResource(
-			"dependencies/metrics/aggregate-report", "/css/main.css",
-			"/index.html", "/js/main.js");
+			"dependencies/metrics/aggregate-report", "/index.html");
 
 		long startTime = _getStartTime(startDateString);
 
@@ -65,10 +62,7 @@ public class BuildHistoryReport {
 			outputDir);
 
 		buildHistoryReport.addFilesFromResource(
-			"dependencies/metrics/", "css/report.css", "js/utils.js");
-		buildHistoryReport.addFilesFromResource(
-			"dependencies/metrics/test-suite-report", "/css/main.css",
-			"/index.html", "/js/main.js");
+			"dependencies/metrics/test-suite-report", "/index.html");
 
 		long duration = TimeUnit.DAYS.toMillis(durationDays);
 		long startTime = _getStartTime(startDateString);

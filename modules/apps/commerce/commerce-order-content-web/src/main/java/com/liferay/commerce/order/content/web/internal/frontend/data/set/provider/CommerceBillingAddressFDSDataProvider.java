@@ -64,8 +64,8 @@ public class CommerceBillingAddressFDSDataProvider
 			_commerceAddressService.getBillingCommerceAddresses(
 				commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 				commerceOrder.getCommerceAccountId(),
-				commerceChannel.getCommerceChannelId(), fdsKeywords.getKeywords(),
-				fdsPagination.getStartPosition(),
+				commerceChannel.getCommerceChannelId(),
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition(), sort);
 
 		for (CommerceAddress commerceAddress : commerceAddresses) {

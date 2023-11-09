@@ -433,6 +433,8 @@ components:
                     type: string
                 objectDefinitionSystem2:
                     type: boolean
+                objectField:
+                    $ref: "#/components/schemas/ObjectField"
                 parameterObjectFieldId:
                     format: int64
                     type: integer

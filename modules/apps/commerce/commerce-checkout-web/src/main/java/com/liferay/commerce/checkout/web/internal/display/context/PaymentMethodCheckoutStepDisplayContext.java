@@ -14,10 +14,11 @@ import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,7 @@ public class PaymentMethodCheckoutStepDisplayContext {
 		}
 
 		List<CommercePaymentIntegration> commercePaymentIntegrations =
-			Collections.emptyList();
+			new ArrayList<>();
 
 		if (!commerceOrder.isSubscriptionOrder()) {
 			Map<String, CommercePaymentIntegration>
@@ -83,17 +84,43 @@ public class PaymentMethodCheckoutStepDisplayContext {
 					_commercePaymentIntegrationRegistry.
 						getCommercePaymentIntegrations();
 
-			commercePaymentIntegrations = ListUtil.fromCollection(
-				commercePaymentIntegrationMaps.values());
+			for (CommercePaymentIntegration commercePaymentIntegration :
+					commercePaymentIntegrationMaps.values()) {
+
+				CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+					_commercePaymentMethodGroupRelLocalService.
+						fetchCommercePaymentMethodGroupRel(
+							groupId, commercePaymentIntegration.getKey());
+
+				if ((commercePaymentMethodGroupRel != null) &&
+					commercePaymentMethodGroupRel.isActive()) {
+
+					commercePaymentIntegrations.add(commercePaymentIntegration);
+				}
+			}
 		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		for (CommercePaymentIntegration commercePaymentIntegration :
 				commercePaymentIntegrations) {
 
-			commercePaymentMethodGroupRels.add(
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
 				_commercePaymentMethodGroupRelLocalService.
 					getCommercePaymentMethodGroupRel(
-						groupId, commercePaymentIntegration.getKey()));
+						groupId, commercePaymentIntegration.getKey());
+
+			if (permissionChecker.hasPermission(
+					commercePaymentMethodGroupRel.getGroupId(),
+					CommercePaymentMethodGroupRel.class.getName(),
+					commercePaymentMethodGroupRel.
+						getCommercePaymentMethodGroupRelId(),
+					ActionKeys.VIEW)) {
+
+				commercePaymentMethodGroupRels.add(
+					commercePaymentMethodGroupRel);
+			}
 		}
 
 		return commercePaymentMethodGroupRels;

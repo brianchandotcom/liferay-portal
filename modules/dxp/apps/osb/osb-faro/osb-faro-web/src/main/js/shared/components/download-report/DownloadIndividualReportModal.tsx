@@ -47,7 +47,7 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 								})
 							);
 
-							onClick();
+							onClick(null);
 						}}
 					>
 						<ClayModal.Header>

@@ -75,6 +75,7 @@ definition {
 
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
+				enableLazyLoading = "true",
 				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
@@ -82,6 +83,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			for (var navTab : list "Advanced,Styles,General,Styles") {
+				Navigator.gotoNavTab(navTab = ${navTab});
+			}
+
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -230,8 +235,11 @@ definition {
 		}
 
 		task ("Directly select an image with width greater than 2000px as background image of Container") {
+			SetWindowSize.maximizeWindow();
+
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
+				enableLazyLoading = "true",
 				paddingBottom = 3,
 				paddingTop = 3,
 				panel = "Styles",
@@ -244,6 +252,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			for (var navTab : list "Advanced,Styles,General,Styles") {
+				Navigator.gotoNavTab(navTab = ${navTab});
+			}
+
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -400,7 +412,10 @@ definition {
 		}
 
 		task ("Directly select an image with width greater than 2000px in Card fragment") {
+			SetWindowSize.maximizeWindow();
+
 			PageEditor.editFragmentImage(
+				enableLazyLoading = "true",
 				fileName = "high_resolution_photo.jpg",
 				fragmentName = "Card",
 				id = "01-img");
@@ -412,6 +427,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			for (var navTab : list "Link,Image Source") {
+				Navigator.gotoNavTab(navTab = ${navTab});
+			}
+
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}

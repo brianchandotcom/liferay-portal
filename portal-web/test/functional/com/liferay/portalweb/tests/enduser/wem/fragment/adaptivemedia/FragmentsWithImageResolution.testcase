@@ -225,8 +225,11 @@ definition {
 		}
 
 		task ("Directly select an image with width greater than 2000px as background image of Container") {
+			SetWindowSize.maximizeWindow();
+
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
+				enableLazyLoading = "true",
 				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
@@ -236,6 +239,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			for (var navTab : list "Advanced,Styles,General,Styles") {
+				Navigator.gotoNavTab(navTab = ${navTab});
+			}
+
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -294,6 +301,7 @@ definition {
 		task ("Directly select an image with width greater than 2000px as background image of Banner Center") {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
+				enableLazyLoading = "true",
 				entryTitle = "high_resolution_photo.jpg",
 				panel = "Styles",
 				position = 2);
@@ -459,6 +467,7 @@ definition {
 
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
+				enableLazyLoading = "true",
 				entryTitle = "high_resolution_photo.jpg",
 				fieldName = "File URL",
 				navItem = "Documents and Media",
@@ -469,6 +478,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			for (var navTab : list "Advanced,Styles,General,Styles") {
+				Navigator.gotoNavTab(navTab = ${navTab});
+			}
+
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -613,6 +626,7 @@ definition {
 
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
+				enableLazyLoading = "true",
 				entryTitle = "high_resolution_photo.jpg",
 				fieldName = "File URL",
 				navItem = "Documents and Media",
@@ -629,6 +643,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			for (var navTab : list "Advanced,Styles,General,Styles") {
+				Navigator.gotoNavTab(navTab = ${navTab});
+			}
+
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -968,7 +986,10 @@ definition {
 		}
 
 		task ("Select an Image with width greater than 2000px") {
+			SetWindowSize.maximizeWindow();
+
 			PageEditor.editFragmentImage(
+				enableLazyLoading = "true",
 				fileName = "high_resolution_photo.jpg",
 				fragmentName = "Image",
 				id = "image-square");
@@ -991,6 +1012,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution") {
+			for (var navTab : list "Link,Image Source") {
+				Navigator.gotoNavTab(navTab = ${navTab});
+			}
+
 			var fileSize = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}

@@ -32,6 +32,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191986. View draft display page template is not shown in fragment display page mapping."
+	@priority = 3
+	test CannotMapDraftDisplayPageTemplateToFragment {
+		task ("Given a user has a draft display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = ${randomSiteName},
+				subType = "Basic Web Content");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+		}
+
+		task ("When the user adds a Button fragment to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Then the user cannot map the draft display page template to Button fragment") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			Select(
+				key_fieldLabel = "Link",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Mapped URL");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_VALUE",
+				value1 = "Display Page Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-116975. Map all categories from asset entry to editable field."
 	@priority = 4
 	test MapAllCategoriesFromAssetToEditableField {

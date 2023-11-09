@@ -49,10 +49,8 @@ public class BlogsEntryModelResourcePermissionWrapper
 						modelResourcePermission, _groupLocalService,
 						BlogsEntry::getEntryId));
 
-				if (_sharingModelResourcePermissionConfigurator != null) {
-					_sharingModelResourcePermissionConfigurator.configure(
-						modelResourcePermission, consumer);
-				}
+				_sharingModelResourcePermissionConfigurator.configure(
+					modelResourcePermission, consumer);
 			});
 	}
 

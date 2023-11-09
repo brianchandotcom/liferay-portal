@@ -88,10 +88,8 @@ public class DLFileEntryModelResourcePermissionWrapper
 					new DLFileEntryWorkflowedModelResourcePermissionLogic(
 						modelResourcePermission));
 
-				if (_sharingModelResourcePermissionConfigurator != null) {
-					_sharingModelResourcePermissionConfigurator.configure(
-						modelResourcePermission, consumer);
-				}
+				_sharingModelResourcePermissionConfigurator.configure(
+					modelResourcePermission, consumer);
 
 				consumer.accept(
 					(permissionChecker, name, fileEntry, actionId) -> {

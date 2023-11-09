@@ -65,6 +65,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProvisioningRestController extends BaseRestController {
 
+	@PostMapping("license-keys/{id}/deactivate")
+	public void deactivateLicenseKeys(
+			@AuthenticationPrincipal Jwt jwt, @PathVariable("id") String id)
+		throws Exception {
+
+		_initResourceBuilders();
+
+		_appLicenseKeyResource.putAppLicenseKeyDeactivate(
+			jwt.getClaim("username"), jwt.getClaim("sub"),
+			new Long[] {GetterUtil.getLong(id)});
+	}
+
 	@GetMapping("license-keys/{id}")
 	public AppLicenseKey getLicenseKeys(@PathVariable("id") String id)
 		throws Exception {

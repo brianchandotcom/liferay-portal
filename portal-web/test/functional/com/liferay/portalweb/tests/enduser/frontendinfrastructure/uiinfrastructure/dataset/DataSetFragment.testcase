@@ -1028,10 +1028,9 @@ definition {
 		task ("Then Confirm that the select view button changes to the name of the selected view") {
 			SelectFrameTop();
 
-			AssertAttributeValue(
+			AssertElementPresent(
 				locator1 = "DataSet#SELECT_DATA_SET_VIEW",
-				value1 = "title",
-				value2 = "Full countries View");
+				value1 = "Full countries View");
 		}
 	}
 

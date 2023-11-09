@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "It activates the Accessibility Menu."
 	macro activateAccessibilityMenu(portlet = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -20,7 +20,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "It activates the Accessibility Menu By Site Settings."
 	macro activateAccessibilityMenuBySiteSettings(siteURLKey = null) {
 		Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
@@ -37,7 +37,7 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	@summary = "Default summary"
+	@summary = "It asserts that the user can access the Accessibility Menu modal."
 	macro assertCanAccessAccessibilityMenuModal() {
 		KeyPress(
 			locator1 = "//body",
@@ -58,7 +58,7 @@ definition {
 			locator1 = "AccessibilityMenu#MODAL_TITLE");
 	}
 
-	@summary = "Default summary"
+	@summary = "It asserts that the user can access the Accessibility Menu modal by the user's profile menu."
 	macro assertCanAccessAccessibilityMenuModalByTheUserProfileMenu() {
 		Navigator.openURL();
 
@@ -69,7 +69,7 @@ definition {
 			locator1 = "AccessibilityMenu#MODAL_TITLE");
 	}
 
-	@summary = "Default summary"
+	@summary = "It asserts that the user cannot access the Accessibility Menu."
 	macro assertCannotAccessAccessibilityMenuModal() {
 		KeyPress(
 			locator1 = "//body",
@@ -85,7 +85,7 @@ definition {
 			locator1 = "AccessibilityMenu#QUICK_LINK");
 	}
 
-	@summary = "Default summary"
+	@summary = "It asserts that the user cannot access the Accessibility Menu by the user's profile menu."
 	macro assertCannotAccessAccessibilityMenuModalByTheUserProfileMenu() {
 		Navigator.openURL();
 
@@ -96,7 +96,7 @@ definition {
 			locator1 = "AccessibilityMenu#MODAL_TITLE");
 	}
 
-	@summary = "Default summary"
+	@summary = "It deactivates the Accessibility Menu."
 	macro deactivateAccessibilityMenu(portlet = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -116,7 +116,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "It deactivates the Accessibility Menu by site settings."
 	macro deactivateAccessibilityMenuBySiteSettings() {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -133,7 +133,7 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	@summary = "Default summary"
+	@summary = "It disables a specific option in the Accessibility menu."
 	macro disableSpecificOption(key_toggleSwitchLabel = null) {
 		AccessibilityMenu.openAccessibilityMenu();
 
@@ -151,7 +151,7 @@ definition {
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
-	@summary = "Default summary"
+	@summary = "It goes to the Accessibility Menu quick link."
 	macro goToAccessibilityMenuQuickLink() {
 		KeyPress(
 			locator1 = "//body",
@@ -163,7 +163,7 @@ definition {
 			value1 = "\TAB");
 	}
 
-	@summary = "Default summary"
+	@summary = "It opens the Accessibility Menu."
 	macro openAccessibilityMenu() {
 		KeyPress(
 			locator1 = "//body",
@@ -180,7 +180,7 @@ definition {
 			value1 = "\ENTER");
 	}
 
-	@summary = "Default summary"
+	@summary = "It resets the Accessibility Menu option to its default values."
 	macro resetDefaultValues(portlet = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

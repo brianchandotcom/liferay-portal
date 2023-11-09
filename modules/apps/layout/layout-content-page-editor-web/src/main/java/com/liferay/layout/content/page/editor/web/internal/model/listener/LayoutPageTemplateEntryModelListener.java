@@ -297,17 +297,12 @@ public class LayoutPageTemplateEntryModelListener
 			editableValuesJSONObject = _jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 
-			for (String fragmentEntryProcessorKey :
-					_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
+			JSONObject editableFragmentEntryProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-				JSONObject editableFragmentEntryProcessorJSONObject =
-					editableValuesJSONObject.getJSONObject(
-						fragmentEntryProcessorKey);
-
-				if (editableFragmentEntryProcessorJSONObject == null) {
-					continue;
-				}
-
+			if (editableFragmentEntryProcessorJSONObject != null) {
 				_removeMappedFields(editableFragmentEntryProcessorJSONObject);
 			}
 		}
@@ -382,10 +377,6 @@ public class LayoutPageTemplateEntryModelListener
 			}
 		}
 	}
-
-	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
-		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryModelListener.class);

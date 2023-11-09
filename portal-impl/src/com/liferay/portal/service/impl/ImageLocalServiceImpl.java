@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
 
@@ -52,7 +52,9 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 
 		imagePersistence.remove(image);
 
-		_store.deleteDirectory(
+		Store store = _storeSnapshot.get();
+
+		store.deleteDirectory(
 			image.getCompanyId(), _REPOSITORY_ID,
 			_getFileName(image.getImageId(), image.getType()));
 
@@ -98,10 +100,12 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 
 		String fileName = _getFileName(imageId, type);
 
-		if (_store.hasFile(
+		Store store = _storeSnapshot.get();
+
+		if (store.hasFile(
 				companyId, _REPOSITORY_ID, fileName, Store.VERSION_DEFAULT)) {
 
-			return _store.getFileAsStream(
+			return store.getFileAsStream(
 				companyId, _REPOSITORY_ID, fileName, StringPool.BLANK);
 		}
 
@@ -109,7 +113,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			_log.debug("Get image " + imageId + " from the default company");
 		}
 
-		return _store.getFileAsStream(
+		return store.getFileAsStream(
 			0, _REPOSITORY_ID, fileName, StringPool.BLANK);
 	}
 
@@ -259,16 +263,18 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			GroupThreadLocal.getGroupId(), fileName,
 			MimeTypesUtil.getContentType(fileName), bytes);
 
-		if (_store.hasFile(
+		Store store = _storeSnapshot.get();
+
+		if (store.hasFile(
 				image.getCompanyId(), _REPOSITORY_ID, fileName,
 				Store.VERSION_DEFAULT)) {
 
-			_store.deleteDirectory(
+			store.deleteDirectory(
 				image.getCompanyId(), _REPOSITORY_ID, fileName);
 		}
 
 		try (InputStream inputStream = new UnsyncByteArrayInputStream(bytes)) {
-			_store.addFile(
+			store.addFile(
 				image.getCompanyId(), _REPOSITORY_ID, fileName,
 				Store.VERSION_DEFAULT, inputStream);
 		}
@@ -375,9 +381,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageLocalServiceImpl.class);
 
-	private static volatile Store _store =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Store.class, ImageLocalServiceImpl.class, "_store",
-			"(default=true)", true);
+	private static final Snapshot<Store> _storeSnapshot = new Snapshot<>(
+		ImageLocalServiceImpl.class, Store.class, "(default=true)");
 
 }

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
+import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Dictionary;
@@ -192,15 +193,18 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					oAuth2Authorizations.get(0);
 
 				httpServletRequest.setAttribute(
-					"token", oAuth2Authorization.getAccessTokenContent());
+					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN,
+					oAuth2Authorization.getAccessTokenContent());
 			}
 
 			String matcherField = (String)properties.get("matcherField");
 
-			httpServletRequest.setAttribute("matcherField", matcherField);
+			httpServletRequest.setAttribute(
+				ScimWebKeys.SCIM_MATCHER_FIELD, matcherField);
 
 			httpServletRequest.setAttribute(
-				"oAuth2ApplicationName", oAuth2ApplicationName);
+				ScimWebKeys.SCIM_OAUTH2_APPLICATION_NAME,
+				oAuth2ApplicationName);
 		}
 
 	}

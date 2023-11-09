@@ -1,0 +1,94 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-182024. The administrator could unlock locked page via keyboard."
+	@priority = 4
+	test CanUnlockLockedPageViaKeyboard {
+		task ("Given a locked page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When using the keyboard for navigation") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+
+			ProductMenuHelper.closeProductMenu();
+
+			KeyPress(
+				ariaLabel = "Actions for Test Content Page Name",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\TAB");
+
+			KeyPress(
+				ariaLabel = "Actions for Test Content Page Name",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			KeyPress.keyPressNoError(
+				key_menuItem = "Unlock",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_modalTitle = "Unlock Pages",
+				locator1 = "Button#CLOSE_MODAL",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "Unlock",
+				locator1 = "Button#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "Unlock",
+				locator1 = "Button#ANY",
+				value1 = "\ENTER");
+		}
+
+		task ("Then it is possible to unlock a locked page") {
+			Alert.viewSuccessMessageText(successMessage = "Success:1 pages were successfully unlocked.");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No locked pages were found.");
+		}
+	}
+
+}

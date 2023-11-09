@@ -1,0 +1,100 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-182024. The administrator could search locked pages in Locked Pages admin."
+	@priority = 4
+	test CanSearchLockedPagesInLockedPagesAdmin {
+		task ("Given two locked pages") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Second Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Second Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When navigating to locked pages admin") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+
+			for (var pageName : list "Test Content Page Name,Second Page") {
+				AssertTextPresent(
+					key_columnName = "name",
+					key_tableEntry = ${pageName},
+					locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+					value1 = ${pageName});
+			}
+		}
+
+		task ("Then it is possible to search for locked pages by name or user created") {
+			Search.searchCP(searchTerm = "Second Page");
+
+			AssertTextPresent(
+				key_columnName = "name",
+				key_tableEntry = "Second Page",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "Second Page");
+
+			AssertTextNotPresent(
+				key_columnName = "name",
+				key_tableEntry = "Test Content Page Name",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "Test Content Page Name");
+
+			Search.searchCP(searchTerm = "Test Test");
+
+			for (var pageName : list "Test Content Page Name,Second Page") {
+				AssertTextPresent(
+					key_columnName = "name",
+					key_tableEntry = ${pageName},
+					locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+					value1 = ${pageName});
+			}
+		}
+	}
+
+}

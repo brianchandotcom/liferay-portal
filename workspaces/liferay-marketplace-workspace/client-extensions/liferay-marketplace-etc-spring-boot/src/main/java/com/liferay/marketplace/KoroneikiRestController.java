@@ -84,7 +84,7 @@ public class KoroneikiRestController extends BaseRestController {
 			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap =
 				new HashMap<>();
 
-			_getDXPLicenseUsageTypeProperties(
+			_populateDXPLicenseUsageTypePropertiesMap(
 				dxpLicenseUsageTypePropertiesMap, orderItem.getOptions());
 
 			ProductPurchaseView productPurchaseView =
@@ -223,7 +223,7 @@ public class KoroneikiRestController extends BaseRestController {
 			JSONObject orderItemJSONObject = orderItemsJSONArray.getJSONObject(
 				i);
 
-			_getDXPLicenseUsageTypeProperties(
+			_populateDXPLicenseUsageTypePropertiesMap(
 				dxpLicenseUsageTypePropertiesMap,
 				orderItemJSONObject.getString("options"));
 
@@ -312,37 +312,6 @@ public class KoroneikiRestController extends BaseRestController {
 
 			_orderResource.patchOrder(
 				commerceOrderJSONObject.getLong("id"), order);
-		}
-	}
-
-	private void _getDXPLicenseUsageTypeProperties(
-		Map<String, Boolean> map, String options) {
-
-		JSONArray optionsJSONArray = new JSONArray(options);
-
-		for (int i = 0; i < optionsJSONArray.length(); i++) {
-			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
-
-			if (!StringUtil.equals(
-					jsonObject.getString("key"), "dxp-license-usage-type")) {
-
-				continue;
-			}
-
-			JSONArray jsonArray = jsonObject.getJSONArray("value");
-
-			for (int j = 0; j < jsonArray.length(); j++) {
-				for (String licenseUsageType : _LICENSE_USAGE_TYPES) {
-					if (!map.containsKey(licenseUsageType) ||
-						!map.get(licenseUsageType)) {
-
-						map.put(
-							licenseUsageType,
-							StringUtil.equals(
-								jsonArray.getString(j), licenseUsageType));
-					}
-				}
-			}
 		}
 	}
 
@@ -443,6 +412,37 @@ public class KoroneikiRestController extends BaseRestController {
 		).endpoint(
 			liferayDXPURL
 		).build();
+	}
+
+	private void _populateDXPLicenseUsageTypePropertiesMap(
+		Map<String, Boolean> map, String options) {
+
+		JSONArray optionsJSONArray = new JSONArray(options);
+
+		for (int i = 0; i < optionsJSONArray.length(); i++) {
+			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
+
+			if (!StringUtil.equals(
+					jsonObject.getString("key"), "dxp-license-usage-type")) {
+
+				continue;
+			}
+
+			JSONArray jsonArray = jsonObject.getJSONArray("value");
+
+			for (int j = 0; j < jsonArray.length(); j++) {
+				for (String licenseUsageType : _LICENSE_USAGE_TYPES) {
+					if (!map.containsKey(licenseUsageType) ||
+						!map.get(licenseUsageType)) {
+
+						map.put(
+							licenseUsageType,
+							StringUtil.equals(
+								jsonArray.getString(j), licenseUsageType));
+					}
+				}
+			}
+		}
 	}
 
 	private static final int _COMMERCE_ORDER_COMPLETED_STATUS = 0;

@@ -189,7 +189,6 @@ definition {
 				path = "/myendpoint");
 
 			var companyScopedEndpointId = JSONPathUtil.getIdValue(response = ${responseFromEndpoint});
-
 			var responseCompanyScopedSchema = SchemaAPI.createAPISchema(
 				apiApplicationERC = "My-app",
 				mainObjectDefinitionERC = "L_API_APPLICATION",

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="question" index-type="keyword" instance-id="66h6rVD7" name="question" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Where can I subscribe to your newsletter?]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="answer" index-type="keyword" instance-id="QVXfPpgA" name="answer" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[We often send out our newsletter with news and great offers. We will never disclose your data to third parties and you can unsubscribe from the newsletter at any time. Subscribe here to our newsletter.]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

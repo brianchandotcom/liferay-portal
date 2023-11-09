@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="question" index-type="keyword" instance-id="H6tqCvnK" name="question" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[We would like to sell our magazine through your shop but we haven't yet received an answer]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="answer" index-type="keyword" instance-id="Ra7n4FXF" name="answer" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[We receive up to 20 enquiries per week from publishers all around the world. Because we can't always respond to each one right away, all enquiries are checked and answered in chronological order. It may therefore take several weeks or months from receiving your enquiry to being able to respond to it. However, we always endeavour to answer all enquiries.]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

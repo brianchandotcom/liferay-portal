@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="question" index-type="keyword" instance-id="xkli7gfE" name="question" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Where can I edit my billing and shipping address?]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="answer" index-type="keyword" instance-id="ymuudwyj" name="answer" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[If you created a new account after or while ordering you can edit both addresses (for billing and shipping) in your customer account.]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

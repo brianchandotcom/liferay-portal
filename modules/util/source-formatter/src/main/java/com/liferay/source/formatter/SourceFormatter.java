@@ -701,6 +701,7 @@ public class SourceFormatter {
 
 			String[] breakingChangeReports = parts[1].split("\n----");
 
+			outLooper:
 			for (String breakingChangeReport : breakingChangeReports) {
 				int alternativesCount = StringUtil.count(
 					breakingChangeReport, "## Alternatives");
@@ -746,7 +747,7 @@ public class SourceFormatter {
 				String trimmedLine = StringUtil.trimLeading(
 					SourceUtil.getLine(breakingChangeReport, lineNumber));
 
-				if ((trimmedLine != null) && (trimmedLine.length() == 7)) {
+				if (trimmedLine.length() == 7) {
 					throw new Exception(
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0],
@@ -754,14 +755,34 @@ public class SourceFormatter {
 							"What'"));
 				}
 
-				Matcher matcher = _whatPattern.matcher(breakingChangeReport);
+				String filePath = StringUtil.trim(trimmedLine.substring(7));
 
-				if (matcher.find()) {
-					throw new Exception(
-						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0], ":\n",
-							"'## What' section should contain only one file"));
+				File file = SourceFormatterUtil.getFile(
+					_sourceFormatterArgs.getBaseDirName(), filePath,
+					_sourceFormatterArgs.getMaxDirLevel());
+
+				if (file != null) {
+					continue;
 				}
+
+				List<String> deletedFileNames =
+					GitUtil.getCurrentBranchDeletedFileNames(
+						_sourceFormatterArgs.getBaseDirName(),
+						_sourceFormatterArgs.getGitWorkingBranchName());
+
+				if (!deletedFileNames.isEmpty()) {
+					for (String deletedFileName : deletedFileNames) {
+						if (filePath.endsWith(deletedFileName)) {
+							continue outLooper;
+						}
+					}
+				}
+
+				throw new Exception(
+					StringBundler.concat(
+						"Found formatting issues in SHA ", parts[0], ":\n",
+						"'## What' section should contain only one file with ",
+						"correct file path"));
 			}
 		}
 	}
@@ -1451,9 +1472,6 @@ public class SourceFormatter {
 		"source-formatter.properties";
 
 	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
-
-	private static final Pattern _whatPattern = Pattern.compile(
-		"## What\\s+(([\\w\\-]+/)*\\w+\\.\\w+[\n, ]){2,}\n");
 
 	private List<String> _allFileNames;
 	private final List<String> _modifiedFileNames =

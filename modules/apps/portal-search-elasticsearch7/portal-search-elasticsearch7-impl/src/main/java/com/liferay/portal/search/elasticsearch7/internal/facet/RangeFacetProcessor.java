@@ -83,6 +83,11 @@ public class RangeFacetProcessor
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
 			String label = rangeJSONObject.getString("label");
+
+			if (Validator.isBlank(label)) {
+				label = rangeJSONObject.getString("range");
+			}
+
 			String rangeString = rangeJSONObject.getString("range");
 
 			_addRange(abstractRangeBuilder, label, rangeString);

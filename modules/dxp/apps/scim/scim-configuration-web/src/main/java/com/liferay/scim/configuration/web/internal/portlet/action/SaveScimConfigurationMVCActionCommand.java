@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Date;
@@ -134,7 +135,8 @@ public class SaveScimConfigurationMVCActionCommand
 				}
 			}
 
-			actionRequest.setAttribute("token", accessToken);
+			actionRequest.setAttribute(
+				ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN, accessToken);
 		}
 		else if (Objects.equals(cmd, "revoke")) {
 			OAuth2Application oAuth2Application =

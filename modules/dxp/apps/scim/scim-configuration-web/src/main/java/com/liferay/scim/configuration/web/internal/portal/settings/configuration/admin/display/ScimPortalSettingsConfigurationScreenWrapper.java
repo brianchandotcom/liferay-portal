@@ -173,12 +173,17 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 			catch (NoSuchOAuth2ApplicationException
 						noSuchOAuth2ApplicationException) {
 
-				if (_log.isInfoEnabled()) {
-					_log.info(noSuchOAuth2ApplicationException);
+				if (_log.isWarnEnabled()) {
+					_log.warn(noSuchOAuth2ApplicationException);
 				}
 
 				return;
 			}
+
+			String matcherField = (String)properties.get("matcherField");
+
+			httpServletRequest.setAttribute(
+				ScimWebKeys.SCIM_MATCHER_FIELD, matcherField);
 
 			List<OAuth2Authorization> oAuth2Authorizations =
 				_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
@@ -196,11 +201,6 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN,
 					oAuth2Authorization.getAccessTokenContent());
 			}
-
-			String matcherField = (String)properties.get("matcherField");
-
-			httpServletRequest.setAttribute(
-				ScimWebKeys.SCIM_MATCHER_FIELD, matcherField);
 
 			httpServletRequest.setAttribute(
 				ScimWebKeys.SCIM_OAUTH2_APPLICATION_NAME,

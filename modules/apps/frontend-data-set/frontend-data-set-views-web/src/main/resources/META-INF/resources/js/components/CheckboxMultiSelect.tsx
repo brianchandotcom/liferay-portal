@@ -78,6 +78,7 @@ function CheckboxMultiSelect({
 							<ClayCheckbox
 								aria-label={item.label}
 								checked={isChecked(items, item)}
+								className="invisible"
 								onClick={(event: any) => {
 									event.stopPropagation();
 

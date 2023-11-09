@@ -10,6 +10,12 @@ package com.liferay.commerce.payment.constants;
  */
 public class CommercePaymentWebKeys {
 
+	public static final String IS_DEFAULT_PAYMENT_INTEGRATION_TYPE_SETTINGS =
+		"IS_DEFAULT_PAYMENT_INTEGRATION_TYPE_SETTINGS";
+
+	public static final String PAYMENT_INTEGRATION_TYPE_SETTINGS =
+		"PAYMENT_INTEGRATION_TYPE_SETTINGS";
+
 	public static final String REDIRECT_URL = "REDIRECT_URL";
 
 	public static final String REDIRECTION_DATA = "REDIRECTION_DATA";

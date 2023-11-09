@@ -5,49 +5,83 @@
 
 package com.liferay.object.exception;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Marco Leo
  */
 public class RequiredObjectFieldException extends PortalException {
 
-	public RequiredObjectFieldException() {
-		super("At least one object field must be added");
-
-		_messageKey = "at-least-one-object-field-must-be-added";
-	}
-
-	public RequiredObjectFieldException(String message, String messageKey) {
-		super(message);
-
-		_messageKey = messageKey;
+	public List<Object> getArguments() {
+		return _arguments;
 	}
 
 	public String getMessageKey() {
 		return _messageKey;
 	}
 
-	public static class MustNotDeleteObjectFieldUniqueCompositeKey
+	public static class MustNotDeleteObjectField
 		extends RequiredObjectFieldException {
 
-		public MustNotDeleteObjectFieldUniqueCompositeKey() {
+		public MustNotDeleteObjectField(String objectFieldName) {
 			super(
-				StringBundler.concat(
-					"This object field cannot be deleted as it is used in a ",
-					"composite unique key validation. To remove this object ",
-					"field you must first delete the associated unique ",
-					"composite key validation."),
-				StringBundler.concat(
-					"this-object-field-cannot-be-deleted-as-it-is-used-in-a-",
-					"composite-unique-key-validation.-to-remove-this-object-",
-					"field-you-must-first-delete-the-associated-unique-",
-					"composite-key-validation"));
+				Collections.singletonList(objectFieldName),
+				String.format(
+					"The object field \"%s\" cannot be deleted",
+					objectFieldName),
+				"the-object-field-x-cannot-be-deleted");
 		}
 
 	}
 
+	public static class MustNotDeleteObjectFieldCompositeKey
+		extends RequiredObjectFieldException {
+
+		public MustNotDeleteObjectFieldCompositeKey(String objectFieldName) {
+			super(
+				Collections.singletonList(objectFieldName),
+				String.format(
+					"The object field \"%s\" cannot be deleted as it is used " +
+						"in a unique composite key validation",
+					objectFieldName),
+				"the-object-field-x-cannot-be-deleted-as-it-is-used-in-a-" +
+					"unique-composite-key-validation");
+		}
+
+	}
+
+	public static class MustNotDeleteObjectFieldPublishedObjectDefinition
+		extends RequiredObjectFieldException {
+
+		public MustNotDeleteObjectFieldPublishedObjectDefinition(
+			String objectFieldName) {
+
+			super(
+				Collections.singletonList(objectFieldName),
+				String.format(
+					"The object field \"%s\" cannot be deleted as it is the " +
+						"only custom object field of the published object " +
+							"definition",
+					objectFieldName),
+				"the-object-field-x-cannot-be-deleted-as-it-is-the-only-" +
+					"custom-object-field-of-the-published-object-definition");
+		}
+
+	}
+
+	private RequiredObjectFieldException(
+		List<Object> arguments, String message, String messageKey) {
+
+		super(message);
+
+		_arguments = arguments;
+		_messageKey = messageKey;
+	}
+
+	private final List<Object> _arguments;
 	private final String _messageKey;
 
 }

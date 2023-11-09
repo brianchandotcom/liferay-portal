@@ -139,10 +139,21 @@ public class ObjectEntryItemSelectorViewDescriptor
 							_portletRequest, "objectRelationshipId")));
 			}
 			else {
+				Group scopeGroup = _themeDisplay.getScopeGroup();
+
+				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> page =
+					_objectEntryManager.getObjectEntries(
+						_themeDisplay.getCompanyId(), _objectDefinition,
+						scopeGroup.getGroupKey(), null, _getDTOConverterContext(),
+						StringPool.BLANK, Pagination.of(searchContainer.getCur(), searchContainer.getDelta()), ParamUtil.getString(_portletRequest, "keywords"),
+						null);
+
 				searchContainer.setResultsAndTotal(
-					_getObjectEntries(
-						searchContainer.getCur(), searchContainer.getDelta(),
-						ParamUtil.getString(_portletRequest, "keywords")));
+					() -> TransformUtil.transform(
+						page.getItems(),
+						objectEntry -> ObjectEntryUtil.toObjectEntry(
+							_objectDefinition.getObjectDefinitionId(), objectEntry)),
+					Math.toIntExact(page.getTotalCount()));
 			}
 		}
 		catch (Exception exception) {

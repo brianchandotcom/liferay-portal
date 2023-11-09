@@ -207,11 +207,11 @@ public class KoroneikiRestController extends BaseRestController {
 				product.getProductId(), Pagination.of(1, 10)
 			).getItems());
 
-		ZonedDateTime commerceOrderStartDate = ZonedDateTime.parse(
+		int successCount = 0;
+
+		ZonedDateTime zonedDateTime = ZonedDateTime.parse(
 			commerceOrderJSONObject.getString("createDate"),
 			DateTimeFormatter.ISO_DATE_TIME);
-
-		int successCount = 0;
 
 		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
 
@@ -226,12 +226,12 @@ public class KoroneikiRestController extends BaseRestController {
 			ProductPurchase productPurchase = new ProductPurchase();
 
 			if (StringUtil.equals(licenseType, "Subscription")) {
-				Instant instant = commerceOrderStartDate.plusYears(
+				Instant instant = zonedDateTime.plusYears(
 					1
 				).toInstant();
 
 				if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
-					instant = commerceOrderStartDate.plusMonths(
+					instant = zonedDateTime.plusMonths(
 						1
 					).toInstant();
 				}
@@ -248,8 +248,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 			productPurchase.setExternalLinks(new ExternalLink[] {externalLink});
 
-			productPurchase.setStartDate(
-				Date.from(commerceOrderStartDate.toInstant()));
+			productPurchase.setStartDate(Date.from(zonedDateTime.toInstant()));
 			productPurchase.setPerpetual(
 				StringUtil.equals(licenseType, "Perpetual"));
 			productPurchase.setProductKey(

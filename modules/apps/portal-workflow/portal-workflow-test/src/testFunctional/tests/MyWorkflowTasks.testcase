@@ -137,12 +137,12 @@ definition {
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Order",
-			workflowAssetType = "Commerce Order",
+			workflowAssetType = "Order",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Order",
-			workflowAssetType = "Commerce Order",
+			workflowAssetType = "Order",
 			workflowTask = "Review");
 
 		User.logoutAndLoginPG(
@@ -1683,8 +1683,6 @@ definition {
 
 		CommerceNavigator.gotoMiniCart();
 
-		Button.click(button = "Review Order");
-
 		Button.click(button = "Submit");
 
 		Navigator.openURL();
@@ -1693,7 +1691,7 @@ definition {
 
 		Workflow.viewTaskAssignedToMyRoles(
 			workflowAssetTitle = "Order",
-			workflowAssetType = "Commerce Order",
+			workflowAssetType = "Order",
 			workflowTask = "Review");
 
 		ApplicationsMenu.gotoSite(site = "Minium");

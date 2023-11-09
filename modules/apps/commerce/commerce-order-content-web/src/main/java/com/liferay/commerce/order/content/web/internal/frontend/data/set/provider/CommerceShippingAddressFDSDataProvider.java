@@ -10,6 +10,8 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.content.web.internal.model.Address;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
@@ -54,11 +56,16 @@ public class CommerceShippingAddressFDSDataProvider
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
 		List<CommerceAddress> commerceAddresses =
 			_commerceAddressService.getShippingCommerceAddresses(
 				commerceOrder.getCompanyId(), AccountEntry.class.getName(),
-				commerceOrder.getCommerceAccountId(), fdsKeywords.getKeywords(),
-				fdsPagination.getStartPosition(),
+				commerceOrder.getCommerceAccountId(),
+				commerceChannel.getCommerceChannelId(),
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition(), sort);
 
 		for (CommerceAddress commerceAddress : commerceAddresses) {
@@ -83,9 +90,14 @@ public class CommerceShippingAddressFDSDataProvider
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
 		return _commerceAddressService.getShippingCommerceAddressesCount(
 			commerceOrder.getCompanyId(), AccountEntry.class.getName(),
-			commerceOrder.getCommerceAccountId(), fdsKeywords.getKeywords());
+			commerceOrder.getCommerceAccountId(),
+			commerceChannel.getCommerceChannelId(), fdsKeywords.getKeywords());
 	}
 
 	private String _getDescriptiveCommerceAddress(
@@ -117,6 +129,9 @@ public class CommerceShippingAddressFDSDataProvider
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

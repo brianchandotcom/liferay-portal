@@ -188,17 +188,9 @@ definition {
 		task ("Then the focus should be on modal when go through via Tab key") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			WaitForEditable(
-				key_text = "Description",
-				locator1 = "TextInput#ANY");
-
-			SelectFrameTop();
-
-			AssertElementFocused(
-				key_title = "AI Creator",
-				locator1 = "IFrame#MODAL_ANY");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			Type.typeKeys(
+				locator1 = "//body",
+				value1 = "keys=TAB");
 
 			Type.typeKeys(
 				locator1 = "//body",

@@ -155,14 +155,16 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 	@Override
 	public List<CommerceAddress> getBillingCommerceAddresses(
-			long companyId, String className, long classPK, String keywords,
-			int start, int end, Sort sort)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords, int start, int end,
+			Sort sort)
 		throws PortalException {
 
 		_checkPermission(className, classPK);
 
 		return commerceAddressLocalService.getBillingCommerceAddresses(
-			companyId, className, classPK, keywords, start, end, sort);
+			companyId, className, classPK, commerceChannelId, keywords, start,
+			end, sort);
 	}
 
 	@Override
@@ -178,13 +180,14 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 	@Override
 	public int getBillingCommerceAddressesCount(
-			long companyId, String className, long classPK, String keywords)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords)
 		throws PortalException {
 
 		_checkPermission(className, classPK);
 
 		return commerceAddressLocalService.getBillingCommerceAddressesCount(
-			companyId, className, classPK, keywords);
+			companyId, className, classPK, commerceChannelId, keywords);
 	}
 
 	@Override
@@ -325,14 +328,16 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 	@Override
 	public List<CommerceAddress> getShippingCommerceAddresses(
-			long companyId, String className, long classPK, String keywords,
-			int start, int end, Sort sort)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords, int start, int end,
+			Sort sort)
 		throws PortalException {
 
 		_checkPermission(className, classPK);
 
 		return commerceAddressLocalService.getShippingCommerceAddresses(
-			companyId, className, classPK, keywords, start, end, sort);
+			companyId, className, classPK, commerceChannelId, keywords, start,
+			end, sort);
 	}
 
 	@Override
@@ -348,13 +353,14 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 	@Override
 	public int getShippingCommerceAddressesCount(
-			long companyId, String className, long classPK, String keywords)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords)
 		throws PortalException {
 
 		_checkPermission(className, classPK);
 
 		return commerceAddressLocalService.getShippingCommerceAddressesCount(
-			companyId, className, classPK, keywords);
+			companyId, className, classPK, commerceChannelId, keywords);
 	}
 
 	/**

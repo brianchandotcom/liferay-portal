@@ -129,7 +129,7 @@ public class ProvisioningRestController extends BaseRestController {
 		_initResourceBuilders();
 
 		return _appLicenseKeyResource.getAppLicenseKeysPage(
-			"", "orderId eq '" + orderId + "'",
+			"", "active eq true and orderId eq '" + orderId + "'",
 			Pagination.of(
 				GetterUtil.getInteger(page), GetterUtil.getInteger(pageSize)),
 			"");

@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -498,25 +499,19 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 */
 	@Override
 	public long[] getTagIds(String name) {
-		List<Long> assetTagIds = new ArrayList<>();
+		return TransformUtil.transformToLongArray(
+			assetTagPersistence.findByName(_getName(name)),
+			assetTag -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+					if (StringUtil.equals(assetTag.getName(), name)) {
+						return assetTag.getTagId();
+					}
 
-		List<AssetTag> assetTags = assetTagPersistence.findByName(
-			_getName(name));
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
-			for (AssetTag assetTag : assetTags) {
-				if (StringUtil.equals(assetTag.getName(), name)) {
-					assetTagIds.add(assetTag.getTagId());
+					return null;
 				}
-			}
-		}
-		else {
-			for (AssetTag assetTag : assetTags) {
-				assetTagIds.add(assetTag.getTagId());
-			}
-		}
 
-		return ArrayUtil.toArray(assetTagIds.toArray(new Long[0]));
+				return assetTag.getTagId();
+			});
 	}
 
 	/**

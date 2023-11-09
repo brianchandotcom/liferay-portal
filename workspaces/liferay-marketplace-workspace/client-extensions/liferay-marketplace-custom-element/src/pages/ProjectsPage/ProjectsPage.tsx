@@ -11,7 +11,7 @@ import {ProjectDetailsCard} from '../../components/CreateProjectModal/ProjectDet
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {getPlacedOrders} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
-import {NextStepPage} from '../NextSteps/NextSteps';
+import {NextSteps} from '../NextSteps';
 import {ProjectsTableRow} from './ProjectsTableRow';
 
 import './ProjectsPage.scss';
@@ -93,7 +93,7 @@ export function ProjectsPage({
 
 	if (showNextStepsPage) {
 		return (
-			<NextStepPage
+			<NextSteps
 				continueButtonText="Go to Dashboard"
 				header={{
 					description:
@@ -110,7 +110,7 @@ export function ProjectsPage({
 				size="lg"
 			>
 				<ProjectDetailsCard showHeader />
-			</NextStepPage>
+			</NextSteps>
 		);
 	}
 

@@ -27,7 +27,7 @@ import {PaymentStatus} from '../GetAppPage/enums/PaymentStatus';
 import getProductPriceModel from '../GetAppPage/utils/getProductPriceModel';
 import useNextSteps from './useNextSteps';
 
-interface NextStepPageProps {
+interface NextStepsProps {
 	children?: ReactNode;
 	continueButtonText?: string;
 	header?: {
@@ -45,12 +45,12 @@ type TypeNextStepBody = {
 	[key in string]?: ReactNode;
 };
 
-export function NextStepPage({
+export function NextSteps({
 	children,
 	onClickContinue,
 	showBackButton,
 	size,
-}: NextStepPageProps) {
+}: NextStepsProps) {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	const orderId = urlParams.get('orderId');

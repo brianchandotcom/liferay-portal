@@ -52,10 +52,11 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 					)}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onSubmit={() => {
-						onClick();
+					onSubmit={dateRange => {
+						onClick(dateRange);
 					}}
 					requiredDateRange
+					type='CSV'
 				/>
 			)}
 		</div>

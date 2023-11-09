@@ -2721,7 +2721,12 @@ definition {
 
 		SelectFrameTop();
 
-		Button.clickApply();
+		if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Filter by Extension")) {
+			Button.clickApply();
+		}
+		else {
+			Button.clickSelect();
+		}
 	}
 
 	@summary = "Default summary"

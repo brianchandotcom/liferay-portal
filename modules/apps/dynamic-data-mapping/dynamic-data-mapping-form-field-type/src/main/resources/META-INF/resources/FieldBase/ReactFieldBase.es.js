@@ -334,10 +334,12 @@ export function FieldBase({
 						)}
 						disabled={readOnly}
 						onClick={() =>
-							dispatch({
-								payload: name,
-								type: CORE_EVENT_TYPES.FIELD.REPEATED,
-							})
+							setTimeout(() => {
+								dispatch({
+									payload: name,
+									type: CORE_EVENT_TYPES.FIELD.REPEATED,
+								});
+							}, 200)
 						}
 						small
 						title={Liferay.Language.get('duplicate')}

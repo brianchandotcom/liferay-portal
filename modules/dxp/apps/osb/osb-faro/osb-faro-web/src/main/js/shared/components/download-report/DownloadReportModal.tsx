@@ -25,9 +25,10 @@ interface IDownloadReportModal {
 	infoMessage: string;
 	observer: any;
 	onClose: () => void;
-	onSubmit: () => void;
+	onSubmit: (dateRange?: MomentDateRange) => void;
 	requiredDateRange?: boolean;
 	showDateRange?: boolean;
+	type?: 'CSV' | 'PDF';
 }
 
 export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
@@ -40,7 +41,8 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	onClose,
 	onSubmit,
 	requiredDateRange = false,
-	showDateRange = true
+	showDateRange = true,
+	type
 }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -67,6 +69,12 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 							message: alertMessage
 						})
 					);
+
+					if (type === 'CSV') {
+						onSubmit(dateRange);
+
+						return;
+					}
 
 					if (dateRange && dateRange.end && dateRange.start) {
 						history.push(

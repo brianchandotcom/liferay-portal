@@ -174,42 +174,44 @@ export function useDownloadCSV({
 }) {
 	const {channelId, groupId} = useParams();
 
-	const searchParams = new URLSearchParams(location.search);
-
-	const field = searchParams.get('field');
-	const query = searchParams.get('query');
-	const rangeEnd = searchParams.get('rangeEnd');
-	const rangeKey = searchParams.get('rangeKey');
-	const rangeStart = searchParams.get('rangeStart');
-	const sortOrder = searchParams.get('sortOrder');
-
-	const a = document.createElement('a');
-
-	let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}&fromDate=${rangeStart}&rangeKey=${rangeKey}&toDate=${rangeEnd}`;
-
-	if (assetId) {
-		url += `&assetId=${encodeURIComponent(assetId)}`;
-	}
-
-	if (assetType) {
-		url += `&assetType=${assetType}`;
-	}
-
-	if (field && sortOrder) {
-		const orderByFields = JSON.stringify(
-			buildOrderByFields({field, sortOrder}, INDIVIDUALS)
-		);
-
-		url += `&orderByFields=${encodeURIComponent(orderByFields)}`;
-	}
-
-	if (query) {
-		url += `&query=${query}`;
-	}
-
-	a.href = url;
-
 	return {
-		onClick: () => a.click()
+		onClick: dateRange => {
+			const searchParams = new URLSearchParams(location.search);
+
+			const field = searchParams.get('field');
+			const query = searchParams.get('query');
+			const rangeKey = searchParams.get('rangeKey');
+			const sortOrder = searchParams.get('sortOrder');
+
+			const a = document.createElement('a');
+
+			let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}&fromDate=${formatDate(
+				dateRange?.start
+			)}&rangeKey=${rangeKey}&toDate=${formatDate(dateRange?.end)}`;
+
+			if (assetId) {
+				url += `&assetId=${encodeURIComponent(assetId)}`;
+			}
+
+			if (assetType) {
+				url += `&assetType=${assetType}`;
+			}
+
+			if (field && sortOrder) {
+				const orderByFields = JSON.stringify(
+					buildOrderByFields({field, sortOrder}, INDIVIDUALS)
+				);
+
+				url += `&orderByFields=${encodeURIComponent(orderByFields)}`;
+			}
+
+			if (query) {
+				url += `&query=${query}`;
+			}
+
+			a.href = url;
+
+			a.click();
+		}
 	};
 }

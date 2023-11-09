@@ -2097,14 +2097,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JournalArticle journalArticle =
 				_journalArticleLocalService.fetchArticle(
 					serviceContext.getScopeGroupId(),
-					jsonObject.getString("articleId"));
+					articleId);
 
 			if (journalArticle == null) {
 				journalArticle = _journalArticleLocalService.addArticle(
 					null, serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), journalFolderId,
 					JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
-					jsonObject.getString("articleId"), false, 1, titleMap, null,
+					articleId, false, 1, titleMap, null,
 					titleMap,
 					_replace(
 						SiteInitializerUtil.read(
@@ -2125,7 +2125,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				journalArticle = _journalArticleLocalService.updateArticle(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), journalFolderId,
-					jsonObject.getString("articleId"),
+					articleId,
 					journalArticle.getVersion(), titleMap, null, titleMap,
 					_replace(
 						SiteInitializerUtil.read(

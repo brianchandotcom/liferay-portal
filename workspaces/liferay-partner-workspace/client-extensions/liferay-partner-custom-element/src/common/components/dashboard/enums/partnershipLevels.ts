@@ -5,6 +5,7 @@
 
 export enum PartnershipLevels {
 	AUTHORIZED = 'authorized',
+	GLOBAL = 'global',
 	GOLD = 'gold',
 	PLATINUM = 'platinum',
 	SILVER = 'silver',

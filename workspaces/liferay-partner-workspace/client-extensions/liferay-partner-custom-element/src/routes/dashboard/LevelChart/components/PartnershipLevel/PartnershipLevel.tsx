@@ -92,10 +92,12 @@ const PartnershipLevel = ({
 				className={classNames('d-flex', {
 					'mb-4':
 						partnerLevel.partnerLevelType.key ===
-						PartnershipLevels.AUTHORIZED,
+						PartnershipLevels.AUTHORIZED || partnerLevel.partnerLevelType.key ===
+						PartnershipLevels.GLOBAL,
 					'mb-5':
 						partnerLevel.partnerLevelType.key !==
-						PartnershipLevels.AUTHORIZED,
+						PartnershipLevels.AUTHORIZED && partnerLevel.partnerLevelType.key !==
+						PartnershipLevels.GLOBAL,
 				})}
 			>
 				<PartnerIcon level={partnerLevel.partnerLevelType.key} />
@@ -123,7 +125,8 @@ const PartnershipLevel = ({
 			</h3>
 
 			{partnerLevel.partnerLevelType.key !==
-				PartnershipLevels.AUTHORIZED && (
+				PartnershipLevels.AUTHORIZED && partnerLevel.partnerLevelType.key !==
+				PartnershipLevels.GLOBAL && (
 				<div>
 					{partnerLevel.partnerLevelType.key !==
 						PartnershipLevels.SILVER && (

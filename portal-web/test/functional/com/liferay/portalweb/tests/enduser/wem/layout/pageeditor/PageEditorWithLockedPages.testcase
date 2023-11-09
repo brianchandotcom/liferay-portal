@@ -968,4 +968,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182024. The Locked Pages admin should comply with WCAG 2.1 AA standard."
+	@priority = 4
+	test ViewAccessibilityOfLockedPages {
+		task ("Given a locked page") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+
+			AssertAccessible();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When to unlock a locked page") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
+
+			User.impersonateCP(
+				siteName = ${siteName},
+				userScreenName = "usersn");
+
+			UserBar.gotoMySite(siteName = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+
+			AssertAccessible();
+		}
+
+		task ("Then it is possible to check accessibility") {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Unlock",
+				rowEntry = "Test Content Page Name");
+
+			AssertAccessible();
+		}
+	}
+
 }

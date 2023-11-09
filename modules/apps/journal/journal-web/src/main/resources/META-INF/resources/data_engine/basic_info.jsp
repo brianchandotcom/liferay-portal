@@ -23,9 +23,7 @@ if (ddmStructure != null) {
 
 <aui:input name="storageType" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getStorageType() %>" />
 
-<c:if test="<%= journalEditDDMStructuresDisplayContext.isShowStructureKeyInput() %>">
-	<aui:input disabled="<%= journalEditDDMStructuresDisplayContext.isStructureKeyInputDisabled() %>" name="structureKey" />
-</c:if>
+<aui:input disabled="<%= journalEditDDMStructuresDisplayContext.isStructureKeyInputDisabled() %>" name="structureKey" />
 
 <aui:input activeLanguageIds="<%= journalEditDDMStructuresDisplayContext.getAvailableLanguageIds() %>" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" languagesDropdownDirection="downleft" localized="<%= true %>" name="description" type="text" />
 

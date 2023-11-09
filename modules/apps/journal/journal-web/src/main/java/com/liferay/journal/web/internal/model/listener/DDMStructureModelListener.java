@@ -11,7 +11,6 @@ import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.exception.DDMStructureValidationModelListenerException;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.Portal;
@@ -38,9 +37,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			DDMStructure originalDDMStructure, DDMStructure ddmStructure)
 		throws ModelListenerException {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				ddmStructure.getCompanyId(), "LPS-184255") ||
-			(ddmStructure.getClassNameId() !=
+		if ((ddmStructure.getClassNameId() !=
 				_getJournalArticleClassNameId()) ||
 			Objects.equals(
 				originalDDMStructure.getStructureKey(),

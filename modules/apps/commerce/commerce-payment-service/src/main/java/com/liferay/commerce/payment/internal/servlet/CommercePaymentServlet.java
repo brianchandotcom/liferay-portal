@@ -89,14 +89,6 @@ public class CommercePaymentServlet extends HttpServlet {
 
 			URL portalURL = new URL(_portal.getPortalURL(httpServletRequest));
 
-			_nextUrl = ParamUtil.getString(httpServletRequest, "nextStep");
-
-			URL nextURL = new URL(_nextUrl);
-
-			if (!Objects.equals(portalURL.getHost(), nextURL.getHost())) {
-				throw new ServletException();
-			}
-
 			String entryKey = ParamUtil.getString(
 				httpServletRequest, "entryKey");
 
@@ -196,6 +188,14 @@ public class CommercePaymentServlet extends HttpServlet {
 				entryId);
 
 		if (commercePaymentEntry == null) {
+			_nextUrl = ParamUtil.getString(httpServletRequest, "nextStep");
+
+			URL nextURL = new URL(_nextUrl);
+
+			if (!Objects.equals(portalURL.getHost(), nextURL.getHost())) {
+				throw new ServletException();
+			}
+
 			User currentUser = _portal.getUser(httpServletRequest);
 
 			if (currentUser == null) {
@@ -219,7 +219,7 @@ public class CommercePaymentServlet extends HttpServlet {
 
 			commercePaymentEntry =
 				_commercePaymentEntryLocalService.updateCommercePaymentEntry(
-					commercePaymentIntegration.setUpPayment(
+					_commercePaymentGateway.setUpPayment(
 						httpServletRequest, commercePaymentEntry));
 		}
 		else {
@@ -339,6 +339,14 @@ public class CommercePaymentServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse,
 			CommerceOrder commerceOrder, URL portalURL)
 		throws Exception {
+
+		_nextUrl = ParamUtil.getString(httpServletRequest, "nextStep");
+
+		URL nextURL = new URL(_nextUrl);
+
+		if (!Objects.equals(portalURL.getHost(), nextURL.getHost())) {
+			throw new ServletException();
+		}
 
 		if (_commerceCheckoutStepHttpHelper.isCommercePaymentComplete(
 				httpServletRequest, commerceOrder)) {

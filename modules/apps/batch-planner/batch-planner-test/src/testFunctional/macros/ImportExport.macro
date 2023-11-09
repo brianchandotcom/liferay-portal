@@ -247,7 +247,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureImport(containsHeaders = null, fileName = null, templateName = null, entityType = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
+	macro configureImport(containsHeaders = null, fileName = null, templateName = null, entityType = null, scope = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
 		UploadDependencyFile.uploadFile(fileName = ${fileName});
 
 		if (isSet(importName)) {
@@ -270,6 +270,13 @@ definition {
 		}
 
 		ImportExport.selectEntity(entityType = ${entityType});
+
+		if (isSet(scope)) {
+			Select(
+				key_selectFieldLabel = "Scope",
+				locator1 = "ImportExport#SELECT",
+				value1 = ${scope});
+		}
 
 		if (isSet(importStrategy)) {
 			Select(

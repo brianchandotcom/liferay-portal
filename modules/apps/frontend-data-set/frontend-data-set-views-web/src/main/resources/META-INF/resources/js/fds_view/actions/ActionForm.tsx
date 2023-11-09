@@ -465,6 +465,12 @@ const ActionForm = ({
 
 									<ClayInput.GroupItem append>
 										<ClayInput
+											onChange={({target: {value}}) =>
+												setActionData({
+													...actionData,
+													iconSymbol: value,
+												})
+											}
 											placeholder={Liferay.Language.get(
 												'no-icon-selected'
 											)}

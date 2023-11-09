@@ -37,8 +37,9 @@
 
 			<ul class="options-organizations your-organizations">
 				[#list organizations as	organization]
+
 					[#if organization.creator.id == user.userId ]
-						<li class="" value="${organization.idNumber}">${organization.id} - ${organization.organizationName} - ${organization.taxId}</li>
+						<li class="" value="${organization.id}">${organization.id} - ${organization.organizationName} - ${organization.taxId}</li>
 					[/#if]
 				[/#list]
 				</ul>
@@ -48,7 +49,7 @@
 
 			<ul class="all-organizations options-organizations">
 				[#list organizations as	organization]
-					<li class="" value="${organization.idNumber}">${organization.id} - ${organization.organizationName} - ${organization.taxId}</li>
+					<li class="" value="${organization.id}">${organization.id} - ${organization.organizationName} - ${organization.taxId}</li>
 				[/#list]
 			</ul>
 		</div>

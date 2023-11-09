@@ -467,6 +467,35 @@ public class ObjectRelationship implements Serializable {
 	protected Boolean objectDefinitionSystem2;
 
 	@Schema
+	@Valid
+	public ObjectField getObjectField() {
+		return objectField;
+	}
+
+	public void setObjectField(ObjectField objectField) {
+		this.objectField = objectField;
+	}
+
+	@JsonIgnore
+	public void setObjectField(
+		UnsafeSupplier<ObjectField, Exception> objectFieldUnsafeSupplier) {
+
+		try {
+			objectField = objectFieldUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ObjectField objectField;
+
+	@Schema
 	public Long getParameterObjectFieldId() {
 		return parameterObjectFieldId;
 	}
@@ -805,6 +834,16 @@ public class ObjectRelationship implements Serializable {
 			sb.append("\"objectDefinitionSystem2\": ");
 
 			sb.append(objectDefinitionSystem2);
+		}
+
+		if (objectField != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectField\": ");
+
+			sb.append(String.valueOf(objectField));
 		}
 
 		if (parameterObjectFieldId != null) {

@@ -211,9 +211,10 @@ public class CommercePaymentServlet extends HttpServlet {
 					commerceOrder.getCommerceOrderId(), commerceChannelId,
 					commerceOrder.getTotal(), _nextUrl, _nextUrl,
 					commerceCurrency.getCode(),
-					_language.getLanguageId(httpServletRequest), null,
-					commerceOrder.getCommercePaymentMethodKey(), 0, null, null,
-					CommercePaymentEntryConstants.TYPE_PAYMENT,
+					_language.getLanguageId(httpServletRequest),
+					commerceOrder.getCommercePaymentMethodKey(),
+					commercePaymentIntegration.getPaymentIntegrationType(),
+					null,
 					ServiceContextFactory.getInstance(httpServletRequest));
 
 			commercePaymentEntry =
@@ -328,6 +329,20 @@ public class CommercePaymentServlet extends HttpServlet {
 			(commercePaymentIntegration.getPaymentIntegrationType() ==
 				CommercePaymentIntegrationConstants.
 					TYPE_FUNCTION_ONLINE_STANDARD)) {
+
+			if (commercePaymentEntry.getPaymentStatus() ==
+					CommercePaymentEntryConstants.STATUS_CREATED) {
+
+				commercePaymentEntry = _commercePaymentGateway.authorize(
+					httpServletRequest, commercePaymentEntry);
+			}
+
+			if (commercePaymentEntry.getPaymentStatus() ==
+					CommercePaymentEntryConstants.STATUS_AUTHORIZED) {
+
+				_commercePaymentGateway.capture(
+					httpServletRequest, commercePaymentEntry);
+			}
 
 			httpServletResponse.sendRedirect(_nextUrl);
 		}

@@ -6,7 +6,6 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.document.Document;
@@ -79,28 +77,40 @@ public class DisplayContextUtil {
 	}
 
 	public static Map<Long, String> getTypeNames(
-		long ctCollectionId,
-		CTDisplayRendererRegistry ctDisplayRendererRegistry,
-		ThemeDisplay themeDisplay) {
+		long ctCollectionId, boolean showHideable, ThemeDisplay themeDisplay) {
 
-		List<Long> classNameIds = ClassNameLocalServiceUtil.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				CTEntryTable.INSTANCE.modelClassNameId
-			).from(
-				CTEntryTable.INSTANCE
-			).where(
-				CTEntryTable.INSTANCE.ctCollectionId.eq(ctCollectionId)
-			));
+		Searcher searcher = _searcherSnapshot.get();
+
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			_searchRequestBuilderFactorySnapshot.get();
+
+		SearchRequestBuilder searchRequestBuilder =
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				themeDisplay.getCompanyId()
+			).entryClassNames(
+				CTEntry.class.getName()
+			).emptySearchEnabled(
+				true
+			).fields(
+				"modelClassNameId", "typeName"
+			).withSearchContext(
+				searchContext -> {
+					searchContext.setAttribute(
+						"ctCollectionId", ctCollectionId);
+					searchContext.setAttribute("showHideable", showHideable);
+				}
+			);
+
+		SearchResponse searchResponse = searcher.search(
+			searchRequestBuilder.build());
 
 		Map<Long, String> typeNames = new HashMap<>();
 
-		for (long classNameId : classNameIds) {
-			String typeName = ctDisplayRendererRegistry.getTypeName(
-				themeDisplay.getLocale(), classNameId);
-
-			typeName = typeName.substring(typeName.lastIndexOf(".") + 1);
-
-			typeNames.put(classNameId, typeName);
+		for (Document document : searchResponse.getDocuments()) {
+			typeNames.put(
+				document.getLong("modelClassNameId"),
+				document.getString("typeName"));
 		}
 
 		return typeNames;

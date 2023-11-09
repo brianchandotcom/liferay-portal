@@ -63,7 +63,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class KoroneikiRestController extends BaseRestController {
 
 	@PostMapping("product-purchase")
-	public void createProductPurchase(
+	public void postProductPurchase(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
@@ -211,7 +211,7 @@ public class KoroneikiRestController extends BaseRestController {
 	}
 
 	@GetMapping("subscriptions/{orderId}")
-	public String getSubscriptionsByOrderId(
+	public String getSubscriptions(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("orderId") Long orderId)
 		throws Exception {

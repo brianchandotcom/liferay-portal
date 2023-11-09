@@ -66,13 +66,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProvisioningRestController extends BaseRestController {
 
 	@PostMapping("license-keys")
-	public AppLicenseKey createLicenseKey(
+	public AppLicenseKey postLicenseKeys(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
 		_initResourceBuilders();
 
 		JSONObject jsonObject = new JSONObject(json);
+
+		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
+			jsonObject.getJSONObject(
+				"licenseEntry"
+			).toString());
+
+		appLicenseKey.setActive(true);
+		appLicenseKey.setCreateDate(new Date());
 
 		ProductPurchase productPurchase =
 			_productPurchaseResource.getProductPurchase(
@@ -88,6 +96,8 @@ public class ProvisioningRestController extends BaseRestController {
 				).toInstant());
 		}
 
+		appLicenseKey.setExpirationDate(expirationDate);
+
 		AppLicenseKey.LicenseType licenseType =
 			AppLicenseKey.LicenseType.PRODUCTION;
 
@@ -95,28 +105,23 @@ public class ProvisioningRestController extends BaseRestController {
 			licenseType = AppLicenseKey.LicenseType.DEVELOPER;
 		}
 
-		Date startDate = productPurchase.getStartDate();
-
-		if (startDate == null) {
-			startDate = new Date();
-		}
-
-		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
-			jsonObject.getJSONObject(
-				"licenseEntry"
-			).toString());
-
-		appLicenseKey.setActive(true);
-		appLicenseKey.setCreateDate(new Date());
-		appLicenseKey.setExpirationDate(expirationDate);
 		appLicenseKey.setLicenseType(licenseType);
+
 		appLicenseKey.setOwner((String)jwt.getClaim("username"));
 		appLicenseKey.setProductId(productPurchase.getProductKey());
 		appLicenseKey.setProductName(
 			productPurchase.getProduct(
 			).getName());
 		appLicenseKey.setProductVersion(_getVersion(jsonObject, jwt));
+
+		Date startDate = productPurchase.getStartDate();
+
+		if (startDate == null) {
+			startDate = new Date();
+		}
+
 		appLicenseKey.setStartDate(startDate);
+
 		appLicenseKey.setUserName((String)jwt.getClaim("username"));
 		appLicenseKey.setUserUuid((String)jwt.getClaim("sub"));
 
@@ -125,7 +130,7 @@ public class ProvisioningRestController extends BaseRestController {
 	}
 
 	@GetMapping("license-keys/{id}/download")
-	public ResponseEntity downloadLicenseKey(@PathVariable("id") String id)
+	public ResponseEntity getLicenseKeysDownload(@PathVariable("id") String id)
 		throws Exception {
 
 		_initResourceBuilders();
@@ -156,7 +161,7 @@ public class ProvisioningRestController extends BaseRestController {
 	}
 
 	@GetMapping("license-keys/{id}")
-	public AppLicenseKey getLicenseKey(@PathVariable("id") String id)
+	public AppLicenseKey getLicenseKeys(@PathVariable("id") String id)
 		throws Exception {
 
 		_initResourceBuilders();

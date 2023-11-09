@@ -42,13 +42,11 @@ export function mergeFieldOptions(field, newField) {
 const sanitizePagesCaptchaHTML = (pages) => {
 	const visitor = new PagesVisitor(pages);
 
-	visitor.mapFields(
-		(field) => {
-			if (field.fieldName === "_CAPTCHA_") {
-				delete field.html;
-			}
-		},
-	);
+	visitor.mapFields((field) => {
+		if (field.fieldName === '_CAPTCHA_') {
+			delete field.html;
+		}
+	});
 };
 
 export function mergePages(

@@ -12,9 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectDefinitionStatusException extends PortalException {
 
-	public ObjectDefinitionStatusException() {
-	}
-
 	public ObjectDefinitionStatusException(String message) {
 		super(message);
 	}

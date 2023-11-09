@@ -142,6 +142,29 @@ public class ViewChangesDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_user = _themeDisplay.getUser();
+
+		long modelClassNameId = ParamUtil.getLong(
+			renderRequest, "modelClassNameId");
+		long modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
+
+		if ((modelClassNameId != 0) && (modelClassPK != 0)) {
+			_modelClassNameId = modelClassNameId;
+			_modelClassPK = modelClassPK;
+		}
+		else {
+			long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
+
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
+
+			if (ctEntry != null) {
+				_modelClassNameId = ctEntry.getModelClassNameId();
+				_modelClassPK = ctEntry.getModelClassPK();
+			}
+			else {
+				_modelClassNameId = 0;
+				_modelClassPK = 0;
+			}
+		}
 	}
 
 	public String getAPIURL() {
@@ -270,7 +293,8 @@ public class ViewChangesDisplayContext {
 			try {
 				if (!_user.isOnDemandUser()) {
 					ctClosure = _ctClosureFactory.create(
-						_ctCollection.getCtCollectionId());
+						_ctCollection.getCtCollectionId(),
+						_portal.getClassNameId(Group.class));
 				}
 				else {
 					ctClosure = _ctClosureFactory.create(
@@ -330,13 +354,17 @@ public class ViewChangesDisplayContext {
 
 			Map.Entry<Long, List<Long>> entry = null;
 
+			boolean foundSelectedEntry = false;
+
 			while ((entry = queue.poll()) != null) {
 				long classNameId = entry.getKey();
 
-				Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
-					classNameId, key -> new HashSet<>());
+				if (!foundSelectedEntry) {
+					Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
+						classNameId, key -> new HashSet<>());
 
-				classPKs.addAll(entry.getValue());
+					classPKs.addAll(entry.getValue());
+				}
 
 				for (long classPK : entry.getValue()) {
 					ModelInfoKey modelInfoKey = new ModelInfoKey(
@@ -354,6 +382,26 @@ public class ViewChangesDisplayContext {
 							queue.addAll(childPKsMap.entrySet());
 						}
 					}
+
+					if ((classNameId == _modelClassNameId) &&
+						(classPK == _modelClassPK)) {
+
+						foundSelectedEntry = true;
+					}
+				}
+			}
+
+			if (foundSelectedEntry) {
+				Map<Long, List<Long>> childPKsMap = ctClosure.getChildPKsMap(
+					_modelClassNameId, _modelClassPK);
+
+				for (Map.Entry<Long, List<Long>> childPKEntry :
+						childPKsMap.entrySet()) {
+
+					Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
+						childPKEntry.getKey(), key -> new HashSet<>());
+
+					classPKs.addAll(childPKEntry.getValue());
 				}
 			}
 		}
@@ -1451,6 +1499,8 @@ public class ViewChangesDisplayContext {
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final long _modelClassNameId;
+	private final long _modelClassPK;
 	private final Portal _portal;
 	private final PublicationsDisplayContext _publicationsDisplayContext;
 	private final PublishScheduler _publishScheduler;

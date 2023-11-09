@@ -137,6 +137,9 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		Queue<Map.Entry<Long, List<Long>>> queue = new LinkedList<>(
 			map.entrySet());
 
+		CTCollection ctCollection = _ctCollectionPersistence.fetchByPrimaryKey(
+			ctCollectionId);
+
 		while (queue.size() > 0) {
 			Map.Entry<Long, List<Long>> queueEntry = queue.poll();
 
@@ -146,9 +149,6 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				combinedTableReferenceInfos.get(childClassNameId);
 
 			if (childTableReferenceInfo == null) {
-				CTCollection ctCollection =
-					_ctCollectionPersistence.fetchByPrimaryKey(ctCollectionId);
-
 				if ((ctCollection != null) &&
 					(ctCollection.getStatus() !=
 						WorkflowConstants.STATUS_DRAFT) &&

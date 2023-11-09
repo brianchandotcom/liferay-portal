@@ -8,16 +8,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute("oAuth2ApplicationName"));
+String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_APPLICATION_NAME));
 
-String paramToken = GetterUtil.getString(request.getAttribute("token"));
+String oAuth2AccessToken = GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN));
 %>
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 
 <aui:input label="application-name" name="oAuth2ApplicationName" required="<%= true %>" type="text" value="<%= oAuth2ApplicationName %>" />
 
-<aui:select helpMessage="scim-matcher-field-help" label="scim-matcher-field" name="matcherField" required="<%= true %>" value="<%= request.getAttribute("matcherField") %>">
+<aui:select helpMessage="scim-matcher-field-help" label="scim-matcher-field" name="matcherField" required="<%= true %>" value="<%= request.getAttribute(ScimWebKeys.SCIM_MATCHER_FIELD) %>">
 	<aui:option label="" value="" />
 	<aui:option label="userName" localizeLabel="<%= false %>" value="userName" />
 	<aui:option label="email" localizeLabel="<%= false %>" value="email" />
@@ -27,17 +27,17 @@ String paramToken = GetterUtil.getString(request.getAttribute("token"));
 	<c:when test="<%= oAuth2ApplicationName != null %>">
 
 		<%
-		String paramTokenInputId = liferayPortletResponse.getNamespace() + "paramToken";
+		String oAuth2AccessTokenInputId = liferayPortletResponse.getNamespace() + "oAuth2AccessToken";
 		%>
 
 		<div class="form-group">
-			<label for="<%= paramTokenInputId %>">
+			<label for="<%= oAuth2AccessTokenInputId %>">
 				<liferay-ui:message key="access-token" />
 			</label>
 
 			<div class="input-group input-group-sm">
 				<div class="input-group-item input-group-prepend">
-					<input class="form-control" id="<%= paramTokenInputId %>" readonly value="<%= paramToken %>" />
+					<input class="form-control" id="<%= oAuth2AccessTokenInputId %>" readonly value="<%= oAuth2AccessToken %>" />
 				</div>
 
 				<span class="input-group-append input-group-item input-group-item-shrink">
@@ -45,7 +45,7 @@ String paramToken = GetterUtil.getString(request.getAttribute("token"));
 						name="copyAccessToken"
 						id="copyAccessToken"
 						cssClass="scim-infopanel-copy-clipboard lfr-portal-tooltip"
-						data-clipboard-target='<%= "#" + paramTokenInputId %>'
+						data-clipboard-target='<%= "#" + oAuth2AccessTokenInputId %>'
 						displayType="secondary"
 						icon="paste"
 						title="copy-link"
@@ -69,7 +69,7 @@ String paramToken = GetterUtil.getString(request.getAttribute("token"));
 		</div>
 
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(paramToken) %>">
+			<c:when test="<%= Validator.isNotNull(oAuth2AccessToken) %>">
 				<label for="<portlet:namespace />revokeAccessToken">
 					<liferay-ui:message key="scim-revoke-all" />
 

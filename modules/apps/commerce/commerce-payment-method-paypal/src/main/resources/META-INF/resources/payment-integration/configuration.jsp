@@ -54,26 +54,6 @@ PayPalGroupServiceConfiguration payPalGroupServiceConfiguration = (PayPalGroupSe
 
 			</aui:select>
 		</commerce-ui:info-box>
-
-		<commerce-ui:info-box
-			title='<%= LanguageUtil.get(request, "options") %>'
-		>
-			<aui:select id="paypal-settings-request" label="request-details" name="settings--request--">
-
-				<%
-				for (String requestDetailsOption : PayPalCommercePaymentMethodConstants.REQUEST_DETAILS_OPTIONS) {
-				%>
-
-					<aui:option label="<%= requestDetailsOption %>" selected="<%= requestDetailsOption.equals(payPalGroupServiceConfiguration.requestDetails()) %>" value="<%= requestDetailsOption %>" />
-
-				<%
-				}
-				%>
-
-			</aui:select>
-
-			<aui:input id="paypal-payment-attempts-max-count" label="payment-attempts-max-count" name="settings--paymentAttempts--" value="<%= payPalGroupServiceConfiguration.paymentAttemptsMaxCount() %>" />
-		</commerce-ui:info-box>
 	</commerce-ui:panel>
 
 	<aui:button-row>

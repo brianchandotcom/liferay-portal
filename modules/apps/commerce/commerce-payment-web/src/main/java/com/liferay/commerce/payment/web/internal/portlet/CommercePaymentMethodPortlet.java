@@ -63,7 +63,7 @@ public class CommercePaymentMethodPortlet extends MVCPortlet {
 					_commerceChannelLocalService,
 					_commercePaymentMethodGroupRelService,
 					_commercePaymentMethodRegistry,
-					_commercePaymentIntegrationRegistry, _countryService,
+					_commercePaymentIntegrationRegistry,
 					_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(

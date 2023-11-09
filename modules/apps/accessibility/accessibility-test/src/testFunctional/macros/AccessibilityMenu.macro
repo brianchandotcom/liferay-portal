@@ -70,6 +70,17 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro assertCannotAccessAccessibilityMenuModalByTheUserProfileMenu() {
+		Navigator.openURL();
+
+		UserBar.gotoDropdown();
+
+		AssertElementNotPresent(
+			key_modal_title = "Accessibility Menu",
+			locator1 = "AccessibilityMenu#MODAL_TITLE");
+	}
+
+	@summary = "Default summary"
 	macro assertCannotAccessAccessibilityMenuModal() {
 		KeyPress(
 			locator1 = "//body",

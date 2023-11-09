@@ -23,7 +23,7 @@ interface ModalEditExternalReferenceCodeProps {
 	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
 	saveURL: string;
-	setExternalReferenceCode: (value: string) => void;
+	setExternalReferenceCode?: (value: string) => void;
 }
 
 type TInitialValues = {
@@ -62,7 +62,9 @@ export function ModalEditExternalReferenceCode({
 				url: `${saveURL}`,
 			});
 
-			setExternalReferenceCode(externalReferenceCode);
+			if (setExternalReferenceCode) {
+				setExternalReferenceCode(externalReferenceCode);
+			}
 
 			if (onExternalReferenceCodeChange) {
 				onExternalReferenceCodeChange(externalReferenceCode);

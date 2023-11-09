@@ -19,16 +19,14 @@ import './EditObjectFolderHeader.scss';
 interface EditObjectFolderHeaderProps {
 	hasDraftObjectDefinitions: boolean;
 	selectedObjectFolder: ObjectFolder;
-	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 
 export default function EditObjectFolderHeader({
 	hasDraftObjectDefinitions,
 	selectedObjectFolder,
-	setShowModal,
 }: EditObjectFolderHeaderProps) {
 	const [
-		{showChangesSaved, showSidebars},
+		{modelBuilderModals, showChangesSaved, showSidebars},
 		dispatch,
 	] = useObjectFolderContext();
 
@@ -108,14 +106,16 @@ export default function EditObjectFolderHeader({
 								)}
 								displayType="unstyled"
 								onClick={() =>
-									setShowModal(
-										(
-											previousState: ModelBuilderModals
-										) => ({
-											...previousState,
-											editObjectFolder: true,
-										})
-									)
+									dispatch({
+										payload: {
+											modelBuilderModals: {
+												...modelBuilderModals,
+												editObjectFolder: true,
+											},
+										},
+										type:
+											TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+									})
 								}
 								symbol="pencil"
 							/>
@@ -150,12 +150,16 @@ export default function EditObjectFolderHeader({
 						disabled={!hasDraftObjectDefinitions}
 						displayType="primary"
 						onClick={() => {
-							setShowModal(
-								(previousState: ModelBuilderModals) => ({
-									...previousState,
-									publishObjectDefinitions: true,
-								})
-							);
+							dispatch({
+								payload: {
+									modelBuilderModals: {
+										...modelBuilderModals,
+										publishObjectDefinitions: true,
+									},
+								},
+								type:
+									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+							});
 						}}
 						size="sm"
 					>

@@ -39,11 +39,7 @@ const EDGE_TYPES = {
 	selfObjectRelationshipEdge: SelfObjectRelationshipEdge,
 };
 
-function DiagramBuilder({
-	setShowModal,
-}: {
-	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
-}) {
+function DiagramBuilder() {
 	const [
 		{
 			baseResourceURL,
@@ -74,9 +70,6 @@ function DiagramBuilder({
 
 	const emptyNode = [
 		{
-			data: {
-				setShowModal,
-			},
 			id: 'empty',
 			position: {
 				x: 400,

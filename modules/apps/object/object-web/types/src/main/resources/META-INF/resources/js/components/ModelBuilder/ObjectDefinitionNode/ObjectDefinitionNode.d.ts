@@ -10,7 +10,6 @@ import './NodeContainer.scss';
 export declare function ObjectDefinitionNode({
 	data: {
 		defaultLanguageId,
-		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
 		id,

@@ -8,13 +8,14 @@ import {DropDownItems} from '../ModelBuilder/types';
 import {DeletedObjectDefinition} from './ViewObjectDefinitions';
 declare type DeleteObjectDefinitionProps = {
 	baseResourceURL: string;
+	handleDeleteObjectDefinition: (value: DeletedObjectDefinition) => void;
 	handleShowDeleteObjectDefinitionModal: () => void;
 	objectDefinitionId: number;
 	objectDefinitionName: string;
-	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
 };
 declare type ObjectDefinitionNodeActionsProps = {
 	baseResourceURL: string;
+	handleDeleteObjectDefinition: (value: DeletedObjectDefinition) => void;
 	handleShowDeleteObjectDefinitionModal: () => void;
 	handleShowEditObjectDefinitionExternalReferenceCodeModal: () => void;
 	handleShowRedirectObjectDefinitionModal: () => void;
@@ -23,7 +24,6 @@ declare type ObjectDefinitionNodeActionsProps = {
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	objectDefinitionPermissionsURL: string;
-	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
 	status: {
 		code: number;
 		label: string;
@@ -50,14 +50,15 @@ export declare function deleteObjectDefinitionToast(
 ): Promise<void>;
 export declare function deleteObjectDefinition({
 	baseResourceURL,
+	handleDeleteObjectDefinition,
 	handleShowDeleteObjectDefinitionModal,
 	objectDefinitionId,
 	objectDefinitionName,
-	setDeletedObjectDefinition,
 }: DeleteObjectDefinitionProps): Promise<void>;
 export declare function deleteRelationship(id: number): Promise<void>;
 export declare function getObjectDefinitionNodeActions({
 	baseResourceURL,
+	handleDeleteObjectDefinition,
 	handleShowDeleteObjectDefinitionModal,
 	handleShowEditObjectDefinitionExternalReferenceCodeModal,
 	handleShowRedirectObjectDefinitionModal,
@@ -66,7 +67,6 @@ export declare function getObjectDefinitionNodeActions({
 	objectDefinitionId,
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,
-	setDeletedObjectDefinition,
 }: ObjectDefinitionNodeActionsProps): DropDownItems[];
 export declare function getObjectFolderActions(
 	id: number,

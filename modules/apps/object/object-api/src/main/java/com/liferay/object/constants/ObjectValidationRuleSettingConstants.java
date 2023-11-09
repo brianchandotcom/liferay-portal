@@ -10,10 +10,6 @@ package com.liferay.object.constants;
  */
 public class ObjectValidationRuleSettingConstants {
 
-	public static final int COMPOSITE_KEY_OBJECT_FIELDS_SIZE_MAX = 5;
-
-	public static final int COMPOSITE_KEY_OBJECT_FIELDS_SIZE_MIN = 2;
-
 	public static final String
 		NAME_COMPOSITE_KEY_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE =
 			"compositeKeyObjectFieldExternalReferenceCode";

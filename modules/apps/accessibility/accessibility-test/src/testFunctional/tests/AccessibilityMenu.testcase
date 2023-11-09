@@ -51,6 +51,10 @@ definition {
 		task ("Then Accessibility Menu cannot be accessed") {
 			AccessibilityMenu.assertCannotAccessAccessibilityMenuModal();
 		}
+
+		task ("And Accessibility Menu cannot be reached through the user's profile menu") {
+			AccessibilityMenu.assertCannotAccessAccessibilityMenuModalByTheUserProfileMenu();
+		}
 	}
 
 	@description = "LPS-178192. Verifies Expanded Text effects toggle can be enabled."

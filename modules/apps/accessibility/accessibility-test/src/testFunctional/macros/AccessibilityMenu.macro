@@ -70,17 +70,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCannotAccessAccessibilityMenuModalByTheUserProfileMenu() {
-		Navigator.openURL();
-
-		UserBar.gotoDropdown();
-
-		AssertElementNotPresent(
-			key_modal_title = "Accessibility Menu",
-			locator1 = "AccessibilityMenu#MODAL_TITLE");
-	}
-
-	@summary = "Default summary"
 	macro assertCannotAccessAccessibilityMenuModal() {
 		KeyPress(
 			locator1 = "//body",
@@ -94,6 +83,17 @@ definition {
 		AssertElementNotPresent(
 			key_link = "Open Accessibility Menu",
 			locator1 = "AccessibilityMenu#QUICK_LINK");
+	}
+
+	@summary = "Default summary"
+	macro assertCannotAccessAccessibilityMenuModalByTheUserProfileMenu() {
+		Navigator.openURL();
+
+		UserBar.gotoDropdown();
+
+		AssertElementNotPresent(
+			key_modal_title = "Accessibility Menu",
+			locator1 = "AccessibilityMenu#MODAL_TITLE");
 	}
 
 	@summary = "Default summary"

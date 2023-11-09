@@ -29,7 +29,7 @@ public class ChangeTypeSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "change-types";
+		return "changed";
 	}
 
 	@Override

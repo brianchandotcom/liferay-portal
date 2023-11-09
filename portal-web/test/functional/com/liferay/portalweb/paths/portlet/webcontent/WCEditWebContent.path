@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>SELECT_FEATURED_IMAGE_INPUT</td>
-	<td>//div[contains(@id,'smallFileContainer')]//input[contains(@id,'smallFile')] | //input[contains(@id,'smallImageId')][contains(@type,'text')]</td>
+	<td>//div[contains(@id,'featuredImageContent')]//input[contains(@id,'smallFile')] | //input[contains(@id,'smallImageId')][contains(@type,'text')]</td>
 	<td></td>
 </tr>
 <tr>

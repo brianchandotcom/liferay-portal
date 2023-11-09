@@ -5,7 +5,7 @@
 
 package com.liferay.analytics.machine.learning.internal.dispatch.executor;
 
-import com.liferay.analytics.dxp.entity.rest.dto.v1_0.AnalyticsUserContentRecommendation;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.AnalyticsMostViewedContentRecommendation;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
@@ -22,16 +22,17 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"dispatch.task.executor.name=" + AnalyticsDownloadUserContentRecommendationDispatchTaskExecutor.KEY,
-		"dispatch.task.executor.type=" + AnalyticsDownloadUserContentRecommendationDispatchTaskExecutor.KEY
+		"dispatch.task.executor.name=" + AnalyticsDownloadMostViewedContentRecommendationDispatchTaskExecutor.KEY,
+		"dispatch.task.executor.type=" + AnalyticsDownloadMostViewedContentRecommendationDispatchTaskExecutor.KEY
 	},
 	service = DispatchTaskExecutor.class
 )
-public class AnalyticsDownloadUserContentRecommendationDispatchTaskExecutor
-	extends BaseRecommendationDispatchTaskExecutor {
+public class
+	AnalyticsDownloadMostViewedContentRecommendationDispatchTaskExecutor
+		extends BaseRecommendationDispatchTaskExecutor {
 
 	public static final String KEY =
-		"analytics-download-user-content-recommendation";
+		"analytics-download-most-viewed-content-recommendation";
 
 	@Override
 	public void doExecute(
@@ -54,9 +55,9 @@ public class AnalyticsDownloadUserContentRecommendationDispatchTaskExecutor
 			).put(
 				"createDate", "createDate"
 			).put(
-				"entryClassPK", "userId"
-			).put(
 				"jobId", "jobId"
+			).put(
+				"rank", "rank"
 			).put(
 				"recommendedEntryClassPK", "recommendedAssetEntryId"
 			).put(
@@ -66,7 +67,7 @@ public class AnalyticsDownloadUserContentRecommendationDispatchTaskExecutor
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
 			resourceLastModifiedDate,
-			AnalyticsUserContentRecommendation.class.getName(),
+			AnalyticsMostViewedContentRecommendation.class.getName(),
 			dispatchLog.getUserId());
 	}
 

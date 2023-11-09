@@ -89,7 +89,7 @@ export const Filters = {
 	},
 	MDF_CLAIM_LISTING: {
 		channelsCompleted: `${mdfClaimCompletedFilter} and ${previousToCurrentYearFilterDateCreated}`,
-		channelsOpen: `${mdfClaimOpenFilter} and (mdfClaimStatus ne 'draft') and ${previousToCurrentYearFilterDateCreated}`,
+		channelsOpen: `${mdfClaimOpenFilter} and (mdfClaimStatus ne 'draft')`,
 		completedList: mdfClaimCompletedListStatus,
 		openList: mdfClaimOpenListStatus,
 		partnersCompleted: `${mdfClaimCompletedFilter} and ${fiscalYearFilterDateCreated} `,
@@ -101,11 +101,11 @@ export const Filters = {
 	},
 	MDF_REQUEST_LISTING: {
 		channelsCompleted: `${mdfRequestCompletedFilter} and ${previousToCurrentYearFilterDateCreated}`,
-		channelsOpen: `${mdfRequestOpenFilter} and (mdfRequestStatus ne 'draft') and ${previousToCurrentYearFilterDateCreated}`,
+		channelsOpen: `${mdfRequestOpenFilter} and (mdfRequestStatus ne 'draft')`,
 		completedList: mdfRequestCompletedListStatus,
 		openList: mdfRequestOpenListStatus,
 		partnersCompleted: `${mdfRequestCompletedFilter} and ${fiscalYearFilterDateCreated}`,
-		partnersOpen: `${mdfRequestOpenFilter} and ${fiscalYearFilterDateCreated}`,
+		partnersOpen: `${mdfRequestOpenFilter}`,
 	},
 	OPPORTUNITY_LISTING: {
 		closedWIP: `${opportunityStageClosed} and ${fiscalYearFilterCloseDate}`,

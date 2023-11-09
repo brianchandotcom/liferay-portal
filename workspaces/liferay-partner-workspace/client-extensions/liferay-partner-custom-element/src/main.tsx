@@ -93,7 +93,7 @@ const appRoutes: AppRouteComponent = {
 			name="Partner Opportunities"
 			newButtonDeal={false}
 			openOpportunitiesFilter={Filters.OPPORTUNITY_LISTING.openWIP}
-			sort="dateCreated:desc"
+			sort="closeDate:desc"
 		/>
 	),
 	[AppRouteType.RENEWALS_OPPORTUNITIES_LIST]: (

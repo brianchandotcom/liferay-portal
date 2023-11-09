@@ -124,11 +124,11 @@
 <#macro insertDLFolder
 	_ddmStructureId
 	_dlFolderDepth
-	_groupId
+	_groupModel
 	_parentDLFolderId
 >
 	<#if _dlFolderDepth <= dataFactory.maxDLFolderDepth>
-		<#local dlFolderModels = dataFactory.newDLFolderModels(_groupId, _parentDLFolderId, _dlFolderDepth)>
+		<#local dlFolderModels = dataFactory.newDLFolderModels(_groupModel.groupId, _parentDLFolderId, _dlFolderDepth)>
 
 		<#list dlFolderModels as dlFolderModel>
 			${dataFactory.toInsertSQL(dlFolderModel)}
@@ -171,13 +171,15 @@
 
 				${dataFactory.toInsertSQL(dataFactory.newDDMStructureLinkModel(dlFileEntryMetadataModel))}
 
-				${csvFileWriter.write("documentLibrary", virtualHostModel.hostname + "," + dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dlFileEntryModel.fileName + "," + _groupId + "\n")}
+				${csvFileWriter.write("documentLibrary", virtualHostModel.hostname + "," + _groupModel.friendlyURL + "," + dlFileEntryModel.uuid + "," + dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dlFileEntryModel.fileName + "," + _groupModel.groupId + "\n")}
 			</#list>
+
+			<#local groupModel = _groupModel>
 
 			<@insertDLFolder
 				_ddmStructureId=_ddmStructureId
 				_dlFolderDepth=_dlFolderDepth + 1
-				_groupId=groupId
+				_groupModel=groupModel
 				_parentDLFolderId=dlFolderModel.folderId
 			/>
 		</#list>

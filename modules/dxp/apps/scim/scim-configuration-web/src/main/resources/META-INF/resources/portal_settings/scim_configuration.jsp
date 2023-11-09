@@ -8,19 +8,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_APPLICATION_NAME));
-
 String oAuth2AccessToken = GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN));
+String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_APPLICATION_NAME));
 %>
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 
-<aui:input label="application-name" name="oAuth2ApplicationName" required="<%= true %>" type="text" value="<%= oAuth2ApplicationName %>" />
+<aui:input label="oauth2-application-name" name="oAuth2ApplicationName" required="<%= true %>" type="text" value="<%= oAuth2ApplicationName %>" />
 
 <aui:select helpMessage="scim-matcher-field-help" label="scim-matcher-field" name="matcherField" required="<%= true %>" value="<%= request.getAttribute(ScimWebKeys.SCIM_MATCHER_FIELD) %>">
 	<aui:option label="" value="" />
-	<aui:option label="userName" localizeLabel="<%= false %>" value="userName" />
 	<aui:option label="email" localizeLabel="<%= false %>" value="email" />
+	<aui:option label="userName" localizeLabel="<%= false %>" value="userName" />
 </aui:select>
 
 <c:choose>
@@ -42,12 +41,12 @@ String oAuth2AccessToken = GetterUtil.getString(request.getAttribute(ScimWebKeys
 
 				<span class="input-group-append input-group-item input-group-item-shrink">
 					<clay:button
-						name="copyAccessToken"
-						id="copyAccessToken"
 						cssClass="scim-infopanel-copy-clipboard lfr-portal-tooltip"
 						data-clipboard-target='<%= "#" + oAuth2AccessTokenInputId %>'
 						displayType="secondary"
 						icon="paste"
+						id="copyAccessToken"
+						name="copyAccessToken"
 						title="copy-link"
 					/>
 				</span>
@@ -93,6 +92,18 @@ String oAuth2AccessToken = GetterUtil.getString(request.getAttribute(ScimWebKeys
 />
 
 <script>
+	var copyccessToken = document.getElementById(
+		'<portlet:namespace />copyccessToken'
+	);
+
+	if (copyccessToken) {
+		copyccessToken.addEventListener('click', (event) => {
+			this._clipboard = new ClipboardJS('.scim-infopanel-copy-clipboard');
+
+			this._clipboard.on('success', this._handleClipboardSuccess.bind(this));
+		});
+	}
+
 	var genetareAccessToken = document.getElementById(
 		'<portlet:namespace />genetareAccessToken'
 	);
@@ -134,18 +145,6 @@ String oAuth2AccessToken = GetterUtil.getString(request.getAttribute(ScimWebKeys
 					}
 				},
 			});
-		});
-	}
-
-	var copyccessToken = document.getElementById(
-		'<portlet:namespace />copyccessToken'
-	);
-
-	if (copyccessToken) {
-		copyccessToken.addEventListener('click', (event) => {
-			this._clipboard = new ClipboardJS('.scim-infopanel-copy-clipboard');
-
-			this._clipboard.on('success', this._handleClipboardSuccess.bind(this));
 		});
 	}
 </script>

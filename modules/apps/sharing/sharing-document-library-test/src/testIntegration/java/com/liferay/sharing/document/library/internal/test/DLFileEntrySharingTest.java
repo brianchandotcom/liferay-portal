@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -132,7 +133,7 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 
 	@Override
 	protected PermissionSQLContributor getPermissionSQLContributor() {
-		return _permissionSQLContributor;
+		return _permissionSQLContributorSnapshot.get();
 	}
 
 	@Override
@@ -161,10 +162,11 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 	)
 	private ModelResourcePermission<DLFileEntry> _modelResourcePermission;
 
-	@Inject(
-		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
-	)
-	private PermissionSQLContributor _permissionSQLContributor;
+	private final Snapshot<PermissionSQLContributor>
+		_permissionSQLContributorSnapshot = new Snapshot<>(
+			DLFileEntrySharingTest.class, PermissionSQLContributor.class,
+			"(model.class.name=" +
+				"com.liferay.document.library.kernel.model.DLFileEntry)");
 
 	@Inject(
 		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"

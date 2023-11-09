@@ -81,19 +81,44 @@ public class KoroneikiRestController extends BaseRestController {
 						Pagination.of(1, 10)
 				).getItems()) {
 
+			ProductPurchaseView productPurchaseView =
+				_productPurchaseViewResource.
+					getAccountAccountKeyProductProductKeyProductPurchaseView(
+						order.getAccountExternalReferenceCode(),
+						orderItem.getSkuExternalReferenceCode());
+
+			ProductPurchase productPurchase =
+				productPurchaseView.getProductPurchases()[0];
+
+			String endDate = null;
+
+			if (!productPurchase.getPerpetual()) {
+				endDate = ZonedDateTime.ofInstant(
+					productPurchase.getEndDate(
+					).toInstant(),
+					ZoneOffset.UTC
+				).format(
+					DateTimeFormatter.ISO_INSTANT
+				);
+			}
+
+			String dxpLicenseName = orderItem.getSkuExternalReferenceCode();
+
 			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap =
 				new HashMap<>();
 
 			_populateDXPLicenseUsageTypePropertiesMap(
 				dxpLicenseUsageTypePropertiesMap, orderItem.getOptions());
 
-			int provisionedCount = 0;
+			for (String dxpLicenseUsageType : _DXP_LICENSE_USAGE_TYPES) {
+				if (dxpLicenseUsageTypePropertiesMap.get(dxpLicenseUsageType)) {
+					dxpLicenseName = dxpLicenseUsageType;
 
-			ProductPurchaseView productPurchaseView =
-				_productPurchaseViewResource.
-					getAccountAccountKeyProductProductKeyProductPurchaseView(
-						order.getAccountExternalReferenceCode(),
-						orderItem.getSkuExternalReferenceCode());
+					break;
+				}
+			}
+
+			int provisionedCount = 0;
 
 			for (ProductConsumption productConsumption :
 					productPurchaseView.getProductConsumptions()) {
@@ -107,35 +132,10 @@ public class KoroneikiRestController extends BaseRestController {
 				}
 			}
 
-			String dxpLicenseName = orderItem.getSkuExternalReferenceCode();
-
-			for (String dxpLicenseUsageType : _DXP_LICENSE_USAGE_TYPES) {
-				if (dxpLicenseUsageTypePropertiesMap.get(dxpLicenseUsageType)) {
-					dxpLicenseName = dxpLicenseUsageType;
-
-					break;
-				}
-			}
-
-			ProductPurchase[] productPurchases =
-				productPurchaseView.getProductPurchases();
-
-			ProductPurchase productPurchase = productPurchases[0];
-
-			String endDate = null;
 			Date startDate = productPurchase.getStartDate();
 
 			if (productPurchase.getPerpetual()) {
 				startDate = order.getCreateDate();
-			}
-			else {
-				endDate = ZonedDateTime.ofInstant(
-					productPurchase.getEndDate(
-					).toInstant(),
-					ZoneOffset.UTC
-				).format(
-					DateTimeFormatter.ISO_INSTANT
-				);
 			}
 
 			jsonArray.put(

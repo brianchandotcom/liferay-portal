@@ -1456,7 +1456,7 @@ definition {
 		}
 
 		task ("When the navigation menu creator hovers on the content page item") {
-			MouseOver.javaScriptFocus(
+			MouseOver(
 				key_nodeName = "Test Page Name",
 				locator1 = "Treeview#NODE_ITEM");
 		}

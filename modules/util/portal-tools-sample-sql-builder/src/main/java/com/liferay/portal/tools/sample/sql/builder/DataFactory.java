@@ -3764,7 +3764,10 @@ public class DataFactory {
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_DL_FILE_ENTRY_COUNT;
 			 i++) {
 
-			dlFileEntryModels.add(newDlFileEntryModel(dlFolderModel, i));
+			dlFileEntryModels.add(
+				newDlFileEntryModel(
+					dlFolderModel, "TestFile" + i, "txt",
+					ContentTypes.TEXT_PLAIN, _counter.get()));
 		}
 
 		return dlFileEntryModels;
@@ -6350,14 +6353,6 @@ public class DataFactory {
 		ddmTemplateModel.setUuid(SequentialUUID.generate());
 
 		return ddmTemplateModel;
-	}
-
-	protected DLFileEntryModel newDlFileEntryModel(
-		DLFolderModel dlFolderModel, int index) {
-
-		return newDlFileEntryModel(
-			dlFolderModel, "TestFile" + index, "txt", ContentTypes.TEXT_PLAIN,
-			_counter.get());
 	}
 
 	protected DLFolderModel newDLFolderModel(

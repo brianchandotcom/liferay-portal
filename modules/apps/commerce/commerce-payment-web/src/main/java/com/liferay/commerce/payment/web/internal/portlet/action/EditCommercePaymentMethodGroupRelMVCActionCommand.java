@@ -6,6 +6,7 @@
 package com.liferay.commerce.payment.web.internal.portlet.action;
 
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
+import com.liferay.commerce.payment.constants.CommercePaymentIntegrationConstants;
 import com.liferay.commerce.payment.exception.CommercePaymentMethodGroupRelNameException;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
@@ -131,15 +133,24 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 			CommerceChannel commerceChannel =
 				_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-			String commercePaymentMethodEngineKey = ParamUtil.getString(
+			String paymentIntegrationKey = ParamUtil.getString(
 				actionRequest, "commercePaymentMethodEngineKey");
+
+			if (StringUtil.equals(
+					paymentIntegrationKey,
+					CommercePaymentIntegrationConstants.
+						FUNCTION_COMMERCE_PAYMENT_INTEGRATION_CONFIGURATION)) {
+
+				paymentIntegrationKey = ParamUtil.getString(
+					actionRequest, "commercePaymentIntegrationKey");
+			}
 
 			commercePaymentMethodGroupRel =
 				_commercePaymentMethodGroupRelService.
 					addCommercePaymentMethodGroupRel(
 						commerceChannel.getGroupId(), nameMap, descriptionMap,
-						active, imageFile, commercePaymentMethodEngineKey,
-						priority, null);
+						active, imageFile, paymentIntegrationKey, priority,
+						null);
 		}
 		else {
 			commercePaymentMethodGroupRel =

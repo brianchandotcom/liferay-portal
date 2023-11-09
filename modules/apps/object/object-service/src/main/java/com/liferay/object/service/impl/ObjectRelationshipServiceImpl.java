@@ -55,7 +55,7 @@ public class ObjectRelationshipServiceImpl
 		return objectRelationshipLocalService.addObjectRelationship(
 			externalReferenceCode, getUserId(), objectDefinitionId1,
 			objectDefinitionId2, parameterObjectFieldId, deletionType, labelMap,
-			name, system, type);
+			name, system, type, objectField);
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class ObjectRelationshipServiceImpl
 
 		return objectRelationshipLocalService.updateObjectRelationship(
 			externalReferenceCode, objectRelationshipId, parameterObjectFieldId,
-			deletionType, edge, labelMap);
+			deletionType, edge, labelMap, objectField);
 	}
 
 	@Reference(

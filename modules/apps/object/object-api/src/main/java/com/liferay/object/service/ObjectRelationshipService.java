@@ -5,6 +5,7 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -49,7 +50,7 @@ public interface ObjectRelationshipService extends BaseService {
 			String externalReferenceCode, long objectDefinitionId1,
 			long objectDefinitionId2, long parameterObjectFieldId,
 			String deletionType, Map<Locale, String> labelMap, String name,
-			boolean system, String type)
+			boolean system, String type, ObjectField objectField)
 		throws PortalException;
 
 	public void addObjectRelationshipMappingTableValues(
@@ -91,7 +92,7 @@ public interface ObjectRelationshipService extends BaseService {
 	public ObjectRelationship updateObjectRelationship(
 			String externalReferenceCode, long objectRelationshipId,
 			long parameterObjectFieldId, String deletionType, boolean edge,
-			Map<Locale, String> labelMap)
+			Map<Locale, String> labelMap, ObjectField objectField)
 		throws PortalException;
 
 }

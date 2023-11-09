@@ -8,7 +8,8 @@ import {
 	CommerceTotalOrderValueResolver,
 	CustomAssetsListResolver,
 	EventAnalysisListResolver,
-	ExperimentResolver as Experiment
+	ExperimentResolver as Experiment,
+	PagePathResolver
 } from './resolvers';
 import {get} from 'lodash';
 import {HttpLink} from 'apollo-link-http';
@@ -82,6 +83,9 @@ const client = new ApolloClient({
 			},
 			orderTotalCurrencyValues(_, params) {
 				return CommerceTotalOrderValueResolver(params);
+			},
+			pagePath(_, params) {
+				return PagePathResolver(params);
 			}
 		}
 	}

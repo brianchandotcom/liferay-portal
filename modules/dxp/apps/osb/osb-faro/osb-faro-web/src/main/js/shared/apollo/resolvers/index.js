@@ -5,6 +5,7 @@ import CommerceTotalOrderValueResolver from './CommerceTotalOrderValueResolver';
 import CustomAssetsListResolver from './CustomAssetsListResolver';
 import EventAnalysisListResolver from './EventAnalysisListResolver';
 import ExperimentResolver from './ExperimentResolver';
+import PagePathResolver from './PagePathResolver';
 
 export {
 	CommerceAverageOrderValueResolver,
@@ -13,5 +14,6 @@ export {
 	CommerceTotalOrderValueResolver,
 	CustomAssetsListResolver,
 	EventAnalysisListResolver,
-	ExperimentResolver
+	ExperimentResolver,
+	PagePathResolver
 };

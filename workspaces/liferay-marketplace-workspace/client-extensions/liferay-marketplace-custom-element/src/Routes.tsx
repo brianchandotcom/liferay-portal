@@ -6,7 +6,7 @@
 import {Liferay} from './liferay/liferay';
 import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
 import GetAppPage from './pages/GetAppPage/GetAppPage';
-import {NextStepPage} from './pages/NextSteps/NextSteps';
+import {NextSteps} from './pages/NextSteps';
 import {AppCreationFlow} from './pages/PublishedAppsDashboard/Apps/AppCreationFlow/AppCreationFlow';
 import PublishedAppsDashboardRouter from './pages/PublishedAppsDashboard/PublishedAppsDashboardRouter';
 import PurchasedAppsDashboardRouter from './pages/PurchasedAppsDashboard/PurchasedAppsDashboardRouter';
@@ -16,7 +16,7 @@ const Routes = {
 	'create-app': AppCreationFlow,
 	'customer-gate': CustomerGatePage,
 	'get-app': GetAppPage,
-	'next-steps': NextStepPage,
+	'next-steps': NextSteps,
 	'published-apps': PublishedAppsDashboardRouter,
 	'purchased-apps': PurchasedAppsDashboardRouter,
 	'purchased-solutions': PurchasedSolutions,

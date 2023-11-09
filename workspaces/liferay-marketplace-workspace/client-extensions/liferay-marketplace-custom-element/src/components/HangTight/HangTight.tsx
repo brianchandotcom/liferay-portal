@@ -7,12 +7,12 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import './HangTight.scss';
 
-interface LoadingPageProps {
+type HangTightProps = {
 	title: string;
 	version: string;
-}
+};
 
-const HangTight: React.FC<LoadingPageProps> = ({title, version}) => (
+const HangTight: React.FC<HangTightProps> = ({title, version}) => (
 	<div className="hang-tight-container">
 		<ClayLoadingIndicator displayType="primary" shape="squares" size="lg" />
 

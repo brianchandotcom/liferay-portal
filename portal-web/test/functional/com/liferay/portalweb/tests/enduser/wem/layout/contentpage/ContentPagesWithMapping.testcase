@@ -1441,6 +1441,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191986. View rel added to mapped fragment."
+	@priority = 4
+	test MapSpecificDisplayPageTemplateToFragment {
+		var portalURL = PropsUtil.get("portal.url");
+		var assetTypeId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
+
+		task ("Given a user has a default display page template and a normal display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name 1",
+				groupName = ${randomSiteName},
+				statusKey = "APPROVED",
+				subType = "Basic Web Content");
+
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = ${randomSiteName},
+				layoutPageTemplateEntryName = "Display Page Name 1",
+				type = "Display Page Template");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name 2",
+				groupName = ${randomSiteName},
+				statusKey = "APPROVED",
+				subType = "Basic Web Content");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			var assetId = JSONWebcontent.getResourcePrimKeyByURLTitle(
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+		}
+
+		task ("When the user maps the default display page template as specific to a Button fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = "Web Content Title",
+				field = "Display Page Name 1",
+				navItem = "Web Content");
+		}
+
+		task ("Then the canonical is added to Button") {
+			InputField.viewText(
+				fieldLabel = "URL",
+				text = "${portalURL}/web/${siteURLKey}/e/display-page-name-1/${assetTypeId}/${assetId}");
+
+			AssertAttributeValue(
+				fragmentName = "button",
+				id = "link",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "rel",
+				value2 = "canonical");
+		}
+
+		task ("When the user maps the normal display page template as specific to a Button fragment") {
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Display Page Name 2");
+		}
+
+		task ("Then the canonical is added to Button") {
+			InputField.viewText(
+				fieldLabel = "URL",
+				text = "${portalURL}/web/${siteURLKey}/e/display-page-name-2/${assetTypeId}/${assetId}");
+
+			AssertAttributeValue(
+				fragmentName = "button",
+				id = "link",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "rel",
+				value2 = "nofollow");
+		}
+	}
+
 	@description = "This is a use case for LPS-116975. Map single tag from asset entry to editable field."
 	@priority = 5
 	test MapTagFromAssetToEditableField {

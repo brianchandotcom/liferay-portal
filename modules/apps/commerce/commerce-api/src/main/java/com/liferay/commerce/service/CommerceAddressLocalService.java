@@ -122,8 +122,9 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getBillingCommerceAddresses(
-			long companyId, String className, long classPK, String keywords,
-			int start, int end, Sort sort)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords, int start, int end,
+			Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -132,7 +133,8 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBillingCommerceAddressesCount(
-			long companyId, String className, long classPK, String keywords)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -203,17 +205,15 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getShippingCommerceAddresses(
-			long companyId, String className, long classPK, String keywords,
-			int start, int end, Sort sort)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords, int start, int end,
+			Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getShippingCommerceAddressesCount(
-		long channelId, String className, long classPK, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getShippingCommerceAddressesCount(
-			long companyId, String className, long classPK, String keywords)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords)
 		throws PortalException;
 
 	/**

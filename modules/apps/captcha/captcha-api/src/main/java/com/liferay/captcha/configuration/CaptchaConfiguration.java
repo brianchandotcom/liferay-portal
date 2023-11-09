@@ -118,7 +118,7 @@ public interface CaptchaConfiguration {
 	public String[] simpleCaptchaNoiseProducers();
 
 	@Meta.AD(
-		deflt = "com.liferay.captcha.simplecaptcha.DictionaryWordTextProducer|com.liferay.captcha.simplecaptcha.PinNumberTextProducer|nl.captcha.text.producer.DefaultTextProducer|nl.captcha.text.producer.FiveLetterFirstNameTextProducer",
+		deflt = "com.liferay.captcha.simplecaptcha.PinNumberTextProducer|nl.captcha.text.producer.DefaultTextProducer|nl.captcha.text.producer.FiveLetterFirstNameTextProducer",
 		description = "simple-captcha-text-producers-help",
 		name = "simple-captcha-text-producers", required = false
 	)

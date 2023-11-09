@@ -232,7 +232,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).put(
 				"title",
 				"The API filter can only be associated to API endpoints with " +
-					"a retrieve type of \"collection\"."
+					"a retrieve type of \"collection.\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

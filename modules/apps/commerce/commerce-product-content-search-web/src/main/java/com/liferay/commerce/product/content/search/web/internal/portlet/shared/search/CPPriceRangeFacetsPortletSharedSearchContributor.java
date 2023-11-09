@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.facet.Facet;
-import com.liferay.portal.search.facet.date.range.DateRangeFacetFactory;
+import com.liferay.portal.search.facet.range.RangeFacetFactory;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -84,7 +84,7 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 					(ThemeDisplay)renderRequest.getAttribute(
 						WebKeys.THEME_DISPLAY));
 
-		Facet facet = _dateRangeFacetFactory.newInstance(searchContext);
+		Facet facet = _rangeFacetFactory.newInstance(searchContext);
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
@@ -125,9 +125,9 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private DateRangeFacetFactory _dateRangeFacetFactory;
+	private JSONFactory _jsonFactory;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	private RangeFacetFactory _rangeFacetFactory;
 
 }

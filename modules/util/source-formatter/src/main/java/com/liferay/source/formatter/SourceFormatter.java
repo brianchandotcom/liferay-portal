@@ -782,7 +782,7 @@ public class SourceFormatter {
 					StringBundler.concat(
 						"Found formatting issues in SHA ", parts[0], ":\n",
 						"'## What' section should contain only one file with ",
-						"correct file path"));
+						"correct full file path"));
 			}
 		}
 	}

@@ -15,18 +15,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(service = RecommendationIndexer.class)
-public class UserContentRecommendationIndexer
+public class MostViewedContentRecommendationIndexer
 	extends BaseRecommendationIndexer {
 
 	@Override
 	public String getIndexName(long companyId) {
 		return _indexNameBuilder.getIndexName(companyId) +
-			"-user-content-recommendation";
+			"-most-viewed-content-recommendation";
 	}
 
 	@Override
 	protected String getIndexMappingFileName() {
-		return "user-content-recommendation-mappings.json";
+		return "most-viewed-content-recommendation-mappings.json";
 	}
 
 	@Reference

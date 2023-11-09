@@ -194,6 +194,8 @@ public class ProvisioningRestController extends BaseRestController {
 			return _oauthAccessToken;
 		}
 
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
 		HttpPost httpPost = new HttpPost(
 			new URL(_provisioningAuthURL) + "/o/oauth2/token");
 
@@ -207,8 +209,6 @@ public class ProvisioningRestController extends BaseRestController {
 					new BasicNameValuePair(
 						"grant_type", "client_credentials"))));
 		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
-
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build();

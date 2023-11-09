@@ -82,6 +82,8 @@ public class KoroneikiRestController extends BaseRestController {
 						Pagination.of(1, 10)
 				).getItems()) {
 
+			String endDate = null;
+
 			ProductPurchaseView productPurchaseView =
 				_productPurchaseViewResource.
 					getAccountAccountKeyProductProductKeyProductPurchaseView(
@@ -90,8 +92,6 @@ public class KoroneikiRestController extends BaseRestController {
 
 			ProductPurchase productPurchase =
 				productPurchaseView.getProductPurchases()[0];
-
-			String endDate = null;
 
 			if (!productPurchase.getPerpetual()) {
 				endDate = ZonedDateTime.ofInstant(
@@ -210,20 +210,19 @@ public class KoroneikiRestController extends BaseRestController {
 			).getItems());
 
 		int successCount = 0;
-
 		ZonedDateTime zonedDateTime = ZonedDateTime.parse(
 			commerceOrderJSONObject.getString("createDate"),
 			DateTimeFormatter.ISO_DATE_TIME);
 
 		for (int i = 0; i < orderItemsJSONArray.length(); i++) {
+			ProductPurchase productPurchase = new ProductPurchase();
+
 			JSONObject orderItemJSONObject = orderItemsJSONArray.getJSONObject(
 				i);
 
 			_populateDXPLicenseUsageTypePropertiesMap(
 				dxpLicenseUsageTypePropertiesMap,
 				orderItemJSONObject.getString("options"));
-
-			ProductPurchase productPurchase = new ProductPurchase();
 
 			if (StringUtil.equals(licenseType, "Subscription")) {
 				Instant instant = zonedDateTime.plusYears(

@@ -379,8 +379,7 @@ public class KoroneikiRestController extends BaseRestController {
 	}
 
 	private void _initResourceBuilders(Jwt jwt) throws Exception {
-		URL liferayMarketplaceKoroneikiAuthURL = new URL(
-			_liferayMarketplaceKoroneikiAuthURL);
+		URL liferayMarketplaceKoroneikiAuthURL = new URL(_koroneikiAuthURL);
 
 		URL liferayDXPURL = new URL(
 			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
@@ -411,7 +410,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
-			"API_TOKEN", _liferayMarketplaceKoroneikiAuthToken
+			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
 			liferayMarketplaceKoroneikiAuthURL.getHost(),
 			liferayMarketplaceKoroneikiAuthURL.getPort(),
@@ -420,7 +419,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 		_productPurchaseViewResource = ProductPurchaseViewResource.builder(
 		).header(
-			"API_TOKEN", _liferayMarketplaceKoroneikiAuthToken
+			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
 			liferayMarketplaceKoroneikiAuthURL.getHost(),
 			liferayMarketplaceKoroneikiAuthURL.getPort(),
@@ -468,10 +467,10 @@ public class KoroneikiRestController extends BaseRestController {
 	private AccountResource _accountResource;
 
 	@Value("${liferay.marketplace.koroneiki.auth.token}")
-	private String _liferayMarketplaceKoroneikiAuthToken;
+	private String _koroneikiAuthToken;
 
 	@Value("${liferay.marketplace.koroneiki.auth.url}")
-	private String _liferayMarketplaceKoroneikiAuthURL;
+	private String _koroneikiAuthURL;
 
 	private OrderItemResource _orderItemResource;
 	private OrderResource _orderResource;

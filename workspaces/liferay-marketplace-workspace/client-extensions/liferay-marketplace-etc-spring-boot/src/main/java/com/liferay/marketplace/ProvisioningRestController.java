@@ -189,18 +189,15 @@ public class ProvisioningRestController extends BaseRestController {
 		}
 
 		HttpPost httpPost = new HttpPost(
-			new URL(_liferayMarketplaceProvisioningAuthURL) +
-				"/o/oauth2/token");
+			new URL(_provisioningAuthURL) + "/o/oauth2/token");
 
 		httpPost.setEntity(
 			new UrlEncodedFormEntity(
 				Arrays.asList(
 					new BasicNameValuePair(
-						"client_id",
-						_liferayMarketplaceProvisioningAuthClientId),
+						"client_id", _provisioningAuthClientId),
 					new BasicNameValuePair(
-						"client_secret",
-						_liferayMarketplaceProvisioningAuthClientSecret),
+						"client_secret", _provisioningAuthClientSecret),
 					new BasicNameValuePair(
 						"grant_type", "client_credentials"))));
 
@@ -274,11 +271,10 @@ public class ProvisioningRestController extends BaseRestController {
 	}
 
 	private void _initResourceBuilders() throws Exception {
-		URL liferayMarketplaceKoroneikiAuthURL = new URL(
-			_liferayMarketplaceKoroneikiAuthURL);
+		URL liferayMarketplaceKoroneikiAuthURL = new URL(_koroneikiAuthURL);
 
 		URL liferayMarketplaceProvisioningAuthURL = new URL(
-			_liferayMarketplaceProvisioningAuthURL);
+			_provisioningAuthURL);
 
 		_appLicenseKeyResource = AppLicenseKeyResource.builder(
 		).header(
@@ -291,7 +287,7 @@ public class ProvisioningRestController extends BaseRestController {
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
-			"API_TOKEN", _liferayMarketplaceKoroneikiAuthToken
+			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
 			liferayMarketplaceKoroneikiAuthURL.getHost(),
 			liferayMarketplaceKoroneikiAuthURL.getPort(),
@@ -305,22 +301,22 @@ public class ProvisioningRestController extends BaseRestController {
 	private AppLicenseKeyResource _appLicenseKeyResource;
 
 	@Value("${liferay.marketplace.koroneiki.auth.token}")
-	private String _liferayMarketplaceKoroneikiAuthToken;
+	private String _koroneikiAuthToken;
 
 	@Value("${liferay.marketplace.koroneiki.auth.url}")
-	private String _liferayMarketplaceKoroneikiAuthURL;
-
-	@Value("${liferay.marketplace.provisioning.auth.client.id}")
-	private String _liferayMarketplaceProvisioningAuthClientId;
-
-	@Value("${liferay.marketplace.provisioning.auth.client.secret}")
-	private String _liferayMarketplaceProvisioningAuthClientSecret;
-
-	@Value("${liferay.marketplace.provisioning.auth.url}")
-	private String _liferayMarketplaceProvisioningAuthURL;
+	private String _koroneikiAuthURL;
 
 	private String _oauthAccessToken;
 	private long _oauthExpirationMillis;
 	private ProductPurchaseResource _productPurchaseResource;
+
+	@Value("${liferay.marketplace.provisioning.auth.client.id}")
+	private String _provisioningAuthClientId;
+
+	@Value("${liferay.marketplace.provisioning.auth.client.secret}")
+	private String _provisioningAuthClientSecret;
+
+	@Value("${liferay.marketplace.provisioning.auth.url}")
+	private String _provisioningAuthURL;
 
 }

@@ -16,7 +16,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -102,8 +101,8 @@ public class APIPropertyRelevantObjectEntryModelListener
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
 
-			long apiSchemaId = GetterUtil.getLong(
-				values.get("r_apiSchemaToAPIProperties_c_apiSchemaId"));
+			long apiSchemaId = (long)values.get(
+				"r_apiSchemaToAPIProperties_c_apiSchemaId");
 
 			if (!_objectEntryHelper.isValidObjectEntry(
 					apiSchemaId, "L_API_SCHEMA")) {

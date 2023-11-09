@@ -12,7 +12,6 @@ import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -54,8 +53,8 @@ public class APISortRelevantObjectEntryModelListener
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
 
-			long apiEndpointId = GetterUtil.getLong(
-				values.get("r_apiEndpointToAPISorts_c_apiEndpointId"));
+			long apiEndpointId = (long)values.get(
+				"r_apiEndpointToAPISorts_c_apiEndpointId");
 
 			if (!_objectEntryHelper.isValidObjectEntry(
 					apiEndpointId, "L_API_ENDPOINT")) {

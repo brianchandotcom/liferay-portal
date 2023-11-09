@@ -172,36 +172,50 @@ public class CTEntryModelDocumentContributor
 			return;
 		}
 
+		long groupId = 0;
+
 		if (model instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)model;
 
+			groupId = groupedModel.getGroupId();
+		}
+		else {
+			Map<String, Object> modelAttributes = model.getModelAttributes();
+
+			if (modelAttributes.containsKey("groupId")) {
+				groupId = (long)modelAttributes.get("groupId");
+			}
+		}
+
+		Group group = null;
+
+		if (groupId > 0) {
 			try (SafeCloseable safeCloseable =
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						ctCollectionId)) {
 
-				Group group = _groupLocalService.fetchGroup(
-					groupedModel.getGroupId());
-
-				if (group != null) {
-					document.addKeyword(Field.GROUP_ID, group.getGroupId());
-
-					Map<Locale, String> groupNameMap;
-
-					try {
-						groupNameMap = group.getDescriptiveNameMap();
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
-						}
-
-						groupNameMap = group.getNameMap();
-					}
-
-					document.addLocalizedKeyword(
-						"groupName", groupNameMap, false, true);
-				}
+				group = _groupLocalService.fetchGroup(groupId);
 			}
+		}
+
+		if (group != null) {
+			document.addKeyword(Field.GROUP_ID, group.getGroupId());
+
+			Map<Locale, String> groupNameMap;
+
+			try {
+				groupNameMap = group.getDescriptiveNameMap();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+
+				groupNameMap = group.getNameMap();
+			}
+
+			document.addLocalizedKeyword(
+				"groupName", groupNameMap, false, true);
 		}
 
 		document.addLocalizedText(

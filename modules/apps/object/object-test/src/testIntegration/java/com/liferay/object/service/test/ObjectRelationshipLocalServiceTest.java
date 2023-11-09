@@ -167,7 +167,8 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"able", false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				"able", false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+				null);
 
 		AssertUtils.assertFailure(
 			DuplicateObjectRelationshipException.class, "Duplicate name able",
@@ -177,7 +178,8 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"able", false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+				"able", false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+				null));
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
@@ -222,7 +224,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectFieldName1, false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
@@ -237,7 +239,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectFieldName2, false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
@@ -252,7 +254,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectFieldName1, false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
@@ -267,7 +269,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectFieldName2, false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipParameterObjectFieldIdException.class,
 			"Object definition " + _objectDefinition1.getName() +
@@ -280,7 +282,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipParameterObjectFieldIdException.class,
 			"Object relationship type " +
@@ -294,7 +296,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipSystemException.class, false,
 			"Only allowed bundles can add system object relationships",
@@ -306,7 +308,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), true,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 	}
 
 	@Test
@@ -325,7 +327,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_ONE));
+				ObjectRelationshipConstants.TYPE_ONE_TO_ONE, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipTypeException.class,
 			"Invalid type for system object definition " +
@@ -337,7 +339,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipParameterObjectFieldIdException.class,
 			"Object relationship type " +
@@ -351,7 +353,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null));
 		AssertUtils.assertFailure(
 			ObjectRelationshipTypeException.class,
 			"Relationships are not allowed between system objects",
@@ -362,7 +364,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null));
 
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -422,7 +424,7 @@ public class ObjectRelationshipLocalServiceTest {
 						objectRelationship.getObjectRelationshipId(),
 						objectRelationship.getParameterObjectFieldId(),
 						objectRelationship.getDeletionType(), true,
-						objectRelationship.getLabelMap()));
+						objectRelationship.getLabelMap(), null));
 			});
 		AssertUtils.assertFailure(
 			ObjectRelationshipReverseException.class,
@@ -437,7 +439,7 @@ public class ObjectRelationshipLocalServiceTest {
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString()),
 						StringUtil.randomId(), false,
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
 				_objectRelationshipLocalService.deleteObjectRelationship(
 					_objectRelationshipLocalService.
@@ -453,7 +455,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), true,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipSystemException.class, false,
@@ -476,7 +478,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
-				false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
 		Assert.assertEquals(
 			externalReferenceCode,
@@ -492,7 +494,7 @@ public class ObjectRelationshipLocalServiceTest {
 				externalReferenceCode,
 				objectRelationship1.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
-				LocalizedMapUtil.getLocalizedMap("Baker"));
+				LocalizedMapUtil.getLocalizedMap("Baker"), null);
 
 		Assert.assertEquals(
 			externalReferenceCode,
@@ -523,8 +525,8 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationship2.getExternalReferenceCode(),
 				objectRelationship2.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, true,
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString())));
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				null));
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipDeletionTypeException.MustHaveCascadeDeletionType.
@@ -535,8 +537,8 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationship2.getExternalReferenceCode(),
 				objectRelationship2.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, true,
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString())));
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				null));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
@@ -549,7 +551,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
-				false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
@@ -559,8 +561,8 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationship3.getExternalReferenceCode(),
 				objectRelationship3.getObjectRelationshipId(), 0,
 				objectRelationship3.getDeletionType(), true,
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString())));
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				null));
 
 		ObjectRelationship objectRelationship4 =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -569,7 +571,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition1.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
-				false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
@@ -579,8 +581,8 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationship4.getExternalReferenceCode(),
 				objectRelationship4.getObjectRelationshipId(), 0,
 				objectRelationship4.getDeletionType(), true,
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString())));
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				null));
 
 		ObjectRelationship objectRelationship5 =
 			_addObjectRelationshipSystemObjectDefinition();
@@ -594,8 +596,8 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationship5.getObjectRelationshipId(),
 				objectRelationship5.getParameterObjectFieldId(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString())));
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				null));
 
 		ObjectRelationship reverseObjectRelationship =
 			_objectRelationshipLocalService.fetchReverseObjectRelationship(
@@ -615,8 +617,8 @@ public class ObjectRelationshipLocalServiceTest {
 				reverseObjectRelationship.getExternalReferenceCode(),
 				reverseObjectRelationship.getObjectRelationshipId(), 0,
 				reverseObjectRelationship.getDeletionType(), false,
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString())));
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				null));
 
 		ObjectRelationship objectRelationship6 =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -626,7 +628,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		ObjectField objectField2 = _objectFieldLocalService.updateRequired(
 			objectRelationship6.getObjectFieldId2(), true);
@@ -638,7 +640,7 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationship6.getExternalReferenceCode(),
 				objectRelationship6.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
-				objectRelationship6.getLabelMap());
+				objectRelationship6.getLabelMap(), null);
 
 		objectField2 = _objectFieldLocalService.fetchObjectField(
 			objectRelationship6.getObjectFieldId2());
@@ -652,14 +654,14 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
-				true, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				true, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
 		systemObjectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
 				systemObjectRelationship.getExternalReferenceCode(),
 				systemObjectRelationship.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
-				LocalizedMapUtil.getLocalizedMap("Able"));
+				LocalizedMapUtil.getLocalizedMap("Able"), null);
 
 		Assert.assertEquals(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
@@ -677,7 +679,7 @@ public class ObjectRelationshipLocalServiceTest {
 					systemObjectRelationship.getExternalReferenceCode(),
 					systemObjectRelationship.getObjectRelationshipId(), 0,
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-					LocalizedMapUtil.getLocalizedMap("Baker"));
+					LocalizedMapUtil.getLocalizedMap("Baker"), null);
 		}
 		finally {
 			SystemProperties.set("liferay.mode", liferayMode);
@@ -740,7 +742,7 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			objectRelationshipName, false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectDefinition2.getObjectDefinitionId(),
@@ -756,7 +758,7 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)
@@ -805,7 +807,8 @@ public class ObjectRelationshipLocalServiceTest {
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0, deletionType,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, system, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				name, system, ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+				null);
 
 		Map<String, String> pkObjectFieldDBColumnNames =
 			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
@@ -861,7 +864,8 @@ public class ObjectRelationshipLocalServiceTest {
 				objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, system, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				name, system, ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+				null);
 
 		String objectFieldNamePrefix = "r_" + name + "_";
 
@@ -929,7 +933,8 @@ public class ObjectRelationshipLocalServiceTest {
 				relatedObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, system, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				name, system, ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+				null);
 
 		Assert.assertEquals(
 			StringPool.BLANK, objectRelationship.getDBTableName());
@@ -1007,7 +1012,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 
 		long parameterObjectFieldId = RandomTestUtil.randomLong();
 
@@ -1023,7 +1028,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -1045,7 +1050,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 
 		objectFields = _objectFieldLocalService.getObjectFields(
 			_objectDefinition1.getObjectDefinitionId());
@@ -1064,7 +1069,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 
 		_addObjectRelationshipSystemObjectDefinition();
 	}

@@ -81,7 +81,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		Assert.assertEquals(
 			_jsonFactory.createJSONArray(
@@ -161,7 +161,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		Assert.assertEquals(
 			_jsonFactory.createJSONArray(
@@ -199,7 +199,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		Assert.assertEquals(
 			_jsonFactory.createJSONArray(
@@ -274,7 +274,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
 
 		Assert.assertEquals(
 			_jsonFactory.createJSONArray(

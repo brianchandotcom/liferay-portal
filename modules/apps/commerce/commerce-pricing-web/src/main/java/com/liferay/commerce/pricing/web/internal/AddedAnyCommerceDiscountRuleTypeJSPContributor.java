@@ -9,9 +9,7 @@ import com.liferay.commerce.discount.constants.CommerceDiscountRuleConstants;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContributor;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.pricing.web.internal.display.context.AddedAnyCommerceDiscountRuleDisplayContext;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +38,7 @@ public class AddedAnyCommerceDiscountRuleTypeJSPContributor
 		AddedAnyCommerceDiscountRuleDisplayContext
 			addedAnyCommerceDiscountRuleDisplayContext =
 				new AddedAnyCommerceDiscountRuleDisplayContext(
-					_commerceDiscountRuleService, _cpDefinitionService,
-					httpServletRequest, _itemSelector);
+					_commerceDiscountRuleService, httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			"view.jsp-addedAnyCommerceDiscountRuleDisplayContext",
@@ -54,12 +51,6 @@ public class AddedAnyCommerceDiscountRuleTypeJSPContributor
 
 	@Reference
 	private CommerceDiscountRuleService _commerceDiscountRuleService;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -1278,6 +1278,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 		_validateNameObjectFieldName(name, objectDefinition1);
 		_validateNameObjectFieldName(name, objectDefinition2);
+		_validateNameObjectRelationshipName(name, objectDefinition1);
+		_validateNameObjectRelationshipName(name, objectDefinition2);
 	}
 
 	private void _validateNameObjectFieldName(
@@ -1297,6 +1299,34 @@ public class ObjectRelationshipLocalServiceImpl
 				"object definition \"", objectDefinition.getShortName(),
 				".\" Object fields and object relationships cannot have the ",
 				"same name."));
+	}
+
+	private void _validateNameObjectRelationshipName(
+			String name, ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectDefinitionId(
+					objectDefinition.getObjectDefinitionId(), name);
+
+		if (objectRelationship == null) {
+			return;
+		}
+
+		if (objectRelationship.getObjectDefinitionId1() !=
+				objectDefinition.getObjectDefinitionId()) {
+
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
+		}
+
+		throw new ObjectRelationshipNameException(
+			StringBundler.concat(
+				"There is already an object relationship with this name in ",
+				"the object definition \"", objectDefinition.getShortName(),
+				".\" Parent and child object definitions cannot have the same ",
+				"name."));
 	}
 
 	private void _validateObjectEntryId(

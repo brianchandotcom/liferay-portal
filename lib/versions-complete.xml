@@ -4210,7 +4210,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!hibernate-validator.jar</file-name>
-				<version>6.1.5.Final</version>
+				<version>6.2.5.Final</version>
 				<project-name>Hibernate Validator Engine</project-name>
 				<licenses>
 					<license>

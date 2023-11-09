@@ -253,7 +253,7 @@ public class PayPalCommercePaymentIntegration
 	}
 
 	@Override
-	public String getPaymentIntegrationName() {
+	public String getName(Locale locale) {
 		return "PayPal";
 	}
 

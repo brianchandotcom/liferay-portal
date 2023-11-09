@@ -65,6 +65,63 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProvisioningRestController extends BaseRestController {
 
+	@GetMapping("license-keys/{id}")
+	public AppLicenseKey getLicenseKeys(@PathVariable("id") String id)
+		throws Exception {
+
+		_initResourceBuilders();
+
+		return _appLicenseKeyResource.getAppLicenseKey(Long.valueOf(id));
+	}
+
+	@GetMapping("license-keys/{id}/download")
+	public ResponseEntity getLicenseKeysDownload(@PathVariable("id") String id)
+		throws Exception {
+
+		_initResourceBuilders();
+
+		AppLicenseKey appLicenseKey = _appLicenseKeyResource.getAppLicenseKey(
+			GetterUtil.getLong(id));
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.setContentDispositionFormData(
+			"attachment",
+			StringBundler.concat(
+				"activation-key-", appLicenseKey.getProductName(),
+				StringPool.DASH, appLicenseKey.getProductVersion(),
+				StringPool.DASH, appLicenseKey.getHostName(), ".xml"
+			).replaceAll(
+				StringPool.SPACE, StringPool.DASH
+			).toLowerCase());
+		headers.setContentType(MediaType.TEXT_XML);
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+		HttpInvoker.HttpResponse licenseKeyHttpResponse =
+			_appLicenseKeyResource.getAppLicenseKeyDownloadHttpResponse(
+				appLicenseKey.getId());
+
+		return new ResponseEntity(
+			licenseKeyHttpResponse.getBinaryContent(), headers, HttpStatus.OK);
+	}
+
+	@GetMapping("order-license-keys/{orderId}")
+	public Page<AppLicenseKey> getOrderLicenseKeys(
+			@PathVariable("orderId") String orderId,
+			@RequestParam(defaultValue = "1", required = false) String page,
+			@RequestParam(defaultValue = "20", required = false) String
+				pageSize)
+		throws Exception {
+
+		_initResourceBuilders();
+
+		return _appLicenseKeyResource.getAppLicenseKeysPage(
+			"", "orderId eq '" + orderId + "'",
+			Pagination.of(
+				GetterUtil.getInteger(page), GetterUtil.getInteger(pageSize)),
+			"");
+	}
+
 	@PostMapping("license-keys")
 	public AppLicenseKey postLicenseKeys(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
@@ -127,63 +184,6 @@ public class ProvisioningRestController extends BaseRestController {
 
 		return _appLicenseKeyResource.postAppLicenseKey(
 			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
-	}
-
-	@GetMapping("license-keys/{id}/download")
-	public ResponseEntity getLicenseKeysDownload(@PathVariable("id") String id)
-		throws Exception {
-
-		_initResourceBuilders();
-
-		AppLicenseKey appLicenseKey = _appLicenseKeyResource.getAppLicenseKey(
-			GetterUtil.getLong(id));
-
-		HttpHeaders headers = new HttpHeaders();
-
-		headers.setContentDispositionFormData(
-			"attachment",
-			StringBundler.concat(
-				"activation-key-", appLicenseKey.getProductName(),
-				StringPool.DASH, appLicenseKey.getProductVersion(),
-				StringPool.DASH, appLicenseKey.getHostName(), ".xml"
-			).replaceAll(
-				StringPool.SPACE, StringPool.DASH
-			).toLowerCase());
-		headers.setContentType(MediaType.TEXT_XML);
-		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-
-		HttpInvoker.HttpResponse licenseKeyHttpResponse =
-			_appLicenseKeyResource.getAppLicenseKeyDownloadHttpResponse(
-				appLicenseKey.getId());
-
-		return new ResponseEntity(
-			licenseKeyHttpResponse.getBinaryContent(), headers, HttpStatus.OK);
-	}
-
-	@GetMapping("license-keys/{id}")
-	public AppLicenseKey getLicenseKeys(@PathVariable("id") String id)
-		throws Exception {
-
-		_initResourceBuilders();
-
-		return _appLicenseKeyResource.getAppLicenseKey(Long.valueOf(id));
-	}
-
-	@GetMapping("order-license-keys/{orderId}")
-	public Page<AppLicenseKey> getOrderLicenseKeys(
-			@PathVariable("orderId") String orderId,
-			@RequestParam(defaultValue = "1", required = false) String page,
-			@RequestParam(defaultValue = "20", required = false) String
-				pageSize)
-		throws Exception {
-
-		_initResourceBuilders();
-
-		return _appLicenseKeyResource.getAppLicenseKeysPage(
-			"", "orderId eq '" + orderId + "'",
-			Pagination.of(
-				GetterUtil.getInteger(page), GetterUtil.getInteger(pageSize)),
-			"");
 	}
 
 	private String _getOAuthAuthorization() throws Exception {

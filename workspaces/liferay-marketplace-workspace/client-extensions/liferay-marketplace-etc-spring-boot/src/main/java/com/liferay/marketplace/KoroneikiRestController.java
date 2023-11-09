@@ -62,6 +62,111 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class KoroneikiRestController extends BaseRestController {
 
+	@GetMapping("subscriptions/{orderId}")
+	public String getSubscriptions(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("orderId") Long orderId)
+		throws Exception {
+
+		_initResourceBuilders(jwt);
+
+		JSONArray jsonArray = new JSONArray();
+
+		Order order = _orderResource.getOrder(orderId);
+
+		for (OrderItem orderItem :
+				_orderItemResource.getOrderIdOrderItemsPage(
+					orderId,
+					com.liferay.headless.commerce.admin.order.client.pagination.
+						Pagination.of(1, 10)
+				).getItems()) {
+
+			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap =
+				new HashMap<>();
+
+			_getDXPLicenseUsageTypeProperties(
+				dxpLicenseUsageTypePropertiesMap, orderItem.getOptions());
+
+			ProductPurchaseView productPurchaseView =
+				_productPurchaseViewResource.
+					getAccountAccountKeyProductProductKeyProductPurchaseView(
+						order.getAccountExternalReferenceCode(),
+						orderItem.getSkuExternalReferenceCode());
+
+			int provisionedCount = 0;
+
+			for (ProductConsumption productConsumption :
+					productPurchaseView.getProductConsumptions()) {
+
+				if (productConsumption.getEndDate(
+					).after(
+						new Date()
+					)) {
+
+					provisionedCount++;
+				}
+			}
+
+			String licenseName = orderItem.getSkuExternalReferenceCode();
+
+			for (String licenseUsageType : _LICENSE_USAGE_TYPES) {
+				if (dxpLicenseUsageTypePropertiesMap.get(licenseUsageType)) {
+					licenseName = licenseUsageType;
+
+					break;
+				}
+			}
+
+			ProductPurchase[] productPurchases =
+				productPurchaseView.getProductPurchases();
+
+			ProductPurchase productPurchase = productPurchases[0];
+
+			String endDate = null;
+			Date startDate = productPurchase.getStartDate();
+
+			if (productPurchase.getPerpetual()) {
+				startDate = order.getCreateDate();
+			}
+			else {
+				endDate = ZonedDateTime.ofInstant(
+					productPurchase.getEndDate(
+					).toInstant(),
+					ZoneOffset.UTC
+				).format(
+					DateTimeFormatter.ISO_INSTANT
+				);
+			}
+
+			jsonArray.put(
+				new JSONObject(
+				).put(
+					"endDate", endDate
+				).put(
+					"name", licenseName
+				).put(
+					"perpetual", productPurchase.getPerpetual()
+				).put(
+					"productPurchasedKey", productPurchase.getKey()
+				).put(
+					"provisionedCount", provisionedCount
+				).put(
+					"purchasedCount", orderItem.getQuantity()
+				).put(
+					"skuId", orderItem.getSkuId()
+				).put(
+					"startDate",
+					ZonedDateTime.ofInstant(
+						startDate.toInstant(), ZoneOffset.UTC
+					).format(
+						DateTimeFormatter.ISO_INSTANT
+					)
+				));
+		}
+
+		return jsonArray.toString();
+	}
+
 	@PostMapping("product-purchase")
 	public void postProductPurchase(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
@@ -208,111 +313,6 @@ public class KoroneikiRestController extends BaseRestController {
 			_orderResource.patchOrder(
 				commerceOrderJSONObject.getLong("id"), order);
 		}
-	}
-
-	@GetMapping("subscriptions/{orderId}")
-	public String getSubscriptions(
-			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("orderId") Long orderId)
-		throws Exception {
-
-		_initResourceBuilders(jwt);
-
-		JSONArray jsonArray = new JSONArray();
-
-		Order order = _orderResource.getOrder(orderId);
-
-		for (OrderItem orderItem :
-				_orderItemResource.getOrderIdOrderItemsPage(
-					orderId,
-					com.liferay.headless.commerce.admin.order.client.pagination.
-						Pagination.of(1, 10)
-				).getItems()) {
-
-			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap =
-				new HashMap<>();
-
-			_getDXPLicenseUsageTypeProperties(
-				dxpLicenseUsageTypePropertiesMap, orderItem.getOptions());
-
-			ProductPurchaseView productPurchaseView =
-				_productPurchaseViewResource.
-					getAccountAccountKeyProductProductKeyProductPurchaseView(
-						order.getAccountExternalReferenceCode(),
-						orderItem.getSkuExternalReferenceCode());
-
-			int provisionedCount = 0;
-
-			for (ProductConsumption productConsumption :
-					productPurchaseView.getProductConsumptions()) {
-
-				if (productConsumption.getEndDate(
-					).after(
-						new Date()
-					)) {
-
-					provisionedCount++;
-				}
-			}
-
-			String licenseName = orderItem.getSkuExternalReferenceCode();
-
-			for (String licenseUsageType : _LICENSE_USAGE_TYPES) {
-				if (dxpLicenseUsageTypePropertiesMap.get(licenseUsageType)) {
-					licenseName = licenseUsageType;
-
-					break;
-				}
-			}
-
-			ProductPurchase[] productPurchases =
-				productPurchaseView.getProductPurchases();
-
-			ProductPurchase productPurchase = productPurchases[0];
-
-			String endDate = null;
-			Date startDate = productPurchase.getStartDate();
-
-			if (productPurchase.getPerpetual()) {
-				startDate = order.getCreateDate();
-			}
-			else {
-				endDate = ZonedDateTime.ofInstant(
-					productPurchase.getEndDate(
-					).toInstant(),
-					ZoneOffset.UTC
-				).format(
-					DateTimeFormatter.ISO_INSTANT
-				);
-			}
-
-			jsonArray.put(
-				new JSONObject(
-				).put(
-					"endDate", endDate
-				).put(
-					"name", licenseName
-				).put(
-					"perpetual", productPurchase.getPerpetual()
-				).put(
-					"productPurchasedKey", productPurchase.getKey()
-				).put(
-					"provisionedCount", provisionedCount
-				).put(
-					"purchasedCount", orderItem.getQuantity()
-				).put(
-					"skuId", orderItem.getSkuId()
-				).put(
-					"startDate",
-					ZonedDateTime.ofInstant(
-						startDate.toInstant(), ZoneOffset.UTC
-					).format(
-						DateTimeFormatter.ISO_INSTANT
-					)
-				));
-		}
-
-		return jsonArray.toString();
 	}
 
 	private void _getDXPLicenseUsageTypeProperties(

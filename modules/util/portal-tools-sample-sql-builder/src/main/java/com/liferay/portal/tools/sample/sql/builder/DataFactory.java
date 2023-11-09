@@ -3709,14 +3709,6 @@ public class DataFactory {
 
 	public DLFileEntryModel newDlFileEntryModel(
 		DLFolderModel dlFolderModel, String name, String extension,
-		String mimeType) {
-
-		return newDlFileEntryModel(
-			dlFolderModel, name, extension, mimeType, _counter.get());
-	}
-
-	public DLFileEntryModel newDlFileEntryModel(
-		DLFolderModel dlFolderModel, String name, String extension,
 		String mimeType, long fileEntryId) {
 
 		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
@@ -6364,7 +6356,8 @@ public class DataFactory {
 		DLFolderModel dlFolderModel, int index) {
 
 		return newDlFileEntryModel(
-			dlFolderModel, "TestFile" + index, "txt", ContentTypes.TEXT_PLAIN);
+			dlFolderModel, "TestFile" + index, "txt", ContentTypes.TEXT_PLAIN,
+			_counter.get());
 	}
 
 	protected DLFolderModel newDLFolderModel(

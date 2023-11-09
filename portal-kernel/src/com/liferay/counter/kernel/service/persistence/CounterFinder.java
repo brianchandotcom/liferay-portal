@@ -14,6 +14,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CounterFinder {
 
+	public long getCurrentId(String name);
+
 	public java.util.List<String> getNames();
 
 	public String getRegistryName();

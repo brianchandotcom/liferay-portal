@@ -8,7 +8,10 @@ package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.AccountAddressChannel;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.internal.odata.entity.v1_0.ChannelEntityModel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
@@ -20,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -37,7 +41,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/channel.properties",
-	scope = ServiceScope.PROTOTYPE, service = ChannelResource.class
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
+	service = ChannelResource.class
 )
 public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
@@ -63,6 +68,18 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		_commerceChannelService.deleteCommerceChannel(
 			commerceChannel.getCommerceChannelId());
+	}
+
+	@NestedField(parentClass = AccountAddressChannel.class, value = "channel")
+	@Override
+	public Channel getAccountAddressChannelChannel(Long id) throws Exception {
+		CommerceChannelRel commerceChannelRel =
+			_commerceChannelRelService.getCommerceChannelRel(id);
+
+		return _channelDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				commerceChannelRel.getCommerceChannelId(),
+				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
@@ -246,6 +263,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		target = "(component.name=com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.ChannelDTOConverter)"
 	)
 	private DTOConverter<CommerceChannel, Channel> _channelDTOConverter;
+
+	@Reference
+	private CommerceChannelRelService _commerceChannelRelService;
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;

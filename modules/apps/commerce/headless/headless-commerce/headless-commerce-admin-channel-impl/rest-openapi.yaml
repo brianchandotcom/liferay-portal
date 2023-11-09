@@ -18,6 +18,110 @@ components:
             schema:
                 type: string
     schemas:
+        AccountAddress:
+            properties:
+                city:
+                    example: Diamond Bar
+                    type: string
+                countryISOCode:
+                    example: US
+                    type: string
+                defaultBilling:
+                    example: true
+                    type: boolean
+                defaultShipping:
+                    example: true
+                    type: boolean
+                description:
+                    type: string
+                    example: right stairs, first room on the left
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                latitude:
+                    example: 33.9976884
+                    format: double
+                    type: number
+                longitude:
+                    example: -117.8144595
+                    format: double
+                    type: number
+                name:
+                    example: Alessio Antonio Rendina
+                    type: string
+                phoneNumber:
+                    example: (123) 456 7890
+                    type: string
+                regionISOCode:
+                    example: CA
+                    type: string
+                street1:
+                    example: 1400 Montefino Ave
+                    type: string
+                street2:
+                    example: 1st floor
+                    type: string
+                street3:
+                    example: suite 200
+                    type: string
+                type:
+                    example: 1
+                    format: int32
+                    maximum: 3
+                    minimum: 1
+                    type: integer
+                zip:
+                    example: "91765"
+                    type: string
+            required:
+                - city
+                - countryISOCode
+                - name
+                - street1
+            type: object
+        AccountAddressChannel:
+            properties:
+                accountAddressChannelId:
+                    example: 30643
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                addressExternalReferenceCode:
+                    example: "DAB-34098-789-N"
+                    type: string
+                addressId:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    type: integer
+                channel:
+                    $ref: "#/components/schemas/Channel"
+                    readOnly: true
+                channelExternalReferenceCode:
+                    example: "PAB-34098-789-N"
+                    type: string
+                channelId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+            required:
+                - addressId
+                - channelId
+            type: object
         Channel:
             properties:
                 accountId:
@@ -374,6 +478,444 @@ info:
     version: v1.0
 openapi: 3.0.0
 paths:
+    "/account-address-channels/{accountAddressChannelId}":
+        delete:
+            operationId: deleteAccountAddressChannel
+            parameters:
+                - in: path
+                  explode: false
+                  name: accountAddressChannelId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Deletes a Account Address Channel by ID.
+            tags: ["AccountAddressChannel"]
+    "/account-address-channels/{accountAddressChannelId}/channel":
+        get:
+            operationId: getAccountAddressChannelChannel
+            parameters:
+                - in: path
+                  name: accountAddressChannelId
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets channel associated to the account address object.
+            tags: ["Channel"]
+    "/account-addresses/by-externalReferenceCode/{externalReferenceCode}/account-address-channels":
+        get:
+            operationId: getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountAddressChannel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountAddressChannel"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a list of Account Address Channels.
+            tags: ["AccountAddressChannel"]
+        post:
+            operationId: postAccountAddressByExternalReferenceCodeAccountAddressChannel
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountAddressChannel"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountAddressChannel"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountAddressChannel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountAddressChannel"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Creates or updates a Account Address Channel.
+            tags: ["AccountAddressChannel"]
+    "/account-addresses/{addressId}/account-address-channels":
+        get:
+            operationId: getAccountAddressIdAccountAddressChannelsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: addressId
+                  required: true
+                  schema:
+                      description:
+                          The address Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountAddressChannel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountAddressChannel"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a list of Account Address Channels.
+            tags: ["AccountAddressChannel"]
+        post:
+            operationId: postAccountAddressIdAccountAddressChannel
+            parameters:
+                - in: path
+                  explode: false
+                  name: addressId
+                  required: true
+                  schema:
+                      description:
+                          The address Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountAddressChannel"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountAddressChannel"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountAddressChannel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountAddressChannel"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Creates or updates a Account Address Channel.
+            tags: ["AccountAddressChannel"]
     /channels:
         get:
             description:

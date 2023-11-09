@@ -226,21 +226,6 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
 				"There is already a field with this name in the ",
-				_objectDefinition2.getShortName(),
-				" object definition. Object fields and object relationships ",
-				"can’t have the same name. Please, choose another name."),
-			() -> _objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				objectFieldName2, false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
-		AssertUtils.assertFailure(
-			ObjectRelationshipNameException.class,
-			StringBundler.concat(
-				"There is already a field with this name in the ",
 				_objectDefinition1.getShortName(),
 				" object definition. Object fields and object relationships ",
 				"can’t have the same name. Please, choose another name."),
@@ -252,6 +237,21 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectFieldName1, false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+		AssertUtils.assertFailure(
+			ObjectRelationshipNameException.class,
+			StringBundler.concat(
+				"There is already a field with this name in the ",
+				_objectDefinition2.getShortName(),
+				" object definition. Object fields and object relationships ",
+				"can’t have the same name. Please, choose another name."),
+			() -> _objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				objectFieldName2, false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(

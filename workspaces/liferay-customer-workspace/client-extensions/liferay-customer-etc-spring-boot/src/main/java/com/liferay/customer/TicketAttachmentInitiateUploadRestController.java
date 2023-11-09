@@ -46,7 +46,7 @@ public class TicketAttachmentInitiateUploadRestController
 		try {
 			TicketAttachment ticketAttachment =
 				_ticketAttachmentWebService.fetchTicketAttachment(
-					jwt, zendeskTicketId, fileName, md5Checksum);
+					jwt, fileName, md5Checksum, zendeskTicketId);
 
 			if (ticketAttachment != null) {
 				if (ticketAttachment.isApproved()) {
@@ -60,9 +60,9 @@ public class TicketAttachmentInitiateUploadRestController
 			else {
 				ticketAttachment =
 					_ticketAttachmentWebService.addTicketAttachment(
-						jwt, _getAccountKey(zendeskTicketId), zendeskTicketId,
-						fileName, fileSize, md5Checksum, type,
-						TicketAttachment.STATUS_DRAFT);
+						jwt, _getAccountKey(zendeskTicketId), fileName,
+						fileSize, md5Checksum, TicketAttachment.STATUS_DRAFT,
+						type, zendeskTicketId);
 			}
 
 			return new ResponseEntity<>(

@@ -33,7 +33,7 @@ public class ObjectRelationshipTestUtil {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 	public static ObjectRelationship addObjectRelationship(
@@ -48,7 +48,7 @@ public class ObjectRelationshipTestUtil {
 			objectDefinition2.getObjectDefinitionId(), 0, deletionType,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 }

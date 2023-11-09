@@ -39,7 +39,7 @@ public class ObjectRelationshipTestUtil {
 			null, userId, objectDefinition.getObjectDefinitionId(),
 			relatedObjectDefinition.getObjectDefinitionId(), 0, deletionType,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false, type);
+			StringUtil.randomId(), false, type, null);
 	}
 
 	public static void relateObjectEntries(

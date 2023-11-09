@@ -59,15 +59,15 @@ public class CommercePaymentEntryModelListener
 
 				int paymentStatus = commercePaymentEntry.getPaymentStatus();
 
-				commerceOrder =
-					_commerceOrderLocalService.
-						updatePaymentStatusAndTransactionId(
-							commerceOrder.getUserId(), commerceOrderId,
-							paymentStatus,
-							commercePaymentEntry.getTransactionCode());
-
 				if (commercePaymentEntry.getPaymentStatus() !=
 						CommercePaymentEntryConstants.STATUS_CREATED) {
+
+					commerceOrder =
+						_commerceOrderLocalService.
+							updatePaymentStatusAndTransactionId(
+								commerceOrder.getUserId(), commerceOrderId,
+								paymentStatus,
+								commercePaymentEntry.getTransactionCode());
 
 					_commerceOrderPaymentLocalService.addCommerceOrderPayment(
 						commerceOrderId, paymentStatus,

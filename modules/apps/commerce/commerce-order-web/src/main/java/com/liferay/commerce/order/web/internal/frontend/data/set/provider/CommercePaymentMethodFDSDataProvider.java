@@ -10,6 +10,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.web.internal.model.PaymentMethod;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -83,6 +86,35 @@ public class CommercePaymentMethodFDSDataProvider
 						themeDisplay.getLocale())));
 		}
 
+		Map<String, CommercePaymentIntegration> commercePaymentIntegrationMaps =
+			_commercePaymentIntegrationRegistry.
+				getCommercePaymentIntegrations();
+
+		for (CommercePaymentIntegration commercePaymentIntegration :
+				commercePaymentIntegrationMaps.values()) {
+
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelLocalService.
+					fetchCommercePaymentMethodGroupRel(
+						commerceOrder.getGroupId(),
+						commercePaymentIntegration.getKey());
+
+			if ((commercePaymentMethodGroupRel != null) &&
+				commercePaymentMethodGroupRel.isActive()) {
+
+				paymentMethods.add(
+					new PaymentMethod(
+						commercePaymentMethodGroupRel.getDescription(
+							themeDisplay.getLocale()),
+						commercePaymentMethodGroupRel.
+							getPaymentIntegrationKey(),
+						_getThumbnail(
+							commercePaymentMethodGroupRel, themeDisplay),
+						commercePaymentMethodGroupRel.getName(
+							themeDisplay.getLocale())));
+			}
+		}
+
 		return paymentMethods;
 	}
 
@@ -122,6 +154,10 @@ public class CommercePaymentMethodFDSDataProvider
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;
+
+	@Reference
+	private CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 
 	@Reference
 	private CommercePaymentMethodGroupRelLocalService

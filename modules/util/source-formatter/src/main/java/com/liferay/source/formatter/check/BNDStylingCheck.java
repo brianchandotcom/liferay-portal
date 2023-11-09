@@ -23,8 +23,8 @@ public class BNDStylingCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		content = StringUtil.replace(
-			content, new String[] {"/\n", "/,\\\n", " \\\n"},
-			new String[] {"\n", ",\\\n", "\\\n"});
+			content, new String[] {"/\n", "/,\\\n", " \\\n", "\n\\"},
+			new String[] {"\n", ",\\\n", "\\\n", "\n\t\\"});
 
 		content = _fixIncorrectIndent(content);
 

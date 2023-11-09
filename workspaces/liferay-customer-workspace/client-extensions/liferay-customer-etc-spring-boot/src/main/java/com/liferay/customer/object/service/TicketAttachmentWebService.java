@@ -28,8 +28,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class TicketAttachmentWebService {
 
 	public TicketAttachment addTicketAttachment(
-			Jwt jwt, String accountKey, long zendeskTicketId, String fileName,
-			String fileSize, String md5Checksum, String type, int statusCode)
+			Jwt jwt, String accountKey, String fileName, String fileSize,
+			String md5Checksum, int statusCode, String type,
+			long zendeskTicketId)
 		throws Exception {
 
 		JSONObject requestJSONObject = new JSONObject();
@@ -116,7 +117,7 @@ public class TicketAttachmentWebService {
 	}
 
 	public TicketAttachment fetchTicketAttachment(
-			Jwt jwt, long zendeskTicketId, String fileName, String md5Checksum)
+			Jwt jwt, String fileName, String md5Checksum, long zendeskTicketId)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();

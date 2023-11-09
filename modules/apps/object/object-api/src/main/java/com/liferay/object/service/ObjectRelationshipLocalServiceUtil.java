@@ -57,13 +57,14 @@ public class ObjectRelationshipLocalServiceUtil {
 			String externalReferenceCode, long userId, long objectDefinitionId1,
 			long objectDefinitionId2, long parameterObjectFieldId,
 			String deletionType, Map<java.util.Locale, String> labelMap,
-			String name, boolean system, String type)
+			String name, boolean system, String type,
+			com.liferay.object.model.ObjectField objectField)
 		throws PortalException {
 
 		return getService().addObjectRelationship(
 			externalReferenceCode, userId, objectDefinitionId1,
 			objectDefinitionId2, parameterObjectFieldId, deletionType, labelMap,
-			name, system, type);
+			name, system, type, objectField);
 	}
 
 	public static void addObjectRelationshipMappingTableValues(
@@ -524,12 +525,13 @@ public class ObjectRelationshipLocalServiceUtil {
 	public static ObjectRelationship updateObjectRelationship(
 			String externalReferenceCode, long objectRelationshipId,
 			long parameterObjectFieldId, String deletionType, boolean edge,
-			Map<java.util.Locale, String> labelMap)
+			Map<java.util.Locale, String> labelMap,
+			com.liferay.object.model.ObjectField objectField)
 		throws PortalException {
 
 		return getService().updateObjectRelationship(
 			externalReferenceCode, objectRelationshipId, parameterObjectFieldId,
-			deletionType, edge, labelMap);
+			deletionType, edge, labelMap, objectField);
 	}
 
 	public static ObjectRelationshipLocalService getService() {

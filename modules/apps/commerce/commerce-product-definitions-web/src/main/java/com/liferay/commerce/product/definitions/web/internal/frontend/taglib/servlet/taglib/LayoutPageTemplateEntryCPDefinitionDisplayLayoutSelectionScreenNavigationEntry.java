@@ -8,7 +8,6 @@ package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.se
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionDisplayLayoutDisplayContext;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -102,9 +101,9 @@ public class
 			cpDefinitionDisplayLayoutDisplayContext =
 				new CPDefinitionDisplayLayoutDisplayContext(
 					_actionHelper, httpServletRequest,
-					_commerceChannelLocalService, _cpDefinitionService,
-					_cpDisplayLayoutService, _groupLocalService, _itemSelector,
-					_layoutLocalService, _layoutPageTemplateEntryLocalService);
+					_commerceChannelLocalService, _cpDisplayLayoutService,
+					_groupLocalService, _itemSelector, _layoutLocalService,
+					_layoutPageTemplateEntryLocalService);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -123,9 +122,6 @@ public class
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPDisplayLayoutService _cpDisplayLayoutService;

@@ -46,7 +46,7 @@ public class ListTypeEntryUtil {
 				id = serviceBuilderListTypeEntry.getListTypeEntryId();
 				key = serviceBuilderListTypeEntry.getKey();
 				name = serviceBuilderListTypeEntry.getName(locale);
-				name_i18n = LocalizedMapUtil.getI18nMap(
+				name_i18n = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderListTypeEntry.getNameMap());
 				type = serviceBuilderListTypeEntry.getType();
 			}

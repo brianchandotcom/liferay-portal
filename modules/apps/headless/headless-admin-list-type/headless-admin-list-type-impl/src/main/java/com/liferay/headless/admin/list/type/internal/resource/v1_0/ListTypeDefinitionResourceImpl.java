@@ -263,7 +263,7 @@ public class ListTypeDefinitionResourceImpl
 						null, locale, listTypeEntry),
 					ListTypeEntry.class);
 				name = serviceBuilderListTypeDefinition.getName(locale);
-				name_i18n = LocalizedMapUtil.getI18nMap(
+				name_i18n = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderListTypeDefinition.getNameMap());
 				system = serviceBuilderListTypeDefinition.getSystem();
 			}

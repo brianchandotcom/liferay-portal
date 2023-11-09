@@ -83,7 +83,7 @@ public class Snapshot<T> {
 				return serviceTracker;
 			};
 
-			_serivceSupplier = () -> {
+			_serviceSupplier = () -> {
 				ServiceTracker<T, T> serviceTracker =
 					serviceTrackerDCLSingleton.getSingleton(
 						serviceTrackerSupplier);
@@ -106,7 +106,7 @@ public class Snapshot<T> {
 		else {
 			DCLSingleton<T> serviceDCLSingleton = new DCLSingleton<>();
 
-			_serivceSupplier = () -> serviceDCLSingleton.getSingleton(
+			_serviceSupplier = () -> serviceDCLSingleton.getSingleton(
 				() -> {
 					BundleContext bundleContext = _getBundleContext(
 						holderClass);
@@ -154,7 +154,7 @@ public class Snapshot<T> {
 	}
 
 	public T get() {
-		return _serivceSupplier.get();
+		return _serviceSupplier.get();
 	}
 
 	private BundleContext _getBundleContext(Class<?> holderClass) {
@@ -193,7 +193,7 @@ public class Snapshot<T> {
 		}
 	}
 
-	private final Supplier<T> _serivceSupplier;
+	private final Supplier<T> _serviceSupplier;
 
 	private static class ServiceTracker<S, T>
 		extends org.osgi.util.tracker.ServiceTracker<S, T> {

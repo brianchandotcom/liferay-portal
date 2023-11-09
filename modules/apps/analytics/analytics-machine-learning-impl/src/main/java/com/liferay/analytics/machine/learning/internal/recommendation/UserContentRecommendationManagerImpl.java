@@ -9,18 +9,12 @@ import com.liferay.analytics.machine.learning.content.UserContentRecommendation;
 import com.liferay.analytics.machine.learning.content.UserContentRecommendationManager;
 import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationField;
 import com.liferay.analytics.machine.learning.internal.search.api.RecommendationIndexer;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.TermQuery;
@@ -28,22 +22,11 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = UserContentRecommendationManager.class)
 public class UserContentRecommendationManagerImpl
+	extends BaseRecommendationManagerImpl<UserContentRecommendation>
 	implements UserContentRecommendationManager {
 
 	@Override
@@ -60,23 +44,10 @@ public class UserContentRecommendationManagerImpl
 			UserContentRecommendation userContentRecommendation)
 		throws PortalException {
 
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+		return addRecommendation(
+			userContentRecommendation,
 			_recommendationIndexer.getIndexName(
-				userContentRecommendation.getCompanyId()),
-			_toDocument(userContentRecommendation));
-
-		IndexDocumentResponse indexDocumentResponse =
-			_searchEngineAdapter.execute(indexDocumentRequest);
-
-		if ((indexDocumentResponse.getStatus() < 200) ||
-			(indexDocumentResponse.getStatus() >= 300)) {
-
-			throw new PortalException(
-				"Index request return status: " +
-					indexDocumentResponse.getStatus());
-		}
-
-		return userContentRecommendation;
+				userContentRecommendation.getCompanyId()));
 	}
 
 	@Override
@@ -91,7 +62,7 @@ public class UserContentRecommendationManagerImpl
 		searchSearchRequest.setSize(end - start);
 		searchSearchRequest.setStart(start);
 
-		return _getUserContentRecommendations(searchSearchRequest);
+		return getSearchResults(searchSearchRequest);
 	}
 
 	@Override
@@ -100,47 +71,66 @@ public class UserContentRecommendationManagerImpl
 			long userId)
 		throws PortalException {
 
-		return _getUserContentRecommendationsCount(
+		return getSearchResultsCount(
 			_getSearchSearchRequest(
 				assetCategoryIds, classNameIds, companyId, userId));
 	}
 
-	private Date _getDate(String dateString) {
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSSX");
+	@Override
+	protected Document toDocument(
+		UserContentRecommendation userContentRecommendation) {
 
-		try {
-			return dateFormat.parse(dateString);
-		}
-		catch (ParseException parseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(parseException);
-			}
-		}
+		Document document = new DocumentImpl();
 
-		return null;
+		document.addNumber(
+			Field.ASSET_CATEGORY_IDS,
+			userContentRecommendation.getAssetCategoryIds());
+		document.addDate(
+			Field.CREATE_DATE, userContentRecommendation.getCreateDate());
+		document.addNumber(
+			Field.COMPANY_ID, userContentRecommendation.getCompanyId());
+		document.addNumber(
+			Field.ENTRY_CLASS_PK, userContentRecommendation.getEntryClassPK());
+		document.addNumber(
+			RecommendationField.RECOMMENDED_ENTRY_CLASS_PK,
+			userContentRecommendation.getRecommendedEntryClassPK());
+		document.addNumber(
+			RecommendationField.SCORE, userContentRecommendation.getScore());
+		document.addText(
+			RecommendationField.JOB_ID, userContentRecommendation.getJobId());
+		document.addKeyword(
+			Field.UID,
+			String.valueOf(
+				getHash(
+					userContentRecommendation.getEntryClassPK(),
+					userContentRecommendation.getRecommendedEntryClassPK())));
+
+		return document;
 	}
 
-	private List<Document> _getDocuments(Hits hits) {
-		List<Document> documents = new ArrayList<>(hits.toList());
+	@Override
+	protected UserContentRecommendation toModel(Document document) {
+		UserContentRecommendation userContentRecommendation =
+			new UserContentRecommendation();
 
-		Map<String, Hits> groupedHits = hits.getGroupedHits();
+		userContentRecommendation.setAssetCategoryIds(
+			GetterUtil.getLongValues(
+				document.getValues(Field.ASSET_CATEGORY_IDS)));
+		userContentRecommendation.setCompanyId(
+			GetterUtil.getLong(document.get(Field.COMPANY_ID)));
+		userContentRecommendation.setCreateDate(
+			getDate(document.get(Field.CREATE_DATE)));
+		userContentRecommendation.setEntryClassPK(
+			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+		userContentRecommendation.setJobId(
+			document.get(RecommendationField.JOB_ID));
+		userContentRecommendation.setRecommendedEntryClassPK(
+			GetterUtil.getLong(
+				document.get(RecommendationField.RECOMMENDED_ENTRY_CLASS_PK)));
+		userContentRecommendation.setScore(
+			GetterUtil.getFloat(document.get(RecommendationField.SCORE)));
 
-		for (Map.Entry<String, Hits> entry : groupedHits.entrySet()) {
-			documents.addAll(_getDocuments(entry.getValue()));
-		}
-
-		return documents;
-	}
-
-	private long _getHash(Object... values) {
-		StringBundler sb = new StringBundler(values.length);
-
-		for (Object value : values) {
-			sb.append(value);
-		}
-
-		return HashUtil.hash(values.length, sb.toString());
+		return userContentRecommendation;
 	}
 
 	private SearchSearchRequest _getSearchSearchRequest(
@@ -201,94 +191,11 @@ public class UserContentRecommendationManagerImpl
 		return searchSearchRequest;
 	}
 
-	private List<UserContentRecommendation> _getUserContentRecommendations(
-		SearchSearchRequest searchSearchRequest) {
-
-		SearchSearchResponse searchSearchResponse =
-			_searchEngineAdapter.execute(searchSearchRequest);
-
-		return TransformUtil.transform(
-			_getDocuments(searchSearchResponse.getHits()),
-			this::_toUserContentRecommendation);
-	}
-
-	private long _getUserContentRecommendationsCount(
-		SearchSearchRequest searchSearchRequest) {
-
-		SearchSearchResponse searchSearchResponse =
-			_searchEngineAdapter.execute(searchSearchRequest);
-
-		return searchSearchResponse.getCount();
-	}
-
-	private Document _toDocument(
-		UserContentRecommendation userContentRecommendation) {
-
-		Document document = new DocumentImpl();
-
-		document.addNumber(
-			Field.ASSET_CATEGORY_IDS,
-			userContentRecommendation.getAssetCategoryIds());
-		document.addDate(
-			Field.CREATE_DATE, userContentRecommendation.getCreateDate());
-		document.addNumber(
-			Field.COMPANY_ID, userContentRecommendation.getCompanyId());
-		document.addNumber(
-			Field.ENTRY_CLASS_PK, userContentRecommendation.getEntryClassPK());
-		document.addNumber(
-			RecommendationField.RECOMMENDED_ENTRY_CLASS_PK,
-			userContentRecommendation.getRecommendedEntryClassPK());
-		document.addNumber(
-			RecommendationField.SCORE, userContentRecommendation.getScore());
-		document.addText(
-			RecommendationField.JOB_ID, userContentRecommendation.getJobId());
-		document.addKeyword(
-			Field.UID,
-			String.valueOf(
-				_getHash(
-					userContentRecommendation.getEntryClassPK(),
-					userContentRecommendation.getRecommendedEntryClassPK())));
-
-		return document;
-	}
-
-	private UserContentRecommendation _toUserContentRecommendation(
-		Document document) {
-
-		UserContentRecommendation userContentRecommendation =
-			new UserContentRecommendation();
-
-		userContentRecommendation.setAssetCategoryIds(
-			GetterUtil.getLongValues(
-				document.getValues(Field.ASSET_CATEGORY_IDS)));
-		userContentRecommendation.setCompanyId(
-			GetterUtil.getLong(document.get(Field.COMPANY_ID)));
-		userContentRecommendation.setCreateDate(
-			_getDate(document.get(Field.CREATE_DATE)));
-		userContentRecommendation.setEntryClassPK(
-			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
-		userContentRecommendation.setJobId(
-			document.get(RecommendationField.JOB_ID));
-		userContentRecommendation.setRecommendedEntryClassPK(
-			GetterUtil.getLong(
-				document.get(RecommendationField.RECOMMENDED_ENTRY_CLASS_PK)));
-		userContentRecommendation.setScore(
-			GetterUtil.getFloat(document.get(RecommendationField.SCORE)));
-
-		return userContentRecommendation;
-	}
-
 	private static final int _SEARCH_SEARCH_REQUEST_SIZE = 10;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UserContentRecommendationManagerImpl.class);
 
 	@Reference(
 		target = "(component.name=com.liferay.analytics.machine.learning.internal.recommendation.search.UserContentRecommendationIndexer)"
 	)
 	private RecommendationIndexer _recommendationIndexer;
-
-	@Reference
-	private volatile SearchEngineAdapter _searchEngineAdapter;
 
 }

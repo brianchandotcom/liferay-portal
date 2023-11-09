@@ -1,0 +1,38 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<div id="item-finder-root-channel"></div>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"addressExternalReferenceCode", HtmlUtil.escapeJS(address.getExternalReferenceCode())
+		).put(
+			"addressId", addressId
+		).put(
+			"dataSetId", CommerceAccountFDSNames.ACCOUNT_ADDRESS_QUALIFIER_CHANNELS
+		).put(
+			"rootPortletId", portletDisplay.getRootPortletId()
+		).put(
+			"spritemap", themeDisplay.getPathThemeSpritemap()
+		).build()
+	%>'
+	module="js/channels"
+/>
+
+<commerce-ui:panel
+	bodyClasses="p-0"
+	title='<%= LanguageUtil.get(request, "channels") %>'
+>
+	<frontend-data-set:headless-display
+		apiURL="<%= accountAddressQualifiersDisplayContext.getAccountAddressChannelsAPIURL() %>"
+		fdsActionDropdownItems="<%= accountAddressQualifiersDisplayContext.getAccountAddressChannelFDSActionDropdownItems() %>"
+		formName="fm"
+		id="<%= CommerceAccountFDSNames.ACCOUNT_ADDRESS_QUALIFIER_CHANNELS %>"
+		itemsPerPage="<%= 10 %>"
+	/>
+</commerce-ui:panel>

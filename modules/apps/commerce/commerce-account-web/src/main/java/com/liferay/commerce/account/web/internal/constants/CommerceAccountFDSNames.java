@@ -10,6 +10,10 @@ package com.liferay.commerce.account.web.internal.constants;
  */
 public class CommerceAccountFDSNames {
 
+	public static final String ACCOUNT_ADDRESS_QUALIFIER_CHANNELS =
+		CommerceAccountPortletKeys.COMMERCE_ACCOUNT +
+			"-account-address-qualifier-channels";
+
 	public static final String ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS =
 		CommerceAccountPortletKeys.COMMERCE_ACCOUNT +
 			"-account-entry-default-shipping-options";

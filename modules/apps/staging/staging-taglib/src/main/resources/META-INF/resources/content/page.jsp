@@ -72,6 +72,7 @@
 														id="rangeLast"
 														label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>'
 														name="range"
+														popover="export-last-range-help"
 														value="<%= ExportImportDateUtil.RANGE_LAST %>"
 													/>
 												</div>

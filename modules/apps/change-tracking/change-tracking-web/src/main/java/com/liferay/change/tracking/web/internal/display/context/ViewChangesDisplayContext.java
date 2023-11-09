@@ -239,7 +239,8 @@ public class ViewChangesDisplayContext {
 		Map<Long, String> siteNames = DisplayContextUtil.getSiteNames(
 			_ctCollection.getCtCollectionId(), _themeDisplay);
 		Map<Long, String> typeNames = DisplayContextUtil.getTypeNames(
-			_ctCollection.getCtCollectionId(), _ctDisplayRendererRegistry,
+			_ctCollection.getCtCollectionId(),
+			ParamUtil.getBoolean(_renderRequest, "showHideable"),
 			_themeDisplay);
 		JSONObject usersJSONObject = DisplayContextUtil.getUserInfoJSONObject(
 			CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),

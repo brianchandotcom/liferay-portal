@@ -106,7 +106,7 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 		HashMapBuilder.<String, Object>put(
 			"layoutItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getLayoutItemSelectorUrl()
 		).put(
-			"layoutPageTemplateEntryItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getLayoutPageTemplateEntryItemSelectorUrl()
+			"layoutPageTemplateEntryItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getLayoutPageTemplateEntryItemSelectorURL()
 		).put(
 			"portletNamespace", liferayPortletResponse.getNamespace()
 		).put(

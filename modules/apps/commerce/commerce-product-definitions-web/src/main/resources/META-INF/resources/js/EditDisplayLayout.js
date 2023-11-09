@@ -165,9 +165,11 @@ export default function ({
 								return;
 							}
 
-							pagesContainerInput.value = selectedItem.id;
+							const itemValue = JSON.parse(selectedItem.value);
 
-							displayPageNameInput.innerHTML = selectedItem.name;
+							pagesContainerInput.value = itemValue.uuid;
+
+							displayPageNameInput.innerHTML = itemValue.name;
 
 							displayPageItemRemoveIcon.classList.remove('hide');
 						},

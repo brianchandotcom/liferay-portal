@@ -9,7 +9,6 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionDisplayLayoutDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.item.selector.ItemSelector;
@@ -67,9 +66,8 @@ public class EditCPDefinitionCPDisplayLayoutMVCRenderCommand
 				cpDefinitionDisplayLayoutDisplayContext =
 					new CPDefinitionDisplayLayoutDisplayContext(
 						_actionHelper, httpServletRequest,
-						_commerceChannelLocalService, _cpDefinitionService,
-						_cpDisplayLayoutService, _groupLocalService,
-						_itemSelector, _layoutLocalService,
+						_commerceChannelLocalService, _cpDisplayLayoutService,
+						_groupLocalService, _itemSelector, _layoutLocalService,
 						_layoutPageTemplateEntryLocalService);
 
 			httpServletRequest.setAttribute(
@@ -98,9 +96,6 @@ public class EditCPDefinitionCPDisplayLayoutMVCRenderCommand
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPDisplayLayoutService _cpDisplayLayoutService;

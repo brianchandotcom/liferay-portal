@@ -65,8 +65,7 @@ public class AutoIncrementObjectFieldBusinessType
 	public String getDescription(Locale locale) {
 		return _language.get(
 			locale,
-			"automatically-generates-a-unique-value-when-a-new-entry-is-" +
-				"added.-this-field-value-is-read-only");
+			"automatically-generate-a-unique-value-when-a-new-entry-is-added");
 	}
 
 	@Override

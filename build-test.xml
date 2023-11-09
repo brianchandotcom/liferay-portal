@@ -3105,14 +3105,12 @@ tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
 						src="${patching.tool.version.url}"
 					/>
 
-					<local name="patching.tool.version" />
-
 					<loadfile
 						property="patching.tool.version"
 						srcFile="${patching.tool.latest.txt}"
 					>
 						<filterchain>
-							<striplinebreaks/>
+							<striplinebreaks />
 							<trim />
 						</filterchain>
 					</loadfile>

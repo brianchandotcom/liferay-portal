@@ -1470,7 +1470,7 @@ public class ObjectFieldLocalServiceImpl
 
 			throw new ObjectFieldNameException.
 				MustNotBeEqualToObjectRelationshipName(
-					"current " + objectDefinition.getShortName());
+					objectDefinition.getShortName());
 		}
 
 		ObjectDefinition objectDefinition1 =
@@ -1479,7 +1479,7 @@ public class ObjectFieldLocalServiceImpl
 
 		throw new ObjectFieldNameException.
 			MustNotBeEqualToObjectRelationshipName(
-				"related " + objectDefinition1.getShortName());
+				objectDefinition1.getShortName());
 	}
 
 	private void _validateObjectRelationshipDeletionType(

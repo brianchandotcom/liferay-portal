@@ -54,6 +54,9 @@ public class AccountScreenNavigationEntryConstants {
 
 	public static final String ENTRY_KEY_PASSWORD = "password";
 
+	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_ADDRESS =
+		"edit.account.address.form";
+
 	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY =
 		"edit.account.entry.form";
 

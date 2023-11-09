@@ -39,6 +39,14 @@ public class EditAccountEntryAddressMVCRenderCommand
 		long accountEntryId = ParamUtil.getLong(
 			renderRequest, "accountEntryId");
 
+		renderRequest.setAttribute("accountEntryId", accountEntryId);
+
+		long accountEntryAddressId = ParamUtil.getLong(
+			renderRequest, "accountEntryAddressId");
+
+		renderRequest.setAttribute(
+			"accountEntryAddressId", accountEntryAddressId);
+
 		renderRequest.setAttribute(
 			AccountWebKeys.ACCOUNT_ENTRY_DISPLAY,
 			AccountEntryDisplayFactoryUtil.create(

@@ -171,22 +171,15 @@ public class ObjectDefinitionResourcePermissionUtil {
 			String objectActionPermissionKeys = _getObjectActionPermissionKeys(
 				objectActionLocalService, node.getObjectDefinitionId());
 
-			String portletId = rootNodeObjectDefinition.getPortletId();
-
 			ObjectDefinition rootDescendantNodeObjectDefinition =
 				objectDefinitionPersistence.findByPrimaryKey(
 					node.getObjectDefinitionId());
 
-			if (StringUtil.equals(
-					objectActionPermissionKeys, StringPool.BLANK)) {
-
-				portletId = rootDescendantNodeObjectDefinition.getPortletId();
-			}
-
 			modelResources = StringBundler.concat(
 				modelResources, "<model-resource><model-name>",
 				rootDescendantNodeObjectDefinition.getClassName(),
-				"</model-name><portlet-ref><portlet-name>", portletId,
+				"</model-name><portlet-ref><portlet-name>",
+				rootNodeObjectDefinition.getPortletId(),
 				"</portlet-name></portlet-ref><weight>", weight++,
 				"</weight><permissions><supports>", objectActionPermissionKeys,
 				"</supports><site-member-defaults>",

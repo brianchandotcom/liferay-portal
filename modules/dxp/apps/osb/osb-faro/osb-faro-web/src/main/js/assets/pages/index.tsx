@@ -2,13 +2,14 @@ import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
 import ClayLink from '@clayui/link';
+import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
+import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Router} from 'shared/types';
-import {Routes, toRoute} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useDataSource} from 'shared/hooks/useDataSource';
@@ -102,7 +103,47 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 					routeParams={{channelId, groupId}}
 				/>
 			</BasePage.Header>
-
+			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_BLOGS && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadCSVReport
+							disabled={dataSourceStates.empty}
+							type='blog'
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
+			{getMatchedRoute(NAV_ITEMS) ===
+				Routes.ASSETS_DOCUMENTS_AND_MEDIA && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadCSVReport
+							disabled={dataSourceStates.empty}
+							type='document'
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
+			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_FORMS && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadCSVReport
+							disabled={dataSourceStates.empty}
+							type='form'
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
+			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_WEB_CONTENT && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						<DownloadCSVReport
+							disabled={dataSourceStates.empty}
+							type='journal'
+						/>
+					</div>
+				</BasePage.SubHeader>
+			)}
 			<BasePage.Body>
 				<BasePage.Context.Provider
 					value={{

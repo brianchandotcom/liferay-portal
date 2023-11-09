@@ -11,7 +11,7 @@ import {ProjectDetailsCard} from '../../components/CreateProjectModal/ProjectDet
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {getPlacedOrders} from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
-import {NextStepPage} from '../NextStepPage/NextStepPage';
+import {NextStepPage} from '../NextSteps/NextSteps';
 import {ProjectsTableRow} from './ProjectsTableRow';
 
 import './ProjectsPage.scss';

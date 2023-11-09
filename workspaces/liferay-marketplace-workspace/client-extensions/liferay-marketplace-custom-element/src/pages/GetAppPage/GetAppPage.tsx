@@ -30,9 +30,9 @@ import useGetAddresses from './hooks/useGetAddresses';
 import useGetProduct from './hooks/useGetProduct';
 import useGetProductCreatorAccount from './hooks/useGetProductCreatorAccount';
 import useGetProductSkus from './hooks/useGetProductSkus';
-import useProductPriceModel from './hooks/useProductPriceModel';
 import buildNewCart from './utils/buildNewCart';
 import {getProductOrderTypes} from './utils/getProductOrderTypes';
+import getProductPriceModel from './utils/getProductPriceModel';
 import {getProductSpecificationValues} from './utils/getProductSpecificationValues';
 import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
 import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
@@ -80,13 +80,16 @@ const GetAppFlow = () => {
 		useCallback((value: Product) => setValue('product', value), [setValue])
 	);
 	const {sku} = useGetProductSkus(setEnableTrialMethod, product);
+
 	const {addresses} = useGetAddresses(account?.id);
-	const {isFreeApp, priceModel} = useProductPriceModel(product);
+
+	const {isFreeApp, priceModel} = getProductPriceModel(product);
 	const cartUtil = useCart({
 		accountId: account?.id!,
 		channelId: channel?.id,
 		orderType,
 	});
+
 	const productCreatorAccount = useGetProductCreatorAccount(product);
 
 	useEffect(() => {

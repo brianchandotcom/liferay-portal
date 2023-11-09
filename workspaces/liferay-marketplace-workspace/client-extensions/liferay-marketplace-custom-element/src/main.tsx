@@ -24,6 +24,7 @@ class WebComponent extends HTMLElement {
 				<SWRConfig
 					value={{
 						provider: SWRCacheProvider,
+						revalidateIfStale: true,
 						revalidateOnFocus: false,
 					}}
 				>

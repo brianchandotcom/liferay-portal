@@ -243,15 +243,13 @@ public class ProvisioningRestController extends BaseRestController {
 		String version = "1.0.0";
 
 		try {
-			URL liferayURL = new URL(
-				lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+			URL url = new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 
 			SkuResource skuResource = SkuResource.builder(
 			).header(
 				HttpHeaders.AUTHORIZATION, jwt.getTokenValue()
 			).endpoint(
-				liferayURL.getHost(), liferayURL.getPort(),
-				liferayURL.getProtocol()
+				url.getHost(), url.getPort(), url.getProtocol()
 			).build();
 
 			Sku sku = skuResource.getSku(jsonObject.getLong("skuId"));

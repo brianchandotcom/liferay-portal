@@ -5,21 +5,28 @@
 
 package com.liferay.scim.rest.internal.util;
 
+import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.internal.model.ScimUser;
+
+import java.io.File;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -130,15 +137,120 @@ public class ScimUserUtil {
 		return user;
 	}
 
-	private static ComplexAttribute _createLiferayUserExtensionComplexAttribute(
-			ScimUser scimUser)
-		throws Exception {
+	private static AttributeSchema _createAttributeSchema() {
+		AbstractResourceManager.setEndpointURLMap(
+			Collections.singletonMap(
+				SCIMConstants.USER_ENDPOINT, "/o/scim/Users"));
 
 		SCIMUserSchemaExtensionBuilder scimUserSchemaExtensionBuilder =
 			SCIMUserSchemaExtensionBuilder.getInstance();
 
+		String json = JSONUtil.putAll(
+			JSONUtil.put(
+				"attributeName", "birthday"
+			).put(
+				"attributeURI",
+				ScimUserUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI + ":birthday"
+			).put(
+				"canonicalValues", JSONFactoryUtil.createJSONArray()
+			).put(
+				"caseExact", "false"
+			).put(
+				"dataType", "string"
+			).put(
+				"description", "User's birthday"
+			).put(
+				"multiValued", "false"
+			).put(
+				"mutability", "readWrite"
+			).put(
+				"referenceTypes", JSONFactoryUtil.createJSONArray()
+			).put(
+				"required", "false"
+			).put(
+				"returned", "default"
+			).put(
+				"subAttributes", "null"
+			).put(
+				"uniqueness", "none"
+			),
+			JSONUtil.put(
+				"attributeName", "male"
+			).put(
+				"attributeURI",
+				ScimUserUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI + ":male"
+			).put(
+				"canonicalValues", JSONFactoryUtil.createJSONArray()
+			).put(
+				"caseExact", "false"
+			).put(
+				"dataType", "boolean"
+			).put(
+				"description", "User's gender"
+			).put(
+				"multiValued", "false"
+			).put(
+				"mutability", "readWrite"
+			).put(
+				"referenceTypes", JSONFactoryUtil.createJSONArray()
+			).put(
+				"required", "false"
+			).put(
+				"returned", "default"
+			).put(
+				"subAttributes", "null"
+			).put(
+				"uniqueness", "none"
+			),
+			JSONUtil.put(
+				"attributeName", ScimUserUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI
+			).put(
+				"attributeURI", ScimUserUtil.LIFERAY_USER_SCHEMA_EXTENSION_URI
+			).put(
+				"canonicalValues", JSONFactoryUtil.createJSONArray()
+			).put(
+				"caseExact", "false"
+			).put(
+				"dataType", "complex"
+			).put(
+				"description", "Liferay's User Schema Extension"
+			).put(
+				"multiValued", "false"
+			).put(
+				"mutability", "readWrite"
+			).put(
+				"referenceTypes", JSONUtil.put("external")
+			).put(
+				"required", "false"
+			).put(
+				"returned", "default"
+			).put(
+				"subAttributes", "birthday male"
+			).put(
+				"uniqueness", "none"
+			)
+		).toString();
+
+		try {
+			File file = FileUtil.createTempFile(json.getBytes());
+
+			scimUserSchemaExtensionBuilder.buildUserSchemaExtension(
+				file.getPath());
+		}
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
+		}
+
+		return scimUserSchemaExtensionBuilder.getExtensionSchema();
+	}
+
+	private static ComplexAttribute _createLiferayUserExtensionComplexAttribute(
+			ScimUser scimUser)
+		throws Exception {
+
 		AttributeSchema attributeSchema =
-			scimUserSchemaExtensionBuilder.getExtensionSchema();
+			_attributeSchemaDCLSingleton.getSingleton(
+				ScimUserUtil::_createAttributeSchema);
 
 		ComplexAttribute complexAttribute = new ComplexAttribute(
 			attributeSchema.getName());
@@ -282,5 +394,8 @@ public class ScimUserUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ScimUserUtil.class);
+
+	private static final DCLSingleton<AttributeSchema>
+		_attributeSchemaDCLSingleton = new DCLSingleton<>();
 
 }

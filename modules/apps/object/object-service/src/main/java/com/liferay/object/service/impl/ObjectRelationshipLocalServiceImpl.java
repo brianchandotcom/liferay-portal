@@ -108,7 +108,7 @@ public class ObjectRelationshipLocalServiceImpl
 			String externalReferenceCode, long userId, long objectDefinitionId1,
 			long objectDefinitionId2, long parameterObjectFieldId,
 			String deletionType, Map<Locale, String> labelMap, String name,
-			boolean system, String type)
+			boolean system, String type, ObjectField objectField)
 		throws PortalException {
 
 		return _addObjectRelationship(
@@ -779,7 +779,7 @@ public class ObjectRelationshipLocalServiceImpl
 	public ObjectRelationship updateObjectRelationship(
 			String externalReferenceCode, long objectRelationshipId,
 			long parameterObjectFieldId, String deletionType, boolean edge,
-			Map<Locale, String> labelMap)
+			Map<Locale, String> labelMap, ObjectField objectField)
 		throws PortalException {
 
 		if (Validator.isNull(deletionType)) {

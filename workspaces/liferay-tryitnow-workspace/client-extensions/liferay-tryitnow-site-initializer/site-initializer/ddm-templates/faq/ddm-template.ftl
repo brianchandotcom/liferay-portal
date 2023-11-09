@@ -1,1 +1,0 @@
-<h1>This is an example template</h1>

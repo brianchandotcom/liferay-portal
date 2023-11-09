@@ -26,8 +26,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-191607"
-	@ignore = "true"
 	@priority = 3
 	test DownloadSampleFileOfTheCustomObject {
 		task ("Given a custom object is published") {
@@ -36,12 +34,6 @@ definition {
 				en_US_plural_label = "students",
 				name = "Student",
 				requiredStringFieldName = "name");
-		}
-
-		task ("And Given object entry is created") {
-			ObjectDefinitionAPI.createObjectEntryWithName(
-				en_US_plural_label = "students",
-				name = "Jessica");
 		}
 
 		task ("And Given I create an import file task with custom object as the entity type") {
@@ -57,10 +49,12 @@ definition {
 		}
 
 		task ("Then the sample file download successfully") {
-			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "objectentry-*.csv");
+			DownloadTempFile();
+
+			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "c_student-*.csv");
 
 			ImportExport.assertFileContent(
-				comparisonFileName = "json_objectEntry_export.txt",
+				comparisonFileName = "objectEntry_import_sample.csv",
 				fileName = ${sampleFileName});
 		}
 	}

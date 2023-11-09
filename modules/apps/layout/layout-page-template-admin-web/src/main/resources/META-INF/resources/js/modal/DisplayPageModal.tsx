@@ -102,7 +102,7 @@ export default function DisplayPageModal({
 							bodyHTML: `
 							<p class="text-secondary">
 								${Liferay.Language.get(
-									'the-content-type-cannot-be-changed-because-this-display-page-is-being-edited-by-another-user'
+									'the-content-type-cannot-be-changed-because-this-display-page-template-is-being-edited-by-another-user'
 								)}
 							</p>`,
 							buttons: [

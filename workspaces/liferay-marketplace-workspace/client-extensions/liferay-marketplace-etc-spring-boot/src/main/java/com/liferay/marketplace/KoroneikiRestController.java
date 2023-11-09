@@ -193,6 +193,8 @@ public class KoroneikiRestController extends BaseRestController {
 
 		_orderResource.patchOrder(commerceOrderJSONObject.getLong("id"), order);
 
+		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
+
 		long cpDefinitionId = GetterUtil.getLong(
 			orderItemsJSONArray.getJSONObject(
 				0
@@ -212,8 +214,6 @@ public class KoroneikiRestController extends BaseRestController {
 		ZonedDateTime zonedDateTime = ZonedDateTime.parse(
 			commerceOrderJSONObject.getString("createDate"),
 			DateTimeFormatter.ISO_DATE_TIME);
-
-		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
 
 		for (int i = 0; i < orderItemsJSONArray.length(); i++) {
 			JSONObject orderItemJSONObject = orderItemsJSONArray.getJSONObject(

@@ -14,6 +14,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -53,6 +55,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Wade Cao
@@ -104,47 +109,26 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 	@Test
 	public void testIPStackConfiguration() throws Exception {
-		_test(
-			new String[] {"diamond bar city", "walnut city"},
-			() -> {
-				try (ConfigurationTemporarySwapper
-						configurationTemporarySwapper =
-							_getConfigurationTemporarySwapper(
-								"2345", "34.94.32.240", "true")) {
+		try {
+			ReflectionTestUtil.setFieldValue(
+				HttpUtil.class, "_httpSnapshot",
+				new Snapshot<>(HttpUtil.class, Http.class, null, true));
 
-					ReflectionTestUtil.setFieldValue(
-						HttpUtil.class, "_http",
-						_getHttp(
-							JSONUtil.put(
-								"city", "diamond bar"
-							).toString()));
+			_test(
+				new String[] {"diamond bar city", "walnut city"},
+				() -> {
+					_testIPStackConfiguration(
+						"diamond bar", "[diamond bar city]", "34.94.32.240");
 
-					_assertSearch("[diamond bar city]", "34.94.32.240", "city");
-				}
-				finally {
-					ReflectionTestUtil.setFieldValue(
-						HttpUtil.class, "_http", _http);
-				}
-
-				try (ConfigurationTemporarySwapper
-						configurationTemporarySwapper =
-							_getConfigurationTemporarySwapper(
-								"2345", "91.233.116.229", "true")) {
-
-					ReflectionTestUtil.setFieldValue(
-						HttpUtil.class, "_http",
-						_getHttp(
-							JSONUtil.put(
-								"city", "walnut"
-							).toString()));
-
-					_assertSearch("[walnut city]", "91.233.116.229", "city");
-				}
-				finally {
-					ReflectionTestUtil.setFieldValue(
-						HttpUtil.class, "_http", _http);
-				}
-			});
+					_testIPStackConfiguration(
+						"walnut", "[walnut city]", "91.233.116.229");
+				});
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				HttpUtil.class, "_httpSnapshot",
+				new Snapshot<>(HttpUtil.class, Http.class));
+		}
 	}
 
 	@Test
@@ -272,6 +256,22 @@ public class SXPBlueprintSearchRequestContributorTest {
 		unsafeRunnable.run();
 	}
 
+	private void _testIPStackConfiguration(
+			String cityValue, String expected, String ipAddress)
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				_getConfigurationTemporarySwapper("2345", ipAddress, "true");
+			HttpServiceRegistrationHolder httpServiceRegistrationHolder =
+				new HttpServiceRegistrationHolder(cityValue)) {
+
+			_assertSearch(expected, ipAddress, "city");
+		}
+	}
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -294,5 +294,28 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 	@Inject
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
+
+	private class HttpServiceRegistrationHolder implements AutoCloseable {
+
+		public HttpServiceRegistrationHolder(String value) {
+			_serviceRegistration = _bundleContext.registerService(
+				Http.class,
+				_getHttp(
+					JSONUtil.put(
+						"city", value
+					).toString()),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"service.ranking", Integer.MAX_VALUE
+				).build());
+		}
+
+		@Override
+		public void close() {
+			_serviceRegistration.unregister();
+		}
+
+		private final ServiceRegistration<Http> _serviceRegistration;
+
+	}
 
 }

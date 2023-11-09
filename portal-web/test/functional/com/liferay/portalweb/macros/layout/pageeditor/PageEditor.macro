@@ -3139,6 +3139,10 @@ definition {
 				value1 = "Direct");
 		}
 
+		if (${enableLazyLoading} == "true") {
+			PageEditor.configureFragment(enableLazyLoading = "true");
+		}
+
 		if (IsTextEqual(key_fieldLabel = "Image", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 			Click(
 				key_fieldLabel = "Image",
@@ -3482,6 +3486,16 @@ definition {
 		AssertVisible(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		if (${enableLazyLoading} == "true") {
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Check.checkNotVisible(
+				checkboxName = "Set Content Visibility to Auto",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
 
 		if (${panel} == "Styles") {
 			Navigator.gotoNavTab(navTab = "Styles");

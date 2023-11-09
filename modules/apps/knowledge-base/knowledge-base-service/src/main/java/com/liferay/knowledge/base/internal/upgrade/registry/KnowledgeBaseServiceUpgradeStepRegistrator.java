@@ -190,6 +190,11 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 			"4.5.0", "4.6.0",
 			new com.liferay.knowledge.base.internal.upgrade.v4_6_0.
 				KBArticleUpgradeProcess());
+
+		registry.register(
+			"4.6.0", "4.7.0",
+			new com.liferay.knowledge.base.internal.upgrade.v4_7_0.
+				KBFolderUpgradeProcess());
 	}
 
 	@Reference

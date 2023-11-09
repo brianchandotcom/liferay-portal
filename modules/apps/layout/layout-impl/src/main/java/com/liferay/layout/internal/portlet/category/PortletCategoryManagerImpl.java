@@ -9,6 +9,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.portlet.category.PortletCategoryManager;
 import com.liferay.layout.util.PortalPreferencesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -334,7 +335,8 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 			if ((portlet == null) ||
 				((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
 				 ArrayUtil.contains(
-					 _UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName()))) {
+					 _UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName())) ||
+				_isDisabledByFeatureFlag(portletId)) {
 
 				continue;
 			}
@@ -434,6 +436,19 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 			"sortedPortletCategoryKeys");
 	}
+
+	private boolean _isDisabledByFeatureFlag(String portletId) {
+		if (portletId.equals(_DATE_FACET_PORTLET_ID) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-153839")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final String _DATE_FACET_PORTLET_ID =
+		"com_liferay_portal_search_web_date_facet_portlet_DateFacetPortlet";
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {
 		PortletKeys.NESTED_PORTLETS

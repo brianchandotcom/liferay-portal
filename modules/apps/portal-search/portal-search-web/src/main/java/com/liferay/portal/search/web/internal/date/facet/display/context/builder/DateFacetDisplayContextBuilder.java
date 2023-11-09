@@ -7,6 +7,7 @@ package com.liferay.portal.search.web.internal.date.facet.display.context.builde
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -205,6 +206,10 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 	}
 
 	protected boolean isRenderNothing() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-153839")) {
+			return true;
+		}
+
 		if (!Validator.isBlank(_fieldToAggregate) && (_totalHits > 0)) {
 			return false;
 		}

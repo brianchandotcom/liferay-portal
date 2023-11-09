@@ -561,7 +561,7 @@ public class EditInfoItemStrutsActionTest {
 		Assert.assertEquals(
 			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
 		Assert.assertNull(values.get("myDate"));
-		Assert.assertTrue(Validator.isNull(values.get("myDecimal")));
+		Assert.assertEquals("0.0", String.valueOf(values.get("myDecimal")));
 		Assert.assertEquals("0", String.valueOf(values.get("myInteger")));
 		Assert.assertEquals("0", String.valueOf(values.get("myLongInteger")));
 		Assert.assertTrue(

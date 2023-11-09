@@ -94,6 +94,7 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 			method: 'POST',
 
 			// Necessary due the response comes resolved already, not necessary to parse to .json()
+
 		}) as unknown) as Promise<LicenseKey>;
 	}
 

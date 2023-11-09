@@ -11644,12 +11644,16 @@ ${update.properties}</echo>
 		</if>
 
 		<get-testcase-property property.name="database.partition.enabled" />
+		<get-testcase-property property.name="liferay.online.properties" />
 		<get-testcase-property property.name="portal.version" />
 
 		<if>
 			<and>
-				<isset property="database.partition.enabled" />
 				<isset property="portal.version" />
+				<or>
+					<isset property="database.partition.enabled" />
+					<isset property="liferay.online.properties" />
+				</or>
 			</and>
 			<then>
 				<property name="database.max.pool.size" value="50" />
@@ -11888,6 +11892,16 @@ upgrade.database.auto.run=true</echo>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 database.partition.enabled=true</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="liferay.online.properties" />
+		<propertycopy from="liferay.online.properties[${env.CI_TEST_SUITE}]" name="liferay.online.properties" silent="true" />
+
+		<if>
+			<equals arg1="${liferay.online.properties}" arg2="true" />
+			<then>
+				<prepare-liferay-online-properties />
 
 				<get-testcase-property property.name="data.archive.type" />
 
@@ -12019,16 +12033,6 @@ dl.store.impl=com.liferay.portal.store.gcs.GCSStore</echo>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 dl.store.impl=com.liferay.portal.store.s3.IBMS3Store</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="liferay.online.properties" />
-		<propertycopy from="liferay.online.properties[${env.CI_TEST_SUITE}]" name="liferay.online.properties" silent="true" />
-
-		<if>
-			<equals arg1="${liferay.online.properties}" arg2="true" />
-			<then>
-				<prepare-liferay-online-properties />
 			</then>
 		</if>
 
@@ -14270,6 +14274,15 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<then>
 				<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
 database.partition.enabled=true</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="liferay.online.properties" />
+
+		<if>
+			<equals arg1="${liferay.online.properties}" arg2="true" />
+			<then>
+				<prepare-liferay-online-properties />
 
 				<get-testcase-property property.name="data.archive.type" />
 

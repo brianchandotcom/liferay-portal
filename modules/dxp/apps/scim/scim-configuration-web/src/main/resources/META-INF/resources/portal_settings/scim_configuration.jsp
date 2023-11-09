@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String paramApplicationName = (String)request.getAttribute("applicationName");
+String paramApplicationName = (String)request.getAttribute("oAuth2ApplicationName");
 String paramMatcherField = (String)request.getAttribute("matcherField");
 
 String paramToken = (String)request.getAttribute("token");
@@ -20,7 +20,7 @@ if (paramToken == null) {
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 
-<aui:input label="application-name" name="applicationName" required="<%= true %>" type="text" value="<%= paramApplicationName %>" />
+<aui:input label="application-name" name="oAuth2ApplicationName" required="<%= true %>" type="text" value="<%= paramApplicationName %>" />
 
 <aui:select helpMessage="scim-matcher-field-help" label="scim-matcher-field" name="matcherField" required="<%= true %>" value="<%= paramMatcherField %>">
 	<aui:option label="" value="" />

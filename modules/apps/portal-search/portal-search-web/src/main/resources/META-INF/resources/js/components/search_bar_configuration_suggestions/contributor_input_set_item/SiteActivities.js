@@ -5,9 +5,8 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {ClayInput, ClaySelect} from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {LearnMessage} from 'frontend-js-components-web';
 import React, {useRef, useState} from 'react';
 
@@ -20,8 +19,10 @@ import InputSetItemHeader from './InputSetItemHeader';
 import CharacterThresholdInput from './inputs/CharacterThresholdInput';
 import ContentTypeInput from './inputs/ContentTypeInput';
 import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
+import MatchDisplayLanguageInput from './inputs/MatchDisplayLanguageInput';
 import MinimumSearchesInput from './inputs/MinimumSearchesInput';
 import SizeInput from './inputs/SizeInput';
+import TimeRangeInput from './inputs/TimeRangeInput';
 
 function getSiteActivitiesContributorActivityOptions() {
 	const options = [
@@ -277,80 +278,112 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 				/>
 			</div>
 
-			<div className="c-mb-0 form-group-autofit">
-				<CharacterThresholdInput
-					onBlur={onBlur('attributes.characterThreshold')}
-					onChange={_handleChangeAttributeInput('characterThreshold')}
-					touched={touched['attributes.characterThreshold']}
-					value={value.attributes?.characterThreshold}
-				/>
+			{[
+				CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+			].includes(value.contributorName) ? (
+				<div className="c-mb-0 form-group-autofit">
+					<CharacterThresholdInput
+						onBlur={onBlur('attributes.characterThreshold')}
+						onChange={_handleChangeAttributeInput(
+							'characterThreshold'
+						)}
+						touched={touched['attributes.characterThreshold']}
+						value={value.attributes?.characterThreshold}
+					/>
 
-				{[
-					CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
-					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
-					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES,
-				].includes(value.contributorName) && (
-					<ClayInput.GroupItem>
-						<label>
-							{Liferay.Language.get('match-display-language')}
+					<MatchDisplayLanguageInput
+						onChange={_handleChangeAttributeInput(
+							'matchDisplayLanguageId'
+						)}
+						value={value.attributes?.matchDisplayLanguageId}
+					/>
 
-							<ClayTooltipProvider>
-								<span
-									className="c-ml-2"
-									data-tooltip-align="top"
-									title={Liferay.Language.get(
-										'match-display-language-help'
-									)}
-								>
-									<ClayIcon symbol="question-circle-full" />
-								</span>
-							</ClayTooltipProvider>
-						</label>
-
-						<ClaySelect
-							aria-label={Liferay.Language.get(
-								'match-display-language'
-							)}
-							onChange={_handleChangeAttributeInput(
-								'matchDisplayLanguageId'
-							)}
-							value={value.attributes?.matchDisplayLanguageId}
-						>
-							<ClaySelect.Option
-								label={Liferay.Language.get('true')}
-								value={true}
-							/>
-
-							<ClaySelect.Option
-								label={Liferay.Language.get('false')}
-								value={false}
-							/>
-						</ClaySelect>
-					</ClayInput.GroupItem>
-				)}
-
-				{[
-					CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
-					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
-				].includes(value.contributorName) && (
 					<MinimumSearchesInput
 						onBlur={onBlur('attributes.minCounts')}
 						onChange={_handleChangeAttributeInput('minCounts')}
 						touched={touched['attributes.minCounts']}
 						value={value.attributes?.minCounts}
 					/>
-				)}
-
-				{value.contributorName ===
-					CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS && (
-					<ContentTypeInput
-						onBlur={onBlur('attributes.contentType')}
-						onChange={_handleChangeAttributeValue('contentType')}
-						touched={touched['attributes.contentType']}
-						value={value.attributes?.contentType}
+				</div>
+			) : [
+					CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES,
+					CONTRIBUTOR_TYPES.ASAH_RECENT_SITES,
+			  ].includes(value.contributorName) ? (
+				<div className="c-mb-0 form-group-autofit">
+					<CharacterThresholdInput
+						onBlur={onBlur('attributes.characterThreshold')}
+						onChange={_handleChangeAttributeInput(
+							'characterThreshold'
+						)}
+						touched={touched['attributes.characterThreshold']}
+						value={value.attributes?.characterThreshold}
 					/>
-				)}
-			</div>
+
+					<TimeRangeInput
+						onBlur={onBlur('attributes.rangeKey')}
+						onChange={_handleChangeAttributeValue('rangeKey')}
+						touched={touched['attributes.rangeKey']}
+						value={value.attributes?.rangeKey}
+					/>
+				</div>
+			) : (
+				<>
+					<div className="c-mb-3 form-group-autofit">
+						<CharacterThresholdInput
+							onBlur={onBlur('attributes.characterThreshold')}
+							onChange={_handleChangeAttributeInput(
+								'characterThreshold'
+							)}
+							touched={touched['attributes.characterThreshold']}
+							value={value.attributes?.characterThreshold}
+						/>
+
+						{value.contributorName ===
+							CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES && (
+							<MatchDisplayLanguageInput
+								onChange={_handleChangeAttributeInput(
+									'matchDisplayLanguageId'
+								)}
+								value={value.attributes?.matchDisplayLanguageId}
+							/>
+						)}
+
+						{value.contributorName ===
+							CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS && (
+							<ContentTypeInput
+								onBlur={onBlur('attributes.contentType')}
+								onChange={_handleChangeAttributeValue(
+									'contentType'
+								)}
+								touched={touched['attributes.contentType']}
+								value={value.attributes?.contentType}
+							/>
+						)}
+					</div>
+
+					<div className="c-mb-0 form-group-autofit">
+						{value.contributorName ===
+							CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES && (
+							<MinimumSearchesInput
+								onBlur={onBlur('attributes.minCounts')}
+								onChange={_handleChangeAttributeInput(
+									'minCounts'
+								)}
+								touched={touched['attributes.minCounts']}
+								value={value.attributes?.minCounts}
+							/>
+						)}
+
+						<TimeRangeInput
+							onBlur={onBlur('attributes.rangeKey')}
+							onChange={_handleChangeAttributeValue('rangeKey')}
+							touched={touched['attributes.rangeKey']}
+							value={value.attributes?.rangeKey}
+						/>
+					</div>
+				</>
+			)}
 		</>
 	);
 }

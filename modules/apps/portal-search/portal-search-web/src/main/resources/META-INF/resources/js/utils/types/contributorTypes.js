@@ -47,15 +47,20 @@ export const CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES = {
 	[CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES]: {
 		characterThreshold: '0',
 		matchDisplayLanguageId: true,
+		minCounts: '5',
+		rangeKey: '0',
 	},
 	[CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES]: {
 		characterThreshold: '0',
+		rangeKey: '0',
 	},
 	[CONTRIBUTOR_TYPES.ASAH_RECENT_SITES]: {
 		characterThreshold: '0',
+		rangeKey: '0',
 	},
 	[CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS]: {
 		characterThreshold: '0',
 		contentType: '',
+		rangeKey: '0',
 	},
 };

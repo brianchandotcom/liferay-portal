@@ -379,18 +379,14 @@ public class KoroneikiRestController extends BaseRestController {
 		).header(
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
-			liferayMarketplaceKoroneikiAuthURL.getHost(),
-			liferayMarketplaceKoroneikiAuthURL.getPort(),
-			liferayMarketplaceKoroneikiAuthURL.getProtocol()
+			liferayMarketplaceKoroneikiAuthURL
 		).build();
 
 		_productPurchaseViewResource = ProductPurchaseViewResource.builder(
 		).header(
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
-			liferayMarketplaceKoroneikiAuthURL.getHost(),
-			liferayMarketplaceKoroneikiAuthURL.getPort(),
-			liferayMarketplaceKoroneikiAuthURL.getProtocol()
+			liferayMarketplaceKoroneikiAuthURL
 		).build();
 
 		_productResource = ProductResource.builder(

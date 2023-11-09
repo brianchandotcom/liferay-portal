@@ -244,13 +244,11 @@ public class ProvisioningRestController extends BaseRestController {
 		String version = "1.0.0";
 
 		try {
-			URL url = new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
-
 			SkuResource skuResource = SkuResource.builder(
 			).header(
 				HttpHeaders.AUTHORIZATION, jwt.getTokenValue()
 			).endpoint(
-				url.getHost(), url.getPort(), url.getProtocol()
+				new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 			).build();
 
 			Sku sku = skuResource.getSku(jsonObject.getLong("skuId"));
@@ -282,18 +280,14 @@ public class ProvisioningRestController extends BaseRestController {
 		).header(
 			"Authorization", _getOAuthAuthorization()
 		).endpoint(
-			liferayMarketplaceProvisioningAuthURL.getHost(),
-			liferayMarketplaceProvisioningAuthURL.getPort(),
-			liferayMarketplaceProvisioningAuthURL.getProtocol()
+			liferayMarketplaceProvisioningAuthURL
 		).build();
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
-			liferayMarketplaceKoroneikiAuthURL.getHost(),
-			liferayMarketplaceKoroneikiAuthURL.getPort(),
-			liferayMarketplaceKoroneikiAuthURL.getProtocol()
+			liferayMarketplaceKoroneikiAuthURL
 		).build();
 	}
 

@@ -69,17 +69,8 @@ public class LayoutPageTemplateEntryModelListener
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws ModelListenerException {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
-			Objects.equals(
-				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) &&
-			(originalLayoutPageTemplateEntry.getClassNameId() != 0) &&
-			(!Objects.equals(
-				originalLayoutPageTemplateEntry.getClassNameId(),
-				layoutPageTemplateEntry.getClassNameId()) ||
-			 !Objects.equals(
-				 originalLayoutPageTemplateEntry.getClassTypeId(),
-				 layoutPageTemplateEntry.getClassTypeId()))) {
+		if (_isContentTypeChanged(
+				layoutPageTemplateEntry, originalLayoutPageTemplateEntry)) {
 
 			try {
 				_removeContextReferences(
@@ -91,6 +82,32 @@ public class LayoutPageTemplateEntryModelListener
 				}
 			}
 		}
+	}
+
+	private boolean _isContentTypeChanged(
+		LayoutPageTemplateEntry layoutPageTemplateEntry,
+		LayoutPageTemplateEntry originalLayoutPageTemplateEntry) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195263") ||
+			!Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) ||
+			(originalLayoutPageTemplateEntry.getClassNameId() == 0)) {
+
+			return false;
+		}
+
+		if (!Objects.equals(
+				originalLayoutPageTemplateEntry.getClassNameId(),
+				layoutPageTemplateEntry.getClassNameId()) ||
+			!Objects.equals(
+				originalLayoutPageTemplateEntry.getClassTypeId(),
+				layoutPageTemplateEntry.getClassTypeId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private List<FragmentEntryLink> _processFormStyledLayoutStructureItem(

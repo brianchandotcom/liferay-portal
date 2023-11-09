@@ -218,8 +218,15 @@ public class SXPBlueprintSearchRequestContributorTest {
 			).build());
 	}
 
-	private Http _getHttp(String urlResponse) {
-		return (Http)ProxyUtil.newProxyInstance(
+	private AutoCloseable _setUpHttp(String cityValue) {
+		Snapshot<Http> snapshot = ReflectionTestUtil.getFieldValue(
+			HttpUtil.class, "_httpSnapshot");
+
+		String urlResponse = JSONUtil.put(
+			"city", cityValue
+		).toString();
+
+		Http http = (Http)ProxyUtil.newProxyInstance(
 			Http.class.getClassLoader(), new Class<?>[] {Http.class},
 			(proxy, method, args) -> {
 				if (!Objects.equals(method.getName(), "URLtoString") ||
@@ -230,18 +237,9 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 				return urlResponse;
 			});
-	}
-
-	private AutoCloseable _setUpHttp(String cityValue) {
-		Snapshot<Http> snapshot = ReflectionTestUtil.getFieldValue(
-			HttpUtil.class, "_httpSnapshot");
 
 		Supplier<Http> serviceSupplier = ReflectionTestUtil.getAndSetFieldValue(
-			snapshot, "_serviceSupplier",
-			() -> _getHttp(
-				JSONUtil.put(
-					"city", cityValue
-				).toString()));
+			snapshot, "_serviceSupplier", () -> http);
 
 		return () -> ReflectionTestUtil.setFieldValue(
 			snapshot, "_serviceSupplier", serviceSupplier);

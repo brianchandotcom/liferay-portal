@@ -63,7 +63,11 @@ public class MiniCartTag extends IncludeTag {
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		try {
-			AccountEntry accountEntry = commerceContext.getAccountEntry();
+			AccountEntry accountEntry = null;
+
+			if (commerceContext != null) {
+				accountEntry = commerceContext.getAccountEntry();
+			}
 
 			if (accountEntry != null) {
 				_accountEntryId = accountEntry.getAccountEntryId();
@@ -83,7 +87,11 @@ public class MiniCartTag extends IncludeTag {
 				).buildString();
 			}
 
-			_commerceChannelId = commerceContext.getCommerceChannelId();
+			_commerceChannelId = 0;
+
+			if (commerceContext != null) {
+				_commerceChannelId = commerceContext.getCommerceChannelId();
+			}
 
 			if (_commerceChannelId == 0) {
 				_commerceChannelGroupId = 0;

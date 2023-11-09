@@ -1523,6 +1523,11 @@ definition {
 
 		FormFields.enableSwitch(fieldName = "Allow Multiple Selections");
 
+		AssertValue.assertValue(
+			key_fieldName = "Allow Multiple Selections",
+			locator1 = "FormFields#SWITCH",
+			value1 = "true");
+
 		Form.saveElementSet();
 
 		FormsAdmin.addForm();
@@ -1543,7 +1548,10 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.viewSwitchChecked(fieldName = "Allow Multiple Selections");
+		AssertValue.assertValue(
+			key_fieldName = "Allow Multiple Selections",
+			locator1 = "FormFields#SWITCH",
+			value1 = "true");
 
 		Form.save();
 

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="question" index-type="keyword" instance-id="pM6Esqoe" name="question" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Are unsold magazines sent back to the publisher?]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="answer" index-type="keyword" instance-id="iOblMC6b" name="answer" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[We usually sell all copies of the magazines offered in our shop. Some publishers and distributors offer the retailer the option of returning any unsold magazines. However, because our range includes magazines from countries such as Australia, the USA and the United Kingdom, sending them back would involve considerable effort in terms of logistics and would also be very expensive. We therefore choose not to return any unsold magazines. At the same time, this allows us to also offer our customers older or out-of-print magazines.]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

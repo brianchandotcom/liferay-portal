@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="question" index-type="keyword" instance-id="28cU6yRg" name="question" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[We'd like to sell our magazine through your shop]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="answer" index-type="keyword" instance-id="Ky91CCwU" name="answer" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[That's a good idea. We are always interested in new magazines from all over the world. If you think your magazine would fit perfectly to our shop, we are happy to hear from you: Please use our contact form. Please note that we might have a little longer to reply to your request due to the large number of requests we get.]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="question" index-type="keyword" instance-id="Rur4fPRZ" name="question" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[What does LOREM mean?]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="answer" index-type="keyword" instance-id="HNAzgkw0" name="answer" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA['Lorem ipsum dolor sit amet, consectetur adipisici elit…' (complete text) is dummy text that is not meant to mean anything. It is used as a placeholder in magazine layouts, for example, in order to give an impression of the finished document. The text is intentionally unintelligible so that the viewer is not distracted by the content. The language is not real Latin and even the first word 'Lorem' does not exist. It is said that the lorem ipsum text has been common among typesetters since the 16th century. (Source: Wikipedia.com).]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

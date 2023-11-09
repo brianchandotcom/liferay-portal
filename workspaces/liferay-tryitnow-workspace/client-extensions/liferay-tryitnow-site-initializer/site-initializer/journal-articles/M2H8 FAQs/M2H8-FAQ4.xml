@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="question" index-type="keyword" instance-id="adz57OBn" name="question" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Can I order a free sample copy of a magazine?]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="answer" index-type="keyword" instance-id="mpwbbr9U" name="answer" type="text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[Unfortunately, we're unable to offer free samples. As a retailer, we buy all magazines from their publishers at the regular trade price. However, you could contact the publisher directly.]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

@@ -444,10 +444,7 @@ const ActionForm = ({
 							/>
 						</ClayLayout.Col>
 
-						<ClayLayout.Col
-							className="align-items-center d-flex justify-content-end"
-							size={4}
-						>
+						<ClayLayout.Col size={4}>
 							<ClayForm.Group>
 								<label htmlFor={iconFormElementId}>
 									{Liferay.Language.get('icon')}

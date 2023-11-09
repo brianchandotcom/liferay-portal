@@ -3,6 +3,8 @@
 .dsm-actions-icon-selection-modal ul li {
 	color: $gray-600;
 	cursor: pointer;
+	padding-bottom: 2px;
+	padding-top: 2px;
 
 	&:hover {
 		background-color: #f0f5ff;

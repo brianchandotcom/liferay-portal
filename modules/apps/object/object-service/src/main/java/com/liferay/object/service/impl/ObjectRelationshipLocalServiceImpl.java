@@ -1219,10 +1219,27 @@ public class ObjectRelationshipLocalServiceImpl
 				"Duplicate name " + name);
 		}
 
-		_validateRelatedObjectDefinitionObjectFieldName(
-			name, objectDefinition1);
-		_validateRelatedObjectDefinitionObjectFieldName(
-			name, objectDefinition2);
+		_validateNameObjectFieldName(name, objectDefinition1);
+		_validateNameObjectFieldName(name, objectDefinition2);
+	}
+
+	private void _validateNameObjectFieldName(
+			String name, ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), name);
+
+		if (objectField == null) {
+			return;
+		}
+
+		throw new ObjectRelationshipNameException(
+			StringBundler.concat(
+				"There is already a field with this name in the ",
+				objectDefinition.getShortName(),
+				" object definition. Object fields and object relationships ",
+				"can’t have the same name. Please, choose another name."));
 	}
 
 	private void _validateObjectEntryId(
@@ -1321,25 +1338,6 @@ public class ObjectRelationshipLocalServiceImpl
 						" does not belong to a relationship object field");
 			}
 		}
-	}
-
-	private void _validateRelatedObjectDefinitionObjectFieldName(
-			String name, ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectDefinition.getObjectDefinitionId(), name);
-
-		if (objectField == null) {
-			return;
-		}
-
-		throw new ObjectRelationshipNameException(
-			StringBundler.concat(
-				"There is already a field with this name in the ",
-				objectDefinition.getShortName(),
-				" object definition. Object fields and object relationships ",
-				"can’t have the same name. Please, choose another name."));
 	}
 
 	private void _validateType(

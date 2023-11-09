@@ -740,20 +740,18 @@ public class SourceFormatter {
 							"Alternatives'"));
 				}
 
-				String[] lines = breakingChangeReport.split("\n");
+				int lineNumber = SourceUtil.getLineNumber(
+					breakingChangeReport, whatPosition);
 
-				for (String line : lines) {
-					String trimmedLine = StringUtil.trimLeading(line);
+				String trimmedLine = StringUtil.trimLeading(
+					SourceUtil.getLine(breakingChangeReport, lineNumber));
 
-					if (trimmedLine.startsWith("## What") &&
-						(trimmedLine.length() == 7)) {
-
-						throw new Exception(
-							StringBundler.concat(
-								"Found formatting issues in SHA ", parts[0],
-								":\nThere should be one file path after '## ",
-								"What'"));
-					}
+				if ((trimmedLine != null) && (trimmedLine.length() == 7)) {
+					throw new Exception(
+						StringBundler.concat(
+							"Found formatting issues in SHA ", parts[0],
+							":\nThere should be one file path after '## ",
+							"What'"));
 				}
 
 				Matcher matcher = _whatPattern.matcher(breakingChangeReport);

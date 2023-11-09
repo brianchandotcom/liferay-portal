@@ -2251,25 +2251,7 @@ public class ObjectEntryLocalServiceImpl
 		String counterName, String initialValue, String prefix, String suffix,
 		String valueString) {
 
-		long currentId = 0;
-
-		Connection connection = _currentConnection.getConnection(
-			objectEntryPersistence.getDataSource());
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select currentId from Counter where name = ?")) {
-
-			preparedStatement.setString(1, counterName);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					currentId = resultSet.getLong(1);
-				}
-			}
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
+		long currentId = counterLocalService.getCurrentId(counterName);
 
 		long value = GetterUtil.getLong(
 			_getAutoIncrementSortableValue(prefix, suffix, valueString));

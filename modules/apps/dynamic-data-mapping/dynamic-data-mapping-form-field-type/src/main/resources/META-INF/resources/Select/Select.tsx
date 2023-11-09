@@ -43,7 +43,7 @@ function Select({
 		);
 
 		if (selectedOption) {
-			return setSelectedLabel(selectedOption.label);
+			setSelectedLabel(selectedOption.label);
 		}
 
 		setSelectedLabel('');
@@ -81,7 +81,7 @@ function Select({
 					onChange({}, [field.value]);
 				}}
 				placeholder={Liferay.Language.get('choose-an-option')}
-				selectedKey={newSelectedKey || predefinedValue?.[0]}
+				selectedKey={newSelectedKey || predefinedValue?.[0] || ''}
 			>
 				{(group) => (
 					<DropDown.Group header={group.label} items={group.items}>
@@ -150,6 +150,27 @@ const Main = ({
 		]
 	);
 
+	let newValue = value[0];
+	let newPredefinedValue = predefinedValueArray;
+
+	if (!multiple) {
+		if (
+			options.length &&
+			value[0] &&
+			!options.find((option) => option.value === value[0])
+		) {
+			newValue = '';
+		}
+
+		if (
+			options.length &&
+			predefinedValueArray[0] &&
+			!options.find((option) => option.value === predefinedValueArray[0])
+		) {
+			newPredefinedValue = [];
+		}
+	}
+
 	return (
 		<FieldBase
 			label={label}
@@ -189,16 +210,16 @@ const Main = ({
 						name={`${name}_field`}
 						onChange={onChange}
 						options={normalizedOptions}
-						predefinedValue={predefinedValueArray}
+						predefinedValue={newPredefinedValue}
 						readOnly={readOnly}
 						required={otherProps.required}
-						selectedKey={selectedKey || value[0]}
+						selectedKey={selectedKey || (newValue as string)}
 						showEmptyOption={false}
 					/>
 				)}
 			</ClayTooltipProvider>
 
-			<input name={name} type="hidden" value={value} />
+			<input name={name} type="hidden" value={newValue} />
 		</FieldBase>
 	);
 };

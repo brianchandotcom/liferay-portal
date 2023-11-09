@@ -12,6 +12,7 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -67,7 +67,7 @@ public class SaveScimConfigurationMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+			themeDisplay.getPermissionChecker();
 
 		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
 			SessionErrors.add(actionRequest, PrincipalException.class);
@@ -79,18 +79,17 @@ public class SaveScimConfigurationMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String clientId = ScimClientUtil.generateScimClientId(
+		String scimClientId = ScimClientUtil.generateScimClientId(
 			ParamUtil.getString(actionRequest, "oAuth2ApplicationName"));
 
 		if (Objects.equals(cmd, "generate")) {
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
-					themeDisplay.getCompanyId(), clientId);
+					themeDisplay.getCompanyId(), scimClientId);
 
-			String tokens = _localOAuthClient.requestTokens(
-				oAuth2Application, oAuth2Application.getUserId());
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(tokens);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_localOAuthClient.requestTokens(
+					oAuth2Application, oAuth2Application.getUserId()));
 
 			String accessToken = jsonObject.getString("access_token");
 
@@ -102,21 +101,23 @@ public class SaveScimConfigurationMVCActionCommand
 			for (OAuth2Authorization oAuth2Authorization :
 					oAuth2Authorizations) {
 
-				if (accessToken.equals(
+				if (Objects.equals(
+						accessToken,
 						oAuth2Authorization.getAccessTokenContent())) {
 
 					continue;
 				}
 
-				Date date = new Date();
-
 				Date accessTokenExpirationDate =
 					oAuth2Authorization.getAccessTokenExpirationDate();
+
+				int daysBetween = DateUtil.getDaysBetween(
+					accessTokenExpirationDate, new Date());
+
 				Date refreshTokenExpirationDate =
 					oAuth2Authorization.getRefreshTokenExpirationDate();
 
-				if ((DateUtil.getDaysBetween(accessTokenExpirationDate, date) >
-						10) ||
+				if ((daysBetween > 10) ||
 					(refreshTokenExpirationDate != null)) {
 
 					oAuth2Authorization.setAccessTokenExpirationDate(
@@ -124,7 +125,6 @@ public class SaveScimConfigurationMVCActionCommand
 							Math.min(
 								accessTokenExpirationDate.getTime(),
 								System.currentTimeMillis() + (Time.DAY * 10))));
-
 					oAuth2Authorization.setRefreshTokenContent(null);
 					oAuth2Authorization.setRefreshTokenCreateDate(null);
 					oAuth2Authorization.setRefreshTokenExpirationDate(null);
@@ -139,7 +139,7 @@ public class SaveScimConfigurationMVCActionCommand
 		else if (Objects.equals(cmd, "revoke")) {
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
-					themeDisplay.getCompanyId(), clientId);
+					themeDisplay.getCompanyId(), scimClientId);
 
 			_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
 				oAuth2Application.getOAuth2ApplicationId());
@@ -147,12 +147,11 @@ public class SaveScimConfigurationMVCActionCommand
 		else {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
-					String.format(
-						"(&(%s=%s*)(%s=%s))",
-						ConfigurationAdmin.SERVICE_FACTORYPID,
-						"com.liferay.scim.rest.internal.configuration." +
-							"ScimClientOAuth2ApplicationConfiguration",
-						"companyId", themeDisplay.getCompanyId()));
+					StringBundler.concat(
+						"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
+						"=com.liferay.scim.rest.internal.configuration.",
+						"ScimClientOAuth2ApplicationConfiguration)(companyId=",
+						themeDisplay.getCompanyId(), "))"));
 
 			if (configurations != null) {
 				Configuration configuration = configurations[0];
@@ -161,12 +160,12 @@ public class SaveScimConfigurationMVCActionCommand
 					configuration.getProperties();
 
 				properties.put(
-					"oAuth2ApplicationName",
-					ParamUtil.getString(actionRequest, "oAuth2ApplicationName"));
-
-				properties.put(
 					"matcherField",
 					ParamUtil.getString(actionRequest, "matcherField"));
+				properties.put(
+					"oAuth2ApplicationName",
+					ParamUtil.getString(
+						actionRequest, "oAuth2ApplicationName"));
 
 				configuration.update(properties);
 			}
@@ -179,13 +178,14 @@ public class SaveScimConfigurationMVCActionCommand
 
 				configuration.update(
 					HashMapDictionaryBuilder.<String, Object>put(
-						"oAuth2ApplicationName",
-						ParamUtil.getString(actionRequest, "oAuth2ApplicationName")
-					).put(
 						"companyId", themeDisplay.getCompanyId()
 					).put(
 						"matcherField",
 						ParamUtil.getString(actionRequest, "matcherField")
+					).put(
+						"oAuth2ApplicationName",
+						ParamUtil.getString(
+							actionRequest, "oAuth2ApplicationName")
 					).build());
 			}
 		}

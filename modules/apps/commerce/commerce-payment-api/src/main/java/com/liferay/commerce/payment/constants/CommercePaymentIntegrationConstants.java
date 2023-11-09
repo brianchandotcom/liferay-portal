@@ -10,6 +10,10 @@ package com.liferay.commerce.payment.constants;
  */
 public class CommercePaymentIntegrationConstants {
 
+	public static final String
+		FUNCTION_COMMERCE_PAYMENT_INTEGRATION_CONFIGURATION =
+			"function.commerce.payment.integration.configuration";
+
 	public static final int TYPE_FUNCTION_OFFLINE = 5;
 
 	public static final int TYPE_FUNCTION_ONLINE_REDIRECT = 4;

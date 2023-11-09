@@ -15,17 +15,22 @@ public class PaymentMethod {
 
 	public PaymentMethod(
 		String description, String key, String name, String paymentEngine,
-		LabelField status) {
+		LabelField status, String integrationKey) {
 
 		_description = description;
 		_key = key;
 		_name = name;
 		_paymentEngine = paymentEngine;
 		_status = status;
+		_integrationKey = integrationKey;
 	}
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public String getIntegrationKey() {
+		return _integrationKey;
 	}
 
 	public String getKey() {
@@ -45,6 +50,7 @@ public class PaymentMethod {
 	}
 
 	private final String _description;
+	private final String _integrationKey;
 	private final String _key;
 	private final String _name;
 	private final String _paymentEngine;

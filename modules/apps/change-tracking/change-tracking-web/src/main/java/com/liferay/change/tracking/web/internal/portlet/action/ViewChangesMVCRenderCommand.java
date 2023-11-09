@@ -17,20 +17,16 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsDisplayContext;
 import com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext;
 import com.liferay.change.tracking.web.internal.helper.PublicationHelper;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -43,23 +39,18 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
  */
 @Component(
-	configurationPid = "com.liferay.change.tracking.web.internal.configuration.CTConfiguration",
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
 		"mvc.command.name=/change_tracking/view_changes"
@@ -107,7 +98,6 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 				new ViewChangesDisplayContext(
 					activeCtCollectionId, _basePersistenceRegistry,
 					_ctClosureFactory, ctCollection, _ctCollectionLocalService,
-					_getCTConfiguration(themeDisplay.getCompanyId()),
 					_ctDisplayRendererRegistry, _ctEntryLocalService,
 					_ctSchemaVersionLocalService, _groupLocalService, _language,
 					_portal,
@@ -142,25 +132,6 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 		return "/publications/view_changes.jsp";
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_defaultCTConfiguration = ConfigurableUtil.createConfigurable(
-			CTConfiguration.class, properties);
-	}
-
-	private CTConfiguration _getCTConfiguration(long companyId) {
-		try {
-			return _configurationProvider.getCompanyConfiguration(
-				CTConfiguration.class, companyId);
-		}
-		catch (ConfigurationException configurationException) {
-			_log.error(configurationException);
-		}
-
-		return _defaultCTConfiguration;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewChangesMVCRenderCommand.class);
 
@@ -171,9 +142,6 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private BasePersistenceRegistry _basePersistenceRegistry;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CTClosureFactory _ctClosureFactory;
@@ -204,8 +172,6 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
-
-	private volatile CTConfiguration _defaultCTConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

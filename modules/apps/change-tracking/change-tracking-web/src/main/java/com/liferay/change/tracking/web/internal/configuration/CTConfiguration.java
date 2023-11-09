@@ -24,18 +24,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTConfiguration {
 
 	@Meta.AD(
-		deflt = "1000", description = "context-view-limit-count-help",
-		name = "context-view-limit-count", required = false
-	)
-	public int contextViewLimitCount();
-
-	@Meta.AD(
-		deflt = "true", description = "context-view-include-production-help",
-		name = "context-view-include-production", required = false
-	)
-	public boolean contextViewIncludeProduction();
-
-	@Meta.AD(
 		description = "hidden-applications-help", name = "hidden-applications",
 		required = false
 	)
@@ -47,12 +35,6 @@ public interface CTConfiguration {
 		name = "production-only-application", required = false
 	)
 	public String[] productionOnlyApplication();
-
-	@Meta.AD(
-		deflt = "true", description = "show-all-items-enabled-help",
-		name = "show-all-items-enabled", required = false
-	)
-	public boolean showAllItemsEnabled();
 
 	@Meta.AD(
 		deflt = "com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet, com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet, com_liferay_users_admin_web_portlet_UsersAdminPortlet",

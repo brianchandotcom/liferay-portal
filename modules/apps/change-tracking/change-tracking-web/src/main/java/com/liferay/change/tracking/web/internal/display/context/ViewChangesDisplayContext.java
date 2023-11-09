@@ -18,7 +18,6 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTModelDisplayRendererAdapter;
 import com.liferay.change.tracking.web.internal.frontend.data.set.filter.ChangeTypeSelectionFDSFilter;
@@ -112,7 +111,6 @@ public class ViewChangesDisplayContext {
 		BasePersistenceRegistry basePersistenceRegistry,
 		CTClosureFactory ctClosureFactory, CTCollection ctCollection,
 		CTCollectionLocalService ctCollectionLocalService,
-		CTConfiguration ctConfiguration,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
 		CTSchemaVersionLocalService ctSchemaVersionLocalService,
@@ -126,7 +124,6 @@ public class ViewChangesDisplayContext {
 		_ctClosureFactory = ctClosureFactory;
 		_ctCollection = ctCollection;
 		_ctCollectionLocalService = ctCollectionLocalService;
-		_ctConfiguration = ctConfiguration;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
 		_ctSchemaVersionLocalService = ctSchemaVersionLocalService;
@@ -269,16 +266,9 @@ public class ViewChangesDisplayContext {
 
 		CTClosure ctClosure = null;
 
-		int ctEntriesCount = _ctEntryLocalService.getCTCollectionCTEntriesCount(
-			_ctCollection.getCtCollectionId());
-
-		if ((_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
-			(ctEntriesCount <= _ctConfiguration.contextViewLimitCount())) {
-
+		if (_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			try {
-				if (_ctConfiguration.contextViewIncludeProduction() &&
-					!_user.isOnDemandUser()) {
-
+				if (!_user.isOnDemandUser()) {
 					ctClosure = _ctClosureFactory.create(
 						_ctCollection.getCtCollectionId());
 				}
@@ -1455,7 +1445,6 @@ public class ViewChangesDisplayContext {
 	private final CTClosureFactory _ctClosureFactory;
 	private final CTCollection _ctCollection;
 	private final CTCollectionLocalService _ctCollectionLocalService;
-	private final CTConfiguration _ctConfiguration;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTSchemaVersionLocalService _ctSchemaVersionLocalService;

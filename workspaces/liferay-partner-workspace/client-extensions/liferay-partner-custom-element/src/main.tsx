@@ -9,6 +9,7 @@ import {SWRConfig} from 'swr';
 
 import {WebDAV} from './common/context/WebDAV';
 import {AppRouteType} from './common/enums/appRouteType';
+import {OpportunityType} from './common/enums/opportunityType';
 import {Filters} from './common/utils/constants/filters';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import DealRegistrationForm from './routes/DealRegistrationForm';
@@ -82,12 +83,25 @@ const appRoutes: AppRouteComponent = {
 					opportunitiesFilter ===
 					Filters.OPPORTUNITY_LISTING.closedWIP
 				) {
-					return items.filter((item) => !item['HAS-RENEWAL']);
+					return items.filter(
+						(item) =>
+							item['TYPE'] === OpportunityType.NEW_BUSINESS ||
+							item['TYPE'] ===
+								OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
+							(item['TYPE'] ===
+								OpportunityType.EXISTING_BUSINESS &&
+								!item['HAS-RENEWAL'])
+					);
 				}
 
 				return items.filter(
 					(item) =>
-						!item['HAS-RENEWAL'] && Number(item['GROWTH-ARR']) > 0
+						item['TYPE'] === OpportunityType.NEW_BUSINESS ||
+						item['TYPE'] ===
+							OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
+						(item['TYPE'] === OpportunityType.EXISTING_BUSINESS &&
+							!item['HAS-RENEWAL'] &&
+							Number(item['GROWTH-ARR']) > 0)
 				);
 			}}
 			name="Partner Opportunities"

@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ArrayHelpers} from 'formik';
+import {Fragment} from 'react';
 
 import LiferayPicklist from '../../../../../../common/interfaces/liferayPicklist';
 import MDFRequestActivity from '../../../../../../common/interfaces/mdfRequestActivity';
@@ -46,7 +47,7 @@ const Listing = ({
 			<div>
 				{!!activities.length &&
 					activities.map((activity, index) => (
-						<>
+						<Fragment key={index}>
 							{!activity.removed && (
 								<ActivityPanel
 									activity={activity}
@@ -57,7 +58,7 @@ const Listing = ({
 									overallCampaignName={overallCampaignName}
 								/>
 							)}
-						</>
+						</Fragment>
 					))}
 
 				{!activities.length && (

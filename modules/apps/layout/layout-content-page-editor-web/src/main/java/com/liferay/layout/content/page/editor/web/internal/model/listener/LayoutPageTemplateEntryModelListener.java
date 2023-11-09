@@ -285,7 +285,9 @@ public class LayoutPageTemplateEntryModelListener
 	private void _updateFragmentEntryLinkEditableValues(
 		FragmentEntryLink fragmentEntryLink) {
 
-		if (fragmentEntryLink.getType() == FragmentConstants.TYPE_INPUT) {
+		if ((fragmentEntryLink.getType() != FragmentConstants.TYPE_COMPONENT) &&
+			(fragmentEntryLink.getType() != FragmentConstants.TYPE_SECTION)) {
+
 			return;
 		}
 

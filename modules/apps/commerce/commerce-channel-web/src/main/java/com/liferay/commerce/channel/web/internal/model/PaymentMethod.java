@@ -14,10 +14,11 @@ import com.liferay.commerce.frontend.model.LabelField;
 public class PaymentMethod {
 
 	public PaymentMethod(
-		String description, String key, String name, String paymentEngine,
-		LabelField status) {
+		String description, String integrationKey, String key, String name,
+		String paymentEngine, LabelField status) {
 
 		_description = description;
+		_integrationKey = integrationKey;
 		_key = key;
 		_name = name;
 		_paymentEngine = paymentEngine;
@@ -26,6 +27,10 @@ public class PaymentMethod {
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public String getIntegrationKey() {
+		return _integrationKey;
 	}
 
 	public String getKey() {
@@ -45,6 +50,7 @@ public class PaymentMethod {
 	}
 
 	private final String _description;
+	private final String _integrationKey;
 	private final String _key;
 	private final String _name;
 	private final String _paymentEngine;

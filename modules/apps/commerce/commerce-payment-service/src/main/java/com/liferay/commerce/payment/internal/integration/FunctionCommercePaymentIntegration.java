@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.payment.internal.integration;
 
+import com.liferay.commerce.constants.CommercePaymentEntryConstants;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
 import com.liferay.commerce.payment.internal.configuration.FunctionCommercePaymentIntegrationConfiguration;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
@@ -12,8 +13,6 @@ import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -21,8 +20,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -32,15 +35,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
+ * @author Crescenzo Rega
  */
 @Component(
 	configurationPid = "com.liferay.commerce.payment.internal.configuration.FunctionCommercePaymentIntegrationConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = CommercePaymentIntegration.class
 )
 public class FunctionCommercePaymentIntegration
@@ -52,13 +58,32 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		_portalCatapult.launch(
-			commercePaymentEntry.getCompanyId(), Http.Method.POST,
-			_functionCommercePaymentIntegrationConfiguration.
-				oAuth2ApplicationExternalReferenceCode(),
-			_getPayloadJSONObject(commercePaymentEntry),
-			_functionCommercePaymentIntegrationConfiguration.authorizePath(),
-			commercePaymentEntry.getUserId());
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				new String(
+					_portalCatapult.launch(
+						commercePaymentEntry.getCompanyId(), Http.Method.POST,
+						_functionCommercePaymentIntegrationConfiguration.
+							oAuth2ApplicationExternalReferenceCode(),
+						_getPayloadJSONObject(commercePaymentEntry),
+						_functionCommercePaymentIntegrationConfiguration.
+							authorizePath(),
+						commercePaymentEntry.getUserId()
+					).get()));
+
+			commercePaymentEntry.setPaymentStatus(
+				jsonObject.getInt("paymentStatus"));
+
+			commercePaymentEntry.setTransactionCode(
+				jsonObject.getString("transactionCode"));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			commercePaymentEntry.setErrorMessages(exception.getMessage());
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+		}
 
 		return commercePaymentEntry;
 	}
@@ -69,13 +94,29 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		_portalCatapult.launch(
-			commercePaymentEntry.getCompanyId(), Http.Method.POST,
-			_functionCommercePaymentIntegrationConfiguration.
-				oAuth2ApplicationExternalReferenceCode(),
-			_getPayloadJSONObject(commercePaymentEntry),
-			_functionCommercePaymentIntegrationConfiguration.cancelPath(),
-			commercePaymentEntry.getUserId());
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				new String(
+					_portalCatapult.launch(
+						commercePaymentEntry.getCompanyId(), Http.Method.POST,
+						_functionCommercePaymentIntegrationConfiguration.
+							oAuth2ApplicationExternalReferenceCode(),
+						_getPayloadJSONObject(commercePaymentEntry),
+						_functionCommercePaymentIntegrationConfiguration.
+							cancelPath(),
+						commercePaymentEntry.getUserId()
+					).get()));
+
+			commercePaymentEntry.setPaymentStatus(
+				jsonObject.getInt("paymentStatus"));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			commercePaymentEntry.setErrorMessages(exception.getMessage());
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+		}
 
 		return commercePaymentEntry;
 	}
@@ -86,20 +127,36 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		_portalCatapult.launch(
-			commercePaymentEntry.getCompanyId(), Http.Method.POST,
-			_functionCommercePaymentIntegrationConfiguration.
-				oAuth2ApplicationExternalReferenceCode(),
-			_getPayloadJSONObject(commercePaymentEntry),
-			_functionCommercePaymentIntegrationConfiguration.capturePath(),
-			commercePaymentEntry.getUserId());
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				new String(
+					_portalCatapult.launch(
+						commercePaymentEntry.getCompanyId(), Http.Method.POST,
+						_functionCommercePaymentIntegrationConfiguration.
+							oAuth2ApplicationExternalReferenceCode(),
+						_getPayloadJSONObject(commercePaymentEntry),
+						_functionCommercePaymentIntegrationConfiguration.
+							capturePath(),
+						commercePaymentEntry.getUserId()
+					).get()));
+
+			commercePaymentEntry.setPaymentStatus(
+				jsonObject.getInt("paymentStatus"));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			commercePaymentEntry.setErrorMessages(exception.getMessage());
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+		}
 
 		return commercePaymentEntry;
 	}
 
 	@Override
 	public String getDescription(Locale locale) {
-		return "TEST";
+		return _functionCommercePaymentIntegrationConfiguration.name();
 	}
 
 	@Override
@@ -108,9 +165,8 @@ public class FunctionCommercePaymentIntegration
 	}
 
 	@Override
-	public String getPaymentIntegrationName() {
-		return _functionCommercePaymentIntegrationConfiguration.
-			paymentIntegrationName();
+	public String getName(Locale locale) {
+		return _functionCommercePaymentIntegrationConfiguration.name();
 	}
 
 	@Override
@@ -120,18 +176,79 @@ public class FunctionCommercePaymentIntegration
 	}
 
 	@Override
+	public UnicodeProperties getPaymentIntegrationTypeSettings() {
+		return UnicodePropertiesBuilder.create(
+			true
+		).putAll(
+			ObjectMapperUtil.readValue(
+				Map.class,
+				_functionCommercePaymentIntegrationConfiguration.
+					paymentIntegrationTypeSettings())
+		).build();
+	}
+
+	@Override
 	public CommercePaymentEntry refund(
 			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		_portalCatapult.launch(
-			commercePaymentEntry.getCompanyId(), Http.Method.POST,
-			_functionCommercePaymentIntegrationConfiguration.
-				oAuth2ApplicationExternalReferenceCode(),
-			_getPayloadJSONObject(commercePaymentEntry),
-			_functionCommercePaymentIntegrationConfiguration.refundPath(),
-			commercePaymentEntry.getUserId());
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				new String(
+					_portalCatapult.launch(
+						commercePaymentEntry.getCompanyId(), Http.Method.POST,
+						_functionCommercePaymentIntegrationConfiguration.
+							oAuth2ApplicationExternalReferenceCode(),
+						_getPayloadJSONObject(commercePaymentEntry),
+						_functionCommercePaymentIntegrationConfiguration.
+							refundPath(),
+						commercePaymentEntry.getUserId()
+					).get()));
+
+			commercePaymentEntry.setPaymentStatus(
+				jsonObject.getInt("paymentStatus"));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			commercePaymentEntry.setErrorMessages(exception.getMessage());
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+		}
+
+		return commercePaymentEntry;
+	}
+
+	@Override
+	public CommercePaymentEntry setUpPayment(
+			HttpServletRequest httpServletRequest,
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				new String(
+					_portalCatapult.launch(
+						commercePaymentEntry.getCompanyId(), Http.Method.POST,
+						_functionCommercePaymentIntegrationConfiguration.
+							oAuth2ApplicationExternalReferenceCode(),
+						_getPayloadJSONObject(commercePaymentEntry),
+						_functionCommercePaymentIntegrationConfiguration.
+							setUpPaymentPath(),
+						commercePaymentEntry.getUserId()
+					).get()));
+
+			commercePaymentEntry.setPaymentStatus(
+				jsonObject.getInt("paymentStatus"));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			commercePaymentEntry.setErrorMessages(exception.getMessage());
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+		}
 
 		return commercePaymentEntry;
 	}
@@ -205,15 +322,6 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			commercePaymentEntry.getClassPK());
-
-		if (objectEntry == null) {
-			throw new PortalException(
-				"No object entry found with object entry ID " +
-					commercePaymentEntry.getClassPK());
-		}
-
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(
 				commercePaymentEntry.getCommerceChannelId());
@@ -235,11 +343,12 @@ public class FunctionCommercePaymentIntegration
 			"commercePaymentEntry",
 			_jsonFactory.looseSerializeDeep(commercePaymentEntry)
 		).put(
-			"objectEntry", _jsonFactory.looseSerializeDeep(objectEntry)
-		).put(
 			"typeSettings", typeSettingsJSONObject
 		);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FunctionCommercePaymentIntegration.class);
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
@@ -253,9 +362,6 @@ public class FunctionCommercePaymentIntegration
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private PortalCatapult _portalCatapult;

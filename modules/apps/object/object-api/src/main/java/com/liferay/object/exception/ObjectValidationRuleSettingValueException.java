@@ -12,20 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectValidationRuleSettingValueException extends PortalException {
 
-	public ObjectValidationRuleSettingValueException(String message) {
-		super(message);
-
-		_messageKey = message;
-	}
-
-	public ObjectValidationRuleSettingValueException(
-		String message, String messageKey) {
-
-		super(message);
-
-		_messageKey = messageKey;
-	}
-
 	public String getMessageKey() {
 		return _messageKey;
 	}
@@ -73,6 +59,18 @@ public class ObjectValidationRuleSettingValueException extends PortalException {
 
 	}
 
-	private final String _messageKey;
+	private ObjectValidationRuleSettingValueException(String message) {
+		super(message);
+	}
+
+	private ObjectValidationRuleSettingValueException(
+		String message, String messageKey) {
+
+		super(message);
+
+		_messageKey = messageKey;
+	}
+
+	private String _messageKey;
 
 }

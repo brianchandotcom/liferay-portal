@@ -26,6 +26,11 @@ public class CounterLocalServiceWrapper
 	}
 
 	@Override
+	public long getCurrentId(String name) {
+		return _counterLocalService.getCurrentId(name);
+	}
+
+	@Override
 	public java.util.List<String> getNames() {
 		return _counterLocalService.getNames();
 	}

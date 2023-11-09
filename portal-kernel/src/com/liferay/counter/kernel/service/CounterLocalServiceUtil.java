@@ -26,6 +26,10 @@ public class CounterLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.counter.service.impl.CounterLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static long getCurrentId(String name) {
+		return getService().getCurrentId(name);
+	}
+
 	public static List<String> getNames() {
 		return getService().getNames();
 	}

@@ -13,6 +13,10 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
  */
 public class CounterFinderUtil {
 
+	public static long getCurrentId(String name) {
+		return getFinder().getCurrentId(name);
+	}
+
 	public static java.util.List<String> getNames() {
 		return getFinder().getNames();
 	}

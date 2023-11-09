@@ -75,6 +75,7 @@ public class UserAccountTestUtil {
 					RandomTestUtil.randomString());
 				profileURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				status = Status.ACTIVE;
 			}
 		};
 	}

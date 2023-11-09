@@ -13,6 +13,7 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -138,11 +139,11 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 			try {
 				Configuration[] configurations =
 					_configurationAdmin.listConfigurations(
-						String.format(
-							"(&(%s=%s)(%s=%s))",
-							ConfigurationAdmin.SERVICE_FACTORYPID,
-							"com.liferay.scim.rest.internal.configuration.ScimClientOAuth2ApplicationConfiguration",
-							"companyId", themeDisplay.getCompanyId()));
+						StringBundler.concat(
+							"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
+							"=com.liferay.scim.rest.internal.configuration.",
+							"ScimClientOAuth2ApplicationConfiguration)(",
+							"companyId=", themeDisplay.getCompanyId(), "))"));
 
 				if (configurations == null) {
 					return;

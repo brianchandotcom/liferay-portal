@@ -1,178 +1,95 @@
-import DirectAccessEdge from './edges/DirectAccessEdge';
-import EmptyStateEdge from './edges/EmptyStateEdge';
-import Loading from 'shared/components/Loading';
-import ParentTouchpointEdge from './edges/ParentTouchpointEdge';
-import Paths from './Paths';
-import React, {useEffect, useRef, useState} from 'react';
-import TouchpointEdge from './edges/TouchpointEdge';
-import TouchpointPathQuery from 'shared/queries/TouchpointPathQuery';
-import {AssetNode, Link, Node, SankeyNode} from './utils/types';
+import React, {useState} from 'react';
+import {Link} from './Link';
 import {
-	getAssetsHeight,
-	getBounds,
-	getInternalData,
-	getSankeyData,
-	getSankeyHeight,
-	isParentNode,
-	SANKEY_OFFSET
-} from './utils/sankey';
-import {getVariables} from 'shared/util/mappers';
-import {RangeSelectors} from 'shared/types';
-import {useQuery} from '@apollo/react-hooks';
+	MAIN_NODE_HEIGHT,
+	MAIN_NODE_WIDTH,
+	SANKEY_HEIGHT,
+	SANKEY_WIDTH
+} from './utils';
+import {Node} from './Node';
+import {Sankey as SankeyChart, Tooltip} from 'recharts';
+import {sub} from 'shared/util/lang';
+import {toLocale} from 'shared/util/numbers';
 
-export const CLASSNAME = 'analytics-sankey';
+const CustomTooltip: React.FC<any> = ({payload}) => {
+	if (!payload.length) return null;
 
-interface ISankeyProps extends React.HTMLAttributes<HTMLElement> {
-	filters: object;
-	rangeSelectors: RangeSelectors;
-	router: {
-		params: object;
-		query: object;
-	};
-	width: string;
-}
+	const data = payload[0].payload?.payload;
 
-const Sankey: React.FC<ISankeyProps> = ({
-	filters,
-	rangeSelectors,
-	router,
-	width = '100%'
-}) => {
-	const svgRef = useRef<any>();
+	let description = Liferay.Language.get('page-views');
 
-	const [{links, nodes}, setData] = useState<{
-		links: Array<Link>;
-		nodes: Array<Node>;
-	}>({links: [], nodes: []});
-
-	const [activeIndex, setActiveIndex] = useState<number>(-1);
-
-	const [expandedTouchpoint, setExpandedTouchpoint] = useState<
-		SankeyNode & {items: Array<AssetNode>}
-	>();
-
-	const sankeyHeight = getSankeyHeight(nodes);
-
-	const [{stageHeight, stageWidth}, setStageSize] = useState<{
-		stageHeight: number;
-		stageWidth: number;
-	}>({stageHeight: sankeyHeight, stageWidth: undefined});
-
-	const {variables} = getVariables({
-		filters,
-		params: router.params,
-		rangeSelectors
-	});
-
-	const {loading} = useQuery(TouchpointPathQuery, {
-		onCompleted: data => {
-			setData(getSankeyData(data, router));
-		},
-		variables
-	});
-
-	useEffect(() => {
-		const extraHeight = expandedTouchpoint
-			? getAssetsHeight(expandedTouchpoint.items) + SANKEY_OFFSET
-			: 0;
-
-		setStageSize(size => ({
-			...size,
-			stageHeight: sankeyHeight + extraHeight
-		}));
-	}, [expandedTouchpoint, sankeyHeight]);
-
-	useEffect(() => {
-		const {width: stageWidth} = getBounds(svgRef);
-		setStageSize(size => ({...size, stageWidth}));
-	}, [svgRef.current]);
-
-	const internalData = getInternalData(
-		{links, nodes},
-		stageWidth,
-		sankeyHeight
-	);
-
-	const parentNode = internalData.nodes.find(isParentNode);
-
-	if (parentNode && !loading && svgRef.current) {
-		if (!parentNode.directAccessMetric && !links.length) {
-			return (
-				<div ref={svgRef} style={{width}}>
-					<EmptyStateEdge node={parentNode} />
-				</div>
-			);
-		} else if (!links.length) {
-			return (
-				<div ref={svgRef} style={{width}}>
-					<DirectAccessEdge
-						node={parentNode}
-						rangeSelectors={rangeSelectors}
-						router={router}
-					/>
-				</div>
-			);
+	if (!data?.main) {
+		if (data?.type === 'previous' || data?.target?.main) {
+			description = sub(Liferay.Language.get('page-views-x'), [
+				Liferay.Language.get('referral')
+			]);
 		} else {
-			return (
-				<svg
-					className={CLASSNAME}
-					height={stageHeight + SANKEY_OFFSET}
-					ref={svgRef}
-					width={width}
-				>
-					<g fill='none'>
-						<Paths
-							activeIndex={activeIndex}
-							expandedTouchpoint={expandedTouchpoint}
-							internalData={internalData}
-							parentNode={parentNode}
-							setActiveIndex={setActiveIndex}
-						/>
-					</g>
-					<g className='svg'>
-						{internalData.nodes
-							.filter(node => !isParentNode(node))
-							.map((node, index) => (
-								<g
-									className={`${CLASSNAME}-box`}
-									key={`${index}_node`}
-								>
-									<TouchpointEdge
-										activeIndex={activeIndex}
-										expandedTouchpoint={expandedTouchpoint}
-										node={node}
-										rangeSelectors={rangeSelectors}
-										router={router}
-										setActiveIndex={setActiveIndex}
-										setExpandedTouchpoint={
-											setExpandedTouchpoint
-										}
-									/>
-								</g>
-							))}
-						<g className={`${CLASSNAME}-box`}>
-							<ParentTouchpointEdge
-								activeIndex={activeIndex}
-								expandedTouchpoint={expandedTouchpoint}
-								hasOnlyOneReferrer={links.length === 1}
-								node={parentNode}
-								nodes={internalData.nodes}
-								rangeSelectors={rangeSelectors}
-								router={router}
-								setActiveIndex={setActiveIndex}
-								setExpandedTouchpoint={setExpandedTouchpoint}
-							/>
-						</g>
-					</g>
-				</svg>
-			);
+			description = sub(Liferay.Language.get('page-views-x'), [
+				Liferay.Language.get('exit-pages')
+			]);
 		}
 	}
 
 	return (
-		<div ref={svgRef} style={{width}}>
-			<Loading />
+		<div className='clay-popover-top fade popover position-relative show'>
+			<div className='popover-header'>{description}</div>
+			<div className='popover-body d-flex justify-content-between'>
+				<div className='mr-2'>{payload[0].name}</div>
+				<div>{toLocale(payload[0].value)}</div>
+			</div>
 		</div>
+	);
+};
+
+const Sankey = ({data}) => {
+	const [hovered, setMouseEnter] = useState(false);
+	const [selectedNode, setSelectedNode] = useState(null);
+
+	const emptyState = !data.links.length && data.nodes.length === 1;
+
+	return (
+		/**
+		 * TODO: It is necessary to update Recharts to latest version
+		 * to be able to sort main path on center of the card.
+		 * But it will break changes on Recharts API
+		 *
+		 * 1. Remove interations props
+		 * 2. Add sort={false}
+		 */
+
+		<SankeyChart
+			data={data}
+			height={emptyState ? MAIN_NODE_HEIGHT : SANKEY_HEIGHT}
+			iterations={0}
+			link={
+				<Link
+					hovered={hovered}
+					onNodeChange={setSelectedNode}
+					selectedNode={selectedNode}
+				/>
+			}
+			linkCurvature={0.3}
+			margin={{bottom: 30, top: 50}}
+			node={
+				<Node
+					emptyState={emptyState}
+					hovered={hovered}
+					onNodeChange={setSelectedNode}
+					selectedNode={selectedNode}
+				/>
+			}
+			nodePadding={80}
+			nodeWidth={MAIN_NODE_WIDTH}
+			onMouseEnter={() => {
+				setMouseEnter(true);
+			}}
+			onMouseLeave={() => {
+				setMouseEnter(false);
+			}}
+			width={emptyState ? MAIN_NODE_WIDTH : SANKEY_WIDTH}
+		>
+			<Tooltip content={<CustomTooltip />} />
+		</SankeyChart>
 	);
 };
 

@@ -12,7 +12,6 @@ import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectValidationRuleExternalReferenceCodeException;
-import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleOutputTypeException;
@@ -499,7 +498,9 @@ public class ObjectValidationRuleLocalServiceImpl
 					NAME_COMPOSITE_KEY_OBJECT_FIELD_ID)) {
 
 			throw new RequiredObjectValidationRuleSettingException.
-				MustNotDeleteObjectValidationRuleSettingCompositeKey();
+				MustNotDeleteObjectValidationRuleSettingPublishedObjectDefinition(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID);
 		}
 
 		for (String objectValidationRuleSettingValue :

@@ -905,7 +905,8 @@ public class ObjectFieldLocalServiceImpl
 						"a relationship type");
 			}
 			else if (!objectField.isDeletionAllowed()) {
-				throw new RequiredObjectFieldException();
+				throw new RequiredObjectFieldException.MustNotDeleteObjectField(
+					objectField.getName());
 			}
 		}
 		else if (!deleteRelationshipObjectField) {
@@ -923,7 +924,7 @@ public class ObjectFieldLocalServiceImpl
 
 		if (objectValidationRuleSettingsCount > 0) {
 			throw new RequiredObjectFieldException.
-				MustNotDeleteObjectFieldUniqueCompositeKey();
+				MustNotDeleteObjectFieldCompositeKey(objectField.getName());
 		}
 
 		ObjectDefinition objectDefinition =
@@ -943,7 +944,9 @@ public class ObjectFieldLocalServiceImpl
 			objectField1 -> !objectField1.isMetadata());
 
 		if (objectDefinition.isApproved() && (objectFields.size() == 1)) {
-			throw new RequiredObjectFieldException();
+			throw new RequiredObjectFieldException.
+				MustNotDeleteObjectFieldPublishedObjectDefinition(
+					objectField.getName());
 		}
 
 		if (Objects.equals(

@@ -106,7 +106,8 @@ export const Column = forwardRef(
 											field={field}
 											index={index + 1}
 											nestedFieldIndex={
-												field.nestedFieldIndex
+												typeof field.nestedFieldIndex ===
+												'number'
 													? field.nestedFieldIndex + 1
 													: field.nestedFieldIndex
 											}

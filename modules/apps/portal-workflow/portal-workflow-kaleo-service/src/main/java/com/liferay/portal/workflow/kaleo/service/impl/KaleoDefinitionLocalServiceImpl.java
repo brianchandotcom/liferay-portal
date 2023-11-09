@@ -130,6 +130,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		kaleoDefinition.setCreateDate(date);
 		kaleoDefinition.setModifiedDate(date);
+
 		kaleoDefinition.setName(name);
 		kaleoDefinition.setTitle(title);
 		kaleoDefinition.setDescription(description);

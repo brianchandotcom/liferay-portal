@@ -9,10 +9,11 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -70,8 +71,12 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 		sendRedirect(
 			actionRequest, actionResponse,
 			PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					actionRequest, CTPortletKeys.PUBLICATIONS,
+				_portal.getControlPanelPortletURL(
+					actionRequest,
+					_groupLocalService.getGroup(
+						themeDisplay.getCompanyId(),
+						GroupConstants.CONTROL_PANEL),
+					CTPortletKeys.PUBLICATIONS, 0, 0,
 					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
 				"/change_tracking/view_history"
@@ -80,6 +85,9 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTCollectionService _ctCollectionService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

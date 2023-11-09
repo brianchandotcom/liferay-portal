@@ -83,7 +83,6 @@ const FiltersDropdown = () => {
 						<ClayDropDown.ItemList>
 							{filters.map((filter) => (
 								<ClayDropDown.Item
-									active={filter.value !== undefined}
 									key={filter.id}
 									onClick={() => {
 										setActiveFilter(filter);

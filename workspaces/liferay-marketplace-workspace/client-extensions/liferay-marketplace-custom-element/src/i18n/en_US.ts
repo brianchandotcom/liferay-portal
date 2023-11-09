@@ -9,6 +9,7 @@ export default {
 	'access-console': 'Access Console',
 	'activation-status': 'Activation Status',
 	'back-to-my-apps': 'Back to My Apps',
+	'cancel': 'Cancel',
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
 	'create-license-key': 'Create License Key',
@@ -26,6 +27,8 @@ export default {
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
 	'instance-size': 'Instance Size',
 	'ip-addresses': 'IP Addresses',
+	'key-deactivation-requested-succesfully':
+		'Key deactivation requested successfully',
 	'key-type': 'Key Type',
 	'licenses': 'Licenses',
 	'mac-addresses': 'Mac Addresses',

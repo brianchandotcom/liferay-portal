@@ -101,6 +101,17 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 									  )
 							);
 						}
+						else if (
+							responseContent.type.includes(
+								'SXPElementNoDefaultLocaleTitleException'
+							)
+						) {
+							_handleFormError(
+								Liferay.Language.get(
+									'error.default-locale-title-empty'
+								)
+							);
+						}
 						else {
 							_handleFormError(
 								isElement

@@ -1465,24 +1465,21 @@ public class ObjectFieldLocalServiceImpl
 			return;
 		}
 
-		String objectDefinitionShortName = objectDefinition.getShortName();
-		String prefix = "current";
-
-		if (objectRelationship.getObjectDefinitionId1() !=
+		if (objectRelationship.getObjectDefinitionId1() ==
 				objectDefinition.getObjectDefinitionId()) {
 
-			ObjectDefinition objectDefinition1 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId1());
-
-			objectDefinitionShortName = objectDefinition1.getShortName();
-			prefix = "related";
+			throw new ObjectFieldNameException.
+				MustNotBeEqualToObjectRelationshipName(
+					"current " + objectDefinition.getShortName());
 		}
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
 
 		throw new ObjectFieldNameException.
 			MustNotBeEqualToObjectRelationshipName(
-				StringBundler.concat(
-					prefix, StringPool.SPACE, objectDefinitionShortName));
+				"related " + objectDefinition1.getShortName());
 	}
 
 	private void _validateObjectRelationshipDeletionType(

@@ -6,12 +6,15 @@
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -84,6 +87,11 @@ public class AttachmentDTOConverter
 				options = _getAttachmentOptions(cpAttachmentFileEntry);
 				priority = cpAttachmentFileEntry.getPriority();
 				src = portalURL + downloadURL;
+				tags = TransformUtil.transformToArray(
+					_assetTagService.getTags(
+						cpAttachmentFileEntry.getModelClassName(),
+						cpAttachmentFileEntry.getCPAttachmentFileEntryId()),
+					AssetTag::getName, String.class);
 				title = LanguageUtils.getLanguageIdMap(
 					cpAttachmentFileEntry.getTitleMap());
 				type = cpAttachmentFileEntry.getType();
@@ -134,4 +142,6 @@ public class AttachmentDTOConverter
 	@Reference
 	private Portal _portal;
 
+	@Reference
+	private AssetTagService _assetTagService;
 }

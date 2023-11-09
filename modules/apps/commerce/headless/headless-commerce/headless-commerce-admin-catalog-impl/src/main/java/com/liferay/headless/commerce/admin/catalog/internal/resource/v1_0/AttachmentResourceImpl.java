@@ -408,6 +408,12 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 		}
 
+		String[] tags = attachment.getTags();
+
+		if (tags != null) {
+			serviceContext.setAssetTagNames(tags);
+		}
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 				cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
@@ -442,6 +448,12 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 		}
 
+		String[] tags = attachmentBase64.getTags();
+
+		if (tags != null) {
+			serviceContext.setAssetTagNames(tags);
+		}
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 				_cpAttachmentFileEntryService, _cpDefinitionOptionRelService,
@@ -470,6 +482,12 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (expandoBridgeAttributes != null) {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
+		String[] tags = attachmentUrl.getTags();
+
+		if (tags != null) {
+			serviceContext.setAssetTagNames(tags);
 		}
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =

@@ -13,7 +13,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -53,8 +52,7 @@ public class CommerceChannelPaymentRestrictionsScreenNavigationEntry
 					_commerceChannelLocalService,
 					_commercePaymentMethodGroupRelService,
 					_commercePaymentMethodRegistry,
-					_commercePaymentIntegrationRegistry, _countryService,
-					httpServletRequest);
+					_commercePaymentIntegrationRegistry, httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -78,9 +76,6 @@ public class CommerceChannelPaymentRestrictionsScreenNavigationEntry
 
 	@Reference
 	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
-
-	@Reference
-	private CountryService _countryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

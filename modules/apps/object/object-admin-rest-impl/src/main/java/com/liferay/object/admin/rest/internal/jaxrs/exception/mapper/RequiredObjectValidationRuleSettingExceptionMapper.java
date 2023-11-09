@@ -6,6 +6,7 @@
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.RequiredObjectValidationRuleSettingException;
+import com.liferay.object.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
@@ -39,8 +40,11 @@ public class RequiredObjectValidationRuleSettingExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			_language.get(
-				_acceptLanguage.getPreferredLocale(),
+			ObjectExceptionMapperUtil.getTitle(
+				_acceptLanguage,
+				requiredObjectValidationRuleSettingException.getArguments(),
+				_language,
+				requiredObjectValidationRuleSettingException.getMessage(),
 				requiredObjectValidationRuleSettingException.getMessageKey()));
 	}
 

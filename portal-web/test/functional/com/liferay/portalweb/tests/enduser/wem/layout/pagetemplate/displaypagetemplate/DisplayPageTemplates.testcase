@@ -200,6 +200,84 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191986. Can configure friendly URL for default display page template."
+	@priority = 3
+	test ConfigureFriendlyURLOfDefaultDisplayPageTemplate {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a user has a default display page template") {
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("When the user accesses to the configuration page of display page template") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+		}
+
+		task ("Then the user could configure the friendly URL of display page template") {
+			Navigator.viewActivatedNavTab(navTab = "General");
+
+			AssertTextEquals(
+				key_text = "Friendly URL",
+				locator1 = "TextInput#ANY",
+				value1 = "/display-page-name");
+
+			PagesAdmin.editFriendlyURL(friendlyURLEdit = "/welcome");
+
+			AssertTextEquals(
+				key_text = "Friendly URL",
+				locator1 = "TextInput#ANY",
+				value1 = "/welcome");
+		}
+
+		task ("When the user accesses to the SEO sheet") {
+			Navigator.gotoNavTab(navTab = "SEO");
+		}
+
+		task ("Then the user could configure the Robots and Sitemap settings") {
+			AssertEditable(
+				key_label = "Robots",
+				locator1 = "TextArea#ANY_LABELED");
+
+			AssertAttributeValue(
+				key_label = "Robots",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "placeholder",
+				value2 = "Robots");
+
+			AssertEditable(
+				key_fieldLabel = "Include",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Include",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Yes");
+
+			AssertEditable(
+				key_text = "Page Priority",
+				locator1 = "TextInput#ANY");
+
+			AssertAttributeValue(
+				key_text = "Page Priority",
+				locator1 = "TextInput#ANY",
+				value1 = "placeholder",
+				value2 = "0.0");
+
+			AssertEditable(
+				key_fieldLabel = "Change Frequency",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Change Frequency",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Daily");
+		}
+	}
+
 	@description = "This is a test for LPS-191986. Can configure friendly URL for non-default display page template."
 	@priority = 4
 	test ConfigureFriendlyURLOfDisplayPageTemplate {

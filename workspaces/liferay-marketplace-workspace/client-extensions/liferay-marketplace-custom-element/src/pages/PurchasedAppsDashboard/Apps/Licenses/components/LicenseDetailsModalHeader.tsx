@@ -1,0 +1,40 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {getThumbnailByProductAttachment} from '../../../../../utils/util';
+import AccountEmailInfo from '../../../../CreateLicense/AccountInfo';
+import OrderDetailsHeader from '../../components/OrderDetailsHeader';
+
+type LicenseDetailsModalHeaderProps = {
+	modalData: any;
+	myUserAccount: UserAccount;
+	product: Product;
+};
+
+const LicenseDetailsModalHeader: React.FC<LicenseDetailsModalHeaderProps> = ({
+	modalData,
+	myUserAccount,
+	product,
+}) => (
+	<div className="d-flex flex-row justify-content-between">
+		<div className="flex-row mb-1">
+			<h6 className="font-weight-bold text-primary text-uppercase">
+				Activation Key details
+			</h6>
+
+			<OrderDetailsHeader
+				className="d-flex flex-row justify-content-between mt-3"
+				hasOrderDescription={modalData?.description}
+				image={getThumbnailByProductAttachment(product?.attachments)}
+				name={product?.name?.en_US}
+				version={modalData?.productVersion}
+			/>
+		</div>
+
+		<AccountEmailInfo userAccount={myUserAccount} />
+	</div>
+);
+
+export default LicenseDetailsModalHeader;

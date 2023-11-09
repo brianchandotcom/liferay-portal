@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import ClayTable from '@clayui/table';
 import {ReactNode} from 'react';
 
@@ -12,6 +11,7 @@ import './Table.scss';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 type TableProps<T = any> = {
+	Actions: React.FC<{row: T}>;
 	className?: string;
 	columns: TableColumn<T>[];
 	hasKebabButton?: boolean;
@@ -48,6 +48,7 @@ type PaginationProps = {
 };
 
 const Table: React.FC<TableProps> = ({
+	Actions,
 	className,
 	columns,
 	hasKebabButton,
@@ -115,12 +116,7 @@ const Table: React.FC<TableProps> = ({
 									className="border-0"
 									columnTextAlignment="center"
 								>
-									<ClayButtonWithIcon
-										aria-label="Menu"
-										displayType={null}
-										symbol="ellipsis-v"
-										title="Menu"
-									/>
+									{Actions && <Actions row={row} />}
 								</ClayTable.Cell>
 							)}
 						</ClayTable.Row>

@@ -9,12 +9,12 @@ import './index.scss';
 
 import {format, isBefore} from 'date-fns';
 
-import i18n from '../../../../../i18n';
-import {LicenceKeyProps} from '../Licenses';
+import i18n from '../../../../../../i18n';
+import {LicenseKey} from '../../../../../../services/oauth/ProvisioningKoroneikiOAuth2';
 
 type LicenseKeyModalProps = {
 	Header: React.FC;
-	modalData: LicenceKeyProps;
+	modalData: LicenseKey;
 };
 
 const LicenceKeyModalContent = ({Header, modalData}: LicenseKeyModalProps) => {
@@ -29,10 +29,7 @@ const LicenceKeyModalContent = ({Header, modalData}: LicenseKeyModalProps) => {
 		startDate,
 	} = modalData;
 
-	const isActive =
-		active && isBefore(new Date(), new Date(expirationDate))
-			? 'active'
-			: 'inactive';
+	const isActive = active && isBefore(new Date(), new Date(expirationDate));
 
 	return (
 		<div className="container mkt-license-details-content">

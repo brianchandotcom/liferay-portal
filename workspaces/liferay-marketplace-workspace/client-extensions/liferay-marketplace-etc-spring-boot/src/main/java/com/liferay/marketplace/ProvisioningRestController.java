@@ -217,26 +217,25 @@ public class ProvisioningRestController extends BaseRestController {
 
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
-			if (statusLine.getStatusCode() ==
+			if (statusLine.getStatusCode() !=
 					org.apache.http.HttpStatus.SC_OK) {
 
-				JSONObject jsonObject = new JSONObject(
-					EntityUtils.toString(
-						closeableHttpResponse.getEntity(),
-						Charset.defaultCharset()));
-
-				_oauthExpirationMillis =
-					(jsonObject.getLong("expires_in") * 1000) +
-						System.currentTimeMillis();
-
-				_oauthAccessToken =
-					jsonObject.getString("token_type") + " " +
-						jsonObject.getString("access_token");
-
-				return _oauthAccessToken;
+				throw new Exception("Unable to get OAuth authorization");
 			}
 
-			throw new Exception("Unable to get OAuth authorization");
+			JSONObject jsonObject = new JSONObject(
+				EntityUtils.toString(
+					closeableHttpResponse.getEntity(),
+					Charset.defaultCharset()));
+
+			_oauthExpirationMillis =
+				(jsonObject.getLong("expires_in") * 1000) +
+					System.currentTimeMillis();
+			_oauthAccessToken =
+				jsonObject.getString("token_type") + " " +
+					jsonObject.getString("access_token");
+
+			return _oauthAccessToken;
 		}
 	}
 

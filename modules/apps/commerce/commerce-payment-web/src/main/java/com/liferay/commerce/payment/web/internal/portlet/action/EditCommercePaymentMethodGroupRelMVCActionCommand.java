@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
@@ -134,12 +135,27 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 			String commercePaymentMethodEngineKey = ParamUtil.getString(
 				actionRequest, "commercePaymentMethodEngineKey");
 
-			commercePaymentMethodGroupRel =
-				_commercePaymentMethodGroupRelService.
-					addCommercePaymentMethodGroupRel(
-						commerceChannel.getGroupId(), nameMap, descriptionMap,
-						active, imageFile, commercePaymentMethodEngineKey,
-						priority, null);
+			if (StringUtil.equals(
+					commercePaymentMethodEngineKey,
+					"function.commerce.payment.integration.configuration")) {
+
+				commercePaymentMethodGroupRel =
+					_commercePaymentMethodGroupRelService.
+						addCommercePaymentMethodGroupRel(
+							commerceChannel.getGroupId(), nameMap,
+							descriptionMap, active, imageFile,
+							ParamUtil.getString(
+								actionRequest, "commercePaymentIntegrationKey"),
+							priority, null);
+			}
+			else {
+				commercePaymentMethodGroupRel =
+					_commercePaymentMethodGroupRelService.
+						addCommercePaymentMethodGroupRel(
+							commerceChannel.getGroupId(), nameMap,
+							descriptionMap, active, imageFile,
+							commercePaymentMethodEngineKey, priority, null);
+			}
 		}
 		else {
 			commercePaymentMethodGroupRel =

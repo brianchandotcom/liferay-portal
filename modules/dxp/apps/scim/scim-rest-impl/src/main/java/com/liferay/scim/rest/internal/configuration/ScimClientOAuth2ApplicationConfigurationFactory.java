@@ -122,7 +122,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 			companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
 
 		String clientId = ScimClientUtil.generateScimClientId(
-			scimClientOAuth2ApplicationConfiguration.applicationName());
+			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
 
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
@@ -137,7 +137,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 					clientId, ClientProfile.HEADLESS_SERVER.id(),
 					OAuth2SecureRandomGenerator.generateClientSecret(), null,
 					Collections.emptyList(), null, 0, null,
-					scimClientOAuth2ApplicationConfiguration.applicationName(),
+					scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName(),
 					null, Collections.emptyList(), false, true, null,
 					new ServiceContext());
 

@@ -80,7 +80,7 @@ public class SaveScimConfigurationMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String clientId = ScimClientUtil.generateScimClientId(
-			ParamUtil.getString(actionRequest, "applicationName"));
+			ParamUtil.getString(actionRequest, "oAuth2ApplicationName"));
 
 		if (Objects.equals(cmd, "generate")) {
 			OAuth2Application oAuth2Application =
@@ -161,8 +161,8 @@ public class SaveScimConfigurationMVCActionCommand
 					configuration.getProperties();
 
 				properties.put(
-					"applicationName",
-					ParamUtil.getString(actionRequest, "applicationName"));
+					"oAuth2ApplicationName",
+					ParamUtil.getString(actionRequest, "oAuth2ApplicationName"));
 
 				properties.put(
 					"matcherField",
@@ -179,8 +179,8 @@ public class SaveScimConfigurationMVCActionCommand
 
 				configuration.update(
 					HashMapDictionaryBuilder.<String, Object>put(
-						"applicationName",
-						ParamUtil.getString(actionRequest, "applicationName")
+						"oAuth2ApplicationName",
+						ParamUtil.getString(actionRequest, "oAuth2ApplicationName")
 					).put(
 						"companyId", themeDisplay.getCompanyId()
 					).put(

@@ -7,7 +7,6 @@ package com.liferay.object.service.impl;
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
@@ -28,7 +27,6 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFolderItem;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectRelationshipTable;
-import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -69,7 +67,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -114,7 +111,7 @@ public class ObjectRelationshipLocalServiceImpl
 		return _addObjectRelationship(
 			externalReferenceCode, userId, objectDefinitionId1,
 			objectDefinitionId2, parameterObjectFieldId, deletionType, labelMap,
-			name, false, system, type);
+			name, false, system, type, objectField);
 	}
 
 	@Override
@@ -816,8 +813,7 @@ public class ObjectRelationshipLocalServiceImpl
 		_validateDeletionType(deletionType, edge);
 		_validateEdge(edge, objectRelationship);
 
-		if (Objects.equals(
-				objectRelationship.getType(),
+		if (objectRelationship.compareType(
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
 			ObjectRelationship reverseObjectRelationship =
@@ -833,6 +829,36 @@ public class ObjectRelationshipLocalServiceImpl
 					ObjectRelationship.class);
 
 			indexer.reindex(reverseObjectRelationship);
+		}
+		else if ((objectField != null) &&
+				 (objectRelationship.compareType(
+					 ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
+				  objectRelationship.compareType(
+					  ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
+
+			ObjectField existingObjectField =
+				_objectFieldLocalService.getObjectField(
+					objectRelationship.getObjectFieldId2());
+
+			_objectFieldLocalService.updateObjectField(
+				objectField.getExternalReferenceCode(),
+				existingObjectField.getObjectFieldId(),
+				existingObjectField.getUserId(),
+				existingObjectField.getListTypeDefinitionId(),
+				existingObjectField.getObjectDefinitionId(),
+				existingObjectField.getBusinessType(),
+				existingObjectField.getDBColumnName(),
+				existingObjectField.getDBTableName(),
+				existingObjectField.getDBType(),
+				existingObjectField.isIndexed(),
+				existingObjectField.isIndexedAsKeyword(),
+				existingObjectField.getIndexedLanguageId(),
+				objectField.getLabelMap(), existingObjectField.isLocalized(),
+				existingObjectField.getName(), objectField.getReadOnly(),
+				objectField.getReadOnlyConditionExpression(),
+				objectField.isRequired(), existingObjectField.isState(),
+				existingObjectField.isSystem(),
+				existingObjectField.getObjectFieldSettings());
 		}
 
 		objectRelationship = _updateObjectRelationship(
@@ -856,86 +882,6 @@ public class ObjectRelationshipLocalServiceImpl
 		_bundleContext = bundleContext;
 	}
 
-	private ObjectField _addObjectField(
-			User user, Map<Locale, String> labelMap, String name,
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, boolean system, String type)
-		throws PortalException {
-
-		ObjectField objectField = _objectFieldPersistence.create(
-			counterLocalService.increment());
-
-		objectField.setCompanyId(user.getCompanyId());
-		objectField.setUserId(user.getUserId());
-		objectField.setUserName(user.getFullName());
-		objectField.setListTypeDefinitionId(0);
-		objectField.setObjectDefinitionId(
-			objectDefinition2.getObjectDefinitionId());
-		objectField.setBusinessType(
-			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP);
-		objectField.setSystem(system);
-
-		String dbColumnName = StringBundler.concat(
-			"r_", name, "_", objectDefinition1.getPKObjectFieldName());
-
-		objectField.setDBColumnName(dbColumnName);
-
-		String dbTableName = objectDefinition2.getDBTableName();
-
-		if (objectDefinition2.isApproved()) {
-			dbTableName = objectDefinition2.getExtensionDBTableName();
-		}
-
-		objectField.setDBTableName(dbTableName);
-
-		objectField.setDBType(ObjectFieldConstants.DB_TYPE_LONG);
-		objectField.setIndexed(true);
-		objectField.setIndexedAsKeyword(false);
-		objectField.setIndexedLanguageId(null);
-		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
-		objectField.setName(dbColumnName);
-		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_FALSE);
-		objectField.setReadOnlyConditionExpression(StringPool.BLANK);
-		objectField.setRelationshipType(type);
-		objectField.setRequired(false);
-
-		objectField = _objectFieldLocalService.updateObjectField(objectField);
-
-		_objectFieldSettingLocalService.addObjectFieldSetting(
-			user.getUserId(), objectField.getObjectFieldId(),
-			ObjectFieldSettingConstants.NAME_OBJECT_DEFINITION_1_SHORT_NAME,
-			objectDefinition1.getShortName());
-
-		_objectFieldSettingLocalService.addObjectFieldSetting(
-			user.getUserId(), objectField.getObjectFieldId(),
-			ObjectFieldSettingConstants.
-				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-			StringUtil.replaceLast(objectField.getName(), "Id", "ERC"));
-
-		if (!objectDefinition2.isApproved()) {
-			return objectField;
-		}
-
-		runSQL(
-			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-				dbTableName, objectField.getDBColumnName(), "Long"));
-
-		ObjectDBManagerUtil.createIndexMetadata(
-			_currentConnection.getConnection(
-				objectRelationshipPersistence.getDataSource()),
-			dbTableName, false, objectField.getDBColumnName());
-
-		ObjectDefinitionLocalService objectDefinitionLocalService =
-			_objectDefinitionLocalServiceSnapshot.get();
-
-		if (objectDefinitionLocalService != null) {
-			objectDefinitionLocalService.deployObjectDefinition(
-				objectDefinition2);
-		}
-
-		return objectField;
-	}
-
 	private void _addObjectFolderItem(
 			long userId, long objectDefinitionId, long objectFolderId)
 		throws PortalException {
@@ -956,7 +902,8 @@ public class ObjectRelationshipLocalServiceImpl
 			String externalReferenceCode, long userId, long objectDefinitionId1,
 			long objectDefinitionId2, long parameterObjectFieldId,
 			String deletionType, Map<Locale, String> labelMap, String name,
-			boolean reverse, boolean system, String type)
+			boolean reverse, boolean system, String type,
+			ObjectField objectField)
 		throws PortalException {
 
 		_validateInvokerBundle(
@@ -1010,9 +957,30 @@ public class ObjectRelationshipLocalServiceImpl
 			Objects.equals(
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-			ObjectField objectField = _addObjectField(
-				user, objectRelationship.getLabelMap(), name, objectDefinition1,
-				objectDefinition2, system, type);
+			if (objectField != null) {
+				Map<Locale, String> objectFieldLabelMap =
+					objectField.getLabelMap();
+
+				if (objectFieldLabelMap.isEmpty()) {
+					objectFieldLabelMap = objectRelationship.getLabelMap();
+				}
+
+				objectField =
+					_objectFieldLocalService.addObjectRelationshipObjectField(
+						objectField.getExternalReferenceCode(), user,
+						objectDefinition1, objectDefinition2,
+						objectFieldLabelMap, name, objectField.getReadOnly(),
+						objectField.getReadOnlyConditionExpression(), type,
+						objectField.isRequired(), system);
+			}
+			else {
+				objectField =
+					_objectFieldLocalService.addObjectRelationshipObjectField(
+						null, user, objectDefinition1, objectDefinition2,
+						objectRelationship.getLabelMap(), name,
+						ObjectFieldConstants.READ_ONLY_FALSE, StringPool.BLANK,
+						type, false, system);
+			}
 
 			objectRelationship.setObjectFieldId2(
 				objectField.getObjectFieldId());
@@ -1027,7 +995,7 @@ public class ObjectRelationshipLocalServiceImpl
 			_addObjectRelationship(
 				null, userId, objectDefinitionId2, objectDefinitionId1,
 				parameterObjectFieldId, deletionType, labelMap, name, true,
-				system, type);
+				system, type, objectField);
 
 			return objectRelationshipLocalService.
 				createManyToManyObjectRelationshipTable(

@@ -79,7 +79,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	public String getModule() {
-		if (_module.contains(" from ")) {
+		if (ESImportUtil.isESImport(_module)) {
 			return _module;
 		}
 

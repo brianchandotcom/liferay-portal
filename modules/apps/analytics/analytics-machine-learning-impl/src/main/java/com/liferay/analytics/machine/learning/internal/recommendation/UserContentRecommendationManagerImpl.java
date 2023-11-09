@@ -52,12 +52,12 @@ public class UserContentRecommendationManagerImpl
 
 	@Override
 	public List<UserContentRecommendation> getUserContentRecommendations(
-			long[] assetCategoryIds, long[] classNameIds, long companyId,
-			long userId, int start, int end)
+			long[] assetCategoryIds, long companyId, long userId, int start,
+			int end)
 		throws PortalException {
 
 		SearchSearchRequest searchSearchRequest = _getSearchSearchRequest(
-			assetCategoryIds, classNameIds, companyId, userId);
+			assetCategoryIds, companyId, userId);
 
 		searchSearchRequest.setSize(end - start);
 		searchSearchRequest.setStart(start);
@@ -67,13 +67,11 @@ public class UserContentRecommendationManagerImpl
 
 	@Override
 	public long getUserContentRecommendationsCount(
-			long[] assetCategoryIds, long[] classNameIds, long companyId,
-			long userId)
+			long[] assetCategoryIds, long companyId, long userId)
 		throws PortalException {
 
 		return getSearchResultsCount(
-			_getSearchSearchRequest(
-				assetCategoryIds, classNameIds, companyId, userId));
+			_getSearchSearchRequest(assetCategoryIds, companyId, userId));
 	}
 
 	@Override
@@ -134,8 +132,7 @@ public class UserContentRecommendationManagerImpl
 	}
 
 	private SearchSearchRequest _getSearchSearchRequest(
-			long[] assetCategoryIds, long[] classNameIds, long companyId,
-			long userId)
+			long[] assetCategoryIds, long companyId, long userId)
 		throws PortalException {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -165,15 +162,6 @@ public class UserContentRecommendationManagerImpl
 					Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategoryId));
 
 				booleanQuery.add(categoryIdTermQuery, BooleanClauseOccur.MUST);
-			}
-		}
-
-		if (classNameIds != null) {
-			for (long classNameId : classNameIds) {
-				TermQuery classNameIdTermQuery = new TermQueryImpl(
-					Field.ASSET_CATEGORY_IDS, String.valueOf(classNameId));
-
-				booleanQuery.add(classNameIdTermQuery, BooleanClauseOccur.MUST);
 			}
 		}
 

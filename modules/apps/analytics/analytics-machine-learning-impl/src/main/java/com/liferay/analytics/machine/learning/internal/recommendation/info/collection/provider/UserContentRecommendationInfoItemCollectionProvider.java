@@ -40,15 +40,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,16 +77,13 @@ public class UserContentRecommendationInfoItemCollectionProvider
 				assetCategoryIds = ArrayUtil.unique(assetCategoryIds);
 			}
 
-			long[] classNameIds = _getClassNameIds(collectionQuery);
-
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
 			long count =
 				_userContentRecommendationManager.
 					getUserContentRecommendationsCount(
-						assetCategoryIds, classNameIds,
-						serviceContext.getCompanyId(),
+						assetCategoryIds, serviceContext.getCompanyId(),
 						serviceContext.getUserId());
 
 			if (count <= 0) {
@@ -103,13 +96,13 @@ public class UserContentRecommendationInfoItemCollectionProvider
 				TransformUtil.transform(
 					_userContentRecommendationManager.
 						getUserContentRecommendations(
-							assetCategoryIds, classNameIds,
-							serviceContext.getCompanyId(),
+							assetCategoryIds, serviceContext.getCompanyId(),
 							serviceContext.getUserId(), pagination.getStart(),
 							pagination.getEnd()),
 					userContentRecommendation ->
 						_assetEntryLocalService.fetchEntry(
-							userContentRecommendation.getEntryClassPK())),
+							userContentRecommendation.
+								getRecommendedEntryClassPK())),
 				collectionQuery.getPagination(), (int)count);
 		}
 		catch (PortalException portalException) {
@@ -158,35 +151,6 @@ public class UserContentRecommendationInfoItemCollectionProvider
 		}
 
 		return false;
-	}
-
-	private long[] _getClassNameIds(CollectionQuery collectionQuery) {
-		Map<String, String[]> configuration =
-			collectionQuery.getConfiguration();
-
-		if (MapUtil.isNotEmpty(configuration) &&
-			ArrayUtil.isNotEmpty(configuration.get("item_types"))) {
-
-			List<Long> classNameIds = new ArrayList<>();
-
-			String[] itemTypes = configuration.get("item_types");
-
-			for (String itemType : itemTypes) {
-				if (Validator.isNotNull(itemType)) {
-					classNameIds.add(_portal.getClassNameId(itemType));
-				}
-			}
-
-			if (ListUtil.isNotEmpty(classNameIds)) {
-				return ArrayUtil.toArray(classNameIds.toArray(new Long[0]));
-			}
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		return AssetRendererFactoryRegistryUtil.getIndexableClassNameIds(
-			serviceContext.getCompanyId(), true);
 	}
 
 	private InfoField<?> _getItemTypesInfoField() {

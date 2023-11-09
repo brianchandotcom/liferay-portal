@@ -3,7 +3,7 @@
 <root>
 	<template>
 		<template-key>date-facet-checkbox-ftl</template-key>
-		<name>portlet-display-template-name-checkbox-layout</name>
+		<name>portlet-display-template-name-checkbox-layout-multi-select</name>
 		<description>portlet-display-template-description-facet-checkbox</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portal/search/web/internal/date/facet/portlet/display/template/dependencies/portlet_display_template_checkbox.ftl</script-file>
@@ -11,15 +11,15 @@
 	</template>
 	<template>
 		<template-key>date-facet-link-ftl</template-key>
-		<name>portlet-display-template-name-single-select-basic-link-layout</name>
-		<description>portlet-display-template-description-single-select-basic-link</description>
+		<name>portlet-display-template-name-hyperlink-layout-single-select</name>
+		<description>portlet-display-template-description-facet-link</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portal/search/web/internal/date/facet/portlet/display/template/dependencies/portlet_display_template_link.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
 		<template-key>date-facet-radio-ftl</template-key>
-		<name>portlet-display-template-name-radio-layout</name>
+		<name>portlet-display-template-name-radio-button-layout-single-select</name>
 		<description>portlet-display-template-description-facet-radio</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portal/search/web/internal/date/facet/portlet/display/template/dependencies/portlet_display_template_radio.ftl</script-file>

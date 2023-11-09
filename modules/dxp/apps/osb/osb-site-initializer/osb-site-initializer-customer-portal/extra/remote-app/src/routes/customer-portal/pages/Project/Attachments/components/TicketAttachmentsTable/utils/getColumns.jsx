@@ -17,7 +17,7 @@ const getInitialColumns = () => [
 				</div>
 			),
 			styles:
-				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand-smaller',
+				'h6 text-neutral-10 font-weight-bold table-cell-expand-smaller',
 		},
 		truncate: true,
 	},
@@ -32,7 +32,7 @@ const getInitialColumns = () => [
 				</div>
 			),
 			styles:
-				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand',
+				'h6 text-neutral-10 font-weight-bold table-cell-expand',
 		},
 		truncate: true,
 	},
@@ -47,7 +47,7 @@ const getInitialColumns = () => [
 				</div>
 			),
 			styles:
-				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand-smaller',
+				'h6 text-neutral-10 font-weight-bold table-cell-expand-smaller',
 		},
 		truncate: true,
 	},
@@ -62,7 +62,7 @@ const getInitialColumns = () => [
 				</div>
 			),
 			styles:
-				'h6 border-bottom text-neutral-10 font-weight-bold table-cell-expand-small',
+				'h6 text-neutral-10 font-weight-bold table-cell-expand-small',
 		},
 	},
 ];

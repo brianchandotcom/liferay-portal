@@ -10,9 +10,9 @@ import {getTicketAttachments} from '../../../../../../../common/services/liferay
 import useMyUserAccountByAccountExternalReferenceCode from '../../../../Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 import getAttachmentFormattedDateTime from './utils/getAttachmentFormattedDateTime';
 import {getColumns} from './utils/getColumns';
-import getSortedTicketAttachments from './utils/getSortedTicketAttachments';
 import usePagination from './hooks/usePaginationTicketAttachments';
 import useSort from './hooks/useSortTicketAttachments';
+import TicketAttachmentsTableEmpty from './components/TicketAttachmentsTableEmpty';
 
 const TicketAttachmentsTable = ({
 	koroneikiAccount,
@@ -31,7 +31,7 @@ const TicketAttachmentsTable = ({
 
 	const loading = myUserAccountLoading;
 
-	const [ticketAttachments, setTicketAttachments] = useState();
+	const [ticketAttachments, setTicketAttachments] = useState([]);
 
 	const {handleSortChange, sortConfig} = useSort();
 
@@ -60,7 +60,7 @@ const TicketAttachmentsTable = ({
 
 	return (
 		<>
-			{(sortedTicketAttachmentsFilteredPerPage !== undefined && !loading) ? (
+			{(sortedTicketAttachmentsFilteredPerPage && (paginationConfig.totalCount > 0) && !loading) ? (
 				<div className="cp-ticket-attachments-table-wrapper">
 					<Table
 						className="border-0"
@@ -109,14 +109,16 @@ const TicketAttachmentsTable = ({
 						)}
 					/>
 				</div>
+			) : !sortedTicketAttachmentsFilteredPerPage || (paginationConfig.totalCount === 0 && !loading) ? (
+				<TicketAttachmentsTableEmpty
+					description={i18n.translate("there-are-no-items-to-display")}
+					title={i18n.translate("no-attachments-yet")}
+				/>
 			) : (
-				<div>
-					loading
-				</div>
+				<div>loading</div>
 			)}
 		</>
 	);
-
 };
 
 export default TicketAttachmentsTable;

@@ -1,7 +1,6 @@
 .cp-ticket-attachments-table-wrapper {
-	thead {
-		top: 0;
-		z-index: 999;
+	.table-responsive, .table thead th {
+		border-bottom: 1px solid var(--color-neutral-2);
 	}
 
 	svg {
@@ -9,22 +8,24 @@
 	}
 }
 
-.page-link:hover {
-	z-index: 0;
-}
+.attachments-icon-container {
+	border: 1px solid var(--color-neutral-2);
+	border-radius: 10px;
+	padding: 4rem 0;
 
-.remove-user-modal {
-	.modal-header,
-	.modal-footer,
-	.modal-body {
-		border-width: 0;
+	.attachments-icon {
+		background-color: var(--color-brand-primary-lighten-5);
+		border-radius: var(--border-radius);
+		width: 144px;
+
+		.lexicon-icon-folder {
+			fill: var(--color-brand-primary);
+			height: 2rem;
+			width: 2rem;
+		}
 	}
 
-	a:hover {
-		text-decoration: none;
-	}
-
-	.custom-control {
-		margin-bottom: 0;
+	.c-empty-state-text {
+		color: #6B6C7E;
 	}
 }

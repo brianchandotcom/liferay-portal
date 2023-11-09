@@ -21,6 +21,11 @@ public class CounterLocalServiceImpl
 	extends CounterLocalServiceBaseImpl implements CounterLocalService {
 
 	@Override
+	public long getCurrentId(String name) {
+		return counterFinder.getCurrentId(name);
+	}
+
+	@Override
 	public List<String> getNames() {
 		return counterFinder.getNames();
 	}

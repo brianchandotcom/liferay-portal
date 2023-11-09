@@ -118,6 +118,11 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 	private static class Pre7CounterFinderImpl implements CounterFinder {
 
 		@Override
+		public long getCurrentId(String name) {
+			return _counterFinder.getCurrentId(name);
+		}
+
+		@Override
 		public List<String> getNames() {
 			return _counterFinder.getNames();
 		}

@@ -49,6 +49,27 @@ import javax.sql.DataSource;
 public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 	@Override
+	public long getCurrentId(String name) {
+		try (Connection connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				_SQL_SELECT_ID_BY_NAME)) {
+
+			preparedStatement.setString(1, name);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong(1);
+				}
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+
+		return 0;
+	}
+
+	@Override
 	public List<String> getNames() {
 		try (Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(

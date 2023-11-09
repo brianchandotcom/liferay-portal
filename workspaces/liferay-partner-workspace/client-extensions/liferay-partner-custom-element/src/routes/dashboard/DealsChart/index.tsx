@@ -62,10 +62,7 @@ const DealsChart = () => {
 						lead.createdDate
 					).getFullYear();
 
-					return (
-						lead.isConverted &&
-						createDateYear === currentYear
-					);
+					return lead.isConverted && createDateYear === currentYear;
 				}
 			);
 			const rejectedData = responseJSON.items.filter(
@@ -75,7 +72,7 @@ const DealsChart = () => {
 					).getFullYear();
 
 					return (
-						lead.leadStatus === 'CAM Rejected' &&
+						lead.leadStatus === 'CAM rejected' &&
 						createDateYear === currentYear
 					);
 				}
@@ -91,7 +88,7 @@ const DealsChart = () => {
 					).getFullYear();
 
 					return (
-						lead.leadStatus !== 'CAM Rejected' &&
+						lead.leadStatus !== 'CAM rejected' &&
 						!lead.isConverted &&
 						createDateYear === currentYear
 					);

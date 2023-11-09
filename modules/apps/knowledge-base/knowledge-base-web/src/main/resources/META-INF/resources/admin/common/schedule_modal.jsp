@@ -16,7 +16,7 @@
 			).put(
 				"isScheduled", ParamUtil.getBoolean(request, "scheduled")
 			).put(
-				"timezone", timeZone.getID()
+				"timeZone", timeZone.getID()
 			).build()
 		%>'
 	/>

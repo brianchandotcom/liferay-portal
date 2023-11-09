@@ -157,12 +157,14 @@ public class CommerceAddressLocalServiceUtil {
 	}
 
 	public static List<CommerceAddress> getBillingCommerceAddresses(
-			long companyId, String className, long classPK, String keywords,
-			int start, int end, com.liferay.portal.kernel.search.Sort sort)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
 		throws PortalException {
 
 		return getService().getBillingCommerceAddresses(
-			companyId, className, classPK, keywords, start, end, sort);
+			companyId, className, classPK, commerceChannelId, keywords, start,
+			end, sort);
 	}
 
 	public static int getBillingCommerceAddressesCount(
@@ -173,11 +175,12 @@ public class CommerceAddressLocalServiceUtil {
 	}
 
 	public static int getBillingCommerceAddressesCount(
-			long companyId, String className, long classPK, String keywords)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords)
 		throws PortalException {
 
 		return getService().getBillingCommerceAddressesCount(
-			companyId, className, classPK, keywords);
+			companyId, className, classPK, commerceChannelId, keywords);
 	}
 
 	public static CommerceAddress getCommerceAddress(long commerceAddressId)
@@ -280,27 +283,23 @@ public class CommerceAddressLocalServiceUtil {
 	}
 
 	public static List<CommerceAddress> getShippingCommerceAddresses(
-			long companyId, String className, long classPK, String keywords,
-			int start, int end, com.liferay.portal.kernel.search.Sort sort)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
 		throws PortalException {
 
 		return getService().getShippingCommerceAddresses(
-			companyId, className, classPK, keywords, start, end, sort);
+			companyId, className, classPK, commerceChannelId, keywords, start,
+			end, sort);
 	}
 
 	public static int getShippingCommerceAddressesCount(
-		long channelId, String className, long classPK, int start, int end) {
-
-		return getService().getShippingCommerceAddressesCount(
-			channelId, className, classPK, start, end);
-	}
-
-	public static int getShippingCommerceAddressesCount(
-			long companyId, String className, long classPK, String keywords)
+			long companyId, String className, long classPK,
+			long commerceChannelId, String keywords)
 		throws PortalException {
 
 		return getService().getShippingCommerceAddressesCount(
-			companyId, className, classPK, keywords);
+			companyId, className, classPK, commerceChannelId, keywords);
 	}
 
 	/**

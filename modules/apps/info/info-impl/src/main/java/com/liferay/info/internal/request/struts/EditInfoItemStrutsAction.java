@@ -193,7 +193,9 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				status = WorkflowConstants.STATUS_APPROVED;
 			}
 
-			if (infoItemIdentifier != null) {
+			if ((infoItemIdentifier != null) &&
+				FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+
 				InfoItemObjectProvider<Object> infoItemObjectProvider =
 					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemObjectProvider.class, className,

@@ -24,7 +24,10 @@ export default function FormMappingOptions({
 		...config.formTypes.filter((formType) => !formType?.isRestricted),
 	];
 
-	if (config.layoutType === LAYOUT_TYPES.display) {
+	if (
+		Liferay.FeatureFlags['LPS-183727'] &&
+		config.layoutType === LAYOUT_TYPES.display
+	) {
 		formTypes = formTypes.map((formType) => {
 			if (formType.value === config.selectedMappingTypes.type.id) {
 				return {

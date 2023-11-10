@@ -905,25 +905,28 @@ public class LayoutStructureRenderer {
 		jspWriter.write(
 			String.valueOf(formStyledLayoutStructureItem.getClassTypeId()));
 
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			(LayoutDisplayPageObjectProvider<?>)
-				_httpServletRequest.getAttribute(
-					LayoutDisplayPageWebKeys.
-						LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					_httpServletRequest.getAttribute(
+						LayoutDisplayPageWebKeys.
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-		if ((layoutDisplayPageObjectProvider != null) &&
-			(layoutDisplayPageObjectProvider.getClassNameId() ==
-				formStyledLayoutStructureItem.getClassNameId())) {
+			if ((layoutDisplayPageObjectProvider != null) &&
+				(layoutDisplayPageObjectProvider.getClassNameId() ==
+					formStyledLayoutStructureItem.getClassNameId())) {
 
-			jspWriter.write(
-				"\"><input name=\"classPK\" type=\"hidden\" value=\"");
-			jspWriter.write(
-				String.valueOf(layoutDisplayPageObjectProvider.getClassPK()));
-			jspWriter.write(
-				"\"><input name=\"externalReferenceCode\" type=\"hidden\"");
-			jspWriter.write(" value=\"");
-			jspWriter.write(
-				layoutDisplayPageObjectProvider.getExternalReferenceCode());
+				jspWriter.write(
+					"\"><input name=\"classPK\" type=\"hidden\" value=\"");
+				jspWriter.write(
+					String.valueOf(
+						layoutDisplayPageObjectProvider.getClassPK()));
+				jspWriter.write(
+					"\"><input name=\"externalReferenceCode\" type=\"hidden\"");
+				jspWriter.write(" value=\"");
+				jspWriter.write(
+					layoutDisplayPageObjectProvider.getExternalReferenceCode());
+			}
 		}
 
 		jspWriter.write(

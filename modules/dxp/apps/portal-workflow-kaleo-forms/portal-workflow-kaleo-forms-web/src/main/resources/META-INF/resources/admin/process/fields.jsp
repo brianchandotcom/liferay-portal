@@ -110,18 +110,21 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	Liferay.on(
 		'<portlet:namespace />chooseDefinition',
 		(event) => {
-			var A = AUI();
+			const ddmStructureId = event.ddmStructureId;
+			const ddmStructureName = event.name;
 
-			var ddmStructureId = event.ddmStructureId;
-			var ddmStructureName = event.name;
+			document.getElementById(
+				'<portlet:namespace />ddmStructureDisplay'
+			).innerHTML = Liferay.Util.escapeHTML(ddmStructureName);
 
-			A.one('#<portlet:namespace />ddmStructureDisplay').html(
-				Liferay.Util.escapeHTML(ddmStructureName)
-			);
-			A.one('#<portlet:namespace />ddmStructureId').val(ddmStructureId);
-			A.one('#<portlet:namespace />ddmStructureName').val(ddmStructureName);
+			document.getElementById(
+				'<portlet:namespace />ddmStructureId'
+			).value = ddmStructureId;
+			document.getElementById(
+				'<portlet:namespace />ddmStructureName'
+			).value = ddmStructureName;
 
-			var kaleoFormsAdmin = Liferay.component(
+			const kaleoFormsAdmin = Liferay.component(
 				'<portlet:namespace />KaleoFormsAdmin'
 			);
 
@@ -138,7 +141,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		['aui-base']
 	);
 
-	window.<portlet:namespace />editStructure = (title, uri) => {
+	window.<portlet:namespace />editStructure = (title, url) => {
 		let closeRedirectURL;
 		let redirectOnClose = false;
 
@@ -174,18 +177,18 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 				}
 			},
 			title: title,
-			url: uri,
+			url,
 		});
 	};
 </aui:script>
 
 <aui:script use="liferay-kaleo-forms-components">
-	var kaleoDefinitionPreview = new Liferay.KaleoDefinitionPreview({
+	const kaleoDefinitionPreview = new Liferay.KaleoDefinitionPreview({
 		availableDefinitions: <%= availableDefinitionsJSONArray.toString() %>,
 		height: 600,
 		namespace: '<portlet:namespace />',
 		on: {
-			choose: function (event) {
+			choose: (event) => {
 				Liferay.fire('<portlet:namespace />chooseDefinition', {
 					ddmStructureId: event.definitionId,
 					name: event.definitionName,
@@ -195,15 +198,14 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		width: 700,
 	});
 
-	A.one('#p_p_id<portlet:namespace />').delegate(
-		'click',
-		(event) => {
-			var definitionId = event.target.attr('data-definition-id');
-
-			kaleoDefinitionPreview.select(definitionId);
-
-			kaleoDefinitionPreview.preview();
-		},
+	const previewButtons = document.querySelectorAll(
 		'.kaleo-process-preview-definition'
 	);
+
+	previewButtons.forEach((button) => {
+		button.addEventListener('click', (event) => {
+			kaleoDefinitionPreview.select(event.target.dataset.definitionId);
+			kaleoDefinitionPreview.preview();
+		});
+	});
 </aui:script>

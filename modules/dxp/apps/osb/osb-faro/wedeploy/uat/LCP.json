@@ -6,6 +6,7 @@
 	],
 	"env": {
 		"FARO_URL": "https://analytics-uat.liferay.com",
+		"GRAPHQL_API_ENABLED": "true",
 		"LCP_PROJECT_LIFERAY_CLUSTER_ENABLED": "true",
 		"LIFERAY_JAVA_OPTS": "-Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true",
 		"OSB_API_PORT": 443,

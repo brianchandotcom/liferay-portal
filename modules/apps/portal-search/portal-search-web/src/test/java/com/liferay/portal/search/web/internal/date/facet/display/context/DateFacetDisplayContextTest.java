@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -56,6 +57,8 @@ public class DateFacetDisplayContextTest
 		_jsonFactoryImpl = new JSONFactoryImpl();
 
 		_setUpPortalUtil();
+
+		PropsTestUtil.setProps("feature.flag.LPS-153839", "true");
 
 		Mockito.doReturn(
 			_facetCollector

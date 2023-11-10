@@ -5,79 +5,177 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Tamyris Bernardo
  */
-public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
+public class UpgradeSetResultsSetTotalMethodCheck extends BaseUpgradeCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith(".java") && !fileName.endsWith(".jsp") &&
-			!fileName.endsWith(".jspf")) {
-
-			return content;
+		if (fileName.endsWith(".java")) {
+			content = _formatJava(content, fileName);
 		}
-
-		content = _removeSetTotal(content, fileName);
-		content = _replaceSetResults(content, fileName);
+		else if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
+			content = _formatContent(content, content, fileName);
+		}
 
 		return content;
 	}
 
-	private String _removeSetTotal(String content, String fileName) {
-		String newContent = content;
-
-		Matcher setTotalMatcher = _setTotalPattern.matcher(content);
-
-		while (setTotalMatcher.find()) {
-			if (hasClassOrVariableName(
-					"SearchContainer", content, content, fileName,
-					JavaSourceUtil.getMethodCall(
-						content, setTotalMatcher.start()))) {
-
-				newContent = StringUtil.removeSubstring(
-					newContent, setTotalMatcher.group());
-			}
-		}
-
-		return newContent;
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"java", "jsp", "jspf"};
 	}
 
-	private String _replaceSetResults(String content, String fileName) {
-		String newContent = content;
+	private String _formatContent(
+		String content, String fileContent, String fileName) {
 
-		Matcher setResultsMatcher = _setResultsPattern.matcher(content);
+		String newContent = fileContent;
 
-		while (setResultsMatcher.find()) {
-			String methodCall = JavaSourceUtil.getMethodCall(
-				content, setResultsMatcher.start());
+		Matcher matcher = _setResultsPattern.matcher(content);
 
-			if (hasClassOrVariableName(
-					"SearchContainer", content, content, fileName,
-					methodCall)) {
+		int setResultsIndex = 0;
 
-				newContent = StringUtil.replace(
-					newContent, methodCall,
-					StringUtil.replace(
-						methodCall, ".setResults(", ".setResultsAndTotal("));
-			}
+		String setResultsMethodCall = null;
+
+		if (matcher.find()) {
+			setResultsIndex = matcher.start();
+
+			setResultsMethodCall = JavaSourceUtil.getMethodCall(
+				content, setResultsIndex);
 		}
 
-		return newContent;
+		matcher = _setTotalPattern.matcher(content);
+
+		int setTotalIndex = 0;
+
+		String setTotalMethodCall = null;
+
+		if (matcher.find()) {
+			setTotalIndex = matcher.start();
+
+			setTotalMethodCall = JavaSourceUtil.getMethodCall(
+				content, setTotalIndex);
+		}
+
+		if (!hasClassOrVariableName(
+				"SearchContainer", content, newContent, fileName,
+				setResultsMethodCall) &&
+			!hasClassOrVariableName(
+				"SearchContainer", content, newContent, fileName,
+				setTotalMethodCall)) {
+
+			return newContent;
+		}
+
+		return StringUtil.replace(
+			newContent, content,
+			_getNewMethodCall(
+				content, setResultsIndex, setResultsMethodCall, setTotalIndex,
+				setTotalMethodCall));
+	}
+
+	private String _formatJava(String content, String fileName)
+		throws Exception {
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
+
+		if (javaClass == null) {
+			return content;
+		}
+
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			if (!childJavaTerm.isJavaMethod()) {
+				continue;
+			}
+
+			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
+
+			String javaMethodContent = javaMethod.getContent();
+
+			content = _formatContent(javaMethodContent, content, fileName);
+		}
+
+		return content;
+	}
+
+	private String _getNewMethodCall(
+		String content, int setResultsIndex, String setResultsMethodCall,
+		int setTotalIndex, String setTotalMethodCall) {
+
+		String newContent = content;
+
+		String lastMethodCall = null;
+
+		List<String> parameters = new ArrayList<>();
+
+		if ((setResultsMethodCall != null) && (setTotalMethodCall != null)) {
+			String firstMethodCall = null;
+
+			if (setResultsIndex < setTotalIndex) {
+				firstMethodCall = setResultsMethodCall;
+				lastMethodCall = setTotalMethodCall;
+			}
+			else {
+				firstMethodCall = setTotalMethodCall;
+				lastMethodCall = setResultsMethodCall;
+			}
+
+			newContent = StringUtil.removeSubstring(
+				content,
+				firstMethodCall + StringPool.SEMICOLON + StringPool.NEW_LINE);
+
+			parameters.add(JavaSourceUtil.getParameters(setResultsMethodCall));
+			parameters.add(JavaSourceUtil.getParameters(setTotalMethodCall));
+		}
+		else if ((setResultsMethodCall == null) &&
+				 (setTotalMethodCall != null)) {
+
+			lastMethodCall = setTotalMethodCall;
+
+			parameters.add(
+				getVariableName(setTotalMethodCall) + "::getResults");
+			parameters.add(JavaSourceUtil.getParameters(setTotalMethodCall));
+		}
+		else if ((setResultsMethodCall != null) &&
+				 (setTotalMethodCall == null)) {
+
+			lastMethodCall = setResultsMethodCall;
+
+			parameters.add(JavaSourceUtil.getParameters(setResultsMethodCall));
+			parameters.add(
+				getVariableName(setResultsMethodCall) + "::getTotal");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getVariableName(lastMethodCall));
+		sb.append(".setResultsAndTotal(");
+		sb.append(StringUtil.merge(parameters, StringPool.COMMA_AND_SPACE));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return StringUtil.replace(newContent, lastMethodCall, sb.toString());
 	}
 
 	private static final Pattern _setResultsPattern = Pattern.compile(
-		"\\w+\\.setResults\\(");
+		"\\t*\\w+\\.setResults\\(");
 	private static final Pattern _setTotalPattern = Pattern.compile(
-		"(\\s*)\\w+\\.setTotal\\([^;]+;");
+		"\\t*\\w+\\.setTotal\\(");
 
 }

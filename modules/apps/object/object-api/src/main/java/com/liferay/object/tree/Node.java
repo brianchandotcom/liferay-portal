@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class Node {
 
-	public Node(Edge edge, long primaryKey, Node parentNode) {
+	public Node(Edge edge, Node parentNode, long primaryKey) {
 		_edge = edge;
-		_primaryKey = primaryKey;
 		_parentNode = parentNode;
+		_primaryKey = primaryKey;
 
 		_depth = (parentNode == null) ? 0 : parentNode._depth + 1;
 	}

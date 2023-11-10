@@ -44,7 +44,7 @@ public class TreeFactoryImpl implements TreeFactory {
 					node.getPrimaryKey(), true),
 				objectRelationship -> new Node(
 					new Edge(objectRelationship.getObjectRelationshipId()),
-					objectRelationship.getObjectDefinitionId2(), node)));
+					node, objectRelationship.getObjectDefinitionId2())));
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class TreeFactoryImpl implements TreeFactory {
 								new Edge(
 									objectRelationship.
 										getObjectRelationshipId()),
-								objectEntry.getObjectEntryId(), node)));
+								node, objectEntry.getObjectEntryId())));
 				}
 
 				return childrenNodes;
@@ -88,7 +88,7 @@ public class TreeFactoryImpl implements TreeFactory {
 			UnsafeFunction<Node, List<Node>, PortalException> unsafeFunction)
 		throws PortalException {
 
-		Node rootNode = new Node(null, primaryKey, null);
+		Node rootNode = new Node(null, null, primaryKey);
 
 		Queue<Node> queue = new LinkedList<>();
 

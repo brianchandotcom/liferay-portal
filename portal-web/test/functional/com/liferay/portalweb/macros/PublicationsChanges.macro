@@ -132,12 +132,6 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoEditChanges(changeCategory = null, changeTitle = null, editInLocation = null) {
-		if (isSet(changeOrder)) {
-			var changeOrder = ${changeOrder};
-		}
-		else {
-			var changeOrder = 1;
-		}
 
 		Click(
 			key_changeCategory = ${changeCategory},

@@ -60,9 +60,11 @@ definition {
 
 	@summary = "It asserts that the user can access the Accessibility Menu modal by the user's profile menu."
 	macro assertCanAccessAccessibilityMenuModalByTheUserProfileMenu() {
-		Navigator.openURL();
+		AccessibilityMenu.OpenUserProfileMenu();
 
-		UserBar.gotoDropdownItem(dropdownItem = "Accessibility Menu");
+		ClickNoError(
+			key_dropdownItem = "Accessibility Menu",
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
 
 		AssertElementPresent(
 			key_modal_title = "Accessibility Menu",
@@ -87,9 +89,7 @@ definition {
 
 	@summary = "It asserts that the user cannot access the Accessibility Menu by the user's profile menu."
 	macro assertCannotAccessAccessibilityMenuModalByTheUserProfileMenu() {
-		Navigator.openURL();
-
-		UserBar.gotoDropdown();
+		AccessibilityMenu.OpenUserProfileMenu();
 
 		AssertElementNotPresent(
 			key_modal_title = "Accessibility Menu",
@@ -151,7 +151,7 @@ definition {
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
-	@summary = "It goes to the Accessibility Menu quick link."
+	@summary = "Keyboard focus on the 2nd quick link item, Accessibility Menu"
 	macro goToAccessibilityMenuQuickLink() {
 		KeyPress(
 			locator1 = "//body",
@@ -165,14 +165,7 @@ definition {
 
 	@summary = "It opens the Accessibility Menu."
 	macro openAccessibilityMenu() {
-		KeyPress(
-			locator1 = "//body",
-			value1 = "\TAB");
-
-		KeyPress(
-			key_link = "Skip to Main Content",
-			locator1 = "AccessibilityMenu#QUICK_LINK",
-			value1 = "\TAB");
+		AccessibilityMenu.goToAccessibilityMenuQuickLink();
 
 		KeyPress(
 			key_link = "Open Accessibility Menu",
@@ -180,7 +173,14 @@ definition {
 			value1 = "\ENTER");
 	}
 
-	@summary = "It resets the Accessibility Menu option to its default values."
+	@summary = "It the user's profile menu."
+	macro OpenUserProfileMenu() {
+		Navigator.openURL();
+
+		UserBar.gotoDropdown();
+	}
+
+	@summary = "It resets the Accessibility Menu option to its default options."
 	macro resetDefaultValues(portlet = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

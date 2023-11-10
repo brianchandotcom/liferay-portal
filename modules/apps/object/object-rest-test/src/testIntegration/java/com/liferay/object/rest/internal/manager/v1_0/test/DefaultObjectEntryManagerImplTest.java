@@ -1367,63 +1367,8 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testDeleteObjectEntryWithAccountEntryRestricted2()
+	public void testDeleteObjectEntryWithAccountEntryRestricted1()
 		throws Exception {
-
-		// Object definitions inherit account entry restricted from the root
-		// object definition
-
-		AccountEntry accountEntry1 = _addAccountEntry();
-
-		Tree tree = _createAccountRestrictedObjectEntryTree(
-			accountEntry1, StringPool.BLANK);
-
-		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
-
-		_user = _addUser();
-
-		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
-
-		Node rootNode = tree.getRootNode();
-
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
-			_objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				AssertUtils.assertFailure(
-					PrincipalException.MustHavePermission.class,
-					StringBundler.concat(
-						"User ", _user.getUserId(),
-						" must have DELETE permission for ",
-						_rootObjectDefinition.getClassName(), StringPool.SPACE,
-						rootNode.getPrimaryKey()),
-					() -> _defaultObjectEntryManager.deleteObjectEntry(
-						objectDefinition, objectEntry.getObjectEntryId()));
-			});
-
-		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.DELETE, _buyerRole);
-
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
-			_objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				_defaultObjectEntryManager.deleteObjectEntry(
-					objectDefinition, objectEntry.getObjectEntryId());
-			});
-	}
-
-	@Test
-	public void testDeleteObjectEntryWithAccountEntryRestricted1() throws Exception {
 
 		// Regular roles' company scope permissions should not be restricted by
 		// account entry
@@ -1642,6 +1587,62 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition3, objectEntry1.getId());
 
 		_assertObjectEntriesSize(0);
+	}
+
+	@Test
+	public void testDeleteObjectEntryWithAccountEntryRestricted2()
+		throws Exception {
+
+		// Object definitions inherit account entry restricted from the root
+		// object definition
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+
+		Tree tree = _createAccountRestrictedObjectEntryTree(
+			accountEntry1, StringPool.BLANK);
+
+		_addResourcePermission(
+			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
+
+		_user = _addUser();
+
+		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
+
+		Node rootNode = tree.getRootNode();
+
+		TreeTestUtil.forEachNodeObjectEntry(
+			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+
+				AssertUtils.assertFailure(
+					PrincipalException.MustHavePermission.class,
+					StringBundler.concat(
+						"User ", _user.getUserId(),
+						" must have DELETE permission for ",
+						_rootObjectDefinition.getClassName(), StringPool.SPACE,
+						rootNode.getPrimaryKey()),
+					() -> _defaultObjectEntryManager.deleteObjectEntry(
+						objectDefinition, objectEntry.getObjectEntryId()));
+			});
+
+		_addResourcePermission(
+			_rootObjectDefinition, ActionKeys.DELETE, _buyerRole);
+
+		TreeTestUtil.forEachNodeObjectEntry(
+			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+
+				_defaultObjectEntryManager.deleteObjectEntry(
+					objectDefinition, objectEntry.getObjectEntryId());
+			});
 	}
 
 	@Test
@@ -1996,40 +1997,8 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testGetObjectEntriesHierarchyWithAccountRestriction()
+	public void testGetObjectEntriesWithAccountEntryRestricted1()
 		throws Exception {
-
-		// Root account restrictions must be inherited
-
-		AccountEntry accountEntry1 = _addAccountEntry();
-
-		_createAccountRestrictedObjectEntryTree(accountEntry1, "1");
-
-		AccountEntry accountEntry2 = _addAccountEntry();
-
-		_createAccountRestrictedObjectEntryTree(accountEntry2, "2");
-
-		_user = _addUser();
-
-		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(), objectDefinitionLocalService,
-			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 0));
-
-		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
-
-		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(), objectDefinitionLocalService,
-			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 1));
-
-		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
-
-		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(), objectDefinitionLocalService,
-			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 2));
-	}
-
-	@Test
-	public void testGetObjectEntriesWithAccountRestriction() throws Exception {
 
 		// Regular roles permissions should not be restricted by account entry
 
@@ -2154,6 +2123,40 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testGetObjectEntriesWithAccountEntryRestricted2()
+		throws Exception {
+
+		// Object definitions inherit account entry restricted from the root
+		// object definition
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+
+		_createAccountRestrictedObjectEntryTree(accountEntry1, "1");
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_createAccountRestrictedObjectEntryTree(accountEntry2, "2");
+
+		_user = _addUser();
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			_tree.iterator(), objectDefinitionLocalService,
+			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 0));
+
+		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			_tree.iterator(), objectDefinitionLocalService,
+			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 1));
+
+		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
+
+		TreeTestUtil.forEachNodeObjectDefinition(
+			_tree.iterator(), objectDefinitionLocalService,
+			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 2));
+	}
+
+	@Test
 	public void testGetObjectEntriesWithAggregationFacets() throws Exception {
 		_defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
@@ -2215,7 +2218,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testGetObjectEntryRelatedObjectEntriesWithAccountRestriction()
+	public void testGetObjectEntryRelatedObjectEntriesWithAccountEntryRestricted()
 		throws Exception {
 
 		// Account entry restricted scope

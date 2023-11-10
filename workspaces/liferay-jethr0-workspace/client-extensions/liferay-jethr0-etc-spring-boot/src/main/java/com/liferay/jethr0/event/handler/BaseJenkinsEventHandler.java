@@ -33,7 +33,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (!buildJSONObject.has("duration")) {
-			throw new Exception("Missing duration from build");
+			throw new Exception("Missing 'duration' from build json");
 		}
 
 		return buildJSONObject.getLong("duration");
@@ -45,7 +45,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		JSONObject buildJSONObject = messageJSONObject.optJSONObject("build");
 
 		if (buildJSONObject == null) {
-			throw new Exception("Missing build from message");
+			throw new Exception("Missing 'build' from message json");
 		}
 
 		return buildJSONObject;
@@ -55,7 +55,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (!buildJSONObject.has("number")) {
-			throw new Exception("Missing number from build");
+			throw new Exception("Missing 'number' from build json");
 		}
 
 		return buildJSONObject.optLong("number");
@@ -65,34 +65,47 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (buildJSONObject == null) {
-			throw new Exception("Missing build");
+			throw new Exception("Missing 'build' from message json");
 		}
 
 		JSONObject parmetersJSONObject = buildJSONObject.optJSONObject(
 			"parameters");
 
 		if (parmetersJSONObject == null) {
-			throw new Exception("Missing parameters from build");
+			throw new Exception("Missing 'parameters' from build json");
 		}
 
 		String buildRunID = parmetersJSONObject.optString(
 			"JETHR0_BUILD_RUN_ID");
 
-		if ((buildRunID == null) || !buildRunID.matches("\\d+")) {
-			return null;
+		if (StringUtil.isNullOrEmpty(buildRunID)) {
+			throw new Exception(
+				"Missing 'JETHR0_BUILD_RUN_ID' parameter from build json");
+		}
+
+		if (!buildRunID.matches("\\d+")) {
+			throw new Exception(
+				"Invalid 'JETHR0_BUILD_RUN_ID' parameter from build json");
 		}
 
 		BuildRunEntityRepository buildRunEntityRepository =
 			getBuildRunRepository();
 
-		return buildRunEntityRepository.getById(Long.valueOf(buildRunID));
+		BuildRunEntity buildRunEntity = buildRunEntityRepository.getById(
+			Long.valueOf(buildRunID));
+
+		if (buildRunEntity == null) {
+			throw new Exception("Unable to find build run by id " + buildRunID);
+		}
+
+		return buildRunEntity;
 	}
 
 	protected BuildRunEntity.Result getBuildRunResult() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (!buildJSONObject.has("result")) {
-			throw new Exception("Missing result from build");
+			throw new Exception("Missing 'result' from build json");
 		}
 
 		String result = buildJSONObject.getString("result");
@@ -111,7 +124,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			"computer");
 
 		if (computerJSONObject == null) {
-			throw new Exception("Missing computer from message");
+			throw new Exception("Missing 'computer' from message json");
 		}
 
 		return computerJSONObject;
@@ -131,18 +144,22 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			"jenkins");
 
 		if (jenkinsJSONObject == null) {
-			throw new Exception("Missing Jenkins from message");
+			throw new Exception("Missing 'jenkins' from message json");
 		}
 
 		return jenkinsJSONObject;
 	}
 
 	protected JenkinsNodeEntity getJenkinsNodeEntity() throws Exception {
-		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
-
 		JSONObject computerJSONObject = getComputerJSONObject();
 
-		String computerName = computerJSONObject.getString("name");
+		String computerName = computerJSONObject.optString("name");
+
+		if (StringUtil.isNullOrEmpty(computerName)) {
+			throw new Exception("Missing 'name' from computer json");
+		}
+
+		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
 
 		for (JenkinsNodeEntity jenkinsNodeEntity :
 				jenkinsServerEntity.getJenkinsNodeEntities()) {
@@ -166,17 +183,34 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		JenkinsServerEntityRepository jenkinsServerEntityRepository =
 			getJenkinsServerEntityRepository();
 
-		return jenkinsServerEntityRepository.getByURL(getJenkinsURL());
+		URL jenkinsURL = getJenkinsURL();
+
+		JenkinsServerEntity jenkinsServerEntity =
+			jenkinsServerEntityRepository.getByURL(jenkinsURL);
+
+		if (jenkinsServerEntity == null) {
+			throw new Exception(
+				"Unable to find jenkins server by url " + jenkinsURL);
+		}
+
+		return jenkinsServerEntity;
 	}
 
 	protected URL getJenkinsURL() throws Exception {
 		JSONObject jenkinsJSONObject = getJenkinsJSONObject();
 
-		if (!jenkinsJSONObject.has("url")) {
-			throw new Exception("Missing url from Jenkins");
+		String jenkinsURLString = jenkinsJSONObject.optString("url");
+
+		if (StringUtil.isNullOrEmpty(jenkinsURLString)) {
+			throw new Exception("Missing 'url' from jenkins json");
 		}
 
-		return StringUtil.toURL(jenkinsJSONObject.optString("url"));
+		try {
+			return StringUtil.toURL(jenkinsURLString);
+		}
+		catch (Exception exception) {
+			throw new Exception("Invalid 'url' from jenkins json", exception);
+		}
 	}
 
 	protected JSONObject getJobJSONObject() throws Exception {
@@ -185,7 +219,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		JSONObject jobJSONObject = messageJSONObject.optJSONObject("job");
 
 		if (jobJSONObject == null) {
-			throw new Exception("Missing job from message");
+			throw new Exception("Missing 'job' from message json");
 		}
 
 		return jobJSONObject;
@@ -195,7 +229,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		JSONObject jobJSONObject = getJobJSONObject();
 
 		if (!jobJSONObject.has("name")) {
-			throw new Exception("Missing name from job");
+			throw new Exception("Missing 'name' from job json");
 		}
 
 		return jobJSONObject.optString("name");
@@ -205,9 +239,9 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		computerJSONObject.put(
-			"idle", !computerJSONObject.getBoolean("busy")
+			"idle", !computerJSONObject.optBoolean("busy", true)
 		).put(
-			"offline", !computerJSONObject.getBoolean("online")
+			"offline", !computerJSONObject.optBoolean("online", false)
 		);
 
 		JenkinsNodeEntity jenkinsNodeEntity = getJenkinsNodeEntity();

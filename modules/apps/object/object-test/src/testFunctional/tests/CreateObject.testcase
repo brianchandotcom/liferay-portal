@@ -3911,7 +3911,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 96");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Users");
 
 		CreateObject.saveObject();
 
@@ -3920,7 +3923,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 96");
 
 		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Control Panel > Users",
+			valuePanelCategory = "Users",
 			valueScope = "Company");
 	}
 
@@ -3940,7 +3943,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 97");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Users");
 
 		CreateObject.saveObject();
 
@@ -3949,7 +3955,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 97");
 
 		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Control Panel > Users",
+			valuePanelCategory = "Users",
 			valueScope = "Company");
 	}
 
@@ -4102,7 +4108,12 @@ definition {
 			currentOption = "ID",
 			fieldLabel = "Custom Field");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectObjectScope(fieldOption = "Company");
+
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		CreateObject.saveObject();
 
@@ -4124,7 +4135,7 @@ definition {
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Control Panel > Object",
+			valuePanelCategory = "Object",
 			valueScope = "Company");
 	}
 
@@ -4234,7 +4245,10 @@ definition {
 
 		ObjectAdmin.selectObjectScope(optionName = "Site");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Navigation");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		CreateObject.saveObject();
 
@@ -4243,8 +4257,8 @@ definition {
 		}
 
 		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Site Administration > Navigation",
-			valueScope = "Site");
+			valuePanelCategory = "Object",
+			valueScope = "Company");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view Entries with Custom Layout Created"
@@ -8999,7 +9013,10 @@ definition {
 
 		ObjectAdmin.selectObjectScope(optionName = "Site");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Site Builder");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Site Builder");
 
 		PortletEntry.publish();
 
@@ -9014,8 +9031,8 @@ definition {
 		}
 
 		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Site Administration > Site Builder",
-			valueScope = "Site");
+			valuePanelCategory = "Site Builder",
+			valueScope = "Company");
 	}
 
 	@description = "LPS-151877 - Verify that, when adding a new Object with Account Restriction, the Account Restriction field turns into a mandatory field for the created Object"

@@ -764,7 +764,10 @@ definition {
 		task ("Publish Custom Object") {
 			ObjectAdmin.goToDetailsTab();
 
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Panel Link",
+				optionName = "Object");
 
 			ObjectAdmin.publishObjectViaUI();
 		}

@@ -595,7 +595,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Scope");
 
 		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Control Panel > Object",
+			valuePanelCategory = "Object",
 			valueScope = "Company");
 	}
 

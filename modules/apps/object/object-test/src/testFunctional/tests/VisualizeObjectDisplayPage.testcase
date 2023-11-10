@@ -710,7 +710,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 326");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		CreateObject.selectTitleField(
 			currentOption = "ID",

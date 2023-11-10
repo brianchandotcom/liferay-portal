@@ -81,7 +81,10 @@ definition {
 
 		CreateObject.checkToggleActive();
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Content & Data");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Content & Data");
 
 		CustomerPortal.checkToggleHideWidget();
 
@@ -522,7 +525,10 @@ definition {
 
 		ObjectPortlet.selectObject(label = ${title});
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Choose an Option");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Choose an Option");
 
 		CustomerPortal.uncheckToggleHideInactiveWidget();
 
@@ -803,7 +809,10 @@ definition {
 
 		CreateObject.checkToggleActive();
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		CustomerPortal.checkToggleHideWidget();
 

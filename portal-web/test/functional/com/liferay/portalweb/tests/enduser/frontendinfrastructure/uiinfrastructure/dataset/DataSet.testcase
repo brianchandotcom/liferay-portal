@@ -196,7 +196,10 @@ definition {
 
 			ObjectAdmin.goToDetailsTab();
 
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Panel Link",
+				optionName = "Object");
 
 			Check.checkNotVisible(
 				checkboxName = "Enable Entry Translation",
@@ -1984,7 +1987,10 @@ definition {
 
 			ObjectAdmin.goToDetailsTab();
 
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Panel Link",
+				optionName = "Object");
 
 			Check.checkNotVisible(
 				checkboxName = "Enable Entry Translation",
@@ -2141,7 +2147,10 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "DataSetObject");
 
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Panel Link",
+				optionName = "Object");
 
 			Check.checkNotVisible(
 				checkboxName = "Enable Entry Translation",

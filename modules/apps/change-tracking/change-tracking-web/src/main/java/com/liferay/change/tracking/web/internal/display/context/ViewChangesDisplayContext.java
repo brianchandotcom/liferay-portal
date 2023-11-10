@@ -236,12 +236,14 @@ public class ViewChangesDisplayContext {
 	}
 
 	public List<FDSFilter> getFDSFilters() {
+		boolean showHideable = ParamUtil.getBoolean(
+			_renderRequest, "showHideable");
+
 		Map<Long, String> siteNames = DisplayContextUtil.getSiteNames(
-			_ctCollection.getCtCollectionId(), _themeDisplay);
+			_ctCollection.getCtCollectionId(), showHideable, _themeDisplay);
 		Map<Long, String> typeNames = DisplayContextUtil.getTypeNames(
-			_ctCollection.getCtCollectionId(),
-			ParamUtil.getBoolean(_renderRequest, "showHideable"),
-			_themeDisplay);
+			_ctCollection.getCtCollectionId(), showHideable, _themeDisplay);
+
 		JSONObject usersJSONObject = DisplayContextUtil.getUserInfoJSONObject(
 			CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
 			CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,

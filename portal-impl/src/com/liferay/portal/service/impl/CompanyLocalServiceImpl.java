@@ -404,11 +404,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return company;
 	}
 
-	public Company extractCompany(long companyId)
-		throws PortalException {
-
+	public Company extractCompany(long companyId) throws PortalException {
 		if (!DBPartition.isPartitionEnabled()) {
 			throw new IllegalArgumentException("DB Partition must be enabled");
+		}
+
+		if (companyId == PortalInstances.getDefaultCompanyId()) {
+			throw new RequiredCompanyException(
+				"Select another default company before extracting company " +
+					companyId);
 		}
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);

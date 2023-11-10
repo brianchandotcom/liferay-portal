@@ -79,6 +79,7 @@ function DiagramBuilder() {
 			) as Node<ObjectDefinitionNodeData>;
 
 			if (
+				connection.targetHandle === connection.sourceHandle ||
 				(sourceNode.data?.modifiable === false &&
 					targetNode.data?.modifiable === false) ||
 				(sourceNode.data?.system && targetNode.data?.system) ||

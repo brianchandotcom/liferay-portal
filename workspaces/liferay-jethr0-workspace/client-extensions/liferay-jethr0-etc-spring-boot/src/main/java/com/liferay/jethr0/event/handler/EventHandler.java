@@ -5,6 +5,10 @@
 
 package com.liferay.jethr0.event.handler;
 
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Objects;
+
 /**
  * @author Michael Hashimoto
  */
@@ -20,7 +24,21 @@ public interface EventHandler {
 		CREATE_JOB, QUEUE_ITEM_ENTER_BLOCKED, QUEUE_ITEM_ENTER_BUILDABLE,
 		QUEUE_ITEM_ENTER_WAITING, QUEUE_ITEM_LEAVE_BLOCKED,
 		QUEUE_ITEM_LEAVE_BUILDABLE, QUEUE_ITEM_LEAVE_WAITING, QUEUE_ITEM_LEFT,
-		QUEUE_JOB
+		QUEUE_JOB;
+
+		public static EventType get(String eventTypeString) {
+			if (StringUtil.isNullOrEmpty(eventTypeString)) {
+				return null;
+			}
+
+			for (EventType eventType : values()) {
+				if (Objects.equals(eventTypeString, eventType.toString())) {
+					return eventType;
+				}
+			}
+
+			return null;
+		}
 
 	}
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ambrín Chaudhary
  */
 @Component(service = FragmentRenderer.class)
-public class FragmentVideoStreaming implements FragmentRenderer {
+public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -152,7 +152,7 @@ public class FragmentVideoStreaming implements FragmentRenderer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentVideoStreaming.class);
+		VideoStreamingFragmentRenderer.class);
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

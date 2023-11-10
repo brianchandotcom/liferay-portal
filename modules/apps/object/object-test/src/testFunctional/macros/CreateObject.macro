@@ -142,9 +142,10 @@ definition {
 			key_labelName = "Scope",
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
-		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_LINK",
-			value1 = ${valuePanelCategory});
+		AssertElementPresent(
+			key_currentOption = ${valuePanelCategory},
+			key_labelName = "Panel Link",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@summary = "Default summary"

@@ -56,7 +56,10 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Proxy Custom Object");
 
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Panel Link",
+				optionName = "Object");
 
 			CreateObject.saveObject();
 		}

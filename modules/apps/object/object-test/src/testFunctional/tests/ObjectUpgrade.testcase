@@ -164,7 +164,7 @@ definition {
 				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			CreateObject.assertValuesOnScope(
-				valuePanelCategory = "Site Administration > Content & Data",
+				valuePanelCategory = "Content & Data",
 				valueScope = "Site");
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");

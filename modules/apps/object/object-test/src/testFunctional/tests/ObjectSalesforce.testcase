@@ -76,7 +76,10 @@ definition {
 		task ("And given the object's external reference code matches a Salesforce custom object") {
 			ObjectPortlet.selectCustomObject(label = "Poshi Test");
 
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Panel Link",
+				optionName = "Object");
 
 			CreateObject.saveObject();
 
@@ -191,7 +194,10 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Contact");
 
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Panel Link",
+				optionName = "Object");
 
 			CreateObject.saveObject();
 

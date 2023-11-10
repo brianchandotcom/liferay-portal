@@ -566,7 +566,10 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 163066");
 
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Panel Link",
+				optionName = "Users");
 
 			Button.clickSave();
 		}

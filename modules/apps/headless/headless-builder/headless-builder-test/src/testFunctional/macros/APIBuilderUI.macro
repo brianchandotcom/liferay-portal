@@ -439,7 +439,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = ${objectDefinition});
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		CreateObject.saveObject();
 	}

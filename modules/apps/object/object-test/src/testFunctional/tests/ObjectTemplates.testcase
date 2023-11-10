@@ -82,7 +82,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149241");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		PortletEntry.save();
 
@@ -163,7 +166,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149245");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		PortletEntry.save();
 
@@ -242,7 +248,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149246");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		PortletEntry.save();
 
@@ -321,7 +330,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149242");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		PortletEntry.save();
 
@@ -400,7 +412,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149244");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		PortletEntry.save();
 
@@ -474,7 +489,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149243");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -564,7 +582,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149240");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Panel Link",
+			optionName = "Object");
 
 		PortletEntry.save();
 

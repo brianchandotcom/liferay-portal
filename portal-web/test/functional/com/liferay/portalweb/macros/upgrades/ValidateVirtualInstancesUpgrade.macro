@@ -30,9 +30,9 @@ definition {
 				locator1 = "CreateObject#TITLE_FIELD",
 				value1 = "Custom Field Text");
 
-			AssertTextEquals(
-				locator1 = "CreateObject#PANEL_LINK",
-				value1 = "Control Panel > Object");
+			CreateObject.assertValuesOnScope(
+				valuePanelCategory = "Object",
+				valueScope = "Company");
 		}
 
 		task ("Assert custom object on second instance") {
@@ -63,9 +63,9 @@ definition {
 				locator1 = "CreateObject#TITLE_FIELD",
 				value1 = "Custom Field Text 2");
 
-			AssertTextEquals(
-				locator1 = "CreateObject#PANEL_LINK",
-				value1 = "Control Panel > Object");
+			CreateObject.assertValuesOnScope(
+				valuePanelCategory = "Object",
+				valueScope = "Company");
 		}
 
 		task ("Assert custom object on third instance") {
@@ -96,9 +96,9 @@ definition {
 				locator1 = "CreateObject#TITLE_FIELD",
 				value1 = "Custom Field Text 3");
 
-			AssertTextEquals(
-				locator1 = "CreateObject#PANEL_LINK",
-				value1 = "Control Panel > Object");
+			CreateObject.assertValuesOnScope(
+				valuePanelCategory = "Object",
+				valueScope = "Company");
 		}
 	}
 

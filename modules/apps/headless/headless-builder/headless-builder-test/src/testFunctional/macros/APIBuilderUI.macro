@@ -82,11 +82,7 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "APIBuilder#VIEW_RELATED_OBJECTS")) {
-			Click(locator1 = "APIBuilder#VIEW_RELATED_OBJECTS");
-
-			Click(
-				key_componentName = ${relatedObjectName},
-				locator1 = "Panel#PANEL_TITLE");
+			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = ${relatedObjectName});
 
 			Click(
 				key_text = ${relatedFieldName},
@@ -393,6 +389,17 @@ definition {
 		Click(
 			locator1 = "Button#BUTTON_WITH_VALUE",
 			value = ${tabEntity});
+	}
+
+	@summary = "Default summary"
+	macro gotoRelatedObjectsProperties(relatedObjectName = null) {
+		Variables.assertDefined(parameterList = ${relatedObjectName});
+
+		Click(locator1 = "APIBuilder#VIEW_RELATED_OBJECTS");
+
+		Click(
+			key_componentName = ${relatedObjectName},
+			locator1 = "Panel#PANEL_TITLE");
 	}
 
 	@summary = "Default summary"

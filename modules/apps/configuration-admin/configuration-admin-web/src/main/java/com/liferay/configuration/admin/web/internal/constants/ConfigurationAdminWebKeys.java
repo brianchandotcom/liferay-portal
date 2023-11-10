@@ -43,7 +43,4 @@ public class ConfigurationAdminWebKeys {
 	public static final String FACTORY_CONFIGURATION_MODEL =
 		"FACTORY_CONFIGURATION_MODEL";
 
-	public static final String RESOURCE_BUNDLE_LOADER_PROVIDER =
-		"RESOURCE_BUNDLE_LOADER_PROVIDER";
-
 }

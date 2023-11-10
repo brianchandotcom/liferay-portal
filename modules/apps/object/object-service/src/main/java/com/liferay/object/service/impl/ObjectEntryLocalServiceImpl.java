@@ -1141,10 +1141,10 @@ public class ObjectEntryLocalServiceImpl
 					_objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(objectDefinitionId);
-		DynamicObjectDefinitionTable rootDynamicObjectDefinitionTable =
-			_getRootDynamicObjectDefinitionTable(objectDefinitionId);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
+		DynamicObjectDefinitionTable rootDynamicObjectDefinitionTable =
+			_getRootDynamicObjectDefinitionTable(objectDefinitionId);
 
 		Expression<?>[] selectExpressions = ArrayUtil.append(
 			_getSelectExpressions(dynamicObjectDefinitionLocalizationTable),
@@ -1227,10 +1227,10 @@ public class ObjectEntryLocalServiceImpl
 					_objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(objectDefinitionId);
-		DynamicObjectDefinitionTable rootDynamicObjectDefinitionTable =
-			_getRootDynamicObjectDefinitionTable(objectDefinitionId);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
+		DynamicObjectDefinitionTable rootDynamicObjectDefinitionTable =
+			_getRootDynamicObjectDefinitionTable(objectDefinitionId);
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.countDistinct(
 			ObjectEntryTable.INSTANCE.objectEntryId
@@ -2388,40 +2388,6 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getDBTableName());
 	}
 
-	private DynamicObjectDefinitionTable _getRootDynamicObjectDefinitionTable(
-			long objectDefinitionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		if (!objectDefinition.isRootDescendantNode()) {
-			return null;
-		}
-
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectDefinition.getRootObjectDefinitionId());
-
-		if (!rootObjectDefinition.isAccountEntryRestricted()) {
-			return null;
-		}
-
-		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
-			rootObjectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-		if (Objects.equals(
-				objectField.getDBTableName(),
-				rootObjectDefinition.getDBTableName())) {
-
-			return _getDynamicObjectDefinitionTable(
-				rootObjectDefinition.getObjectDefinitionId());
-		}
-
-		return _getExtensionDynamicObjectDefinitionTable(
-			rootObjectDefinition.getObjectDefinitionId());
-	}
-
 	private DynamicObjectDefinitionTable
 			_getExtensionDynamicObjectDefinitionTable(long objectDefinitionId)
 		throws PortalException {
@@ -2808,14 +2774,14 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(
 				objectRelationship.getObjectDefinitionId2());
-		DynamicObjectDefinitionTable rootDynamicObjectDefinitionTable =
-			_getRootDynamicObjectDefinitionTable(
-				objectRelationship.getObjectDefinitionId2());
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(
 				objectRelationship.getObjectDefinitionId2());
 		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
 			objectRelationship.getObjectFieldId2());
+		DynamicObjectDefinitionTable rootDynamicObjectDefinitionTable =
+			_getRootDynamicObjectDefinitionTable(
+				objectRelationship.getObjectDefinitionId2());
 
 		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
@@ -3016,6 +2982,40 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return result;
+	}
+
+	private DynamicObjectDefinitionTable _getRootDynamicObjectDefinitionTable(
+			long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (!objectDefinition.isRootDescendantNode()) {
+			return null;
+		}
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition.getRootObjectDefinitionId());
+
+		if (!rootObjectDefinition.isAccountEntryRestricted()) {
+			return null;
+		}
+
+		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
+			rootObjectDefinition.getAccountEntryRestrictedObjectFieldId());
+
+		if (Objects.equals(
+				objectField.getDBTableName(),
+				rootObjectDefinition.getDBTableName())) {
+
+			return _getDynamicObjectDefinitionTable(
+				rootObjectDefinition.getObjectDefinitionId());
+		}
+
+		return _getExtensionDynamicObjectDefinitionTable(
+			rootObjectDefinition.getObjectDefinitionId());
 	}
 
 	private Expression<?>[] _getSelectExpressions(

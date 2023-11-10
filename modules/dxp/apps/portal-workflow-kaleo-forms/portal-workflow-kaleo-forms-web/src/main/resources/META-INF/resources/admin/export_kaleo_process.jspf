@@ -19,16 +19,17 @@
 		window,
 		'<portlet:namespace />exportKaleoProcess',
 		(url) => {
-			var A = AUI();
+			const form = document.createElement('form');
+			const content = document.getElementById(
+				'<portlet:namespace />exportProcess'
+			);
 
-			var form = A.Node.create('<form method="post" />');
-
-			var content = A.one('#<portlet:namespace />exportProcess');
+			form.method = 'POST';
 
 			if (content) {
 				form.append(content);
 
-				content.show();
+				content.classList.remove('hide');
 			}
 
 			var dialog = Liferay.Util.Window.getWindow({
@@ -45,7 +46,7 @@
 								label:
 									'<%= UnicodeLanguageUtil.get(request, "ok") %>',
 								on: {
-									click: function () {
+									click: () => {
 										submitForm(form, url, false);
 
 										dialog.hide();
@@ -57,7 +58,7 @@
 								label:
 									'<%= UnicodeLanguageUtil.get(request, "cancel") %>',
 								on: {
-									click: function () {
+									click: () => {
 										dialog.hide();
 									},
 								},
@@ -68,7 +69,7 @@
 								cssClass: 'close',
 								label: '\u00D7',
 								on: {
-									click: function (event) {
+									click: () => {
 										dialog.hide();
 									},
 								},

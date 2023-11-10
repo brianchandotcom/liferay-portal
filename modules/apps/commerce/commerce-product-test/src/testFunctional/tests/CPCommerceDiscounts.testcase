@@ -228,6 +228,100 @@ definition {
 			value1 = "24.00");
 	}
 
+	@description = "This is a test for COMMERCE-12768. As a buyer, I want to use the coupon code discount applied with case insensitive"
+	@priority = 5
+	test CanApplyCaseInsensitiveCouponCodeDiscount {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a discount with coupon code (Coupon50) is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				couponCode = "Coupon50",
+				level = "L1",
+				percentageLevel1 = 50,
+				target = "total",
+				title = "Test Discount",
+				useCouponCode = "true",
+				usePercentage = "true");
+		}
+
+		task ("And Coupon Code Entry widget is deployed in the Pending Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
+		}
+
+		task ("And the buyer adds U-Joint product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("When the coupon code is applied with coupon50 (lowercase) in the Pending Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			AssertTextEquals(
+				key_cellName1 = "Commerce Account",
+				key_cellName2 = "Buyer User",
+				key_columnNumber = 8,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "$ 24.00");
+
+			FrontStore.applyCouponCode(discountCouponCode = "coupon50");
+		}
+
+		task ("Then can view the discount applied for the order entry") {
+			AssertTextEquals(
+				key_cellName1 = "Commerce Account",
+				key_cellName2 = "Buyer User",
+				key_columnNumber = 8,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "$ 12.00");
+		}
+
+		task ("And can view the discount applied in the order entry's details") {
+			Button.click(button = "View");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+
+			CommerceOrders.viewOrderPrices(
+				deliveryPrice = "0.00",
+				subTotalPrice = "24.00",
+				taxPrice = "0.00",
+				totalPrice = "12.00");
+		}
+	}
+
 	@description = "COMMERCE-11821 | Discount is applied correctly when a tax category is enabled"
 	@priority = 4
 	test CanApplyDiscountWithTaxCategoryEnabled {

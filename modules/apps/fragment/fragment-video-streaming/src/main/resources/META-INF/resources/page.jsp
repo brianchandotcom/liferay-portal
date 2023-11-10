@@ -16,31 +16,37 @@
 <div style="display: flex; justify-content: left;">
 	<div class="videojs-container">
 		<video class="video-js" id="fragmentVideoJsURL" preload="auto">
-			<source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" type="video/mp4" />
+			<source src='<%= (String)request.getAttribute("src") %>' type="video/mp4" />
 		</video>
 
 		<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
 	</div>
 </div>
-q
+
 <script>
 	const content= document.querySelector('.videojs-container');
 
-	//TODO get from the rendered
 	const configuration = {
 		autoplay: 'muted',
-		height: null,
-		loop: true,
-		muted: true,
-		width: null,
-	}
+		videoHeight: '<%= (String)request.getAttribute("height") %>',
+		loop: '<%= (Boolean)request.getAttribute("loop") %>',
+		muted: '<%= (Boolean)request.getAttribute("muted") %>',
+		videoWidth: '<%= (String)request.getAttribute("width") %>',
+	};
+
+	const height = configuration.videoHeight
+			? configuration.videoHeight.replace('px', '')
+			: configuration.videoHeight;
+		const width = configuration.videoWidth
+			? configuration.videoWidth.replace('px', '')
+			: configuration.videoWidth;
 
 	function resizeVideoJs() {
 		const boundingClientRect = content.parentElement.getBoundingClientRect();
 
-		const contentWidth = configuration.width || boundingClientRect.width;
+		const contentWidth = width || boundingClientRect.width;
 
-		const contentHeight = configuration.height || contentWidth * 0.5625;
+		const contentHeight = height || contentWidth * 0.5625;
 
 		content.firstElementChild.style.height = contentHeight + 'px';
 		content.firstElementChild.style.width = contentWidth + 'px';
@@ -52,7 +58,6 @@ q
 	});
 
 	player.ready(() => {
-		console.log('ready!');
 		window.addEventListener('resize', resizeVideoJs);
 
 		resizeVideoJs();

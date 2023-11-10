@@ -20,6 +20,8 @@ import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -101,7 +103,8 @@ public class TransactionInterceptorTest {
 
 			super(
 				hibernateTransactionManager,
-				hibernateTransactionManager.getSessionFactory());
+				(SessionFactoryImplementor)
+					hibernateTransactionManager.getSessionFactory());
 
 			_platformTransactionManager = hibernateTransactionManager;
 		}

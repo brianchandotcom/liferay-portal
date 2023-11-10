@@ -417,19 +417,25 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		_clearCompanyCache(companyId, true);
-		_clearVirtualHostCache(companyId);
+		try (SafeCloseable safeCloseable1 =
+				CompanyThreadLocal.setWithSafeCloseable(companyId);
+			SafeCloseable safeCloseable2 =
+				PortalInstances.setCompanyInDeletionProcess(companyId)) {
 
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				PortalInstances.removeCompany(company.getCompanyId());
+			_clearCompanyCache(companyId, true);
+			_clearVirtualHostCache(companyId);
 
-				unregisterCompany(company);
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					PortalInstances.removeCompany(company.getCompanyId());
 
-				return null;
-			});
+					unregisterCompany(company);
 
-		DBPartitionUtil.extractDBPartition(companyId);
+					return null;
+				});
+
+			DBPartitionUtil.extractDBPartition(companyId);
+		}
 
 		return company;
 	}

@@ -24,15 +24,30 @@ definition {
 	@description = "This is a test for LPS-182024. The Locked Pages admin should comply with WCAG 2.1 AA standard."
 	@priority = 4
 	test ViewAccessibilityOfLockedPages {
-		task ("Given a locked page") {
+		task ("Given a user doesn't have locked pages") {
+			SetWindowSize.maximizeWindow();
+
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+		}
+
+		task ("When a user accesses to the Locked Pages admin") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Locked Pages");
+		}
 
+		task ("Then the Locked Pages admin should have correct accessibility") {
 			AssertAccessible();
+		}
+
+		task ("Given a user has a locked pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -40,29 +55,27 @@ definition {
 				fragmentName = "Button");
 		}
 
-		task ("When to unlock a locked page") {
+		task ("When a user accesses to the Locked Pages admin in a new tab") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
-
-			User.impersonateCP(
-				siteName = ${siteName},
-				userScreenName = "usersn");
-
-			UserBar.gotoMySite(siteName = "Test Site Name");
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Locked Pages");
+		}
 
+		task ("Then the Locked Pages admin should have correct accessibility") {
 			AssertAccessible();
 		}
 
-		task ("Then it is possible to check accessibility") {
-			LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Unlock",
-				rowEntry = "Test Content Page Name");
+		task ("When the user unlocks the locked page") {
+			LexiconTable.clickEllipsisItem(
+				item = "Unlock",
+				tableEntry = "Test Page Name");
+		}
 
+		task ("Then the Unlock Pages modal should have correct accessibility") {
 			AssertAccessible();
 		}
 	}

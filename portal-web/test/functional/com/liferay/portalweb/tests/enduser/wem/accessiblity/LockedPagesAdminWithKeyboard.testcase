@@ -23,10 +23,15 @@ definition {
 
 	@description = "This is a test for LPS-182024. The administrator could unlock locked page via keyboard."
 	@priority = 4
-	test CanUnlockLockedPageViaKeyboard {
-		task ("Given a locked page") {
+	test UnlockLockedPageViaKeyboard {
+		task ("Given an administrator has a locked page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -34,45 +39,34 @@ definition {
 				fragmentName = "Button");
 		}
 
-		task ("When using the keyboard for navigation") {
+		task ("When the administrator navigates to the Locked Pages admin in a new tab") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
-
-			User.impersonateCP(
-				siteName = ${siteName},
-				userScreenName = "usersn");
-
-			UserBar.gotoMySite(siteName = "Test Site Name");
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Locked Pages");
+		}
 
-			ProductMenuHelper.closeProductMenu();
-
+		task ("Then it is possible to unlock a locked page") {
 			KeyPress(
-				ariaLabel = "Actions for Test Content Page Name",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				key_text = "Test Page Name",
+				locator1 = "Link#ANY",
 				value1 = "\TAB");
 
 			KeyPress(
-				ariaLabel = "Actions for Test Content Page Name",
+				ariaLabel = "Actions for Test Page Name",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL",
 				value1 = "\ENTER");
 
-			KeyPress.keyPressNoError(
+			KeyPress(
 				key_menuItem = "Unlock",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
 				value1 = "\ENTER");
 
 			KeyPress(
-				key_modalTitle = "Unlock Pages",
-				locator1 = "Button#CLOSE_MODAL",
-				value1 = "\TAB");
-
-			KeyPress(
-				key_text = "Unlock",
+				key_text = "Cancel",
 				locator1 = "Button#ANY",
 				value1 = "\TAB");
 
@@ -80,9 +74,7 @@ definition {
 				key_text = "Unlock",
 				locator1 = "Button#ANY",
 				value1 = "\ENTER");
-		}
 
-		task ("Then it is possible to unlock a locked page") {
 			Alert.viewSuccessMessageText(successMessage = "Success:1 pages were successfully unlocked.");
 
 			AssertTextEquals(

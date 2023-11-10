@@ -22,23 +22,30 @@ definition {
 
 	@description = "This is a test for LPS-182024. The administrator could search locked pages in Locked Pages admin."
 	@priority = 4
-	test CanSearchLockedPagesInLockedPagesAdmin {
+	test SearchLockedPagesInLockedPagesAdmin {
+		var baseURL = PropsUtil.get("portal.url");
+		var siteName = selenium.getText("Home#SITE_NAME");
+
 		task ("Given two locked pages") {
+			for (var pageName : list "Welcome,Blog") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = ${pageName},
+					type = "content");
+			}
+
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Welcome",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Second Page",
-				type = "content");
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Second Page",
+				pageName = "Blog",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -46,53 +53,29 @@ definition {
 				fragmentName = "Heading");
 		}
 
-		task ("When navigating to locked pages admin") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
-
-			User.impersonateCP(
-				siteName = ${siteName},
-				userScreenName = "usersn");
-
-			UserBar.gotoMySite(siteName = "Test Site Name");
+		task ("When navigating to locked pages admin in a new tab") {
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Locked Pages");
 
-			for (var pageName : list "Test Content Page Name,Second Page") {
-				AssertTextPresent(
-					key_columnName = "name",
-					key_tableEntry = ${pageName},
-					locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-					value1 = ${pageName});
+			for (var pageName : list "Welcome,Blog") {
+				LexiconTable.viewTableEntryTitle(tableEntry = ${pageName});
 			}
 		}
 
 		task ("Then it is possible to search for locked pages by name or user created") {
-			Search.searchCP(searchTerm = "Second Page");
+			Search.searchCP(searchTerm = "Welcome");
 
-			AssertTextPresent(
-				key_columnName = "name",
-				key_tableEntry = "Second Page",
-				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-				value1 = "Second Page");
+			LexiconTable.viewTableEntryTitle(tableEntry = "Welcome");
 
-			AssertTextNotPresent(
-				key_columnName = "name",
-				key_tableEntry = "Test Content Page Name",
-				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-				value1 = "Test Content Page Name");
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Blog");
 
 			Search.searchCP(searchTerm = "Test Test");
 
-			for (var pageName : list "Test Content Page Name,Second Page") {
-				AssertTextPresent(
-					key_columnName = "name",
-					key_tableEntry = ${pageName},
-					locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-					value1 = ${pageName});
+			for (var pageName : list "Welcome,Blog") {
+				LexiconTable.viewTableEntryTitle(tableEntry = ${pageName});
 			}
 		}
 	}

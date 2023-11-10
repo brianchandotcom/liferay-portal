@@ -22,69 +22,18 @@ definition {
 
 	@description = "This is a test for LPS-182024. The non-administrator cannot unlock locked page."
 	@priority = 4
-	test ViewUserWithoutAdminPermissionCannotUnlockLockedPage {
-		task ("Given a user without administrator permission") {
-			HeadlessSite.addSite(
-				siteName = "Test Site Name",
-				templateName = "Welcome",
-				templateType = "Site Initializer");
+	test CannotUnlockLockedPageAsUserWithNonAdministratorRole {
+		var baseURL = PropsUtil.get("portal.url");
+		var siteName = selenium.getText("Home#SITE_NAME");
 
+		task ("Given a user without administrator permission has a locked page") {
 			JSONRole.addSiteRole(
-				roleKey = "Locked Pages Role",
-				roleTitle = "Locked Pages Role");
+				roleKey = "Page Designer",
+				roleTitle = "Page Designer");
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Locked Pages Role",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Locked Pages Role",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = "Locked Pages Role",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_layout_locked_layouts_web_internal_portlet_LockedLayoutsPortlet",
-				roleTitle = "Locked Pages Role",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ADD_TO_PAGE",
-				resourceName = "com_liferay_layout_locked_layouts_web_internal_portlet_LockedLayoutsPortlet",
-				roleTitle = "Locked Pages Role",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "CONFIGURATION",
-				resourceName = "com_liferay_layout_locked_layouts_web_internal_portlet_LockedLayoutsPortlet",
-				roleTitle = "Locked Pages Role",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "PERMISSIONS",
-				resourceName = "com_liferay_layout_locked_layouts_web_internal_portlet_LockedLayoutsPortlet",
-				roleTitle = "Locked Pages Role",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "PREFERENCES",
-				resourceName = "com_liferay_layout_locked_layouts_web_internal_portlet_LockedLayoutsPortlet",
-				roleTitle = "Locked Pages Role",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com_liferay_layout_locked_layouts_web_internal_portlet_LockedLayoutsPortlet",
-				roleTitle = "Locked Pages Role",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com.liferay.depot.model.DepotEntry,VIEW_SITE_ADMINISTRATION:com_liferay_layout_locked_layouts_web_internal_portlet_LockedLayoutsPortlet,ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW",
+				roleTitle = "Page Designer",
 				roleType = "site");
 
 			JSONUser.addUser(
@@ -99,16 +48,16 @@ definition {
 
 			JSONRole.assignSiteRoleToUser(
 				groupName = "Test Site Name",
-				roleTitle = "Locked Pages Role",
+				roleTitle = "Page Designer",
 				userEmailAddress = "userea@liferay.com");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
+				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -116,7 +65,7 @@ definition {
 				fragmentName = "Button");
 		}
 
-		task ("When accessing the locked admin page of the site where the user is a member") {
+		task ("When accessing the locked admin in a new tab") {
 			var baseURL = PropsUtil.get("portal.url");
 
 			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
@@ -125,15 +74,7 @@ definition {
 				siteName = ${siteName},
 				userScreenName = "usersn");
 
-			Click(
-				key_dropdownItem = "My Sites",
-				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Navigator.gotoNavItem(navItem = "My Sites");
-
-			SiteSelector.selectSite(site = "Test Site Name");
+			UserBar.gotoMySite(siteName = "Test Site Name");
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
@@ -141,9 +82,9 @@ definition {
 		}
 
 		task ("Then it is not possible to unlock the locked page") {
-			LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Unlock",
-				rowEntry = "Test Content Page Name");
+			LexiconTable.clickEllipsisItem(
+				item = "Unlock",
+				tableEntry = "Test Page Name");
 
 			Click(
 				key_text = "Unlock",

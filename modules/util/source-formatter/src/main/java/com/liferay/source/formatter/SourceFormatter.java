@@ -701,7 +701,6 @@ public class SourceFormatter {
 
 			String[] breakingChangeReports = parts[1].split("\n----");
 
-			outerLoop:
 			for (String breakingChangeReport : breakingChangeReports) {
 				int alternativesCount = StringUtil.count(
 					breakingChangeReport, "## Alternatives");
@@ -757,29 +756,29 @@ public class SourceFormatter {
 
 				String filePath = StringUtil.trim(trimmedLine.substring(7));
 
-				File file = SourceFormatterUtil.getFile(
-					_sourceFormatterArgs.getBaseDirName(), filePath,
-					_sourceFormatterArgs.getMaxDirLevel());
+				File portalDir = SourceFormatterUtil.getPortalDir(
+					_sourceFormatterArgs.getBaseDirName(),
+					_sourceFormatterArgs.getMaxLineLength());
 
-				if (file != null) {
+				File file = new File(portalDir, filePath);
+
+				if (file.exists()) {
 					continue;
 				}
 
-				for (String deletedFileName :
-						GitUtil.getCurrentBranchDeletedFileNames(
-							_sourceFormatterArgs.getBaseDirName(),
-							_sourceFormatterArgs.getGitWorkingBranchName())) {
+				List<String> currentBranchDeletedFileNames =
+					GitUtil.getCurrentBranchDeletedFileNames(
+						_sourceFormatterArgs.getBaseDirName(),
+						_sourceFormatterArgs.getGitWorkingBranchName());
 
-					if (filePath.endsWith(deletedFileName)) {
-						continue outerLoop;
-					}
+				if (!currentBranchDeletedFileNames.contains(filePath)) {
+					throw new Exception(
+						StringBundler.concat(
+							"Found formatting issues in SHA ", parts[0], ":\n",
+							"'## What' should be followed by only one ",
+							"relative path, which is from portal root ",
+							"directory."));
 				}
-
-				throw new Exception(
-					StringBundler.concat(
-						"Found formatting issues in SHA ", parts[0], ":\n",
-						"'## What' should be followed by only one relative ",
-						"path, which is from portal root directory."));
 			}
 		}
 	}

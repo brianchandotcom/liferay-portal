@@ -1253,14 +1253,14 @@ definition {
 			SelectFrameTop();
 
 			AssertElementPresent(
-					key_text = "accessibility",
-					locator1 = "Icon#ANY");
+				key_text = "accessibility",
+				locator1 = "Icon#ANY");
 		}
 
 		task ("When the mandatory fields are filled") {
 			Click(
-				locator1 = "Button#CLOSE_MODAL",
-				key_modalTitle = "");
+				key_modalTitle = "",
+				locator1 = "Button#CLOSE_MODAL");
 
 			Type(
 				key_unnamedTitle = "",

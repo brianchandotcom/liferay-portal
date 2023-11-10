@@ -263,11 +263,11 @@ export function ObjectDefinitionNode({
 				/>
 
 				<>
-					{Object.keys(nodeHandleRefs).map((position, index) => (
+					{Object.keys(nodeHandleRefs).map((position) => (
 						<Handle
 							className="lfr-objects__model-builder-node-handle"
-							id={id.toString()}
-							key={index}
+							id={`${id}_${position}`}
+							key={`${id}_${position}`}
 							position={nodeHandlePosition[position]}
 							ref={nodeHandleRefs[position]}
 							style={{

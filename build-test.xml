@@ -2931,16 +2931,7 @@ jdbc.default.url=${database.url.upgrade}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}</echo>
 
-			<get-testcase-property property.name="upgrade.reports.enabled" />
-
-			<if>
-				<equals arg1="${upgrade.reports.enabled}" arg2="true" />
-				<then>
-					<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">${line.separator}upgrade.report.enabled=true</echo>
-				</then>
-			</if>
-
-			<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">${line.separator}liferay.home=${liferay.home}</echo>
+			<prepare-upgrade-ext-properties />
 		</sequential>
 	</macrodef>
 
@@ -5179,6 +5170,75 @@ tell application "Safari" to quit
 					</antelope:repeat>
 
 					<var name="app.server.bundle.index" unset="true" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-upgrade-ext-properties">
+		<sequential>
+			<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+liferay.home=${liferay.home}</echo>
+
+			<get-testcase-property property.name="database.partition.enabled" />
+
+			<if>
+				<equals arg1="${database.partition.enabled}" arg2="true" />
+				<then>
+					<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+database.partition.enabled=true</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="liferay.online.properties" />
+
+			<if>
+				<equals arg1="${liferay.online.properties}" arg2="true" />
+				<then>
+					<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+include-and-override=portal-liferay-online.properties</echo>
+
+					<replace
+						file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties"
+						token="${database.mysql.driver}"
+						value="${database.mariadb.driver}"
+					/>
+
+					<get-testcase-property property.name="data.archive.type" />
+
+					<if>
+						<contains string="${data.archive.type}" substring="partition-large" />
+						<then>
+							<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+locales=es_ES,en_US,en_GB
+locales.enabled=es_ES,en_US,en_GB
+admin.default.role.names=User
+layout.user.public.layouts.power.user.required=true
+layout.user.private.layouts.power.user.required=true
+passwords.encryption.algorithm.legacy=SHA
+company.default.web.id=www.able.com</echo>
+						</then>
+					</if>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="upgrade.reports.enabled" />
+
+			<if>
+				<equals arg1="${upgrade.reports.enabled}" arg2="true" />
+				<then>
+					<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+upgrade.report.enabled=true</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="custom.upgrade.properties" />
+
+			<if>
+				<isset property="custom.upgrade.properties" />
+				<then>
+					<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+${custom.upgrade.properties}</echo>
 				</then>
 			</if>
 		</sequential>
@@ -14265,51 +14325,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
 				/>
 			</else>
-		</if>
-
-		<get-testcase-property property.name="database.partition.enabled" />
-
-		<if>
-			<equals arg1="${database.partition.enabled}" arg2="true" />
-			<then>
-				<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
-database.partition.enabled=true</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="liferay.online.properties" />
-
-		<if>
-			<equals arg1="${liferay.online.properties}" arg2="true" />
-			<then>
-				<prepare-liferay-online-properties />
-
-				<get-testcase-property property.name="data.archive.type" />
-
-				<if>
-					<contains string="${data.archive.type}" substring="partition-large" />
-					<then>
-						<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
-locales=es_ES,en_US,en_GB
-locales.enabled=es_ES,en_US,en_GB
-admin.default.role.names=User
-layout.user.public.layouts.power.user.required=true
-layout.user.private.layouts.power.user.required=true
-passwords.encryption.algorithm.legacy=SHA
-company.default.web.id=www.able.com</echo>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="custom.upgrade.properties" />
-
-		<if>
-			<isset property="custom.upgrade.properties" />
-			<then>
-				<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
-${custom.upgrade.properties}</echo>
-			</then>
 		</if>
 
 		<get-test-app-server-lib-portal-dir />

@@ -3735,6 +3735,10 @@ public class JenkinsResultsParserUtil {
 		StringBuilder sb = new StringBuilder();
 
 		for (String string : strings) {
+			if (string == null) {
+				continue;
+			}
+
 			if (sb.length() > 0) {
 				sb.append(delimiter);
 			}
@@ -5818,19 +5822,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	private static String _combineCommandArgs(String... args) {
-		StringBuilder sb = new StringBuilder();
-
-		for (String arg : args) {
-			if (arg == null) {
-				continue;
-			}
-
-			sb.append(" ");
-
-			sb.append(arg);
-		}
-
-		return sb.toString();
+		return join(" ", args);
 	}
 
 	private static void _executeCommandService(

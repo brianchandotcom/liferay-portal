@@ -15,7 +15,7 @@
 
 <div style="display: flex; justify-content: left;">
 	<div class="videojs-container">
-		<video class="video-js" id="fragmentVideoJsURL" preload="auto">
+		<video class="video-js" controls id="fragmentVideoJsURL" preload="auto">
 			<source src="<%= (String)request.getAttribute("src") %>" type="video/mp4" />
 		</video>
 
@@ -52,10 +52,7 @@
 		content.firstElementChild.style.width = contentWidth + 'px';
 	}
 
-	const player = videojs('fragmentVideoJsURL', {
-		controls: true,
-		...configuration,
-	});
+	const player = videojs('fragmentVideoJsURL', configuration);
 
 	player.ready(() => {
 		window.addEventListener('resize', resizeVideoJs);

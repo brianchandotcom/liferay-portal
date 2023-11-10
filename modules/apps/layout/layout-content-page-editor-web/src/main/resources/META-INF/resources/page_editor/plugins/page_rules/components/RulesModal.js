@@ -134,7 +134,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 						title={Liferay.Language.get('error')}
 					>
 						{Liferay.Language.get(
-							'incomplete-rule.-please-check-that-the-conditions-and-actions-are-completed-before-saving'
+							'the-rule-is-incomplete.-please-check-that-the-conditions-and-actions-are-completed-before-saving'
 						)}
 					</ClayAlert>
 				) : null}

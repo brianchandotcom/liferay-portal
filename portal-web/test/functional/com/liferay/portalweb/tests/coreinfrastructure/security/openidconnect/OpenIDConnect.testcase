@@ -176,7 +176,8 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-124898 TC-6: Verify Refresh Token Offset is not existing in the Instance Settings."
+	@description = "This is a use case for LPS-124898 TC-6: Verify Refresh Token Offset is not existing in the Instance Settings. Blocked by LPS-198886."
+	@ignore = "true"
 	@priority = 5
 	test AssertTokenRefreshOffsetCannotBeSetAtInstanceLevel {
 		property test.liferay.virtual.instance = "false";

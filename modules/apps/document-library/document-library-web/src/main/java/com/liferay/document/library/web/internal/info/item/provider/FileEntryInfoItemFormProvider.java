@@ -29,6 +29,7 @@ import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -176,6 +177,17 @@ public class FileEntryInfoItemFormProvider
 		).build();
 	}
 
+	private InfoFieldSet _getDisplayPageInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			FileEntryInfoItemFields.displayPageURLInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "display-page")
+		).name(
+			"display-page"
+		).build();
+	}
+
 	private InfoFieldSet _getFileEntryTypeInfoFieldSet(
 			long ddmStructureId, long fileEntryTypeId)
 		throws NoSuchStructureException {
@@ -241,7 +253,17 @@ public class FileEntryInfoItemFormProvider
 					}
 				}
 			).infoFieldSetEntry(
-				displayPageInfoFieldSet
+				unsafeConsumer -> {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
+						unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
+					}
+				}
+			).infoFieldSetEntry(
+				unsafeConsumer -> {
+					if (FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
+						unsafeConsumer.accept(displayPageInfoFieldSet);
+					}
+				}
 			).infoFieldSetEntry(
 				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
 					DLFileEntryConstants.getClassName())

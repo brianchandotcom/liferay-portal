@@ -19,6 +19,7 @@ import com.liferay.knowledge.base.web.internal.info.item.KBArticleInfoItemFields
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import org.osgi.framework.Constants;
@@ -112,6 +113,17 @@ public class KBArticleInfoItemFormProvider
 		).build();
 	}
 
+	private InfoFieldSet _getDisplayPageInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			KBArticleInfoItemFields.displayPageURLInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "display-page")
+		).name(
+			"display-page"
+		).build();
+	}
+
 	private InfoForm _getInfoForm(
 		InfoFieldSet assetEntryInfoFieldSet,
 		InfoFieldSet displayPageInfoFieldSet) {
@@ -130,7 +142,17 @@ public class KBArticleInfoItemFormProvider
 		).infoFieldSetEntry(
 			_getConfigurationInfoFieldSet()
 		).infoFieldSetEntry(
-			displayPageInfoFieldSet
+			unsafeConsumer -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
+					unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
+				}
+			}
+		).infoFieldSetEntry(
+			unsafeConsumer -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
+					unsafeConsumer.accept(displayPageInfoFieldSet);
+				}
+			}
 		).infoFieldSetEntry(
 			assetEntryInfoFieldSet
 		).infoFieldSetEntry(

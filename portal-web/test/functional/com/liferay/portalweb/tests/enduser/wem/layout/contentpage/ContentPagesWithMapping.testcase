@@ -1090,6 +1090,8 @@ definition {
 	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for blog entry."
 	@priority = 4
 	test MapSpecificDisplayPageForBlogsEntry {
+		property custom.properties = "feature.flag.LPS-195205=true";
+
 		task ("Given a page designer has a display page template for Blogs Entry") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
@@ -1157,6 +1159,8 @@ definition {
 	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for category."
 	@priority = 3
 	test MapSpecificDisplayPageForCategory {
+		property custom.properties = "feature.flag.LPS-195205=true";
+
 		task ("Given a page designer has a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
@@ -1228,6 +1232,8 @@ definition {
 	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for commerce product."
 	@priority = 3
 	test MapSpecificDisplayPageForCommerceProduct {
+		property custom.properties = "feature.flag.LPS-195205=true";
+
 		var channelName = StringUtil.randomString(8);
 		var productName = StringUtil.randomString(8);
 
@@ -1307,6 +1313,8 @@ definition {
 	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for document."
 	@priority = 3
 	test MapSpecificDisplayPageForDocument {
+		property custom.properties = "feature.flag.LPS-195205=true";
+
 		task ("Given a page designer has a display page template for Document") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
@@ -1376,6 +1384,8 @@ definition {
 	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for web content."
 	@priority = 5
 	test MapSpecificDisplayPageForWebContentArticle {
+		property custom.properties = "feature.flag.LPS-195205=true";
+
 		task ("Given a page designer has a display page template for Web Content Article") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

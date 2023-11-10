@@ -628,7 +628,9 @@ public class LayoutsAdminDisplayContext {
 
 		Layout selLayout = getSelLayout();
 
-		if (selLayout.isTypeAssetDisplay()) {
+		if (selLayout.isTypeAssetDisplay() &&
+			FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
+
 			friendlyURLBase.append("/e");
 
 			return friendlyURLBase.toString();

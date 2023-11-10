@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -42,6 +43,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Víctor Galán
  */
+@FeatureFlags("LPS-195205")
 @RunWith(Arquillian.class)
 public class GetMappingFieldsMVCResourceCommandTest {
 

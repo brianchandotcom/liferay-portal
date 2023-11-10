@@ -55,6 +55,15 @@ public class FileEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				FileEntryInfoItemFields.class, "description")
 		).build();
+	public static final InfoField<URLInfoFieldType> displayPageURLInfoField =
+		BuilderHolder._builder.infoFieldType(
+			URLInfoFieldType.INSTANCE
+		).name(
+			"displayPageURL"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				"com.liferay.asset.info.display.impl", "display-page-url")
+		).build();
 	public static final InfoField<URLInfoFieldType> downloadURLInfoField =
 		BuilderHolder._builder.infoFieldType(
 			URLInfoFieldType.INSTANCE

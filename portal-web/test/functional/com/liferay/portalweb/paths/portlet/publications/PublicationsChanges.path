@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_TYPE_BUTTON</td>
+	<td>//button[contains(@class,'btn-sorting') and contains(.,'Change Type')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_ACTIONS</td>
 	<td>//div[contains(@class,'autofit-row') and contains(.,'${key_commentValue}')]/preceding-sibling::div//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

@@ -214,7 +214,7 @@ definition {
 				locator1 = "Publications#PUBLICATION_NAME_VIEW");
 		}
 
-		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
+		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_TYPE_BUTTON");
 
 		if (${showSystemChanges} == "true") {
 			Click(locator1 = "PublicationsChanges#ELLIPSIS_IN_PUBLICATION");

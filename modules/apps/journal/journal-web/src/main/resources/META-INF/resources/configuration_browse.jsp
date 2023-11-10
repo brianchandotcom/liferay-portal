@@ -101,6 +101,8 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 									module="js/configuration_browse/HighlightedDDMStructuresConfiguration"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
+											"ddmStructures", journalDisplayContext.getHighlightedDDMStructuresJSONArray()
+										).put(
 											"selectDDMStructureURL", journalConfigurationDisplayContext.getSelectDDMStructureURL()
 										).build()
 									%>'

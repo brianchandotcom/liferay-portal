@@ -301,7 +301,7 @@ public class UserManagerImpl implements UserManager {
 
 		_saveScimClientId(
 			ScimClientUtil.generateScimClientId(
-				scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName()),
+				scimClientOAuth2ApplicationConfiguration.applicationName()),
 			portalUser);
 
 		return portalUser;
@@ -351,7 +351,7 @@ public class UserManagerImpl implements UserManager {
 				_getScimClientOAuth2ApplicationConfiguration(companyId);
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
-			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
+			scimClientOAuth2ApplicationConfiguration.applicationName());
 
 		if (!Objects.equals(_getScimClientId(portalUser), scimClientId)) {
 			return null;
@@ -512,7 +512,7 @@ public class UserManagerImpl implements UserManager {
 		throws PortalException {
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
-			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
+			scimClientOAuth2ApplicationConfiguration.applicationName());
 		String portalUserScimClientId = _getScimClientId(portalUser);
 
 		if (Validator.isNotNull(portalUserScimClientId) &&

@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class ScimClientUtil {
 
-	public static String generateScimClientId(String oAuth2ApplicationName) {
+	public static String generateScimClientId(String applicationName) {
 		String clientId = StringUtil.replace(
-			StringUtil.toLowerCase(oAuth2ApplicationName), CharPool.SPACE,
+			StringUtil.toLowerCase(applicationName), CharPool.SPACE,
 			CharPool.DASH);
 
 		return "SCIM_" + clientId;

@@ -145,6 +145,9 @@ public class FragmentVideoStreaming implements FragmentRenderer {
 		FragmentVideoStreaming.class);
 
 	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
 	private Language _language;
 
 	@Reference(

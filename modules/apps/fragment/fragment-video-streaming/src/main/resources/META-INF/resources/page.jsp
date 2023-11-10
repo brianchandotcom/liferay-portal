@@ -22,16 +22,41 @@
 		<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
 	</div>
 </div>
-
+q
 <script>
-	const player = videojs('fragmentVideoJsURL', {
-		controls: true,
+	const content= document.querySelector('.videojs-container');
+
+	//TODO get from the rendered
+	const configuration = {
 		autoplay: 'muted',
+		height: null,
 		loop: true,
 		muted: true,
+		width: null,
+	}
+
+	function resizeVideoJs() {
+		const boundingClientRect = content.parentElement.getBoundingClientRect();
+
+		const contentWidth = configuration.width || boundingClientRect.width;
+
+		const contentHeight = configuration.height || contentWidth * 0.5625;
+
+		content.firstElementChild.style.height = contentHeight + 'px';
+		content.firstElementChild.style.width = contentWidth + 'px';
+	}
+
+	const player = videojs('fragmentVideoJsURL', {
+		controls: true,
+		...configuration
 	});
 
 	player.ready(() => {
 		console.log('ready!');
+		window.addEventListener('resize', resizeVideoJs);
+
+		resizeVideoJs();
 	});
+
+
 </script>

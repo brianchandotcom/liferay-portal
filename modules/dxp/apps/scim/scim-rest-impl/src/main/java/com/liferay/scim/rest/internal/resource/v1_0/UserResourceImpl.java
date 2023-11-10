@@ -49,6 +49,11 @@ import org.wso2.charon3.core.schema.SCIMConstants;
 public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Override
+	public Response deleteV2User(String id) throws Exception {
+		return _buildResponse(_userResourceManager.delete(id, _userManager));
+	}
+
+	@Override
 	public Object getV2User(Integer count, Integer startIndex)
 		throws Exception {
 

@@ -12,6 +12,8 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -178,13 +180,18 @@ public class CTEntryModelDocumentContributor
 		if (model instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)model;
 
-			Group group = _groupLocalService.fetchGroup(
-				groupedModel.getGroupId());
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollectionId)) {
 
-			if (group != null) {
-				document.addKeyword(Field.GROUP_ID, group.getGroupId());
-				document.addLocalizedKeyword(
-					"groupName", group.getNameMap(), true, true);
+				Group group = _groupLocalService.fetchGroup(
+					groupedModel.getGroupId());
+
+				if (group != null) {
+					document.addKeyword(Field.GROUP_ID, group.getGroupId());
+					document.addLocalizedKeyword(
+						"groupName", group.getNameMap(), true, true);
+				}
 			}
 		}
 

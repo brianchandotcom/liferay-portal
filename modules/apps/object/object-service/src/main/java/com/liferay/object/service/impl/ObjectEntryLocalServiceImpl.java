@@ -1160,15 +1160,15 @@ public class ObjectEntryLocalServiceImpl
 			).from(
 				dynamicObjectDefinitionTable
 			).innerJoinON(
-				ObjectEntryTable.INSTANCE,
-				ObjectEntryTable.INSTANCE.objectEntryId.eq(
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn())
-			).innerJoinON(
 				extensionDynamicObjectDefinitionTable,
 				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
 				).eq(
 					dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 				)
+			).innerJoinON(
+				ObjectEntryTable.INSTANCE,
+				ObjectEntryTable.INSTANCE.objectEntryId.eq(
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn())
 			).innerJoinON(
 				rootDynamicObjectDefinitionTable,
 				_getInnerJoinRootObjectDefinitionTablePredicate(
@@ -1237,15 +1237,15 @@ public class ObjectEntryLocalServiceImpl
 		).from(
 			dynamicObjectDefinitionTable
 		).innerJoinON(
-			ObjectEntryTable.INSTANCE,
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
-		).innerJoinON(
 			extensionDynamicObjectDefinitionTable,
 			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
 			).eq(
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 			)
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
 		).innerJoinON(
 			rootDynamicObjectDefinitionTable,
 			_getInnerJoinRootObjectDefinitionTablePredicate(
@@ -2789,14 +2789,14 @@ public class ObjectEntryLocalServiceImpl
 		return fromStep.from(
 			dynamicObjectDefinitionTable
 		).innerJoinON(
-			ObjectEntryTable.INSTANCE,
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(primaryKeyColumn)
-		).innerJoinON(
 			extensionDynamicObjectDefinitionTable,
 			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
 			).eq(
 				primaryKeyColumn
 			)
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(primaryKeyColumn)
 		).innerJoinON(
 			rootDynamicObjectDefinitionTable,
 			_getInnerJoinRootObjectDefinitionTablePredicate(

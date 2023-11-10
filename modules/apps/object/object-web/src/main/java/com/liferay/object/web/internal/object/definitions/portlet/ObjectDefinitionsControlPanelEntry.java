@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
@@ -40,17 +41,18 @@ public class ObjectDefinitionsControlPanelEntry extends BaseControlPanelEntry {
 			return false;
 		}
 
+		long groupId = 0L;
+
+		if (StringUtil.startsWith(
+				portlet.getControlPanelEntryCategory(),
+				PortletCategoryKeys.SITE_ADMINISTRATION)) {
+
+			groupId = group.getGroupId();
+		}
+
 		ObjectDefinition rootObjectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				_objectDefinition.getRootObjectDefinitionId());
-
-		String category = portlet.getControlPanelEntryCategory();
-
-		long groupId = 0L;
-
-		if (category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-			groupId = group.getGroupId();
-		}
 
 		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
 			rootObjectDefinition.getPortletId());

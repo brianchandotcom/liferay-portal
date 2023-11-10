@@ -1042,7 +1042,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Address",
-				changeSite = "Global",
+				changeSite = "",
 				changeTitle = "Address",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -1063,7 +1063,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Address",
-				changeSite = "Global",
+				changeSite = "",
 				changeTitle = "Address",
 				changeType = "Deleted",
 				changeUser = "Test Test");
@@ -1114,7 +1114,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Email Address",
-				changeSite = "Global",
+				changeSite = "",
 				changeTitle = "organization@liferay.com",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -1135,7 +1135,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Email Address",
-				changeSite = "Global",
+				changeSite = "",
 				changeTitle = "organization@liferay.com",
 				changeType = "Deleted",
 				changeUser = "Test Test");
@@ -1188,7 +1188,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Phone",
-				changeSite = "Global",
+				changeSite = "",
 				changeTitle = "1-877-543-3729",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -1209,7 +1209,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Phone",
-				changeSite = "Global",
+				changeSite = "",
 				changeTitle = "1-877-543-3729",
 				changeType = "Deleted",
 				changeUser = "Test Test");
@@ -1286,7 +1286,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Client Extension Entry",
-			changeSite = "Global",
+			changeSite = "",
 			changeTitle = "Vanilla Counter",
 			changeType = "Added",
 			changeUser = "Test Test");

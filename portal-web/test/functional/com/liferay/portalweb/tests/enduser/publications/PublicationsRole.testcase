@@ -49,7 +49,7 @@ definition {
 			publicationName = "Publication Name");
 
 		PublicationsChanges.viewChanges(
-			changeCategory = "Role",
+			changeCategory = "",
 			changeSite = "Global",
 			changeTitle = "Regrole Name",
 			changeType = "Deleted",
@@ -58,7 +58,7 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Permissions",
 			changeOrder = 2,
-			changeSite = "Global",
+			changeSite = "",
 			changeTitle = "Regrole Name Permissions for Publications All Sites and Asset Libraries",
 			changeType = "Deleted",
 			changeUser = "Test Test",
@@ -95,7 +95,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Permissions",
-			changeSite = "Global",
+			changeSite = "",
 			changeTitle = "Regrole Name Permissions for Publications All Sites and Asset Libraries",
 			changeType = "Modified",
 			changeUser = "Test Test",
@@ -127,7 +127,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Role",
-			changeSite = "Global",
+			changeSite = "",
 			changeTitle = "Regrole Name",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -135,7 +135,7 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Permissions",
 			changeOrder = 2,
-			changeSite = "Global",
+			changeSite = "",
 			changeTitle = "Regrole Name Permissions for Portal",
 			changeType = "Added",
 			changeUser = "Test Test",

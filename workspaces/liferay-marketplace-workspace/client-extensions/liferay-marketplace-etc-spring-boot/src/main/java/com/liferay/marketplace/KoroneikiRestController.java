@@ -221,12 +221,10 @@ public class KoroneikiRestController extends BaseRestController {
 			return;
 		}
 
+		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
 		ZonedDateTime zonedDateTime = ZonedDateTime.parse(
 			commerceOrderJSONObject.getString("createDate"),
 			DateTimeFormatter.ISO_DATE_TIME);
-
-		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
-
 		int successCount = 0;
 
 		for (int i = 0; i < orderItemsJSONArray.length(); i++) {
@@ -345,10 +343,10 @@ public class KoroneikiRestController extends BaseRestController {
 		return null;
 	}
 
-	private HashMap<String, String> _getProductSpecificationsMap(
+	private Map<String, String> _getProductSpecificationsMap(
 		Collection<ProductSpecification> productSpecifications) {
 
-		HashMap<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 
 		for (ProductSpecification productSpecification :
 				productSpecifications) {

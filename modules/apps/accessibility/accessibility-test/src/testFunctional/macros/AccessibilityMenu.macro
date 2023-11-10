@@ -1,7 +1,7 @@
 definition {
 
-	@summary = "It activates the Accessibility Menu."
-	macro activateAccessibilityMenu(portlet = null) {
+	@summary = "It activates the Accessibility Menu by Instance Settings or System Settings."
+	macro activateAccessibilityMenu(portlet) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

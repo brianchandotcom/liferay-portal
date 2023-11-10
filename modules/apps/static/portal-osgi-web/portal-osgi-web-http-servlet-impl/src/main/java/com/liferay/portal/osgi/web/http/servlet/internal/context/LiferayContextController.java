@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
@@ -24,7 +25,6 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequestAttributeListener;
 import jakarta.servlet.ServletRequestListener;
-import jakarta.servlet.descriptor.JspConfigDescriptor;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionAttributeListener;
 import jakarta.servlet.http.HttpSessionEvent;
@@ -75,7 +75,6 @@ import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.eclipse.equinox.http.servlet.internal.servlet.ResourceServlet;
 import org.eclipse.equinox.http.servlet.internal.servlet.ServletConfigImpl;
-import org.eclipse.equinox.http.servlet.internal.servlet.ServletContextAdaptor;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 import org.eclipse.equinox.http.servlet.internal.util.Path;
@@ -264,10 +263,10 @@ public class LiferayContextController extends ContextController {
 				filterRegistration.init(
 					new FilterConfigImpl(
 						filterDTO.name, filterDTO.initParams,
-						_createServletContextAdaptor(
-							serviceHolder.getBundle(),
-							_getServletContextHelper(
-								serviceHolder.getBundle()))));
+						new ServletContextWrapper(
+							serviceHolder.getBundle(), this,
+							_getServletContextHelper(serviceHolder.getBundle()),
+							_servletContextHelperDataContext)));
 
 				_filterRegistrations.add(filterRegistration);
 			}
@@ -322,9 +321,10 @@ public class LiferayContextController extends ContextController {
 				}
 			}
 
-			ServletContext servletContext = _createServletContextAdaptor(
-				serviceHolder.getBundle(),
-				_getServletContextHelper(serviceHolder.getBundle()));
+			ServletContext servletContext = new ServletContextWrapper(
+				serviceHolder.getBundle(), this,
+				_getServletContextHelper(serviceHolder.getBundle()),
+				_servletContextHelperDataContext);
 
 			listenerRegistration = new ListenerRegistration(
 				serviceHolder, eventListenerClasses,
@@ -412,8 +412,9 @@ public class LiferayContextController extends ContextController {
 			resourceRegistration.init(
 				new ServletConfigImpl(
 					resourceRegistration.getName(), new HashMap<>(),
-					_createServletContextAdaptor(
-						bundle, servletContextHelper)));
+					new ServletContextWrapper(
+						bundle, this, servletContextHelper,
+						_servletContextHelperDataContext)));
 		}
 		catch (ServletException servletException) {
 			if (_log.isDebugEnabled()) {
@@ -461,19 +462,20 @@ public class LiferayContextController extends ContextController {
 
 				ServletDTO servletDTO = objectValuePair.getKey();
 
-				ServletContextHelper curServletContextHelper =
+				ServletContextHelper servletContextHelper =
 					_getServletContextHelper(serviceHolder.getBundle());
 
 				servletRegistration = new ServletRegistration(
 					serviceHolder, servletDTO, objectValuePair.getValue(),
-					curServletContextHelper, this, null);
+					servletContextHelper, this, null);
 
 				servletRegistration.init(
 					new ServletConfigImpl(
 						servletDTO.name, servletDTO.initParams,
-						_createServletContextAdaptor(
-							serviceHolder.getBundle(),
-							curServletContextHelper)));
+						new ServletContextWrapper(
+							serviceHolder.getBundle(), this,
+							servletContextHelper,
+							_servletContextHelperDataContext)));
 
 				_endpointRegistrations.add(servletRegistration);
 			}
@@ -872,23 +874,6 @@ public class LiferayContextController extends ContextController {
 			eventListenerClasses, Class::getName, String.class);
 
 		return listenerDTO;
-	}
-
-	private ServletContext _createServletContextAdaptor(
-		Bundle bundle, ServletContextHelper servletContextHelper) {
-
-		ServletContextAdaptor servletContextAdaptor = new ServletContextAdaptor(
-			this, bundle, servletContextHelper,
-			_servletContextHelperDataContext, _eventListeners,
-			AccessController.getContext()) {
-
-			public JspConfigDescriptor getJspConfigDescriptor() {
-				return null;
-			}
-
-		};
-
-		return servletContextAdaptor.createServletContext();
 	}
 
 	private ObjectValuePair<ServletDTO, ErrorPageDTO> _createServletDTOs(

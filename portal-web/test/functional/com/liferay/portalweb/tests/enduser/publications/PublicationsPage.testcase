@@ -505,6 +505,35 @@ definition {
 			publicationName = "Publication Name");
 	}
 
+	@description = "This is a use case for LPS-198982."
+	@priority = 3
+	test CannotPublishLayoutDrafts {
+		task ("Add and select a new publication") {
+			JSONPublications.addPublication(publicationName = "Publication 1");
+
+			JSONPublications.selectPublication(publicationName = "Publication 1");
+		}
+
+		task ("Go to the home page, change the heading text, and let the draft auto save") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Guest");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Test Heading Edit");
+		}
+
+		task ("Assert that publishing Publication 1 is blocked due to the layout draft") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 1");
+
+			Publications.viewConflictingChangesWarning(warningMessage = "This publication contains unapproved changes that must be approved before publishing.");
+		}
+	}
+
 	@description = "This is a use cas for LPS-176197. As a publication admin, I would like to preview fragment before publishing"
 	@priority = 3
 	test CanPreviewAfterChangeFragmentBeforePublishing {

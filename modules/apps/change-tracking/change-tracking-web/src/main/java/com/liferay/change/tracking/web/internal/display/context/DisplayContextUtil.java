@@ -23,13 +23,17 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -84,6 +88,8 @@ public class DisplayContextUtil {
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
 			_searchRequestBuilderFactorySnapshot.get();
 
+		Sorts sorts = _sortsSnapshot.get();
+
 		SearchRequestBuilder searchRequestBuilder =
 			searchRequestBuilderFactory.builder(
 			).companyId(
@@ -94,6 +100,12 @@ public class DisplayContextUtil {
 				true
 			).fields(
 				"modelClassNameId", "typeName"
+			).sorts(
+				sorts.field(
+					Field.getSortableFieldName(
+						"typeName_".concat(
+							LocaleUtil.toLanguageId(themeDisplay.getLocale()))),
+					SortOrder.ASC)
 			).withSearchContext(
 				searchContext -> {
 					searchContext.setAttribute(
@@ -105,7 +117,7 @@ public class DisplayContextUtil {
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilder.build());
 
-		Map<Long, String> typeNames = new HashMap<>();
+		Map<Long, String> typeNames = new LinkedHashMap<>();
 
 		for (Document document : searchResponse.getDocuments()) {
 			typeNames.put(
@@ -186,5 +198,7 @@ public class DisplayContextUtil {
 	private static final Snapshot<SearchRequestBuilderFactory>
 		_searchRequestBuilderFactorySnapshot = new Snapshot<>(
 			DisplayContextUtil.class, SearchRequestBuilderFactory.class);
+	private static final Snapshot<Sorts> _sortsSnapshot = new Snapshot<>(
+		DisplayContextUtil.class, Sorts.class);
 
 }

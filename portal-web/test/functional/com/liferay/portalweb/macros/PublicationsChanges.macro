@@ -49,13 +49,6 @@ definition {
 
 	@summary = "Default summary"
 	macro discardChanges(conflictingChanges = null, changeCategory = null, changeTitle = null) {
-		if (isSet(changeOrder)) {
-			var changeOrder = ${changeOrder};
-		}
-		else {
-			var changeOrder = 1;
-		}
-
 		var key_changeCategory = ${changeCategory};
 		var key_changeTitle = ${changeTitle};
 

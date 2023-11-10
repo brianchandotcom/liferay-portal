@@ -190,7 +190,7 @@ public class CTEntryModelDocumentContributor
 				if (group != null) {
 					document.addKeyword(Field.GROUP_ID, group.getGroupId());
 					document.addLocalizedKeyword(
-						"groupName", group.getNameMap(), true, true);
+						"groupName", group.getNameMap(), false, true);
 				}
 			}
 		}

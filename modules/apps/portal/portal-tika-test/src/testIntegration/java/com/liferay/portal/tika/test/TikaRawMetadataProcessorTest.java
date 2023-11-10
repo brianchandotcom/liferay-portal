@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +42,8 @@ public class TikaRawMetadataProcessorTest {
 		Map<String, DDMFormValues> rawMetadataMap =
 			_rawMetadataProcessor.getRawMetadataMap(
 				ContentTypes.APPLICATION_JAVASCRIPT,
-				_getInputStream("test-x-matlab.js"));
+				new ByteArrayInputStream(
+					"function TikaRawMetadataProcessorTest() {}".getBytes()));
 
 		DDMFormValues ddmFormValues = rawMetadataMap.get(
 			RawMetadataProcessor.TIKA_RAW_METADATA);
@@ -61,12 +62,6 @@ public class TikaRawMetadataProcessorTest {
 		String valueString = value.getString(value.getDefaultLocale());
 
 		Assert.assertTrue(valueString.startsWith("application/javascript;"));
-	}
-
-	private InputStream _getInputStream(String fileName) {
-		Class<?> clazz = getClass();
-
-		return clazz.getResourceAsStream("dependencies/" + fileName);
 	}
 
 	@Inject

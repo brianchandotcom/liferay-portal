@@ -1,3 +1,0 @@
-function TikaRawMetadataProcessorTest() {
-	return;
-}

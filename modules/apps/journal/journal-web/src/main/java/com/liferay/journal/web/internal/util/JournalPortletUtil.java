@@ -138,8 +138,6 @@ public class JournalPortletUtil {
 
 				Collections.reverse(ancestorFolders);
 
-				ancestorFolders.add(folder);
-
 				return TransformUtil.transform(
 					ancestorFolders,
 					ancestorFolder -> {

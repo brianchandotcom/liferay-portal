@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.scim.rest.dto.v1_0.User;
 import com.liferay.scim.rest.internal.manager.UserManagerImpl;
 import com.liferay.scim.rest.internal.manager.UserResourceManagerImpl;
@@ -83,7 +85,8 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 		_userManager = new UserManagerImpl(
 			_classNameLocalService, _companyLocalService, _configurationAdmin,
 			_expandoColumnLocalService, _expandoTableLocalService,
-			_expandoValueLocalService, _userLocalService);
+			_expandoValueLocalService, _userLocalService, _searcher,
+			_searchRequestBuilderFactory);
 	}
 
 	private Response _buildResponse(SCIMResponse scimResponse) {
@@ -131,6 +134,12 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
+
+	@Reference
+	private Searcher _searcher;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -14,6 +14,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,10 +25,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -36,8 +39,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.scim.rest.internal.configuration.ScimClientOAuth2ApplicationConfiguration;
 import com.liferay.scim.rest.internal.model.ScimUser;
 import com.liferay.scim.rest.internal.util.ScimUserUtil;
@@ -61,6 +70,7 @@ import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.GroupsGetResponse;
 import org.wso2.charon3.core.objects.plainobjects.UsersGetResponse;
+import org.wso2.charon3.core.utils.codeutils.Node;
 import org.wso2.charon3.core.utils.codeutils.SearchRequest;
 
 /**
@@ -75,7 +85,8 @@ public class UserManagerImpl implements UserManager {
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoTableLocalService expandoTableLocalService,
 		ExpandoValueLocalService expandoValueLocalService,
-		UserLocalService userLocalService) {
+		UserLocalService userLocalService, Searcher searcher,
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		_classNameLocalService = classNameLocalService;
 		_companyLocalService = companyLocalService;
@@ -84,6 +95,8 @@ public class UserManagerImpl implements UserManager {
 		_expandoTableLocalService = expandoTableLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
 		_userLocalService = userLocalService;
+		_searcher = searcher;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
 	@Override
@@ -184,6 +197,74 @@ public class UserManagerImpl implements UserManager {
 		throws NotImplementedException {
 
 		throw new NotImplementedException();
+	}
+
+	@Override
+	public UsersGetResponse listUsersWithGET(
+			Node node, Integer startIndex, Integer count, String sortBy,
+			String sortOrder, String domainName,
+			Map<String, Boolean> requiredAttributes)
+		throws BadRequestException, CharonException, NotImplementedException {
+
+		if (startIndex != null) {
+			startIndex--;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ScimClientOAuth2ApplicationConfiguration
+			scimClientOAuth2ApplicationConfiguration =
+				_getScimClientOAuth2ApplicationConfiguration(
+					serviceContext.getCompanyId());
+
+		String scimClientId = ScimClientUtil.generateScimClientId(
+			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
+
+		com.liferay.portal.search.searcher.SearchRequest searchRequest =
+			_searchRequestBuilderFactory.builder(
+			).modelIndexerClasses(
+				com.liferay.portal.kernel.model.User.class
+			).companyId(
+				serviceContext.getCompanyId()
+			).fetchSource(
+				false
+			).fields(
+				new String[0]
+			).from(
+				startIndex
+			).emptySearchEnabled(
+				true
+			).size(
+				count
+			).withSearchContext(
+				searchContext -> {
+					searchContext.setAttribute(Field.GROUP_ID, 0L);
+					searchContext.setAttribute(
+						Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+					searchContext.setAttribute(
+						"expando__keyword__custom_fields__scimClientId",
+						scimClientId);
+					searchContext.setUserId(serviceContext.getUserId());
+				}
+			).build();
+
+		SearchResponse searchResponse = _searcher.search(searchRequest);
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		return new UsersGetResponse(
+			(int)searchHits.getTotalHits(),
+			TransformUtil.transform(
+				searchHits.getSearchHits(),
+				searchHit -> {
+					Document document = searchHit.getDocument();
+
+					return ScimUserUtil.toUser(
+						_toScimUser(
+							_userLocalService.getUser(
+								document.getLong(Field.ENTRY_CLASS_PK))));
+				}));
 	}
 
 	@Override
@@ -479,6 +560,18 @@ public class UserManagerImpl implements UserManager {
 			expandoColumn = _expandoColumnLocalService.addColumn(
 				expandoTable.getTableId(), "scimClientId",
 				ExpandoColumnConstants.STRING);
+
+			UnicodeProperties unicodeProperties =
+				expandoColumn.getTypeSettingsProperties();
+
+			unicodeProperties.setProperty(
+				ExpandoColumnConstants.INDEX_TYPE,
+				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
+			expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+			expandoColumn = _expandoColumnLocalService.updateExpandoColumn(
+				expandoColumn);
 		}
 
 		_expandoValueLocalService.addValue(
@@ -595,6 +688,8 @@ public class UserManagerImpl implements UserManager {
 	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoTableLocalService _expandoTableLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final UserLocalService _userLocalService;
 
 }

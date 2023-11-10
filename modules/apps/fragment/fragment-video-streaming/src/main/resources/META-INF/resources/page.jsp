@@ -16,7 +16,7 @@
 <div style="display: flex; justify-content: left;">
 	<div class="videojs-container">
 		<video class="video-js" id="fragmentVideoJsURL" preload="auto">
-			<source src='<%= (String)request.getAttribute("src") %>' type="video/mp4" />
+			<source src="<%= (String)request.getAttribute("src") %>" type="video/mp4" />
 		</video>
 
 		<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
@@ -24,7 +24,7 @@
 </div>
 
 <script>
-	const content= document.querySelector('.videojs-container');
+	const content = document.querySelector('.videojs-container');
 
 	const configuration = {
 		autoplay: 'muted',
@@ -35,11 +35,11 @@
 	};
 
 	const height = configuration.videoHeight
-			? configuration.videoHeight.replace('px', '')
-			: configuration.videoHeight;
-		const width = configuration.videoWidth
-			? configuration.videoWidth.replace('px', '')
-			: configuration.videoWidth;
+		? configuration.videoHeight.replace('px', '')
+		: configuration.videoHeight;
+	const width = configuration.videoWidth
+		? configuration.videoWidth.replace('px', '')
+		: configuration.videoWidth;
 
 	function resizeVideoJs() {
 		const boundingClientRect = content.parentElement.getBoundingClientRect();
@@ -54,7 +54,7 @@
 
 	const player = videojs('fragmentVideoJsURL', {
 		controls: true,
-		...configuration
+		...configuration,
 	});
 
 	player.ready(() => {
@@ -62,6 +62,4 @@
 
 		resizeVideoJs();
 	});
-
-
 </script>

@@ -15,7 +15,10 @@ import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -189,8 +192,22 @@ public class CTEntryModelDocumentContributor
 
 				if (group != null) {
 					document.addKeyword(Field.GROUP_ID, group.getGroupId());
+
+					Map<Locale, String> groupNameMap;
+
+					try {
+						groupNameMap = group.getDescriptiveNameMap();
+					}
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(portalException);
+						}
+
+						groupNameMap = group.getNameMap();
+					}
+
 					document.addLocalizedKeyword(
-						"groupName", group.getNameMap(), false, true);
+						"groupName", groupNameMap, false, true);
 				}
 			}
 		}
@@ -217,6 +234,9 @@ public class CTEntryModelDocumentContributor
 				true, true);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTEntryModelDocumentContributor.class);
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

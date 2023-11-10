@@ -1127,7 +1127,7 @@ public class DefaultObjectEntryManagerImplTest
 		// object definition
 
 		_addResourcePermission(
-			_rootObjectDefinition, ObjectActionKeys.ADD_OBJECT_ENTRY,
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _rootObjectDefinition,
 			_buyerRole);
 
 		AccountEntry accountEntry = _addAccountEntry();
@@ -1182,7 +1182,7 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_removeResourcePermission(
-			_rootObjectDefinition, ObjectActionKeys.ADD_OBJECT_ENTRY,
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _rootObjectDefinition,
 			_buyerRole);
 
 		AssertUtils.assertFailure(
@@ -1598,11 +1598,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Tree tree = _createAccountRestrictedObjectEntryTree(
-			accountEntry1, StringPool.BLANK);
+		Tree tree = _createObjectEntryTree(accountEntry1, StringPool.BLANK);
 
 		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
+			ActionKeys.VIEW, _rootObjectDefinition, _buyerRole);
 
 		_user = _addUser();
 
@@ -1630,7 +1629,7 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.DELETE, _buyerRole);
+			ActionKeys.DELETE, _rootObjectDefinition, _buyerRole);
 
 		TreeTestUtil.forEachNodeObjectEntry(
 			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
@@ -2131,11 +2130,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		_createAccountRestrictedObjectEntryTree(accountEntry1, "1");
+		_createObjectEntryTree(accountEntry1, "1");
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
-		_createAccountRestrictedObjectEntryTree(accountEntry2, "2");
+		_createObjectEntryTree(accountEntry2, "2");
 
 		_user = _addUser();
 
@@ -2537,7 +2536,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testSearchObjectEntriesWithAccountRestriction()
+	public void testSearchObjectEntriesWithAccountEntryRestricted()
 		throws Exception {
 
 		AccountEntry accountEntry1 = _addAccountEntry();
@@ -2805,65 +2804,8 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testUpdateObjectEntryHierarchyWithAccountRestriction()
+	public void testUpdateObjectEntryWithAccountEntryRestricted1()
 		throws Exception {
-
-		// Root account restrictions must be inherited
-
-		AccountEntry accountEntry1 = _addAccountEntry();
-
-		Tree tree = _createAccountRestrictedObjectEntryTree(
-			accountEntry1, StringPool.BLANK);
-
-		_user = _addUser();
-
-		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
-
-		Node rootNode = tree.getRootNode();
-
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(), _objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				AssertUtils.assertFailure(
-					PrincipalException.MustHavePermission.class,
-					StringBundler.concat(
-						"User ", _user.getUserId(),
-						" must have UPDATE permission for ",
-						_rootObjectDefinition.getClassName(), StringPool.SPACE,
-						rootNode.getPrimaryKey()),
-					() -> _defaultObjectEntryManager.updateObjectEntry(
-						_simpleDTOConverterContext, objectDefinition,
-						objectEntry.getObjectEntryId(),
-						_defaultObjectEntryManager.getObjectEntry(
-							_simpleDTOConverterContext, objectDefinition,
-							objectEntry.getObjectEntryId())));
-			});
-
-		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.UPDATE, _buyerRole);
-
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(), _objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				_defaultObjectEntryManager.updateObjectEntry(
-					_simpleDTOConverterContext, objectDefinition,
-					objectEntry.getObjectEntryId(),
-					_defaultObjectEntryManager.getObjectEntry(
-						_simpleDTOConverterContext, objectDefinition,
-						objectEntry.getObjectEntryId()));
-			});
-	}
-
-	@Test
-	public void testUpdateObjectEntryWithAccountRestriction() throws Exception {
 
 		// Regular roles' company scope permissions should not be restricted by
 		// account entry
@@ -3026,6 +2968,64 @@ public class DefaultObjectEntryManagerImplTest
 		_defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition3,
 			objectEntry1.getId(), objectEntry1);
+	}
+
+	@Test
+	public void testUpdateObjectEntryWithAccountEntryRestricted2()
+		throws Exception {
+
+		// Object definitions inherit account entry restricted from the root
+		// object definition
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+
+		Tree tree = _createObjectEntryTree(accountEntry1, StringPool.BLANK);
+
+		_user = _addUser();
+
+		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
+
+		Node rootNode = tree.getRootNode();
+
+		TreeTestUtil.forEachNodeObjectEntry(
+			tree.iterator(), _objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+
+				AssertUtils.assertFailure(
+					PrincipalException.MustHavePermission.class,
+					StringBundler.concat(
+						"User ", _user.getUserId(),
+						" must have UPDATE permission for ",
+						_rootObjectDefinition.getClassName(), StringPool.SPACE,
+						rootNode.getPrimaryKey()),
+					() -> _defaultObjectEntryManager.updateObjectEntry(
+						_simpleDTOConverterContext, objectDefinition,
+						objectEntry.getObjectEntryId(),
+						_defaultObjectEntryManager.getObjectEntry(
+							_simpleDTOConverterContext, objectDefinition,
+							objectEntry.getObjectEntryId())));
+			});
+
+		_addResourcePermission(
+			ActionKeys.UPDATE, _rootObjectDefinition, _buyerRole);
+
+		TreeTestUtil.forEachNodeObjectEntry(
+			tree.iterator(), _objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+
+				_defaultObjectEntryManager.updateObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					objectEntry.getObjectEntryId(),
+					_defaultObjectEntryManager.getObjectEntry(
+						_simpleDTOConverterContext, objectDefinition,
+						objectEntry.getObjectEntryId()));
+			});
 	}
 
 	@Override
@@ -3283,7 +3283,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _addResourcePermission(
-			ObjectDefinition objectDefinition, String actionId, Role role)
+			String actionId, ObjectDefinition objectDefinition, Role role)
 		throws Exception {
 
 		String name = objectDefinition.getClassName();
@@ -3300,7 +3300,7 @@ public class DefaultObjectEntryManagerImplTest
 	private void _addResourcePermission(String actionId, Role role)
 		throws Exception {
 
-		_addResourcePermission(_objectDefinition3, actionId, role);
+		_addResourcePermission(actionId, _objectDefinition3, role);
 	}
 
 	private Role _addRoleUser(
@@ -3490,7 +3490,24 @@ public class DefaultObjectEntryManagerImplTest
 			StringUtil.merge(valuesList, includes ? " or " : " and "), "))");
 	}
 
-	private Tree _createAccountRestrictedObjectEntryTree(
+	private ObjectDefinition _createObjectDefinition(
+			List<ObjectField> objectFields)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				adminUser.getUserId(), 0, false, true, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+
+		return objectDefinitionLocalService.publishCustomObjectDefinition(
+			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
+	}
+
+	private Tree _createObjectEntryTree(
 			AccountEntry accountEntry, String externalReferenceCodeSuffix)
 		throws Exception {
 
@@ -3518,23 +3535,6 @@ public class DefaultObjectEntryManagerImplTest
 			ServiceContextTestUtil.getServiceContext());
 
 		return tree;
-	}
-
-	private ObjectDefinition _createObjectDefinition(
-			List<ObjectField> objectFields)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.addCustomObjectDefinition(
-				adminUser.getUserId(), 0, false, true, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
-
-		return objectDefinitionLocalService.publishCustomObjectDefinition(
-			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -3579,7 +3579,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _removeResourcePermission(
-			ObjectDefinition objectDefinition, String actionId, Role role)
+			String actionId, ObjectDefinition objectDefinition, Role role)
 		throws Exception {
 
 		String name = objectDefinition.getClassName();
@@ -3596,7 +3596,7 @@ public class DefaultObjectEntryManagerImplTest
 	private void _removeResourcePermission(String actionId, Role role)
 		throws Exception {
 
-		_removeResourcePermission(_objectDefinition3, actionId, role);
+		_removeResourcePermission(actionId, _objectDefinition3, role);
 	}
 
 	private void _testAddObjectEntryAccountEntryRestriction(

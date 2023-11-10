@@ -61,6 +61,10 @@ public class MVCCSynchronizerPostUpdateEventListener
 			PortalCache<Serializable, Serializable> portalCache =
 				EntityCacheUtil.getPortalCache(modelClass);
 
+			if (portalCache == null) {
+				return;
+			}
+
 			Serializable entityCacheResult = portalCache.get(primaryKeyObj);
 
 			if (entityCacheResult instanceof MVCCModel) {

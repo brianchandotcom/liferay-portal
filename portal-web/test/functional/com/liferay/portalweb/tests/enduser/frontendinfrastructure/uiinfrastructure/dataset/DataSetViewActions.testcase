@@ -1250,23 +1250,22 @@ definition {
 		}
 
 		task ("When the user clicks on the Icon field") {
-			Click(
-				key_fieldLabel = "Icon",
-				locator1 = "Select#GENERIC_SELECT_FIELD");
+			Click(locator1 = "Button#PLUS");
 		}
 
-		task ("Then a dropdown list all the icons in clay with the name and the corresponding icon") {
-			Select(
-				key_fieldLabel = "Icon",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "accessibility");
+		task ("Then a modal list all the icons in clay with the name and the corresponding icon") {
+			SelectFrameTop();
 
 			AssertElementPresent(
-				key_text = "pt-br",
-				locator1 = "Icon#ANY");
+					key_text = "accessibility",
+					locator1 = "Icon#ANY");
 		}
 
 		task ("When the mandatory fields are filled") {
+			Click(
+				locator1 = "Button#CLOSE_MODAL",
+				key_modalTitle = "");
+
 			Type(
 				key_unnamedTitle = "",
 				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
@@ -1279,10 +1278,6 @@ definition {
 		}
 
 		task ("And clicks on Save button") {
-			Click(
-				key_fieldLabel = "Icon",
-				locator1 = "Select#GENERIC_SELECT_FIELD");
-
 			PortletEntry.save();
 		}
 

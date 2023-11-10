@@ -26,10 +26,19 @@ definition {
 				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
 				value1 = ${key_actionName});
 
-			Select(
-				key_fieldLabel = "Icon",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${key_actionIcon});
+			if (isSet(key_actionIcon)) {
+				Click(locator1 = "Button#PLUS");
+
+				SelectFrameTop();
+
+				Type(
+					locator1 = "DataSet#MODAL_SEARCH",
+					value1 = ${key_actionIcon});
+
+				Click.mouseOverClick(
+					key_text = ${key_actionIcon},
+					locator1 = "Icon#ANY");
+			}
 
 			Select(
 				key_fieldLabel = "Type",
@@ -63,8 +72,8 @@ definition {
 			}
 
 			Click(
-				key_fieldLabel = "Icon",
-				locator1 = "Select#GENERIC_SELECT_FIELD");
+				key_text = ${key_actionIcon},
+				locator1 = "Icon#ANY");
 
 			PortletEntry.save();
 		}

@@ -1602,6 +1602,58 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-198068. View documents and media URL of Image Fragment is correctly displayed on the Live environment."
+	@priority = 4
+	test ViewDisplayedImageOnLiveSiteAsGuest {
+		task ("Given a user displays an Image on content page in live site") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "${randomSiteName}-staging",
+				mimeType = "image/png",
+				sourceFileName = "Document_1.png");
+
+			JSONLayout.addPublicLayout(
+				groupName = "${randomSiteName} (Staging)",
+				layoutName = "Test Content Page Name",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "${randomSiteName} Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+
+			PageEditor.editFragmentImage(
+				fragmentName = "Image",
+				id = "image-square",
+				imageFileName = "Document_1");
+
+			PageEditor.publish();
+
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("When this page is visited by a guest user") {
+			User.logoutPG();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then the guest user could view the displayed image") {
+			ContentPages.viewFragmentImage(
+				fragmentName = "image",
+				id = "image-square",
+				image = "document_1");
+		}
+	}
+
 	@description = "This is a test for LPS-141773 and LPS-142348. Able to land in the experience selected at view mode in page editor in staging site."
 	@priority = 4
 	test ViewExperienceInViewMode {

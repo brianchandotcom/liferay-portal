@@ -23,7 +23,7 @@ definition {
 
 		ExecuteJavaScript(value1 = "sessionStorage.clear(); window.open();");
 
-		SelectWindow.selectPopUp(value1 = "null");
+		selenium.selectPopUp("null");
 
 		selenium.open(${value1});
 	}

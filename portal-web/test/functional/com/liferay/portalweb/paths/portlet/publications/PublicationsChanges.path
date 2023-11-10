@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_NO_CHANGES</td>
-	<td>//div[contains(@class, 'c-empty-state-text') and contains(.,'No changes were found.')]</td>
+	<td>//div[contains(@class, 'c-empty-state-text') and contains(.,'Sorry, no results were found.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_TITLE</td>
-	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_changeCategory}')]//preceding-sibling::div[contains(.,'${key_changeTitle}')]</td>
+	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_changeCategory}')]//preceding-sibling::div//a[contains(.,'${key_changeTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,6 +133,11 @@
 <tr>
 	<td>SHOW_ALL_ITEMS_TOGGLE_SWITCH</td>
 	<td>//input[contains(@class,'toggle-switch-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELLIPSIS_IN_PUBLICATION</td>
+	<td>//button[contains(@class, 'dropdown-toggle btn btn-monospaced btn-sm btn-unstyled')]</td>
 	<td></td>
 </tr>
 <tr>

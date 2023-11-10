@@ -220,7 +220,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChanges(changeCategory = null, changeUser = null, publishedPublication = null, changeType = null, changeSite = null, changeTitle = null, changeStatus = null, publicationName = null, showAllItems = null) {
+	macro viewChanges(changeCategory = null, changeUser = null, publishedPublication = null, changeType = null, changeSite = null, changeTitle = null, changeStatus = null, publicationName = null, showSystemChanges = null) {
 		if (${publishedPublication} == "true") {
 			Click(
 				key_publicationName = ${publicationName},
@@ -229,8 +229,10 @@ definition {
 
 		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
 
-		if (${showAllItems} == "true") {
-			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
+		if (${showSystemChanges} == "true") {
+			Click(locator1 = "PublicationsChanges#ELLIPSIS_IN_PUBLICATION");
+
+			MenuItem.click(menuItem = "Show System Changes");
 		}
 
 		var key_changeCategory = ${changeCategory};

@@ -1613,11 +1613,10 @@ definition {
 				labelName = "Type",
 				optionName = "One to Many");
 
-			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-			Click(
-				key_columnOption = "Custom Object",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Many Records Of",
+				optionName = "Custom Object");
 
 			Click(locator1 = "ObjectRelationships#SELECT_PARAMETER_FORM");
 
@@ -2292,17 +2291,15 @@ definition {
 				locator1 = "ObjectAdmin#LABEL_OBJECT_RELATIONSHIP",
 				value1 = "Relationship");
 
-			Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Type",
+				optionName = "One to Many");
 
-			Click(
-				key_type = "One to Many",
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
-
-			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-			Click(
-				key_columnOption = "Custom Object 697",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Many Records Of",
+				optionName = "Custom Object 697");
 		}
 
 		task ("When the user clicks on the switch button") {
@@ -2413,11 +2410,10 @@ definition {
 				labelName = "Type",
 				optionName = "Many to Many");
 
-			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-			Click(
-				key_columnOption = "Custom Object 195296",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Many Records Of",
+				optionName = "Custom Object 195296");
 		}
 
 		task ("Then the switch button is no longer present") {

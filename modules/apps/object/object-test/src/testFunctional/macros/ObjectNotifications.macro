@@ -16,13 +16,10 @@ definition {
 
 	@summary = "Default summary"
 	macro addNotificationTemplateAttachment(objectLabel = null) {
-		Click(
-			key_dataSource = "Select a Data Source",
-			locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
-
-		Click(
-			key_optionName = ${objectLabel},
-			locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select a Data Source",
+			labelName = "Data Source",
+			optionName = ${objectLabel});
 
 		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
 

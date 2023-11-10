@@ -26,11 +26,10 @@ definition {
 			Click(locator1 = "ObjectCustomViews#DEFAULT_SORT_ADD_BUTTON");
 		}
 
-		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-		Click(
-			key_columnOption = ${columnOption},
-			locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Columns",
+			optionName = ${columnOption});
 
 		ObjectAdmin.selectDropdownItem(
 			currentOption = "Ascending",

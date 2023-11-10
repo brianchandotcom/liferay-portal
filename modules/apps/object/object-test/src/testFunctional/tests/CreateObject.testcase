@@ -726,11 +726,10 @@ definition {
 			labelName = "Type",
 			optionName = "One to Many");
 
-		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-		Click(
-			key_columnOption = "Custom Object 13",
-			locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Many Records Of",
+			optionName = "Custom Object 13");
 
 		Button.clickCancel();
 

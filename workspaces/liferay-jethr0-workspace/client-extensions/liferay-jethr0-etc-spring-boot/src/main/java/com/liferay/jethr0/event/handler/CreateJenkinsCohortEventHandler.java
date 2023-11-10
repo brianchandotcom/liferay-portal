@@ -21,10 +21,7 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JSONObject jenkinsCohortJSONObject = validateJenkinsCohortJSONObject(
-			messageJSONObject.optJSONObject("jenkinsCohort"));
+		JSONObject jenkinsCohortJSONObject = getJenkinsCohortJSONObject();
 
 		JenkinsCohortEntityRepository jenkinsCohortEntityRepository =
 			getJenkinsCohortEntityRepository();

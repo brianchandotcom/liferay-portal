@@ -8,12 +8,9 @@ package com.liferay.change.tracking.rest.internal.dto.v1_0.converter;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.Status;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
@@ -69,27 +66,6 @@ public class CTEntryDTOConverter
 			field.getLocalizedValues(), locale, LocaleUtil.getDefault());
 	}
 
-	private String _getSiteName(
-		long ctCollectionId, Locale locale, Long groupId) {
-
-		if (groupId == null) {
-			return null;
-		}
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId)) {
-
-			Group group = _groupLocalService.fetchGroup(groupId);
-
-			if (group != null) {
-				return group.getName(locale);
-			}
-		}
-
-		return null;
-	}
-
 	private <T extends BaseModel<T>> CTEntry _toCTEntry(
 			DTOConverterContext dtoConverterContext,
 			com.liferay.change.tracking.model.CTEntry ctEntry)
@@ -127,19 +103,22 @@ public class CTEntryDTOConverter
 
 				setSiteId(
 					() -> {
-						Long groupId = null;
-
 						if (document.hasField(Field.GROUP_ID)) {
-							groupId = Long.valueOf(
+							return GetterUtil.getLong(
 								document.get(Field.GROUP_ID));
 						}
 
-						setSiteName(
-							_getSiteName(
-								ctCollectionId, dtoConverterContext.getLocale(),
-								groupId));
+						return null;
+					});
+				setSiteName(
+					() -> {
+						if (document.hasField("groupName")) {
+							return _getLocalizedValue(
+								document.getField("groupName"),
+								dtoConverterContext.getLocale());
+						}
 
-						return groupId;
+						return null;
 					});
 			}
 		};

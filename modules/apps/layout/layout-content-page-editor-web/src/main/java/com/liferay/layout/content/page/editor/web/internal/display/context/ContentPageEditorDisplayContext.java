@@ -594,8 +594,9 @@ public class ContentPageEditorDisplayContext {
 				() -> {
 					Layout publishedLayout = _getPublishedLayout();
 
-					if (publishedLayout.isDenied() ||
-						publishedLayout.isPending()) {
+					if ((publishedLayout != null) &&
+						(publishedLayout.isDenied() ||
+						 publishedLayout.isPending())) {
 
 						return true;
 					}

@@ -269,15 +269,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPanelCategoryKey(panelCategoryKey = null) {
-		Click(locator1 = "CreateObject#PANEL_LINK");
-
-		Click(
-			key_menuItem = ${panelCategoryKey},
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-	}
-
-	@summary = "Default summary"
 	macro selectScope(fieldLabel = null) {
 		Click(locator1 = "CreateObject#SCOPE");
 

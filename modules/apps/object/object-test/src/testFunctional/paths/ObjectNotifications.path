@@ -21,11 +21,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>DATA_SOURCE_ATTACHMENTS</td>
-		<td>//div[@tabindex='0']//span[contains(.,'${key_dataSource}')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>FIELD_ATTACHMENTS_OBJECT</td>
 		<td>//div[@class='input-group-item']//div[@class="form-control form-control-tag-group input-group"]</td>
 		<td></td>

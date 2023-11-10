@@ -209,7 +209,17 @@ definition {
 			locator1 = "Button#ANY_TITLE",
 			value1 = "Page 1 / 3");
 
-		DMNavigator.openToConfigInSystemSettings(portlet = "PDF Preview");
+		DMNavigator.openToConfigInSystemSettings(portlet = "File Preview Limits");
+
+		AssertTextEquals(
+			key_portletTitle = "File Preview Limits",
+			locator1 = "DocumentsAndMedia#PORTLET_TITLE",
+			value1 = "File Preview Limits");
+
+		AssertTextEquals(
+			key_fieldLabel = "Maximum Number of Pages",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = 3);
 
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",

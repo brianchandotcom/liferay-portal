@@ -611,7 +611,7 @@ database.mysql.docker.image=mysql:${database.version}
 database.mysql.host=localhost_mysql
 database.mysql.password=
 database.mysql.schema=lportal
-database.mysql.url=jdbc:mysql://localhost:3307/lportal?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=true
+database.mysql.url=jdbc:mysql://localhost:3307/lportal?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&permitMysqlScheme&serverTimezone=GMT&useFastDateParsing=false&useUnicode=true
 database.mysql.username=root
 database.mysql.version=${database.version}
 database.type=mysql

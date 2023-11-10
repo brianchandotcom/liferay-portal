@@ -42,6 +42,10 @@ function Select({
 	if (selectedItem?.length === 0) {
 		selectedItem = '';
 	}
+	else if (typeof (selectedItem as string) === 'string') {
+		selectedItem =
+			(newSelectedKey as string) || (predefinedValue as string) || '';
+	}
 	else {
 		selectedItem = newSelectedKey[0] || predefinedValue?.[0] || '';
 	}

@@ -62,7 +62,7 @@ definition {
 			changeTitle = "Regrole Name Permissions for Publications All Sites and Asset Libraries",
 			changeType = "Deleted",
 			changeUser = "Test Test",
-			showAllItems = "true");
+			showSystemChanges = "true");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
@@ -99,7 +99,7 @@ definition {
 			changeTitle = "Regrole Name Permissions for Publications All Sites and Asset Libraries",
 			changeType = "Modified",
 			changeUser = "Test Test",
-			showAllItems = "true");
+			showSystemChanges = "true");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
@@ -139,7 +139,7 @@ definition {
 			changeTitle = "Regrole Name Permissions for Portal",
 			changeType = "Added",
 			changeUser = "Test Test",
-			showAllItems = "true");
+			showSystemChanges = "true");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 	}

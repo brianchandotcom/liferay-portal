@@ -54,7 +54,7 @@ definition {
 			changeTitle = "Blogs Entry Title",
 			changeType = "Added",
 			changeUser = "Test Test",
-			showAllItems = "true");
+			showSystemChanges = "true");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 
@@ -113,7 +113,7 @@ definition {
 			changeTitle = "Blogs Entry Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test",
-			showAllItems = "true");
+			showSystemChanges = "true");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 

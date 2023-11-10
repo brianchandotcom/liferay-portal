@@ -13,10 +13,12 @@ import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenPro
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -84,6 +86,21 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 					).put(
 						"companyId", companyId.toString()
 					).build());
+
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					_localOAuthClient.requestTokens(
+						_oAuth2Application,
+						_userLocalService.getGuestUser(
+							companyId
+						).getUserId()));
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"New access token for SCIM OAuth 2 application ",
+							_oAuth2Application.getName(), " generated: ",
+							jsonObject.getString("access_token")));
+				}
 			});
 	}
 

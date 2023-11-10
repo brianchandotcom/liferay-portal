@@ -1420,10 +1420,6 @@ definition {
 		}
 
 		task ("And clicks on Save button") {
-			Click(
-				key_fieldLabel = "Icon",
-				locator1 = "Select#GENERIC_SELECT_FIELD");
-
 			PortletEntry.save();
 		}
 

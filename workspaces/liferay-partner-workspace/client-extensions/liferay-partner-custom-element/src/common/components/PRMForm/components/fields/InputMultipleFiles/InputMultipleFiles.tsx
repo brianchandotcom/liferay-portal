@@ -12,8 +12,8 @@ import LiferayFile from '../../../../../interfaces/liferayFile';
 import MDFClaim from '../../../../../interfaces/mdfClaim';
 import PRMFormik from '../../../../PRMFormik';
 import ListFiles from '../InputMultipleFilesListing/components/ListFiles';
-import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
+import PRMFormMultipleFilesProps from '../common/interfaces/prmFormMultipleFilesProps';
 
 interface IProps {
 	acceptedFilesExtensions: string;
@@ -31,7 +31,7 @@ const InputMultipleFiles = ({
 	onAccept,
 	required,
 	value,
-}: PRMFormFieldProps &
+}: PRMFormMultipleFilesProps &
 	PRMFormFieldStateProps<LiferayFile[]> &
 	Pick<FormikContextType<MDFClaim>, 'setFieldValue'> &
 	IProps) => {
@@ -39,7 +39,7 @@ const InputMultipleFiles = ({
 		noClick: true,
 		noKeyboard: true,
 		onDrop: (acceptedFiles) => {
-			form.setFieldTouched(field.name, true);
+			form?.setFieldTouched(field.name, true);
 			onAccept(acceptedFiles);
 		},
 	});

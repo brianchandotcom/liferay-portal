@@ -54,7 +54,7 @@ public class JenkinsEventsUtil {
 	}
 
 	public static void publish(
-		JenkinsEventsDescriptor.EventTrigger eventTrigger, Object eventObject) {
+		JenkinsEventsDescriptor.EventType eventType, Object eventObject) {
 
 		if (_jenkinsEventsDescriptor == null) {
 			return;
@@ -71,9 +71,9 @@ public class JenkinsEventsUtil {
 		payloadJSONObject.put(
 			"build", _getBuildJSONObject(eventObject)
 		).put(
-			"computer", _getComputerJSONObject(eventObject, eventTrigger)
+			"computer", _getComputerJSONObject(eventObject, eventType)
 		).put(
-			"eventTrigger", eventTrigger
+			"eventType", eventType
 		).put(
 			"jenkins", _getJenkinsJSONObject(jenkins)
 		).put(
@@ -83,7 +83,7 @@ public class JenkinsEventsUtil {
 		);
 
 		_jenkinsEventsDescriptor.publish(
-			payloadJSONObject.toString(), eventTrigger);
+			payloadJSONObject.toString(), eventType);
 	}
 
 	public static void setJenkinsEventsDescriptor(
@@ -156,7 +156,7 @@ public class JenkinsEventsUtil {
 	}
 
 	private static JSONObject _getComputerJSONObject(
-		Object eventObject, JenkinsEventsDescriptor.EventTrigger eventTrigger) {
+		Object eventObject, JenkinsEventsDescriptor.EventType eventType) {
 
 		Computer computer = _getComputer(eventObject);
 
@@ -166,14 +166,10 @@ public class JenkinsEventsUtil {
 
 		JSONObject jsonObject = new JSONObject();
 
-		if (eventTrigger ==
-				JenkinsEventsDescriptor.EventTrigger.COMPUTER_IDLE) {
-
+		if (eventType == JenkinsEventsDescriptor.EventType.COMPUTER_IDLE) {
 			jsonObject.put("busy", false);
 		}
-		else if (eventTrigger ==
-					JenkinsEventsDescriptor.EventTrigger.COMPUTER_BUSY) {
-
+		else if (eventType == JenkinsEventsDescriptor.EventType.COMPUTER_BUSY) {
 			jsonObject.put("busy", true);
 		}
 		else {

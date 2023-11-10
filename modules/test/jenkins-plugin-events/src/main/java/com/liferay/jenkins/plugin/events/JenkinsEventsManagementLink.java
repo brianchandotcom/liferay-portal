@@ -50,13 +50,13 @@ public class JenkinsEventsManagementLink extends ManagementLink {
 		jenkinsEventsDescriptor.setUserPassword(
 			jsonObject.getString("userPassword"));
 
-		jenkinsEventsDescriptor.clearEventTriggers();
+		jenkinsEventsDescriptor.clearEventTypes();
 
-		for (JenkinsEventsDescriptor.EventTrigger eventTrigger :
-				JenkinsEventsDescriptor.EventTrigger.values()) {
+		for (JenkinsEventsDescriptor.EventType eventType :
+				JenkinsEventsDescriptor.EventType.values()) {
 
-			if (jsonObject.optBoolean(eventTrigger.toString())) {
-				jenkinsEventsDescriptor.addEventTrigger(eventTrigger);
+			if (jsonObject.optBoolean(eventType.toString())) {
+				jenkinsEventsDescriptor.addEventType(eventType);
 			}
 		}
 

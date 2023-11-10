@@ -29,13 +29,13 @@ public class JenkinsComputerListener extends ComputerListener {
 		@Nonnull Computer computer, OfflineCause offlineCause) {
 
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.COMPUTER_OFFLINE, computer);
+			JenkinsEventsDescriptor.EventType.COMPUTER_OFFLINE, computer);
 	}
 
 	@Override
 	public void onOnline(Computer computer, TaskListener taskListener) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.COMPUTER_ONLINE, computer);
+			JenkinsEventsDescriptor.EventType.COMPUTER_ONLINE, computer);
 	}
 
 	@Override
@@ -43,14 +43,14 @@ public class JenkinsComputerListener extends ComputerListener {
 		Computer computer, OfflineCause offlineCause) {
 
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.COMPUTER_TEMPORARILY_OFFLINE,
+			JenkinsEventsDescriptor.EventType.COMPUTER_TEMPORARILY_OFFLINE,
 			computer);
 	}
 
 	@Override
 	public void onTemporarilyOnline(Computer computer) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.COMPUTER_TEMPORARILY_ONLINE,
+			JenkinsEventsDescriptor.EventType.COMPUTER_TEMPORARILY_ONLINE,
 			computer);
 	}
 

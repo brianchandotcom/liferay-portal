@@ -117,7 +117,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 		jsonObject.put(
 			"build", buildJSONObject
 		).put(
-			"eventTrigger", EventTrigger.CREATE_BUILD
+			"eventType", EventType.CREATE_BUILD
 		).put(
 			"job", jobJSONObject
 		);

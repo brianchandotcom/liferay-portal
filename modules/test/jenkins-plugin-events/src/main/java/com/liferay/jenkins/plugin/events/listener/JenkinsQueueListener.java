@@ -22,49 +22,49 @@ public class JenkinsQueueListener extends QueueListener {
 	@Override
 	public void onEnterBlocked(Queue.BlockedItem blockedItem) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.QUEUE_ITEM_ENTER_BLOCKED,
+			JenkinsEventsDescriptor.EventType.QUEUE_ITEM_ENTER_BLOCKED,
 			blockedItem);
 	}
 
 	@Override
 	public void onEnterBuildable(Queue.BuildableItem buildableItem) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.QUEUE_ITEM_ENTER_BUILDABLE,
+			JenkinsEventsDescriptor.EventType.QUEUE_ITEM_ENTER_BUILDABLE,
 			buildableItem);
 	}
 
 	@Override
 	public void onEnterWaiting(Queue.WaitingItem waitingItem) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.QUEUE_ITEM_ENTER_WAITING,
+			JenkinsEventsDescriptor.EventType.QUEUE_ITEM_ENTER_WAITING,
 			waitingItem);
 	}
 
 	@Override
 	public void onLeaveBlocked(Queue.BlockedItem blockedItem) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.QUEUE_ITEM_LEAVE_BLOCKED,
+			JenkinsEventsDescriptor.EventType.QUEUE_ITEM_LEAVE_BLOCKED,
 			blockedItem);
 	}
 
 	@Override
 	public void onLeaveBuildable(Queue.BuildableItem buildableItem) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.QUEUE_ITEM_LEAVE_BUILDABLE,
+			JenkinsEventsDescriptor.EventType.QUEUE_ITEM_LEAVE_BUILDABLE,
 			buildableItem);
 	}
 
 	@Override
 	public void onLeaveWaiting(Queue.WaitingItem waitingItem) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.QUEUE_ITEM_LEAVE_WAITING,
+			JenkinsEventsDescriptor.EventType.QUEUE_ITEM_LEAVE_WAITING,
 			waitingItem);
 	}
 
 	@Override
 	public void onLeft(Queue.LeftItem leftItem) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.QUEUE_ITEM_LEFT, leftItem);
+			JenkinsEventsDescriptor.EventType.QUEUE_ITEM_LEFT, leftItem);
 	}
 
 }

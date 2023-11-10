@@ -65,7 +65,7 @@ public interface Jethr0Client {
 
 	}
 
-	public enum EventTrigger {
+	public enum EventType {
 
 		CREATE_BUILD
 

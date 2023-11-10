@@ -24,12 +24,12 @@ public class JenkinsBuildListener extends RunListener<Build> {
 	@Override
 	public void onCompleted(Build build, TaskListener taskListener) {
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.BUILD_COMPLETED, build);
+			JenkinsEventsDescriptor.EventType.BUILD_COMPLETED, build);
 
 		Executor executor = build.getExecutor();
 
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.COMPUTER_IDLE,
+			JenkinsEventsDescriptor.EventType.COMPUTER_IDLE,
 			executor.getOwner());
 	}
 
@@ -38,11 +38,11 @@ public class JenkinsBuildListener extends RunListener<Build> {
 		Executor executor = build.getExecutor();
 
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.COMPUTER_BUSY,
+			JenkinsEventsDescriptor.EventType.COMPUTER_BUSY,
 			executor.getOwner());
 
 		JenkinsEventsUtil.publish(
-			JenkinsEventsDescriptor.EventTrigger.BUILD_STARTED, build);
+			JenkinsEventsDescriptor.EventType.BUILD_STARTED, build);
 	}
 
 }

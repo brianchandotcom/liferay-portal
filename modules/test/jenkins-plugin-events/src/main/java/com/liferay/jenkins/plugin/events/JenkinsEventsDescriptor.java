@@ -36,31 +36,30 @@ public class JenkinsEventsDescriptor
 		JenkinsEventsUtil.setJenkinsEventsDescriptor(this);
 	}
 
-	public void addEventTrigger(EventTrigger eventTrigger) {
-		_eventTriggers.add(eventTrigger);
+	public void addEventType(EventType eventType) {
+		_eventTypes.add(eventType);
 	}
 
-	public void clearEventTriggers() {
-		_eventTriggers.clear();
+	public void clearEventTypes() {
+		_eventTypes.clear();
 	}
 
-	public boolean containsEventTrigger(EventTrigger eventTrigger) {
-		if (eventTrigger == null) {
+	public boolean containsEventType(EventType eventType) {
+		if (eventType == null) {
 			return false;
 		}
 
-		if (_eventTriggers.contains(eventTrigger)) {
+		if (_eventTypes.contains(eventType)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public boolean containsEventTrigger(String eventTriggerString) {
-		for (EventTrigger eventTrigger : EventTrigger.values()) {
-			if (Objects.equals(eventTriggerString, eventTrigger.toString())) {
-				return containsEventTrigger(
-					EventTrigger.valueOf(eventTriggerString));
+	public boolean containsEventType(String eventTypeString) {
+		for (EventType eventType : EventType.values()) {
+			if (Objects.equals(eventTypeString, eventType.toString())) {
+				return containsEventType(EventType.valueOf(eventTypeString));
 			}
 		}
 
@@ -72,8 +71,8 @@ public class JenkinsEventsDescriptor
 		return this;
 	}
 
-	public List<EventTrigger> getEventTriggers() {
-		return _eventTriggers;
+	public List<EventType> getEventTypes() {
+		return _eventTypes;
 	}
 
 	public String getInboundQueueName() {
@@ -96,11 +95,11 @@ public class JenkinsEventsDescriptor
 		return _userPassword;
 	}
 
-	public void publish(String payload, EventTrigger eventTrigger) {
+	public void publish(String payload, EventType eventType) {
 		String outboundQueueName = getOutboundQueueName();
 
-		if (!containsEventTrigger(eventTrigger) ||
-			(outboundQueueName == null) || outboundQueueName.isEmpty()) {
+		if (!containsEventType(eventType) || (outboundQueueName == null) ||
+			outboundQueueName.isEmpty()) {
 
 			return;
 		}
@@ -187,7 +186,7 @@ public class JenkinsEventsDescriptor
 		}
 	}
 
-	public enum EventTrigger {
+	public enum EventType {
 
 		BUILD_COMPLETED, BUILD_STARTED, COMPUTER_BUSY, COMPUTER_IDLE,
 		COMPUTER_OFFLINE, COMPUTER_ONLINE, COMPUTER_TEMPORARILY_OFFLINE,
@@ -198,7 +197,7 @@ public class JenkinsEventsDescriptor
 
 	}
 
-	private final List<EventTrigger> _eventTriggers = new ArrayList<>();
+	private final List<EventType> _eventTypes = new ArrayList<>();
 	private transient JMSQueue _inboundJMSQueue;
 	private String _inboundQueueName;
 	private transient JMSQueue _outboundJMSQueue;

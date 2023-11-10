@@ -1119,11 +1119,10 @@ definition {
 
 			AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 
-			Click(locator1 = "ObjectField#LABEL_RELATIONSHIP");
-
-			Click(
-				key_dropdownItem = "RelationshipCommerce",
-				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Relationship",
+				optionName = "RelationshipCommerce");
 
 			ObjectAdmin.selectDropdownItem(
 				currentOption = "Max",
@@ -3482,18 +3481,20 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Type(
-			locator1 = "ObjectField#LABEL_INPUT",
-			value1 = "Custom Picklist");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Type",
+			optionName = "Picklist");
 
-		ObjectField.selectType(fieldType = "Picklist");
-
-		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_PICKLIST");
+		Click(
+			key_currentOption = "Select an option",
+			key_labelName = "Picklist",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		for (var numberPicklist : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21") {
 			AssertElementPresent(
 				key_optionName = "Custom Picklist ${numberPicklist}",
-				locator1 = "ObjectAdmin#VIEW_PICKLIST_OPTIONS");
+				locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 		}
 	}
 

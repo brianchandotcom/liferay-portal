@@ -770,11 +770,9 @@ public class SourceFormatter {
 						_sourceFormatterArgs.getBaseDirName(),
 						_sourceFormatterArgs.getGitWorkingBranchName());
 
-				if (!deletedFileNames.isEmpty()) {
-					for (String deletedFileName : deletedFileNames) {
-						if (filePath.endsWith(deletedFileName)) {
-							continue outerLoop;
-						}
+				for (String deletedFileName : deletedFileNames) {
+					if (filePath.endsWith(deletedFileName)) {
+						continue outerLoop;
 					}
 				}
 

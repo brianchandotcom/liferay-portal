@@ -227,15 +227,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						"/c/" + _BASE_URL_1
 					));
 
-				String externalReferenceCode = RandomTestUtil.randomString();
-
 				assertSuccessfulHttpCode(
 					JSONUtil.put(
 						"applicationStatus", "published"
 					).put(
 						"baseURL", _BASE_URL_1
 					).put(
-						"externalReferenceCode", externalReferenceCode
+						"externalReferenceCode", _API_APPLICATION_ERC_1
 					).put(
 						"title", "test-app"
 					).toString(),
@@ -248,10 +246,19 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						"/c/" + _BASE_URL_1
 					));
 
+				JSONAssert.assertEquals(
+					JSONUtil.put(
+						"totalCount", 1
+					).toString(),
+					HTTPTestUtil.invokeToJSONObject(
+						null, "headless-builder/applications", Http.Method.GET
+					).toString(),
+					JSONCompareMode.LENIENT);
+
 				assertSuccessfulHttpCode(
 					null,
 					"headless-builder/applications/by-external-reference-code" +
-						"/" + externalReferenceCode,
+						"/" + _API_APPLICATION_ERC_1,
 					Http.Method.DELETE);
 
 				Assert.assertFalse(
@@ -262,6 +269,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					));
 			}
 		);
+
+		assertSuccessfulHttpCode(
+			null,
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_1,
+			Http.Method.GET);
 	}
 
 	@Test

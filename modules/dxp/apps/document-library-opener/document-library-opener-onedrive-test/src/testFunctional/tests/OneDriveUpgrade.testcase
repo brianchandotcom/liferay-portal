@@ -20,6 +20,21 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
 	@priority = 5
 	test ViewOneDriveDocumentsArchive72101 {
 		property data.archive.type = "data-archive-onedrive";

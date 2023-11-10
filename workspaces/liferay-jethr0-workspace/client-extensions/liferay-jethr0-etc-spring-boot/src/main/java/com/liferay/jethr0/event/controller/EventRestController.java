@@ -89,7 +89,7 @@ public class EventRestController {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
+				_log.warn(eventType + ": " + exception.getMessage());
 			}
 
 			return new ResponseEntity<>(

@@ -15,12 +15,11 @@ const LiferayExperienceCloud = () => {
 		{project, subscriptionGroups, userAccount},
 		dispatch,
 	] = useCustomerPortal();
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 
 	useEffect(() => {
-		setHasQuickLinksPanel(true);
 		setHasSideMenu(true);
-	}, [setHasSideMenu, setHasQuickLinksPanel]);
+	}, [setHasSideMenu]);
 
 	const {data} = useGetLiferayExperienceCloudEnvironments({
 		filter: `accountKey eq '${project?.accountKey}'`,

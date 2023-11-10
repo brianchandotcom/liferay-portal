@@ -22,7 +22,7 @@ const targetProducts = [
 ];
 
 const TeamMembers = () => {
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 	const {data, loading} = useCurrentKoroneikiAccount();
 	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 
@@ -56,9 +56,8 @@ const TeamMembers = () => {
 	);
 
 	useEffect(() => {
-		setHasQuickLinksPanel(false);
 		setHasSideMenu(true);
-	}, [setHasSideMenu, setHasQuickLinksPanel]);
+	}, [setHasSideMenu]);
 
 	return (
 		<>

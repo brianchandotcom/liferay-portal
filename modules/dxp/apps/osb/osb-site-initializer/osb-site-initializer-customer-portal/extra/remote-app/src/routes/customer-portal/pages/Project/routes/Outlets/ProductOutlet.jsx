@@ -9,7 +9,7 @@ import i18n from '../../../../../../common/I18n';
 import {useCustomerPortal} from '../../../../context';
 
 const ProductOutlet = ({product}) => {
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 	const [{project, subscriptionGroups}] = useCustomerPortal();
 
 	const hasProduct = useMemo(
@@ -28,7 +28,6 @@ const ProductOutlet = ({product}) => {
 	return (
 		<Outlet
 			context={{
-				setHasQuickLinksPanel,
 				setHasSideMenu,
 			}}
 		/>

@@ -12,12 +12,11 @@ import {LIST_TYPES} from '../../../utils/constants';
 
 const Portal = ({hasKeyComplimentary}) => {
 	const [{project, sessionId}] = useCustomerPortal();
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 
 	useEffect(() => {
-		setHasQuickLinksPanel(true);
 		setHasSideMenu(true);
-	}, [setHasSideMenu, setHasQuickLinksPanel]);
+	}, [setHasSideMenu]);
 
 	return (
 		<div className="mr-4">

@@ -18,7 +18,7 @@ import {useCustomerPortal} from '../../../../context';
 
 const ActivationOutlet = () => {
 	const [{subscriptionGroups}] = useCustomerPortal();
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 
 	const isCurrentActivationRoute = !!useMatch({
 		path: useResolvedPath('').pathname,
@@ -26,9 +26,8 @@ const ActivationOutlet = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		setHasQuickLinksPanel(true);
 		setHasSideMenu(true);
-	}, [setHasSideMenu, setHasQuickLinksPanel]);
+	}, [setHasSideMenu]);
 
 	useEffect(() => {
 		if (subscriptionGroups?.length && isCurrentActivationRoute) {
@@ -45,7 +44,6 @@ const ActivationOutlet = () => {
 	return (
 		<Outlet
 			context={{
-				setHasQuickLinksPanel,
 				setHasSideMenu,
 			}}
 		/>

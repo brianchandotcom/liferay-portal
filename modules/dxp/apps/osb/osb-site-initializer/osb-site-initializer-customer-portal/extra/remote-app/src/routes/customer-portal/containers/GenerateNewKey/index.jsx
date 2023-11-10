@@ -27,7 +27,7 @@ const GenerateNewKey = ({
 	const [{project, sessionId, userAccount}] = useCustomerPortal();
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 	const [status, setStatus] = useState({
 		deactivate: '',
 		downloadAggregated: '',
@@ -41,9 +41,8 @@ const GenerateNewKey = ({
 	const [purposeDescription, setPurposeDescription] = useState('');
 
 	useEffect(() => {
-		setHasQuickLinksPanel(false);
 		setHasSideMenu(false);
-	}, [setHasSideMenu, setHasQuickLinksPanel]);
+	}, [setHasSideMenu]);
 
 	const isAdminOrPartnerManager = hasAdminOrPartnerManager(
 		project,

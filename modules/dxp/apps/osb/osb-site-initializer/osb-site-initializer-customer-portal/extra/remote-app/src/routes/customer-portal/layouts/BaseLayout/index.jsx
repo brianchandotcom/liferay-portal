@@ -6,12 +6,10 @@
 import {useEffect, useRef, useState} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
 import ProjectBreadcrumb from '../../components/ProjectBreadcrumb/ProjectBreadcrumb';
-import QuickLinksPanel from '../../containers/QuickLinksPanel';
 import SideMenu from '../../containers/SideMenu';
 
 const Layout = () => {
 	const [hasSideMenu, setHasSideMenu] = useState(true);
-	const [hasQuickLinksPanel, setHasQuickLinksPanel] = useState(true);
 
 	const {accountKey} = useParams();
 	const firstAccountKeyRef = useRef(accountKey);
@@ -36,13 +34,11 @@ const Layout = () => {
 				<div className="mx-4 px-2 w-100">
 					<Outlet
 						context={{
-							setHasQuickLinksPanel,
 							setHasSideMenu,
 						}}
 					/>
 				</div>
 
-				{hasQuickLinksPanel && <QuickLinksPanel />}
 			</div>
 		</div>
 	);

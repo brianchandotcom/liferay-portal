@@ -28,12 +28,11 @@ import {DEACTIVATE_COLUMNS} from './utils/constants';
 
 const DeactivateKeysTable = ({initialFilter, productName}) => {
 	const [{project, sessionId, userAccount}] = useCustomerPortal();
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 
 	useEffect(() => {
-		setHasQuickLinksPanel(false);
 		setHasSideMenu(false);
-	}, [setHasSideMenu, setHasQuickLinksPanel]);
+	}, [setHasSideMenu]);
 
 	const {
 		activationKeysState: [activationKeys, setActivationKeys],

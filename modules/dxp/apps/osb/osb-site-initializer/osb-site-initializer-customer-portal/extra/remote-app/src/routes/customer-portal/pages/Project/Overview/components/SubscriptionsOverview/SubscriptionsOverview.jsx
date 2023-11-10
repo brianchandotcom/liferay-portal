@@ -15,7 +15,7 @@ import useAccountSubscriptions from './hooks/useAccountSubscriptions';
 const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 	const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 	const [
 		{lastAccountSubcriptionGroup, setLastAccountSubscriptionGroup},
 		{
@@ -39,9 +39,8 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 		accountSubscriptionsData?.c.accountSubscriptions.items;
 
 	useEffect(() => {
-		setHasQuickLinksPanel(true);
 		setHasSideMenu(true);
-	}, [setHasSideMenu, setHasQuickLinksPanel]);
+	}, [setHasSideMenu]);
 
 	const handleDropdownOnClick = (selectedStatus) =>
 		setLastSubscriptionStatus(

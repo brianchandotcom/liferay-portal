@@ -119,10 +119,17 @@ public class DDMStructureItemSelectorViewDescriptor
 				getOrderByCol(), getOrderByType()));
 		ddmStructureSearchContainer.setOrderByType(getOrderByType());
 
-		long[] groupIds =
-			SiteConnectedGroupGroupProviderUtil.
-				getCurrentAndAncestorSiteAndDepotGroupIds(
-					_themeDisplay.getScopeGroupId(), true);
+		long[] groupIds;
+
+		if (_ddmStructureItemSelectorCriterion.isSelectAncestorScopes()) {
+			groupIds =
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						_themeDisplay.getScopeGroupId(), true);
+		}
+		else {
+			groupIds = new long[] {_themeDisplay.getScopeGroupId()};
+		}
 
 		if (Validator.isNotNull(_getKeywords())) {
 			ddmStructureSearchContainer.setResultsAndTotal(

@@ -34,6 +34,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -76,6 +78,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -115,6 +118,9 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Javier Gamarra
@@ -170,6 +176,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_testUser));
 	}
 
 	@Override
@@ -381,6 +390,36 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		User user = UserTestUtil.addUser();
 
 		Group group = GroupTestUtil.addGroup();
+
+		Role groupRole = RoleTestUtil.addRole(
+			"Test Site Role", RoleConstants.TYPE_SITE);
+
+		User groupUser = UserTestUtil.addGroupUser(group, "Test Site Role");
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			"headless-admin-user/v1.0/user-accounts/" + groupUser.getUserId(),
+			Http.Method.GET);
+
+		JSONArray actualSiteBriefs_jsonArray = (JSONArray)jsonObject.get(
+			"siteBriefs");
+
+		JSONArray expectedSiteBriefs_jsonArray = JSONUtil.put(
+			JSONUtil.put(
+				"name", group.getGroupKey()
+			).put(
+				"roleBriefs",
+				JSONUtil.put(
+					JSONUtil.put(
+						"id", groupRole.getRoleId()
+					).put(
+						"name", groupRole.getName()
+					))
+			));
+
+		JSONAssert.assertEquals(
+			expectedSiteBriefs_jsonArray.toString(),
+			actualSiteBriefs_jsonArray.toString(), JSONCompareMode.LENIENT);
 
 		_testGetUserAccountWithRoles(
 			group,

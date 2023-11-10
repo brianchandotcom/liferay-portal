@@ -701,7 +701,7 @@ public class SourceFormatter {
 
 			String[] breakingChangeReports = parts[1].split("\n----");
 
-			outLooper:
+			outerLoop:
 			for (String breakingChangeReport : breakingChangeReports) {
 				int alternativesCount = StringUtil.count(
 					breakingChangeReport, "## Alternatives");
@@ -773,7 +773,7 @@ public class SourceFormatter {
 				if (!deletedFileNames.isEmpty()) {
 					for (String deletedFileName : deletedFileNames) {
 						if (filePath.endsWith(deletedFileName)) {
-							continue outLooper;
+							continue outerLoop;
 						}
 					}
 				}

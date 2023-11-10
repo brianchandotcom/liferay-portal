@@ -6,6 +6,7 @@ import DownloadPDFReport, {
 	Containers
 } from 'shared/components/download-report/DownloadPDFReport';
 import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
+import FilterBySegment from '../components/FilterBySegment';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useEffect, useState} from 'react';
@@ -62,6 +63,7 @@ function TouchpointRoutes({className, router}) {
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 	const decodedTitle = decodeURIComponent(title);
 	const decodedTouchpoint = decodeURIComponent(touchpoint);
+	const [selectedSegment, setSelectedSegment] = useState({});
 
 	useEffect(() => {
 		setPathRangeSelectors(rangeSelectors);
@@ -150,13 +152,13 @@ function TouchpointRoutes({className, router}) {
 			>
 				{matchedRoute === Routes.SITES_TOUCHPOINTS_PATH && (
 					<BasePage.SubHeader>
-						<div className='d-flex justify-content-end w-100'>
-							<DropdownRangeKey
-								legacy={false}
-								onChange={setPathRangeSelectors}
-								rangeSelectors={pathRangeSelectors}
-							/>
-						</div>
+						<FilterBySegment onFilterChange={setSelectedSegment} />
+
+						<DropdownRangeKey
+							legacy={false}
+							onChange={setPathRangeSelectors}
+							rangeSelectors={pathRangeSelectors}
+						/>
 					</BasePage.SubHeader>
 				)}
 
@@ -181,7 +183,8 @@ function TouchpointRoutes({className, router}) {
 
 							<BundleRouter
 								componentProps={{
-									pathRangeSelectors
+									pathRangeSelectors,
+									selectedSegment
 								}}
 								data={TouchpointPathPage}
 								destructured={false}

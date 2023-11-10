@@ -8,8 +8,8 @@ import {
 	URL_COLOR
 } from './utils';
 import {Layer, Rectangle} from 'recharts';
+import {TitleKey, Type} from './types';
 import {toThousands} from 'shared/util/numbers';
-import {Type} from './types';
 
 function truncateText(text: string, limit: number) {
 	if (text.length > limit) {
@@ -19,7 +19,7 @@ function truncateText(text: string, limit: number) {
 	return text;
 }
 
-function getRadius({payload}) {
+function getRadius(payload) {
 	if (payload.main) {
 		return 0;
 	}
@@ -29,6 +29,19 @@ function getRadius({payload}) {
 	}
 
 	return [0, 5, 5, 0];
+}
+
+function showURL(url?: TitleKey) {
+	if (
+		url &&
+		url !== TitleKey.Direct &&
+		url !== TitleKey.DropOffs &&
+		url !== TitleKey.Others
+	) {
+		return true;
+	}
+
+	return false;
 }
 
 export const Node = (props: any) => {
@@ -81,13 +94,17 @@ export const Node = (props: any) => {
 						})}
 						fillOpacity='1'
 						height={height}
-						radius={getRadius({payload}) as number}
+						radius={getRadius(payload) as number}
 						width={width}
 						x={x}
 						y={y}
 					/>
 
-					<text x={x + width / 2 - 10} y={y + height / 2 + 5}>
+					<text
+						textAnchor='middle'
+						x={x + width / 2}
+						y={y + height / 2 + 5}
+					>
 						{toThousands(payload.value)}
 					</text>
 				</>
@@ -98,12 +115,12 @@ export const Node = (props: any) => {
 				fontWeight={SANKEY_HEIGHT}
 				textAnchor='start'
 				x={x}
-				y={payload.url ? y - 28 : y - 16}
+				y={showURL(payload.url) ? y - 28 : y - 16}
 			>
 				{truncateText(payload.name, 15)}
 			</text>
 
-			{payload.url && (
+			{showURL(payload.url) && (
 				<text
 					fill={URL_COLOR}
 					fontSize='12'

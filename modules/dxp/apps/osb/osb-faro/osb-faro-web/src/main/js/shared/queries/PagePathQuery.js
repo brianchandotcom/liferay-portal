@@ -7,7 +7,7 @@ export default gql`
 		$rangeEnd: String
 		$rangeKey: Int
 		$rangeStart: String
-		$segmentId: Int
+		$segmentId: String
 		$title: String!
 	) {
 		pagePath(

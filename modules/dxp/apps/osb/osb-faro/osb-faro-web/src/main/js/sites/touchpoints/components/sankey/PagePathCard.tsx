@@ -5,8 +5,8 @@ import React from 'react';
 import Sankey from './Sankey';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import {getSafeRangeSelectors} from 'shared/util/util';
-import {MAIN_NODE_HEIGHT, SECONDARY_NODE_COLOR} from './utils';
-import {Type} from './types';
+import {SECONDARY_NODE_COLOR} from './utils';
+import {TitleKey, Type} from './types';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
 import {v4 as uuidv4} from 'uuid';
@@ -19,12 +19,6 @@ type pagePathNode = {
 	previousPagePathNodes: pagePathNode[];
 };
 
-enum TitleKey {
-	Direct = 'direct',
-	DropOffs = 'drop-offs',
-	Others = 'others'
-}
-
 function getTitle(key: TitleKey, type: Type) {
 	const langs = {
 		[TitleKey.Direct]: Liferay.Language.get('direct-traffic'),
@@ -35,7 +29,7 @@ function getTitle(key: TitleKey, type: Type) {
 				: Liferay.Language.get('other-pages')
 	};
 
-	return langs[key] || key;
+	return langs[key] || decodeURIComponent(key);
 }
 
 function getColor(key: TitleKey) {
@@ -51,49 +45,34 @@ function getColor(key: TitleKey) {
 }
 
 function formatData({pagePath}: {pagePath: pagePathNode}) {
-	const calculateTotalViews = (nodes: pagePathNode[]) =>
-		nodes?.reduce((acc, {views}) => acc + views, 0) || 0;
-
-	const formatNodes = (
-		nodes: pagePathNode[],
-		type: Type,
-		totalViews: number
-	) =>
-		nodes?.map(({canonicalUrl, title, views}) => ({
-			color: getColor(title),
-			height: (views / totalViews) * MAIN_NODE_HEIGHT,
-			id: uuidv4(),
-			name: getTitle(title, type),
-			type,
-			url: canonicalUrl,
-			views
-		})) || [];
-
-	const totalViewsPreviousPage = calculateTotalViews(
-		pagePath.previousPagePathNodes
-	);
-	const totalViewsNextPage = calculateTotalViews(
-		pagePath.followingPagePathNodes
-	);
+	const formatNodes = (nodes: pagePathNode[], type: Type) =>
+		nodes
+			?.filter(({views}) => !!views)
+			?.map(({canonicalUrl, title, views}) => ({
+				color: getColor(title),
+				id: uuidv4(),
+				name: getTitle(title, type),
+				type,
+				url: decodeURIComponent(canonicalUrl),
+				views
+			}));
 
 	const mainNode = {
-		height: MAIN_NODE_HEIGHT,
 		id: uuidv4(),
 		main: true,
-		name: pagePath.title,
-		url: pagePath.canonicalUrl
+		name: decodeURIComponent(pagePath.title),
+		url: decodeURIComponent(pagePath.canonicalUrl),
+		views: pagePath.views
 	};
 
 	const previousNodes = formatNodes(
 		pagePath.previousPagePathNodes,
-		Type.Previous,
-		totalViewsPreviousPage
+		Type.Previous
 	);
 
 	const followingNodes = formatNodes(
 		pagePath.followingPagePathNodes,
-		Type.Following,
-		totalViewsNextPage
+		Type.Following
 	);
 
 	const links = [...previousNodes, ...followingNodes].map((link, index) => ({
@@ -110,14 +89,17 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 	};
 }
 
-const PagePathCard = ({rangeSelectors}) => {
+const PagePathCard = ({pathRangeSelectors, selectedSegment}) => {
 	const {channelId, title, touchpoint} = useParams();
 	const {data, error, loading} = useQuery(PagePathQuery, {
 		variables: {
 			canonicalUrl: decodeURIComponent(touchpoint),
 			channelId,
-			title,
-			...getSafeRangeSelectors(rangeSelectors)
+			title: decodeURIComponent(title),
+			...(selectedSegment?.id && {
+				segmentId: selectedSegment.id
+			}),
+			...getSafeRangeSelectors(pathRangeSelectors)
 		}
 	});
 

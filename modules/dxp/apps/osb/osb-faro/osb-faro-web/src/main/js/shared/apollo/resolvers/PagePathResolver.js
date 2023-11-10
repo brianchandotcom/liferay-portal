@@ -22,13 +22,13 @@ export default () => ({
 		},
 		{
 			__typename: 'PagePathNode',
-			canonicalUrl: null,
+			canonicalUrl: 'others',
 			title: 'others',
 			views: 500
 		},
 		{
 			__typename: 'PagePathNode',
-			canonicalUrl: null,
+			canonicalUrl: 'drop-offs',
 			title: 'drop-offs',
 			views: 8000
 		}
@@ -54,13 +54,13 @@ export default () => ({
 		},
 		{
 			__typename: 'PagePathNode',
-			canonicalUrl: null,
+			canonicalUrl: 'direct',
 			title: 'direct',
 			views: 5000
 		},
 		{
 			__typename: 'PagePathNode',
-			canonicalUrl: null,
+			canonicalUrl: 'others',
 			title: 'others',
 			views: 1000
 		}

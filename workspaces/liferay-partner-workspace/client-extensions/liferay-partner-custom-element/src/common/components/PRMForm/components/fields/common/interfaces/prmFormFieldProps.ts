@@ -3,14 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FormikProps} from 'formik';
-
-import MDFClaim from '../../../../../../interfaces/mdfClaim';
-
 export default interface PRMFormFieldProps {
 	children?: React.ReactNode;
 	description?: string;
-	form: FormikProps<MDFClaim>;
 	label?: string;
 	required?: boolean;
 }

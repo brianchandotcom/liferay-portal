@@ -12,6 +12,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.model.TranslationEntryTable;
 import com.liferay.translation.service.persistence.TranslationEntryPersistence;
 
@@ -29,14 +30,11 @@ public class TranslationEntryTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<TranslationEntryTable>
 			childTableReferenceInfoBuilder) {
-	}
 
-	@Override
-	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<TranslationEntryTable>
-			parentTableReferenceInfoBuilder) {
-
-		parentTableReferenceInfoBuilder.referenceInnerJoin(
+		childTableReferenceInfoBuilder.assetEntryReference(
+			TranslationEntryTable.INSTANCE.translationEntryId,
+			TranslationEntry.class
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				JournalArticleTable.INSTANCE
 			).innerJoinON(
@@ -49,9 +47,16 @@ public class TranslationEntryTableReferenceDefinition
 					JournalArticle.class.getName()
 				).and(
 					ClassNameTable.INSTANCE.classNameId.eq(
-						TranslationEntryTable.INSTANCE.classPK)
+						TranslationEntryTable.INSTANCE.classNameId)
 				)
-			));
+			)
+		);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<TranslationEntryTable>
+			parentTableReferenceInfoBuilder) {
 	}
 
 	@Override

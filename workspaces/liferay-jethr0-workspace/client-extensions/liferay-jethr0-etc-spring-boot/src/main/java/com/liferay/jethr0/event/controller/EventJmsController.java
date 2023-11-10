@@ -155,7 +155,7 @@ public class EventJmsController {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
+				_log.warn(eventType + ": " + exception.getMessage());
 			}
 		}
 	}

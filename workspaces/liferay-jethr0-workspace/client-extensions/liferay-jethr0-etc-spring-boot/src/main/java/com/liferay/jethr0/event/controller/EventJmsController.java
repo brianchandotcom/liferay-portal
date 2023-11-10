@@ -7,6 +7,7 @@ package com.liferay.jethr0.event.controller;
 
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import javax.jms.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,41 +102,60 @@ public class EventJmsController {
 			_log.debug("Received " + message);
 		}
 
-		JSONObject messageJSONObject = new JSONObject(message);
+		JSONObject messageJSONObject = null;
 
-		EventHandler.EventType eventType = EventHandler.EventType.valueOf(
-			messageJSONObject.optString("eventTrigger"));
-
-		if ((eventType == EventHandler.EventType.BUILD_COMPLETED) ||
-			(eventType == EventHandler.EventType.BUILD_STARTED) ||
-			(eventType == EventHandler.EventType.COMPUTER_BUSY) ||
-			(eventType == EventHandler.EventType.COMPUTER_IDLE) ||
-			(eventType == EventHandler.EventType.COMPUTER_OFFLINE) ||
-			(eventType == EventHandler.EventType.COMPUTER_ONLINE) ||
-			(eventType ==
-				EventHandler.EventType.COMPUTER_TEMPORARILY_OFFLINE) ||
-			(eventType == EventHandler.EventType.COMPUTER_TEMPORARILY_ONLINE) ||
-			(eventType == EventHandler.EventType.CREATE_BUILD) ||
-			(eventType == EventHandler.EventType.CREATE_JENKINS_COHORT) ||
-			(eventType == EventHandler.EventType.CREATE_JOB) ||
-			(eventType == EventHandler.EventType.QUEUE_JOB)) {
-
-			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
-				messageJSONObject);
-
-			if (eventHandler == null) {
-				throw new RuntimeException();
+		try {
+			messageJSONObject = new JSONObject(message);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(jsonException);
 			}
 
-			try {
-				eventHandler.process();
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
-				}
+			return;
+		}
 
-				throw new RuntimeException(exception);
+		String eventTypeString = messageJSONObject.optString("eventType");
+
+		if (StringUtil.isNullOrEmpty(eventTypeString)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Missing 'eventType' from message json");
+			}
+
+			return;
+		}
+
+		EventHandler.EventType eventType = EventHandler.EventType.get(
+			eventTypeString);
+
+		if (eventType == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Invalid 'eventType': " + eventTypeString);
+			}
+
+			return;
+		}
+
+		EventHandler eventHandler = null;
+
+		try {
+			eventHandler = _eventHandlerFactory.newEventHandler(
+				eventType, messageJSONObject);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(illegalArgumentException);
+			}
+
+			return;
+		}
+
+		try {
+			eventHandler.process();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
 			}
 		}
 	}

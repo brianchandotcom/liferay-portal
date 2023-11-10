@@ -16,9 +16,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EventHandlerFactory {
 
-	public EventHandler newEventHandler(JSONObject messageJSONObject) {
-		EventHandler.EventType eventType = EventHandler.EventType.valueOf(
-			messageJSONObject.optString("eventTrigger"));
+	public EventHandler newEventHandler(
+		EventHandler.EventType eventType, JSONObject messageJSONObject) {
 
 		EventHandler eventHandler = null;
 
@@ -61,7 +60,8 @@ public class EventHandlerFactory {
 			eventHandler = new QueueJobEventHandler(
 				_eventHandlerContext, messageJSONObject);
 		}
-		else {
+
+		if (eventHandler == null) {
 			throw new IllegalArgumentException(
 				"Invalid event type: " + eventType);
 		}

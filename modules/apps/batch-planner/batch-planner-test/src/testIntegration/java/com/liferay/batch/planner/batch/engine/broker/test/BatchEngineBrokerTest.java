@@ -83,6 +83,7 @@ import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -125,6 +126,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -183,6 +185,67 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
+	public void testExportCompanyScopeObjectDefinitionCSV() throws Exception {
+		String objectDefinitionName = "TestObjectCSV";
+
+		_objectDefinition2 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), objectDefinitionName,
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+
+		long companyId = _counterLocalService.increment();
+
+		_company2 = _addCompany(companyId, "test.com");
+
+		try {
+			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
+
+			_objectDefinition1 = _publishObjectDefinition(
+				_company2.getCompanyId(), objectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_COMPANY, user);
+
+			_objectDefinitionLocalService.updateExternalReferenceCode(
+				_objectDefinition1.getObjectDefinitionId(),
+				_OBJECT_DEFINITION_1_ERC);
+
+			BatchPlannerPlan batchPlannerPlan =
+				_batchPlannerPlanLocalService.addBatchPlannerPlan(
+					user.getUserId(), true,
+					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+					StringPool.SLASH,
+					"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+					RandomTestUtil.randomString(), 0, null, false);
+
+			for (String fieldName : _objectDefinitionExportCSVFieldNames) {
+				_batchPlannerMappingLocalService.addBatchPlannerMapping(
+					user.getUserId(), batchPlannerPlan.getBatchPlannerPlanId(),
+					fieldName, "String", fieldName, "String", StringPool.BLANK);
+			}
+
+			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+			BatchEngineExportTask batchEngineExportTask =
+				_getFinishedBatchEngineExportTask(
+					batchPlannerPlan.getBatchPlannerPlanId(),
+					_company2.getCompanyId());
+
+			_assertCSVFiles(
+				_batchEngineExportTaskLocalService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId()),
+				_getInputStream(
+					getClass(), "csv/expected-object-definition.csv"),
+				objectDefinitionName);
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				_objectDefinition1.getObjectDefinitionId());
+
+			_objectDefinition1 = null;
+
+			_companyLocalService.deleteCompany(_company2);
+		}
+	}
+
+	@Test
 	public void testExportCompanyScopeObjectEntry() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
@@ -226,7 +289,8 @@ public class BatchEngineBrokerTest {
 
 			BatchEngineExportTask batchEngineExportTask =
 				_getFinishedBatchEngineExportTask(
-					batchPlannerPlan.getBatchPlannerPlanId());
+					batchPlannerPlan.getBatchPlannerPlanId(),
+					TestPropsValues.getCompanyId());
 
 			_objectMapper.setFilterProvider(
 				new SimpleFilterProvider() {
@@ -266,67 +330,9 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testExportObjectDefinition() throws Exception {
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject1",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+		String objectDefinitionName = "TestObjectJSON1";
 
-		_objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_GROOVY,
-			ObjectActionTriggerConstants.KEY_STANDALONE,
-			new UnicodeProperties(), false);
-
-		ObjectFolder objectFolder = _objectFolderLocalService.addObjectFolder(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString());
-
-		_objectFolderItemLocalService.addObjectFolderItem(
-			TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(),
-			objectFolder.getObjectFolderId(), RandomTestUtil.nextInt(),
-			RandomTestUtil.nextInt());
-
-		_objectLayoutLocalService.addObjectLayout(
-			TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(), false,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			Collections.emptyList());
-
-		_objectDefinition2 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject2",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
-
-		_objectRelationshipLocalService.addObjectRelationship(
-			null, TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(),
-			_objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"a" + RandomTestUtil.randomString(), false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			StringPool.BLANK, TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(), true,
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-			"isEmailAddress(textObjectField)", false, Collections.emptyList());
-
-		_objectViewLocalService.addObjectView(
-			TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(), true,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			Arrays.asList(_createObjectViewColumn("createDate")),
-			Arrays.asList(_createObjectViewFilterColumn("createDate")),
-			Arrays.asList(_createObjectViewSortColumn("createDate", "asc")));
+		_setUpObjectDefinition(objectDefinitionName);
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanLocalService.addBatchPlannerPlan(
@@ -346,7 +352,8 @@ public class BatchEngineBrokerTest {
 
 		BatchEngineExportTask batchEngineExportTask =
 			_getFinishedBatchEngineExportTask(
-				batchPlannerPlan.getBatchPlannerPlanId());
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				TestPropsValues.getCompanyId());
 
 		_objectMapper.setFilterProvider(
 			new SimpleFilterProvider() {
@@ -369,14 +376,54 @@ public class BatchEngineBrokerTest {
 		Assert.assertTrue(jsonNode.isArray());
 		Assert.assertTrue(jsonNode.size() >= 2);
 
-		JsonNode actualJsonNode = _getActualJsonNode(jsonNode, "TestObject1");
+		JsonNode actualJsonNode = _getActualJsonNode(
+			jsonNode, objectDefinitionName);
 
 		Assert.assertNotNull(
-			"TestObject1 object definition is not exported", actualJsonNode);
+			objectDefinitionName + " object definition is not exported",
+			actualJsonNode);
 
 		_assertEqualsExport(
 			expectedJsonNode, _objectDefinitionExportFieldNames,
 			actualJsonNode);
+	}
+
+	@Test
+	public void testExportObjectDefinitionCSV() throws Exception {
+		String objectDefinitionName = "TestObjectCSV";
+
+		_setUpObjectDefinition(objectDefinitionName);
+
+		_objectDefinitionLocalService.updateExternalReferenceCode(
+			_objectDefinition1.getObjectDefinitionId(),
+			_OBJECT_DEFINITION_1_ERC);
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), true,
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, StringPool.SLASH,
+				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+				RandomTestUtil.randomString(), 0, null, false);
+
+		for (String fieldName : _objectDefinitionExportCSVFieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
+		}
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		BatchEngineExportTask batchEngineExportTask =
+			_getFinishedBatchEngineExportTask(
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				TestPropsValues.getCompanyId());
+
+		_assertCSVFiles(
+			_batchEngineExportTaskLocalService.openContentInputStream(
+				batchEngineExportTask.getBatchEngineExportTaskId()),
+			_getInputStream(getClass(), "csv/expected-object-definition.csv"),
+			objectDefinitionName);
 	}
 
 	@Test
@@ -416,7 +463,8 @@ public class BatchEngineBrokerTest {
 
 		BatchEngineExportTask batchEngineExportTask =
 			_getFinishedBatchEngineExportTask(
-				batchPlannerPlan.getBatchPlannerPlanId());
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				TestPropsValues.getCompanyId());
 
 		_objectMapper.setFilterProvider(
 			new SimpleFilterProvider() {
@@ -503,7 +551,7 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testImportObjectDefinition() throws Exception {
-		File file = _createImportFile("object_definition_import.json");
+		File file = _createImportFile("json", "object_definition_import.json");
 
 		URI uri = file.toURI();
 
@@ -689,6 +737,67 @@ public class BatchEngineBrokerTest {
 		Assert.assertTrue(!jsonNode.isEmpty());
 	}
 
+	private void _assertColumnNames(
+		List<String> actualColumnNames, List<String> expectedColumnNames) {
+
+		Assert.assertEquals(
+			actualColumnNames, _objectDefinitionExportCSVFieldNames);
+
+		Assert.assertEquals(expectedColumnNames, actualColumnNames);
+	}
+
+	private void _assertCSVContent(
+		List<String> actualContentRow, List<String> expectedContentRow) {
+
+		int index = 0;
+
+		for (String columnName : _objectDefinitionExportCSVFieldNames) {
+			if (Objects.equals(columnName, "dateCreated") ||
+				Objects.equals(columnName, "dateModified") ||
+				Objects.equals(columnName, "id")) {
+
+				Assert.assertNotNull(actualContentRow.get(index));
+				Assert.assertNotNull(expectedContentRow.get(index));
+			}
+			else {
+				Assert.assertEquals(
+					expectedContentRow.get(index), actualContentRow.get(index));
+			}
+
+			index++;
+		}
+	}
+
+	private void _assertCSVFiles(
+			InputStream actualInputStream, InputStream expectedInputStream,
+			String objectDefinitionName)
+		throws Exception {
+
+		UnsyncBufferedReader actualUnsyncBufferedReader =
+			new UnsyncBufferedReader(
+				new InputStreamReader(_getZipInputStream(actualInputStream)));
+
+		UnsyncBufferedReader expectedUnsyncBufferedReader =
+			new UnsyncBufferedReader(
+				new InputStreamReader(expectedInputStream));
+
+		_assertColumnNames(
+			_getContentRow(actualUnsyncBufferedReader.readLine()),
+			_getContentRow(expectedUnsyncBufferedReader.readLine()));
+
+		String actualLineString = actualUnsyncBufferedReader.readLine();
+
+		while (actualLineString != null) {
+			if (actualLineString.contains(objectDefinitionName)) {
+				_assertCSVContent(
+					_getContentRow(actualLineString),
+					_getContentRow(expectedUnsyncBufferedReader.readLine()));
+			}
+
+			actualLineString = actualUnsyncBufferedReader.readLine();
+		}
+	}
+
 	private void _assertEqualsExport(
 		JsonNode expectedJsonNode, List<String> fieldNames, JsonNode jsonNode) {
 
@@ -742,15 +851,10 @@ public class BatchEngineBrokerTest {
 			String objectEntryERC, String templateName)
 		throws Exception {
 
-		Class<?> clazz = getClass();
-
 		File file = _file.createTempFile("json");
 
 		String template = StreamUtil.toString(
-			clazz.getResourceAsStream(
-				StringBundler.concat(
-					"/com/liferay/batch/planner/batch/engine/broker/test",
-					"/dependencies/", templateName)));
+			_getInputStream(getClass(), templateName));
 
 		Link link = LinkUtil.toLink(
 			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
@@ -772,17 +876,12 @@ public class BatchEngineBrokerTest {
 		return file;
 	}
 
-	private File _createImportFile(String fileName) throws Exception {
-		Class<?> clazz = getClass();
+	private File _createImportFile(String extension, String fileName)
+		throws Exception {
 
-		File file = _file.createTempFile("json");
+		File file = _file.createTempFile(extension);
 
-		Files.copy(
-			clazz.getResourceAsStream(
-				StringBundler.concat(
-					"/com/liferay/batch/planner/batch/engine/broker/test",
-					"/dependencies/", fileName)),
-			file.toPath());
+		Files.copy(_getInputStream(getClass(), fileName), file.toPath());
 
 		return file;
 	}
@@ -851,6 +950,10 @@ public class BatchEngineBrokerTest {
 		return null;
 	}
 
+	private List<String> _getContentRow(String line) {
+		return Arrays.asList(line.split(StringPool.COMMA, -1));
+	}
+
 	private JsonNode _getExpectedJsonNode(ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -887,15 +990,14 @@ public class BatchEngineBrokerTest {
 	}
 
 	private BatchEngineExportTask _getFinishedBatchEngineExportTask(
-			long batchPlannerPlanId)
+			long batchPlannerPlanId, long companyId)
 		throws Exception {
 
 		while (true) {
 			BatchEngineExportTask batchEngineExportTask =
 				_batchEngineExportTaskLocalService.
 					getBatchEngineExportTaskByExternalReferenceCode(
-						String.valueOf(batchPlannerPlanId),
-						TestPropsValues.getCompanyId());
+						String.valueOf(batchPlannerPlanId), companyId);
 
 			if (Objects.equals(
 					BatchEngineTaskExecuteStatus.COMPLETED.toString(),
@@ -945,6 +1047,13 @@ public class BatchEngineBrokerTest {
 		}
 
 		return groupId;
+	}
+
+	private InputStream _getInputStream(Class<?> clazz, String fileName) {
+		return clazz.getResourceAsStream(
+			StringBundler.concat(
+				"/com/liferay/batch/planner/batch/engine/broker/test",
+				"/dependencies/", fileName));
 	}
 
 	private ZipInputStream _getZipInputStream(InputStream inputStream)
@@ -1148,6 +1257,72 @@ public class BatchEngineBrokerTest {
 		return jsonNode;
 	}
 
+	private void _setUpObjectDefinition(String objectDefinitionName)
+		throws Exception {
+
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), objectDefinitionName,
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			new UnicodeProperties(), false);
+
+		ObjectFolder objectFolder = _objectFolderLocalService.addObjectFolder(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString());
+
+		_objectFolderItemLocalService.addObjectFolderItem(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			objectFolder.getObjectFolderId(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_objectLayoutLocalService.addObjectLayout(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Collections.emptyList());
+
+		_objectDefinition2 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject2",
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"a" + RandomTestUtil.randomString(), false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+			"isEmailAddress(textObjectField)", false, Collections.emptyList());
+
+		_objectViewLocalService.addObjectView(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Arrays.asList(_createObjectViewColumn("createDate")),
+			Arrays.asList(_createObjectViewFilterColumn("createDate")),
+			Arrays.asList(_createObjectViewSortColumn("createDate", "asc")));
+	}
+
 	private void _testImportSiteScopeObjectEntry(
 			long groupId, String objectEntryERC)
 		throws Exception {
@@ -1246,6 +1421,14 @@ public class BatchEngineBrokerTest {
 			Arrays.asList(
 				"dateCreated", "dateModified", "id", "objectDefinitionId")
 		).build();
+	private static final List<String> _objectDefinitionExportCSVFieldNames =
+		Arrays.asList(
+			"accountEntryRestrictedObjectFieldName", "dateCreated",
+			"dateModified", "defaultLanguageId", "externalReferenceCode", "id",
+			"name", "objectFolderExternalReferenceCode", "panelAppOrder",
+			"panelCategoryKey", "restContextPath",
+			"rootObjectDefinitionExternalReferenceCode", "scope", "storageType",
+			"titleObjectFieldName");
 	private static final List<String> _objectDefinitionExportFieldNames =
 		Arrays.asList(
 			"accountEntryRestricted", "accountEntryRestrictedObjectFieldName",

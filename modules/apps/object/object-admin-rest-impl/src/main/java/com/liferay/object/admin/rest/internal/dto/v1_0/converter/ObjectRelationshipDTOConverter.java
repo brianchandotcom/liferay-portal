@@ -6,6 +6,7 @@
 package com.liferay.object.admin.rest.internal.dto.v1_0.converter;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -93,6 +95,23 @@ public class ObjectRelationshipDTOConverter
 
 						return serviceBuilderObjectRelationship.isEdge();
 					});
+				setObjectField(
+					() -> {
+						ObjectField objectField =
+							_objectFieldLocalService.fetchObjectField(
+								serviceBuilderObjectRelationship.
+									getObjectFieldId2());
+
+						if (objectField == null) {
+							return null;
+						}
+
+						return _objectFieldDTOConverter.toDTO(
+							new DefaultDTOConverterContext(
+								false, null, null, null,
+								dtoConverterContext.getLocale(), null, null),
+							objectField);
+					});
 				setParameterObjectFieldName(
 					() -> {
 						if (Validator.isNull(
@@ -115,6 +134,11 @@ public class ObjectRelationshipDTOConverter
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference(target = DTOConverterConstants.OBJECT_FIELD_DTO_CONVERTER)
+	private DTOConverter
+		<ObjectField, com.liferay.object.admin.rest.dto.v1_0.ObjectField>
+			_objectFieldDTOConverter;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

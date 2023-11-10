@@ -5,13 +5,16 @@
 
 package com.liferay.fragment.video.streaming;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
 
@@ -134,15 +137,44 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");
 
-			httpServletRequest.setAttribute("src",
-				"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4");
-			httpServletRequest.setAttribute("height", "");
-			httpServletRequest.setAttribute("loop", Boolean.TRUE);
-			httpServletRequest.setAttribute("muted", Boolean.TRUE);
-			httpServletRequest.setAttribute(
-				"src",
-				"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4");
-			httpServletRequest.setAttribute("width", "");
+			FragmentEntryLink fragmentEntryLink =
+				fragmentRendererContext.getFragmentEntryLink();
+
+			String src = GetterUtil.getString(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					getConfiguration(fragmentRendererContext),
+					fragmentEntryLink.getEditableValues(),
+					fragmentRendererContext.getLocale(), "url"));
+
+			String height = GetterUtil.getString(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					getConfiguration(fragmentRendererContext),
+					fragmentEntryLink.getEditableValues(),
+					fragmentRendererContext.getLocale(), "videoHeight"));
+
+			String width = GetterUtil.getString(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					getConfiguration(fragmentRendererContext),
+					fragmentEntryLink.getEditableValues(),
+					fragmentRendererContext.getLocale(), "videoWidth"));
+
+			boolean loop = GetterUtil.getBoolean(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					getConfiguration(fragmentRendererContext),
+					fragmentEntryLink.getEditableValues(),
+					fragmentRendererContext.getLocale(), "loop"));
+
+			boolean muted = GetterUtil.getBoolean(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					getConfiguration(fragmentRendererContext),
+					fragmentEntryLink.getEditableValues(),
+					fragmentRendererContext.getLocale(), "muted"));
+
+			httpServletRequest.setAttribute("height", height);
+			httpServletRequest.setAttribute("loop", loop);
+			httpServletRequest.setAttribute("muted", muted);
+			httpServletRequest.setAttribute("src", src);
+			httpServletRequest.setAttribute("width", width);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

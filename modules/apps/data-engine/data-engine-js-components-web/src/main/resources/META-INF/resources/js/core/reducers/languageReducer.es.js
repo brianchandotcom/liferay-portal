@@ -5,6 +5,7 @@
 
 import {
 	generateInstanceId,
+	getField,
 	getFieldProperties,
 	localizeField,
 	updateInputMaskProperties,
@@ -239,8 +240,6 @@ export default function languageReducer(state, action) {
 
 			const visitor = new PagesVisitor(pages ?? state.pages);
 
-			let newFocusedField = focusedField;
-
 			const newPages = visitor.mapFields(
 				({
 					localizable,
@@ -274,10 +273,6 @@ export default function languageReducer(state, action) {
 							);
 						}
 
-						if (field.fieldName === newFocusedField.fieldName) {
-							newFocusedField = newField;
-						}
-
 						return newField;
 					}
 
@@ -300,7 +295,8 @@ export default function languageReducer(state, action) {
 			return {
 				defaultLanguageId,
 				editingLanguageId,
-				focusedField: newFocusedField,
+				focusedField:
+					getField(newPages, focusedField?.fieldName) ?? focusedField,
 				pages: newPages,
 			};
 		}

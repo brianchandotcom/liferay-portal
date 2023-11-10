@@ -154,7 +154,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 		int weight = _INITIAL_WEIGHT;
 
-		Tree tree = treeFactory.create(
+		Tree tree = treeFactory.createObjectDefinitionTree(
 			rootNodeObjectDefinition.getObjectDefinitionId());
 
 		Iterator<Node> iterator = tree.iterator();
@@ -169,11 +169,11 @@ public class ObjectDefinitionResourcePermissionUtil {
 			}
 
 			String objectActionPermissionKeys = _getObjectActionPermissionKeys(
-				objectActionLocalService, node.getObjectDefinitionId());
+				objectActionLocalService, node.getPrimaryKey());
 
 			ObjectDefinition rootDescendantNodeObjectDefinition =
 				objectDefinitionPersistence.findByPrimaryKey(
-					node.getObjectDefinitionId());
+					node.getPrimaryKey());
 
 			modelResources = StringBundler.concat(
 				modelResources, "<model-resource><model-name>",

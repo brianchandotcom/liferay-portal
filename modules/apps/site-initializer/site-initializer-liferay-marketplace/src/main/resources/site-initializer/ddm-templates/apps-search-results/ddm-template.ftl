@@ -12,7 +12,6 @@
 
 	.adt-apps-search-results .card-image-title-container .image-container {
 		height: 3rem;
-		min-width: 3rem;
 	}
 
 	.adt-apps-search-results .cards-container .app-search-results-card .card-image-title-container .image-container .app-search-image {

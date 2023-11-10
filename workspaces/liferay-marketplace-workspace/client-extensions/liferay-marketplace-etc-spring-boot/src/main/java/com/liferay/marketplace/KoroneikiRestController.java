@@ -193,8 +193,6 @@ public class KoroneikiRestController extends BaseRestController {
 
 		_orderResource.patchOrder(commerceOrderJSONObject.getLong("id"), order);
 
-		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
-
 		long cpDefinitionId = GetterUtil.getLong(
 			orderItemsJSONArray.getJSONObject(
 				0
@@ -204,15 +202,32 @@ public class KoroneikiRestController extends BaseRestController {
 
 		Product product = _productResource.getProduct(cpDefinitionId + 1);
 
-		String licenseType = _getLicenseType(
-			_productSpecificationResource.getProductIdProductSpecificationsPage(
-				product.getProductId(), Pagination.of(1, 10)
-			).getItems());
+		Map<String, String> productSpecificationsMap =
+			_getProductSpecificationsMap(
+				_productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						product.getProductId(), Pagination.of(1, 20)
+					).getItems());
 
-		int successCount = 0;
+		if (StringUtil.equals(
+				productSpecificationsMap.get("price-model"), "Free")) {
+
+			order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
+			order.setPaymentStatus(_COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED);
+
+			_orderResource.patchOrder(
+				commerceOrderJSONObject.getLong("id"), order);
+
+			return;
+		}
+
 		ZonedDateTime zonedDateTime = ZonedDateTime.parse(
 			commerceOrderJSONObject.getString("createDate"),
 			DateTimeFormatter.ISO_DATE_TIME);
+
+		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
+
+		int successCount = 0;
 
 		for (int i = 0; i < orderItemsJSONArray.length(); i++) {
 			ProductPurchase productPurchase = new ProductPurchase();
@@ -224,7 +239,10 @@ public class KoroneikiRestController extends BaseRestController {
 				dxpLicenseUsageTypePropertiesMap,
 				orderItemJSONObject.getString("options"));
 
-			if (StringUtil.equals(licenseType, "Subscription")) {
+			if (StringUtil.equals(
+					productSpecificationsMap.get("license-type"),
+					"Subscription")) {
+
 				Instant instant = zonedDateTime.plusYears(
 					1
 				).toInstant();
@@ -248,7 +266,8 @@ public class KoroneikiRestController extends BaseRestController {
 			productPurchase.setExternalLinks(new ExternalLink[] {externalLink});
 
 			productPurchase.setPerpetual(
-				StringUtil.equals(licenseType, "Perpetual"));
+				StringUtil.equals(
+					productSpecificationsMap.get("license-type"), "Perpetual"));
 			productPurchase.setProductKey(
 				_getProductKey(
 					orderItemJSONObject.getString("sku"),
@@ -316,28 +335,6 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 	}
 
-	private String _getLicenseType(
-		Collection<ProductSpecification> productSpecifications) {
-
-		for (ProductSpecification productSpecification :
-				productSpecifications) {
-
-			if (!StringUtil.equals(
-					productSpecification.getSpecificationKey(),
-					"license-type")) {
-
-				continue;
-			}
-
-			return productSpecification.getValue(
-			).get(
-				"en_US"
-			);
-		}
-
-		return null;
-	}
-
 	private String _getProductKey(String skuString, Collection<Sku> skus) {
 		for (Sku sku : skus) {
 			if (Objects.equals(sku.getSku(), skuString)) {
@@ -346,6 +343,25 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 
 		return null;
+	}
+
+	private HashMap<String, String> _getProductSpecificationsMap(
+		Collection<ProductSpecification> productSpecifications) {
+
+		HashMap<String, String> map = new HashMap<>();
+
+		for (ProductSpecification productSpecification :
+				productSpecifications) {
+
+			map.put(
+				productSpecification.getSpecificationKey(),
+				productSpecification.getValue(
+				).get(
+					"en_US"
+				));
+		}
+
+		return map;
 	}
 
 	private void _initResourceBuilders(Jwt jwt) throws Exception {

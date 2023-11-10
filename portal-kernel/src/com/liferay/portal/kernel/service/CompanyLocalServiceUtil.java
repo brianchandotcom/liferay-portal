@@ -174,12 +174,6 @@ public class CompanyLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static Company doExportPartitionCompany(long companyId)
-		throws PortalException {
-
-		return getService().doExportPartitionCompany(companyId);
-	}
-
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
@@ -263,6 +257,12 @@ public class CompanyLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static Company extractCompany(long companyId)
+		throws PortalException {
+
+		return getService().extractCompany(companyId);
 	}
 
 	public static Company fetchCompany(long companyId) {

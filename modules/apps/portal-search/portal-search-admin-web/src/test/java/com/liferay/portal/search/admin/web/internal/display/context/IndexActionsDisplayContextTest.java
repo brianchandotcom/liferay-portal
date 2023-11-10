@@ -9,6 +9,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.IndexActionsDisplayContextBuilder;
@@ -22,12 +24,16 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Felipe Lorenz
@@ -44,6 +50,16 @@ public class IndexActionsDisplayContextTest {
 		_setUpLanguage();
 		_setUpPortalInstancesLocalServiceUtil();
 		_setUpPortalUtil();
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			IndexerRegistry.class, Mockito.mock(IndexerRegistry.class), null);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -189,5 +205,6 @@ public class IndexActionsDisplayContextTest {
 		ReindexConfiguration.class);
 	private final SearchCapabilities _searchCapabilities = Mockito.mock(
 		SearchCapabilities.class);
+	private ServiceRegistration<IndexerRegistry> _serviceRegistration;
 
 }

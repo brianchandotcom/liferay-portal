@@ -1194,12 +1194,11 @@ public class DefaultObjectEntryManagerImplTest
 			() -> _defaultObjectEntryManager.addObjectEntry(
 				_simpleDTOConverterContext,
 				objectDefinitionLocalService.getObjectDefinition(
-					rootNode.getPrimaryKey()),
+					childNode.getPrimaryKey()),
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName2_accountEntryId",
-							accountEntry.getAccountEntryId()
+							objectField.getName(), objectEntry.getId()
 						).build();
 					}
 				},
@@ -1213,11 +1212,12 @@ public class DefaultObjectEntryManagerImplTest
 			() -> _defaultObjectEntryManager.addObjectEntry(
 				_simpleDTOConverterContext,
 				objectDefinitionLocalService.getObjectDefinition(
-					childNode.getPrimaryKey()),
+					rootNode.getPrimaryKey()),
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
-							objectField.getName(), objectEntry.getId()
+							"r_oneToManyRelationshipName2_accountEntryId",
+							accountEntry.getAccountEntryId()
 						).build();
 					}
 				},

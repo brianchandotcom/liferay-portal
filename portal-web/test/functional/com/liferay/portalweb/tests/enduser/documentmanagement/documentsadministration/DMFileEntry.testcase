@@ -527,31 +527,18 @@ definition {
 		for (var entryCount : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.jpg",
+				dmDocumentTitle = "Document_${entryCount}",
 				groupName = "Guest",
+				guestPermissions = "false",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_${entryCount}.jpg");
 		}
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		PortletEntry.selectAll();
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Permissions");
-
-		for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX") {
-			PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-				permissionDefinitionKey = ${permissionDefinitionKey},
-				roleTitle = "Guest");
-		}
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		PortletEntry.selectAll();
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2,Document_3");
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -569,6 +556,8 @@ definition {
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
 			menuItem = "Permissions");
+
+		IFrame.selectPermissionsFrame();
 
 		for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX") {
 			PermissionsInline.viewPermissionsRemoved(

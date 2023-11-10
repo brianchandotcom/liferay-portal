@@ -239,6 +239,16 @@ public abstract class BaseDBPartitionTestCase {
 		dbInspector = new DBInspector(connection);
 	}
 
+	protected static void extractDBPartitions() throws Exception {
+		extractDBPartitions(COMPANY_IDS);
+	}
+
+	protected static void extractDBPartitions(long[] companyIds)
+		throws Exception {
+
+		_executeOnDBPartitions(companyIds, DBPartitionUtil::extractDBPartition);
+	}
+
 	protected static String getCreateIndexSQL(String tableName) {
 		return StringBundler.concat(
 			"create index ", TEST_INDEX_NAME, " on ", tableName,
@@ -342,16 +352,6 @@ public abstract class BaseDBPartitionTestCase {
 				preparedStatement.executeUpdate();
 			}
 		}
-	}
-
-	protected static void migrateDBPartitions() throws Exception {
-		migrateDBPartitions(COMPANY_IDS);
-	}
-
-	protected static void migrateDBPartitions(long[] companyIds)
-		throws Exception {
-
-		_executeOnDBPartitions(companyIds, DBPartitionUtil::migrateDBPartition);
 	}
 
 	protected static void removeDBPartitions() throws Exception {

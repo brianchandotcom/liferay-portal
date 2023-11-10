@@ -153,6 +153,87 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testExtractDBPartition() throws Exception {
+		addDBPartitions();
+
+		try {
+			HashMap<Long, List<String>> viewNames = new HashMap<>();
+			HashMap<Long, Integer> tablesCount = new HashMap<>();
+
+			for (long companyId : COMPANY_IDS) {
+				List<String> views = _getObjectNames("VIEW", companyId);
+
+				viewNames.put(companyId, views);
+
+				Assert.assertNotEquals(0, views.size());
+
+				tablesCount.put(companyId, _getTablesCount(companyId));
+			}
+
+			extractDBPartitions();
+
+			for (long companyId : COMPANY_IDS) {
+				List<String> views = viewNames.get(companyId);
+
+				Assert.assertEquals(
+					tablesCount.get(companyId) + views.size(),
+					_getTablesCount(companyId));
+
+				Assert.assertEquals(0, _getViewsCount(companyId));
+
+				for (String viewName : viewNames.get(companyId)) {
+					Assert.assertEquals(
+						viewName + " count",
+						_getCount(viewName, true, companyId),
+						_getCount(viewName, false, companyId));
+				}
+			}
+		}
+		finally {
+			removeDBPartitions();
+		}
+	}
+
+	@Test
+	public void testExtractDBPartitionRollback() throws Exception {
+		addDBPartitions();
+
+		try {
+			for (long companyId : COMPANY_IDS) {
+				int tablesCount = _getTablesCount(companyId);
+				int viewsCount = _getViewsCount(companyId);
+
+				try {
+					String fullTestTableName =
+						getSchemaName(companyId) + "." +
+							TEST_CONTROL_TABLE_NAME;
+
+					createAndPopulateControlTable(TEST_CONTROL_TABLE_NAME);
+					createAndPopulateControlTable(fullTestTableName);
+
+					try {
+						extractDBPartitions();
+
+						Assert.fail("Should throw an exception");
+					}
+					catch (Exception exception) {
+						Assert.assertEquals(
+							tablesCount, _getTablesCount(companyId));
+						Assert.assertEquals(
+							viewsCount, _getViewsCount(companyId) - 1);
+					}
+				}
+				finally {
+					dropTable(TEST_CONTROL_TABLE_NAME);
+				}
+			}
+		}
+		finally {
+			removeDBPartitions();
+		}
+	}
+
+	@Test
 	public void testForEachCompanyId() throws Exception {
 		try {
 			addDBPartitions();
@@ -183,87 +264,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 		finally {
 			deletePartitionRequiredData();
-			removeDBPartitions();
-		}
-	}
-
-	@Test
-	public void testMigrateDBPartition() throws Exception {
-		addDBPartitions();
-
-		try {
-			HashMap<Long, List<String>> viewNames = new HashMap<>();
-			HashMap<Long, Integer> tablesCount = new HashMap<>();
-
-			for (long companyId : COMPANY_IDS) {
-				List<String> views = _getObjectNames("VIEW", companyId);
-
-				viewNames.put(companyId, views);
-
-				Assert.assertNotEquals(0, views.size());
-
-				tablesCount.put(companyId, _getTablesCount(companyId));
-			}
-
-			migrateDBPartitions();
-
-			for (long companyId : COMPANY_IDS) {
-				List<String> views = viewNames.get(companyId);
-
-				Assert.assertEquals(
-					tablesCount.get(companyId) + views.size(),
-					_getTablesCount(companyId));
-
-				Assert.assertEquals(0, _getViewsCount(companyId));
-
-				for (String viewName : viewNames.get(companyId)) {
-					Assert.assertEquals(
-						viewName + " count",
-						_getCount(viewName, true, companyId),
-						_getCount(viewName, false, companyId));
-				}
-			}
-		}
-		finally {
-			removeDBPartitions();
-		}
-	}
-
-	@Test
-	public void testMigrateDBPartitionRollback() throws Exception {
-		addDBPartitions();
-
-		try {
-			for (long companyId : COMPANY_IDS) {
-				int tablesCount = _getTablesCount(companyId);
-				int viewsCount = _getViewsCount(companyId);
-
-				try {
-					String fullTestTableName =
-						getSchemaName(companyId) + "." +
-							TEST_CONTROL_TABLE_NAME;
-
-					createAndPopulateControlTable(TEST_CONTROL_TABLE_NAME);
-					createAndPopulateControlTable(fullTestTableName);
-
-					try {
-						migrateDBPartitions();
-
-						Assert.fail("Should throw an exception");
-					}
-					catch (Exception exception) {
-						Assert.assertEquals(
-							tablesCount, _getTablesCount(companyId));
-						Assert.assertEquals(
-							viewsCount, _getViewsCount(companyId) - 1);
-					}
-				}
-				finally {
-					dropTable(TEST_CONTROL_TABLE_NAME);
-				}
-			}
-		}
-		finally {
 			removeDBPartitions();
 		}
 	}

@@ -119,6 +119,18 @@ public class DBPartitionUtil {
 		return true;
 	}
 
+	public static boolean extractDBPartition(long companyId)
+		throws PortalException {
+
+		if (!DBPartition.isPartitionEnabled() ||
+			(companyId == _defaultCompanyId)) {
+
+			return false;
+		}
+
+		return _extractDBPartition(companyId);
+	}
+
 	public static void forEachCompanyId(
 			UnsafeConsumer<Long, Exception> unsafeConsumer)
 		throws Exception {
@@ -169,18 +181,6 @@ public class DBPartitionUtil {
 		}
 
 		return companyId;
-	}
-
-	public static boolean migrateDBPartition(long companyId)
-		throws PortalException {
-
-		if (!DBPartition.isPartitionEnabled() ||
-			(companyId == _defaultCompanyId)) {
-
-			return false;
-		}
-
-		return _migrateDBPartition(companyId);
 	}
 
 	public static boolean removeDBPartition(long companyId)
@@ -329,6 +329,89 @@ public class DBPartitionUtil {
 		_companyIds.remove(companyId);
 
 		return true;
+	}
+
+	private static boolean _extractDBPartition(long companyId)
+		throws PortalException {
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		List<String> controlTableNames = new ArrayList<>();
+
+		try {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_defaultSchemaName, dbInspector.getSchema(), null,
+					new String[] {"TABLE"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (dbInspector.isControlTable(
+							_getCompanyIds(), tableName)) {
+
+						controlTableNames.add(tableName);
+
+						_extractTable(
+							companyId, tableName, statement, dbInspector);
+					}
+				}
+			}
+		}
+		catch (Exception exception1) {
+			if (ListUtil.isEmpty(controlTableNames)) {
+				throw new PortalException(exception1);
+			}
+
+			try {
+				for (String tableName : controlTableNames) {
+					try (Statement statement = connection.createStatement()) {
+						_restoreTable(
+							companyId, tableName, statement, dbInspector);
+					}
+				}
+			}
+			catch (Exception exception2) {
+				throw new PortalException(
+					StringBundler.concat(
+						"Unable to rollback the extraction of database ",
+						"partition. Recover a backup of the database schema ",
+						_getSchemaName(companyId), "."),
+					exception2);
+			}
+
+			throw new PortalException(
+				"Removal of database partition extraction was rolled back",
+				exception1);
+		}
+
+		return true;
+	}
+
+	private static void _extractTable(
+			long companyId, String tableName, Statement statement,
+			DBInspector dbInspector)
+		throws Exception {
+
+		statement.executeUpdate(_getDropViewSQL(companyId, tableName));
+
+		statement.executeUpdate(_getCreateTableSQL(companyId, tableName));
+
+		if (dbInspector.hasColumn(tableName, "companyId")) {
+			_moveCompanyData(
+				companyId, tableName, _defaultSchemaName,
+				_getSchemaName(companyId), statement);
+		}
+		else {
+			_copyData(
+				tableName, _defaultSchemaName, _getSchemaName(companyId),
+				statement, StringPool.BLANK);
+		}
 	}
 
 	private static void _forEachCompanyIdConcurrently(
@@ -616,89 +699,6 @@ public class DBPartitionUtil {
 		}
 
 		return false;
-	}
-
-	private static boolean _migrateDBPartition(long companyId)
-		throws PortalException {
-
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		List<String> controlTableNames = new ArrayList<>();
-
-		try {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					_defaultSchemaName, dbInspector.getSchema(), null,
-					new String[] {"TABLE"});
-				Statement statement = connection.createStatement()) {
-
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (dbInspector.isControlTable(
-							_getCompanyIds(), tableName)) {
-
-						controlTableNames.add(tableName);
-
-						_migrateTable(
-							companyId, tableName, statement, dbInspector);
-					}
-				}
-			}
-		}
-		catch (Exception exception1) {
-			if (ListUtil.isEmpty(controlTableNames)) {
-				throw new PortalException(exception1);
-			}
-
-			try {
-				for (String tableName : controlTableNames) {
-					try (Statement statement = connection.createStatement()) {
-						_restoreTable(
-							companyId, tableName, statement, dbInspector);
-					}
-				}
-			}
-			catch (Exception exception2) {
-				throw new PortalException(
-					StringBundler.concat(
-						"Unable to rollback the removal of database ",
-						"partition. Recover a backup of the database schema ",
-						_getSchemaName(companyId), "."),
-					exception2);
-			}
-
-			throw new PortalException(
-				"Removal of database partition removal was rolled back",
-				exception1);
-		}
-
-		return true;
-	}
-
-	private static void _migrateTable(
-			long companyId, String tableName, Statement statement,
-			DBInspector dbInspector)
-		throws Exception {
-
-		statement.executeUpdate(_getDropViewSQL(companyId, tableName));
-
-		statement.executeUpdate(_getCreateTableSQL(companyId, tableName));
-
-		if (dbInspector.hasColumn(tableName, "companyId")) {
-			_moveCompanyData(
-				companyId, tableName, _defaultSchemaName,
-				_getSchemaName(companyId), statement);
-		}
-		else {
-			_copyData(
-				tableName, _defaultSchemaName, _getSchemaName(companyId),
-				statement, StringPool.BLANK);
-		}
 	}
 
 	private static void _moveCompanyData(

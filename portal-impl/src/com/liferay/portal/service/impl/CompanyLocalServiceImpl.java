@@ -404,11 +404,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return company;
 	}
 
-	public Company doExportPartitionCompany(long companyId)
+	public Company extractCompany(long companyId)
 		throws PortalException {
 
 		if (!DBPartition.isPartitionEnabled()) {
-			throw new IllegalArgumentException("DB partition must be enabled");
+			throw new IllegalArgumentException("DB Partition must be enabled");
 		}
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
@@ -425,7 +425,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				return null;
 			});
 
-		DBPartitionUtil.migrateDBPartition(companyId);
+		DBPartitionUtil.extractDBPartition(companyId);
 
 		return company;
 	}

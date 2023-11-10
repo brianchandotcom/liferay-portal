@@ -39,7 +39,7 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListener
 		Company company = _companyLocalService.getCompanyByWebId(
 			(String)properties.get("webId"));
 
-		_companyLocalService.doExportPartitionCompany(company.getCompanyId());
+		_companyLocalService.extractCompany(company.getCompanyId());
 	}
 
 	@Override

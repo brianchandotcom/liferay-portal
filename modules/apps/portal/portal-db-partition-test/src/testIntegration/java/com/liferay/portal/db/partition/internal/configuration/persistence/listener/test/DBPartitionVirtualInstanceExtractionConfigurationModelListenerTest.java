@@ -29,14 +29,12 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 	}
 
 	@Test
-	public void testCompanyMigration() throws Exception {
-		String toBeMigratedCompanyWebId = "Test" + COMPANY_IDS[0];
+	public void testCompanyExtraction() throws Exception {
+		String toBeExtractedCompanyWebId = "Test" + COMPANY_IDS[0];
 
 		try (AutoCloseable autoCloseable = swapCompanyLocalService(
 				(proxy, method, args) -> {
-					if (Objects.equals(
-							method.getName(), "doExportPartitionCompany")) {
-
+					if (Objects.equals(method.getName(), "extractCompany")) {
 						Assert.assertEquals(
 							COMPANY_IDS[0], GetterUtil.getLong(args[0]));
 
@@ -45,7 +43,7 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 					else if (Objects.equals(
 								method.getName(), "getCompanyByWebId")) {
 
-						Assert.assertEquals(toBeMigratedCompanyWebId, args[0]);
+						Assert.assertEquals(toBeExtractedCompanyWebId, args[0]);
 
 						return _companyLocalService.createCompany(
 							COMPANY_IDS[0]);
@@ -55,7 +53,7 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 				})) {
 
 			deployConfiguration(
-				_PID, "webId=T\"" + toBeMigratedCompanyWebId + "\"\n");
+				_PID, "webId=T\"" + toBeExtractedCompanyWebId + "\"\n");
 
 			Assert.assertTrue(_calledDoExportPartitionCompanyMethod);
 		}

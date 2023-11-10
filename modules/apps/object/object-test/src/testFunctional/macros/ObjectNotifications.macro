@@ -239,15 +239,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectEntity(entityName = null) {
-		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-		Click(
-			key_optionName = ${entityName},
-			locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
-	}
-
-	@summary = "Default summary"
 	macro viewEmailNotificationTemplateDetails(cc = null, bcc = null, emailBody = null, subject = null, name = null, fromName = null, description = null, fromAddress = null, notificationType = null, entryTo = null, externalReferenceCode = null) {
 		Click(
 			key_name = ${name},

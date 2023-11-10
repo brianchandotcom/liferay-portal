@@ -157,15 +157,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertNoColumnPresentInDefaultSort() {
-		ObjectCustomViews.addNewDefaultSort();
-
-		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-		AssertElementPresent(locator1 = "ObjectCustomViews#DEFAULT_SORT_NO_COLUMN_OPTION");
-	}
-
-	@summary = "Default summary"
 	macro assertObjectView(viewLabel = null) {
 		var key_viewLabel = ${viewLabel};
 

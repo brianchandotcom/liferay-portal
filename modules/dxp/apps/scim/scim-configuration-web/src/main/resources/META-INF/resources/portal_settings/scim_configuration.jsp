@@ -46,16 +46,16 @@ if (paramToken == null) {
 				</div>
 
 				<span class="input-group-append input-group-item input-group-item-shrink">
-					<clay:button
-						name="copyAccessToken"
-						id="copyAccessToken"
-						cssClass="scim-infopanel-copy-clipboard lfr-portal-tooltip"
-						data-clipboard-target='<%= "#" + paramTokenInputId %>'
-						displayType="secondary"
-						icon="paste"
-						title="copy-link"
-					/>
-				</span>
+			<clay:button
+				name="copyAccessToken"
+				id="copyAccessToken"
+				cssClass="scim-infopanel-copy-clipboard lfr-portal-tooltip"
+				data-clipboard-target='<%= "#" + paramTokenInputId %>'
+				displayType="secondary"
+				icon="paste"
+				title="copy-link"
+			/>
+		</span>
 			</div>
 		</div>
 
@@ -65,21 +65,20 @@ if (paramToken == null) {
 			<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>' />
 		</label>
 
-		<div class="input-group input-group-sm">
-			<aui:button id="genetareAccessToken" label="discard-changes" name="genetareAccessToken" small="<%= true %>" value="generate" />
-		</div>
+		</br>
+
+		<aui:button id="genetareAccessToken" label="discard-changes" name="genetareAccessToken" small="<%= true %>" value="generate" />
 
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(paramToken) %>">
-				<label for="<portlet:namespace />revokeAccessToken">
+				</br> <label for="<portlet:namespace />revokeAccessToken">
 					<liferay-ui:message key="scim-revoke-all" />
 
 					<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "scim-revoke-all-help") %>' />
 				</label>
+				</br>
 
-				<div class="input-group input-group-sm">
-					<aui:button id="revokeAccessToken" label="discard-changes" name="revokeAccessToken" small="<%= true %>" value="revoke" />
-				</div>
+				<aui:button id="revokeAccessToken" label="discard-changes" name="revokeAccessToken" small="<%= true %>" value="revoke" />
 			</c:when>
 		</c:choose>
 	</c:when>

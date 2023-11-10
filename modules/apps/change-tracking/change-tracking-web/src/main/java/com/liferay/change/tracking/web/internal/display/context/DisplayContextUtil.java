@@ -43,7 +43,7 @@ import java.util.Set;
 public class DisplayContextUtil {
 
 	public static Map<Long, String> getSiteNames(
-		long ctCollectionId, ThemeDisplay themeDisplay) {
+		long ctCollectionId, boolean showHideable, ThemeDisplay themeDisplay) {
 
 		Searcher searcher = _searcherSnapshot.get();
 
@@ -69,8 +69,11 @@ public class DisplayContextUtil {
 							LocaleUtil.toLanguageId(themeDisplay.getLocale()))),
 					SortOrder.ASC)
 			).withSearchContext(
-				searchContext -> searchContext.setAttribute(
-					"ctCollectionId", ctCollectionId)
+				searchContext -> {
+					searchContext.setAttribute(
+						"ctCollectionId", ctCollectionId);
+					searchContext.setAttribute("showHideable", showHideable);
+				}
 			);
 
 		SearchResponse searchResponse = searcher.search(

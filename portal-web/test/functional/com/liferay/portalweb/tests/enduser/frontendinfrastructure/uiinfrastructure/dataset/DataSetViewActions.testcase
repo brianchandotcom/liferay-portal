@@ -795,10 +795,17 @@ definition {
 				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
 				value1 = "edit");
 
-			Select(
-				key_fieldLabel = "Icon",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
 				value1 = "pencil");
+
+			Click.mouseOverClick(
+				key_text = "pencil",
+				locator1 = "Icon#ANY");
 
 			Select(
 				key_fieldLabel = "Type",

@@ -118,16 +118,10 @@ KaleoFormsTaskTemplateSearchDisplayContext kaleoFormsTaskTemplateSearchDisplayCo
 		window,
 		'<portlet:namespace />editFormTemplate',
 		(uri) => {
-			var A = AUI();
-
-			var WIN = A.config.win;
-
 			Liferay.Util.openWindow({
 				dialog: {
 					destroyOnHide: true,
 				},
-				id: A.guid(),
-				refreshWindow: WIN,
 				title: '<liferay-ui:message key="forms" />',
 				uri: uri,
 			});
@@ -139,27 +133,28 @@ KaleoFormsTaskTemplateSearchDisplayContext kaleoFormsTaskTemplateSearchDisplayCo
 		window,
 		'<portlet:namespace />unassignForm',
 		(event) => {
-			var A = AUI();
+			const data = new URLSearchParams({
+				<portlet:namespace />kaleoProcessLinkDDMStructureId:
+					event.ddmStructureId,
+				<portlet:namespace />kaleoProcessLinkDDMTemplateId: 0,
+				<portlet:namespace />kaleoProcessLinkWorkflowDefinition:
+					event.workflowDefinition,
+				<portlet:namespace />kaleoProcessLinkWorkflowTaskName:
+					event.workflowTaskName,
+			});
 
-			var data = {};
-
-			data['<portlet:namespace />kaleoProcessLinkDDMStructureId'] =
-				event.ddmStructureId;
-			data['<portlet:namespace />kaleoProcessLinkDDMTemplateId'] = 0;
-			data['<portlet:namespace />kaleoProcessLinkWorkflowDefinition'] =
-				event.workflowDefinition;
-			data['<portlet:namespace />kaleoProcessLinkWorkflowTaskName'] =
-				event.workflowTaskName;
-
-			A.io.request('<portlet:resourceURL id="saveInPortletSession" />', {
-				after: {
-					success: function () {
-						window.location = decodeURIComponent(
-							'<%= HtmlUtil.escapeURL(kaleoFormsTaskTemplateSearchDisplayContext.getBackURL()) %>'
-						);
-					},
-				},
-				data: data,
+			Liferay.Util.fetch(
+				'<portlet:resourceURL id="saveInPortletSession" />',
+				{
+					body: data,
+					method: 'POST',
+				}
+			).then((response) => {
+				if (response.ok) {
+					window.location = decodeURIComponent(
+						'<%= HtmlUtil.escapeURL(kaleoFormsTaskTemplateSearchDisplayContext.getBackURL()) %>'
+					);
+				}
 			});
 		},
 		['aui-base']

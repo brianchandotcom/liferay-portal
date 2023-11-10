@@ -156,6 +156,111 @@ definition {
 		}
 	}
 
+	@description = "LPS-185676 - Verify when the user searches for an object definition, the current object folder is displayed first and other folders are in alphabetical order"
+	@priority = 3
+	test CanSearchForObjectDefinitionWithRelationship {
+		task ("Given an object definition called Employee in the Employee folder") {
+			var employeeFolderERC = JSONObjectFolder.addFolder(
+				folderLabel = "Employee",
+				folderName = "Employee");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Employee",
+				objectName = "Employee",
+				pluralLabelName = "Employees");
+
+			JSONObject.updateObject(
+				configKey = "objectFolderExternalReferenceCode",
+				configValue = ${employeeFolderERC},
+				objectName = "Employee");
+		}
+
+		task ("and Given an object definition called Role in the Role folder") {
+			var roleFolderERC = JSONObjectFolder.addFolder(
+				folderLabel = "Role",
+				folderName = "Role");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Role",
+				objectName = "Role",
+				pluralLabelName = "Roles");
+
+			JSONObject.updateObject(
+				configKey = "objectFolderExternalReferenceCode",
+				configValue = ${roleFolderERC},
+				objectName = "Role");
+		}
+
+		task ("and Given an object definition called Department in the Department folder") {
+			var departmentFolderERC = JSONObjectFolder.addFolder(
+				folderLabel = "Department",
+				folderName = "Department");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Department",
+				objectName = "Department",
+				pluralLabelName = "Departments");
+
+			JSONObject.updateObject(
+				configKey = "objectFolderExternalReferenceCode",
+				configValue = ${departmentFolderERC},
+				objectName = "Department");
+		}
+
+		task ("and Given Employee is related to Role and Department") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "Employee",
+				objectName_2 = "Role",
+				relationshipLabel = "EmployeeRoles",
+				relationshipName = "employeeRoles",
+				relationshipType = "manyToMany");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "Department",
+				objectName_2 = "Employee",
+				relationshipLabel = "DepartmentEmployees",
+				relationshipName = "departmentEmployees",
+				relationshipType = "oneToMany");
+		}
+
+		task ("and Given the user is in the Employee folder") {
+			ObjectModelBuilder.openObjectFolderInModelBuilder(objectFolderName = "Employee");
+		}
+
+		task ("When the user searches for Employee in the side panel") {
+			Search.searchCP(searchTerm = "Employee");
+		}
+
+		task ("Then the Employee folder is displayed as the first result") {
+			AssertElementPresent(
+				key_folderLabel = "Employee",
+				key_index = 1,
+				locator1 = "ObjectModelBuilder#SIDEBAR_FOLDER_BY_INDEX");
+		}
+
+		task ("And Then Department and Role are listed in alphabetical order with Employee listed in them with the link icon") {
+			AssertClick(
+				key_index = 2,
+				locator1 = "ObjectModelBuilder#SIDEBAR_FOLDER_BY_INDEX",
+				value1 = "Department");
+
+			AssertElementPresent(
+				key_folderLabel = "Department",
+				key_objectLabel = "Employee",
+				locator1 = "ObjectModelBuilder#LINKED_OBJECT_IN_OTHER_FOLDERS");
+
+			AssertClick(
+				key_index = 3,
+				locator1 = "ObjectModelBuilder#SIDEBAR_FOLDER_BY_INDEX",
+				value1 = "Role");
+
+			AssertElementPresent(
+				key_folderLabel = "Role",
+				key_objectLabel = "Employee",
+				locator1 = "ObjectModelBuilder#LINKED_OBJECT_IN_OTHER_FOLDERS");
+		}
+	}
+
 	@description = "LPS-185679 - Verify the user can update a field in model builder view"
 	@priority = 5
 	test CanUpdateField {

@@ -4176,8 +4176,9 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void rsync(
-		String destinationHostName, String destinationDirPath,
-		String sourceHostName, String sourceFilePath, String argumentString) {
+		final String destinationHostName, final String destinationDirPath,
+		final String sourceHostName, final String sourceFilePath,
+		final String argumentString) {
 
 		if ((destinationHostName != null) &&
 			!destinationDirPath.startsWith("::")) {
@@ -4198,37 +4199,39 @@ public class JenkinsResultsParserUtil {
 			destinationDir.mkdirs();
 		}
 
-		int maxRetries = 3;
-		int retries = 0;
+		Retryable<Process> retryable = new Retryable<Process>(
+			true, 3, 3000, false) {
 
-		while (retries < maxRetries) {
-			try {
-				retries++;
-
+			@Override
+			public Process execute() {
 				String command = _combineCommandArgs(
 					"time", "timeout", "1200", "rsync", argumentString,
 					_getRyncPath(sourceHostName, sourceFilePath),
 					_getRyncPath(destinationHostName, destinationDirPath));
 
-				executeBashCommands(command);
-
-				break;
-			}
-			catch (IOException | TimeoutException exception) {
-				if (retries == maxRetries) {
-					throw new RuntimeException(
-						"Unable to rsync " +
-							_getRyncPath(sourceHostName, sourceFilePath),
-						exception);
+				try {
+					return executeBashCommands(command);
 				}
-
-				System.out.println(
-					"Unable to execute bash commands, retrying... ");
-
-				exception.printStackTrace();
-
-				sleep(3000);
+				catch (IOException | TimeoutException exception) {
+					throw new RuntimeException(exception);
+				}
 			}
+
+		};
+
+		try {
+			Process process = retryable.executeWithRetries();
+
+			if (process.exitValue() != 0) {
+				throw new RuntimeException(
+					readInputStream(process.getErrorStream()));
+			}
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to rsync " +
+					_getRyncPath(sourceHostName, sourceFilePath),
+				exception);
 		}
 	}
 

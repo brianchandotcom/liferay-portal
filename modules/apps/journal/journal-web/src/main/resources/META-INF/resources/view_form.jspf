@@ -23,6 +23,36 @@
 		</c:when>
 		<c:otherwise>
 			<div>
+				<div class="cadmin row">
+					<div class="col d-flex">
+						<div class="c-mr-2 d-inline-flex form-group">
+							<button class="btn btn-secondary btn-sm form-control-select">
+								<%= journalDisplayContext.getSearchResultsLabel() %>
+							</button>
+						</div>
+
+						<%
+						String searchLocationLabel = journalDisplayContext.getSearchLocationLabel();
+						%>
+
+						<c:if test="<%= searchLocationLabel != null %>">
+							<div class="c-mr-2 d-inline-flex form-group">
+								<button class="align-items-center btn btn-secondary btn-sm form-control-select">
+									<svg class="lexicon-icon lexicon-icon-folder mr-2" role="presentation">
+										<use xlink:href="/o/admin-theme/images/clay/icons.svg#folder">
+									</svg><%= searchLocationLabel %>
+								</button>
+							</div>
+						</c:if>
+
+						<div class="d-inline-flex form-group">
+							<button class="btn btn-secondary btn-sm form-control-select">
+								<%= journalDisplayContext.getSearchInLabel() %>
+							</button>
+						</div>
+					</div>
+				</div>
+
 				<react:component
 					module="js/SearchOptions"
 					props="<%= journalDisplayContext.getSearchProps() %>"

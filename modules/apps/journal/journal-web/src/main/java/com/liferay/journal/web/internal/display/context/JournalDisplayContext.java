@@ -974,6 +974,28 @@ public class JournalDisplayContext {
 		return _searchContainer;
 	}
 
+	public String getSearchInLabel() {
+		if (Objects.equals(_getSearchIn(), "title")) {
+			return LanguageUtil.get(_themeDisplay.getLocale(), "title-only");
+		}
+
+		return LanguageUtil.get(_themeDisplay.getLocale(), "all-fields");
+	}
+
+	public String getSearchLocationLabel() {
+		if (getFolderId() == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return null;
+		}
+
+		if (Objects.equals(_getSearchLocation(), "current-folder")) {
+			JournalFolder folder = getFolder();
+
+			return folder.getName();
+		}
+
+		return LanguageUtil.get(_themeDisplay.getLocale(), "everywhere");
+	}
+
 	public Map<String, Object> getSearchProps() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"searchIn", _getSearchIn()
@@ -1054,6 +1076,19 @@ public class JournalDisplayContext {
 				"status", getStatus()
 			).buildString()
 		).build();
+	}
+
+	public String getSearchResultsLabel() throws PortalException {
+		String searchResults = getTab();
+
+		if (Objects.equals(searchResults, "comments")) {
+			return LanguageUtil.get(_themeDisplay.getLocale(), "comments");
+		}
+		else if (Objects.equals(searchResults, "versions")) {
+			return LanguageUtil.get(_themeDisplay.getLocale(), "versions");
+		}
+
+		return LanguageUtil.get(_themeDisplay.getLocale(), "web-content");
 	}
 
 	public String getSelectDDMStructureURL() {

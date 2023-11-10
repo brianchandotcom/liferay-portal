@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import ChangeDefaultLanguage from '../../../src/main/resources/META-INF/resources/js/ChangeDefaultLanguage.es';
+import ChangeDefaultLanguage from '../../src/main/resources/META-INF/resources/js/ChangeDefaultLanguage.es';
 
 const defaultStrings = {
 	ca_ES: 'Catalan (ES)',

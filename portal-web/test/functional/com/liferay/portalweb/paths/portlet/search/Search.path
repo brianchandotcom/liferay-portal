@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>REINDEX_IN_PROGRESS_INDICATOR</td>
-	<td>//div[contains(.,'The portal is currently reindexing.')]</td>
+	<td>//span[contains(@data-title,'The portal is currently reindexing.')] | //span[contains(@title,'The portal is currently reindexing.')]</td>
 	<td></td>
 </tr>
 <tr>

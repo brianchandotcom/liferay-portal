@@ -161,9 +161,10 @@ else {
 					</clay:col>
 
 					<clay:col
+						cssClass="align-items-center d-flex"
 						md="2"
 					>
-						<aui:button-row cssClass="add-parameter">
+						<aui:button-row cssClass="add-parameter c-mt-1">
 							<aui:button value="add-parameter" />
 						</aui:button-row>
 					</clay:col>

@@ -31,34 +31,6 @@ AUI().use('escape', 'event', 'aui-lang', (A) => {
 
 			let message = '';
 
-			if (!parameterKey.length) {
-				A.all('.portlet-msg-error').setStyle('display', 'none');
-
-				message = Liferay.Language.get(
-					'please-enter-a-valid-report-parameter-key'
-				);
-
-				message = AEscape.html(message);
-
-				instance._sendMessage(message);
-
-				return;
-			}
-
-			if (parameterType !== 'date' && !parameterValue.length) {
-				A.all('.portlet-msg-error').setStyle('display', 'none');
-
-				message = Liferay.Language.get(
-					'please-enter-a-valid-report-parameter-value'
-				);
-
-				message = AEscape.html(message);
-
-				instance._sendMessage(message);
-
-				return;
-			}
-
 			if (
 				parameterKey.indexOf(',') > 0 ||
 				parameterKey.indexOf('=') > 0 ||
@@ -371,20 +343,6 @@ AUI().use('escape', 'event', 'aui-lang', (A) => {
 				if (currentTarget.val() === 'date') {
 					parametersValueFieldSet.setStyle('display', 'none');
 					parametersInputDate.setStyle('display', 'block');
-				}
-
-				if (currentTarget.val() === 'startDateDay') {
-					parametersInputDate.setStyle('display', 'none');
-					parametersValueFieldSet.setStyle('display', 'block');
-					parametersValue.attr('disabled', 'disabled');
-					parametersValue.val('${startDateDay}');
-				}
-
-				if (currentTarget.val() === 'endDateDay') {
-					parametersInputDate.setStyle('display', 'none');
-					parametersValueFieldSet.setStyle('display', 'block');
-					parametersValue.attr('disabled', 'disabled');
-					parametersValue.val('${endDateDay}');
 				}
 			});
 		},

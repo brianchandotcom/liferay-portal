@@ -765,12 +765,11 @@ public class SourceFormatter {
 					continue;
 				}
 
-				List<String> deletedFileNames =
-					GitUtil.getCurrentBranchDeletedFileNames(
-						_sourceFormatterArgs.getBaseDirName(),
-						_sourceFormatterArgs.getGitWorkingBranchName());
+				for (String deletedFileName :
+						GitUtil.getCurrentBranchDeletedFileNames(
+							_sourceFormatterArgs.getBaseDirName(),
+							_sourceFormatterArgs.getGitWorkingBranchName())) {
 
-				for (String deletedFileName : deletedFileNames) {
 					if (filePath.endsWith(deletedFileName)) {
 						continue outerLoop;
 					}

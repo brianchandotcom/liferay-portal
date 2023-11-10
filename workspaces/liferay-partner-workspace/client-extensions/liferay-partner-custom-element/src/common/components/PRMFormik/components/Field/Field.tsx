@@ -13,8 +13,8 @@ interface IProps {
 
 const Field = ({component, name, ...props}: IProps & any) => (
 	<FormikField name={name}>
-		{({field, meta}: FieldProps) =>
-			React.createElement(component, {field, meta, ...props})
+		{({field, form, meta}: FieldProps) =>
+			React.createElement(component, {field, form, meta, ...props})
 		}
 	</FormikField>
 );

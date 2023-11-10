@@ -25,6 +25,7 @@ const InputMultipleFiles = ({
 	acceptedFilesExtensions,
 	description,
 	field,
+	form,
 	label,
 	meta,
 	onAccept,
@@ -38,6 +39,7 @@ const InputMultipleFiles = ({
 		noClick: true,
 		noKeyboard: true,
 		onDrop: (acceptedFiles) => {
+			form.setFieldTouched(field.name, true);
 			onAccept(acceptedFiles);
 		},
 	});
@@ -99,7 +101,7 @@ const InputMultipleFiles = ({
 					</div>
 				</div>
 
-				{meta.error && !Array.isArray(meta.error) && (
+				{meta.error && !Array.isArray(meta.error) && meta.touched && (
 					<ClayForm.FeedbackGroup>
 						<ClayForm.FeedbackItem>
 							{meta.error}

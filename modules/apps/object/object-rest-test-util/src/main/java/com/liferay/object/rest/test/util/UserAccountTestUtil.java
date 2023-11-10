@@ -86,6 +86,8 @@ public class UserAccountTestUtil {
 
 		UserAccount userAccount = randomUserAccount();
 
+		userAccount.setStatus(UserAccount.Status.ACTIVE);
+
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 

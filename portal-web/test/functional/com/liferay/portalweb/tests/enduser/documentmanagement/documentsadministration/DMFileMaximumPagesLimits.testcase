@@ -36,7 +36,12 @@ definition {
 			mimeType = "application/pdf",
 			sourceFileName = "large_file.pdf");
 
-		DMNavigator.openToConfigInSystemSettings(portlet = "PDF Preview");
+		DMNavigator.openToConfigInSystemSettings(portlet = "File Preview Limits");
+
+		AssertTextEquals(
+			key_portletTitle = "File Preview Limits",
+			locator1 = "DocumentsAndMedia#PORTLET_TITLE",
+			value1 = "File Preview Limits");
 
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
@@ -45,7 +50,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		DMNavigator.openToConfigInInstanceSettings(portlet = "PDF Preview");
+		DMNavigator.openToConfigInInstanceSettings(portlet = "File Preview Limits");
 
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",
@@ -58,7 +63,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Alert.viewErrorMessage(errorMessage = "Maximum number of pages limit is not valid.");
+		Alert.viewErrorMessage(errorMessage = "Maximum number of pages limit is invalid.");
 
 		Type(
 			key_fieldLabel = "Maximum Number of Pages",

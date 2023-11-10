@@ -28,7 +28,10 @@ const formatActions = (actions, itemData) => {
 	return actions
 		? actions.reduce((actions, action) => {
 				if (action.data?.permissionKey) {
-					if (itemData.actions[action.data.permissionKey]) {
+					if (
+						itemData.actions &&
+						itemData.actions[action.data.permissionKey]
+					) {
 						if (action.target === 'headless') {
 							return [
 								...actions,

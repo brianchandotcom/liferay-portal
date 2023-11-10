@@ -136,7 +136,11 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 					{showDateRange && (
 						<ClayForm.Group>
 							<label htmlFor='timeRange'>
-								{Liferay.Language.get('date-range-optional')}
+								{requiredDateRange
+									? Liferay.Language.get('date-range')
+									: Liferay.Language.get(
+											'date-range-optional'
+									  )}
 							</label>
 
 							<ClayDropDown
@@ -213,7 +217,8 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 							<ClayButton
 								disabled={
 									(requiredDateRange &&
-										!Object.keys(dateRange).length) ||
+										!dateRange.end &&
+										!dateRange.start) ||
 									disabled ||
 									submitDisabled
 								}

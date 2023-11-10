@@ -15,12 +15,18 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.util.List;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,12 +43,26 @@ public class TikaRawMetadataProcessorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_file = new File("test-x-matlab.js");
+
+		Files.write(
+			Paths.get(_file.getPath()),
+			"function TikaRawMetadataProcessorTest() {}".getBytes());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_file.delete();
+	}
+
 	@Test
 	public void testGetRawMetadataMapWithXMatlab() throws Exception {
 		Map<String, DDMFormValues> rawMetadataMap =
 			_rawMetadataProcessor.getRawMetadataMap(
 				ContentTypes.APPLICATION_JAVASCRIPT,
-				_getInputStream("test-x-matlab.js"));
+				new FileInputStream(_file));
 
 		DDMFormValues ddmFormValues = rawMetadataMap.get(
 			RawMetadataProcessor.TIKA_RAW_METADATA);
@@ -63,11 +83,7 @@ public class TikaRawMetadataProcessorTest {
 		Assert.assertTrue(valueString.startsWith("application/javascript;"));
 	}
 
-	private InputStream _getInputStream(String fileName) {
-		Class<?> clazz = getClass();
-
-		return clazz.getResourceAsStream("dependencies/" + fileName);
-	}
+	private static File _file;
 
 	@Inject
 	private RawMetadataProcessor _rawMetadataProcessor;

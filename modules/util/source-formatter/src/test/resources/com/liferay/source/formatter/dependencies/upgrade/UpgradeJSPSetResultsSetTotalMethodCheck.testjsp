@@ -5,12 +5,9 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
-
 <%
-SearchContainer<WeDeployAuthApp> weDeployAuthAppsSearchContainer = new SearchContainer(renderRequest, portletURL, null, "no-wedeploy-apps-were-found");
+SearchContainer<Entry> searchContainer = new SearchContainer();
 
-weDeployAuthAppsSearchContainer.setTotal(WeDeployAuthAppLocalServiceUtil.getWeDeployAuthAppsCount());
-
-weDeployAuthAppsSearchContainer.setResults(WeDeployAuthAppLocalServiceUtil.getWeDeployAuthApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+searchContainer.setResults(resultsParameter);
+searchContainer.setTotal(totalParameter);
 %>

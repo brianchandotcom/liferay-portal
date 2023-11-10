@@ -5,12 +5,8 @@
  */
 --%>
 
-<div class="entries">
+<%
+SearchContainer<Entry> searchContainer = new SearchContainer();
 
-	<%
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
-
-	searchContainer.setResultsAndTotal(entries);
-	%>
-
-</div>
+searchContainer.setResultsAndTotal(resultsParameter, totalParameter);
+%>

@@ -5,20 +5,24 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
-/**
- * @author Tamyris Bernardo
- */
 public class UpgradeJavaSetResultsSetTotalMethodCheck {
 
 	public void method() {
-		SearchContainer<AnnouncementsEntry>
-			announcementsEntriesSearchContainer = new SearchContainer();
+		SearchContainer<Entry> searchContainer = new SearchContainer();
 
-		announcementsEntriesSearchContainer.setResultsAndTotal(consumers);
+		searchContainer.setResultsAndTotal(resultsParameter, totalParameter);
+	}
 
-		SearchContainer vocabulariesSearchContainer = new SearchContainer();
+	public void method() {
+		SearchContainer<Entry> searchContainer = new SearchContainer();
 
-		vocabulariesSearchContainer.setResultsAndTotal(consumers);
+		searchContainer.setResultsAndTotal(resultsParameter, searchContainer::getTotal);
+	}
+
+	public void method() {
+		SearchContainer<Entry> searchContainer = new SearchContainer();
+
+		searchContainer.setResultsAndTotal(searchContainer::getResults, totalParameter);
 	}
 
 }

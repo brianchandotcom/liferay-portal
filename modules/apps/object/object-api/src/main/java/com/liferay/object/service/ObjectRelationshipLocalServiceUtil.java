@@ -275,6 +275,14 @@ public class ObjectRelationshipLocalServiceUtil {
 
 	public static ObjectRelationship
 		fetchObjectRelationshipByExternalReferenceCode(
+			String externalReferenceCode, long objectDefinitionId1) {
+
+		return getService().fetchObjectRelationshipByExternalReferenceCode(
+			externalReferenceCode, objectDefinitionId1);
+	}
+
+	public static ObjectRelationship
+		fetchObjectRelationshipByExternalReferenceCode(
 			String externalReferenceCode, long companyId,
 			long objectDefinitionId1) {
 

@@ -15,7 +15,6 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -63,14 +62,12 @@ import org.objectweb.asm.Opcodes;
 public class Sidecar {
 
 	public Sidecar(
-		ClusterExecutor clusterExecutor,
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper,
 		ElasticsearchInstancePaths elasticsearchInstancePaths,
 		ProcessExecutor processExecutor,
 		ProcessExecutorPaths processExecutorPaths,
 		SidecarManager sidecarManager) {
 
-		_clusterExecutor = clusterExecutor;
 		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
 		_elasticsearchInstancePaths = elasticsearchInstancePaths;
 		_processExecutor = processExecutor;
@@ -480,8 +477,6 @@ public class Sidecar {
 			_elasticsearchInstancePaths
 		).httpPortRange(
 			new HttpPortRange(_elasticsearchConfigurationWrapper)
-		).localBindInetAddressSupplier(
-			_clusterExecutor::getBindInetAddress
 		).nodeName(
 			_getNodeName()
 		).build();
@@ -587,7 +582,6 @@ public class Sidecar {
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
 
 	private String _address;
-	private final ClusterExecutor _clusterExecutor;
 	private final Path _dataHomePath;
 	private final ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;

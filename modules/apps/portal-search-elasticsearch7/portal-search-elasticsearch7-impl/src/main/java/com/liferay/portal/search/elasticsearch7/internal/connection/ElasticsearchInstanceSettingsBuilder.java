@@ -95,14 +95,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		return this;
 	}
 
-	public ElasticsearchInstanceSettingsBuilder localBindInetAddressSupplier(
-		Supplier<InetAddress> localBindInetAddressSupplier) {
-
-		_localBindInetAddressSupplier = localBindInetAddressSupplier;
-
-		return this;
-	}
-
 	public ElasticsearchInstanceSettingsBuilder networkHost(
 		String networkHost) {
 
@@ -199,21 +191,8 @@ public class ElasticsearchInstanceSettingsBuilder {
 		if (!Validator.isBlank(_networkHost)) {
 			put("network.host", _networkHost);
 		}
-		else {
-			if (Validator.isNull(networkBindHost) &&
-				Validator.isNull(networkHost) &&
-				Validator.isNull(networkPublishHost)) {
-
-				InetAddress inetAddress = _localBindInetAddressSupplier.get();
-
-				if (inetAddress != null) {
-					networkHost = inetAddress.getHostAddress();
-				}
-			}
-
-			if (Validator.isNotNull(networkHost)) {
-				put("network.host", networkHost);
-			}
+		else if (Validator.isNotNull(networkHost)) {
+			put("network.host", networkHost);
 		}
 
 		if (Validator.isNotNull(networkPublishHost)) {
@@ -313,7 +292,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		_elasticsearchConfigurationWrapper;
 	private ElasticsearchInstancePaths _elasticsearchInstancePaths;
 	private HttpPortRange _httpPortRange;
-	private Supplier<InetAddress> _localBindInetAddressSupplier;
 	private String _networkHost;
 	private String _nodeName;
 	private final SettingsBuilder _settingsBuilder = new SettingsBuilder(

@@ -122,7 +122,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 			"job", jobJSONObject
 		);
 
-		sendMessageToJethr0(jsonObject.toString());
+		sendJRPMessageToJethr0(jsonObject.toString());
 	}
 
 	@Override
@@ -179,7 +179,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 	}
 
 	@Override
-	public void sendMessageToJethr0(String message) {
+	public void sendJRPMessageToJethr0(String message) {
 		connect();
 
 		try {
@@ -196,6 +196,25 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 				"jenkinsMasterName", _jenkinsMaster.getName());
 
 			messageProducer.send(textMessage);
+		}
+		catch (JMSException jmsException) {
+			throw new RuntimeException(jmsException);
+		}
+	}
+
+	@Override
+	public void sendWebhookMessageToJethr0(String message) {
+		connect();
+
+		try {
+			Session session = _connection.createSession(
+				false, Session.AUTO_ACKNOWLEDGE);
+
+			Queue queue = session.createQueue(getJMSWebhookToJethr0QueueName());
+
+			MessageProducer messageProducer = session.createProducer(queue);
+
+			messageProducer.send(session.createTextMessage(message));
 		}
 		catch (JMSException jmsException) {
 			throw new RuntimeException(jmsException);
@@ -314,6 +333,8 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 	protected abstract String getJMSUserName();
 
 	protected abstract String getJMSUserPassword();
+
+	protected abstract String getJMSWebhookToJethr0QueueName();
 
 	protected abstract URL getLiferayDXPURL();
 

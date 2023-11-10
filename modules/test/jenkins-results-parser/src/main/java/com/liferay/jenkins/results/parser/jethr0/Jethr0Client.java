@@ -39,7 +39,9 @@ public interface Jethr0Client {
 
 	public String liferayDXPRequest(String urlPath, String message);
 
-	public void sendMessageToJethr0(String message);
+	public void sendJRPMessageToJethr0(String message);
+
+	public void sendWebhookMessageToJethr0(String message);
 
 	public String springBootRequest(String urlPath);
 

@@ -24,6 +24,8 @@ public class LocalJethr0Client extends BaseJethr0Client {
 			"jethr0.jms.jrp.jethr0.queue.name");
 		_jmsUserName = getBuildPropertyString("jethr0.jms.user.name");
 		_jmsUserPassword = getBuildPropertyString("jethr0.jms.user.password");
+		_jmsWebhookToJethr0QueueName = getBuildPropertyString(
+			"jethr0.jms.webhook.jethr0.queue.name");
 		_liferayDXPURL = getBuildPropertyURL("jethr0.liferay.dxp.url");
 		_oAuthClientSecret = getBuildPropertyString(
 			"jethr0.liferay.oauth.client.secret");
@@ -60,6 +62,11 @@ public class LocalJethr0Client extends BaseJethr0Client {
 	}
 
 	@Override
+	protected String getJMSWebhookToJethr0QueueName() {
+		return _jmsWebhookToJethr0QueueName;
+	}
+
+	@Override
 	protected URL getLiferayDXPURL() {
 		return _liferayDXPURL;
 	}
@@ -84,6 +91,7 @@ public class LocalJethr0Client extends BaseJethr0Client {
 	private final String _jmsJRPToJethr0QueueName;
 	private final String _jmsUserName;
 	private final String _jmsUserPassword;
+	private final String _jmsWebhookToJethr0QueueName;
 	private final URL _liferayDXPURL;
 	private final String _oAuthClientSecret;
 	private final String _oAuthExternalReferenceCode;

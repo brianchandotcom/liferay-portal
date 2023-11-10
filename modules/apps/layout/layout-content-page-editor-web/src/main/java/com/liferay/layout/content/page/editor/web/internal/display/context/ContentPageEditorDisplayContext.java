@@ -594,6 +594,10 @@ public class ContentPageEditorDisplayContext {
 				() -> {
 					Layout draftLayout = themeDisplay.getLayout();
 
+					if (draftLayout.isDenied() || draftLayout.isPending()) {
+						return true;
+					}
+
 					Layout publishedLayout = _layoutLocalService.fetchLayout(
 						draftLayout.getClassPK());
 

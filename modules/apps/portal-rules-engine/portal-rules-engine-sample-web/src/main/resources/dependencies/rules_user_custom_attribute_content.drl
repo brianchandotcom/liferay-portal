@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
@@ -41,6 +40,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.internal.facet.FacetImpl;
 
 import java.io.Serializable;
 
@@ -74,11 +74,11 @@ function List getAssetEntries(
 
 	SearchContext searchContext = new SearchContext();
 
-	Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
+	Facet facet = new FacetImpl(Field.ENTRY_CLASS_NAME, searchContext);
 
-	assetEntriesFacet.setStatic(true);
+	facet.setStatic(true);
 
-	searchContext.addFacet(assetEntriesFacet);
+	searchContext.addFacet(facet);
 
 	Facet scopeFacet = new ScopeFacet(searchContext);
 

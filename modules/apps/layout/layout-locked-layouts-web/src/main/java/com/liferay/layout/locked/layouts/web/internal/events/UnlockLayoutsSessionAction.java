@@ -9,6 +9,7 @@ import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.SessionAction;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,7 +41,10 @@ public class UnlockLayoutsSessionAction extends SessionAction {
 
 		User user = _userLocalService.fetchUser(userId);
 
-		if (user == null) {
+		if ((user == null) ||
+			!FeatureFlagManagerUtil.isEnabled(
+				user.getCompanyId(), "LPS-180328")) {
+
 			return;
 		}
 

@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
@@ -86,7 +87,9 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public void getLock(Layout layout, long userId) throws PortalException {
-		if ((layout == null) || !layout.isDraftLayout()) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+			(layout == null) || !layout.isDraftLayout()) {
+
 			return;
 		}
 
@@ -245,6 +248,10 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				redirectUnsafeSupplier)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
+			return String.valueOf(redirectUnsafeSupplier.get());
+		}
+
 		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse
 		).setActionName(
@@ -256,7 +263,9 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public void unlock(Layout layout, long userId) {
-		if ((layout == null) || !layout.isDraftLayout()) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+			(layout == null) || !layout.isDraftLayout()) {
+
 			return;
 		}
 

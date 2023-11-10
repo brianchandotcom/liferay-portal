@@ -9,6 +9,7 @@ import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -29,6 +30,10 @@ public class UnlockLayoutsLogoutPostAction extends Action {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws ActionException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
+			return;
+		}
 
 		try {
 			User user = _portal.getUser(httpServletRequest);

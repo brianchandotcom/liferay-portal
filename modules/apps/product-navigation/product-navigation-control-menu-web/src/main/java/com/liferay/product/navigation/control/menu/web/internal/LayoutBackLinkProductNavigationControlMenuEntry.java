@@ -7,6 +7,7 @@ package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -93,7 +94,8 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 
 		Layout layout = _layoutLocalService.fetchLayout(themeDisplay.getPlid());
 
-		if (!Objects.equals(
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+			!Objects.equals(
 				ParamUtil.getString(
 					httpServletRequest, "p_l_mode", Constants.VIEW),
 				Constants.EDIT) ||

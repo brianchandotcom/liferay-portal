@@ -7,6 +7,7 @@ package com.liferay.layout.locked.layouts.web.internal.events.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jürgen Kappler
  */
+@FeatureFlags("LPS-180328")
 @RunWith(Arquillian.class)
 public class UnlockLayoutsSessionActionTest extends BaseActionTest {
 

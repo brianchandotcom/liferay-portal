@@ -10,6 +10,7 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.locked.layouts.web.internal.constants.LockedLayoutsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -44,7 +45,8 @@ public class LockedLayoutsPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (group.isCompany() || _stagingGroupHelper.isLocalLiveGroup(group) ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+			group.isCompany() || _stagingGroupHelper.isLocalLiveGroup(group) ||
 			_stagingGroupHelper.isRemoteLiveGroup(group)) {
 
 			return false;

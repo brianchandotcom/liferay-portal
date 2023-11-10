@@ -66,7 +66,7 @@ export function NextSteps({
 
 	const {name: appName = ''} = firstCartItem ?? {};
 
-	const isTrial = cartItems.items.some(
+	const isTrial = cartItems?.items?.some(
 		(item: any) =>
 			item.sku.endsWith('ts') || item.sku.toLowerCase().includes('trial')
 	);

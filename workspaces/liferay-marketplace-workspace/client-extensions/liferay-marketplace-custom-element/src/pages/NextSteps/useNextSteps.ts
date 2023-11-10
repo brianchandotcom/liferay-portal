@@ -25,7 +25,7 @@ const useNextSteps = (orderId: string) => {
 
 	const [cart, cartItems] = data ?? [];
 	const {accountId} = cart ?? {};
-	const firstCartItem = cartItems.items[0];
+	const firstCartItem = cartItems?.items[0];
 
 	const {productId} = firstCartItem ?? {};
 

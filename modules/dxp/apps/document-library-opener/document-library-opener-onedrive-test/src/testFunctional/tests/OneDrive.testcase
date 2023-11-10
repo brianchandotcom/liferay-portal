@@ -49,8 +49,6 @@ definition {
 
 			DMFolder.tearDownCP();
 
-			DMDocumentType.tearDownCP();
-
 			PagesAdmin.tearDownCP();
 		}
 	}

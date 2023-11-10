@@ -5,8 +5,6 @@ definition {
 	function open(value1) {
 		WaitForSPARefresh();
 
-		selenium.selectWindow("null");
-
 		selenium.selectFrame("relative=top");
 
 		selenium.open(${value1});

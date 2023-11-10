@@ -1297,6 +1297,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-198257. View the Experience Selector on the Page Audit is on the Performance Tab."
+	@priority = 3
+	test ViewExperienceSelectorOnPageAudit {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
+		task ("Given a content page with an experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addExperience(
+				experienceName = "Experience",
+				segmentName = "Anyone");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When accessing the page audit performance tab") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
+
+			PageAudit.openPageAuditSidebar();
+		}
+
+		task ("Then it is possible to select the experience through the performance tab") {
+			Click(
+				ariaLabel = "Experience Selector",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			MenuItem.click(menuItem = "Experience");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
+		}
+	}
+
 	@description = "This is a test for LPS-196044. View improvement in page audit when adding a Button fragment. Check the accessibility in page audit improvement when adding a Button fragment."
 	@priority = 3
 	test ViewImprovementWhenAddingAButtonFragment {

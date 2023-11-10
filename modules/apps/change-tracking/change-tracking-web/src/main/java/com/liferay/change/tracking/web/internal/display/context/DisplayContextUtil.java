@@ -32,7 +32,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,12 +45,12 @@ public class DisplayContextUtil {
 	public static Map<Long, String> getSiteNames(
 		long ctCollectionId, ThemeDisplay themeDisplay) {
 
-		Map<Long, String> siteNames = new HashMap<>();
-
 		Searcher searcher = _searcherSnapshot.get();
 
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
 			_searchRequestBuilderFactorySnapshot.get();
+
+		Sorts sorts = _sortsSnapshot.get();
 
 		SearchRequestBuilder searchRequestBuilder =
 			searchRequestBuilderFactory.builder(
@@ -63,6 +62,12 @@ public class DisplayContextUtil {
 				Field.GROUP_ID, "groupName"
 			).modelIndexerClasses(
 				CTEntry.class
+			).sorts(
+				sorts.field(
+					Field.getSortableFieldName(
+						"groupName_".concat(
+							LocaleUtil.toLanguageId(themeDisplay.getLocale()))),
+					SortOrder.ASC)
 			).withSearchContext(
 				searchContext -> searchContext.setAttribute(
 					"ctCollectionId", ctCollectionId)
@@ -70,6 +75,8 @@ public class DisplayContextUtil {
 
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilder.build());
+
+		Map<Long, String> siteNames = new LinkedHashMap<>();
 
 		for (Document document : searchResponse.getDocuments()) {
 			siteNames.put(

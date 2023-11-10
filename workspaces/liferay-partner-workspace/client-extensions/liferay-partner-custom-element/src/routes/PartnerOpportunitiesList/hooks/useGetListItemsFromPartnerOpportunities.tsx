@@ -11,6 +11,8 @@ import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import useGet from '../../../common/services/liferay/object/useGet';
+import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
+import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 import getOpportunityAmount from '../utils/getOpportunityAmount';
 import getOpportunityDates from '../utils/getOpportunityDates';
@@ -49,7 +51,10 @@ export default function useGetListItemsFromPartnerOpportunities(
 					: {[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: ' - '}),
 
 				[PartnerOpportunitiesColumnKey.CLOSE_DATE]: item.closeDate
-					? item.closeDate
+					? getDateCustomFormat(
+							item.closeDate,
+							customFormatDateOptions.SHORT_MONTH
+					  )
 					: '- ',
 				[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
 					item.partnerFirstName ? item.partnerFirstName : ''

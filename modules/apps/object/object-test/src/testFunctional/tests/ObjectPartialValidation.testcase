@@ -189,11 +189,10 @@ definition {
 				key_optionSelected = "partialValidation",
 				locator1 = "FormFields#OPTION_SELECTED");
 
-			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-			Click(
-				key_columnOption = "Custom Field",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Fields",
+				optionName = "Custom Field");
 
 			PortletEntry.save();
 		}

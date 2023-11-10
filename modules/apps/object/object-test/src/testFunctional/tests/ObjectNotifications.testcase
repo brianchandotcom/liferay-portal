@@ -65,8 +65,9 @@ definition {
 			MenuItem.clickNoError(menuItem = "View");
 
 			AssertElementPresent(
-				key_dataSource = "Custom Object 161924",
-				locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
+				key_currentOption = "Custom Object 161924",
+				key_labelName = "Data Source",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			AssertElementPresent(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
 		}
@@ -183,13 +184,10 @@ definition {
 
 			MenuItem.click(menuItem = "Email");
 
-			Click(
-				key_dataSource = "Select a Data Source",
-				locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
-
-			Click(
-				key_optionName = "Custom Object B 183441",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select a Data Source",
+				labelName = "Data Source",
+				optionName = "Custom Object B 183441");
 
 			Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
 		}
@@ -247,7 +245,10 @@ definition {
 				notificationType = "Email",
 				subject = "Subject");
 
-			ObjectNotifications.selectEntity(entityName = "User");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Entity",
+				optionName = "User");
 
 			var listOfTerms = "Middle Name,Screen Name,Create Date,First Name,Last Login Date,UUID";
 
@@ -297,7 +298,10 @@ definition {
 				recipientType = "User",
 				subject = "Subject content");
 
-			ObjectNotifications.selectEntity(entityName = "User");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Entity",
+				optionName = "User");
 
 			var listOfTerms = "Middle Name,Screen Name,Create Date,First Name,Last Login Date,UUID";
 

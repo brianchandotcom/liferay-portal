@@ -39,8 +39,9 @@ definition {
 				subject = "Subject");
 
 			AssertElementPresent(
-				key_dataSource = "Custom Object2",
-				locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
+				key_currentOption = "Custom Object2",
+				key_labelName = "Data Source",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			AssertTextPresent(
 				locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT",

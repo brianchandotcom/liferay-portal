@@ -30,6 +30,7 @@ import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -71,6 +72,10 @@ public class SharingDLViewFileVersionDisplayContext
 	@Override
 	public List<DropdownItem> getActionDropdownItems() throws PortalException {
 		List<DropdownItem> dropdownItems = super.getActionDropdownItems();
+
+		if (dropdownItems == null) {
+			dropdownItems = new ArrayList<>();
+		}
 
 		return _addSharingDropdownItem(dropdownItems);
 	}

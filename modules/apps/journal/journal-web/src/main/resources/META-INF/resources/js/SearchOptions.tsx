@@ -14,10 +14,18 @@ import React, {Key} from 'react';
 
 const Trigger = React.forwardRef<HTMLButtonElement, any>(
 	(
-		{children, className: _className, onClick, triggerIcon, ...otherProps},
+		{
+			'aria-label': ariaLabel,
+			children,
+			'className': _className,
+			onClick,
+			triggerIcon,
+			...otherProps
+		},
 		ref
 	) => (
 		<ClayButton
+			aria-label={ariaLabel}
 			className="form-control-select"
 			displayType="secondary"
 			onClick={onClick}
@@ -84,6 +92,7 @@ const SearchOptions = ({
 			<ClayLayout.Col>
 				<ClayForm.Group className="c-mr-2 d-inline-flex">
 					<Picker
+						aria-label={Liferay.Language.get('results')}
 						as={Trigger}
 						id={`${namespace}searchResults`}
 						onSelectionChange={(key: Key) =>
@@ -105,6 +114,7 @@ const SearchOptions = ({
 				{searchLocationOptions ? (
 					<ClayForm.Group className="c-mr-2 d-inline-flex">
 						<Picker
+							aria-label={Liferay.Language.get('location')}
 							as={Trigger}
 							id={`${namespace}searchLocation`}
 							onSelectionChange={(key: Key) =>
@@ -129,6 +139,7 @@ const SearchOptions = ({
 
 				<ClayForm.Group className="d-inline-flex">
 					<Picker
+						aria-label={Liferay.Language.get('search-in')}
 						as={Trigger}
 						id={`${namespace}searchIn`}
 						onSelectionChange={(key: Key) =>

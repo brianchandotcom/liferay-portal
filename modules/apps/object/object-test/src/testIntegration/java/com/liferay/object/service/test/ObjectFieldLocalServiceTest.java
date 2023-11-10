@@ -1128,8 +1128,9 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			RequiredObjectFieldException.class,
 			String.format(
-				"The object field \"%s\" cannot be deleted as it is the only " +
-					"custom object field of the published object definition",
+				"The object field \"%s\" cannot be deleted because it is the " +
+					"only custom object field of the published object " +
+						"definition",
 				ableObjectField.getName()),
 			() -> _objectFieldLocalService.deleteObjectField(ableObjectField));
 

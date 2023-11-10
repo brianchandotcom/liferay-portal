@@ -2065,7 +2065,7 @@ definition {
 		task ("Then a message is seen stating the custom field cannot be deleted and the custom field isn't deleted") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Modal#BODY",
-				value1 = "The object field \"Custom Attachment\" cannot be deleted as it is the only custom object field of the published object definition.");
+				value1 = "The object field \"Custom Attachment\" cannot be deleted because it is the only custom object field of the published object definition.");
 
 			Button.click(button = "Done");
 

@@ -284,7 +284,7 @@ export function RightSidebarObjectFieldDetails() {
 							<Text>
 								{sub(
 									Liferay.Language.get(
-										'the-object-field-x-cannot-be-deleted-as-it-is-the-only-custom-object-field-of-the-published-object-definition'
+										'the-object-field-x-cannot-be-deleted-because-it-is-the-only-custom-object-field-of-the-published-object-definition'
 									),
 									`${getLocalizableLabel(
 										selectedObjectDefinitionNode?.data
@@ -298,7 +298,7 @@ export function RightSidebarObjectFieldDetails() {
 							<Text>
 								{sub(
 									Liferay.Language.get(
-										'the-object-field-x-cannot-be-deleted-as-it-is-used-in-a-unique-composite-key-validation'
+										'the-object-field-x-cannot-be-deleted-because-it-is-used-in-a-unique-composite-key-validation'
 									),
 									`${getLocalizableLabel(
 										selectedObjectDefinitionNode?.data

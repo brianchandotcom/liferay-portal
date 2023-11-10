@@ -44,11 +44,11 @@ public class RequiredObjectFieldException extends PortalException {
 			super(
 				Collections.singletonList(objectFieldName),
 				String.format(
-					"The object field \"%s\" cannot be deleted as it is used " +
-						"in a unique composite key validation",
+					"The object field \"%s\" cannot be deleted because it is " +
+						"used in a unique composite key validation",
 					objectFieldName),
-				"the-object-field-x-cannot-be-deleted-as-it-is-used-in-a-" +
-					"unique-composite-key-validation");
+				"the-object-field-x-cannot-be-deleted-because-it-is-used-in-" +
+					"a-unique-composite-key-validation");
 		}
 
 	}
@@ -62,11 +62,11 @@ public class RequiredObjectFieldException extends PortalException {
 			super(
 				Collections.singletonList(objectFieldName),
 				String.format(
-					"The object field \"%s\" cannot be deleted as it is the " +
-						"only custom object field of the published object " +
-							"definition",
+					"The object field \"%s\" cannot be deleted because it is " +
+						"the only custom object field of the published " +
+							"object definition",
 					objectFieldName),
-				"the-object-field-x-cannot-be-deleted-as-it-is-the-only-" +
+				"the-object-field-x-cannot-be-deleted-because-it-is-the-only-" +
 					"custom-object-field-of-the-published-object-definition");
 		}
 

@@ -2062,19 +2062,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-			String articleId = null;
+			String articleId = jsonObject.getString("articleId");
 
-			if (jsonObject.has("articleId")) {
-				articleId = jsonObject.getString("articleId");
-			}
-			else {
-				articleId = FileUtil.getShortFileName(resourcePath);
-
-				int index = articleId.indexOf(".");
-
-				if (index != -1) {
-					articleId = articleId.substring(0, index);
-				}
+			if (Validator.isNull(articleId)) {
+				articleId = FileUtil.stripExtension(
+					FileUtil.getShortFileName(resourcePath));
 			}
 
 			Map<Locale, String> titleMap = Collections.singletonMap(

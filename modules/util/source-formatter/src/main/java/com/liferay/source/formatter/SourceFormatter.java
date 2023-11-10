@@ -778,8 +778,8 @@ public class SourceFormatter {
 				throw new Exception(
 					StringBundler.concat(
 						"Found formatting issues in SHA ", parts[0], ":\n",
-						"'## What' section should contain only one file with ",
-						"correct full file path"));
+						"'## What' should be followed by only one relative ",
+						"path, which is from portal root directory."));
 			}
 		}
 	}

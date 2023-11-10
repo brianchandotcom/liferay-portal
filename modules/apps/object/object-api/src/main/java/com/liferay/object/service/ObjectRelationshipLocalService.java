@@ -242,6 +242,10 @@ public interface ObjectRelationshipLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectRelationship fetchObjectRelationshipByExternalReferenceCode(
+		String externalReferenceCode, long objectDefinitionId1);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectRelationship fetchObjectRelationshipByExternalReferenceCode(
 		String externalReferenceCode, long companyId, long objectDefinitionId1);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

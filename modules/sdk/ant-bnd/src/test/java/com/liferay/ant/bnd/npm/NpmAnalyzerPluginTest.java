@@ -44,7 +44,7 @@ public class NpmAnalyzerPluginTest {
 		Assert.assertEquals("liferay", npmModule.name);
 		Assert.assertEquals("1.2.4", npmModule.version);
 		Assert.assertTrue(npmModule.dependencies.containsKey("lodash"));
-		Assert.assertEquals("~3.9.3", npmModule.dependencies.get("lodash"));
+		Assert.assertEquals("~4.17.21", npmModule.dependencies.get("lodash"));
 	}
 
 	@Test

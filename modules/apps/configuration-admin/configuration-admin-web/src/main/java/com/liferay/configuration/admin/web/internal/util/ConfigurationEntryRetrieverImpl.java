@@ -169,8 +169,7 @@ public class ConfigurationEntryRetrieverImpl
 			if (configurationModel.isGenerateUI()) {
 				ConfigurationEntry configurationEntry =
 					new ConfigurationModelConfigurationEntry(
-						configurationModel, locale,
-						_resourceBundleLoaderProvider);
+						configurationModel, locale);
 
 				configurationEntries.add(configurationEntry);
 			}
@@ -313,9 +312,6 @@ public class ConfigurationEntryRetrieverImpl
 		_configurationScreenServiceTrackerMap;
 	private ServiceTrackerMap<String, List<ConfigurationScreen>>
 		_configurationScreensServiceTrackerMap;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;

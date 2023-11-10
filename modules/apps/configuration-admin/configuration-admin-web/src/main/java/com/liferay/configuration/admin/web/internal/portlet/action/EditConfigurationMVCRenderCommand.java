@@ -17,7 +17,6 @@ import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationFormRendererRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -112,8 +111,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 			ConfigurationEntry configurationEntry =
 				new ConfigurationModelConfigurationEntry(
-					configurationModel, _portal.getLocale(renderRequest),
-					_resourceBundleLoaderProvider);
+					configurationModel, _portal.getLocale(renderRequest));
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY,
@@ -148,16 +146,11 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			DDMFormRendererHelper ddmFormRendererHelper =
 				new DDMFormRendererHelper(
 					renderRequest, renderResponse, configurationModel,
-					_ddmFormRenderer, locationVariableResolver,
-					_resourceBundleLoaderProvider);
+					_ddmFormRenderer, locationVariableResolver);
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML,
 				ddmFormRendererHelper.getDDMFormHTML());
-
-			renderRequest.setAttribute(
-				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
-				_resourceBundleLoaderProvider);
 
 			return "/edit_configuration.jsp";
 		}
@@ -198,9 +191,6 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

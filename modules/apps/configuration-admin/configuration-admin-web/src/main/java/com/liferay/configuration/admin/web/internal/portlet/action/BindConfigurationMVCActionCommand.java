@@ -14,7 +14,7 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationFormRender
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelToDDMFormConverter;
 import com.liferay.configuration.admin.web.internal.util.DDMFormValuesToPropertiesConverter;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProviderUtil;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -148,7 +148,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 		else {
 			ResourceBundleLoader resourceBundleLoader =
-				_resourceBundleLoaderProvider.getResourceBundleLoader(
+				ResourceBundleLoaderProviderUtil.getResourceBundleLoader(
 					configurationModel.getBundleSymbolicName());
 
 			ResourceBundle resourceBundle =
@@ -369,9 +369,6 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

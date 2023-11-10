@@ -44,9 +44,7 @@ String viewCategoryHREF = ConfigurationCategoryUtil.getHREF(configurationCategor
 
 PortalUtil.addPortletBreadcrumbEntry(request, categoryDisplayName, viewCategoryHREF);
 
-ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
-
-ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
+ResourceBundleLoader resourceBundleLoader = ResourceBundleLoaderProviderUtil.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
 
 ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
 

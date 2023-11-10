@@ -15,7 +15,6 @@ import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -102,8 +101,8 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 
 			ConfigurationEntry configurationEntry =
 				new ConfigurationModelConfigurationEntry(
-					factoryConfigurationModel, _portal.getLocale(renderRequest),
-					_resourceBundleLoaderProvider);
+					factoryConfigurationModel,
+					_portal.getLocale(renderRequest));
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY,
@@ -115,9 +114,6 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL,
 				factoryConfigurationModel);
-			renderRequest.setAttribute(
-				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
-				_resourceBundleLoaderProvider);
 
 			return "/view_factory_instances.jsp";
 		}
@@ -152,9 +148,6 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 	private ServiceTrackerMap<String, MVCRenderCommand> _serviceTrackerMap;
 

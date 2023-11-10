@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,15 +9,12 @@ import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(service = ResourceBundleLoaderProvider.class)
-public class ResourceBundleLoaderProvider {
+public class ResourceBundleLoaderProviderUtil {
 
-	public ResourceBundleLoader getResourceBundleLoader(
+	public static ResourceBundleLoader getResourceBundleLoader(
 		String bundleSymbolicName) {
 
 		ResourceBundleLoader resourceBundleLoader =

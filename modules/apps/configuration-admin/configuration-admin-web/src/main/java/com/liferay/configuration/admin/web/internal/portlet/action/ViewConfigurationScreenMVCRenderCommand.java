@@ -13,7 +13,6 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenC
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -80,10 +79,6 @@ public class ViewConfigurationScreenMVCRenderCommand
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.CONFIGURATION_ENTRY, configurationEntry);
 
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
-			_resourceBundleLoaderProvider);
-
 		return "/view_configuration_screen.jsp";
 	}
 
@@ -92,8 +87,5 @@ public class ViewConfigurationScreenMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

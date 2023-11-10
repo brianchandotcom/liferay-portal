@@ -9,7 +9,7 @@ import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationDDMFormDeclarationUtil;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelToDDMFormConverter;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelToDDMFormValuesConverter;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProviderUtil;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -41,15 +41,13 @@ public class DDMFormRendererHelper {
 	public DDMFormRendererHelper(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		ConfigurationModel configurationModel, DDMFormRenderer ddmFormRenderer,
-		LocationVariableResolver locationVariableResolver,
-		ResourceBundleLoaderProvider resourceBundleLoaderProvider) {
+		LocationVariableResolver locationVariableResolver) {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_configurationModel = configurationModel;
 		_ddmFormRenderer = ddmFormRenderer;
 		_locationVariableResolver = locationVariableResolver;
-		_resourceBundleLoaderProvider = resourceBundleLoaderProvider;
 	}
 
 	public String getDDMFormHTML() throws PortletException {
@@ -88,7 +86,7 @@ public class DDMFormRendererHelper {
 
 	private DDMForm _getDDMForm() {
 		ResourceBundleLoader resourceBundleLoader =
-			_resourceBundleLoaderProvider.getResourceBundleLoader(
+			ResourceBundleLoaderProviderUtil.getResourceBundleLoader(
 				_configurationModel.getBundleSymbolicName());
 
 		Locale locale = _getLocale();
@@ -148,6 +146,5 @@ public class DDMFormRendererHelper {
 	private final LocationVariableResolver _locationVariableResolver;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
-	private final ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

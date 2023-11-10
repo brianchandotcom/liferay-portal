@@ -10,7 +10,7 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProviderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -289,7 +289,7 @@ public class ConfigurationModelIndexer
 		}
 
 		ResourceBundleLoader resourceBundleLoader =
-			_resourceBundleLoaderProvider.getResourceBundleLoader(
+			ResourceBundleLoaderProviderUtil.getResourceBundleLoader(
 				configurationModel.getBundleSymbolicName());
 
 		for (Locale locale : _language.getAvailableLocales()) {
@@ -597,9 +597,6 @@ public class ConfigurationModelIndexer
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 

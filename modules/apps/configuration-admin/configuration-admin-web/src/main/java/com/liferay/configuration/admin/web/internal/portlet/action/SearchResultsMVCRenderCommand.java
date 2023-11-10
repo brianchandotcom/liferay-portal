@@ -18,7 +18,6 @@ import com.liferay.configuration.admin.web.internal.search.FieldNames;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -118,8 +117,7 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 					searchResults.add(
 						new ConfigurationModelConfigurationEntry(
-							configurationModel, renderRequest.getLocale(),
-							_resourceBundleLoaderProvider));
+							configurationModel, renderRequest.getLocale()));
 				}
 			}
 
@@ -158,9 +156,6 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER,
 				_configurationEntryRetriever);
-			renderRequest.setAttribute(
-				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
-				_resourceBundleLoaderProvider);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
@@ -177,8 +172,5 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

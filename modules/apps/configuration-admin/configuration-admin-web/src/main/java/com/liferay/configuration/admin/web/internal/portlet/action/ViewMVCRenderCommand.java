@@ -10,7 +10,6 @@ import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdmin
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
@@ -50,17 +49,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER,
 			_configurationEntryRetriever);
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
-			_resourceBundleLoaderProvider);
 
 		return "/view.jsp";
 	}
 
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

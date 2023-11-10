@@ -6,7 +6,7 @@
 package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
-import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
@@ -26,12 +26,10 @@ public class ConfigurationModelConfigurationEntry
 	implements ConfigurationEntry {
 
 	public ConfigurationModelConfigurationEntry(
-		ConfigurationModel configurationModel, Locale locale,
-		ResourceBundleLoaderProvider resourceBundleLoaderProvider) {
+		ConfigurationModel configurationModel, Locale locale) {
 
 		_configurationModel = configurationModel;
 		_locale = locale;
-		_resourceBundleLoaderProvider = resourceBundleLoaderProvider;
 	}
 
 	@Override
@@ -83,7 +81,7 @@ public class ConfigurationModelConfigurationEntry
 	@Override
 	public String getName() {
 		ResourceBundleLoader curResourceBundleLoader =
-			_resourceBundleLoaderProvider.getResourceBundleLoader(
+			ResourceBundleLoaderProviderUtil.getResourceBundleLoader(
 				_configurationModel.getBundleSymbolicName());
 
 		ResourceBundle curComponentResourceBundle =
@@ -114,6 +112,5 @@ public class ConfigurationModelConfigurationEntry
 
 	private final ConfigurationModel _configurationModel;
 	private final Locale _locale;
-	private final ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

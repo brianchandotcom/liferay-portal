@@ -576,7 +576,8 @@ public class JournalManagementToolbarDisplayContext
 			).setActive(
 				_journalDisplayContext.isNavigationStructure()
 			).setLabel(
-				LanguageUtil.get(httpServletRequest, "structures")
+				LanguageUtil.get(httpServletRequest, "structures") +
+					StringPool.TRIPLE_PERIOD
 			).build());
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-196766")) {

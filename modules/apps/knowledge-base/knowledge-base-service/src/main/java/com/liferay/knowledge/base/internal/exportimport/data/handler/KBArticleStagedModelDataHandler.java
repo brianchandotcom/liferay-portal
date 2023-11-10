@@ -505,7 +505,7 @@ public class KBArticleStagedModelDataHandler
 		}
 
 		return _kbArticleLocalService.getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+			resourcePrimKey, kbArticle.getStatus());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

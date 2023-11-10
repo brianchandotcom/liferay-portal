@@ -131,11 +131,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>SELECT_AUTO_COMPLETE</td>
-		<td>//div[contains(@class, 'select__content')]//span[contains(text(),'Choose an Option')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>SELECT_AUTO_COMPLETE_OPTION</td>
 		<td>//button[(@class='dropdown-item') and contains(.,'${key_columnOption}')]</td>
 		<td></td>

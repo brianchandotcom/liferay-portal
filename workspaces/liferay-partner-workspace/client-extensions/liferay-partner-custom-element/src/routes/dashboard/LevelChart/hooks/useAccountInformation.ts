@@ -112,7 +112,7 @@ export default function useAccountInformation() {
 				}),
 				{
 					growthArrTotal: 0,
-					targetArr: 0,
+					targetArr: Number(accountData.targetArr) || 0,
 				}
 			);
 

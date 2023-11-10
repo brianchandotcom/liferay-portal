@@ -7,10 +7,12 @@ package com.liferay.jethr0.event.controller;
 
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
+import com.liferay.jethr0.util.StringUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,52 +31,70 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventRestController {
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
-	public ResponseEntity<String> process(@RequestBody String body) {
+	public ResponseEntity<String> process(@RequestBody String message) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Processing " + body);
+			_log.debug("Processing " + message);
 		}
 
-		JSONObject bodyJSONObject = new JSONObject(body);
+		JSONObject messageJSONObject = null;
 
-		EventHandler.EventType eventType = EventHandler.EventType.valueOf(
-			bodyJSONObject.optString("eventTrigger"));
-
-		if ((eventType == EventHandler.EventType.BUILD_COMPLETED) ||
-			(eventType == EventHandler.EventType.BUILD_STARTED) ||
-			(eventType == EventHandler.EventType.COMPUTER_BUSY) ||
-			(eventType == EventHandler.EventType.COMPUTER_IDLE) ||
-			(eventType == EventHandler.EventType.COMPUTER_OFFLINE) ||
-			(eventType == EventHandler.EventType.COMPUTER_ONLINE) ||
-			(eventType ==
-				EventHandler.EventType.COMPUTER_TEMPORARILY_OFFLINE) ||
-			(eventType == EventHandler.EventType.COMPUTER_TEMPORARILY_ONLINE) ||
-			(eventType == EventHandler.EventType.CREATE_BUILD) ||
-			(eventType == EventHandler.EventType.CREATE_JENKINS_COHORT) ||
-			(eventType == EventHandler.EventType.CREATE_JOB) ||
-			(eventType == EventHandler.EventType.QUEUE_JOB)) {
-
-			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
-				bodyJSONObject);
-
-			if (eventHandler == null) {
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		try {
+			messageJSONObject = new JSONObject(message);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(jsonException);
 			}
 
-			try {
-				return new ResponseEntity<>(
-					eventHandler.process(), HttpStatus.OK);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
-				}
-
-				return new ResponseEntity<>(
-					exception.getMessage(), HttpStatus.BAD_REQUEST);
-			}
+			return new ResponseEntity<>("{}", HttpStatus.BAD_REQUEST);
 		}
 
-		return new ResponseEntity<>("{}", HttpStatus.OK);
+		String eventTypeString = messageJSONObject.optString("eventType");
+
+		if (StringUtil.isNullOrEmpty(eventTypeString)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Missing 'eventType' from message json");
+			}
+
+			return new ResponseEntity<>("{}", HttpStatus.BAD_REQUEST);
+		}
+
+		EventHandler.EventType eventType = EventHandler.EventType.get(
+			eventTypeString);
+
+		if (eventType == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Invalid 'eventType': " + eventTypeString);
+			}
+
+			return new ResponseEntity<>("{}", HttpStatus.BAD_REQUEST);
+		}
+
+		EventHandler eventHandler = null;
+
+		try {
+			eventHandler = _eventHandlerFactory.newEventHandler(
+				eventType, messageJSONObject);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(illegalArgumentException);
+			}
+
+			return new ResponseEntity<>("{}", HttpStatus.BAD_REQUEST);
+		}
+
+		try {
+			return new ResponseEntity<>(eventHandler.process(), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return new ResponseEntity<>(
+				exception.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	private static final Log _log = LogFactory.getLog(

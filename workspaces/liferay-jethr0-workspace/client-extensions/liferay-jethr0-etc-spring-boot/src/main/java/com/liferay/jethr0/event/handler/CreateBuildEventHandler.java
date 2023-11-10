@@ -23,15 +23,11 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JobEntity jobEntity = getJobEntity(
-			messageJSONObject.optJSONObject("job"));
+		JobEntity jobEntity = getJobEntity(getJobJSONObject());
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		JSONObject buildJSONObject = validateBuildJSONObject(
-			messageJSONObject.optJSONObject("build"));
+		JSONObject buildJSONObject = getBuildJSONObject();
 
 		BuildEntity buildEntity = buildEntityRepository.create(
 			jobEntity, buildJSONObject);

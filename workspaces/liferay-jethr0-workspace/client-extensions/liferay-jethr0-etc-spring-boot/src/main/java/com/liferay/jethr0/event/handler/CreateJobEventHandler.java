@@ -23,10 +23,7 @@ public class CreateJobEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JSONObject jobJSONObject = validateJobJSONObject(
-			messageJSONObject.optJSONObject("job"));
+		JSONObject jobJSONObject = getJobJSONObject();
 
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 

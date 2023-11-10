@@ -19,10 +19,7 @@ public class QueueJobEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JobEntity jobEntity = getJobEntity(
-			messageJSONObject.optJSONObject("job"));
+		JobEntity jobEntity = getJobEntity(getJobJSONObject());
 
 		jobEntity.setState(JobEntity.State.QUEUED);
 

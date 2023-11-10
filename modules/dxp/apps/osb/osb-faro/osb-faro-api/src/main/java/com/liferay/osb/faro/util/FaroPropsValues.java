@@ -38,6 +38,10 @@ public class FaroPropsValues {
 	public static final String FARO_URL = GetterUtil.getString(
 		PropsUtil.get("faro.url"), System.getenv("FARO_URL"));
 
+	public static final boolean GRAPHQL_API_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get("graphql.api.enabled"),
+		GetterUtil.getBoolean(System.getenv("GRAPHQL_API_ENABLED")));
+
 	public static final String ISSUES_EMAIL_ADDRESS = GetterUtil.getString(
 		PropsUtil.get("issues.email.address"),
 		System.getenv("ISSUES_EMAIL_ADDRESS"));

@@ -193,25 +193,6 @@ public class ObjectEntryItemSelectorViewDescriptor
 			_themeDisplay.getLocale(), null, _themeDisplay.getUser());
 	}
 
-	private List<ObjectEntry> _getObjectEntries(
-			int curPage, int pageSize, String search)
-		throws Exception {
-
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> page =
-			_objectEntryManager.getObjectEntries(
-				_themeDisplay.getCompanyId(), _objectDefinition,
-				scopeGroup.getGroupKey(), null, _getDTOConverterContext(),
-				StringPool.BLANK, Pagination.of(curPage, pageSize), search,
-				null);
-
-		return TransformUtil.transform(
-			page.getItems(),
-			objectEntry -> ObjectEntryUtil.toObjectEntry(
-				_objectDefinition.getObjectDefinitionId(), objectEntry));
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryItemSelectorViewDescriptor.class);
 

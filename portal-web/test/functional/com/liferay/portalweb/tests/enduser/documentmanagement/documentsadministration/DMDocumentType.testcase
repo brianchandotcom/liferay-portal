@@ -139,7 +139,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldFieldLabel = "Image",
-			key_image = "Document_1.jpg",
+			key_image = "document_1-jpg",
 			locator1 = "DocumentsAndMediaDocument#CUSTOM_FIELD_IMAGE_PREVIEW");
 
 		PortletEntry.publish();

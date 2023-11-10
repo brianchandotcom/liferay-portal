@@ -37,9 +37,9 @@ export const DownloadReportButton: React.FC<IDownloadReportButton> = ({
 
 	return (
 		<ClayButton
-			className='text-secondary'
+			borderless
 			disabled={disabled || loading || loadingCount > 0}
-			displayType={null}
+			displayType='secondary'
 			onClick={onClick}
 			size='sm'
 		>

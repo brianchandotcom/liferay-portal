@@ -111,35 +111,37 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 				/>
 			</BasePage.Header>
 
-			<BasePage.SubHeader>
-				<div className='d-flex justify-content-end w-100'>
-					{matchedRoute === Routes.SITES && (
-						<DownloadPDFReport
-							containers={[
-								Containers.SiteActivityCard,
-								Containers.TopPagesCard,
-								Containers.AcquisitionsCard,
-								Containers.VisitorsByTimeCard,
-								Containers.SearchTermsCard,
-								Containers.InterestsCard,
-								Containers.SessionsByLocationCard,
-								Containers.SessionTechnologyCard,
-								Containers.CohortAnalysisCard
-							]}
-							disabled={dataSourceStates.empty}
-							subtitle={selectedChannelName}
-							title={Liferay.Language.get('sites-dashboard')}
-						/>
-					)}
+			{matchedRoute !== Routes.SITES_INTERESTS && (
+				<BasePage.SubHeader>
+					<div className='d-flex justify-content-end w-100'>
+						{matchedRoute === Routes.SITES && (
+							<DownloadPDFReport
+								containers={[
+									Containers.SiteActivityCard,
+									Containers.TopPagesCard,
+									Containers.AcquisitionsCard,
+									Containers.VisitorsByTimeCard,
+									Containers.SearchTermsCard,
+									Containers.InterestsCard,
+									Containers.SessionsByLocationCard,
+									Containers.SessionTechnologyCard,
+									Containers.CohortAnalysisCard
+								]}
+								disabled={dataSourceStates.empty}
+								subtitle={selectedChannelName}
+								title={Liferay.Language.get('sites-dashboard')}
+							/>
+						)}
 
-					{matchedRoute === Routes.SITES_TOUCHPOINTS && (
-						<DownloadCSVReport
-							disabled={dataSourceStates.empty}
-							type='page'
-						/>
-					)}
-				</div>
-			</BasePage.SubHeader>
+						{matchedRoute === Routes.SITES_TOUCHPOINTS && (
+							<DownloadCSVReport
+								disabled={dataSourceStates.empty}
+								type='page'
+							/>
+						)}
+					</div>
+				</BasePage.SubHeader>
+			)}
 
 			<BasePage.Context.Provider
 				value={{

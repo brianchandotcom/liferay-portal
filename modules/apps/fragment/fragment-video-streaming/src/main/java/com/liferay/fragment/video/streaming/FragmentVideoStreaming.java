@@ -134,6 +134,13 @@ public class FragmentVideoStreaming implements FragmentRenderer {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");
 
+			httpServletRequest.setAttribute("src",
+				"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4");
+			httpServletRequest.setAttribute("height", "");
+			httpServletRequest.setAttribute("loop", true);
+			httpServletRequest.setAttribute("muted", true);
+			httpServletRequest.setAttribute("width", "");
+
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {

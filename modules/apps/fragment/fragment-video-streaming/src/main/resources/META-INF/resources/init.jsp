@@ -7,4 +7,6 @@
 
 <%@taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
+
 <liferay-frontend:defineObjects />

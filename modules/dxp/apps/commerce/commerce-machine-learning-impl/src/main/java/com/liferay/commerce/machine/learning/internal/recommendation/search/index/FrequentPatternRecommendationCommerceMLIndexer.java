@@ -6,7 +6,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
-import com.liferay.commerce.machine.learning.internal.search.index.helper.BaseCommerceMLIndexer;
+import com.liferay.commerce.machine.learning.internal.search.index.BaseCommerceMLIndexer;
 
 import org.osgi.service.component.annotations.Component;
 

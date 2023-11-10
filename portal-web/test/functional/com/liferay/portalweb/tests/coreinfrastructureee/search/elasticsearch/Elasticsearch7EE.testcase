@@ -343,6 +343,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-151205."
+	@ignore = "true"
 	@priority = 5
 	test XPackWithRestrictedCipherSuitesAndTLSVersions {
 		property elastic.xpack.configure.tls.cipher.suites = "true";

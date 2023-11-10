@@ -421,10 +421,10 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			return;
 		}
 
+		long accountEntryId = 0;
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		long accountEntryId = 0;
 
 		if (objectDefinition.isRootDescendantNode()) {
 			accountEntryId = _getRootObjectEntryAccountEntryId(

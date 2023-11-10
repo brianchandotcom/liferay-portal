@@ -593,7 +593,8 @@ public class JournalManagementToolbarDisplayContext
 				).setActive(
 					ArrayUtil.isNotEmpty(_getAssetCategoryIds())
 				).setLabel(
-					LanguageUtil.get(httpServletRequest, "categories")
+					LanguageUtil.get(httpServletRequest, "categories") +
+						StringPool.TRIPLE_PERIOD
 				).build());
 
 			filterNavigationDropdownItems.add(
@@ -609,7 +610,8 @@ public class JournalManagementToolbarDisplayContext
 				).setActive(
 					ArrayUtil.isNotEmpty(_getAssetTagIds())
 				).setLabel(
-					LanguageUtil.get(httpServletRequest, "tags")
+					LanguageUtil.get(httpServletRequest, "tags") +
+						StringPool.TRIPLE_PERIOD
 				).build());
 		}
 

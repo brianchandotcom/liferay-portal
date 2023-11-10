@@ -25,6 +25,12 @@ function getWebContentPayload({dataset}) {
 		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
 	}
 
+	if (dataset.analyticsWebContentResourcePk) {
+		Object.assign(payload, {
+			webContentResourcePk: dataset.analyticsWebContentResourcePk.trim(),
+		});
+	}
+
 	return payload;
 }
 

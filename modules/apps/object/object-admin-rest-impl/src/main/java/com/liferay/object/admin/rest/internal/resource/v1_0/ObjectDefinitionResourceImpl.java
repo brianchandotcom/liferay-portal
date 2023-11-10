@@ -829,11 +829,15 @@ public class ObjectDefinitionResourceImpl
 				com.liferay.object.model.ObjectRelationship
 					serviceBuilderObjectRelationship =
 						_objectRelationshipLocalService.
-							fetchObjectRelationshipByObjectDefinitionId(
-								objectDefinitionId,
-								objectRelationship.getName());
+							fetchObjectRelationshipByExternalReferenceCode(
+								objectRelationship.getExternalReferenceCode(),
+								objectDefinitionId);
 
 				if (serviceBuilderObjectRelationship != null) {
+					if (serviceBuilderObjectRelationship.isReverse()) {
+						continue;
+					}
+
 					objectRelationshipResource.putObjectRelationship(
 						serviceBuilderObjectRelationship.
 							getObjectRelationshipId(),

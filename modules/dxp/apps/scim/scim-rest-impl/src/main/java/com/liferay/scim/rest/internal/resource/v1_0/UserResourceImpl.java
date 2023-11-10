@@ -80,20 +80,23 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Activate
 	protected void activate() throws Exception {
-		if (_registerLiferayUserSchemaExtension) {
-			synchronized (_userResourceManager) {
-				if (_registerLiferayUserSchemaExtension) {
-					_registerLiferayUserSchemaExtension();
-
-					_registerLiferayUserSchemaExtension = false;
-				}
+		synchronized (_userResourceManager) {
+			if (_userManager != null) {
+				return;
 			}
-		}
 
-		_userManager = new UserManagerImpl(
-			_classNameLocalService, _companyLocalService, _configurationAdmin,
-			_expandoColumnLocalService, _expandoTableLocalService,
-			_expandoValueLocalService, _userLocalService);
+			AbstractResourceManager.setEndpointURLMap(
+				Collections.singletonMap(
+					SCIMConstants.USER_ENDPOINT, "/o/scim/Users"));
+
+			_registerLiferayUserSchemaExtension();
+
+			_userManager = new UserManagerImpl(
+				_classNameLocalService, _companyLocalService,
+				_configurationAdmin, _expandoColumnLocalService,
+				_expandoTableLocalService, _expandoValueLocalService,
+				_userLocalService);
+		}
 	}
 
 	private Response _buildResponse(SCIMResponse scimResponse) {
@@ -116,10 +119,6 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	}
 
 	private void _registerLiferayUserSchemaExtension() throws Exception {
-		AbstractResourceManager.setEndpointURLMap(
-			Collections.singletonMap(
-				SCIMConstants.USER_ENDPOINT, "/o/scim/Users"));
-
 		SCIMUserSchemaExtensionBuilder scimUserSchemaExtensionBuilder =
 			SCIMUserSchemaExtensionBuilder.getInstance();
 
@@ -214,7 +213,7 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 		scimUserSchemaExtensionBuilder.buildUserSchemaExtension(file.getPath());
 	}
 
-	private static boolean _registerLiferayUserSchemaExtension = true;
+	private static UserManager _userManager;
 	private static final UserResourceManager _userResourceManager =
 		new UserResourceManager();
 
@@ -244,7 +243,5 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	private UserManager _userManager;
 
 }

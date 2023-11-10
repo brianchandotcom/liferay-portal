@@ -8,7 +8,6 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import getCN from 'classnames';
 import React, {useState} from 'react';
 
 const TIME_RANGE_TYPES = [
@@ -34,26 +33,13 @@ const TIME_RANGE_TYPES = [
 	},
 ];
 
-export default function TimeRangeInput({
-	onBlur,
-	onChange,
-	touched,
-	value = '0',
-}) {
+export default function TimeRangeInput({onChange, value}) {
 	const [activeDropdown, setActiveDropdown] = useState(false);
 
 	return (
-		<ClayInput.GroupItem
-			className={getCN({
-				'has-error': !value && touched,
-			})}
-		>
+		<ClayInput.GroupItem>
 			<label>
 				{Liferay.Language.get('time-range')}
-
-				<span className="reference-mark">
-					<ClayIcon symbol="asterisk" />
-				</span>
 
 				<ClayTooltipProvider>
 					<span
@@ -74,17 +60,23 @@ export default function TimeRangeInput({
 						closeOnClick={true}
 						closeOnClickOutside={true}
 						onActiveChange={setActiveDropdown}
-						onBlur={onBlur}
 						trigger={
 							<ClayButton
 								className="form-control form-control-select"
 								displayType="secondary"
 							>
-								{
+								{value ? (
 									TIME_RANGE_TYPES.find(
 										(item) => item.value === value
 									)?.label
-								}
+								) : (
+									<span className="text-secondary">
+										{Liferay.Util.sub(
+											Liferay.Language.get('select-x'),
+											Liferay.Language.get('time-range')
+										)}
+									</span>
+								)}
 							</ClayButton>
 						}
 					>

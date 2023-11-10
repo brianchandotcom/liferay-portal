@@ -376,9 +376,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 						)}
 
 						<TimeRangeInput
-							onBlur={onBlur('attributes.rangeKey')}
 							onChange={_handleChangeAttributeValue('rangeKey')}
-							touched={touched['attributes.rangeKey']}
 							value={value.attributes?.rangeKey}
 						/>
 					</div>

@@ -30,7 +30,7 @@ function MatchDisplayLanguageInput({onChange, value}) {
 			<ClaySelect
 				aria-label={Liferay.Language.get('match-display-language')}
 				onChange={onChange}
-				value={value.attributes?.matchDisplayLanguageId}
+				value={value}
 			>
 				<ClaySelect.Option
 					label={Liferay.Language.get('true')}

@@ -37,6 +37,15 @@ function Select({
 		newSelectedKey = 'null';
 	}
 
+	let selectedItem = newSelectedKey || predefinedValue;
+
+	if (selectedItem?.length === 0) {
+		selectedItem = '';
+	}
+	else {
+		selectedItem = newSelectedKey[0] || predefinedValue?.[0] || '';
+	}
+
 	useEffect(() => {
 		const selectedOption = options.find(
 			(option) => option.value === selectedKey
@@ -81,7 +90,7 @@ function Select({
 					onChange({}, [field.value]);
 				}}
 				placeholder={Liferay.Language.get('choose-an-option')}
-				selectedKey={newSelectedKey || predefinedValue?.[0] || ''}
+				selectedKey={selectedItem}
 			>
 				{(group) => (
 					<DropDown.Group header={group.label} items={group.items}>
@@ -150,7 +159,7 @@ const Main = ({
 		]
 	);
 
-	let newValue = value[0];
+	let newValue = value;
 	let newPredefinedValue = predefinedValueArray;
 
 	if (!multiple) {

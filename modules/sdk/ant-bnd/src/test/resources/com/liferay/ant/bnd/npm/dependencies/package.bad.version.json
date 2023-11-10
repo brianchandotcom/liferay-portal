@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"lodash": "~3.9.3"
+		"lodash": "~4.17.21"
 	},
 	"name": "liferay",
 	"runtime": {

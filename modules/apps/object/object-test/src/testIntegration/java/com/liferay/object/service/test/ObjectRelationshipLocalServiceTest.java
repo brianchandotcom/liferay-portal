@@ -221,7 +221,22 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectFieldName1, false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+		AssertUtils.assertFailure(
+			ObjectRelationshipNameException.class,
+			StringBundler.concat(
+				"There is already an object field with this name in the ",
+				"object definition \"", _objectDefinition2.getShortName(),
+				".\" Object fields and object relationships cannot have the ",
+				"same name."),
+			() -> _objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				objectFieldName2, false,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
@@ -236,21 +251,6 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectFieldName1, false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
-		AssertUtils.assertFailure(
-			ObjectRelationshipNameException.class,
-			StringBundler.concat(
-				"There is already an object field with this name in the ",
-				"object definition \"", _objectDefinition2.getShortName(),
-				".\" Object fields and object relationships cannot have the ",
-				"same name."),
-			() -> _objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				objectFieldName2, false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
@@ -266,7 +266,7 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectFieldName2, false,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipParameterObjectFieldIdException.class,

@@ -689,14 +689,6 @@ public class SourceFormatter {
 				continue;
 			}
 
-			if (!parts[1].endsWith("\n\n----")) {
-				throw new Exception(
-					StringBundler.concat(
-						"Found formatting issues in SHA ", parts[0], ":\n",
-						"The commit message contains '# breaking_change_report",
-						"' should end with '\\n\\n----'"));
-			}
-
 			_checkMissingEmptyLinesAroundHeaders(parts);
 
 			String[] breakingChangeReports = parts[1].split("\n----");
@@ -785,6 +777,14 @@ public class SourceFormatter {
 
 	private void _checkMissingEmptyLinesAroundHeaders(String[] parts)
 		throws Exception {
+
+		if (!parts[1].endsWith("\n\n----")) {
+			throw new Exception(
+				StringBundler.concat(
+					"Found formatting issues in SHA ", parts[0], ":\n",
+					"The commit message contains '# breaking_change_report",
+					"' should end with '\\n\\n----'"));
+		}
 
 		for (String header : _BREAKING_CHANGE_REPORT_HEADER_NAMES) {
 			int x = parts[1].indexOf(header);

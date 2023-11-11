@@ -86,12 +86,10 @@ public class NavItemUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long siteNavigationMenuItemId = _getRelativeSiteNavigationMenuItemId(
-			themeDisplay.getLayout(), siteNavigationMenuId);
-
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
-				siteNavigationMenuItemId);
+				_getRelativeSiteNavigationMenuItemId(
+					themeDisplay.getLayout(), siteNavigationMenuId));
 
 		if (siteNavigationMenuItem == null) {
 			return new ArrayList<>();

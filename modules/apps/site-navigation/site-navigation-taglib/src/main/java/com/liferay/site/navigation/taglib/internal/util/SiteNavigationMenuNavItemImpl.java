@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.NavItemUtil;
 import com.liferay.site.navigation.theme.SiteNavigationMenuNavItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 

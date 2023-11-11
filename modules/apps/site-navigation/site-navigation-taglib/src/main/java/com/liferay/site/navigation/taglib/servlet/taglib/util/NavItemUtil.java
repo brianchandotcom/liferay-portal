@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.navigation.taglib.internal.util;
+package com.liferay.site.navigation.taglib.servlet.taglib.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
+import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItemImpl;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
@@ -92,7 +94,7 @@ public class NavItemUtil {
 			themeDisplay.getLayout(), siteNavigationMenuId);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
-			_siteNavigationMenuItemLocalService.fetchSiteNavigationMenuItem(
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
 				siteNavigationMenuItemId);
 
 		if (siteNavigationMenuItem == null) {
@@ -109,7 +111,7 @@ public class NavItemUtil {
 					0) {
 
 			siteNavigationMenuItem =
-				_siteNavigationMenuItemLocalService.getSiteNavigationMenuItem(
+				SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItem(
 					siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
 
 			ancestorSiteNavigationMenuItems.add(siteNavigationMenuItem);
@@ -123,13 +125,13 @@ public class NavItemUtil {
 				ancestorSiteNavigationMenuItems.get(i);
 
 			navItems.add(
-				new SiteNavigationMenuNavItem(
+				new SiteNavigationMenuNavItemImpl(
 					httpServletRequest, themeDisplay,
 					ancestorSiteNavigationMenuItem));
 		}
 
 		navItems.add(
-			new SiteNavigationMenuNavItem(
+			new SiteNavigationMenuNavItemImpl(
 				httpServletRequest, themeDisplay,
 				originalSiteNavigationMenuItem));
 
@@ -376,7 +378,7 @@ public class NavItemUtil {
 		Layout layout, long siteNavigationMenuId) {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
 				siteNavigationMenuId);
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :

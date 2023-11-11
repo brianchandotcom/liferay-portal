@@ -10,7 +10,6 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
@@ -21,6 +20,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -29,7 +30,6 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -127,39 +127,38 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String url = null;
-		String language = "";
+		Layout previewLayout = layout;
 
-		String displayContextLanguage = displayContext.getLocale(
-		).getLanguage();
-
-		if (!Objects.equals(displayContextLanguage, "en") ||
-			(layout.getCtCollectionId() == 0)) {
-
-			language = StringPool.FORWARD_SLASH + displayContextLanguage;
+		if (layout.isDenied() || layout.isPending()) {
+			previewLayout = layout.fetchDraftLayout();
 		}
 
-		if (!layout.isDenied() && !layout.isPending()) {
-			url = StringBundler.concat(
-				_portal.getPortalURL(themeDisplay), language,
-				layout.getFriendlyURL());
-		}
-		else {
-			url = StringBundler.concat(
-				_portal.getPortalURL(themeDisplay), language,
-				layout.fetchDraftLayout(
-				).getFriendlyURL());
+		String redirect = HttpComponentsUtil.addParameter(
+			_portal.getLayoutFriendlyURL(previewLayout, themeDisplay),
+			"p_l_mode", "preview");
+
+		redirect = HttpComponentsUtil.addParameter(
+			redirect, "previewCTCollectionId", layout.getCtCollectionId());
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId");
+
+		if (segmentsExperienceId > 0) {
+			redirect = HttpComponentsUtil.addParameter(
+				redirect, "segmentsExperienceId", segmentsExperienceId);
 		}
 
-		url = HttpComponentsUtil.addParameter(url, "p_l_mode", "preview");
+		String url = HttpComponentsUtil.addParameter(
+			themeDisplay.getPathMain() + "/portal/update_language", "p_l_id",
+			previewLayout.getPlid());
+
+		String languageId = LocaleUtil.toLanguageId(displayContext.getLocale());
+
+		url = HttpComponentsUtil.addParameter(url, "languageId", languageId);
+		url = HttpComponentsUtil.addParameter(url, "persistState", "false");
 		url = HttpComponentsUtil.addParameter(
-			url, "previewCTCollectionId", layout.getCtCollectionId());
-
-		if (httpServletRequest.getParameter("segmentsExperienceId") != null) {
-			url = HttpComponentsUtil.addParameter(
-				url, "segmentsExperienceId",
-				httpServletRequest.getParameter("segmentsExperienceId"));
-		}
+			url, "showUserLocaleOptionsMessage", "false");
+		url = HttpComponentsUtil.addParameter(url, "redirect", redirect);
 
 		return StringBundler.concat(
 			"<iframe frameborder=\"0\" onload=\"this.style.height = ",

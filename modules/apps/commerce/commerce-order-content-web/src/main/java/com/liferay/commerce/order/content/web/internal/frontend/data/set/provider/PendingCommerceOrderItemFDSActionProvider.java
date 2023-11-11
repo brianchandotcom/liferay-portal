@@ -90,13 +90,15 @@ public class PendingCommerceOrderItemFDSActionProvider
 					return false;
 				}
 
-				int count = _cpDefinitionOptionRelLocalService.
-					getCPDefinitionOptionRelsCount(
-						cpInstance.getCPDefinitionId());
+				int count =
+					_cpDefinitionOptionRelLocalService.
+						getCPDefinitionOptionRelsCount(
+							cpInstance.getCPDefinitionId());
 
 				return _modelResourcePermission.contains(
 					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
-					ActionKeys.UPDATE) && (count > 0);
+					ActionKeys.UPDATE) &&
+					   (count > 0);
 			},
 			dropdownItem -> {
 				dropdownItem.setData(

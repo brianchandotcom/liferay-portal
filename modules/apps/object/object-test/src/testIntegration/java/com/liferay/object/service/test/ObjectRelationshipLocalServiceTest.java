@@ -210,10 +210,10 @@ public class ObjectRelationshipLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
-				"There is already a field with this name in the ",
-				_objectDefinition1.getShortName(),
-				" object definition. Object fields and object relationships ",
-				"cannot have the same name."),
+				"There is already an object field with this name in the ",
+				"object definition \"", _objectDefinition1.getShortName(),
+				".\" Object fields and object relationships cannot have the ",
+				"same name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
@@ -225,10 +225,10 @@ public class ObjectRelationshipLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
-				"There is already a field with this name in the ",
-				_objectDefinition1.getShortName(),
-				" object definition. Object fields and object relationships ",
-				"cannot have the same name."),
+				"There is already an object field with this name in the ",
+				"object definition \"", _objectDefinition1.getShortName(),
+				".\" Object fields and object relationships cannot have the ",
+				"same name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
@@ -240,10 +240,10 @@ public class ObjectRelationshipLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
-				"There is already a field with this name in the ",
-				_objectDefinition2.getShortName(),
-				" object definition. Object fields and object relationships ",
-				"cannot have the same name."),
+				"There is already an object field with this name in the ",
+				"object definition \"", _objectDefinition2.getShortName(),
+				".\" Object fields and object relationships cannot have the ",
+				"same name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
@@ -255,10 +255,10 @@ public class ObjectRelationshipLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
-				"There is already a field with this name in the ",
-				_objectDefinition2.getShortName(),
-				" object definition. Object fields and object relationships ",
-				"cannot have the same name."),
+				"There is already an object field with this name in the ",
+				"object definition \"", _objectDefinition2.getShortName(),
+				".\" Object fields and object relationships cannot have the ",
+				"same name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),

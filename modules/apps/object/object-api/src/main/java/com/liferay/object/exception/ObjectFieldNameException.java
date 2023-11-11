@@ -47,10 +47,10 @@ public class ObjectFieldNameException extends PortalException {
 
 			super(
 				StringBundler.concat(
-					"There is already a relationship with this name in the ",
-					objectDefinitionName,
-					" object definition. Object fields and object ",
-					"relationships cannot have the same name."));
+					"There is already an object relationship with this name ",
+					"in the object definition \"", objectDefinitionName,
+					".\" Object fields and object relationships cannot have ",
+					"the same name."));
 		}
 
 	}

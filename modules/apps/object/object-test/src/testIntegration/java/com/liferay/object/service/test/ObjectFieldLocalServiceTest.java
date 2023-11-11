@@ -305,8 +305,7 @@ public class ObjectFieldLocalServiceTest {
 				class,
 			StringBundler.concat(
 				"There is already an object relationship with this name ",
-				"in the object definition \"",
-				objectDefinition1.getShortName(),
+				"in the object definition \"", objectDefinition1.getShortName(),
 				".\" Object fields and object relationships cannot have ",
 				"the same name."),
 			() -> _addCustomObjectField(
@@ -324,8 +323,7 @@ public class ObjectFieldLocalServiceTest {
 				class,
 			StringBundler.concat(
 				"There is already an object relationship with this name ",
-				"in the object definition \"",
-				objectDefinition1.getShortName(),
+				"in the object definition \"", objectDefinition1.getShortName(),
 				".\" Object fields and object relationships cannot have ",
 				"the same name."),
 			() -> _addCustomObjectField(
@@ -357,8 +355,7 @@ public class ObjectFieldLocalServiceTest {
 				class,
 			StringBundler.concat(
 				"There is already an object relationship with this name ",
-				"in the object definition \"",
-				objectDefinition1.getShortName(),
+				"in the object definition \"", objectDefinition1.getShortName(),
 				".\" Object fields and object relationships cannot have ",
 				"the same name."),
 			() -> _addCustomObjectField(
@@ -376,8 +373,7 @@ public class ObjectFieldLocalServiceTest {
 				class,
 			StringBundler.concat(
 				"There is already an object relationship with this name ",
-				"in the object definition \"",
-				objectDefinition1.getShortName(),
+				"in the object definition \"", objectDefinition1.getShortName(),
 				".\" Object fields and object relationships cannot have ",
 				"the same name."),
 			() -> _addCustomObjectField(

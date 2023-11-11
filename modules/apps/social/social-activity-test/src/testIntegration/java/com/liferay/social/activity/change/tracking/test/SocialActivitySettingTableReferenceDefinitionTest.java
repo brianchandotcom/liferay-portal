@@ -44,10 +44,10 @@ public class SocialActivitySettingTableReferenceDefinitionTest
 				_counterLocalService.increment(
 					SocialActivitySetting.class.getName()));
 
+		socialActivitySetting.setGroupId(group.getGroupId());
 		socialActivitySetting.setCompanyId(group.getCompanyId());
 		socialActivitySetting.setClassNameId(
 			_classNameLocalService.getClassNameId(Group.class));
-		socialActivitySetting.setGroupId(group.getGroupId());
 		socialActivitySetting.setName(RandomTestUtil.randomString());
 		socialActivitySetting.setValue(Boolean.TRUE.toString());
 

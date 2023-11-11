@@ -371,7 +371,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					JenkinsResultsParserUtil.combine(
 						String.valueOf(getURL()), "/queue/api/json?tree=",
 						"items[actions[parameters[name,value]],id,task[url]]"),
-					false);
+					false, 5000);
 
 				JSONArray queueItemsJSONArray = jsonObject.getJSONArray(
 					"items");
@@ -455,7 +455,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
 					getURL(), "/job/", jobName, "/api/json?",
-					"tree=builds[actions[parameters[name,value]],result,url]"));
+					"tree=builds[actions[parameters[name,value]],result,url]"),
+				false, 5000);
 
 			JSONArray buildsJSONArray = jobJSONObject.optJSONArray("builds");
 
@@ -547,7 +548,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			JSONObject queueJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
 					getURL(), "/queue/api/json?",
-					"tree=items[actions[parameters[name,value]],task[url]]"));
+					"tree=items[actions[parameters[name,value]],task[url]]"),
+				false, 5000);
 
 			JSONArray itemsJSONArray = queueJSONObject.optJSONArray("items");
 
@@ -893,7 +895,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 				try {
 					JSONObject jsonObject =
-						JenkinsResultsParserUtil.toJSONObject(url, false);
+						JenkinsResultsParserUtil.toJSONObject(url, false, 5000);
 
 					return jsonObject.getJSONArray("allBuilds");
 				}

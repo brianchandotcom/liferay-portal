@@ -776,8 +776,8 @@ public class SourceFormatter {
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0], ":\n",
 							"'## What' should be followed by only one ",
-							"relative path, which is from portal root ",
-							"directory."));
+							"relative path, which is from ",
+							portalDir.getAbsolutePath()));
 				}
 			}
 		}

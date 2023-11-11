@@ -5,6 +5,7 @@
 
 package com.liferay.site.navigation.taglib.servlet.taglib.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,23 +69,18 @@ public class NavItemUtil {
 
 		List<Layout> ancestorLayouts = layout.getAncestors();
 
-		List<NavItem> navItems = new ArrayList<>(ancestorLayouts.size() + 1);
+		Collections.reverse(ancestorLayouts);
 
-		for (int i = ancestorLayouts.size() - 1; i >= 0; i--) {
-			Layout ancestorLayout = ancestorLayouts.get(i);
+		ancestorLayouts.add(layout);
 
-			navItems.add(
-				new NavItem(httpServletRequest, themeDisplay, ancestorLayout));
-		}
-
-		navItems.add(new NavItem(httpServletRequest, themeDisplay, layout));
-
-		return navItems;
+		return TransformUtil.transform(
+			ancestorLayouts,
+			ancestorLayout -> new NavItem(
+				httpServletRequest, themeDisplay, ancestorLayout));
 	}
 
 	public static List<NavItem> getBranchNavItems(
-			HttpServletRequest httpServletRequest, long siteNavigationMenuId)
-		throws PortalException {
+		HttpServletRequest httpServletRequest, long siteNavigationMenuId) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -101,41 +97,18 @@ public class NavItemUtil {
 			return new ArrayList<>();
 		}
 
-		SiteNavigationMenuItem originalSiteNavigationMenuItem =
-			siteNavigationMenuItem;
-
 		List<SiteNavigationMenuItem> ancestorSiteNavigationMenuItems =
-			new ArrayList<>();
+			siteNavigationMenuItem.getAncestors();
 
-		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
-					0) {
+		Collections.reverse(ancestorSiteNavigationMenuItems);
 
-			siteNavigationMenuItem =
-				SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItem(
-					siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
+		ancestorSiteNavigationMenuItems.add(siteNavigationMenuItem);
 
-			ancestorSiteNavigationMenuItems.add(siteNavigationMenuItem);
-		}
-
-		List<NavItem> navItems = new ArrayList<>(
-			ancestorSiteNavigationMenuItems.size() + 1);
-
-		for (int i = ancestorSiteNavigationMenuItems.size() - 1; i >= 0; i--) {
-			SiteNavigationMenuItem ancestorSiteNavigationMenuItem =
-				ancestorSiteNavigationMenuItems.get(i);
-
-			navItems.add(
-				new SiteNavigationMenuNavItemImpl(
-					httpServletRequest, themeDisplay,
-					ancestorSiteNavigationMenuItem));
-		}
-
-		navItems.add(
-			new SiteNavigationMenuNavItemImpl(
+		return TransformUtil.transform(
+			ancestorSiteNavigationMenuItems,
+			ancestorSiteNavigationMenuItem -> new SiteNavigationMenuNavItemImpl(
 				httpServletRequest, themeDisplay,
-				originalSiteNavigationMenuItem));
-
-		return navItems;
+				ancestorSiteNavigationMenuItem));
 	}
 
 	public static List<NavItem> getChildNavItems(

@@ -66,7 +66,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			InfoDisplayWebKeys.INFO_ITEM);
 
 		if (infoItem == null) {
-			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+			if (fragmentRendererContext.isEditMode()) {
 				FragmentRendererUtil.printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
 					"the-display-page-content-will-be-shown-here");
@@ -83,7 +83,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			infoItemDetails.getClassName());
 
 		if (infoItemRenderer == null) {
-			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+			if (fragmentRendererContext.isEditMode()) {
 				FragmentRendererUtil.printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
 					"there-are-no-available-renderers-for-the-display-page-" +

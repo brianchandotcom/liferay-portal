@@ -163,7 +163,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		if ((infoItemReference == null) &&
 			((jsonObject == null) || (jsonObject.length() == 0))) {
 
-			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+			if (fragmentRendererContext.isEditMode()) {
 				FragmentRendererUtil.printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
 					"the-selected-content-will-be-shown-here");
@@ -188,7 +188,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (displayObject == null) {
-			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+			if (fragmentRendererContext.isEditMode()) {
 				FragmentRendererUtil.printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
 					"the-selected-content-is-no-longer-available.-please-" +
@@ -206,7 +206,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			className, displayObject.getClass(), fragmentRendererContext);
 
 		if ((tuple == null) || (tuple.getObject(0) == null)) {
-			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+			if (fragmentRendererContext.isEditMode()) {
 				FragmentRendererUtil.printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
 					"there-are-no-available-renderers-for-the-selected-" +
@@ -217,7 +217,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (!_hasPermission(httpServletRequest, className, displayObject)) {
-			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+			if (fragmentRendererContext.isEditMode()) {
 				FragmentRendererUtil.printRestrictedContentMessage(
 					httpServletRequest, httpServletResponse);
 			}

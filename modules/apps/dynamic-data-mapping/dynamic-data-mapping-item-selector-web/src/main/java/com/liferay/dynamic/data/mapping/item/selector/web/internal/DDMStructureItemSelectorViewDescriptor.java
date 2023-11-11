@@ -119,7 +119,7 @@ public class DDMStructureItemSelectorViewDescriptor
 				getOrderByCol(), getOrderByType()));
 		ddmStructureSearchContainer.setOrderByType(getOrderByType());
 
-		long[] groupIds;
+		long[] groupIds = null;
 
 		if (_ddmStructureItemSelectorCriterion.isSelectAncestorScopes()) {
 			groupIds =

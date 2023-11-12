@@ -40,10 +40,8 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -60,8 +58,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -783,36 +779,16 @@ public class FragmentEntryConfigurationParserImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		HashMap<String, List<NavItem>> navItemsObject = null;
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
 		MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
 			new MenuDisplayFragmentConfiguration(value);
 
-		try {
-			List<NavItem> branchNavItems = NavItemUtil.getBranchNavItems(
-				httpServletRequest,
-				menuDisplayFragmentConfiguration.getSiteNavigationMenuId());
-
-			navItemsObject = HashMapBuilder.<String, List<NavItem>>put(
-				"branchNavItems", branchNavItems
-			).put(
-				"navItems",
-				NavItemUtil.getNavItems(
-					branchNavItems, httpServletRequest,
-					menuDisplayFragmentConfiguration.getNavigationMenuMode(),
-					menuDisplayFragmentConfiguration.getRootLayoutType(),
-					menuDisplayFragmentConfiguration.getRootLayoutLevel(),
-					menuDisplayFragmentConfiguration.getRootLayoutUUID(),
-					menuDisplayFragmentConfiguration.getSiteNavigationMenuId())
-			).build();
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return navItemsObject;
+		return NavItemUtil.getNavigationMenuContext(
+			1, "auto", serviceContext.getRequest(),
+			menuDisplayFragmentConfiguration.getNavigationMenuMode(), false,
+			menuDisplayFragmentConfiguration.getRootLayoutUUID(),
+			menuDisplayFragmentConfiguration.getRootLayoutLevel(),
+			menuDisplayFragmentConfiguration.getRootLayoutType(),
+			menuDisplayFragmentConfiguration.getSiteNavigationMenuId());
 	}
 
 	private Object _getURLValue(String value) {

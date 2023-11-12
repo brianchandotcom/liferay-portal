@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -119,6 +121,45 @@ public class NavItemUtil {
 		}
 
 		return navItems;
+	}
+
+	public static Map<String, Object> getNavigationMenuContext(
+		int displayDepth, String expandedLevels,
+		HttpServletRequest httpServletRequest,
+		NavigationMenuMode navigationMenuMode, boolean preview,
+		String rootItemId, int rootItemLevel, String rootItemType,
+		long siteNavigationMenuId) {
+
+		List<NavItem> branchNavItems = null;
+		List<NavItem> navItems = null;
+
+		try {
+			branchNavItems = getBranchNavItems(
+				httpServletRequest, siteNavigationMenuId);
+
+			navItems = getNavItems(
+				branchNavItems, httpServletRequest, navigationMenuMode,
+				rootItemId, rootItemLevel, rootItemType, siteNavigationMenuId);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"branchNavItems", branchNavItems
+		).put(
+			"displayDepth", displayDepth
+		).put(
+			"includedLayouts", expandedLevels
+		).put(
+			"navItems", navItems
+		).put(
+			"preview", preview
+		).put(
+			"rootLayoutLevel", rootItemLevel
+		).put(
+			"rootLayoutType", rootItemType
+		).build();
 	}
 
 	public static List<NavItem> getNavItems(

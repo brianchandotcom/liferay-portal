@@ -7,12 +7,9 @@ package com.liferay.site.navigation.taglib.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -22,6 +19,7 @@ import com.liferay.site.navigation.taglib.servlet.taglib.util.NavItemUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -85,44 +83,23 @@ public class NavigationMenuTag extends IncludeTag {
 			return EVAL_PAGE;
 		}
 
-		List<NavItem> branchNavItems = null;
-		List<NavItem> navItems = null;
+		JspWriter jspWriter = pageContext.getOut();
 
 		HttpServletRequest httpServletRequest = getRequest();
 
-		try {
-			branchNavItems = NavItemUtil.getBranchNavItems(
-				httpServletRequest, _siteNavigationMenuId);
-
-			navItems = NavItemUtil.getNavItems(
-				branchNavItems, httpServletRequest, _navigationMenuMode,
-				_rootItemType, _rootItemLevel, _rootItemId,
-				_siteNavigationMenuId);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		JspWriter jspWriter = pageContext.getOut();
+		Map<String, Object> navigationMenuContext =
+			NavItemUtil.getNavigationMenuContext(
+				_displayDepth, _expandedLevels, httpServletRequest,
+				_navigationMenuMode, _preview, _rootItemId, _rootItemLevel,
+				_rootItemType, _siteNavigationMenuId);
 
 		jspWriter.write(
 			PortletDisplayTemplateUtil.renderDDMTemplate(
 				httpServletRequest,
 				(HttpServletResponse)pageContext.getResponse(),
-				portletDisplayDDMTemplate.getTemplateId(), navItems,
-				HashMapBuilder.<String, Object>put(
-					"branchNavItems", branchNavItems
-				).put(
-					"displayDepth", _displayDepth
-				).put(
-					"includedLayouts", _expandedLevels
-				).put(
-					"preview", _preview
-				).put(
-					"rootLayoutLevel", _rootItemLevel
-				).put(
-					"rootLayoutType", _rootItemType
-				).build()));
+				portletDisplayDDMTemplate.getTemplateId(),
+				(List<NavItem>)navigationMenuContext.get("navItems"),
+				navigationMenuContext));
 
 		return EVAL_PAGE;
 	}
@@ -225,9 +202,6 @@ public class NavigationMenuTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/navigation/page.jsp";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		NavigationMenuTag.class);
 
 	private long _ddmTemplateGroupId;
 	private String _ddmTemplateKey;

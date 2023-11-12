@@ -791,40 +791,21 @@ public class FragmentEntryConfigurationParserImpl
 			new MenuDisplayFragmentConfiguration(value);
 
 		try {
-			List<NavItem> branchNavItems = null;
-			List<NavItem> navItems = null;
-
-			if (menuDisplayFragmentConfiguration.getSiteNavigationMenuId() >
-					0) {
-
-				branchNavItems = NavItemUtil.getBranchNavItems(
-					httpServletRequest,
-					menuDisplayFragmentConfiguration.getSiteNavigationMenuId());
-
-				navItems = NavItemUtil.getMenuNavItems(
-					httpServletRequest, branchNavItems,
-					menuDisplayFragmentConfiguration.getRootLayoutType(),
-					menuDisplayFragmentConfiguration.getRootLayoutLevel(),
-					menuDisplayFragmentConfiguration.getSiteNavigationMenuId(),
-					menuDisplayFragmentConfiguration.getRootLayoutUUID());
-			}
-			else {
-				branchNavItems = NavItemUtil.getBranchNavItems(
-					httpServletRequest);
-
-				navItems = NavItemUtil.getNavItems(
-					menuDisplayFragmentConfiguration.getNavigationMenuMode(),
-					httpServletRequest,
-					menuDisplayFragmentConfiguration.getRootLayoutType(),
-					menuDisplayFragmentConfiguration.getRootLayoutLevel(),
-					menuDisplayFragmentConfiguration.getRootLayoutUUID(),
-					branchNavItems);
-			}
+			List<NavItem> branchNavItems = NavItemUtil.getBranchNavItems(
+				httpServletRequest,
+				menuDisplayFragmentConfiguration.getSiteNavigationMenuId());
 
 			navItemsObject = HashMapBuilder.<String, List<NavItem>>put(
 				"branchNavItems", branchNavItems
 			).put(
-				"navItems", navItems
+				"navItems",
+				NavItemUtil.getNavItems(
+					branchNavItems, httpServletRequest,
+					menuDisplayFragmentConfiguration.getNavigationMenuMode(),
+					menuDisplayFragmentConfiguration.getRootLayoutType(),
+					menuDisplayFragmentConfiguration.getRootLayoutLevel(),
+					menuDisplayFragmentConfiguration.getRootLayoutUUID(),
+					menuDisplayFragmentConfiguration.getSiteNavigationMenuId())
 			).build();
 		}
 		catch (Exception exception) {

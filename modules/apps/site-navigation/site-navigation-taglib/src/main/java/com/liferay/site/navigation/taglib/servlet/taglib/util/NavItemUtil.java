@@ -6,7 +6,6 @@
 package com.liferay.site.navigation.taglib.servlet.taglib.util;
 
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -46,67 +45,14 @@ import javax.servlet.http.HttpServletRequest;
 public class NavItemUtil {
 
 	public static List<NavItem> getBranchNavItems(
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
+			HttpServletRequest httpServletRequest, long siteNavigationMenuId)
+		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isDraftLayout()) {
-			LayoutLocalService layoutLocalService =
-				_layoutLocalServiceSnapshot.get();
-
-			layout = layoutLocalService.fetchLayout(layout.getClassPK());
+		if (siteNavigationMenuId > 0) {
+			return _getBranchNavItems(httpServletRequest, siteNavigationMenuId);
 		}
 
-		if (layout.isRootLayout()) {
-			return Collections.singletonList(
-				new NavItem(httpServletRequest, themeDisplay, layout));
-		}
-
-		List<Layout> ancestorLayouts = layout.getAncestors();
-
-		Collections.reverse(ancestorLayouts);
-
-		ancestorLayouts.add(layout);
-
-		return TransformUtil.transform(
-			ancestorLayouts,
-			ancestorLayout -> new NavItem(
-				httpServletRequest, themeDisplay, ancestorLayout));
-	}
-
-	public static List<NavItem> getBranchNavItems(
-		HttpServletRequest httpServletRequest, long siteNavigationMenuId) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
-				_getRelativeSiteNavigationMenuItemId(
-					themeDisplay.getLayout(), siteNavigationMenuId));
-
-		if (siteNavigationMenuItem == null) {
-			return new ArrayList<>();
-		}
-
-		List<SiteNavigationMenuItem> ancestorSiteNavigationMenuItems =
-			siteNavigationMenuItem.getAncestors();
-
-		Collections.reverse(ancestorSiteNavigationMenuItems);
-
-		ancestorSiteNavigationMenuItems.add(siteNavigationMenuItem);
-
-		return TransformUtil.transform(
-			ancestorSiteNavigationMenuItems,
-			ancestorSiteNavigationMenuItem -> new SiteNavigationMenuNavItemImpl(
-				httpServletRequest, themeDisplay,
-				ancestorSiteNavigationMenuItem));
+		return _getBranchNavItems(httpServletRequest);
 	}
 
 	public static List<NavItem> getChildNavItems(
@@ -175,7 +121,137 @@ public class NavItemUtil {
 		return navItems;
 	}
 
-	public static List<NavItem> getMenuNavItems(
+	public static List<NavItem> getNavItems(
+			List<NavItem> branchNavItems, HttpServletRequest httpServletRequest,
+			NavigationMenuMode navigationMenuMode, String rootItemId,
+			int rootItemLevel, String rootItemType, long siteNavigationMenuId)
+		throws Exception {
+
+		if (siteNavigationMenuId > 0) {
+			return _getMenuNavItems(
+				httpServletRequest, branchNavItems, rootItemType, rootItemLevel,
+				siteNavigationMenuId, rootItemId);
+		}
+
+		return _getNavItems(
+			navigationMenuMode, httpServletRequest, rootItemType, rootItemLevel,
+			rootItemId, branchNavItems);
+	}
+
+	private static List<NavItem> _fromLayouts(
+			NavigationMenuMode navigationMenuMode,
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (navigationMenuMode == NavigationMenuMode.DEFAULT) {
+			return themeDisplay.getNavItems();
+		}
+
+		boolean privateLayout = false;
+
+		if (navigationMenuMode == NavigationMenuMode.PRIVATE_PAGES) {
+			privateLayout = true;
+		}
+
+		return NavItem.fromLayouts(
+			httpServletRequest, _getLayouts(privateLayout, themeDisplay),
+			themeDisplay);
+	}
+
+	private static List<NavItem> _getBranchNavItems(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isDraftLayout()) {
+			LayoutLocalService layoutLocalService =
+				_layoutLocalServiceSnapshot.get();
+
+			layout = layoutLocalService.fetchLayout(layout.getClassPK());
+		}
+
+		if (layout.isRootLayout()) {
+			return Collections.singletonList(
+				new NavItem(httpServletRequest, themeDisplay, layout));
+		}
+
+		List<Layout> ancestorLayouts = layout.getAncestors();
+
+		Collections.reverse(ancestorLayouts);
+
+		ancestorLayouts.add(layout);
+
+		return TransformUtil.transform(
+			ancestorLayouts,
+			ancestorLayout -> new NavItem(
+				httpServletRequest, themeDisplay, ancestorLayout));
+	}
+
+	private static List<NavItem> _getBranchNavItems(
+		HttpServletRequest httpServletRequest, long siteNavigationMenuId) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
+				_getRelativeSiteNavigationMenuItemId(
+					themeDisplay.getLayout(), siteNavigationMenuId));
+
+		if (siteNavigationMenuItem == null) {
+			return new ArrayList<>();
+		}
+
+		List<SiteNavigationMenuItem> ancestorSiteNavigationMenuItems =
+			siteNavigationMenuItem.getAncestors();
+
+		Collections.reverse(ancestorSiteNavigationMenuItems);
+
+		ancestorSiteNavigationMenuItems.add(siteNavigationMenuItem);
+
+		return TransformUtil.transform(
+			ancestorSiteNavigationMenuItems,
+			ancestorSiteNavigationMenuItem -> new SiteNavigationMenuNavItemImpl(
+				httpServletRequest, themeDisplay,
+				ancestorSiteNavigationMenuItem));
+	}
+
+	private static List<Layout> _getLayouts(
+			boolean privateLayout, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		LayoutLocalService layoutLocalService =
+			_layoutLocalServiceSnapshot.get();
+
+		List<Layout> layouts = ListUtil.copy(
+			layoutLocalService.getLayouts(
+				themeDisplay.getScopeGroupId(), privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID));
+
+		Iterator<Layout> iterator = layouts.iterator();
+
+		while (iterator.hasNext()) {
+			Layout layout = iterator.next();
+
+			if (layout.isHidden() ||
+				!LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.VIEW)) {
+
+				iterator.remove();
+			}
+		}
+
+		return layouts;
+	}
+
+	private static List<NavItem> _getMenuNavItems(
 			HttpServletRequest httpServletRequest, List<NavItem> branchNavItems,
 			String rootItemType, int rootItemLevel, long siteNavigationMenuId,
 			String rootItemId)
@@ -218,7 +294,7 @@ public class NavItemUtil {
 		return new ArrayList<>();
 	}
 
-	public static List<NavItem> getNavItems(
+	private static List<NavItem> _getNavItems(
 			NavigationMenuMode navigationMenuMode,
 			HttpServletRequest httpServletRequest, String rootLayoutType,
 			int rootLayoutLevel, String rootLayoutUuid,
@@ -294,55 +370,6 @@ public class NavItemUtil {
 		}
 
 		return rootNavItem.getChildren();
-	}
-
-	private static List<NavItem> _fromLayouts(
-			NavigationMenuMode navigationMenuMode,
-			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (navigationMenuMode == NavigationMenuMode.DEFAULT) {
-			return themeDisplay.getNavItems();
-		}
-
-		boolean privateLayout = false;
-
-		if (navigationMenuMode == NavigationMenuMode.PRIVATE_PAGES) {
-			privateLayout = true;
-		}
-
-		return NavItem.fromLayouts(
-			httpServletRequest, _getLayouts(privateLayout, themeDisplay),
-			themeDisplay);
-	}
-
-	private static List<Layout> _getLayouts(
-			boolean privateLayout, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		LayoutLocalService layoutLocalService =
-			_layoutLocalServiceSnapshot.get();
-
-		List<Layout> layouts = ListUtil.copy(
-			layoutLocalService.getLayouts(
-				themeDisplay.getScopeGroupId(), privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID));
-
-		Iterator<Layout> iterator = layouts.iterator();
-
-		while (iterator.hasNext()) {
-			Layout layout = iterator.next();
-
-			if (layout.isHidden() ||
-				!LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.VIEW)) {
-
-				iterator.remove();
-			}
-		}
-
-		return layouts;
 	}
 
 	private static long _getRelativeSiteNavigationMenuItemId(

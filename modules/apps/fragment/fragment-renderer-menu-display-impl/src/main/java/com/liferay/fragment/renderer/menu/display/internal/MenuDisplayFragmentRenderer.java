@@ -10,7 +10,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.fragment.util.configuration.FragmentEntryMenuDisplayConfiguration;
 import com.liferay.petra.string.StringPool;
@@ -34,10 +33,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -111,13 +110,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 			printWriter.write("<div id=\"" + fragmentElementId + "\">");
 
-			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
-				_parse(
-					getConfiguration(fragmentRendererContext),
-					fragmentEntryLink.getEditableValues());
-
 			_writeCss(
-				fragmentElementId, menuDisplayFragmentConfiguration,
+				getConfiguration(fragmentRendererContext),
+				fragmentEntryLink.getEditableValues(), fragmentElementId,
 				printWriter);
 
 			ThemeDisplay themeDisplay =
@@ -125,7 +120,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 					WebKeys.THEME_DISPLAY);
 
 			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
-				themeDisplay.getCompanyId(), menuDisplayFragmentConfiguration);
+				themeDisplay.getCompanyId(),
+				getConfiguration(fragmentRendererContext),
+				fragmentEntryLink.getEditableValues());
 
 			navigationMenuTag.doTag(httpServletRequest, httpServletResponse);
 
@@ -137,27 +134,38 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	private NavigationMenuTag _getNavigationMenuTag(
-			long companyId,
-			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration)
+			long companyId, String configuration, String editableValues)
 		throws PortalException {
 
 		NavigationMenuTag navigationMenuTag = new NavigationMenuTag();
 
-		DDMTemplate ddmTemplate = _getTagDDMTemplate(
-			companyId, menuDisplayFragmentConfiguration.getDisplayStyle());
+		String displayStyle = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "displayStyle"));
+
+		DDMTemplate ddmTemplate = _getTagDDMTemplate(companyId, displayStyle);
 
 		if (ddmTemplate != null) {
 			navigationMenuTag.setDdmTemplateGroupId(ddmTemplate.getGroupId());
 			navigationMenuTag.setDdmTemplateKey(ddmTemplate.getTemplateKey());
 		}
 
-		navigationMenuTag.setDisplayDepth(
-			menuDisplayFragmentConfiguration.sublevels() + 1);
+		int sublevels = GetterUtil.getInteger(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "sublevels"));
+
+		navigationMenuTag.setDisplayDepth(sublevels + 1);
+
+		String source = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "source"));
 
 		FragmentEntryMenuDisplayConfiguration
 			fragmentEntryMenuDisplayConfiguration =
-				menuDisplayFragmentConfiguration.
-					getFragmentEntryMenuDisplayConfiguration();
+				new FragmentEntryMenuDisplayConfiguration(source);
 
 		navigationMenuTag.setNavigationMenuMode(
 			fragmentEntryMenuDisplayConfiguration.getNavigationMenuMode());
@@ -173,15 +181,14 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		return navigationMenuTag;
 	}
 
-	private DDMTemplate _getTagDDMTemplate(
-			long companyId, DisplayStyle displayStyle)
+	private DDMTemplate _getTagDDMTemplate(long companyId, String displayStyle)
 		throws PortalException {
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
 		String ddmTemplateKey = "NAVBAR-BLANK-FTL";
 
-		if (displayStyle == DisplayStyle.STACKED) {
+		if (Objects.equals(displayStyle, "stacked")) {
 			ddmTemplateKey = "LIST-MENU-FTL";
 		}
 
@@ -190,45 +197,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			ddmTemplateKey);
 	}
 
-	private MenuDisplayFragmentConfiguration _parse(
-		String configuration, String editableValues) {
-
-		String displayStyle = GetterUtil.getString(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues,
-				LocaleUtil.getMostRelevantLocale(), "displayStyle"));
-
-		String hoveredItemColor = GetterUtil.getString(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues,
-				LocaleUtil.getMostRelevantLocale(), "hoveredItemColor"));
-
-		String selectedItemColor = GetterUtil.getString(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues,
-				LocaleUtil.getMostRelevantLocale(), "selectedItemColor"));
-
-		String source = GetterUtil.getString(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues,
-				LocaleUtil.getMostRelevantLocale(), "source"));
-
-		int sublevels = GetterUtil.getInteger(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues,
-				LocaleUtil.getMostRelevantLocale(), "sublevels"));
-
-		return new MenuDisplayFragmentConfiguration(
-			DisplayStyle.parse(displayStyle),
-			new FragmentEntryMenuDisplayConfiguration(source), hoveredItemColor,
-			selectedItemColor, sublevels);
-	}
-
 	private void _writeCss(
-			String fragmentElementId,
-			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration,
-			PrintWriter printWriter)
-		throws IOException {
+		String configuration, String editableValues, String fragmentElementId,
+		PrintWriter printWriter) {
 
 		String styles = StringUtil.replace(
 			StringUtil.read(
@@ -240,28 +211,19 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 				"fragmentElementId", fragmentElementId
 			).put(
 				"hoveredItemColor",
-				() -> {
-					String hoveredItemColor =
-						menuDisplayFragmentConfiguration.getHoveredItemColor();
-
-					if (hoveredItemColor != null) {
-						return hoveredItemColor;
-					}
-
-					return "inherit";
-				}
+				GetterUtil.getString(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						configuration, editableValues,
+						LocaleUtil.getMostRelevantLocale(), "hoveredItemColor"),
+					"inherit")
 			).put(
 				"selectedItemColor",
-				() -> {
-					String selectedItemColor =
-						menuDisplayFragmentConfiguration.getSelectedItemColor();
-
-					if (selectedItemColor != null) {
-						return selectedItemColor;
-					}
-
-					return "inherit";
-				}
+				GetterUtil.getString(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						configuration, editableValues,
+						LocaleUtil.getMostRelevantLocale(),
+						"selectedItemColor"),
+					"inherit")
 			).build());
 
 		printWriter.write(styles);

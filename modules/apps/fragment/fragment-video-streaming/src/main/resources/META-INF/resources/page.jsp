@@ -27,10 +27,10 @@
 	const content = document.querySelector('.videojs-container');
 
 	const configuration = {
-		autoplay: 'muted',
+		autoplay: <%= (Boolean)request.getAttribute("autoplay") %>,
+		loop: <%= (Boolean)request.getAttribute("loop") %>,
+		muted: <%= (Boolean)request.getAttribute("muted") %>,
 		videoHeight: '<%= (String)request.getAttribute("height") %>',
-		loop: '<%= (Boolean)request.getAttribute("loop") %>',
-		muted: '<%= (Boolean)request.getAttribute("muted") %>',
 		videoWidth: '<%= (String)request.getAttribute("width") %>',
 	};
 

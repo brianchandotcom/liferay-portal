@@ -10,6 +10,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -47,53 +48,18 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 				JSONUtil.put(
 					"fields",
 					JSONUtil.putAll(
-						JSONUtil.put(
-							"label", "url"
-						).put(
-							"name", "url"
-						).put(
-							"type", "text"
-						),
-						JSONUtil.put(
-							"label", "autoplay"
-						).put(
-							"name", "autoplay"
-						).put(
-							"type", "checkbox"
-						),
-						JSONUtil.put(
-							"label", "loop"
-						).put(
-							"name", "loop"
-						).put(
-							"type", "checkbox"
-						),
-						JSONUtil.put(
-							"label", "mute"
-						).put(
-							"name", "mute"
-						).put(
-							"type", "checkbox"
-						),
-						JSONUtil.put(
-							"label", "width"
-						).put(
-							"name", "videoWidth"
-						).put(
-							"type", "text"
-						),
-						JSONUtil.put(
-							"label", "height"
-						).put(
-							"name", "videoHeight"
-						).put(
-							"type", "text"
-						))
+						_createFieldJSONObject("url", "url", "text"),
+						_createFieldJSONObject(
+							"autoplay", "autoplay", "checkbox"),
+						_createFieldJSONObject("loop", "loop", "checkbox"),
+						_createFieldJSONObject("mute", "mute", "checkbox"),
+						_createFieldJSONObject("width", "videoWidth", "text"),
+						_createFieldJSONObject("height", "videoHeight", "text"))
 				).put(
 					"label",
 					_language.format(
-						fragmentRendererContext.getLocale(), "video-options",
-						"video-options", true)
+						fragmentRendererContext.getLocale(), "x-options",
+						"video-streaming", true)
 				))
 		).toString();
 	}
@@ -108,6 +74,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 		return _language.get(locale, "video-streaming");
 	}
 
+	@Override
 	public boolean hasViewPermission(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
@@ -119,6 +86,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 		return true;
 	}
 
+	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-200108")) {
 			return false;
@@ -140,47 +108,71 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
 
-			String src = GetterUtil.getString(
-				_fragmentEntryConfigurationParser.getFieldValue(
-					getConfiguration(fragmentRendererContext),
-					fragmentEntryLink.getEditableValues(),
-					fragmentRendererContext.getLocale(), "url"));
+			httpServletRequest.setAttribute(
+				"autoplay",
+				GetterUtil.getBoolean(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						getConfiguration(fragmentRendererContext),
+						fragmentEntryLink.getEditableValues(),
+						fragmentRendererContext.getLocale(), "autoplay")));
 
-			String height = GetterUtil.getString(
-				_fragmentEntryConfigurationParser.getFieldValue(
-					getConfiguration(fragmentRendererContext),
-					fragmentEntryLink.getEditableValues(),
-					fragmentRendererContext.getLocale(), "videoHeight"));
+			httpServletRequest.setAttribute(
+				"height",
+				GetterUtil.getString(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						getConfiguration(fragmentRendererContext),
+						fragmentEntryLink.getEditableValues(),
+						fragmentRendererContext.getLocale(), "videoHeight")));
 
-			String width = GetterUtil.getString(
-				_fragmentEntryConfigurationParser.getFieldValue(
-					getConfiguration(fragmentRendererContext),
-					fragmentEntryLink.getEditableValues(),
-					fragmentRendererContext.getLocale(), "videoWidth"));
+			httpServletRequest.setAttribute(
+				"loop",
+				GetterUtil.getBoolean(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						getConfiguration(fragmentRendererContext),
+						fragmentEntryLink.getEditableValues(),
+						fragmentRendererContext.getLocale(), "loop")));
 
-			boolean loop = GetterUtil.getBoolean(
-				_fragmentEntryConfigurationParser.getFieldValue(
-					getConfiguration(fragmentRendererContext),
-					fragmentEntryLink.getEditableValues(),
-					fragmentRendererContext.getLocale(), "loop"));
+			httpServletRequest.setAttribute(
+				"muted",
+				GetterUtil.getBoolean(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						getConfiguration(fragmentRendererContext),
+						fragmentEntryLink.getEditableValues(),
+						fragmentRendererContext.getLocale(), "muted")));
 
-			boolean muted = GetterUtil.getBoolean(
-				_fragmentEntryConfigurationParser.getFieldValue(
-					getConfiguration(fragmentRendererContext),
-					fragmentEntryLink.getEditableValues(),
-					fragmentRendererContext.getLocale(), "muted"));
+			httpServletRequest.setAttribute(
+				"src",
+				GetterUtil.getString(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						getConfiguration(fragmentRendererContext),
+						fragmentEntryLink.getEditableValues(),
+						fragmentRendererContext.getLocale(), "url")));
 
-			httpServletRequest.setAttribute("height", height);
-			httpServletRequest.setAttribute("loop", loop);
-			httpServletRequest.setAttribute("muted", muted);
-			httpServletRequest.setAttribute("src", src);
-			httpServletRequest.setAttribute("width", width);
+			httpServletRequest.setAttribute(
+				"width",
+				GetterUtil.getString(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						getConfiguration(fragmentRendererContext),
+						fragmentEntryLink.getEditableValues(),
+						fragmentRendererContext.getLocale(), "videoWidth")));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to render video streaming fragment", exception);
 		}
+	}
+
+	private JSONObject _createFieldJSONObject(
+		String label, String name, String type) {
+
+		return JSONUtil.put(
+			"label", label
+		).put(
+			"name", name
+		).put(
+			"type", type
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

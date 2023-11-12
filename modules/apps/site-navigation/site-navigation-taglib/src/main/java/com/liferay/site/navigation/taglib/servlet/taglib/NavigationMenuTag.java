@@ -112,29 +112,26 @@ public class NavigationMenuTag extends IncludeTag {
 			_log.error(exception);
 		}
 
-		HttpServletResponse httpServletResponse =
-			(HttpServletResponse)pageContext.getResponse();
-
-		String result = PortletDisplayTemplateUtil.renderDDMTemplate(
-			httpServletRequest, httpServletResponse,
-			portletDisplayDDMTemplate.getTemplateId(), navItems,
-			HashMapBuilder.<String, Object>put(
-				"branchNavItems", branchNavItems
-			).put(
-				"displayDepth", _displayDepth
-			).put(
-				"includedLayouts", _expandedLevels
-			).put(
-				"preview", _preview
-			).put(
-				"rootLayoutLevel", _rootItemLevel
-			).put(
-				"rootLayoutType", _rootItemType
-			).build());
-
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write(result);
+		jspWriter.write(
+			PortletDisplayTemplateUtil.renderDDMTemplate(
+				httpServletRequest,
+				(HttpServletResponse)pageContext.getResponse(),
+				portletDisplayDDMTemplate.getTemplateId(), navItems,
+				HashMapBuilder.<String, Object>put(
+					"branchNavItems", branchNavItems
+				).put(
+					"displayDepth", _displayDepth
+				).put(
+					"includedLayouts", _expandedLevels
+				).put(
+					"preview", _preview
+				).put(
+					"rootLayoutLevel", _rootItemLevel
+				).put(
+					"rootLayoutType", _rootItemType
+				).build()));
 
 		return EVAL_PAGE;
 	}

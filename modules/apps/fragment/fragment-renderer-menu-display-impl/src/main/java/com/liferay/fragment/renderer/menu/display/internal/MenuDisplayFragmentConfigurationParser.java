@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MenuDisplayFragmentConfigurationParser {
 
 	public MenuDisplayFragmentConfiguration parse(
-		String configuration, String editableValues, long groupId) {
+		String configuration, String editableValues) {
 
 		DisplayStyle displayStyle = _getDisplayStyle(
 			configuration, editableValues);

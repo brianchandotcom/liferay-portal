@@ -113,19 +113,18 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 			printWriter.write("<div id=\"" + fragmentElementId + "\">");
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
 				_menuDisplayFragmentConfigurationParser.parse(
 					getConfiguration(fragmentRendererContext),
-					fragmentEntryLink.getEditableValues(),
-					themeDisplay.getScopeGroupId());
+					fragmentEntryLink.getEditableValues());
 
 			_writeCss(
 				fragmentElementId, menuDisplayFragmentConfiguration,
 				printWriter);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
 				themeDisplay.getCompanyId(), menuDisplayFragmentConfiguration);

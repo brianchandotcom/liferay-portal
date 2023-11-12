@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayLayout from '@clayui/layout';
 import {createPortletURL, navigate as navigateUtil, sub} from 'frontend-js-web';
@@ -19,7 +18,6 @@ export default function ChangeTrackingChangeView({
 	defaultLocale,
 	discardURL,
 	entryFromURL,
-	expired,
 	modelData,
 	moveChangesURL,
 	namespace,
@@ -375,29 +373,9 @@ export default function ChangeTrackingChangeView({
 		[moveChangesURL, setParameter]
 	);
 
-	const renderExpiredBanner = () => {
-		if (!expired) {
-			return '';
-		}
-
-		return (
-			<ClayAlert
-				displayType="warning"
-				spritemap={spritemap}
-				title={Liferay.Language.get('out-of-date')}
-			>
-				{Liferay.Language.get(
-					'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-publish,-revert,-or-make-additional-changes'
-				)}
-			</ClayAlert>
-		);
-	};
-
 	const renderMainContent = () => {
 		return (
 			<div className="container-fluid container-fluid-max-xl">
-				{renderExpiredBanner()}
-
 				<div className="publications-changes-content row">
 					<div className="col-md-12">
 						{initialNode.modelClassNameId ? (

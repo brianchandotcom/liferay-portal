@@ -6,18 +6,12 @@
 package com.liferay.frontend.editor.taglib.internal;
 
 import com.liferay.frontend.editor.EditorRenderer;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Iván Zaera Avellón
@@ -29,80 +23,17 @@ public class EditorRendererUtil {
 			return null;
 		}
 
-		return _editorRendererMap.get(name);
+		return _serviceTrackerMap.getService(name);
 	}
 
-	public static void start(final BundleContext bundleContext) {
-		_serviceTracker = new ServiceTracker<EditorRenderer, EditorRenderer>(
-			bundleContext, EditorRenderer.class,
-			new ServiceTrackerCustomizer<EditorRenderer, EditorRenderer>() {
+	private static final ServiceTrackerMap<String, EditorRenderer>
+		_serviceTrackerMap;
 
-				@Override
-				public EditorRenderer addingService(
-					ServiceReference<EditorRenderer> serviceReference) {
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(EditorRendererUtil.class);
 
-					EditorRenderer editorRenderer = bundleContext.getService(
-						serviceReference);
-
-					List<String> names = StringUtil.asList(
-						serviceReference.getProperty("name"));
-
-					for (String name : names) {
-						_editorRendererMap.put(name, editorRenderer);
-					}
-
-					return editorRenderer;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<EditorRenderer> serviceReference,
-					EditorRenderer editorRenderer) {
-
-					List<String> names = StringUtil.asList(
-						serviceReference.getProperty("name"));
-
-					for (String name : names) {
-						if (_editorRendererMap.get(name) != editorRenderer) {
-							Collection<EditorRenderer> editorRenderers =
-								_editorRendererMap.values();
-
-							editorRenderers.remove(editorRenderer);
-
-							_editorRendererMap.put(name, editorRenderer);
-						}
-					}
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<EditorRenderer> serviceReference,
-					EditorRenderer editorRenderer) {
-
-					List<String> names = StringUtil.asList(
-						serviceReference.getProperty("name"));
-
-					for (String name : names) {
-						_editorRendererMap.remove(name);
-					}
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
-
-		_serviceTracker.open();
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundle.getBundleContext(), EditorRenderer.class, "name");
 	}
-
-	public static void stop() {
-		_serviceTracker.close();
-
-		_serviceTracker = null;
-	}
-
-	private static final Map<String, EditorRenderer> _editorRendererMap =
-		new ConcurrentHashMap<>();
-	private static ServiceTracker<EditorRenderer, EditorRenderer>
-		_serviceTracker;
 
 }

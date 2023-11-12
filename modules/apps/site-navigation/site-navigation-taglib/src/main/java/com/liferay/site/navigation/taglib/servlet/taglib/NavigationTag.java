@@ -85,11 +85,12 @@ public class NavigationTag extends IncludeTag {
 		HttpServletRequest httpServletRequest = getRequest();
 
 		try {
-			branchNavItems = NavItemUtil.getBranchNavItems(httpServletRequest);
+			branchNavItems = NavItemUtil.getBranchNavItems(
+				httpServletRequest, 0);
 
 			navItems = NavItemUtil.getNavItems(
-				NavigationMenuMode.DEFAULT, httpServletRequest, _rootLayoutType,
-				_rootLayoutLevel, _rootLayoutUuid, branchNavItems);
+				branchNavItems, httpServletRequest, NavigationMenuMode.DEFAULT,
+				_rootLayoutType, _rootLayoutLevel, _rootLayoutUuid, 0);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

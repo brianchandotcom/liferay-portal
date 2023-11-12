@@ -91,22 +91,13 @@ public class NavigationMenuTag extends IncludeTag {
 		HttpServletRequest httpServletRequest = getRequest();
 
 		try {
-			if (_siteNavigationMenuId > 0) {
-				branchNavItems = NavItemUtil.getBranchNavItems(
-					httpServletRequest, _siteNavigationMenuId);
+			branchNavItems = NavItemUtil.getBranchNavItems(
+				httpServletRequest, _siteNavigationMenuId);
 
-				navItems = NavItemUtil.getMenuNavItems(
-					httpServletRequest, branchNavItems, _rootItemType,
-					_rootItemLevel, _siteNavigationMenuId, _rootItemId);
-			}
-			else {
-				branchNavItems = NavItemUtil.getBranchNavItems(
-					httpServletRequest);
-
-				navItems = NavItemUtil.getNavItems(
-					_navigationMenuMode, httpServletRequest, _rootItemType,
-					_rootItemLevel, _rootItemId, branchNavItems);
-			}
+			navItems = NavItemUtil.getNavItems(
+				branchNavItems, httpServletRequest, _navigationMenuMode,
+				_rootItemType, _rootItemLevel, _rootItemId,
+				_siteNavigationMenuId);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -7,7 +7,6 @@ package com.liferay.site.navigation.taglib.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
@@ -101,7 +100,8 @@ public class NavigationMenuTag extends IncludeTag {
 					_rootItemLevel, _siteNavigationMenuId, _rootItemId);
 			}
 			else {
-				branchNavItems = getBranchNavItems(httpServletRequest);
+				branchNavItems = NavItemUtil.getBranchNavItems(
+					httpServletRequest);
 
 				navItems = NavItemUtil.getNavItems(
 					_navigationMenuMode, httpServletRequest, _rootItemType,
@@ -200,13 +200,6 @@ public class NavigationMenuTag extends IncludeTag {
 		_rootItemLevel = 1;
 		_rootItemType = "absolute";
 		_siteNavigationMenuId = 0;
-	}
-
-	protected List<NavItem> getBranchNavItems(
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		return NavItemUtil.getBranchNavItems(httpServletRequest);
 	}
 
 	protected String getDisplayStyle() {

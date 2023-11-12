@@ -942,7 +942,7 @@ public class CTCollectionLocalServiceImpl
 
 			ctEntry.setChangeType(changeType);
 
-			_ctEntryPersistence.update(ctEntry);
+			_ctEntryLocalService.updateCTEntry(ctEntry);
 		}
 
 		try {

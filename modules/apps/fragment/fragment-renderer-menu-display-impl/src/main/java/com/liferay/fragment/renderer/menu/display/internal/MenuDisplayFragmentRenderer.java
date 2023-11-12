@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -110,7 +112,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			printWriter.write("<div id=\"" + fragmentElementId + "\">");
 
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
-				_menuDisplayFragmentConfigurationParser.parse(
+				_parse(
 					getConfiguration(fragmentRendererContext),
 					fragmentEntryLink.getEditableValues());
 
@@ -188,6 +190,40 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			ddmTemplateKey);
 	}
 
+	private MenuDisplayFragmentConfiguration _parse(
+		String configuration, String editableValues) {
+
+		String displayStyle = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "displayStyle"));
+
+		String hoveredItemColor = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "hoveredItemColor"));
+
+		String selectedItemColor = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "selectedItemColor"));
+
+		String source = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "source"));
+
+		int sublevels = GetterUtil.getInteger(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues,
+				LocaleUtil.getMostRelevantLocale(), "sublevels"));
+
+		return new MenuDisplayFragmentConfiguration(
+			DisplayStyle.parse(displayStyle),
+			new FragmentEntryMenuDisplayConfiguration(source), hoveredItemColor,
+			selectedItemColor, sublevels);
+	}
+
 	private void _writeCss(
 			String fragmentElementId,
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration,
@@ -248,10 +284,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private MenuDisplayFragmentConfigurationParser
-		_menuDisplayFragmentConfigurationParser;
 
 	@Reference
 	private Portal _portal;

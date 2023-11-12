@@ -30,18 +30,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 		/>
 	</div>
 
-	<clay:navigation-bar
-		navigationItems="<%= viewChangesDisplayContext.getViewNavigationItems() %>"
-	/>
-
 	<clay:container-fluid>
+		<clay:navigation-bar
+			navigationItems="<%= viewChangesDisplayContext.getViewNavigationItems() %>"
+		/>
+
 		<frontend-data-set:headless-display
 			apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
 			fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
 			fdsFilters="<%= viewChangesDisplayContext.getFDSFilters() %>"
 			fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
 			id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"
-			style="stacked"
 		/>
 	</clay:container-fluid>
 </div>

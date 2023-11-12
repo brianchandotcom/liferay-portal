@@ -20,6 +20,5 @@ ViewHistoryDisplayContext viewHistoryDisplayContext = (ViewHistoryDisplayContext
 		apiURL="<%= viewHistoryDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewHistoryDisplayContext.getFDSActionDropdownItems() %>"
 		id="<%= PublicationsFDSNames.PUBLICATIONS_HISTORY %>"
-		style="stacked"
 	/>
 </clay:container-fluid>

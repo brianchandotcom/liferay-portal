@@ -20,6 +20,5 @@ ViewScheduledDisplayContext viewScheduledDisplayContext = (ViewScheduledDisplayC
 		apiURL="<%= viewScheduledDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewScheduledDisplayContext.getFDSActionDropdownItems() %>"
 		id="<%= PublicationsFDSNames.PUBLICATIONS_SCHEDULED %>"
-		style="stacked"
 	/>
 </clay:container-fluid>

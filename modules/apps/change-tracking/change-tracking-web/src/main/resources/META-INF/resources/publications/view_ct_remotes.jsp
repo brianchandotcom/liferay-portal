@@ -23,5 +23,4 @@ portletDisplay.setURLBack(backURL);
 	creationMenu="<%= viewCTRemotesDisplayContext.getCreationMenu() %>"
 	fdsActionDropdownItems="<%= viewCTRemotesDisplayContext.getFDSActionDropdownItems() %>"
 	id="<%= PublicationsFDSNames.PUBLICATIONS_REMOTES %>"
-	style="fluid"
 />

@@ -137,7 +137,8 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 					clientId, ClientProfile.HEADLESS_SERVER.id(),
 					OAuth2SecureRandomGenerator.generateClientSecret(), null,
 					Collections.emptyList(), null, 0, null,
-					scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName(),
+					scimClientOAuth2ApplicationConfiguration.
+						oAuth2ApplicationName(),
 					null, Collections.emptyList(), false, true, null,
 					new ServiceContext());
 

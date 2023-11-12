@@ -301,7 +301,8 @@ public class UserManagerImpl implements UserManager {
 
 		_saveScimClientId(
 			ScimClientUtil.generateScimClientId(
-				scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName()),
+				scimClientOAuth2ApplicationConfiguration.
+					oAuth2ApplicationName()),
 			portalUser);
 
 		return portalUser;

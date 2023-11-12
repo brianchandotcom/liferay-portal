@@ -9,6 +9,7 @@ import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.fragment.util.configuration.FragmentEntryMenuDisplayConfiguration;
 import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
@@ -779,16 +780,17 @@ public class FragmentEntryConfigurationParserImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
-			new MenuDisplayFragmentConfiguration(value);
+		FragmentEntryMenuDisplayConfiguration
+			fragmentEntryMenuDisplayConfiguration =
+				new FragmentEntryMenuDisplayConfiguration(value);
 
 		return NavItemUtil.getNavigationMenuContext(
 			1, "auto", serviceContext.getRequest(),
-			menuDisplayFragmentConfiguration.getNavigationMenuMode(), false,
-			menuDisplayFragmentConfiguration.getRootLayoutUUID(),
-			menuDisplayFragmentConfiguration.getRootLayoutLevel(),
-			menuDisplayFragmentConfiguration.getRootLayoutType(),
-			menuDisplayFragmentConfiguration.getSiteNavigationMenuId());
+			fragmentEntryMenuDisplayConfiguration.getNavigationMenuMode(),
+			false, fragmentEntryMenuDisplayConfiguration.getRootItemId(),
+			fragmentEntryMenuDisplayConfiguration.getRootItemLevel(),
+			fragmentEntryMenuDisplayConfiguration.getRootItemType(),
+			fragmentEntryMenuDisplayConfiguration.getSiteNavigationMenuId());
 	}
 
 	private Object _getURLValue(String value) {

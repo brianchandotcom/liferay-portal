@@ -5,6 +5,8 @@
 
 package com.liferay.fragment.renderer.menu.display.internal;
 
+import com.liferay.fragment.util.configuration.FragmentEntryMenuDisplayConfiguration;
+
 import java.util.Objects;
 
 /**
@@ -12,22 +14,28 @@ import java.util.Objects;
  */
 public class MenuDisplayFragmentConfiguration {
 
-	public static final Source DEFAULT_SOURCE = new SiteNavigationMenuSource(
-		0, false, 0);
-
 	public MenuDisplayFragmentConfiguration(
-		DisplayStyle displayStyle, String hoveredItemColor,
-		String selectedItemColor, Source source, int sublevels) {
+		DisplayStyle displayStyle,
+		FragmentEntryMenuDisplayConfiguration
+			fragmentEntryMenuDisplayConfiguration,
+		String hoveredItemColor, String selectedItemColor, int sublevels) {
 
 		_displayStyle = displayStyle;
+		_fragmentEntryMenuDisplayConfiguration =
+			fragmentEntryMenuDisplayConfiguration;
 		_hoveredItemColor = hoveredItemColor;
 		_selectedItemColor = selectedItemColor;
-		_source = source;
 		_sublevels = sublevels;
 	}
 
 	public DisplayStyle getDisplayStyle() {
 		return _displayStyle;
+	}
+
+	public FragmentEntryMenuDisplayConfiguration
+		getFragmentEntryMenuDisplayConfiguration() {
+
+		return _fragmentEntryMenuDisplayConfiguration;
 	}
 
 	public String getHoveredItemColor() {
@@ -38,69 +46,8 @@ public class MenuDisplayFragmentConfiguration {
 		return _selectedItemColor;
 	}
 
-	public Source getSource() {
-		return _source;
-	}
-
 	public int sublevels() {
 		return _sublevels;
-	}
-
-	public static class SiteNavigationMenuSource implements Source {
-
-		public SiteNavigationMenuSource(
-			long parentSiteNavigationMenuItemId, boolean privateLayout,
-			long siteNavigationMenuId) {
-
-			_parentSiteNavigationMenuItemId = parentSiteNavigationMenuItemId;
-			_privateLayout = privateLayout;
-			_siteNavigationMenuId = siteNavigationMenuId;
-		}
-
-		public long getParentSiteNavigationMenuItemId() {
-			return _parentSiteNavigationMenuItemId;
-		}
-
-		public long getSiteNavigationMenuId() {
-			return _siteNavigationMenuId;
-		}
-
-		public boolean isPrivateLayout() {
-			return _privateLayout;
-		}
-
-		private final long _parentSiteNavigationMenuItemId;
-		private final boolean _privateLayout;
-		private final long _siteNavigationMenuId;
-
-	}
-
-	public enum ContextualMenu implements Source {
-
-		CHILDREN("children"),
-		PARENT_AND_ITS_SIBLINGS("parent-and-its-siblings"),
-		SELF_AND_SIBLINGS("self-and-siblings");
-
-		public static ContextualMenu parse(String stringValue) {
-			for (ContextualMenu contextualMenu : values()) {
-				if (Objects.equals(contextualMenu.getValue(), stringValue)) {
-					return contextualMenu;
-				}
-			}
-
-			return SELF_AND_SIBLINGS;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		private ContextualMenu(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
 	}
 
 	public enum DisplayStyle {
@@ -133,9 +80,10 @@ public class MenuDisplayFragmentConfiguration {
 	}
 
 	private final DisplayStyle _displayStyle;
+	private final FragmentEntryMenuDisplayConfiguration
+		_fragmentEntryMenuDisplayConfiguration;
 	private final String _hoveredItemColor;
 	private final String _selectedItemColor;
-	private final Source _source;
 	private final int _sublevels;
 
 }

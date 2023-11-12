@@ -10,10 +10,9 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.ContextualMenu;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
-import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.SiteNavigationMenuSource;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.fragment.util.configuration.FragmentEntryMenuDisplayConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -23,9 +22,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -33,7 +30,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
 
 import java.io.IOException;
@@ -138,69 +134,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
-	private void _configureMenu(
-			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration,
-			NavigationMenuTag navigationMenuTag)
-		throws PortalException {
-
-		MenuDisplayFragmentConfiguration.Source source =
-			menuDisplayFragmentConfiguration.getSource();
-
-		if (source instanceof ContextualMenu) {
-			ContextualMenu contextualMenu = (ContextualMenu)source;
-
-			navigationMenuTag.setRootItemType("relative");
-
-			if (contextualMenu == ContextualMenu.CHILDREN) {
-				navigationMenuTag.setRootItemLevel(0);
-			}
-			else if (contextualMenu == ContextualMenu.PARENT_AND_ITS_SIBLINGS) {
-				navigationMenuTag.setRootItemLevel(2);
-			}
-			else if (contextualMenu == ContextualMenu.SELF_AND_SIBLINGS) {
-				navigationMenuTag.setRootItemLevel(1);
-			}
-		}
-		else if (source instanceof SiteNavigationMenuSource) {
-			SiteNavigationMenuSource siteNavigationMenuSource =
-				(SiteNavigationMenuSource)source;
-
-			navigationMenuTag.setNavigationMenuMode(
-				NavigationMenuMode.PUBLIC_PAGES);
-
-			if (siteNavigationMenuSource.isPrivateLayout()) {
-				navigationMenuTag.setNavigationMenuMode(
-					NavigationMenuMode.PRIVATE_PAGES);
-			}
-
-			navigationMenuTag.setRootItemType("select");
-
-			long siteNavigationMenuId =
-				siteNavigationMenuSource.getSiteNavigationMenuId();
-
-			navigationMenuTag.setSiteNavigationMenuId(siteNavigationMenuId);
-
-			long parentSiteNavigationMenuItemId =
-				siteNavigationMenuSource.getParentSiteNavigationMenuItemId();
-
-			if (parentSiteNavigationMenuItemId > 0) {
-				if (_isLayoutHierarchy(siteNavigationMenuId)) {
-					Layout layout = _layoutLocalService.fetchLayout(
-						parentSiteNavigationMenuItemId);
-
-					navigationMenuTag.setRootItemId(layout.getUuid());
-				}
-				else {
-					navigationMenuTag.setRootItemId(
-						String.valueOf(parentSiteNavigationMenuItemId));
-				}
-			}
-		}
-
-		navigationMenuTag.setDisplayDepth(
-			menuDisplayFragmentConfiguration.sublevels() + 1);
-	}
-
 	private NavigationMenuTag _getNavigationMenuTag(
 			long companyId,
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration)
@@ -216,7 +149,24 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			navigationMenuTag.setDdmTemplateKey(ddmTemplate.getTemplateKey());
 		}
 
-		_configureMenu(menuDisplayFragmentConfiguration, navigationMenuTag);
+		navigationMenuTag.setDisplayDepth(
+			menuDisplayFragmentConfiguration.sublevels() + 1);
+
+		FragmentEntryMenuDisplayConfiguration
+			fragmentEntryMenuDisplayConfiguration =
+				menuDisplayFragmentConfiguration.
+					getFragmentEntryMenuDisplayConfiguration();
+
+		navigationMenuTag.setNavigationMenuMode(
+			fragmentEntryMenuDisplayConfiguration.getNavigationMenuMode());
+		navigationMenuTag.setRootItemId(
+			fragmentEntryMenuDisplayConfiguration.getRootItemId());
+		navigationMenuTag.setRootItemLevel(
+			fragmentEntryMenuDisplayConfiguration.getRootItemLevel());
+		navigationMenuTag.setRootItemType(
+			fragmentEntryMenuDisplayConfiguration.getRootItemType());
+		navigationMenuTag.setSiteNavigationMenuId(
+			fragmentEntryMenuDisplayConfiguration.getSiteNavigationMenuId());
 
 		return navigationMenuTag;
 	}
@@ -236,14 +186,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		return _ddmTemplateLocalService.fetchTemplate(
 			companyGroup.getGroupId(), _portal.getClassNameId(NavItem.class),
 			ddmTemplateKey);
-	}
-
-	private boolean _isLayoutHierarchy(long siteNavigationMenuId) {
-		if (siteNavigationMenuId == 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _writeCss(
@@ -306,9 +248,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private MenuDisplayFragmentConfigurationParser

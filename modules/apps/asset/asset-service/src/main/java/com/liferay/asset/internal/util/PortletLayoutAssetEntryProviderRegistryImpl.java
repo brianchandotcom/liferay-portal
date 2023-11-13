@@ -5,8 +5,8 @@
 
 package com.liferay.asset.internal.util;
 
-import com.liferay.asset.util.PortletLayoutAssetEntryProvider;
-import com.liferay.asset.util.PortletLayoutAssetEntryProviderRegistry;
+import com.liferay.asset.provider.PortletLayoutAssetEntryProvider;
+import com.liferay.asset.provider.PortletLayoutAssetEntryProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 

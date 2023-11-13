@@ -323,7 +323,7 @@ public class UserManagerImpl implements UserManager {
 
 		if (Objects.equals(
 				scimClientOAuth2ApplicationConfiguration.matcherField(),
-				"emailAddress")) {
+				"email")) {
 
 			return _userLocalService.fetchUserByEmailAddress(
 				scimUser.getCompanyId(), scimUser.getEmailAddress());

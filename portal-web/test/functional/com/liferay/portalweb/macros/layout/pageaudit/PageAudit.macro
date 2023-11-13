@@ -265,7 +265,9 @@ definition {
 
 	@summary = "Default summary"
 	macro setPreferredStrategy(key_preferredStrategy = null) {
-		Click(locator1 = "Dropdown#TRIGGER");
+		Click(
+			key_fieldLabel = "Preferred Strategy",
+			locator1 = "Dropdown#COMBOBOX_WITH_LABEL");
 
 		DropdownMenuItem.click(menuItem = ${key_preferredStrategy});
 	}

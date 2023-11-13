@@ -24,6 +24,14 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro clickListEntryBreadcrumbItem(listEntry = null) {
+		Click(
+			key_breadcrumbName = ${breadcrumbName},
+			key_listEntry = ${listEntry},
+			locator1 = "LexiconList#LIST_ENTRY_BREADCRUMB_ITEM");
+	}
+
+	@summary = "Default summary"
 	macro clickListEntryTitle(listEntry = null) {
 		Click(
 			key_listEntry = ${listEntry},

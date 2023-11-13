@@ -1716,8 +1716,10 @@ definition {
 				changeTitle = "Preferences for Web Content Display on Test Content Page");
 		}
 
-		task ("Turn on Show All Items and assert assert portlet preference change are displayed") {
-			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
+		task ("Turn on Show system changes and assert assert portlet preference change are displayed") {
+			Click(locator1 = "PublicationsChanges#ELLIPSIS_IN_PUBLICATION");
+
+			MenuItem.click(menuItem = "Show System Changes");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Portlet Preference Value",
@@ -1783,8 +1785,10 @@ definition {
 				changeTitle = "Preferences for Web Content Display on Test Widget Page");
 		}
 
-		task ("Turn on Show All Items and assert assert portlet preference change are displayed") {
-			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
+		task ("Turn on Show system changes and assert assert portlet preference change are displayed") {
+			Click(locator1 = "PublicationsChanges#ELLIPSIS_IN_PUBLICATION");
+
+			MenuItem.click(menuItem = "Show System Changes");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Portlet Preference Value",

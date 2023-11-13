@@ -25,23 +25,31 @@ function Select({
 	label,
 	name,
 	onChange,
+	onSelectionChange,
 	options,
+	placeholder,
 	predefinedValue,
 	readOnly,
 	required,
 	selectedKey,
+	showEmptyOption,
 	viewMode,
 }: SelectProps) {
 	const [selectedLabel, setSelectedLabel] = useState('');
 	let newSelectedKey = selectedKey;
-	if (!selectedKey.length) {
+	
+	if (!selectedKey?.length && showEmptyOption) {
 		newSelectedKey = 'chooseAnOption';
 	}
 
-	let selectedItem = newSelectedKey;
+	if(typeof(selectedKey) !== 'string' && selectedKey?.[0] === '') {
+		newSelectedKey = undefined;
+	}
+
+	let selectedItem: string | string[] | undefined = newSelectedKey;
 
 	if (newSelectedKey !== 'chooseAnOption') {
-		selectedItem = selectedItem ?? predefinedValue;
+		selectedItem = newSelectedKey ?? (predefinedValue?.length ? predefinedValue : undefined);
 	}
 	else if (
 		newSelectedKey === 'chooseAnOption' &&
@@ -55,20 +63,23 @@ function Select({
 	}
 
 	if (typeof selectedItem !== 'string') {
-		selectedItem = selectedItem[0];
+		selectedItem = selectedItem?.[0];
 	}
 
 	useEffect(() => {
 		const selectedOption = options.find(
-			(option) => option.value === selectedKey[0] || option.active
+			(option) => option.value === selectedItem?.[0]
 		);
 
 		if (selectedOption) {
 			setSelectedLabel(selectedOption.label);
+		} else {
+			setSelectedLabel(Liferay.Language.get('choose-an-option'));
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedKey]);
+	}, [selectedKey, selectedItem, options]);
+
 
 	return (
 		<div
@@ -96,9 +107,22 @@ function Select({
 					);
 
 					onChange({}, [field.value]);
+
+					if(onSelectionChange) {
+						onSelectionChange(itemKey);
+					}
 				}}
-				placeholder={Liferay.Language.get('choose-an-option')}
-				selectedKey={selectedItem as string}
+				// onKeyDown={(event: KeyboardEvent) => {
+				// 	if (event.key === 'ArrowDown') {
+                //         event.preventDefault();
+				// 		console.log('entrou')
+
+				// 		const select = document.querySelector('.dropdown-menu-select.show')?.firstChild?.firstChild;
+				// 		(select as HTMLElement)?.focus()
+                //     }
+				// }}
+				placeholder={placeholder}
+				selectedKey={selectedItem}
 			>
 				{(group) => (
 					<DropDown.Group header={group.label} items={group.items}>
@@ -122,17 +146,19 @@ const Main = ({
 	multiple = false,
 	name,
 	onChange,
+	onSelectionChange,
 	options = [],
+	placeholder = Liferay.Language.get('choose-an-option'),
 	predefinedValue = [],
 	readOnly = false,
 	showEmptyOption = true,
-	value = '',
+	value,
 	selectedKey,
 	...otherProps
 }: MainProps) => {
 	const {editingLanguageId}: {editingLanguageId: Locale} = useFormState();
 	const predefinedValueArray = toArray(predefinedValue);
-	const valueArray = toArray(value);
+	const valueArray = toArray(value as string | string[]);
 	const {viewMode} = useFormState();
 
 	const normalizedOptions = useMemo(
@@ -173,11 +199,11 @@ const Main = ({
 	if (!multiple) {
 		if (
 			normalizedOptions.length &&
-			value[0] &&
+			value?.[0] &&
 			!normalizedOptions.find((option) => option.value === value[0])
 		) {
-			newValue = '';
-		}
+			newValue = undefined;
+		} //acho que eh pra limpar o campo quando eu deletar uma opcao do select
 
 		if (
 			normalizedOptions.length &&
@@ -229,11 +255,13 @@ const Main = ({
 						name={`${name}_field`}
 						onChange={onChange}
 						options={normalizedOptions}
+						onSelectionChange={onSelectionChange}
+						placeholder={placeholder}
 						predefinedValue={newPredefinedValue}
 						readOnly={readOnly}
 						required={otherProps.required}
-						selectedKey={selectedKey || (newValue as string)}
-						showEmptyOption={false}
+						selectedKey={selectedKey ??	 (newValue as string)}
+						showEmptyOption={showEmptyOption}
 						viewMode={viewMode}
 					/>
 				)}

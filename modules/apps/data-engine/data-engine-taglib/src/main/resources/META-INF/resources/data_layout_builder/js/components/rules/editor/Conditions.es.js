@@ -4,13 +4,14 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Context as ModalContext} from '@clayui/modal';
 import {
 	FieldStateless,
 	FieldSupport,
 	generateName,
 } from 'data-engine-js-components-web';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import Timeline from './Timeline.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
@@ -33,9 +34,11 @@ function FieldOperator({
 	left,
 	onChange,
 	operator,
+	operatorValue,
 	operatorsByType,
 	readOnly,
 	right,
+	setOperatorValue,
 }) {
 	const options = useMemo(() => {
 		if (!left.value) {
@@ -58,6 +61,15 @@ function FieldOperator({
 		return option?.parameterClassNames?.length === 2;
 	};
 
+	useEffect(() => {
+		if (operator !== '') {
+			setOperatorValue(operator);
+		}
+	}, [operator]);
+
+	console.log('operator', operator);
+	console.log('operatorValue', operatorValue);
+
 	return (
 		<>
 			<Timeline.FormGroupItem>
@@ -73,12 +85,14 @@ function FieldOperator({
 							type: ACTIONS_TYPES.CHANGE_OPERATOR,
 						});
 					}}
+					onSelectionChange={(itemKey) => {
+						setOperatorValue(itemKey);
+					}}
 					options={options}
-					placeholder={Liferay.Language.get('choose-an-option')}
 					readOnly={readOnly}
+					selectedKey={operatorValue}
 					showEmptyOption={false}
 					type="select"
-					value={[operator]}
 				/>
 			</Timeline.FormGroupItem>
 			{isBinaryOperator(operator) && left.type !== 'user' && (
@@ -117,7 +131,15 @@ function FieldOperator({
 	);
 }
 
-function FieldLeft({fields, left, onChange}) {
+function FieldLeft({
+	fieldLeftSelectedKey,
+	fields,
+	left,
+	onChange,
+	setFieldLeftSelectedKey,
+	setOperatorValue,
+	setReload,
+}) {
 	return (
 		<Timeline.FormGroupItem>
 			<FieldStateless
@@ -130,8 +152,14 @@ function FieldLeft({fields, left, onChange}) {
 					},
 				]}
 				onChange={onChange}
+				onSelectionChange={(itemKey) => {
+					setFieldLeftSelectedKey(itemKey);
+					setOperatorValue(undefined);
+					setReload(true);
+				}}
 				options={fields}
 				placeholder={Liferay.Language.get('choose-an-option')}
+				selectedKey={fieldLeftSelectedKey}
 				showEmptyOption={false}
 				type="select"
 				value={[left.value]}
@@ -241,6 +269,9 @@ export function Conditions({
 	roles,
 	state: {logicalOperator},
 }) {
+	const [fieldLeftSelectedKey, setFieldLeftSelectedKey] = useState();
+	const [operatorValue, setOperatorValue] = useState();
+	const [reload, setReload] = useState(false);
 	const [modal, openModal] = useContext(ModalContext);
 
 	const onChangeLogicalOperator = (value) =>
@@ -248,6 +279,12 @@ export function Conditions({
 			payload: {value},
 			type: ACTIONS_TYPES.CHANGE_LOGICAL_OPERATOR,
 		});
+
+	useEffect(() => {
+		setTimeout(() => {
+			setReload(false);
+		}, 200);
+	}, [fieldLeftSelectedKey]);
 
 	return (
 		<Timeline.List className="timeline-first">
@@ -268,6 +305,7 @@ export function Conditions({
 				<Timeline.Item key={index}>
 					<Timeline.Panel expression={expression}>
 						<FieldLeft
+							fieldLeftSelectedKey={fieldLeftSelectedKey}
 							fields={fields}
 							left={left}
 							onChange={(event) =>
@@ -280,22 +318,33 @@ export function Conditions({
 									type: ACTIONS_TYPES.CHANGE_IDENTIFIER_LEFT,
 								})
 							}
+							setFieldLeftSelectedKey={setFieldLeftSelectedKey}
+							setOperatorValue={setOperatorValue}
+							setReload={setReload}
 						/>
 
-						<FieldOperator
-							fields={fields}
-							left={left}
-							onChange={({payload, type}) =>
-								dispatch({
-									payload: {loc: index, value: payload},
-									type,
-								})
-							}
-							operator={operator}
-							operatorsByType={operatorsByType}
-							readOnly={!left.value}
-							right={right}
-						/>
+						{reload ? (
+							<ClayLoadingIndicator
+								displayType="secondary"
+								size="sm"
+							/>
+						) : (
+							<FieldOperator
+								fields={fields}
+								left={left}
+								onChange={({payload, type}) =>
+									dispatch({
+										payload: {loc: index, value: payload},
+										type,
+									})
+								}
+								operator={operator}
+								operatorValue={operatorValue}
+								operatorsByType={operatorsByType}
+								right={right}
+								setOperatorValue={setOperatorValue}
+							/>
+						)}
 
 						{right && right.type && (
 							<FieldRight

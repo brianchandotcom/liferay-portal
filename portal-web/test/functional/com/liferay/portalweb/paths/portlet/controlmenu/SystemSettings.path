@@ -22,12 +22,12 @@
 </tr>
 <tr>
 	<td>DROPDOWN_MENU</td>
-	<td>//*[contains(.,'${key_fieldLabel}')]/parent::div//div[contains(@class,'option-selected')] | //p[contains(.,'${key_fieldLabel}')]/following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//*[contains(.,'${key_fieldLabel}')]/parent::div//div[contains(@class,'option-selected')] | //p[contains(.,'${key_fieldLabel}')]/following-sibling::div//button[contains(@class,'dropdown-toggle')] | //label[normalize-space()='${key_fieldLabel}']//following-sibling::div//button[@role='combobox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DROPDOWN_MENU_OPTION</td>
-	<td>//button[contains(@class,'dropdown-item') and @label='${key_selectOption}']</td>
+	<td>//button[contains(@class,'dropdown-item') and @label='${key_selectOption}'] | //div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[contains(@class,'dropdown-item')][normalize-space()='${key_selectOption}']</td>
 	<td></td>
 </tr>
 <tr>

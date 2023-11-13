@@ -204,9 +204,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		sb.append(componentId);
 
 		sb.append("', new ");
-
 		sb.append(variableName);
-
 		sb.append(".default(");
 
 		HttpServletRequest httpServletRequest = getRequest();

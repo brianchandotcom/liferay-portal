@@ -2111,6 +2111,8 @@ definition {
 
 			Portlet.addPG(portletName = "Web Content Display");
 
+			Portlet.viewPG(portletName = "Web Content Display");
+
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page ${pageCount}",
 				siteName = "Site Name");
@@ -2166,6 +2168,8 @@ definition {
 				siteName = "Site Name");
 
 			Portlet.addPG(portletName = "Asset Publisher");
+
+			Portlet.viewPG(portletName = "Asset Publisher");
 
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page ${pageCount}",

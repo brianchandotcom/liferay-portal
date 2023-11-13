@@ -101,7 +101,7 @@ const TicketAttachmentsTable = ({
 									</div>
 								),
 								ticket: (
-									<a className="m-0 text-truncate" href={"https://help.liferay.com/hc/en-us/requests/" + ticketAttachment?.zendeskTicketId}>
+									<a className="m-0 text-truncate" href={PAGE_ROUTER_TYPES.request(ticketAttachment?.zendeskTicketId)}>
 										{'#' + ticketAttachment?.zendeskTicketId}
 									</a>
 								),

@@ -15,10 +15,12 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -143,7 +145,14 @@ public class AssetAutoTaggerOSGiCommands implements OSGiCommands {
 			}
 
 			actionableDynamicQuery.setPerformActionMethod(
-				(AssetEntry assetEntry) -> consumer.accept(assetEntry));
+				(AssetEntry assetEntry) -> {
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setWithSafeCloseable(
+								assetEntry.getCompanyId())) {
+
+						consumer.accept(assetEntry);
+					}
+				});
 
 			actionableDynamicQuery.performActions();
 		}

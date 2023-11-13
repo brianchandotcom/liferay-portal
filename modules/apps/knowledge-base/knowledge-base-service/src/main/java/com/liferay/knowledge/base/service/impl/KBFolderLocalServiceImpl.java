@@ -93,6 +93,11 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		kbFolder.setDescription(description);
 		kbFolder.setExpandoBridgeAttributes(serviceContext);
 
+		kbFolder.setStatus(WorkflowConstants.STATUS_APPROVED);
+		kbFolder.setStatusByUserId(userId);
+		kbFolder.setStatusByUserName(user.getFullName());
+		kbFolder.setStatusDate(date);
+
 		kbFolder = kbFolderPersistence.update(kbFolder);
 
 		// Resources

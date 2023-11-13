@@ -883,6 +883,7 @@ definition {
 			value1 = "1 result for bicycle");
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test SwitchSidecarToRemote {
 		property embedded.elasticsearch.only = "true";

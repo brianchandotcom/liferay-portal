@@ -171,8 +171,7 @@ export default function Relationships({
 					setShowDeleteModal(true);
 				}
 				else {
-					deleteRelationship(itemData.id);
-					setTimeout(() => window.location.reload(), 1500);
+					deleteRelationship(itemData.id, true);
 				}
 			}
 		},

@@ -257,7 +257,6 @@ definition {
 
 			PublicationsNavigator.gotoViewChangeDetails(
 				changeCategory = "Wiki Page",
-				changeOrder = 2,
 				changeTitle = "Wiki Page Title (1.1)");
 
 			PublicationsChangeDetails.viewChangeDetailsInDisplay(

@@ -55,12 +55,7 @@ definition {
 		var key_changeCategory = ${changeCategory};
 		var key_changeTitle = ${changeTitle};
 
-		if (isSet(changeOrder)) {
-			var changeOrder = ${changeOrder};
-		}
-		else {
-			var changeOrder = 1;
-		}
+		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_TYPE_BUTTON");
 
 		while (IsElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_CATEGORY")) {
 			Click(locator1 = "//*[contains(@class, 'page-link')]//*[contains(@class,'right')]");

@@ -207,11 +207,14 @@ export class SegmentProfileRoutes extends React.Component {
 								containers={[
 									Containers.SegmentMembershipCard,
 									Containers.SegmentCompositionCard,
-									Containers.SegmentCriteriaCard,
+									this.props.segmentType ===
+										SegmentTypes.Dynamic &&
+										Containers.SegmentCriteriaCard,
 									Containers.TopInterestsCard,
 									Containers.DistributionBreakdownCard
-								]}
+								].filter(Boolean)}
 								disabled={false}
+								showDateRange={false}
 								subtitle={selectedChannel?.name}
 								title={Liferay.Language.get('segments')}
 							/>

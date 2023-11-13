@@ -156,6 +156,7 @@ export type TransformedContainer = TContainer & {
 export interface IDownloadReport {
 	disabled: boolean;
 	containers: Containers[];
+	showDateRange?: boolean;
 	subtitle: string;
 	title: string;
 	url?: string;
@@ -179,6 +180,7 @@ const formatContainers = (containers: Containers[]): ContainerList =>
 const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	containers: initialContainers,
 	disabled,
+	showDateRange,
 	subtitle,
 	title,
 	url
@@ -243,6 +245,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 							});
 						}, 1000);
 					}}
+					showDateRange={showDateRange}
 				>
 					<ClayForm.Group>
 						<label>{Liferay.Language.get('select-reports')}</label>

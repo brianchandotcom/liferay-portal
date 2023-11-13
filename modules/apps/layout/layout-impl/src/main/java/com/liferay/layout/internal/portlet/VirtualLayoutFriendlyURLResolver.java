@@ -99,6 +99,10 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 		Group group = _groupLocalService.fetchFriendlyURLGroup(
 			companyId, groupFriendlyURL);
 
+		if (group == null) {
+			return null;
+		}
+
 		// Layout friendly URL
 
 		String layoutFriendlyURL = null;

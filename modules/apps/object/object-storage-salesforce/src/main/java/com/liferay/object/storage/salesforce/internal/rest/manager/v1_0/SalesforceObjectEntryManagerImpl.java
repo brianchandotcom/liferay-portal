@@ -7,6 +7,7 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -239,7 +240,7 @@ public class SalesforceObjectEntryManagerImpl
 			StringUtil.merge(
 				TransformUtil.transform(
 					accountEntries,
-					accountEntry -> accountEntry.getExternalReferenceCode()),
+					AccountEntryModel::getExternalReferenceCode),
 				"', '"),
 			"')");
 	}

@@ -12,20 +12,8 @@
 		"type": "com.liferay.account.model.AccountEntry.address"
 	},
 	{
-		"name": "billing",
-		"type": "com.liferay.account.model.AccountEntry.address"
-	},
-	{
-		"name": "billing",
-		"type": "com.liferay.account.model.AccountEntry.address"
-	},
-	{
 		"name": "phone-number",
 		"type": "com.liferay.portal.kernel.model.Address.phone"
-	},
-	{
-		"name": "billing",
-		"type": "com.liferay.account.model.AccountEntry.address"
 	},
 	{
 		"name": "billing",
@@ -77,11 +65,11 @@
 	},
 	{
 		"name": "intranet",
-		"type": "com.liferay.account.model.AccountEntry.address"
+		"type": "com.liferay.portal.kernel.model.Company.website"
 	},
 	{
 		"name": "public",
-		"type": "com.liferay.account.model.AccountEntry.address"
+		"type": "com.liferay.portal.kernel.model.Company.website"
 	},
 	{
 		"name": "business",

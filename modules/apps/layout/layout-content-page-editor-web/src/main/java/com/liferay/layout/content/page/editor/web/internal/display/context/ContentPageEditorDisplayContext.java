@@ -598,8 +598,7 @@ public class ContentPageEditorDisplayContext {
 						return true;
 					}
 
-					Layout publishedLayout = _layoutLocalService.fetchLayout(
-						draftLayout.getClassPK());
+					Layout publishedLayout = _getPublishedLayout();
 
 					if ((publishedLayout != null) &&
 						(publishedLayout.isDenied() ||
@@ -1220,10 +1219,11 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getDiscardDraftURL() {
-		Layout draftLayout = themeDisplay.getLayout();
+		Layout publishedLayout = _getPublishedLayout();
 
-		if (!Objects.equals(
-				draftLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
+		if ((publishedLayout != null) &&
+			!Objects.equals(
+				publishedLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
 
 			return PortletURLBuilder.create(
 				_portletURLFactory.create(
@@ -1250,7 +1250,16 @@ public class ContentPageEditorDisplayContext {
 					httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 					PortletRequest.RENDER_PHASE)
 			).setParameter(
-				"selPlid", draftLayout.getClassPK()
+				"selPlid",
+				() -> {
+					if (publishedLayout != null) {
+						return publishedLayout.getPlid();
+					}
+
+					Layout draftLayout = themeDisplay.getLayout();
+
+					return draftLayout.getClassPK();
+				}
 			).buildString()
 		).setParameter(
 			"selPlid", themeDisplay.getPlid()
@@ -1745,6 +1754,19 @@ public class ContentPageEditorDisplayContext {
 		return PortletIdCodec.decodePortletName(id.substring(8));
 	}
 
+	private Layout _getPublishedLayout() {
+		if (_publishedLayout != null) {
+			return _publishedLayout;
+		}
+
+		Layout draftLayout = themeDisplay.getLayout();
+
+		_publishedLayout = _layoutLocalService.fetchLayout(
+			draftLayout.getClassPK());
+
+		return _publishedLayout;
+	}
+
 	private String _getRedirect() {
 		if (Validator.isNotNull(_redirect)) {
 			return _redirect;
@@ -1896,10 +1918,11 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private boolean _isConversionDraft() {
-		Layout draftLayout = themeDisplay.getLayout();
+		Layout publishedLayout = _getPublishedLayout();
 
-		if (Objects.equals(
-				draftLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
+		if ((publishedLayout != null) &&
+			Objects.equals(
+				publishedLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
 
 			return true;
 		}
@@ -1991,6 +2014,7 @@ public class ContentPageEditorDisplayContext {
 	private LayoutStructure _masterLayoutStructure;
 	private final PageEditorConfiguration _pageEditorConfiguration;
 	private final PortletURLFactory _portletURLFactory;
+	private Layout _publishedLayout;
 	private String _redirect;
 	private List<String> _restrictedItemIds;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;

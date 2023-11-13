@@ -48,9 +48,9 @@ import com.liferay.search.experiences.blueprint.exception.InvalidElementInstance
 import com.liferay.search.experiences.blueprint.exception.InvalidParameterException;
 import com.liferay.search.experiences.blueprint.exception.InvalidQueryEntryException;
 import com.liferay.search.experiences.blueprint.exception.UnresolvedTemplateVariableException;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.ContextSXPParameterContributor;
-import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;

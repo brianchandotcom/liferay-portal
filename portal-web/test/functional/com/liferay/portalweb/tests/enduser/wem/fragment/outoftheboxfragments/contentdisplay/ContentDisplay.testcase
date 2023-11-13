@@ -25,17 +25,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a test for LPS-97182. If a page author does not have view permissions for an asset, it should not display for them."
 	@priority = 3
 	test CannotViewAssetWithoutAssetViewPermission {

@@ -22,6 +22,8 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -88,6 +90,19 @@ public class UpgradeCatchAllCheck {
 	public void method(HttpServletRequest httpServletRequest) {
 		_commerceAccountHelper.getCurrentAccountEntry(0, httpServletRequest);
 		_commerceAccountHelper.getCurrentCommerceAccount(null);
+	}
+
+	public void method(HttpServletRequest httpServletRequest, String name) {
+		CookieUtil.get(httpServletRequest, "test123");
+		CookiesManagerUtil.getCookieValue(name, httpServletRequest);
+	}
+
+	public void method(
+		HttpServletRequest httpServletRequest, String name,
+		boolean toUpperCase) {
+
+		CookieUtil.get(httpServletRequest, "test123", toUpperCase);
+		CookiesManagerUtil.getCookieValue(name, httpServletRequest, toUpperCase);
 	}
 
 	public void method(

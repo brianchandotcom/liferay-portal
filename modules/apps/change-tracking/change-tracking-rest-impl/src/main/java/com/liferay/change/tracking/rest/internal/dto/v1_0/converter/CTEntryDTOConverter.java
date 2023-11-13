@@ -9,6 +9,7 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.Status;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -60,6 +61,10 @@ public class CTEntryDTOConverter
 	}
 
 	private String _getLocalizedValue(Field field, Locale locale) {
+		if (field == null) {
+			return StringPool.BLANK;
+		}
+
 		return MapUtil.getWithFallbackKey(
 			field.getLocalizedValues(), locale, LocaleUtil.getDefault());
 	}

@@ -6,7 +6,9 @@
 package com.liferay.change.tracking.internal.search.spi.model.index.contributor;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
@@ -97,11 +99,9 @@ public class CTEntryModelDocumentContributor
 	}
 
 	private <T extends BaseModel<T>> Map<Locale, String> _getTitleMap(
-		CTEntry ctEntry, Locale[] locales) {
+		long ctCollectionId, CTEntry ctEntry, Locale[] locales) {
 
 		Map<Locale, String> map = new HashMap<>();
-
-		long ctCollectionId = ctEntry.getCtCollectionId();
 
 		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
 			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
@@ -137,7 +137,15 @@ public class CTEntryModelDocumentContributor
 
 		long ctCollectionId = ctEntry.getCtCollectionId();
 
-		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if ((ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) ||
+			((ctCollection != null) &&
+			 (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
+			 (ctEntry.getChangeType() ==
+				 CTConstants.CT_CHANGE_TYPE_ADDITION))) {
+
 			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 		}
 
@@ -181,7 +189,7 @@ public class CTEntryModelDocumentContributor
 		}
 
 		document.addLocalizedText(
-			Field.TITLE, _getTitleMap(ctEntry, locales), true);
+			Field.TITLE, _getTitleMap(ctCollectionId, ctEntry, locales), true);
 
 		document.addKeyword(
 			"hideable",
@@ -202,6 +210,9 @@ public class CTEntryModelDocumentContributor
 				true, true);
 		}
 	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;

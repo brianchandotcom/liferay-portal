@@ -166,7 +166,7 @@ public class AggregationFilteringFacetProcessorContext
 
 		rangeQueryBuilder.from(rangeParts[0]);
 		rangeQueryBuilder.includeLower(true);
-		rangeQueryBuilder.includeUpper(false);
+		rangeQueryBuilder.includeUpper(true);
 		rangeQueryBuilder.to(rangeParts[1]);
 
 		return rangeQueryBuilder;

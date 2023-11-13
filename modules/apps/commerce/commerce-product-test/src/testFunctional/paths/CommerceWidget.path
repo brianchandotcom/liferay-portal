@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ASSERT_ACCOUNT_DETAILS_AT_SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar-body')]//div[contains(@class,'sidebar-dd') and contains(.,'${key_fieldValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACET_DEFAULT_LABEL</td>
 	<td>//span[@class='custom-control-label-text' and contains(text(), '${key_facetLabel}')]</td>
 	<td></td>

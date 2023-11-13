@@ -52,7 +52,7 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 				<clay:checkbox
 					checked="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isEnabled() %>"
 					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
-					label='<%= LanguageUtil.get(request, "enable-openai-to-create-content") %>'
+					label='<%= LanguageUtil.get(request, "enable-chatgtp-to-create-content") %>'
 					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
 				/>
 			</c:when>
@@ -61,7 +61,7 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 					checked="<%= false %>"
 					disabled="<%= true %>"
 					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
-					label='<%= LanguageUtil.get(request, "enable-openai-to-create-content") %>'
+					label='<%= LanguageUtil.get(request, "enable-chatgtp-to-create-content") %>'
 					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
 				/>
 			</c:otherwise>

@@ -423,6 +423,27 @@ public class User implements Cloneable, Serializable {
 
 	protected MultiValuedAttribute[] roles;
 
+	public String[] getSchemas() {
+		return schemas;
+	}
+
+	public void setSchemas(String[] schemas) {
+		this.schemas = schemas;
+	}
+
+	public void setSchemas(
+		UnsafeSupplier<String[], Exception> schemasUnsafeSupplier) {
+
+		try {
+			schemas = schemasUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] schemas;
+
 	public String getTimezone() {
 		return timezone;
 	}

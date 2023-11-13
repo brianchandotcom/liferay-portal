@@ -82,6 +82,30 @@ public class BaseScimSerDes {
 			sb.append(String.valueOf(baseScim.getMeta()));
 		}
 
+		if (baseScim.getSchemas() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"schemas\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < baseScim.getSchemas().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(baseScim.getSchemas()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < baseScim.getSchemas().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -121,6 +145,13 @@ public class BaseScimSerDes {
 			map.put("meta", String.valueOf(baseScim.getMeta()));
 		}
 
+		if (baseScim.getSchemas() == null) {
+			map.put("schemas", null);
+		}
+		else {
+			map.put("schemas", String.valueOf(baseScim.getSchemas()));
+		}
+
 		return map;
 	}
 
@@ -155,6 +186,12 @@ public class BaseScimSerDes {
 				if (jsonParserFieldValue != null) {
 					baseScim.setMeta(
 						MetaSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "schemas")) {
+				if (jsonParserFieldValue != null) {
+					baseScim.setSchemas(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 		}

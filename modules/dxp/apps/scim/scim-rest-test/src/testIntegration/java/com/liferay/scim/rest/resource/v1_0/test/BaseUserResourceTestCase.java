@@ -480,6 +480,14 @@ public abstract class BaseUserResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("schemas", additionalAssertFieldName)) {
+				if (user.getSchemas() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("timezone", additionalAssertFieldName)) {
 				if (user.getTimezone() == null) {
 					valid = false;
@@ -801,6 +809,16 @@ public abstract class BaseUserResourceTestCase {
 
 			if (Objects.equals("roles", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(user1.getRoles(), user2.getRoles())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("schemas", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						user1.getSchemas(), user2.getSchemas())) {
+
 					return false;
 				}
 
@@ -1378,6 +1396,11 @@ public abstract class BaseUserResourceTestCase {
 		}
 
 		if (entityFieldName.equals("roles")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("schemas")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

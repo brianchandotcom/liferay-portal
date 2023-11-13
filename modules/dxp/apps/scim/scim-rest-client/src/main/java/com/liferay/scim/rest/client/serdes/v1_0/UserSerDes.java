@@ -351,6 +351,30 @@ public class UserSerDes {
 			sb.append("]");
 		}
 
+		if (user.getSchemas() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"schemas\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < user.getSchemas().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(user.getSchemas()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < user.getSchemas().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (user.getTimezone() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -578,6 +602,13 @@ public class UserSerDes {
 		}
 		else {
 			map.put("roles", String.valueOf(user.getRoles()));
+		}
+
+		if (user.getSchemas() == null) {
+			map.put("schemas", null);
+		}
+		else {
+			map.put("schemas", String.valueOf(user.getSchemas()));
 		}
 
 		if (user.getTimezone() == null) {
@@ -808,6 +839,11 @@ public class UserSerDes {
 					}
 
 					user.setRoles(rolesArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "schemas")) {
+				if (jsonParserFieldValue != null) {
+					user.setSchemas(toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "timezone")) {

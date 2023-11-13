@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
@@ -43,6 +44,7 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
@@ -142,6 +144,97 @@ public class ObjectFieldLocalServiceImpl
 			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
 			localized, name, readOnly, readOnlyConditionExpression, required,
 			state, false, objectFieldSettings);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectField addObjectRelationshipObjectField(
+			String externalReferenceCode, User user,
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, Map<Locale, String> labelMap,
+			String name, String readOnly, String readOnlyConditionExpression,
+			String relationshipType, boolean required, boolean system)
+		throws PortalException {
+
+		_validateExternalReferenceCode(
+			externalReferenceCode, 0, objectDefinition2.getCompanyId(),
+			objectDefinition2.getObjectDefinitionId());
+		_validateReadOnlyAndReadOnlyConditionExpression(
+			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP, readOnly,
+			readOnlyConditionExpression);
+		_validateRequired(
+			0, ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP, required);
+
+		ObjectField objectField = objectFieldPersistence.create(
+			counterLocalService.increment());
+
+		objectField.setExternalReferenceCode(externalReferenceCode);
+		objectField.setCompanyId(user.getCompanyId());
+		objectField.setUserId(user.getUserId());
+		objectField.setUserName(user.getFullName());
+		objectField.setListTypeDefinitionId(0);
+		objectField.setObjectDefinitionId(
+			objectDefinition2.getObjectDefinitionId());
+		objectField.setBusinessType(
+			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP);
+
+		String dbColumnName = StringBundler.concat(
+			"r_", name, "_", objectDefinition1.getPKObjectFieldName());
+
+		objectField.setDBColumnName(dbColumnName);
+
+		String dbTableName = objectDefinition2.getDBTableName();
+
+		if (objectDefinition2.isApproved()) {
+			dbTableName = objectDefinition2.getExtensionDBTableName();
+		}
+
+		objectField.setDBTableName(dbTableName);
+
+		objectField.setDBType(ObjectFieldConstants.DB_TYPE_LONG);
+		objectField.setIndexed(true);
+		objectField.setIndexedAsKeyword(false);
+		objectField.setIndexedLanguageId(null);
+		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectField.setName(dbColumnName);
+		objectField.setReadOnly(readOnly);
+		objectField.setReadOnlyConditionExpression(readOnlyConditionExpression);
+		objectField.setRelationshipType(relationshipType);
+		objectField.setRequired(required);
+		objectField.setSystem(system);
+
+		objectField = objectFieldPersistence.update(objectField);
+
+		_objectFieldSettingLocalService.addObjectFieldSetting(
+			user.getUserId(), objectField.getObjectFieldId(),
+			ObjectFieldSettingConstants.NAME_OBJECT_DEFINITION_1_SHORT_NAME,
+			objectDefinition1.getShortName());
+		_objectFieldSettingLocalService.addObjectFieldSetting(
+			user.getUserId(), objectField.getObjectFieldId(),
+			ObjectFieldSettingConstants.
+				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+			StringUtil.replaceLast(objectField.getName(), "Id", "ERC"));
+
+		objectField.setObjectFieldSettings(
+			_objectFieldSettingLocalService.getObjectFieldObjectFieldSettings(
+				objectField.getObjectFieldId()));
+
+		if (!objectDefinition2.isApproved()) {
+			return objectField;
+		}
+
+		_addObjectFieldColumn(
+			dbTableName, objectField, objectField.getDBColumnName());
+
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			_objectDefinitionLocalServiceSnapshot.get();
+
+		if (objectDefinitionLocalService != null) {
+			objectDefinitionLocalService.deployObjectDefinition(
+				objectDefinition2);
+		}
+
+		return objectField;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -783,11 +876,16 @@ public class ObjectFieldLocalServiceImpl
 					ObjectFieldConstants.DB_TYPE_LONG));
 		}
 
-		if (objectField.hasUniqueValues()) {
+		boolean unique = objectField.hasUniqueValues();
+
+		if (unique ||
+			objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
 			ObjectDBManagerUtil.createIndexMetadata(
 				_currentConnection.getConnection(
 					objectFieldPersistence.getDataSource()),
-				dbTableName, true, dbColumnNames);
+				dbTableName, unique, dbColumnNames);
 		}
 	}
 
@@ -1649,6 +1747,10 @@ public class ObjectFieldLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectFieldLocalServiceImpl.class);
 
+	private static final Snapshot<ObjectDefinitionLocalService>
+		_objectDefinitionLocalServiceSnapshot = new Snapshot<>(
+			ObjectRelationshipLocalServiceImpl.class,
+			ObjectDefinitionLocalService.class, null, true);
 	private static final Snapshot<ObjectRelationshipLocalService>
 		_objectRelationshipLocalServiceSnapshot = new Snapshot<>(
 			ObjectFieldLocalServiceImpl.class,

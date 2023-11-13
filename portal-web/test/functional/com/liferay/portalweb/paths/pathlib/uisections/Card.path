@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARD_DRAG_ICON</td>
+	<td>//div[contains(@class,'card-body')][.//*[normalize-space()='${key_card}']]//button[.//*[name()='svg'][contains(@class,'lexicon-icon-drag')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_STICKER</td>
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'sticker-overlay')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_icon}')] | //div[contains(@class,'card')][contains(.,'${key_card}')]//p[contains(@class,'card-title')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_icon}')]</td>
 	<td></td>

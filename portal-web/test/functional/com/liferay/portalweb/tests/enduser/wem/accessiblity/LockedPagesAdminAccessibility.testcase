@@ -80,4 +80,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194238. The Locked Pages admin should comply with WCAG 2.1 AA standard with the filter menu and sort menu opened."
+	@priority = 4
+	test ViewLockedPagesFilterAndOrderAccessibility {
+		task ("Given a locked content pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When filtering by Display Page Template, ordering by Name and sort is added") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+
+			ManagementBar.setFilterAndOrder(
+				filterBy = "Display Page Template",
+				orderBy = "Name");
+
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		}
+
+		task ("Then it is possible to check accessibility") {
+			AssertAccessible();
+		}
+	}
+
 }

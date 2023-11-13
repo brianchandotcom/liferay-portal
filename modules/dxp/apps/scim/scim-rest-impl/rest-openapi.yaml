@@ -15,6 +15,13 @@ components:
                     type: string
                 meta:
                     $ref: "#/components/schemas/Meta"
+                schemas:
+                    description:
+                        A multi-valued list of strings indicating the namespaces of the SCIM schemas that define the
+                        attributes present in the current JSON structure.
+                    items:
+                        type: string
+                    type: array
             type: object
         Meta:
             description:

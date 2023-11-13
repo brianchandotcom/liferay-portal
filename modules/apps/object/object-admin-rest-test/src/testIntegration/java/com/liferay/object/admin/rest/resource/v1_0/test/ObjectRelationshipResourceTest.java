@@ -119,6 +119,8 @@ public class ObjectRelationshipResourceTest
 	public void testPutObjectRelationshipByExternalReferenceCode()
 		throws Exception {
 
+		// TODO Modify REST builder because of LPS-201121
+
 		ObjectRelationship postObjectRelationship =
 			testPutObjectRelationshipByExternalReferenceCode_addObjectRelationship();
 

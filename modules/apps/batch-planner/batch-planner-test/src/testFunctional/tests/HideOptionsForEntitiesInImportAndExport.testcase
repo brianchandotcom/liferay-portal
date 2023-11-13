@@ -37,7 +37,7 @@ definition {
 		task ("Then the available Import Strategy is Add or Update Records") {
 			AssertTextEquals(
 				locator1 = "ImportExport#IMPORT_STRATEGY",
-				value1 = "Add or Update Records");
+				value1 = "Only Add New Records Add or Update Records");
 		}
 
 		task ("And Then the available Update Strategy are Update Changed Record Fields/Overwrite Records") {

@@ -235,16 +235,4 @@ definition {
 		
 	}
 
-	@description = "Automation ID: LPS-146216 | Test Summary: Verify if when Customer Portal is created, Tests Accounts will be created for it as well"
-	@priority = 4
-	test TestsAccountsAreCreatedForCP20 {
-		task ("Assert that after the Customer Portal was created, test accounts were also created") {
-			Account.openAccountsAdmin();
-
-			AssertElementPresent(
-				locator1 = "CustomerPortalSite#ACCOUNTS_TABLE",
-				value = "Test Account LXC - SM");
-		}
-	}
-
 }

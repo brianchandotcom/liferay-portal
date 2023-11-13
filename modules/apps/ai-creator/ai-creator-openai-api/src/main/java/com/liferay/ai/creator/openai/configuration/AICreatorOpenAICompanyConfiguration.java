@@ -23,13 +23,18 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AICreatorOpenAICompanyConfiguration {
 
-	@Meta.AD(
-		deflt = "true", name = "enable-openai-to-create-content",
-		required = false
-	)
-	public boolean enableOpenAIToCreateContent();
-
 	@Meta.AD(deflt = "", name = "api-key", required = false)
 	public String apiKey();
+
+	@Meta.AD(
+		deflt = "true", name = "enable-chatgtp-to-create-content",
+		required = false
+	)
+	public boolean enableChatGPTToCreateContent();
+
+	@Meta.AD(
+		deflt = "true", name = "enable-dalle-to-create-images", required = false
+	)
+	public boolean enableDALLEToCreateImages();
 
 }

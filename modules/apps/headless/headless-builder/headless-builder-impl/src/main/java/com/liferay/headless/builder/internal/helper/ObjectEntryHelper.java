@@ -54,6 +54,21 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ObjectEntryHelper.class)
 public class ObjectEntryHelper {
 
+	public ObjectEntry addObjectEntry(
+			long companyId, String objectDefinitionERC, ObjectEntry objectEntry,
+			String scopeKey)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionERC, companyId);
+
+		return _objectEntryManager.addObjectEntry(
+			_getDefaultDTOConverterContext(objectDefinition), objectDefinition,
+			objectEntry, scopeKey);
+	}
+
 	public List<ObjectEntry> getObjectEntries(
 			long companyId, String filterString, List<String> nestedFields,
 			String objectDefinitionExternalReferenceCode, String scopeKey)

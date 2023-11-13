@@ -69,5 +69,5 @@ export type TState = {
 	objectFields: ObjectField[];
 	objectView: TObjectView;
 	objectViewId: string;
-	workflowStatusJSONArray: TWorkflowStatus[];
+	workflowStatuses: TWorkflowStatus[];
 };

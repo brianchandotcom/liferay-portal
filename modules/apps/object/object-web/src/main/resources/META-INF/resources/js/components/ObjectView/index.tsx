@@ -226,7 +226,7 @@ interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	isViewOnly: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectViewId: string;
-	workflowStatusJSONArray: TWorkflowStatus[];
+	workflowStatuses: TWorkflowStatus[];
 }
 
 const CustomViewWrapper: React.FC<ICustomViewWrapperProps> = ({
@@ -234,7 +234,7 @@ const CustomViewWrapper: React.FC<ICustomViewWrapperProps> = ({
 	isViewOnly,
 	objectDefinitionExternalReferenceCode,
 	objectViewId,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }) => {
 	return (
 		<ViewContextProvider
@@ -243,7 +243,7 @@ const CustomViewWrapper: React.FC<ICustomViewWrapperProps> = ({
 				isViewOnly,
 				objectDefinitionExternalReferenceCode,
 				objectViewId,
-				workflowStatusJSONArray,
+				workflowStatuses,
 			}}
 		>
 			<CustomView />

@@ -25,7 +25,7 @@ export function FilterScreen() {
 			filterOperators,
 			objectFields,
 			objectView,
-			workflowStatusJSONArray,
+			workflowStatuses,
 		},
 		dispatch,
 	] = useViewContext();
@@ -198,7 +198,7 @@ export function FilterScreen() {
 					onClose={onClose}
 					onSave={saveFilterColumn}
 					validate={validateFilters}
-					workflowStatusJSONArray={workflowStatusJSONArray}
+					workflowStatuses={workflowStatuses}
 				/>
 			)}
 		</>

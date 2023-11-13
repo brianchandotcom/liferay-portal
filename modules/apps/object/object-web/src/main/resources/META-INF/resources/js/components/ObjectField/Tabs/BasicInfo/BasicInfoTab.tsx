@@ -46,7 +46,7 @@ interface BasicInfoTabProps {
 	setValues: (values: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 }
 
 export function BasicInfoTab({
@@ -65,7 +65,7 @@ export function BasicInfoTab({
 	setValues,
 	sidebarElements,
 	values,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: BasicInfoTabProps) {
 	const [objectDefinition, setObjectDefinition] = useState<
 		Partial<ObjectDefinition>
@@ -168,7 +168,7 @@ export function BasicInfoTab({
 						setCreationLanguageId2={setCreationLanguageId2}
 						setValues={setValues}
 						values={values}
-						workflowStatusJSONArray={workflowStatusJSONArray}
+						workflowStatuses={workflowStatuses}
 					/>
 				)}
 

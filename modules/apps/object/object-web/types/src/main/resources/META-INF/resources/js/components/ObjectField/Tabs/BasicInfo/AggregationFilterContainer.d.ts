@@ -31,7 +31,7 @@ interface AggregationFilterProps {
 	setCreationLanguageId2: (values: Liferay.Language.Locale) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 }
 export declare function AggregationFilterContainer({
 	aggregationFilters,
@@ -45,6 +45,6 @@ export declare function AggregationFilterContainer({
 	setCreationLanguageId2,
 	setValues,
 	values,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: AggregationFilterProps): JSX.Element;
 export {};

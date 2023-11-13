@@ -39,6 +39,6 @@ export declare function EditObjectFieldContent({
 	readOnly,
 	setValues,
 	values,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: EditObjectFieldContentProps): JSX.Element;
 export {};

@@ -52,7 +52,7 @@ interface AggregationFilterProps {
 	setCreationLanguageId2: (values: Liferay.Language.Locale) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 }
 
 interface CustomWindow extends Window {
@@ -73,7 +73,7 @@ export function AggregationFilterContainer({
 	setCreationLanguageId2,
 	setValues,
 	values,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: AggregationFilterProps) {
 	const [editingFilter, setEditingFilter] = useState(false);
 	const [editingObjectFieldName, setEditingObjectFieldName] = useState<
@@ -231,7 +231,7 @@ export function AggregationFilterContainer({
 
 						const workflowStatusValueList = statusFilterValues.map(
 							(statusValue) => {
-								const currentStatus = workflowStatusJSONArray.find(
+								const currentStatus = workflowStatuses.find(
 									(workflowStatus) =>
 										Number(workflowStatus.value) ===
 										statusValue
@@ -605,7 +605,7 @@ export function AggregationFilterContainer({
 					onClose={onClose}
 					onSave={handleSaveFilterColumn}
 					validate={validateFilters}
-					workflowStatusJSONArray={workflowStatusJSONArray}
+					workflowStatuses={workflowStatuses}
 				/>
 			)}
 		</>

@@ -25,13 +25,13 @@ import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
 
-export type SiteCompanyJSONArray = {
+export type Scope = {
 	items: LabelValueObject[];
 	label: string;
 };
 interface EditObjectDetailsProps {
 	backURL: string;
-	companyJSONArray: SiteCompanyJSONArray[];
+	companies: Scope[];
 	dbTableName: string;
 	externalReferenceCode: string;
 	hasPublishObjectPermission: boolean;
@@ -47,7 +47,7 @@ interface EditObjectDetailsProps {
 	pluralLabel: LocalizedValue<string>;
 	portletNamespace: string;
 	shortName: string;
-	siteJSONArray: SiteCompanyJSONArray[];
+	sites: Scope[];
 	storageTypes: LabelValueObject[];
 }
 
@@ -75,7 +75,7 @@ function setAccountRelationshipFieldMandatory(
 
 export default function EditObjectDetails({
 	backURL,
-	companyJSONArray,
+	companies,
 	dbTableName,
 	externalReferenceCode,
 	hasPublishObjectPermission,
@@ -88,7 +88,7 @@ export default function EditObjectDetails({
 	pluralLabel,
 	portletNamespace,
 	shortName,
-	siteJSONArray,
+	sites,
 	storageTypes,
 }: EditObjectDetailsProps) {
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
@@ -306,7 +306,7 @@ export default function EditObjectDetails({
 					>
 						<ClayPanel.Body>
 							<ScopeContainer
-								companyJSONArray={companyJSONArray}
+								companies={companies}
 								errors={errors}
 								hasUpdateObjectDefinitionPermission={
 									hasUpdateObjectDefinitionPermission
@@ -314,7 +314,7 @@ export default function EditObjectDetails({
 								isApproved={isApproved}
 								isRootDescendantNode={isRootDescendantNode}
 								setValues={setValues}
-								siteJSONArray={siteJSONArray}
+								sites={sites}
 								values={values}
 							/>
 						</ClayPanel.Body>

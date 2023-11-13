@@ -19,7 +19,7 @@ export interface EditObjectFieldProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
 	readOnly: boolean;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 }
 export declare const objectFieldInitialValues: Partial<ObjectField>;
 export default function EditObjectField({
@@ -35,5 +35,5 @@ export default function EditObjectField({
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
 	readOnly,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: EditObjectFieldProps): JSX.Element;

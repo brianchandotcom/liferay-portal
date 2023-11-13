@@ -64,7 +64,7 @@ interface ModalAddFilterProps {
 		setErrors,
 		value,
 	}: FilterValidation) => FilterErrors;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 }
 
 export type FilterErrors = {
@@ -125,7 +125,7 @@ export function ModalAddFilter({
 	onClose,
 	onSave,
 	validate,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: ModalAddFilterProps) {
 	const [items, setItems] = useState<MultiSelectItem[]>([]);
 
@@ -216,12 +216,12 @@ export function ModalAddFilter({
 
 				if (editingFilter) {
 					newItems = getCheckedWorkflowStatusItems(
-						workflowStatusJSONArray,
+						workflowStatuses,
 						setEditingFilterType
 					);
 				}
 				else {
-					newItems = workflowStatusJSONArray.map((workflowStatus) => {
+					newItems = workflowStatuses.map((workflowStatus) => {
 						return {
 							label: workflowStatus.label,
 							value: workflowStatus.value,
@@ -342,12 +342,7 @@ export function ModalAddFilter({
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		editingFilter,
-		setFieldValues,
-		selectedFilterBy,
-		workflowStatusJSONArray,
-	]);
+	}, [editingFilter, setFieldValues, selectedFilterBy, workflowStatuses]);
 
 	useEffect(() => {
 		if (editingFilter) {

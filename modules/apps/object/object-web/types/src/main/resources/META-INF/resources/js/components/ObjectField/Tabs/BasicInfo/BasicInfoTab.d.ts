@@ -36,7 +36,7 @@ interface BasicInfoTabProps {
 	setValues: (values: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 }
 export declare function BasicInfoTab({
 	containerWrapper: ContainerWrapper,
@@ -54,6 +54,6 @@ export declare function BasicInfoTab({
 	setValues,
 	sidebarElements,
 	values,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: BasicInfoTabProps): JSX.Element;
 export {};

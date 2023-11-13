@@ -26,7 +26,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			HashMapBuilder.<String, Object>put(
 				"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))
 			).put(
-				"companyJSONArray", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("company")
+				"companies", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("company")
 			).put(
 				"dbTableName", objectDefinition.getDBTableName()
 			).put(
@@ -52,7 +52,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			).put(
 				"shortName", objectDefinition.getShortName()
 			).put(
-				"siteJSONArray", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("site")
+				"sites", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("site")
 			).put(
 				"storageTypes", objectDefinitionsDetailsDisplayContext.getStorageTypesJSONArray()
 			).build()

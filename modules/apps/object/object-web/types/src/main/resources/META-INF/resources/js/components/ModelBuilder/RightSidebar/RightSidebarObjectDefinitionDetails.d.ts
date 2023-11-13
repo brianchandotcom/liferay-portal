@@ -5,14 +5,14 @@
 
 /// <reference types="react" />
 
-import {SiteCompanyJSONArray} from '../../ObjectDetails/EditObjectDetails';
+import {Scope} from '../../ObjectDetails/EditObjectDetails';
 import './RightSidebarObjectDefinitionDetails.scss';
 interface RightSidebarObjectDefinitionDetailsProps {
-	companyJSONArray: SiteCompanyJSONArray[];
-	siteJSONArray: SiteCompanyJSONArray[];
+	companies: Scope[];
+	sites: Scope[];
 }
 export declare function RightSidebarObjectDefinitionDetails({
-	companyJSONArray,
-	siteJSONArray,
+	companies,
+	sites,
 }: RightSidebarObjectDefinitionDetailsProps): JSX.Element;
 export {};

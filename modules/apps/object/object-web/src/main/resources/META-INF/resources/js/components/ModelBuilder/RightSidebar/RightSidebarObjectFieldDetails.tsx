@@ -46,7 +46,7 @@ export function RightSidebarObjectFieldDetails() {
 			objectWebLearnResources,
 			selectedObjectDefinitionNode,
 			selectedObjectField,
-			workflowStatusJSONArray,
+			workflowStatuses,
 		},
 		dispatch,
 	] = useObjectFolderContext();
@@ -242,7 +242,7 @@ export function RightSidebarObjectFieldDetails() {
 						}
 						setValues={setValues}
 						values={values}
-						workflowStatusJSONArray={workflowStatusJSONArray}
+						workflowStatuses={workflowStatuses}
 					/>
 				</div>
 			</div>

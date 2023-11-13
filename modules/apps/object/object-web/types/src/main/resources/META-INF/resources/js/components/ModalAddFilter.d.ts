@@ -40,7 +40,7 @@ interface ModalAddFilterProps {
 		setErrors,
 		value,
 	}: FilterValidation) => FilterErrors;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 }
 export declare type FilterErrors = {
 	endDate?: string;
@@ -88,6 +88,6 @@ export declare function ModalAddFilter({
 	onClose,
 	onSave,
 	validate,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: ModalAddFilterProps): JSX.Element;
 export {};

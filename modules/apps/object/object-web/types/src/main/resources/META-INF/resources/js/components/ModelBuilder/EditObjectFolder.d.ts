@@ -5,16 +5,16 @@
 
 /// <reference types="react" />
 
-import {SiteCompanyJSONArray} from '../ObjectDetails/EditObjectDetails';
+import {Scope} from '../ObjectDetails/EditObjectDetails';
 import './EditObjectFolder.scss';
 interface EditObjectFolder {
-	companyJSONArray: SiteCompanyJSONArray[];
+	companies: Scope[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
-	siteJSONArray: SiteCompanyJSONArray[];
+	sites: Scope[];
 }
 export default function EditObjectFolder({
-	companyJSONArray,
+	companies,
 	objectRelationshipDeletionTypes,
-	siteJSONArray,
+	sites,
 }: EditObjectFolder): JSX.Element;
 export {};

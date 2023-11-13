@@ -8,7 +8,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {FormError, SingleSelect} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {SiteCompanyJSONArray} from './EditObjectDetails';
+import {Scope} from './EditObjectDetails';
 
 const SCOPE_OPTIONS = [
 	{
@@ -22,7 +22,7 @@ const SCOPE_OPTIONS = [
 ];
 
 interface ScopeContainerProps {
-	companyJSONArray: SiteCompanyJSONArray[];
+	companies: Scope[];
 	errors: FormError<ObjectDefinition>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
@@ -30,12 +30,12 @@ interface ScopeContainerProps {
 	isRootDescendantNode: boolean;
 	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
-	siteJSONArray: SiteCompanyJSONArray[];
+	sites: Scope[];
 	values: Partial<ObjectDefinition>;
 }
 
 export function ScopeContainer({
-	companyJSONArray,
+	companies,
 	errors,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
@@ -43,7 +43,7 @@ export function ScopeContainer({
 	isRootDescendantNode,
 	onSubmit,
 	setValues,
-	siteJSONArray,
+	sites,
 	values,
 }: ScopeContainerProps) {
 	const [
@@ -52,10 +52,10 @@ export function ScopeContainer({
 	] = useState('');
 
 	const setPanelCategoryKey = (
-		siteCompanyJSONArray: SiteCompanyJSONArray[],
+		sites: Scope[],
 		panelCategoryValue: string
 	) => {
-		siteCompanyJSONArray.forEach(({items}) => {
+		sites.forEach(({items}) => {
 			const selectedPanelCategory = items.find(
 				({value}) => value === panelCategoryValue
 			);
@@ -68,11 +68,11 @@ export function ScopeContainer({
 
 	useEffect(() => {
 		setPanelCategoryKey(
-			values.scope === 'company' ? companyJSONArray : siteJSONArray,
+			values.scope === 'company' ? companies : sites,
 			values.panelCategoryKey as string
 		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.scope, companyJSONArray, siteJSONArray]);
+	}, [values.scope, companies, sites]);
 
 	return (
 		<>
@@ -115,11 +115,7 @@ export function ScopeContainer({
 				}
 				error={errors.titleObjectFieldId}
 				id="objectDetailsScopeContainer"
-				items={
-					values.scope === 'company'
-						? companyJSONArray
-						: siteJSONArray
-				}
+				items={values.scope === 'company' ? companies : sites}
 				label={Liferay.Language.get('panel-link')}
 				onSelectionChange={(value) => {
 					setValues({

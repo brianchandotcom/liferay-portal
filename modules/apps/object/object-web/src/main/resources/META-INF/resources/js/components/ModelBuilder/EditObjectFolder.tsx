@@ -6,7 +6,7 @@
 import React, {useEffect, useState} from 'react';
 import {FlowElement, useStore} from 'react-flow-renderer';
 
-import {SiteCompanyJSONArray} from '../ObjectDetails/EditObjectDetails';
+import {Scope} from '../ObjectDetails/EditObjectDetails';
 import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
 import {ModalEditObjectFolder} from '../ViewObjectDefinitions/ModalEditObjectFolder';
 import {getUpdatedModelBuilderStructurePayload} from '../ViewObjectDefinitions/objectDefinitionUtil';
@@ -22,15 +22,15 @@ import {RightSideBar} from './RightSidebar/index';
 import './EditObjectFolder.scss';
 
 interface EditObjectFolder {
-	companyJSONArray: SiteCompanyJSONArray[];
+	companies: Scope[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
-	siteJSONArray: SiteCompanyJSONArray[];
+	sites: Scope[];
 }
 
 export default function EditObjectFolder({
-	companyJSONArray,
+	companies,
 	objectRelationshipDeletionTypes,
-	siteJSONArray,
+	sites,
 }: EditObjectFolder) {
 	const [
 		{
@@ -193,8 +193,8 @@ export default function EditObjectFolder({
 
 					{rightSidebarType === 'objectDefinitionDetails' && (
 						<RightSideBar.ObjectDefinitionDetails
-							companyJSONArray={companyJSONArray}
-							siteJSONArray={siteJSONArray}
+							companies={companies}
+							sites={sites}
 						/>
 					)}
 

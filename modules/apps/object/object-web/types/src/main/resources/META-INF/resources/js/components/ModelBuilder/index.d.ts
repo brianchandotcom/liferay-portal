@@ -5,10 +5,10 @@
 
 /// <reference types="react" />
 
-import {SiteCompanyJSONArray} from '../ObjectDetails/EditObjectDetails';
+import {Scope} from '../ObjectDetails/EditObjectDetails';
 interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
-	companyJSONArray: SiteCompanyJSONArray[];
+	companies: Scope[];
 	editObjectDefinitionURL: string;
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
@@ -18,12 +18,12 @@ interface CustomObjectFolderWrapperProps {
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	objectWebLearnResources: ObjectWebLearnResources;
-	siteJSONArray: SiteCompanyJSONArray[];
-	workflowStatusJSONArray: LabelValueObject[];
+	sites: Scope[];
+	workflowStatuses: LabelValueObject[];
 }
 export default function CustomObjectFolderWrapper({
 	baseResourceURL,
-	companyJSONArray,
+	companies,
 	editObjectDefinitionURL,
 	filterOperators,
 	forbiddenChars,
@@ -33,7 +33,7 @@ export default function CustomObjectFolderWrapper({
 	objectDefinitionsStorageTypes,
 	objectRelationshipDeletionTypes,
 	objectWebLearnResources,
-	siteJSONArray,
-	workflowStatusJSONArray,
+	sites,
+	workflowStatuses,
 }: CustomObjectFolderWrapperProps): JSX.Element;
 export {};

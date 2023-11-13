@@ -30,7 +30,7 @@ export interface EditObjectFieldProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
 	readOnly: boolean;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 }
 
 export const objectFieldInitialValues: Partial<ObjectField> = {
@@ -65,7 +65,7 @@ export default function EditObjectField({
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
 	readOnly,
-	workflowStatusJSONArray,
+	workflowStatuses,
 }: EditObjectFieldProps) {
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
 		delete objectField.defaultValue;
@@ -149,7 +149,7 @@ export default function EditObjectField({
 				readOnly={readOnly}
 				setValues={setValues}
 				values={values}
-				workflowStatusJSONArray={workflowStatusJSONArray}
+				workflowStatuses={workflowStatuses}
 			/>
 		</SidePanelForm>
 	);

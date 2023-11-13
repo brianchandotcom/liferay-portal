@@ -206,7 +206,7 @@ export type TState = {
 	selectedObjectRelationship?: Edge<ObjectRelationshipEdgeData>;
 	showChangesSaved: boolean;
 	showSidebars: boolean;
-	workflowStatusJSONArray: LabelValueObject[];
+	workflowStatuses: LabelValueObject[];
 };
 
 export interface LeftSidebarItem {

@@ -1337,7 +1337,7 @@ definition {
 			else {
 				AssertTextEquals(
 					ariaLabel = "Display Page Name",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = ${pageName});
 			}
 		}
@@ -2602,7 +2602,7 @@ definition {
 				if (${displayPageTemplateType} == "Default") {
 					AssertTextEquals(
 						ariaLabel = "Display Page Name",
-						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+						locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 						value1 = ${displayPageTemplateName});
 				}
 				else {

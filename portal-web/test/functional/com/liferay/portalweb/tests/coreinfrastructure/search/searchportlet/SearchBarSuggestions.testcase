@@ -689,7 +689,7 @@ definition {
 
 		Type(
 			ariaLabel = "Text to Match",
-			locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+			locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 			value1 = "software");
 
 		PortletEntry.save();

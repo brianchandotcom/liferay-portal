@@ -57,7 +57,7 @@ definition {
 
 			AssertTextEquals(
 				ariaLabel = "Margin Left",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = "");
 
 			AssertCssValue(
@@ -70,7 +70,7 @@ definition {
 		task ("When the page creator adds a value on input field of Marging Left") {
 			Type(
 				ariaLabel = "Margin Left",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 20);
 
 			Click(
@@ -97,7 +97,7 @@ definition {
 
 			Type(
 				ariaLabel = "Padding Left",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 20);
 
 			Click(
@@ -130,7 +130,7 @@ definition {
 
 			AssertTextEquals(
 				ariaLabel = "Padding Left",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = "");
 
 			AssertCssValue(
@@ -350,7 +350,7 @@ definition {
 
 			Type(
 				ariaLabel = "Padding Top",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 4);
 
 			Click(
@@ -872,22 +872,22 @@ definition {
 			task ("View the default value is shown in Border Width, Border Radius, Opacity and Shadow text inputs") {
 				AssertTextEquals(
 					ariaLabel = "Border Width",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = 0);
 
 				AssertTextEquals(
 					ariaLabel = "Border Radius",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = 0);
 
 				AssertTextEquals(
 					ariaLabel = "Opacity",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = 100);
 
 				AssertTextEquals(
 					ariaLabel = "Shadow",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = "none");
 			}
 

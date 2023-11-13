@@ -1679,7 +1679,7 @@ definition {
 		if (isSet(opacity)) {
 			Type(
 				ariaLabel = "Opacity",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = ${opacity});
 
 			Click(
@@ -3653,7 +3653,7 @@ definition {
 			if (isSet(opacity)) {
 				Type(
 					ariaLabel = "Opacity",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = ${opacity});
 
 				Click(
@@ -3664,7 +3664,7 @@ definition {
 
 				AssertTextEquals(
 					ariaLabel = "Opacity",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = ${opacity});
 			}
 		}
@@ -4007,7 +4007,7 @@ definition {
 			if (isSet(opacity)) {
 				Type(
 					ariaLabel = "Opacity",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = ${opacity});
 
 				Click(
@@ -4018,7 +4018,7 @@ definition {
 
 				AssertTextEquals(
 					ariaLabel = "Opacity",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = ${opacity});
 			}
 		}

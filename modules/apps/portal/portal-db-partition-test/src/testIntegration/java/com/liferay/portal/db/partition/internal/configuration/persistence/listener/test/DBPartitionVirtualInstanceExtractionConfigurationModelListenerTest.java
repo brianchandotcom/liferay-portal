@@ -29,24 +29,7 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 	}
 
 	@Test
-	public void testConfigurationIsDeletedAfterDeploy() throws Exception {
-		try (AutoCloseable autoCloseable = swapCompanyLocalService(
-				(proxy, method, args) -> {
-					if (Objects.equals(method.getName(), "getCompanyByWebId")) {
-						return _companyLocalService.createCompany(
-							COMPANY_IDS[0]);
-					}
-
-					return null;
-				})) {
-
-			testConfigurationIsDeletedAfterDeploy(
-				_PID, "webId=T\"testWebId\"\n");
-		}
-	}
-
-	@Test
-	public void testExtractCompany() throws Exception {
+	public void testDeployConfiguration() throws Exception {
 		String webId = "Test" + COMPANY_IDS[0];
 
 		try (AutoCloseable autoCloseable = swapCompanyLocalService(
@@ -72,6 +55,8 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 			deployConfiguration(_PID, "webId=T\"" + webId + "\"\n");
 
 			Assert.assertTrue(_calledExtractCompany);
+
+			verifyConfigurationIsDeletedAfterDeploy(_PID);
 		}
 	}
 

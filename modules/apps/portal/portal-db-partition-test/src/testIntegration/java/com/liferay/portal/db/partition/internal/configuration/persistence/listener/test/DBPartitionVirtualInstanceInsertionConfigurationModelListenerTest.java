@@ -23,11 +23,15 @@ public class DBPartitionVirtualInstanceInsertionConfigurationModelListenerTest
 	}
 
 	@Test
-	public void testConfigurationIsDeletedAfterDeploy() throws Exception {
-		testConfigurationIsDeletedAfterDeploy(
-			"com.liferay.portal.db.partition.internal.configuration." +
-				"DBPartitionVirtualInstanceInsertionConfiguration",
-			"newWebId=T\"testNewWebId\"\nwebId=T\"testWebId\"\n");
+	public void testDeployConfiguration() throws Exception {
+		deployConfiguration(
+			_PID, "newWebId=T\"testNewWebId\"\nwebId=T\"testWebId\"\n");
+
+		verifyConfigurationIsDeletedAfterDeploy(_PID);
 	}
+
+	private static final String _PID =
+		"com.liferay.portal.db.partition.internal.configuration." +
+			"DBPartitionVirtualInstanceInsertionConfiguration";
 
 }

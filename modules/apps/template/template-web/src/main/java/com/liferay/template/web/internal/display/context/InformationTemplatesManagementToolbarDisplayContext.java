@@ -15,6 +15,7 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,7 +39,6 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.web.internal.security.permissions.resource.TemplateEntryPermission;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -188,11 +188,28 @@ public class InformationTemplatesManagementToolbarDisplayContext
 
 			if (infoItemFormVariationsProvider != null) {
 				List<InfoItemFormVariation> infoItemFormVariations =
-					new ArrayList<>(infoItemFormVariationsProvider.getInfoItemFormVariations(
-						_themeDisplay.getScopeGroupId()));
+					new ArrayList<>(
+						infoItemFormVariationsProvider.
+							getInfoItemFormVariations(
+								_themeDisplay.getScopeGroupId()));
 
 				if (infoItemFormVariations.isEmpty()) {
 					continue;
+				}
+
+				InfoPermissionProvider infoPermissionProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoPermissionProvider.class,
+						infoItemClassDetails.getClassName());
+
+				if (infoPermissionProvider != null) {
+					infoItemFormVariations = ListUtil.filter(
+						infoItemFormVariations,
+						infoItemFormVariation ->
+							infoPermissionProvider.hasViewPermission(
+								infoItemFormVariation.getKey(),
+								_themeDisplay.getScopeGroupId(),
+								_themeDisplay.getPermissionChecker()));
 				}
 
 				JSONArray itemSubtypesJSONArray =

@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-import {MultiSelectProps} from './select';
+import {MultiSelectProps} from './select.d';
 declare const MultipleSelection: ({
 	name,
 	onChange,

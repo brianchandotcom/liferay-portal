@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-import {MainProps} from './select';
+import {MainProps} from './select.d';
 declare const Main: ({
 	fixedOptions,
 	label,

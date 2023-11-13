@@ -250,6 +250,10 @@ public class DateFacetPortletSharedSearchContributor
 
 			String label = rangeJSONObject.getString("label");
 
+			if (Validator.isBlank(label)) {
+				label = rangeJSONObject.getString("range");
+			}
+
 			String range = rangeJSONObject.getString("range");
 
 			String[] rangeParts = RangeParserUtil.parserRange(range);
@@ -286,7 +290,7 @@ public class DateFacetPortletSharedSearchContributor
 			dateRangeFilterBuilder.setFieldName(fieldToAggregate);
 			dateRangeFilterBuilder.setFrom(from);
 			dateRangeFilterBuilder.setIncludeLower(true);
-			dateRangeFilterBuilder.setIncludeUpper(false);
+			dateRangeFilterBuilder.setIncludeUpper(true);
 			dateRangeFilterBuilder.setTo(to);
 
 			booleanFilter.add(

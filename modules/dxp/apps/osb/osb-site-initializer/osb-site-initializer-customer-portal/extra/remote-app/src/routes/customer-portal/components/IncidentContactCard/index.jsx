@@ -183,26 +183,6 @@ const IncidentContactCard = ({
 		openModal();
 	};
 
-	const HighPriorityContactsModal = () => {
-		return (
-			<ClayModal
-				center
-				className="high-priority-contacts-modal"
-				observer={observer}
-				onClose={closeModal}
-			>
-				<IncidentContactEditForm
-					close={closeModal}
-					hasCriticalIncidentContact={hasCriticalIncidentContact}
-					hasPrivacyBreachContact={hasPrivacyBreachContact}
-					hasSecurityBreachContact={hasSecurityBreachContact}
-					leftButton={i18n.translate('cancel')}
-					modalFilter={modalFilter}
-				/>
-			</ClayModal>
-		);
-	};
-
 	return (
 		<>
 			{hasActiveProduct &&
@@ -373,7 +353,31 @@ const IncidentContactCard = ({
 										</>
 									)}
 
-									{open && HighPriorityContactsModal()}
+									{open && (
+										<ClayModal
+											center
+											className="high-priority-contacts-modal"
+											observer={observer}
+											onClose={closeModal}
+										>
+											<IncidentContactEditForm
+												close={closeModal}
+												hasCriticalIncidentContact={
+													hasCriticalIncidentContact
+												}
+												hasPrivacyBreachContact={
+													hasPrivacyBreachContact
+												}
+												hasSecurityBreachContact={
+													hasSecurityBreachContact
+												}
+												leftButton={i18n.translate(
+													'cancel'
+												)}
+												modalFilter={modalFilter}
+											/>
+										</ClayModal>
+									)}
 								</div>
 							</div>
 						</>

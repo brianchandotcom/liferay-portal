@@ -19,7 +19,7 @@ const HighPriorityContactsInput = ({
 	setContactList,
 }) => {
 	const [sourceItems, setSourceItems] = useState([]);
-	const [loaded, setLoaded] = useState(false);
+	const loaded = sourceItems.length;
 	const [items, setItems] = useState([]);
 	const [
 		,
@@ -65,12 +65,6 @@ const HighPriorityContactsInput = ({
 		);
 		setSourceItems(teamMembers);
 	}, [userAccountsData]);
-
-	useEffect(() => {
-		if (sourceItems.length) {
-			setLoaded(true);
-		}
-	}, [sourceItems]);
 
 	return loaded ? (
 		<ClayForm>

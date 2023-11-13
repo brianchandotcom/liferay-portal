@@ -48,8 +48,10 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!_aiCreatorOpenAIConfigurationManager.isAICreatorOpenAIGroupEnabled(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+		if (!_aiCreatorOpenAIConfigurationManager.
+				isAICreatorChatGTPGroupEnabled(
+					themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId())) {
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,

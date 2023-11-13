@@ -40,12 +40,29 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 		expand="<%= true %>"
 	>
 		<clay:checkbox
-			checked="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.isEnabled() %>"
-			id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+			checked="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.isChatGTPEnabled() %>"
+			id='<%= liferayPortletResponse.getNamespace() + "enableChatGTP" %>'
 			label='<%= LanguageUtil.get(request, "enable-chatgtp-to-create-content") %>'
-			name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+			name='<%= liferayPortletResponse.getNamespace() + "enableChatGTP" %>'
 		/>
 	</clay:content-col>
 </clay:content-row>
+
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") %>'>
+	<clay:content-row
+		cssClass="c-mt-2"
+	>
+		<clay:content-col
+			expand="<%= true %>"
+		>
+			<clay:checkbox
+				checked="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.isDALLEEnabled() %>"
+				id='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+				label='<%= LanguageUtil.get(request, "enable-dalle-to-create-images") %>'
+				name='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+			/>
+		</clay:content-col>
+	</clay:content-row>
+</c:if>
 
 <%@ include file="/configuration/error_ai_creator_openai_client_exception.jspf" %>

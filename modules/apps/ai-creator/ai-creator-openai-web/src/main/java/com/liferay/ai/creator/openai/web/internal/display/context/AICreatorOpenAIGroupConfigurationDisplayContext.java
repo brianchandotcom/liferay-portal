@@ -31,9 +31,14 @@ public class AICreatorOpenAIGroupConfigurationDisplayContext
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public boolean isCompanyEnabled() throws ConfigurationException {
+	public boolean isCompanyChatGTPEnabled() throws ConfigurationException {
 		return _aiCreatorOpenAIConfigurationManager.
-			isAICreatorOpenAICompanyEnabled(_themeDisplay.getCompanyId());
+			isAICreatorChatGTPCompanyEnabled(_themeDisplay.getCompanyId());
+	}
+
+	public boolean isCompanyDALLEEnabled() throws ConfigurationException {
+		return _aiCreatorOpenAIConfigurationManager.
+			isAICreatorDALLECompanyEnabled(_themeDisplay.getCompanyId());
 	}
 
 	@Override
@@ -43,9 +48,18 @@ public class AICreatorOpenAIGroupConfigurationDisplayContext
 	}
 
 	@Override
-	protected boolean isAICreatorOpenAIEnabled() throws ConfigurationException {
+	protected boolean isAICreatorChatGTPEnabled()
+		throws ConfigurationException {
+
 		return _aiCreatorOpenAIConfigurationManager.
-			isAICreatorOpenAIGroupEnabled(
+			isAICreatorChatGTPGroupEnabled(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId());
+	}
+
+	@Override
+	protected boolean isAICreatorDALLEEnabled() throws ConfigurationException {
+		return _aiCreatorOpenAIConfigurationManager.
+			isAICreatorDALLEGroupEnabled(
 				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId());
 	}
 

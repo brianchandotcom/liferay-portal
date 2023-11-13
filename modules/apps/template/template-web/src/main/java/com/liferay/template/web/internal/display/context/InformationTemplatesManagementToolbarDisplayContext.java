@@ -187,9 +187,9 @@ public class InformationTemplatesManagementToolbarDisplayContext
 					infoItemClassDetails.getClassName());
 
 			if (infoItemFormVariationsProvider != null) {
-				Collection<InfoItemFormVariation> infoItemFormVariations =
-					infoItemFormVariationsProvider.getInfoItemFormVariations(
-						_themeDisplay.getScopeGroupId());
+				List<InfoItemFormVariation> infoItemFormVariations =
+					new ArrayList<>(infoItemFormVariationsProvider.getInfoItemFormVariations(
+						_themeDisplay.getScopeGroupId()));
 
 				if (infoItemFormVariations.isEmpty()) {
 					continue;
@@ -199,7 +199,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 					JSONFactoryUtil.createJSONArray();
 
 				infoItemFormVariations = ListUtil.sort(
-					new ArrayList<>(infoItemFormVariations),
+					infoItemFormVariations,
 					Comparator.comparing(
 						infoItemFormVariation -> infoItemFormVariation.getLabel(
 							_themeDisplay.getLocale())));

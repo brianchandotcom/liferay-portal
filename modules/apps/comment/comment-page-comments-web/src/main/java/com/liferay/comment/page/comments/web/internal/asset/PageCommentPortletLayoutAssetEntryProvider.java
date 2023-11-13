@@ -7,7 +7,7 @@ package com.liferay.comment.page.comments.web.internal.asset;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.util.PortletLayoutAssetEntryProvider;
+import com.liferay.asset.provider.PortletLayoutAssetEntryProvider;
 import com.liferay.comment.page.comments.web.internal.constants.PageCommentsPortletKeys;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.ParamUtil;

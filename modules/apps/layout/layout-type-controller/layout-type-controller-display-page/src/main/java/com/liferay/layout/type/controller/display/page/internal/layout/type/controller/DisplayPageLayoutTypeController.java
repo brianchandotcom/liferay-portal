@@ -7,8 +7,8 @@ package com.liferay.layout.type.controller.display.page.internal.layout.type.con
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.util.PortletLayoutAssetEntryProvider;
-import com.liferay.asset.util.PortletLayoutAssetEntryProviderRegistry;
+import com.liferay.asset.provider.PortletLayoutAssetEntryProvider;
+import com.liferay.asset.provider.PortletLayoutAssetEntryProviderRegistry;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;

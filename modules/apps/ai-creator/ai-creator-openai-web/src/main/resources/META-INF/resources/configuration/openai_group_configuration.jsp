@@ -9,14 +9,33 @@
 
 <%
 AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfigurationDisplayContext = (AICreatorOpenAIGroupConfigurationDisplayContext)request.getAttribute(AICreatorOpenAIGroupConfigurationDisplayContext.class.getName());
+
+boolean companyChatGTPEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyChatGTPEnabled();
+boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyDALLEEnabled();
 %>
 
 <clay:content-row>
-	<c:if test="<%= !aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyEnabled() %>">
-		<clay:alert
-			message="to-enable-openai-in-this-site,-it-must-also-be-enabled-from-instance-settings"
-		/>
-	</c:if>
+	<clay:content-col
+		expand="<%= true %>"
+	>
+		<c:choose>
+			<c:when test="<%= !companyChatGTPEnabled && !companyDALLEEnabled %>">
+				<clay:alert
+					message="to-enable-openai-in-this-site,-it-must-also-be-enabled-from-instance-settings"
+				/>
+			</c:when>
+			<c:when test="<%= !companyChatGTPEnabled && companyDALLEEnabled %>">
+				<clay:alert
+					message="to-enable-chatgpt-in-this-site,-it-must-also-be-enabled-from-instance-settings"
+				/>
+			</c:when>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") && companyChatGTPEnabled && !companyDALLEEnabled %>'>
+				<clay:alert
+					message="to-enable-dalle-in-this-site,-it-must-also-be-enabled-from-instance-settings"
+				/>
+			</c:when>
+		</c:choose>
+	</clay:content-col>
 </clay:content-row>
 
 <clay:content-row>
@@ -48,25 +67,55 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 		expand="<%= true %>"
 	>
 		<c:choose>
-			<c:when test="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyEnabled() %>">
+			<c:when test="<%= companyChatGTPEnabled %>">
 				<clay:checkbox
-					checked="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isEnabled() %>"
-					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+					checked="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isChatGTPEnabled() %>"
+					id='<%= liferayPortletResponse.getNamespace() + "enableChatGTP" %>'
 					label='<%= LanguageUtil.get(request, "enable-chatgtp-to-create-content") %>'
-					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+					name='<%= liferayPortletResponse.getNamespace() + "enableChatGTP" %>'
 				/>
 			</c:when>
 			<c:otherwise>
 				<clay:checkbox
 					checked="<%= false %>"
 					disabled="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+					id='<%= liferayPortletResponse.getNamespace() + "enableChatGTP" %>'
 					label='<%= LanguageUtil.get(request, "enable-chatgtp-to-create-content") %>'
-					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+					name='<%= liferayPortletResponse.getNamespace() + "enableChatGTP" %>'
 				/>
 			</c:otherwise>
 		</c:choose>
 	</clay:content-col>
 </clay:content-row>
+
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") %>'>
+	<clay:content-row
+		cssClass="c-mt-2"
+	>
+		<clay:content-col
+			expand="<%= true %>"
+		>
+			<c:choose>
+				<c:when test="<%= companyDALLEEnabled %>">
+					<clay:checkbox
+						checked="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isDALLEEnabled() %>"
+						id='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+						label='<%= LanguageUtil.get(request, "enable-dalle-to-create-images") %>'
+						name='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+					/>
+				</c:when>
+				<c:otherwise>
+					<clay:checkbox
+						checked="<%= false %>"
+						disabled="<%= true %>"
+						id='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+						label='<%= LanguageUtil.get(request, "enable-dalle-to-create-images") %>'
+						name='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+					/>
+				</c:otherwise>
+			</c:choose>
+		</clay:content-col>
+	</clay:content-row>
+</c:if>
 
 <%@ include file="/configuration/error_ai_creator_openai_client_exception.jspf" %>

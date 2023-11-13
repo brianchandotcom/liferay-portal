@@ -30,8 +30,6 @@
 
 <c:if test="<%= iFramePortletInstanceConfiguration.dynamicUrlEnabled() %>">
 	<aui:script use="aui-base,querystring">
-		var A = AUI();
-
 		function init() {
 			var hash = document.location.hash.replace('#', '');
 
@@ -43,7 +41,7 @@
 				hash = String(hash);
 			}
 
-			var iframe = A.one('#<portlet:namespace />iframe');
+			const iframe = document.getElementById('<portlet:namespace />iframe');
 
 			if (iframe) {
 				if (hash) {
@@ -52,17 +50,13 @@
 					var baseSrc =
 						'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 
-					if (
-						!/^https?\:\/\//.test(hash) ||
-						!A.Lang.String.startsWith(hash, baseSrc)
-					) {
-						src = A.QueryString.unescape(hash);
+					if (!/^https?\:\/\//.test(hash) || !hash.startsWith(baseSrc)) {
+						src = unescape(hash);
 					}
-
-					iframe.attr('src', baseSrc + src);
+					iframe.src = baseSrc + src;
 				}
 
-				iframe.on('load', monitorIframe);
+				iframe.addEventListener('load', monitorIframe);
 			}
 		}
 
@@ -84,7 +78,7 @@
 				'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 			var iframeSrc =
 				'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
-			var hasBaseSrc = A.Lang.String.startsWith(url, baseSrc);
+			var hasBaseSrc = url.startsWith(baseSrc);
 
 			if (hasBaseSrc) {
 				url = url.substring(baseSrc.length);
@@ -107,26 +101,14 @@
 
 			hash = hashSearch.toString();
 
-			var maximize = A.one(
-				'#p_p_id<portlet:namespace /> .portlet-maximize-icon a'
-			);
-
-			if (maximize) {
-				var maximizeUrl = maximize.attr('href');
-
-				maximizeUrl = maximizeUrl.split('#')[0];
-
-				maximize.attr('href', maximizeUrl + '#' + hash);
-			}
-
-			var restore = A.one('#p_p_id<portlet:namespace /> a.portlet-icon-back');
+			const restore = document.getElementsByClassName('portlet-icon-back')[0];
 
 			if (restore) {
-				var restoreHREF = restore.attr('href');
+				var restoreHREF = restore.getAttribute('href');
 
 				restoreHREF = restoreHREF.split('#')[0];
 
-				restore.attr('href', restoreHREF + '#' + hash);
+				restore.setAttribute('href', restoreHREF + '#' + hash);
 			}
 
 			location.hash = hash;
@@ -137,7 +119,7 @@
 </c:if>
 
 <aui:script use="aui-autosize-iframe">
-	var iframe = A.one('#<portlet:namespace />iframe');
+	const iframe = document.getElementById('<portlet:namespace />iframe');
 
 	function isNested(initial = window, parentUrls = []) {
 		var isTop = initial === initial.Liferay.Util.getTop();
@@ -157,18 +139,18 @@
 
 	if (iframe) {
 		if (!isNested()) {
-			iframe.set(
+			iframe.setAttribute(
 				'src',
 				'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>'
 			);
 		}
 
-		iframe.plug(A.Plugin.AutosizeIframe, {
-			monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>,
-		});
+		if (<%= iFramePortletInstanceConfiguration.resizeAutomatically() %>) {
+			iframe.height = document.body.scrollHeight;
+		}
 
-		iframe.on('load', () => {
-			var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
+		iframe.addEventListener('load', () => {
+			let height = iframe.getAttribute('height');
 
 			if (height == null) {
 				height =
@@ -179,9 +161,7 @@
 						'<%= HtmlUtil.escapeJS(iFramePortletInstanceConfiguration.heightMaximized()) %>';
 				}
 
-				iframe.setStyle('height', height);
-
-				iframe.autosizeiframe.set('monitorHeight', false);
+				iframe.height = height;
 			}
 		});
 	}

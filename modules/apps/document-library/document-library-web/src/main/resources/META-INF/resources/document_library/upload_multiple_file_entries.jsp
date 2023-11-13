@@ -229,7 +229,7 @@ if (portletTitleBasedNavigation) {
 										Liferay.Util.fetch('<%= uploadMultipleFileEntries %>')
 											.then((response) => response.text())
 											.then((response) => {
-												commonFileMetadataContainer.innerHTML = respose;
+												commonFileMetadataContainer.innerHTML = response;
 
 												runScriptsInElement(commonFileMetadataContainer);
 											});

@@ -212,7 +212,18 @@ function DiagramBuilder() {
 				{!isLoadingObjectFolder ? (
 					<>
 						<Controls showInteractive={false} />
-						<MiniMap />
+						<MiniMap
+							maskColor="none"
+							nodeBorderRadius={8}
+							nodeColor="#F7F8F9"
+							nodeStrokeColor="#0B5FFF"
+							nodeStrokeWidth={10}
+							style={{
+								backgroundColor: '#F7F8F9',
+								border: '4px solid #A7A9BC',
+								borderRadius: '8px',
+							}}
+						/>
 					</>
 				) : (
 					<div className="lfr-objects__model-builder-diagram-area-loading">

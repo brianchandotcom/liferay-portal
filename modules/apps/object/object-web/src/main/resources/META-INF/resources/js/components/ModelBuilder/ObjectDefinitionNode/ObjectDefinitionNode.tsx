@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	API,
+	ModalEditExternalReferenceCode,
+	getLocalizableLabel,
+	openToast,
+} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
+import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {
 	Elements,
@@ -14,16 +21,6 @@ import {
 	isNode,
 	useStore,
 } from 'react-flow-renderer';
-
-import './NodeContainer.scss';
-
-import {
-	API,
-	ModalEditExternalReferenceCode,
-	getLocalizableLabel,
-	openToast,
-} from '@liferay/object-js-components-web';
-import {createResourceURL} from 'frontend-js-web';
 
 import {formatActionURL} from '../../../utils/fds';
 import {ModalAddObjectField} from '../../ObjectField/ModalAddObjectField';
@@ -40,6 +37,9 @@ import ObjectDefinitionNodeFooter from './ObjectDefinitionNodeFooter';
 import ObjectDefinitionNodeHeader from './ObjectDefinitionNodeHeader';
 import ObjectDefinitionNodeFields from './ObjectDefinitionNodeObjectFields';
 import {RedirectToEditObjectDetailsModal} from './RedirectToEditObjectDetailsModal';
+
+import './NodeContainer.scss';
+
 const selfRelationshipHandleStyle = {
 	background: 'transparent',
 	border: '2px transparent',

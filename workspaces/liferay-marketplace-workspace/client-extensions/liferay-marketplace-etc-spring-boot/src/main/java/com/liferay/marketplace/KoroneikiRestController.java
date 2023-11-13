@@ -5,7 +5,12 @@
 
 package com.liferay.marketplace;
 
+import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
+import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
@@ -23,6 +28,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -181,13 +187,18 @@ public class KoroneikiRestController extends BaseRestController {
 		JSONArray orderItemsJSONArray = commerceOrderJSONObject.getJSONArray(
 			"orderItems");
 
-		if (orderItemsJSONArray == null) {
-			return;
-		}
-
 		_initResourceBuilders(jwt);
 
-		Order order = new Order();
+		Order order = _orderResource.getOrder(
+			commerceOrderJSONObject.getLong("id"));
+
+		if ((orderItemsJSONArray == null) ||
+			!StringUtil.equals(
+				order.getOrderTypeExternalReferenceCode(),
+				_ALLOWED_ORDER_TYPE)) {
+
+			return;
+		}
 
 		order.setOrderStatus(_COMMERCE_ORDER_STATUS_PROCESSING);
 
@@ -219,6 +230,20 @@ public class KoroneikiRestController extends BaseRestController {
 				commerceOrderJSONObject.getLong("id"), order);
 
 			return;
+		}
+
+		Account account = _accountResource.getAccount(
+			commerceOrderJSONObject.getLong("accountId"));
+
+		if (!StringUtil.startsWith(
+				account.getExternalReferenceCode(), "KOR-")) {
+
+			account.setExternalReferenceCode(
+				_postKoroneikiAccount(
+					account, jwt
+				).getKey());
+
+			_accountResource.patchAccount(account.getId(), account);
 		}
 
 		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
@@ -283,9 +308,7 @@ public class KoroneikiRestController extends BaseRestController {
 							jsonObject.getString("userName"),
 							String.valueOf(
 								commerceOrderJSONObject.getInt("userId")),
-							_accountResource.getAccount(
-								commerceOrderJSONObject.getLong("accountId")
-							).getExternalReferenceCode(),
+							account.getExternalReferenceCode(),
 							productPurchase);
 
 				successCount++;
@@ -387,7 +410,23 @@ public class KoroneikiRestController extends BaseRestController {
 			liferayDXPURL
 		).build();
 
+		_postalAddressResource = PostalAddressResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			liferayDXPURL
+		).build();
+
 		URL liferayMarketplaceKoroneikiAuthURL = new URL(_koroneikiAuthURL);
+
+		_koroneikiAccountResource =
+			com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
+				AccountResource.builder(
+				).header(
+					"API_TOKEN", _koroneikiAuthToken
+				).endpoint(
+					liferayMarketplaceKoroneikiAuthURL
+				).build();
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
@@ -456,6 +495,73 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 	}
 
+	private com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+			_postKoroneikiAccount(Account account, Jwt jwt)
+		throws Exception {
+
+		Map<String, String> customFieldsMap = new HashMap<>();
+
+		for (CustomField customField : account.getCustomFields()) {
+			customFieldsMap.put(
+				customField.getName(),
+				customField.getCustomValue(
+				).getData(
+				).toString());
+		}
+
+		Page<PostalAddress> postalAddressPage =
+			_postalAddressResource.getAccountPostalAddressesPage(
+				account.getId());
+
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress[]
+			koroneikiPostalAddresses = new
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress
+				[(int)postalAddressPage.getTotalCount()];
+
+		int i = 0;
+
+		for (PostalAddress postalAddress : postalAddressPage.getItems()) {
+			koroneikiPostalAddresses[i] =
+				com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+					PostalAddress.toDTO(postalAddress.toString());
+
+			koroneikiPostalAddresses[i].setAddressType("");
+			i++;
+		}
+
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+			koroneikiAccount =
+				new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+					Account();
+
+		koroneikiAccount.setCode(
+			account.getName(
+			).replaceAll(
+				StringPool.SPACE, StringPool.BLANK
+			).toUpperCase());
+		koroneikiAccount.setContactEmailAddress(
+			customFieldsMap.get("Contact Email"));
+		koroneikiAccount.setDateCreated(
+			Date.from(
+				ZonedDateTime.parse(
+					customFieldsMap.get("Create Date"),
+					DateTimeFormatter.ISO_DATE_TIME
+				).toInstant()));
+		koroneikiAccount.setDescription(account.getDescription());
+		koroneikiAccount.setName(account.getName());
+		koroneikiAccount.setPhoneNumber(customFieldsMap.get("Contact Phone"));
+		koroneikiAccount.setPostalAddresses(koroneikiPostalAddresses);
+		koroneikiAccount.setStatus(
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account.
+				Status.ACTIVE);
+		koroneikiAccount.setWebsite(customFieldsMap.get("Homepage URL"));
+
+		return _koroneikiAccountResource.postAccount(
+			jwt.getClaim("username"), jwt.getClaim("sub"), koroneikiAccount);
+	}
+
+	private static final String _ALLOWED_ORDER_TYPE = "CLOUDAPP";
+
 	private static final int _COMMERCE_ORDER_STATUS_COMPLETED = 0;
 
 	private static final int _COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED = 0;
@@ -470,6 +576,9 @@ public class KoroneikiRestController extends BaseRestController {
 		KoroneikiRestController.class);
 
 	private AccountResource _accountResource;
+	private
+		com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
+			AccountResource _koroneikiAccountResource;
 
 	@Value("${liferay.marketplace.koroneiki.auth.token}")
 	private String _koroneikiAuthToken;
@@ -479,6 +588,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 	private OrderItemResource _orderItemResource;
 	private OrderResource _orderResource;
+	private PostalAddressResource _postalAddressResource;
 	private ProductPurchaseResource _productPurchaseResource;
 	private ProductPurchaseViewResource _productPurchaseViewResource;
 	private ProductResource _productResource;

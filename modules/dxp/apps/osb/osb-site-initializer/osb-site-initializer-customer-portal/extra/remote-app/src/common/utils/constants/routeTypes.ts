@@ -6,4 +6,5 @@
 export const ROUTE_TYPES = {
 	onboarding: 'onboarding',
 	project: 'project',
+	request: 'request'
 };

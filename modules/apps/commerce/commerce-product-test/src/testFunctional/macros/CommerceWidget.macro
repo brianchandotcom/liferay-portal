@@ -181,6 +181,30 @@ definition {
 		Refresh();
 	}
 
+	@summary = "This macro can be used for clearing Organization Management Widget search bar."
+	macro clearOrganizationManagementWidgetSearchBar() {
+		DoubleClick(locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
+
+		KeyPress(
+			locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+			value1 = "\BACK_SPACE");
+	}
+
+	@summary = "This macro can be used for deleting entry from Organization Management Chart."
+	macro deleteEntryFromOrganizationManagement(entryName = null) {
+		CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${entryName});
+
+		Click(
+			key_nodeName = ${entryName},
+			locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+		ClickNoError(
+			key_menuItem = "Delete",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		AssertConfirm.waitForConfirmation(value1 = "${entryName} will be deleted.");
+	}
+
 	@summary = "Default summary"
 	macro deleteFilterEntry(portletName = null) {
 		Portlet.gotoPortletOptions(
@@ -210,6 +234,63 @@ definition {
 		Alert.viewSuccessMessage();
 
 		IFrame.closeFrame();
+	}
+
+	@summary = "This macro can be used for editing account information from Organization Management Chart."
+	macro editAccountFromOrganizationManagement(accountName = null, accountImage = null, newAccountName = null, accountTaxID = null, accountERC = null, accountDescription = null) {
+		if (isSet(viewAndEditAccount)) {
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${accountName});
+
+			Click(
+				key_nodeName = ${accountName},
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+			Click(
+				key_menuItem = "View",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			Click(locator1 = "Icon#SIDEBAR_HEADER_ACTION_VERTICAL_ELLIPSIS_BUTTON");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+		else {
+			Click(locator1 = "Icon#SIDEBAR_HEADER_ACTION_VERTICAL_ELLIPSIS_BUTTON");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		if (isSet(accountImage)) {
+			User.changeProfileImage(imageName = ${accountImage});
+		}
+
+		if (isSet(newAccountName)) {
+			PortletEntry.inputName(name = ${newAccountName});
+		}
+
+		if (isSet(accountTaxID)) {
+			PortletEntry.inputText(
+				fieldLabel = "Tax ID",
+				text = ${accountTaxID});
+		}
+
+		if (isSet(accountERC)) {
+			Type(
+				key_label = "External Reference Code",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = ${accountERC});
+		}
+
+		if (isSet(accountDescription)) {
+			PortletEntry.inputDescription(description = ${accountDescription});
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Default summary"
@@ -281,6 +362,21 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	@summary = "This macro can be used for removing account from Organization in Organization Management Chart."
+	macro removeAccountFromOrganization(accountName = null, organizationName = null) {
+		CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${accountName});
+
+		Click(
+			key_nodeName = ${accountName},
+			locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+		ClickNoError(
+			key_menuItem = "Remove",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		AssertConfirm(value1 = "${accountName} will be removed from ${organizationName}.");
+	}
+
 	@summary = "Default summary"
 	macro removeChildOrganization(key_nodeName = null, key_nodeChild = null) {
 		Click(locator1 = "Button#EXPAND");
@@ -302,6 +398,17 @@ definition {
 		Refresh();
 
 		Click(locator1 = "Button#EXPAND");
+	}
+
+	@summary = "This macro can be used for navigating to the Organization Management Widget entry."
+	macro searchAndGoToOrganizationManagementWidgetEntry(entryName = null) {
+		Type(
+			locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+			value1 = ${entryName});
+
+		Click(
+			key_columnOption = ${entryName},
+			locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
 	}
 
 	@summary = "Default summary"
@@ -583,6 +690,30 @@ definition {
 		}
 
 		SelectFrameTop();
+	}
+
+	@summary = "This macro can be used for asserting account information from Organization Management Chart."
+	macro viewAccountDetailsAtSidebar(accountDescription = null, accountERC = null, accountID = null, accountImage = null, accountName = null, accountTaxID = null, accountType = null) {
+		if (isSet(viewCurrentInfo)) {
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${accountName});
+
+			Click(
+				key_nodeName = ${accountName},
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+			Click(
+				key_menuItem = "View",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		var accountID = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});
+		var accountERC = JSONPRMAPI.getAccountExternalReferenceCode(accountEntryName = ${accountName});
+
+		for (var accountDetails : list "${accountImage},${accountName},${accountType},${accountTaxID},${accountERC},${accountID},${accountDescription}") {
+			AssertElementPresent(
+				key_fieldValue = ${accountDetails},
+				locator1 = "CommerceWidget#ASSERT_ACCOUNT_DETAILS_AT_SIDEBAR");
+		}
 	}
 
 }

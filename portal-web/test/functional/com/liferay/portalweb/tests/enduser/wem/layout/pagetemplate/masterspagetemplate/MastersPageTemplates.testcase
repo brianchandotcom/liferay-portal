@@ -102,22 +102,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102208. As a master pages administrator I can duplicate a masters template"
-	@priority = 5
-	test CanDuplicateMastersPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Make a copy of master page template") {
-			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
-				item = "Make a Copy",
-				masterLayoutName = "Custom Masters Page Template");
-		}
-
-		task ("Assert master page template's name") {
-			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template (Copy)");
-		}
-	}
-
 	@description = "This is for LPS-102202. Validate if the Blank page template can not be edited and deleted."
 	@priority = 5
 	test CannotDeleteBlankPageTemplate {
@@ -1400,6 +1384,28 @@ definition {
 			for (var portletName : list "Asset Publisher,Web Content Display") {
 				Portlet.viewPG(portletName = ${portletName});
 			}
+		}
+	}
+
+	@description = "This is a test for LPS-102208. As a master pages administrator I can duplicate a masters template"
+	@priority = 5
+	test DuplicateMastersPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Make a copy of master page template") {
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			MastersPageTemplates.publishMaster();
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Make a Copy",
+				masterLayoutName = "Custom Masters Page Template");
+
+			MenuItem.click(menuItem = "Master Page");
+		}
+
+		task ("Assert master page template's name") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template (Copy)");
 		}
 	}
 

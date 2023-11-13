@@ -2062,7 +2062,12 @@ definition {
 
 			Alert.viewSuccessMessageText(successMessage = "Your form was successfully submitted.");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Jack");
+			var objectEntryId = JSONObject.getObjectEntryId(
+				entryValue = "Jack",
+				fieldName = "name",
+				objectName = "PurchaseOrder");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
 
 			InputField.viewText(
 				fieldLabel = "Name",

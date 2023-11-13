@@ -844,7 +844,7 @@ definition {
 
 			Button.click(button = "Go Somewhere");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Liferay");
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

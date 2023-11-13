@@ -890,7 +890,7 @@ definition {
 				key_text = "Heading Example",
 				locator1 = "Link#ANY");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Liferay");
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
 
 			Button.click(button = "Go Somewhere");
 
@@ -1021,7 +1021,7 @@ definition {
 				key_text = "Heading Example",
 				locator1 = "Link#ANY");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Liferay");
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
 
 			Button.click(button = "Go Somewhere");
 
@@ -1157,7 +1157,7 @@ definition {
 				key_text = "Heading Example",
 				locator1 = "Link#ANY");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Google");
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId1});
 
 			Button.click(button = "Go Somewhere");
 

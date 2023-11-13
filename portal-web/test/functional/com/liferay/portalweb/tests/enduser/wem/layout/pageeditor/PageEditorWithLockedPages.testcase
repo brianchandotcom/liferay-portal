@@ -849,8 +849,6 @@ definition {
 	@description = "This is a test for LPS-194238. Sort is added to Locked Pages in alphabetical order."
 	@priority = 5
 	test ViewLockedPagesAlphabeticalOrder {
-		property custom.properties = "feature.flag.LPS-180328=true";
-
 		task ("Given two locked content pages with different names") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

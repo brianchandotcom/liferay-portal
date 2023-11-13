@@ -1141,8 +1141,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>UPLOAD_ON_WIDGET_ON_ANY_FIELD</td> xpath=(//label[text()='${key_fieldName}'][1]/following-sibling::div//descendant::span[text()='Select'])[${key_rowNumber}]
-	<td>//div[contains(@data-field-name,'${key_fieldName}')][${key_rowNumber}]//button[contains(.,'Select')] | //div[@class="ddm-field"][${key_rowNumber}]//span[text()='${key_fieldName}']/..//button[contains(.,'Select')]</td>
+	<td>UPLOAD_ON_WIDGET_ON_ANY_FIELD</td>
+	<td>xpath=(//label[text()='${key_fieldName}'][1]/following-sibling::div//descendant::span[text()='Select'])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

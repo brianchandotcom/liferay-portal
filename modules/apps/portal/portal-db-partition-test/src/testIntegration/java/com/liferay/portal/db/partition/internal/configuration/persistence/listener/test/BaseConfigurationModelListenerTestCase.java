@@ -109,11 +109,8 @@ public abstract class BaseConfigurationModelListenerTestCase
 			companyLocalService);
 	}
 
-	protected void testConfigurationIsDeletedAfterDeploy(
-			String pid, String content)
+	protected void verifyConfigurationIsDeletedAfterDeploy(String pid)
 		throws Exception {
-
-		deployConfiguration(pid, content);
 
 		Assert.assertFalse(Files.exists(_configurationPath));
 

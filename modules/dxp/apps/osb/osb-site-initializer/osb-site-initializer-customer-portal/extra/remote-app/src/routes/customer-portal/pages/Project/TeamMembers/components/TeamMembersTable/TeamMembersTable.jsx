@@ -112,17 +112,20 @@ const TeamMembersTable = ({
 		userAccounts
 	);
 
-	const getHighPriorityContactsByFilter = async (filter) => {
-		return userAccountsData?.accountUserAccountsByExternalReferenceCode?.items
-			.filter((account) =>
-				account?.selectedAccountSummary?.roleBriefs?.some(
-					(role) => role?.name === filter
+	const getHighPriorityContactsByFilter = useCallback(
+		(filter) => {
+			return userAccountsData?.accountUserAccountsByExternalReferenceCode?.items
+				.filter((account) =>
+					account?.selectedAccountSummary?.roleBriefs?.some(
+						(role) => role?.name === filter
+					)
 				)
-			)
-			.map((account) => ({
-				email: account.emailAddress,
-			}));
-	};
+				.map((account) => ({
+					email: account.emailAddress,
+				}));
+		},
+		[userAccountsData?.accountUserAccountsByExternalReferenceCode?.items]
+	);
 
 	useEffect(() => {
 		const fetchHighPriorityContacts = async () => {
@@ -148,7 +151,7 @@ const TeamMembersTable = ({
 		};
 
 		fetchHighPriorityContacts();
-	}, [userAccountsData]);
+	}, [getHighPriorityContactsByFilter, userAccountsData]);
 
 	const {
 		data: accountRolesData,

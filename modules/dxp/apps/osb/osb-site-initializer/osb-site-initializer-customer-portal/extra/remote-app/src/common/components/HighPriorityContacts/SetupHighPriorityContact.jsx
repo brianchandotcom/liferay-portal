@@ -127,6 +127,7 @@ const SetupHighPriorityContact = ({
 					?.items ?? [],
 				highPriorityContactsCategory.contactsCategory.role
 			) ?? [];
+
 		const currentCriticalIncidentContacts = highPriorityContacts.map(
 			(highPriorityContact, index) => ({
 				email: highPriorityContact?.email,
@@ -150,7 +151,6 @@ const SetupHighPriorityContact = ({
 		userAccountsData,
 		highPriorityContactsCategory,
 		setCurrentContact,
-		currentHighPriorityContacts,
 	]);
 
 	const handleMetaErrorChange = (error, inputName) => {

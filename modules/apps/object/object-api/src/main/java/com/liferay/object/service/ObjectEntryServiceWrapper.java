@@ -118,11 +118,11 @@ public class ObjectEntryServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.security.permission.resource.
 		ModelResourcePermission<com.liferay.object.model.ObjectEntry>
-				getModelResourcePermission(
-					com.liferay.object.model.ObjectEntry objectEntry)
+				getModelResourcePermission(long objectDefinitionId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectEntryService.getModelResourcePermission(objectEntry);
+		return _objectEntryService.getModelResourcePermission(
+			objectDefinitionId);
 	}
 
 	@Override

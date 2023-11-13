@@ -42,4 +42,23 @@ public interface EventHandler {
 
 	}
 
+	public class InvalidJSONException extends Exception {
+
+		public InvalidJSONException() {
+		}
+
+		public InvalidJSONException(String message) {
+			super(message);
+		}
+
+		public InvalidJSONException(String message, Throwable throwable) {
+			super(message, throwable);
+		}
+
+		public InvalidJSONException(Throwable throwable) {
+			super(throwable);
+		}
+
+	}
+
 }

@@ -157,6 +157,41 @@ definition {
 		}
 	}
 
+	@description = "LPS-193985: The upgrade report is genenerated in the default path when the directory specified is write protected"
+	@priority = 3
+	test ReportGeneratedInDefaultPathWhenWriteProtectedDirectory {
+		property custom.properties = "upgrade.report.dir=${liferay.home}/tools/portal-tools-db-upgrade-client/temp";
+		property database.auto.upgrade.enabled = "true";
+		property skip.upgrade-legacy-database = "true";
+
+		task ("Given a write protected directory") {
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "create-write-protected-directory");
+		}
+
+		task ("When upgrade is complete") {
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the upgrade report is generated in the default directory") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+			var upgradeLogContent = Log.getLogFileContent();
+
+			if (!(contains(${upgradeLogContent}, "Unable to generate the upgrade report at ${liferayHome}/tools/portal-tools-db-upgrade-client/temp"))) {
+				fail("Unable to generate upgrade report file message not present");
+			}
+
+			var upgradeReportExists = FileUtil.exists("${liferayHome}/reports/upgrade_report.info");
+
+			if (${upgradeReportExists} == "false") {
+				fail("Upgrade report is not generated in default directory: ${liferayHome}/reports");
+			}
+		}
+
+		task ("Clean up write protected directory") {
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "delete-write-protected-directory");
+		}
+	}
+
 	@description = "LPS-193985: The upgrade report will create the nonexistent directory and generate the report"
 	@priority = 3
 	test ReportGeneratedInNonExistentDirectory {

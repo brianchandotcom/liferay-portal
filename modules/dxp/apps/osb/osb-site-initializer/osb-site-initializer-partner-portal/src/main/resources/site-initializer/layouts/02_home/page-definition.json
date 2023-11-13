@@ -6,12 +6,14 @@
 					"fragment": {
 						"key": "content-welcome-banner"
 					},
-					"fragmentConfig": {},
+					"fragmentConfig": {
+					},
 					"fragmentFields": [
 						{
 							"id": "first-banner-primary-button-text",
 							"value": {
-								"fragmentLink": {},
+								"fragmentLink": {
+								},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Watch a Video Tour",
@@ -34,7 +36,8 @@
 						{
 							"id": "second-banner-primary-button-text",
 							"value": {
-								"fragmentLink": {},
+								"fragmentLink": {
+								},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Watch a Video Tour",
@@ -57,7 +60,8 @@
 						{
 							"id": "first-welcome-banner-title",
 							"value": {
-								"fragmentLink": {},
+								"fragmentLink": {
+								},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Welcome to Partner Portal",
@@ -80,7 +84,8 @@
 						{
 							"id": "first-welcome-banner-description",
 							"value": {
-								"fragmentLink": {},
+								"fragmentLink": {
+								},
 								"text": {
 									"value_i18n": {
 										"en_US": ""
@@ -91,7 +96,8 @@
 						{
 							"id": "second-welcome-banner-title",
 							"value": {
-								"fragmentLink": {},
+								"fragmentLink": {
+								},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Partner Portal",
@@ -119,7 +125,8 @@
 				},
 				"pageElements": [
 					{
-						"definition": {},
+						"definition": {
+						},
 						"pageElements": [
 							{
 								"definition": {
@@ -133,7 +140,8 @@
 										{
 											"id": "first-banner-primary-button-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Watch a Video Tour",
@@ -162,7 +170,8 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {},
+						"definition": {
+						},
 						"pageElements": [
 							{
 								"definition": {
@@ -228,7 +237,8 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {},
+						"definition": {
+						},
 						"pageElements": [
 							{
 								"definition": {
@@ -253,7 +263,8 @@
 														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										}
 									],
@@ -265,7 +276,8 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {},
+						"definition": {
+						},
 						"pageElements": [
 							{
 								"definition": {
@@ -279,7 +291,8 @@
 										{
 											"id": "first-banner-primary-button-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Watch a Video Tour",
@@ -308,7 +321,8 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {},
+						"definition": {
+						},
 						"pageElements": [
 							{
 								"definition": {
@@ -326,7 +340,8 @@
 										{
 											"id": "link",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "View Solutions Partner Guide",
@@ -420,7 +435,8 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
@@ -443,7 +459,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -461,12 +478,14 @@
 											"fragment": {
 												"key": "announcements-subscribe"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "announcements-heading",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Announcements",
@@ -583,7 +602,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -771,7 +791,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1783,11 +1804,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -1803,7 +1826,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1840,7 +1864,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1877,7 +1902,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1893,7 +1919,8 @@
 									{
 										"definition": {
 											"indexed": true,
-											"layout": {}
+											"layout": {
+											}
 										},
 										"pageElements": [
 											{
@@ -1923,7 +1950,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1960,7 +1988,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{

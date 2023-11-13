@@ -708,6 +708,25 @@ definition {
 		}
 	}
 
+	@description = "LPS-193985: Upgrade report directory can be specified with auto-upgrade"
+	@priority = 4
+	test UserCanSpecifyUpgradeReportDirectoryWithAutoUpgrade {
+		property custom.properties = "upgrade.report.dir=${liferay.home}/logs";
+		property database.auto.upgrade.enabled = "true";
+		property skip.start.app.server = "false";
+		property skip.upgrade-legacy-database = "true";
+
+		task ("Then the upgrade report is generated in the specified directory") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var upgradeReportExists = FileUtil.exists("${liferayHome}/logs/upgrade_report.info");
+
+			if (${upgradeReportExists} == "false") {
+				fail("Upgrade report is not generated in specified directory: ${liferayHome}/logs");
+			}
+		}
+	}
+
 	@description = "LPS-158743: Upgrade report trace line is generated in the console"
 	@priority = 3
 	test UserNotifiedWhereToFindUpgradeReportAfterAutoUpgrade {

@@ -49,6 +49,8 @@ public interface ObjectRelationship
 
 			};
 
+	public boolean compareType(String type);
+
 	public boolean isAllowedObjectRelationshipType(String type);
 
 	public boolean isEdgeCandidate()

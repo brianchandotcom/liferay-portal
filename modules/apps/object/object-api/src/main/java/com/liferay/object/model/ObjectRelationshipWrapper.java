@@ -197,6 +197,11 @@ public class ObjectRelationshipWrapper
 	}
 
 	@Override
+	public boolean compareType(String type) {
+		return model.compareType(type);
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
 	}

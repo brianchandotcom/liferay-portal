@@ -785,14 +785,13 @@ public class CompanyLocalServiceTest {
 
 		try {
 			_companyLocalService.extractCompany(1L);
+
+			Assert.fail("Should throw UnsupportedOperationException");
 		}
 		catch (Exception exception) {
-			if (exception instanceof UnsupportedOperationException) {
-				return;
-			}
+			Assert.assertTrue(
+				exception instanceof UnsupportedOperationException);
 		}
-
-		Assert.fail("Should throw UnsupportedOperationException");
 	}
 
 	@Test
@@ -800,26 +799,19 @@ public class CompanyLocalServiceTest {
 		try {
 			_companyLocalService.extractCompany(
 				PortalInstances.getDefaultCompanyId());
+
+			Assert.fail("Should throw an exception");
 		}
 		catch (Exception exception) {
 			if (DBPartition.isPartitionEnabled()) {
-				if (!(exception instanceof RequiredCompanyException)) {
-					Assert.fail("Should throw RequiredCompanyException");
-				}
-
-				return;
+				Assert.assertTrue(
+					exception instanceof RequiredCompanyException);
 			}
-
-			if (!DBPartition.isPartitionEnabled()) {
-				if (!(exception instanceof UnsupportedOperationException)) {
-					Assert.fail("Should throw UnsupportedOperationException");
-				}
-
-				return;
+			else {
+				Assert.assertTrue(
+					exception instanceof UnsupportedOperationException);
 			}
 		}
-
-		Assert.fail("Should throw Exception");
 	}
 
 	@Test

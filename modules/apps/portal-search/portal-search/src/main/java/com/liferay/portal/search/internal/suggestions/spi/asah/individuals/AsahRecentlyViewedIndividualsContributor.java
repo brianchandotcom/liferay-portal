@@ -5,13 +5,17 @@
 
 package com.liferay.portal.search.internal.suggestions.spi.asah.individuals;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.search.internal.util.SearchUtil;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
-import com.liferay.portal.search.result.SearchResultAssetView;
 import com.liferay.portal.search.spi.suggestions.SuggestionsContributor;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConstants;
@@ -19,7 +23,6 @@ import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConsta
 import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
@@ -57,11 +60,28 @@ public class AsahRecentlyViewedIndividualsContributor
 		String url = itemJSONObject.getString("url");
 
 		if (url.endsWith("/search")) {
-			return _searchResultAssetView.getSearchResultViewURL(
-				_liferayPortletRequest, _liferayPortletResponse,
-				_contentTypeToClassNameMap.get(
-					itemJSONObject.getString("contentType")),
-				itemJSONObject.getLong("assetId"), true, url);
+			try {
+				String entryClassName = _contentTypeToClassNameMap.get(
+					itemJSONObject.getString("contentType"));
+
+				AssetRendererFactory<?> assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(entryClassName);
+
+				if (assetRendererFactory == null) {
+					return null;
+				}
+
+				long entryClassPK = itemJSONObject.getLong("assetId");
+
+				return SearchUtil.getAssetURLView(
+					assetRendererFactory.getAssetRenderer(entryClassPK),
+					assetRendererFactory, entryClassName, entryClassPK,
+					_liferayPortletRequest, _liferayPortletResponse);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 		}
 
 		return url;
@@ -70,6 +90,9 @@ public class AsahRecentlyViewedIndividualsContributor
 	protected String getText(JSONObject itemJSONObject) {
 		return itemJSONObject.getString("assetTitle");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AsahRecentlyViewedIndividualsContributor.class);
 
 	private static final HashMap<String, String> _contentTypeToClassNameMap =
 		HashMapBuilder.put(
@@ -85,8 +108,5 @@ public class AsahRecentlyViewedIndividualsContributor
 
 	private LiferayPortletRequest _liferayPortletRequest;
 	private LiferayPortletResponse _liferayPortletResponse;
-
-	@Reference
-	private SearchResultAssetView _searchResultAssetView;
 
 }

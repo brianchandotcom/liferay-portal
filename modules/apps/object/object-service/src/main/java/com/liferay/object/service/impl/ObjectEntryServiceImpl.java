@@ -342,11 +342,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			getModelResourcePermission(objectEntry.getObjectDefinitionId());
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			user);
-
 		return modelResourcePermission.contains(
-			permissionChecker, objectEntryId, actionId);
+			_permissionCheckerFactory.create(user), objectEntryId, actionId);
 	}
 
 	@Override

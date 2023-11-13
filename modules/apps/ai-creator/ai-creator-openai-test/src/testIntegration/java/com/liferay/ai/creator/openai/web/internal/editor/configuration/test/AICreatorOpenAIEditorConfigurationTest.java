@@ -60,16 +60,20 @@ public class AICreatorOpenAIEditorConfigurationTest {
 		_originalAPIKey =
 			_aiCreatorOpenAIConfigurationManager.
 				getAICreatorOpenAICompanyAPIKey(_group.getCompanyId());
-		_originalEnabled =
+		_originalChatGTPEnabled =
 			_aiCreatorOpenAIConfigurationManager.
-				isAICreatorOpenAICompanyEnabled(_group.getCompanyId());
+				isAICreatorChatGTPCompanyEnabled(_group.getCompanyId());
+		_originalDALLEEnabled =
+			_aiCreatorOpenAIConfigurationManager.isAICreatorDALLECompanyEnabled(
+				_group.getCompanyId());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				_group.getCompanyId(), _originalAPIKey, _originalEnabled);
+				_group.getCompanyId(), _originalAPIKey, _originalChatGTPEnabled,
+				_originalDALLEEnabled);
 
 		_groupLocalService.deleteGroup(_group);
 	}
@@ -80,11 +84,12 @@ public class AICreatorOpenAIEditorConfigurationTest {
 
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				_group.getCompanyId(), RandomTestUtil.randomString(), true);
+				_group.getCompanyId(), RandomTestUtil.randomString(), true,
+				true);
 
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAIGroupConfiguration(
-				_group.getGroupId(), StringPool.BLANK, true);
+				_group.getGroupId(), StringPool.BLANK, true, true);
 
 		_assertEditorConfigurationConfigJSONObject(
 			true, true, JournalPortletKeys.JOURNAL);
@@ -96,10 +101,10 @@ public class AICreatorOpenAIEditorConfigurationTest {
 
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				_group.getCompanyId(), StringPool.BLANK, true);
+				_group.getCompanyId(), StringPool.BLANK, true, true);
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAIGroupConfiguration(
-				_group.getGroupId(), RandomTestUtil.randomString(), true);
+				_group.getGroupId(), RandomTestUtil.randomString(), true, true);
 
 		_assertEditorConfigurationConfigJSONObject(
 			true, true, JournalPortletKeys.JOURNAL);
@@ -111,10 +116,11 @@ public class AICreatorOpenAIEditorConfigurationTest {
 
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				_group.getCompanyId(), RandomTestUtil.randomString(), true);
+				_group.getCompanyId(), RandomTestUtil.randomString(), true,
+				true);
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAIGroupConfiguration(
-				_group.getGroupId(), RandomTestUtil.randomString(), true);
+				_group.getGroupId(), RandomTestUtil.randomString(), true, true);
 
 		_assertEditorConfigurationConfigJSONObject(
 			false, false, RandomTestUtil.randomString());
@@ -126,10 +132,10 @@ public class AICreatorOpenAIEditorConfigurationTest {
 
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				_group.getCompanyId(), StringPool.BLANK, true);
+				_group.getCompanyId(), StringPool.BLANK, true, true);
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAIGroupConfiguration(
-				_group.getGroupId(), StringPool.BLANK, true);
+				_group.getGroupId(), StringPool.BLANK, true, true);
 
 		_assertEditorConfigurationConfigJSONObject(
 			false, true, JournalPortletKeys.JOURNAL);
@@ -141,10 +147,11 @@ public class AICreatorOpenAIEditorConfigurationTest {
 
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				_group.getCompanyId(), StringPool.BLANK, false);
+				_group.getCompanyId(), StringPool.BLANK, false, false);
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAIGroupConfiguration(
-				_group.getGroupId(), RandomTestUtil.randomString(), true);
+				_group.getGroupId(), RandomTestUtil.randomString(), true,
+				false);
 
 		_assertEditorConfigurationConfigJSONObject(
 			false, false, JournalPortletKeys.JOURNAL);
@@ -156,10 +163,12 @@ public class AICreatorOpenAIEditorConfigurationTest {
 
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				_group.getCompanyId(), RandomTestUtil.randomString(), true);
+				_group.getCompanyId(), RandomTestUtil.randomString(), true,
+				true);
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAIGroupConfiguration(
-				_group.getGroupId(), RandomTestUtil.randomString(), false);
+				_group.getGroupId(), RandomTestUtil.randomString(), false,
+				false);
 
 		_assertEditorConfigurationConfigJSONObject(
 			false, false, JournalPortletKeys.JOURNAL);
@@ -275,7 +284,8 @@ public class AICreatorOpenAIEditorConfigurationTest {
 	private GroupLocalService _groupLocalService;
 
 	private String _originalAPIKey;
-	private boolean _originalEnabled;
+	private boolean _originalChatGTPEnabled;
+	private boolean _originalDALLEEnabled;
 
 	@Inject
 	private Portal _portal;

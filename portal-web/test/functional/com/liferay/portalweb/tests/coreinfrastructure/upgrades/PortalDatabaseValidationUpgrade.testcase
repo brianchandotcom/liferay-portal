@@ -18,17 +18,8 @@ definition {
 		property skip.start.app.server = "true";
 		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 
-		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
-		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
-
 		task ("Given the user is using the latest 7413 portal version") {
-			AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
-
-			Portlet.startServer(keepOsGiState = "true");
-
-			AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
-
-			Navigator.openSpecificURL(url = "http://localhost:8080");
+			Upgrade.startReleasedBundle();
 		}
 
 		task ("And a partitioned is present") {
@@ -41,11 +32,7 @@ definition {
 		}
 
 		task ("And the server is upgraded to a new version") {
-			Portlet.shutdownServer();
-
-			AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
-
-			Portlet.startServer(deleteLiferayHome = "false");
+			Upgrade.restoreOriginalBundleAndUpgrade();
 
 			User.firstLoginPG(
 				password = "test",

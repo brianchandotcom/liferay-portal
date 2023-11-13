@@ -15,17 +15,14 @@ definition {
 	property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 	property testray.main.component.name = "Upgrades Search";
 
+	setUp {
+		Upgrade.startReleasedBundle();
+	}
+
 	@ignore = "true"
 	@priority = 5
 	test ViewSearchPortletsConfiguration {
 		property portal.suite.search.engine = "elasticsearch7,solr";
-
-		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
-		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
-
-		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
-
-		Portlet.startServer(keepOsGiState = "true");
 
 		User.firstLoginUI(
 			password = "test",
@@ -56,11 +53,7 @@ definition {
 			displayFrequencies = "disable",
 			portletName = "Type Facet");
 
-		Portlet.shutdownServer();
-
-		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
-
-		Portlet.startServer(deleteLiferayHome = "false");
+		Upgrade.restoreOriginalBundleAndUpgrade();
 
 		TestUtils.hardRefresh();
 
@@ -132,13 +125,6 @@ definition {
 	@priority = 5
 	test ViewSXPBlueprintsAndElements {
 		property portal.suite.search.engine = "elasticsearch7";
-
-		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
-		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
-
-		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
-
-		Portlet.startServer(keepOsGiState = "true");
 
 		User.firstLoginUI(
 			password = "test",
@@ -390,13 +376,7 @@ definition {
 
 		PortletEntry.save();
 
-		Portlet.shutdownServer();
-
-		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Navigator.openSpecificURL(url = "http://localhost:8080");
+		Upgrade.restoreOriginalBundleAndUpgrade();
 
 		TestUtils.hardRefresh();
 

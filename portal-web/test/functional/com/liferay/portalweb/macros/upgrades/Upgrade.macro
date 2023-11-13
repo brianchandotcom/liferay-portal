@@ -1,0 +1,28 @@
+definition {
+
+	@summary = "Restore and start original bundle with auto upgrade enabled"
+	macro restoreOriginalBundleAndUpgrade() {
+		Portlet.shutdownServer();
+
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+	}
+
+	@summary = "Backup original bundle, configure and start latest released bundle test enviroment"
+	macro startReleasedBundle() {
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+	}
+
+}

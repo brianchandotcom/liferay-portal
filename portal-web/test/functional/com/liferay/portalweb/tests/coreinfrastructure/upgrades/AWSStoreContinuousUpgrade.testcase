@@ -15,20 +15,13 @@ definition {
 	property test.run.type = "single";
 	property testray.main.component.name = "Database Upgrade Framework";
 
+	setUp {
+		Upgrade.startReleasedBundle();
+	}
+
 	@ignore = "true"
 	@priority = 4
 	test AutoUpgradeFromLatest7413Update {
-		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
-		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
-
-		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
-
-		Portlet.startServer(keepOsGiState = "true");
-
-		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
-
-		Navigator.openSpecificURL(url = "http://localhost:8080");
-
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://localhost:8080",
@@ -59,13 +52,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		Portlet.shutdownServer();
-
-		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Navigator.openSpecificURL(url = "http://localhost:8080");
+		Upgrade.restoreOriginalBundleAndUpgrade();
 
 		User.firstLoginUI(
 			password = "test",

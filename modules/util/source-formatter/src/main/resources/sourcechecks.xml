@@ -1635,10 +1635,6 @@
 			<category name="Upgrade" />
 			<description name="CookieKeys class was replaced by CookiesManagerUtil and CookieConstants" />
 		</check>
-		<check name="UpgradeJavaCookieUtilCheck">
-			<category name="Upgrade" />
-			<description name="Replace CookieUtilCheck.get by CookiesManagerUtil.getCookieValue and reorder parameters" />
-		</check>
 		<check name="UpgradeJavaFacetedSearcherCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search` method call." />

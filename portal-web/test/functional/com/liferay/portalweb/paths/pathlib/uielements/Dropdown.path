@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMBOBOX_WITH_LABEL</td>
+	<td>//label[normalize-space()='${key_fieldLabel}']//following-sibling::div//button[@role='combobox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_SUBHEADER</td>
 	<td>//div[contains(@class,'dropdown-menu')]//li[contains(@class,'dropdown-subheader')][normalize-space() = '${subHeader}']</td>
 	<td></td>

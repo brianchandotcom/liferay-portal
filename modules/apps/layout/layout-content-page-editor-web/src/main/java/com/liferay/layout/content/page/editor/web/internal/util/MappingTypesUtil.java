@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Collection;
-import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
@@ -60,8 +59,7 @@ public class MappingTypesUtil {
 					"subtypes",
 					_getMappingFormVariationsJSONArray(
 						infoItemClassDetails, infoItemServiceRegistry,
-						themeDisplay.getScopeGroupId(),
-						themeDisplay.getLocale())
+						themeDisplay)
 				).put(
 					"value",
 					String.valueOf(
@@ -75,8 +73,8 @@ public class MappingTypesUtil {
 
 	private static JSONArray _getMappingFormVariationsJSONArray(
 		InfoItemClassDetails infoItemClassDetails,
-		InfoItemServiceRegistry infoItemServiceRegistry, long groupId,
-		Locale locale) {
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		ThemeDisplay themeDisplay) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -90,19 +88,40 @@ public class MappingTypesUtil {
 		}
 
 		Collection<InfoItemFormVariation> infoItemFormVariations =
-			infoItemFormVariationsProvider.getInfoItemFormVariations(groupId);
+			infoItemFormVariationsProvider.getInfoItemFormVariations(
+				themeDisplay.getScopeGroupId());
+
+		InfoPermissionProvider infoPermissionProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoPermissionProvider.class,
+				infoItemClassDetails.getClassName());
 
 		for (InfoItemFormVariation infoItemFormVariation :
 				infoItemFormVariations) {
 
 			jsonArray.put(
 				JSONUtil.put(
+					"isRestricted",
+					() -> {
+						if ((infoPermissionProvider == null) ||
+							infoPermissionProvider.hasViewPermission(
+								infoItemFormVariation.getKey(),
+								themeDisplay.getScopeGroupId(),
+								themeDisplay.getPermissionChecker())) {
+
+							return false;
+						}
+
+						return true;
+					}
+				).put(
 					"label",
 					() -> {
 						InfoLocalizedValue<String> labelInfoLocalizedValue =
 							infoItemFormVariation.getLabelInfoLocalizedValue();
 
-						return labelInfoLocalizedValue.getValue(locale);
+						return labelInfoLocalizedValue.getValue(
+							themeDisplay.getLocale());
 					}
 				).put(
 					"value", String.valueOf(infoItemFormVariation.getKey())

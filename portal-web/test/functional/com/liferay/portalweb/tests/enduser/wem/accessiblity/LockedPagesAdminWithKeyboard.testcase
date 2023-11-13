@@ -23,104 +23,125 @@ definition {
 
 	@description = "This is a test for LPS-194238. Filter and sort menus can be navigated via keyboard."
 	@priority = 4
-	test CanFilterAndSortViaKeyboard {
-		task ("Given two locked content pages with different names") {
+	test FilterAndSortViaKeyboard {
+		var baseURL = PropsUtil.get("portal.url");
+
+		task ("Given two locked pages") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "A Test Page Name",
+				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "A Test Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "B Test Page Name",
-				type = "content");
+			Open.openInTheNewTab(value1 = "${baseURL}/group/test-site-name/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
 
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "B Test Page Name",
-				siteName = "Test Site Name");
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Button");
+				fragmentName = "Heading");
 		}
 
-		task ("When filtering by name and sort is added via Keyboard") {
-			var baseURL = PropsUtil.get("portal.url");
-
+		task ("When navigate to the Locked Pages admin in a new tab") {
 			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Locked Pages");
-
-			KeyPress(
-				key_text = "Filter and Order",
-				locator1 = "Button#ANY",
-				value1 = "\TAB");
-
-			KeyPress(
-				key_text = "Filter and Order",
-				locator1 = "Button#ANY",
-				value1 = "\ENTER");
-
-			KeyPress(
-				key_menuItem = "Content Page",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\DOWN");
-
-			KeyPress(
-				key_menuItem = "Content Page",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\ENTER");
-
-			KeyPress(
-				key_text = "Filter and Order",
-				locator1 = "Button#ANY",
-				value1 = "\TAB");
-
-			KeyPress(
-				key_text = "Filter and Order",
-				locator1 = "Button#ANY",
-				value1 = "\ENTER");
-
-			KeyPress(
-				key_menuItem = "Name",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\DOWN");
-
-			KeyPress(
-				key_menuItem = "Name",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\ENTER");
-
-			KeyPress(
-				key_text = "order-list-down",
-				locator1 = "Icon#ANY",
-				value1 = "\TAB");
-
-			KeyPress(
-				key_text = "order-list-down",
-				locator1 = "Icon#ANY",
-				value1 = "\ENTER");
 		}
 
-		task ("Then can check that it is in alphabetical order") {
+		task ("Then could filter and sort via keyboard") {
+			KeyPress(
+				ariaLabel = "Select All Items on the Page",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
+				value1 = "\TAB");
+
+			KeyPress(
+				ariaLabel = "Filter and Order",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Collection Page",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "Content Page",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "Test Page Name");
+
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "404 Error Utility Page");
+
+			KeyPress(
+				ariaLabel = "Filter and Order",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Collection Page",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\UP");
+
+			KeyPress(
+				key_menuItem = "All",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				ariaLabel = "Filter and Order",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Last Autosave",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "Name",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
 			AssertElementPresent(
 				index = 1,
-				key_tableEntry = "A Test Page Name",
+				key_tableEntry = "Test Page Name",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			AssertElementPresent(
 				index = 2,
-				key_tableEntry = "B Test Page Name",
+				key_tableEntry = "404 Error Utility Page",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+
+			KeyPress(
+				ariaLabel = "Filter and Order",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "order-list-down",
+				locator1 = "Icon#ANY",
+				value1 = "\ENTER");
+
+			AssertElementPresent(
+				index = 1,
+				key_tableEntry = "404 Error Utility Page",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+
+			AssertElementPresent(
+				index = 2,
+				key_tableEntry = "Test Page Name",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 		}
 	}

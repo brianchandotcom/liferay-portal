@@ -16,3 +16,28 @@
 .react-flow__edges {
 	z-index: 3 !important;
 }
+
+@mixin responsiveReactFlowControlPosition(
+	$bottom,
+	$leftHidden,
+	$leftNotHidden,
+	$maxWidth
+) {
+	@media (max-width: #{$maxWidth}) {
+		.lfr__object-model-builder-controls {
+			&-sidebars-hidden {
+				bottom: #{$bottom} !important;
+				left: #{$leftHidden} !important;
+			}
+
+			&-sidebars-not-hidden {
+				bottom: #{$bottom} !important;
+				left: #{$leftNotHidden} !important;
+			}
+		}
+	}
+}
+
+@include responsiveReactFlowControlPosition(9.5%, 98.8%, 98.5%, 3840px);
+@include responsiveReactFlowControlPosition(15%, 98.2%, 97.5%, 2560px);
+@include responsiveReactFlowControlPosition(21%, 97.8%, 96.5%, 1920px);

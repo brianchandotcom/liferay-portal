@@ -4,6 +4,7 @@
  */
 
 import {API} from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import React, {useCallback, useState} from 'react';
 import ReactFlow, {
 	Background,
@@ -45,6 +46,7 @@ function DiagramBuilder() {
 			isLoadingObjectFolder,
 			selectedObjectFolder,
 			showChangesSaved,
+			showSidebars,
 		},
 		dispatch,
 	] = useObjectFolderContext();
@@ -211,7 +213,14 @@ function DiagramBuilder() {
 
 				{!isLoadingObjectFolder ? (
 					<>
-						<Controls showInteractive={false} />
+						<Controls
+							className={classNames({
+								'lfr__object-model-builder-controls-sidebars-hidden': !showSidebars,
+								'lfr__object-model-builder-controls-sidebars-not-hidden': showSidebars,
+							})}
+							showInteractive={false}
+						/>
+
 						<MiniMap
 							maskColor="none"
 							nodeBorderRadius={8}

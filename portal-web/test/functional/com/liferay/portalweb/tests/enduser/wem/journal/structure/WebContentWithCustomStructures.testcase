@@ -1855,9 +1855,7 @@ definition {
 				structureName = "WC Structure Name");
 
 			for (var fieldName : list "Select from List,Color,Geolocation") {
-				DataEngine.addField(
-					fieldFieldLabel = ${fieldName},
-					fieldName = ${fieldName});
+				DataEngine.addField(fieldName = ${fieldName});
 
 				DataEngine.toggleFieldRepeatable(fieldFieldLabel = ${fieldName});
 			}

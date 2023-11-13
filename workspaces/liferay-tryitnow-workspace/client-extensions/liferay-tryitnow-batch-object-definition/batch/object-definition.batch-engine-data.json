@@ -34,7 +34,8 @@
 						"en_US": "Create Date"
 					},
 					"name": "createDate",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "true",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -52,7 +53,8 @@
 						"en_US": "Creator"
 					},
 					"name": "creator",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "true",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -70,7 +72,8 @@
 						"en_US": "Done"
 					},
 					"name": "done",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -88,7 +91,8 @@
 						"en_US": "External Reference Code"
 					},
 					"name": "externalReferenceCode",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -106,7 +110,8 @@
 						"en_US": "ID"
 					},
 					"name": "id",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "true",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -124,7 +129,8 @@
 						"en_US": "Modified Date"
 					},
 					"name": "modifiedDate",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "true",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -142,7 +148,8 @@
 						"en_US": "Status"
 					},
 					"name": "status",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "true",
 					"readOnlyConditionExpression": "",
 					"required": false,

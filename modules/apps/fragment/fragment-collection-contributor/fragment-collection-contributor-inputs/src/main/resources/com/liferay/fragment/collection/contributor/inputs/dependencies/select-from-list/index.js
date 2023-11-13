@@ -58,7 +58,7 @@ if (input.value) {
 		(option) => option.value === input.value
 	);
 
-	lastSearchQuery = selectedOption.label;
+	lastSearchQuery = selectedOption.label.toLowerCase();
 	valueInputElement.value = selectedOption.label;
 
 	const selectedOptionElement = optionListElement.querySelector(

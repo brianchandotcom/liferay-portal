@@ -111,6 +111,8 @@ class WebBrowser extends React.Component {
 				</div>
 			);
 		}
+
+		return null;
 	}
 
 	render() {

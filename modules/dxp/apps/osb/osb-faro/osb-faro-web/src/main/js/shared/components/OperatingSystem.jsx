@@ -107,6 +107,8 @@ class OperatingSystem extends React.Component {
 				</div>
 			);
 		}
+
+		return null;
 	}
 
 	render() {

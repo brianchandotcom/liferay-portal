@@ -75,6 +75,7 @@ public class ScimUserUtil {
 
 		scimUser.setFirstName(scimName.getGivenName());
 
+		scimUser.setId(user.getId());
 		scimUser.setJobTitle(user.getTitle());
 		scimUser.setLastName(scimName.getFamilyName());
 		scimUser.setLocale(locale);

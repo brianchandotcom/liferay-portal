@@ -86,7 +86,7 @@ public class RangeFacetImpl extends RangeFacet implements Facet {
 
 			rangeFilterBuilder.setFrom(from);
 			rangeFilterBuilder.setIncludeLower(true);
-			rangeFilterBuilder.setIncludeUpper(false);
+			rangeFilterBuilder.setIncludeUpper(true);
 			rangeFilterBuilder.setTo(to);
 
 			booleanFilter.add(

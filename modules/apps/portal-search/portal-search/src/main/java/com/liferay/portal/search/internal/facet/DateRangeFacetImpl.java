@@ -86,7 +86,7 @@ public class DateRangeFacetImpl extends DateRangeFacet implements Facet {
 
 			dateRangeFilterBuilder.setFrom(from);
 			dateRangeFilterBuilder.setIncludeLower(true);
-			dateRangeFilterBuilder.setIncludeUpper(false);
+			dateRangeFilterBuilder.setIncludeUpper(true);
 			dateRangeFilterBuilder.setTo(to);
 
 			booleanFilter.add(

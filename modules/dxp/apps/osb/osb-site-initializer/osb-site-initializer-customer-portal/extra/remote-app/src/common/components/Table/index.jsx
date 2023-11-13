@@ -118,7 +118,7 @@ const Table = ({
 									<div className="d-flex">
 										{column.header.name}
 
-										{hasSorting && (
+										{hasSorting && column.filterIdentifier && (
 											<FilterIcon
 												columnName={column.filterIdentifier}
 												handleSortChange={handleSortChange}

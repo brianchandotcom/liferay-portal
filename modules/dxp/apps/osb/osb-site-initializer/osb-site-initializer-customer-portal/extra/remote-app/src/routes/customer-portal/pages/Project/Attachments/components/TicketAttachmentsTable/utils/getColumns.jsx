@@ -65,24 +65,19 @@ const getInitialColumns = () => [
 				'h6 text-neutral-10 font-weight-bold table-cell-expand-small',
 		},
 	},
+	{
+		accessor: 'options',
+		align: 'right',
+		bodyClass: 'border-0',
+		header: {
+			name: '',
+			styles: 'border-bottom bg-transparent',
+		},
+	}
 ];
 
-const optionColumn = {
-	accessor: 'options',
-	align: 'right',
-	bodyClass: 'border-0',
-	header: {
-		name: '',
-		styles: 'border-bottom bg-transparent',
-	},
-};
-
-export function getColumns(hasAccountAdministrator, handleConfigChange) {
-	const columns = getInitialColumns(handleConfigChange);
-
-	if (hasAccountAdministrator) {
-		return [...columns, optionColumn];
-	}
+export function getColumns() {
+	const columns = getInitialColumns();
 
 	return columns;
 }

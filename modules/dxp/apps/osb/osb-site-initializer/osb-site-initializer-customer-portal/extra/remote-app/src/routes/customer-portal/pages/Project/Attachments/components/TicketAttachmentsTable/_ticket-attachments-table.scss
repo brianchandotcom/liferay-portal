@@ -29,3 +29,27 @@
 		color: #6B6C7E;
 	}
 }
+
+.dropdown-menu {
+	button.dropdown-item  {
+		padding: 0.75rem;
+
+		&:hover:not(.disabled) {
+			.lexicon-icon-download, .lexicon-icon-trash {
+				opacity: 1;
+			}
+		}
+	}
+
+	ul.list-unstyled {
+		margin-bottom: 0;
+		padding: 0.5rem;
+	}
+
+	.lexicon-icon-download, .lexicon-icon-trash {
+		height: 1rem;
+		margin-right: 0.5rem;
+		opacity: 0.5;
+		width: 1rem;
+	}
+}

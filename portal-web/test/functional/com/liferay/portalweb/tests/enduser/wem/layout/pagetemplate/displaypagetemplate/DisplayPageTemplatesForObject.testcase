@@ -679,8 +679,6 @@ definition {
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Apple");
 
-			PortletEntry.save();
-
 			Navigator.gotoBack();
 
 			ObjectPortlet.viewEntry(entry = "Apple");

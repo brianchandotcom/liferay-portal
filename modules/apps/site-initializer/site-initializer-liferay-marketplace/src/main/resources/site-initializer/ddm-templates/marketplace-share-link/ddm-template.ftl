@@ -4,7 +4,7 @@
 	<svg class="link-arrow" style="margin-left:auto;" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="arrow" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="4" width="6" height="8"><path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"></path></mask><g mask="url(#arrow)"><path fill="#858c94" d="M0 0h16v16H0z"></path></g></svg>
 </a>
 
-<script ${nonceAttribute} type="">
+<script type="">
 	var target = document.querySelector('[href="#copy-share-link"]');
 
 	function copyToClipboard(text) {

@@ -17,4 +17,11 @@ public interface InfoPermissionProvider<T> {
 
 	public boolean hasViewPermission(PermissionChecker permissionChecker);
 
+	public default boolean hasViewPermission(
+		String formVariationKey, long groupId,
+		PermissionChecker permissionChecker) {
+
+		return true;
+	}
+
 }

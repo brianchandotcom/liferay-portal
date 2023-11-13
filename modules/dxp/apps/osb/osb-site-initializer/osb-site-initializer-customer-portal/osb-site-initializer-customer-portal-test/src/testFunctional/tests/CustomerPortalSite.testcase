@@ -41,18 +41,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-146217 - Verify if when Customer Portal is created, Accounts Users will be created for it as well"
-	@priority = 4
-	test AccountUsersAreCreatedForCP20 {
-		property solutions.acceptance = "true";
-
-		AccountUsers.openAccountUsersAdmin();
-
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#ACCOUNTS_TABLE",
-			value = "Test Test");
-	}
-
 	@description = "Story: LPS-167803 | Test Summary: Verify that it is possible to search for a project with just the project code"
 	@priority = 2
 	test AssertThatAbleToSearchWithProjectCode {

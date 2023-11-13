@@ -227,7 +227,12 @@ definition {
 	macro createAPISchema(objectDefinitionName = null, name = null) {
 		Variables.assertDefined(parameterList = "${name},${objectDefinitionName}");
 
-		Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+		if (isSet(addByPlus)) {
+			Click(locator1 = "Button#PLUS");
+		}
+		else {
+			Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+		}
 
 		Type(
 			locator1 = "TextInput#NAME",

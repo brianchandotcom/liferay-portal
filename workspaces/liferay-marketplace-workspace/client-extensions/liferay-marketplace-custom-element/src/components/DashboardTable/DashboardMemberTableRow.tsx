@@ -25,7 +25,7 @@ export function DashboardMemberTableRow({
 	onSelectedMemberChange,
 }: DashboardMemberTableRowProps) {
 	const {email, image, name, role} = item;
-	const [{gravatarAPI}, _] = useAppContext();
+	const [{gravatarAPI}] = useAppContext();
 	const isInvitedMember = role.includes('Invited Member');
 
 	return (

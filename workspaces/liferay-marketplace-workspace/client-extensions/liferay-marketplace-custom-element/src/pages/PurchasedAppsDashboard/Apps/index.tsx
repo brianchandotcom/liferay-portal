@@ -6,13 +6,9 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useOutletContext} from 'react-router-dom';
 
-import appsIcon from '../../../assets/icons/apps_fill_icon.svg';
-import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
-import {PurchasedAppsDashboardTableRow} from '../../../components/DashboardTable/PurchasedAppsDashboardTableRow';
+import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
-import {DashboardPage} from '../../DashBoardPage/DashboardPage';
-import {PurchasedAppProps} from '../PurchasedAppsDashboardOutlet';
-import {tableHeaders} from '../PurchasedDashboardPageUtil';
+import PurchasedAppsTable from './components/PurchasedAppsTable';
 
 const Apps = () => {
 	const {page, purchasedAppTable, setPage} = useOutletContext<any>();
@@ -28,24 +24,7 @@ const Apps = () => {
 				window.location.href = getSiteURL();
 			}}
 		>
-			<DashboardTable<PurchasedAppProps>
-				emptyStateMessage={{
-					description1:
-						'Purchase and install new apps and they will show up here.',
-					description2: 'Click on “Add Apps” to start.',
-					title: 'No Apps Yet',
-				}}
-				icon={appsIcon}
-				items={purchasedAppTable.items}
-				tableHeaders={tableHeaders}
-			>
-				{(item) => (
-					<PurchasedAppsDashboardTableRow
-						item={item}
-						key={item.name}
-					/>
-				)}
-			</DashboardTable>
+			<PurchasedAppsTable items={purchasedAppTable.items ?? []} />
 
 			{!!purchasedAppTable.items.length && (
 				<ClayPaginationBarWithBasicItems

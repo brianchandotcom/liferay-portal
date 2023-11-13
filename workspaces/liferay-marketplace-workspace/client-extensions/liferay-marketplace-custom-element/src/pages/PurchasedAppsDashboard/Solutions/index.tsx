@@ -6,9 +6,9 @@
 import {useOutletContext} from 'react-router-dom';
 
 import solutionsIcon from '../../../assets/icons/analytics_icon.svg';
+import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import {DashboardPage} from '../../DashBoardPage/DashboardPage';
 import {usePurchasedOrders} from '../usePurchasedOrders';
 
 const Solutions = () => {

@@ -6,6 +6,7 @@ import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {DownloadReportButton} from './DownloadReportButton';
 import {sub} from 'shared/util/lang';
+import {toLocale} from 'shared/util/numbers';
 import {useDispatch} from 'react-redux';
 import {useDownloadCSV} from './utils';
 
@@ -56,9 +57,14 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 
 						<ClayModal.Body>
 							<p>
-								{Liferay.Language.get(
-									'this-list-will-be-downloaded-respecting-the-current-ordering,-filter-and-search-results.-are-you-sure-you-want-to-download-the-csv-file'
-								)}
+								{
+									sub(
+										Liferay.Language.get(
+											'this-list-will-be-downloaded-respecting-the-current-ordering,-filter-and-search-results.-the-maximum-number-of-entries-supported-per-export-is-x.-are-you-sure-you-want-to-download-the-csv-file'
+										),
+										[toLocale(10000)]
+									) as string
+								}
 							</p>
 						</ClayModal.Body>
 

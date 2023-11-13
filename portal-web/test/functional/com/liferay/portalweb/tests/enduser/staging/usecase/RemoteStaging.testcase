@@ -236,7 +236,7 @@ definition {
 			validateErrorMessage = "An unexpected error occurred with the publish process. Please check your portal and publishing configuration.");
 	}
 
-	@description = "This is a use case for LPS-190015, TC3. Canceling the multi publishing of several webcontents to remote site, stops them process properly and no webcontnts are published."
+	@description = "This is a use case for LPS-190015, TC6. Canceling the multi publishing of several webcontents to remote site, stops them process properly and no webcontnts are published."
 	@priority = 3
 	test CanceledMultiPublishToRemoteDoesNotPublishAnyWebContent {
 		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPS-165481=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
@@ -540,7 +540,7 @@ definition {
 			publicationTitle = "sumCheck");
 	}
 
-	@description = "This is a use case for LPS-190015, TC2. Publishing several webcontents from the first page of wcs by multi publish option to remote site."
+	@description = "This is a use case for LPS-190015, TC5. Publishing several webcontents from the first page of wcs by multi publish option to remote site."
 	@priority = 3
 	test PublishMoreWebContentsToRemoteWithMultiPublishOption {
 		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPS-165481=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";

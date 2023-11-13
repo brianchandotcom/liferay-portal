@@ -1,0 +1,209 @@
+{
+	"actions": {
+		"createBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+			"method": "POST"
+		}
+	},
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": true,
+			"enableObjectEntryHistory": true,
+			"externalReferenceCode": "M2H8_PROGRESS_TRACKER",
+			"label": {
+				"en_US": "M2H8 Progress Tracker"
+			},
+			"name": "M2H8ProgressTracker",
+			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Done"
+					},
+					"name": "done",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Step Number"
+					},
+					"name": "stepNumber",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Create Date"
+					},
+					"name": "createDate",
+					"objectFieldSettings": [
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Author"
+					},
+					"name": "creator",
+					"objectFieldSettings": [
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "External Reference Code"
+					},
+					"name": "externalReferenceCode",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "ID"
+					},
+					"name": "id",
+					"objectFieldSettings": [
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Modified Date"
+					},
+					"name": "modifiedDate",
+					"objectFieldSettings": [
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Status"
+					},
+					"name": "status",
+					"objectFieldSettings": [
+					],
+					"readOnly": "true",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "applications_menu.applications.content",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "M2H8 Progress Trackers"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/m2h8progresstrackers",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "stepNumber"
+		}
+	]
+}

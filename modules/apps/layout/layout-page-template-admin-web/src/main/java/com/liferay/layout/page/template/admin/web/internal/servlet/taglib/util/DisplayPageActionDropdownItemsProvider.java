@@ -68,8 +68,9 @@ public class DisplayPageActionDropdownItemsProvider {
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderResponse = renderResponse;
 
+		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			layoutPageTemplateEntry.getPlid());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-
 		_infoItemServiceRegistry =
 			(InfoItemServiceRegistry)renderRequest.getAttribute(
 				InfoItemServiceRegistry.class.getName());
@@ -82,9 +83,6 @@ public class DisplayPageActionDropdownItemsProvider {
 					LayoutPageTemplateAdminWebConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
-			layoutPageTemplateEntry.getPlid());
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -93,7 +91,7 @@ public class DisplayPageActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
 				ActionKeys.UPDATE);
 
-		int usagesCount =
+		int count =
 			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntriesCount(
 				_layoutPageTemplateEntry.getClassNameId(),
 				_layoutPageTemplateEntry.getClassTypeId(),
@@ -105,7 +103,7 @@ public class DisplayPageActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> hasUpdatePermission,
-						_getEditDisplayPageActionUnsafeConsumer(usagesCount)
+						_getEditDisplayPageActionUnsafeConsumer(count)
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -116,7 +114,7 @@ public class DisplayPageActionDropdownItemsProvider {
 						() ->
 							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
 							hasUpdatePermission,
-						_getChangeContentTypeActionUnsafeConsumer(usagesCount)
+						_getChangeContentTypeActionUnsafeConsumer(count)
 					).add(
 						() -> hasUpdatePermission,
 						_getUpdateLayoutPageTemplateEntryPreviewActionUnsafeConsumer()
@@ -141,7 +139,7 @@ public class DisplayPageActionDropdownItemsProvider {
 						_getRenameDisplayPageActionUnsafeConsumer()
 					).add(
 						_getViewUsagesDisplayPageActionUnsafeConsumer(
-							usagesCount)
+							count)
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -192,12 +190,12 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getChangeContentTypeActionUnsafeConsumer(int usagesCount) {
+		_getChangeContentTypeActionUnsafeConsumer(int count) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "changeContentType");
 
-			if (usagesCount > 0) {
+			if (count > 0) {
 				dropdownItem.putData("assetType", _getTypeLabel());
 				dropdownItem.putData("viewUsagesURL", _getViewUsagesURL());
 			}
@@ -417,7 +415,7 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getEditDisplayPageActionUnsafeConsumer(int usagesCount) {
+		_getEditDisplayPageActionUnsafeConsumer(int count) {
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
@@ -428,7 +426,7 @@ public class DisplayPageActionDropdownItemsProvider {
 				"p_l_back_url_title", portletDisplay.getPortletDisplayName(),
 				"p_l_mode", Constants.EDIT);
 
-			if (!_existsMappedContentType && (usagesCount > 0)) {
+			if (!_existsMappedContentType && (count > 0)) {
 				dropdownItem.setDisabled(true);
 			}
 			else if (!_existsMappedContentType) {
@@ -666,10 +664,10 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getViewUsagesDisplayPageActionUnsafeConsumer(int usagesCount) {
+		_getViewUsagesDisplayPageActionUnsafeConsumer(int count) {
 
 		return dropdownItem -> {
-			dropdownItem.setDisabled(usagesCount == 0);
+			dropdownItem.setDisabled(count == 0);
 			dropdownItem.setHref(_getViewUsagesURL());
 			dropdownItem.setIcon("list-ul");
 			dropdownItem.setLabel(

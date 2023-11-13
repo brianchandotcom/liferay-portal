@@ -30,7 +30,7 @@ public class FacetBucketUtil {
 			String value = field.getValue();
 
 			if (Validator.isNotNull(lower) && (lower.compareTo(value) <= 0) &&
-				Validator.isNotNull(upper) && (value.compareTo(upper) < 0)) {
+				Validator.isNotNull(upper) && (value.compareTo(upper) <= 0)) {
 
 				return true;
 			}

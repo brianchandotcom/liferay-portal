@@ -53,14 +53,20 @@ public class FacetBucketUtilTest {
 
 		Facet facet = new RangeFacet(null);
 
+		Assert.assertFalse(
+			FacetBucketUtil.isFieldInBucket(field, "[001 TO 006]", facet));
+		Assert.assertFalse(
+			FacetBucketUtil.isFieldInBucket(field, "[008 TO 999]", facet));
+		Assert.assertFalse(
+			FacetBucketUtil.isFieldInBucket(field, "undefined", facet));
 		Assert.assertTrue(
 			FacetBucketUtil.isFieldInBucket(field, "[001 TO 999]", facet));
 		Assert.assertTrue(
-			FacetBucketUtil.isFieldInBucket(field, "[007 TO 999]", facet));
-		Assert.assertFalse(
 			FacetBucketUtil.isFieldInBucket(field, "[001 TO 007]", facet));
-		Assert.assertFalse(
-			FacetBucketUtil.isFieldInBucket(field, "undefined", facet));
+		Assert.assertTrue(
+			FacetBucketUtil.isFieldInBucket(field, "[007 TO 007]", facet));
+		Assert.assertTrue(
+			FacetBucketUtil.isFieldInBucket(field, "[007 TO 999]", facet));
 	}
 
 	@Test

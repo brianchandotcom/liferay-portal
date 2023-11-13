@@ -181,7 +181,12 @@ public class LayoutPageTemplateEntryModelListener
 					layout.getGroupId(),
 					String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
-			if (infoItemFormVariation == null) {
+			if ((infoItemFormVariation == null) ||
+				((infoPermissionProvider != null) &&
+				 !infoPermissionProvider.hasViewPermission(
+					 infoItemFormVariation.getKey(), layout.getGroupId(),
+					 PermissionThreadLocal.getPermissionChecker()))) {
+
 				return Collections.emptyList();
 			}
 		}

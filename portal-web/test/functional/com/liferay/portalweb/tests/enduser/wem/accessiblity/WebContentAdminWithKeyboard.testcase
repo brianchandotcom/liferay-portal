@@ -7,10 +7,6 @@ definition {
 	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "Web Content Administration";
 
-	static var randomSiteName = StringUtil.randomString(8);
-
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
-
 	setUp {
 		task ("Set up virtual instance") {
 			TestCase.setUpPortalInstance();
@@ -21,7 +17,7 @@ definition {
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${randomSiteName});
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 	}
 
@@ -31,22 +27,22 @@ definition {
 		task ("Given a web content and a folder with a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Over the Years");
 
 			JSONWebcontent.addFolder(
 				folderName = "WC Folder Name",
-				groupName = ${randomSiteName});
+				groupName = "Test Site Name");
 
 			JSONWebcontent.addWebContent(
 				content = "After many years I understood",
 				folderName = "WC Folder Name",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
 		task ("When searching for a term on the web content admin page") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "Test Site Name");
 
 			Search.searchCP(searchTerm = "Years");
 		}
@@ -68,7 +64,7 @@ definition {
 		}
 
 		task ("When searching for a term on the web content admin page") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "Test Site Name");
 
 			Search.searchCP(searchTerm = "Years");
 		}

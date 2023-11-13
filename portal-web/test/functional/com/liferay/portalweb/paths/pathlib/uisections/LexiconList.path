@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_ENTRY_BREADCRUMB_ITEM</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//ol[contains(@class,'breadcrumb')]//li//a[contains(.,'${key_breadcrumbName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_ENTRY_CHECKBOX</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//input[@type='checkbox']</td>
 	<td></td>

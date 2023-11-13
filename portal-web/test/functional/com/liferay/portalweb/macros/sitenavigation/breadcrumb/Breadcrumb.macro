@@ -55,6 +55,21 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro gotoEntry(breadcrumbName = null) {
+		Click(
+			key_breadcrumbName = ${breadcrumbName},
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+
+		if (isSet(folderWebContentTitle)) {
+			AssertVisible(
+				key_rowEntry = ${folderWebContentTitle},
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+
+		Breadcrumb.viewActiveEntry(breadcrumbName = ${breadcrumbName});
+	}
+
+	@summary = "Default summary"
 	macro saveDisplayPreview() {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

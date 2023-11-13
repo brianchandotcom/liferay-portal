@@ -1144,13 +1144,20 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Item Test 1");
 
-		ObjectAdmin.changePicklistFieldEntry(
-			entrySelected = "Item Test 1",
-			newPicklistOption = "Item Test 2");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Item Test 1",
+			labelName = "Field Picklist",
+			optionName = "Item Test 2");
 
-		ObjectPortlet.assertEntryDetailsValueSelected(entrySelected = "Item Test 2");
+		AssertElementPresent(
+			key_currentOption = "Item Test 2",
+			key_labelName = "Field Picklist",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
-		ObjectPortlet.assertEntryDetailsNotPresent(entryNotSelected = "Item Test 1");
+		AssertElementNotPresent(
+			key_currentOption = "Item Test 1",
+			key_labelName = "Field Picklist",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a String entry on layout"
@@ -2107,10 +2114,9 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Item Test 1");
 
 		AssertElementPresent(
-			key_entryLabel = "Field Picklist",
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
-
-		ObjectPortlet.assertEntryDetailsValueSelected(entrySelected = "Item Test 1");
+			key_currentOption = "Item Test 1",
+			key_labelName = "Field Picklist",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to view a String entry and label on layout"

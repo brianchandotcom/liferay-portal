@@ -294,9 +294,10 @@ definition {
 				fieldName = "customFieldDate",
 				fieldValue = "06/15/2023");
 
-			ObjectAdmin.changePicklistFieldEntry(
-				entrySelected = "Picklist Item 1",
-				newPicklistOption = "Picklist Item 2");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Picklist Item 1",
+				labelName = "Custom Field Picklist",
+				optionName = "Picklist Item 2");
 
 			Type(
 				locator1 = "CKEditor#BODY_FIELD_IFRAME",

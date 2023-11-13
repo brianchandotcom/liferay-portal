@@ -2270,9 +2270,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 59");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 59");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -3501,9 +3509,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 85");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 85");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -6585,13 +6601,14 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
-
-		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
 		AssertElementNotPresent(
-			key_label = "Custom Object 140",
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+			key_optionName = "Custom Object 140",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Page Item Selector when inactivated"
@@ -7582,13 +7599,14 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
-
-		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
 		AssertElementPresent(
-			key_label = "Custom Object 156",
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+			key_optionName = "Custom Object 156",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Item Selector when reactivated"
@@ -9182,9 +9200,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 178");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 178");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 

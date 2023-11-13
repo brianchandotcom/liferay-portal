@@ -1801,7 +1801,16 @@ definition {
 
 		ObjectCustomViews.addNewDefaultSort();
 
-		ObjectCustomViews.searchColumnsOnModalDefaultSort(columnName = "Author");
+		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+		Type(
+			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
+			value1 = ${columnName});
+
+		AssertElementPresent(
+			key_currentOption = "Author",
+			key_labelName = "Columns",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to Default Sort"

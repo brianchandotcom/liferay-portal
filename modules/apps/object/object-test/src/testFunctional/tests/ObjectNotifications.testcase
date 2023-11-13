@@ -276,7 +276,8 @@ definition {
 
 			ObjectNotifications.configureUserNotificationTemplate(
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-				name = "Notification Template",
+				indexRecipient = 2,
+				name = "User Notification Template",
 				recipientType = "User",
 				subject = "Subject content",
 				userName = "Test");
@@ -810,6 +811,8 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject178781");
 
 			ObjectPortlet.deleteEntry(entry = "Entry Test");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Then the email is received correctly on the email server") {

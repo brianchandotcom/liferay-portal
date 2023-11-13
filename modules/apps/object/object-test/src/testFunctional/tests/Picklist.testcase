@@ -135,8 +135,9 @@ definition {
 			FormFields.viewRequiredAsterisk();
 
 			AssertElementPresent(
-				key_selectField = "Picklist Item Test",
-				locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
+				key_currentOption = "Picklist Item Test",
+				key_labelName = "Field Picklist",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			PortletEntry.save();
 		}
@@ -294,8 +295,9 @@ definition {
 			FormFields.viewRequiredAsterisk();
 
 			AssertElementPresent(
-				key_selectField = "Picklist Item Test 2",
-				locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
+				key_currentOption = "Picklist Item Test 2",
+				key_labelName = "Field Picklist",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			PortletEntry.save();
 		}
@@ -790,9 +792,17 @@ definition {
 		task ("Mapped the Form with Custom Object") {
 			PopulateObjectFormsConfiguration.openFormSettings();
 
-			PopulateObjectFormsConfiguration.selectObject(label = "Objeto");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Default",
+				labelName = "Select a Storage Type",
+				optionName = "Object");
 
-			PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 147730");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "No Workflow",
+				labelName = "Select a Workflow",
+				optionName = "Custom Object 147730");
+
+			Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 		}
 
 		task ("Add field type and select object field") {
@@ -874,7 +884,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject298");
 
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Entry Test");
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+			currentOption = "Escolha uma Opção",
+			labelName = "Field Picklist",
+			picklistOption = "Teste de entrada");
 
 		User.openUsersAdmin();
 

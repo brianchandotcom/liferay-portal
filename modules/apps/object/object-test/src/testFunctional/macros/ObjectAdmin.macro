@@ -361,9 +361,10 @@ definition {
 	macro addObjectPicklistFieldEntryViaUI(picklistOption = null, saveName = null) {
 		LexiconEntry.gotoAdd();
 
-		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
-
-		MenuItem.clickNoError(menuItem = ${picklistOption});
+		ObjectAdmin.selectDropdownItem(
+			currentOption = ${currentOption},
+			labelName = ${labelName},
+			optionName = ${picklistOption});
 
 		if (IsElementPresent(key_text = ${saveName}, locator1 = "Button#ANY")) {
 			Click(

@@ -47,9 +47,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 303");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 303");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -80,9 +88,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 304");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 304");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -111,9 +127,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 305");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 305");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Numeric");
 
@@ -159,9 +183,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 306");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 306");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Date");
 
@@ -221,9 +253,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 307");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 307");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Date");
 
@@ -281,9 +321,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 308");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 308");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -327,9 +375,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 309");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 309");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Date");
 
@@ -378,9 +434,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 310");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 310");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -425,9 +489,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 312");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 312");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -462,9 +534,17 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Default",
+			labelName = "Select a Storage Type",
+			optionName = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 313");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "No Workflow",
+			labelName = "Select a Workflow",
+			optionName = "Custom Object 313");
+
+		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Text");
 

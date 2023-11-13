@@ -160,9 +160,10 @@ definition {
 
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
 
-			ObjectAdmin.changePicklistFieldEntry(
-				entrySelected = "Choose an Option",
-				newPicklistOption = "Open");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Choose an Option",
+				labelName = "Custom Text Field",
+				optionName = "Open");
 
 			PortletEntry.save();
 		}
@@ -172,9 +173,10 @@ definition {
 
 			ObjectPortlet.viewEntryDetails(entry = "Open");
 
-			ObjectAdmin.changePicklistFieldEntry(
-				entrySelected = "Open",
-				newPicklistOption = "In Progress");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Open",
+				labelName = "Custom Text Field",
+				optionName = "In Progress");
 
 			PortletEntry.save();
 		}
@@ -895,9 +897,10 @@ definition {
 
 			ObjectPortlet.viewEntryDetails(entry = "Open");
 
-			ObjectAdmin.changePicklistFieldEntry(
-				entrySelected = "Open",
-				newPicklistOption = "In Progress");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Open",
+				labelName = "Custom Picklist Field",
+				optionName = "In Progress");
 
 			PortletEntry.save();
 

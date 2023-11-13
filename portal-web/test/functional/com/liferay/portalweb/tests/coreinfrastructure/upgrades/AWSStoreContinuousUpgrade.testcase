@@ -54,11 +54,6 @@ definition {
 
 		Upgrade.restoreOriginalBundleAndUpgrade();
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:8080",
-			userEmailAddress = "test@liferay.com");
-
 		AntCommands.runCommand("build-test-s3-store.xml", "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");

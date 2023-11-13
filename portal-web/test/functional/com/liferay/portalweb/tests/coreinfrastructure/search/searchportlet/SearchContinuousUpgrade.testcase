@@ -57,26 +57,6 @@ definition {
 
 		TestUtils.hardRefresh();
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:8080",
-			userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		Click(
-			key_navItem = "Index Actions",
-			locator1 = "NavBar#NAV_ITEM_LINK");
-
-		SearchAdministration.startReindex(action = "All Search Indexes");
-
-		SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
-
-		Navigator.openSpecificURL(url = "http://localhost:8080");
-
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		Portlet.gotoPortletOptions(
@@ -379,24 +359,6 @@ definition {
 		Upgrade.restoreOriginalBundleAndUpgrade();
 
 		TestUtils.hardRefresh();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:8080",
-			userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		Click(
-			key_navItem = "Index Actions",
-			locator1 = "NavBar#NAV_ITEM_LINK");
-
-		SearchAdministration.startReindex(action = "All Search Indexes");
-
-		SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Search Experiences",

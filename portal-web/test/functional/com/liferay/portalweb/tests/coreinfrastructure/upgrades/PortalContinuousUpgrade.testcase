@@ -50,11 +50,6 @@ definition {
 			id = "image-square",
 			image = "tree-png");
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:8080",
-			userEmailAddress = "test@liferay.com");
-
 		WebContentNavigator.openWebContentAdmin(
 			baseURL = "http://localhost:8080",
 			siteURLKey = "guest");

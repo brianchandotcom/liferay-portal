@@ -6,10 +6,8 @@
 package com.liferay.portal.search.internal.suggestions.spi;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -17,21 +15,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.internal.util.SearchUtil;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -44,17 +38,10 @@ import com.liferay.portal.search.suggestions.SuggestionBuilder;
 import com.liferay.portal.search.suggestions.SuggestionBuilderFactory;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilderFactory;
-import com.liferay.portal.search.web.constants.SearchResultsPortletKeys;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.MutableRenderParameters;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -117,70 +104,6 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 		}
 
 		return false;
-	}
-
-	private String _getAssetURL(
-		AssetRenderer<?> assetRenderer,
-		AssetRendererFactory<?> assetRendererFactory, String entryClassName,
-		long entryClassPK, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		try {
-			PortletURL viewContentURL =
-				PortletURLBuilder.createLiferayPortletURL(
-					liferayPortletResponse,
-					SearchResultsPortletKeys.SEARCH_RESULTS,
-					PortletRequest.RENDER_PHASE
-				).setRedirect(
-					_portal.getCurrentURL(liferayPortletRequest)
-				).setPortletMode(
-					PortletMode.VIEW
-				).setWindowState(
-					WindowState.MAXIMIZED
-				).buildPortletURL();
-
-			MutableRenderParameters mutableRenderParameters =
-				viewContentURL.getRenderParameters();
-
-			mutableRenderParameters.setValue("mvcPath", "/view_content.jsp");
-
-			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				entryClassName, entryClassPK);
-
-			mutableRenderParameters.setValue(
-				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-
-			mutableRenderParameters.setValue(
-				"type", assetRendererFactory.getType());
-
-			String viewURL = null;
-
-			if (assetRenderer != null) {
-				viewURL = assetRenderer.getURLViewInContext(
-					liferayPortletRequest, liferayPortletResponse,
-					viewContentURL.toString());
-			}
-
-			if (Validator.isNull(viewURL)) {
-				viewURL = viewContentURL.toString();
-			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			return HttpComponentsUtil.setParameter(
-				viewURL, "p_l_back_url", themeDisplay.getURLCurrent());
-		}
-		catch (Exception exception) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to get view URL for class ", entryClassName,
-					" with primary key ", entryClassPK),
-				exception);
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private int _getCharacterThreshold(Map<String, Object> attributes) {
@@ -261,7 +184,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 						liferayPortletRequest, liferayPortletResponse));
 				suggestionBuilder.attribute(
 					"assetURL",
-					_getAssetURL(
+					SearchUtil.getAssetURLView(
 						assetRenderer, assetRendererFactory, entryClassName,
 						entryClassPK, liferayPortletRequest,
 						liferayPortletResponse));
@@ -327,12 +250,6 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicSuggestionsContributor.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private Searcher _searcher;

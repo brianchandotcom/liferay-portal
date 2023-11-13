@@ -23,10 +23,6 @@ const Attachments = () => {
 		<>
 			<h1>{i18n.translate('attachments')}</h1>
 
-			<p className="text-neutral-7 text-paragraph-sm">
-				Add a short description.
-			</p>
-
 			<div className="mt-4">
 				<TicketAttachmentsTable
 					koroneikiAccount={koroneikiAccount}

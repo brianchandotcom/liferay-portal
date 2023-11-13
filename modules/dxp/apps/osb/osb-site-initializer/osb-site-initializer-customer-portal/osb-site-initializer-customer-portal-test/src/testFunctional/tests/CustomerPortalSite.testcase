@@ -199,15 +199,52 @@ definition {
 	test CanCP20BeCreated {
 		property portal.acceptance = "true";
 
-		task ("Go to Customer Portal Site") {
+		task ("When a Customer Portal Site is created") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
-		task ("Assert the Customer Portal Page is present") {
+		task ("Then I can assert that the Customer Portal Page is present") {
 			AssertElementPresent(
 				key_title = "Welcome,",
 				locator1 = "CustomerPortalSite#FRAGMENT_HEADING");
 		}
+
+		task ("And I can assert that test accounts were also created") {
+			Account.openAccountsAdmin();
+
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#ACCOUNTS_TABLE",
+				value = "Test Account LXC - SM");
+		}
+
+		task ("And I can assert that account users were also created") {
+			AccountUsers.openAccountUsersAdmin();
+
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#ACCOUNTS_TABLE",
+				value = "Test Test");
+		}
+
+		task ("And I can assert that remote applications were also created") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#OBJECTS_TABLE",
+				value = "Customer Portal");
+		}
+
+		task ("And I can assert that the objects were also created") {
+			ObjectAdmin.openObjectAdmin();
+
+			while (IsElementNotPresent(value = "Koroneiki Account", locator1 = "CustomerPortalSite#OBJECTS_TABLE")) {
+				Click(locator1 = "Pagination#NEXT_LINK");
+			}
+
+			AssertElementPresent(
+				locator1 = "CustomerPortalSite#OBJECTS_TABLE",
+				value = "Koroneiki Account");
+		}
+		
 	}
 
 	@description = "Automation ID: LPS-146220 | Test Summary: Verify if when Customer Portal is created, Objects will be created for it as well"

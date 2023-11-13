@@ -1,0 +1,89 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Partner_Company_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Account Name"
+			},
+			"name": "partnerAccountName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Account_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Account Name"
+			},
+			"name": "accountName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"externalReferenceCode": "Registration_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Registation Date"
+			},
+			"name": "registrationDate",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
+			"required": false,
+			"type": "DateTime"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Stage__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Stage"
+			},
+			"name": "stage",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opportunity_Stage__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Opportunity Stage"
+			},
+			"name": "oppportunityStage",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Name",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Opportunity Name"
+			},
+			"name": "opportunityName",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:PartnerOpportunitySF$]"
+}

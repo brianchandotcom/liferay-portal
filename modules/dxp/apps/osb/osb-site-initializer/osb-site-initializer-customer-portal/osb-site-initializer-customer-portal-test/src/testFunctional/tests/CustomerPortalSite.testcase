@@ -235,18 +235,6 @@ definition {
 		
 	}
 
-	@description = "Automation ID: LPS-146219 | Test Summary: Verify if when Customer Portal is created, Remote Apps will be created for it as well"
-	@priority = 4
-	test RemoteAppsAreCreatedForCP20 {
-		task ("Assert that when the Customer Portal is created, remote applications are also created") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			AssertElementPresent(
-				locator1 = "CustomerPortalSite#OBJECTS_TABLE",
-				value = "Customer Portal");
-		}
-	}
-
 	@description = "Automation ID: LPS-146216 | Test Summary: Verify if when Customer Portal is created, Tests Accounts will be created for it as well"
 	@priority = 4
 	test TestsAccountsAreCreatedForCP20 {

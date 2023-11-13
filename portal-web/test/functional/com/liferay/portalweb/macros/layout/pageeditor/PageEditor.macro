@@ -4839,11 +4839,33 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		Modal.gotoNavTab(navTab = ${navTab});
 
-		Click.waitForMenuToggleJSClick(
+		KeyPress(
 			key_card = ${setName},
-			locator1 = "Card#CARD_ELLIPSIS");
+			locator1 = "Card#CARD_DRAG_ICON",
+			value1 = "\ENTER");
 
-		DropdownMenuItem.click(menuItem = ${action});
+		if (${action} == "Move Up") {
+			KeyPress(
+				key_card = ${setName},
+				locator1 = "Card#CARD_DRAG_ICON",
+				value1 = "\UP");
+
+			KeyPress(
+				key_card = ${setName},
+				locator1 = "Card#CARD_DRAG_ICON",
+				value1 = "\ENTER");
+		}
+		else if (${action} == "Move Down") {
+			KeyPress(
+				key_card = ${setName},
+				locator1 = "Card#CARD_DRAG_ICON",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_card = ${setName},
+				locator1 = "Card#CARD_DRAG_ICON",
+				value1 = "\ENTER");
+		}
 
 		Button.click(button = "Save");
 	}

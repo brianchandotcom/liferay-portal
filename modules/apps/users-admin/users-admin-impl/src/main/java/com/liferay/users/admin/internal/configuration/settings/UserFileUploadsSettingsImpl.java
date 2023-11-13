@@ -6,6 +6,11 @@
 package com.liferay.users.admin.internal.configuration.settings;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
@@ -14,6 +19,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -26,31 +32,64 @@ public class UserFileUploadsSettingsImpl implements UserFileUploadsSettings {
 
 	@Override
 	public int getImageMaxHeight() {
-		return _userFileUploadsConfiguration.imageMaxHeight();
+		UserFileUploadsConfiguration userFileUploadsConfiguration =
+			_getUserFileUploadsConfiguration();
+
+		return userFileUploadsConfiguration.imageMaxHeight();
 	}
 
 	@Override
 	public long getImageMaxSize() {
-		return _userFileUploadsConfiguration.imageMaxSize();
+		UserFileUploadsConfiguration userFileUploadsConfiguration =
+			_getUserFileUploadsConfiguration();
+
+		return userFileUploadsConfiguration.imageMaxSize();
 	}
 
 	@Override
 	public int getImageMaxWidth() {
-		return _userFileUploadsConfiguration.imageMaxWidth();
+		UserFileUploadsConfiguration userFileUploadsConfiguration =
+			_getUserFileUploadsConfiguration();
+
+		return userFileUploadsConfiguration.imageMaxWidth();
 	}
 
 	@Override
 	public boolean isImageCheckToken() {
-		return _userFileUploadsConfiguration.imageCheckToken();
+		UserFileUploadsConfiguration userFileUploadsConfiguration =
+			_getUserFileUploadsConfiguration();
+
+		return userFileUploadsConfiguration.imageCheckToken();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_userFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
-			UserFileUploadsConfiguration.class, properties);
+		_defaultUserFileUploadsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				UserFileUploadsConfiguration.class, properties);
 	}
 
-	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
+	private UserFileUploadsConfiguration _getUserFileUploadsConfiguration() {
+		try {
+			return _configurationProvider.getCompanyConfiguration(
+				UserFileUploadsConfiguration.class,
+				CompanyThreadLocal.getCompanyId());
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
+
+		return _defaultUserFileUploadsConfiguration;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserFileUploadsSettingsImpl.class.getName());
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	private volatile UserFileUploadsConfiguration
+		_defaultUserFileUploadsConfiguration;
 
 }

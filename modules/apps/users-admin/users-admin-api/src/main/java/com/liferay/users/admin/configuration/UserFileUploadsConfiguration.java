@@ -12,7 +12,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Drew Brokke
  */
-@ExtendedObjectClassDefinition(category = "users")
+@ExtendedObjectClassDefinition(
+	category = "users", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
 	localization = "content/Language",

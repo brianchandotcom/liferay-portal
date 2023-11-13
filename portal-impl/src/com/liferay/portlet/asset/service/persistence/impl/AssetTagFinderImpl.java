@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagTable;
 import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,46 +51,19 @@ public class AssetTagFinderImpl
 		try {
 			session = openSession();
 
+			Long[] assetTagIds = _getAssetTagIds(groupId, classNameId, name);
+
+			if (ArrayUtil.isEmpty(assetTagIds)) {
+				return 0;
+			}
+
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				DSLQueryFactoryUtil.countDistinct(
 					AssetEntries_AssetTagsTable.INSTANCE.entryId
 				).from(
-					AssetTagTable.INSTANCE
-				).innerJoinON(
-					AssetEntries_AssetTagsTable.INSTANCE,
-					AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
-						AssetTagTable.INSTANCE.tagId)
+					AssetEntries_AssetTagsTable.INSTANCE
 				).where(
-					AssetEntries_AssetTagsTable.INSTANCE.entryId.in(
-						DSLQueryFactoryUtil.select(
-							AssetEntryTable.INSTANCE.entryId
-						).from(
-							AssetEntryTable.INSTANCE
-						).where(
-							AssetEntryTable.INSTANCE.groupId.eq(
-								groupId
-							).and(
-								() -> {
-									if (classNameId <= 0) {
-										return null;
-									}
-
-									return AssetEntryTable.INSTANCE.classNameId.
-										eq(classNameId);
-								}
-							).and(
-								AssetEntryTable.INSTANCE.visible.eq(true)
-							).and(
-								() -> {
-									if (name == null) {
-										return null;
-									}
-
-									return AssetTagTable.INSTANCE.name.like(
-										_getName(name));
-								}
-							)
-						))
+					AssetEntries_AssetTagsTable.INSTANCE.tagId.in(assetTagIds)
 				));
 
 			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
@@ -253,6 +228,86 @@ public class AssetTagFinderImpl
 			}
 
 			return assetTags;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private Long[] _getAssetTagIds(
+		long groupId, long classNameId, String name) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					AssetTagTable.INSTANCE
+				).from(
+					AssetTagTable.INSTANCE
+				).innerJoinON(
+					AssetEntries_AssetTagsTable.INSTANCE,
+					AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
+						AssetTagTable.INSTANCE.tagId)
+				).innerJoinON(
+					AssetEntryTable.INSTANCE,
+					AssetEntryTable.INSTANCE.entryId.eq(
+						AssetEntries_AssetTagsTable.INSTANCE.entryId)
+				).where(
+					AssetEntryTable.INSTANCE.groupId.eq(
+						groupId
+					).and(
+						() -> {
+							if (classNameId <= 0) {
+								return null;
+							}
+
+							return AssetEntryTable.INSTANCE.classNameId.eq(
+								classNameId);
+						}
+					).and(
+						AssetEntryTable.INSTANCE.visible.eq(true)
+					).and(
+						() -> {
+							if (name == null) {
+								return null;
+							}
+
+							return AssetTagTable.INSTANCE.name.like(
+								_getName(name));
+						}
+					)
+				));
+
+			sqlQuery.addEntity("AssetTag", AssetTagImpl.class);
+
+			List<AssetTag> assetTags = (List<AssetTag>)QueryUtil.list(
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			List<Long> assetTagIds;
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+				assetTagIds = TransformUtil.unsafeTransform(
+					assetTags, AssetTag::getTagId);
+			}
+			else {
+				assetTagIds = TransformUtil.unsafeTransform(
+					assetTags,
+					assetTag -> {
+						if (!StringUtil.equals(assetTag.getName(), name)) {
+							return null;
+						}
+
+						return Long.valueOf(assetTag.getTagId());
+					});
+			}
+
+			return assetTagIds.toArray(new Long[0]);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

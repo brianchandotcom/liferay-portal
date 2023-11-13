@@ -217,7 +217,7 @@ definition {
 
 			Type(
 				ariaLabel = "Padding Right",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 20);
 
 			Click(
@@ -280,7 +280,7 @@ definition {
 		task ("Then the new user should not see the input field for custom values") {
 			AssertElementNotPresent(
 				ariaLabel = "Padding Top",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL");
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL");
 
 			AssertElementNotPresent(
 				key_fieldLabel = "Padding Top",

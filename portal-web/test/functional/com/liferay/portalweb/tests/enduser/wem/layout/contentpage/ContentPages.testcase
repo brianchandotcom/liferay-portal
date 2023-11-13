@@ -52,7 +52,7 @@ definition {
 
 				Type(
 					ariaLabel = "Spacer 1",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = "-32");
 
 				StyleBooks.clickManagementBar();
@@ -2181,7 +2181,7 @@ definition {
 
 					Type(
 						ariaLabel = "Spacer ${i}",
-						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+						locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 						value1 = ${tokenValue});
 
 					StyleBooks.clickManagementBar();
@@ -2197,7 +2197,7 @@ definition {
 
 				Type(
 					ariaLabel = "Spacer 3",
-					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 					value1 = "Auto");
 
 				StyleBooks.clickManagementBar();

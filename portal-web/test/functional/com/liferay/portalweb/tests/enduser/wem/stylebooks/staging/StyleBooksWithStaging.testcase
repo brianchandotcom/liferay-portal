@@ -65,7 +65,7 @@ definition {
 
 			Type(
 				ariaLabel = "Heading 1 Font Size",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 2);
 
 			StyleBooks.clickManagementBar();
@@ -257,7 +257,7 @@ definition {
 
 			Type(
 				ariaLabel = "Heading 1 Font Size",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 2);
 
 			StyleBooks.clickManagementBar();
@@ -566,7 +566,7 @@ definition {
 
 			Type(
 				ariaLabel = "Heading 1 Font Size",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 2);
 
 			StyleBooks.clickManagementBar();
@@ -654,7 +654,7 @@ definition {
 
 			Type(
 				ariaLabel = "Heading 1 Font Size",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 2);
 
 			StyleBooks.clickManagementBar();
@@ -804,7 +804,7 @@ definition {
 
 			Type(
 				ariaLabel = "Heading 1 Font Size",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = "1.5");
 
 			StyleBooks.clickManagementBar();

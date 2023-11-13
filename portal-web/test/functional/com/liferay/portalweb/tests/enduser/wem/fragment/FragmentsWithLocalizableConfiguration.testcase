@@ -225,12 +225,12 @@ definition {
 
 			AssertTextEquals(
 				ariaLabel = "Radio del borde",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = 0);
 
 			AssertTextEquals(
 				ariaLabel = "Sombra",
-				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+				locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 				value1 = "none");
 		}
 	}

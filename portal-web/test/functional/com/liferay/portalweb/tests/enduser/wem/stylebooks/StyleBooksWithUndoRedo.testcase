@@ -165,12 +165,12 @@ definition {
 				for (var fieldLabel : list "Heading 1 Font Size,Heading 2 Font Size,Heading 3 Font Size,Heading 4 Font Size,Heading 5 Font Size") {
 					KeyPress(
 						ariaLabel = ${fieldLabel},
-						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+						locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 						value1 = "\UP");
 
 					KeyPress(
 						ariaLabel = ${fieldLabel},
-						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+						locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
 						value1 = "\ENTER");
 
 					StyleBooks.waitForAutoSave();

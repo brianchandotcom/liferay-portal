@@ -139,8 +139,7 @@ public class DiscardDraftLayoutMVCActionCommand
 		sendRedirect(
 			actionRequest, actionResponse,
 			_layoutLockManager.getLockedLayoutURL(
-				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(actionRequest))));
+				_portal.getHttpServletRequest(actionRequest)));
 	}
 
 	@Reference

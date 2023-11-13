@@ -5,11 +5,16 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorReturnType;
+import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMStructureItemSelectorCriterion;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -19,6 +24,7 @@ import com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryCons
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -46,6 +52,11 @@ public class JournalConfigurationDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
+			ItemSelector.class.getName());
+		_journalWebConfiguration =
+			(JournalWebConfiguration)httpServletRequest.getAttribute(
+				JournalWebConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -137,6 +148,28 @@ public class JournalConfigurationDisplayContext {
 		).buildPortletURL();
 	}
 
+	public String getSelectDDMStructureURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_renderRequest);
+
+		DDMStructureItemSelectorCriterion ddmStructureItemSelectorCriterion =
+			new DDMStructureItemSelectorCriterion();
+
+		ddmStructureItemSelectorCriterion.setClassNameId(
+			PortalUtil.getClassNameId(JournalArticle.class));
+		ddmStructureItemSelectorCriterion.setMultiSelection(true);
+		ddmStructureItemSelectorCriterion.setSelectAncestorScopes(
+			_journalWebConfiguration.showAncestorScopesByDefault());
+		ddmStructureItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new DDMStructureItemSelectorReturnType());
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_renderResponse.getNamespace() + "selectDDMStructure",
+				ddmStructureItemSelectorCriterion));
+	}
+
 	public String getTitle() {
 		return LanguageUtil.get(_httpServletRequest, getNavigation());
 	}
@@ -197,8 +230,10 @@ public class JournalConfigurationDisplayContext {
 	private String _emailFromAddress;
 	private String _emailFromName;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final JournalGroupServiceConfiguration
 		_journalGroupServiceConfiguration;
+	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _navigation;
 	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;

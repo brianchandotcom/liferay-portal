@@ -438,7 +438,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 	}
 
 	private boolean _isDisabledByFeatureFlag(String portletId) {
-		if (portletId.equals(_DATE_FACET_PORTLET_ID) &&
+		if (portletId.equals(_PORTLET_ID) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-153839")) {
 
 			return true;
@@ -447,7 +447,7 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		return false;
 	}
 
-	private static final String _DATE_FACET_PORTLET_ID =
+	private static final String _PORTLET_ID =
 		"com_liferay_portal_search_web_date_facet_portlet_DateFacetPortlet";
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {

@@ -6858,6 +6858,16 @@ go</echo>
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.1.10.8" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.2.10.7" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.2.10.8" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u4" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u5" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u6" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u7" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u8" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u9" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u10" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u11" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u12" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u13" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.3.21" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u1" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u33" />
@@ -6871,6 +6881,10 @@ go</echo>
 				</elseif>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u14" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u15" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u16" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u17" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u50" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u51" />
 					</or>
@@ -6880,6 +6894,11 @@ go</echo>
 				</elseif>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u18" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u19" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u20" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u21" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u22" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u57" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u58" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u59" />
@@ -6892,6 +6911,7 @@ go</echo>
 				</elseif>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u23" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u63" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u67" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u68" />
@@ -6905,6 +6925,10 @@ go</echo>
 				</elseif>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u24" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u25" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u26" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u27" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u73" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u75" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u76" />
@@ -6918,6 +6942,12 @@ go</echo>
 				</elseif>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u28" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u29" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u30" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u31" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u32" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u33" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u91" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u92" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u93" />
@@ -6930,6 +6960,7 @@ go</echo>
 				</elseif>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.u34" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u96" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u97" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u98" />

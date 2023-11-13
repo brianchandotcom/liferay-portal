@@ -175,6 +175,49 @@ definition {
 			webContentTitle = "WC Contenido de la web Titulo");
 	}
 
+	@description = "This is a test for LPS-197163. When displaying the search results, the file path must be an interactive element."
+	@priority = 4
+	test NavigateByBreadcrumbInSearchResults {
+		task ("Given a web content and a folder with a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content",
+				groupName = "Test Site Name",
+				title = "Over the Years");
+
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "After many years I understood",
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When searching for a term on the web content admin page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Years");
+
+			Breadcrumb.gotoEntry(
+				breadcrumbName = "Home",
+				folderWebContentTitle = "WC Folder Name");
+		}
+
+		task ("Then the file path must be an interactive element") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Years");
+
+			Breadcrumb.gotoEntry(breadcrumbName = "WC Folder Name");
+
+			AssertElementPresent(
+				key_breadcrumbName = "Home",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+		}
+	}
+
 	@description = "This is a test for LPS-151948. The Filter by Status is available to the Versions tab."
 	@priority = 4
 	test ViewFilterByStatusAvailableToVersionsTab {

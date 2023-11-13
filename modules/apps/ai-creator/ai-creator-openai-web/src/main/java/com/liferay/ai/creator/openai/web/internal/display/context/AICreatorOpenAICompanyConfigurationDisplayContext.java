@@ -38,9 +38,17 @@ public class AICreatorOpenAICompanyConfigurationDisplayContext
 	}
 
 	@Override
-	protected boolean isAICreatorOpenAIEnabled() throws ConfigurationException {
+	protected boolean isAICreatorChatGTPEnabled()
+		throws ConfigurationException {
+
 		return _aiCreatorOpenAIConfigurationManager.
-			isAICreatorOpenAICompanyEnabled(_themeDisplay.getCompanyId());
+			isAICreatorChatGTPCompanyEnabled(_themeDisplay.getCompanyId());
+	}
+
+	@Override
+	protected boolean isAICreatorDALLEEnabled() throws ConfigurationException {
+		return _aiCreatorOpenAIConfigurationManager.
+			isAICreatorDALLECompanyEnabled(_themeDisplay.getCompanyId());
 	}
 
 	private final AICreatorOpenAIConfigurationManager

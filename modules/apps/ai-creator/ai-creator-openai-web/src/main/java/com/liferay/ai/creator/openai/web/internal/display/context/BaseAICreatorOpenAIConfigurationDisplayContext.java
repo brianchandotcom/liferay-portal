@@ -32,21 +32,35 @@ public abstract class BaseAICreatorOpenAIConfigurationDisplayContext {
 		return getAICreatorOpenAIAPIKey();
 	}
 
-	public boolean isEnabled() throws ConfigurationException {
+	public boolean isChatGTPEnabled() throws ConfigurationException {
 		String enabled = ParamUtil.getString(
-			httpServletRequest, "enableOpenAI", null);
+			httpServletRequest, "enableChatGTP", null);
 
 		if (enabled != null) {
 			return GetterUtil.getBoolean(enabled);
 		}
 
-		return isAICreatorOpenAIEnabled();
+		return isAICreatorChatGTPEnabled();
+	}
+
+	public boolean isDALLEEnabled() throws ConfigurationException {
+		String enabled = ParamUtil.getString(
+			httpServletRequest, "enableDALLE", null);
+
+		if (enabled != null) {
+			return GetterUtil.getBoolean(enabled);
+		}
+
+		return isAICreatorDALLEEnabled();
 	}
 
 	protected abstract String getAICreatorOpenAIAPIKey()
 		throws ConfigurationException;
 
-	protected abstract boolean isAICreatorOpenAIEnabled()
+	protected abstract boolean isAICreatorChatGTPEnabled()
+		throws ConfigurationException;
+
+	protected abstract boolean isAICreatorDALLEEnabled()
 		throws ConfigurationException;
 
 	protected final HttpServletRequest httpServletRequest;

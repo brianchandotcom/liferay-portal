@@ -47,7 +47,7 @@ public class AICreatorOpenAIEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		if (!_isAICreatorOpenAIGroupEnabled(
+		if (!_isAICreatorChatGPTGroupEnabled(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
 			return;
@@ -95,12 +95,12 @@ public class AICreatorOpenAIEditorConfigContributor
 		);
 	}
 
-	private boolean _isAICreatorOpenAIGroupEnabled(
+	private boolean _isAICreatorChatGPTGroupEnabled(
 		long companyId, long groupId) {
 
 		try {
 			if (_aiCreatorOpenAIConfigurationManager.
-					isAICreatorOpenAIGroupEnabled(companyId, groupId)) {
+					isAICreatorChatGTPGroupEnabled(companyId, groupId)) {
 
 				return true;
 			}

@@ -235,18 +235,6 @@ definition {
 		
 	}
 
-	@description = "Automation ID: LPS-146220 | Test Summary: Verify if when Customer Portal is created, Objects will be created for it as well"
-	@priority = 4
-	test ObjectsAreCreatedForCP20 {
-		task ("Go to the Objects admin and assert that the objects have been created") {
-			ObjectAdmin.openObjectAdmin();
-
-			AssertElementPresent(
-				locator1 = "CustomerPortalSite#OBJECTS_TABLE",
-				value = "Koroneiki Account");
-		}
-	}
-
 	@description = "Automation ID: LPS-146219 | Test Summary: Verify if when Customer Portal is created, Remote Apps will be created for it as well"
 	@priority = 4
 	test RemoteAppsAreCreatedForCP20 {

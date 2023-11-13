@@ -1,0 +1,258 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Custom Object Definition University with text field 'name' created and one-to-many relationship UniversityAddresses created") {
+			var universityId = ObjectDefinitionAPI.createObjectDefinition(
+				en_US_label = "University",
+				en_US_plural_label = "Universities",
+				name = "University",
+				objectDefinitionExternalReferenceCode = "university",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "universityName");
+			var addressId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Address");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UniversityAddresses",
+				name = "universityAddresses",
+				objectDefinitionId1 = ${universityId},
+				objectDefinitionId2 = ${addressId},
+				type = "oneToMany");
+		}
+
+		task ("And Given APIApplication created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				title = "My-app");
+		}
+
+		task ("And Given 'University' Schema based on University object created") {
+			SchemaAPI.createAPISchema(
+				apiApplicationERC = "My-app",
+				mainObjectDefinitionERC = "university",
+				name = "University");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanAddPropertiesFromSidebarToList {
+		property portal.acceptance = "true";
+
+		task ("When adding the 'name' field from University section of Properties sidebar to 'Drop properties' box") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+
+			Click(
+				key_text = "name",
+				locator1 = "APIBuilder#PROPERTY_CONTAINER");
+		}
+
+		task ("Then 'name' field is placed in Properties") {
+			AssertElementPresent(
+				key_commentValue = "name",
+				locator1 = "PublicationsChanges#COMMENT_VALUE");
+		}
+	}
+
+	@priority = 4
+	test CanSearchThroughPropertiesFromTheList {
+		property portal.acceptance = "true";
+
+		task ("And Given 'name', 'External Reference Code', 'Create Date', 'ID' fields placed in Properties") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+
+			var fieldNameList = "name,External Reference Code,Create Date,ID";
+
+			for (var fieldName : list ${fieldNameList}) {
+				Click(
+					key_text = ${fieldName},
+					locator1 = "APIBuilder#PROPERTY_CONTAINER");
+			}
+		}
+
+		task ("When searching property 'External Reference Code' with Search box") {
+			Type(
+				locator1 = "TextInput#SEARCH",
+				value1 = "External Reference Code");
+		}
+
+		task ("Then only 'External Reference Code' present in Properties list") {
+			var fieldNameList = "name,Create Date,ID";
+
+			for (var fieldName : list ${fieldNameList}) {
+				AssertElementNotPresent(
+					key_commentValue = "name",
+					locator1 = "PublicationsChanges#COMMENT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_commentValue = "External Reference Code",
+				locator1 = "PublicationsChanges#COMMENT_VALUE");
+		}
+	}
+
+	@priority = 4
+	test DroppedIntoPropertiesListRelatedObjectFieldIsDisabledInPropertiesSidebar {
+		property portal.acceptance = "true";
+
+		task ("And Given fields of Address object definition present through View Related Objects'") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+
+			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "Postal Address");
+		}
+
+		task ("When adding 'External Reference Code' of Address to 'Drop properties' box") {
+			Click(
+				key_text = "External Reference Code",
+				locator1 = "APIBuilder#PROPERTY_CONTAINER");
+		}
+
+		task ("Then 'External Reference Code' is placed in Properties") {
+			AssertElementPresent(
+				key_commentValue = "External Reference Code",
+				locator1 = "PublicationsChanges#COMMENT_VALUE");
+		}
+	}
+
+	@priority = 4
+	test FieldsOfRelatedObjectsAreAccessibleFromPropertiesSidebar {
+		property portal.acceptance = "true";
+
+		task ("When clicking 'View Related Objects' option in Properties sidebar") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+
+			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "Postal Address");
+		}
+
+		task ("Then all fields of Address object definition are present") {
+			var fieldNameList = "Author,Create Date,External Reference Code,ID,Modified Date,Status,Name,Street 1,UniversityAddresses";
+
+			for (var fieldName : list ${fieldNameList}) {
+				AssertElementPresent(
+					key_button = ${fieldName},
+					locator1 = "CommerceWidget#PRODUCT_PUBLISHER_FILTER_ADD_SELECT_BUTTON");
+			}
+		}
+	}
+
+	@priority = 5
+	test ObjectFieldsArePresentInPropertiesSidebar {
+		property portal.acceptance = "true";
+
+		task ("When going to Properties section in Schemas > University") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+		}
+
+		task ("Then University fields are present in Properties sidebar") {
+			var fieldNameList = "Author,Create Date,External Reference Code,ID,Modified Date,Status,name";
+
+			for (var fieldName : list ${fieldNameList}) {
+				AssertElementPresent(
+					key_button = ${fieldName},
+					locator1 = "CommerceWidget#PRODUCT_PUBLISHER_FILTER_ADD_SELECT_BUTTON");
+			}
+		}
+	}
+
+	@priority = 5
+	test PropertiesSectionIsPresentForSchema {
+		property portal.acceptance = "true";
+
+		task ("When in Schemas of APIApplication a 'University1' Schema based on University object created") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Schemas",
+				title = "My-app");
+
+			APIBuilderUI.createAPISchema(
+				addByPlus = "true",
+				confirmCreation = "true",
+				name = "University1",
+				objectDefinitionName = "University");
+		}
+
+		task ("Then Properties section appears in Schemas > University1") {
+			WaitForElementPresent(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "Properties");
+		}
+	}
+
+	@priority = 5
+	test PropertiesSidebarIsPresentForSchema {
+		property portal.acceptance = "true";
+
+		task ("When going to Properties section in Schemas > University") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+		}
+
+		task ("Then Properties sidebar present") {
+			WaitForElementPresent(
+				key_header = "Properties",
+				locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_HEADER");
+		}
+	}
+
+	@priority = 4
+	test RelatedObjectsOptionIsPresentInPropertiesSidebar {
+		property portal.acceptance = "true";
+
+		task ("When going to Properties section in Schemas > University") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+		}
+
+		task ("Then 'View Related Objects' option is present in Properties sidebar") {
+			WaitForElementPresent(locator1 = "APIBuilder#VIEW_RELATED_OBJECTS");
+		}
+	}
+
+}

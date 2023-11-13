@@ -14234,7 +14234,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<param name="app.server.tomcat.version" value="${app.server.tomcat.version}" />
 		</antcall>
 		<antcall target="prepare-portlet-ext-properties" />
-		<antcall target="prepare-system-ext-properties" />
+		<antcall inheritAll="false" target="prepare-system-ext-properties">
+			<param name="app.server.classes.portal.dir" value="${app.server.tomcat.classes.portal.dir}" />
+		</antcall>
 
 		<get-testcase-property property.name="aws.store.enabled" />
 

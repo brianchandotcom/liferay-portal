@@ -841,7 +841,7 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD_OPTIONS_LIST</td>
-	<td>//div[@class='dropdown-menu ddm-btn-full ddm-select-dropdown show']//button[@label='${key_selectOption}']</td>
+	<td>//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[@label='${key_selectOption}'] | //div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[normalize-space()='${key_selectOption}']</td>
 	<td></td>
 </tr>
 <tr>

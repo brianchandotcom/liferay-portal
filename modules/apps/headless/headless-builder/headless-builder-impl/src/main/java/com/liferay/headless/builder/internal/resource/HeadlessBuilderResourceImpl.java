@@ -17,10 +17,13 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.security.InvalidParameterException;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -50,7 +53,7 @@ public class HeadlessBuilderResourceImpl {
 			@QueryParam("sort") String sortString)
 		throws Exception {
 
-		return _executeEndpoint(
+		return _executeGetEndpoint(
 			path, APIApplication.Endpoint.Scope.COMPANY,
 			endpoint -> _endpointHelper.getResponseEntityMapsPage(
 				_acceptLanguage, _company.getCompanyId(), endpoint,
@@ -67,7 +70,7 @@ public class HeadlessBuilderResourceImpl {
 			@QueryParam("sort") String sortString)
 		throws Exception {
 
-		return _executeEndpoint(
+		return _executeGetEndpoint(
 			path, APIApplication.Endpoint.Scope.SITE,
 			endpoint -> _endpointHelper.getResponseEntityMapsPage(
 				_acceptLanguage, _company.getCompanyId(), endpoint,
@@ -82,7 +85,7 @@ public class HeadlessBuilderResourceImpl {
 			@PathParam("parameter") String pathParameterValue)
 		throws Exception {
 
-		return _executeEndpoint(
+		return _executeGetEndpoint(
 			path + "/" + pathParameterValue,
 			APIApplication.Endpoint.Scope.COMPANY,
 			endpoint -> _endpointHelper.getResponseEntityMap(
@@ -102,14 +105,30 @@ public class HeadlessBuilderResourceImpl {
 			@PathParam("parameter") String pathParameterValue)
 		throws Exception {
 
-		return _executeEndpoint(
+		return _executeGetEndpoint(
 			path + "/" + pathParameterValue, APIApplication.Endpoint.Scope.SITE,
 			endpoint -> _endpointHelper.getResponseEntityMap(
 				_company.getCompanyId(), endpoint.getPathParameter(),
 				pathParameterValue, endpoint.getResponseSchema(), scopeKey));
 	}
 
-	private <T> Response _executeEndpoint(
+	@Consumes({"application/json", "application/xml"})
+	@Path("/{path: .*}")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	public Response post(
+			@PathParam("path") String path, Map<String, Object> properties)
+		throws Exception {
+
+		return _executePostEndpoint(
+			path, APIApplication.Endpoint.Scope.COMPANY,
+			endpoint -> _endpointHelper.postObjectEntry(
+				_company.getCompanyId(), properties,
+				endpoint.getRequestSchema(), endpoint.getResponseSchema(),
+				null));
+	}
+
+	private <T> Response _executeGetEndpoint(
 			String path, APIApplication.Endpoint.Scope scope,
 			UnsafeFunction<APIApplication.Endpoint, T, Exception>
 				successUnsafeFunction)
@@ -133,6 +152,25 @@ public class HeadlessBuilderResourceImpl {
 
 		if (endpoint.getResponseSchema() == null) {
 			return Response.noContent(
+			).build();
+		}
+
+		return Response.ok(
+			successUnsafeFunction.apply(endpoint)
+		).build();
+	}
+
+	private <T> Response _executePostEndpoint(
+			String path, APIApplication.Endpoint.Scope scope,
+			UnsafeFunction<APIApplication.Endpoint, T, Exception>
+				successUnsafeFunction)
+		throws Exception {
+
+		APIApplication.Endpoint endpoint = _getEndpoint(path, scope);
+
+		if (endpoint == null) {
+			return Response.status(
+				Response.Status.NOT_FOUND
 			).build();
 		}
 

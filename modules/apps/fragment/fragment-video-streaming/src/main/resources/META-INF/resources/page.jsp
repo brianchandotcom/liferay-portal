@@ -16,7 +16,7 @@
 <div style="display: flex; justify-content: left;">
 	<div class="videojs-container">
 		<video class="video-js" controls id="fragmentVideoJsURL" preload="auto">
-			<source src="<%= (String)request.getAttribute("src") %>" type="video/mp4" />
+			<source src="<%= (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_SOURCE_URL) %>" type="video/mp4" />
 		</video>
 
 		<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
@@ -27,11 +27,13 @@
 	const content = document.querySelector('.videojs-container');
 
 	const configuration = {
-		autoplay: <%= (Boolean)request.getAttribute("autoplay") %>,
-		loop: <%= (Boolean)request.getAttribute("loop") %>,
-		muted: <%= (Boolean)request.getAttribute("muted") %>,
-		videoHeight: '<%= (String)request.getAttribute("height") %>',
-		videoWidth: '<%= (String)request.getAttribute("width") %>',
+		autoplay: <%= (Boolean)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_AUTOPLAY) %>,
+		loop: <%= (Boolean)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_LOOP) %>,
+		muted: <%= (Boolean)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_MUTED) %>,
+		videoHeight:
+			'<%= (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_HEIGHT) %>',
+		videoWidth:
+			'<%= (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_WIDTH) %>',
 	};
 
 	const height = configuration.videoHeight

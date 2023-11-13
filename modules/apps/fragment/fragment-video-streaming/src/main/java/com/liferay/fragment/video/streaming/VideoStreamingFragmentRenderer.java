@@ -9,6 +9,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.fragment.video.streaming.constants.VideoStreamingWebKeys;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -109,7 +110,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext.getFragmentEntryLink();
 
 			httpServletRequest.setAttribute(
-				"autoplay",
+				VideoStreamingWebKeys.VIDEO_STREAMING_AUTOPLAY,
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
 						getConfiguration(fragmentRendererContext),
@@ -117,7 +118,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 						fragmentRendererContext.getLocale(), "autoplay")));
 
 			httpServletRequest.setAttribute(
-				"height",
+				VideoStreamingWebKeys.VIDEO_STREAMING_HEIGHT,
 				GetterUtil.getString(
 					_fragmentEntryConfigurationParser.getFieldValue(
 						getConfiguration(fragmentRendererContext),
@@ -125,7 +126,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 						fragmentRendererContext.getLocale(), "videoHeight")));
 
 			httpServletRequest.setAttribute(
-				"loop",
+				VideoStreamingWebKeys.VIDEO_STREAMING_LOOP,
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
 						getConfiguration(fragmentRendererContext),
@@ -133,15 +134,15 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 						fragmentRendererContext.getLocale(), "loop")));
 
 			httpServletRequest.setAttribute(
-				"muted",
+				VideoStreamingWebKeys.VIDEO_STREAMING_MUTED,
 				GetterUtil.getBoolean(
 					_fragmentEntryConfigurationParser.getFieldValue(
 						getConfiguration(fragmentRendererContext),
 						fragmentEntryLink.getEditableValues(),
-						fragmentRendererContext.getLocale(), "muted")));
+						fragmentRendererContext.getLocale(), "mute")));
 
 			httpServletRequest.setAttribute(
-				"src",
+				VideoStreamingWebKeys.VIDEO_STREAMING_SOURCE_URL,
 				GetterUtil.getString(
 					_fragmentEntryConfigurationParser.getFieldValue(
 						getConfiguration(fragmentRendererContext),
@@ -149,7 +150,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 						fragmentRendererContext.getLocale(), "url")));
 
 			httpServletRequest.setAttribute(
-				"width",
+				VideoStreamingWebKeys.VIDEO_STREAMING_WIDTH,
 				GetterUtil.getString(
 					_fragmentEntryConfigurationParser.getFieldValue(
 						getConfiguration(fragmentRendererContext),

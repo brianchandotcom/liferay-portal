@@ -26,42 +26,45 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		super(eventHandlerContext, messageJSONObject);
 	}
 
-	protected JSONObject getBuildJSONObject() throws Exception {
+	protected JSONObject getBuildJSONObject() throws InvalidJSONException {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
 		JSONObject buildJSONObject = messageJSONObject.optJSONObject("build");
 
 		if (buildJSONObject == null) {
-			throw new Exception("Missing 'build' from message json");
+			throw new InvalidJSONException("Missing 'build' from message json");
 		}
 
 		return validateBuildJSONObject(buildJSONObject);
 	}
 
-	protected JSONObject getJenkinsCohortJSONObject() throws Exception {
+	protected JSONObject getJenkinsCohortJSONObject()
+		throws InvalidJSONException {
+
 		JSONObject messageJSONObject = getMessageJSONObject();
 
 		JSONObject jenkinsCohortJSONObject = messageJSONObject.optJSONObject(
 			"jenkinsCohort");
 
 		if (jenkinsCohortJSONObject == null) {
-			throw new Exception("Missing 'jenkinsCohort' from message json");
+			throw new InvalidJSONException(
+				"Missing 'jenkinsCohort' from message json");
 		}
 
 		return validateJenkinsCohortJSONObject(jenkinsCohortJSONObject);
 	}
 
 	protected JobEntity getJobEntity(JSONObject jobJSONObject)
-		throws Exception {
+		throws InvalidJSONException {
 
 		if (jobJSONObject == null) {
-			throw new Exception("Missing job json");
+			throw new InvalidJSONException("Missing job json");
 		}
 
 		long jobEntityId = jobJSONObject.optLong("id");
 
 		if (jobEntityId <= 0) {
-			throw new Exception("Missing 'id' from job json");
+			throw new InvalidJSONException("Missing 'id' from job json");
 		}
 
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
@@ -69,35 +72,36 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		return jobEntityRepository.getById(jobEntityId);
 	}
 
-	protected JSONObject getJobJSONObject() throws Exception {
+	protected JSONObject getJobJSONObject() throws InvalidJSONException {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
 		JSONObject jobJSONObject = messageJSONObject.optJSONObject("job");
 
 		if (jobJSONObject == null) {
-			throw new Exception("Missing 'job' from message json");
+			throw new InvalidJSONException("Missing 'job' from message json");
 		}
 
 		return validateJobJSONObject(jobJSONObject);
 	}
 
 	protected JSONObject validateBuildJSONObject(JSONObject buildJSONObject)
-		throws Exception {
+		throws InvalidJSONException {
 
 		if (buildJSONObject == null) {
-			throw new Exception("Missing build json");
+			throw new InvalidJSONException("Missing build json");
 		}
 
 		String jenkinsJobName = buildJSONObject.optString("jenkinsJobName");
 
 		if (jenkinsJobName.isEmpty()) {
-			throw new Exception("Missing 'jenkinsJobName' from build json");
+			throw new InvalidJSONException(
+				"Missing 'jenkinsJobName' from build json");
 		}
 
 		String name = buildJSONObject.optString("name");
 
 		if (name.isEmpty()) {
-			throw new Exception("Missing 'name' from build json");
+			throw new InvalidJSONException("Missing 'name' from build json");
 		}
 
 		BuildEntity.State state = BuildEntity.State.getByKey(
@@ -123,7 +127,7 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 	}
 
 	protected JSONArray validateBuildsJSONArray(JSONArray buildsJSONArray)
-		throws Exception {
+		throws InvalidJSONException {
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -139,10 +143,10 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 
 	protected JSONObject validateJenkinsCohortJSONObject(
 			JSONObject jenkinsCohortJSONObject)
-		throws Exception {
+		throws InvalidJSONException {
 
 		if (jenkinsCohortJSONObject == null) {
-			throw new Exception("Missing Jenkins cohort json");
+			throw new InvalidJSONException("Missing Jenkins cohort json");
 		}
 
 		if (jenkinsCohortJSONObject.has("id")) {
@@ -152,7 +156,8 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		String name = jenkinsCohortJSONObject.optString("name");
 
 		if (StringUtil.isNullOrEmpty(name)) {
-			throw new Exception("Missing 'name' from Jenkins cohort json");
+			throw new InvalidJSONException(
+				"Missing 'name' from Jenkins cohort json");
 		}
 
 		JSONObject jsonObject = new JSONObject();
@@ -170,7 +175,7 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 
 	protected JSONArray validateJenkinsCohortsJSONArray(
 			JSONArray jenkinsCohortsJSONArray)
-		throws Exception {
+		throws InvalidJSONException {
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -189,17 +194,17 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 
 	protected JSONObject validateJenkinsServerJSONObject(
 			JSONObject jenkinsServerJSONObject)
-		throws Exception {
+		throws InvalidJSONException {
 
 		if (jenkinsServerJSONObject == null) {
-			throw new Exception("Missing Jenkins server json");
+			throw new InvalidJSONException("Missing Jenkins server json");
 		}
 
 		String jenkinsUserName = jenkinsServerJSONObject.optString(
 			"jenkinsUserName");
 
 		if (StringUtil.isNullOrEmpty(jenkinsUserName)) {
-			throw new Exception(
+			throw new InvalidJSONException(
 				"Missing 'jenkinsUserName' from Jenkins server json");
 		}
 
@@ -207,20 +212,22 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			"jenkinsUserPassword");
 
 		if (StringUtil.isNullOrEmpty(jenkinsUserPassword)) {
-			throw new Exception(
+			throw new InvalidJSONException(
 				"Missing 'jenkinsUserPassword' from Jenkins server json");
 		}
 
 		String urlString = jenkinsServerJSONObject.optString("url");
 
 		if (StringUtil.isNullOrEmpty(urlString)) {
-			throw new Exception("Missing 'url' from Jenkins server json");
+			throw new InvalidJSONException(
+				"Missing 'url' from Jenkins server json");
 		}
 
 		URL url = StringUtil.toURL(urlString);
 
 		if (url == null) {
-			throw new Exception("Invalid 'url' from Jenkins server json");
+			throw new InvalidJSONException(
+				"Invalid 'url' from Jenkins server json");
 		}
 
 		JSONObject jsonObject = new JSONObject();
@@ -240,7 +247,7 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 
 	protected JSONArray validateJenkinsServersJSONArray(
 			JSONArray jenkinsServersJSONArray)
-		throws Exception {
+		throws InvalidJSONException {
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -258,10 +265,10 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 	}
 
 	protected JSONObject validateJobJSONObject(JSONObject jobJSONObject)
-		throws Exception {
+		throws InvalidJSONException {
 
 		if (jobJSONObject == null) {
-			throw new Exception("Missing job");
+			throw new InvalidJSONException("Missing job");
 		}
 
 		if (jobJSONObject.has("id")) {
@@ -271,13 +278,13 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		String name = jobJSONObject.optString("name");
 
 		if (name.isEmpty()) {
-			throw new Exception("Missing 'name' from job json");
+			throw new InvalidJSONException("Missing 'name' from job json");
 		}
 
 		int priority = jobJSONObject.optInt("priority");
 
 		if (priority <= 0) {
-			throw new Exception("Missing 'priority' from job json");
+			throw new InvalidJSONException("Missing 'priority' from job json");
 		}
 
 		JobEntity.State state = JobEntity.State.getByKey(
@@ -291,7 +298,7 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			jobJSONObject.optString("type"));
 
 		if (type == null) {
-			throw new Exception(
+			throw new InvalidJSONException(
 				"Job type is not one of the following: " +
 					JobEntity.Type.getKeys());
 		}

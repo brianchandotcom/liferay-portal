@@ -344,21 +344,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchColumnsOnModalDefaultSort(columnName = null) {
-		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
-
-		Type(
-			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
-			value1 = ${columnName});
-
-		Click(locator1 = "ObjectCustomViews#VIEW_DROPDOWN_MENU_ON_MODAL_DEFAULT_SORT");
-
-		AssertElementPresent(
-			key_columnName = ${columnName},
-			locator1 = "ObjectCustomViews#VIEW_FIELDS_ON_DROPDOWN_ITEM");
-	}
-
-	@summary = "Default summary"
 	macro searchOnAddColumnModal(columnName = null) {
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 

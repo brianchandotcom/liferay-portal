@@ -13,7 +13,10 @@ import {
 	getCustomFieldExpandoValue,
 	getProductAttachments,
 } from '../../utils/api';
-import {getAccountImage} from '../../utils/util';
+import {
+	getAccountImage,
+	getThumbnailByProductAttachment,
+} from '../../utils/util';
 import {initialDashboardNavigationItems as dashboardNavigationItems} from './PurchasedDashboardPageUtil';
 
 import './PurchasedAppsDashboard.scss';
@@ -41,17 +44,11 @@ export type PurchasedAppProps = {
 	virtualURL: string;
 };
 
-const options: Intl.DateTimeFormatOptions = {
-	day: 'numeric',
-	month: 'short',
-	year: 'numeric',
-};
-
 const PurchasedAppsDashboardOutlet = () => {
 	const {accountId} = useParams();
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 
-	const [page, setPage] = useState<number>(1);
+	const [page, setPage] = useState(1);
 	const {channel} = useMarketplaceContext();
 
 	const {data: accounts = []} = useSWR('/purchased/accounts', async () => {
@@ -99,10 +96,6 @@ const PurchasedAppsDashboardOutlet = () => {
 			placedOrders.items.map(async (order) => {
 				const [placeOrderItem] = order.placedOrderItems;
 
-				const date = new Date(order.createDate);
-
-				const formattedDate = date.toLocaleDateString('en-US', options);
-
 				const version = await getCustomFieldExpandoValue({
 					className: 'com.liferay.commerce.product.model.CPInstance',
 					classPK: placeOrderItem.skuId,
@@ -117,50 +110,11 @@ const PurchasedAppsDashboardOutlet = () => {
 					placeOrderItem.productId
 				);
 
-				let orderThumbnail;
-
-				if (attachments) {
-					orderThumbnail = await (async () => {
-						const promises = attachments.map(
-							async (currentAttachment) => {
-								const attachmentsCustomField = await getCustomFieldExpandoValue(
-									{
-										className:
-											'com.liferay.commerce.product.model.CPAttachmentFileEntry',
-										classPK: currentAttachment.id,
-										columnName: 'App Icon',
-										companyId: Number(
-											Liferay.ThemeDisplay.getCompanyId()
-										),
-										tableName: 'CUSTOM_FIELDS',
-									}
-								);
-
-								return attachmentsCustomField[0] === 'Yes'
-									? currentAttachment
-									: null;
-							}
-						);
-
-						const results = await Promise.all(promises);
-
-						return results.find(
-							(attachment) => attachment !== null
-						);
-					})();
-				}
-
 				return {
+					...order,
 					name: placeOrderItem.name,
-					orderId: order.id,
-					orderTypeExternalReferenceCode:
-						order.orderTypeExternalReferenceCode,
 					productId: order.placedOrderItems[0].productId,
-					provisioning: order.orderStatusInfo.label,
-					provisioningLabel: order.orderStatusInfo.label,
-					purchasedBy: order.author,
-					purchasedDate: formattedDate,
-					thumbnail: orderThumbnail?.src as string,
+					thumbnail: getThumbnailByProductAttachment(attachments),
 					type: placeOrderItem.subscription
 						? 'Subscription'
 						: 'Perpetual',

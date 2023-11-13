@@ -9,13 +9,13 @@ import {useMemo, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
-import {DashboardPage} from '../../pages/DashBoardPage/DashboardPage';
 import {
 	MemberProps,
 	adminRoles,
 	customerRoles,
 	publisherRoles,
 } from '../../pages/PublishedAppsDashboard/PublishedDashboardPageUtil';
+import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {DashboardMemberTableRow} from '../DashboardTable/DashboardMemberTableRow';
 import {DashboardTable, TableHeaders} from '../DashboardTable/DashboardTable';
 import {InviteMemberModal} from '../InviteMemberModal/InviteMemberModal';

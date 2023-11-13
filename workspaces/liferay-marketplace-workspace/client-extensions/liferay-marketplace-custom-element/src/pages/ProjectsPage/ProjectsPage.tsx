@@ -8,9 +8,9 @@ import {useEffect, useState} from 'react';
 
 import {CreateProjectModal} from '../../components/CreateProjectModal/CreateProjectModal';
 import {ProjectDetailsCard} from '../../components/CreateProjectModal/ProjectDetailsCard';
+import {DashboardPage} from '../../components/DashBoardPage/DashboardPage';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {getPlacedOrders} from '../../utils/api';
-import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {NextSteps} from '../NextSteps';
 import {ProjectsTableRow} from './ProjectsTableRow';
 

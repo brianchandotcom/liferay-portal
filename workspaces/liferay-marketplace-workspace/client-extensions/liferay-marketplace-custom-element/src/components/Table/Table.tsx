@@ -9,9 +9,10 @@ import {ReactNode} from 'react';
 import './Table.scss';
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import classNames from 'classnames';
 
 type TableProps<T = any> = {
-	Actions: React.FC<{row: T}>;
+	Actions?: React.FC<{row: T}>;
 	className?: string;
 	columns: TableColumn<T>[];
 	hasKebabButton?: boolean;
@@ -53,7 +54,7 @@ const Table: React.FC<TableProps> = ({
 	columns,
 	hasKebabButton,
 	hasPagination,
-	onClickRow = () => {},
+	onClickRow,
 	paginationProps,
 	rows,
 }) => {
@@ -80,7 +81,13 @@ const Table: React.FC<TableProps> = ({
 
 				<ClayTable.Body className="table-body">
 					{rows.map((row, rowIndex) => (
-						<ClayTable.Row key={row.id || rowIndex}>
+						<ClayTable.Row
+							className={classNames({
+								'cursor-pointer':
+									typeof onClickRow === 'function',
+							})}
+							key={row.id || rowIndex}
+						>
 							{columns.map((column, columnIndex) => {
 								const data = row[column.key];
 
@@ -102,7 +109,9 @@ const Table: React.FC<TableProps> = ({
 										key={`${rowIndex}-${columnIndex}`}
 										noWrap={column.noWrap}
 										onClick={() => {
-											onClickRow(row);
+											if (onClickRow) {
+												onClickRow(row);
+											}
 										}}
 										truncate={column.truncate}
 									>

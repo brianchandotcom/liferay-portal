@@ -9,12 +9,12 @@ import {useState} from 'react';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 
 import appsIcon from '../../../assets/icons/apps_fill_icon.svg';
+import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import {
 	AppProps,
 	DashboardTable,
 } from '../../../components/DashboardTable/DashboardTable';
 import {PublishedAppsDashboardTableRow} from '../../../components/DashboardTable/PublishedAppsDashboardTableRow';
-import {DashboardPage} from '../../DashBoardPage/DashboardPage';
 import {appTableHeaders} from '../PublishedDashboardPageUtil';
 
 const Apps = () => {

@@ -4,8 +4,8 @@
  */
 
 import solutionsIcon from '../../../assets/icons/analytics_icon.svg';
+import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
-import {DashboardPage} from '../../DashBoardPage/DashboardPage';
 
 const Solutions = () => (
 	<DashboardPage

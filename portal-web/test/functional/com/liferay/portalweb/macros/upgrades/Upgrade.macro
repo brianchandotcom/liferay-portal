@@ -1,12 +1,30 @@
 definition {
 
-	@summary = "Restore and start original bundle with auto upgrade enabled"
+	@summary = "Restore original bundle, start it with auto upgrade enabled and reindex after"
 	macro restoreOriginalBundleAndUpgrade() {
 		Portlet.shutdownServer();
 
 		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
 
 		Portlet.startServer(deleteLiferayHome = "false");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		Click(
+			key_navItem = "Index Actions",
+			locator1 = "NavBar#NAV_ITEM_LINK");
+
+		SearchAdministration.startReindex(action = "All Search Indexes");
+
+		SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 	}

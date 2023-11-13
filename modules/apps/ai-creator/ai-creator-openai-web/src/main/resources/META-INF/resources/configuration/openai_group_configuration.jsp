@@ -12,32 +12,24 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 %>
 
 <clay:content-row>
-	<clay:content-col
-		expand="<%= true %>"
-	>
-		<c:choose>
-			<c:when test="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyEnabled() %>">
-				<clay:checkbox
-					checked="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isEnabled() %>"
-					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
-					label='<%= LanguageUtil.get(request, "enable-openai-to-create-content") %>'
-					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
-				/>
-			</c:when>
-			<c:otherwise>
-				<clay:alert
-					message="to-enable-openai-in-this-site,-it-must-also-be-enabled-from-instance-settings"
-				/>
+	<c:if test="<%= !aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyEnabled() %>">
+		<clay:alert
+			message="to-enable-openai-in-this-site,-it-must-also-be-enabled-from-instance-settings"
+		/>
+	</c:if>
+</clay:content-row>
 
-				<clay:checkbox
-					checked="<%= false %>"
-					disabled="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
-					label='<%= LanguageUtil.get(request, "enable-openai-to-create-content") %>'
-					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
-				/>
-			</c:otherwise>
-		</c:choose>
+<clay:content-row>
+	<clay:content-col>
+		<span>
+			<liferay-ui:message key="set-the-api-key-for-authentication" />
+
+			<clay:link
+				href="https://platform.openai.com/docs/api-reference/authentication"
+				label="how-do-i-get-an-api-key"
+				target="_blank"
+			/>
+		</span>
 	</clay:content-col>
 </clay:content-row>
 
@@ -52,12 +44,28 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 </clay:content-row>
 
 <clay:content-row>
-	<clay:content-col>
-		<clay:link
-			href="https://platform.openai.com/docs/api-reference/authentication"
-			label="how-do-i-get-an-api-key"
-			target="_blank"
-		/>
+	<clay:content-col
+		expand="<%= true %>"
+	>
+		<c:choose>
+			<c:when test="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyEnabled() %>">
+				<clay:checkbox
+					checked="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isEnabled() %>"
+					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+					label='<%= LanguageUtil.get(request, "enable-openai-to-create-content") %>'
+					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+				/>
+			</c:when>
+			<c:otherwise>
+				<clay:checkbox
+					checked="<%= false %>"
+					disabled="<%= true %>"
+					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+					label='<%= LanguageUtil.get(request, "enable-openai-to-create-content") %>'
+					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAI" %>'
+				/>
+			</c:otherwise>
+		</c:choose>
 	</clay:content-col>
 </clay:content-row>
 

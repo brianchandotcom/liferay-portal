@@ -26,6 +26,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyNameException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -774,6 +775,51 @@ public class CompanyLocalServiceTest {
 		long companyId = PortalInstances.getDefaultCompanyId();
 
 		_companyLocalService.deleteCompany(companyId);
+	}
+
+	@Test
+	public void testExtractCompany() {
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
+
+		try {
+			_companyLocalService.extractCompany(1L);
+		}
+		catch (Exception exception) {
+			if (exception instanceof UnsupportedOperationException) {
+				return;
+			}
+		}
+
+		Assert.fail("Should throw UnsupportedOperationException");
+	}
+
+	@Test
+	public void testExtractDefaultCompany() {
+		try {
+			_companyLocalService.extractCompany(
+				PortalInstances.getDefaultCompanyId());
+		}
+		catch (Exception exception) {
+			if (DBPartition.isPartitionEnabled()) {
+				if (!(exception instanceof RequiredCompanyException)) {
+					Assert.fail("Should throw RequiredCompanyException");
+				}
+
+				return;
+			}
+
+			if (!DBPartition.isPartitionEnabled()) {
+				if (!(exception instanceof UnsupportedOperationException)) {
+					Assert.fail("Should throw UnsupportedOperationException");
+				}
+
+				return;
+			}
+		}
+
+		Assert.fail("Should throw Exception");
 	}
 
 	@Test

@@ -16,7 +16,7 @@ import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {normalizeOptions, normalizeValue} from '../util/options';
 import {getTooltipTitle} from '../util/tooltip';
 import MultipleSelection from './MultipleSelect';
-import {MainProps, SelectProps} from './select';
+import {MainProps, SelectProps} from './select.d';
 import {toArray} from './selectOperations';
 
 import type {Locale} from '../types';

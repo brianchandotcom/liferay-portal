@@ -8,7 +8,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {useFormState} from 'data-engine-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {MultiSelectItem, MultiSelectProps} from './select';
+import {MultiSelectItem, MultiSelectProps} from './select.d';
 
 const MultipleSelection = ({
 	name,

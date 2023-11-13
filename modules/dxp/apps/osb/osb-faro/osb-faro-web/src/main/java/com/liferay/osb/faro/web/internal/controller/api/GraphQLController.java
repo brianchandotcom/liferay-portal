@@ -12,6 +12,7 @@ import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.util.FaroPermissionChecker;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.web.internal.context.GroupInfo;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
@@ -68,6 +69,13 @@ public class GraphQLController extends BaseFaroController {
 	public String post(@Context GroupInfo groupInfo, String requestBody)
 		throws Exception {
 
+		if (!FaroPropsValues.GRAPHQL_API_ENABLED) {
+			throw new WebApplicationException(
+				Response.status(
+					Response.Status.NOT_FOUND
+				).build());
+		}
+
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByGroupId(
 				groupInfo.getGroupId());
@@ -111,9 +119,12 @@ public class GraphQLController extends BaseFaroController {
 			if (_log.isDebugEnabled()) {
 				_log.debug(uriSyntaxException);
 			}
-		}
 
-		return null;
+			throw new WebApplicationException(
+				Response.status(
+					Response.Status.BAD_REQUEST
+				).build());
+		}
 	}
 
 	protected String getSecuritySignature(URI uri) {

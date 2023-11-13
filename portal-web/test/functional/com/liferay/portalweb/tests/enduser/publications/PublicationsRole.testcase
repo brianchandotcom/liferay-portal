@@ -49,8 +49,8 @@ definition {
 			publicationName = "Publication Name");
 
 		PublicationsChanges.viewChanges(
-			changeCategory = "",
-			changeSite = "Global",
+			changeCategory = "Role",
+			changeSite = "",
 			changeTitle = "Regrole Name",
 			changeType = "Deleted",
 			changeUser = "Test Test");

@@ -199,22 +199,30 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			Search.searchCP(searchTerm = "Years");
-
-			Breadcrumb.gotoEntry(
-				breadcrumbName = "Home",
-				folderWebContentTitle = "WC Folder Name");
 		}
 
-		task ("Then the file path must be an interactive element") {
+		task ("Then it is possible to access to the Home folder") {
+			LexiconList.clickListEntryBreadcrumbItem(
+				breadcrumbName = "Home",
+				listEntry = "Over the Years");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Home");
+		}
+
+		task ("When searching for a term on the web content admin page") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			Search.searchCP(searchTerm = "Years");
+		}
 
-			Breadcrumb.gotoEntry(breadcrumbName = "WC Folder Name");
+		task ("Then it is possible to access to the new folder") {
+			LexiconList.clickListEntryBreadcrumbItem(
+				breadcrumbName = "WC Folder Name",
+				listEntry = "Web Content Title");
 
-			AssertElementPresent(
-				key_breadcrumbName = "Home",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+			Breadcrumb.viewActiveEntry(breadcrumbName = "WC Folder Name");
+
+			WebContentAdmin.viewEntryTitle(entry = "Web Content Title");
 		}
 	}
 

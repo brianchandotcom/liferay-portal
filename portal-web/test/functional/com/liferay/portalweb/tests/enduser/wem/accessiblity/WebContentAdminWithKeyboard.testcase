@@ -47,15 +47,16 @@ definition {
 			Search.searchCP(searchTerm = "Years");
 		}
 
-		task ("Then it is possible to access the file path using the keyboard") {
+		task ("Then it is possible to access to the Home folder using the keyboard") {
 			KeyPress(
-				key_breadcrumbName = "Home",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				key_listEntry = "Over the Years",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
 				value1 = "\TAB");
 
 			KeyPress(
 				key_breadcrumbName = "Home",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				key_listEntry = "Over the Years",
+				locator1 = "LexiconList#LIST_ENTRY_BREADCRUMB_ITEM",
 				value1 = "\ENTER");
 
 			Breadcrumb.viewActiveEntry(breadcrumbName = "Home");
@@ -69,15 +70,17 @@ definition {
 			Search.searchCP(searchTerm = "Years");
 		}
 
-		task ("Then it is possible to access the file path using the keyboard") {
+		task ("Then it is possible to access to the new folder using the keyboard") {
 			KeyPress(
-				key_breadcrumbName = "WC Folder Name",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				key_breadcrumbName = "Home",
+				key_listEntry = "Web Content Title",
+				locator1 = "LexiconList#LIST_ENTRY_BREADCRUMB_ITEM",
 				value1 = "\TAB");
 
 			KeyPress(
 				key_breadcrumbName = "WC Folder Name",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				key_listEntry = "Web Content Title",
+				locator1 = "LexiconList#LIST_ENTRY_BREADCRUMB_ITEM",
 				value1 = "\ENTER");
 
 			Breadcrumb.viewActiveEntry(breadcrumbName = "WC Folder Name");

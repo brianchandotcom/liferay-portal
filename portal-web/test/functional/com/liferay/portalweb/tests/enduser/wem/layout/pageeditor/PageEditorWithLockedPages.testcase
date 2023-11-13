@@ -906,4 +906,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194238. Filter is added to Locked pages with the scope pages in alphabetical order"
+	@priority = 5
+	test ViewLockedPagesFilterAndOrderScopePagesAlphabeticalOrder {
+		task ("Given a locked content pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When filtering by Display Page Template, ordering by Name and sort is added") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+
+			Click.pauseClickAt(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+			AssertVisible(
+				key_menuItem = "Last Autosave",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_ACTIVE");
+
+			MenuItem.viewOrder(menuItemList = "All,Collection Page,Content Page,Content Page Template,Display Page Template,Master Page,Utility Page");
+		}
+	}
+
 }

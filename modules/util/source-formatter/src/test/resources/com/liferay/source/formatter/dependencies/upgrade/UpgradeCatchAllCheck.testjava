@@ -73,6 +73,19 @@ public class UpgradeCatchAllCheck {
 		_commerceAccountHelper.getCurrentCommerceAccount(null);
 	}
 
+	public void method(HttpServletRequest httpServletRequest, String name) {
+		CookieUtil.get(httpServletRequest, "test123");
+		CookieUtil.get(httpServletRequest, name);
+	}
+
+	public void method(
+		HttpServletRequest httpServletRequest, String name,
+		boolean toUpperCase) {
+
+		CookieUtil.get(httpServletRequest, "test123", toUpperCase);
+		CookieUtil.get(httpServletRequest, name, toUpperCase);
+	}
+
 	public void method(
 		Indexer indexer, ServiceReference<Indexer> serviceReference) {
 

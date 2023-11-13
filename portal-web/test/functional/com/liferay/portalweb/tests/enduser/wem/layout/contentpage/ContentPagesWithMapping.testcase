@@ -1496,7 +1496,7 @@ definition {
 				navItem = "Web Content");
 		}
 
-		task ("Then the canonical is added to Button") {
+		task ("Then the nofollow is added to Button") {
 			InputField.viewText(
 				fieldLabel = "URL",
 				text = "${portalURL}/web/${siteURLKey}/e/display-page-name-1/${assetTypeId}/${assetId}");
@@ -1507,16 +1507,41 @@ definition {
 				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "rel",
+				value2 = "nofollow");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user accesses to the associated display page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			Button.click(button = "Go Somewhere");
+		}
+
+		task ("Then the canonical is added to an link element") {
+			AssertAttributeValue(
+				locator1 = "//link[contains(@href,'${siteURLKey}/w/web-content-title')]",
+				value1 = "rel",
 				value2 = "canonical");
 		}
 
 		task ("When the user maps the normal display page template as specific to a Button fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Display Page Name 2");
 		}
 
-		task ("Then the canonical is added to Button") {
+		task ("Then the nofollow is added to Button") {
 			InputField.viewText(
 				fieldLabel = "URL",
 				text = "${portalURL}/web/${siteURLKey}/e/display-page-name-2/${assetTypeId}/${assetId}");

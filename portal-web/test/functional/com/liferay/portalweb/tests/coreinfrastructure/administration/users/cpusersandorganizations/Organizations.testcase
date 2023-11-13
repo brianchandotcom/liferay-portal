@@ -772,6 +772,67 @@ definition {
 		}
 	}
 
+	@description = "Use case for LPS-198960.Organization users and sub organizations are not mixed across pages using the interactor button."
+	@priority = 4
+	test CanViewListedUsersAndSubOrganizationsNotMixedAcrossPages {
+		task ("Given an Organization with two Users") {
+			JSONOrganization.addOrganization(organizationName = "Organization for Users");
+
+			for (var user : list "A,B") {
+				JSONUser.addUser(
+					userEmailAddress = "${user}@liferay.com",
+					userFirstName = "${user}_fn",
+					userLastName = "${user}_sn",
+					userScreenName = "${user}_sn");
+
+				JSONOrganization.assignUserToOrganization(
+					organizationName = "Organization for Users",
+					userEmailAddress = "${user}@liferay.com");
+			}
+		}
+
+		task ("And 4 Sub Organizations within the same organization") {
+			for (var count : list "A,B,C,D") {
+				JSONOrganization.addOrganization(
+					organizationName = "${count} Suborganization",
+					parentOrganizationName = "Organization for Users");
+			}
+		}
+
+		task ("And set the page interator button to show 4 Entries per Page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UsersAndOrganizationsNavigator.gotoOrganizations();
+
+			Organization.gotoCP(orgName = "Organization for Users");
+
+			Pagination.changePagination(itemsPerPage = 4);
+		}
+
+		task ("Then Users and Sub Organizations are not mixed across pages") {
+			AssertElementPresent(
+				key_userName = "Organizations",
+				locator1 = "Account#USER_TABLE_NAME");
+
+			AssertElementNotPresent(
+				key_userName = "Users",
+				locator1 = "Account#USER_TABLE_NAME");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			AssertElementPresent(
+				key_userName = "Users",
+				locator1 = "Account#USER_TABLE_NAME");
+
+			AssertElementNotPresent(
+				key_userName = "Organizations",
+				locator1 = "Account#USER_TABLE_NAME");
+		}
+	}
+
 	@description = "This is a use case for LPS-123120."
 	@priority = 4
 	test ClearSearchResults {

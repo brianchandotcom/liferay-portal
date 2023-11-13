@@ -62,6 +62,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
+		Mutation.setProductOptionValueResourceComponentServiceObjects(
+			_productOptionValueResourceComponentServiceObjects);
 		Mutation.setSkuResourceComponentServiceObjects(
 			_skuResourceComponentServiceObjects);
 		Mutation.setWishListResourceComponentServiceObjects(
@@ -138,6 +140,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class,
 							"postChannelsPageExportBatch"));
+					put(
+						"mutation#createChannelProductProductOptionProductOptionValuesPage",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"postChannelProductProductOptionProductOptionValuesPage"));
 					put(
 						"mutation#createChannelProductSku",
 						new ObjectValuePair<>(
@@ -283,6 +290,10 @@ public class ServletDataImpl implements ServletData {
 		_channelResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProductOptionValueResource>
+		_productOptionValueResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SkuResource>
 		_skuResourceComponentServiceObjects;
 
@@ -321,10 +332,6 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductOptionResource>
 		_productOptionResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<ProductOptionValueResource>
-		_productOptionValueResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductSpecificationResource>

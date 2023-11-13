@@ -423,6 +423,13 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testPostChannelProductProductOptionProductOptionValuesPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
 	protected ProductOptionValue
 			testGraphQLProductOptionValue_addProductOptionValue()
 		throws Exception {

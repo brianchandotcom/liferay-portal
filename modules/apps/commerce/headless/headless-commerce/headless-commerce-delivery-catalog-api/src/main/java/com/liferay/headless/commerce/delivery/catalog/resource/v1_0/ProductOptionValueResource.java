@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.delivery.catalog.resource.v1_0;
 
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOptionValue;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -52,6 +53,13 @@ public interface ProductOptionValueResource {
 				Long channelId, Long productId, Long productOptionId,
 				Long accountId, Long productOptionValueId, Long skuId,
 				Pagination pagination)
+		throws Exception;
+
+	public Page<ProductOptionValue>
+			postChannelProductProductOptionProductOptionValuesPage(
+				Long channelId, Long productId, Long productOptionId,
+				Long accountId, Long productOptionValueId, Long skuId,
+				Pagination pagination, SkuOption[] skuOptions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

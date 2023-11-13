@@ -6,11 +6,13 @@
 package com.liferay.headless.commerce.delivery.catalog.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.DDMOption;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishListItem;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ChannelResource;
+import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductOptionValueResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListItemResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListResource;
@@ -25,6 +27,8 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTa
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.function.BiFunction;
 
@@ -51,6 +55,14 @@ public class Mutation {
 
 		_channelResourceComponentServiceObjects =
 			channelResourceComponentServiceObjects;
+	}
+
+	public static void setProductOptionValueResourceComponentServiceObjects(
+		ComponentServiceObjects<ProductOptionValueResource>
+			productOptionValueResourceComponentServiceObjects) {
+
+		_productOptionValueResourceComponentServiceObjects =
+			productOptionValueResourceComponentServiceObjects;
 	}
 
 	public static void setSkuResourceComponentServiceObjects(
@@ -94,6 +106,37 @@ public class Mutation {
 				search, _filterBiFunction.apply(channelResource, filterString),
 				_sortsBiFunction.apply(channelResource, sortsString),
 				callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Retrieves a list of ProductOptionValue from selected channel, product ID and product option ID."
+	)
+	public java.util.Collection<ProductOptionValue>
+			createChannelProductProductOptionProductOptionValuesPage(
+				@GraphQLName("channelId") Long channelId,
+				@GraphQLName("productId") Long productId,
+				@GraphQLName("productOptionId") Long productOptionId,
+				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("productOptionValueId") Long productOptionValueId,
+				@GraphQLName("skuId") Long skuId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("skuOptions") SkuOption[] skuOptions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productOptionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productOptionValueResource -> {
+				Page paginationPage =
+					productOptionValueResource.
+						postChannelProductProductOptionProductOptionValuesPage(
+							channelId, productId, productOptionId, accountId,
+							productOptionValueId, skuId,
+							Pagination.of(page, pageSize), skuOptions);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -284,6 +327,28 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(
+			ProductOptionValueResource productOptionValueResource)
+		throws Exception {
+
+		productOptionValueResource.setContextAcceptLanguage(_acceptLanguage);
+		productOptionValueResource.setContextCompany(_company);
+		productOptionValueResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		productOptionValueResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		productOptionValueResource.setContextUriInfo(_uriInfo);
+		productOptionValueResource.setContextUser(_user);
+		productOptionValueResource.setGroupLocalService(_groupLocalService);
+		productOptionValueResource.setRoleLocalService(_roleLocalService);
+
+		productOptionValueResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		productOptionValueResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(SkuResource skuResource)
 		throws Exception {
 
@@ -345,6 +410,8 @@ public class Mutation {
 
 	private static ComponentServiceObjects<ChannelResource>
 		_channelResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProductOptionValueResource>
+		_productOptionValueResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SkuResource>
 		_skuResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WishListResource>

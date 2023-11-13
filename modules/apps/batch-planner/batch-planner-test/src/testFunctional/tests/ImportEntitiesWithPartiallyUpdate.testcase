@@ -42,11 +42,14 @@ definition {
 		}
 
 		task ("And Given "Stop the import on error" unchecked with Only Add New Records and valid JSON file with blog posting entry with existing externalReferenceCode") {
+			var siteName = TestCase.getSiteName();
+
 			ImportExport.configureImport(
 				entityType = "BlogPosting (v1_0 - Liferay Headless Delivery)",
 				fieldMappings = "articleBody:articleBody,headline:headline,externalReferenceCode:externalReferenceCode",
 				fileName = "json_blogPosting_import.json",
 				importStrategy = "Only Add New Records",
+				scope = ${siteName},
 				stopImportOnError = "false");
 		}
 

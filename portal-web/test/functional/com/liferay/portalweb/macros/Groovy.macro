@@ -56,6 +56,10 @@ definition {
 		ServerAdministration.executeScript(
 			language = "Groovy",
 			script = ${script});
+
+		if (isSet(expectedOutput)) {
+			ServerAdministration.viewOutputField(valueName = ${expectedOutput});
+		}
 	}
 
 }

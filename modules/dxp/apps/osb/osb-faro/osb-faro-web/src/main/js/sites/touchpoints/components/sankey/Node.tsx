@@ -19,7 +19,7 @@ function truncateText(text: string, limit: number) {
 	return text;
 }
 
-function getRadius(payload) {
+function getRadius(payload: {main: boolean; type: Type}) {
 	if (payload.main) {
 		return 0;
 	}
@@ -44,19 +44,26 @@ function showURL(url?: TitleKey) {
 	return false;
 }
 
-export const Node = (props: any) => {
-	const {
-		emptyState,
-		height,
-		hovered,
-		index,
-		onNodeChange,
-		payload,
-		selectedNode,
-		width,
-		x,
-		y
-	} = props;
+function normalizeNumber(number: number) {
+	return isNaN(number) ? 0 : number;
+}
+
+export const Node = ({
+	emptyState,
+	height: initialHeight,
+	hovered,
+	index,
+	onNodeChange,
+	payload,
+	selectedNode,
+	width: initialWidth,
+	x: initialX,
+	y: initialY
+}: any) => {
+	const height = normalizeNumber(initialHeight);
+	const width = normalizeNumber(initialWidth);
+	const x = normalizeNumber(initialX);
+	const y = normalizeNumber(initialY);
 
 	return (
 		<Layer

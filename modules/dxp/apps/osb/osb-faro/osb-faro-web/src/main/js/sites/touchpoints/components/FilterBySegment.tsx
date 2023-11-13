@@ -51,6 +51,7 @@ const filterBySegment: React.FC<IFilterBySegment> = ({onFilterChange}) => {
 		<div className='d-flex justify-content-between w-100 analytics-segment-filter-root'>
 			<div className='align-items-center d-flex'>
 				<ClayDropDown
+					closeOnClick
 					trigger={
 						<ClayButton
 							borderless
@@ -104,9 +105,9 @@ const filterBySegment: React.FC<IFilterBySegment> = ({onFilterChange}) => {
 					</ClayDropDown.ItemList>
 
 					{!data?.items.length && (
-						<NoResultsDisplay
-							description={
-								<>
+						<ClayDropDown.Section>
+							<NoResultsDisplay
+								description={
 									<div
 										className='d-flex flex-column justify-content-center'
 										style={{minHeight: 240}}
@@ -134,27 +135,29 @@ const filterBySegment: React.FC<IFilterBySegment> = ({onFilterChange}) => {
 											)}
 										</a>
 									</div>
-
-									<ClayLink
-										button
-										className='button-root'
-										displayType='primary'
-										href={toRoute(
-											Routes.CONTACTS_LIST_SEGMENT,
-											{
-												channelId,
-												groupId,
-												type: SEGMENTS
-											}
-										)}
-									>
-										{Liferay.Language.get('create-segment')}
-									</ClayLink>
-								</>
-							}
-							title={null}
-						/>
+								}
+								title={null}
+							/>
+						</ClayDropDown.Section>
 					)}
+
+					<ClayDropDown.Section>
+						<ClayLink
+							block
+							button
+							displayType={
+								!data?.items.length ? 'primary' : 'secondary'
+							}
+							href={toRoute(Routes.CONTACTS_LIST_SEGMENT, {
+								channelId,
+								groupId,
+								type: SEGMENTS
+							})}
+							small
+						>
+							{Liferay.Language.get('create-segment')}
+						</ClayLink>
+					</ClayDropDown.Section>
 				</ClayDropDown>
 
 				{selectedItem && (

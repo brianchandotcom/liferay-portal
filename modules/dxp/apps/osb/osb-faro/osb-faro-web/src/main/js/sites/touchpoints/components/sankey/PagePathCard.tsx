@@ -29,7 +29,7 @@ function getTitle(key: TitleKey, type: Type) {
 				: Liferay.Language.get('other-pages')
 	};
 
-	return langs[key] || decodeURIComponent(key);
+	return langs[key] || key;
 }
 
 function getColor(key: TitleKey) {
@@ -53,15 +53,15 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 				id: uuidv4(),
 				name: getTitle(title, type),
 				type,
-				url: decodeURIComponent(canonicalUrl),
+				url: canonicalUrl,
 				views
 			}));
 
 	const mainNode = {
 		id: uuidv4(),
 		main: true,
-		name: decodeURIComponent(pagePath.title),
-		url: decodeURIComponent(pagePath.canonicalUrl),
+		name: pagePath.title,
+		url: pagePath.canonicalUrl,
 		views: pagePath.views
 	};
 

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -27,8 +27,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,67 +34,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FileEntry")
+@GraphQLName("Folder")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FileEntry")
-public class FileEntry implements Serializable {
+@XmlRootElement(name = "Folder")
+public class Folder implements Serializable {
 
-	public static FileEntry toDTO(String json) {
-		return ObjectMapperUtil.readValue(FileEntry.class, json);
+	public static Folder toDTO(String json) {
+		return ObjectMapperUtil.readValue(Folder.class, json);
 	}
 
-	public static FileEntry unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FileEntry.class, json);
+	public static Folder unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Folder.class, json);
 	}
-
-	@Schema(
-		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileBase64`)"
-	)
-	public String getFileBase64() {
-		return fileBase64;
-	}
-
-	public void setFileBase64(String fileBase64) {
-		this.fileBase64 = fileBase64;
-	}
-
-	@JsonIgnore
-	public void setFileBase64(
-		UnsafeSupplier<String, Exception> fileBase64UnsafeSupplier) {
-
-		try {
-			fileBase64 = fileBase64UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileBase64`)"
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String fileBase64;
 
 	@Schema
-	@Valid
-	public Folder getFolder() {
-		return folder;
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
 	}
 
-	public void setFolder(Folder folder) {
-		this.folder = folder;
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
 	}
 
 	@JsonIgnore
-	public void setFolder(
-		UnsafeSupplier<Folder, Exception> folderUnsafeSupplier) {
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
 		try {
-			folder = folderUnsafeSupplier.get();
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -108,21 +73,23 @@ public class FileEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Folder folder;
+	protected String externalReferenceCode;
 
 	@Schema
-	public Long getId() {
-		return id;
+	public Long getSiteId() {
+		return siteId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			siteId = siteIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -134,60 +101,7 @@ public class FileEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
-
-	@Schema
-	@Valid
-	public Link getLink() {
-		return link;
-	}
-
-	public void setLink(Link link) {
-		this.link = link;
-	}
-
-	@JsonIgnore
-	public void setLink(UnsafeSupplier<Link, Exception> linkUnsafeSupplier) {
-		try {
-			link = linkUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Link link;
-
-	@Schema
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected Long siteId;
 
 	@Override
 	public boolean equals(Object object) {
@@ -195,13 +109,13 @@ public class FileEntry implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FileEntry)) {
+		if (!(object instanceof Folder)) {
 			return false;
 		}
 
-		FileEntry fileEntry = (FileEntry)object;
+		Folder folder = (Folder)object;
 
-		return Objects.equals(toString(), fileEntry.toString());
+		return Objects.equals(toString(), folder.toString());
 	}
 
 	@Override
@@ -216,62 +130,28 @@ public class FileEntry implements Serializable {
 
 		sb.append("{");
 
-		if (fileBase64 != null) {
+		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fileBase64\": ");
+			sb.append("\"externalReferenceCode\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fileBase64));
+			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
 		}
 
-		if (folder != null) {
+		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"folder\": ");
+			sb.append("\"siteId\": ");
 
-			sb.append(String.valueOf(folder));
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
-		if (link != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"link\": ");
-
-			sb.append(String.valueOf(link));
-		}
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
+			sb.append(siteId);
 		}
 
 		sb.append("}");
@@ -281,7 +161,7 @@ public class FileEntry implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.object.rest.dto.v1_0.FileEntry",
+		defaultValue = "com.liferay.object.rest.dto.v1_0.Folder",
 		name = "x-class-name"
 	)
 	public String xClassName;

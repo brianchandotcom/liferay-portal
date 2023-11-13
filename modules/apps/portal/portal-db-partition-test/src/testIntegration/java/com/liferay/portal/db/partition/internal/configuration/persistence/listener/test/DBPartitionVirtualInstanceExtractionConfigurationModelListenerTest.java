@@ -29,37 +29,6 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 	}
 
 	@Test
-	public void testCompanyExtraction() throws Exception {
-		String toBeExtractedCompanyWebId = "Test" + COMPANY_IDS[0];
-
-		try (AutoCloseable autoCloseable = swapCompanyLocalService(
-				(proxy, method, args) -> {
-					if (Objects.equals(method.getName(), "extractCompany")) {
-						Assert.assertEquals(
-							COMPANY_IDS[0], GetterUtil.getLong(args[0]));
-
-						_calledDoExportPartitionCompanyMethod = true;
-					}
-					else if (Objects.equals(
-								method.getName(), "getCompanyByWebId")) {
-
-						Assert.assertEquals(toBeExtractedCompanyWebId, args[0]);
-
-						return _companyLocalService.createCompany(
-							COMPANY_IDS[0]);
-					}
-
-					return null;
-				})) {
-
-			deployConfiguration(
-				_PID, "webId=T\"" + toBeExtractedCompanyWebId + "\"\n");
-
-			Assert.assertTrue(_calledDoExportPartitionCompanyMethod);
-		}
-	}
-
-	@Test
 	public void testConfigurationIsDeletedAfterDeploy() throws Exception {
 		try (AutoCloseable autoCloseable = swapCompanyLocalService(
 				(proxy, method, args) -> {
@@ -76,11 +45,41 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 		}
 	}
 
+	@Test
+	public void testExtractCompany() throws Exception {
+		String webId = "Test" + COMPANY_IDS[0];
+
+		try (AutoCloseable autoCloseable = swapCompanyLocalService(
+				(proxy, method, args) -> {
+					if (Objects.equals(method.getName(), "extractCompany")) {
+						Assert.assertEquals(
+							COMPANY_IDS[0], GetterUtil.getLong(args[0]));
+
+						_calledExtractCompany = true;
+					}
+					else if (Objects.equals(
+								method.getName(), "getCompanyByWebId")) {
+
+						Assert.assertEquals(webId, args[0]);
+
+						return _companyLocalService.createCompany(
+							COMPANY_IDS[0]);
+					}
+
+					return null;
+				})) {
+
+			deployConfiguration(_PID, "webId=T\"" + webId + "\"\n");
+
+			Assert.assertTrue(_calledExtractCompany);
+		}
+	}
+
 	private static final String _PID =
 		"com.liferay.portal.db.partition.internal.configuration." +
 			"DBPartitionVirtualInstanceExtractionConfiguration";
 
-	private boolean _calledDoExportPartitionCompanyMethod;
+	private boolean _calledExtractCompany;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

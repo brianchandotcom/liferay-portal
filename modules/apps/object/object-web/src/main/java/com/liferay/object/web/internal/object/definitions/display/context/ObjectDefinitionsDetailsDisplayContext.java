@@ -172,10 +172,10 @@ public class ObjectDefinitionsDetailsDisplayContext
 				_panelCategoryRegistry.getChildPanelCategories(
 					panelCategoryKey);
 
-			JSONArray itensJSONArray = JSONFactoryUtil.createJSONArray();
+			JSONArray itemsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (PanelCategory childPanelCategory : childPanelCategories) {
-				itensJSONArray.put(
+				itemsJSONArray.put(
 					JSONUtil.put(
 						"label",
 						childPanelCategory.getLabel(
@@ -187,7 +187,7 @@ public class ObjectDefinitionsDetailsDisplayContext
 
 			jsonArray.put(
 				JSONUtil.put(
-					"items", itensJSONArray
+					"items", itemsJSONArray
 				).put(
 					"label",
 					panelCategory.getLabel(objectRequestHelper.getLocale())

@@ -67,7 +67,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	}
 
 	@Override
-	public boolean isAICreatorOpenAICompanyEnabled(long companyId)
+	public boolean isAICreatorChatGTPCompanyEnabled(long companyId)
 		throws ConfigurationException {
 
 		AICreatorOpenAICompanyConfiguration
@@ -75,7 +75,9 @@ public class AICreatorOpenAIConfigurationManagerImpl
 				_configurationProvider.getCompanyConfiguration(
 					AICreatorOpenAICompanyConfiguration.class, companyId);
 
-		if (aiCreatorOpenAICompanyConfiguration.enableOpenAIToCreateContent()) {
+		if (aiCreatorOpenAICompanyConfiguration.
+				enableChatGPTToCreateContent()) {
+
 			return true;
 		}
 
@@ -83,10 +85,10 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	}
 
 	@Override
-	public boolean isAICreatorOpenAIGroupEnabled(long companyId, long groupId)
+	public boolean isAICreatorChatGTPGroupEnabled(long companyId, long groupId)
 		throws ConfigurationException {
 
-		if (!isAICreatorOpenAICompanyEnabled(companyId)) {
+		if (!isAICreatorChatGTPCompanyEnabled(companyId)) {
 			return false;
 		}
 
@@ -94,7 +96,42 @@ public class AICreatorOpenAIConfigurationManagerImpl
 			_configurationProvider.getGroupConfiguration(
 				AICreatorOpenAIGroupConfiguration.class, groupId);
 
-		if (aiCreatorOpenAIGroupConfiguration.enableOpenAIToCreateContent()) {
+		if (aiCreatorOpenAIGroupConfiguration.enableChatGPTToCreateContent()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isAICreatorDALLECompanyEnabled(long companyId)
+		throws ConfigurationException {
+
+		AICreatorOpenAICompanyConfiguration
+			aiCreatorOpenAICompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					AICreatorOpenAICompanyConfiguration.class, companyId);
+
+		if (aiCreatorOpenAICompanyConfiguration.enableDALLEToCreateImages()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isAICreatorDALLEGroupEnabled(long companyId, long groupId)
+		throws ConfigurationException {
+
+		if (!isAICreatorDALLECompanyEnabled(companyId)) {
+			return false;
+		}
+
+		AICreatorOpenAIGroupConfiguration aiCreatorOpenAIGroupConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				AICreatorOpenAIGroupConfiguration.class, groupId);
+
+		if (aiCreatorOpenAIGroupConfiguration.enableDALLEToCreateImages()) {
 			return true;
 		}
 
@@ -103,7 +140,8 @@ public class AICreatorOpenAIConfigurationManagerImpl
 
 	@Override
 	public void saveAICreatorOpenAICompanyConfiguration(
-			long companyId, String apiKey, boolean enabled)
+			long companyId, String apiKey, boolean enableChatGPT,
+			boolean enableDALLE)
 		throws ConfigurationException {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -111,13 +149,16 @@ public class AICreatorOpenAIConfigurationManagerImpl
 			HashMapDictionaryBuilder.<String, Object>put(
 				"apiKey", apiKey
 			).put(
-				"enableOpenAIToCreateContent", enabled
+				"enableChatGPTToCreateContent", enableChatGPT
+			).put(
+				"enableDALLEToCreateImages", enableDALLE
 			).build());
 	}
 
 	@Override
 	public void saveAICreatorOpenAIGroupConfiguration(
-			long groupId, String apiKey, boolean enabled)
+			long groupId, String apiKey, boolean enableChatGPT,
+			boolean enableDALLE)
 		throws ConfigurationException {
 
 		_configurationProvider.saveGroupConfiguration(
@@ -125,7 +166,9 @@ public class AICreatorOpenAIConfigurationManagerImpl
 			HashMapDictionaryBuilder.<String, Object>put(
 				"apiKey", apiKey
 			).put(
-				"enableOpenAIToCreateContent", enabled
+				"enableChatGPTToCreateContent", enableChatGPT
+			).put(
+				"enableDALLEToCreateImages", enableDALLE
 			).build());
 	}
 

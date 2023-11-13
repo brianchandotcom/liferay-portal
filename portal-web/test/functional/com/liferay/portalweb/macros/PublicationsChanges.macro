@@ -147,9 +147,8 @@ definition {
 
 		Click(
 			key_changeCategory = ${changeCategory},
-			key_changeOrder = ${changeOrder},
 			key_changeTitle = ${changeTitle},
-			locator1 = "PublicationsChanges#REVIEW_CHANGE_LISTING");
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
 
 		Click(locator1 = "PublicationsChanges#REVIEW_CHANGE_DROPDOWN");
 

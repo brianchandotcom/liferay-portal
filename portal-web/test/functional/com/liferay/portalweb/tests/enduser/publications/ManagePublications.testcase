@@ -57,7 +57,6 @@ definition {
 
 			PublicationsChanges.gotoMoveChangeToAnotherPublication(
 				changeCategory = "Site",
-				changeOrder = 1,
 				changeTitle = "Test Site Name",
 				targetPublicationName = "Publication 1 Name");
 
@@ -136,7 +135,6 @@ definition {
 		task ("Assert the changes are listed when moving the change to Publication 1 Name") {
 			PublicationsChanges.gotoMoveChangeToAnotherPublication(
 				changeCategory = "Web Content Article",
-				changeOrder = 1,
 				changeTitle = "Edited in Publication 2 Name",
 				submit = "false",
 				targetPublicationName = "Publication 1 Name");
@@ -233,7 +231,6 @@ definition {
 		task ("Attempt to move the change to Publication 1 Name and assert an alert is shown for conflicting changes") {
 			PublicationsChanges.gotoMoveChangeToAnotherPublication(
 				changeCategory = "Web Content Article",
-				changeOrder = 1,
 				changeTitle = "WC WebContent Title 2 Edit",
 				targetPublicationName = "Publication 1 Name");
 
@@ -334,7 +331,6 @@ definition {
 
 			PublicationsChanges.gotoMoveChangeToAnotherPublication(
 				changeCategory = "Web Content Article",
-				changeOrder = 1,
 				changeTitle = "Test WebContent Title",
 				targetPublicationName = "Publication 1 Name");
 

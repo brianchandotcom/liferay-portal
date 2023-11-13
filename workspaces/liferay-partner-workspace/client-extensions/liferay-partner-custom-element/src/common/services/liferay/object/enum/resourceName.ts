@@ -16,5 +16,7 @@ export enum ResourceName {
 	LEAD_NOTIFICATION = 'leadnotifications',
 	LEADS_SALESFORCE = 'leadsfs',
 	OPPORTUNITIES_SALESFORCE = 'opportunitysfs',
+	OPPORTUNITIES_PARTNER_ROLE_SALESFORCE = 'opportunitypartnerrolesfs',
+	PARTNER_OPPORTUNITIES_SALESFORCE = 'partneropportunitysfs',
 	PROJECT_SALESFORCE = 'projectsfs',
 }

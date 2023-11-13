@@ -4,6 +4,7 @@
  */
 
 import Button, {ClayButtonWithIcon} from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 
 import ModalFormatedInformation from '../../../../common/components/ModalFormatedInformation';
@@ -29,6 +30,7 @@ export default function ModalContent({content, onClose}: IProps) {
 				/>
 			</div>
 
+			{!content && <ClayLoadingIndicator />}
 			<div className="d-md-flex">
 				<div className="col">
 					{content?.[

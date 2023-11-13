@@ -93,21 +93,32 @@ const appRoutes: AppRouteComponent = {
 								!item['HAS-RENEWAL'])
 					);
 				}
+				if (
+					opportunitiesFilter === Filters.OPPORTUNITY_LISTING.openWIP
+				) {
+					return items.filter(
+						(item) =>
+							item['TYPE'] === OpportunityType.NEW_BUSINESS ||
+							item['TYPE'] ===
+								OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
+							(item['TYPE'] ===
+								OpportunityType.EXISTING_BUSINESS &&
+								!item['HAS-RENEWAL'] &&
+								Number(item['GROWTH-ARR']) > 0)
+					);
+				}
 
-				return items.filter(
-					(item) =>
-						item['TYPE'] === OpportunityType.NEW_BUSINESS ||
-						item['TYPE'] ===
-							OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
-						(item['TYPE'] === OpportunityType.EXISTING_BUSINESS &&
-							!item['HAS-RENEWAL'] &&
-							Number(item['GROWTH-ARR']) > 0)
-				);
+				if (opportunitiesFilter === Filters.OPPORTUNITY_LISTING.rfp) {
+					return items.filter((item) => item['OPPORTUNITY']);
+				}
+
+				return items;
 			}}
 			name="Partner Opportunities"
 			newButtonDeal={false}
 			openOpportunitiesFilter={Filters.OPPORTUNITY_LISTING.openWIP}
-			sort="closeDate:desc"
+			rfpOpportunitiesFilter={Filters.OPPORTUNITY_LISTING.rfp}
+			sort="dateCreated:desc"
 		/>
 	),
 	[AppRouteType.RENEWALS_OPPORTUNITIES_LIST]: (

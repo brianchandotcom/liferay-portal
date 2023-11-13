@@ -20,12 +20,16 @@ import {PartnerOpportunitiesColumnKey} from '../../common/enums/partnerOpportuni
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
+import DealRegistrationDTO from '../../common/interfaces/dto/dealRegistrationDTO';
 import {Liferay} from '../../common/services/liferay';
+import {ResourceName} from '../../common/services/liferay/object/enum/resourceName';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
+import {retry} from '../../common/utils/retry';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFromPartnerOpportunities';
 import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
+import getItemPartnerOpportunity from './utils/getItemPartnerOpportunity';
 
 interface IProps {
 	closedOpportunitiesFilter: string;
@@ -36,6 +40,7 @@ interface IProps {
 	name: string;
 	newButtonDeal?: boolean;
 	openOpportunitiesFilter: string;
+	rfpOpportunitiesFilter?: string;
 	sort: string;
 }
 
@@ -48,6 +53,7 @@ const PartnerOpportunitiesList = ({
 	name,
 	newButtonDeal,
 	openOpportunitiesFilter,
+	rfpOpportunitiesFilter,
 	sort,
 }: IProps) => {
 	const [opportunitiesFilter, setOpportunitiesFilter] = useState(
@@ -60,7 +66,10 @@ const PartnerOpportunitiesList = ({
 		PartnerOpportunitiesItem
 	>();
 	const {observer, onClose} = useModal({
-		onClose: () => setIsVisibleModal(false),
+		onClose: () => {
+			setIsVisibleModal(false);
+			setModalContent(undefined);
+		},
 	});
 
 	const pagination = usePagination();
@@ -70,6 +79,7 @@ const PartnerOpportunitiesList = ({
 		filtersTerm,
 		sort
 	);
+
 	const {data: dataCSV} = useGetListItemsFromPartnerOpportunities(
 		BASE_PAGE,
 		MAX_ITEMS,
@@ -84,7 +94,7 @@ const PartnerOpportunitiesList = ({
 		dataCSV.items && getFilteredItems(dataCSV.items, opportunitiesFilter);
 
 	const siteURL = useLiferayNavigate();
-	const columns = [
+	const columnsOpp = [
 		{
 			columnKey: PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME,
 			label: 'Partner Account Name',
@@ -131,8 +141,49 @@ const PartnerOpportunitiesList = ({
 		},
 	];
 
-	const handleCustomClickOnRow = (row: PartnerOpportunitiesItem) => {
+	const columnsRFP = [
+		{
+			columnKey: PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME,
+			label: 'Partner Account Name',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.ACCOUNT_NAME,
+			label: 'Account Name',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.STAGE,
+			label: 'Stage',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.CREATED_DATE,
+			label: 'Created Date',
+		},
+	];
+
+	const handleCustomClickOnRow = async (row: PartnerOpportunitiesItem) => {
 		setIsVisibleModal(true);
+
+		if (opportunitiesFilter === rfpOpportunitiesFilter) {
+			const response = await retry<Response>(() =>
+				fetch(
+					`/o/c/${ResourceName.OPPORTUNITIES_SALESFORCE}/by-external-reference-code/${row['OPPORTUNITY']}`,
+					{
+						headers: {
+							'accept': 'application/json',
+							'x-csrf-token': Liferay.authToken,
+						},
+					}
+				)
+			);
+
+			if (response.ok) {
+				const rfpOpportunity = (await response.json()) as DealRegistrationDTO;
+				const rowRFP = getItemPartnerOpportunity(rfpOpportunity);
+				setModalContent(rowRFP);
+			}
+
+			return;
+		}
 		setModalContent(row);
 	};
 
@@ -146,7 +197,8 @@ const PartnerOpportunitiesList = ({
 
 	const getTable = (
 		totalCount: number,
-		items?: PartnerOpportunitiesItem[]
+		items?: PartnerOpportunitiesItem[],
+		isRFP?: boolean
 	) => {
 		if (items) {
 			if (!totalCount) {
@@ -161,6 +213,12 @@ const PartnerOpportunitiesList = ({
 						</ClayAlert>
 					</div>
 				);
+			}
+
+			let columns = columnsOpp;
+
+			if (isRFP) {
+				columns = columnsRFP;
 			}
 
 			return (
@@ -205,6 +263,19 @@ const PartnerOpportunitiesList = ({
 					>
 						Closed
 					</ClayTabs.Item>
+					{rfpOpportunitiesFilter && (
+						<ClayTabs.Item
+							active={
+								opportunitiesFilter === rfpOpportunitiesFilter
+							}
+							className="nav-item"
+							onClick={() =>
+								setOpportunitiesFilter(rfpOpportunitiesFilter)
+							}
+						>
+							RFPs
+						</ClayTabs.Item>
+					)}
 				</ClayTabs>
 			</div>
 
@@ -265,7 +336,12 @@ const PartnerOpportunitiesList = ({
 
 			{isValidating && <ClayLoadingIndicator />}
 
-			{!isValidating && getTable(filteredData?.length || 0, filteredData)}
+			{!isValidating &&
+				getTable(
+					filteredData?.length || 0,
+					filteredData,
+					opportunitiesFilter === rfpOpportunitiesFilter
+				)}
 		</div>
 	);
 };

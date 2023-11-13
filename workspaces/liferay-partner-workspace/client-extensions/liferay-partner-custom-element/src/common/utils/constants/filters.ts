@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ResourceName} from '../../services/liferay/object/enum/resourceName';
 import {getCamelCase} from '../getCamelCase';
 
 const todayDate = new Date();
@@ -108,15 +109,16 @@ export const Filters = {
 		partnersOpen: `${mdfRequestOpenFilter}`,
 	},
 	OPPORTUNITY_LISTING: {
-		closedWIP: `${opportunityStageClosed} and ${fiscalYearFilterCloseDate}`,
-		openWIP: `${opportunityStageOpen}`,
+		closedWIP: `${ResourceName.OPPORTUNITIES_SALESFORCE}/?&filter=${opportunityStageClosed} and ${fiscalYearFilterCloseDate}`,
+		openWIP: `${ResourceName.OPPORTUNITIES_SALESFORCE}/?&filter=${opportunityStageOpen}`,
+		rfp: `${ResourceName.PARTNER_OPPORTUNITIES_SALESFORCE}/?&filter=stage eq 'Open'`,
 	},
 	RENEWAL_DASHBOARD: {
 		renewals: `${opportunityStageOpen} and type eq 'Existing Business' and closeDate le ${thirtyDaysFromToday}`,
 	},
 	RENEWAL_LISTING: {
-		closedWIP: `${opportunityStageClosed} and type eq 'Existing Business' and ${fiscalYearFilterCloseDate}`,
-		openWIP: `${opportunityStageOpen} and type eq 'Existing Business'`,
+		closedWIP: `${ResourceName.OPPORTUNITIES_SALESFORCE}/?&filter=${opportunityStageClosed} and type eq 'Existing Business' and ${fiscalYearFilterCloseDate}`,
+		openWIP: `${ResourceName.OPPORTUNITIES_SALESFORCE}/?&filter=${opportunityStageOpen} and type eq 'Existing Business'`,
 	},
 	REVENUE_DASHBOARD: {
 		opportunities: `stage eq 'Closed Won' and ${fiscalYearFilterCloseDate}`,

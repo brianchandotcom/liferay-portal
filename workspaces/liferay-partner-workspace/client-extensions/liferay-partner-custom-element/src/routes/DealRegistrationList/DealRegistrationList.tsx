@@ -59,7 +59,9 @@ const DealRegistrationList = ({
 	const [modalContent, setModalContent] = useState<DealRegistrationItem>({});
 
 	const {observer, onClose} = useModal({
-		onClose: () => setIsVisibleModal(false),
+		onClose: () => {
+			setIsVisibleModal(false);
+		},
 	});
 
 	const pagination = usePagination();

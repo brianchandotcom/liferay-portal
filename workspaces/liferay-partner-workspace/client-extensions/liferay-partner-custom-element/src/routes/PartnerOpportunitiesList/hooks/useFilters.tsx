@@ -8,7 +8,7 @@ import {useCallback, useEffect, useState} from 'react';
 import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 
-export default function useFilters(renewalOpportunitiesFilter?: string) {
+export default function useFilters(opportunitiesFilter?: string) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	const [filtersTerm, setFilterTerm] = useState('');
@@ -23,12 +23,12 @@ export default function useFilters(renewalOpportunitiesFilter?: string) {
 	);
 
 	useEffect(() => {
-		let initialFilter = '';
+		let initialFilter = ``;
 
-		if (renewalOpportunitiesFilter) {
+		if (opportunitiesFilter) {
 			initialFilter = initialFilter
-				? initialFilter.concat(renewalOpportunitiesFilter)
-				: `${renewalOpportunitiesFilter}`;
+				? initialFilter.concat(opportunitiesFilter)
+				: `${opportunitiesFilter}`;
 		}
 
 		if (filters.searchTerm) {
@@ -38,7 +38,7 @@ export default function useFilters(renewalOpportunitiesFilter?: string) {
 		}
 
 		setFilterTerm(initialFilter);
-	}, [filters.searchTerm, renewalOpportunitiesFilter, setFilters]);
+	}, [filters.searchTerm, opportunitiesFilter, setFilters]);
 
 	return {filters, filtersTerm, onFilter};
 }

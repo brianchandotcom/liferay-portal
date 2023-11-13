@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-12192=true${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -1150,6 +1150,293 @@ definition {
 			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#INCREASE_ZOOM_BUTTON");
 
 			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#EXPAND_BUTTON");
+		}
+	}
+
+	@description = "COMMERCE-12825. As a user, I can delete account definetely from Organization Management Chart."
+	@priority = 5
+	test CanUserDeleteAccountFromOrganizationManagementChart {
+		property portal.acceptance = "true";
+
+		task ("Given an organization is created and the account is linked to it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Org 1",
+				organizationSite = "false");
+
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Commerce Account",
+				organizationName = "Org 1");
+		}
+
+		task ("And the user is given a Regular role and required permissions are given to that role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Power User");
+
+			for (var resourceAction : list "DELETE,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Power User");
+			}
+		}
+
+		task ("When the user navigates to the widget page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+		}
+
+		task ("And deletes the account from Organization Management Chart") {
+			CommerceWidget.deleteEntryFromOrganizationManagement(entryName = "Commerce Account");
+		}
+
+		task ("Then the account will be deleted definetely both from Organization Management Chart and Account Management") {
+			CommerceWidget.clearOrganizationManagementWidgetSearchBar();
+
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "Commerce Account");
+
+			AssertElementNotPresent(
+				key_columnOption = "Commerce Account",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Commerce Account");
+		}
+	}
+
+	@description = "COMMERCE-12824. As a user, I can edit account details from Organization Management Chart."
+	@priority = 5
+	test CanUserEditAccountDetailsFromOrganizationManagementChart {
+		property portal.acceptance = "true";
+
+		task ("Given an organization is created and the account is linked to it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Org 1",
+				organizationSite = "false");
+
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Commerce Account",
+				organizationName = "Org 1");
+		}
+
+		task ("And the user is given a Regular role and required permissions are given to that role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Power User");
+
+			for (var resourceAction : list "DELETE,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Power User");
+			}
+		}
+
+		task ("When the user navigates to the widget page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+		}
+
+		task ("Then can view current account details") {
+			CommerceWidget.viewAccountDetailsAtSidebar(
+				accountDescription = "Account Entry Description",
+				accountImage = "Default",
+				accountName = "Commerce Account",
+				accountTaxID = "-",
+				accountType = "Business",
+				viewCurrentInfo = "true");
+		}
+
+		task ("When the user edits account details from Organization Management Chart") {
+			CommerceWidget.editAccountFromOrganizationManagement(
+				accountDescription = "New Account Description",
+				accountERC = "newERC",
+				accountImage = "Commerce_Blue.jpg",
+				accountName = "Commerce Account",
+				accountTaxID = 1234,
+				newAccountName = "New Account Name");
+		}
+
+		task ("Then the edited fields are saved and shown correctly") {
+			CommerceWidget.viewAccountDetailsAtSidebar(
+				accountDescription = "New Account Description",
+				accountImage = "Custom Image",
+				accountName = "New Account Name",
+				accountTaxID = 1234,
+				accountType = "Business");
+		}
+	}
+
+	@description = "COMMERCE-12826 . As a user, I can remove account from the organization in Organization Management Chart."
+	@priority = 4
+	test CanUserRemoveAccountFromOrganization {
+		property portal.acceptance = "false";
+
+		task ("Given an organization is created and the account is linked to it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Org 1",
+				organizationSite = "false");
+
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Commerce Account",
+				organizationName = "Org 1");
+		}
+
+		task ("And the user is given a Regular role and required permissions are given to that role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Power User");
+
+			for (var resourceAction : list "DELETE,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Power User");
+			}
+		}
+
+		task ("When the user navigates to the widget page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+		}
+
+		task ("And removes the account from Organization Management Chart") {
+			CommerceWidget.removeAccountFromOrganization(
+				accountName = "Commerce Account",
+				organizationName = "Org 1");
+		}
+
+		task ("Then the account will be removed from the organization") {
+			CommerceWidget.clearOrganizationManagementWidgetSearchBar();
+
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = "Commerce Account");
+
+			AssertElementNotPresent(
+				key_entry = "Commerce Account",
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
+
+			AssertElementPresent(
+				key_searchResults = "0 Result for Commerce Account",
+				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+		}
+	}
+
+	@description = "COMMERCE-12823. As a user, I can view options as Edit, Delete, Remove, View for account in Organization Management Chart if the necessary permissions are given."
+	@priority = 5
+	test CanUserViewActionOptionsForAccountInOrganizationManagementChart {
+		property portal.acceptance = "true";
+
+		task ("Given an organization is created and the account is linked to it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Org 1",
+				organizationSite = "false");
+
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Commerce Account",
+				organizationName = "Org 1");
+		}
+
+		task ("And the user is given a Regular role and View permissions are given to that role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var resourceNameList : list "com.liferay.account.model.AccountEntry,com.liferay.portal.kernel.model.Organization") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW",
+					resourceName = ${resourceNameList},
+					roleTitle = "Power User");
+			}
+		}
+
+		task ("When the user navigates to the widget page clicking the account's ellipsis") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = "Commerce Account");
+
+			Click(
+				key_nodeName = "Commerce Account",
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+		}
+
+		task ("Then can verify Edit, Delete and Remove options are not shown to the user without permissions, only View option is shown") {
+			for (var menuItem : list "Edit,Delete,Remove") {
+				AssertElementNotPresent(
+					key_menuItem = ${menuItem},
+					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			}
+
+			AssertElementPresent(
+				key_menuItem = "View",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("When the necessary permissions are given to the user (Account Entry > View, Update, Delete)") {
+			for (var resourceAction : list "DELETE,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Power User");
+			}
+
+			Refresh();
+		}
+
+		task ("Then can verify Edit, Delete, Remove and View options are shown") {
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = "Commerce Account");
+
+			Click(
+				key_nodeName = "Commerce Account",
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+			for (var menuItem : list "Edit,Delete,Remove,View") {
+				AssertElementPresent(
+					key_menuItem = ${menuItem},
+					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			}
 		}
 	}
 

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -72,6 +71,13 @@ public class ToolDependencies {
 
 		bundleContext.registerService(
 			FullNameGenerator.class, new DefaultFullNameGenerator(), null);
+		bundleContext.registerService(
+			FriendlyURLNormalizer.class,
+			(FriendlyURLNormalizer)ProxyUtil.newProxyInstance(
+				ToolDependencies.class.getClassLoader(),
+				new Class<?>[] {FriendlyURLNormalizer.class},
+				(proxy, method, args) -> null),
+			null);
 
 		CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 			new CacheKeyGeneratorUtil();
@@ -92,15 +98,6 @@ public class ToolDependencies {
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
-
-		FriendlyURLNormalizerUtil friendlyURLNormalizerUtil =
-			new FriendlyURLNormalizerUtil();
-
-		friendlyURLNormalizerUtil.setFriendlyURLNormalizer(
-			(FriendlyURLNormalizer)ProxyUtil.newProxyInstance(
-				ToolDependencies.class.getClassLoader(),
-				new Class<?>[] {FriendlyURLNormalizer.class},
-				(proxy, method, args) -> null));
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 

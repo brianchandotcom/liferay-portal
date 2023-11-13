@@ -1,0 +1,93 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Web Content Administration";
+
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+	}
+
+	@description = "This is a test for LPS-197163. When displaying the search results, the file path can be accessed via keyboard."
+	@priority = 4
+	test NavigateByBreadcrumbInSearchResultsViaKeyboard {
+		task ("Given a web content and a folder with a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content",
+				groupName = ${randomSiteName},
+				title = "Over the Years");
+
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = ${randomSiteName});
+
+			JSONWebcontent.addWebContent(
+				content = "After many years I understood",
+				folderName = "WC Folder Name",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+		}
+
+		task ("When searching for a term on the web content admin page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
+
+			Search.searchCP(searchTerm = "Years");
+		}
+
+		task ("Then it is possible to access the file path using the keyboard") {
+			KeyPress(
+				key_breadcrumbName = "Home",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_breadcrumbName = "Home",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				value1 = "\ENTER");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Home");
+
+			WebContentAdmin.viewEntryTitle(entry = "WC Folder Name");
+		}
+
+		task ("When searching for a term on the web content admin page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
+
+			Search.searchCP(searchTerm = "Years");
+		}
+
+		task ("Then it is possible to access the file path using the keyboard") {
+			KeyPress(
+				key_breadcrumbName = "WC Folder Name",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_breadcrumbName = "WC Folder Name",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				value1 = "\ENTER");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "WC Folder Name");
+
+			WebContentAdmin.viewEntryTitle(entry = "Web Content Title");
+		}
+	}
+
+}

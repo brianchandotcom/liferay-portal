@@ -5,14 +5,13 @@
 
 	.app-container .app-category {
 		background-color: #e6ebf5;
-		padding: 6px 8px 4px 8px;
+		padding: 6px 8px 4px
 	}
 
 	.app-container .app-product-type {
-		color:#2e5aac;
 		border-color: #2e5aac !important;
-		padding: 4px 8px 4px 8px;
-
+		color:#2e5aac;
+		padding: 4px 8px;
 	}
 
 	@media screen and (max-width: 768px) {
@@ -28,17 +27,16 @@
 
 		.app-container .app-category,
 		.app-container .app-product-type {
-			padding: 2px 4px 2px 4px;
+			padding: 2px 4px;
 		}
 	}
-
 </style>
 
 <#assign
+	PRODUCT_TYPE_CLOUD = "CLOUD"
+	PRODUCT_TYPE_DXP = "DXP"
 	PRODUCT_TYPE_FREE = "FREE"
 	PRODUCT_TYPE_PAID = "PAID"
-	PRODUCT_TYPE_DXP = "DXP"
-	PRODUCT_TYPE_CLOUD = "CLOUD"
 	VOCABULARY_PRODUCT_CATEGORY = "MARKETPLACE APP CATEGORY"
 />
 
@@ -49,8 +47,8 @@
 <#if currentURL?has_content>
 	<#if currentURL?contains('web')>
 		<#assign
-			partsUrl = currentURL?split('/')
 			index = 2
+			partsUrl = currentURL?split('/')
 			siteName = partsUrl[index..index]?join('/')
 		/>
 	</#if>
@@ -68,8 +66,8 @@
 
 <#assign
 	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications,categories")
-	productSpecifications = product.productSpecifications![]
 	categories = product.categories![]
+	productSpecifications = product.productSpecifications![]
 />
 
 <div class="app-container color-neutral-3 d-flex flex-wrap font-size-paragraph-small justify-content-between w-100">
@@ -89,21 +87,15 @@
 			<#assign productTypes = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "type")) />
 
 			<#list productTypes as productType>
-				<#assign
-					type = ""
-					icon =""
-				/>
-
 				<#if productType.value?upper_case == PRODUCT_TYPE_DXP>
 					<#assign
+						icon = "ir-icon-dxp-svg"
 						type = "DXP App"
-						icon ="ir-icon-dxp-svg"
 					/>
-
 				<#elseif productType.value?upper_case == PRODUCT_TYPE_CLOUD>
 					<#assign
-						type = "Cloud App"
 						icon = "ir-icon-cloud-svg"
+						type = "Cloud App"
 					/>
 				</#if>
 

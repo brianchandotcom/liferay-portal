@@ -667,6 +667,8 @@ definition {
 	test ViewMappedContentInDisplayPageTemplate {
 		property portal.acceptance = "true";
 
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
@@ -756,7 +758,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
 				id = "link",
-				text = "/web/test-site-name/v/${categoryId}");
+				text = "${baseURL}/web/test-site-name/v/${categoryId}");
 
 			ContentPages.viewFragmentBackgroundImage(image = "/images/");
 		}

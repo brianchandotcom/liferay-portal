@@ -54,7 +54,13 @@ interface ISaveFDSFieldsModalContentProps {
 	fdsFields: Array<IFDSField>;
 	fdsView: FDSViewType;
 	namespace: string;
-	onSave: Function;
+	onSave: ({
+		createdFDSFields,
+		deletedFDSFieldsIds,
+	}: {
+		createdFDSFields: Array<IFDSField>;
+		deletedFDSFieldsIds: Array<number>;
+	}) => void;
 	saveFDSFieldsURL: string;
 }
 
@@ -159,7 +165,7 @@ const SaveFDSFieldsModalContent = ({
 		setSaveButtonDisabled(true);
 
 		const creationData: Array<{name: string; type: string}> = [];
-		const deletionIds: Array<string> = [];
+		const deletionIds: Array<number> = [];
 
 		fields?.forEach((field) => {
 			if (field.selected && !field.id) {
@@ -167,7 +173,7 @@ const SaveFDSFieldsModalContent = ({
 			}
 
 			if (!field.selected && field.id) {
-				deletionIds.push(field.id);
+				deletionIds.push(Number(field.id));
 			}
 		});
 

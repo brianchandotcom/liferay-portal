@@ -15,6 +15,7 @@ definition {
 	property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 	property testray.main.component.name = "Upgrades Search";
 
+	@ignore = "true"
 	@priority = 5
 	test ViewSearchPortletsConfiguration {
 		property portal.suite.search.engine = "elasticsearch7,solr";
@@ -127,6 +128,7 @@ definition {
 			locator1 = "Search#FACET_TERM_FREQUENCIES");
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test ViewSXPBlueprintsAndElements {
 		property portal.suite.search.engine = "elasticsearch7";

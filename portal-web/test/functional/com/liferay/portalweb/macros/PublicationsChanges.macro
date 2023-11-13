@@ -113,14 +113,16 @@ definition {
 
 	@summary = "Default summary"
 	macro filterChangesByItem(checkboxName = null, menuItem = null) {
-		if (IsElementPresent(key_text = "Clear", locator1 = "Button#ANY")) {
+		if (IsElementPresent(key_text = "Reset Filters", locator1 = "Button#ANY")) {
 			Click(
-				key_text = "Clear",
+				key_text = "Reset Filters",
 				locator1 = "Button#ANY");
 		}
 
+		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_TYPE_BUTTON");
+
 		Click(
-			key_name = "Filter By",
+			key_name = "Filter",
 			locator1 = "PublicationsChanges#SORT_BUTTON");
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
@@ -128,6 +130,8 @@ definition {
 		Check.checkNotVisible(
 			key_checkboxName = ${checkboxName},
 			locator1 = "MenuItem#ANY_CHECKBOX");
+
+		Click(locator1 = "Publications#ADD_FILTER_BUTTON");
 	}
 
 	@summary = "Default summary"

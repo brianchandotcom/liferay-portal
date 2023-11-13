@@ -346,7 +346,7 @@ definition {
 
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Added",
-			menuItem = "Change Types");
+			menuItem = "Changed");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
@@ -365,7 +365,7 @@ definition {
 
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Deleted",
-			menuItem = "Change Types");
+			menuItem = "Types");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
@@ -376,7 +376,6 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = 2,
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.viewChangesResultNotPresent(
@@ -385,7 +384,7 @@ definition {
 
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Modified",
-			menuItem = "Change Types");
+			menuItem = "Changed");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
@@ -400,7 +399,6 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = 2,
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
@@ -423,7 +421,6 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = 2,
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
@@ -462,7 +459,6 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = 2,
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
@@ -478,7 +474,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeOrder = 2,
 			changeSite = "Test Site Name",
 			changeTitle = "WC WebContent Title 2",
 			changeType = "Added",

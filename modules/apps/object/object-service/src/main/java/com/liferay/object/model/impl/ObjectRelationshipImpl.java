@@ -21,6 +21,15 @@ import java.util.Set;
 public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 
 	@Override
+	public boolean compareType(String type) {
+		if (type.equals(getType())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isAllowedObjectRelationshipType(String type) {
 		Set<String> defaultObjectRelationshipTypes =
 			ObjectRelationshipUtil.getDefaultObjectRelationshipTypes();

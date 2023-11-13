@@ -138,10 +138,6 @@ public class ScimUserUtil {
 	}
 
 	private static AttributeSchema _createAttributeSchema() {
-		AbstractResourceManager.setEndpointURLMap(
-			Collections.singletonMap(
-				SCIMConstants.USER_ENDPOINT, "/o/scim/Users"));
-
 		SCIMUserSchemaExtensionBuilder scimUserSchemaExtensionBuilder =
 			SCIMUserSchemaExtensionBuilder.getInstance();
 

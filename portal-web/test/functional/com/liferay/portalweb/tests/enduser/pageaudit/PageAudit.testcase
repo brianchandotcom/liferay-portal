@@ -1299,7 +1299,7 @@ definition {
 
 	@description = "This is a test for LPS-198257. View the Experience Selector on the Page Audit is on the Performance Tab."
 	@priority = 3
-	test ViewExperienceSelectorOnPageAudit {
+	test SwitchExperienceOnPageAudit {
 		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
 
 		task ("Given a content page with an experience") {

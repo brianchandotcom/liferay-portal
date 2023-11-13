@@ -47,6 +47,7 @@ interface Option<T> {
 
 interface SelectProps extends Omit<MainProps, 'editingLanguageId' | 'value'> {
 	selectedKey: string;
+	viewMode: unknown;
 }
 
 type MultiSelectItem = {

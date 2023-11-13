@@ -10,7 +10,7 @@ export function getTooltipTitle({
 	placeholder: string;
 	value: string;
 }) {
-	let tooltipText: {title: string} | string = '';
+	let tooltipText: {title: string} = {title: ''};
 
 	if (value !== '') {
 		tooltipText = {title: value};

@@ -9,8 +9,6 @@ export declare function getTooltipTitle({
 }: {
 	placeholder: string;
 	value: string;
-}):
-	| string
-	| {
-			title: string;
-	  };
+}): {
+	title: string;
+};

@@ -65,7 +65,7 @@ export function normalizeOptions({
 	if (showEmptyOption && !multiple) {
 		newOptions.push({
 			label: Liferay.Language.get('choose-an-option'),
-			value: null,
+			value: 'chooseAnOption',
 		});
 	}
 

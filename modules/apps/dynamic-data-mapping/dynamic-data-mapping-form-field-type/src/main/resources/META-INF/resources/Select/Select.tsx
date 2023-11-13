@@ -30,36 +30,43 @@ function Select({
 	readOnly,
 	required,
 	selectedKey,
+	viewMode,
 }: SelectProps) {
 	const [selectedLabel, setSelectedLabel] = useState('');
 	let newSelectedKey = selectedKey;
-	if (selectedKey === null) {
-		newSelectedKey = 'null';
+	if (!selectedKey.length) {
+		newSelectedKey = 'chooseAnOption';
 	}
 
-	let selectedItem = newSelectedKey || predefinedValue;
+	let selectedItem = newSelectedKey;
 
-	if (selectedItem?.length === 0) {
-		selectedItem = '';
+	if (newSelectedKey !== 'chooseAnOption') {
+		selectedItem = selectedItem ?? predefinedValue;
 	}
-	else if (typeof (selectedItem as string) === 'string') {
-		selectedItem =
-			(newSelectedKey as string) || (predefinedValue as string) || '';
+	else if (
+		newSelectedKey === 'chooseAnOption' &&
+		predefinedValue?.[0] &&
+		!viewMode
+	) {
+		selectedItem = predefinedValue?.[0];
 	}
-	else {
-		selectedItem = newSelectedKey[0] || predefinedValue?.[0] || '';
+	else if (viewMode) {
+		selectedItem = selectedItem ?? predefinedValue;
+	}
+
+	if (typeof selectedItem !== 'string') {
+		selectedItem = selectedItem[0];
 	}
 
 	useEffect(() => {
 		const selectedOption = options.find(
-			(option) => option.value === selectedKey
+			(option) => option.value === selectedKey[0] || option.active
 		);
 
 		if (selectedOption) {
 			setSelectedLabel(selectedOption.label);
 		}
 
-		setSelectedLabel('');
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedKey]);
 
@@ -83,9 +90,6 @@ function Select({
 					if ((itemKey as string)?.includes('$.')) {
 						newItemKey = '.';
 					}
-					else if (itemKey === 'null') {
-						newItemKey = null;
-					}
 
 					const field = options.find(
 						({value}) => value === newItemKey
@@ -94,7 +98,7 @@ function Select({
 					onChange({}, [field.value]);
 				}}
 				placeholder={Liferay.Language.get('choose-an-option')}
-				selectedKey={selectedItem}
+				selectedKey={selectedItem as string}
 			>
 				{(group) => (
 					<DropDown.Group header={group.label} items={group.items}>
@@ -168,17 +172,19 @@ const Main = ({
 
 	if (!multiple) {
 		if (
-			options.length &&
+			normalizedOptions.length &&
 			value[0] &&
-			!options.find((option) => option.value === value[0])
+			!normalizedOptions.find((option) => option.value === value[0])
 		) {
 			newValue = '';
 		}
 
 		if (
-			options.length &&
+			normalizedOptions.length &&
 			predefinedValueArray[0] &&
-			!options.find((option) => option.value === predefinedValueArray[0])
+			!normalizedOptions.find(
+				(option) => option.value === predefinedValueArray[0]
+			)
 		) {
 			newPredefinedValue = [];
 		}
@@ -228,6 +234,7 @@ const Main = ({
 						required={otherProps.required}
 						selectedKey={selectedKey || (newValue as string)}
 						showEmptyOption={false}
+						viewMode={viewMode}
 					/>
 				)}
 			</ClayTooltipProvider>

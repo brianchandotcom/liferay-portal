@@ -466,9 +466,11 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Test
 	public void testUpdateObjectRelationship() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
 		ObjectRelationship objectRelationship1 =
 			_objectRelationshipLocalService.addObjectRelationship(
-				"L_ABLE_ERC", TestPropsValues.getUserId(),
+				externalReferenceCode, TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
@@ -476,19 +478,24 @@ public class ObjectRelationshipLocalServiceTest {
 				false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		Assert.assertEquals(
-			"L_ABLE_ERC", objectRelationship1.getExternalReferenceCode());
+			externalReferenceCode,
+			objectRelationship1.getExternalReferenceCode());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
 			objectRelationship1.getLabelMap());
 
+		externalReferenceCode = RandomTestUtil.randomString();
+
 		objectRelationship1 =
 			_objectRelationshipLocalService.updateObjectRelationship(
-				"L_BAKER_ERC", objectRelationship1.getObjectRelationshipId(), 0,
+				externalReferenceCode,
+				objectRelationship1.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				LocalizedMapUtil.getLocalizedMap("Baker"));
 
 		Assert.assertEquals(
-			"L_BAKER_ERC", objectRelationship1.getExternalReferenceCode());
+			externalReferenceCode,
+			objectRelationship1.getExternalReferenceCode());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),
 			objectRelationship1.getLabelMap());

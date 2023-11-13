@@ -70,27 +70,25 @@ public class UploadServletRequestImpl
 
 			httpSession.removeAttribute(ProgressTracker.PERCENT);
 
+			ServletFileUpload servletFileUpload =
+				_servletFileUploadSnapshot.get();
+
 			liferayServletRequest = new LiferayServletRequest(
 				httpServletRequest);
-
-			long uploadServletRequestImplMaxSize =
-				UploadServletRequestConfigurationProviderUtil.getMaxSize();
 
 			location = GetterUtil.getString(
 				location,
 				UploadServletRequestConfigurationProviderUtil.getTempDir());
-
-			ServletFileUpload servletFileUpload =
-				_servletFileUploadSnapshot.get();
 
 			List<FileItem> fileItemsList = servletFileUpload.parseRequest(
 				liferayServletRequest, location, fileSizeThreshold);
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
 
-			long uploadServletRequestImplSize = 0;
-
 			int contentLength = httpServletRequest.getContentLength();
+			long uploadServletRequestImplMaxSize =
+				UploadServletRequestConfigurationProviderUtil.getMaxSize();
+			long uploadServletRequestImplSize = 0;
 
 			if ((uploadServletRequestImplMaxSize > 0) &&
 				((contentLength == -1) ||

@@ -7,6 +7,7 @@ package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,6 +69,25 @@ public class RequiredObjectFieldException extends PortalException {
 					objectFieldName),
 				"the-object-field-x-cannot-be-deleted-because-it-is-the-only-" +
 					"custom-object-field-of-the-published-object-definition");
+		}
+
+	}
+
+	public static class MustNotDeleteObjectFieldRelationship
+		extends RequiredObjectFieldException {
+
+		public MustNotDeleteObjectFieldRelationship(
+			String objectDefinitionName, String objectFieldName) {
+
+			super(
+				Arrays.asList(objectFieldName, objectDefinitionName),
+				String.format(
+					"The object field \"%s\" cannot be deleted because it is " +
+						"the only custom object field of the published " +
+							"object definition \"%s\"",
+					objectFieldName, objectDefinitionName),
+				"the-object-field-x-cannot-be-deleted-because-it-is-the-only-" +
+					"custom-object-field-of-the-published-object-definition-x");
 		}
 
 	}

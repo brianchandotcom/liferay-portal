@@ -6,14 +6,12 @@
 					"fragment": {
 						"key": "content-welcome-banner"
 					},
-					"fragmentConfig": {
-					},
+					"fragmentConfig": {},
 					"fragmentFields": [
 						{
 							"id": "first-banner-primary-button-text",
 							"value": {
-								"fragmentLink": {
-								},
+								"fragmentLink": {},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Watch a Video Tour",
@@ -36,8 +34,7 @@
 						{
 							"id": "second-banner-primary-button-text",
 							"value": {
-								"fragmentLink": {
-								},
+								"fragmentLink": {},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Watch a Video Tour",
@@ -60,8 +57,7 @@
 						{
 							"id": "first-welcome-banner-title",
 							"value": {
-								"fragmentLink": {
-								},
+								"fragmentLink": {},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Welcome to Partner Portal",
@@ -84,8 +80,7 @@
 						{
 							"id": "first-welcome-banner-description",
 							"value": {
-								"fragmentLink": {
-								},
+								"fragmentLink": {},
 								"text": {
 									"value_i18n": {
 										"en_US": ""
@@ -96,8 +91,7 @@
 						{
 							"id": "second-welcome-banner-title",
 							"value": {
-								"fragmentLink": {
-								},
+								"fragmentLink": {},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Partner Portal",
@@ -125,8 +119,7 @@
 				},
 				"pageElements": [
 					{
-						"definition": {
-						},
+						"definition": {},
 						"pageElements": [
 							{
 								"definition": {
@@ -140,8 +133,7 @@
 										{
 											"id": "first-banner-primary-button-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Watch a Video Tour",
@@ -170,8 +162,7 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {
-						},
+						"definition": {},
 						"pageElements": [
 							{
 								"definition": {
@@ -237,8 +228,7 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {
-						},
+						"definition": {},
 						"pageElements": [
 							{
 								"definition": {
@@ -263,8 +253,7 @@
 														}
 													}
 												},
-												"fragmentLink": {
-												}
+												"fragmentLink": {}
 											}
 										}
 									],
@@ -276,8 +265,7 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {
-						},
+						"definition": {},
 						"pageElements": [
 							{
 								"definition": {
@@ -291,8 +279,7 @@
 										{
 											"id": "first-banner-primary-button-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Watch a Video Tour",
@@ -321,8 +308,7 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {
-						},
+						"definition": {},
 						"pageElements": [
 							{
 								"definition": {
@@ -340,8 +326,7 @@
 										{
 											"id": "link",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "View Solutions Partner Guide",
@@ -435,8 +420,7 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								},
 								{
 									"id": "tablet",
@@ -459,8 +443,7 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
@@ -478,14 +461,12 @@
 											"fragment": {
 												"key": "announcements-subscribe"
 											},
-											"fragmentConfig": {
-											},
+											"fragmentConfig": {},
 											"fragmentFields": [
 												{
 													"id": "announcements-heading",
 													"value": {
-														"fragmentLink": {
-														},
+														"fragmentLink": {},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Announcements",
@@ -602,8 +583,7 @@
 										},
 										"pageElements": [
 											{
-												"definition": {
-												},
+												"definition": {},
 												"pageElements": [
 													{
 														"definition": {
@@ -791,8 +771,7 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
@@ -1804,13 +1783,11 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								}
 							],
 							"verticalAlignment": "top"
@@ -1826,12 +1803,12 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "tablet"
 										}
@@ -1863,54 +1840,17 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "tablet"
 										}
 									],
 									"size": 6
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"widgetInstance": {
-												"widgetConfig": {
-													"properties": "path=deals-chart"
-												},
-												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
-											}
-										},
-										"type": "Widget"
-									}
-								],
-								"type": "Column"
-							},
-							{
-								"definition": {
-									"columnViewports": [
-										{
-											"columnViewportDefinition": {
-												"size": 12
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
-										}
-									],
-									"size": 4
 								},
 								"pageElements": [
 									{
@@ -1937,12 +1877,58 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"properties": "path=level-chart"
+														},
+														"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "tablet"
 										}
@@ -1954,7 +1940,7 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"properties": "path=level-chart"
+													"properties": "path=deals-chart"
 												},
 												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
 											}
@@ -1974,12 +1960,12 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "tablet"
 										}

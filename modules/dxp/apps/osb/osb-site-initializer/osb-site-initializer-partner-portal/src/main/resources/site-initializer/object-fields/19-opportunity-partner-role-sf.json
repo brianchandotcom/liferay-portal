@@ -1,0 +1,42 @@
+{
+	"object-fields": [
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "Acitve_Partner__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Acitve Partner"
+			},
+			"name": "acitvePartner",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "Primary_Seller__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Seller"
+			},
+			"name": "primarySeller",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opportunity__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Opportunity"
+			},
+			"name": "opportunity",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:OpportunityPartnerRoleSF$]"
+}

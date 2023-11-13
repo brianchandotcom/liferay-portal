@@ -1,0 +1,29 @@
+{
+	"externalReferenceCode": "OpportunityPartnerRole__c",
+	"label": {
+		"en_US": "Opportunity Partner Role SF"
+	},
+	"name": "OpportunityPartnerRoleSF",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Account__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Account External Reference Code"
+			},
+			"name": "accountExternalReferenceCode",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Opportunities Partner Role SF"
+	},
+	"portlet": true,
+	"scope": "company",
+	"storageType": "salesforce"
+}

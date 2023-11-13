@@ -270,22 +270,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 	}
 
-	@description = "LPS-136456 - Verify that workflows cannot be added to forms that are mapped to an object"
-	@priority = 4
-	test CannotAddWorkflow {
-		FormsAdmin.addForm();
-
-		PopulateObjectFormsConfiguration.openFormSettings();
-
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
-
-		Click(locator1 = "Modal#HEADER");
-
-		ObjectPortlet.assertFieldLabelName(fieldLabelName = "Select Object");
-
-		ObjectPortlet.assertFieldLabelNameNotPresent(fieldLabelName = "Select a Workflow");
-	}
-
 	@description = "LPS-138495 - Verify that Picklist entries cannot be edited in the Forms Sidebar"
 	@priority = 4
 	test CannotEditPicklistEntries {

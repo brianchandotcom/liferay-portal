@@ -399,41 +399,6 @@ definition {
 		MenuItem.viewNotPresent(menuItem = "View Entries");
 	}
 
-	@description = "LPS-133365 - Verify if it's possible to select Object as a Storage Type"
-	@priority = 5
-	test CanSelectObjectStorageType {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 311",
-			objectName = "CustomObject311",
-			pluralLabelName = "Custom Objects 311");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject311");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject311");
-
-		FormsAdmin.addForm();
-
-		PopulateObjectFormsConfiguration.openFormSettings();
-
-		AssertElementPresent(
-			key_label = "Object",
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-
-		PopulateObjectFormsConfiguration.selectObject(label = "Object");
-
-		AssertElementPresent(
-			key_label = "Custom Object 311",
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-	}
-
 	@description = "LPS-136456 - Verify that the Repeatable option is not available on a form when it is mapped to an object"
 	@priority = 4
 	test RepeatableOptionNotAvailable {

@@ -485,8 +485,12 @@ definition {
 	@description = "LPS-154683: The Upgrade Report should not be deleted on additional upgrade runs."
 	@priority = 4
 	test ReportPersistThroughAdditionalUpgradeRuns {
+		property custom.upgrade.properties = "upgrade.report.dir=${liferay.home}/tools/portal-tools-db-upgrade-client/temp";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
 		task ("Look for the upgrade report") {
-			var upgradeReportOriginal = UpgradeReport.getUpgradeReportFileContent();
+			var upgradeReportOriginal = UpgradeReport.getUpgradeReportFileContent(directory = "${liferayHome}/tools/portal-tools-db-upgrade-client/temp");
 		}
 
 		task ("Read the report. All upgrade processes and type defined as 'major' are expected") {
@@ -510,7 +514,7 @@ definition {
 		}
 
 		task ("Look for the upgrade report") {
-			var upgradeReportNew = UpgradeReport.getUpgradeReportFileContent();
+			var upgradeReportNew = UpgradeReport.getUpgradeReportFileContent(directory = "${liferayHome}/tools/portal-tools-db-upgrade-client/temp");
 		}
 
 		task ("Read the new report. No upgrade processes and type defined as 'no upgrade' are expected ") {
@@ -531,7 +535,7 @@ definition {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 			var upgradeReportFilePattern = StringUtil.split("**/upgrade_report.info.[0-9]*");
 
-			var upgradeReportRenamedFilePath = FileUtil.getIncludedResourceURLs(${upgradeReportFilePattern}, "${liferayHome}/tools/portal-tools-db-upgrade-client/reports");
+			var upgradeReportRenamedFilePath = FileUtil.getIncludedResourceURLs(${upgradeReportFilePattern}, "${liferayHome}/tools/portal-tools-db-upgrade-client/temp");
 
 			var upgradeReportRenamedFilePath = StringUtil.valueOf(${upgradeReportRenamedFilePath});
 

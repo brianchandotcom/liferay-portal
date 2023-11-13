@@ -1490,7 +1490,11 @@ public class ObjectFieldLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			RequiredObjectFieldException.class,
-			"At least one object field must be added",
+			String.format(
+				"The object field \"%s\" cannot be deleted because it is the " +
+					"only custom object field of the published object " +
+						"definition",
+				systemObjectField2.getName()),
 			() -> _objectFieldLocalService.deleteObjectField(
 				systemObjectField2));
 

@@ -153,19 +153,9 @@ definition {
 				key_content = "[normalize-space(text())='Web Content Content']",
 				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 
-			AssertTextEquals(
-				locator1 = "Portlet#MESSAGE_INFO",
-				value1 = "You do not have permission to access the requested resource.");
-
 			ContentPages.gotoPageEditor();
 
-			AssertElementNotPresent(
-				key_content = "[normalize-space(text())='Web Content Content']",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
-
-			AssertTextEquals(
-				locator1 = "Portlet#MESSAGE_INFO",
-				value1 = "You do not have permission to access the requested resource.");
+			AssertVisible(locator1 = "//div[contains(@class,'alert')][normalize-space()='This content cannot be displayed due to permission restrictions.']");
 		}
 	}
 

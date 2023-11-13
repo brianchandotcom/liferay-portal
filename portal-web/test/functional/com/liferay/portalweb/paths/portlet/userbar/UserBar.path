@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>USER_SIGN_IN</td>
-	<td>//button[contains(@class,'sign-in')]</td>
+	<td>//span[contains(@class,'sign-in')]/a/span | //button[contains(@class,'sign-in')]</td>
 	<td></td>
 </tr>
 <tr>

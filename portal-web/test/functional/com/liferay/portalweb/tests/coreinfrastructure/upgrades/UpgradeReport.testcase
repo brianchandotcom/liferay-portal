@@ -157,6 +157,31 @@ definition {
 		}
 	}
 
+	@description = "LPS-193985: The upgrade report will create the nonexistent directory and generate the report"
+	@priority = 3
+	test ReportGeneratedInNonExistentDirectory {
+		property custom.upgrade.properties = "upgrade.report.dir=${liferay.home}/tools/portal-tools-db-upgrade-client/temp";
+
+		task ("Then the upgrade report is generated in the specified nonexistent directory") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var upgradeReportExists = FileUtil.exists("${liferayHome}/tools/portal-tools-db-upgrade-client/temp/upgrade_report.info");
+
+			if (${upgradeReportExists} == "false") {
+				fail("Upgrade report is not generated in specified directory: ${liferayHome}/tools/portal-tools-db-upgrade-client/temp");
+			}
+		}
+
+		task ("And the upgrade report trace line matches the specified path") {
+			var upgradeLogContent = Log.getUpgradeLogFileContent();
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			if (!(contains(${upgradeLogContent}, "Upgrade report generated in ${liferayHome}/tools/portal-tools-db-upgrade-client/temp/upgrade_report.info"))) {
+				fail("Upgrade report file path message not present");
+			}
+		}
+	}
+
 	@description = "LPS-154683: Upgrade Report is created when property is set to true"
 	@priority = 4
 	test ReportGeneratedWhenEnabled {

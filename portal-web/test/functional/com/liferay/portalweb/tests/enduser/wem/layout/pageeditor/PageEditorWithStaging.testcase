@@ -29,8 +29,6 @@ definition {
 	@description = "This is a test for LPS-182022. The user should be redirected to the Page In Use when access to edit mode of a locked content page in staging site."
 	@priority = 4
 	test RedirectToPageInUseWhenEditLockedContentPageInStagingSite {
-		property custom.properties = "feature.flag.LPS-180328=true";
-
 		task ("Given a page designer has a locked content page in staging site") {
 			Navigator.openURL();
 

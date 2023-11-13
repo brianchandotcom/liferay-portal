@@ -116,15 +116,6 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 						getConfiguration(fragmentRendererContext),
 						fragmentEntryLink.getEditableValues(),
 						fragmentRendererContext.getLocale(), "autoplay")));
-
-			httpServletRequest.setAttribute(
-				VideoStreamingWebKeys.VIDEO_STREAMING_HEIGHT,
-				GetterUtil.getString(
-					_fragmentEntryConfigurationParser.getFieldValue(
-						getConfiguration(fragmentRendererContext),
-						fragmentEntryLink.getEditableValues(),
-						fragmentRendererContext.getLocale(), "videoHeight")));
-
 			httpServletRequest.setAttribute(
 				VideoStreamingWebKeys.VIDEO_STREAMING_LOOP,
 				GetterUtil.getBoolean(
@@ -132,7 +123,6 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 						getConfiguration(fragmentRendererContext),
 						fragmentEntryLink.getEditableValues(),
 						fragmentRendererContext.getLocale(), "loop")));
-
 			httpServletRequest.setAttribute(
 				VideoStreamingWebKeys.VIDEO_STREAMING_MUTED,
 				GetterUtil.getBoolean(
@@ -140,7 +130,6 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 						getConfiguration(fragmentRendererContext),
 						fragmentEntryLink.getEditableValues(),
 						fragmentRendererContext.getLocale(), "mute")));
-
 			httpServletRequest.setAttribute(
 				VideoStreamingWebKeys.VIDEO_STREAMING_SOURCE_URL,
 				GetterUtil.getString(
@@ -148,9 +137,15 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 						getConfiguration(fragmentRendererContext),
 						fragmentEntryLink.getEditableValues(),
 						fragmentRendererContext.getLocale(), "url")));
-
 			httpServletRequest.setAttribute(
-				VideoStreamingWebKeys.VIDEO_STREAMING_WIDTH,
+				VideoStreamingWebKeys.VIDEO_STREAMING_VIDEO_HEIGHT,
+				GetterUtil.getString(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						getConfiguration(fragmentRendererContext),
+						fragmentEntryLink.getEditableValues(),
+						fragmentRendererContext.getLocale(), "videoHeight")));
+			httpServletRequest.setAttribute(
+				VideoStreamingWebKeys.VIDEO_STREAMING_VIDEO_WIDTH,
 				GetterUtil.getString(
 					_fragmentEntryConfigurationParser.getFieldValue(
 						getConfiguration(fragmentRendererContext),

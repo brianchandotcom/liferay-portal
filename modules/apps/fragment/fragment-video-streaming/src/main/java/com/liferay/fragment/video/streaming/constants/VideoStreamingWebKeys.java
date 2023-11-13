@@ -13,9 +13,6 @@ public class VideoStreamingWebKeys {
 	public static final String VIDEO_STREAMING_AUTOPLAY =
 		"VIDEO_STREAMING_AUTOPLAY";
 
-	public static final String VIDEO_STREAMING_HEIGHT =
-		"VIDEO_STREAMING_HEIGHT";
-
 	public static final String VIDEO_STREAMING_LOOP = "VIDEO_STREAMING_LOOP";
 
 	public static final String VIDEO_STREAMING_MUTED = "VIDEO_STREAMING_MUTED";
@@ -23,6 +20,10 @@ public class VideoStreamingWebKeys {
 	public static final String VIDEO_STREAMING_SOURCE_URL =
 		"VIDEO_STREAMING_SOURCE_URL";
 
-	public static final String VIDEO_STREAMING_WIDTH = "VIDEO_STREAMING_WIDTH";
+	public static final String VIDEO_STREAMING_VIDEO_HEIGHT =
+		"VIDEO_STREAMING_VIDEO_HEIGHT";
+
+	public static final String VIDEO_STREAMING_VIDEO_WIDTH =
+		"VIDEO_STREAMING_VIDEO_WIDTH";
 
 }

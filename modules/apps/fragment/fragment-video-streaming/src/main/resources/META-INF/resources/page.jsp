@@ -31,9 +31,9 @@
 		loop: <%= (Boolean)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_LOOP) %>,
 		muted: <%= (Boolean)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_MUTED) %>,
 		videoHeight:
-			'<%= (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_HEIGHT) %>',
+			'<%= (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_VIDEO_HEIGHT) %>',
 		videoWidth:
-			'<%= (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_WIDTH) %>',
+			'<%= (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_VIDEO_WIDTH) %>',
 	};
 
 	const height = configuration.videoHeight

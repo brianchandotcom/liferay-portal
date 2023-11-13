@@ -39,6 +39,11 @@ public class AssetTagFinderImpl
 
 	@Override
 	public int countByG_N(long groupId, String name) {
+		return countByG_C_N(groupId, 0, name);
+	}
+
+	@Override
+	public int countByG_C_N(long groupId, long classNameId, String name) {
 		Session session = null;
 
 		try {
@@ -63,79 +68,27 @@ public class AssetTagFinderImpl
 							AssetEntryTable.INSTANCE.groupId.eq(
 								groupId
 							).and(
+								() -> {
+									if (classNameId <= 0) {
+										return null;
+									}
+
+									return AssetEntryTable.INSTANCE.classNameId.
+										eq(classNameId);
+								}
+							).and(
 								AssetEntryTable.INSTANCE.visible.eq(true)
+							).and(
+								() -> {
+									if (name == null) {
+										return null;
+									}
+
+									return AssetTagTable.INSTANCE.name.like(
+										_getName(name));
+								}
 							)
-						)
-					).and(
-						AssetTagTable.INSTANCE.name.like(_getName(name))
-					)
-				));
-
-			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			Iterator<Long> iterator = sqlQuery.iterate();
-
-			if (iterator.hasNext()) {
-				Long count = iterator.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public int countByG_C_N(long groupId, long classNameId, String name) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
-				DSLQueryFactoryUtil.countDistinct(
-					AssetEntries_AssetTagsTable.INSTANCE.entryId
-				).from(
-					AssetTagTable.INSTANCE
-				).innerJoinON(
-					AssetEntries_AssetTagsTable.INSTANCE,
-					AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
-						AssetTagTable.INSTANCE.tagId)
-				).where(
-					() -> {
-						Predicate predicate =
-							AssetEntries_AssetTagsTable.INSTANCE.entryId.in(
-								DSLQueryFactoryUtil.select(
-									AssetEntryTable.INSTANCE.entryId
-								).from(
-									AssetEntryTable.INSTANCE
-								).where(
-									AssetEntryTable.INSTANCE.groupId.eq(
-										groupId
-									).and(
-										AssetEntryTable.INSTANCE.classNameId.eq(
-											classNameId)
-									).and(
-										AssetEntryTable.INSTANCE.visible.eq(
-											true)
-									)
-								));
-
-						if (name == null) {
-							return predicate;
-						}
-
-						return predicate.and(
-							AssetTagTable.INSTANCE.name.like(_getName(name)));
-					}
+						))
 				));
 
 			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);

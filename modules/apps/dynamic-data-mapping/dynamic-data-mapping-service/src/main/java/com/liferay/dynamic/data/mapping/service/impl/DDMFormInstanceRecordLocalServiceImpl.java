@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordGroupIdException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.internal.notification.DDMFormEmailNotificationSender;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -48,6 +47,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -163,21 +163,25 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
 
-			if (!Objects.equals(
-					ddmFormFieldValue.getType(),
-					DDMFormFieldTypeConstants.DOCUMENT_LIBRARY)) {
-
-				continue;
-			}
-
 			Value value = ddmFormFieldValue.getValue();
 
 			if (value == null) {
 				continue;
 			}
 
+			String valueString = value.getString(
+				ddmFormValues.getDefaultLocale());
+
+			if (!JSONUtil.isJSONObject(valueString)) {
+				continue;
+			}
+
 			JSONObject valueJSONObject = _jsonFactory.createJSONObject(
-				value.getString(ddmFormValues.getDefaultLocale()));
+				valueString);
+
+			if (!valueJSONObject.has("uuid")) {
+				continue;
+			}
 
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
 				valueJSONObject.getString("uuid"), groupId);

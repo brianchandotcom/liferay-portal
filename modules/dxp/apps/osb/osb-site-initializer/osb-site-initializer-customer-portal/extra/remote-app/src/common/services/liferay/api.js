@@ -57,4 +57,21 @@ const getTicketAttachments = async (search) => {
 		return response;
 }
 
-export {getHighPriorityContacts, getTicketAttachments, fetchHeadless};
+const deleteTicketAttachment = async (ticketAttachmentId) => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${HEADLESS_BASE_URL}${`c/ticketattachments/${ticketAttachmentId}`}`,
+		{
+			headers: {
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Cache-Control': 'max-age=30, stale-while-revalidate=30',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'DELETE',
+		}
+	);
+
+	return response;
+}
+
+export {getHighPriorityContacts, getTicketAttachments, fetchHeadless, deleteTicketAttachment};

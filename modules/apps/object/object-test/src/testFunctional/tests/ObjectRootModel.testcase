@@ -44,16 +44,9 @@ definition {
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectAdmin.selectSpecificKebabMenuOption(
-				kebabOption = "Bind",
-				objectLabel = "Custom Object 292");
-
-			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
-				labelName = "Select the Root Object Path",
-				optionName = "Custom Object 195");
-
-			Button.click(button = "Bind to Root");
+			ObjectRootModel.bindToRootObject(
+				childObject = "Custom Object 292",
+				rootObjectPath = "Custom Object 195 (Relationship)");
 
 			WaitForPageLoad();
 		}

@@ -136,7 +136,6 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoEditChanges(changeCategory = null, changeTitle = null, editInLocation = null) {
-
 		Click(
 			key_changeCategory = ${changeCategory},
 			key_changeTitle = ${changeTitle},
@@ -146,7 +145,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMoveChangeToAnotherPublication(changeCategory = null, targetPublicationName = null, changeTitle = null, changeOrder = null) {
+	macro gotoMoveChangeToAnotherPublication(changeCategory = null, targetPublicationName = null, changeTitle = null) {
 		Search.searchCP(searchTerm = ${changeTitle});
 
 		Click(

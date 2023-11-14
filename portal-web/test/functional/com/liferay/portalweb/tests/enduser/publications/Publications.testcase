@@ -741,7 +741,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Translation",
-			changeOrder = 2,
 			changeSite = "Guest",
 			changeTitle = "网页内容标题",
 			changeType = "Added",
@@ -1739,12 +1738,10 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = 2,
 			changeTitle = "WC Title 2");
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = 3,
 			changeTitle = "WC Title 3");
 
 		Search.searchCP(searchTerm = "WC");

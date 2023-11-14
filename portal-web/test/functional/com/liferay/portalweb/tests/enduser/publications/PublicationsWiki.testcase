@@ -54,7 +54,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Node",
-			changeOrder = 1,
 			changeSite = "Guest",
 			changeTitle = "Wiki Node Name",
 			changeType = "Added",
@@ -62,7 +61,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Page",
-			changeOrder = 2,
 			changeSite = "Guest",
 			changeTitle = "Wiki Page Title",
 			changeType = "Added",
@@ -123,7 +121,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Page",
-			changeOrder = 2,
 			changeSite = "Guest",
 			changeTitle = "Wiki Page Title (1.0)",
 			changeType = "Deleted",
@@ -210,7 +207,6 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Wiki Page",
-				changeOrder = 2,
 				changeSite = "Guest",
 				changeTitle = "Wiki Page Test (1.1)",
 				changeType = "Added",

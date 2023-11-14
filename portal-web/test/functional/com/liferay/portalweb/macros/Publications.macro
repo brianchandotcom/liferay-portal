@@ -2,13 +2,6 @@ definition {
 
 	@summary = "Default summary"
 	macro assertDiscardIsUnavailableForInactivePublication(changeCategory = null, changeTitle = null, publicationName = null) {
-		if (isSet(changeOrder)) {
-			var changeOrder = ${changeOrder};
-		}
-		else {
-			var changeOrder = 1;
-		}
-
 		Click(
 			key_publicationName = ${publicationName},
 			locator1 = "Publications#PUBLICATION_NAME_VIEW");

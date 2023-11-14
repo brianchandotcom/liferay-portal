@@ -572,7 +572,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
-			changeOrder = 2,
 			changeSite = "Site Name",
 			changeTitle = "Document_1.jpg",
 			changeType = "Added",

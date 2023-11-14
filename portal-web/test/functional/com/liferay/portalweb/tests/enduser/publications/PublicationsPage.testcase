@@ -182,7 +182,6 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset",
-				changeOrder = 5,
 				changeSite = "Site Name",
 				changeTitle = "Custom Master Page Template",
 				changeType = "Added",
@@ -730,7 +729,6 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Page",
-				changeOrder = 2,
 				changeSite = "Guest",
 				changeTitle = "Widget Page Name 2",
 				changeType = "Modified",

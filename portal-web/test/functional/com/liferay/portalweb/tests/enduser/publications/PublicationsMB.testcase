@@ -198,7 +198,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
-			changeOrder = 2,
 			changeSite = "Site Name",
 			changeTitle = "RE: MB Thread Message Subject",
 			changeType = "Added",
@@ -286,7 +285,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
-			changeOrder = 2,
 			changeSite = "Site Name",
 			changeTitle = "Split Reply Thread Subject",
 			changeType = "Added",
@@ -301,7 +299,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Thread",
-			changeOrder = 2,
 			changeSite = "Site Name",
 			changeTitle = "MB Thread Split Subject",
 			changeType = "Added",

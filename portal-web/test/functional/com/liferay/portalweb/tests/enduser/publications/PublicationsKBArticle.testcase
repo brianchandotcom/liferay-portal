@@ -118,7 +118,6 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Knowledge Base Article",
-			changeOrder = 2,
 			changeSite = "Guest",
 			changeTitle = "Knowledge Base Article Title Edit",
 			changeType = "Added",

@@ -306,7 +306,6 @@ definition {
 
 		/*PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeOrder = 2,
 			changeSite = "Guest",
 			changeStatus = "Approved",
 			changeTitle = "WC WebContent Title 2",

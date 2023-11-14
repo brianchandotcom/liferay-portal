@@ -84,7 +84,6 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
-				changeOrder = 2,
 				changeSite = "Guest",
 				changeTitle = "Asset List Entry",
 				changeType = "Added",
@@ -140,7 +139,6 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
-				changeOrder = 2,
 				changeSite = "Guest",
 				changeTitle = "Asset List Entry",
 				changeType = "Deleted",

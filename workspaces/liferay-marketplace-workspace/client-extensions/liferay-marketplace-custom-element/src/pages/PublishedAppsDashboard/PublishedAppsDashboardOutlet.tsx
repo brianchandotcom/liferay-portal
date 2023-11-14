@@ -28,6 +28,7 @@ import {
 	getProductTypeFromSpecifications,
 	initialDashboardNavigationItems,
 } from './PublishedDashboardPageUtil';
+import { Liferay } from '../../liferay/liferay';
 
 const PAGE_SIZE = 10;
 
@@ -60,7 +61,7 @@ const PublishedAppsDashboardOutlet = () => {
 	const [showDashboardNavigation, setShowDashboardNavigation] = useState(
 		true
 	);
-	const {accountId} = useParams();
+	const {accountId} = Liferay.CommerceContext.account || {};
 	const [page, setPage] = useState(1);
 
 	const {data: accounts = []} = useSWR('/published/accounts', async () => {

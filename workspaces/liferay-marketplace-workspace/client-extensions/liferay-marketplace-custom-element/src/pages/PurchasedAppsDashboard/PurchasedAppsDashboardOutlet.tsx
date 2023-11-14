@@ -45,7 +45,7 @@ export type PurchasedAppProps = {
 };
 
 const PurchasedAppsDashboardOutlet = () => {
-	const {accountId} = useParams();
+	const {accountId} = Liferay.CommerceContext.account || {};
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 
 	const [page, setPage] = useState(1);

@@ -11,6 +11,7 @@ import {NavLink, useLocation, useParams} from 'react-router-dom';
 
 import {DashboardListItems} from './DashboardNavigation';
 import {DashboardNavigationListItem} from './DashboardNavigationListItem';
+import { Liferay } from '../../liferay/liferay';
 
 interface DashboardNavigationListProps {
 	navigationItemMock: DashboardListItems;
@@ -21,7 +22,6 @@ export function DashboardNavigationList({
 }: DashboardNavigationListProps) {
 	const {itemIcon, itemTitle, items, path} = navigationItemMock;
 
-	const {accountId} = useParams();
 	const location = useLocation();
 
 	const isAppRoute =
@@ -36,7 +36,7 @@ export function DashboardNavigationList({
 							isActive || (path === '/' && isAppRoute),
 					})
 				}
-				to={accountId ? `/${accountId}${path}` : path}
+				to={path}
 			>
 				{({isActive}) => (
 					<>

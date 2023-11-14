@@ -7,6 +7,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
 import {
 	ExpressionBuilder,
 	SidebarCategory,
@@ -145,13 +146,15 @@ export function DefaultValueContainer({
 			)}
 
 			{!values.state && (
-				<Toggle
-					label={Liferay.Language.get('use-default-value')}
-					onToggle={(toggled) => {
-						handleToggle(toggled);
-					}}
-					toggled={defaultValueToggleEnabled}
-				/>
+				<ClayForm.Group>
+					<Toggle
+						label={Liferay.Language.get('use-default-value')}
+						onToggle={(toggled) => {
+							handleToggle(toggled);
+						}}
+						toggled={defaultValueToggleEnabled}
+					/>
+				</ClayForm.Group>
 			)}
 
 			{defaultValueToggleEnabled && !values.state && (

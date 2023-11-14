@@ -1652,9 +1652,9 @@ definition {
 			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
-	@description = "This is a test for COMMERCE-6106. EditPaypalPaymentMethod"
+	@description = "This is a test for COMMERCE-6106. EditPaypalSubscriptionsPaymentMethod"
 	@priority = 3
-	test EditPaypalPaymentMethod {
+	test EditPaypalSubscriptionsPaymentMethod {
 		property portal.acceptance = "false";
 
 		// TODO Review
@@ -1666,7 +1666,7 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
 		CommerceEntry.clickTableEntryEditButton(
-			entryName = "PayPal",
+			entryName = "PayPal Subscriptions",
 			table = "Payment Methods");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");

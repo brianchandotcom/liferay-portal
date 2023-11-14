@@ -942,7 +942,7 @@ definition {
 
 		Click(
 			key_value = "Commerce_Black",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+			locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -997,7 +997,7 @@ definition {
 
 		Click(
 			key_value = "Commerce_Black",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+			locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
 
@@ -1033,7 +1033,7 @@ definition {
 
 		Click(
 			key_value = "Commerce_Black",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+			locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
 

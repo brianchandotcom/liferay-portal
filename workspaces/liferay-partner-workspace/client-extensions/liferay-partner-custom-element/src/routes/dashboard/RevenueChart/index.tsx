@@ -26,7 +26,7 @@ export default function () {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await retry<Response>(() =>
+		const opportunities = await retry<any>(() =>
 			fetch(
 				`/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=${Filters.REVENUE_DASHBOARD.opportunities}`,
 				{
@@ -38,7 +38,7 @@ export default function () {
 			)
 		);
 
-		const myUserAccountResponse = await retry<Response>(() =>
+		const myUserAccount = await retry<any>(() =>
 			fetch(`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`, {
 				headers: {
 					'accept': 'application/json',
@@ -46,11 +46,10 @@ export default function () {
 				},
 			})
 		);
-		const myUserAccount = await myUserAccountResponse.json();
 
-		const accountResponse =
+		const account =
 			myUserAccount.accountBriefs[0]?.externalReferenceCode &&
-			(await retry<Response>(() =>
+			(await retry<any>(() =>
 				fetch(
 					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${myUserAccount.accountBriefs[0]?.externalReferenceCode}`,
 					{
@@ -62,18 +61,14 @@ export default function () {
 				)
 			));
 
-		const account = await accountResponse?.json();
-
 		const currency = account ? account.currency : 'USD';
 
-		if (response.ok) {
-			const closedWonOpportunities = await response.json();
-
+		if (opportunities) {
 			setCurrencyData(currency);
 
 			getRevenueChartColumns(
 				currency,
-				closedWonOpportunities,
+				opportunities,
 				setTitleChart,
 				setValueChart,
 				setColumnsRevenueChart

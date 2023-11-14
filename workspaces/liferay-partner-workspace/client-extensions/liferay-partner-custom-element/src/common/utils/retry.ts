@@ -11,15 +11,14 @@ export async function retry<T>(
 	const result = await operation();
 
 	if (result.ok) {
-		return result as T;
+		return result.json() as T;
 	}
 
 	if (maxRetryCount > 0) {
 		await new Promise((resolve) => setTimeout(resolve, delay));
 
 		return retry(operation, maxRetryCount - 1, delay * maxRetryCount);
-	}
-	else {
+	} else {
 		throw new Error();
 	}
 }

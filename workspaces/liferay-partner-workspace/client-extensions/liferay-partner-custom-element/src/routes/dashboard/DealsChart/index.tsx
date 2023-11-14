@@ -35,7 +35,7 @@ const DealsChart = () => {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await retry<Response>(() =>
+		const leads = await retry<any>(() =>
 			fetch(
 				`/o/c/leadsfs?pageSize=200&filter=${Filters.DEAL_DASHBOARD.deals}`,
 				{
@@ -47,12 +47,10 @@ const DealsChart = () => {
 			)
 		);
 
-		if (response.ok) {
+		if (leads) {
 			const currentYear = new Date().getFullYear();
 
-			const responseJSON = await response.json();
-
-			const approvedData = responseJSON.items.filter(
+			const approvedData = leads.items.filter(
 				(lead: {
 					createdDate: string;
 					isConverted: boolean;
@@ -65,7 +63,7 @@ const DealsChart = () => {
 					return lead.isConverted && createDateYear === currentYear;
 				}
 			);
-			const rejectedData = responseJSON.items.filter(
+			const rejectedData = leads.items.filter(
 				(lead: {createdDate: string; leadStatus: string}) => {
 					const createDateYear = new Date(
 						lead.createdDate
@@ -77,7 +75,7 @@ const DealsChart = () => {
 					);
 				}
 			);
-			const sumbittedData = responseJSON.items.filter(
+			const sumbittedData = leads.items.filter(
 				(lead: {
 					createdDate: string;
 					isConverted: boolean;

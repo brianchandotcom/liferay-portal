@@ -26,7 +26,7 @@ export default function () {
 		setIsLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await retry<Response>(() =>
+		const opportunities = await retry<any>(() =>
 			fetch(
 				`/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc&filter=${Filters.RENEWAL_DASHBOARD.renewals}`,
 				{
@@ -38,10 +38,8 @@ export default function () {
 			)
 		);
 
-		if (response.ok) {
-			const responseJSON = await response.json();
-
-			setData(responseJSON);
+		if (opportunities) {
+			setData(opportunities);
 			setIsLoading(false);
 
 			return;

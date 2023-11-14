@@ -34,7 +34,7 @@ const MDFRequestChart = () => {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await retry<Response>(() =>
+		const mdfRequests = await retry<any>(() =>
 			fetch(
 				`/o/c/mdfrequests?pageSize=-1&nestedFields=${Filters.MDF_DASHBOARD.fields}&filter=${Filters.MDF_DASHBOARD.requests}`,
 				{
@@ -46,7 +46,7 @@ const MDFRequestChart = () => {
 			)
 		);
 
-		const myUserAccountResponse = await retry<Response>(() =>
+		const myUserAccount = await retry<any>(() =>
 			fetch(`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`, {
 				headers: {
 					'accept': 'application/json',
@@ -54,11 +54,10 @@ const MDFRequestChart = () => {
 				},
 			})
 		);
-		const myUserAccount = await myUserAccountResponse.json();
 
-		const accountResponse =
+		const account =
 			myUserAccount.accountBriefs[0]?.externalReferenceCode &&
-			(await retry<Response>(() =>
+			(await retry<any>(() =>
 				fetch(
 					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${myUserAccount.accountBriefs[0]?.externalReferenceCode}`,
 					{
@@ -70,13 +69,9 @@ const MDFRequestChart = () => {
 				)
 			));
 
-		const account = await accountResponse?.json();
-
 		const currency = account ? account.currency : 'USD';
 
-		if (response.ok && currency) {
-			const mdfRequests = await response.json();
-
+		if (mdfRequests && currency) {
 			setCurrencyData(currency);
 
 			getChartColumns(

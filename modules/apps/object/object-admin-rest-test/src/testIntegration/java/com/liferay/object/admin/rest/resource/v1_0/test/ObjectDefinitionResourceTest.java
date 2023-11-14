@@ -324,6 +324,12 @@ public class ObjectDefinitionResourceTest
 		ObjectDefinition randomModifiableSystemObjectDefinition =
 			_addObjectDefinition(_randomModifiableSystemObjectDefinition());
 
+		ObjectValidationRule systemObjectValidationRule =
+			(ObjectValidationRule)ArrayUtil.getValue(
+				randomModifiableSystemObjectDefinition.
+					getObjectValidationRules(),
+				1);
+
 		randomModifiableSystemObjectDefinition.setEnableObjectEntryDraft(
 			(Boolean)null);
 		randomModifiableSystemObjectDefinition.
@@ -404,6 +410,22 @@ public class ObjectDefinitionResourceTest
 		finally {
 			SystemProperties.set("liferay.mode", liferayMode);
 		}
+
+		ObjectDefinition getObjectDefinition =
+			objectDefinitionResource.getObjectDefinition(
+				randomModifiableSystemObjectDefinition.getId());
+
+		_assertObjectValidationRule(
+			"customObjectFieldERC", updatedCustomObjectValidationRule,
+			(ObjectValidationRule)ArrayUtil.getValue(
+				getObjectDefinition.getObjectValidationRules(), 0));
+		_assertObjectValidationRule(
+			"customObjectFieldERC", systemObjectValidationRule,
+			(ObjectValidationRule)ArrayUtil.getValue(
+				getObjectDefinition.getObjectValidationRules(), 1));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			randomModifiableSystemObjectDefinition.getId());
 
 		// Storage type
 

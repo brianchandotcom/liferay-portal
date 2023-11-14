@@ -25,6 +25,10 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 	}
 
+	public ColumnLayoutStructureItem(String itemId, String parentItemId) {
+		super(itemId, parentItemId);
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

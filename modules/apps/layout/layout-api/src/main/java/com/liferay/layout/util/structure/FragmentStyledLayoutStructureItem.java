@@ -31,6 +31,12 @@ public class FragmentStyledLayoutStructureItem
 		super(parentItemId);
 	}
 
+	public FragmentStyledLayoutStructureItem(
+		String itemId, String parentItemId) {
+
+		super(itemId, parentItemId);
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

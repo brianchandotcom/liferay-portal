@@ -52,9 +52,13 @@ public abstract class LayoutStructureItem {
 	}
 
 	public LayoutStructureItem(String parentItemId) {
+		this(PortalUUIDUtil.generate(), parentItemId);
+	}
+
+	public LayoutStructureItem(String itemId, String parentItemId) {
+		_itemId = itemId;
 		_parentItemId = parentItemId;
 
-		_itemId = PortalUUIDUtil.generate();
 		_childrenItemIds = new ArrayList<>();
 	}
 

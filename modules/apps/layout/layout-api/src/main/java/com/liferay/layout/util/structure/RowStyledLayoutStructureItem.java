@@ -25,6 +25,10 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		super(parentItemId);
 	}
 
+	public RowStyledLayoutStructureItem(String itemId, String parentItemId) {
+		super(itemId, parentItemId);
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

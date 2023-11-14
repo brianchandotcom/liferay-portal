@@ -29,6 +29,12 @@ public class CollectionStyledLayoutStructureItem
 		super(parentItemId);
 	}
 
+	public CollectionStyledLayoutStructureItem(
+		String itemId, String parentItemId) {
+
+		super(itemId, parentItemId);
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

@@ -26,6 +26,10 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		super(parentItemId);
 	}
 
+	public FormStyledLayoutStructureItem(String itemId, String parentItemId) {
+		super(itemId, parentItemId);
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

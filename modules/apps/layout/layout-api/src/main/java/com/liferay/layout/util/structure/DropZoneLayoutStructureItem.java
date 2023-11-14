@@ -26,6 +26,12 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 		_fragmentEntryKeys = Collections.emptyList();
 	}
 
+	public DropZoneLayoutStructureItem(String itemId, String parentItemId) {
+		super(itemId, parentItemId);
+
+		_fragmentEntryKeys = Collections.emptyList();
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

@@ -28,6 +28,14 @@ public class ContainerStyledLayoutStructureItem
 		_linkJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
+	public ContainerStyledLayoutStructureItem(
+		String itemId, String parentItemId) {
+
+		super(itemId, parentItemId);
+
+		_linkJSONObject = JSONFactoryUtil.createJSONObject();
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

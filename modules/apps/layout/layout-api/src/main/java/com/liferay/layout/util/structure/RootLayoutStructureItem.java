@@ -19,6 +19,10 @@ public class RootLayoutStructureItem extends LayoutStructureItem {
 		super(StringPool.BLANK);
 	}
 
+	public RootLayoutStructureItem(String itemId) {
+		super(itemId, StringPool.BLANK);
+	}
+
 	@Override
 	public JSONObject getItemConfigJSONObject() {
 		return JSONFactoryUtil.createJSONObject();

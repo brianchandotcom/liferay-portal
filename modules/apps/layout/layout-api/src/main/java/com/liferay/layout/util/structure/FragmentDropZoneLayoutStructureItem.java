@@ -18,6 +18,12 @@ public class FragmentDropZoneLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 	}
 
+	public FragmentDropZoneLayoutStructureItem(
+		String itemId, String parentItemId) {
+
+		super(itemId, parentItemId);
+	}
+
 	public String getFragmentDropZoneId() {
 		return _fragmentDropZoneId;
 	}

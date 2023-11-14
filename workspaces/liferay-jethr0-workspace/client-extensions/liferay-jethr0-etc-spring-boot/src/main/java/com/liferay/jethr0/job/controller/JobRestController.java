@@ -128,14 +128,10 @@ public class JobRestController {
 		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
 			JSONObject buildJSONObject = buildEntity.getJSONObject();
 
-			List<BuildRunEntity> historyBuildRunEntities =
-				buildEntity.getHistoryBuildRunEntities();
+			BuildRunEntity latestBuildRunEntity =
+				buildEntity.getLatestBuildRunEntity();
 
-			if (!historyBuildRunEntities.isEmpty()) {
-				BuildRunEntity latestBuildRunEntity =
-					historyBuildRunEntities.get(
-						historyBuildRunEntities.size() - 1);
-
+			if (latestBuildRunEntity != null) {
 				buildJSONObject.put(
 					"latestDuration", latestBuildRunEntity.getDuration()
 				).put(

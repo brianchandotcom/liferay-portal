@@ -64,6 +64,8 @@ public interface BuildEntity extends Entity {
 
 	public long getJobEntityId();
 
+	public BuildRunEntity getLatestBuildRunEntity();
+
 	public int getMaxNodeCount();
 
 	public int getMinNodeRAM();

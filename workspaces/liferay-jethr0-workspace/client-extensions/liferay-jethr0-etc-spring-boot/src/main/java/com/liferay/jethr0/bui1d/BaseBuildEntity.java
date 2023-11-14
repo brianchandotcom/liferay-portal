@@ -177,6 +177,18 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
+	public BuildRunEntity getLatestBuildRunEntity() {
+		List<BuildRunEntity> historyBuildRunEntities =
+			getHistoryBuildRunEntities();
+
+		if (historyBuildRunEntities.isEmpty()) {
+			return null;
+		}
+
+		return historyBuildRunEntities.get(historyBuildRunEntities.size() - 1);
+	}
+
+	@Override
 	public int getMaxNodeCount() {
 		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
 			"MAX_NODE_COUNT");

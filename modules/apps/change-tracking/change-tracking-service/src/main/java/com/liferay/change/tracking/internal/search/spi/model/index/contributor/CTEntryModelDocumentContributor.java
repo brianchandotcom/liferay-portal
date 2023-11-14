@@ -150,8 +150,10 @@ public class CTEntryModelDocumentContributor
 		if ((ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) ||
 			((ctCollection != null) &&
 			 (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
-			 (ctEntry.getChangeType() ==
-				 CTConstants.CT_CHANGE_TYPE_ADDITION))) {
+			 ((ctEntry.getChangeType() ==
+				 CTConstants.CT_CHANGE_TYPE_ADDITION) ||
+			  (ctEntry.getChangeType() ==
+				  CTConstants.CT_CHANGE_TYPE_MODIFICATION)))) {
 
 			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 		}

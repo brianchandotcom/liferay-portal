@@ -30,7 +30,7 @@ export default function getEventFields(mdfRequestActivity: MDFRequestActivity) {
 	else {
 		eventFields.push(
 			{
-				title: 'Location',
+				title: 'Activity Location',
 				value: mdfRequestActivity.activityDescription?.location,
 			},
 			{
@@ -52,7 +52,7 @@ export default function getEventFields(mdfRequestActivity: MDFRequestActivity) {
 					?.liferayParticipationRequirements,
 		},
 		{
-			title: 'Source and Size of Invitee List',
+			title: 'Source and Size of Invite List',
 			value:
 				mdfRequestActivity.activityDescription
 					?.sourceAndSizeOfInviteeList,

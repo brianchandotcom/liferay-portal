@@ -90,12 +90,18 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	clearResultsURL="<%= rankingPortletDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= rankingPortletDisplayContext.getCreationMenu() %>"
 	disabled="<%= rankingPortletDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= rankingPortletDisplayContext.getFilterItemsDropdownItems() %>"
+	filterLabelItems="<%= rankingPortletDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= rankingPortletDisplayContext.getTotalItems() %>"
 	propsTransformer="js/RankingPortletManagementToolbarPropsTransformer"
+	searchActionURL="<%= rankingPortletDisplayContext.getSearchActionURL() %>"
 	searchContainerId="resultsRankingEntries"
+	searchFormName="fm"
 	selectable="<%= true %>"
 	showCreationMenu="<%= rankingPortletDisplayContext.isShowCreationMenu() %>"
-	showSearch="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= rankingPortletDisplayContext.getOrderByType() %>"
+	sortingURL="<%= rankingPortletDisplayContext.getSortingURL() %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">

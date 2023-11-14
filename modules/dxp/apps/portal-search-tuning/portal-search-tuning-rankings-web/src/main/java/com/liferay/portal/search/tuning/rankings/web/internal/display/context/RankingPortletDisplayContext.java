@@ -7,6 +7,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -35,6 +36,10 @@ public class RankingPortletDisplayContext {
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
 		return _filterItemsDropdownItems;
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return _filterLabelItems;
 	}
 
 	public String getOrderByType() {
@@ -91,6 +96,10 @@ public class RankingPortletDisplayContext {
 		_filterItemsDropdownItems = filterItemsDropdownItems;
 	}
 
+	public void setFilterLabelItems(List<LabelItem> filterLabelItems) {
+		_filterLabelItems = filterLabelItems;
+	}
+
 	public void setOrderByType(String orderByType) {
 		_orderByType = orderByType;
 	}
@@ -119,6 +128,7 @@ public class RankingPortletDisplayContext {
 	private boolean _disabledManagementBar;
 	private String _displayStyle;
 	private List<DropdownItem> _filterItemsDropdownItems;
+	private List<LabelItem> _filterLabelItems;
 	private String _orderByType;
 	private String _searchActionURL;
 	private SearchContainer<RankingEntryDisplayContext> _searchContainer;

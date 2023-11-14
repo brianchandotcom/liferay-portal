@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.util.comparator.AssetCategoryAssetVocabularyLocalizedTitleComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 import com.liferay.taglib.aui.AUIUtil;
 
@@ -154,10 +155,12 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> categories =
+		List<AssetCategory> categories = ListUtil.sort(
 			AssetCategoryServiceUtil.getVocabularyRootCategories(
 				groupId, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				null),
+			new AssetCategoryAssetVocabularyLocalizedTitleComparator(
+				vocabularyId, _themeDisplay.getLocale(), true));
 
 		for (AssetCategory category : categories) {
 			categoriesJSONArray.put(_getCategoryJSONObject(category));
@@ -191,8 +194,10 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		JSONArray childCategoriesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> childCategories =
-			AssetCategoryServiceUtil.getChildCategories(categoryId);
+		List<AssetCategory> childCategories = ListUtil.sort(
+			AssetCategoryServiceUtil.getChildCategories(categoryId),
+			new AssetCategoryAssetVocabularyLocalizedTitleComparator(
+				0, _themeDisplay.getLocale(), true));
 
 		for (AssetCategory childCategory : childCategories) {
 			childCategoriesJSONArray.put(_getCategoryJSONObject(childCategory));

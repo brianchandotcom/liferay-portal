@@ -87,34 +87,8 @@ public class DisplayPageDisplayContext {
 			return true;
 		}
 
-		if (layoutPageTemplateEntry.getClassNameId() == 0) {
-			return false;
-		}
-
-		Map<Long, Long[]> classNameIdsMap = _getClassNameIdsMap();
-
-		if (!classNameIdsMap.containsKey(
-				layoutPageTemplateEntry.getClassNameId())) {
-
-			return false;
-		}
-
-		Long[] classTypeIds = classNameIdsMap.get(
-			layoutPageTemplateEntry.getClassNameId());
-
-		if ((layoutPageTemplateEntry.getClassTypeId() == 0) &&
-			ArrayUtil.isEmpty(classTypeIds)) {
-
-			return true;
-		}
-
-		if (!ArrayUtil.contains(
-				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
-
-			return false;
-		}
-
-		return true;
+		return _isContentTypeInMap(
+			_getClassNameIdsMap(), layoutPageTemplateEntry);
 	}
 
 	public SearchContainer<?> getDisplayPagesSearchContainer() {
@@ -431,34 +405,8 @@ public class DisplayPageDisplayContext {
 			return true;
 		}
 
-		if (layoutPageTemplateEntry.getClassNameId() == 0) {
-			return false;
-		}
-
-		Map<Long, Long[]> classNameIdsMap = _getAllowedClassNameIdsMap();
-
-		if (!classNameIdsMap.containsKey(
-				layoutPageTemplateEntry.getClassNameId())) {
-
-			return false;
-		}
-
-		Long[] classTypeIds = classNameIdsMap.get(
-			layoutPageTemplateEntry.getClassNameId());
-
-		if ((layoutPageTemplateEntry.getClassTypeId() == 0) &&
-			ArrayUtil.isEmpty(classTypeIds)) {
-
-			return true;
-		}
-
-		if (!ArrayUtil.contains(
-				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
-
-			return false;
-		}
-
-		return true;
+		return _isContentTypeInMap(
+			_getAllowedClassNameIdsMap(), layoutPageTemplateEntry);
 	}
 
 	public boolean isSearch() {
@@ -634,6 +582,35 @@ public class DisplayPageDisplayContext {
 		}
 
 		return null;
+	}
+
+	private boolean _isContentTypeInMap(
+		Map<Long, Long[]> classNameIdsMap,
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		if ((layoutPageTemplateEntry.getClassNameId() == 0) ||
+			!classNameIdsMap.containsKey(
+				layoutPageTemplateEntry.getClassNameId())) {
+
+			return false;
+		}
+
+		Long[] classTypeIds = classNameIdsMap.get(
+			layoutPageTemplateEntry.getClassNameId());
+
+		if ((layoutPageTemplateEntry.getClassTypeId() == 0) &&
+			ArrayUtil.isEmpty(classTypeIds)) {
+
+			return true;
+		}
+
+		if (!ArrayUtil.contains(
+				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private Map<Long, Long[]> _allowedClassNameIdsMap;

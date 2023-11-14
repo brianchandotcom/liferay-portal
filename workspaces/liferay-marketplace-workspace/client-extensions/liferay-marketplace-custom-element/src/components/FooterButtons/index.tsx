@@ -6,6 +6,7 @@
 import {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 
 export type ButtonProps = {
 	appendIcon?: string;
@@ -15,6 +16,7 @@ export type ButtonProps = {
 	onClick?: () => void;
 	show: boolean;
 	text?: string;
+	tooltip?: string;
 };
 
 export type FooterButtonsProps = {
@@ -31,57 +33,64 @@ const FooterButtons = ({className, dataButtons}: FooterButtonsProps) => {
 	const {cancelButton, customizedButton, nextButton} = dataButtons;
 
 	return (
-		<div className={className}>
-			{cancelButton?.show && (
-				<ClayButton
-					className={cancelButton?.className}
-					displayType={cancelButton?.displayType as DisplayType}
-					onClick={() =>
-						cancelButton.onClick && cancelButton.onClick()
-					}
-				>
-					{cancelButton?.text ?? 'Cancel'}
-				</ClayButton>
-			)}
-
-			<div className="d-flex justify-content-end">
-				{customizedButton?.show && (
+		<ClayTooltipProvider>
+			<div className={className}>
+				{cancelButton?.show && (
 					<ClayButton
-						className={customizedButton?.className}
-						displayType={
-							customizedButton?.displayType as DisplayType
-						}
+						className={cancelButton?.className}
+						displayType={cancelButton?.displayType as DisplayType}
 						onClick={() =>
-							customizedButton.onClick &&
-							customizedButton.onClick()
+							cancelButton.onClick && cancelButton.onClick()
 						}
 					>
-						{customizedButton?.text}
+						{cancelButton?.text ?? 'Cancel'}
 					</ClayButton>
 				)}
 
-				{nextButton?.show && (
-					<ClayButton
-						className={nextButton?.className}
-						disabled={nextButton?.disabled}
-						displayType={nextButton?.displayType as DisplayType}
-						onClick={() =>
-							nextButton.onClick && nextButton.onClick()
-						}
-					>
-						{nextButton?.appendIcon && (
-							<span className="inline-item inline-item-after mx-2">
-								<ClayIcon
-									aria-label={`Icon ${nextButton?.appendIcon}}`}
-									symbol={nextButton?.appendIcon}
-								/>
-							</span>
-						)}
-						{customizedButton?.show ? nextButton?.text : 'Continue'}
-					</ClayButton>
-				)}
+				<div className="d-flex justify-content-end">
+					{customizedButton?.show && (
+						<ClayButton
+							className={customizedButton?.className}
+							displayType={
+								customizedButton?.displayType as DisplayType
+							}
+							onClick={() =>
+								customizedButton.onClick &&
+								customizedButton.onClick()
+							}
+						>
+							{customizedButton?.text}
+						</ClayButton>
+					)}
+
+					{nextButton?.show && (
+						<ClayButton
+							className={nextButton?.className}
+							data-title-set-as-html
+							data-tooltip-align="top-right"
+							disabled={nextButton?.disabled}
+							displayType={nextButton?.displayType as DisplayType}
+							onClick={() =>
+								nextButton.onClick && nextButton.onClick()
+							}
+							title={nextButton.tooltip}
+						>
+							{nextButton?.appendIcon && (
+								<span className="inline-item inline-item-after mx-2">
+									<ClayIcon
+										aria-label={`Icon ${nextButton?.appendIcon}}`}
+										symbol={nextButton?.appendIcon}
+									/>
+								</span>
+							)}
+							{customizedButton?.show
+								? nextButton?.text
+								: 'Continue'}
+						</ClayButton>
+					)}
+				</div>
 			</div>
-		</div>
+		</ClayTooltipProvider>
 	);
 };
 

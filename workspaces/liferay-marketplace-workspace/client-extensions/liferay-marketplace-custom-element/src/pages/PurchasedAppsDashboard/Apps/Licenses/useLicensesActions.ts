@@ -53,9 +53,18 @@ const useLicenseActions = ({
 
 	const onDownload = useCallback(
 		(licenseKey: LicenseKey) => {
-			provisioningKoroneikiOAuth2.downloadLicenseKey(
-				licenseKey?.id as number
-			);
+			if (licenseKey?.id) {
+				return provisioningKoroneikiOAuth2.downloadLicenseKey(
+					licenseKey?.id as number
+				);
+			}
+
+			Liferay.Util.openToast({
+				message: i18n.translate(
+					'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'
+				),
+				type: 'danger',
+			});
 		},
 		[provisioningKoroneikiOAuth2]
 	);

@@ -42,6 +42,10 @@ export default {
 		'The order must be completed before licensing this app.',
 	'there-was-an-unexpected-error-while-attempting-to-deactivate-key-please-try-again-in-a-few-moments':
 		'There was an unexpected error while attempting to deactivate key. Please try again in a few moments.',
+	'this-key-is-expired-and-cannot-be-downloaded':
+		'This key is expired and cannot be downloaded.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
+	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':
+		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',
 };

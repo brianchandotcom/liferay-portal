@@ -5,9 +5,6 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
-import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectConstants;
@@ -67,7 +64,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -75,17 +71,14 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -110,8 +103,6 @@ import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.text.ParseException;
@@ -1444,47 +1435,19 @@ public class DefaultObjectEntryManagerImpl
 							" is not supported");
 		}
 
-		_attachmentManager.validateFileName(fileEntry.getName());
+		com.liferay.portal.kernel.repository.model.FileEntry
+			serviceBuilderFileEntry = _attachmentManager.addFileEntry(
+				objectField.getCompanyId(),
+				getGroupId(objectDefinition, scopeKey, true),
+				Base64.decode(fileEntry.getFileBase64()), fileEntry.getName(),
+				objectField.getObjectFieldId(), serviceContext);
 
-		_attachmentManager.validateFileExtension(
-			fileEntry.getName(), objectField.getObjectFieldId());
+		fileEntry.setFileBase64((String)null);
+		fileEntry.setId(serviceBuilderFileEntry.getFileEntryId());
 
-		byte[] content = Base64.decode(fileEntry.getFileBase64());
+		Map<String, Object> properties = objectEntry.getProperties();
 
-		User user = _userLocalService.getUser(serviceContext.getUserId());
-
-		_attachmentManager.validateFileSize(
-			fileEntry.getName(), content.length, objectField.getObjectFieldId(),
-			!user.isGuestUser());
-
-		long groupId = getGroupId(objectDefinition, scopeKey, true);
-
-		DLFolder dlFolder = _attachmentManager.getDLFolder(
-			objectField.getObjectFieldId(), objectField.getCompanyId(), groupId,
-			serviceContext, serviceContext.getUserId());
-
-		try (InputStream inputStream = new ByteArrayInputStream(content)) {
-			com.liferay.portal.kernel.repository.model.FileEntry
-				serviceBuilderFileEntry = _dlAppLocalService.addFileEntry(
-					null, serviceContext.getUserId(),
-					dlFolder.getRepositoryId(), dlFolder.getFolderId(),
-					DLUtil.getUniqueFileName(
-						groupId, dlFolder.getFolderId(), fileEntry.getName(),
-						true),
-					_mimeTypes.getContentType(inputStream, fileEntry.getName()),
-					DLUtil.getUniqueTitle(
-						groupId, dlFolder.getFolderId(),
-						FileUtil.stripExtension(fileEntry.getName())),
-					StringPool.BLANK, null, null, inputStream, content.length,
-					null, null, serviceContext);
-
-			fileEntry.setFileBase64((String)null);
-			fileEntry.setId(serviceBuilderFileEntry.getFileEntryId());
-
-			Map<String, Object> properties = objectEntry.getProperties();
-
-			properties.put(objectField.getName(), fileEntry.toString());
-		}
+		properties.put(objectField.getName(), fileEntry.toString());
 	}
 
 	private void _processVulcanAggregation(
@@ -1772,12 +1735,6 @@ public class DefaultObjectEntryManagerImpl
 	private AttachmentManager _attachmentManager;
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference(
@@ -1787,9 +1744,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private MimeTypes _mimeTypes;
 
 	@Reference
 	private ObjectActionEngine _objectActionEngine;

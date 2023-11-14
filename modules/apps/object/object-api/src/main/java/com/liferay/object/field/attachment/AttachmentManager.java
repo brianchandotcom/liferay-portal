@@ -9,12 +9,18 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Carlos Correa
  */
 public interface AttachmentManager {
+
+	public FileEntry addFileEntry(
+			long companyId, long groupId, byte[] fileContent, String fileName,
+			long objectFieldId, ServiceContext serviceContext)
+		throws Exception;
 
 	public String[] getAcceptedFileExtensions(long objectFieldId);
 

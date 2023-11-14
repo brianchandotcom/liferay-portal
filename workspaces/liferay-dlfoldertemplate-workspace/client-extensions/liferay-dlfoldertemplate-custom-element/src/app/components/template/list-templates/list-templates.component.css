@@ -1,0 +1,63 @@
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "material-design-icons/iconfont/material-icons.css";
+@import "../../../../styles.css";
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 10px;
+    color: var(--dark);
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Hide the standard browse button */
+input[type="file"] {
+    display: none;
+}
+
+.table-th
+{
+    text-transform: capitalize!important;
+}
+
+.upload-file
+{
+    display: flex;
+    flex-direction: row;
+}
+.upload-file .icon
+{
+    display: flex;
+    margin: auto;
+}
+.upload-file .icon-label
+{
+    display: flex;
+    margin: auto;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.table-container
+{
+    width: 100%;
+    overflow: scroll;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+.jobs-list-table
+{
+    width: 100%;
+    margin-top: 1rem;
+}
+.jobs-list-table > data-import-job-list-item
+{
+    width: 100%;
+    display: block;
+}
+

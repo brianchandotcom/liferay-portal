@@ -1,0 +1,72 @@
+@import "material-design-icons/iconfont/material-icons.css";
+
+.item
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding:0.5rem;
+    border-bottom: var(--light);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+
+}
+.item > div
+{
+    display: flex;
+    flex-direction: column;
+    min-width: 20%;
+}
+.item > div.size-5
+{
+    min-width: 5%;
+}
+.item > div.size-10
+{
+    min-width: 10%;
+}
+.item > div.size-15
+{
+    min-width: 15%;
+}
+.item > div.size-20
+{
+    min-width: 20%;
+}
+.item > div.size-30
+{
+    min-width: 30%;
+}
+.item > div.size-35
+{
+    min-width: 35%;
+}
+.item > div.size-40
+{
+    min-width: 40%;
+}
+.item > div.size-50
+{
+    min-width: 50%;
+}
+.item .cell
+{
+    margin-top: auto;
+    font-weight: 400;
+    margin-bottom: auto;
+}
+.bold
+{
+    font-weight: 900!important;
+}
+.item-action
+{
+    display: flex;
+}
+.content-center
+{
+    display: flex!important;
+    margin-top: auto!important;
+    margin-bottom: auto!important;
+    margin-left: 5px;
+}

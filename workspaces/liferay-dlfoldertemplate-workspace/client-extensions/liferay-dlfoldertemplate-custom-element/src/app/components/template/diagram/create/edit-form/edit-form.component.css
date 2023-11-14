@@ -1,0 +1,17 @@
+.edit-folder
+{
+    min-width: 350px;
+}
+.form-container
+{
+    display: flex;
+    flex-direction: column;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 5%;
+    padding-left: 5%;
+}
+.actions > button
+{
+    margin-right: 0.5rem;
+}

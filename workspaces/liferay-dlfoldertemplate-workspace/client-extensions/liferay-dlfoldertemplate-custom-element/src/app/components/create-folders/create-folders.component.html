@@ -1,0 +1,30 @@
+<div class="app-widget mat-elevation-z1">
+    <mat-toolbar>
+        <span>Create Folder Structure From Template</span>
+        <span class="spacer"></span>
+    </mat-toolbar>
+    <div class="actions no-border">
+        <div class="actions-start">
+        </div>
+        <div class="spacer"></div>
+        <div class="actions-end">
+            <button (click)="save()"  mat-stroked-button [disabled]="!isStepContentValid()">Save</button>
+            <button (click)="closeDialog('cancel')" color="warn" mat-stroked-button>Cancel</button>
+        </div>
+    </div>
+    <div>
+        <form [formGroup]="templateForm" class="form-container">
+            <mat-form-field>
+                <mat-label>Folder Name</mat-label>
+                <input matInput formControlName="folderName">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Container Folder</mat-label>
+                <input [readonly]="true" formControlName="containerId" matInput>
+                <button mat-icon-button matSuffix (click)="select()">
+                    <mat-icon>folder</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+    </div>
+</div>

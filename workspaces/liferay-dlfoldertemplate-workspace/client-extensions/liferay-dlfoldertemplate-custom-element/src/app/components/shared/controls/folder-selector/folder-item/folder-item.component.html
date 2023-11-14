@@ -1,0 +1,50 @@
+<li class="folder-sub" *ngIf="node && hasChildren" mat-list-item>
+    <div class="folder">
+        <div class="toggler" (click)="toggleListVisibility()">
+            <span>
+                <mat-icon *ngIf="isListVisible">expand_less</mat-icon>
+                <mat-icon *ngIf="!isListVisible">expand_more</mat-icon>
+            </span>
+        </div>
+        <div class="folder-name">
+            <span>
+                {{node.name}}<sup matBadgeSize="small" class="badge" matBadge="{{node.children.length}}" matBadgeOverlap="false"></sup>
+            </span>
+        </div>
+        <div class="spacer">
+
+        </div>
+        <div class="folder-select">
+            <span>
+                <button mat-button (click)="select(this.node)" color="primary" >Select</button>
+            </span>
+        </div>
+    </div>
+    <ul role="list" mat-list class="nested" [@showHide]="isListVisible ? 'show' : 'hide'">
+        <app-folder-item *ngFor="let folder of children" (select)="select(folder)" [ref]="dialogRef"  [node]="folder"></app-folder-item>
+    </ul>
+</li>
+<li class="folder-no-sub"  *ngIf="!hasChildren" mat-list-item>
+    <div class="folder">
+        <div class="toggler">
+           <span>
+               <mat-icon>keyboard_arrow_right</mat-icon>
+           </span>
+        </div>
+        <div class="folder-name">
+            <span>
+                {{node.name}}
+            </span>
+        </div>
+        <div class="spacer">
+
+        </div>
+        <div class="folder-select">
+            <span>
+                 <button mat-button color="primary" (click)="select(this.node)">Select</button>
+            </span>
+        </div>
+    </div>
+</li>
+
+

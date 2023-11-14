@@ -1,0 +1,18 @@
+.nested
+{
+    list-style: none!important;
+}
+.app-widget
+{
+    min-width: 70vw;
+}
+.tree
+{
+    max-height: 50vh;
+    height: 50vh;
+    overflow: scroll;
+}
+.root
+{
+    padding: 2rem;
+}

@@ -1,0 +1,9 @@
+apply plugin: "com.liferay.node"
+
+createDockerContainer {
+    hostConfig.network = "host"
+}
+
+node {
+    nodeVersion = "18.15.0"
+}

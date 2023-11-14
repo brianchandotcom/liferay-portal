@@ -1,0 +1,9 @@
+{
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "client-extensions/liferay-dlfoldertemplate-etc-node",
+            "client-extensions/liferay-dlfoldertemplate-custom-element"
+        ]
+    }
+}

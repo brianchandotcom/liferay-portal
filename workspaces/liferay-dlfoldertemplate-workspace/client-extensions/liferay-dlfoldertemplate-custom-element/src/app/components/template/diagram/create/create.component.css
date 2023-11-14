@@ -1,0 +1,34 @@
+.designer
+{
+    width: 100vw;
+    height: 100vh;
+}
+::ng-deep .cdk-overlay-pane
+{
+    max-width: 100vw!important;
+}
+
+#tree
+{
+    width: 100%;
+    height: 100%;
+}
+
+:host ::ng-deep  [data-n-id] rect {
+    fill: white;
+}
+:host ::ng-deep  [data-n-id] rect {
+    filter: drop-shadow(4px 4px 1px #ffca2761);
+}
+:host ::ng-deep  [data-n-id] text {
+    fill: black;
+    width: 200px; /* Set your desired width */
+    word-wrap: break-word; /* or overflow-wrap: break-word; */
+    white-space: pre-wrap;
+}
+
+:host ::ng-deep .boc-toolbar-container
+{
+    top: 10%!important;
+    bottom: unset!important;
+}

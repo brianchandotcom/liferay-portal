@@ -1,0 +1,27 @@
+<div class="item" *ngIf="record">
+    <div class="cell bold size-5">
+        {{record.id}}
+    </div>
+    <div class="cell size-30" >
+        {{record.templateName}}
+    </div>
+    <div class="cell size-15">
+        {{record.dateCreated| date: 'medium'}}
+    </div>
+    <div class="cell size-50">
+        <div class="item-action">
+            <div class="actions-start">
+
+            </div>
+            <div class="spacer"></div>
+            <div class="actions-end">
+                <button mat-icon-button color="primary" (click)="createFolder()" matTooltip="Create Folder Structure">
+                    <mat-icon>folder</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" (click)="openDesigner()" matTooltip="Open Designer">
+                    <mat-icon>format_paint</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

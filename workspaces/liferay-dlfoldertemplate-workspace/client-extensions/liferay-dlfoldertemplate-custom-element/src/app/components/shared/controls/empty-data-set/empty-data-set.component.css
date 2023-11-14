@@ -1,0 +1,29 @@
+.empty-container
+{
+    width: 100%;
+}
+.empty-container >div
+{
+
+}
+.empty-container-image
+{
+    display: flex;
+    padding: 5rem;
+
+}
+.empty-container-image > img
+{
+    display: flex;
+    margin: auto;
+    max-height: 200px;
+}
+.empty-container-description
+{
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    padding-top: 0;
+    font-size: 1.5em;
+    font-weight: 300;
+}

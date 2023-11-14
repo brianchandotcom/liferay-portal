@@ -1,0 +1,48 @@
+.folder
+{
+    font-weight: 300;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.1rem;
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-color: #eeeeee;
+}
+.badge
+{
+    margin-left: 5px;
+}
+.folder > div
+{
+    display: flex;
+    flex-direction: column;
+    margin: 0.2rem;
+}
+.folder > div > span
+{
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+}
+.folder > div > span > *
+{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.spacer {
+    flex: 1 1 auto;
+}
+::ng-deep li.folder-sub
+{
+    list-style: none;
+}
+::ng-deep li.folder-no-sub
+{
+    list-style: none;
+}
+.nested
+{
+    list-style: none!important;
+}

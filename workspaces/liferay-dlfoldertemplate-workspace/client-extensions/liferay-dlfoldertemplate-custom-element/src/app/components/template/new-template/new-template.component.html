@@ -1,0 +1,27 @@
+<div class="app-widget mat-elevation-z1">
+    <mat-toolbar>
+        <span>Create Template</span>
+        <span class="spacer"></span>
+    </mat-toolbar>
+    <div class="actions no-border">
+        <div class="actions-start">
+        </div>
+        <div class="spacer"></div>
+        <div class="actions-end">
+            <button (click)="save()"  mat-stroked-button [disabled]="!isStepContentValid()">Save</button>
+            <button (click)="closeDialog('cancel')" color="warn" mat-stroked-button>Cancel</button>
+        </div>
+    </div>
+    <div>
+        <form [formGroup]="templateForm" class="form-container">
+            <mat-form-field>
+                <mat-label>Template Name</mat-label>
+                <input matInput formControlName="templateName">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" rows="4"></textarea>
+            </mat-form-field>
+        </form>
+    </div>
+</div>

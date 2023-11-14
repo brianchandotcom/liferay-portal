@@ -1,0 +1,25 @@
+<div class="app-widget mat-elevation-z1" *ngIf="isSignedIn">
+    <mat-toolbar>
+        <span>Folder Selector</span>
+        <span class="spacer"></span>
+    </mat-toolbar>
+    <div class="actions no-border">
+        <div class="actions-start">
+        </div>
+        <div class="spacer"></div>
+        <div class="actions-end">
+            <button (click)="closeDialog('cancel')" color="warn" mat-stroked-button>Cancel</button>
+        </div>
+    </div>
+    <div>
+        <app-empty-data *ngIf="Folders && Folders.length <= 0"></app-empty-data>
+        <div  class="folder-selector tree">
+            <ul mat-list role="list" class="root">
+                <app-folder-item (select)="select($event)" [ref]="dialogRef" *ngFor="let folder of Folders" [node]="folder"></app-folder-item>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+

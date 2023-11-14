@@ -1,0 +1,532 @@
+{
+  "actions": {
+    "createBatch": {
+      "href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+      "method": "POST"
+    }
+  },
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+    "companyId": 0,
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_FAIL",
+      "taskItemDelegateName": "DEFAULT",
+      "updateStrategy": "UPDATE"
+    },
+    "userId": 0,
+    "version": "v1.0"
+  },
+  "items": [
+    {
+      "enableComments": false,
+      "enableLocalization": false,
+      "accountEntryRestricted": false,
+      "externalReferenceCode": "folder-template-information",
+      "objectFields": [
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "String",
+          "label": {
+            "en_US": "Author"
+          },
+          "type": "String",
+          "required": false,
+          "externalReferenceCode": "51fb3490-88ea-4618-5843-3e50f9a7e5ef",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "creator",
+          "state": false,
+          "businessType": "Text",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "Date",
+          "label": {
+            "en_US": "Create Date"
+          },
+          "type": "Date",
+          "required": false,
+          "externalReferenceCode": "3185334d-4535-fac6-d823-f2a4d8cecdcc",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "createDate",
+          "state": false,
+          "businessType": "Date",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "false",
+          "DBType": "String",
+          "label": {
+            "en_US": "External Reference Code"
+          },
+          "type": "String",
+          "required": false,
+          "externalReferenceCode": "7155eafe-a828-424f-3694-444b52db524a",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "externalReferenceCode",
+          "state": false,
+          "businessType": "Text",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "Long",
+          "label": {
+            "en_US": "ID"
+          },
+          "type": "Long",
+          "required": false,
+          "externalReferenceCode": "b581c22a-9bd7-7fcf-47ef-42c2bbb53a6d",
+          "indexedAsKeyword": true,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "id",
+          "state": false,
+          "businessType": "LongInteger",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "Date",
+          "label": {
+            "en_US": "Modified Date"
+          },
+          "type": "Date",
+          "required": false,
+          "externalReferenceCode": "2c19e28c-fe42-2986-7645-ce64b4625547",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "modifiedDate",
+          "state": false,
+          "businessType": "Date",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "String",
+          "label": {
+            "en_US": "Status"
+          },
+          "type": "String",
+          "required": false,
+          "externalReferenceCode": "35a3b169-05a6-c142-c261-6ade8a96d253",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "status",
+          "state": false,
+          "businessType": "Text",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+            {
+              "name": "uniqueValues",
+              "value": true
+            }
+          ],
+          "readOnly": "false",
+          "DBType": "String",
+          "label": {
+            "en_US": "Template Name"
+          },
+          "type": "String",
+          "required": true,
+          "externalReferenceCode": "84afc7ed-1a07-d28e-0550-cff81ec5c2f3",
+          "indexedAsKeyword": false,
+          "system": false,
+          "indexedLanguageId": "en_US",
+          "name": "templateName",
+          "state": false,
+          "businessType": "Text",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+            {
+              "name": "showCounter",
+              "value": false
+            }
+          ],
+          "readOnly": "false",
+          "DBType": "Clob",
+          "label": {
+            "en_US": "Template Description"
+          },
+          "type": "Clob",
+          "required": false,
+          "externalReferenceCode": "6220c42c-38f3-e947-91fa-90455abdad23",
+          "indexedAsKeyword": false,
+          "system": false,
+          "indexedLanguageId": "en_US",
+          "name": "templateDescription",
+          "state": false,
+          "businessType": "LongText",
+          "readOnlyConditionExpression": ""
+        }
+      ],
+      "restContextPath": "/o/c/foldertemplateinformations",
+      "scope": "company",
+      "portlet": true,
+      "modifiable": true,
+      "parameterRequired": false,
+      "enableObjectEntryHistory": false,
+      "titleObjectFieldName": "templateName",
+      "objectValidationRules": [
+      ],
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "label": {
+        "en_US": "Folder Template Information"
+      },
+      "panelCategoryKey": "applications_menu.applications.custom.apps",
+      "pluralLabel": {
+        "en_US": "Folder Templates Information"
+      },
+      "objectLayouts": [
+      ],
+      "system": false,
+      "objectViews": [
+      ],
+      "name": "FolderTemplateInformation",
+      "actions": {
+        "permissions": {
+        },
+        "get": {
+        },
+        "update": {
+        },
+        "delete": {
+        }
+      },
+      "status": {
+        "label_i18n": "Approved",
+        "code": 0,
+        "label": "approved"
+      }
+    }
+    ,{
+      "enableComments": false,
+      "objectRelationships": [
+      ],
+      "enableCategorization": true,
+      "accountEntryRestrictedObjectFieldName": "",
+      "objectActions": [
+      ],
+      "enableLocalization": false,
+      "accountEntryRestricted": false,
+      "externalReferenceCode": "liferay-folder-template",
+      "objectFields": [
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "String",
+          "label": {
+            "en_US": "Author"
+          },
+          "type": "String",
+          "required": false,
+          "externalReferenceCode": "c44f358f-7c19-90a3-a34d-d28dd40eea42",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "creator",
+          "state": false,
+          "businessType": "Text",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "Date",
+          "label": {
+            "en_US": "Create Date"
+          },
+          "type": "Date",
+          "required": false,
+          "externalReferenceCode": "14d55ae9-c9c9-50d7-aa21-53037165c480",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "createDate",
+          "state": false,
+          "businessType": "Date",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "false",
+          "DBType": "String",
+          "label": {
+            "en_US": "External Reference Code"
+          },
+          "type": "String",
+          "required": false,
+          "externalReferenceCode": "6458c199-8de9-90ae-9aa4-c5bfcecb5ddd",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "externalReferenceCode",
+          "state": false,
+          "businessType": "Text",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "Long",
+          "label": {
+            "en_US": "ID"
+          },
+          "type": "Long",
+          "required": false,
+          "externalReferenceCode": "b23f8841-a1d6-034d-77a0-6ee832f5ce0a",
+          "indexedAsKeyword": true,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "id",
+          "state": false,
+          "businessType": "LongInteger",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "Date",
+          "label": {
+            "en_US": "Modified Date"
+          },
+          "type": "Date",
+          "required": false,
+          "externalReferenceCode": "2f2a031a-87ae-24d2-2897-54e1fe91d612",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "modifiedDate",
+          "state": false,
+          "businessType": "Date",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": false,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "true",
+          "DBType": "String",
+          "label": {
+            "en_US": "Status"
+          },
+          "type": "String",
+          "required": false,
+          "externalReferenceCode": "76d80459-7680-8a9a-693e-1692bbb6e018",
+          "indexedAsKeyword": false,
+          "system": true,
+          "indexedLanguageId": "",
+          "name": "status",
+          "state": false,
+          "businessType": "Text",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "false",
+          "DBType": "String",
+          "label": {
+            "en_US": "Name"
+          },
+          "type": "String",
+          "required": true,
+          "externalReferenceCode": "2be66aa0-2b7b-6a1f-9884-9b1010fea589",
+          "indexedAsKeyword": false,
+          "system": false,
+          "indexedLanguageId": "en_US",
+          "name": "name",
+          "state": false,
+          "businessType": "Text",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "false",
+          "DBType": "Integer",
+          "label": {
+            "en_US": "Parent ID"
+          },
+          "type": "Integer",
+          "required": true,
+          "externalReferenceCode": "12fcd597-6e33-e738-7dd9-d43639439b6d",
+          "indexedAsKeyword": false,
+          "system": false,
+          "indexedLanguageId": "",
+          "name": "parentID",
+          "state": false,
+          "businessType": "Integer",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "false",
+          "DBType": "Boolean",
+          "label": {
+            "en_US": "Root"
+          },
+          "type": "Boolean",
+          "required": false,
+          "externalReferenceCode": "df041ef2-f3bc-4a95-3861-6cadae28df2b",
+          "indexedAsKeyword": false,
+          "system": false,
+          "indexedLanguageId": "",
+          "name": "root",
+          "state": false,
+          "businessType": "Boolean",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+            {
+              "name": "showCounter",
+              "value": false
+            }
+          ],
+          "readOnly": "false",
+          "DBType": "Clob",
+          "label": {
+            "en_US": "Description"
+          },
+          "type": "Clob",
+          "required": false,
+          "externalReferenceCode": "0b5065b7-fc99-1ff1-3aad-9107e146f4c5",
+          "indexedAsKeyword": false,
+          "system": false,
+          "indexedLanguageId": "en_US",
+          "name": "description",
+          "state": false,
+          "businessType": "LongText",
+          "readOnlyConditionExpression": ""
+        },
+        {
+          "indexed": true,
+          "localized": false,
+          "objectFieldSettings": [
+          ],
+          "readOnly": "false",
+          "DBType": "Long",
+          "label": {
+            "en_US": "Template ID"
+          },
+          "type": "Long",
+          "required": true,
+          "externalReferenceCode": "aa58831c-0db3-16f2-5887-52d2559ce83c",
+          "indexedAsKeyword": false,
+          "system": false,
+          "indexedLanguageId": "",
+          "name": "templateID",
+          "state": false,
+          "businessType": "LongInteger",
+          "readOnlyConditionExpression": ""
+        }
+      ],
+      "restContextPath": "/o/c/foldertemplates",
+      "scope": "company",
+      "portlet": true,
+      "modifiable": true,
+      "parameterRequired": false,
+      "enableObjectEntryHistory": false,
+      "titleObjectFieldName": "name",
+      "objectValidationRules": [
+      ],
+      "active": true,
+      "defaultLanguageId": "en_US",
+      "label": {
+        "en_US": "Folder Template"
+      },
+      "panelCategoryKey": "applications_menu.applications.custom.apps",
+      "pluralLabel": {
+        "en_US": "Folder Templates"
+      },
+      "system": false,
+      "objectViews": [
+      ],
+      "name": "FolderTemplate",
+      "actions": {
+        "permissions": {
+        },
+        "get": {
+        },
+        "update": {
+        },
+        "delete": {
+        }
+      },
+      "status": {
+        "label_i18n": "Approved",
+        "code": 0,
+        "label": "approved"
+      }
+    }
+  ]
+}

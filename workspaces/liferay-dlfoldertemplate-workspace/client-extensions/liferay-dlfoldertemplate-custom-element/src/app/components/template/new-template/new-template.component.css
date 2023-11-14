@@ -1,0 +1,19 @@
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "material-design-icons/iconfont/material-icons.css";
+.app-widget
+{
+    min-width: 450px;
+}
+.no-border
+{
+    border:none!important;
+}
+.form-container
+{
+    display: flex;
+    flex-direction: column;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 5%;
+    padding-left: 5%;
+}

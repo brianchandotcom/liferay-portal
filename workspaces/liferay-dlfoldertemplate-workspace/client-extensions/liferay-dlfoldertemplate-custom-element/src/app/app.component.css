@@ -1,0 +1,45 @@
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 10px;
+    cursor: pointer;
+    color: var(--primary);
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+.spacer {
+    flex: 1 1 auto;
+}
+.custom-file-upload:hover {
+    color: var(--secondary);
+}
+
+/* Hide the standard browse button */
+input[type="file"] {
+    display: none;
+}
+
+.table-th
+{
+    text-transform: capitalize!important;
+}
+
+.upload-file
+{
+    display: flex;
+    flex-direction: row;
+}
+.upload-file .icon
+{
+    display: flex;
+    margin: auto;
+}
+.upload-file .icon-label
+{
+    display: flex;
+    margin: auto;
+    padding-right: 5px;
+    padding-left: 5px;
+}

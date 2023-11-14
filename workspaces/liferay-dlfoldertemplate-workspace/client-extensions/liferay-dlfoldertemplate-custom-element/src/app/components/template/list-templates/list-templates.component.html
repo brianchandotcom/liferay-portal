@@ -1,0 +1,47 @@
+<div class="app-widget mat-elevation-z1">
+    <mat-toolbar>
+        <span>Liferay Folder Structure Template(s)</span>
+        <span class="spacer"></span>
+    </mat-toolbar>
+    <div class="actions">
+        <div class="actions-start">
+            <div class="upload-file-button">
+                <label  class="custom-file-upload">
+                    <div class="upload-file">
+                        <div class="icon">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="pages"></mat-icon>
+                        </div>
+                        <div class="icon-label"  matBadge="{{length}}" matBadgeOverlap="false">
+                            Available Templates
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div class="actions-end">
+            <button  mat-stroked-button color="accent" (click)="reload()">Reload</button>
+            <button  mat-stroked-button color="primary" (click)="create()">New Template</button>
+        </div>
+    </div>
+    <div class="container" *ngIf="!isLoading">
+        <app-empty-data *ngIf="data.length == 0"></app-empty-data>
+        <div class="data-table" *ngIf="data.length > 0">
+            <div class="table-container">
+                <div class="jobs-list-table">
+                    <app-template-list-header></app-template-list-header>
+                    <app-template-list-item *ngFor="let row of data;let i = index" [record]="row"></app-template-list-item>
+                </div>
+            </div>
+            <mat-paginator [length]="100"
+                           (page)="handlePageEvent($event)"
+                           [pageSize]="10"
+                           [length]="length"
+                           [pageSize]="pageSize"
+                           [pageIndex]="pageIndex"
+                           [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+                           aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

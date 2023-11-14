@@ -25,20 +25,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		TestUtils.hardRefresh();
-
-		PageAudit.tearDownInstanceSettingsConfigurations();
-
-		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
-
 	@description = "LPS-128383 Given the preferred strategy dropdown in the Site Scope section When the value is void (""Choose an option"") Then the call is made for Google Page Speed default value - desktop"
 	@priority = 3
 	test DefaultStrategyAtInstanceSettings {

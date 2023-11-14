@@ -1,0 +1,17 @@
+.checkbox-container {
+	border: 1px solid #e2e2e4;
+	&:hover {
+		background-color: #e6edfb;
+		border: 1px solid #004ad7;
+	}
+
+	&-checked {
+		background-color: #e6edfb;
+		border: 1px solid #004ad7;
+	}
+
+	&-description {
+		font-size: 0.81rem;
+		color: #54555f;
+	}
+}

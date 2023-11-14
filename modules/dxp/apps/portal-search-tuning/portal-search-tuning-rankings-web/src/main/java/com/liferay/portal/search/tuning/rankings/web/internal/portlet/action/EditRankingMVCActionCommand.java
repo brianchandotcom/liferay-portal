@@ -29,6 +29,7 @@ import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRa
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateAliasStringException;
 import com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateQueryStringException;
+import com.liferay.portal.search.tuning.rankings.web.internal.exception.NotApplicableStatusException;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DuplicateQueryStringsDetector;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
@@ -462,6 +463,12 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
+		if (Objects.equals(
+				ranking.getStatus(), ResultRankingsConstants.NOT_APPLICABLE)) {
+
+			throw new NotApplicableStatusException();
+		}
+
 		_guardDuplicateQueryStrings(editRankingMVCActionRequest, ranking);
 
 		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(
@@ -553,6 +560,10 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(
 					actionRequest, DuplicateQueryStringException.class);
 			}
+			else if (exception instanceof NotApplicableStatusException) {
+				SessionErrors.add(
+					actionRequest, NotApplicableStatusException.class);
+			}
 			else {
 				SessionErrors.add(actionRequest, Exception.class);
 			}
@@ -576,7 +587,18 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			_guardDuplicateQueryStrings(editRankingMVCActionRequest, rankings);
 		}
 
+		boolean notApplicableStatus = false;
+
 		for (Ranking ranking : rankings) {
+			if (Objects.equals(
+					ranking.getStatus(),
+					ResultRankingsConstants.NOT_APPLICABLE)) {
+
+				notApplicableStatus = true;
+
+				continue;
+			}
+
 			Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(
 				ranking);
 
@@ -584,6 +606,10 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 			rankingStorageAdapter.update(
 				rankingBuilder.build(), getRankingIndexName());
+		}
+
+		if (notApplicableStatus) {
+			throw new NotApplicableStatusException();
 		}
 	}
 

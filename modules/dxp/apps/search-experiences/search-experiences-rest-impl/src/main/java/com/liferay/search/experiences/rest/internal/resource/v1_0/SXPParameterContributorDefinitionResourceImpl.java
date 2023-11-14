@@ -6,10 +6,17 @@
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinitionProvider;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorProvider;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPParameterContributorDefinitionResource;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,10 +41,9 @@ public class SXPParameterContributorDefinitionResourceImpl
 
 		return Page.of(
 			transform(
-				_sxpParameterContributorDefinitionProvider.
-					getSXPParameterContributorDefinitions(
-						contextCompany.getCompanyId(),
-						contextAcceptLanguage.getPreferredLocale()),
+				_getSXPParameterContributorDefinitions(
+					contextCompany.getCompanyId(),
+					contextAcceptLanguage.getPreferredLocale()),
 				sxpParameterContributorDefinition ->
 					new SXPParameterContributorDefinition() {
 						{
@@ -55,11 +61,40 @@ public class SXPParameterContributorDefinitionResourceImpl
 					}));
 	}
 
+	private List
+		<com.liferay.search.experiences.blueprint.parameter.contributor.
+			SXPParameterContributorDefinition>
+				_getSXPParameterContributorDefinitions(
+					long companyId, Locale locale) {
+
+		if (ArrayUtil.isEmpty(
+				_sxpParameterContributorProvider.
+					getSxpParameterContributors())) {
+
+			return Collections.emptyList();
+		}
+
+		List
+			<com.liferay.search.experiences.blueprint.parameter.contributor.
+				SXPParameterContributorDefinition>
+					sxpParameterContributorDefinitions = new ArrayList<>();
+
+		for (SXPParameterContributor sxpParameterContributor :
+				_sxpParameterContributorProvider.
+					getSxpParameterContributors()) {
+
+			sxpParameterContributorDefinitions.addAll(
+				sxpParameterContributor.getSXPParameterContributorDefinitions(
+					companyId, locale));
+		}
+
+		return sxpParameterContributorDefinitions;
+	}
+
 	@Reference
 	private Language _language;
 
 	@Reference
-	private SXPParameterContributorDefinitionProvider
-		_sxpParameterContributorDefinitionProvider;
+	private SXPParameterContributorProvider _sxpParameterContributorProvider;
 
 }

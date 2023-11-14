@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -639,6 +640,69 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());
+	}
+
+	private void _assertObjectValidationRule(
+		String expectedObjectFieldExternalReferenceCode,
+		ObjectValidationRule expectedObjectValidationRule,
+		ObjectValidationRule actualObjectValidationRule) {
+
+		Assert.assertEquals(
+			expectedObjectValidationRule.getActive(),
+			actualObjectValidationRule.getActive());
+		Assert.assertEquals(
+			expectedObjectValidationRule.getEngine(),
+			actualObjectValidationRule.getEngine());
+		Assert.assertEquals(
+			expectedObjectValidationRule.getErrorLabel(),
+			actualObjectValidationRule.getErrorLabel());
+		Assert.assertEquals(
+			expectedObjectValidationRule.getExternalReferenceCode(),
+			expectedObjectValidationRule.getExternalReferenceCode());
+		Assert.assertEquals(
+			expectedObjectValidationRule.getName(),
+			actualObjectValidationRule.getName());
+		Assert.assertEquals(
+			expectedObjectValidationRule.getOutputType(),
+			actualObjectValidationRule.getOutputType());
+		Assert.assertEquals(
+			expectedObjectValidationRule.getScript(),
+			actualObjectValidationRule.getScript());
+
+		if (StringUtil.equals(
+				actualObjectValidationRule.getOutputTypeAsString(),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION)) {
+
+			Assert.assertTrue(
+				ArrayUtil.isEmpty(
+					actualObjectValidationRule.
+						getObjectValidationRuleSettings()));
+		}
+		else if (StringUtil.equals(
+					actualObjectValidationRule.getOutputTypeAsString(),
+					ObjectValidationRuleConstants.
+						OUTPUT_TYPE_PARTIAL_VALIDATION)) {
+
+			Assert.assertTrue(
+				ArrayUtil.isNotEmpty(
+					actualObjectValidationRule.
+						getObjectValidationRuleSettings()));
+
+			for (ObjectValidationRuleSetting objectValidationRuleSetting :
+					actualObjectValidationRule.
+						getObjectValidationRuleSettings()) {
+
+				if (StringUtil.equals(
+						objectValidationRuleSetting.getName(),
+						ObjectValidationRuleSettingConstants.
+							NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
+
+					Assert.assertEquals(
+						expectedObjectFieldExternalReferenceCode,
+						objectValidationRuleSetting.getValue());
+				}
+			}
+		}
 	}
 
 	private ObjectDefinition _randomModifiableSystemObjectDefinition()

@@ -19,6 +19,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -143,6 +144,10 @@ public class EndpointHelper {
 
 		if (relationshipsNames.isEmpty()) {
 			return objectEntry.getPropertyValue(property.getSourceFieldName());
+		}
+
+		if (objectEntry == null) {
+			return Collections.emptyList();
 		}
 
 		List<Object> values = new ArrayList<>();

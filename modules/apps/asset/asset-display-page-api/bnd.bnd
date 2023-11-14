@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.asset.display.page.exception,\
 	com.liferay.asset.display.page.model,\
 	com.liferay.asset.display.page.portlet,\
+	com.liferay.asset.display.page.portlet.provider,\
 	com.liferay.asset.display.page.service,\
 	com.liferay.asset.display.page.service.persistence,\
 	com.liferay.asset.display.page.upgrade,\

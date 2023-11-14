@@ -78,11 +78,19 @@ export default function ObjectDefinitionNodeHeader({
 
 					<ClayLabel
 						displayType={
-							status?.label === 'approved' ? 'success' : 'info'
+							status?.label === 'approved'
+								? 'success'
+								: status?.label === 'pending'
+								? 'info'
+								: 'secondary'
 						}
 					>
 						{Liferay.Language.get(
-							status?.label === 'approved' ? 'approved' : 'draft'
+							status?.label === 'approved'
+								? 'approved'
+								: status?.label === 'pending'
+								? 'pending'
+								: 'draft'
 						)}
 					</ClayLabel>
 				</div>

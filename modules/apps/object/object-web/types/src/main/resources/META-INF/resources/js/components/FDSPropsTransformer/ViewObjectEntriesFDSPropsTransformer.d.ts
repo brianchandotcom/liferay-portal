@@ -4,6 +4,7 @@
  */
 
 import MultiselectPicklistDataRenderer from './FDSDataRenderers/MultiselectPicklistDataRenderer';
+import StatusDataRenderer from './FDSDataRenderers/StatusDataRenderer';
 export default function ViewObjectEntriesFDSPropsTransformer({
 	...otherProps
 }: {
@@ -11,6 +12,7 @@ export default function ViewObjectEntriesFDSPropsTransformer({
 }): {
 	customDataRenderers: {
 		multiselectPicklistDataRenderer: typeof MultiselectPicklistDataRenderer;
+		statusDataRenderer: typeof StatusDataRenderer;
 	};
 	onActionDropdownItemClick({
 		action,

@@ -12,6 +12,12 @@ public class ResultRankingsConstants {
 
 	public static final String ACTIVATE = "activate";
 
+	public static final String ACTIVE = "active";
+
 	public static final String DEACTIVATE = "deactivate";
+
+	public static final String INACTIVE = "inactive";
+
+	public static final String NOT_APPLICABLE = "not-applicable";
 
 }

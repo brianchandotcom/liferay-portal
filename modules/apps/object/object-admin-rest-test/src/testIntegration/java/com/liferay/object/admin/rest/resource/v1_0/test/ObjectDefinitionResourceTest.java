@@ -419,6 +419,22 @@ public class ObjectDefinitionResourceTest
 			SystemProperties.set("liferay.mode", liferayMode);
 		}
 
+		ObjectDefinition getObjectDefinition =
+			objectDefinitionResource.getObjectDefinition(
+				randomModifiableSystemObjectDefinition.getId());
+
+		_assertObjectValidationRule(
+			"customObjectFieldERC", updatedCustomObjectValidationRule,
+			(ObjectValidationRule)ArrayUtil.getValue(
+				getObjectDefinition.getObjectValidationRules(), 0));
+		_assertObjectValidationRule(
+			"customObjectFieldERC", systemObjectValidationRule,
+			(ObjectValidationRule)ArrayUtil.getValue(
+				getObjectDefinition.getObjectValidationRules(), 1));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			randomModifiableSystemObjectDefinition.getId());
+
 		// Storage type
 
 		postObjectDefinition = testPutObjectDefinition_addObjectDefinition();

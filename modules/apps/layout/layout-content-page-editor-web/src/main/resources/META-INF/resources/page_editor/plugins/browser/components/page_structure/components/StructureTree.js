@@ -18,12 +18,15 @@ import {EDITABLE_TYPE_LABELS} from '../../../../../app/config/constants/editable
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {
 	ARROW_DOWN_KEY_CODE,
 	ARROW_LEFT_KEY_CODE,
 	ARROW_RIGHT_KEY_CODE,
 	ARROW_UP_KEY_CODE,
+	ENTER_KEY_CODE,
+	SPACE_KEY_CODE,
 } from '../../../../../app/config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../../../app/config/constants/layoutTypes';
@@ -32,6 +35,7 @@ import {
 	useActiveItemId,
 	useHoverItem,
 	useHoveredItemId,
+	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
 import {useMovementTarget} from '../../../../../app/contexts/KeyboardMovementContext';
 import {
@@ -51,6 +55,7 @@ import isMappedToCollection from '../../../../../app/utils/editable_value/isMapp
 import findPageContent from '../../../../../app/utils/findPageContent';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
+import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
@@ -91,6 +96,7 @@ export default function PageStructureSidebar() {
 	const pageContents = useSelector(selectPageContents);
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
+	const selectItem = useSelectItem();
 
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const masterLayoutData = useSelector(
@@ -325,6 +331,28 @@ export default function PageStructureSidebar() {
 		}
 	}, [getAncestorsIds, keyboardMovementTargetId, layoutData]);
 
+	const onKeyDown = (event, item) => {
+		const {code} = event.nativeEvent;
+
+		if (![ENTER_KEY_CODE, SPACE_KEY_CODE].includes(code)) {
+			return;
+		}
+
+		const itemId = getFirstControlsId({
+			item,
+			layoutData: layoutDataRef.current,
+		});
+
+		if (item.activable) {
+			selectItem(itemId, {
+				itemType: item.itemType,
+				origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+			});
+
+			hoverItem(null);
+		}
+	};
+
 	return (
 		<div
 			className="overflow-auto page-editor__page-structure__structure-tree pt-4"
@@ -384,6 +412,7 @@ export default function PageStructureSidebar() {
 										? ''
 										: 'right'
 								}
+								onKeyDown={(event) => onKeyDown(event, item)}
 								onMouseLeave={(event) => {
 									if (item.hovered) {
 										event.stopPropagation();

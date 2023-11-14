@@ -1,0 +1,64 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.search.tuning.rankings.web.internal.model.listener;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.storage.RankingStorageAdapter;
+import com.liferay.search.experiences.model.SXPBlueprint;
+
+import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Almir Ferreira
+ */
+@Component(service = ModelListener.class)
+public class SXPBlueprintModelListener extends BaseModelListener<SXPBlueprint> {
+
+	@Override
+	public void onBeforeRemove(SXPBlueprint sxpBlueprint) {
+		try {
+			List<Ranking> rankings = _rankingIndexReader.fetch(sxpBlueprint);
+
+			if (rankings == null) {
+				return;
+			}
+
+			for (Ranking ranking : rankings) {
+				Ranking.RankingBuilder rankingBuilder =
+					new Ranking.RankingBuilder(ranking);
+
+				rankingBuilder.status(ResultRankingsConstants.NOT_APPLICABLE);
+
+				_rankingStorageAdapter.update(
+					rankingBuilder.build(),
+					_rankingIndexNameBuilder.getRankingIndexName(
+						sxpBlueprint.getCompanyId()));
+			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Reference
+	private RankingIndexNameBuilder _rankingIndexNameBuilder;
+
+	@Reference
+	private RankingIndexReader _rankingIndexReader;
+
+	@Reference
+	private RankingStorageAdapter _rankingStorageAdapter;
+
+}

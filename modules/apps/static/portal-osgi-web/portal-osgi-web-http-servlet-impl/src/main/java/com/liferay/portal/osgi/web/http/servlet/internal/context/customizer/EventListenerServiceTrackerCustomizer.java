@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.context.customizer;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
 import java.util.EventListener;
@@ -64,16 +65,7 @@ public class EventListenerServiceTrackerCustomizer
 					DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 			}
 
-			boolean listener = false;
-
-			if (listenerObject instanceof Boolean) {
-				listener = (boolean)listenerObject;
-			}
-			else {
-				listener = Boolean.parseBoolean((String)listenerObject);
-			}
-
-			if (!listener) {
+			if (!GetterUtil.getBoolean(listenerObject)) {
 				return result;
 			}
 

@@ -73,7 +73,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 				</aui:select>
 
-				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-10890") %>'>
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "COMMERCE-10890") %>'>
 					<aui:select disabled="<%= !commerceChannelDisplayContext.hasManageLinkSupplierPermission() %>" label="link-channel-to-a-supplier" name="accountEntryId" showEmptyOption="<%= true %>">
 
 						<%

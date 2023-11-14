@@ -164,7 +164,7 @@ boolean viewOnly = !commerceCatalogDisplayContext.hasModelResourcePermission(com
 						</aui:script>
 					</c:if>
 
-					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-10890") %>'>
+					<c:if test='<%= FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "COMMERCE-10890") %>'>
 
 						<%
 						AccountEntry accountEntry = commerceCatalogDisplayContext.getAccountEntry();

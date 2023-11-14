@@ -28,8 +28,6 @@ public class AccountConstants {
 
 	public static final String ACCOUNT_ENTRY_TYPE_SUPPLIER = "supplier";
 
-	public static final String[] ACCOUNT_ENTRY_TYPES = getAccountEntryTypes();
-
 	public static final String[] ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES = {
 		ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_PERSON
 	};
@@ -50,8 +48,8 @@ public class AccountConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.account";
 
-	public static String[] getAccountEntryTypes() {
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-10890")) {
+	public static String[] getAccountEntryTypes(long companyId) {
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "COMMERCE-10890")) {
 			return new String[] {
 				ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_GUEST,
 				ACCOUNT_ENTRY_TYPE_PERSON, ACCOUNT_ENTRY_TYPE_SUPPLIER

@@ -12,8 +12,10 @@ import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -52,7 +54,12 @@ public class AccountEntriesManagementPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			if (FeatureFlagManagerUtil.isEnabled("COMMERCE-10890")) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			if (FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "COMMERCE-10890")) {
+
 				renderRequest.setAttribute(
 					AccountWebKeys.ACCOUNT_ENTRY_ALLOWED_TYPES,
 					ArrayUtil.append(

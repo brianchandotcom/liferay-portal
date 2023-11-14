@@ -341,7 +341,9 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	}
 
 	@Override
-	public void unlockLayoutsByUserId(long companyId, long userId) {
+	public void unlockLayoutsByUserId(long companyId, long userId)
+		throws PortalException {
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_lockLocalService.getActionableDynamicQuery();
 
@@ -354,19 +356,11 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 						"className", Layout.class.getName()));
 				dynamicQuery.add(RestrictionsFactoryUtil.eq("userId", userId));
 			});
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(com.liferay.portal.lock.model.Lock lock) -> _lockManager.unlock(
 				lock.getClassName(), lock.getKey()));
 
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	private Date _getLastAutosaveDate(

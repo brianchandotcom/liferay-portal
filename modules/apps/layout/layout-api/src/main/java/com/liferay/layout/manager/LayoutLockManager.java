@@ -45,6 +45,7 @@ public interface LayoutLockManager {
 	public void unlockLayouts(long companyId, long autosaveMinutes)
 		throws PortalException;
 
-	public void unlockLayoutsByUserId(long companyId, long userId);
+	public void unlockLayoutsByUserId(long companyId, long userId)
+		throws PortalException;
 
 }

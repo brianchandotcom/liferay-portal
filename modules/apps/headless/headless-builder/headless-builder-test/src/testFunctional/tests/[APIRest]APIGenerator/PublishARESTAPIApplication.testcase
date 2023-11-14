@@ -72,7 +72,7 @@ definition {
 	}
 
 	@priority = 4
-	test CanSeeNewAPIEndpointInPublishedAPIApplcationPage {
+	test CanSeeNewAPIEndpointInPublishedAPIApplicationPage {
 		property portal.acceptance = "true";
 
 		task ("And Given an API endpoint 'AppTest' related to an Application by post request postAPIEndpoint") {
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@priority = 4
-	test CanSeeNewSchemaInPublishedAPIApplcationPage {
+	test CanSeeNewSchemaInPublishedAPIApplicationPage {
 		property portal.acceptance = "true";
 
 		task ("And Given an API Schema 'AppTest' related to an Application by post request postAPISchema") {

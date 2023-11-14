@@ -43,6 +43,18 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
+			if (isSet(tags)) {
+				for (var tagsList : list ${tags}) {
+					Type(
+						locator1 = "ACSettings#INVITE_USERS_INPUT",
+						value1 = ${tagsList});
+
+					KeyPress(
+						locator1 = "ACSettings#INVITE_USERS_INPUT",
+						value1 = "\RETURN");
+				}
+			}
+
 			CommerceEntry.publishProductImage();
 
 			Click(locator1 = "Icon#CLOSE");
@@ -185,6 +197,18 @@ definition {
 					Uncheck.uncheckToggleSwitch(
 						key_toggleSwitchLabel = "Use in Shopping Experience Image Gallery",
 						locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				}
+			}
+
+			if (isSet(tags)) {
+				for (var tagsList : list ${tags}) {
+					Type(
+						locator1 = "ACSettings#INVITE_USERS_INPUT",
+						value1 = ${tagsList});
+
+					KeyPress(
+						locator1 = "ACSettings#INVITE_USERS_INPUT",
+						value1 = "\RETURN");
 				}
 			}
 

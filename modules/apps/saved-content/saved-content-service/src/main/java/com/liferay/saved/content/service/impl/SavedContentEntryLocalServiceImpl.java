@@ -18,8 +18,6 @@ import com.liferay.saved.content.exception.DuplicateSavedContentEntryException;
 import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.service.base.SavedContentEntryLocalServiceBaseImpl;
 
-import java.util.Date;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

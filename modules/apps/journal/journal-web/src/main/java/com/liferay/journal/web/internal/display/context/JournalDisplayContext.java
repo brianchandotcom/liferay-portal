@@ -1634,6 +1634,11 @@ public class JournalDisplayContext {
 				_getAssetTagNamesFilter(), BooleanClauseOccur.MUST);
 		}
 
+		if (Objects.equals(_getSearchLocation(), "current-folder")) {
+			booleanFilter.add(
+				_getCurrentFolderFilter(), BooleanClauseOccur.MUST_NOT);
+		}
+
 		if (!isSearch()) {
 			booleanFilter.addTerm(
 				Field.FOLDER_ID, String.valueOf(getFolderId()),
@@ -1688,6 +1693,19 @@ public class JournalDisplayContext {
 		searchContainer.setResultsAndTotal(() -> mbMessages, hits.getLength());
 
 		return searchContainer;
+	}
+
+	private Filter _getCurrentFolderFilter() {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		booleanFilter.addTerm(
+			Field.ENTRY_CLASS_NAME, JournalFolder.class.getName(),
+			BooleanClauseOccur.MUST);
+		booleanFilter.addTerm(
+			Field.ENTRY_CLASS_PK, String.valueOf(getFolderId()),
+			BooleanClauseOccur.MUST);
+
+		return booleanFilter;
 	}
 
 	private EntriesChecker _getEntriesChecker() {

@@ -360,6 +360,11 @@
 	<td>//label[contains(.,'${checkboxName}')]/..//input[@type='checkbox']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SF_ORDER_BODY_VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'portlet') and contains(@class,'container')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]] | //*[contains(@class,'sheet-title')]//*[contains(@class,'dropdown-toggle')][.//*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
 
 <!--FRAGMENTS-->
 

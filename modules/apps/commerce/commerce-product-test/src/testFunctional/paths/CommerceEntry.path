@@ -1141,6 +1141,21 @@
 	<td>//span[contains(text(),'${key_itemName}')]/../../../../../../..//div[contains(@class,'product-card')]//a//picture[@data-fileentryid="${key_fileEntryId}"]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REMOVE_IMAGE_TAG</td>
+	<td>//span[contains(@class,'label label-secondary')]//span[contains(.,'${key_tagName}')]/..//*[name()='svg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE_TAG</td>
+	<td>//span[contains(@class,'label label-secondary')]//span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_ALL_IMAGE_TAG</td>
+	<td>//label[contains(.,'Tags')]/..//div[contains(@class,'input-group-item input-group-item-shrink')]//*[name()='svg']</td>
+	<td></td>
+</tr>
 
 <!--ATTACHMENT-->
 

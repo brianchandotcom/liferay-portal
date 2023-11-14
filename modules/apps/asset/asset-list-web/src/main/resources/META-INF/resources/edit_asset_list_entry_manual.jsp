@@ -9,7 +9,7 @@
 
 <%
 portletDisplay.setURLBack(editAssetListDisplayContext.getBackURL());
-portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
+portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 
 AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 %>

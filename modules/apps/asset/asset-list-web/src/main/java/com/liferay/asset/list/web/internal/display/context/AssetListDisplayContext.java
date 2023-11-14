@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -387,6 +388,14 @@ public class AssetListDisplayContext {
 				_themeDisplay.getURLCurrent()
 			).setParameter(
 				"assetListEntryId", assetListEntry.getAssetListEntryId()
+			).setParameter(
+				"backURLTitle",
+				() -> {
+					PortletDisplay portletDisplay =
+						_themeDisplay.getPortletDisplay();
+
+					return portletDisplay.getPortletDisplayName();
+				}
 			).buildString();
 		}
 

@@ -4864,6 +4864,11 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			KeyPress(
 				key_card = ${setName},
 				locator1 = "Card#CARD_DRAG_ICON",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_card = ${setName},
+				locator1 = "Card#CARD_DRAG_ICON",
 				value1 = "\ENTER");
 		}
 

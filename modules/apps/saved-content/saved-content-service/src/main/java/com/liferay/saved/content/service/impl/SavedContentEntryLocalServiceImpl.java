@@ -60,11 +60,6 @@ public class SavedContentEntryLocalServiceImpl
 		savedContentEntry.setUserId(user.getUserId());
 		savedContentEntry.setUserName(user.getFullName());
 
-		Date date = new Date();
-
-		savedContentEntry.setCreateDate(date);
-		savedContentEntry.setModifiedDate(date);
-
 		savedContentEntry.setClassNameId(classNameId);
 		savedContentEntry.setClassPK(classPK);
 

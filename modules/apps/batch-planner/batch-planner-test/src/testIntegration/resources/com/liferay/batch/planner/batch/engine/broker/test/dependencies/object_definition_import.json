@@ -499,6 +499,7 @@
 			{
 				"deletionType": "prevent",
 				"edge": false,
+				"externalReferenceCode": "TEST-OBJECT-RELATIONSHIP",
 				"id": 35639,
 				"label": {
 					"en_US": "relationship"

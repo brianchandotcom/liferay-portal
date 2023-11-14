@@ -7,6 +7,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFolder;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFolderItem;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
@@ -15,7 +16,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectFolderService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -25,6 +25,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -264,39 +266,60 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 						getObjectFolderItemsByObjectFolderId(
 							objectFolder.getObjectFolderId()),
 					objectFolderItem -> _toObjectFolderItem(
-						objectFolder.getObjectFolderId(), objectFolderItem),
+						objectFolder.getExternalReferenceCode(),
+						objectFolderItem),
 					ObjectFolderItem.class);
 			}
 		};
 	}
 
 	private ObjectFolderItem _toObjectFolderItem(
-			long objectFolderId,
+			String objectFolderExternalReferenceCode,
 			com.liferay.object.model.ObjectFolderItem objectFolderItem)
-		throws PortalException {
+		throws Exception {
 
 		if (objectFolderItem == null) {
 			return null;
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource = builder.user(
+			contextUser
+		).build();
+
+		com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition
+			dtoObjectDefinition = objectDefinitionResource.getObjectDefinition(
 				objectFolderItem.getObjectDefinitionId());
 
 		return new ObjectFolderItem() {
 			{
-				linkedObjectDefinition =
-					objectDefinition.isLinkedToObjectFolder(objectFolderId);
+				linkedObjectDefinition = !Objects.equals(
+					dtoObjectDefinition.getObjectFolderExternalReferenceCode(),
+					objectFolderExternalReferenceCode);
 				objectDefinitionExternalReferenceCode =
-					objectDefinition.getExternalReferenceCode();
+					dtoObjectDefinition.getExternalReferenceCode();
 				positionX = objectFolderItem.getPositionX();
 				positionY = objectFolderItem.getPositionY();
+
+				setObjectDefinition(
+					() -> {
+						if (linkedObjectDefinition) {
+							return null;
+						}
+
+						return dtoObjectDefinition;
+					});
 			}
 		};
 	}
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 	@Reference
 	private ObjectFolderItemLocalService _objectFolderItemLocalService;

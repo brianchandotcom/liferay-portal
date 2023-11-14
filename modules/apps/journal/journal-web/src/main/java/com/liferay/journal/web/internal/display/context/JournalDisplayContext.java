@@ -1345,10 +1345,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords()) ||
-			ArrayUtil.isNotEmpty(_getAssetCategoryIds()) ||
-			ArrayUtil.isNotEmpty(_getAssetTagNames())) {
-
+		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
 

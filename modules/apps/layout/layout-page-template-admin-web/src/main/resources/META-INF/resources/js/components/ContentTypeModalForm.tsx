@@ -160,6 +160,7 @@ function MappingTypeSelector({
 				<select
 					className="form-control"
 					defaultValue={selectedType}
+					id={`${namespace}classNameId`}
 					name={`${namespace}classNameId`}
 					onChange={onChange}
 				>
@@ -184,6 +185,7 @@ function MappingTypeSelector({
 					<select
 						className="form-control"
 						defaultValue={selectedSubtype}
+						id={`${namespace}classTypeId`}
 						name={`${namespace}classTypeId`}
 						onChange={() =>
 							setError({

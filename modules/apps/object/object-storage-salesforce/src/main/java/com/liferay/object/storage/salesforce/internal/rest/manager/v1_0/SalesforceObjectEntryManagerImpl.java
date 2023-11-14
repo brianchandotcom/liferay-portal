@@ -228,10 +228,7 @@ public class SalesforceObjectEntryManagerImpl
 			_accountEntryLocalService.getUserAccountEntries(
 				dtoConverterContext.getUserId(),
 				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				new String[] {
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-				},
+				AccountConstants.ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 

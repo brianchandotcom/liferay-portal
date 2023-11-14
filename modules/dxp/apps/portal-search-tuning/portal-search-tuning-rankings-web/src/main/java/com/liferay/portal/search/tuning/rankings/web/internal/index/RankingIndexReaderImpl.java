@@ -6,7 +6,9 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -22,6 +24,8 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
+import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +39,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = RankingIndexReader.class)
 public class RankingIndexReaderImpl implements RankingIndexReader {
+
+	@Override
+	public List<Ranking> fetch(Group group) throws PortalException {
+		return fetch(
+			group.getExternalReferenceCode(), StringPool.BLANK,
+			_rankingIndexNameBuilder.getRankingIndexName(group.getCompanyId()),
+			StringPool.BLANK);
+	}
 
 	@Override
 	public Ranking fetch(String id, RankingIndexName rankingIndexName) {
@@ -53,10 +65,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		RankingIndexName rankingIndexName,
 		String sxpBlueprintExternalReferenceCode) {
 
-		if (Validator.isBlank(queryString)) {
-			return null;
-		}
-
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(rankingIndexName.getIndexName());
@@ -69,6 +77,17 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		return _getRankings(
 			rankingIndexName,
 			_searchEngineAdapter.execute(searchSearchRequest));
+	}
+
+	@Override
+	public List<Ranking> fetch(SXPBlueprint sxpBlueprint)
+		throws PortalException {
+
+		return fetch(
+			StringPool.BLANK, StringPool.BLANK,
+			_rankingIndexNameBuilder.getRankingIndexName(
+				sxpBlueprint.getCompanyId()),
+			sxpBlueprint.getExternalReferenceCode());
 	}
 
 	@Override
@@ -129,8 +148,12 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 					groupExternalReferenceCode));
 		}
 
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(RankingFields.QUERY_STRINGS_KEYWORD, queryString));
+		if (!Validator.isBlank(queryString)) {
+			booleanQuery.addFilterQueryClauses(
+				_queries.term(
+					RankingFields.QUERY_STRINGS_KEYWORD, queryString));
+		}
+
 		booleanQuery.addMustNotQueryClauses(
 			_queries.term(
 				RankingFields.STATUS, ResultRankingsConstants.INACTIVE));
@@ -174,6 +197,9 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private RankingIndexNameBuilder _rankingIndexNameBuilder;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

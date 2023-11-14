@@ -136,7 +136,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 				ObjectDefinition objectDefinition =
 					objectField.getObjectDefinition();
 
-				dlFolderId = _getObjectRepositoryFolderId(
+				dlFolderId = _getRepositoryFolderId(
 					companyId, groupId, objectDefinition.getPortletId(),
 					serviceContext, userId);
 			}
@@ -220,7 +220,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			ObjectConfiguration.class, properties);
 	}
 
-	private Repository _getObjectRepository(
+	private Repository _getRepository(
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws Exception {
 
@@ -240,12 +240,12 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			groupId, portletId, serviceContext);
 	}
 
-	private Long _getObjectRepositoryFolderId(
+	private Long _getRepositoryFolderId(
 			long companyId, long groupId, String portletId,
 			ServiceContext serviceContext, long userId)
 		throws Exception {
 
-		Repository repository = _getObjectRepository(
+		Repository repository = _getRepository(
 			groupId, portletId, serviceContext);
 
 		if (repository == null) {

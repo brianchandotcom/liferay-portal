@@ -63,9 +63,6 @@ export default function getItemPartnerOpportunity(item: DealRegistrationDTO) {
 		[PartnerOpportunitiesColumnKey.HAS_RENEWAL]: item.hasRenewal
 			? item.hasRenewal
 			: false,
-		[PartnerOpportunitiesColumnKey.FISCAL_PERIOD]: item.fiscalPeriod
-			? item.fiscalPeriod
-			: '- ',
 		[PartnerOpportunitiesColumnKey.CREATED_DATE]: item.dateCreated
 			? getDateCustomFormat(
 					item.dateCreated,

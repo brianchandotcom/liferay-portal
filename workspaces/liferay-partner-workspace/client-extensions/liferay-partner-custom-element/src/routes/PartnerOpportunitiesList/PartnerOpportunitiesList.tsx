@@ -20,16 +20,14 @@ import {PartnerOpportunitiesColumnKey} from '../../common/enums/partnerOpportuni
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
-import DealRegistrationDTO from '../../common/interfaces/dto/dealRegistrationDTO';
 import {Liferay} from '../../common/services/liferay';
-import {ResourceName} from '../../common/services/liferay/object/enum/resourceName';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
-import {retry} from '../../common/utils/retry';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFromPartnerOpportunities';
 import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
 import getItemPartnerOpportunity from './utils/getItemPartnerOpportunity';
+import getOpportunityByErc from './utils/getOpportunityByErc';
 
 interface IProps {
 	closedOpportunitiesFilter: string;
@@ -64,7 +62,10 @@ const PartnerOpportunitiesList = ({
 		PartnerOpportunitiesItem
 	>();
 	const {observer, onClose} = useModal({
-		onClose: () => setIsVisibleModal(false),
+		onClose: () => {
+			setIsVisibleModal(false);
+			setModalContent(undefined);
+		},
 	});
 
 	const pagination = usePagination();
@@ -119,10 +120,6 @@ const PartnerOpportunitiesList = ({
 			label: 'End Date',
 		},
 		{
-			columnKey: PartnerOpportunitiesColumnKey.FISCAL_PERIOD,
-			label: 'Fiscal Period',
-		},
-		{
 			columnKey: PartnerOpportunitiesColumnKey.PARTNER_REP_NAME,
 			label: getDoubleParagraph('Partner Rep', 'Name'),
 		},
@@ -136,9 +133,15 @@ const PartnerOpportunitiesList = ({
 		},
 	];
 
-	const handleCustomClickOnRow = (row: PartnerOpportunitiesItem) => {
+	const handleCustomClickOnRow = async (row: PartnerOpportunitiesItem) => {
 		setIsVisibleModal(true);
-		setModalContent(row);
+		const opportunityERC = String(row['OPPORTUNITY']);
+
+		if (opportunityERC) {
+			const opportunity = await getOpportunityByErc(opportunityERC);
+			const rowModal = getItemPartnerOpportunity(opportunity);
+			setModalContent(rowModal);
+		}
 	};
 
 	const getModal = () => {

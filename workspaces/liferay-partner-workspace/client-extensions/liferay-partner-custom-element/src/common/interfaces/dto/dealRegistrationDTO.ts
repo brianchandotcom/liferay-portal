@@ -18,9 +18,9 @@ export default interface DealRegistrationDTO
 		| 'prospect'
 		| 'primaryProspect'
 	> {
-	active?: boolean;
 	accountExternalReferenceCode?: string;
 	accountName?: string;
+	active?: boolean;
 	additionalContactEmailAddress?: string;
 	additionalContactFirstName?: string;
 	additionalContactLastName?: string;

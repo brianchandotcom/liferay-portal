@@ -8,9 +8,9 @@ import {useMemo} from 'react';
 import DealRegistrationDTO from '../../../common/interfaces/dto/dealRegistrationDTO';
 import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import useGet from '../../../common/services/liferay/object/useGet';
 import getItemPartnerOpportunity from '../utils/getItemPartnerOpportunity';
-import { ResourceName } from '../../../common/services/liferay/object/enum/resourceName';
 
 export default function useGetListItemsFromPartnerOpportunities(
 	page: number,

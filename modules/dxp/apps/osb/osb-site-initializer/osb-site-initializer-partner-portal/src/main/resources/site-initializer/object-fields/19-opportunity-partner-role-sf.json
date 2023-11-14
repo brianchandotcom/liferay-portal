@@ -39,14 +39,13 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Picklist",
+			"businessType": "Text",
 			"externalReferenceCode": "Role__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Role"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:PartnerRoles$]",
 			"name": "role",
 			"required": false,
 			"type": "String"
@@ -313,14 +312,13 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Picklist",
+			"businessType": "Text",
 			"externalReferenceCode": "Opp_CurrencyIsoCode__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Currency"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
 			"name": "currency",
 			"required": false,
 			"type": "String"

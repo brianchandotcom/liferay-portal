@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 import {DragSource as dragSource} from 'react-dnd';
 
 import useKeyboardNavigation from '../../hooks/useKeyboardNavigation';
@@ -33,6 +33,7 @@ function CriteriaSidebarItem({
 	label,
 	type,
 }) {
+	const [isActive, setIsActive] = useState(false);
 	const {isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
@@ -41,14 +42,22 @@ function CriteriaSidebarItem({
 		<li
 			className={classNames(
 				'align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex ',
-				{dragging},
+				{
+					'criteria-sidebar-item-root--active': isActive,
+					dragging,
+				},
 				className
 			)}
 			ref={setElement}
 			role="menuitem"
 			tabIndex={isTarget ? 0 : -1}
 		>
-			<span className="c-p-2 inline-item" tabIndex={isTarget ? 0 : -1}>
+			<span
+				className="c-p-2 inline-item"
+				onBlur={() => setIsActive(false)}
+				onFocus={() => setIsActive(true)}
+				tabIndex={isTarget ? 0 : -1}
+			>
 				<ClayIcon symbol="drag" />
 			</span>
 

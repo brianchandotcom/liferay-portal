@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@clayui/alert": "3.106.1",
 		"@clayui/breadcrumb": "3.106.1",
 		"@clayui/button": "3.106.1",
 		"@clayui/card": "3.106.1",

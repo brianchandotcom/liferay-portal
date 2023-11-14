@@ -390,11 +390,11 @@ public class ServiceBuilder {
 				while (enumeration.hasMoreElements()) {
 					URL url = enumeration.nextElement();
 
-					InputStream inputStream = url.openStream();
-
-					_readResourceActionModels(
-						implDirName, resourcesDirName, inputStream,
-						resourceActionModels);
+					try (InputStream inputStream = url.openStream()) {
+						_readResourceActionModels(
+							implDirName, resourcesDirName, inputStream,
+							resourceActionModels);
+					}
 				}
 			}
 			else {

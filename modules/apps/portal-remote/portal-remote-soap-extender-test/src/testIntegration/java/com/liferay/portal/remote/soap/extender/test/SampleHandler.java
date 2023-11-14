@@ -7,6 +7,8 @@ package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 
+import java.io.InputStream;
+
 import java.net.URL;
 
 import javax.xml.transform.Transformer;
@@ -52,14 +54,16 @@ public class SampleHandler implements LogicalHandler<LogicalMessageContext> {
 
 			LogicalMessage logicalMessage = logicalMessageContext.getMessage();
 
-			Transformer transformer = _transformerFactory.newTransformer(
-				new StreamSource(_url.openStream()));
+			try (InputStream inputStream = _url.openStream()) {
+				Transformer transformer = _transformerFactory.newTransformer(
+					new StreamSource(inputStream));
 
-			DOMResult domResult = new DOMResult();
+				DOMResult domResult = new DOMResult();
 
-			transformer.transform(logicalMessage.getPayload(), domResult);
+				transformer.transform(logicalMessage.getPayload(), domResult);
 
-			logicalMessage.setPayload(new DOMSource(domResult.getNode()));
+				logicalMessage.setPayload(new DOMSource(domResult.getNode()));
+			}
 
 			return true;
 		}

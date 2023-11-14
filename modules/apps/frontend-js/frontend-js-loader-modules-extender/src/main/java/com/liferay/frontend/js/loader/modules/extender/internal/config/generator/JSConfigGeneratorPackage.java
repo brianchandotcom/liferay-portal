@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
@@ -330,7 +331,9 @@ public class JSConfigGeneratorPackage {
 			return;
 		}
 
-		try (Reader reader = new InputStreamReader(url.openStream())) {
+		try (InputStream inputStream = url.openStream();
+			Reader reader = new InputStreamReader(inputStream)) {
+
 			JSONTokener jsonTokener = new JSONTokener(reader);
 
 			JSONObject jsonObject = new JSONObject(jsonTokener);

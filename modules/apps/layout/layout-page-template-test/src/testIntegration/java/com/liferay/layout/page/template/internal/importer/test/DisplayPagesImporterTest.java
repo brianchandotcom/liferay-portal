@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -222,7 +223,9 @@ public class DisplayPagesImporterTest {
 
 		String zipPath = StringUtil.removeSubstring(entryPath, _BASE_PATH);
 
-		zipWriter.addEntry(zipPath, url.openStream());
+		try (InputStream inputStream = url.openStream()) {
+			zipWriter.addEntry(zipPath, inputStream);
+		}
 	}
 
 	private File _generateZipFile(String testCaseName) throws Exception {
@@ -321,7 +324,9 @@ public class DisplayPagesImporterTest {
 
 		String zipPath = StringUtil.removeSubstring(url.getFile(), _BASE_PATH);
 
-		zipWriter.addEntry(zipPath, url.openStream());
+		try (InputStream inputStream = url.openStream()) {
+			zipWriter.addEntry(zipPath, inputStream);
+		}
 
 		String path = FileUtil.getPath(url.getPath());
 

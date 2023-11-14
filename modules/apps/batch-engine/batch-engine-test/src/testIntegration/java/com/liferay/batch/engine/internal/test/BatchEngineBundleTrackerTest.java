@@ -177,7 +177,9 @@ public class BatchEngineBundleTrackerTest {
 					zipPath = zipPath.substring(1);
 				}
 
-				zipWriter.addEntry(zipPath, url.openStream());
+				try (InputStream inputStream = url.openStream()) {
+					zipWriter.addEntry(zipPath, inputStream);
+				}
 			}
 		}
 

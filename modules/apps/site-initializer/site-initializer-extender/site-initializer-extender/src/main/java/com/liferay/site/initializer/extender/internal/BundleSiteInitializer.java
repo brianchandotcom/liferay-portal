@@ -202,6 +202,7 @@ import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.net.URL;
@@ -921,9 +922,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_removeFirst(fileName, parentResourcePath), json);
 			}
 			else {
-				zipWriter.addEntry(
-					_removeFirst(fileName, parentResourcePath),
-					url.openStream());
+				try (InputStream inputStream = url.openStream()) {
+					zipWriter.addEntry(
+						_removeFirst(fileName, parentResourcePath),
+						inputStream);
+				}
 			}
 		}
 
@@ -1008,10 +1011,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 					json);
 			}
 			else {
-				zipWriter.addEntry(
-					_removeFirst(
-						urlPath, "/site-initializer/layout-page-templates"),
-					url.openStream());
+				try (InputStream inputStream = url.openStream()) {
+					zipWriter.addEntry(
+						_removeFirst(
+							urlPath, "/site-initializer/layout-page-templates"),
+						inputStream);
+				}
 			}
 		}
 
@@ -1078,11 +1083,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					json);
 			}
 			else {
-				zipWriter.addEntry(
-					_removeFirst(
-						urlPath,
-						"/site-initializer/layout-utility-page-entries"),
-					url.openStream());
+				try (InputStream inputStream = url.openStream()) {
+					zipWriter.addEntry(
+						_removeFirst(
+							urlPath,
+							"/site-initializer/layout-utility-page-entries"),
+						inputStream);
+				}
 			}
 		}
 
@@ -4139,9 +4146,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			zipWriter.addEntry(
-				_removeFirst(fileName, "/site-initializer/style-books/"),
-				url.openStream());
+			try (InputStream inputStream = url.openStream()) {
+				zipWriter.addEntry(
+					_removeFirst(fileName, "/site-initializer/style-books/"),
+					inputStream);
+			}
 		}
 
 		_styleBookEntryZipProcessor.importStyleBookEntries(

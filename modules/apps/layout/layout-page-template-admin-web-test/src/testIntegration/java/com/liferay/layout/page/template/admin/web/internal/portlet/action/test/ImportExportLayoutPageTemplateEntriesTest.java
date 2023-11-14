@@ -87,6 +87,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.net.URL;
@@ -1573,7 +1574,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		String zipPath = StringUtil.removeSubstring(
 			url.getFile(), _LAYOUT_PATE_TEMPLATES_PATH);
 
-		zipWriter.addEntry(zipPath, url.openStream());
+		try (InputStream inputStream = url.openStream()) {
+			zipWriter.addEntry(zipPath, inputStream);
+		}
 
 		String path = FileUtil.getPath(url.getPath());
 

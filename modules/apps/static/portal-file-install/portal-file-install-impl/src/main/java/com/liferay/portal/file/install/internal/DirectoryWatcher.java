@@ -661,8 +661,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			if (url != null) {
 				String location = url.toString();
 
-				try (BufferedInputStream bufferedInputStream =
-						new BufferedInputStream(url.openStream())) {
+				try (InputStream inputStream = url.openStream();
+					BufferedInputStream bufferedInputStream =
+						new BufferedInputStream(inputStream)) {
 
 					bundle = _installOrUpdateBundle(
 						location, bufferedInputStream, checksum, modified);

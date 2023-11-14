@@ -41,6 +41,7 @@ import com.liferay.portal.upload.test.util.UploadTestUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -207,9 +208,12 @@ public class ImportFragmentEntriesStrutsActionTest {
 			String path = url.getPath();
 
 			if (!path.endsWith(StringPool.SLASH)) {
-				zipWriter.addEntry(
-					StringUtil.removeSubstring(url.getPath(), _RESOURCES_PATH),
-					url.openStream());
+				try (InputStream inputStream = url.openStream()) {
+					zipWriter.addEntry(
+						StringUtil.removeSubstring(
+							url.getPath(), _RESOURCES_PATH),
+						inputStream);
+				}
 			}
 		}
 

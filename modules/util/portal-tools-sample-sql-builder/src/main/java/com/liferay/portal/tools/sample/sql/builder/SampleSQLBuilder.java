@@ -360,15 +360,14 @@ public class SampleSQLBuilder {
 		writer.write(sql);
 	}
 
-	private void _loadCreateSQL(InputStream inputStream, Writer writer)
-		throws IOException {
-
-		try (BufferedReader reader = new BufferedReader(
-				new InputStreamReader(inputStream))) {
+	private void _loadCreateSQL(URL url, Writer writer) throws IOException {
+		try (InputStream inputStream = url.openStream();
+			Reader reader = new InputStreamReader(inputStream);
+			BufferedReader bufferedReader = new BufferedReader(reader)) {
 
 			String line;
 
-			while ((line = reader.readLine()) != null) {
+			while ((line = bufferedReader.readLine()) != null) {
 				writer.append(line);
 				writer.append(System.lineSeparator());
 			}
@@ -386,14 +385,11 @@ public class SampleSQLBuilder {
 					sqlFileName);
 
 				while (enumeration.hasMoreElements()) {
-					URL url = enumeration.nextElement();
-
-					_loadCreateSQL(url.openStream(), writer);
+					_loadCreateSQL(enumeration.nextElement(), writer);
 				}
 			}
 			else {
-				_loadCreateSQL(
-					classLoader.getResourceAsStream(sqlFileName), writer);
+				_loadCreateSQL(classLoader.getResource(sqlFileName), writer);
 			}
 		}
 

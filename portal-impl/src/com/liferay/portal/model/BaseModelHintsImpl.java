@@ -81,9 +81,9 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 									"Loading ", name, " from ", url));
 						}
 
-						InputStream inputStream = url.openStream();
-
-						read(classLoader, url.toString(), inputStream);
+						try (InputStream inputStream = url.openStream()) {
+							read(classLoader, url.toString(), inputStream);
+						}
 					}
 				}
 				else {

@@ -35,6 +35,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -236,9 +237,12 @@ public class ImportMVCResourceCommandTest {
 			String path = url.getPath();
 
 			if (!path.endsWith(StringPool.SLASH)) {
-				zipWriter.addEntry(
-					StringUtil.removeSubstring(url.getPath(), _RESOURCES_PATH),
-					url.openStream());
+				try (InputStream inputStream = url.openStream()) {
+					zipWriter.addEntry(
+						StringUtil.removeSubstring(
+							url.getPath(), _RESOURCES_PATH),
+						inputStream);
+				}
 			}
 		}
 

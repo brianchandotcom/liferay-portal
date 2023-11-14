@@ -16,6 +16,7 @@ export default function VideoStreaming({
 		autoplay,
 		loop,
 		muted,
+		playbackRates: [0.5, 1, 1.5, 2],
 		videoHeight,
 		videoWidth,
 	};

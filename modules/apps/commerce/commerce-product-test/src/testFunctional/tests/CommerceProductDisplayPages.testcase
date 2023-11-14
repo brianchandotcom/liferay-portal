@@ -178,7 +178,7 @@ definition {
 		}
 
 		task ("When the user removes the Override Default Product Display Page") {
-			CommerceEntry.deleteCommerceEntry(key_value = "Bearings");
+			CommerceEntry.deleteCommerceEntry(entryName = "Bearings");
 		}
 
 		task ("Then the product display page override should no longer be present") {

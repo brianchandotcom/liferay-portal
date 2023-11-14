@@ -200,6 +200,10 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 		return _orderByType;
 	}
 
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
 	private long _getGroupId() {
 		if (_groupId != null) {
 			return _groupId;

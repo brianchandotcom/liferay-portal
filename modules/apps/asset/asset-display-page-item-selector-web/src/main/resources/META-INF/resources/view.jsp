@@ -34,7 +34,7 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 						colspan="<%= 2 %>"
 					>
 						<clay:horizontal-card
-							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard((LayoutPageTemplateCollection)object, renderResponse) %>"
+							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard(assetDisplayPagesItemSelectorCustomViewDisplayContext, (LayoutPageTemplateCollection)object) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

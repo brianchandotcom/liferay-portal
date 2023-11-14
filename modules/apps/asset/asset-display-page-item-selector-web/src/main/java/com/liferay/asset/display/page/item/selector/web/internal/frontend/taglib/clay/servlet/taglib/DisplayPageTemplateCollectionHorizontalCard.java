@@ -5,11 +5,10 @@
 
 package com.liferay.asset.display.page.item.selector.web.internal.frontend.taglib.clay.servlet.taglib;
 
+import com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorCustomViewDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-
-import javax.portlet.RenderResponse;
 
 /**
  * @author Yurena Cabrera
@@ -18,17 +17,20 @@ public class DisplayPageTemplateCollectionHorizontalCard
 	implements HorizontalCard {
 
 	public DisplayPageTemplateCollectionHorizontalCard(
-		LayoutPageTemplateCollection layoutPageTemplateCollection,
-		RenderResponse renderResponse) {
+		AssetDisplayPagesItemSelectorCustomViewDisplayContext
+			assetDisplayPagesItemSelectorCustomViewDisplayContext,
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
+		_assetDisplayPagesItemSelectorCustomViewDisplayContext =
+			assetDisplayPagesItemSelectorCustomViewDisplayContext;
 		_layoutPageTemplateCollection = layoutPageTemplateCollection;
-		_renderResponse = renderResponse;
 	}
 
 	@Override
 	public String getHref() {
-		return PortletURLBuilder.createRenderURL(
-			_renderResponse
+		return PortletURLBuilder.create(
+			_assetDisplayPagesItemSelectorCustomViewDisplayContext.
+				getPortletURL()
 		).setParameter(
 			"groupId", _layoutPageTemplateCollection.getGroupId()
 		).setParameter(
@@ -52,7 +54,8 @@ public class DisplayPageTemplateCollectionHorizontalCard
 		return false;
 	}
 
+	private final AssetDisplayPagesItemSelectorCustomViewDisplayContext
+		_assetDisplayPagesItemSelectorCustomViewDisplayContext;
 	private final LayoutPageTemplateCollection _layoutPageTemplateCollection;
-	private final RenderResponse _renderResponse;
 
 }

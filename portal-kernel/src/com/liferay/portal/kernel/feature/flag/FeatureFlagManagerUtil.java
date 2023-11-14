@@ -67,8 +67,8 @@ public class FeatureFlagManagerUtil {
 			return function.apply(featureFlagManager);
 		}
 
-		if (_log.isWarnEnabled()) {
-			_log.warn(
+		if (_log.isInfoEnabled()) {
+			_log.info(
 				"No feature flag manager service found. Returning the " +
 					"default value.");
 		}

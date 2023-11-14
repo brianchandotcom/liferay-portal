@@ -27,6 +27,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -75,6 +77,36 @@ public class ObjectFolderItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean linkedObjectDefinition;
+
+	@Schema
+	@Valid
+	public ObjectDefinition getObjectDefinition() {
+		return objectDefinition;
+	}
+
+	public void setObjectDefinition(ObjectDefinition objectDefinition) {
+		this.objectDefinition = objectDefinition;
+	}
+
+	@JsonIgnore
+	public void setObjectDefinition(
+		UnsafeSupplier<ObjectDefinition, Exception>
+			objectDefinitionUnsafeSupplier) {
+
+		try {
+			objectDefinition = objectDefinitionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ObjectDefinition objectDefinition;
 
 	@Schema
 	public String getObjectDefinitionExternalReferenceCode() {
@@ -200,6 +232,16 @@ public class ObjectFolderItem implements Serializable {
 			sb.append("\"linkedObjectDefinition\": ");
 
 			sb.append(linkedObjectDefinition);
+		}
+
+		if (objectDefinition != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinition\": ");
+
+			sb.append(String.valueOf(objectDefinition));
 		}
 
 		if (objectDefinitionExternalReferenceCode != null) {

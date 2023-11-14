@@ -27,13 +27,13 @@ public class Ranking {
 		_aliases = new ArrayList<>(ranking._aliases);
 		_groupExternalReferenceCode = ranking._groupExternalReferenceCode;
 		_hiddenDocumentIds = new LinkedHashSet<>(ranking._hiddenDocumentIds);
-		_inactive = ranking._inactive;
 		_indexName = ranking._indexName;
 		_name = ranking._name;
 		_pinnedDocumentIds = new HashSet<>(ranking._pinnedDocumentIds);
 		_pins = new ArrayList<>(ranking._pins);
 		_queryString = ranking._queryString;
 		_rankingDocumentId = ranking._rankingDocumentId;
+		_status = ranking._status;
 		_sxpBlueprintExternalReferenceCode =
 			ranking._sxpBlueprintExternalReferenceCode;
 	}
@@ -88,12 +88,12 @@ public class Ranking {
 		return _rankingDocumentId;
 	}
 
-	public String getSXPBlueprintExternalReferenceCode() {
-		return _sxpBlueprintExternalReferenceCode;
+	public String getStatus() {
+		return _status;
 	}
 
-	public boolean isInactive() {
-		return _inactive;
+	public String getSXPBlueprintExternalReferenceCode() {
+		return _sxpBlueprintExternalReferenceCode;
 	}
 
 	public boolean isPinned(String documentId) {
@@ -169,12 +169,6 @@ public class Ranking {
 			return this;
 		}
 
-		public RankingBuilder inactive(boolean inactive) {
-			_ranking._inactive = inactive;
-
-			return this;
-		}
-
 		public RankingBuilder indexName(String indexName) {
 			_ranking._indexName = indexName;
 
@@ -218,6 +212,12 @@ public class Ranking {
 			return this;
 		}
 
+		public RankingBuilder status(String status) {
+			_ranking._status = status;
+
+			return this;
+		}
+
 		public RankingBuilder sxpBlueprintExternalReferenceCode(
 			String sxpBlueprintExternalReferenceCode) {
 
@@ -245,13 +245,13 @@ public class Ranking {
 	private List<String> _aliases = new ArrayList<>();
 	private String _groupExternalReferenceCode;
 	private Set<String> _hiddenDocumentIds = new LinkedHashSet<>();
-	private boolean _inactive;
 	private String _indexName;
 	private String _name;
 	private Set<String> _pinnedDocumentIds = new LinkedHashSet<>();
 	private List<Pin> _pins = new ArrayList<>();
 	private String _queryString;
 	private String _rankingDocumentId;
+	private String _status;
 	private String _sxpBlueprintExternalReferenceCode;
 
 }

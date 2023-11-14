@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
@@ -57,10 +58,10 @@ public class EditRankingDisplayBuilder {
 		_setCompanyId(editRankingDisplayContext);
 		_setData(editRankingDisplayContext);
 		_setFormName(editRankingDisplayContext);
-		_setInactive(editRankingDisplayContext);
 		_setKeywords(editRankingDisplayContext);
 		_setRedirect(editRankingDisplayContext);
 		_setResultsRankingUid(editRankingDisplayContext);
+		_setStatus(editRankingDisplayContext);
 
 		return editRankingDisplayContext;
 	}
@@ -154,7 +155,7 @@ public class EditRankingDisplayBuilder {
 			"initialGroupExternalReferenceCode",
 			_getGroupExternalReferenceCode()
 		).put(
-			"initialInactive", _isInactive()
+			"initialStatus", _getStatus()
 		).put(
 			"initialSXPBlueprintExternalReferenceCode",
 			_getSXPBlueprintExternalReferenceCode()
@@ -220,6 +221,14 @@ public class EditRankingDisplayBuilder {
 		return resourceURL.toString();
 	}
 
+	private String _getStatus() {
+		if (_ranking != null) {
+			return _ranking.getStatus();
+		}
+
+		return ResultRankingsConstants.ACTIVE;
+	}
+
 	private String _getSXPBlueprintExternalReferenceCode() {
 		if (_ranking != null) {
 			return _ranking.getSXPBlueprintExternalReferenceCode();
@@ -246,14 +255,6 @@ public class EditRankingDisplayBuilder {
 		resourceURL.setResourceID("/result_rankings/get_results");
 
 		return resourceURL.toString();
-	}
-
-	private boolean _isInactive() {
-		if (_ranking != null) {
-			return _ranking.isInactive();
-		}
-
-		return false;
 	}
 
 	private void _setBackURL(
@@ -285,12 +286,6 @@ public class EditRankingDisplayBuilder {
 		editRankingDisplayContext.setFormName(_getFormName());
 	}
 
-	private void _setInactive(
-		EditRankingDisplayContext editRankingDisplayContext) {
-
-		editRankingDisplayContext.setInactive(_isInactive());
-	}
-
 	private void _setKeywords(
 		EditRankingDisplayContext editRankingDisplayContext) {
 
@@ -307,6 +302,12 @@ public class EditRankingDisplayBuilder {
 		EditRankingDisplayContext editRankingDisplayContext) {
 
 		editRankingDisplayContext.setResultsRankingUid(_getResultsRankingUid());
+	}
+
+	private void _setStatus(
+		EditRankingDisplayContext editRankingDisplayContext) {
+
+		editRankingDisplayContext.setStatus(_getStatus());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

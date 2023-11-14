@@ -20,6 +20,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 
 import java.util.ArrayList;
@@ -131,7 +132,8 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		booleanQuery.addFilterQueryClauses(
 			_queries.term(RankingFields.QUERY_STRINGS_KEYWORD, queryString));
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term(RankingFields.INACTIVE, true));
+			_queries.term(
+				RankingFields.STATUS, ResultRankingsConstants.INACTIVE));
 
 		return booleanQuery;
 	}

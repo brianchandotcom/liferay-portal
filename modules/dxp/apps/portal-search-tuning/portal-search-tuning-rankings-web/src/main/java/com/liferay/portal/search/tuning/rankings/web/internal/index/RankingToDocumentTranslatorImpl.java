@@ -35,8 +35,6 @@ public class RankingToDocumentTranslatorImpl
 		).setString(
 			RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
 			ranking.getGroupExternalReferenceCode()
-		).setBoolean(
-			RankingFields.INACTIVE, ranking.isInactive()
 		).setString(
 			RankingFields.INDEX, ranking.getIndexName()
 		).setString(
@@ -48,6 +46,8 @@ public class RankingToDocumentTranslatorImpl
 		).setStrings(
 			RankingFields.QUERY_STRINGS,
 			ArrayUtil.toStringArray(ranking.getQueryStrings())
+		).setString(
+			RankingFields.STATUS, ranking.getStatus()
 		).setString(
 			RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 			ranking.getSXPBlueprintExternalReferenceCode()

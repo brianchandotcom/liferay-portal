@@ -17,8 +17,6 @@ public class RankingFields {
 	public static final String GROUP_EXTERNAL_REFERENCE_CODE =
 		"groupExternalReferenceCode";
 
-	public static final String INACTIVE = "inactive";
-
 	public static final String INDEX = "index";
 
 	public static final String NAME = "name";
@@ -34,6 +32,8 @@ public class RankingFields {
 	public static final String QUERY_STRINGS = "queryStrings";
 
 	public static final String QUERY_STRINGS_KEYWORD = "queryStrings.keyword";
+
+	public static final String STATUS = "status";
 
 	public static final String SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE =
 		"sxpBlueprintExternalReferenceCode";

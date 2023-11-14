@@ -47,8 +47,6 @@ public class RankingJSONStorageHelper {
 				"hiddenDocumentIds",
 				_jsonFactory.createJSONArray(ranking.getHiddenDocumentIds())
 			).put(
-				"inactive", ranking.isInactive()
-			).put(
 				"indexName", ranking.getIndexName()
 			).put(
 				"name", ranking.getName()
@@ -58,6 +56,8 @@ public class RankingJSONStorageHelper {
 				"queryString", ranking.getQueryString()
 			).put(
 				"rankingDocumentId", rankingDocumentId
+			).put(
+				"status", ranking.getStatus()
 			).put(
 				"sxpBlueprintExternalReferenceCode",
 				ranking.getSXPBlueprintExternalReferenceCode()
@@ -89,11 +89,11 @@ public class RankingJSONStorageHelper {
 			"hiddenDocumentIds",
 			_jsonFactory.createJSONArray(ranking.getHiddenDocumentIds())
 		).put(
-			"inactive", ranking.isInactive()
-		).put(
 			"name", ranking.getName()
 		).put(
 			"pins", _getPinsJSONArray(ranking)
+		).put(
+			"status", ranking.getStatus()
 		).put(
 			"sxpBlueprintExternalReferenceCode",
 			ranking.getSXPBlueprintExternalReferenceCode()

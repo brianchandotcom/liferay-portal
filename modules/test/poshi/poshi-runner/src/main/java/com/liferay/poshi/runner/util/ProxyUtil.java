@@ -27,6 +27,12 @@ import org.openqa.selenium.Proxy;
  */
 public class ProxyUtil {
 
+	public static void addHeader(String headerName, String content) {
+		BrowserMobProxy browserMobProxy = getBrowserMobProxy();
+
+		browserMobProxy.addHeader(headerName, content);
+	}
+
 	public static String getHarRecording(String jsonPath) throws IOException {
 		BrowserMobProxy browserMobProxy = getBrowserMobProxy();
 

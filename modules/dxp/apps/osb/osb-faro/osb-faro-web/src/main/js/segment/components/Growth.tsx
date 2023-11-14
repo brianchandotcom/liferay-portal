@@ -272,6 +272,8 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 				</div>
 			);
 		}
+
+		return null;
 	};
 
 	interface ICommonAreaChartStyles {
@@ -354,6 +356,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						tickLine={false}
 						tickMargin={12}
 						ticks={intervals}
+						type='number'
 					/>
 
 					<XAxis

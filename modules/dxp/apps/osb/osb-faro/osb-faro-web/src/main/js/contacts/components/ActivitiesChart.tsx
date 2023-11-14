@@ -119,6 +119,8 @@ const ActivitiesChart: React.FC<
 				/>
 			);
 		}
+
+		return null;
 	};
 
 	const intervals = getIntervals(

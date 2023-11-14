@@ -169,22 +169,22 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 };
 
 const MetricTooltip = ({active, data, interval, payload, rangeSelectors}) => {
-	if (!active || !payload || !payload.length) {
-		return null;
+	if (active && payload?.length) {
+		const [header, rows] = useMetricTooltip({
+			data,
+			interval,
+			payload,
+			rangeSelectors
+		});
+
+		return (
+			<div className='bb-tooltip-container' style={{position: 'static'}}>
+				<ChartTooltip header={header} rows={rows} />
+			</div>
+		);
 	}
 
-	const [header, rows] = useMetricTooltip({
-		data,
-		interval,
-		payload,
-		rangeSelectors
-	});
-
-	return (
-		<div className='bb-tooltip-container' style={{position: 'static'}}>
-			<ChartTooltip header={header} rows={rows} />
-		</div>
-	);
+	return null;
 };
 
 export default MetricTooltip;

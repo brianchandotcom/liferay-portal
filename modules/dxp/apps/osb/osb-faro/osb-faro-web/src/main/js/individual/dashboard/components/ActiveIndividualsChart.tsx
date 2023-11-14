@@ -97,6 +97,8 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 				/>
 			);
 		}
+
+		return null;
 	};
 
 	const yAxisWidth = getYAxisWidth(data, 'knownVisitors');

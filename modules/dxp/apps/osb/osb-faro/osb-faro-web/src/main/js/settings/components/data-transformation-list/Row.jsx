@@ -447,7 +447,6 @@ export default compose(
 			close,
 			open
 		},
-		null,
-		{pure: false}
+		null
 	)
 )(DataTransformationListRow);

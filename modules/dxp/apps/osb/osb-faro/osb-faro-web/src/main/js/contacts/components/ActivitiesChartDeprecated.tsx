@@ -102,6 +102,8 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 				/>
 			);
 		}
+
+		return null;
 	};
 
 	const intervals = getIntervals(

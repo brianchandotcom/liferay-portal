@@ -474,6 +474,20 @@ public class JournalManagementToolbarDisplayContext
 		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
+			"ddmStructureId",
+			() -> {
+				long ddmStructureId =
+					_journalDisplayContext.getDDMStructureId();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
+					(ddmStructureId > 0)) {
+
+					return _journalDisplayContext.getDDMStructureId();
+				}
+
+				return null;
+			}
+		).setParameter(
 			"folderId", _journalDisplayContext.getFolderId()
 		).setParameter(
 			"status", _journalDisplayContext.getStatus()

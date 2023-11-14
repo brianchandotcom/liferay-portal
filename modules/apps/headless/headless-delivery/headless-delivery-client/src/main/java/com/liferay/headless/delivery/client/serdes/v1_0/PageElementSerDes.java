@@ -63,6 +63,20 @@ public class PageElementSerDes {
 			}
 		}
 
+		if (pageElement.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageElement.getId()));
+
+			sb.append("\"");
+		}
+
 		if (pageElement.getPageElements() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -123,6 +137,13 @@ public class PageElementSerDes {
 			map.put("definition", String.valueOf(pageElement.getDefinition()));
 		}
 
+		if (pageElement.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(pageElement.getId()));
+		}
+
 		if (pageElement.getPageElements() == null) {
 			map.put("pageElements", null);
 		}
@@ -162,6 +183,11 @@ public class PageElementSerDes {
 			if (Objects.equals(jsonParserFieldName, "definition")) {
 				if (jsonParserFieldValue != null) {
 					pageElement.setDefinition((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					pageElement.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pageElements")) {

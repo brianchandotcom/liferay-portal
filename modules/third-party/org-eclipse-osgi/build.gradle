@@ -35,6 +35,7 @@ patch {
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java"
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java"
 	fileNames "org/eclipse/osgi/internal/weaving/WeavingHookConfigurator.java"
+	fileNames "org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java"
 
 	originalLibModuleName = "org.eclipse.osgi"
 }

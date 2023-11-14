@@ -5,13 +5,14 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context.customizer;
 
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import jakarta.servlet.Servlet;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
 
 import org.osgi.framework.BundleContext;
@@ -28,9 +29,11 @@ public class ServletServiceTrackerCustomizer
 	public ServletServiceTrackerCustomizer(
 		BundleContext bundleContext,
 		HttpServletEndpointController httpServletEndpointController,
-		ContextController contextController) {
+		LiferayContextController liferayContextController) {
 
-		super(bundleContext, contextController, httpServletEndpointController);
+		super(
+			bundleContext, httpServletEndpointController,
+			liferayContextController);
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class ServletServiceTrackerCustomizer
 			return null;
 		}
 
-		if (!contextController.matches(serviceReference) ||
+		if (!liferayContextController.matches(serviceReference) ||
 			!httpServletEndpointController.matches(serviceReference)) {
 
 			return null;
@@ -61,7 +64,8 @@ public class ServletServiceTrackerCustomizer
 
 		try {
 			result.set(
-				contextController.addServletRegistration(serviceReference));
+				liferayContextController.addServletRegistration(
+					serviceReference));
 		}
 		catch (Exception exception) {
 			httpServletEndpointController.log(

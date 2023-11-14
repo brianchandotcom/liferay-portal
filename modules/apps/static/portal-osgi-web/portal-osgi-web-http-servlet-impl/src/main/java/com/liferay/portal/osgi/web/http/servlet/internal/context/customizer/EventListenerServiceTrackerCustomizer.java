@@ -6,12 +6,12 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.context.customizer;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 
 import java.util.EventListener;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
 import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
 
@@ -28,10 +28,13 @@ public class EventListenerServiceTrackerCustomizer
 		<EventListener, AtomicReference<ListenerRegistration>> {
 
 	public EventListenerServiceTrackerCustomizer(
-		BundleContext bundleContext, ContextController contextController,
-		HttpServletEndpointController httpServletEndpointController) {
+		BundleContext bundleContext,
+		HttpServletEndpointController httpServletEndpointController,
+		LiferayContextController liferayContextController) {
 
-		super(bundleContext, contextController, httpServletEndpointController);
+		super(
+			bundleContext, httpServletEndpointController,
+			liferayContextController);
 	}
 
 	@Override
@@ -42,7 +45,7 @@ public class EventListenerServiceTrackerCustomizer
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER);
 
 		if ((listenerObject == null) ||
-			!contextController.matches(serviceReference) ||
+			!liferayContextController.matches(serviceReference) ||
 			!httpServletEndpointController.matches(serviceReference)) {
 
 			return null;
@@ -75,7 +78,8 @@ public class EventListenerServiceTrackerCustomizer
 			}
 
 			result.set(
-				contextController.addListenerRegistration(serviceReference));
+				liferayContextController.addListenerRegistration(
+					serviceReference));
 		}
 		catch (Exception exception) {
 			httpServletEndpointController.log(

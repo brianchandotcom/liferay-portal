@@ -10,6 +10,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRuleSetting;
 import com.liferay.object.admin.rest.client.dto.v1_0.Status;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
@@ -19,6 +20,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
+import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -314,6 +317,87 @@ public class ObjectDefinitionResourceTest
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
+
+		// Modifiable system object definition
+
+		ObjectDefinition randomModifiableSystemObjectDefinition =
+			_addObjectDefinition(_randomModifiableSystemObjectDefinition());
+
+		ObjectValidationRule updatedCustomObjectValidationRule =
+			new ObjectValidationRule() {
+				{
+					active = false;
+					engine = ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY;
+					errorLabel = Collections.singletonMap(
+						"en_US", RandomTestUtil.randomString());
+					externalReferenceCode = "customObjectValidationRuleERC";
+					name = Collections.singletonMap(
+						"en_US", RandomTestUtil.randomString());
+					objectDefinitionExternalReferenceCode =
+						randomModifiableSystemObjectDefinition.
+							getExternalReferenceCode();
+					objectValidationRuleSettings =
+						new ObjectValidationRuleSetting[] {
+							new ObjectValidationRuleSetting() {
+								{
+									name =
+										ObjectValidationRuleSettingConstants.
+											NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE;
+									value = "customObjectFieldERC";
+								}
+							}
+						};
+					outputType = OutputType.create("partialValidation");
+					script = RandomTestUtil.randomString();
+					system = false;
+				}
+			};
+
+		randomModifiableSystemObjectDefinition.setObjectValidationRules(
+			new ObjectValidationRule[] {
+				updatedCustomObjectValidationRule,
+				new ObjectValidationRule() {
+					{
+						active = false;
+						engine =
+							ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY;
+						errorLabel = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
+						externalReferenceCode = "systemObjectValidationRuleERC";
+						name = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
+						objectDefinitionExternalReferenceCode =
+							randomModifiableSystemObjectDefinition.
+								getExternalReferenceCode();
+						objectValidationRuleSettings =
+							new ObjectValidationRuleSetting[] {
+								new ObjectValidationRuleSetting() {
+									{
+										name =
+											ObjectValidationRuleSettingConstants.NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE;
+										value = "customObjectFieldERC";
+									}
+								}
+							};
+						outputType = OutputType.create("partialValidation");
+						script = RandomTestUtil.randomString();
+						system = true;
+					}
+				}
+			});
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		try {
+			objectDefinitionResource.putObjectDefinition(
+				randomModifiableSystemObjectDefinition.getId(),
+				randomModifiableSystemObjectDefinition);
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
 
 		// Storage type
 

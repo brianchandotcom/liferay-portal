@@ -1,9 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.wiki.web.internal.helper;
+package com.liferay.wiki.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -31,18 +31,19 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Roberto Díaz
+ * @author Regisson Aguiar
  */
-@Component(service = WikiAttachmentsHelper.class)
-public class WikiAttachmentsHelper {
+public abstract class BaseMVCActionCommand
+	extends com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand {
 
-	public void addAttachments(ActionRequest actionRequest) throws Exception {
+	protected void addAttachments(ActionRequest actionRequest)
+		throws Exception {
+
 		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
+			portal.getUploadPortletRequest(actionRequest);
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
@@ -82,7 +83,7 @@ public class WikiAttachmentsHelper {
 							themeDisplay.getUserId(),
 							WikiConstants.TEMP_FOLDER_NAME, selectUploadedFile);
 
-					WikiPage wikiPage = _wikiPageService.getPage(nodeId, title);
+					WikiPage wikiPage = wikiPageService.getPage(nodeId, title);
 
 					String uniqueFileName = DLUtil.getUniqueFileName(
 						wikiPage.getGroupId(),
@@ -102,7 +103,7 @@ public class WikiAttachmentsHelper {
 			}
 
 			if (ListUtil.isNotEmpty(inputStreamOVPs)) {
-				_wikiPageService.addPageAttachments(
+				wikiPageService.addPageAttachments(
 					nodeId, title, inputStreamOVPs);
 			}
 		}
@@ -126,7 +127,7 @@ public class WikiAttachmentsHelper {
 		}
 	}
 
-	public TrashedModel deleteAttachment(
+	protected TrashedModel deleteAttachment(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
@@ -137,7 +138,7 @@ public class WikiAttachmentsHelper {
 		TrashedModel trashedModel = null;
 
 		if (moveToTrash) {
-			FileEntry fileEntry = _wikiPageService.movePageAttachmentToTrash(
+			FileEntry fileEntry = wikiPageService.movePageAttachmentToTrash(
 				nodeId, title, attachment);
 
 			if (fileEntry.isRepositoryCapabilityProvided(
@@ -147,35 +148,36 @@ public class WikiAttachmentsHelper {
 			}
 		}
 		else {
-			_wikiPageService.deletePageAttachment(nodeId, title, attachment);
+			wikiPageService.deletePageAttachment(nodeId, title, attachment);
 		}
 
 		return trashedModel;
 	}
 
-	public void emptyTrash(ActionRequest actionRequest) throws Exception {
+	protected void emptyTrash(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 
-		_wikiPageService.deleteTrashPageAttachments(nodeId, title);
+		wikiPageService.deleteTrashPageAttachments(nodeId, title);
 	}
 
-	public void restoreEntries(ActionRequest actionRequest) throws Exception {
+	protected void restoreEntries(ActionRequest actionRequest)
+		throws Exception {
+
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		_wikiPageService.restorePageAttachmentFromTrash(
-			nodeId, title, fileName);
+		wikiPageService.restorePageAttachmentFromTrash(nodeId, title, fileName);
 	}
 
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected WikiPageService wikiPageService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		WikiAttachmentsHelper.class);
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private WikiPageService _wikiPageService;
+		BaseMVCActionCommand.class);
 
 }

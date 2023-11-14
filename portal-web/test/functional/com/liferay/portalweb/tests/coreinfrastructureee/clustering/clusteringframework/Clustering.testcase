@@ -386,17 +386,17 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		Groovy.runScriptViaUI(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Result of invoke-method-portal: 9080",
 			scriptFile = "groovy-script-invoke-method.groovy");
 
-		Groovy.runScriptViaUI(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Result of invoke-method-portal: 8080",
 			nodePort = 9080,
 			scriptFile = "groovy-script-invoke-method.groovy");
 
 		for (var serverPort : list "8080,9080") {
-			Groovy.runScriptViaUI(
+			Groovy.runScriptViaGogoShell(
 				expectedOutput = "Result of invoke-method-portal-on-master: 8080",
 				nodePort = ${serverPort},
 				scriptFile = "groovy-script-invoke-method-on-master.groovy");
@@ -922,18 +922,18 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		Groovy.runScriptViaUI(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
 			scriptFile = "groovy-script-master-slave.groovy");
 
-		Groovy.runScriptViaUI(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is slave node",
 			nodePort = 9080,
 			scriptFile = "groovy-script-master-slave.groovy");
 
 		Clustering.shutdownSpecificServer(nodePort = 8080);
 
-		Groovy.runScriptViaUI(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
 			nodePort = 9080,
 			scriptFile = "groovy-script-master-slave.groovy");
@@ -952,7 +952,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Groovy.runScriptViaUI(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is slave node",
 			scriptFile = "groovy-script-master-slave.groovy");
 	}

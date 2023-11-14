@@ -75,6 +75,7 @@ public class ColumnLayoutStructureItemMapper
 							});
 					}
 				};
+				id = layoutStructureItem.getItemId();
 				type = Type.COLUMN;
 			}
 		};

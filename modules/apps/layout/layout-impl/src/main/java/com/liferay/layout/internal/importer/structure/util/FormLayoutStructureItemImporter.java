@@ -53,6 +53,7 @@ public class FormLayoutStructureItemImporter
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
 				layoutStructure.addFormStyledLayoutStructureItem(
+					pageElement.getId(),
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 

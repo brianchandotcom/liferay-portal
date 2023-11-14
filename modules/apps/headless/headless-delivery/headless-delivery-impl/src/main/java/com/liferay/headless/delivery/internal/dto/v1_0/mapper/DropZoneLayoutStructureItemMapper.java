@@ -46,6 +46,7 @@ public class DropZoneLayoutStructureItemMapper
 							dropZoneLayoutStructureItem);
 					}
 				};
+				id = layoutStructureItem.getItemId();
 				type = Type.DROP_ZONE;
 			}
 		};

@@ -82,6 +82,7 @@ public class FragmentLayoutStructureItemMapper
 									saveMappingConfiguration),
 								getFragmentViewPorts(itemConfigJSONObject),
 								saveInlineContent, saveMappingConfiguration);
+					id = layoutStructureItem.getItemId();
 					type = Type.FRAGMENT;
 				}
 			};
@@ -104,6 +105,7 @@ public class FragmentLayoutStructureItemMapper
 								itemConfigJSONObject.getJSONObject("style")),
 							PortletIdCodec.encode(portletId, instanceId),
 							_widgetInstanceMapper);
+				id = layoutStructureItem.getItemId();
 				type = Type.WIDGET;
 			}
 		};

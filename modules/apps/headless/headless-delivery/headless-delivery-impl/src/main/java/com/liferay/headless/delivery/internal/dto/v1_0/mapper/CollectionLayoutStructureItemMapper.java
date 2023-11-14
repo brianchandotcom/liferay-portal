@@ -104,6 +104,7 @@ public class CollectionLayoutStructureItemMapper
 								getTemplateKey();
 					}
 				};
+				id = layoutStructureItem.getItemId();
 				type = Type.COLLECTION;
 			}
 		};

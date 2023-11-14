@@ -33,6 +33,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 	}
 
+	public StyledLayoutStructureItem(String itemId, String parentItemId) {
+		super(itemId, parentItemId);
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

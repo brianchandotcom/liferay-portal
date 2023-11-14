@@ -99,6 +99,7 @@ public class FormLayoutStructureItemMapper
 									getItemConfigJSONObject()));
 					}
 				};
+				id = layoutStructureItem.getItemId();
 				type = Type.FORM;
 			}
 		};

@@ -42,6 +42,7 @@ public class FragmentDropZoneLayoutStructureItemMapper
 								getFragmentDropZoneId();
 					}
 				};
+				id = layoutStructureItem.getItemId();
 
 				type = Type.FRAGMENT_DROP_ZONE;
 			}

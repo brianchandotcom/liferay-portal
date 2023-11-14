@@ -110,6 +110,7 @@ public class ContainerLayoutStructureItemMapper
 								containerStyledLayoutStructureItem));
 					}
 				};
+				id = layoutStructureItem.getItemId();
 				type = Type.SECTION;
 			}
 		};

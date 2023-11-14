@@ -38,6 +38,7 @@ public class ColumnLayoutStructureItemImporter
 		ColumnLayoutStructureItem columnLayoutStructureItem =
 			(ColumnLayoutStructureItem)
 				layoutStructure.addColumnLayoutStructureItem(
+					pageElement.getId(),
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 

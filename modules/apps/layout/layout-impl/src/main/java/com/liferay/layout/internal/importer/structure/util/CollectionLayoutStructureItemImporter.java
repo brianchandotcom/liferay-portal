@@ -61,6 +61,7 @@ public class CollectionLayoutStructureItemImporter
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)
 					layoutStructure.addCollectionStyledLayoutStructureItem(
+						pageElement.getId(),
 						layoutStructureItemImporterContext.getParentItemId(),
 						layoutStructureItemImporterContext.getPosition());
 

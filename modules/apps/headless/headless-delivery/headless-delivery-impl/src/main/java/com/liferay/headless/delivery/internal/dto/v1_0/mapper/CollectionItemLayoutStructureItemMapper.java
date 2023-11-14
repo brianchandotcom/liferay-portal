@@ -46,6 +46,7 @@ public class CollectionItemLayoutStructureItemMapper
 								getItemConfigJSONObject());
 					}
 				};
+				id = layoutStructureItem.getItemId();
 				type = Type.COLLECTION_ITEM;
 			}
 		};

@@ -118,6 +118,7 @@ public class RowLayoutStructureItemMapper
 							});
 					}
 				};
+				id = layoutStructureItem.getItemId();
 				type = Type.ROW;
 			}
 		};

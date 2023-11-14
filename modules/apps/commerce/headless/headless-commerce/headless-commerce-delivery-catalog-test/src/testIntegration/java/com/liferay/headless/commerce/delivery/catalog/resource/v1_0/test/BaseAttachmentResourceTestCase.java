@@ -634,6 +634,14 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("tags", additionalAssertFieldName)) {
+				if (attachment.getTags() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (attachment.getTitle() == null) {
 					valid = false;
@@ -856,6 +864,16 @@ public abstract class BaseAttachmentResourceTestCase {
 			if (Objects.equals("src", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						attachment1.getSrc(), attachment2.getSrc())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("tags", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getTags(), attachment2.getTags())) {
 
 					return false;
 				}
@@ -1166,6 +1184,11 @@ public abstract class BaseAttachmentResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("tags")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("title")) {

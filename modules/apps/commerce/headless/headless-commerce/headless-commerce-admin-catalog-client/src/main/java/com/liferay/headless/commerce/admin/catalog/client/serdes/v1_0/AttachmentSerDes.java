@@ -241,6 +241,30 @@ public class AttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (attachment.getTags() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tags\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < attachment.getTags().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(attachment.getTags()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < attachment.getTags().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (attachment.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -396,6 +420,13 @@ public class AttachmentSerDes {
 			map.put("src", String.valueOf(attachment.getSrc()));
 		}
 
+		if (attachment.getTags() == null) {
+			map.put("tags", null);
+		}
+		else {
+			map.put("tags", String.valueOf(attachment.getTags()));
+		}
+
 		if (attachment.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -525,6 +556,12 @@ public class AttachmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "src")) {
 				if (jsonParserFieldValue != null) {
 					attachment.setSrc((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "tags")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setTags(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

@@ -275,6 +275,27 @@ public class AttachmentBase64 implements Cloneable, Serializable {
 
 	protected String src;
 
+	public String[] getTags() {
+		return tags;
+	}
+
+	public void setTags(String[] tags) {
+		this.tags = tags;
+	}
+
+	public void setTags(
+		UnsafeSupplier<String[], Exception> tagsUnsafeSupplier) {
+
+		try {
+			tags = tagsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] tags;
+
 	public Map<String, String> getTitle() {
 		return title;
 	}

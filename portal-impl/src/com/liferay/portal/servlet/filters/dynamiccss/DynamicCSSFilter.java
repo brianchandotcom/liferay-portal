@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
 import com.liferay.portal.servlet.filters.util.CacheFileNameGenerator;
@@ -130,7 +129,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 					_log.info("Replacing tokens on CSS " + originalRequestPath);
 				}
 
-				content = StringUtil.read(resourceURL.openStream());
+				content = URLUtil.toString(resourceURL);
 
 				dynamicContent = DynamicCSSUtil.replaceToken(
 					servletContext, httpServletRequest, content);

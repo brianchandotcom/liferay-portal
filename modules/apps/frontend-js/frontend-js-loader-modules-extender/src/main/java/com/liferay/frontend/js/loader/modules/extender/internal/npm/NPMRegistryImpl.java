@@ -36,10 +36,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.IOException;
 
 import java.net.URL;
 
@@ -452,24 +450,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 				return null;
 			}
 
-			String content;
-
-			try {
-				content = StringUtil.read(url.openStream());
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
-
-				return null;
-			}
-
-			if (content == null) {
-				return null;
-			}
-
-			return _jsonFactory.createJSONObject(content);
+			return _jsonFactory.createJSONObject(URLUtil.toString(url));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

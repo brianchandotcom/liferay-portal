@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1139,10 +1140,9 @@ public class PageTemplatesImporterTest {
 		String zipPath = StringUtil.removeSubstring(
 			entryPath, _LAYOUT_PATE_TEMPLATES_PATH);
 
-		String content = StringUtil.read(url.openStream());
-
 		zipWriter.addEntry(
-			zipPath, StringUtil.replace(content, "${", "}", valuesMap));
+			zipPath,
+			StringUtil.replace(URLUtil.toString(url), "${", "}", valuesMap));
 	}
 
 	private void

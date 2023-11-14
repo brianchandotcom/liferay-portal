@@ -5,9 +5,7 @@
 
 package com.liferay.portal.log4j;
 
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -15,12 +13,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.log4j.internal.Log4jConfigUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -61,8 +59,8 @@ public class Log4JUtil {
 
 		String urlContent = null;
 
-		try (InputStream inputStream = url.openStream()) {
-			urlContent = StreamUtil.toString(inputStream, StringPool.UTF8);
+		try {
+			urlContent = URLUtil.toString(url);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

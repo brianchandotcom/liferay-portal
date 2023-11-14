@@ -7,10 +7,8 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -94,9 +92,7 @@ public class ElasticsearchConnectionHttpTest {
 	}
 
 	protected String toString(URL url) throws Exception {
-		try (InputStream inputStream = url.openStream()) {
-			return StringUtil.read(inputStream);
-		}
+		return URLUtil.toString(url);
 	}
 
 	private static String _clusterName;

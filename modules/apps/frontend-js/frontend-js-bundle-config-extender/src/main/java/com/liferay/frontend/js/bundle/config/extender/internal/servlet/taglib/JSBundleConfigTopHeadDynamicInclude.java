@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -97,9 +97,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			stringWriter.write("\">");
 
 			for (JSBundleConfigRegistry.JSConfig jsConfig : jsConfigs) {
-				URL url = jsConfig.getURL();
-
-				try (InputStream inputStream = url.openStream()) {
+				try {
 					stringWriter.write("try {");
 
 					ServletContext servletContext =
@@ -117,7 +115,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 					stringWriter.write(
 						StringUtil.removeSubstring(
-							StringUtil.read(inputStream),
+							URLUtil.toString(jsConfig.getURL()),
 							"//# sourceMappingURL=config.js.map"));
 
 					stringWriter.write(
@@ -149,23 +147,21 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 				return null;
 			}
 
-			try (InputStream inputStream = url.openStream()) {
-				JSONObject jsonObject = _jsonFactory.createJSONObject(
-					StringUtil.read(inputStream));
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				URLUtil.toString(url));
 
-				String moduleName = jsonObject.getString("name");
-				String moduleVersion = jsonObject.getString("version");
+			String moduleName = jsonObject.getString("name");
+			String moduleVersion = jsonObject.getString("version");
 
-				String moduleMain = jsonObject.getString("main");
+			String moduleMain = jsonObject.getString("main");
 
-				if (Validator.isNull(moduleMain)) {
-					moduleMain = "index.js";
-				}
-
-				return StringBundler.concat(
-					moduleName, "@", moduleVersion, "/",
-					ModuleNameUtil.toModuleName(moduleMain));
+			if (Validator.isNull(moduleMain)) {
+				moduleMain = "index.js";
 			}
+
+			return StringBundler.concat(
+				moduleName, "@", moduleVersion, "/",
+				ModuleNameUtil.toModuleName(moduleMain));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

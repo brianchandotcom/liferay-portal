@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -118,9 +119,8 @@ public class AnnotationsExtendedObjectClassDefinition
 		URL url = bundle.getResource(resourcePath);
 
 		if (url != null) {
-			try (InputStream inputStream = url.openStream()) {
-				return JSONFactoryUtil.createJSONObject(
-					StringUtil.read(inputStream));
+			try {
+				return JSONFactoryUtil.createJSONObject(URLUtil.toString(url));
 			}
 			catch (Exception exception) {
 				_log.error(

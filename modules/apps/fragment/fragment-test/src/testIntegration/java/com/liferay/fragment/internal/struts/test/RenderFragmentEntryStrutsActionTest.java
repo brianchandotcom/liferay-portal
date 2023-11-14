@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.sharepoint.methods.Method;
 import com.liferay.portal.test.rule.Inject;
@@ -91,20 +91,17 @@ public class RenderFragmentEntryStrutsActionTest {
 		URL htmlURL = _bundle.getEntry(
 			_RESOURCES_PATH + "fragments/card/index.html");
 
-		mockHttpServletRequest.setParameter(
-			"html", StringUtil.read(htmlURL.openStream()));
+		mockHttpServletRequest.setParameter("html", URLUtil.toString(htmlURL));
 
 		URL cssURL = _bundle.getEntry(
 			_RESOURCES_PATH + "fragments/card/index.css");
 
-		mockHttpServletRequest.setParameter(
-			"css", StringUtil.read(cssURL.openStream()));
+		mockHttpServletRequest.setParameter("css", URLUtil.toString(cssURL));
 
 		URL jsURL = _bundle.getEntry(
 			_RESOURCES_PATH + "fragments/card/index.js");
 
-		mockHttpServletRequest.setParameter(
-			"js", StringUtil.read(jsURL.openStream()));
+		mockHttpServletRequest.setParameter("js", URLUtil.toString(jsURL));
 
 		_processEvents(mockHttpServletRequest, mockHttpServletResponse, _user);
 
@@ -116,8 +113,7 @@ public class RenderFragmentEntryStrutsActionTest {
 
 		String actualHTML = _getHTML(unsyncStringWriter.toString());
 
-		String expectedHTML = _getHTML(
-			StringUtil.read(renderedURL.openStream()));
+		String expectedHTML = _getHTML(URLUtil.toString(renderedURL));
 
 		Assert.assertEquals(expectedHTML, actualHTML);
 	}

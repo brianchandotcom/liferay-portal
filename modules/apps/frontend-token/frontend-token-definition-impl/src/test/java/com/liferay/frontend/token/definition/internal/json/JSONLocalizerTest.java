@@ -13,11 +13,10 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -128,9 +127,9 @@ public class JSONLocalizerTest {
 		URL url = FrontendTokenDefinitionRegistryImplTest.class.getResource(
 			"dependencies/frontend-token-definition.json");
 
-		try (InputStream inputStream = url.openStream()) {
+		try {
 			_FRONTEND_TOKEN_DEFINITION_JSON_OBJECT =
-				jsonFactory.createJSONObject(StringUtil.read(inputStream));
+				jsonFactory.createJSONObject(URLUtil.toString(url));
 
 			_FRONTEND_TOKEN_DEFINITION_JSON = jsonFactory.looseSerializeDeep(
 				_FRONTEND_TOKEN_DEFINITION_JSON_OBJECT);
@@ -142,9 +141,9 @@ public class JSONLocalizerTest {
 		url = FrontendTokenDefinitionRegistryImplTest.class.getResource(
 			"dependencies/translated-frontend-token-definition.json");
 
-		try (InputStream inputStream = url.openStream()) {
+		try {
 			_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON_OBJECT =
-				jsonFactory.createJSONObject(StringUtil.read(inputStream));
+				jsonFactory.createJSONObject(URLUtil.toString(url));
 		}
 		catch (IOException | JSONException exception) {
 			throw new RuntimeException(exception);

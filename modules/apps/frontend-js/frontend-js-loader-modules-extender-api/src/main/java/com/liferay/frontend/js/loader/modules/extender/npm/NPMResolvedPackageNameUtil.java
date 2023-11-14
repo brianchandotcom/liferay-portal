@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
@@ -119,9 +119,8 @@ public class NPMResolvedPackageNameUtil {
 		}
 
 		try {
-			String json = StringUtil.read(url.openStream());
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				URLUtil.toString(url));
 
 			String name = jsonObject.getString("name");
 

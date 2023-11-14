@@ -17,10 +17,9 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -132,8 +131,8 @@ public class FrontendTokenDefinitionRegistryImpl
 			return null;
 		}
 
-		try (InputStream inputStream = url.openStream()) {
-			String xml = StringUtil.read(inputStream);
+		try {
+			String xml = URLUtil.toString(url);
 
 			xml = xml.replaceAll(StringPool.NEW_LINE, StringPool.SPACE);
 
@@ -175,8 +174,8 @@ public class FrontendTokenDefinitionRegistryImpl
 			return null;
 		}
 
-		try (InputStream inputStream = url.openStream()) {
-			return StringUtil.read(inputStream);
+		try {
+			return URLUtil.toString(url);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(

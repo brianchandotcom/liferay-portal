@@ -5,7 +5,6 @@
 
 package com.liferay.search.experiences.internal.upgrade.v2_0_1;
 
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -18,6 +17,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 
 import java.io.IOException;
@@ -150,9 +150,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				path + StringUtil.toLowerCase(externalReferenceCode) + ".txt");
 
 			try {
-				defaultValues.put(
-					externalReferenceCode,
-					StreamUtil.toString(url.openStream()));
+				defaultValues.put(externalReferenceCode, URLUtil.toString(url));
 			}
 			catch (IOException ioException) {
 				_log.error(

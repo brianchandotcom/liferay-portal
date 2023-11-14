@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -70,7 +70,7 @@ public class TagResourceHandler {
 			URL url = _bundle.getEntry(
 				"META-INF/resources/node_modules/" + resourcePath);
 
-			outputResource(Position.BOTTOM, StringUtil.read(url.openStream()));
+			outputResource(Position.BOTTOM, URLUtil.toString(url));
 		}
 		catch (Exception exception) {
 			_log.error(

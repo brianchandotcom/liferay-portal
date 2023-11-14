@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.test.servlet.PrecompileTestServlet;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -361,16 +362,13 @@ public class JspPrecompileTest {
 				JspPrecompilePortlet.getJspFileNameParameterName(), "=/",
 				jspFileName));
 
-		try (InputStream inputStream = url.openStream()) {
-			String content = StringUtil.read(inputStream);
+		String content = URLUtil.toString(url);
 
-			Assert.assertTrue(
-				StringBundler.concat(
-					"Content {", content,
-					"} does not contain expected message {", expectedMessage,
-					"}"),
-				content.contains(expectedMessage));
-		}
+		Assert.assertTrue(
+			StringBundler.concat(
+				"Content {", content, "} does not contain expected message {",
+				expectedMessage, "}"),
+			content.contains(expectedMessage));
 	}
 
 	private static final String _CLASS_NAME_JSP_COMPILER =

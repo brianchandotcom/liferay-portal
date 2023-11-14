@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -280,7 +281,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 					FileUtil.getShortFileName(
 						FileUtil.stripExtension(url.getPath())),
 					StringUtil.replace(
-						StringUtil.read(url.openStream()), "[$", "$]",
+						URLUtil.toString(url), "[$", "$]",
 						stringUtilReplaceValues));
 			}
 		}

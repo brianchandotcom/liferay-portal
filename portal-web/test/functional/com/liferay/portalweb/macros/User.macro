@@ -36,7 +36,8 @@ definition {
 
 					AssertClick(
 						buttonId = "LoginPortlet",
-						locator1 = "Button#BUTTON_ID",
+						key_text = "Sign In",
+						locator1 = "Button#ANY_WITH_SPAN",
 						value1 = "Sign In");
 				}
 			}

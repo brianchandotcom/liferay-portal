@@ -5,6 +5,8 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
@@ -14,8 +16,11 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.EditRankingDisplayContext" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 
@@ -39,7 +44,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 	<aui:input name="companyId" type="hidden" value="<%= editRankingDisplayContext.getCompanyId() %>" />
 	<aui:input name="keywords" type="hidden" value="<%= editRankingDisplayContext.getKeywords() %>" />
 	<aui:input name="resultsRankingUid" type="hidden" value="<%= editRankingDisplayContext.getResultsRankingUid() %>" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+
+	<c:choose>
+		<c:when test="<%= Objects.equals(editRankingDisplayContext.getStatus(), ResultRankingsConstants.NOT_APPLICABLE) %>">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+		</c:when>
+		<c:otherwise>
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		</c:otherwise>
+	</c:choose>
 
 	<div>
 		<div class="loading-animation-container">

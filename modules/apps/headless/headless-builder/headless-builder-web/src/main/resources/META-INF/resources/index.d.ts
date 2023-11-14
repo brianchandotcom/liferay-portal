@@ -297,6 +297,7 @@ type ApplicationDataError = {
 type ApplicationStatusKeys = 'published' | 'unpublished';
 
 type EndpointDataError = {
+	httpMethod: boolean;
 	parameter: boolean;
 	path: boolean;
 	pathParameter: boolean;

@@ -9,7 +9,6 @@ interface BaseAPIApplicationFieldsProps {
 	basePath: string;
 	data: Partial<APIEndpointUIData>;
 	displayError: EndpointDataError;
-	editMode?: boolean;
 	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
 }
 export default function BaseAPIEndpointFields({
@@ -17,7 +16,6 @@ export default function BaseAPIEndpointFields({
 	basePath,
 	data,
 	displayError,
-	editMode,
 	setData,
 }: BaseAPIApplicationFieldsProps): JSX.Element;
 export {};

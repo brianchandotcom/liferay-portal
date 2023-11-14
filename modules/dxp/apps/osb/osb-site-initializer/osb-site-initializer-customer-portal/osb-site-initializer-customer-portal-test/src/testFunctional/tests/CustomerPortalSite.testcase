@@ -224,7 +224,7 @@ definition {
 		task ("And I can assert that the objects were also created") {
 			ObjectAdmin.openObjectAdmin();
 
-			while (IsElementNotPresent(value = "Koroneiki Account", locator1 = "CustomerPortalSite#OBJECTS_TABLE")) {
+			while (IsElementNotPresent(locator1 = "CustomerPortalSite#OBJECTS_TABLE", value = "Koroneiki Account")) {
 				Click(locator1 = "Pagination#NEXT_LINK");
 			}
 
@@ -232,7 +232,6 @@ definition {
 				locator1 = "CustomerPortalSite#OBJECTS_TABLE",
 				value = "Koroneiki Account");
 		}
-		
 	}
 
 }

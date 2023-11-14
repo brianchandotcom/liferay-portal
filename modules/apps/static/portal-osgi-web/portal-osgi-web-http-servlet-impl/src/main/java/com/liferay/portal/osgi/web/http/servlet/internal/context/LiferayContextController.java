@@ -13,6 +13,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.customizer.EventListenerServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.customizer.FilterServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.customizer.ResourceServiceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.customizer.ServletServiceTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ResourceServlet;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextWrapper;
 
@@ -57,10 +61,6 @@ import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperDataContext;
-import org.eclipse.equinox.http.servlet.internal.customizer.ContextFilterTrackerCustomizer;
-import org.eclipse.equinox.http.servlet.internal.customizer.ContextListenerTrackerCustomizer;
-import org.eclipse.equinox.http.servlet.internal.customizer.ContextResourceTrackerCustomizer;
-import org.eclipse.equinox.http.servlet.internal.customizer.ContextServletTrackerCustomizer;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
 import org.eclipse.equinox.http.servlet.internal.error.RegisteredFilterException;
@@ -150,63 +150,63 @@ public class LiferayContextController extends ContextController {
 
 		_filterServiceTracker = new ServiceTracker<>(
 			bundleContext, Filter.class,
-			new ContextFilterTrackerCustomizer(
+			new FilterServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_filterServiceTracker.open(true);
 
 		_httpSessionAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, HttpSessionAttributeListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
+			new EventListenerServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_httpSessionAttributeListenerServiceTracker.open(true);
 
 		_httpSessionListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, HttpSessionListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
+			new EventListenerServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_httpSessionListenerServiceTracker.open(true);
 
 		_resourceServiceTracker = new ServiceTracker<>(
 			bundleContext, Object.class,
-			new ContextResourceTrackerCustomizer(
+			new ResourceServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_resourceServiceTracker.open(true);
 
 		_servletContextAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContextAttributeListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
+			new EventListenerServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_servletContextAttributeListenerServiceTracker.open(true);
 
 		_servletContextListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContextListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
+			new EventListenerServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_servletContextListenerServiceTracker.open(true);
 
 		_servletRequestAttributeListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletRequestAttributeListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
+			new EventListenerServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_servletRequestAttributeListenerServiceTracker.open(true);
 
 		_servletRequestListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletRequestListener.class.getName(),
-			new ContextListenerTrackerCustomizer(
+			new EventListenerServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_servletRequestListenerServiceTracker.open(true);
 
 		_servletServiceTracker = new ServiceTracker<>(
 			bundleContext, Servlet.class,
-			new ContextServletTrackerCustomizer(
+			new ServletServiceTrackerCustomizer(
 				bundleContext, httpServletEndpointController, this));
 
 		_servletServiceTracker.open(true);

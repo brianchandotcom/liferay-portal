@@ -235,9 +235,9 @@ export function formatDate(date: string) {
 }
 
 export async function getAppListProductSpecifications(productIds: number[]) {
-	return await Promise.all(
+	return Promise.all(
 		productIds.map(async (productId) => {
-			return await getProductSpecifications({
+			return getProductSpecifications({
 				appProductId: productId,
 			});
 		})

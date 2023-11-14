@@ -119,6 +119,13 @@ const PublishedAppsDashboardOutlet = () => {
 			getAppListProductIds(products)
 		);
 
+		const productSpecificationsMap = appListProductSpecifications.map(
+			(productSpecification, index) => ({
+				productId: products[index].id,
+				specification: productSpecification,
+			})
+		);
+
 		const producsFiltered = products
 			.filter((product) => {
 				const marketPlaceChannel = !!product.productChannels.find(
@@ -135,7 +142,7 @@ const PublishedAppsDashboardOutlet = () => {
 					product.catalogId === catalogId
 				);
 			})
-			.map((product, index) => ({
+			.map((product) => ({
 				attachments: product.attachments,
 				catalogId: product.catalogId,
 				externalReferenceCode: product.externalReferenceCode,
@@ -147,11 +154,15 @@ const PublishedAppsDashboardOutlet = () => {
 				),
 				thumbnail: product.thumbnail,
 				type: getProductTypeFromSpecifications(
-					appListProductSpecifications[index]
+					productSpecificationsMap.find(
+						({productId}) => productId === product.id
+					)?.specification ?? []
 				),
 				updatedDate: formatDate(product.modifiedDate),
 				version: getProductVersionFromSpecifications(
-					appListProductSpecifications[index]
+					productSpecificationsMap.find(
+						({productId}) => productId === product.id
+					)?.specification ?? []
 				),
 			}));
 

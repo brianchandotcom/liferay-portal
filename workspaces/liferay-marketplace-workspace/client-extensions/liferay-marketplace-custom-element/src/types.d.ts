@@ -475,7 +475,7 @@ type UserForm = {
 type OfferingType = {
 	description: string;
 	label: string;
-}
+};
 
 type OrderInfo = {
 	account: Account | UserForm;

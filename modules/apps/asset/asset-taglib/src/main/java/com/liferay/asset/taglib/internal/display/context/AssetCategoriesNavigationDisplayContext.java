@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 import com.liferay.taglib.aui.AUIUtil;
 
 import java.util.ArrayList;
@@ -104,26 +106,34 @@ public class AssetCategoriesNavigationDisplayContext {
 			return _vocabularies;
 		}
 
-		if (_vocabularyIds == null) {
-			_vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
-				SiteConnectedGroupGroupProviderUtil.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId()),
-				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
-
-			return _vocabularies;
-		}
-
 		List<AssetVocabulary> vocabularies = new ArrayList<>();
 
-		for (long vocabularyId : _vocabularyIds) {
-			AssetVocabulary vocabulary =
-				AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
+		if (_vocabularyIds == null) {
+			vocabularies = new ArrayList<>(
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					SiteConnectedGroupGroupProviderUtil.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							_themeDisplay.getScopeGroupId()),
+					new int[] {
+						AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC
+					}));
+		}
+		else {
+			for (long vocabularyId : _vocabularyIds) {
+				AssetVocabulary vocabulary =
+					AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
 
-			if (vocabulary != null) {
-				vocabularies.add(vocabulary);
+				if (vocabulary != null) {
+					vocabularies.add(vocabulary);
+				}
 			}
 		}
+
+		ListUtil.sort(
+			vocabularies,
+			new AssetVocabularyGroupLocalizedTitleComparator(
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getLocale(),
+				true));
 
 		_vocabularies = vocabularies;
 

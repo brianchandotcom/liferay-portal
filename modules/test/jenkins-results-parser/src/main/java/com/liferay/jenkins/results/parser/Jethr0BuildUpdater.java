@@ -171,9 +171,14 @@ public class Jethr0BuildUpdater
 			"MAX_NODE_COUNT", String.valueOf(maximumSlavesPerHost));
 		buildParameters.put("MIN_NODE_RAM", String.valueOf(minimumSlaveRAM));
 
-		_jethr0Client.createBuild(
-			build.getJobName(), buildParameters, _jethr0JobId,
-			build.getBuildName());
+		if (_jethr0BuildId > 0) {
+			_jethr0Client.createBuildRun(_jethr0BuildId);
+		}
+		else {
+			_jethr0Client.createBuild(
+				build.getJobName(), buildParameters, _jethr0JobId,
+				build.getBuildName());
+		}
 
 		build.addInvocation(new Build.Invocation(build));
 	}
@@ -193,6 +198,7 @@ public class Jethr0BuildUpdater
 		build.setBuildURL(jenkinsBuildURL);
 		build.setJenkinsMaster(jenkinsMaster);
 
+		_jethr0BuildId = jsonObject.getLong("jethr0BuildId");
 		_jethr0Result = jsonObject.getString("result");
 		_jethr0Status = "completed";
 	}
@@ -202,8 +208,13 @@ public class Jethr0BuildUpdater
 
 		Build.Invocation buildInvocation = build.getCurrentInvocation();
 
-		buildInvocation.setBuildURL(jsonObject.getString("jethr0BuildURL"));
+		String jethr0BuildURL = jsonObject.getString("jethr0BuildURL");
 
+		buildInvocation.setBuildURL(jethr0BuildURL);
+
+		build.setBuildURL(jethr0BuildURL);
+
+		_jethr0BuildId = jsonObject.getLong("jethr0BuildId");
 		_jethr0Status = "queued";
 	}
 
@@ -224,6 +235,7 @@ public class Jethr0BuildUpdater
 
 		build.setJenkinsMaster(jenkinsMaster);
 
+		_jethr0BuildId = jsonObject.getLong("jethr0BuildId");
 		_jethr0Status = "running";
 	}
 
@@ -231,6 +243,7 @@ public class Jethr0BuildUpdater
 		"https?://(?<masterHostname>test-\\d+-\\d+)(.liferay.com)?/.+");
 
 	private final String _jenkinsBuildID;
+	private long _jethr0BuildId;
 	private final Jethr0Client _jethr0Client;
 	private final long _jethr0JobId;
 	private String _jethr0Result;

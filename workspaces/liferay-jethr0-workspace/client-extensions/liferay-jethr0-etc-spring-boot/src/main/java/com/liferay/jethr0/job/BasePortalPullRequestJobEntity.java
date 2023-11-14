@@ -214,7 +214,7 @@ public abstract class BasePortalPullRequestJobEntity
 		).put(
 			"jenkinsJobName", getJenkinsJobName()
 		).put(
-			"name", getJenkinsJobName()
+			"name", "top-level"
 		).put(
 			"state", BuildEntity.State.OPENED
 		);

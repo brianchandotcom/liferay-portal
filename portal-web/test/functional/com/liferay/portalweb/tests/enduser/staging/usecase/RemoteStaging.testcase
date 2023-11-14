@@ -1397,7 +1397,7 @@ definition {
 
 		task ("Then: The warning message should still display") {
 			AssertVisible(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 
@@ -1407,7 +1407,7 @@ definition {
 
 		task ("Then: The warning message should not display") {
 			AssertElementNotPresent(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 
@@ -1419,7 +1419,7 @@ definition {
 
 		task ("Then: The warning message should not display") {
 			AssertElementNotPresent(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 	}
@@ -1447,7 +1447,7 @@ definition {
 
 		task ("Then: The warning message should still display") {
 			AssertVisible(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 
@@ -1457,7 +1457,7 @@ definition {
 
 		task ("Then: The warning message should not display") {
 			AssertElementNotPresent(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 
@@ -1469,7 +1469,7 @@ definition {
 
 		task ("Then: The warning message should not display") {
 			AssertElementNotPresent(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 	}
@@ -1486,7 +1486,7 @@ definition {
 			Staging.addCustomPublication();
 
 			AssertElementNotPresent(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 
@@ -1496,7 +1496,7 @@ definition {
 
 		task ("Then: The warning message should still display") {
 			AssertVisible(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 
@@ -1508,7 +1508,7 @@ definition {
 
 		task ("Then: The warning message should still display") {
 			AssertVisible(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 
@@ -1518,7 +1518,7 @@ definition {
 
 		task ("Then: The warning message should not display") {
 			AssertElementNotPresent(
-				key_warningMessage = "Please consider publishing all content or using a wide date range.",
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
 				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
 		}
 	}

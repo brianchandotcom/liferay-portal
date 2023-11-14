@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
@@ -23,19 +24,26 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import java.util.Map;
 
@@ -53,6 +61,40 @@ import org.osgi.service.component.annotations.Reference;
 	service = AttachmentManager.class
 )
 public class AttachmentManagerImpl implements AttachmentManager {
+
+	@Override
+	public FileEntry addFileEntry(
+			long companyId, long groupId, byte[] fileContent, String fileName,
+			long objectFieldId, ServiceContext serviceContext)
+		throws Exception {
+
+		validateFileName(fileName);
+
+		validateFileExtension(fileName, objectFieldId);
+
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		validateFileSize(
+			fileName, fileContent.length, objectFieldId, !user.isGuestUser());
+
+		DLFolder dlFolder = getDLFolder(
+			objectFieldId, companyId, groupId, serviceContext,
+			serviceContext.getUserId());
+
+		try (InputStream inputStream = new ByteArrayInputStream(fileContent)) {
+			return _dlAppLocalService.addFileEntry(
+				null, serviceContext.getUserId(), dlFolder.getRepositoryId(),
+				dlFolder.getFolderId(),
+				DLUtil.getUniqueFileName(
+					groupId, dlFolder.getFolderId(), fileName, true),
+				_mimeTypes.getContentType(inputStream, fileName),
+				DLUtil.getUniqueTitle(
+					groupId, dlFolder.getFolderId(),
+					FileUtil.stripExtension(fileName)),
+				StringPool.BLANK, null, null, inputStream, fileContent.length,
+				null, null, serviceContext);
+		}
+	}
 
 	@Override
 	public String[] getAcceptedFileExtensions(long objectFieldId) {
@@ -267,6 +309,9 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private MimeTypes _mimeTypes;
 
 	private volatile ObjectConfiguration _objectConfiguration;
 

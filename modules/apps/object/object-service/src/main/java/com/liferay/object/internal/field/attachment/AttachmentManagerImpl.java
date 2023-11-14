@@ -113,6 +113,8 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		ServiceContext serviceContext, long userId) {
 
 		try {
+			Long dlFolderId = null;
+
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectFieldId);
 
@@ -121,8 +123,6 @@ public class AttachmentManagerImpl implements AttachmentManager {
 					ObjectFieldSettingConstants.
 						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
 					objectField.getObjectFieldSettings()));
-
-			Long dlFolderId = null;
 
 			if (showFilesInDocumentsAndMedia) {
 				String storageDLFolderPath = ObjectFieldSettingUtil.getValue(

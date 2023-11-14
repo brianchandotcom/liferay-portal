@@ -128,7 +128,9 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		return _extractDBPartition(companyId);
+		_extractDBPartition(companyId);
+
+		return true;
 	}
 
 	public static void forEachCompanyId(
@@ -192,7 +194,9 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		return _dropDBPartition(companyId);
+		_dropDBPartition(companyId);
+
+		return true;
 	}
 
 	public static void replaceByTable(Connection connection, String viewName)
@@ -286,7 +290,7 @@ public class DBPartitionUtil {
 				whereClause));
 	}
 
-	private static boolean _dropDBPartition(long companyId)
+	private static void _dropDBPartition(long companyId)
 		throws PortalException {
 
 		Connection connection = CurrentConnectionUtil.getConnection(
@@ -327,11 +331,9 @@ public class DBPartitionUtil {
 		}
 
 		_companyIds.remove(companyId);
-
-		return true;
 	}
 
-	private static boolean _extractDBPartition(long companyId)
+	private static void _extractDBPartition(long companyId)
 		throws PortalException {
 
 		Connection connection = CurrentConnectionUtil.getConnection(
@@ -388,8 +390,6 @@ public class DBPartitionUtil {
 				"Removal of database partition extraction was rolled back",
 				exception1);
 		}
-
-		return true;
 	}
 
 	private static void _extractTable(

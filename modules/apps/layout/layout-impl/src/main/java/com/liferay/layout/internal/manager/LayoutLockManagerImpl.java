@@ -319,20 +319,21 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 						lockedLayoutsGroupConfigurations.get(
 							layout.getGroupId());
 
-				if ((lockedLayoutsGroupConfiguration == null) ||
-					lockedLayoutsGroupConfiguration.
+				if ((lockedLayoutsGroupConfiguration != null) &&
+					!lockedLayoutsGroupConfiguration.
 						allowAutomaticUnlockingProcess()) {
 
-					int value = DateUtil.compareTo(
-						lock.getCreateDate(),
-						_getLastAutosaveDate(
-							layout.getGroupId(), companyLastAutosaveDate,
-							lastAutosaveDateMap,
-							lockedLayoutsGroupConfiguration));
+					return;
+				}
 
-					if (value <= 0) {
-						_lockManager.unlock(lock.getClassName(), lock.getKey());
-					}
+				int value = DateUtil.compareTo(
+					lock.getCreateDate(),
+					_getLastAutosaveDate(
+						layout.getGroupId(), companyLastAutosaveDate,
+						lastAutosaveDateMap, lockedLayoutsGroupConfiguration));
+
+				if (value <= 0) {
+					_lockManager.unlock(lock.getClassName(), lock.getKey());
 				}
 			});
 

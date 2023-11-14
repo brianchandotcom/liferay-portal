@@ -89,7 +89,7 @@ const ActivityClaimPanel = ({
 			activity.activityStatus?.key === Status.ACTIVE.key) &&
 		!activity.claimed;
 
-	const editableClaimActivityByStatus = activity.id && activity.selected;
+	const editableClaimActivityByStatus = activity.id;
 
 	const displayActivityClaimCheckbox =
 		claimableActivityByStatus || editableClaimActivityByStatus;

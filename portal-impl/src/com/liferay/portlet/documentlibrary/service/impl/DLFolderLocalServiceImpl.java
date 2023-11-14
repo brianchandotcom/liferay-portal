@@ -363,6 +363,13 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public DLFolder getFolder(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return dlFolderPersistence.findByERC_G(externalReferenceCode, groupId);
+	}
+
+	@Override
 	public long getFolderId(long companyId, long folderId) {
 		return getFolderId(dlFolderPersistence, companyId, folderId);
 	}

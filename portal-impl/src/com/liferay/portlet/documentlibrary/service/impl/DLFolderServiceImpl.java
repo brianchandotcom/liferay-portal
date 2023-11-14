@@ -176,6 +176,19 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	@Override
+	public DLFolder getFolder(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DLFolder dlFolder = dlFolderLocalService.getFolder(
+			externalReferenceCode, groupId);
+
+		_dlFolderModelResourcePermission.check(
+			getPermissionChecker(), dlFolder, ActionKeys.VIEW);
+
+		return dlFolder;
+	}
+
+	@Override
 	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException {
 

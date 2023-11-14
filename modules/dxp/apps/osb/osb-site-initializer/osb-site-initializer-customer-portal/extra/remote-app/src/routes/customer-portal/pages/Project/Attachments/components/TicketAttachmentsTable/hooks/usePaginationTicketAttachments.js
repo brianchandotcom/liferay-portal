@@ -34,7 +34,10 @@ export default function usePagination(sortConfig, ticketAttachments) {
 	);
 
 	const sortedTicketAttachmentsFilteredPerPage = useMemo(() => {
-		const sortedTicketAttachments = getSortedTicketAttachments(ticketAttachments, sortConfig);
+		const sortedTicketAttachments = getSortedTicketAttachments(
+			ticketAttachments,
+			sortConfig
+		);
 
 		if (sortedTicketAttachments) {
 			const sortedTicketAttachmentsFilteredPerPage = sortedTicketAttachments.slice(

@@ -7,18 +7,27 @@ import {useState} from 'react';
 
 const DEFAULT_SORT_CONFIG = {
 	columnName: 'dateCreated',
-	direction: 'descending'
+	direction: 'descending',
 };
 
 export default function useSort() {
-
 	const [sortConfig, setSortConfig] = useState(DEFAULT_SORT_CONFIG);
 
 	const handleSortChange = (column) => {
 		if (column === sortConfig.columnName) {
-			setSortConfig({columnName: column, direction: (sortConfig.direction === 'descending') ? 'ascending' : 'descending'});
-		} else {
-			setSortConfig({columnName: column, direction: (sortConfig.direction)});
+			setSortConfig({
+				columnName: column,
+				direction:
+					sortConfig.direction === 'descending'
+						? 'ascending'
+						: 'descending',
+			});
+		}
+		else {
+			setSortConfig({
+				columnName: column,
+				direction: sortConfig.direction,
+			});
 		}
 	};
 

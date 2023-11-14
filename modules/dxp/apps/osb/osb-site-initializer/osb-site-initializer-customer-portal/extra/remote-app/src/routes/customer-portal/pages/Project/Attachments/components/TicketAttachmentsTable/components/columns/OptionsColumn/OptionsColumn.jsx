@@ -4,8 +4,8 @@
  */
 
 import {ButtonWithIcon} from '@clayui/core';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import i18n from '../../../../../../../../../../common/I18n';
 import {ButtonDropDown} from '../../../../../../../../../../common/components';
 
@@ -31,14 +31,13 @@ const OptionsColumn = ({
 			icon: <ClayIcon symbol="trash" />,
 			label: i18n.translate('delete'),
 			onClick: () => {
-				onOpenChange(true)
-				setSelectedTicketAttachment(ticketAttachment)
+				onOpenChange(true);
+				setSelectedTicketAttachment(ticketAttachment);
 			},
 		},
 	];
 
 	return (
-
 		<ClayTooltipProvider>
 			<span>
 				<ButtonDropDown

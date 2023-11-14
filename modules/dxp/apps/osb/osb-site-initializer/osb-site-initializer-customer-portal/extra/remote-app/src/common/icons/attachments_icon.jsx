@@ -28,7 +28,7 @@ const AttachmentsIcon = (props) => (
 		</mask>
 
 		<g mask="url(#mask0_631_4022)">
-			<rect fill="#282934" height="16" width="16"/>
+			<rect fill="#282934" height="16" width="16" />
 		</g>
 	</svg>
 );

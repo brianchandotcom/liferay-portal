@@ -1,10 +1,11 @@
-.cp-ticket-attachments-table-wrapper {
-	.table-responsive, .table thead th {
-		border-bottom: 1px solid var(--color-neutral-2);
+.alert-container {
+	.alert-successful-attachments {
+		color: #2c6723;
 	}
 
-	svg {
-		cursor: pointer;
+	.lexicon-icon-check-circle-full,
+	.lexicon-icon-times {
+		fill: #2c6723;
 	}
 }
 
@@ -26,45 +27,53 @@
 	}
 
 	.c-empty-state-text {
-		color: #6B6C7E;
+		color: #6b6c7e;
+	}
+}
+
+.cp-ticket-attachments-table-wrapper {
+	.lexicon-icon-ellipsis-v {
+		fill: var(--color-neutral-5);
+	}
+
+	svg {
+		cursor: pointer;
+	}
+
+	.table-responsive,
+	.table thead th {
+		border-bottom: 1px solid var(--color-neutral-2);
 	}
 }
 
 .dropdown-menu {
-	button.dropdown-item  {
+	button.dropdown-item {
 		padding: 0.75rem;
 
 		&:hover:not(.disabled) {
-			.lexicon-icon-download, .lexicon-icon-trash {
+			.lexicon-icon-download,
+			.lexicon-icon-trash {
 				opacity: 1;
 			}
 		}
+	}
+
+	.lexicon-icon-download,
+	.lexicon-icon-trash {
+		height: 1rem;
+		margin-right: 0.5rem;
+		opacity: 0.5;
+		width: 1rem;
 	}
 
 	ul.list-unstyled {
 		margin-bottom: 0;
 		padding: 0.5rem;
 	}
-
-	.lexicon-icon-download, .lexicon-icon-trash {
-		height: 1rem;
-		margin-right: 0.5rem;
-		opacity: 0.5;
-		width: 1rem;
-	}
 }
 
-.modal-body, .modal-footer, .modal-header {
+.modal-body,
+.modal-footer,
+.modal-header {
 	border: 0;
-}
-
-.alert-container {
-	.alert-successful-attachments {
-		color: #2C6723;
-	}
-
-
-	.lexicon-icon-check-circle-full, .lexicon-icon-times {
-		fill: #2C6723;
-	}
 }

@@ -50,14 +50,20 @@ export default function getSortedTicketAttachments(
 
 	function sortSizes(ticketAttachments) {
 		ticketAttachments.sort((x, y) => {
-
 			const x_fileSize = x.fileSize;
 			const y_fileSize = y.fileSize;
 
-			const x_index_first_char = x_fileSize.indexOf(x_fileSize.match(/[a-zA-Z]/).pop());
-			const y_index_first_char = y_fileSize.indexOf(y_fileSize.match(/[a-zA-Z]/).pop());
+			const x_index_first_char = x_fileSize.indexOf(
+				x_fileSize.match(/[a-zA-Z]/).pop()
+			);
+			const y_index_first_char = y_fileSize.indexOf(
+				y_fileSize.match(/[a-zA-Z]/).pop()
+			);
 
-			const splitAt = (index, xs) => [xs.slice(0, index), xs.slice(index)];
+			const splitAt = (index, xs) => [
+				xs.slice(0, index),
+				xs.slice(index),
+			];
 
 			const x_res = splitAt(x_index_first_char, x_fileSize);
 			const y_res = splitAt(y_index_first_char, y_fileSize);
@@ -77,7 +83,9 @@ export default function getSortedTicketAttachments(
 			}
 		});
 
-		return sortConfig.direction === 'descending' ? ticketAttachments.reverse() : ticketAttachments;
+		return sortConfig.direction === 'descending'
+			? ticketAttachments.reverse()
+			: ticketAttachments;
 	}
 
 	function casting(unit_from, unit_to, amount) {

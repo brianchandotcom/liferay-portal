@@ -15,9 +15,13 @@ const DeleteTicketAttachmentModal = ({
 	observer,
 	onClose,
 	onDelete,
-	removing
+	removing,
 }) => (
-	<ClayModal center className="delete-ticket-attachment-modal" observer={observer}>
+	<ClayModal
+		center
+		className="delete-ticket-attachment-modal"
+		observer={observer}
+	>
 		<ClayModal.Header className="h-100 p-4">
 			<h2 className="mb-0 text-neutral-10">{modalTitle}</h2>
 		</ClayModal.Header>

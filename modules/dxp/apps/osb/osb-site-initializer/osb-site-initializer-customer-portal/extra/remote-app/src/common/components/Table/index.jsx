@@ -118,12 +118,17 @@ const Table = ({
 									<div className="d-flex">
 										{column.header.name}
 
-										{hasSorting && column.filterIdentifier && (
-											<FilterIcon
-												columnName={column.filterIdentifier}
-												handleSortChange={handleSortChange}
-											/>
-										)}
+										{hasSorting &&
+											column.filterIdentifier && (
+												<FilterIcon
+													columnName={
+														column.filterIdentifier
+													}
+													handleSortChange={
+														handleSortChange
+													}
+												/>
+											)}
 									</div>
 								)}
 							</ClayTable.Cell>

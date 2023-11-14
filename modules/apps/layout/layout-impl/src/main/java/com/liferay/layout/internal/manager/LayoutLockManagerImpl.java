@@ -272,6 +272,9 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	public void unlockLayouts(long companyId, long autosaveMinutes)
 		throws PortalException {
 
+		Date companyLastAutosaveDate = new Date(
+			System.currentTimeMillis() - (autosaveMinutes * Time.MINUTE));
+		Map<Long, Date> lastAutosaveDateMap = new HashMap<>();
 		Map<Long, LockedLayoutsGroupConfiguration>
 			lockedLayoutsGroupConfigurations =
 				_getLockedLayoutsGroupConfigurations(companyId);
@@ -296,49 +299,42 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 									(autosaveMinutes * Time.MINUTE))));
 				}
 			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(com.liferay.portal.lock.model.Lock lock) -> {
+				if (lockedLayoutsGroupConfigurations.isEmpty()) {
+					_lockManager.unlock(lock.getClassName(), lock.getKey());
 
-		if (lockedLayoutsGroupConfigurations.isEmpty()) {
-			actionableDynamicQuery.setPerformActionMethod(
-				(com.liferay.portal.lock.model.Lock lock) ->
-					_lockManager.unlock(lock.getClassName(), lock.getKey()));
-		}
-		else {
-			Date companyLastAutosaveDate = new Date(
-				System.currentTimeMillis() - (autosaveMinutes * Time.MINUTE));
-			Map<Long, Date> lastAutosaveDateMap = new HashMap<>();
+					return;
+				}
 
-			actionableDynamicQuery.setPerformActionMethod(
-				(com.liferay.portal.lock.model.Lock lock) -> {
-					Layout layout = _layoutLocalService.fetchLayout(
-						GetterUtil.getLong(lock.getKey()));
+				Layout layout = _layoutLocalService.fetchLayout(
+					GetterUtil.getLong(lock.getKey()));
 
-					if (layout == null) {
+				if (layout == null) {
+					_lockManager.unlock(lock.getClassName(), lock.getKey());
+				}
+
+				LockedLayoutsGroupConfiguration
+					lockedLayoutsGroupConfiguration =
+						lockedLayoutsGroupConfigurations.get(
+							layout.getGroupId());
+
+				if ((lockedLayoutsGroupConfiguration == null) ||
+					lockedLayoutsGroupConfiguration.
+						allowAutomaticUnlockingProcess()) {
+
+					int value = DateUtil.compareTo(
+						lock.getCreateDate(),
+						_getLastAutosaveDate(
+							layout.getGroupId(), companyLastAutosaveDate,
+							lastAutosaveDateMap,
+							lockedLayoutsGroupConfiguration));
+
+					if (value <= 0) {
 						_lockManager.unlock(lock.getClassName(), lock.getKey());
 					}
-
-					LockedLayoutsGroupConfiguration
-						lockedLayoutsGroupConfiguration =
-							lockedLayoutsGroupConfigurations.get(
-								layout.getGroupId());
-
-					if ((lockedLayoutsGroupConfiguration == null) ||
-						lockedLayoutsGroupConfiguration.
-							allowAutomaticUnlockingProcess()) {
-
-						int value = DateUtil.compareTo(
-							lock.getCreateDate(),
-							_getLastAutosaveDate(
-								layout.getGroupId(), companyLastAutosaveDate,
-								lastAutosaveDateMap,
-								lockedLayoutsGroupConfiguration));
-
-						if (value <= 0) {
-							_lockManager.unlock(
-								lock.getClassName(), lock.getKey());
-						}
-					}
-				});
-		}
+				}
+			});
 
 		actionableDynamicQuery.performActions();
 	}

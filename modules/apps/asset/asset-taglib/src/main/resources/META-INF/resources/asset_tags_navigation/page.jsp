@@ -75,14 +75,7 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, l
 		for (AssetTag tag : tags) {
 			String tagName = tag.getName();
 
-			int count = 0;
-
-			if (classNameId > 0) {
-				count = AssetTagServiceUtil.getVisibleAssetsTagsCount(scopeGroupId, classNameId, tagName);
-			}
-			else {
-				count = AssetTagServiceUtil.getVisibleAssetsTagsCount(scopeGroupId, tagName);
-			}
+			int count = AssetTagServiceUtil.getVisibleAssetsTagsCount(scopeGroupId, classNameId, tagName);
 
 			if (!showZeroAssetCount && (count == 0)) {
 				continue;
@@ -107,14 +100,7 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, l
 	for (AssetTag tag : tags) {
 		String tagName = tag.getName();
 
-		int count = 0;
-
-		if (classNameId > 0) {
-			count = AssetTagServiceUtil.getVisibleAssetsTagsCount(scopeGroupId, classNameId, tagName);
-		}
-		else {
-			count = AssetTagServiceUtil.getVisibleAssetsTagsCount(scopeGroupId, tagName);
-		}
+		int count = AssetTagServiceUtil.getVisibleAssetsTagsCount(scopeGroupId, classNameId, tagName);
 
 		int popularity = (int)(1 + ((maxCount - (maxCount - (count - minCount))) * multiplier));
 

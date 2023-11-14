@@ -72,18 +72,10 @@ public class AssetTagsNavigationDisplayContext {
 		_scopedAssetCounts = new HashMap<>();
 
 		for (AssetTag assetTag : getAssetTags()) {
-			int count = 0;
-
-			if (_classNameId > 0) {
-				count = AssetTagServiceUtil.getVisibleAssetsTagsCount(
-					_scopeGroupId, _classNameId, assetTag.getName());
-			}
-			else {
-				count = AssetTagServiceUtil.getVisibleAssetsTagsCount(
-					_scopeGroupId, assetTag.getName());
-			}
-
-			_scopedAssetCounts.put(assetTag.getName(), count);
+			_scopedAssetCounts.put(
+				assetTag.getName(),
+				AssetTagServiceUtil.getVisibleAssetsTagsCount(
+					_scopeGroupId, _classNameId, assetTag.getName()));
 		}
 
 		return _scopedAssetCounts;

@@ -208,6 +208,10 @@ const RequiredInformation = ({
 				}
 
 				setIsLoadingGenerateKey(false);
+
+				navigate(urlPreviousPage, {
+					state: {newKeyGeneratedAlert: true},
+				});
 			} else {
 				setIsLoadingGenerateKey(true);
 

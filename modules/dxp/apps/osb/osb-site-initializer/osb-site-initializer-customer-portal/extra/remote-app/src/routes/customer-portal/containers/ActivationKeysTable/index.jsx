@@ -36,7 +36,7 @@ const messageNewKeyGeneratedAlert = i18n.translate(
 );
 
 const messageNewKeyGeneratedAlertForComplimentary = i18n.translate(
-	'complimentary-key-was-generated-sucessfully'
+	'complimentary-key-was-generated-successfully'
 );
 
 const messageDeactivateKey = i18n.translate(

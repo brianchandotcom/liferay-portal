@@ -777,13 +777,13 @@ const SelectSubscription = ({
 										return displayAlertType;
 									}
 
-									return (
-										selected &&
-										displayAlertType &&
+									if (selected) {
 										setAvailableActivationKeysTotal(
 											numberOfActivationKeysAvailable
-										)
-									);
+										);
+									}
+
+									return selected && displayAlertType;
 								};
 
 								return (

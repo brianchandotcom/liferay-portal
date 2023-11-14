@@ -682,6 +682,11 @@ public class SourceFormatter {
 	private void _checkBreakingChangeMessage(List<String> commitMessages)
 		throws Exception {
 
+		List<String> currentBranchDeletedFileNames =
+			GitUtil.getCurrentBranchDeletedFileNames(
+				_sourceFormatterArgs.getBaseDirName(),
+				_sourceFormatterArgs.getGitWorkingBranchName());
+
 		for (String commitMessage : commitMessages) {
 			String[] parts = commitMessage.split(":", 2);
 
@@ -757,11 +762,6 @@ public class SourceFormatter {
 				if (file.exists()) {
 					continue;
 				}
-
-				List<String> currentBranchDeletedFileNames =
-					GitUtil.getCurrentBranchDeletedFileNames(
-						_sourceFormatterArgs.getBaseDirName(),
-						_sourceFormatterArgs.getGitWorkingBranchName());
 
 				if (!currentBranchDeletedFileNames.contains(filePath)) {
 					throw new Exception(

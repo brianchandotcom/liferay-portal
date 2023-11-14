@@ -489,7 +489,7 @@ public class ObjectDefinitionLocalServiceTest {
 				}
 				else {
 					Assert.assertEquals(
-						0,
+						1,
 						_resourceActionLocalService.getResourceActionsCount(
 							nodeObjectDefinition.getClassName()));
 					Assert.assertEquals(

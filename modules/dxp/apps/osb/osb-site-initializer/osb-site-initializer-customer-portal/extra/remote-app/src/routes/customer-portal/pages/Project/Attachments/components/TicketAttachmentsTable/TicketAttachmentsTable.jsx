@@ -17,6 +17,9 @@ import OptionsColumn from './components/columns/OptionsColumn';
 import { PAGE_ROUTER_TYPES } from '~/common/utils/constants';
 import useDownload from './hooks/useDownloadTicketAttachment';
 import useDelete from './hooks/useDeleteTicketAttachment';
+import {useModal} from '@clayui/core';
+import DeleteTicketAttachmentModal from './components/DeleteTicketAttachmentModal/DeleteTicketAttachmentModal';
+import ClayAlert from '@clayui/alert';
 
 const TicketAttachmentsTable = ({
 	koroneikiAccount,
@@ -47,7 +50,9 @@ const TicketAttachmentsTable = ({
 
 	const {observer, onOpenChange, open} = useModal();
 
-	const [loadingModal, setLoadingModal] = useState(false);
+	const [selectedTicketAttachment, setSelectedTicketAttachment] = useState();
+
+	const [toastItems, setToastItems] = useState([]);
 
 	useEffect(() => {
 		const fetchTicketAttachments = async () => {
@@ -74,6 +79,53 @@ const TicketAttachmentsTable = ({
 
 	return (
 		<>
+			{open && (
+				<DeleteTicketAttachmentModal
+					modalTitle={i18n.translate("delete-attached-file")}
+					observer={observer}
+					onClose={() => onOpenChange(false)}
+					onDelete={() => {
+						onDelete(selectedTicketAttachment?.ticketAttachmentId)
+						onOpenChange(false)
+						setToastItems([...toastItems, Math.random() * 100])
+					}}
+					removing={isDeleting}
+				>
+					<p className="my-0 text-neutral-10">
+						{i18n.translate('are-you-sure-you-want-to-delete-this-attached-file')}
+					</p>
+
+					<p className="font-weight-bold mt-4 text-neutral-10">
+						- {selectedTicketAttachment?.fileName}
+					</p>
+				</DeleteTicketAttachmentModal>
+			)}
+
+			<ClayAlert.ToastContainer>
+				{toastItems.map(value => (
+				<ClayAlert
+					autoClose={false}
+					displayType="success"
+					key={value}
+					onClose={() => {
+					setToastItems(prevItems =>
+						prevItems.filter(item => item !== value)
+					);
+					}}
+				>
+					<div className="alert-successful-attachments text-paragraph">
+						{selectedTicketAttachment?.fileName}
+
+						<span> </span>
+
+						<div className="d-inline-block pr-3">
+							{i18n.translate('was-deleted-successfully')}
+						</div>
+					</div>
+				</ClayAlert>
+				))}
+			</ClayAlert.ToastContainer>
+
 			{(sortedTicketAttachmentsFilteredPerPage && (paginationConfig.totalCount > 0) && !loading) ? (
 				<div className="cp-ticket-attachments-table-wrapper">
 					<Table
@@ -120,6 +172,7 @@ const TicketAttachmentsTable = ({
 										onDelete={onDelete}
 										onDownload={onDownload}
 										onOpenChange={onOpenChange}
+										setSelectedTicketAttachment={setSelectedTicketAttachment}
 										ticketAttachment={ticketAttachment}
 									/>
 								),

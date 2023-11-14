@@ -53,3 +53,18 @@
 		width: 1rem;
 	}
 }
+
+.modal-body, .modal-footer, .modal-header {
+	border: 0;
+}
+
+.alert-container {
+	.alert-successful-attachments {
+		color: #2C6723;
+	}
+
+
+	.lexicon-icon-check-circle-full, .lexicon-icon-times {
+		fill: #2C6723;
+	}
+}

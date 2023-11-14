@@ -11,10 +11,10 @@ import {ButtonDropDown} from '../../../../../../../../../../common/components';
 
 const OptionsColumn = ({
 	hasDeletePermissions,
-	onDelete,
 	onDownload,
 	onOpenChange,
-	ticketAttachment
+	setSelectedTicketAttachment,
+	ticketAttachment,
 }) => {
 	const userOptions = [
 		{
@@ -30,6 +30,10 @@ const OptionsColumn = ({
 			disabled: !hasDeletePermissions,
 			icon: <ClayIcon symbol="trash" />,
 			label: i18n.translate('delete'),
+			onClick: () => {
+				onOpenChange(true)
+				setSelectedTicketAttachment(ticketAttachment)
+			},
 		},
 	];
 

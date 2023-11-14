@@ -6,8 +6,8 @@
 import {COOKIE_TYPES, checkConsent} from 'frontend-js-web';
 
 export function flipThirdPartyCookiesOff(element) {
-	if (!Liferay.FeatureFlags['LPS-164563']) {
-		return;
+	if (!Liferay.FeatureFlags['LPS-154290']) {
+		return element;
 	}
 
 	const elements = element.querySelectorAll(
@@ -151,7 +151,7 @@ export default function toggleThirdPartyCookies() {
  * @param {number} startingInterval - The initial interval to start with
  */
 export function runThirdPartyCookiesInterval(startingInterval = 2000) {
-	if (!Liferay.FeatureFlags['LPS-164563']) {
+	if (!Liferay.FeatureFlags['LPS-154290']) {
 		return;
 	}
 

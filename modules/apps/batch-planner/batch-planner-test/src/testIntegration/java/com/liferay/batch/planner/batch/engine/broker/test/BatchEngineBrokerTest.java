@@ -564,16 +564,17 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testImportSiteScopeObjectEntry() throws Exception {
+
+		// Default group
+
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
 			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
 
-		// Import object entry, default group
-
 		_testImportSiteScopeObjectEntry(
 			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
 
-		// Import object entry, global group
+		// Global group
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -583,7 +584,7 @@ public class BatchEngineBrokerTest {
 		_testImportSiteScopeObjectEntry(
 			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
 
-		// Import object entry, new group
+		// New group
 
 		_testImportSiteScopeObjectEntry(
 			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);

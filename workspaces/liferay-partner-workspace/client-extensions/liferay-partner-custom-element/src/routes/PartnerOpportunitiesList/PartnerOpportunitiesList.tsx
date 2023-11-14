@@ -40,7 +40,6 @@ interface IProps {
 	name: string;
 	newButtonDeal?: boolean;
 	openOpportunitiesFilter: string;
-	rfpOpportunitiesFilter?: string;
 	sort: string;
 }
 
@@ -53,7 +52,6 @@ const PartnerOpportunitiesList = ({
 	name,
 	newButtonDeal,
 	openOpportunitiesFilter,
-	rfpOpportunitiesFilter,
 	sort,
 }: IProps) => {
 	const [opportunitiesFilter, setOpportunitiesFilter] = useState(
@@ -66,10 +64,7 @@ const PartnerOpportunitiesList = ({
 		PartnerOpportunitiesItem
 	>();
 	const {observer, onClose} = useModal({
-		onClose: () => {
-			setIsVisibleModal(false);
-			setModalContent(undefined);
-		},
+		onClose: () => setIsVisibleModal(false),
 	});
 
 	const pagination = usePagination();
@@ -94,7 +89,7 @@ const PartnerOpportunitiesList = ({
 		dataCSV.items && getFilteredItems(dataCSV.items, opportunitiesFilter);
 
 	const siteURL = useLiferayNavigate();
-	const columnsOpp = [
+	const columns = [
 		{
 			columnKey: PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME,
 			label: 'Partner Account Name',
@@ -141,49 +136,8 @@ const PartnerOpportunitiesList = ({
 		},
 	];
 
-	const columnsRFP = [
-		{
-			columnKey: PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME,
-			label: 'Partner Account Name',
-		},
-		{
-			columnKey: PartnerOpportunitiesColumnKey.ACCOUNT_NAME,
-			label: 'Account Name',
-		},
-		{
-			columnKey: PartnerOpportunitiesColumnKey.STAGE,
-			label: 'Stage',
-		},
-		{
-			columnKey: PartnerOpportunitiesColumnKey.CREATED_DATE,
-			label: 'Created Date',
-		},
-	];
-
-	const handleCustomClickOnRow = async (row: PartnerOpportunitiesItem) => {
+	const handleCustomClickOnRow = (row: PartnerOpportunitiesItem) => {
 		setIsVisibleModal(true);
-
-		if (opportunitiesFilter === rfpOpportunitiesFilter) {
-			const response = await retry<Response>(() =>
-				fetch(
-					`/o/c/${ResourceName.OPPORTUNITIES_SALESFORCE}/by-external-reference-code/${row['OPPORTUNITY']}`,
-					{
-						headers: {
-							'accept': 'application/json',
-							'x-csrf-token': Liferay.authToken,
-						},
-					}
-				)
-			);
-
-			if (response.ok) {
-				const rfpOpportunity = (await response.json()) as DealRegistrationDTO;
-				const rowRFP = getItemPartnerOpportunity(rfpOpportunity);
-				setModalContent(rowRFP);
-			}
-
-			return;
-		}
 		setModalContent(row);
 	};
 
@@ -197,8 +151,7 @@ const PartnerOpportunitiesList = ({
 
 	const getTable = (
 		totalCount: number,
-		items?: PartnerOpportunitiesItem[],
-		isRFP?: boolean
+		items?: PartnerOpportunitiesItem[]
 	) => {
 		if (items) {
 			if (!totalCount) {
@@ -213,12 +166,6 @@ const PartnerOpportunitiesList = ({
 						</ClayAlert>
 					</div>
 				);
-			}
-
-			let columns = columnsOpp;
-
-			if (isRFP) {
-				columns = columnsRFP;
 			}
 
 			return (
@@ -263,19 +210,6 @@ const PartnerOpportunitiesList = ({
 					>
 						Closed
 					</ClayTabs.Item>
-					{rfpOpportunitiesFilter && (
-						<ClayTabs.Item
-							active={
-								opportunitiesFilter === rfpOpportunitiesFilter
-							}
-							className="nav-item"
-							onClick={() =>
-								setOpportunitiesFilter(rfpOpportunitiesFilter)
-							}
-						>
-							RFPs
-						</ClayTabs.Item>
-					)}
 				</ClayTabs>
 			</div>
 
@@ -336,12 +270,7 @@ const PartnerOpportunitiesList = ({
 
 			{isValidating && <ClayLoadingIndicator />}
 
-			{!isValidating &&
-				getTable(
-					filteredData?.length || 0,
-					filteredData,
-					opportunitiesFilter === rfpOpportunitiesFilter
-				)}
+			{!isValidating && getTable(filteredData?.length || 0, filteredData)}
 		</div>
 	);
 };

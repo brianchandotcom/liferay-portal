@@ -90,7 +90,8 @@ const appRoutes: AppRouteComponent = {
 								OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
 							(item['TYPE'] ===
 								OpportunityType.EXISTING_BUSINESS &&
-								!item['HAS-RENEWAL'])
+								!item['HAS-RENEWAL']) &&
+							item['ACTIVE']
 					);
 				}
 				if (
@@ -104,12 +105,9 @@ const appRoutes: AppRouteComponent = {
 							(item['TYPE'] ===
 								OpportunityType.EXISTING_BUSINESS &&
 								!item['HAS-RENEWAL'] &&
-								Number(item['GROWTH-ARR']) > 0)
+								Number(item['GROWTH-ARR']) > 0) &&
+							item['ACTIVE']
 					);
-				}
-
-				if (opportunitiesFilter === Filters.OPPORTUNITY_LISTING.rfp) {
-					return items.filter((item) => item['OPPORTUNITY']);
 				}
 
 				return items;
@@ -117,8 +115,7 @@ const appRoutes: AppRouteComponent = {
 			name="Partner Opportunities"
 			newButtonDeal={false}
 			openOpportunitiesFilter={Filters.OPPORTUNITY_LISTING.openWIP}
-			rfpOpportunitiesFilter={Filters.OPPORTUNITY_LISTING.rfp}
-			sort="dateCreated:desc"
+			sort="closeDate:desc"
 		/>
 	),
 	[AppRouteType.RENEWALS_OPPORTUNITIES_LIST]: (
@@ -126,10 +123,10 @@ const appRoutes: AppRouteComponent = {
 			closedOpportunitiesFilter={Filters.RENEWAL_LISTING.closedWIP}
 			getFilteredItems={(items, opportunitiesFilter) => {
 				if (opportunitiesFilter === Filters.RENEWAL_LISTING.closedWIP) {
-					return items.filter((item) => item['HAS-RENEWAL']);
+					return items.filter((item) => item['HAS-RENEWAL'] && item['ACTIVE']);
 				}
 
-				return items.filter((item) => item['HAS-RENEWAL']);
+				return items.filter((item) => item['HAS-RENEWAL'] && item['ACTIVE']);
 			}}
 			name="Renewal Opportunities"
 			newButtonDeal={false}

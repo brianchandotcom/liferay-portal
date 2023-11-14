@@ -10,6 +10,7 @@ import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import useGet from '../../../common/services/liferay/object/useGet';
 import getItemPartnerOpportunity from '../utils/getItemPartnerOpportunity';
+import { ResourceName } from '../../../common/services/liferay/object/enum/resourceName';
 
 export default function useGetListItemsFromPartnerOpportunities(
 	page: number,
@@ -19,7 +20,7 @@ export default function useGetListItemsFromPartnerOpportunities(
 ) {
 	const swrResponse = useGet<LiferayItems<DealRegistrationDTO[]>>(
 		filtersTerm &&
-			`/o/${LiferayAPIs.OBJECT}/${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}`
+			`/o/${LiferayAPIs.OBJECT}/${ResourceName.OPPORTUNITIES_PARTNER_ROLE_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}`
 	);
 
 	const listItems = useMemo(

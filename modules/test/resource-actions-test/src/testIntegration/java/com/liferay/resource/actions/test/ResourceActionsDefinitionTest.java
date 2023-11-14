@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -87,11 +88,7 @@ public class ResourceActionsDefinitionTest {
 				continue;
 			}
 
-			Properties properties = new Properties();
-
-			try (InputStream inputStream = url.openStream()) {
-				properties.load(inputStream);
-			}
+			Properties properties = PropertiesUtil.load(url);
 
 			for (String resourceActionConfig :
 					StringUtil.split(

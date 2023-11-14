@@ -104,8 +104,7 @@ public class LPKGDeployerRegistrar {
 			return;
 		}
 
-		Properties properties = PropertiesUtil.load(
-			url.openStream(), StringPool.ISO_8859_1);
+		Properties properties = PropertiesUtil.load(url);
 
 		long remoteAppId = GetterUtil.getLong(
 			properties.getProperty("remote-app-id"));

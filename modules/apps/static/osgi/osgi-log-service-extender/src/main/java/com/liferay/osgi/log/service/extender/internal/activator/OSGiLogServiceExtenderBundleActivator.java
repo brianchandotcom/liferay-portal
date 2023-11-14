@@ -11,10 +11,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.log4j.Log4JUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -100,13 +100,8 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 
 		if (enumeration != null) {
 			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
-
-				Properties properties = new Properties();
-
-				try (InputStream inputStream = url.openStream()) {
-					properties.load(inputStream);
-				}
+				Properties properties = PropertiesUtil.load(
+					enumeration.nextElement());
 
 				for (String name : properties.stringPropertyNames()) {
 					String value = properties.getProperty(name);

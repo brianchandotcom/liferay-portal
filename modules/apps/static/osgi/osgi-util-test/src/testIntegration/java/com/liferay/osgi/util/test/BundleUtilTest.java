@@ -8,6 +8,7 @@ package com.liferay.osgi.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.util.BundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
@@ -47,9 +48,7 @@ public class BundleUtilTest {
 		URL url = BundleUtil.getResourceInBundleOrFragments(
 			_bundle, "/bundle-util/file.properties");
 
-		Properties properties = new Properties();
-
-		properties.load(url.openStream());
+		Properties properties = PropertiesUtil.load(url);
 
 		Assert.assertEquals("aValue", properties.getProperty("aKey"));
 	}
@@ -69,9 +68,7 @@ public class BundleUtilTest {
 		URL url = BundleUtil.getResourceInBundleOrFragments(
 			_bundle, "/fileInRoot.properties");
 
-		Properties properties = new Properties();
-
-		properties.load(url.openStream());
+		Properties properties = PropertiesUtil.load(url);
 
 		Assert.assertEquals("aRootValue", properties.getProperty("aRootKey"));
 	}

@@ -9,9 +9,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.app.license.AppLicenseVerifier;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -78,6 +78,10 @@ public class AppResolverHook implements ResolverHook {
 
 				iterator.remove();
 
+				continue;
+			}
+
+			if (properties == null) {
 				continue;
 			}
 
@@ -172,13 +176,11 @@ public class AppResolverHook implements ResolverHook {
 	}
 
 	private Properties _getAppLicenseProperties(Bundle bundle) {
-		Properties properties = new Properties();
-
 		URL url = bundle.getEntry("/META-INF/marketplace.properties");
 
 		if (url != null) {
-			try (InputStream inputStream = url.openStream()) {
-				properties.load(inputStream);
+			try {
+				return PropertiesUtil.load(url);
 			}
 			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
@@ -187,7 +189,7 @@ public class AppResolverHook implements ResolverHook {
 			}
 		}
 
-		return properties;
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

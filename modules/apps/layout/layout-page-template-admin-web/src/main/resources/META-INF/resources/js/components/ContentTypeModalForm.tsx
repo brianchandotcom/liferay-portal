@@ -159,6 +159,7 @@ function MappingTypeSelector({
 			>
 				<select
 					className="form-control"
+					defaultValue={selectedType}
 					name={`${namespace}classNameId`}
 					onChange={onChange}
 				>
@@ -167,11 +168,7 @@ function MappingTypeSelector({
 					</option>
 
 					{mappingTypes.map(({id, label}) => (
-						<option
-							key={id}
-							selected={id === selectedType}
-							value={id}
-						>
+						<option key={id} value={id}>
 							{label}
 						</option>
 					))}
@@ -186,6 +183,7 @@ function MappingTypeSelector({
 				>
 					<select
 						className="form-control"
+						defaultValue={selectedSubtype}
 						name={`${namespace}classTypeId`}
 						onChange={() =>
 							setError({
@@ -199,11 +197,7 @@ function MappingTypeSelector({
 						</option>
 
 						{subtypes.map(({id, label}) => (
-							<option
-								key={id}
-								selected={id === selectedSubtype}
-								value={id}
-							>
+							<option key={id} value={id}>
 								{label}
 							</option>
 						))}

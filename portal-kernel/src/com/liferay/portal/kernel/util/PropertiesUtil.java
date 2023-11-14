@@ -18,6 +18,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 
+import java.net.URL;
+
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -172,6 +174,16 @@ public class PropertiesUtil {
 
 	public static Properties load(String s) throws IOException {
 		return load(new UnsyncStringReader(s));
+	}
+
+	public static Properties load(URL url) throws IOException {
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = url.openStream()) {
+			properties.load(inputStream);
+		}
+
+		return properties;
 	}
 
 	public static void merge(Properties properties1, Properties properties2) {

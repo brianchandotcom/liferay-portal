@@ -33,7 +33,9 @@ import com.liferay.object.exception.ObjectFieldSystemException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.AutoIncrementObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
 import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
@@ -150,7 +152,6 @@ public class ObjectFieldLocalServiceTest {
 					).localized(
 						true
 					).build())));
-
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted can only be used in object definitions " +
@@ -158,7 +159,6 @@ public class ObjectFieldLocalServiceTest {
 			() -> _addCustomObjectDefinitionWithEncryptedObjectField(
 				"AES", true, ObjectFieldTestUtil.generateKey("AES"),
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE));
-
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted is disabled",
@@ -418,176 +418,6 @@ public class ObjectFieldLocalServiceTest {
 						).build())));
 		}
 
-		String defaultValue = RandomTestUtil.randomString();
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value " + defaultValue +
-				" of setting defaultValue is invalid for object field picklist",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new PicklistObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).listTypeDefinitionId(
-						_listTypeDefinition.getListTypeDefinitionId()
-					).name(
-						"picklist"
-					).objectFieldSettings(
-						Arrays.asList(
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
-							).value(
-								defaultValue
-							).build(),
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.
-									NAME_DEFAULT_VALUE_TYPE
-							).value(
-								ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-							).build())
-					).build())));
-
-		String uniqueValues = RandomTestUtil.randomString();
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value " + uniqueValues +
-				" of setting uniqueValues is invalid for object field text",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"text"
-					).objectFieldSettings(
-						Arrays.asList(
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-							).value(
-								uniqueValues
-							).build())
-					).build())));
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value expressionBuilder of setting defaultValueType is " +
-				"invalid for object field picklist",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new PicklistObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).listTypeDefinitionId(
-						_listTypeDefinition.getListTypeDefinitionId()
-					).name(
-						"picklist"
-					).objectFieldSettings(
-						Arrays.asList(
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
-							).value(
-								_listTypeEntryKey
-							).build(),
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.
-									NAME_DEFAULT_VALUE_TYPE
-							).value(
-								ObjectFieldSettingConstants.
-									VALUE_EXPRESSION_BUILDER
-							).build())
-					).required(
-						true
-					).state(
-						true
-					).build())));
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings acceptedFileExtensions, fileSource, " +
-				"maximumFileSize are required for object field upload",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new AttachmentObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"upload"
-					).build())));
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings defaultValue, defaultValueType are required for " +
-				"object field picklist",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new PicklistObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).listTypeDefinitionId(
-						_listTypeDefinition.getListTypeDefinitionId()
-					).name(
-						"picklist"
-					).required(
-						true
-					).state(
-						true
-					).build())));
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings maxLength are required for object field text",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"text"
-					).objectFieldSettings(
-						Arrays.asList(
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_SHOW_COUNTER
-							).value(
-								"true"
-							).build())
-					).build())));
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings timeStorage are required for object field datetime",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Collections.singletonList(
-					new ObjectFieldBuilder(
-					).businessType(
-						ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME
-					).dbType(
-						ObjectFieldConstants.DB_TYPE_DATE_TIME
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"datetime"
-					).objectFieldSettings(
-						Collections.emptyList()
-					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings anySetting are not allowed for object field text",
@@ -653,83 +483,138 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings maxLength are not allowed for object field text",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"text"
-					).objectFieldSettings(
-						Arrays.asList(
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_MAX_LENGTH
-							).value(
-								null
-							).build())
-					).build())));
+			() -> _addCustomObjectDefinitionWithTextObjectField(
+				RandomTestUtil.randomString(), null, null));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings maxLength are not allowed for object field text",
+			() -> _addCustomObjectDefinitionWithTextObjectField(
+				"10", "false", null));
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.ExceedsMaxLength.class,
+			"The setting prefix exceeds the maximum length of 50",
+			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(51),
+				null, false, StringPool.BLANK));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.ExceedsMaxLength.class,
+			"The setting suffix exceeds the maximum length of 50",
+			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
+				RandomTestUtil.randomString(), StringPool.BLANK, null, false,
+				RandomTestUtil.randomString(51)));
+
+		String defaultValue = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			"The value " + defaultValue +
+				" of setting defaultValue is invalid for object field picklist",
+			() -> _addCustomObjectDefinitionWithPicklistObjectField(
+				defaultValue, ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE,
+				false, false));
+
+		long initialValue = RandomTestUtil.randomLong(Long.MIN_VALUE, 0);
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value ", initialValue,
+				" of setting initialValue is invalid for object field ",
+				"autoIncrement"),
+			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
+				String.valueOf(initialValue), null, null, false,
+				StringPool.BLANK));
+
+		String uniqueValues = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			"The value " + uniqueValues +
+				" of setting uniqueValues is invalid for object field text",
+			() -> _addCustomObjectDefinitionWithTextObjectField(
+				null, null, uniqueValues));
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			"The value expressionBuilder of setting defaultValueType is " +
+				"invalid for object field picklist",
+			() -> _addCustomObjectDefinitionWithPicklistObjectField(
+				_listTypeEntryKey,
+				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER, true,
+				true));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			"The value LPS@ of setting prefix is invalid for object field " +
+				"autoIncrement",
+			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
+				RandomTestUtil.randomString(), "LPS@", null, false, null));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			"The value ^private of setting suffix is invalid for object " +
+				"field autoIncrement",
+			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
+				RandomTestUtil.randomString(), null, null, false, "^private"));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.MissingRequiredValues.class,
+			"The settings acceptedFileExtensions, fileSource, " +
+				"maximumFileSize are required for object field upload",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
-					new TextObjectFieldBuilder(
+					new AttachmentObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"text"
-					).objectFieldSettings(
-						Arrays.asList(
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_MAX_LENGTH
-							).value(
-								"10"
-							).build(),
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_SHOW_COUNTER
-							).value(
-								"false"
-							).build())
+						"upload"
 					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.MissingRequiredValues.class,
+			"The settings defaultValue, defaultValueType are required for " +
+				"object field picklist",
+			() -> _addCustomObjectDefinitionWithPicklistObjectField(
+				null, null, true, true));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.MissingRequiredValues.class,
+			"The settings initialValue are required for object field " +
+				"autoIncrement",
+			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
+				StringPool.BLANK, null, null, false, null));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.MissingRequiredValues.class,
+			"The settings maxLength are required for object field text",
+			() -> _addCustomObjectDefinitionWithTextObjectField(
+				null, "true", null));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.MissingRequiredValues.class,
+			"The settings timeStorage are required for object field datetime",
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Collections.singletonList(
+					new DateTimeObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"datetime"
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyException.class, null,
+			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
+				"0123", null, ObjectFieldConstants.READ_ONLY_TRUE, false,
+				null));
+		AssertUtils.assertFailure(
+			ObjectFieldRequiredException.class, null,
+			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
+				"0123", null, ObjectFieldConstants.READ_ONLY_FALSE, true,
+				null));
 		AssertUtils.assertFailure(
 			ObjectFieldStateException.class,
 			"Object field must be required when the state is true",
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new PicklistObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).listTypeDefinitionId(
-						_listTypeDefinition.getListTypeDefinitionId()
-					).name(
-						"a" + RandomTestUtil.randomString()
-					).objectFieldSettings(
-						Arrays.asList(
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
-							).value(
-								_listTypeEntryKey
-							).build(),
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.
-									NAME_DEFAULT_VALUE_TYPE
-							).value(
-								ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-							).build())
-					).state(
-						true
-					).build())));
+			() -> _addCustomObjectDefinitionWithPicklistObjectField(
+				_listTypeEntryKey,
+				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE, false, true));
 
 		_testAddCustomObjectFieldReadOnly();
 	}
@@ -1348,7 +1233,7 @@ public class ObjectFieldLocalServiceTest {
 
 		// Delete object field business type attachment
 
-		ObjectField uploadObjectField = _addCustomObjectField(
+		ObjectField attachmentObjectField = _addCustomObjectField(
 			new AttachmentObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -1405,7 +1290,7 @@ public class ObjectFieldLocalServiceTest {
 			_dlAppLocalService.getFileEntry(persistedFileEntryId));
 
 		_objectFieldLocalService.deleteObjectField(
-			uploadObjectField.getObjectFieldId());
+			attachmentObjectField.getObjectFieldId());
 
 		AssertUtils.assertFailure(
 			NoSuchFileEntryException.class,
@@ -1413,6 +1298,47 @@ public class ObjectFieldLocalServiceTest {
 				"No FileEntry exists with the key {fileEntryId=",
 				persistedFileEntryId, "}"),
 			() -> _dlAppLocalService.getFileEntry(persistedFileEntryId));
+
+		// Delete object field business type auto increment
+
+		ObjectField autoIncrementObjectField = _addCustomObjectField(
+			new AutoIncrementObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"autoIncrement"
+			).objectDefinitionId(
+				customObjectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+					).value(
+						"0123"
+					).build())
+			).build());
+
+		Assert.assertTrue(
+			_hasColumn(
+				autoIncrementObjectField.getDBTableName(),
+				autoIncrementObjectField.getDBColumnName()));
+		Assert.assertTrue(
+			_hasColumn(
+				autoIncrementObjectField.getDBTableName(),
+				autoIncrementObjectField.getSortableDBColumnName()));
+
+		_objectFieldLocalService.deleteObjectField(
+			autoIncrementObjectField.getObjectFieldId());
+
+		Assert.assertFalse(
+			_hasColumn(
+				autoIncrementObjectField.getDBTableName(),
+				autoIncrementObjectField.getDBColumnName()));
+		Assert.assertFalse(
+			_hasColumn(
+				autoIncrementObjectField.getDBTableName(),
+				autoIncrementObjectField.getSortableDBColumnName()));
 
 		//  Delete object field from system object definition
 
@@ -1599,7 +1525,126 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
 			).build());
 
+		// Business type auto increment
+
+		ObjectField autoIncrementObjectField = _addCustomObjectField(
+			_getAutoIncrementObjectField(
+				"1", objectDefinition.getObjectDefinitionId(), "LPS-", null,
+				false, "-private"));
+
+		_assertObjectFieldSettingsValues(
+			autoIncrementObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_INITIAL_VALUE, "1"
+			).put(
+				ObjectFieldSettingConstants.NAME_PREFIX, "LPS-"
+			).put(
+				ObjectFieldSettingConstants.NAME_SUFFIX, "-private"
+			).build());
+
+		_addOrUpdateCustomObjectField(
+			autoIncrementObjectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+				).value(
+					"2"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_PREFIX
+				).value(
+					"PTR-"
+				).build()));
+
+		_assertObjectFieldSettingsValues(
+			autoIncrementObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_INITIAL_VALUE, "2"
+			).put(
+				ObjectFieldSettingConstants.NAME_PREFIX, "PTR-"
+			).build());
+
+		Assert.assertNull(
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				autoIncrementObjectField.getObjectFieldId(),
+				ObjectFieldSettingConstants.NAME_SUFFIX));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.UnmodifiableValue.class,
+			"The value of setting initialValue is unmodifiable when object " +
+				"definition is published",
+			() -> _addOrUpdateCustomObjectField(
+				autoIncrementObjectField,
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+					).value(
+						"3"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_PREFIX
+					).value(
+						"PTR-"
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.UnmodifiableValue.class,
+			"The value of setting prefix is unmodifiable when object " +
+				"definition is published",
+			() -> _addOrUpdateCustomObjectField(
+				autoIncrementObjectField,
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+					).value(
+						"2"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_PREFIX
+					).value(
+						"LPP-"
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.UnmodifiableValue.class,
+			"The value of setting suffix is unmodifiable when object " +
+				"definition is published",
+			() -> _addOrUpdateCustomObjectField(
+				autoIncrementObjectField,
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+					).value(
+						"2"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_PREFIX
+					).value(
+						"PTR-"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_SUFFIX
+					).value(
+						"-private"
+					).build())));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
 		// Business type integer
+
+		objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			false, _objectDefinitionLocalService, Collections.emptyList());
 
 		ObjectField integerObjectField = _addCustomObjectField(
 			_getIntegerObjectField(
@@ -1863,6 +1908,18 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
+	private void _addCustomObjectDefinitionWithAutoIncrementObjectField(
+			String initialValue, String prefix, String readOnly,
+			boolean required, String suffix)
+		throws Exception {
+
+		ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			false, _objectDefinitionLocalService,
+			Collections.singletonList(
+				_getAutoIncrementObjectField(
+					initialValue, 0, prefix, readOnly, required, suffix)));
+	}
+
 	private void _addCustomObjectDefinitionWithEncryptedObjectField(
 			String algorithm, boolean enabled, String key, String storageType)
 		throws Exception {
@@ -1883,6 +1940,79 @@ public class ObjectFieldLocalServiceTest {
 					).name(
 						"a" + RandomTestUtil.randomString()
 					).build())));
+	}
+
+	private void _addCustomObjectDefinitionWithPicklistObjectField(
+			String defaultValue, String defaultValueType, boolean required,
+			boolean state)
+		throws Exception {
+
+		ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			false, _objectDefinitionLocalService,
+			Collections.singletonList(
+				new PicklistObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).listTypeDefinitionId(
+					_listTypeDefinition.getListTypeDefinitionId()
+				).name(
+					"picklist"
+				).objectFieldSettings(
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+						).value(
+							defaultValue
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+						).value(
+							defaultValueType
+						).build())
+				).required(
+					required
+				).state(
+					state
+				).build()));
+	}
+
+	private void _addCustomObjectDefinitionWithTextObjectField(
+			String maxLength, String showCounter, String uniqueValues)
+		throws Exception {
+
+		ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			false, _objectDefinitionLocalService,
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"text"
+				).objectFieldSettings(
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_LENGTH
+						).value(
+							maxLength
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_SHOW_COUNTER
+						).value(
+							showCounter
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+						).value(
+							uniqueValues
+						).build())
+				).build()));
 	}
 
 	private ObjectField _addCustomObjectField(ObjectField objectField)
@@ -2207,6 +2337,44 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertEquals("able", systemObjectField.getName());
 		Assert.assertEquals(expectedRequired, systemObjectField.isRequired());
 		Assert.assertTrue(systemObjectField.isSystem());
+	}
+
+	private ObjectField _getAutoIncrementObjectField(
+		String initialValue, long objectDefinitionId, String prefix,
+		String readOnly, boolean required, String suffix) {
+
+		return new AutoIncrementObjectFieldBuilder(
+		).labelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).name(
+			"autoIncrement"
+		).objectDefinitionId(
+			objectDefinitionId
+		).objectFieldSettings(
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+				).value(
+					initialValue
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_PREFIX
+				).value(
+					prefix
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_SUFFIX
+				).value(
+					suffix
+				).build())
+		).readOnly(
+			readOnly
+		).required(
+			required
+		).build();
 	}
 
 	private ObjectField _getIntegerObjectField(

@@ -23,12 +23,14 @@ import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionSystemException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
+import com.liferay.object.field.builder.AutoIncrementObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -130,7 +132,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags({"LPS-173537", "LPS-181663", "LPS-187142"})
+@FeatureFlags({"LPS-173537", "LPS-181663", "LPS-187142", "LPS-196724"})
 @RunWith(Arquillian.class)
 public class ObjectActionLocalServiceTest {
 
@@ -372,6 +374,75 @@ public class ObjectActionLocalServiceTest {
 			true);
 
 		_objectDefinition = _publishCustomObjectDefinition();
+
+		// Auto increment object field should not be populated by object actions
+
+		ObjectField autoIncrementObjectField =
+			ObjectFieldUtil.addCustomObjectField(
+				new AutoIncrementObjectFieldBuilder(
+				).userId(
+					TestPropsValues.getUserId()
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					StringUtil.randomId()
+				).objectDefinitionId(
+					_objectDefinition.getObjectDefinitionId()
+				).objectFieldSettings(
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+						).value(
+							"0123"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_PREFIX
+						).value(
+							"LPS-"
+						).build())
+				).build());
+
+		try {
+			_addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"objectDefinitionId",
+					_objectDefinition.getObjectDefinitionId()
+				).put(
+					"predefinedValues",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"inputAsValue", true
+						).put(
+							"name", autoIncrementObjectField.getName()
+						).put(
+							"value", RandomTestUtil.randomString()
+						)
+					).toString()
+				).build(),
+				false);
+
+			Assert.fail();
+		}
+		catch (ObjectActionParametersException
+					objectActionParametersException) {
+
+			Map<String, Object> messageKeys =
+				objectActionParametersException.getMessageKeys();
+
+			Assert.assertEquals(
+				"invalid",
+				MapUtil.getString(
+					(Map<String, String>)messageKeys.get("predefinedValues"),
+					autoIncrementObjectField.getName()));
+		}
+
+		_objectFieldLocalService.deleteObjectField(autoIncrementObjectField);
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -634,8 +705,9 @@ public class ObjectActionLocalServiceTest {
 
 			// Hierarchy, add object entry in a child node
 
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectRelationshipA_AA.getObjectFieldId2());
+			ObjectField relationshipObjectField =
+				_objectFieldLocalService.getObjectField(
+					objectRelationshipA_AA.getObjectFieldId2());
 
 			objectEntry = _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
@@ -643,7 +715,8 @@ public class ObjectActionLocalServiceTest {
 				HashMapBuilder.<String, Serializable>put(
 					"able", RandomTestUtil.randomString()
 				).put(
-					objectField.getName(), objectEntry.getObjectEntryId()
+					relationshipObjectField.getName(),
+					objectEntry.getObjectEntryId()
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
@@ -657,7 +730,7 @@ public class ObjectActionLocalServiceTest {
 
 			// Hierarchy, add object entry in a grandchild node
 
-			objectField = _objectFieldLocalService.getObjectField(
+			relationshipObjectField = _objectFieldLocalService.getObjectField(
 				objectRelationshipAA_AAA.getObjectFieldId2());
 
 			_objectEntryLocalService.addObjectEntry(
@@ -666,7 +739,8 @@ public class ObjectActionLocalServiceTest {
 				HashMapBuilder.<String, Serializable>put(
 					"able", RandomTestUtil.randomString()
 				).put(
-					objectField.getName(), objectEntry.getObjectEntryId()
+					relationshipObjectField.getName(),
+					objectEntry.getObjectEntryId()
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 

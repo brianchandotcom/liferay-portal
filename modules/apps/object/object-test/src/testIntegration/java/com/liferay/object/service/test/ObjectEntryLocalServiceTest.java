@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -28,6 +29,7 @@ import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.AutoIncrementObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
@@ -657,6 +659,197 @@ public class ObjectEntryLocalServiceTest {
 		finally {
 			serviceContext.setWorkflowAction(originalWorkflowAction);
 		}
+	}
+
+	@FeatureFlags("LPS-196724")
+	@Test
+	public void testAddObjectEntryWithAutoIncrementObjectField()
+		throws Exception {
+
+		ObjectField objectField = _addCustomObjectField(
+			new AutoIncrementObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"autoIncrement"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+					).value(
+						"0123"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_PREFIX
+					).value(
+						"LPS-"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_SUFFIX
+					).value(
+						"-private"
+					).build())
+			).build());
+
+		Map<String, Serializable> requiredValues =
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "athanasius@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build();
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"autoIncrement\"",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"autoIncrement",
+					RandomTestUtil.randomString() + "0123-private"
+				).putAll(
+					requiredValues
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"autoIncrement\"",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"autoIncrement",
+					"LPS-" + RandomTestUtil.randomString() + "-private"
+				).putAll(
+					requiredValues
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"autoIncrement\"",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"autoIncrement", "LPS-0123" + RandomTestUtil.randomString()
+				).putAll(
+					requiredValues
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"autoIncrement\"",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"autoIncrement", "LPS-xxxx-private"
+				).putAll(
+					requiredValues
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"autoIncrement\"",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"autoIncrement", "LPS-3-private"
+				).putAll(
+					requiredValues
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"autoIncrement\"",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"autoIncrement", "LPS-123-private"
+				).putAll(
+					requiredValues
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"autoIncrement\"",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"autoIncrement", "LPS-00123-private"
+				).putAll(
+					requiredValues
+				).build()));
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"autoIncrement", "LPS-0200-private"
+			).putAll(
+				requiredValues
+			).build());
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select ", objectField.getSortableDBColumnName(), " from ",
+					objectField.getDBTableName(), " where ",
+					_objectDefinition.getPKObjectFieldDBColumnName(), " = ",
+					objectEntry1.getObjectEntryId()));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			resultSet.next();
+
+			Assert.assertEquals(200, resultSet.getLong(1));
+		}
+
+		// Auto increment object field value must always be unique
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
+			String.format(
+				"Unique value constraint violation for %s.%s with value %s",
+				objectField.getDBTableName(), objectField.getDBColumnName(),
+				"LPS-0200-private"),
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"autoIncrement", "LPS-0200-private"
+				).putAll(
+					requiredValues
+				).build()));
+
+		// Auto increment object field value must not be updatable
+
+		objectEntry1 = _addOrUpdateObjectEntry(
+			objectEntry1.getExternalReferenceCode(), 0,
+			HashMapBuilder.<String, Serializable>put(
+				"autoIncrement", "LPS-2000-private"
+			).putAll(
+				requiredValues
+			).build());
+
+		Assert.assertEquals(
+			"LPS-0200-private",
+			MapUtil.getString(objectEntry1.getValues(), "autoIncrement"));
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"autoIncrement", "LPS-0150-private"
+			).putAll(
+				requiredValues
+			).build());
+
+		Assert.assertEquals(
+			"LPS-0150-private",
+			MapUtil.getString(objectEntry2.getValues(), "autoIncrement"));
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			HashMapBuilder.putAll(
+				requiredValues
+			).build());
+
+		Assert.assertEquals(
+			"LPS-0201-private",
+			MapUtil.getString(objectEntry3.getValues(), "autoIncrement"));
+
+		Assert.assertEquals(
+			201,
+			_counterLocalService.getCurrentId(
+				ObjectFieldUtil.getCounterName(objectField)));
+
+		_objectFieldLocalService.deleteObjectField(objectField);
+
+		Assert.assertEquals(
+			0,
+			_counterLocalService.getCurrentId(
+				ObjectFieldUtil.getCounterName(objectField)));
 	}
 
 	@Test
@@ -3142,6 +3335,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

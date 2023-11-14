@@ -4564,6 +4564,77 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1);
 	}
 
+	@FeatureFlags("LPS-196724")
+	@Test
+	public void testPostCustomObjectEntryWithAutoIncrementField()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT,
+						ObjectFieldConstants.DB_TYPE_STRING, "autoIncrement",
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_INITIAL_VALUE
+							).value(
+								"10"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_SUFFIX
+							).value(
+								"-private"
+							).build()))));
+
+		String endpoint = _getEndpoint(
+			TestPropsValues.getGroupId(), objectDefinition);
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(), endpoint, Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"autoIncrement", "100-private"
+			).toString(),
+			endpoint, Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"autoIncrement", "90-private"
+			).toString(),
+			endpoint, Http.Method.POST);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint, Http.Method.GET);
+
+		_assertItem("0", jsonObject, "autoIncrement", "10-private");
+		_assertItem("1", jsonObject, "autoIncrement", "100-private");
+		_assertItem("2", jsonObject, "autoIncrement", "90-private");
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, "?sort=", URLCodec.encodeURL("autoIncrement:asc")),
+			Http.Method.GET);
+
+		_assertItem("0", jsonObject, "autoIncrement", "10-private");
+		_assertItem("1", jsonObject, "autoIncrement", "90-private");
+		_assertItem("2", jsonObject, "autoIncrement", "100-private");
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, "?sort=", URLCodec.encodeURL("autoIncrement:desc")),
+			Http.Method.GET);
+
+		_assertItem("0", jsonObject, "autoIncrement", "100-private");
+		_assertItem("1", jsonObject, "autoIncrement", "90-private");
+		_assertItem("2", jsonObject, "autoIncrement", "10-private");
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
 	@Test
 	public void testPostCustomObjectEntryWithEmptyNestedCustomObjectEntriesInOneToManyRelationship()
 		throws Exception {
@@ -5657,6 +5728,17 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			String.valueOf(expectedObjectFieldValue),
 			String.valueOf(itemJSONObject.get(expectedObjectFieldName)));
+	}
+
+	private void _assertItem(
+		String index, JSONObject jsonObject, String objectFieldName,
+		String value) {
+
+		Assert.assertEquals(
+			value,
+			JSONUtil.getValue(
+				jsonObject, "JSONArray/items", "JSONObject/" + index,
+				"Object/" + objectFieldName));
 	}
 
 	private void _assertNestedFieldsFieldsInRelationships(

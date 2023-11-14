@@ -114,6 +114,8 @@ public class DisplayPageActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() ->
 							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
+							(_allowedMappedContentType ||
+							 !_existsMappedContentType) &&
 							hasUpdatePermission,
 						_getChangeContentTypeActionUnsafeConsumer(count)
 					).add(

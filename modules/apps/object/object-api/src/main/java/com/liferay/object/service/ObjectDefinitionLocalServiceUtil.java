@@ -593,13 +593,6 @@ public class ObjectDefinitionLocalServiceUtil {
 			objectDefinitionId, objectFolderId);
 	}
 
-	public static ObjectDefinition updatePortlet(
-			long objectDefinitionId, boolean portlet)
-		throws PortalException {
-
-		return getService().updatePortlet(objectDefinitionId, portlet);
-	}
-
 	public static ObjectDefinition updateRootObjectDefinitionId(
 			long objectDefinitionId, long rootObjectDefinitionId)
 		throws PortalException {

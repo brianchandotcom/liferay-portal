@@ -12,6 +12,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -130,10 +132,7 @@ public class ViewRelatedEntriesDisplayContext {
 			DisplayContextUtil.getUserInfoJSONObject(
 				CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
 				CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,
-				CTEntryTable.INSTANCE.ctEntryId.in(
-					TransformUtil.transformToArray(
-						ctEntries, ctEntry -> ctEntry.getCtEntryId(),
-						Long.class)))
+				_getPredicate(ctEntries))
 		).build();
 	}
 
@@ -209,6 +208,25 @@ public class ViewRelatedEntriesDisplayContext {
 			"modelClassPK", _modelClassPK
 		).buildString();
 	}
+
+	private Predicate _getPredicate(List<CTEntry> ctEntries) {
+		Predicate predicate = null;
+
+		Long[] ctEntryIds = TransformUtil.transformToArray(
+			ctEntries, ctEntry -> ctEntry.getCtEntryId(), Long.class);
+
+		for (int i = 0; i < ctEntryIds.length; i += _BATCH_SIZE) {
+			Long[] curCTEntryIds = Arrays.copyOfRange(
+				ctEntryIds, i, Math.min(ctEntryIds.length, i + _BATCH_SIZE));
+
+			predicate = Predicate.or(
+				predicate, CTEntryTable.INSTANCE.ctEntryId.in(curCTEntryIds));
+		}
+
+		return predicate;
+	}
+
+	private static final int _BATCH_SIZE = 1000;
 
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;

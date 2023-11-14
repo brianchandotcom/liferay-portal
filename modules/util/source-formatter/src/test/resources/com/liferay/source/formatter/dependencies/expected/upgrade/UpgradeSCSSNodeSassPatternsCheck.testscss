@@ -15,3 +15,7 @@ $control-panel-spacing-mobile:    ( math.div($spacer, 1.25) );
 
 #{'.col-' + $class + '-push-0'} {
 }
+
+(#{$prop}: var(#{'--btn-' + $key + '-' + $prefix + $prop}))
+
+(#{$prop}: var(#{'--btn-' + $key + '-' + $prefix + '--btn-'}))

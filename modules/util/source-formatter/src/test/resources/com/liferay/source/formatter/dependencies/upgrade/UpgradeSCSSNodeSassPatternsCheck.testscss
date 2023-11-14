@@ -14,3 +14,7 @@ $control-panel-spacing-mobile:    ( $spacer / 1.25 );
 
 .col-#{$class}-push-0 {
 }
+
+(#{$prop}: var(--btn-#{$key}-#{$prefix}#{$prop}))
+
+(#{$prop}: var(--btn-#{$key}-#{$prefix}--btn-))

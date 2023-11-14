@@ -36,19 +36,25 @@ public class SavedContentEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SavedContentEntry addSavedContentEntry(
-			long groupId, long userId, String className, long classPK,
+			long userId, long groupId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
-		_validate(groupId, userId, classNameId, classPK);
+		SavedContentEntry savedContentEntry =
+			savedContentEntryPersistence.fetchByG_U_C_C(
+				groupId, userId, classNameId, classPK);
+
+		if (savedContentEntry != null) {
+			throw new DuplicateSavedContentEntryException();
+		}
 
 		long savedContentEntryId = counterLocalService.increment(
 			SavedContentEntry.class.getName());
 
-		SavedContentEntry savedContentEntry =
-			savedContentEntryPersistence.create(savedContentEntryId);
+		savedContentEntry = savedContentEntryPersistence.create(
+			savedContentEntryId);
 
 		savedContentEntry.setGroupId(groupId);
 
@@ -67,8 +73,6 @@ public class SavedContentEntryLocalServiceImpl
 
 		savedContentEntry = savedContentEntryPersistence.update(
 			savedContentEntry);
-
-		// Resources
 
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
@@ -95,24 +99,11 @@ public class SavedContentEntryLocalServiceImpl
 
 	@Override
 	public SavedContentEntry fetchSavedContentEntry(
-		long groupId, long userId, String className, long classPK) {
+		long userId, long groupId, String className, long classPK) {
 
 		return savedContentEntryPersistence.fetchByG_U_C_C(
 			groupId, userId, _classNameLocalService.getClassNameId(className),
 			classPK);
-	}
-
-	private void _validate(
-			long groupId, long userId, long classNameId, long classPK)
-		throws DuplicateSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry =
-			savedContentEntryPersistence.fetchByG_U_C_C(
-				groupId, userId, classNameId, classPK);
-
-		if (savedContentEntry != null) {
-			throw new DuplicateSavedContentEntryException();
-		}
 	}
 
 	@Reference

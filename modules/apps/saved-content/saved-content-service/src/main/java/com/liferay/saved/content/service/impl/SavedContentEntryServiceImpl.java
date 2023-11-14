@@ -43,7 +43,7 @@ public class SavedContentEntryServiceImpl
 			getPermissionChecker(), groupId, ActionKeys.ADD_ENTRY);
 
 		return savedContentEntryLocalService.addSavedContentEntry(
-			groupId, getUserId(), className, classPK, serviceContext);
+			getUserId(), groupId, className, classPK, serviceContext);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class SavedContentEntryServiceImpl
 
 		SavedContentEntry savedContentEntry =
 			savedContentEntryLocalService.fetchSavedContentEntry(
-				groupId, getUserId(), className, classPK);
+				getUserId(), groupId, className, classPK);
 
 		if (savedContentEntry != null) {
 			_savedContentEntryModelResourcePermission.check(

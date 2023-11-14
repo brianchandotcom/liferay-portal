@@ -293,7 +293,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 				objectEntry, pathParameter, pathString, responseAPISchemaId);
 		}
 		else {
-			_validateSimplePath(objectEntry, pathString);
+			_validatePath(objectEntry, pathString);
 		}
 	}
 
@@ -329,10 +329,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"path-parameters-are-not-supported-by-post-api-endpoints");
 		}
 
-		_validateSimplePath(objectEntry, pathString);
+		_validatePath(objectEntry, pathString);
 	}
 
-	private void _validateSimplePath(ObjectEntry objectEntry, String pathString)
+	private void _validatePath(ObjectEntry objectEntry, String pathString)
 		throws Exception {
 
 		Matcher matcher = _pathPattern.matcher(pathString);

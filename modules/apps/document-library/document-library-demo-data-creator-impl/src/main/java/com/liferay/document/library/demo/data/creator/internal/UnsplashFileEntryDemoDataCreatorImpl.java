@@ -16,9 +16,9 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -84,8 +84,8 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 	private byte[] _getBytes() throws IOException, PortalException {
 		URL url = _getNextUrl();
 
-		try (InputStream inputStream = url.openStream()) {
-			return FileUtil.getBytes(inputStream);
+		try {
+			return URLUtil.toByteArray(url);
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {

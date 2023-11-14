@@ -31,11 +31,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -183,9 +183,7 @@ public class AddFragmentCompositionMVCActionCommand
 					url = _portal.getPortalURL(themeDisplay) + url;
 				}
 
-				URL imageURL = new URL(url);
-
-				bytes = FileUtil.getBytes(imageURL.openStream());
+				bytes = URLUtil.toByteArray(new URL(url));
 			}
 
 			if (bytes.length == 0) {

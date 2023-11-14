@@ -4974,7 +4974,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (url != null) {
 			_layoutSetLocalService.updateLogo(
 				serviceContext.getScopeGroupId(), privateLayout, true,
-				FileUtil.getBytes(url.openStream()));
+				URLUtil.toByteArray(url));
 		}
 
 		JSONObject settingsJSONObject = metadataJSONObject.getJSONObject(

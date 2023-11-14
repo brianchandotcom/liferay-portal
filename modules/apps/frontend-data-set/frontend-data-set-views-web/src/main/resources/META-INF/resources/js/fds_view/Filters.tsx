@@ -71,8 +71,8 @@ function AddFDSFilterModalContent({
 	>(
 		filter && filterType === EFilterType.CLIENT_EXTENSION
 			? fdsFilterClientExtensions.find(
-					(cx: IClientExtensionRenderer) =>
-						cx.externalReferenceCode ===
+					(clientExtensionRenderer: IClientExtensionRenderer) =>
+						clientExtensionRenderer.externalReferenceCode ===
 						(filter as IClientExtensionFilter)
 							.fdsFilterClientExtensionERC
 			  )

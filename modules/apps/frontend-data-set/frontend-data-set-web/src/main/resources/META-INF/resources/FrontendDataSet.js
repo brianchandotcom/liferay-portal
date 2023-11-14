@@ -237,22 +237,22 @@ const FrontendDataSet = ({
 	useEffect(() => {
 		loadClientExtensions([
 			{
-				cxDefinitions: initialFilters
+				clientExtensionDefinitions: initialFilters
 					? initialFilters
-							.filter((filter) => filter.cxFilterURL)
+							.filter((filter) => filter.clientExtensionFilterURL)
 							.map((filter) => ({
 								context: filter,
-								importDeclaration: `default from ${filter.cxFilterURL}`,
+								importDeclaration: `default from ${filter.clientExtensionFilterURL}`,
 							}))
 					: [],
 				onLoad: (bindingContexts) => {
 					const newFilters = bindingContexts.map(
 						({
-							binding: cxFilterImplementation,
+							binding: clientExtensionFilterImplementation,
 							context: filter,
 						}) => ({
 							...filter,
-							cxFilterImplementation,
+							clientExtensionFilterImplementation,
 						})
 					);
 
@@ -263,24 +263,28 @@ const FrontendDataSet = ({
 				},
 			},
 			{
-				cxDefinitions: views.reduce((cxDefinitions, view) => {
-					if (!view.schema?.fields?.length) {
-						return cxDefinitions;
-					}
+				clientExtensionDefinitions: views.reduce(
+					(clientExtensionDefinitions, view) => {
+						if (!view.schema?.fields?.length) {
+							return clientExtensionDefinitions;
+						}
 
-					const cxFields = view.schema.fields.filter(
-						(field) => !!field.contentRendererClientExtension
-					);
+						const clientExtensionFields = view.schema.fields.filter(
+							(field) => !!field.contentRendererClientExtension
+						);
 
-					for (const field of cxFields) {
-						cxDefinitions.push({
-							context: field,
-							importDeclaration: field.contentRendererModuleURL,
-						});
-					}
+						for (const field of clientExtensionFields) {
+							clientExtensionDefinitions.push({
+								context: field,
+								importDeclaration:
+									field.contentRendererModuleURL,
+							});
+						}
 
-					return cxDefinitions;
-				}, []),
+						return clientExtensionDefinitions;
+					},
+					[]
+				),
 				onLoad: (bindingContexts) => {
 					bindingContexts.forEach(
 						({binding: htmlElementBuilder, context: field}) => {

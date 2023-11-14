@@ -7,8 +7,8 @@ import type {FDSFilter} from '@liferay/js-api/data-set';
 import type {FilterImplementation, FilterImplementationArgs} from '../Filter';
 export interface ClientExtensionFilterImplementationArgs
 	extends FilterImplementationArgs<unknown> {
-	cxFilterImplementation?: FDSFilter<unknown>;
-	cxFilterURL: string;
+	clientExtensionFilterImplementation?: FDSFilter<unknown>;
+	clientExtensionFilterURL: string;
 }
 declare const filterImplementation: FilterImplementation<ClientExtensionFilterImplementationArgs>;
 export default filterImplementation;

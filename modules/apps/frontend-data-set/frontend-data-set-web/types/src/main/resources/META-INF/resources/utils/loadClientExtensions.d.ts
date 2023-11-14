@@ -3,19 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-interface CXDefinition<T> {
+interface ClientExtensionDefinition<T> {
 	context: T;
 	importDeclaration: string;
 }
-interface CXDefinitionsHandlerItem<T> {
+interface ClientExtensionDefinitionsHandlerItem<T> {
 	binding: any;
 	context: T;
 }
-interface CXDefinitionsHandler<T> {
-	onLoad(items: CXDefinitionsHandlerItem<T>[]): void;
-	cxDefinitions: CXDefinition<T>[];
+interface ClientExtensionDefinitionsHandler<T> {
+	onLoad(items: ClientExtensionDefinitionsHandlerItem<T>[]): void;
+	clientExtensionDefinitions: ClientExtensionDefinition<T>[];
 }
 export default function loadClientExtensions(
-	cxDefinitionsHandlers: CXDefinitionsHandler<unknown>[]
+	clientExtensionDefinitionsHandlers: ClientExtensionDefinitionsHandler<
+		unknown
+	>[]
 ): void;
 export {};

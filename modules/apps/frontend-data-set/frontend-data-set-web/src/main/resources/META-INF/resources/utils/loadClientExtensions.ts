@@ -5,35 +5,42 @@
 
 import {loadModule} from 'frontend-js-web';
 
-interface CXDefinition<T> {
+interface ClientExtensionDefinition<T> {
 	context: T;
 	importDeclaration: string;
 }
 
-interface CXDefinitionsHandlerItem<T> {
+interface ClientExtensionDefinitionsHandlerItem<T> {
 	binding: any;
 	context: T;
 }
 
-interface CXDefinitionsHandler<T> {
-	onLoad(items: CXDefinitionsHandlerItem<T>[]): void;
-	cxDefinitions: CXDefinition<T>[];
+interface ClientExtensionDefinitionsHandler<T> {
+	onLoad(items: ClientExtensionDefinitionsHandlerItem<T>[]): void;
+	clientExtensionDefinitions: ClientExtensionDefinition<T>[];
 }
 
 export default function loadClientExtensions(
-	cxDefinitionsHandlers: CXDefinitionsHandler<unknown>[]
+	clientExtensionDefinitionsHandlers: ClientExtensionDefinitionsHandler<
+		unknown
+	>[]
 ) {
-	for (const {cxDefinitions, onLoad} of cxDefinitionsHandlers) {
-		if (!cxDefinitions.length) {
+	for (const {
+		clientExtensionDefinitions,
+		onLoad,
+	} of clientExtensionDefinitionsHandlers) {
+		if (!clientExtensionDefinitions.length) {
 			continue;
 		}
 
-		const promises = cxDefinitions.map(({context, importDeclaration}) => {
-			return loadModule(importDeclaration).then((binding) => ({
-				binding,
-				context,
-			}));
-		});
+		const promises = clientExtensionDefinitions.map(
+			({context, importDeclaration}) => {
+				return loadModule(importDeclaration).then((binding) => ({
+					binding,
+					context,
+				}));
+			}
+		);
 
 		Promise.all(promises).then(onLoad);
 	}

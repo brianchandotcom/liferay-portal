@@ -20,29 +20,29 @@ import type {
 
 const LOADING_LABEL = '...';
 
-type CXFilterHTMLElementBuilder = IHTMLElementBuilder<
+type ClientExtensionFilterHTMLElementBuilder = IHTMLElementBuilder<
 	FDSFilterHTMLElementBuilderArgs<unknown>
 >;
 
 export interface ClientExtensionFilterImplementationArgs
 	extends FilterImplementationArgs<unknown> {
-	cxFilterImplementation?: FDSFilter<unknown>;
-	cxFilterURL: string;
+	clientExtensionFilterImplementation?: FDSFilter<unknown>;
+	clientExtensionFilterURL: string;
 }
 
 function getSelectedItemsLabel({
-	cxFilterImplementation,
-	cxFilterURL,
+	clientExtensionFilterImplementation,
+	clientExtensionFilterURL,
 	selectedData,
 }: ClientExtensionFilterImplementationArgs) {
-	if (!cxFilterImplementation) {
+	if (!clientExtensionFilterImplementation) {
 		return LOADING_LABEL;
 	}
 
-	if (!cxFilterImplementation.descriptionBuilder) {
+	if (!clientExtensionFilterImplementation.descriptionBuilder) {
 		console.warn(
 			'The filter client extension',
-			cxFilterURL,
+			clientExtensionFilterURL,
 			'is not exporting a descriptionBuilder() function,',
 			'thus the filter description will not show meaningful information.',
 			'The client extension should be reworked.'
@@ -52,12 +52,14 @@ function getSelectedItemsLabel({
 	}
 
 	try {
-		return cxFilterImplementation.descriptionBuilder(selectedData);
+		return clientExtensionFilterImplementation.descriptionBuilder(
+			selectedData
+		);
 	}
 	catch (error) {
 		console.error(
 			'The filter client extension',
-			cxFilterURL,
+			clientExtensionFilterURL,
 			'caused an error when trying to render the filter description in',
 			'the descriptionBuilder<() function.',
 			'The client extension needs to be fixed.',
@@ -69,18 +71,18 @@ function getSelectedItemsLabel({
 }
 
 function getOdataString({
-	cxFilterImplementation,
-	cxFilterURL,
+	clientExtensionFilterImplementation,
+	clientExtensionFilterURL,
 	selectedData,
 }: ClientExtensionFilterImplementationArgs) {
-	if (!cxFilterImplementation) {
+	if (!clientExtensionFilterImplementation) {
 		return '';
 	}
 
-	if (!cxFilterImplementation.oDataQueryBuilder) {
+	if (!clientExtensionFilterImplementation.oDataQueryBuilder) {
 		console.error(
 			'The filter client extension',
-			cxFilterURL,
+			clientExtensionFilterURL,
 			'is not exporting a oDataQueryBuilder() function,',
 			'thus the filter will NOT work.',
 			'The client extension needs to be fixed.'
@@ -90,12 +92,14 @@ function getOdataString({
 	}
 
 	try {
-		return cxFilterImplementation.oDataQueryBuilder(selectedData);
+		return clientExtensionFilterImplementation.oDataQueryBuilder(
+			selectedData
+		);
 	}
 	catch (error) {
 		console.error(
 			'The filter client extension',
-			cxFilterURL,
+			clientExtensionFilterURL,
 			'caused an error when trying to compute the filter query in the',
 			'oDataQueryBuilder() function.',
 			'The client extension needs to be fixed.',
@@ -107,26 +111,26 @@ function getOdataString({
 }
 
 function ClientExtensionFilter({
-	cxFilterImplementation,
-	cxFilterURL,
+	clientExtensionFilterImplementation,
+	clientExtensionFilterURL,
 	selectedData,
 	setFilter,
 }: ClientExtensionFilterImplementationArgs) {
 	const [htmlElementBuilder, setHTMLElementBuilder] = useState<
-		CXFilterHTMLElementBuilder | undefined
+		ClientExtensionFilterHTMLElementBuilder | undefined
 	>(undefined);
 
 	useEffect(() => {
-		if (!cxFilterImplementation) {
+		if (!clientExtensionFilterImplementation) {
 			setHTMLElementBuilder(undefined);
 
 			return;
 		}
 
-		if (!cxFilterImplementation.htmlElementBuilder) {
+		if (!clientExtensionFilterImplementation.htmlElementBuilder) {
 			console.error(
 				'The filter client extension',
-				cxFilterURL,
+				clientExtensionFilterURL,
 				'is not exporting an htmlElementBuilder() function,',
 				'thus the filter configurator will NOT be shown in the UI.',
 				'The client extension needs to be fixed.'
@@ -139,9 +143,9 @@ function ClientExtensionFilter({
 
 		setHTMLElementBuilder(
 			() =>
-				cxFilterImplementation.htmlElementBuilder as CXFilterHTMLElementBuilder
+				clientExtensionFilterImplementation.htmlElementBuilder as ClientExtensionFilterHTMLElementBuilder
 		);
-	}, [cxFilterImplementation, cxFilterURL]);
+	}, [clientExtensionFilterImplementation, clientExtensionFilterURL]);
 
 	return (
 		<ClientExtension
@@ -164,12 +168,12 @@ function ClientExtensionFilter({
 }
 
 ClientExtensionFilter.propTypes = {
-	cxFilterImplementation: PropTypes.shape({
+	clientExtensionFilterImplementation: PropTypes.shape({
 		descriptionBuilder: PropTypes.func,
 		htmlElementBuilder: PropTypes.func,
 		oDataQueryBuilder: PropTypes.func,
 	}),
-	cxFilterURL: PropTypes.string,
+	clientExtensionFilterURL: PropTypes.string,
 	id: PropTypes.string.isRequired,
 	selectedData: PropTypes.any,
 	setFilter: PropTypes.func.isRequired,

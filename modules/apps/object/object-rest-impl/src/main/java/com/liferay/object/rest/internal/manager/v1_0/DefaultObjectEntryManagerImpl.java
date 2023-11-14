@@ -150,8 +150,8 @@ public class DefaultObjectEntryManagerImpl
 				getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					objectDefinition, objectEntry, scopeKey, serviceContext,
-					dtoConverterContext.getLocale()),
+					dtoConverterContext.getLocale(), objectDefinition,
+					objectEntry, scopeKey, serviceContext),
 				serviceContext);
 
 		return _toObjectEntry(
@@ -789,9 +789,9 @@ public class DefaultObjectEntryManagerImpl
 		serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
 			objectEntryId,
 			_toObjectValues(
-				objectDefinition, objectEntry,
+				dtoConverterContext.getLocale(), objectDefinition, objectEntry,
 				String.valueOf(serviceBuilderObjectEntry.getGroupId()),
-				serviceContext, dtoConverterContext.getLocale()),
+				serviceContext),
 			serviceContext);
 
 		return _toObjectEntry(
@@ -822,8 +822,8 @@ public class DefaultObjectEntryManagerImpl
 				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					objectDefinition, objectEntry, scopeKey, serviceContext,
-					dtoConverterContext.getLocale()),
+					dtoConverterContext.getLocale(), objectDefinition,
+					objectEntry, scopeKey, serviceContext),
 				serviceContext);
 
 		return _toObjectEntry(
@@ -1652,8 +1652,9 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Map<String, Serializable> _toObjectValues(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			String scopeKey, ServiceContext serviceContext, Locale locale)
+			Locale locale, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, String scopeKey,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Map<String, Serializable> values = new HashMap<>();

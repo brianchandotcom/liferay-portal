@@ -524,6 +524,17 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void updateAsset(
+			long userId, CPAttachmentFileEntry cpAttachmentFileEntry,
+			long[] assetCategoryIds, String[] assetTagNames,
+			long[] assetLinkEntryIds, Double priority)
+		throws PortalException {
+
+		getService().updateAsset(
+			userId, cpAttachmentFileEntry, assetCategoryIds, assetTagNames,
+			assetLinkEntryIds, priority);
+	}
+
 	/**
 	 * Updates the cp attachment file entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

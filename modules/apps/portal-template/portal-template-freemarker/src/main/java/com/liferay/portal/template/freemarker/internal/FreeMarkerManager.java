@@ -868,9 +868,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				return null;
 			}
 
-			try (InputStream inputStream = url.openStream()) {
-				Properties properties = PropertiesUtil.load(
-					inputStream, StringPool.UTF8);
+			try {
+				Properties properties = PropertiesUtil.load(url);
 
 				@SuppressWarnings("unchecked")
 				Map<String, String> map = PropertiesUtil.toMap(properties);

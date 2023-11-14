@@ -15,15 +15,12 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.URL;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
@@ -177,19 +174,12 @@ public class ResourceImporterExtender {
 		protected PluginPackage getPluginPackage(Bundle bundle)
 			throws IOException {
 
-			URL url = bundle.getResource(
-				"/WEB-INF/liferay-plugin-package.properties");
-
-			InputStream inputStream = url.openStream();
-
-			Properties liferayPluginPackageProperties = new Properties();
-
-			liferayPluginPackageProperties.load(inputStream);
-
 			PluginPackage pluginPackage =
 				PluginPackageUtil.readPluginPackageProperties(
 					bundle.getSymbolicName() + "-web",
-					liferayPluginPackageProperties);
+					PropertiesUtil.load(
+						bundle.getResource(
+							"/WEB-INF/liferay-plugin-package.properties")));
 
 			pluginPackage.setContext(bundle.getSymbolicName());
 

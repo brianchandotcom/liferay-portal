@@ -139,7 +139,7 @@ export default function ContentTypeModal({
 					}
 					else if (error) {
 						setLoading(false);
-						setError({other: error});
+						setError(error);
 						setWarningVisible(false);
 					}
 					else if (redirectURL) {

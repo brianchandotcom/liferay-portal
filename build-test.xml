@@ -14202,6 +14202,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<param name="test.build.bundle.zip.url" value="${test.released.test.portal.bundle.zip.url}" />
 		</antcall>
 
+		<delete dir="${test.release.bundle.parent.dir}/bundles/osgi/state" />
+
 		<antcall target="deploy-license-xml">
 			<param name="test.build.license.xml.zip.url" value="${test.license.xml.url}" />
 		</antcall>

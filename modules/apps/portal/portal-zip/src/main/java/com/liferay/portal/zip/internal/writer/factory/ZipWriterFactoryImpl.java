@@ -7,7 +7,7 @@ package com.liferay.portal.zip.internal.writer.factory;
 
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
-import com.liferay.portal.zip.ZipWriterImpl;
+import com.liferay.portal.zip.internal.writer.ZipWriterImpl;
 
 import java.io.File;
 

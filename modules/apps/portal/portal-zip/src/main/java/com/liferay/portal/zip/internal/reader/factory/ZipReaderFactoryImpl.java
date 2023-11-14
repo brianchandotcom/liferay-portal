@@ -7,7 +7,7 @@ package com.liferay.portal.zip.internal.reader.factory;
 
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
-import com.liferay.portal.zip.ZipReaderImpl;
+import com.liferay.portal.zip.internal.reader.ZipReaderImpl;
 
 import java.io.File;
 import java.io.IOException;

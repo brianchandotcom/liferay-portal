@@ -124,6 +124,8 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		).setParameter(
 			"assetListEntryId", assetListEntry.getAssetListEntryId()
+		).setParameter(
+			"backURLTitle", ParamUtil.getString(actionRequest, "backURLTitle")
 		).buildString();
 	}
 

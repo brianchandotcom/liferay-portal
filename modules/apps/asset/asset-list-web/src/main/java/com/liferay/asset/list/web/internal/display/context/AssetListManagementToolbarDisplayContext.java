@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -99,6 +100,8 @@ public class AssetListManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "addAssetListEntry");
@@ -108,6 +111,8 @@ public class AssetListManagementToolbarDisplayContext
 						liferayPortletResponse
 					).setActionName(
 						"/asset_list/add_asset_list_entry"
+					).setParameter(
+						"backURLTitle", portletDisplay.getPortletDisplayName()
 					).setParameter(
 						"type", AssetListEntryTypeConstants.TYPE_MANUAL
 					).buildString());
@@ -129,6 +134,8 @@ public class AssetListManagementToolbarDisplayContext
 						liferayPortletResponse
 					).setActionName(
 						"/asset_list/add_asset_list_entry"
+					).setParameter(
+						"backURLTitle", portletDisplay.getPortletDisplayName()
 					).setParameter(
 						"type", AssetListEntryTypeConstants.TYPE_DYNAMIC
 					).buildString());

@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
@@ -1064,7 +1065,7 @@ public class PortletTracker
 
 			if (url != null) {
 				try {
-					defaultPreferences = StringUtil.read(url.openStream());
+					defaultPreferences = URLUtil.toString(url);
 				}
 				catch (IOException ioException) {
 					_log.error(ioException);

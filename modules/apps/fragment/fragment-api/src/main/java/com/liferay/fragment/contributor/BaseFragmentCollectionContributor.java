@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
@@ -271,7 +272,7 @@ public abstract class BaseFragmentCollectionContributor
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			StreamUtil.toString(url.openStream()));
+			URLUtil.toString(url));
 
 		String fragmentCompositionKey = jsonObject.getString(
 			"fragmentCompositionKey");
@@ -353,7 +354,7 @@ public abstract class BaseFragmentCollectionContributor
 
 	private FragmentEntry _getFragmentEntry(URL url) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			StreamUtil.toString(url.openStream()));
+			URLUtil.toString(url));
 
 		String fragmentEntryKey = StringBundler.concat(
 			getFragmentCollectionKey(), StringPool.DASH,

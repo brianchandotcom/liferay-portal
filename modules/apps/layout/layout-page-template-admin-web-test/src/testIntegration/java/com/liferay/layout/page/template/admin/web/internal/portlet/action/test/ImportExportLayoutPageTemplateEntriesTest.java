@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1420,7 +1421,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		String zipPath = StringUtil.removeSubstring(
 			entryPath, _LAYOUT_PATE_TEMPLATES_PATH);
 
-		String content = StringUtil.read(url.openStream());
+		String content = URLUtil.toString(url);
 
 		content = StringUtil.replace(content, "\"${", "}\"", numberValuesMap);
 		content = StringUtil.replace(content, "£{", "}", stringValuesMap);

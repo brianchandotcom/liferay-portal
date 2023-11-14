@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -136,7 +136,7 @@ public class RTLServlet extends HttpServlet {
 
 		CSSRTLConverter cssRTLConverter = new CSSRTLConverter(false);
 
-		String rtl = cssRTLConverter.process(StringUtil.read(url.openStream()));
+		String rtl = cssRTLConverter.process(URLUtil.toString(url));
 
 		InputStream inputStream = new ByteArrayInputStream(
 			rtl.getBytes(StringPool.UTF8));

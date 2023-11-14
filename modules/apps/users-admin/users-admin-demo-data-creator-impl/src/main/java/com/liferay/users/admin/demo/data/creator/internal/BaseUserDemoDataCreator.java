@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.demo.data.creator.UserDemoDataCreator;
 
@@ -67,30 +68,24 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		byte[] portraitBytes = null;
 
 		try {
-			URL url = new URL(_RANDOM_USER_API);
+			JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(
+				URLUtil.toString(new URL(_RANDOM_USER_API)));
 
-			try (InputStream inputStream = url.openStream()) {
-				String json = StringUtil.read(inputStream);
+			JSONArray jsonArray = rootJSONObject.getJSONArray("results");
 
-				JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(
-					json);
+			JSONObject userJSONObject = jsonArray.getJSONObject(0);
 
-				JSONArray jsonArray = rootJSONObject.getJSONArray("results");
+			emailAddress = _getEmailAddress(emailAddress, userJSONObject);
+			male = StringUtil.equalsIgnoreCase(
+				userJSONObject.getString("gender"), "male");
+			birthDate = _getBirthDate(birthDate, userJSONObject);
 
-				JSONObject userJSONObject = jsonArray.getJSONObject(0);
+			JSONObject pictureJSONObject = userJSONObject.getJSONObject(
+				"picture");
 
-				emailAddress = _getEmailAddress(emailAddress, userJSONObject);
-				male = StringUtil.equalsIgnoreCase(
-					userJSONObject.getString("gender"), "male");
-				birthDate = _getBirthDate(birthDate, userJSONObject);
+			String portraitURL = pictureJSONObject.getString("large");
 
-				JSONObject pictureJSONObject = userJSONObject.getJSONObject(
-					"picture");
-
-				String portraitURL = pictureJSONObject.getString("large");
-
-				portraitBytes = _getBytes(new URL(portraitURL));
-			}
+			portraitBytes = _getBytes(new URL(portraitURL));
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {

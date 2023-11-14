@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
@@ -657,9 +658,8 @@ public class FragmentsImporterTest {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			String content = StringUtil.read(url.openStream());
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				URLUtil.toString(url));
 
 			if (calculateFragmentEntryType) {
 				_addFragmentEntryType(jsonObject);
@@ -692,9 +692,8 @@ public class FragmentsImporterTest {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			String content = StringUtil.read(url.openStream());
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				URLUtil.toString(url));
 
 			String path = FileUtil.getPath(url.getPath());
 

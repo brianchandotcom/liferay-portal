@@ -10,7 +10,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.IOException;
 
@@ -71,8 +71,7 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 
 	private JSONObject _createJSONObject(URL url) {
 		try {
-			return _jsonFactory.createJSONObject(
-				StringUtil.read(url.openStream()));
+			return _jsonFactory.createJSONObject(URLUtil.toString(url));
 		}
 		catch (IOException | JSONException exception) {
 			throw new RuntimeException("Unable to read " + url, exception);

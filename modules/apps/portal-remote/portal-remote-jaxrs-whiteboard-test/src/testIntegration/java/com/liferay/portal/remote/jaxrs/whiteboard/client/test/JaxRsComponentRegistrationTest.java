@@ -8,7 +8,7 @@ package com.liferay.portal.remote.jaxrs.whiteboard.client.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.net.URL;
@@ -105,26 +105,26 @@ public class JaxRsComponentRegistrationTest {
 		URL url = new URL(
 			"http://localhost:8080/o/rest-test/greeter1/sayHello");
 
-		Assert.assertEquals("Hello.", StringUtil.read(url.openStream()));
+		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
 		url = new URL("http://localhost:8080/o/rest-test/greeter2/sayHello");
 
-		Assert.assertEquals("Hello.", StringUtil.read(url.openStream()));
+		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
 		url = new URL("http://localhost:8080/o/rest-test/greeter3/sayHello");
 
-		Assert.assertEquals("Hello.", StringUtil.read(url.openStream()));
+		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
 		url = new URL("http://localhost:8080/o/rest-test/greeter3/addon");
 
-		Assert.assertEquals("addon", StringUtil.read(url.openStream()));
+		Assert.assertEquals("addon", URLUtil.toString(url));
 	}
 
 	@Test(expected = Exception.class)
 	public void testServiceListIsUnavailable() throws Exception {
 		URL url = new URL("http://localhost:8080/o/soap-test/services");
 
-		StringUtil.read(url.openStream());
+		URLUtil.toString(url);
 	}
 
 	public static class Addon {

@@ -168,6 +168,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -911,7 +912,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (StringUtil.endsWith(
 					fileName, "fragment-composition-definition.json")) {
 
-				String json = StringUtil.read(url.openStream());
+				String json = URLUtil.toString(url);
 
 				json = _replace(
 					_replace(json, serviceContext), stringUtilReplaceValues);
@@ -977,7 +978,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (StringUtil.endsWith(urlPath, "display-page-template.json") ||
 				StringUtil.endsWith(urlPath, "page-definition.json")) {
 
-				String json = StringUtil.read(url.openStream());
+				String json = URLUtil.toString(url);
 
 				json = _replace(
 					_replace(json, serviceContext), stringUtilReplaceValues);
@@ -1046,7 +1047,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String urlPath = url.getPath();
 
 			if (StringUtil.endsWith(urlPath, "page-definition.json")) {
-				String json = StringUtil.read(url.openStream());
+				String json = URLUtil.toString(url);
 
 				json = _replace(
 					_replace(json, serviceContext), stringUtilReplaceValues);
@@ -1596,9 +1597,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			URL url = enumeration.nextElement();
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				_replace(
-					StringUtil.read(url.openStream()),
-					stringUtilReplaceValues));
+				_replace(URLUtil.toString(url), stringUtilReplaceValues));
 
 			long resourceClassNameId = _portal.getClassNameId(
 				jsonObject.getString(
@@ -2764,7 +2763,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				FileUtil.getShortFileName(
 					FileUtil.stripExtension(url.getPath())),
 				_replace(
-					_replace(StringUtil.read(url.openStream()), serviceContext),
+					_replace(URLUtil.toString(url), serviceContext),
 					stringUtilReplaceValues));
 		}
 

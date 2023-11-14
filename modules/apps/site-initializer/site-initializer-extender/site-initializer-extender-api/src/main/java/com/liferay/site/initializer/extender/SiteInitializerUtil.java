@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
@@ -39,12 +40,9 @@ public class SiteInitializerUtil {
 
 		String urlPath = url.getPath();
 
-		URL entryURL = bundle.getEntry(
-			urlPath.substring(0, urlPath.lastIndexOf("/") + 1) + fileName);
-
-		try (InputStream inputStream = entryURL.openStream()) {
-			return StringUtil.read(entryURL.openStream());
-		}
+		return URLUtil.toString(
+			bundle.getEntry(
+				urlPath.substring(0, urlPath.lastIndexOf("/") + 1) + fileName));
 	}
 
 	public static String read(

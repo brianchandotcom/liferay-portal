@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -267,17 +267,13 @@ public class AuthVerifierTest {
 			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
 				"/guestAllowed");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("guest-allowed", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("guest-allowed", URLUtil.toString(url));
 
 		url = new URL(
 			"http://localhost:8080/o/auth-verifier-guest-allowed-default-test" +
 				"/guestAllowed");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("guest-allowed", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("guest-allowed", URLUtil.toString(url));
 	}
 
 	@Test
@@ -289,9 +285,7 @@ public class AuthVerifierTest {
 				"/auth-verifier-filter-override-missing-test" +
 					"/attemptMatchRelativeToContextPath");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("not-matched", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("not-matched", URLUtil.toString(url));
 	}
 
 	@Test
@@ -303,18 +297,14 @@ public class AuthVerifierTest {
 				"/auth-verifier-filter-override-not-matched-test" +
 					"/authVerifierMatched");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("not-matched", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("not-matched", URLUtil.toString(url));
 
 		url = new URL(
 			"http://localhost:8080/o" +
 				"/auth-verifier-filter-override-matched-test" +
 					"/authVerifierNotMatched");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("matched", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("matched", URLUtil.toString(url));
 	}
 
 	@Test
@@ -324,9 +314,7 @@ public class AuthVerifierTest {
 				"/auth-verifier-filter-override-missing-test" +
 					"/authVerifierNotMatched");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("not-matched", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("not-matched", URLUtil.toString(url));
 	}
 
 	@Test
@@ -335,9 +323,7 @@ public class AuthVerifierTest {
 			"http://localhost:8080/o/auth-verifier-filter-tracker-remote-" +
 				"access-test/remoteAccess");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("true", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("true", URLUtil.toString(url));
 	}
 
 	@Test
@@ -346,27 +332,19 @@ public class AuthVerifierTest {
 			"http://localhost:8080/o/auth-verifier-filter-tracker-enabled-" +
 				"test/remoteUser");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals(
-				"remote-user-set", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("remote-user-set", URLUtil.toString(url));
 
 		url = new URL(
 			"http://localhost:8080/o/auth-verifier-filter-tracker-disabled-" +
 				"test/remoteUser");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("no-remote-user", URLUtil.toString(url));
 
 		url = new URL(
 			"http://localhost:8080/o/auth-verifier-filter-tracker-default-" +
 				"test/remoteUser");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals(
-				"remote-user-set", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("remote-user-set", URLUtil.toString(url));
 	}
 
 	@Test
@@ -377,9 +355,7 @@ public class AuthVerifierTest {
 			"http://localhost:8080/o" +
 				"/auth-verifier-filter-override-matched-test");
 
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("matched", StringUtil.read(inputStream));
-		}
+		Assert.assertEquals("matched", URLUtil.toString(url));
 	}
 
 	public static class AuthVerifierMatchedHttpServlet extends HttpServlet {

@@ -13,11 +13,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
-
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -74,20 +72,15 @@ public class FrontendTokenDefinitionRegistryImplTest {
 			frontendTokenDefinitionRegistryImpl.getFrontendTokenDefinitionImpl(
 				bundle);
 
-		try (InputStream inputStream =
-				_frontendTokenDefinitionJSONURL.openStream()) {
+		JSONFactory jsonFactory = new JSONFactoryImpl();
 
-			JSONFactory jsonFactory = new JSONFactoryImpl();
+		JSONObject expectJSONObject = jsonFactory.createJSONObject(
+			URLUtil.toString(_frontendTokenDefinitionJSONURL));
 
-			JSONObject expectJSONObject = jsonFactory.createJSONObject(
-				StringUtil.read(inputStream));
+		JSONObject actualJSONObject = frontendTokenDefinition.getJSONObject(
+			LocaleUtil.ENGLISH);
 
-			JSONObject actualJSONObject = frontendTokenDefinition.getJSONObject(
-				LocaleUtil.ENGLISH);
-
-			Assert.assertEquals(
-				expectJSONObject.toMap(), actualJSONObject.toMap());
-		}
+		Assert.assertEquals(expectJSONObject.toMap(), actualJSONObject.toMap());
 	}
 
 	@Test

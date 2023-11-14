@@ -11,10 +11,8 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.scripting.executor.internal.constants.ScriptingExecutorMessagingConstants;
-
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -43,7 +41,7 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 			ScriptingExecutorMessagingConstants.MESSAGE_KEY_URLS);
 
 		for (URL url : urls) {
-			try (InputStream inputStream = url.openStream()) {
+			try {
 				ClassLoader bundleClassLoader = (ClassLoader)message.get(
 					ScriptingExecutorMessagingConstants.
 						MESSAGE_KEY_BUNDLE_CLASS_LOADER);
@@ -56,7 +54,7 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 
 				_scripting.exec(
 					null, new HashMap<String, Object>(), scriptingLanguage,
-					StringUtil.read(inputStream));
+					URLUtil.toString(url));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

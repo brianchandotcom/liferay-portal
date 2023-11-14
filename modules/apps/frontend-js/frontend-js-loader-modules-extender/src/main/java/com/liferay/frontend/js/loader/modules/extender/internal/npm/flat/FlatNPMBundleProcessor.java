@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -175,8 +176,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 */
 	private String _getDefineArgs(URL url) {
 		try {
-			String urlContent = _normalizeModuleContent(
-				StringUtil.read(url.openStream()));
+			String urlContent = _normalizeModuleContent(URLUtil.toString(url));
 
 			int x = urlContent.indexOf("Liferay.Loader.define");
 
@@ -249,15 +249,14 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 					() -> new AbstractMap.SimpleImmutableEntry<>(
 						packageJSONURL,
 						_jsonFactory.createJSONObject(
-							StringUtil.read(packageJSONURL.openStream())))));
+							URLUtil.toString(packageJSONURL)))));
 		}
 
 		if (manifestJSONURL != null) {
 			futures.add(
 				_executorService.submit(
 					() -> {
-						String content = StringUtil.read(
-							manifestJSONURL.openStream());
+						String content = URLUtil.toString(manifestJSONURL);
 
 						if (!content.contains("\"flags\"")) {
 							return new AbstractMap.SimpleImmutableEntry<>(

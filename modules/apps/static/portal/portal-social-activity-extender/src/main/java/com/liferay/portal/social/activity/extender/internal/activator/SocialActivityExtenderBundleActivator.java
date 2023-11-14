@@ -7,7 +7,7 @@ package com.liferay.portal.social.activity.extender.internal.activator;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.social.kernel.util.SocialConfiguration;
 
 import java.net.URL;
@@ -118,9 +118,7 @@ public class SocialActivityExtenderBundleActivator implements BundleActivator {
 			List<String> configs = new ArrayList<>();
 
 			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
-
-				configs.add(StringUtil.read(url.openStream()));
+				configs.add(URLUtil.toString(enumeration.nextElement()));
 			}
 
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);

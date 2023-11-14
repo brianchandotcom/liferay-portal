@@ -5,7 +5,6 @@
 
 package com.liferay.search.experiences.internal.util;
 
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -13,6 +12,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
@@ -96,12 +96,10 @@ public class SXPElementUtil {
 
 		try {
 			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
-
 				sxpElements.add(
 					com.liferay.search.experiences.rest.dto.v1_0.util.
 						SXPElementUtil.toSXPElement(
-							StreamUtil.toString(url.openStream())));
+							URLUtil.toString(enumeration.nextElement())));
 			}
 		}
 		catch (IOException ioException) {

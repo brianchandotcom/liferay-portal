@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.net.URL;
@@ -155,14 +155,14 @@ public class JaxRsComponentRegistrationTest {
 	public void testIsRegistered() throws Exception {
 		URL url = new URL("http://localhost:8080/o/rest-test/testApp/sayHello");
 
-		Assert.assertEquals("Hello.", StringUtil.read(url.openStream()));
+		Assert.assertEquals("Hello.", URLUtil.toString(url));
 	}
 
 	@Test(expected = Exception.class)
 	public void testServiceListIsUnavailable() throws Exception {
 		URL url = new URL("http://localhost:8080/o/rest-test/services");
 
-		StringUtil.read(url.openStream());
+		URLUtil.toString(url);
 	}
 
 	private void _cleanUp() throws Exception {

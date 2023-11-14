@@ -5,13 +5,13 @@
 
 package com.liferay.search.experiences.internal.upgrade.v2_0_3;
 
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
@@ -92,10 +92,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 		try {
 			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
-
 				SXPElement sxpElement = SXPElementUtil.toSXPElement(
-					StreamUtil.toString(url.openStream()));
+					URLUtil.toString(enumeration.nextElement()));
 
 				_sxpElements.put(
 					sxpElement.getExternalReferenceCode(), sxpElement);

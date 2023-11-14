@@ -124,6 +124,9 @@ public class SelectCollectionManagementToolbarDisplayContext
 				).setBackURL(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
+					"backURLTitle",
+					LanguageUtil.get(httpServletRequest, "select-collection")
+				).setParameter(
 					"type", type
 				).buildString());
 

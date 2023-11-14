@@ -119,7 +119,7 @@ public class EventJmsController {
 
 		if (StringUtil.isNullOrEmpty(eventTypeString)) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Missing 'eventType' from message json");
+				_log.warn("Missing \"eventType\" from message JSON");
 			}
 
 			return;
@@ -130,7 +130,7 @@ public class EventJmsController {
 
 		if (eventType == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Invalid 'eventType': " + eventTypeString);
+				_log.warn("Invalid \"eventType\": " + eventTypeString);
 			}
 
 			return;

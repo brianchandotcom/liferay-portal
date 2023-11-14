@@ -252,6 +252,7 @@ class Item extends PureComponent {
 		onSelect: PropTypes.func,
 		pinned: PropTypes.bool,
 		reorder: PropTypes.bool,
+		resultRankingStatus: PropTypes.string,
 		searchQuery: PropTypes.string,
 		selected: PropTypes.bool,
 		title: PropTypes.string,
@@ -394,6 +395,7 @@ class Item extends PureComponent {
 			over,
 			pinned,
 			reorder,
+			resultRankingStatus,
 			selected,
 			style,
 			title,
@@ -454,6 +456,7 @@ class Item extends PureComponent {
 					<ClayCheckbox
 						aria-label={Liferay.Language.get('select')}
 						checked={selected}
+						disabled={resultRankingStatus === 'not-applicable'}
 						onChange={this._handleSelect}
 					/>
 				</ClayLayout.ContentCol>
@@ -515,66 +518,82 @@ class Item extends PureComponent {
 					</ClayLayout.ContentSection>
 				</ClayLayout.ContentCol>
 
-				<ClayLayout.ContentCol>
-					{pinned && <ResultPinIconDisplay />}
+				{resultRankingStatus !== 'not-applicable' && (
+					<ClayLayout.ContentCol>
+						{pinned && <ResultPinIconDisplay />}
 
-					<div className="quick-action-menu">
-						{onClickHide && (
-							<ClayButton
-								aria-label={
-									hidden
-										? Liferay.Language.get('show-result')
-										: Liferay.Language.get('hide-result')
-								}
-								className="btn-outline-borderless component-action quick-action-item"
-								displayType="secondary"
-								monospaced
-								onClick={this._handleHide}
-								title={
-									hidden
-										? Liferay.Language.get('show-result')
-										: Liferay.Language.get('hide-result')
-								}
-							>
-								<ClayIcon symbol={hidden ? 'view' : 'hidden'} />
-							</ClayButton>
+						<div className="quick-action-menu">
+							{onClickHide && (
+								<ClayButton
+									aria-label={
+										hidden
+											? Liferay.Language.get(
+													'show-result'
+											  )
+											: Liferay.Language.get(
+													'hide-result'
+											  )
+									}
+									className="btn-outline-borderless component-action quick-action-item"
+									displayType="secondary"
+									monospaced
+									onClick={this._handleHide}
+									title={
+										hidden
+											? Liferay.Language.get(
+													'show-result'
+											  )
+											: Liferay.Language.get(
+													'hide-result'
+											  )
+									}
+								>
+									<ClayIcon
+										symbol={hidden ? 'view' : 'hidden'}
+									/>
+								</ClayButton>
+							)}
+
+							{onClickPin && (
+								<ClayButton
+									aria-label={
+										pinned
+											? Liferay.Language.get(
+													'unpin-result'
+											  )
+											: Liferay.Language.get('pin-result')
+									}
+									className="btn-outline-borderless component-action quick-action-item"
+									displayType="secondary"
+									monospaced
+									onClick={this._handlePin}
+									title={
+										pinned
+											? Liferay.Language.get(
+													'unpin-result'
+											  )
+											: Liferay.Language.get('pin-result')
+									}
+								>
+									{pinned ? (
+										<ClayIcon key="UNPIN" symbol="unpin" />
+									) : (
+										<ClayIcon key="PIN" symbol="pin" />
+									)}
+								</ClayButton>
+							)}
+						</div>
+
+						{(onClickPin || onClickHide) && (
+							<ItemDropdown
+								hidden={hidden}
+								onClickHide={this._handleHide}
+								onClickPin={this._handlePin}
+								pinned={pinned}
+							/>
 						)}
-
-						{onClickPin && (
-							<ClayButton
-								aria-label={
-									pinned
-										? Liferay.Language.get('unpin-result')
-										: Liferay.Language.get('pin-result')
-								}
-								className="btn-outline-borderless component-action quick-action-item"
-								displayType="secondary"
-								monospaced
-								onClick={this._handlePin}
-								title={
-									pinned
-										? Liferay.Language.get('unpin-result')
-										: Liferay.Language.get('pin-result')
-								}
-							>
-								{pinned ? (
-									<ClayIcon key="UNPIN" symbol="unpin" />
-								) : (
-									<ClayIcon key="PIN" symbol="pin" />
-								)}
-							</ClayButton>
-						)}
-					</div>
-
-					{(onClickPin || onClickHide) && (
-						<ItemDropdown
-							hidden={hidden}
-							onClickHide={this._handleHide}
-							onClickPin={this._handlePin}
-							pinned={pinned}
-						/>
-					)}
-				</ClayLayout.ContentCol>
+					</ClayLayout.ContentCol>
+				)}
 
 				{!isNil(clicks) && (
 					<div className="click-count list-group-text sticker-bottom-right">

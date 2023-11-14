@@ -31,6 +31,7 @@ class List extends PureComponent {
 		onMove: PropTypes.func,
 		resultIds: PropTypes.arrayOf(Number),
 		resultIdsPinned: PropTypes.arrayOf(Number),
+		resultRankingStatus: PropTypes.string,
 		showLoadMore: PropTypes.bool,
 	};
 
@@ -173,7 +174,7 @@ class List extends PureComponent {
 	 * @param {number} index The item's position in the list.
 	 */
 	_renderItem = (id, index) => {
-		const {dataMap, onClickHide, onMove} = this.props;
+		const {dataMap, onClickHide, onMove, resultRankingStatus} = this.props;
 
 		const {focusIndex, reorder, selectedIds} = this.state;
 
@@ -202,6 +203,7 @@ class List extends PureComponent {
 				onSelect={this._handleSelect}
 				pinned={item.pinned}
 				reorder={index === focusIndex && reorder}
+				resultRankingStatus={resultRankingStatus}
 				selected={selectedIds.includes(item.id)}
 				title={item.title}
 				type={item.type}
@@ -220,6 +222,7 @@ class List extends PureComponent {
 			onClickHide,
 			onClickPin,
 			resultIds,
+			resultRankingStatus,
 			showLoadMore,
 		} = this.props;
 
@@ -240,6 +243,7 @@ class List extends PureComponent {
 						onSelectAll={this._handleSelectAll}
 						onSelectClear={this._handleSelectClear}
 						resultIds={resultIds}
+						resultRankingStatus={resultRankingStatus}
 						selectedIds={selectedIds}
 					/>
 

@@ -38,32 +38,34 @@ class PageToolbar extends Component {
 				aria-label={Liferay.Language.get('save')}
 				className="page-toolbar-root"
 			>
-				<ManagementToolbar.ItemList>
-					<ManagementToolbar.Item>
-						<label
-							className="toggle-switch"
-							htmlFor="active-switch-input"
-						>
-							<input
-								checked={resultRankingStatus === 'active'}
-								className="toggle-switch-check"
-								id="active-switch-input"
-								onChange={onChangeActive}
-								type="checkbox"
-							/>
+				{resultRankingStatus !== 'not-applicable' && (
+					<ManagementToolbar.ItemList>
+						<ManagementToolbar.Item>
+							<label
+								className="toggle-switch"
+								htmlFor="active-switch-input"
+							>
+								<input
+									checked={resultRankingStatus === 'active'}
+									className="toggle-switch-check"
+									id="active-switch-input"
+									onChange={onChangeActive}
+									type="checkbox"
+								/>
 
-							<span className="toggle-switch-bar">
-								<span className="toggle-switch-handle"></span>
-							</span>
+								<span className="toggle-switch-bar">
+									<span className="toggle-switch-handle"></span>
+								</span>
 
-							<span className="toggle-switch-text-right">
-								{resultRankingStatus === 'active'
-									? Liferay.Language.get('active')
-									: Liferay.Language.get('inactive')}
-							</span>
-						</label>
-					</ManagementToolbar.Item>
-				</ManagementToolbar.ItemList>
+								<span className="toggle-switch-text-right">
+									{resultRankingStatus === 'active'
+										? Liferay.Language.get('active')
+										: Liferay.Language.get('inactive')}
+								</span>
+							</label>
+						</ManagementToolbar.Item>
+					</ManagementToolbar.ItemList>
+				)}
 
 				<ManagementToolbar.ItemList expand></ManagementToolbar.ItemList>
 
@@ -78,7 +80,7 @@ class PageToolbar extends Component {
 						</ClayLink>
 					</ManagementToolbar.Item>
 
-					{onSaveAsDraft && (
+					{onSaveAsDraft && resultRankingStatus !== 'not-applicable' && (
 						<ManagementToolbar.Item>
 							<ClayButton
 								displayType="secondary"
@@ -90,16 +92,18 @@ class PageToolbar extends Component {
 						</ManagementToolbar.Item>
 					)}
 
-					<ManagementToolbar.Item>
-						<ClayButton
-							disabled={submitDisabled}
-							onClick={onPublish}
-							small
-							type="submit"
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-					</ManagementToolbar.Item>
+					{resultRankingStatus !== 'not-applicable' && (
+						<ManagementToolbar.Item>
+							<ClayButton
+								disabled={submitDisabled}
+								onClick={onPublish}
+								small
+								type="submit"
+							>
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						</ManagementToolbar.Item>
+					)}
 				</ManagementToolbar.ItemList>
 			</ManagementToolbar.Container>
 		);

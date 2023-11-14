@@ -36,6 +36,7 @@ class SearchBar extends Component {
 		onSelectClear: PropTypes.func.isRequired,
 		onUpdateSearchBarTerm: PropTypes.func,
 		resultIds: PropTypes.arrayOf(String),
+		resultRankingStatus: PropTypes.string,
 		searchBarTerm: PropTypes.string,
 		selectedIds: PropTypes.arrayOf(String),
 	};
@@ -110,6 +111,7 @@ class SearchBar extends Component {
 			fetchDocumentsSearchURL,
 			onAddResultSubmit,
 			resultIds,
+			resultRankingStatus,
 			selectedIds,
 		} = this.props;
 
@@ -136,7 +138,10 @@ class SearchBar extends Component {
 										'select-all'
 									)}
 									checked={this._hasSelectedIds()}
-									disabled={!resultIds.length}
+									disabled={
+										!resultIds.length ||
+										resultRankingStatus === 'not-applicable'
+									}
 									indeterminate={
 										!!selectedIds.length &&
 										selectedIds.length !== resultIds.length
@@ -263,15 +268,17 @@ class SearchBar extends Component {
 						{!this._hasSelectedIds() && (
 							<>
 								<ManagementToolbar.ItemList expand>
-									{!!resultIds.length && (
-										<ManagementToolbar.Item>
-											<span className="component-text navbar-text">
-												{Liferay.Language.get(
-													'select-items'
-												)}
-											</span>
-										</ManagementToolbar.Item>
-									)}
+									{!!resultIds.length &&
+										resultRankingStatus !==
+											'not-applicable' && (
+											<ManagementToolbar.Item>
+												<span className="component-text navbar-text">
+													{Liferay.Language.get(
+														'select-items'
+													)}
+												</span>
+											</ManagementToolbar.Item>
+										)}
 								</ManagementToolbar.ItemList>
 
 								{onAddResultSubmit && (
@@ -283,6 +290,9 @@ class SearchBar extends Component {
 												}
 												onAddResultSubmit={
 													onAddResultSubmit
+												}
+												resultRankingStatus={
+													resultRankingStatus
 												}
 											/>
 										</ManagementToolbar.Item>

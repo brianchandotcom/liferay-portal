@@ -14,7 +14,11 @@ import AddResultModal from './AddResultModal.es';
 /**
  * A button that opens a modal to be able to search, select, and add results.
  */
-function AddResult({fetchDocumentsSearchURL, onAddResultSubmit}) {
+function AddResult({
+	fetchDocumentsSearchURL,
+	onAddResultSubmit,
+	resultRankingStatus,
+}) {
 	const [showModal, setShowModal] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -32,6 +36,7 @@ function AddResult({fetchDocumentsSearchURL, onAddResultSubmit}) {
 		<>
 			<ClayButton
 				aria-label={Liferay.Language.get('add-result')}
+				disabled={resultRankingStatus === 'not-applicable'}
 				key="ADD_RESULT_BUTTON"
 				onClick={_handleAddResultButton}
 			>
@@ -55,6 +60,7 @@ function AddResult({fetchDocumentsSearchURL, onAddResultSubmit}) {
 AddResult.propTypes = {
 	fetchDocumentsSearchURL: PropTypes.string.isRequired,
 	onAddResultSubmit: PropTypes.func.isRequired,
+	resultRankingStatus: PropTypes.string.isRequired,
 };
 
 export default AddResult;

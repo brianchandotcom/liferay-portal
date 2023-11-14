@@ -63,6 +63,7 @@ class Alias extends Component {
 	static propTypes = {
 		keywords: PropTypes.arrayOf(String),
 		onChange: PropTypes.func.isRequired,
+		resultRankingStatus: PropTypes.string,
 	};
 
 	state = {
@@ -78,7 +79,7 @@ class Alias extends Component {
 	};
 
 	render() {
-		const {keywords} = this.props;
+		const {keywords, resultRankingStatus} = this.props;
 
 		const {inputValue} = this.state;
 
@@ -101,6 +102,7 @@ class Alias extends Component {
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
+							disabled={resultRankingStatus === 'not-applicable'}
 							id="aliases-input"
 							items={transformListOfStringsToObjects(keywords)}
 							onChange={this._handleInputChange}
@@ -108,13 +110,15 @@ class Alias extends Component {
 							value={inputValue}
 						/>
 
-						<ClayForm.FeedbackGroup>
-							<ClayForm.Text>
-								{Liferay.Language.get(
-									'add-an-alias-instruction'
-								)}
-							</ClayForm.Text>
-						</ClayForm.FeedbackGroup>
+						{resultRankingStatus !== 'not-applicable' && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.Text>
+									{Liferay.Language.get(
+										'add-an-alias-instruction'
+									)}
+								</ClayForm.Text>
+							</ClayForm.FeedbackGroup>
+						)}
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</ClayForm.Group>

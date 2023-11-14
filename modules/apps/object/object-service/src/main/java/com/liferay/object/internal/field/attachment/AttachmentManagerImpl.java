@@ -96,18 +96,6 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	}
 
 	@Override
-	public String[] getAcceptedFileExtensions(long objectFieldId) {
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectFieldId,
-				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS);
-
-		String value = objectFieldSetting.getValue();
-
-		return value.split("\\s*,\\s*");
-	}
-
-	@Override
 	public DLFolder fetchDLFolder(
 		long companyId, long groupId, long objectFieldId,
 		ServiceContext serviceContext, long userId) {
@@ -154,6 +142,18 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 			return null;
 		}
+	}
+
+	@Override
+	public String[] getAcceptedFileExtensions(long objectFieldId) {
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectFieldId,
+				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS);
+
+		String value = objectFieldSetting.getValue();
+
+		return value.split("\\s*,\\s*");
 	}
 
 	@Override

@@ -193,7 +193,7 @@ public class ReportController extends BaseFaroController {
 		).header(
 			HttpHeaders.CONTENT_DISPOSITION,
 			String.format(
-				"filename=\"analytics-cloud-%ss-overview-%s.csv\"", type,
+				"filename=\"analytics-cloud-%ss-list-%s.csv\"", type,
 				LocalDate.now())
 		).build();
 	}

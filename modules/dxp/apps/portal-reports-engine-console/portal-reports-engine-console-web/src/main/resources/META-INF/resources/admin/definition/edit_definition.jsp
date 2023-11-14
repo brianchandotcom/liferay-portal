@@ -164,8 +164,8 @@ else {
 						cssClass="align-items-center d-flex"
 						md="2"
 					>
-						<aui:button-row cssClass="add-parameter c-mt-1">
-							<aui:button value="add-parameter" />
+						<aui:button-row cssClass="c-mt-1">
+							<aui:button cssClass="add-parameter" value="add-parameter" />
 						</aui:button-row>
 					</clay:col>
 				</clay:row>
@@ -209,15 +209,18 @@ else {
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-	AUI().ready((A) => {
-		Liferay.Report.initialize({
-			namespace: '<portlet:namespace />',
-			parameters:
-				'<%= HtmlUtil.escapeJS(BeanParamUtil.getString(definition, request, "reportParameters")) %>',
-		});
-	});
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"parameters", BeanParamUtil.getString(definition, request, "reportParameters")
+		).build()
+	%>'
+	module="admin/js/ReportParameters"
+/>
 
+<aui:script>
 	function <portlet:namespace />addReport() {
 		submitForm(
 			document.<portlet:namespace />fm,

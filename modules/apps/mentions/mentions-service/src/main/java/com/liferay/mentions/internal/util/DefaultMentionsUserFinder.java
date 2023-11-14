@@ -102,7 +102,7 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 				isSocialInteractionsSitesEnabled()) {
 
 			return _userLocalService.searchBySocial(
-				companyId, groupIds, query, 0, _MAX_USERS);
+				companyId, groupIds, null, query, 0, _MAX_USERS);
 		}
 
 		if (socialInteractionsConfiguration.

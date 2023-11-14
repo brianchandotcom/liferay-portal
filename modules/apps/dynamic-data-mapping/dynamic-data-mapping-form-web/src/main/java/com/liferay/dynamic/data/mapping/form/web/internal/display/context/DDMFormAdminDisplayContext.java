@@ -701,7 +701,7 @@ public class DDMFormAdminDisplayContext {
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			DDMFormBuilderContextRequest.with(
 				null, themeDisplay.getRequest(), themeDisplay.getResponse(),
-				LocaleUtil.fromLanguageId(getDefaultLanguageId()), true);
+				LocaleUtil.fromLanguageId(themeDisplay.getLanguageId()), true);
 
 		ddmFormBuilderContextRequest.addProperty(
 			"ddmStructureVersion", getLatestDDMStructureVersion());

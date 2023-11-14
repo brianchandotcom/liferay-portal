@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.io.StreamUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -35,6 +37,14 @@ public class URLUtil {
 				}
 			}
 		}
+	}
+
+	public static byte[] toByteArray(URL url) throws IOException {
+		return StreamUtil.toByteArray(url.openStream());
+	}
+
+	public static String toString(URL url) throws IOException {
+		return StreamUtil.toString(url.openStream());
 	}
 
 }

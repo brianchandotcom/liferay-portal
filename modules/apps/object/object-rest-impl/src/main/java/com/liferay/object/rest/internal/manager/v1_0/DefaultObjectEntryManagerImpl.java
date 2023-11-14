@@ -1438,8 +1438,8 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.portal.kernel.repository.model.FileEntry
 			serviceBuilderFileEntry = _attachmentManager.addFileEntry(
 				objectField.getCompanyId(),
-				getGroupId(objectDefinition, scopeKey, true),
 				Base64.decode(fileEntry.getFileBase64()), fileEntry.getName(),
+				getGroupId(objectDefinition, scopeKey, true),
 				objectField.getObjectFieldId(), serviceContext);
 
 		fileEntry.setFileBase64((String)null);

@@ -64,7 +64,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 	@Override
 	public FileEntry addFileEntry(
-			long companyId, long groupId, byte[] fileContent, String fileName,
+			long companyId, byte[] fileContent, String fileName, long groupId,
 			long objectFieldId, ServiceContext serviceContext)
 		throws Exception {
 
@@ -110,7 +110,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 	@Override
 	public DLFolder getDLFolder(
-		long objectFieldId, long companyId, long groupId,
+		long companyId, long groupId, long objectFieldId,
 		ServiceContext serviceContext, long userId) {
 
 		try {

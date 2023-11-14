@@ -34,7 +34,13 @@ import {
 import {submitBase64EncodedFile} from '../../utils/util';
 
 import './ProvideAppBuildPage.scss';
+
+import {useEffect, useState} from 'react';
+
 import {getCompanyId} from '../../liferay/constants';
+import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
+import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
+import {AppType} from './enums/AppType';
 
 interface ProvideAppBuildPageProps {
 	onClickBack: () => void;
@@ -53,6 +59,21 @@ export function ProvideAppBuildPage({
 		{appBuild, appERC, appId, appProductId, appType, buildZIPFiles},
 		dispatch,
 	] = useAppContext();
+	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
+		Array<string>
+	>([]);
+
+	const handleSelectCheckbox = (offeringTypelabel: string) => {
+		setSelectedCheckboxValue((prevValue) =>
+			prevValue.includes(offeringTypelabel)
+				? prevValue.filter((value) => value !== offeringTypelabel)
+				: [...prevValue, offeringTypelabel]
+		);
+	};
+
+	useEffect(() => {
+		setSelectedCheckboxValue([]);
+	}, [appType.value]);
 
 	const handleUpload = (files: File[]) => {
 		const newUploadedFiles: UploadedFile[] = files.map((file) => ({
@@ -104,7 +125,7 @@ export function ProvideAppBuildPage({
 
 		let newCategories: Categories[] = [];
 
-		if (appType.value === 'cloud') {
+		if (appType.value === AppType.CLOUD) {
 			let marketplaceLiferayPlatformOfferingId = 0;
 			let marketplaceLiferayVersionId = 0;
 			let marketplaceEditionId = 0;
@@ -131,17 +152,19 @@ export function ProvideAppBuildPage({
 				vocabId: marketplaceLiferayPlatformOfferingId,
 			});
 
-			const fullyManagedOption = platformOfferingList.find(
-				(item) => item.name === 'Fully-Managed'
+			const fullyManagedOption = platformOfferingList.filter((item) =>
+				selectedCheckboxValue.includes(item.name)
 			);
 
 			if (fullyManagedOption) {
-				newCategories.push({
-					externalReferenceCode:
-						fullyManagedOption?.externalReferenceCode,
-					id: fullyManagedOption.id,
-					name: fullyManagedOption.name,
-					vocabulary: 'Marketplace Liferay Platform Offering',
+				fullyManagedOption.map((managedOption) => {
+					newCategories.push({
+						externalReferenceCode:
+							managedOption?.externalReferenceCode,
+						id: managedOption.id,
+						name: managedOption.name,
+						vocabulary: 'Marketplace Liferay Platform Offering',
+					});
 				});
 			}
 
@@ -258,6 +281,20 @@ export function ProvideAppBuildPage({
 					/>
 				</div>
 			</Section>
+			<Section
+				label="Compatible Offering"
+				required
+				tooltip="Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested."
+				tooltipText="More Info"
+			>
+				<OfferingTypeCheckbox
+					handleSelectCheckbox={handleSelectCheckbox}
+					offeringTypes={
+						offeringTypesDescription[String(appType.value)]
+					}
+					selectedValue={selectedCheckboxValue}
+				/>
+			</Section>
 
 			<Section
 				label="App Build"
@@ -346,7 +383,9 @@ export function ProvideAppBuildPage({
 			</Section>
 
 			<NewAppPageFooterButtons
-				disableContinueButton={!buildZIPFiles?.length}
+				disableContinueButton={
+					!buildZIPFiles?.length || !selectedCheckboxValue.length
+				}
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
 					const submitAppBuildType = async () => {

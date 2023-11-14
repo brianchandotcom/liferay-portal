@@ -8,7 +8,8 @@
 			margin-bottom: 1.5rem;
 		}
 
-		&-radio-container {
+		&-radio-container,
+		&-checkbox-container {
 			display: flex;
 			flex-direction: column;
 			gap: 1.5rem;

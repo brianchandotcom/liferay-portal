@@ -6,7 +6,6 @@
 package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
@@ -224,19 +223,17 @@ public class SalesforceObjectEntryManagerImpl
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinition.getAccountEntryRestrictedObjectFieldId());
 
-		List<AccountEntry> accountEntries =
-			_accountEntryLocalService.getUserAccountEntries(
-				dtoConverterContext.getUserId(),
-				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				AccountConstants.ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
 		return StringBundler.concat(
 			objectField.getExternalReferenceCode(), " IN ('",
 			StringUtil.merge(
 				TransformUtil.transform(
-					accountEntries,
+					_accountEntryLocalService.getUserAccountEntries(
+						dtoConverterContext.getUserId(),
+						AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+						AccountConstants.
+							ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
+						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
 					AccountEntryModel::getExternalReferenceCode),
 				"', '"),
 			"')");

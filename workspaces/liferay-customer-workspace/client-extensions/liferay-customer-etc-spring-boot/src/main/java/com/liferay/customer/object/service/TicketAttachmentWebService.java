@@ -83,6 +83,22 @@ public class TicketAttachmentWebService {
 		return new TicketAttachment(jsonObject);
 	}
 
+	public void deleteTicketAttachment(Jwt jwt, long ticketAttachmentId)
+		throws Exception {
+
+		WebClient.create(
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+		).delete(
+		).uri(
+			"/o/c/ticketattachments/" + ticketAttachmentId
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
+	}
+
 	public TicketAttachment fetchTicketAttachment(
 		Jwt jwt, long ticketAttachmentId) {
 

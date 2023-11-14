@@ -36,6 +36,26 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class GoogleCloudStorageWebService {
 
+	public void deleteObject(String bucketName, String objectName)
+		throws Exception {
+
+		WebClient.create(
+			"https://storage.googleapis.com"
+		).delete(
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				"/storage/v1/b/{bucketName}/o/{objectName}"
+			).build(
+				bucketName, objectName
+			)
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + _getAccessToken()
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
+	}
+
 	public String getDownloadURL(String bucketName, String objectName)
 		throws Exception {
 
@@ -74,6 +94,27 @@ public class GoogleCloudStorageWebService {
 		sb.append("/o?uploadType=resumable&name=");
 		sb.append(objectName);
 
+		ResponseEntity<String> responseEntity = WebClient.create(
+		).post(
+		).uri(
+			sb.toString()
+		).accept(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + _getAccessToken()
+		).retrieve(
+		).toEntity(
+			String.class
+		).block();
+
+		HttpHeaders httpHeaders = responseEntity.getHeaders();
+
+		URI uri = httpHeaders.getLocation();
+
+		return uri.toString();
+	}
+
+	private String _getAccessToken() throws Exception {
 		try (InputStream inputStream = new ByteArrayInputStream(
 				_gcsServiceAccountKey.getBytes())) {
 
@@ -89,25 +130,7 @@ public class GoogleCloudStorageWebService {
 
 			AccessToken accessToken = googleCredentials.refreshAccessToken();
 
-			ResponseEntity<String> responseEntity = WebClient.create(
-			).post(
-			).uri(
-				sb.toString()
-			).accept(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + accessToken.getTokenValue()
-			).retrieve(
-			).toEntity(
-				String.class
-			).block();
-
-			HttpHeaders httpHeaders = responseEntity.getHeaders();
-
-			URI uri = httpHeaders.getLocation();
-
-			return uri.toString();
+			return accessToken.getTokenValue();
 		}
 	}
 

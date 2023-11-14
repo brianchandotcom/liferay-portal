@@ -34,18 +34,23 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 	};
 
 	useEffect(() => {
-		if (
-			selectedObjectField &&
-			selectedObjectField.businessType === 'Aggregation'
-		) {
-			setNewVerticalBarWidthValue(950);
+		if (selectedObjectField) {
+			if (selectedObjectField.businessType === 'Aggregation') {
+				setNewVerticalBarWidthValue(950);
+
+				return;
+			}
+
+			if (selectedObjectField.businessType === 'Picklist') {
+				setNewVerticalBarWidthValue(500);
+
+				return;
+			}
+
+			setNewVerticalBarWidthValue(320);
 
 			return;
 		}
-
-		setNewVerticalBarWidthValue(320);
-
-		return;
 	}, [
 		selectedObjectDefinitionNode,
 		selectedObjectField,

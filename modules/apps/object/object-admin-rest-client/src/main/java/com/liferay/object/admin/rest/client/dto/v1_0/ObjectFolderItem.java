@@ -47,6 +47,28 @@ public class ObjectFolderItem implements Cloneable, Serializable {
 
 	protected Boolean linkedObjectDefinition;
 
+	public ObjectDefinition getObjectDefinition() {
+		return objectDefinition;
+	}
+
+	public void setObjectDefinition(ObjectDefinition objectDefinition) {
+		this.objectDefinition = objectDefinition;
+	}
+
+	public void setObjectDefinition(
+		UnsafeSupplier<ObjectDefinition, Exception>
+			objectDefinitionUnsafeSupplier) {
+
+		try {
+			objectDefinition = objectDefinitionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectDefinition objectDefinition;
+
 	public String getObjectDefinitionExternalReferenceCode() {
 		return objectDefinitionExternalReferenceCode;
 	}

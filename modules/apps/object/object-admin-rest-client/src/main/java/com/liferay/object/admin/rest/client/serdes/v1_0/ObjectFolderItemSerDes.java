@@ -56,6 +56,16 @@ public class ObjectFolderItemSerDes {
 			sb.append(objectFolderItem.getLinkedObjectDefinition());
 		}
 
+		if (objectFolderItem.getObjectDefinition() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinition\": ");
+
+			sb.append(String.valueOf(objectFolderItem.getObjectDefinition()));
+		}
+
 		if (objectFolderItem.getObjectDefinitionExternalReferenceCode() !=
 				null) {
 
@@ -123,6 +133,15 @@ public class ObjectFolderItemSerDes {
 				String.valueOf(objectFolderItem.getLinkedObjectDefinition()));
 		}
 
+		if (objectFolderItem.getObjectDefinition() == null) {
+			map.put("objectDefinition", null);
+		}
+		else {
+			map.put(
+				"objectDefinition",
+				String.valueOf(objectFolderItem.getObjectDefinition()));
+		}
+
 		if (objectFolderItem.getObjectDefinitionExternalReferenceCode() ==
 				null) {
 
@@ -177,6 +196,13 @@ public class ObjectFolderItemSerDes {
 				if (jsonParserFieldValue != null) {
 					objectFolderItem.setLinkedObjectDefinition(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "objectDefinition")) {
+				if (jsonParserFieldValue != null) {
+					objectFolderItem.setObjectDefinition(
+						ObjectDefinitionSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

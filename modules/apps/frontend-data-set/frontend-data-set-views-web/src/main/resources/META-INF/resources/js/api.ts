@@ -61,7 +61,7 @@ function getValidFields({
 			return;
 		}
 
-		if (type === EFieldType.OBJECT && propertyValue.$ref) {
+		if (propertyValue.$ref) {
 			if (Liferay.FeatureFlags['LPS-186871']) {
 				fields.push({
 					children: getValidFields({

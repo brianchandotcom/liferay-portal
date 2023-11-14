@@ -9,7 +9,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 const ACTION_COPY_PAGE = 'copy-page';
 const ACTION_DELETE = 'delete';
@@ -147,9 +147,6 @@ function TreeItem({
 	namespace,
 	selectedLayoutId,
 }) {
-	const stackAnchorRef = useRef(null);
-	const itemAnchorRef = useRef(null);
-
 	const warningMessage = isSiteTemplate
 		? Liferay.Language.get(
 				'there-is-a-page-with-the-same-friendly-url-in-a-site-using-this-site-template'
@@ -183,7 +180,7 @@ function TreeItem({
 				draggable={item.id !== ROOT_ITEM_ID}
 				onKeyDown={(event) => {
 					if (event.keyCode === ENTER_KEYCODE && item.regularURL) {
-						stackAnchorRef.current.click();
+						navigate(item.regularURL);
 					}
 				}}
 			>
@@ -195,7 +192,6 @@ function TreeItem({
 							className="flex-grow-1 text-decoration-none text-truncate w-100"
 							data-tooltip-floating="true"
 							href={item.regularURL}
-							ref={stackAnchorRef}
 							tabIndex="-1"
 							target={item.target}
 							title={item.name}
@@ -238,7 +234,7 @@ function TreeItem({
 								event.keyCode === ENTER_KEYCODE &&
 								item.regularURL
 							) {
-								itemAnchorRef.current.click();
+								navigate(item.regularURL);
 							}
 						}}
 					>
@@ -255,7 +251,6 @@ function TreeItem({
 									}
 									className="flex-grow-1 text-decoration-none text-truncate-inline"
 									href={item.regularURL}
-									ref={itemAnchorRef}
 									tabIndex="-1"
 									target={item.target}
 								>

@@ -297,6 +297,40 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
+	private void _validatePath(ObjectEntry objectEntry, String pathString)
+		throws Exception {
+
+		Matcher matcher = _pathPattern.matcher(pathString);
+
+		if (!matcher.matches()) {
+			User user = _userLocalService.getUser(objectEntry.getUserId());
+
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectEntry.getObjectDefinitionId(), "path");
+
+			String message =
+				"%s can have a maximum of 255 alphanumeric characters";
+			String messageKey =
+				"x-can-have-a-maximum-of-255-alphanumeric-characters";
+
+			if (!pathString.startsWith(StringPool.FORWARD_SLASH)) {
+				message = "%s must start with the \"/\" character";
+				messageKey = "x-must-start-with-the-x-character";
+			}
+
+			if (!StringUtil.isLowerCase(pathString)) {
+				message = "%s must contain only lower case characters";
+				messageKey = "x-must-contain-only-lower-case-characters";
+			}
+
+			String label = objectField.getLabel(user.getLocale());
+
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				Arrays.asList(label, "\"/\""), String.format(message, label),
+				messageKey);
+		}
+	}
+
 	private void _validatePostAPIEndpoint(ObjectEntry objectEntry)
 		throws Exception {
 
@@ -330,40 +364,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 
 		_validatePath(objectEntry, pathString);
-	}
-
-	private void _validatePath(ObjectEntry objectEntry, String pathString)
-		throws Exception {
-
-		Matcher matcher = _pathPattern.matcher(pathString);
-
-		if (!matcher.matches()) {
-			User user = _userLocalService.getUser(objectEntry.getUserId());
-
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectEntry.getObjectDefinitionId(), "path");
-
-			String message =
-				"%s can have a maximum of 255 alphanumeric characters";
-			String messageKey =
-				"x-can-have-a-maximum-of-255-alphanumeric-characters";
-
-			if (!pathString.startsWith(StringPool.FORWARD_SLASH)) {
-				message = "%s must start with the \"/\" character";
-				messageKey = "x-must-start-with-the-x-character";
-			}
-
-			if (!StringUtil.isLowerCase(pathString)) {
-				message = "%s must contain only lower case characters";
-				messageKey = "x-must-contain-only-lower-case-characters";
-			}
-
-			String label = objectField.getLabel(user.getLocale());
-
-			throw new ObjectEntryValuesException.InvalidObjectField(
-				Arrays.asList(label, "\"/\""), String.format(message, label),
-				messageKey);
-		}
 	}
 
 	private void _validateSingleElementPath(

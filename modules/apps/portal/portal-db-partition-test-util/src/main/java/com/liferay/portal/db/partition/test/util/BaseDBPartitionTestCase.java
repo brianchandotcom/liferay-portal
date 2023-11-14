@@ -131,6 +131,10 @@ public abstract class BaseDBPartitionTestCase {
 
 					statement.execute(
 						"delete from User_ where companyId = " + companyId);
+
+					statement.execute(
+						"delete from VirtualHost where companyId = " +
+							companyId);
 				}
 			}
 		}
@@ -340,16 +344,31 @@ public abstract class BaseDBPartitionTestCase {
 		for (long companyId : COMPANY_IDS) {
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(companyId);
-				PreparedStatement preparedStatement =
+				PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
 						"insert into Company (companyId, mx, webId) values " +
-							"(?, ?, ?)")) {
+							"(?, ?, ?)");
+				PreparedStatement preparedStatement2 =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"insert into VirtualHost (ctCollectionId, ",
+							"virtualHostId, companyId, layoutSetId, hostname, ",
+							"defaultVirtualHost) values (?, ?, ?, ?, ?, ?)"))) {
 
-				preparedStatement.setLong(1, companyId);
-				preparedStatement.setString(2, "liferay.com");
-				preparedStatement.setString(3, "Test" + companyId);
+				preparedStatement1.setLong(1, companyId);
+				preparedStatement1.setString(2, "liferay.com");
+				preparedStatement1.setString(3, "Test" + companyId);
 
-				preparedStatement.executeUpdate();
+				preparedStatement1.executeUpdate();
+
+				preparedStatement2.setLong(1, 0L);
+				preparedStatement2.setLong(2, RandomTestUtil.nextLong());
+				preparedStatement2.setLong(3, companyId);
+				preparedStatement2.setLong(4, 0L);
+				preparedStatement2.setString(5, "test" + companyId);
+				preparedStatement2.setBoolean(6, true);
+
+				preparedStatement2.executeUpdate();
 			}
 		}
 	}

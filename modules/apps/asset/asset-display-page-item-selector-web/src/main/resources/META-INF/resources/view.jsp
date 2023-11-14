@@ -12,6 +12,10 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 %>
 
 <clay:container-fluid>
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getLayoutPageTemplateBreadcrumbEntries() %>"
+	/>
+
 	<liferay-ui:search-container
 		id="displayPages"
 		searchContainer="<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getAssetDisplayPageSearchContainer() %>"

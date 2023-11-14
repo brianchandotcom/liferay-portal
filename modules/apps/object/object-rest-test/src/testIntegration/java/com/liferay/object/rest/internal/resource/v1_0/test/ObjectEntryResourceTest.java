@@ -6245,6 +6245,9 @@ public class ObjectEntryResourceTest {
 				TestDLFileEntryModelListener testDLFileEntryModelListener)
 		throws Exception {
 
+		// TODO Add a comment here too, and make sure all the comments are
+		// sorted
+
 		String name = RandomTestUtil.randomString();
 
 		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(

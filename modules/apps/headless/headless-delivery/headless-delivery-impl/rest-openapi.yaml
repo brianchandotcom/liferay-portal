@@ -3654,6 +3654,10 @@ components:
                         - $ref: "#/components/schemas/PageRowDefinition"
                         - $ref: "#/components/schemas/PageSectionDefinition"
                         - $ref: "#/components/schemas/PageWidgetInstanceDefinition"
+                id:
+                    description:
+                        The page element's ID.
+                    type: string
                 pageElements:
                     # @review
                     description:
@@ -5761,7 +5765,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.67'."
+        'com.liferay.headless.delivery.client', and version '4.0.68'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

@@ -165,6 +165,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9743, As a buyer I can view Payment Subscription field on the Product Details page with multiple SKUs"
+	@priority = 3
+	test CanViewPaymentSubscriptionOnProductDetailsPageWithMultipleSKU {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new product with an option is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Simple_Product",
+				productType = "simple",
+				sku = "TESTSKU");
+
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "package-quantity",
+				optionName = "Package Quantity",
+				productName = "Simple_Product");
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Simple_Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And the admin navigates to the Subscription tab of the Simple_Product") {
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+		}
+
+		task ("And the Payment Subscription is enabled") {
+			Click(locator1 = "CommerceEntry#PAYMENT_SUBSCRIPTION_TOGGLE");
+		}
+
+		task ("And the default settings(Type:Day,Length:1,Type in Length:Day) are displayed") {
+			AssertSelectedLabel(
+				key_subscriptionFieldLabel = "Subscription Type",
+				key_subscriptionName = "Payment Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+				value1 = "Day");
+
+			AssertTextEquals(
+				key_fieldLabel = "Subscription Length",
+				key_indexNumber = 1,
+				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+				value1 = 1);
+
+			AssertTextEquals(
+				key_subscriptionFieldLabel = "Subscription Length",
+				key_subscriptionName = "Payment Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_TYPE_IN_LENGTH",
+				value1 = "Day");
+
+			Button.clickPublish();
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer navigates to the product details page") {
+			CommerceNavigator.gotoProductDetails(productName = "Simple_Product");
+		}
+
+		task ("Then the Payment Subscription is shown correctly") {
+			AssertElementPresent(
+				key_subscriptionName = "Payment",
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_SUBSCRIPTION_INFO",
+				value1 = "Every 1 Day");
+
+			AssertElementNotPresent(
+				key_subscriptionName = "Delivery",
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_SUBSCRIPTION_INFO",
+				value1 = "Every 1 Day");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9744 and COMMERCE-9798. The admin can view whether the subscription type that in subscription length field is singular or plural according to the value of the subscription length when the Payment Subscription is enabled"
 	@priority = 3
 	test CanViewPaymentSubscriptionTypeFormatInSubscriptionLengthField {

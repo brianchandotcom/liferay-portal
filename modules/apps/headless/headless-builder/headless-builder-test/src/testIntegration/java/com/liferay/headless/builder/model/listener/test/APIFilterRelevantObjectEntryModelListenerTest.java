@@ -92,7 +92,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 	}
 
 	@Test
-	public void testGetEndpointsWithApiEndpointToAPIFiltersAsNestedFields()
+	public void testGetEndpointsWithAPIEndpointToAPIFiltersAsNestedFields()
 		throws Exception {
 
 		_addAPIApplication(

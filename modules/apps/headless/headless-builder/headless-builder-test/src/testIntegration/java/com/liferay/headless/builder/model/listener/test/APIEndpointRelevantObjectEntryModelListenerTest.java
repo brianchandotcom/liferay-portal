@@ -61,7 +61,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 	}
 
 	@Test
-	public void testCreateGETAPIEndpoint() throws Exception {
+	public void testCreateGetAPIEndpoint() throws Exception {
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -729,7 +729,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 	}
 
 	@Test
-	public void testCreatePOSTAPIEndpoint() throws Exception {
+	public void testCreatePostAPIEndpoint() throws Exception {
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"

@@ -91,7 +91,7 @@ definition {
 	}
 
 	@priority = 4
-	test CanCreateApiWithValidFieldValues {
+	test CanCreateAPIWithValidFieldValues {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@priority = 4
-	test CanCustomUrlInNewApiForm {
+	test CanCustomUrlInNewAPIForm {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@priority = 4
-	test CannotCreateApiWithExistingTitle {
+	test CannotCreateAPIWithExistingTitle {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@priority = 3
-	test CannotCreateApiWithoutRequiredTitleAndUrlFieldValues {
+	test CannotCreateAPIWithoutRequiredTitleAndUrlFieldValues {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

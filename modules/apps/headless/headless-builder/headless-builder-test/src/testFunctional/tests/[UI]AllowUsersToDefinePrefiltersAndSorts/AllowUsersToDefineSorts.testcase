@@ -32,7 +32,7 @@ definition {
 			}
 		}
 
-		task ("And Given ApiApplication with an endpoint of scope Company created and published") {
+		task ("And Given APIApplication with an endpoint of scope Company created and published") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
 				endpointName = "testendpoint",

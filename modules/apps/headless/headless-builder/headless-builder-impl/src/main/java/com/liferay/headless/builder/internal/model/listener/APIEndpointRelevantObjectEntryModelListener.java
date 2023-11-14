@@ -162,10 +162,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 				StringUtil.toUpperCase((String)values.get("httpMethod")));
 
 			if (Objects.equals(method, Http.Method.POST)) {
-				_validatePOSTAPIEndpoint(objectEntry);
+				_validatePostAPIEndpoint(objectEntry);
 			}
 			else if (Objects.equals(method, Http.Method.GET)) {
-				_validateGETAPIEndpoint(objectEntry, responseAPISchemaId);
+				_validateGetAPIEndpoint(objectEntry, responseAPISchemaId);
 			}
 
 			String pathParameter = (String)values.get("pathParameter");
@@ -276,7 +276,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
-	private void _validateGETAPIEndpoint(
+	private void _validateGetAPIEndpoint(
 			ObjectEntry objectEntry, long responseAPISchemaId)
 		throws Exception {
 
@@ -299,7 +299,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
-	private void _validatePOSTAPIEndpoint(ObjectEntry objectEntry)
+	private void _validatePostAPIEndpoint(ObjectEntry objectEntry)
 		throws Exception {
 
 		Map<String, Serializable> values = objectEntry.getValues();

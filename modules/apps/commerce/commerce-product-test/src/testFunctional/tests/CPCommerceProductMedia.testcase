@@ -114,6 +114,348 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "COMMERCE-12853 | Verify that is possible to add tags to the attachments and remove it"
+	@priority = 5
+	test CanAddAndRemoveTagsForAttachments {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium Site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And the admin opens the product ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+		}
+
+		task ("And the admin adds some tags for an attachment") {
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addAttachmentImages(
+				imageTitles = "Black",
+				tags = "featured,fnew_tag");
+		}
+
+		task ("Then the tags are correctly added") {
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			for (var tagNameList : list "featured,fnew_tag") {
+				AssertElementPresent(
+					key_tagName = ${tagNameList},
+					locator1 = "CommerceEntry#IMAGE_TAG");
+			}
+		}
+
+		task ("But when the admin removes a tag") {
+			Click(
+				key_tagName = "fnew_tag",
+				locator1 = "CommerceEntry#REMOVE_IMAGE_TAG");
+
+			CommerceEntry.publishProductImage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+		}
+
+		task ("Then the tag is removed") {
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_tagName = "featured",
+				locator1 = "CommerceEntry#IMAGE_TAG");
+
+			AssertElementNotPresent(
+				key_tagName = "fnew_tag",
+				locator1 = "CommerceEntry#IMAGE_TAG");
+		}
+
+		task ("But if the admin tries to add a tag by using the 'Select' button") {
+			Click(
+				key_text = "Select",
+				locator1 = "Button#ANY");
+
+			SelectFrame.selectFrameNoLoading(
+				key_title = "Tags",
+				locator1 = "IFrame#MODAL_ANY");
+
+			task ("Then the admin can add a tag again") {
+				Click(
+					key_columnName = "name",
+					key_tableEntry = "fnew_tag",
+					locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECKBOX");
+
+				SelectFrameTop();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				Button.click(button = "Done");
+
+				CommerceEntry.publishProductImage();
+
+				Click(locator1 = "Icon#CLOSE");
+
+				SelectFrame.selectFrameTop();
+
+				CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				for (var tagNameList : list "featured,fnew_tag") {
+					AssertElementPresent(
+						key_tagName = ${tagNameList},
+						locator1 = "CommerceEntry#IMAGE_TAG");
+				}
+			}
+		}
+
+		task ("When the admin use the 'Clear all' button") {
+			Click(locator1 = "CommerceEntry#REMOVE_ALL_IMAGE_TAG");
+
+			CommerceEntry.publishProductImage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			task ("Then all the tags will be removed") {
+				for (var tagNameList : list "featured,fnew_tag") {
+					AssertElementNotPresent(
+						key_tagName = ${tagNameList},
+						locator1 = "CommerceEntry#IMAGE_TAG");
+				}
+			}
+		}
+
+		task ("But if the admin uses the dropdown to add a tag") {
+			Type(
+				locator1 = "ACSettings#INVITE_USERS_INPUT",
+				value1 = "f");
+
+			for (var rowList : list "featured,fnew_tag") {
+				AssertElementPresent(
+					key_columnOption = ${rowList},
+					locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+			}
+
+			Type(
+				locator1 = "ACSettings#INVITE_USERS_INPUT",
+				value1 = "fn");
+
+			AssertElementPresent(
+				key_columnOption = "fnew_tag",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			AssertElementNotPresent(
+				key_columnOption = "featured",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			Click(
+				key_columnOption = "fnew_tag",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			CommerceEntry.publishProductImage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			task ("Then the tag 'fnew_tag' is present") {
+				AssertElementPresent(
+					key_tagName = "fnew_tag",
+					locator1 = "CommerceEntry#IMAGE_TAG");
+
+				AssertElementNotPresent(
+					key_tagName = "featured",
+					locator1 = "CommerceEntry#IMAGE_TAG");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12852 | Verify that is possible to add tags to the images and remove it"
+	@priority = 5
+	test CanAddAndRemoveTagsForImages {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium Site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And the admin opens the product ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+		}
+
+		task ("And the admin adds some tags for an image") {
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addProductImages(
+				imageTitles = "Black",
+				tags = "featured,fnew_tag");
+		}
+
+		task ("Then the tags are correctly added") {
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			for (var tagNameList : list "featured,fnew_tag") {
+				AssertElementPresent(
+					key_tagName = ${tagNameList},
+					locator1 = "CommerceEntry#IMAGE_TAG");
+			}
+		}
+
+		task ("But when the admin removes a tag") {
+			Click(
+				key_tagName = "fnew_tag",
+				locator1 = "CommerceEntry#REMOVE_IMAGE_TAG");
+
+			CommerceEntry.publishProductImage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+		}
+
+		task ("Then the tag is removed") {
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_tagName = "featured",
+				locator1 = "CommerceEntry#IMAGE_TAG");
+
+			AssertElementNotPresent(
+				key_tagName = "fnew_tag",
+				locator1 = "CommerceEntry#IMAGE_TAG");
+		}
+
+		task ("But if the admin tries to add a tag by using the 'Select' button") {
+			Click(
+				key_text = "Select",
+				locator1 = "Button#ANY");
+
+			SelectFrame.selectFrameNoLoading(
+				key_title = "Tags",
+				locator1 = "IFrame#MODAL_ANY");
+
+			task ("Then the admin can add a tag again") {
+				Click(
+					key_columnName = "name",
+					key_tableEntry = "fnew_tag",
+					locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECKBOX");
+
+				SelectFrameTop();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				Button.click(button = "Done");
+
+				CommerceEntry.publishProductImage();
+
+				Click(locator1 = "Icon#CLOSE");
+
+				SelectFrame.selectFrameTop();
+
+				CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				for (var tagNameList : list "featured,fnew_tag") {
+					AssertElementPresent(
+						key_tagName = ${tagNameList},
+						locator1 = "CommerceEntry#IMAGE_TAG");
+				}
+			}
+		}
+
+		task ("When the admin uses the 'Clear all' button") {
+			Click(locator1 = "CommerceEntry#REMOVE_ALL_IMAGE_TAG");
+
+			CommerceEntry.publishProductImage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			task ("Then all the tags will be removed") {
+				for (var tagNameList : list "featured,fnew_tag") {
+					AssertElementNotPresent(
+						key_tagName = ${tagNameList},
+						locator1 = "CommerceEntry#IMAGE_TAG");
+				}
+			}
+		}
+
+		task ("But if the admin uses the dropdown to add a tag") {
+			Type(
+				locator1 = "ACSettings#INVITE_USERS_INPUT",
+				value1 = "f");
+
+			for (var rowList : list "featured,fnew_tag") {
+				AssertElementPresent(
+					key_columnOption = ${rowList},
+					locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+			}
+
+			Type(
+				locator1 = "ACSettings#INVITE_USERS_INPUT",
+				value1 = "fn");
+
+			AssertElementPresent(
+				key_columnOption = "fnew_tag",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			AssertElementNotPresent(
+				key_columnOption = "featured",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			Click(
+				key_columnOption = "fnew_tag",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			CommerceEntry.publishProductImage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			task ("Then the tag 'fnew_tag' is present") {
+				AssertElementPresent(
+					key_tagName = "fnew_tag",
+					locator1 = "CommerceEntry#IMAGE_TAG");
+
+				AssertElementNotPresent(
+					key_tagName = "featured",
+					locator1 = "CommerceEntry#IMAGE_TAG");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-12305. The admin can delete a product's attachment via API"
 	@priority = 5
 	test CanDeleteProductAttachmentViaAPI {

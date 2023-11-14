@@ -56,7 +56,8 @@ export default function RulesModal({editingRule, onCloseModal}) {
 		Object.values(layoutData.items).forEach((item) => {
 			if (
 				item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
-				item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
 				item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 				item.type !== LAYOUT_DATA_ITEM_TYPES.root
 			) {

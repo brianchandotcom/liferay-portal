@@ -112,10 +112,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.manager.SegmentsExperienceManager;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperimentRel;
+import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
@@ -181,7 +185,8 @@ public class ContentPageEditorDisplayContext {
 		SegmentsExperienceManager segmentsExperienceManager,
 		SegmentsExperienceLocalService segmentsExperienceLocalService,
 		SegmentsExperimentRelLocalService segmentsExperimentRelLocalService,
-		Staging staging, StagingGroupHelper stagingGroupHelper,
+		SegmentsEntryService segmentsEntryService, Staging staging,
+		StagingGroupHelper stagingGroupHelper,
 		StyleBookEntryLocalService styleBookEntryLocalService,
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
@@ -211,6 +216,7 @@ public class ContentPageEditorDisplayContext {
 		_segmentsExperienceManager = segmentsExperienceManager;
 		this.segmentsExperienceLocalService = segmentsExperienceLocalService;
 		_segmentsExperimentRelLocalService = segmentsExperimentRelLocalService;
+		_segmentsEntryService = segmentsEntryService;
 		_staging = staging;
 		_styleBookEntryLocalService = styleBookEntryLocalService;
 		_userLocalService = userLocalService;
@@ -272,6 +278,8 @@ public class ContentPageEditorDisplayContext {
 				_pageEditorConfiguration.autoExtendSessionEnabled()
 			).put(
 				"availableLanguages", _getAvailableLanguages()
+			).put(
+				"availableSegmentsEntries", _getAvailableSegmentsEntries()
 			).put(
 				"availableViewportSizes", _getAvailableViewportSizes()
 			).put(
@@ -1093,6 +1101,39 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return availableLanguages;
+	}
+
+	private Map<String, Object> _getAvailableSegmentsEntries() {
+		Map<String, Object> availableSegmentsEntries = new HashMap<>();
+
+		List<SegmentsEntry> segmentsEntries =
+			_segmentsEntryService.getSegmentsEntries(
+				stagingGroupHelper.getStagedPortletGroupId(
+					getGroupId(), SegmentsPortletKeys.SEGMENTS),
+				true);
+
+		for (SegmentsEntry segmentsEntry : segmentsEntries) {
+			availableSegmentsEntries.put(
+				String.valueOf(segmentsEntry.getSegmentsEntryId()),
+				HashMapBuilder.<String, Object>put(
+					"name", segmentsEntry.getName(themeDisplay.getLocale())
+				).put(
+					"segmentsEntryId",
+					String.valueOf(segmentsEntry.getSegmentsEntryId())
+				).build());
+		}
+
+		availableSegmentsEntries.put(
+			String.valueOf(SegmentsEntryConstants.ID_DEFAULT),
+			HashMapBuilder.<String, Object>put(
+				"name",
+				SegmentsEntryConstants.getDefaultSegmentsEntryName(
+					themeDisplay.getLocale())
+			).put(
+				"segmentsEntryId", SegmentsEntryConstants.ID_DEFAULT
+			).build());
+
+		return availableSegmentsEntries;
 	}
 
 	private Map<String, Map<String, Object>> _getAvailableViewportSizes() {
@@ -2018,6 +2059,7 @@ public class ContentPageEditorDisplayContext {
 	private String _redirect;
 	private List<String> _restrictedItemIds;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
+	private final SegmentsEntryService _segmentsEntryService;
 	private Long _segmentsExperienceId;
 	private final SegmentsExperienceManager _segmentsExperienceManager;
 	private final SegmentsExperimentRelLocalService

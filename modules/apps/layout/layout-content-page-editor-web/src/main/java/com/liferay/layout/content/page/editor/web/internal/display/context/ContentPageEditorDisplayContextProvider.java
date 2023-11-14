@@ -136,8 +136,9 @@ public class ContentPageEditorDisplayContextProvider {
 			_segmentsConfigurationProvider,
 			new SegmentsExperienceManager(_segmentsExperienceLocalService),
 			_segmentsExperienceLocalService, _segmentsExperimentRelLocalService,
-			_staging, _stagingGroupHelper, _styleBookEntryLocalService,
-			_userLocalService, _workflowDefinitionLinkLocalService);
+			_segmentsEntryService, _staging, _stagingGroupHelper,
+			_styleBookEntryLocalService, _userLocalService,
+			_workflowDefinitionLinkLocalService);
 	}
 
 	@Activate

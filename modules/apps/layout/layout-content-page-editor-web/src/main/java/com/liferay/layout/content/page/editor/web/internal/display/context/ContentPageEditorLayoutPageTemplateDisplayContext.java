@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.manager.SegmentsExperienceManager;
+import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.staging.StagingGroupHelper;
@@ -100,7 +101,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		SegmentsExperienceManager segmentsExperienceManager,
 		SegmentsExperienceLocalService segmentsExperienceLocalService,
 		SegmentsExperimentRelLocalService segmentsExperimentRelLocalService,
-		Staging staging, StagingGroupHelper stagingGroupHelper,
+		SegmentsEntryService segmentsEntryService, Staging staging,
+		StagingGroupHelper stagingGroupHelper,
 		StyleBookEntryLocalService styleBookEntryLocalService,
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
@@ -118,8 +120,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			portletRequest, portletURLFactory, renderResponse,
 			segmentsConfigurationProvider, segmentsExperienceManager,
 			segmentsExperienceLocalService, segmentsExperimentRelLocalService,
-			staging, stagingGroupHelper, styleBookEntryLocalService,
-			userLocalService, workflowDefinitionLinkLocalService);
+			segmentsEntryService, staging, stagingGroupHelper,
+			styleBookEntryLocalService, userLocalService,
+			workflowDefinitionLinkLocalService);
 
 		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;

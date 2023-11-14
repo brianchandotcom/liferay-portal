@@ -71,7 +71,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -84,7 +83,6 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -151,8 +149,9 @@ public class ContentPageLayoutEditorDisplayContext
 			portletRequest, portletURLFactory, renderResponse,
 			segmentsConfigurationProvider, segmentsExperienceManager,
 			segmentsExperienceLocalService, segmentsExperimentRelLocalService,
-			staging, stagingGroupHelper, styleBookEntryLocalService,
-			userLocalService, workflowDefinitionLinkLocalService);
+			segmentsEntryService, staging, stagingGroupHelper,
+			styleBookEntryLocalService, userLocalService,
+			workflowDefinitionLinkLocalService);
 
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_groupLocalService = groupLocalService;
@@ -161,7 +160,6 @@ public class ContentPageLayoutEditorDisplayContext
 		_layoutPageTemplateStructureRelLocalService =
 			layoutPageTemplateStructureRelLocalService;
 		_segmentsExperimentRelLocalService = segmentsExperimentRelLocalService;
-		_segmentsEntryService = segmentsEntryService;
 	}
 
 	@Override
@@ -187,8 +185,6 @@ public class ContentPageLayoutEditorDisplayContext
 					getPortletNamespace() + "plid", themeDisplay.getPlid()),
 				getPortletNamespace() + "groupId",
 				themeDisplay.getScopeGroupId()));
-		configContext.put(
-			"availableSegmentsEntries", _getAvailableSegmentsEntries());
 
 		LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(
 			"content-page-personalization",
@@ -364,39 +360,6 @@ public class ContentPageLayoutEditorDisplayContext
 			).put(
 				"type", InfoListItemSelectorReturnType.class.getName()
 			));
-	}
-
-	private Map<String, Object> _getAvailableSegmentsEntries() {
-		Map<String, Object> availableSegmentsEntries = new HashMap<>();
-
-		List<SegmentsEntry> segmentsEntries =
-			_segmentsEntryService.getSegmentsEntries(
-				stagingGroupHelper.getStagedPortletGroupId(
-					getGroupId(), SegmentsPortletKeys.SEGMENTS),
-				true);
-
-		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			availableSegmentsEntries.put(
-				String.valueOf(segmentsEntry.getSegmentsEntryId()),
-				HashMapBuilder.<String, Object>put(
-					"name", segmentsEntry.getName(themeDisplay.getLocale())
-				).put(
-					"segmentsEntryId",
-					String.valueOf(segmentsEntry.getSegmentsEntryId())
-				).build());
-		}
-
-		availableSegmentsEntries.put(
-			String.valueOf(SegmentsEntryConstants.ID_DEFAULT),
-			HashMapBuilder.<String, Object>put(
-				"name",
-				SegmentsEntryConstants.getDefaultSegmentsEntryName(
-					themeDisplay.getLocale())
-			).put(
-				"segmentsEntryId", SegmentsEntryConstants.ID_DEFAULT
-			).build());
-
-		return availableSegmentsEntries;
 	}
 
 	private String _getEditSegmentsEntryURL() throws Exception {
@@ -737,7 +700,6 @@ public class ContentPageLayoutEditorDisplayContext
 		_layoutPageTemplateStructureRelLocalService;
 	private Boolean _lockedSegmentsExperience;
 	private Long _segmentsEntryId;
-	private final SegmentsEntryService _segmentsEntryService;
 	private Long _segmentsExperienceId;
 	private final SegmentsExperimentRelLocalService
 		_segmentsExperimentRelLocalService;

@@ -1,4 +1,8 @@
 {
+	"dependencies": {
+		"date-fns": "2.29.3",
+		"frontend-js-web": "*"
+	},
 	"name": "portal-reports-engine-console-web",
 	"private": true,
 	"scripts": {

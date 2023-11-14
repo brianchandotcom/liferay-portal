@@ -21,6 +21,7 @@ import {DashboardTable, TableHeaders} from '../DashboardTable/DashboardTable';
 import {InviteMemberModal} from '../InviteMemberModal/InviteMemberModal';
 import {MemberProfile} from '../MemberProfile/MemberProfile';
 import useMembers from './useMembers';
+import { Liferay } from '../../liferay/liferay';
 
 interface MembersPageProps {
 	icon: string;
@@ -68,7 +69,7 @@ export function MembersPage({
 	const [visible, setVisible] = useState<boolean>(false);
 	const [loading] = useState<boolean>(false);
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
-	const {accountId} = useParams();
+	const {accountId} = Liferay.CommerceContext.account || {};
 
 	const marketplaceContext = useMarketplaceContext();
 

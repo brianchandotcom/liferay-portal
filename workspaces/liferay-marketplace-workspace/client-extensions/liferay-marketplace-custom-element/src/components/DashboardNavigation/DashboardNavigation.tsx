@@ -12,6 +12,8 @@ import {DashboardNavigationList} from './DashboardNavigationList';
 
 import './DashboardNavigation.scss';
 import {AppProps} from '../DashboardTable/DashboardTable';
+import { Liferay } from '../../liferay/liferay';
+import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 export interface DashboardListItems {
 	itemIcon: string;
 	itemName: string;
@@ -72,7 +74,15 @@ export function DashboardNavigation({
 					{accounts.map((account) => (
 						<ClayDropDown.Item
 							key={account.id}
-							onClick={() => navigate(`/${account.id}`)}
+							onClick={() => {
+								CommerceSelectAccountImpl.selectAccount(account.id).then(() => {
+									Liferay.CommerceContext.account = {
+										accountId: account.id
+									};
+									navigate(`/`);
+									window.location.reload();
+								});
+							}}
 						>
 							{account.name}
 						</ClayDropDown.Item>

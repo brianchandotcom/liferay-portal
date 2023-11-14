@@ -16,14 +16,14 @@ import {
 } from '../../../components/DashboardTable/DashboardTable';
 import {PublishedAppsDashboardTableRow} from '../../../components/DashboardTable/PublishedAppsDashboardTableRow';
 import {appTableHeaders} from '../PublishedDashboardPageUtil';
+import { Liferay } from '../../../liferay/liferay';
 
 const Apps = () => {
 	const [page, setPage] = useState(1);
 
-	const {catalogId, publishedAppTable, selectedAccount} = useOutletContext<
+	const {catalogId, publishedAppTable} = useOutletContext<
 		any
 	>();
-	const {accountId} = useParams();
 	const navigate = useNavigate();
 
 	return (
@@ -40,9 +40,7 @@ const Apps = () => {
 			}}
 			onButtonClick={() => {
 				navigate(
-					`/${
-						accountId ?? selectedAccount?.id
-					}/app/create?catalogId=${catalogId}`
+					`/app/create?catalogId=${catalogId}`
 				);
 			}}
 		>

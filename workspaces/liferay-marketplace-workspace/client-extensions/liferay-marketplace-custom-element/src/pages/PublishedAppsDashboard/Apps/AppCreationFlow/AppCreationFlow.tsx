@@ -38,7 +38,7 @@ export function AppCreationFlow() {
 		initialFLowListItems
 	);
 	const [currentFlow, setCurrentFlow] = useState('create');
-	const {accountId} = useParams();
+	const {accountId} = Liferay.CommerceContext.account || {};
 	const account = useAccountCached([], accountId as string);
 
 	const setAppFlowListState = ({

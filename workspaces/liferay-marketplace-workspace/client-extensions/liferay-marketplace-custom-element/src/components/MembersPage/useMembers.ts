@@ -16,7 +16,7 @@ import {
 import {getUserAccounts} from '../../utils/api';
 
 type Props = {
-	accountId: string | null;
+	accountId: string | number | null;
 	isCustomerDashboard: boolean;
 	isPublisherDashboard: boolean;
 	selectedAccount: Account;

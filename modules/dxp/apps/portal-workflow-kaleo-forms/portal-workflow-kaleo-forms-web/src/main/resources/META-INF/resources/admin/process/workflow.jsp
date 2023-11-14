@@ -189,21 +189,17 @@ if (Validator.isNotNull(workflowDefinition)) {
 	Liferay.on(
 		'<portlet:namespace />chooseWorkflow',
 		(event) => {
-			var A = AUI();
+			const workflowDefinition = event.name + '@' + event.version;
 
-			var workflowDefinition = event.name + '@' + event.version;
+			document.getElementById(
+				'<portlet:namespace />workflowDefinition'
+			).value = workflowDefinition;
 
-			A.one('#<portlet:namespace />workflowDefinition').val(
-				workflowDefinition
-			);
+			document.getElementById(
+				'<portlet:namespace />workflowDefinitionDisplay'
+			).innerHTML = Liferay.Util.escapeHTML(event.title);
 
-			A.one('#<portlet:namespace />workflowDefinitionDisplay').html(
-				A.Lang.sub('{title}', {
-					title: Liferay.Util.escapeHTML(event.title),
-				})
-			);
-
-			var kaleoFormsAdmin = Liferay.component(
+			const kaleoFormsAdmin = Liferay.component(
 				'<portlet:namespace />KaleoFormsAdmin'
 			);
 
@@ -216,20 +212,14 @@ if (Validator.isNotNull(workflowDefinition)) {
 		['aui-base']
 	);
 
-	window['<portlet:namespace />editWorkflow'] = function (uri) {
-		AUI().use('liferay-util', (A) => {
-			var WIN = A.config.win;
-
-			Liferay.Util.openWindow({
-				dialog: {
-					destroyOnHide: true,
-					modal: true,
-				},
-				id: A.guid(),
-				refreshWindow: WIN,
-				title: '<liferay-ui:message key="workflow" />',
-				uri: uri,
-			});
+	window['<portlet:namespace />editWorkflow'] = (uri) => {
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true,
+				modal: true,
+			},
+			title: '<liferay-ui:message key="workflow" />',
+			uri: uri,
 		});
 	};
 </aui:script>

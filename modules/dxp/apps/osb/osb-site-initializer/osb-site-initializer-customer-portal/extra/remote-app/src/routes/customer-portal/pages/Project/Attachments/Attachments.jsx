@@ -10,14 +10,13 @@ import useCurrentKoroneikiAccount from '../../../../../common/hooks/useCurrentKo
 import TicketAttachmentsTable from './components/TicketAttachmentsTable/TicketAttachmentsTable';
 
 const Attachments = () => {
-	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {setHasSideMenu} = useOutletContext();
 	const {data, loading} = useCurrentKoroneikiAccount();
 	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 
 	useEffect(() => {
-		setHasQuickLinksPanel(false);
 		setHasSideMenu(true);
-	}, [setHasSideMenu, setHasQuickLinksPanel]);
+	}, [setHasSideMenu]);
 
 	return (
 		<>

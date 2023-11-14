@@ -176,7 +176,9 @@ const SideMenu = () => {
 						</div>
 
 						<MenuItem to={getKebabCase(MENU_TYPES.attachments)}>
-							{i18n.translate(getKebabCase(MENU_TYPES.attachments))}
+							{i18n.translate(
+								getKebabCase(MENU_TYPES.attachments)
+							)}
 						</MenuItem>
 					</div>
 				)}

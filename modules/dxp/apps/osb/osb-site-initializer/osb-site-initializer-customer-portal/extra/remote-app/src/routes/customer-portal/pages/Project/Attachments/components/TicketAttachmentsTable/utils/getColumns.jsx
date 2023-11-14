@@ -31,8 +31,7 @@ const getInitialColumns = () => [
 					<div className="mr-2">{i18n.translate('file-name')}</div>
 				</div>
 			),
-			styles:
-				'h6 text-neutral-10 font-weight-bold table-cell-expand',
+			styles: 'h6 text-neutral-10 font-weight-bold table-cell-expand',
 		},
 		truncate: true,
 	},
@@ -73,7 +72,7 @@ const getInitialColumns = () => [
 			name: '',
 			styles: 'border-bottom bg-transparent',
 		},
-	}
+	},
 ];
 
 export function getColumns() {

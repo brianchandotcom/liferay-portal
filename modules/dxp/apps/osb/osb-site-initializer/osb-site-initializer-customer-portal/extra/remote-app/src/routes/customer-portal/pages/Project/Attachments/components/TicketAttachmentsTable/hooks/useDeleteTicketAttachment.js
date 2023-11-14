@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { deleteTicketAttachment } from "~/common/services/liferay/api";
-import { useState } from "react";
+import {useState} from 'react';
+import {deleteTicketAttachment} from '~/common/services/liferay/api';
 
 export default function useDelete() {
-
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const onDelete = async (ticketAttachmentId) => {

@@ -4,7 +4,6 @@
  */
 
 export default function useDownload() {
-
 	const onDownload = (storageBucketUrl) => {
 		if (storageBucketUrl) {
 			window.open(storageBucketUrl, '_blank').focus();

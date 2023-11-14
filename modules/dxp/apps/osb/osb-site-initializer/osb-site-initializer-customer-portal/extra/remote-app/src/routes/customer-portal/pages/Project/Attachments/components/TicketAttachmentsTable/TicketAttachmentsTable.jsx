@@ -3,29 +3,28 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState, useMemo} from 'react';
+import ClayAlert from '@clayui/alert';
+import {useModal} from '@clayui/core';
+import {useEffect, useState} from 'react';
+import {PAGE_ROUTER_TYPES} from '~/common/utils/constants';
 import i18n from '../../../../../../../common/I18n';
 import Table from '../../../../../../../common/components/Table';
-import {getTicketAttachments, deleteTicketAttachment} from '../../../../../../../common/services/liferay/api'
+import {getTicketAttachments} from '../../../../../../../common/services/liferay/api';
 import useMyUserAccountByAccountExternalReferenceCode from '../../../../Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
-import getAttachmentFormattedDateTime from './utils/getAttachmentFormattedDateTime';
-import {getColumns} from './utils/getColumns';
-import usePagination from './hooks/usePaginationTicketAttachments';
-import useSort from './hooks/useSortTicketAttachments';
+import DeleteTicketAttachmentModal from './components/DeleteTicketAttachmentModal/DeleteTicketAttachmentModal';
 import TicketAttachmentsTableEmpty from './components/TicketAttachmentsTableEmpty';
 import OptionsColumn from './components/columns/OptionsColumn';
-import { PAGE_ROUTER_TYPES } from '~/common/utils/constants';
-import useDownload from './hooks/useDownloadTicketAttachment';
 import useDelete from './hooks/useDeleteTicketAttachment';
-import {useModal} from '@clayui/core';
-import DeleteTicketAttachmentModal from './components/DeleteTicketAttachmentModal/DeleteTicketAttachmentModal';
-import ClayAlert from '@clayui/alert';
+import useDownload from './hooks/useDownloadTicketAttachment';
+import usePagination from './hooks/usePaginationTicketAttachments';
+import useSort from './hooks/useSortTicketAttachments';
+import getAttachmentFormattedDateTime from './utils/getAttachmentFormattedDateTime';
+import {getColumns} from './utils/getColumns';
 
 const TicketAttachmentsTable = ({
 	koroneikiAccount,
 	loading: koroneikiAccountLoading,
 }) => {
-
 	const {
 		data: myUserAccountData,
 		loading: myUserAccountLoading,
@@ -35,64 +34,72 @@ const TicketAttachmentsTable = ({
 	);
 
 	const loading = myUserAccountLoading;
-
-	const [ticketAttachments, setTicketAttachments] = useState([]);
-
-	const {handleSortChange, sortConfig} = useSort();
-
-	const {paginationConfig, sortedTicketAttachmentsFilteredPerPage} = usePagination(sortConfig, ticketAttachments);
-
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
-	const {onDownload} = useDownload();
-
-	const {isDeleting, onDelete} = useDelete();
-
-	const {observer, onOpenChange, open} = useModal();
-
+	const [ticketAttachments, setTicketAttachments] = useState([]);
 	const [selectedTicketAttachment, setSelectedTicketAttachment] = useState();
-
 	const [toastItems, setToastItems] = useState([]);
+
+	const {handleSortChange, sortConfig} = useSort();
+	const {
+		paginationConfig,
+		sortedTicketAttachmentsFilteredPerPage,
+	} = usePagination(sortConfig, ticketAttachments);
+	const {onDownload} = useDownload();
+	const {isDeleting, onDelete} = useDelete();
+	const {observer, onOpenChange, open} = useModal();
 
 	useEffect(() => {
 		const fetchTicketAttachments = async () => {
-			const ticketAttachmentsResponse = await getTicketAttachments(koroneikiAccount?.accountKey);
+			const ticketAttachmentsResponse = await getTicketAttachments(
+				koroneikiAccount?.accountKey
+			);
 
 			const ticketAttachmentsData = await ticketAttachmentsResponse.json();
 
-			const ticketAttachments = ticketAttachmentsData.items.map(ticketAttachment => ({
-				accountKey: ticketAttachment.accountKey,
-				creatorId: loggedUserAccount?.id,
-				creatorName: ticketAttachment.creator.name,
-				dateCreated: ticketAttachment.dateCreated,
-				fileName: ticketAttachment.fileName,
-				fileSize: ticketAttachment.fileSize,
-				storageBucket: ticketAttachment.storageBucket,
-				ticketAttachmentId: ticketAttachment.id,
-				zendeskTicketId: ticketAttachment.zendeskTicketId
-			}));
+			const ticketAttachments = ticketAttachmentsData.items.map(
+				(ticketAttachment) => ({
+					accountKey: ticketAttachment.accountKey,
+					creatorId: loggedUserAccount?.id,
+					creatorName: ticketAttachment.creator.name,
+					dateCreated: ticketAttachment.dateCreated,
+					fileName: ticketAttachment.fileName,
+					fileSize: ticketAttachment.fileSize,
+					storageBucket: ticketAttachment.storageBucket,
+					ticketAttachmentId: ticketAttachment.id,
+					zendeskTicketId: ticketAttachment.zendeskTicketId,
+				})
+			);
 
 			setTicketAttachments(ticketAttachments);
 		};
 		fetchTicketAttachments();
-	}, [koroneikiAccount?.accountKey, loggedUserAccount?.id, paginationConfig.activePage, paginationConfig.itemsPerPage, isDeleting]);
+	}, [
+		koroneikiAccount?.accountKey,
+		loggedUserAccount?.id,
+		paginationConfig.activePage,
+		paginationConfig.itemsPerPage,
+		isDeleting,
+	]);
 
 	return (
 		<>
 			{open && (
 				<DeleteTicketAttachmentModal
-					modalTitle={i18n.translate("delete-attached-file")}
+					modalTitle={i18n.translate('delete-attached-file')}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onDelete={() => {
-						onDelete(selectedTicketAttachment?.ticketAttachmentId)
-						onOpenChange(false)
-						setToastItems([...toastItems, Math.random() * 100])
+						onDelete(selectedTicketAttachment?.ticketAttachmentId);
+						onOpenChange(false);
+						setToastItems([...toastItems, Math.random() * 100]);
 					}}
 					removing={isDeleting}
 				>
 					<p className="my-0 text-neutral-10">
-						{i18n.translate('are-you-sure-you-want-to-delete-this-attached-file')}
+						{i18n.translate(
+							'are-you-sure-you-want-to-delete-this-attached-file'
+						)}
 					</p>
 
 					<p className="font-weight-bold mt-4 text-neutral-10">
@@ -102,31 +109,33 @@ const TicketAttachmentsTable = ({
 			)}
 
 			<ClayAlert.ToastContainer>
-				{toastItems.map(value => (
-				<ClayAlert
-					autoClose={false}
-					displayType="success"
-					key={value}
-					onClose={() => {
-					setToastItems(prevItems =>
-						prevItems.filter(item => item !== value)
-					);
-					}}
-				>
-					<div className="alert-successful-attachments text-paragraph">
-						{selectedTicketAttachment?.fileName}
+				{toastItems.map((value) => (
+					<ClayAlert
+						autoClose={5000}
+						displayType="success"
+						key={value}
+						onClose={() => {
+							setToastItems((prevItems) =>
+								prevItems.filter((item) => item !== value)
+							);
+						}}
+					>
+						<div className="alert-successful-attachments text-paragraph">
+							{selectedTicketAttachment?.fileName}
 
-						<span> </span>
+							<span> </span>
 
-						<div className="d-inline-block pr-3">
-							{i18n.translate('was-deleted-successfully')}
+							<div className="d-inline-block pr-3">
+								{i18n.translate('was-deleted-successfully')}
+							</div>
 						</div>
-					</div>
-				</ClayAlert>
+					</ClayAlert>
 				))}
 			</ClayAlert.ToastContainer>
 
-			{(sortedTicketAttachmentsFilteredPerPage && (paginationConfig.totalCount > 0) && !loading) ? (
+			{sortedTicketAttachmentsFilteredPerPage &&
+			paginationConfig.totalCount > 0 &&
+			!loading ? (
 				<div className="cp-ticket-attachments-table-wrapper">
 					<Table
 						className="border-0"
@@ -141,7 +150,9 @@ const TicketAttachmentsTable = ({
 								attached: (
 									<div className="d-flex flex-column">
 										<div className="m-0 text-neutral-10 text-truncate">
-											{getAttachmentFormattedDateTime(ticketAttachment?.dateCreated)}
+											{getAttachmentFormattedDateTime(
+												ticketAttachment?.dateCreated
+											)}
 										</div>
 
 										<div className="m-0 text-neutral-7 text-paragraph-sm text-truncate">
@@ -154,7 +165,10 @@ const TicketAttachmentsTable = ({
 									</div>
 								),
 								fileName: (
-									<a className="m-0 text-truncate" href={ticketAttachment?.storageBucket}>
+									<a
+										className="m-0 text-truncate"
+										href={ticketAttachment?.storageBucket}
+									>
 										{ticketAttachment?.fileName}
 									</a>
 								),
@@ -166,32 +180,46 @@ const TicketAttachmentsTable = ({
 								options: (
 									<OptionsColumn
 										hasDeletePermissions={
-											loggedUserAccount?.selectedAccountSummary.hasAdministratorRole ||
-											(loggedUserAccount?.id === ticketAttachment.creatorId)
+											loggedUserAccount
+												?.selectedAccountSummary
+												.hasAdministratorRole ||
+											loggedUserAccount?.id ===
+												ticketAttachment.creatorId
 										}
 										onDelete={onDelete}
 										onDownload={onDownload}
 										onOpenChange={onOpenChange}
-										setSelectedTicketAttachment={setSelectedTicketAttachment}
+										setSelectedTicketAttachment={
+											setSelectedTicketAttachment
+										}
 										ticketAttachment={ticketAttachment}
 									/>
 								),
 								ticket: (
-									<a className="m-0 text-truncate" href={PAGE_ROUTER_TYPES.request(ticketAttachment?.zendeskTicketId)}>
-										{'#' + ticketAttachment?.zendeskTicketId}
+									<a
+										className="m-0 text-truncate"
+										href={PAGE_ROUTER_TYPES.request(
+											ticketAttachment?.zendeskTicketId
+										)}
+									>
+										{'#' +
+											ticketAttachment?.zendeskTicketId}
 									</a>
 								),
 							})
 						)}
 					/>
 				</div>
-			) : !sortedTicketAttachmentsFilteredPerPage || (paginationConfig.totalCount === 0 && !loading) ? (
-				<TicketAttachmentsTableEmpty
-					description={i18n.translate("there-are-no-items-to-display")}
-					title={i18n.translate("no-attachments-yet")}
-				/>
 			) : (
-				<div>loading</div>
+				!sortedTicketAttachmentsFilteredPerPage ||
+				(paginationConfig.totalCount === 0 && !loading && (
+					<TicketAttachmentsTableEmpty
+						description={i18n.translate(
+							'there-are-no-items-to-display'
+						)}
+						title={i18n.translate('no-attachments-yet')}
+					/>
+				))
 			)}
 		</>
 	);

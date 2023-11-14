@@ -10,7 +10,6 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -44,7 +43,6 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.WikiPageService;
-import com.liferay.wiki.web.internal.helper.WikiAttachmentsHelper;
 import com.liferay.wiki.web.internal.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
@@ -334,7 +332,7 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 		WikiPage page = null;
 
-		_wikiAttachmentsHelper.addAttachments(actionRequest);
+		addAttachments(actionRequest);
 
 		if (cmd.equals(Constants.UPDATE)) {
 			double version = ParamUtil.getDouble(actionRequest, "version");
@@ -374,9 +372,6 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private TrashHelper _trashHelper;
-
-	@Reference
-	private WikiAttachmentsHelper _wikiAttachmentsHelper;
 
 	@Reference
 	private WikiPageLocalService _wikiPageLocalService;

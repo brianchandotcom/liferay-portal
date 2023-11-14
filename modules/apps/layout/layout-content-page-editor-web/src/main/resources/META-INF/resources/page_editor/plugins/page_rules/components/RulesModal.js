@@ -43,10 +43,10 @@ export default function RulesModal({editingRule, onCloseModal}) {
 	const [ruleError, setRuleError] = useState(false);
 
 	const [actions, setActions] = useState(
-		() => editingRule?.actions || [{id: uuidv4}]
+		() => editingRule?.actions || [{id: uuidv4()}]
 	);
 	const [conditions, setConditions] = useState(
-		() => editingRule?.conditions || [{id: uuidv4}]
+		() => editingRule?.conditions || [{id: uuidv4()}]
 	);
 	const [conditionType, setConditionType] = useState('all');
 

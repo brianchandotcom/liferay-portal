@@ -87,7 +87,8 @@ definition {
 				value1 = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
 
 			AssertTextEquals(
-				locator1 = "Dropdown#SELECTED_VALUE",
+				key_fieldLabel = "Preferred Strategy",
+				locator1 = "Dropdown#COMBOBOX_WITH_LABEL",
 				value1 = "Mobile");
 		}
 	}

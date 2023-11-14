@@ -276,6 +276,8 @@ components:
                 linkedObjectDefinition:
                     readOnly: true
                     type: boolean
+                objectDefinition:
+                    $ref: "#/components/schemas/ObjectDefinition"
                 objectDefinitionExternalReferenceCode:
                     type: string
                 positionX:

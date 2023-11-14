@@ -471,6 +471,10 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		String parameterValue = ParamUtil.getString(
 			portletRequest, parameterName);
 
+		if (Validator.isBlank(parameterValue)) {
+			return 0;
+		}
+
 		ListType listType = _listTypeLocalService.addListType(
 			companyId, parameterValue, type);
 

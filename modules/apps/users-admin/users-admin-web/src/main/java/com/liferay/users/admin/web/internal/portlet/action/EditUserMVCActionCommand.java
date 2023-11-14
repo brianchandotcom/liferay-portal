@@ -559,6 +559,10 @@ public class EditUserMVCActionCommand
 		String parameterValue = ParamUtil.getString(
 			portletRequest, parameterName);
 
+		if (Validator.isBlank(parameterValue)) {
+			return 0;
+		}
+
 		ListType listType = _listTypeLocalService.addListType(
 			companyId, parameterValue, type);
 

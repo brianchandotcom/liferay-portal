@@ -2,8 +2,8 @@ definition {
 
 	@summary = "Default summary"
 	macro closeMessage(messageType = null) {
-		if ((IsElementPresent(locator1 = "Message#${messageType}")) && (IsVisible(locator1 = "Message#${messageType}")) && (IsVisible(locator1 = "Icon#CLOSE"))) {
-			Click(locator1 = "Icon#CLOSE");
+		if ((IsElementPresent(locator1 = "Message#${messageType}")) && (IsVisible(locator1 = "Message#${messageType}")) && (IsVisible(locator1 = "Icon#CLOSE_ALERT"))) {
+			Click(locator1 = "Icon#CLOSE_ALERT");
 		}
 	}
 

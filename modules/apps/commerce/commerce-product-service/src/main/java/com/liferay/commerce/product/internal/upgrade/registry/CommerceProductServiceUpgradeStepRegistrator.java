@@ -420,9 +420,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				_configurationAdmin));
 
 		registry.register(
-				"5.11.1", "5.12.0",
-				new com.liferay.commerce.product.internal.upgrade.v5_12_0.
-						CPAttachmentFileEntryUpgradeProcess(_assetEntryLocalService));
+			"5.11.1", "5.12.0",
+			new com.liferay.commerce.product.internal.upgrade.v5_12_0.
+				CPAttachmentFileEntryUpgradeProcess(_assetEntryLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

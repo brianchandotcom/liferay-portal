@@ -14,9 +14,9 @@
 <liferay-asset:asset-tags-error />
 
 <aui:field-wrapper>
-    <liferay-asset:asset-tags-selector
-        className="<%= CPAttachmentFileEntry.class.getName() %>"
-        classPK="<%= cpAttachmentFileEntryId %>"
-        groupIds="<%= new long[] {company.getGroupId()} %>"
-    />
+	<liferay-asset:asset-tags-selector
+		className="<%= CPAttachmentFileEntry.class.getName() %>"
+		classPK="<%= cpAttachmentFileEntryId %>"
+		groupIds="<%= new long[] {company.getGroupId()} %>"
+	/>
 </aui:field-wrapper>

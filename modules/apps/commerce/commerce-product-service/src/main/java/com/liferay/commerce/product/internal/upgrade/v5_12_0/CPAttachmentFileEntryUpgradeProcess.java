@@ -10,13 +10,11 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Andrea Sbarra
@@ -31,8 +29,8 @@ public class CPAttachmentFileEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-
-		String className = "com.liferay.commerce.product.model.CPAttachmentFileEntry";
+		String className =
+			"com.liferay.commerce.product.model.CPAttachmentFileEntry";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from CPAttachmentFileEntry");
@@ -43,8 +41,7 @@ public class CPAttachmentFileEntryUpgradeProcess extends UpgradeProcess {
 					"CPAttachmentFileEntryId");
 
 				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					className,
-					cpAttachmentFileEntryId);
+					className, cpAttachmentFileEntryId);
 
 				if (assetEntry != null) {
 					continue;
@@ -57,11 +54,10 @@ public class CPAttachmentFileEntryUpgradeProcess extends UpgradeProcess {
 
 				_assetEntryLocalService.updateEntry(
 					userId, groupId, date, date, className,
-					cpAttachmentFileEntryId, null, 0, new long[0], new String[0],
-					true, true, null, null, null, null, ContentTypes.TEXT_PLAIN,
-					title,
-					StringPool.BLANK, null, null, null, 0, 0,
-					null);
+					cpAttachmentFileEntryId, null, 0, new long[0],
+					new String[0], true, true, null, null, null, null,
+					ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, null,
+					null, null, 0, 0, null);
 			}
 		}
 	}

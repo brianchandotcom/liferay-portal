@@ -26,6 +26,7 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -538,7 +539,8 @@ public class ObjectRelationshipLocalServiceTest {
 					RandomTestUtil.randomString())));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"});
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectEntryLocalService);
 
 		ObjectRelationship objectRelationship3 =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -1069,6 +1071,9 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	private static final Pattern _pattern = Pattern.compile(
 		"R_[A-Z][0-9][A-Z][0-9]$");

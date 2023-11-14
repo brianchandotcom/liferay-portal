@@ -20,6 +20,7 @@ import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -180,7 +181,8 @@ public class TreeTestUtil {
 
 	public static void deleteObjectDefinitionHierarchy(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
-			String[] objectDefinitionNames)
+			String[] objectDefinitionNames,
+			ObjectEntryLocalService objectEntryLocalService)
 		throws Exception {
 
 		for (String objectDefinitionName : objectDefinitionNames) {
@@ -190,6 +192,15 @@ public class TreeTestUtil {
 
 			if (objectDefinition == null) {
 				continue;
+			}
+
+			List<ObjectEntry> objectEntries =
+				objectEntryLocalService.getObjectEntries(
+					0, objectDefinition.getObjectDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (ObjectEntry objectEntry : objectEntries) {
+				objectEntryLocalService.deleteObjectEntry(objectEntry);
 			}
 
 			if (objectDefinition.getRootObjectDefinitionId() != 0) {

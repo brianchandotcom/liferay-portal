@@ -41,6 +41,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -527,7 +528,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"});
+			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"},
+			_objectEntryLocalService);
 	}
 
 	@Test
@@ -1332,7 +1334,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB"});
+			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB"},
+			_objectEntryLocalService);
 	}
 
 	@Test
@@ -1696,7 +1699,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"});
+			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"},
+			_objectEntryLocalService);
 	}
 
 	@Test
@@ -2636,6 +2640,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

@@ -1030,7 +1030,8 @@ public class ObjectFieldLocalServiceTest {
 			() -> _addOrUpdateCustomObjectField(objectField2));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"});
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectEntryLocalService);
 	}
 
 	@Test

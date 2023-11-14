@@ -8,6 +8,7 @@ package com.liferay.object.internal.tree.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Node;
@@ -78,7 +79,8 @@ public class TreeTest {
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"});
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
+			_objectEntryLocalService);
 	}
 
 	private void _testIterator(
@@ -108,6 +110,9 @@ public class TreeTest {
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private static ObjectRelationshipLocalService

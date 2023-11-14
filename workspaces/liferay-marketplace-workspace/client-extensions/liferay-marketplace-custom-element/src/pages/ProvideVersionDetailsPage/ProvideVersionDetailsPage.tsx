@@ -97,7 +97,8 @@ export function ProvideVersionDetailsPage({
 
 			makeFetch();
 		}
-	}, [appProductId, dispatch, optionId, productOptionId]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [appProductId, dispatch, productOptionId]);
 
 	return (
 		<div className="provide-version-details-page-container">

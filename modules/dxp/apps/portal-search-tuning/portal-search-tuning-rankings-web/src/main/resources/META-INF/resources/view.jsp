@@ -16,6 +16,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -148,17 +149,17 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 							Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(rankingEntryDisplayContext.getGroupExternalReferenceCode(), themeDisplay.getCompanyId());
 							%>
 
-							<span class="lfr-portal-tooltip" data-title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>'>
+							<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(group) ? HtmlUtil.escape(group.getDescriptiveName(locale)) : LanguageUtil.get(request, "the-site-associated-with-this-ranking-was-deleted") %>'>
 								<liferay-ui:message key="site" />
 							</span>
 						</c:when>
 						<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode()) %>">
 
 							<%
-							SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.getSXPBlueprintByExternalReferenceCode(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode(), themeDisplay.getCompanyId());
+							SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprintByExternalReferenceCode(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode(), themeDisplay.getCompanyId());
 							%>
 
-							<span class="lfr-portal-tooltip" data-title='<%= HtmlUtil.escape(sxpBlueprint.getTitle(locale)) %>'>
+							<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(sxpBlueprint) ? HtmlUtil.escape(sxpBlueprint.getTitle(locale)) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>'>
 								<liferay-ui:message key="blueprint" />
 							</span>
 						</c:when>

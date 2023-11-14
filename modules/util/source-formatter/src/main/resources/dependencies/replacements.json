@@ -219,7 +219,9 @@
 	{
 		"from": "DLUtil.getGroupIds(ThemeDisplay)",
 		"issueKey": "LPS-192396",
-		"newImports": "com.liferay.portal.kernel.util.PortalUtil",
+		"newImports": [
+			"com.liferay.portal.kernel.util.PortalUtil"
+		],
 		"to": "PortalUtil.getCurrentAndAncestorSiteGroupIds(param#0#.getScopeGroupId())",
 		"validExtensions": [
 			"java",

@@ -167,6 +167,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 						tickLine={false}
 						tickMargin={12}
 						ticks={intervals}
+						type='number'
 					/>
 
 					<XAxis

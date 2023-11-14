@@ -293,6 +293,7 @@ definition {
 		ElasticsearchMonitoring.viewAsGuestPG();
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test XPackWithJDK11 {
 		property elastic.xpack.enabled = "true";

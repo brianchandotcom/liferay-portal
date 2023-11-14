@@ -65,6 +65,7 @@ export default function EditAPIEndpoint({
 		{}
 	);
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
+		httpMethod: false,
 		parameter: false,
 		path: false,
 		pathParameter: false,
@@ -94,6 +95,7 @@ export default function EditAPIEndpoint({
 				...(response.description && {
 					description: response.description,
 				}),
+				httpMethod: response.httpMethod,
 				parameter: getLastParameterFromPath(response.path),
 				path: getAllButLastParameterFromPath(response.path),
 				pathParameter: response.pathParameter,
@@ -111,9 +113,12 @@ export default function EditAPIEndpoint({
 	function validateData() {
 		let isDataValid = true;
 
-		const mandatoryFields = ['path', 'retrieveType', 'scope'];
+		const mandatoryFields = ['httpMethod', 'path', 'retrieveType', 'scope'];
 
-		if (localUIData.retrieveType?.key === 'singleElement') {
+		if (
+			localUIData.retrieveType?.key === 'singleElement' &&
+			localUIData.httpMethod?.key === 'get'
+		) {
 			mandatoryFields.push('parameter');
 
 			if (localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId) {
@@ -191,7 +196,10 @@ export default function EditAPIEndpoint({
 
 				let parameter: string | undefined = '';
 
-				if (localUIData.retrieveType?.key === 'singleElement') {
+				if (
+					localUIData.retrieveType?.key === 'singleElement' &&
+					localUIData.httpMethod?.key === 'get'
+				) {
 					parameter = localUIData.parameter;
 				}
 
@@ -579,7 +587,6 @@ export default function EditAPIEndpoint({
 										basePath={basePath}
 										data={localUIData}
 										displayError={displayError}
-										editMode={true}
 										setData={setLocalUIData}
 									/>
 								</div>

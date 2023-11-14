@@ -35,6 +35,7 @@ export function CreateAPIEndpointModalContent({
 		{}
 	);
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
+		httpMethod: false,
 		parameter: false,
 		path: false,
 		pathParameter: false,
@@ -113,7 +114,7 @@ export function CreateAPIEndpointModalContent({
 
 	function validateData() {
 		let isDataValid = true;
-		const mandatoryFields = ['scope', 'retrieveType', 'path'];
+		const mandatoryFields = ['httpMethod', 'scope', 'retrieveType', 'path'];
 
 		if (localUIData.retrieveType?.key === 'singleElement') {
 			mandatoryFields.push('parameter');

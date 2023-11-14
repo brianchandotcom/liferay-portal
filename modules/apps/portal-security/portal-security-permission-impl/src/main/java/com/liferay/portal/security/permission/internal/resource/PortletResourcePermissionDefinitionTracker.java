@@ -5,7 +5,6 @@
 
 package com.liferay.portal.security.permission.internal.resource;
 
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.definition.PortletResourcePermissionDefinition;
@@ -14,15 +13,22 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Preston Crary
  */
+@Component(service = {})
 public class PortletResourcePermissionDefinitionTracker {
 
-	public void afterPropertiesSet() {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		_serviceTracker = new ServiceTracker<>(
 			_bundleContext, PortletResourcePermissionDefinition.class,
 			new PortletResourcePermissionDefinitionServiceTrackerCustomizer());
@@ -30,12 +36,12 @@ public class PortletResourcePermissionDefinitionTracker {
 		_serviceTracker.open();
 	}
 
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_serviceTracker.close();
 	}
 
-	private final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
+	private BundleContext _bundleContext;
 	private ServiceTracker
 		<PortletResourcePermissionDefinition, ServiceRegistration<?>>
 			_serviceTracker;

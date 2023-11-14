@@ -24,7 +24,7 @@ public interface AttachmentManager {
 
 	public String[] getAcceptedFileExtensions(long objectFieldId);
 
-	public DLFolder getDLFolder(
+	public DLFolder fetchDLFolder(
 		long companyId, long groupId, long objectFieldId,
 		ServiceContext serviceContext, long userId);
 

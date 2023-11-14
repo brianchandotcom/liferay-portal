@@ -69,7 +69,6 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		throws Exception {
 
 		validateFileName(fileName);
-
 		validateFileExtension(fileName, objectFieldId);
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
@@ -109,7 +108,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	}
 
 	@Override
-	public DLFolder getDLFolder(
+	public DLFolder fetchDLFolder(
 		long companyId, long groupId, long objectFieldId,
 		ServiceContext serviceContext, long userId) {
 

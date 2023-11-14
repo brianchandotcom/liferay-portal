@@ -37,7 +37,7 @@ public class EnableThirdPartyCookiesBottomJSDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187501")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-154290")) {
 			return;
 		}
 

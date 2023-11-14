@@ -204,7 +204,7 @@
 													"scopeParameterName": "scope",
 													"searchScope": "this-site",
 													"showStagedResults": "false",
-													"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+													"suggestionsContributorConfigurations": "{\"contributorName\":\"sxpBlueprint\",\"displayGroupName\":\"suggestions\",\"size\":5,\"attributes\":{\"characterThreshold\":\"\",\"fields\":[],\"includeAssetSearchSummary\":true,\"includeAssetURL\":true,\"sxpBlueprintId\":2494710,\"sxpBlueprintExternalReferenceCode\":\"Learn Articles\"}}",
 													"suggestionsDisplayThreshold": "2",
 													"suggestionsEnabled": "true",
 													"useAdvancedSearchSyntax": "false"

@@ -1,0 +1,16 @@
+[
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Svg Sprite Map Id",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	}
+]

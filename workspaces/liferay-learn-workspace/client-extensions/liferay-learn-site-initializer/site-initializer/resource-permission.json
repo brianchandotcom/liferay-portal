@@ -1,0 +1,50 @@
+[
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$EXPANDO_COLUMN_ID:Svg Sprite Map Id$]",
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"roleName": "Test Role 2",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW_PRICE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product",
+		"roleName": "Test Role 2",
+		"scope": "2"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]",
+		"roleName": "Test Role 2",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "[$LAYOUT_PAGE_TEMPLATE_ENTRY_ID:Test Display Page Template$]",
+		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
+		"roleName": "Test Role 4",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "[$LAYOUT_PAGE_TEMPLATE_ENTRY_ID:Test Master Page$]",
+		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
+		"roleName": "Test Role 4",
+		"scope": "4"
+	}
+]

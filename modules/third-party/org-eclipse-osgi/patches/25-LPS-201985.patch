@@ -1,0 +1,62 @@
+diff --git a/org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java b/org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java
+index 915f5a47de46..9b238c7d5fe2 100644
+--- a/org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java
++++ b/org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java
+@@ -16,12 +16,14 @@ import java.io.File;
+ import java.io.FilterInputStream;
+ import java.io.IOException;
+ import java.io.InputStream;
++import java.lang.reflect.Field;
+ import java.util.Collections;
+ import java.util.Enumeration;
+ import java.util.LinkedHashSet;
+ import java.util.concurrent.TimeUnit;
+ import java.util.concurrent.locks.Condition;
+ import java.util.concurrent.locks.ReentrantLock;
++import java.util.zip.InflaterInputStream;
+ import java.util.zip.ZipEntry;
+ import java.util.zip.ZipFile;
+ import org.eclipse.osgi.container.ModuleContainerAdaptor.ContainerEvent;
+@@ -483,6 +485,14 @@ public class ZipBundleFile extends BundleFile {
+ 			} catch (IOException e) {
+ 				throw enrichExceptionWithBaseFile(e);
+ 			} finally {
++				if ((_bufField != null) && (in instanceof InflaterInputStream)) {
++					try {
++						_bufField.set(in, null);
++					}
++					catch (ReflectiveOperationException reflectiveOperationException) {
++					}
++				}
++
+ 				synchronized (this) {
+ 					if (streamClosed)
+ 						return;
+@@ -536,4 +546,26 @@ public class ZipBundleFile extends BundleFile {
+ 			return new IOException(getBaseFile().toString(), e);
+ 		}
+ 	}
++
++	private static final Field _bufField;
++
++	static {
++		Field bufField = null;
++
++		String javaVersion = System.getProperty("java.version");
++
++		if (javaVersion.startsWith("1.8.")) {
++			try {
++				bufField = InflaterInputStream.class.getDeclaredField("buf");
++
++				bufField.setAccessible(true);
++			}
++			catch (ReflectiveOperationException reflectiveOperationException) {
++			}
++		}
++
++		_bufField = bufField;
++	}
++
+ }
++/* @generated */
+\ No newline at end of file

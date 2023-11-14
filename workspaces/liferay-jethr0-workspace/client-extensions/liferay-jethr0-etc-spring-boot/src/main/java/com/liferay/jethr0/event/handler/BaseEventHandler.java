@@ -120,10 +120,13 @@ public abstract class BaseEventHandler implements EventHandler {
 
 		if (buildEntity != null) {
 			jsonObject.put(
+				"jethr0BuildId", String.valueOf(buildEntity.getId())
+			).put(
 				"jethr0BuildURL",
 				StringUtil.combine(
 					getLiferayPortalURL(), "/#/jobs/builds/",
-					buildEntity.getId()));
+					buildEntity.getId())
+			);
 		}
 
 		if (buildRunEntity != null) {

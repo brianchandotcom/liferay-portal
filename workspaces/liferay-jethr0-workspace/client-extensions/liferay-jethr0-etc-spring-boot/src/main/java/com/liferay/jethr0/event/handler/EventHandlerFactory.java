@@ -48,6 +48,10 @@ public class EventHandlerFactory {
 			eventHandler = new CreateBuildEventHandler(
 				_eventHandlerContext, messageJSONObject);
 		}
+		else if (eventType == EventHandler.EventType.CREATE_BUILD_RUN) {
+			eventHandler = new CreateBuildRunEventHandler(
+				_eventHandlerContext, messageJSONObject);
+		}
 		else if (eventType == EventHandler.EventType.CREATE_JENKINS_COHORT) {
 			eventHandler = new CreateJenkinsCohortEventHandler(
 				_eventHandlerContext, messageJSONObject);

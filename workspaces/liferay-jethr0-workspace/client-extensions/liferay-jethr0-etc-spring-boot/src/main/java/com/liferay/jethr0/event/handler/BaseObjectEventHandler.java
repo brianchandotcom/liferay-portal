@@ -92,6 +92,12 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			throw new InvalidJSONException("Missing build JSON");
 		}
 
+		long buildId = buildJSONObject.optLong("id");
+
+		if (buildId > 0) {
+			return buildJSONObject;
+		}
+
 		String jenkinsJobName = buildJSONObject.optString("jenkinsJobName");
 
 		if (jenkinsJobName.isEmpty()) {

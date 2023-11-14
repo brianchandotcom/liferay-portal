@@ -100,6 +100,8 @@ definition {
 				value1 = "Liferay Digital Experience Platform");
 
 			PageEditor.publish();
+
+			Alert.closeMessage(messageType = "SUCCESS");
 		}
 
 		task ("View the video displayed in view mode") {
@@ -168,6 +170,8 @@ definition {
 				value1 = "Liferay Digital Experience Platform");
 
 			PageEditor.publish();
+
+			Alert.closeMessage(messageType = "SUCCESS");
 		}
 
 		task ("View the video displayed in view mode") {

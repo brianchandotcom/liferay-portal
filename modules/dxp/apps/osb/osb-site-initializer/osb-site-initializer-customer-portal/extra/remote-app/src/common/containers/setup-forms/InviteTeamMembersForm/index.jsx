@@ -163,7 +163,7 @@ const InviteTeamMembersPage = ({
 			errors?.invites?.filter((email) => email)?.length || 0;
 
 		if (inviteMembers) {
-			const sucessfullyEmails = totalEmails - failedEmails;
+			const successfullyEmails = totalEmails - failedEmails;
 
 			if (
 				availableAdministratorAssets === 0 &&
@@ -173,7 +173,7 @@ const InviteTeamMembersPage = ({
 				setBaseButtonDisabled(true);
 			} else {
 				setInitialError(false);
-				setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
+				setBaseButtonDisabled(successfullyEmails !== totalEmails);
 				setshowEmptyEmailError(false);
 			}
 		} else if (touched['invites']?.some((field) => field?.email)) {

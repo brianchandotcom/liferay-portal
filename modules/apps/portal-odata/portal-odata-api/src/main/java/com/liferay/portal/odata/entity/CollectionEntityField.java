@@ -22,7 +22,7 @@ public class CollectionEntityField extends EntityField {
 	public CollectionEntityField(EntityField entityField) {
 		super(
 			entityField.getName(), Type.COLLECTION,
-			locale -> entityField.getName(), locale -> entityField.getName(),
+			entityField::getSortableName, entityField::getFilterableName,
 			String::valueOf);
 
 		_entityField = entityField;

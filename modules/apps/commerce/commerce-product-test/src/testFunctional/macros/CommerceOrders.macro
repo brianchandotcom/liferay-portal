@@ -984,7 +984,7 @@ definition {
 
 	@summary = "Default summary"
 	macro importFromOrder(productImportStatuses = null, productSkus = null, orderId = null, productTotalPrices = null, productUnitPrices = null, productNames = null, productQuantities = null, productRequestedDeliveryDates = null) {
-		Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
+		Click(locator1 = "CommerceFrontStore#SF_ORDER_BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Import from Orders");
 
@@ -1012,7 +1012,7 @@ definition {
 
 	@summary = "Default summary"
 	macro importOrderFromType(orderType = null) {
-		Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
+		Click(locator1 = "CommerceFrontStore#SF_ORDER_BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.viewPresent(menuItem = "Import from ${orderType}");
 

@@ -1157,7 +1157,7 @@ definition {
 		Alert.viewSuccessMessage();
 
 		if (IsElementPresent(locator1 = "//a[contains(text(),'BLACKSKU')]")) {
-			CommerceEntry.deleteCommerceEntry();
+			CommerceEntry.deleteCommerceEntry(entryName = "BLACKSKU");
 		}
 
 		Alert.viewSuccessMessage();

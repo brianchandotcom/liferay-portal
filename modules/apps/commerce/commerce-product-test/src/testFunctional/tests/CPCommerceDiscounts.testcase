@@ -94,7 +94,7 @@ definition {
 			portlet = "Discounts");
 
 		Click(
-			key_value = "",
+			key_value = "Test Discount",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
@@ -139,7 +139,7 @@ definition {
 			portlet = "Discounts");
 
 		Click(
-			key_value = "",
+			key_value = "Test Discount",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");

@@ -2,24 +2,38 @@ Bundle-Name: Liferay Portal Search Solr 8 Implementation
 Bundle-SymbolicName: com.liferay.portal.search.solr8.impl
 Bundle-Version: 5.0.20
 Import-Package:\
+	!com.codahale.metrics.*,\
+	\
 	!com.sun.management.*,\
 	!com.sun.msv.*,\
 	\
+	!io.netty.*,\
+	\
 	!jline.*,\
 	\
+	!org.apache.commons.cli.*,\
 	!org.apache.commons.math3.*,\
 	!org.apache.log4j.jmx,\
 	!org.apache.lucene.sandbox.*,\
 	!org.apache.yetus.*,\
+	!org.apache.zookeeper.data.*,\
+	!org.apache.zookeeper.proto.*,\
+	!org.apache.zookeeper.txn.*,\
 	\
 	!org.eclipse.jetty.client.*,\
 	!org.eclipse.jetty.http.*,\
 	!org.eclipse.jetty.http2.client.*,\
+	!org.eclipse.jetty.io.*,\
+	!org.eclipse.jetty.security.*,\
+	!org.eclipse.jetty.server.*,\
+	!org.eclipse.jetty.servlet.*,\
 	!org.eclipse.jetty.util.*,\
 	\
 	!org.jboss.netty.*,\
 	\
 	!org.relaxng.datatype.*,\
+	\
+	!org.xerial.snappy.*,\
 	\
 	com.liferay.portal.search.analysis,\
 	\

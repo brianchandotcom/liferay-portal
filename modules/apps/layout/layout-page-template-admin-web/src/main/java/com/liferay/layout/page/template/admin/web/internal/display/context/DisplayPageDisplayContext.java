@@ -28,15 +28,15 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -437,32 +437,54 @@ public class DisplayPageDisplayContext {
 
 		Map<Long, Long[]> classNameIdsMap = new HashMap<>();
 
-		JSONArray mappingTypesJSONArray = getMappingTypesJSONArray();
-
-		for (int i = 0; i < mappingTypesJSONArray.length(); i++) {
-			JSONObject typeJSONObject = mappingTypesJSONArray.getJSONObject(i);
-
-			JSONArray subtypesJSONArray = typeJSONObject.getJSONArray(
-				"subtypes");
-
-			Long[] classTypeIds = new Long[subtypesJSONArray.length()];
-
-			for (int j = 0; j < subtypesJSONArray.length(); j++) {
-				JSONObject subtypeJSONObject = subtypesJSONArray.getJSONObject(
-					j);
-
-				classTypeIds[j] = GetterUtil.getLong(
-					subtypeJSONObject.getString("id"));
-			}
+		for (InfoItemClassDetails infoItemClassDetails :
+				_infoItemServiceRegistry.getInfoItemClassDetails(
+					DisplayPageInfoItemCapability.KEY)) {
 
 			classNameIdsMap.put(
-				GetterUtil.getLong(typeJSONObject.getString("id")),
-				classTypeIds);
+				PortalUtil.getClassNameId(infoItemClassDetails.getClassName()),
+				_getInfoFormVariationIds(infoItemClassDetails));
 		}
 
 		_classNameIdsMap = classNameIdsMap;
 
 		return _classNameIdsMap;
+	}
+
+	private Long[] _getInfoFormVariationIds(
+		InfoItemClassDetails infoItemClassDetails) {
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				infoItemClassDetails.getClassName());
+
+		if (infoItemFormVariationsProvider == null) {
+			return new Long[0];
+		}
+
+		return ListUtil.toArray(
+			ListUtil.fromCollection(
+				infoItemFormVariationsProvider.getInfoItemFormVariations(
+					_themeDisplay.getScopeGroupId())),
+			new Accessor<InfoItemFormVariation, Long>() {
+
+				@Override
+				public Long get(InfoItemFormVariation infoItemFormVariation) {
+					return Long.valueOf(infoItemFormVariation.getKey());
+				}
+
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<InfoItemFormVariation> getTypeClass() {
+					return InfoItemFormVariation.class;
+				}
+
+			});
 	}
 
 	private long _getLayoutPageTemplateCollectionId() {

@@ -27,6 +27,8 @@ public interface Jethr0Client {
 		String jenkinsJobName, Map<String, String> jenkinsBuildParameters,
 		long jobId, String buildName);
 
+	public void createBuildRun(long buildId);
+
 	public void disconnect();
 
 	public Environment getEnvironment();
@@ -69,7 +71,7 @@ public interface Jethr0Client {
 
 	public enum EventType {
 
-		CREATE_BUILD
+		CREATE_BUILD, CREATE_BUILD_RUN
 
 	}
 

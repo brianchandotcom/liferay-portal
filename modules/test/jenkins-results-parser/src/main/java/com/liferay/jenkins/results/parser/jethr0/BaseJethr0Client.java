@@ -126,6 +126,23 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 	}
 
 	@Override
+	public void createBuildRun(long buildId) {
+		JSONObject buildJSONObject = new JSONObject();
+
+		buildJSONObject.put("id", buildId);
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"build", buildJSONObject
+		).put(
+			"eventType", EventType.CREATE_BUILD_RUN
+		);
+
+		sendJRPMessageToJethr0(jsonObject.toString());
+	}
+
+	@Override
 	public synchronized void disconnect() {
 		if (_connection == null) {
 			return;

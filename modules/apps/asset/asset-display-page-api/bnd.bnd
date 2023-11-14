@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.asset.display.page.configuration,\
 	com.liferay.asset.display.page.constants,\
 	com.liferay.asset.display.page.exception,\
+	com.liferay.asset.display.page.layout.asset.entry.provider,\
 	com.liferay.asset.display.page.model,\
 	com.liferay.asset.display.page.portlet,\
 	com.liferay.asset.display.page.service,\

@@ -249,7 +249,7 @@ definition {
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-			for (var paymentMethod : list "Money Order, Authorize.Net,PayPal") {
+			for (var paymentMethod : list "Money Order,Authorize.Net,PayPal") {
 				CommerceChannels.editPaymentMethod(
 					active = "true",
 					paymentMethod = ${paymentMethod});
@@ -353,7 +353,7 @@ definition {
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-			for (var paymentMethod : list "Money Order, Authorize.Net,PayPal") {
+			for (var paymentMethod : list "Money Order,Authorize.Net,PayPal") {
 				CommerceChannels.editPaymentMethod(
 					active = "true",
 					paymentMethod = ${paymentMethod});
@@ -364,7 +364,7 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderStatus = 1,
-				paymentMethod = "paypal",
+				paymentMethod = "paypal-integration",
 				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");

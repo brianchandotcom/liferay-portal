@@ -71,7 +71,7 @@ public class StyleBookEntryServiceTest {
 			StringBundler.concat(
 				sourceStyleBookEntry.getName(), StringPool.SPACE,
 				StringPool.OPEN_PARENTHESIS,
-				_language.get(LocaleUtil.getDefault(), "copy"),
+				_language.get(LocaleUtil.getSiteDefault(), "copy"),
 				StringPool.CLOSE_PARENTHESIS));
 		Assert.assertEquals(
 			sourceStyleBookEntry.getPreviewFileEntryId(),

@@ -579,7 +579,7 @@ public class JournalArticleLocalServiceTest {
 				draftJournalArticle.getVersion());
 
 		Assert.assertEquals(
-			_getNewTitle(locale, draftJournalArticle.getTitle(locale)),
+			_getNewTitle(draftJournalArticle.getTitle(locale)),
 			newJournalArticle.getTitle(locale));
 
 		_assertAssetCategoryIds(
@@ -660,7 +660,7 @@ public class JournalArticleLocalServiceTest {
 				draftJournalArticle.getVersion());
 
 		Assert.assertEquals(
-			_getNewTitle(locale, draftJournalArticle.getTitle(locale)),
+			_getNewTitle(draftJournalArticle.getTitle(locale)),
 			newJournalArticle.getTitle(locale));
 
 		_assertAssetLinkEntryId(
@@ -715,7 +715,7 @@ public class JournalArticleLocalServiceTest {
 				draftJournalArticle.getVersion());
 
 		Assert.assertEquals(
-			_getNewTitle(locale, draftJournalArticle.getTitle(locale)),
+			_getNewTitle(draftJournalArticle.getTitle(locale)),
 			newJournalArticle.getTitle(locale));
 
 		_assertAssetTagIds(
@@ -764,7 +764,7 @@ public class JournalArticleLocalServiceTest {
 				sourceJournalArticle.getVersion());
 
 		Assert.assertEquals(
-			_getNewTitle(locale, sourceJournalArticle.getTitle(locale)),
+			_getNewTitle(sourceJournalArticle.getTitle(locale)),
 			newJournalArticle.getTitle(locale));
 
 		_assertAssetCategoryIds(
@@ -818,7 +818,7 @@ public class JournalArticleLocalServiceTest {
 				sourceJournalArticle.getVersion());
 
 		Assert.assertEquals(
-			_getNewTitle(locale, sourceJournalArticle.getTitle(locale)),
+			_getNewTitle(sourceJournalArticle.getTitle(locale)),
 			newJournalArticle.getTitle(locale));
 
 		_assertAssetLinkEntryId(
@@ -860,7 +860,7 @@ public class JournalArticleLocalServiceTest {
 				sourceJournalArticle.getVersion());
 
 		Assert.assertEquals(
-			_getNewTitle(locale, sourceJournalArticle.getTitle(locale)),
+			_getNewTitle(sourceJournalArticle.getTitle(locale)),
 			newJournalArticle.getTitle(locale));
 
 		_assertAssetTagIds(
@@ -1727,10 +1727,11 @@ public class JournalArticleLocalServiceTest {
 		return new Tuple(article, ddmStructure);
 	}
 
-	private String _getNewTitle(Locale locale, String title) {
+	private String _getNewTitle(String title) {
 		return StringBundler.concat(
 			title, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-			_language.get(locale, "copy"), StringPool.CLOSE_PARENTHESIS);
+			_language.get(LocaleUtil.getSiteDefault(), "copy"),
+			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

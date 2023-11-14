@@ -124,7 +124,7 @@ public class LayoutUtilityPageEntryServiceTest {
 				copiedLayoutUtilityPageEntry.getName(),
 				StringBundler.concat(
 					layoutUtilityPageEntry.getName(), " (",
-					_language.get(LocaleUtil.getDefault(), "copy"), ")")));
+					_language.get(LocaleUtil.getSiteDefault(), "copy"), ")")));
 		Assert.assertEquals(
 			layoutUtilityPageEntry.getType(),
 			copiedLayoutUtilityPageEntry.getType());

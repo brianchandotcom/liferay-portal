@@ -241,7 +241,7 @@ public class JournalArticleServiceTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				_article.getTitle(), " (",
-				_language.get(LocaleUtil.getDefault(), "copy"), ")"),
+				_language.get(LocaleUtil.getSiteDefault(), "copy"), ")"),
 			journalArticle.getTitle());
 		Assert.assertEquals(
 			_article.getTreePath(), journalArticle.getTreePath());

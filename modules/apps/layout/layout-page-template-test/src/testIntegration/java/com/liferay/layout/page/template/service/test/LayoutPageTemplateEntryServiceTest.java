@@ -283,7 +283,7 @@ public class LayoutPageTemplateEntryServiceTest {
 				copiedLayoutPageTemplateEntry.getName(),
 				StringBundler.concat(
 					layoutPageTemplateEntry.getName(), " (",
-					_language.get(LocaleUtil.getDefault(), "copy"), ")")));
+					_language.get(LocaleUtil.getSiteDefault(), "copy"), ")")));
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getType(),
 			copiedLayoutPageTemplateEntry.getType());

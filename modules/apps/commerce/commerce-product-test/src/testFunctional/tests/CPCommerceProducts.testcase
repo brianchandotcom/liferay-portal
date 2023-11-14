@@ -2870,11 +2870,7 @@ definition {
 
 		CommerceNavigator.searchEntry(entryName = "MIN930178");
 
-		if (IsElementPresent(locator1 = "CommerceNavigation#ANY_ENTRY_NAME")) {
-			CommerceEntry.deleteCommerceEntry();
-
-			AssertVisible(locator1 = "Message#SUCCESS");
-		}
+		CommerceEntry.deleteCommerceEntry(entryName = "MIN930178");
 	}
 
 	@priority = 5

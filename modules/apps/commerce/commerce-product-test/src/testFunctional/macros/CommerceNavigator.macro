@@ -136,7 +136,7 @@ definition {
 	macro gotoOrderEntryViaAdmin(status = null) {
 		ClickNoError(
 			key_value = ${status},
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+			locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 		CommerceEntry.clickNoError(menuItem = "View");
 	}

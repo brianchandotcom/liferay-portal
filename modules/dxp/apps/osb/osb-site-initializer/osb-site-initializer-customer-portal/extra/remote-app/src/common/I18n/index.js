@@ -27,13 +27,17 @@ const getKeyByValue = (word, dictionary) => {
 	const wordTranslated = Object.entries(dictionary).find(
 		([_key, value]) => value === word
 	);
+	const twoHyphensValidation =
+		(wordTranslated[0].match(/-/g) || []).length === 2;
 
 	if (wordTranslated) {
 		const translatedWord = wordTranslated[0];
 		const capitalizedWord = `${translatedWord
 			.charAt(0)
 			.toUpperCase()}${translatedWord.slice(1)}`;
-		const formattedWord = capitalizedWord.replace('-', ' ');
+		const formattedWord = twoHyphensValidation
+			? capitalizedWord.replace('-', ' ')
+			: capitalizedWord;
 
 		return formattedWord;
 	}

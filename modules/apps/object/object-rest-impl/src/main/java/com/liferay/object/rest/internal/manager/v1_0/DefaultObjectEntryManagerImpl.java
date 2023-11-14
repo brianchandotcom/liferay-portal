@@ -1383,7 +1383,7 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
-	private void _preProcessAttachment(
+	private void _processAttachment(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			ObjectField objectField, String scopeKey,
 			ServiceContext serviceContext)
@@ -1409,7 +1409,7 @@ public class DefaultObjectEntryManagerImpl
 
 		if (fileEntry.getId() != null) {
 			throw new IllegalArgumentException(
-				"Expected either 'id' or 'fileBase64' fields, but found both");
+				"Expected either \"id\" or \"fileBase64\" fields");
 		}
 
 		String fileSource = ObjectFieldSettingUtil.getValue(
@@ -1429,10 +1429,10 @@ public class DefaultObjectEntryManagerImpl
 					objectField))) {
 
 			throw new UnsupportedOperationException(
-				"Object field setting " +
+				"Object field setting \"" +
 					ObjectFieldSettingConstants.
 						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA +
-							" is not supported");
+							"\" is not supported");
 		}
 
 		com.liferay.portal.kernel.repository.model.FileEntry
@@ -1666,7 +1666,7 @@ public class DefaultObjectEntryManagerImpl
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-				_preProcessAttachment(
+				_processAttachment(
 					objectDefinition, objectEntry, objectField, scopeKey,
 					serviceContext);
 			}

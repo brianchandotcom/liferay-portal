@@ -31,6 +31,8 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.Du
 page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
 page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %>
 
+<%@ page import="java.util.Objects" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
@@ -101,7 +103,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
 				<portlet:param name="aliases" value="<%= rankingEntryDisplayContext.getAliases() %>" />
 				<portlet:param name="companyId" value="<%= String.valueOf(themeDisplay.getCompanyId()) %>" />
-				<portlet:param name="inactive" value="<%= String.valueOf(rankingEntryDisplayContext.getInactive()) %>" />
+				<portlet:param name="status" value="<%= rankingEntryDisplayContext.getStatus() %>" />
 				<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
 			</portlet:renderURL>
 
@@ -174,11 +176,22 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				cssClass="table-cell-expand-smallest table-cell-minw-150"
 				name="status"
 			>
-				<div class="label <%= rankingEntryDisplayContext.getInactive() ? "label-secondary" : "label-success" %>">
-					<span class="label-item label-item-expand">
-						<liferay-ui:message key='<%= rankingEntryDisplayContext.getInactive() ? "inactive" : "active" %>' />
-					</span>
-				</div>
+				<c:choose>
+					<c:when test="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.NOT_APPLICABLE) %>">
+						<div class="label label-warning">
+							<span class="label-item label-item-expand">
+								<liferay-ui:message key="<%= rankingEntryDisplayContext.getStatus() %>" />
+							</span>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="label <%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.ACTIVE) ? "label-success" : "label-secondary" %>">
+							<span class="label-item label-item-expand">
+								<liferay-ui:message key="<%= rankingEntryDisplayContext.getStatus() %>" />
+							</span>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp

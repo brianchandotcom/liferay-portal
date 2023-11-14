@@ -39,8 +39,8 @@ class ResultRankingsForm extends Component {
 		formName: PropTypes.string.isRequired,
 		initialAliases: PropTypes.arrayOf(String),
 		initialGroupExternalReferenceCode: PropTypes.string,
-		initialInactive: PropTypes.bool,
 		initialSXPBlueprintExternalReferenceCode: PropTypes.string,
+		initialStatus: PropTypes.string.isRequired,
 		resultsRankingUid: PropTypes.string,
 		searchQuery: PropTypes.string.isRequired,
 		validateFormURL: PropTypes.string.isRequired,
@@ -116,12 +116,6 @@ class ResultRankingsForm extends Component {
 		hiddenCur: 0,
 
 		/**
-		 * Indicates whether ranking is active or inactive.
-		 * @type {boolean}
-		 */
-		inactive: this.props.initialInactive,
-
-		/**
 		 * A full list of IDs which include hidden and pinned items. This is
 		 * equivalent to the IDs in dataMap, but in a sorted order.
 		 * @type {Array}
@@ -151,6 +145,12 @@ class ResultRankingsForm extends Component {
 		 * @type {boolean}
 		 */
 		showDebugger: process.env.NODE_ENV === 'development',
+
+		/**
+		 * Indicates whether ranking is active, inactive or achived.
+		 * @type {string}
+		 */
+		status: this.props.initialStatus,
 
 		/**
 		 * Total number of hidden results returned from the fetch request.
@@ -224,11 +224,11 @@ class ResultRankingsForm extends Component {
 
 	/**
 	 * Handles what happens when the toggle switch is clicked. Changes the
-	 * state of the ranking to inactive or active (boolean value).
+	 * state of the ranking to inactive or active (string value).
 	 */
 	_handleActive = () => {
 		this.setState((state) => ({
-			inactive: !state.inactive,
+			status: state.status === 'active' ? 'inactive' : 'active',
 		}));
 	};
 
@@ -551,7 +551,7 @@ class ResultRankingsForm extends Component {
 
 		fetchResponse(this.props.validateFormURL, {
 			[`${namespace}aliases`]: this.state.aliases,
-			[`${namespace}inactive`]: this.state.inactive,
+			[`${namespace}status`]: this.state.status,
 			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}groupExternalReferenceCode`]: this.props
 				.initialGroupExternalReferenceCode,
@@ -739,11 +739,11 @@ class ResultRankingsForm extends Component {
 			displayError,
 			displayErrorHidden,
 			hiddenCur,
-			inactive,
 			resultIdsHidden,
 			resultIdsPinned,
 			scopeDisplayName,
 			showDebugger,
+			status,
 			totalResultsHiddenCount,
 			totalResultsVisibleCount,
 			visibleCur,
@@ -757,21 +757,21 @@ class ResultRankingsForm extends Component {
 						addedHiddenIds: this._getHiddenAdded(),
 						aliases,
 						groupExternalReferenceCode: initialGroupExternalReferenceCode,
-						inactive,
 						pinnedIds: resultIdsPinned,
 						pinnedIdsEndIndex: dataLoadIndex.pinned.end,
 						pinnedIdsStartIndex: dataLoadIndex.pinned.start,
 						removedHiddenIds: this._getHiddenRemoved(),
+						status,
 						sxpBlueprintExternalReferenceCode: initialSXPBlueprintExternalReferenceCode,
 						workflowAction,
 					}}
 				/>
 
 				<PageToolbar
-					inactive={inactive}
 					onCancel={cancelURL}
 					onChangeActive={this._handleActive}
 					onPublish={this._handlePublish}
+					resultRankingStatus={status}
 				/>
 
 				<ClayLayout.ContainerFluid
@@ -810,6 +810,7 @@ class ResultRankingsForm extends Component {
 							<Alias
 								keywords={aliases}
 								onChange={this._handleUpdateAliases}
+								resultRankingStatus={status}
 							/>
 						</ErrorBoundary>
 					</ClayLayout.Sheet>
@@ -881,6 +882,9 @@ class ResultRankingsForm extends Component {
 											resultIdsPinned={
 												this.state.resultIdsPinned
 											}
+											resultRankingStatus={
+												this.state.status
+											}
 											showLoadMore={this._hasMoreData(
 												totalResultsVisibleCount,
 												visibleCur
@@ -900,6 +904,9 @@ class ResultRankingsForm extends Component {
 													._handleFetchResultsDataHidden
 											}
 											resultIds={resultIdsHidden}
+											resultRankingStatus={
+												this.state.status
+											}
 											showLoadMore={this._hasMoreData(
 												totalResultsHiddenCount,
 												hiddenCur

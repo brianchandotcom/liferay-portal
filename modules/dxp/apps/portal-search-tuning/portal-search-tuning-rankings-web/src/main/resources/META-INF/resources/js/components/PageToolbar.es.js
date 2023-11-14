@@ -11,11 +11,11 @@ import React, {Component} from 'react';
 
 class PageToolbar extends Component {
 	static props = {
-		inactive: PropTypes.bool,
 		onCancel: PropTypes.string.isRequired,
 		onChangeActive: PropTypes.func,
 		onPublish: PropTypes.func.isRequired,
 		onSaveAsDraft: PropTypes.func,
+		resultRankingStatus: PropTypes.string.isRequired,
 		submitDisabled: PropTypes.bool,
 	};
 
@@ -25,11 +25,11 @@ class PageToolbar extends Component {
 
 	render() {
 		const {
-			inactive,
 			onCancel,
 			onChangeActive,
 			onPublish,
 			onSaveAsDraft,
+			resultRankingStatus,
 			submitDisabled,
 		} = this.props;
 
@@ -45,7 +45,7 @@ class PageToolbar extends Component {
 							htmlFor="active-switch-input"
 						>
 							<input
-								checked={!inactive}
+								checked={resultRankingStatus === 'active'}
 								className="toggle-switch-check"
 								id="active-switch-input"
 								onChange={onChangeActive}
@@ -57,9 +57,9 @@ class PageToolbar extends Component {
 							</span>
 
 							<span className="toggle-switch-text-right">
-								{inactive
-									? Liferay.Language.get('inactive')
-									: Liferay.Language.get('active')}
+								{resultRankingStatus === 'active'
+									? Liferay.Language.get('active')
+									: Liferay.Language.get('inactive')}
 							</span>
 						</label>
 					</ManagementToolbar.Item>

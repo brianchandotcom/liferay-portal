@@ -22,6 +22,7 @@ page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateQueryStringException" %>
 
 <liferay-frontend:defineObjects />
@@ -60,6 +61,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 	name="<%= formName %>"
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="status" type="hidden" value="<%= ResultRankingsConstants.ACTIVE %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="resultActionCmd" type="hidden" value="<%= resultActionCmd %>" />
 	<aui:input name="resultActionUid" type="hidden" value="<%= resultActionUid %>" />

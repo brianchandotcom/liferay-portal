@@ -5,6 +5,8 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
@@ -17,6 +19,8 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 
@@ -35,31 +39,33 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="/result_rankings/edit_results_rankings" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
-		<portlet:param name="aliases" value="<%= rankingEntryDisplayContext.getAliases() %>" />
-		<portlet:param name="companyId" value="<%= String.valueOf(themeDisplay.getCompanyId()) %>" />
-		<portlet:param name="inactive" value="<%= String.valueOf(rankingEntryDisplayContext.getInactive()) %>" />
-		<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
-	</portlet:renderURL>
+	<c:if test="<%= !Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.NOT_APPLICABLE) %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcRenderCommandName" value="/result_rankings/edit_results_rankings" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
+			<portlet:param name="aliases" value="<%= rankingEntryDisplayContext.getAliases() %>" />
+			<portlet:param name="companyId" value="<%= String.valueOf(themeDisplay.getCompanyId()) %>" />
+			<portlet:param name="status" value="<%= rankingEntryDisplayContext.getStatus() %>" />
+			<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editURL %>"
+		/>
 
-	<portlet:actionURL name="/result_rankings/edit_ranking" var="deactivateURL">
-		<portlet:param name="<%= Constants.CMD %>" value="<%= rankingEntryDisplayContext.getInactive() ? ResultRankingsConstants.ACTIVATE : ResultRankingsConstants.DEACTIVATE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
-	</portlet:actionURL>
+		<portlet:actionURL name="/result_rankings/edit_ranking" var="deactivateURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="<%= rankingEntryDisplayContext.getInactive() ? ResultRankingsConstants.ACTIVATE : ResultRankingsConstants.DEACTIVATE %>"
-		url="<%= deactivateURL %>"
-	/>
+		<liferay-ui:icon
+			message="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.ACTIVE) ? ResultRankingsConstants.DEACTIVATE : ResultRankingsConstants.ACTIVATE %>"
+			url="<%= deactivateURL %>"
+		/>
+	</c:if>
 
 	<portlet:actionURL name="/result_rankings/edit_ranking" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

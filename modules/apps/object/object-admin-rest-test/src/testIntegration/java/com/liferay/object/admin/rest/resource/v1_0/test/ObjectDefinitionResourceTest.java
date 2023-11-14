@@ -323,6 +323,11 @@ public class ObjectDefinitionResourceTest
 		ObjectDefinition randomModifiableSystemObjectDefinition =
 			_addObjectDefinition(_randomModifiableSystemObjectDefinition());
 
+		randomModifiableSystemObjectDefinition.setEnableObjectEntryDraft(
+			(Boolean)null);
+		randomModifiableSystemObjectDefinition.
+			setObjectFolderExternalReferenceCode(StringPool.BLANK);
+
 		ObjectValidationRule updatedCustomObjectValidationRule =
 			new ObjectValidationRule() {
 				{

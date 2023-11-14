@@ -54,8 +54,6 @@ definition {
 		}
 
 		task ("Take down the File Size of image resolution") {
-			PageEditor.gotoConfiguration(fragmentName = "Image");
-
 			PageEditor.gotoImageSource(
 				fragmentName = "Image",
 				id = "image-square");
@@ -209,12 +207,18 @@ definition {
 			PageEditor.viewContainerStyle(
 				backgroundImage = "high_resolution_photo-jpg",
 				position = 1);
+
+			WaitForElementPresent(
+				key_resolutionLabel = "File Size",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			for (var navTab : list "Advanced,Styles,General,Styles") {
-				Navigator.gotoNavTab(navTab = ${navTab});
-			}
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoStyle(fragmentName = "Container");
 
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
@@ -448,12 +452,18 @@ definition {
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo\.jpg");
+
+			WaitForElementPresent(
+				key_resolutionLabel = "File Size",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			for (var navTab : list "Advanced,Styles,General,Styles") {
-				Navigator.gotoNavTab(navTab = ${navTab});
-			}
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoStyle(fragmentName = "Container");
 
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
@@ -613,12 +623,18 @@ definition {
 				paddingBottom = 3,
 				paddingTop = 3,
 				position = 1);
+
+			WaitForElementPresent(
+				key_resolutionLabel = "File Size",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			for (var navTab : list "Advanced,Styles,General,Styles") {
-				Navigator.gotoNavTab(navTab = ${navTab});
-			}
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoStyle(fragmentName = "Container");
 
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
@@ -985,9 +1001,13 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution") {
-			for (var navTab : list "Link,Image Source") {
-				Navigator.gotoNavTab(navTab = ${navTab});
-			}
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoImageSource(
+				fragmentName = "Image",
+				id = "image-square");
 
 			var fileSize = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();

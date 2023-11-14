@@ -53,12 +53,18 @@ definition {
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo-jpg");
+
+			WaitForElementPresent(
+				key_resolutionLabel = "File Size",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			for (var navTab : list "Advanced,Styles,General,Styles") {
-				Navigator.gotoNavTab(navTab = ${navTab});
-			}
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoStyle(fragmentName = "Container");
 
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
@@ -222,12 +228,18 @@ definition {
 				backgroundImage = "high_resolution_photo-jpg",
 				paddingBottom = 3,
 				paddingTop = 3);
+
+			WaitForElementPresent(
+				key_resolutionLabel = "File Size",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			for (var navTab : list "Advanced,Styles,General,Styles") {
-				Navigator.gotoNavTab(navTab = ${navTab});
-			}
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoStyle(fragmentName = "Container");
 
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
@@ -397,12 +409,20 @@ definition {
 				id = "01-img",
 				imageDescription = "",
 				imageFileName = "high_resolution_photo-jpg");
+
+			WaitForElementPresent(
+				key_resolutionLabel = "File Size",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			for (var navTab : list "Link,Image Source") {
-				Navigator.gotoNavTab(navTab = ${navTab});
-			}
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoImageSource(
+				fragmentName = "Card",
+				id = "01-img");
 
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();

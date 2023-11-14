@@ -45,6 +45,16 @@
 		<td>//div[contains(@class,'left-sidebar-current-object-folder-group')]//span[contains(@class,'c-inner') and contains(.,'${key_label}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SIDEBAR_FOLDER_BY_INDEX</td>
+		<td>xpath=(//div[contains(@class,'object-folder-content-title')])[${key_index}]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LINKED_OBJECT_IN_OTHER_FOLDERS</td>
+		<td>//div[@id='${key_folderLabel}']//*[contains(@class, 'icon-link')]/../../following-sibling::div//span[text()='${key_objectLabel}']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -18,14 +18,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 public interface AttachmentManager {
 
 	public FileEntry addFileEntry(
-			long companyId, long groupId, byte[] fileContent, String fileName,
-			long objectFieldId, ServiceContext serviceContext)
+			long companyId, byte[] fileContent, String fileName,
+			long groupId, long objectFieldId, ServiceContext serviceContext)
 		throws Exception;
 
 	public String[] getAcceptedFileExtensions(long objectFieldId);
 
 	public DLFolder getDLFolder(
-		long objectFieldId, long companyId, long groupId,
+		long companyId, long groupId, long objectFieldId,
 		ServiceContext serviceContext, long userId);
 
 	public long getMaximumFileSize(long objectFieldId, boolean signedIn);

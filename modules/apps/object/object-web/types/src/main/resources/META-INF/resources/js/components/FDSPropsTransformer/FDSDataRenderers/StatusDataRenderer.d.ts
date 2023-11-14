@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-export default function objectDefinitionStatusDataRenderer({
+export default function StatusDataRenderer({
 	itemData,
 }: {
 	itemData: ObjectDefinition;

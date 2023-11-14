@@ -326,8 +326,8 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		}
 		else if (Objects.equals(fieldName, "status")) {
 			_addFDSTableSchemaField(
-				null, "status", null, fdsTableSchemaBuilder, fieldName,
-				_getLabel(fieldLabel, "status"), true, null, true);
+				null, "statusDataRenderer", null, fdsTableSchemaBuilder,
+				fieldName, _getLabel(fieldLabel, "status"), true, null, true);
 		}
 	}
 

@@ -6,7 +6,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export default function objectDefinitionStatusDataRenderer({
+export default function StatusDataRenderer({
 	itemData,
 }: {
 	itemData: ObjectDefinition;
@@ -16,7 +16,9 @@ export default function objectDefinitionStatusDataRenderer({
 			className={classNames(
 				itemData.status.label === 'approved'
 					? 'label-success'
-					: 'label-info',
+					: itemData.status.label === 'pending'
+					? 'label-info'
+					: 'label-secondary',
 				'label'
 			)}
 		>

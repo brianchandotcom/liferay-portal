@@ -20,9 +20,9 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import statusDataRenderer from '../FDSPropsTransformer/FDSDataRenderers/StatusDataRenderer';
 import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
 import objectDefinitionModifiedDateDataRenderer from './FDSDataRenderers/ObjectDefinitionModifiedDateDataRenderer';
-import objectDefinitionStatusDataRenderer from './FDSDataRenderers/ObjectDefinitionStatusDataRenderer';
 import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinitionSystemDataRenderer';
 import {ModalAddObjectDefinition} from './ModalAddObjectDefinition';
 import {ModalAddObjectFolder} from './ModalAddObjectFolder';
@@ -173,8 +173,8 @@ export default function ViewObjectDefinitions({
 		customDataRenderers: {
 			objectDefinitionLabelDataRenderer,
 			objectDefinitionModifiedDateDataRenderer,
-			objectDefinitionStatusDataRenderer,
 			objectDefinitionSystemDataRenderer,
+			statusDataRenderer,
 		},
 		emptyState: {
 			description: Liferay.Language.get(
@@ -283,8 +283,7 @@ export default function ViewObjectDefinitions({
 							sortable: true,
 						},
 						{
-							contentRenderer:
-								'objectDefinitionStatusDataRenderer',
+							contentRenderer: 'statusDataRenderer',
 							expand: false,
 							fieldName: 'status',
 							label: Liferay.Language.get('status'),

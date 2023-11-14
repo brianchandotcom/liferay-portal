@@ -192,7 +192,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	@Override
 	public void validateFileName(String fileName) throws FileNameException {
 		if (Validator.isNull(fileName)) {
-			throw new FileNameException("Title is null");
+			throw new FileNameException("File name is null");
 		}
 	}
 

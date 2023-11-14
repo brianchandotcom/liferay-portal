@@ -132,14 +132,14 @@ public abstract class BaseBuildEntity
 			"NODE_TYPE");
 
 		if (buildParameterEntity == null) {
-			return null;
+			return JenkinsNodeEntity.Type.SLAVE;
 		}
 
 		JenkinsNodeEntity.Type type = JenkinsNodeEntity.Type.getByKey(
 			buildParameterEntity.getValue());
 
 		if (type == null) {
-			return null;
+			return JenkinsNodeEntity.Type.SLAVE;
 		}
 
 		return type;
@@ -194,6 +194,11 @@ public abstract class BaseBuildEntity
 			"MAX_NODE_COUNT");
 
 		if (buildParameterEntity == null) {
+			buildParameterEntity = getBuildParameterEntity(
+				"MAXIMUM_SLAVES_PER_HOST");
+		}
+
+		if (buildParameterEntity == null) {
 			return _DEFAULT_MAX_NODE_COUNT;
 		}
 
@@ -210,6 +215,10 @@ public abstract class BaseBuildEntity
 	public int getMinNodeRAM() {
 		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
 			"MIN_NODE_RAM");
+
+		if (buildParameterEntity == null) {
+			buildParameterEntity = getBuildParameterEntity("MINIMUM_SLAVE_RAM");
+		}
 
 		if (buildParameterEntity == null) {
 			return _DEFAULT_MIN_NODE_RAM;

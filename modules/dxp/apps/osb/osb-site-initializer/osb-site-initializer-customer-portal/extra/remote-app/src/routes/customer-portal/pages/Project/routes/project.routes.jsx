@@ -208,7 +208,9 @@ const ProjectRoutes = () => {
 						</Route>
 					</Route>
 
-					<Route element={<Attachments />} path="attachments" />
+					{featureFlags.includes('ISSD-119') && (
+						<Route element={<Attachments />} path="attachments" />
+					)}
 
 					<Route element={<TeamMembers />} path="team-members" />
 

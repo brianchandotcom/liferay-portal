@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>TRIGGER</td>
-	<td>//a[*[name()='svg'][contains(@class,'icon-caret-double')]]</td>
+	<td>//button[contains(.,'Choose an Option')]</td>
 	<td></td>
 </tr>
 <tr>

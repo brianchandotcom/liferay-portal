@@ -67,17 +67,6 @@ definition {
 		property database.types = "mysql";
 		property liferay.online.properties = "true";
 
-		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
-		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
-
-		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
-
-		Portlet.startServer(keepOsGiState = "true");
-
-		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
-
-		Navigator.openSpecificURL(url = "http://localhost:8080");
-
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://localhost:8080",

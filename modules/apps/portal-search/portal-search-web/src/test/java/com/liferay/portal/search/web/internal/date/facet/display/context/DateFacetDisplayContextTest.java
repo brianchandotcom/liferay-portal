@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -28,6 +27,7 @@ import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.date.facet.configuration.DateFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.date.facet.display.context.builder.DateFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -43,6 +43,7 @@ import org.mockito.Mockito;
 /**
  * @author Petteri Karttunen
  */
+@FeatureFlags("LPS-153839")
 public class DateFacetDisplayContextTest
 	extends BaseFacetDisplayContextTestCase {
 
@@ -57,8 +58,6 @@ public class DateFacetDisplayContextTest
 		_jsonFactoryImpl = new JSONFactoryImpl();
 
 		_setUpPortalUtil();
-
-		PropsTestUtil.setProps("feature.flag.LPS-153839", "true");
 
 		Mockito.doReturn(
 			_facetCollector

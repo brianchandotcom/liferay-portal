@@ -5,8 +5,9 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context.customizer;
 
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
+
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -18,16 +19,17 @@ public abstract class BaseServiceTrackerCustomizer<S, T>
 	implements ServiceTrackerCustomizer<S, T> {
 
 	public BaseServiceTrackerCustomizer(
-		BundleContext bundleContext, ContextController contextController,
-		HttpServletEndpointController httpServletEndpointController) {
+		BundleContext bundleContext,
+		HttpServletEndpointController httpServletEndpointController,
+		LiferayContextController liferayContextController) {
 
 		this.bundleContext = bundleContext;
-		this.contextController = contextController;
 		this.httpServletEndpointController = httpServletEndpointController;
+		this.liferayContextController = liferayContextController;
 	}
 
 	protected BundleContext bundleContext;
-	protected ContextController contextController;
 	protected HttpServletEndpointController httpServletEndpointController;
+	protected LiferayContextController liferayContextController;
 
 }

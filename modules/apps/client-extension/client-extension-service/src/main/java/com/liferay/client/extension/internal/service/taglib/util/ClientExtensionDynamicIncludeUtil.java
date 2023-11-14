@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,14 +25,30 @@ public class ClientExtensionDynamicIncludeUtil {
 	public static List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		Layout layout, String type) {
 
+		List<ClientExtensionEntryRel> clientExtensionEntryRels =
+			new ArrayList<>();
+
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		List<ClientExtensionEntryRel> clientExtensionEntryRels =
-			new ArrayList<>(
-				ClientExtensionEntryRelLocalServiceUtil.
-					getClientExtensionEntryRels(
-						PortalUtil.getClassNameId(Layout.class),
-						layout.getPlid(), type));
+		List<ClientExtensionEntryRel> layoutSetClientExtensionEntryRels =
+			ClientExtensionEntryRelLocalServiceUtil.getClientExtensionEntryRels(
+				PortalUtil.getClassNameId(LayoutSet.class),
+				layoutSet.getLayoutSetId(), type);
+
+		for (ClientExtensionEntryRel layoutSetClientExtensionEntryRel :
+				layoutSetClientExtensionEntryRels) {
+
+			if (!ListUtil.exists(
+					clientExtensionEntryRels,
+					clientExtensionEntryRel -> Objects.equals(
+						layoutSetClientExtensionEntryRel.
+							getCETExternalReferenceCode(),
+						clientExtensionEntryRel.
+							getCETExternalReferenceCode()))) {
+
+				clientExtensionEntryRels.add(layoutSetClientExtensionEntryRel);
+			}
+		}
 
 		Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
 			layout.getMasterLayoutPlid());
@@ -62,27 +77,27 @@ public class ClientExtensionDynamicIncludeUtil {
 			}
 		}
 
-		List<ClientExtensionEntryRel> layoutSetClientExtensionEntryRels =
-			ClientExtensionEntryRelLocalServiceUtil.getClientExtensionEntryRels(
-				PortalUtil.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), type);
+		List<ClientExtensionEntryRel> layoutClientExtensionEntryRels =
+			new ArrayList<>(
+				ClientExtensionEntryRelLocalServiceUtil.
+					getClientExtensionEntryRels(
+						PortalUtil.getClassNameId(Layout.class),
+						layout.getPlid(), type));
 
-		for (ClientExtensionEntryRel layoutSetClientExtensionEntryRel :
-				layoutSetClientExtensionEntryRels) {
+		for (ClientExtensionEntryRel layoutClientExtensionEntryRel :
+				layoutClientExtensionEntryRels) {
 
 			if (!ListUtil.exists(
 					clientExtensionEntryRels,
 					clientExtensionEntryRel -> Objects.equals(
-						layoutSetClientExtensionEntryRel.
+						layoutClientExtensionEntryRel.
 							getCETExternalReferenceCode(),
 						clientExtensionEntryRel.
 							getCETExternalReferenceCode()))) {
 
-				clientExtensionEntryRels.add(layoutSetClientExtensionEntryRel);
+				clientExtensionEntryRels.add(layoutClientExtensionEntryRel);
 			}
 		}
-
-		Collections.reverse(clientExtensionEntryRels);
 
 		return clientExtensionEntryRels;
 	}

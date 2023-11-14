@@ -1571,6 +1571,10 @@
 					"title": "The definition Schema",
 					"type": "object"
 				},
+				"id": {
+					"title": "The id Schema",
+					"type": "string"
+				},
 				"pageElements": {
 					"items": {
 						"$ref": "#/definitions/PageElement"

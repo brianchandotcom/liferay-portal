@@ -88,14 +88,15 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 		User user = themeDisplay.getUser();
 
 		long[] groupIds = user.getGroupIds();
+		long[] userGroupIds = user.getUserGroupIds();
 
-		if (ArrayUtil.isEmpty(groupIds)) {
+		if (ArrayUtil.isEmpty(groupIds) && ArrayUtil.isEmpty(userGroupIds)) {
 			return Collections.emptyList();
 		}
 
 		return _userLocalService.searchBySocial(
-			themeDisplay.getCompanyId(), groupIds, keywords, 0, 20,
-			new UserScreenNameComparator(true));
+			themeDisplay.getCompanyId(), groupIds, userGroupIds, keywords, 0,
+			20, new UserScreenNameComparator(true));
 	}
 
 	private JSONArray _getUsersJSONArray(ResourceRequest resourceRequest)

@@ -111,6 +111,13 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
+	public DLFolder getFolder(String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFolderService.getFolder(externalReferenceCode, groupId);
+	}
+
+	@Override
 	public java.util.List<Long> getFolderIds(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -103,6 +103,12 @@ public class DLFolderServiceUtil {
 		return getService().getFolder(groupId, parentFolderId, name);
 	}
 
+	public static DLFolder getFolder(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFolder(externalReferenceCode, groupId);
+	}
+
 	public static List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException {
 

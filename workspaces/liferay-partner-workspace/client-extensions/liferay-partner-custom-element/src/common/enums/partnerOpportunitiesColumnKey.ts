@@ -5,6 +5,7 @@
 
 export enum PartnerOpportunitiesColumnKey {
 	ACCOUNT_NAME = 'ACCOUNT-NAME',
+	ACTIVE = 'ACTIVE',
 	CLOSE_DATE = 'CLOSE-DATE',
 	CREATED_DATE = 'CREATED-DATE',
 	CURRENCY = 'CURRENCY',

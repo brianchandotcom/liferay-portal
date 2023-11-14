@@ -75,5 +75,8 @@ export default function getItemPartnerOpportunity(item: DealRegistrationDTO) {
 		[PartnerOpportunitiesColumnKey.OPPORTUNITY]: item.opportunity
 			? item.opportunity
 			: '',
+		[PartnerOpportunitiesColumnKey.ACTIVE]: item.active
+			? item.active
+			: false,
 	};
 }

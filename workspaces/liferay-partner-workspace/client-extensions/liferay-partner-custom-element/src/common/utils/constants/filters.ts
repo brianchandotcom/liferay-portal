@@ -109,16 +109,15 @@ export const Filters = {
 		partnersOpen: `${mdfRequestOpenFilter}`,
 	},
 	OPPORTUNITY_LISTING: {
-		closedWIP: `${ResourceName.OPPORTUNITIES_SALESFORCE}/?&filter=${opportunityStageClosed} and ${fiscalYearFilterCloseDate}`,
-		openWIP: `${ResourceName.OPPORTUNITIES_SALESFORCE}/?&filter=${opportunityStageOpen}`,
-		rfp: `${ResourceName.PARTNER_OPPORTUNITIES_SALESFORCE}/?&filter=stage eq 'Open'`,
+		closedWIP: `${opportunityStageClosed} and ${fiscalYearFilterCloseDate}`,
+		openWIP: `${opportunityStageOpen}`,
 	},
 	RENEWAL_DASHBOARD: {
 		renewals: `${opportunityStageOpen} and type eq 'Existing Business' and closeDate le ${thirtyDaysFromToday}`,
 	},
 	RENEWAL_LISTING: {
-		closedWIP: `${ResourceName.OPPORTUNITIES_SALESFORCE}/?&filter=${opportunityStageClosed} and type eq 'Existing Business' and ${fiscalYearFilterCloseDate}`,
-		openWIP: `${ResourceName.OPPORTUNITIES_SALESFORCE}/?&filter=${opportunityStageOpen} and type eq 'Existing Business'`,
+		closedWIP: `${opportunityStageClosed} and type eq 'Existing Business' and ${fiscalYearFilterCloseDate}`,
+		openWIP: `${opportunityStageOpen} and type eq 'Existing Business'`,
 	},
 	REVENUE_DASHBOARD: {
 		opportunities: `stage eq 'Closed Won' and ${fiscalYearFilterCloseDate}`,

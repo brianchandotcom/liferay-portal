@@ -1,0 +1,56 @@
+[
+	{
+		"externalReferenceCode": "Influence",
+		"key": "Influence",
+		"name": "Influence",
+		"name_i18n": {
+			"en-US": "Influence"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "Sell",
+		"key": "Sell",
+		"name": "Sell",
+		"name_i18n": {
+			"en-US": "Sell"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "Build",
+		"key": "Build",
+		"name": "Build",
+		"name_i18n": {
+			"en-US": "Build"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "Manage",
+		"key": "Manage",
+		"name": "Manage",
+		"name_i18n": {
+			"en-US": "Manage"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "Technology",
+		"key": "Technology",
+		"name": "Technology",
+		"name_i18n": {
+			"en-US": "Technology"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "Distributor",
+		"key": "Distributor",
+		"name": "Distributor",
+		"name_i18n": {
+			"en-US": "Distributor"
+		},
+		"type": "string"
+	}
+]

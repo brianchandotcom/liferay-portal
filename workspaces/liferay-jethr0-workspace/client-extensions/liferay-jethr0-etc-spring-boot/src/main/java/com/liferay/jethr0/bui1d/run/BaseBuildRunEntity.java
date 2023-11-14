@@ -72,12 +72,12 @@ public abstract class BaseBuildRunEntity
 				"JETHR0_JOB_ID", String.valueOf(jobEntity.getId()));
 		}
 
-		invokeJSONObject.put("jobParameters", jobParametersJSONObject);
-
 		if (jenkinsNodeEntity != null) {
-			invokeJSONObject.put(
-				"jenkinsNode", jenkinsNodeEntity.getJSONObject());
+			jobParametersJSONObject.put(
+				"SLAVE_LABEL", jenkinsNodeEntity.getName());
 		}
+
+		invokeJSONObject.put("jobParameters", jobParametersJSONObject);
 
 		return invokeJSONObject;
 	}

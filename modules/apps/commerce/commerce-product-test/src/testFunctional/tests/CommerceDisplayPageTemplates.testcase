@@ -1708,7 +1708,7 @@ definition {
 		}
 
 		task ("When admin removes the DPT product") {
-			CommerceEntry.deleteCommerceEntry(key_value = "Bearings");
+			CommerceEntry.deleteCommerceEntry(entryName = "Bearings");
 
 			CommerceEntry.assertNoDisplayPageOverride(
 				entryName = "Bearings",

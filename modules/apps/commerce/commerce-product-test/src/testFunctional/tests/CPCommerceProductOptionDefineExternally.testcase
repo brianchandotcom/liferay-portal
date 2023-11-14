@@ -836,7 +836,7 @@ definition {
 
 			CommerceNavigator.searchEntry(entryName = "MIN55861");
 
-			CommerceEntry.deleteCommerceEntry(key_value = "MIN55861");
+			CommerceEntry.deleteCommerceEntry(entryName = "MIN55861");
 		}
 
 		task ("And the admin opens the ABS Sensor Product via Admin") {

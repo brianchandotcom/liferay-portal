@@ -793,8 +793,16 @@ definition {
 	test CanSearchOrderIdInAccountSelector {
 		property portal.acceptance = "true";
 
-		task ("Given a Minium site is created") {
-			ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given Money Order is enbaled") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And admin navigates to the Minium catalog page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 		}
 
 		var orderIds = ListUtil.newList();
@@ -1049,7 +1057,7 @@ definition {
 			key_orderAuthor = "Commerce Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
-		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
+		ClickNoError(locator1 = "CommerceFrontStore#SF_ORDER_BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 

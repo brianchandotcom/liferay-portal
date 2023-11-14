@@ -415,7 +415,7 @@ definition {
 		}
 
 		task ("When the user removes the Override Default Category Display Page") {
-			CommerceEntry.deleteCommerceEntry(key_value = "Suspension");
+			CommerceEntry.deleteCommerceEntry(entryName = "Suspension");
 		}
 
 		task ("Then the category display page override should no longer be present") {

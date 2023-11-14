@@ -883,7 +883,7 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderStatus = 2,
-				paymentMethod = "paypal",
+				paymentMethod = "paypal-integration",
 				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
@@ -1537,7 +1537,7 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderStatus = 2,
-				paymentMethod = "paypal",
+				paymentMethod = "paypal-integration",
 				paymentStatus = 4);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
@@ -1672,7 +1672,7 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderStatus = 2,
-				paymentMethod = "paypal",
+				paymentMethod = "paypal-integration",
 				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
@@ -1770,7 +1770,7 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderStatus = 2,
-				paymentMethod = "paypal",
+				paymentMethod = "paypal-integration",
 				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");

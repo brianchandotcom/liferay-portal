@@ -4,12 +4,6 @@
  */
 
 import {CheckboxCard} from '../../../components/CheckboxCard/CheckboxCard';
-
-interface OfferingType {
-	description: string;
-	label: string;
-}
-
 interface OfferingTypeCheckboxProps {
 	handleSelectCheckbox: (label: string) => void;
 	offeringTypes: OfferingType[];

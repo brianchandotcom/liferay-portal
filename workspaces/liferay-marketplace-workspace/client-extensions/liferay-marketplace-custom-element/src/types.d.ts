@@ -472,6 +472,11 @@ type UserForm = {
 	phoneNumber: string;
 };
 
+type OfferingType = {
+	description: string;
+	label: string;
+}
+
 type OrderInfo = {
 	account: Account | UserForm;
 	product?: Product;

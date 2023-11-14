@@ -71,7 +71,9 @@ public class CommerceAccountRoleHelperImpl
 			AccountRoleConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER,
 			serviceContext);
 
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-10890")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				serviceContext.getCompanyId(), "COMMERCE-10890")) {
+
 			_checkAccountRole(
 				AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER,
 				serviceContext);

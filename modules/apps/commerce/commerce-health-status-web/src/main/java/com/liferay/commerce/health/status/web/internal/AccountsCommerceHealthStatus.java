@@ -105,7 +105,7 @@ public class AccountsCommerceHealthStatus implements CommerceHealthStatus {
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
 
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-10890")) {
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "COMMERCE-10890")) {
 			Role accountSupplierRole = _roleLocalService.fetchRole(
 				companyId, AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER);
 

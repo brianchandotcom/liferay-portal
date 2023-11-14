@@ -1819,24 +1819,6 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"primKey": "[$PermissionAction#MDF-REQUEST-DELETE$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
-		"roleName": "Partner Manager (PM)",
-		"scope": 4
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "[$PermissionAction#MDF-REQUEST-DELETE$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
-		"roleName": "Partner Marketing User (PMU)",
-		"scope": 4
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
 		"primKey": "[$PermissionAction#MDF-REQUEST-CREATE$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Partner Manager (PM)",

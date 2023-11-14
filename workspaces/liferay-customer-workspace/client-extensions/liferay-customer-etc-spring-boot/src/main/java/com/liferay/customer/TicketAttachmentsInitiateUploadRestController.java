@@ -28,9 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Amos Fong
  */
-@RequestMapping("/ticket-attachment/initiate-upload")
+@RequestMapping("/ticket-attachments/initiate-upload")
 @RestController
-public class TicketAttachmentInitiateUploadRestController
+public class TicketAttachmentsInitiateUploadRestController
 	extends BaseRestController {
 
 	@GetMapping
@@ -96,7 +96,7 @@ public class TicketAttachmentInitiateUploadRestController
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		TicketAttachmentInitiateUploadRestController.class);
+		TicketAttachmentsInitiateUploadRestController.class);
 
 	@Autowired
 	private GoogleCloudStorageWebService _googleCloudStorageWebService;

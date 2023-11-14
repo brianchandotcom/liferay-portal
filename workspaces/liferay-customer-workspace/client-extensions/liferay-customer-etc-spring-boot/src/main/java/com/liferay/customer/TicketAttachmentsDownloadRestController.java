@@ -25,9 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Amos Fong
  */
-@RequestMapping("/ticket-attachment/{ticketAttachmentId}/download")
+@RequestMapping("/ticket-attachments/{ticketAttachmentId}/download")
 @RestController
-public class TicketAttachmentDownloadRestController extends BaseRestController {
+public class TicketAttachmentsDownloadRestController
+	extends BaseRestController {
 
 	@GetMapping
 	public ResponseEntity<String> get(
@@ -62,7 +63,7 @@ public class TicketAttachmentDownloadRestController extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		TicketAttachmentDownloadRestController.class);
+		TicketAttachmentsDownloadRestController.class);
 
 	@Autowired
 	private GoogleCloudStorageWebService _googleCloudStorageWebService;

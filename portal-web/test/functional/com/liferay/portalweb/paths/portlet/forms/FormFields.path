@@ -866,7 +866,7 @@
 </tr>
 <tr>
 	<td>SELECT_OPTIONS_INLINE_IDENTIFIER</td>
-	<td>//div[@class='custom-control custom-radio custom-control-inline']</td>
+	<td>//div[@class='ddm__radio']//div[contains(@class, 'custom-control-inline')]</td>
 	<td></td>
 </tr>
 <tr>

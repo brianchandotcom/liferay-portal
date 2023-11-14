@@ -87,7 +87,7 @@ function Rule({onDelete, onEdit, rule}) {
 			onMouseOver={() => setHovered(true)}
 		>
 			<ClayList.ItemField expand>
-				<ClayList.ItemTitle className="align-items-center d-flex">
+				<div className="align-items-center d-flex">
 					<span className="flex-grow-1">{rule.name}</span>
 
 					<ClayDropDown
@@ -123,7 +123,7 @@ function Rule({onDelete, onEdit, rule}) {
 							</ClayDropDown.Item>
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
-				</ClayList.ItemTitle>
+				</div>
 			</ClayList.ItemField>
 		</ClayList.Item>
 	);

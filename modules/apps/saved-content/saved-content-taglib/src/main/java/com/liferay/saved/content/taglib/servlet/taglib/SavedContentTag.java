@@ -196,7 +196,7 @@ public class SavedContentTag extends IncludeTag {
 		).put(
 			"saved", _isSaved(themeDisplay.getUserId())
 		).put(
-			"savedContentURL", _getURL(httpServletRequest)
+			"savedContentEntryURL", _getURL(httpServletRequest)
 		).build();
 	}
 
@@ -222,7 +222,7 @@ public class SavedContentTag extends IncludeTag {
 					MySavedContentPortletKeys.MY_SAVED_CONTENT,
 					PortletRequest.ACTION_PHASE)
 			).setActionName(
-				"/saved_content/edit_saved_content"
+				"/saved_content/edit_saved_content_entry"
 			).setRedirect(
 				PortalUtil.getCurrentURL(httpServletRequest)
 			).buildString();

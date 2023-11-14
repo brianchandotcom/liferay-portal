@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SavedContent render disabled 1`] = `
+exports[`SavedContentEntry render disabled 1`] = `
 <div>
   <form>
     <button
@@ -23,7 +23,7 @@ exports[`SavedContent render disabled 1`] = `
 </div>
 `;
 
-exports[`SavedContent render enabled 1`] = `
+exports[`SavedContentEntry render enabled 1`] = `
 <div>
   <form>
     <button

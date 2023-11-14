@@ -13,7 +13,7 @@ import {
 	openToast as mockedOpenToast,
 } from 'frontend-js-web';
 
-import SavedContent from '../src/main/resources/META-INF/resources/js/SavedContent';
+import SavedContentEntry from '../src/main/resources/META-INF/resources/js/SavedContentEntry';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
@@ -24,20 +24,20 @@ jest.mock('frontend-js-web', () => ({
 
 function renderComponent(props) {
 	return render(
-		<SavedContent
+		<SavedContentEntry
 			className="className"
 			classPK="classPK"
 			contentTitle="contentTitle"
 			enabled
-			mySavedContentURL="/MY-saved-content-url"
+			mySavedContentURL="/my-saved-content-url"
 			portletNamespace="namespace"
-			savedContentURL="/saved-content-url"
+			savedContentEntryURL="/saved-content-entry-url"
 			{...props}
 		/>
 	);
 }
 
-describe('SavedContent', () => {
+describe('SavedContentEntry', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
@@ -77,12 +77,12 @@ describe('SavedContent', () => {
 
 		const [[url, {body}]] = mockedFetch.mock.calls;
 
-		expect(url).toBe('/saved-content-url');
+		expect(url).toBe('/saved-content-entry-url');
 		expect(body.get('namespaceclassName')).toBe('className');
 		expect(body.get('namespaceclassPK')).toBe('classPK');
 	});
 
-	it('saves the content and nofity', async () => {
+	it('saves the content and notify', async () => {
 		mockedFetch.mockReturnValue(
 			Promise.resolve({
 				json: () => Promise.resolve({saved: true}),
@@ -105,7 +105,7 @@ describe('SavedContent', () => {
 		);
 	});
 
-	it('removes the content and nofity', async () => {
+	it('removes the content and notify', async () => {
 		mockedFetch.mockReturnValue(
 			Promise.resolve({
 				json: () => Promise.resolve({saved: false}),

@@ -34,11 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + MySavedContentPortletKeys.MY_SAVED_CONTENT,
-		"mvc.command.name=/saved_content/edit_saved_content"
+		"mvc.command.name=/saved_content/edit_saved_content_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class EditSavedContentMVCActionCommand extends BaseMVCActionCommand {
+public class EditSavedContentEntryMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -89,7 +90,7 @@ public class EditSavedContentMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditSavedContentMVCActionCommand.class);
+		EditSavedContentEntryMVCActionCommand.class);
 
 	@Reference
 	private Language _language;

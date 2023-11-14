@@ -15,7 +15,7 @@ function showNotification(message, error = false) {
 	});
 }
 
-export default function SavedContent({
+export default function SavedContentEntry({
 	className,
 	classPK,
 	contentTitle,
@@ -23,7 +23,7 @@ export default function SavedContent({
 	mySavedContentURL,
 	portletNamespace,
 	saved: initialSaved = false,
-	savedContentURL,
+	savedContentEntryURL,
 }) {
 	const [saved, setSaved] = useState(initialSaved);
 	const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ export default function SavedContent({
 		setLoading(true);
 		setSaved((saved) => !saved);
 
-		fetch(savedContentURL, {
+		fetch(savedContentEntryURL, {
 			body: objectToFormData({
 				[`${portletNamespace}className`]: className,
 				[`${portletNamespace}classPK`]: classPK,
@@ -106,7 +106,7 @@ export default function SavedContent({
 	);
 }
 
-SavedContent.propTypes = {
+SavedContentEntry.propTypes = {
 	className: PropTypes.string.isRequired,
 	classPK: PropTypes.string.isRequired,
 	contentTitle: PropTypes.string.isRequired,
@@ -114,5 +114,5 @@ SavedContent.propTypes = {
 	mySavedContentURL: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	saved: PropTypes.bool,
-	savedContentURL: PropTypes.string.isRequired,
+	savedContentEntryURL: PropTypes.string.isRequired,
 };

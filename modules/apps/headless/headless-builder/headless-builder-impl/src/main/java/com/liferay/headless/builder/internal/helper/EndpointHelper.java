@@ -19,6 +19,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -140,6 +141,10 @@ public class EndpointHelper {
 	private Object _getRelatedObjectValue(
 		ObjectEntry objectEntry, APIApplication.Property property,
 		List<String> relationshipsNames) {
+
+		if (objectEntry == null) {
+			return Collections.emptyList();
+		}
 
 		if (relationshipsNames.isEmpty()) {
 			return objectEntry.getPropertyValue(property.getSourceFieldName());

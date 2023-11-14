@@ -182,7 +182,7 @@ definition {
 		Refresh();
 
 		Click(
-			key_value = "",
+			key_value = "PG2",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		Click(

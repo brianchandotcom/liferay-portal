@@ -48,12 +48,13 @@ public class DisplayPageVerticalCard
 	extends BaseBaseClayCard implements VerticalCard {
 
 	public DisplayPageVerticalCard(
-		BaseModel<?> baseModel, boolean existsMappedContentType,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		RowChecker rowChecker) {
+		boolean allowedMappedContentType, BaseModel<?> baseModel,
+		boolean existsMappedContentType, RenderRequest renderRequest,
+		RenderResponse renderResponse, RowChecker rowChecker) {
 
 		super(baseModel, rowChecker);
 
+		_allowedMappedContentType = allowedMappedContentType;
 		_existsMappedContentType = existsMappedContentType;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -75,8 +76,9 @@ public class DisplayPageVerticalCard
 			DisplayPageActionDropdownItemsProvider
 				displayPageActionDropdownItemsProvider =
 					new DisplayPageActionDropdownItemsProvider(
-						_existsMappedContentType, _layoutPageTemplateEntry,
-						_renderRequest, _renderResponse);
+						_allowedMappedContentType, _existsMappedContentType,
+						_layoutPageTemplateEntry, _renderRequest,
+						_renderResponse);
 
 			return displayPageActionDropdownItemsProvider.
 				getActionDropdownItems();
@@ -230,6 +232,7 @@ public class DisplayPageVerticalCard
 	private static final Log _log = LogFactoryUtil.getLog(
 		DisplayPageVerticalCard.class);
 
+	private final boolean _allowedMappedContentType;
 	private final Layout _draftLayout;
 	private final boolean _existsMappedContentType;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;

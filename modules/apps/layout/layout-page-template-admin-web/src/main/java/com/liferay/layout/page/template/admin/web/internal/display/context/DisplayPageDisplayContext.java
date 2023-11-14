@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -422,12 +424,84 @@ public class DisplayPageDisplayContext {
 		).buildPortletURL();
 	}
 
+	public boolean isAllowedMappedContentType(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195263")) {
+			return true;
+		}
+
+		if (layoutPageTemplateEntry.getClassNameId() == 0) {
+			return false;
+		}
+
+		Map<Long, Long[]> classNameIdsMap = _getAllowedClassNameIdsMap();
+
+		if (!classNameIdsMap.containsKey(
+				layoutPageTemplateEntry.getClassNameId())) {
+
+			return false;
+		}
+
+		Long[] classTypeIds = classNameIdsMap.get(
+			layoutPageTemplateEntry.getClassNameId());
+
+		if ((layoutPageTemplateEntry.getClassTypeId() == 0) &&
+			ArrayUtil.isEmpty(classTypeIds)) {
+
+			return true;
+		}
+
+		if (!ArrayUtil.contains(
+				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
 
 		return false;
+	}
+
+	private Map<Long, Long[]> _getAllowedClassNameIdsMap() {
+		if (_allowedClassNameIdsMap != null) {
+			return _allowedClassNameIdsMap;
+		}
+
+		Map<Long, Long[]> classNameIdsMap = new HashMap<>();
+
+		JSONArray mappingTypesJSONArray = getMappingTypesJSONArray();
+
+		for (int i = 0; i < mappingTypesJSONArray.length(); i++) {
+			JSONObject typeJSONObject = mappingTypesJSONArray.getJSONObject(i);
+
+			JSONArray subtypesJSONArray = typeJSONObject.getJSONArray(
+				"subtypes");
+
+			Long[] classTypeIds = new Long[subtypesJSONArray.length()];
+
+			for (int j = 0; j < subtypesJSONArray.length(); j++) {
+				JSONObject subtypeJSONObject = subtypesJSONArray.getJSONObject(
+					j);
+
+				classTypeIds[j] = GetterUtil.getLong(
+					subtypeJSONObject.getString("id"));
+			}
+
+			classNameIdsMap.put(
+				GetterUtil.getLong(typeJSONObject.getString("id")),
+				classTypeIds);
+		}
+
+		_allowedClassNameIdsMap = classNameIdsMap;
+
+		return _allowedClassNameIdsMap;
 	}
 
 	private Map<Long, Long[]> _getClassNameIdsMap() {
@@ -562,6 +636,7 @@ public class DisplayPageDisplayContext {
 		return null;
 	}
 
+	private Map<Long, Long[]> _allowedClassNameIdsMap;
 	private Map<Long, Long[]> _classNameIdsMap;
 	private SearchContainer<?> _displayPagesSearchContainer;
 	private final HttpServletRequest _httpServletRequest;

@@ -60,10 +60,11 @@ import javax.servlet.http.HttpServletRequest;
 public class DisplayPageActionDropdownItemsProvider {
 
 	public DisplayPageActionDropdownItemsProvider(
-		boolean existsMappedContentType,
+		boolean allowedMappedContentType, boolean existsMappedContentType,
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_allowedMappedContentType = allowedMappedContentType;
 		_existsMappedContentType = existsMappedContentType;
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderResponse = renderResponse;
@@ -715,6 +716,7 @@ public class DisplayPageActionDropdownItemsProvider {
 		return false;
 	}
 
+	private final boolean _allowedMappedContentType;
 	private final Layout _draftLayout;
 	private final boolean _existsMappedContentType;
 	private final HttpServletRequest _httpServletRequest;

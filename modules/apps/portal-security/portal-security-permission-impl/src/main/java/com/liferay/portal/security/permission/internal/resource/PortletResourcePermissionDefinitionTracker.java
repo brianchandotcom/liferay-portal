@@ -5,9 +5,9 @@
 
 package com.liferay.portal.security.permission.internal.resource;
 
-import com.liferay.portal.kernel.internal.security.permission.resource.DefaultPortletResourcePermission;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.definition.PortletResourcePermissionDefinition;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
@@ -53,14 +53,12 @@ public class PortletResourcePermissionDefinitionTracker {
 				portletResourcePermissionDefinition = _bundleContext.getService(
 					serviceReference);
 
-			PortletResourcePermission portletResourcePermission =
-				new DefaultPortletResourcePermission(
+			return _bundleContext.registerService(
+				PortletResourcePermission.class,
+				PortletResourcePermissionFactory.create(
 					portletResourcePermissionDefinition.getResourceName(),
 					portletResourcePermissionDefinition.
-						getPortletResourcePermissionLogics());
-
-			return _bundleContext.registerService(
-				PortletResourcePermission.class, portletResourcePermission,
+						getPortletResourcePermissionLogics()),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"resource.name",
 					portletResourcePermissionDefinition.getResourceName()

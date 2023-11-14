@@ -76,22 +76,23 @@ public class UpgradeSCSSNodeSassPatternsCheck extends BaseUpgradeCheck {
 		String interpolation = matcher.group(3);
 
 		if (!interpolation.isEmpty()) {
-			if (interpolation.contains("#{")) {
-				String variableName = StringUtil.replace(
-					interpolation, "#{", "' + ");
+			String[] interpolationParts = interpolation.split(
+				"((\\#\\{)|(\\}))");
 
-				sb.append(" + '");
-				sb.append(variableName);
-			}
-			else {
-				sb.append(" + '");
-				sb.append(interpolation);
-				sb.append("'}");
+			for (String interpolationPart : interpolationParts) {
+				if (interpolationPart.contains("$")) {
+					sb.append(" + ");
+					sb.append(interpolationPart);
+				}
+				else if (!interpolationPart.isEmpty()) {
+					sb.append(" + '");
+					sb.append(interpolationPart);
+					sb.append("'");
+				}
 			}
 		}
-		else {
-			sb.append(StringPool.CLOSE_CURLY_BRACE);
-		}
+
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
 	}
@@ -100,6 +101,6 @@ public class UpgradeSCSSNodeSassPatternsCheck extends BaseUpgradeCheck {
 		"(\\$\\w+|[0-9.]+)\\s*\\/\\s*(\\$\\w+|[0-9.]+)");
 	private static final Pattern _interpolationPattern = Pattern.compile(
 		"([\\w-\\.]+)\\#\\{([\\w\\.\\$\\(\\), \\&]+)" +
-			"\\}([\\w-\\.\\#\\{\\.\\$\\(\\)\\}]*)");
+			"\\}([\\w-\\.\\#\\{\\.\\$\\}]*)");
 
 }

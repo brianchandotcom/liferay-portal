@@ -81,6 +81,32 @@ public class PageElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object definition;
 
+	@Schema(description = "The page element's ID.")
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The page element's ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String id;
+
 	@Schema(description = "A list of the page elements this page element has.")
 	@Valid
 	public PageElement[] getPageElements() {
@@ -198,6 +224,20 @@ public class PageElement implements Serializable {
 			else {
 				sb.append(definition);
 			}
+		}
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
 		}
 
 		if (pageElements != null) {

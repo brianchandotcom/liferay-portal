@@ -11,6 +11,10 @@
 AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelectorCustomViewDisplayContext = (AssetDisplayPagesItemSelectorCustomViewDisplayContext)request.getAttribute(AssetDisplayPagesItemSelectorCustomViewDisplayContext.class.getName());
 %>
 
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new DisplayPageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPagesItemSelectorCustomViewDisplayContext) %>"
+/>
+
 <clay:container-fluid>
 	<liferay-site-navigation:breadcrumb
 		breadcrumbEntries="<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getLayoutPageTemplateBreadcrumbEntries() %>"

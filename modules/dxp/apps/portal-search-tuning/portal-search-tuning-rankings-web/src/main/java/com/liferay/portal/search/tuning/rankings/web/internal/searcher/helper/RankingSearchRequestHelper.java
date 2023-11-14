@@ -7,6 +7,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.searcher.helper;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.IdsQuery;
@@ -82,9 +83,13 @@ public class RankingSearchRequestHelper {
 	private IdsQuery _getIdsQuery(Ranking.Pin pin, int size) {
 		IdsQuery idsQuery = queries.ids();
 
-		idsQuery.addIds(RankingUtil.getDocumentId(pin.getDocumentId()));
+		String id = RankingUtil.getDocumentId(pin.getDocumentId());
 
-		idsQuery.setBoost((size - pin.getPosition()) * 10000F);
+		if (!Validator.isBlank(id)) {
+			idsQuery.addIds(id);
+
+			idsQuery.setBoost((size - pin.getPosition()) * 10000F);
+		}
 
 		return idsQuery;
 	}

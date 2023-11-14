@@ -7,6 +7,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.util;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,6 +38,10 @@ public class RankingUtil {
 			JournalArticleLocalServiceUtil.fetchJournalArticle(
 				Long.valueOf(parts[1]));
 
+		if (journalArticle == null) {
+			return StringPool.BLANK;
+		}
+
 		JournalArticle latestJournalArticle =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(
 				journalArticle.getResourcePrimKey());
@@ -66,7 +71,11 @@ public class RankingUtil {
 		List<String> ids = new ArrayList<>();
 
 		for (String documentId : documentIds) {
-			ids.add(getDocumentId(documentId));
+			String id = getDocumentId(documentId);
+
+			if (!Validator.isBlank(id)) {
+				ids.add(id);
+			}
 		}
 
 		return ids;

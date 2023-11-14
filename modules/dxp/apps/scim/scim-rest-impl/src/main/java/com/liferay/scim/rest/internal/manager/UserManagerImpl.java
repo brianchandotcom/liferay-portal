@@ -50,8 +50,10 @@ import java.util.Objects;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
+import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.BadRequestException;
 import org.wso2.charon3.core.exceptions.CharonException;
+import org.wso2.charon3.core.exceptions.ConflictException;
 import org.wso2.charon3.core.exceptions.NotFoundException;
 import org.wso2.charon3.core.exceptions.NotImplementedException;
 import org.wso2.charon3.core.extensions.UserManager;
@@ -213,9 +215,7 @@ public class UserManagerImpl implements UserManager {
 		return _addOrUpdateUser(user);
 	}
 
-	private ScimUser _addOrUpdateScimUser(ScimUser scimUser)
-		throws PortalException {
-
+	private ScimUser _addOrUpdateScimUser(ScimUser scimUser) throws Exception {
 		Company company = _companyLocalService.getCompany(
 			scimUser.getCompanyId());
 
@@ -262,6 +262,9 @@ public class UserManagerImpl implements UserManager {
 
 			return ScimUserUtil.toUser(scimUser);
 		}
+		catch (AbstractCharonException abstractCharonException) {
+			return ReflectionUtil.throwException(abstractCharonException);
+		}
 		catch (Throwable throwable) {
 			throw new CharonException(
 				"Unable to provision a portal user for " +
@@ -275,7 +278,7 @@ public class UserManagerImpl implements UserManager {
 			ScimClientOAuth2ApplicationConfiguration
 				scimClientOAuth2ApplicationConfiguration,
 			ScimUser scimUser)
-		throws PortalException {
+		throws Exception {
 
 		com.liferay.portal.kernel.model.User portalUser =
 			_userLocalService.addUser(
@@ -441,7 +444,7 @@ public class UserManagerImpl implements UserManager {
 	private void _saveScimClientId(
 			String scimClientId,
 			com.liferay.portal.kernel.model.User portalUser)
-		throws PortalException {
+		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
 			portalUser.getCompanyId(),
@@ -510,7 +513,7 @@ public class UserManagerImpl implements UserManager {
 			com.liferay.portal.kernel.model.User portalUser, ScimUser scimUser,
 			ScimClientOAuth2ApplicationConfiguration
 				scimClientOAuth2ApplicationConfiguration)
-		throws PortalException {
+		throws Exception {
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
@@ -519,7 +522,7 @@ public class UserManagerImpl implements UserManager {
 		if (Validator.isNotNull(portalUserScimClientId) &&
 			!Objects.equals(scimClientId, portalUserScimClientId)) {
 
-			throw new PortalException(
+			throw new ConflictException(
 				"User was provisioned by another SCIM client");
 		}
 

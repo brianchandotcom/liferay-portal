@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -32,6 +31,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -55,6 +55,7 @@ import org.mockito.Mockito;
 /**
  * @author Joshua Cords
  */
+@FeatureFlags("LPS-172416")
 public class ElasticsearchIndexSearcherSearchAfterTest {
 
 	@ClassRule
@@ -71,8 +72,6 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		_setUpDeepPagination(60);
 		_setUpIndexSearchLimit();
 		_setUpSorts();
-
-		PropsTestUtil.setProps("feature.flag.LPS-172416", "true");
 	}
 
 	@AfterClass

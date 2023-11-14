@@ -17,6 +17,7 @@ import com.liferay.portal.search.query.IdsQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
@@ -225,7 +226,10 @@ public class DuplicateQueryStringsDetectorImpl
 			_getSXPBlueprintExternalReferenceCodeQuery(criteria));
 		_addQueryClauses(
 			booleanQuery::addMustNotQueryClauses,
-			queries.term(RankingFields.INACTIVE, true),
+			queries.term(
+				RankingFields.STATUS, ResultRankingsConstants.INACTIVE),
+			queries.term(
+				RankingFields.STATUS, ResultRankingsConstants.NOT_APPLICABLE),
 			_getUnlessRankingIdQuery(criteria));
 
 		return booleanQuery;

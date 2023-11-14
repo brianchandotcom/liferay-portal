@@ -27,10 +27,10 @@ public class RankingEntryDisplayContextBuilder {
 		_setAliases(rankingEntryDisplayContext);
 		_setGroupExternalReferenceCode(rankingEntryDisplayContext);
 		_setHiddenResultsCount(rankingEntryDisplayContext);
-		_setInactive(rankingEntryDisplayContext);
 		_setIndex(rankingEntryDisplayContext);
 		_setNameForDisplay(rankingEntryDisplayContext);
 		_setPinnedResultsCount(rankingEntryDisplayContext);
+		_setStatus(rankingEntryDisplayContext);
 		_setSXPBlueprintExternalReferenceCode(rankingEntryDisplayContext);
 		_setUid(rankingEntryDisplayContext);
 
@@ -63,12 +63,6 @@ public class RankingEntryDisplayContextBuilder {
 			_getSizeString(_ranking.getHiddenDocumentIds()));
 	}
 
-	private void _setInactive(
-		RankingEntryDisplayContext rankingEntryDisplayContext) {
-
-		rankingEntryDisplayContext.setInactive(_ranking.isInactive());
-	}
-
 	private void _setIndex(
 		RankingEntryDisplayContext rankingEntryDisplayContext) {
 
@@ -86,6 +80,12 @@ public class RankingEntryDisplayContextBuilder {
 
 		rankingEntryDisplayContext.setPinnedResultsCount(
 			_getSizeString(_ranking.getPins()));
+	}
+
+	private void _setStatus(
+		RankingEntryDisplayContext rankingEntryDisplayContext) {
+
+		rankingEntryDisplayContext.setStatus(_ranking.getStatus());
 	}
 
 	private void _setSXPBlueprintExternalReferenceCode(

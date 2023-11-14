@@ -33,8 +33,6 @@ public class DocumentToRankingTranslatorImpl
 			document.getString(RankingFields.GROUP_EXTERNAL_REFERENCE_CODE)
 		).hiddenDocumentIds(
 			document.getStrings(RankingFields.BLOCKS)
-		).inactive(
-			document.getBoolean(RankingFields.INACTIVE)
 		).indexName(
 			document.getString("index")
 		).name(
@@ -45,6 +43,8 @@ public class DocumentToRankingTranslatorImpl
 			_getQueryString(document)
 		).rankingDocumentId(
 			rankingDocumentId
+		).status(
+			document.getString(RankingFields.STATUS)
 		).sxpBlueprintExternalReferenceCode(
 			document.getString(
 				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE)

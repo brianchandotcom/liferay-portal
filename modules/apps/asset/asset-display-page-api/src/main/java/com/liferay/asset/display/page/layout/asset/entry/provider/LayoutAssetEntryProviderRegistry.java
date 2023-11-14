@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.asset.provider;
+package com.liferay.asset.display.page.layout.asset.entry.provider;
 
 /**
  * @author Roberto Díaz
  */
-public interface PortletLayoutAssetEntryProviderRegistry {
+public interface LayoutAssetEntryProviderRegistry {
 
-	public PortletLayoutAssetEntryProvider getPortletLayoutAssetEntryProvider(
+	public LayoutAssetEntryProvider getLayoutAssetEntryProvider(
 		String portletId);
 
 }

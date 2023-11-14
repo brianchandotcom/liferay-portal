@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.comment.page.comments.web.internal.asset;
+package com.liferay.comment.page.comments.web.internal.layout.asset.entry.provider;
 
+import com.liferay.asset.display.page.layout.asset.entry.provider.LayoutAssetEntryProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.provider.PortletLayoutAssetEntryProvider;
 import com.liferay.comment.page.comments.web.internal.constants.PageCommentsPortletKeys;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,10 +24,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "javax.portlet.name=" + PageCommentsPortletKeys.PAGE_COMMENTS,
-	service = PortletLayoutAssetEntryProvider.class
+	service = LayoutAssetEntryProvider.class
 )
-public class PageCommentPortletLayoutAssetEntryProvider
-	implements PortletLayoutAssetEntryProvider {
+public class PageCommentsLayoutAssetEntryProvider
+	implements LayoutAssetEntryProvider {
 
 	@Override
 	public AssetEntry getLayoutAssetEntry(

@@ -5,10 +5,10 @@
 
 package com.liferay.layout.type.controller.display.page.internal.layout.type.controller;
 
+import com.liferay.asset.display.page.layout.asset.entry.provider.LayoutAssetEntryProvider;
+import com.liferay.asset.display.page.layout.asset.entry.provider.LayoutAssetEntryProviderRegistry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.provider.PortletLayoutAssetEntryProvider;
-import com.liferay.asset.provider.PortletLayoutAssetEntryProviderRegistry;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
@@ -89,14 +89,13 @@ public class DisplayPageLayoutTypeController
 			String portletId = ParamUtil.getString(
 				httpServletRequest, "p_p_id");
 
-			PortletLayoutAssetEntryProvider portletLayoutAssetEntryProvider =
-				_portletLayoutAssetEntryProviderRegistry.
-					getPortletLayoutAssetEntryProvider(portletId);
+			LayoutAssetEntryProvider layoutAssetEntryProvider =
+				_layoutAssetEntryProviderRegistry.getLayoutAssetEntryProvider(
+					portletId);
 
-			if (portletLayoutAssetEntryProvider != null) {
-				assetEntry =
-					portletLayoutAssetEntryProvider.getLayoutAssetEntry(
-						httpServletRequest, layout);
+			if (layoutAssetEntryProvider != null) {
+				assetEntry = layoutAssetEntryProvider.getLayoutAssetEntry(
+					httpServletRequest, layout);
 			}
 		}
 
@@ -386,6 +385,9 @@ public class DisplayPageLayoutTypeController
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
+	private LayoutAssetEntryProviderRegistry _layoutAssetEntryProviderRegistry;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -394,10 +396,6 @@ public class DisplayPageLayoutTypeController
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private PortletLayoutAssetEntryProviderRegistry
-		_portletLayoutAssetEntryProviderRegistry;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.display.page)"

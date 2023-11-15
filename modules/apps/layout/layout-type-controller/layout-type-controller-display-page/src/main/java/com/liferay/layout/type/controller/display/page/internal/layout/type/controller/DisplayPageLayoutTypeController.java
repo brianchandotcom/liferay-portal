@@ -81,7 +81,7 @@ public class DisplayPageLayoutTypeController
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to retrieve asset entry", exception);
+				_log.debug("Unable to get asset entry", exception);
 			}
 		}
 

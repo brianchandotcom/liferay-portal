@@ -40,11 +40,6 @@ public class AssetTagFinderImpl
 	extends AssetTagFinderBaseImpl implements AssetTagFinder {
 
 	@Override
-	public int countByG_N(long groupId, String name) {
-		return countByG_C_N(groupId, 0, name);
-	}
-
-	@Override
 	public int countByG_C_N(long groupId, long classNameId, String name) {
 		Session session = null;
 

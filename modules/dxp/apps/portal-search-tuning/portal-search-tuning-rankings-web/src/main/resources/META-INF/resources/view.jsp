@@ -19,6 +19,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -28,6 +29,7 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.Re
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingPortletDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateQueryStringException" %><%@
+page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.NotApplicableStatusException" %><%@
 page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
 page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %>
 
@@ -37,7 +39,23 @@ page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil
 
 <liferay-theme:defineObjects />
 
+<portlet:defineObjects />
+
 <liferay-ui:error embed="<%= false %>" exception="<%= DuplicateQueryStringException.class %>" message="active-search-queries-and-aliases-must-be-unique-across-all-rankings" />
+
+<c:if test="<%= SessionErrors.contains(renderRequest, NotApplicableStatusException.class) %>">
+	<aui:script>
+		Liferay.Util.openToast({
+			message:
+				'<liferay-ui:message key="the-selected-action-could-not-be-performed-on-the-rankings-with-not-applicable-status" />',
+			title: '<liferay-ui:message key="warning" />',
+			toastProps: {
+				autoClose: 5000,
+			},
+			type: 'warning',
+		});
+	</aui:script>
+</c:if>
 
 <%
 RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDisplayContext)request.getAttribute(ResultRankingsPortletKeys.RESULT_RANKINGS_DISPLAY_CONTEXT);

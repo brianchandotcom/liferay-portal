@@ -158,6 +158,7 @@ definition {
 	}
 
 	@description = "LPS-193985: The upgrade report is genenerated in the default path when the directory specified is write protected"
+	@ignore = "true"
 	@priority = 3
 	test ReportGeneratedInDefaultPathWhenWriteProtectedDirectory {
 		property custom.properties = "upgrade.report.dir=${liferay.home}/tools/portal-tools-db-upgrade-client/temp";

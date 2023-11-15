@@ -1,0 +1,162 @@
+@component-name = "portal-batch-planner"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Import/Export";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		BatchPlanner.batchPlannerTearDown();
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanExportAllSystemAndDraftCustomObjectDefinitionsToJSON {
+		property portal.acceptance = "true";
+
+		task ("Given I create a Student custom object without any field") {
+			ObjectDefinitionAPI.createObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Students",
+				name = "Student");
+		}
+
+		task ("When I export ObjectDefinition to a JSON format file in Import/Export center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				exportFields = "active,label,name",
+				exportFileFormat = "JSON");
+		}
+
+		task ("Then I can see all default system and Student object definitions in .json file") {
+			var expectedObjectNames = "Address,CommercePricingClass,AccountEntry,Organization,User,CPDefinition,CommerceOrder,Student";
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = ${expectedObjectNames},
+				fileName = "export.json",
+				jsonObject = "$[*].name");
+		}
+	}
+
+	@priority = 4
+	test CanExportAllSystemAndPublishedCustomObjectDefinitionsToJSONL {
+		property portal.acceptance = "true";
+
+		task ("Given I pusblih a Student custom object with name field") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("When I export ObjectDefinition to a JSONL format file in Import/Export center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				exportFields = "active,label,name",
+				exportFileFormat = "JSONL");
+		}
+
+		task ("Then I can see all default system and Student object definitions in .jsonl file") {
+			ImportExport.assertFileContent(
+				comparisonFileName = "objectDefinition_import.jsonl",
+				fileName = "export.jsonl");
+		}
+	}
+
+	@priority = 4
+	test CanExportAllSystemObjectDefinitionsToJson {
+		property portal.acceptance = "true";
+
+		task ("When I export ObjectDefinition to a JSON format file in Import/Export center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				exportFileFormat = "JSON");
+		}
+
+		task ("Then I can see all default system object definitions in .json file") {
+			var expectedObjectNames = "Address,CommercePricingClass,AccountEntry,Organization,User,CPDefinition,CommerceOrder";
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = ${expectedObjectNames},
+				fileName = "export.json",
+				jsonObject = "$[*].name");
+		}
+	}
+
+	@priority = 4
+	test CanExportCustomObjectFieldToJSONT {
+		property portal.acceptance = "true";
+
+		task ("Given I publish a Student custom object with myTest field") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Students",
+				name = "Student",
+				requiredStringFieldName = "myTest");
+		}
+
+		task ("When I export ObjectDefinition with only objectFields mapped to a JSONT format file in Import/Export center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				exportFields = "objectFields",
+				exportFileFormat = "JSONT");
+		}
+
+		task ("Then I can see actions block with items.objectFields.myTest in export.batch-engine-data.json file") {
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "POST,DELETE,PUT",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.actions..method");
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "{en_US=myTest}",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$..items..[?(@.name=='myTest')].label");
+		}
+	}
+
+	@priority = 4
+	test CanSeeExportFileDialog {
+		task ("When export ObjectDefinition to a JSON format file in Import/Export center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				exportFileFormat = "JSON");
+		}
+
+		task ("Then I can see details in Export File wizard with Back to the List and Download buttons") {
+			AssertElementPresent(
+				key_text = "Download",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_text = "Back to the List",
+				locator1 = "Button#ANY");
+		}
+	}
+
+}

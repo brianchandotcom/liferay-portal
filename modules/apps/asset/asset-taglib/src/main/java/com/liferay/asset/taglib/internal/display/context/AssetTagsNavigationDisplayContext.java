@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,149 +8,263 @@ package com.liferay.asset.taglib.internal.display.context;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.util.comparator.AssetTagCountComparator;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Mikel Lorza
  */
 public class AssetTagsNavigationDisplayContext {
 
-	public AssetTagsNavigationDisplayContext() {
+	public AssetTagsNavigationDisplayContext(
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+
+		_httpServletRequest = httpServletRequest;
+		_renderResponse = renderResponse;
+
+		_classNameId = GetterUtil.getLong(
+			httpServletRequest.getAttribute(
+				"liferay-asset:asset-tags-navigation:classNameId"));
+		_displayStyle = GetterUtil.getString(
+			httpServletRequest.getAttribute(
+				"liferay-asset:asset-tags-navigation:displayStyle"));
+		_hidePortletWhenEmpty = GetterUtil.getBoolean(
+			httpServletRequest.getAttribute(
+				"liferay-asset:asset-tags-navigation:hidePortletWhenEmpty"));
+		_maxAssetTags = GetterUtil.getInteger(
+			httpServletRequest.getAttribute(
+				"liferay-asset:asset-tags-navigation:maxAssetTags"));
+		_showAssetCount = GetterUtil.getBoolean(
+			httpServletRequest.getAttribute(
+				"liferay-asset:asset-tags-navigation:showAssetCount"));
+		_showZeroAssetCount = GetterUtil.getBoolean(
+			httpServletRequest.getAttribute(
+				"liferay-asset:asset-tags-navigation:showZeroAssetCount"));
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (_showBreadcrumb()) {
+			PortalUtil.addPortletBreadcrumbEntry(
+				httpServletRequest, _getTag(), _themeDisplay.getURLCurrent(),
+				null, false);
+		}
 	}
 
-	public String buildTagsNavigation(
-			long scopeGroupId, String selectedTagName, long classNameId,
-			String displayStyle, int maxAssetTags,
-			RenderResponse renderResponse, boolean showAssetCount,
-			boolean showZeroAssetCount)
-		throws Exception {
+	public Map<String, Object> getData() {
+		List<AssetTag> assetTags = _getAssetTags();
 
-		List<AssetTag> tags = null;
-
-		if (showAssetCount && (classNameId > 0)) {
-			tags = AssetTagServiceUtil.getTags(
-				PortalUtil.getSiteGroupId(scopeGroupId), classNameId, null, 0,
-				maxAssetTags, new AssetTagCountComparator());
-		}
-		else {
-			tags = AssetTagServiceUtil.getGroupTags(
-				PortalUtil.getSiteGroupId(scopeGroupId), 0, maxAssetTags,
-				new AssetTagCountComparator());
+		if (assetTags.isEmpty()) {
+			return Collections.emptyMap();
 		}
 
-		if (tags.isEmpty()) {
-			return null;
-		}
+		boolean displayStyleCloud = _displayStyle.equals("cloud");
 
-		tags = ListUtil.sort(tags);
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("<ul class=\"tag-items ");
-
-		int maxCount = 1;
-		int minCount = 1;
-
-		if (displayStyle.equals("cloud")) {
-			sb.append("tag-cloud");
-
-			for (AssetTag tag : tags) {
-				String tagName = tag.getName();
-
-				int count = AssetTagServiceUtil.getVisibleAssetsTagsCount(
-					scopeGroupId, classNameId, tagName);
-
-				if (!showZeroAssetCount && (count == 0)) {
-					continue;
+		return HashMapBuilder.<String, Object>put(
+			"assetTags",
+			() -> {
+				if (displayStyleCloud) {
+					_calculateCounts(assetTags);
 				}
 
-				maxCount = Math.max(maxCount, count);
-				minCount = Math.min(minCount, count);
+				double multiplier = _getMultiplier();
+
+				JSONArray assetTagsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (AssetTag assetTag : assetTags) {
+					String tagName = assetTag.getName();
+
+					int count = _getVisibleAssetsTagsCount(tagName);
+
+					if (!_showZeroAssetCount && (count == 0)) {
+						continue;
+					}
+
+					boolean selected = StringUtil.equals(tagName, _getTag());
+
+					assetTagsJSONArray.put(
+						JSONUtil.put(
+							"count",
+							() -> {
+								if (!isShowAssetCount()) {
+									return null;
+								}
+
+								return count;
+							}
+						).put(
+							"popularity",
+							() -> {
+								if (!displayStyleCloud) {
+									return 1;
+								}
+
+								return _getPopularity(multiplier, count);
+							}
+						).put(
+							"selected", selected
+						).put(
+							"tagName", () -> tagName
+						).put(
+							"tagURL", () -> _getTagURL(selected, tagName)
+						));
+				}
+
+				return assetTagsJSONArray;
 			}
+		).put(
+			"displayStyle",
+			() -> {
+				if (displayStyleCloud) {
+					return "tag-cloud";
+				}
+
+				return "tag-list";
+			}
+		).build();
+	}
+
+	public String getTagSelectedCssClass(JSONObject jsonObject) {
+		if (jsonObject.getBoolean("selected")) {
+			return "tag-selected";
 		}
-		else {
-			sb.append("tag-list");
-		}
 
-		sb.append("\">");
+		return StringPool.BLANK;
+	}
 
-		double multiplier = 1;
+	public boolean isHidePortletWhenEmpty() {
+		return _hidePortletWhenEmpty;
+	}
 
-		if (maxCount != minCount) {
-			multiplier = (double)5 / (maxCount - minCount);
-		}
+	public boolean isShowAssetCount() {
+		return _showAssetCount;
+	}
 
-		for (AssetTag tag : tags) {
-			String tagName = tag.getName();
+	private void _calculateCounts(List<AssetTag> assetTags) {
+		for (AssetTag assetTag : assetTags) {
+			int count = _getVisibleAssetsTagsCount(assetTag.getName());
 
-			int count = AssetTagServiceUtil.getVisibleAssetsTagsCount(
-				scopeGroupId, classNameId, tagName);
-
-			int popularity =
-				(int)
-					(1 +
-						((maxCount - (maxCount - (count - minCount))) *
-							multiplier));
-
-			if (!showZeroAssetCount && (count == 0)) {
+			if (!_showZeroAssetCount && (count == 0)) {
 				continue;
 			}
 
-			sb.append("<li class=\"tag-popularity-");
-			sb.append(popularity);
-			sb.append("\"><span>");
+			_maxCount = Math.max(_maxCount, count);
+			_minCount = Math.min(_minCount, count);
+		}
+	}
 
-			if (tagName.equals(selectedTagName)) {
-				sb.append("<a class=\"tag-selected\" href=\"");
+	private List<AssetTag> _getAssetTags() {
+		List<AssetTag> assetTags;
 
-				PortletURL portletURL = PortletURLBuilder.createRenderURL(
-					renderResponse
-				).setParameter(
-					"tag", StringPool.BLANK
-				).buildPortletURL();
-
-				sb.append(HtmlUtil.escape(portletURL.toString()));
-			}
-			else {
-				sb.append("<a href=\"");
-
-				PortletURL portletURL = PortletURLBuilder.createRenderURL(
-					renderResponse
-				).setParameter(
-					"tag", tagName
-				).buildPortletURL();
-
-				sb.append(HtmlUtil.escape(portletURL.toString()));
-			}
-
-			sb.append("\">");
-			sb.append(tagName);
-
-			if (showAssetCount) {
-				sb.append("<span class=\"tag-asset-count\">");
-				sb.append(StringPool.SPACE);
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(count);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-				sb.append("</span>");
-			}
-
-			sb.append("</a></span></li>");
+		if (isShowAssetCount() && (_classNameId > 0)) {
+			assetTags = AssetTagServiceUtil.getTags(
+				PortalUtil.getSiteGroupId(_themeDisplay.getScopeGroupId()),
+				_classNameId, null, 0, _maxAssetTags,
+				new AssetTagCountComparator());
+		}
+		else {
+			assetTags = AssetTagServiceUtil.getGroupTags(
+				PortalUtil.getSiteGroupId(_themeDisplay.getScopeGroupId()), 0,
+				_maxAssetTags, new AssetTagCountComparator());
 		}
 
-		sb.append("</ul>");
-
-		return sb.toString();
+		return ListUtil.sort(assetTags);
 	}
+
+	private double _getMultiplier() {
+		if (_maxCount != _minCount) {
+			return (double)5 / (_maxCount - _minCount);
+		}
+
+		return 1;
+	}
+
+	private int _getPopularity(double multiplier, int count) {
+		return GetterUtil.getInteger(
+			1 + ((_maxCount - (_maxCount - (count - _minCount))) * multiplier));
+	}
+
+	private String _getTag() {
+		if (_tag == null) {
+			_tag = ParamUtil.getString(_httpServletRequest, "tag");
+		}
+
+		return _tag;
+	}
+
+	private String _getTagURL(boolean selected, String tagName) {
+		return HtmlUtil.escape(
+			PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setParameter(
+				"tag",
+				() -> {
+					if (selected) {
+						return StringPool.BLANK;
+					}
+
+					return tagName;
+				}
+			).buildString());
+	}
+
+	private Integer _getVisibleAssetsTagsCount(String tagName) {
+		if (_assetTagCounts.containsKey(tagName)) {
+			return _assetTagCounts.get(tagName);
+		}
+
+		int count = AssetTagServiceUtil.getVisibleAssetsTagsCount(
+			_themeDisplay.getScopeGroupId(), _classNameId, tagName);
+
+		_assetTagCounts.put(tagName, count);
+
+		return count;
+	}
+
+	private boolean _showBreadcrumb() {
+		if (Validator.isNotNull(_getTag())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private final Map<String, Integer> _assetTagCounts = new HashMap<>();
+	private final long _classNameId;
+	private final String _displayStyle;
+	private final boolean _hidePortletWhenEmpty;
+	private final HttpServletRequest _httpServletRequest;
+	private final int _maxAssetTags;
+	private int _maxCount = 1;
+	private int _minCount = 1;
+	private final RenderResponse _renderResponse;
+	private final boolean _showAssetCount;
+	private final boolean _showZeroAssetCount;
+	private String _tag;
+	private final ThemeDisplay _themeDisplay;
 
 }

@@ -8,28 +8,45 @@
 <%@ include file="/asset_tags_navigation/init.jsp" %>
 
 <%
-long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-tags-navigation:classNameId"));
-String displayStyle = (String)request.getAttribute("liferay-asset:asset-tags-navigation:displayStyle");
-boolean hidePortletWhenEmpty = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-navigation:hidePortletWhenEmpty"));
-int maxAssetTags = GetterUtil.getInteger((String)request.getAttribute("liferay-asset:asset-tags-navigation:maxAssetTags"));
-boolean showAssetCount = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-navigation:showAssetCount"));
-boolean showZeroAssetCount = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-navigation:showZeroAssetCount"));
+AssetTagsNavigationDisplayContext assetTagsNavigationDisplayContext = new AssetTagsNavigationDisplayContext(request, renderResponse);
 
-String tag = ParamUtil.getString(request, "tag");
+Map<String, Object> data = assetTagsNavigationDisplayContext.getData();
 
-AssetTagsNavigationDisplayContext assetTagsNavigationDisplayContext = new AssetTagsNavigationDisplayContext();
-
-String tagsNavigation = assetTagsNavigationDisplayContext.buildTagsNavigation(scopeGroupId, tag, classNameId, displayStyle, maxAssetTags, renderResponse, showAssetCount, showZeroAssetCount);
+JSONArray assetTagsJSONArray = (JSONArray)data.get("assetTags");
 %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(tagsNavigation) %>">
-		<%= tagsNavigation %>
+	<c:when test="<%= !JSONUtil.isEmpty(assetTagsJSONArray) %>">
+		<ul class="tag-items <%= data.get("displayStyle") %>">
+
+			<%
+			for (int i = 0; i < assetTagsJSONArray.length(); i++) {
+				JSONObject assetTagJSONObject = assetTagsJSONArray.getJSONObject(i);
+			%>
+
+				<li class="tag-popularity-<%= assetTagJSONObject.getString("popularity") %>">
+					<span>
+						<a class="<%= assetTagsNavigationDisplayContext.getTagSelectedCssClass(assetTagJSONObject) %>" href="<%= assetTagJSONObject.getString("tagURL") %>">
+							<%= assetTagJSONObject.getString("tagName") %>
+							<c:if test="<%= assetTagsNavigationDisplayContext.isShowAssetCount() %>">
+								<span class="tag-asset-count">
+									(<%= assetTagJSONObject.get("count") %>)
+								</span>
+							</c:if>
+						</a>
+					</span>
+				</li>
+
+			<%
+			}
+			%>
+
+		</ul>
 	</c:when>
 	<c:otherwise>
 
 		<%
-		if (hidePortletWhenEmpty) {
+		if (assetTagsNavigationDisplayContext.isHidePortletWhenEmpty()) {
 			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
 		%>
@@ -40,9 +57,3 @@ String tagsNavigation = assetTagsNavigationDisplayContext.buildTagsNavigation(sc
 		/>
 	</c:otherwise>
 </c:choose>
-
-<%
-if (Validator.isNotNull(tag)) {
-	PortalUtil.addPortletBreadcrumbEntry(request, tag, currentURL, null, false);
-}
-%>

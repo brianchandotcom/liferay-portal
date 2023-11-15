@@ -13,7 +13,7 @@
 	<link href="https://vjs.zencdn.net/8.6.1/video-js.min.css" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div style="display: flex; justify-content: left;">
+<div style="display: flex; justify-content: flex-start;">
 	<div class="videojs-container">
 		<video class="video-js" controls id="fragmentVideoJsURL" preload="auto">
 			<source src="<%= (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_SOURCE_URL) %>" type="video/mp4" />

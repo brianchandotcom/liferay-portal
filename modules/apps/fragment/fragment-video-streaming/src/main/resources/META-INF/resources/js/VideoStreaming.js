@@ -46,5 +46,15 @@ export default function VideoStreaming({
 		window.addEventListener('resize', resizeVideoJs);
 
 		resizeVideoJs();
+
+		if (subtitles) {
+			player.addRemoteTextTrack({
+				default: true,
+				kind: 'subtitles',
+				label: 'English',
+				language: 'en',
+				src: subtitles,
+			});
+		}
 	});
 }

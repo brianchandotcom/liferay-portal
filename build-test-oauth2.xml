@@ -4,23 +4,45 @@
 	<import file="build-test.xml" />
 
 	<target name="prepare-oauth2-osgi-configuration">
-		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies" />
+		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
 
-		<copy
-			file="${osgi.dependency.dir}/${osgi.config.file.name}"
-			todir="${liferay.home}"
-		/>
+		<if>
+			<isset property="bundle.id" />
+			<then>
+				<copy
+					file="${osgi.dependency.dir}/${osgi.config.file.name}"
+					todir="${liferay.home}-${bundle.id}"
+				/>
 
-		<replace
-			file="${liferay.home}/${osgi.config.file.name}"
-			token="companyId=L&quot;20098&quot;"
-			value="companyId=L&quot;${companyId}&quot;"
-		/>
+				<replace
+					file="${liferay.home}-${bundle.id}/${osgi.config.file.name}"
+					token="companyId=L&quot;20098&quot;"
+					value="companyId=L&quot;${companyId}&quot;"
+				/>
 
-		<move
-			file="${liferay.home}/${osgi.config.file.name}"
-			todir="${liferay.home}/osgi/configs"
-		/>
+				<move
+					file="${liferay.home}-${bundle.id}/${osgi.config.file.name}"
+					todir="${liferay.home}-${bundle.id}/osgi/configs"
+				/>
+			</then>
+			<else>
+				<copy
+					file="${osgi.dependency.dir}/${osgi.config.file.name}"
+					todir="${liferay.home}"
+				/>
+
+				<replace
+					file="${liferay.home}/${osgi.config.file.name}"
+					token="companyId=L&quot;20098&quot;"
+					value="companyId=L&quot;${companyId}&quot;"
+				/>
+
+				<move
+					file="${liferay.home}/${osgi.config.file.name}"
+					todir="${liferay.home}/osgi/configs"
+				/>
+			</else>
+		</if>
 	</target>
 
 	<target depends="setup-yarn" name="start-oauth2-application">

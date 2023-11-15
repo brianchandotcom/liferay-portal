@@ -148,23 +148,27 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 			return;
 		}
 
-		try {
-			for (MessageConsumer messageConsumer : _messageConsumers.values()) {
-				if (messageConsumer != null) {
-					messageConsumer.close();
+		synchronized (_messageConsumers) {
+			try {
+				for (MessageConsumer messageConsumer :
+						_messageConsumers.values()) {
+
+					if (messageConsumer != null) {
+						messageConsumer.close();
+					}
+				}
+
+				if (_connection != null) {
+					_connection.close();
 				}
 			}
-
-			if (_connection != null) {
-				_connection.close();
+			catch (JMSException jmsException) {
+				throw new RuntimeException(jmsException);
 			}
-		}
-		catch (JMSException jmsException) {
-			throw new RuntimeException(jmsException);
-		}
-		finally {
-			_connection = null;
-			_messageConsumers.clear();
+			finally {
+				_connection = null;
+				_messageConsumers.clear();
+			}
 		}
 	}
 
@@ -254,35 +258,37 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 	public void subscribe(Jethr0BuildUpdater jethr0BuildUpdater) {
 		String jenkinsBuildID = jethr0BuildUpdater.getJenkinsBuildID();
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(jenkinsBuildID) ||
-			_messageConsumers.containsKey(jenkinsBuildID)) {
+		synchronized (_messageConsumers) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(jenkinsBuildID) ||
+				_messageConsumers.containsKey(jenkinsBuildID)) {
 
-			return;
-		}
+				return;
+			}
 
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-			getJMSBrokerURL());
+			ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
+				getJMSBrokerURL());
 
-		try {
-			Connection connection = connectionFactory.createConnection(
-				getJMSUserName(), getJMSUserPassword());
+			try {
+				Connection connection = connectionFactory.createConnection(
+					getJMSUserName(), getJMSUserPassword());
 
-			connection.start();
+				connection.start();
 
-			Session session = connection.createSession(
-				false, Session.AUTO_ACKNOWLEDGE);
+				Session session = connection.createSession(
+					false, Session.AUTO_ACKNOWLEDGE);
 
-			Queue queue = session.createQueue(getJMSJethr0ToJRPQueueName());
+				Queue queue = session.createQueue(getJMSJethr0ToJRPQueueName());
 
-			MessageConsumer messageConsumer = session.createConsumer(
-				queue, jethr0BuildUpdater.getMessageSelector());
+				MessageConsumer messageConsumer = session.createConsumer(
+					queue, jethr0BuildUpdater.getMessageSelector());
 
-			messageConsumer.setMessageListener(jethr0BuildUpdater);
+				messageConsumer.setMessageListener(jethr0BuildUpdater);
 
-			_messageConsumers.put(jenkinsBuildID, messageConsumer);
-		}
-		catch (JMSException jmsException) {
-			throw new RuntimeException(jmsException);
+				_messageConsumers.put(jenkinsBuildID, messageConsumer);
+			}
+			catch (JMSException jmsException) {
+				throw new RuntimeException(jmsException);
+			}
 		}
 	}
 
@@ -290,27 +296,29 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 	public void unsubscribe(Jethr0BuildUpdater jethr0BuildUpdater) {
 		String jenkinsBuildID = jethr0BuildUpdater.getJenkinsBuildID();
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(jenkinsBuildID) ||
-			!_messageConsumers.containsKey(jenkinsBuildID)) {
+		synchronized (_messageConsumers) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(jenkinsBuildID) ||
+				!_messageConsumers.containsKey(jenkinsBuildID)) {
 
-			return;
-		}
-
-		try {
-			MessageConsumer messageConsumer = _messageConsumers.get(
-				jenkinsBuildID);
-
-			if (messageConsumer == null) {
 				return;
 			}
 
-			messageConsumer.close();
-		}
-		catch (JMSException jmsException) {
-			throw new RuntimeException(jmsException);
-		}
-		finally {
-			_messageConsumers.remove(jenkinsBuildID);
+			try {
+				MessageConsumer messageConsumer = _messageConsumers.get(
+					jenkinsBuildID);
+
+				if (messageConsumer == null) {
+					return;
+				}
+
+				messageConsumer.close();
+			}
+			catch (JMSException jmsException) {
+				throw new RuntimeException(jmsException);
+			}
+			finally {
+				_messageConsumers.remove(jenkinsBuildID);
+			}
 		}
 	}
 

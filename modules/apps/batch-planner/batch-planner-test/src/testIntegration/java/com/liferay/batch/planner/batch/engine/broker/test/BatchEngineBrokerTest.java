@@ -239,7 +239,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testExportCompanyScopeObjectEntry() throws Exception {
+	public void testExportCompanyScopeObjectEntryJSON() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
 			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
@@ -309,7 +309,19 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testExportObjectDefinition() throws Exception {
+	public void testExportObjectDefinitionCSV() throws Exception {
+		_setUpObjectDefinition("TestObjectCSV");
+
+		_assertEqualsExportCSV(
+			_getObjectDefinitionExportInputStream(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectDefinitionExportCSVFieldNames),
+			_getInputStream("csv/expected-object-definition.csv"),
+			_objectDefinition1.getShortName());
+	}
+
+	@Test
+	public void testExportObjectDefinitionJSON() throws Exception {
 		_setUpObjectDefinition("TestObjectJSON1");
 
 		_objectMapper.setFilterProvider(
@@ -336,19 +348,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testExportObjectDefinitionCSV() throws Exception {
-		_setUpObjectDefinition("TestObjectCSV");
-
-		_assertEqualsExportCSV(
-			_getObjectDefinitionExportInputStream(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectDefinitionExportCSVFieldNames),
-			_getInputStream("csv/expected-object-definition.csv"),
-			_objectDefinition1.getShortName());
-	}
-
-	@Test
-	public void testExportSiteScopeObjectEntry() throws Exception {
+	public void testExportSiteScopeObjectEntryJSON() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
 			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
@@ -413,7 +413,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testImportCompanyScopeObjectEntry() throws Exception {
+	public void testImportCompanyScopeObjectEntryJSON() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
 			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
@@ -471,7 +471,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testImportObjectDefinition() throws Exception {
+	public void testImportObjectDefinitionJSON() throws Exception {
 		File file = _createImportFile("json", "object_definition_import.json");
 
 		URI uri = file.toURI();
@@ -532,7 +532,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testImportSiteScopeObjectEntry() throws Exception {
+	public void testImportSiteScopeObjectEntryJSON() throws Exception {
 
 		// Default group
 
@@ -735,6 +735,8 @@ public class BatchEngineBrokerTest {
 			_getContentRow(expectedUnsyncBufferedReader.readLine()));
 
 		String actualLineString = actualUnsyncBufferedReader.readLine();
+
+		Assert.assertNotNull(actualLineString);
 
 		while (actualLineString != null) {
 			if (actualLineString.contains(objectDefinitionName)) {

@@ -41,17 +41,15 @@ public class AICreatorOpenAIConfigurationUpgradeProcess extends UpgradeProcess {
 		Dictionary<String, Object> properties) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(
-			_API_KEY_PROPERTY, properties.get(_API_KEY_PROPERTY)
+			"apiKey", properties.get("apiKey")
 		).put(
-			_ENABLE_CHAT_GPT_TO_CREATE_CONTENT_PROPERTY,
+			"enableChatGPTToCreateContent",
 			GetterUtil.getBoolean(
-				properties.get(
-					_ENABLE_OPEN_AI_TO_CREATE_CONTENT_LEGACY_PROPERTY),
-				true)
+				properties.get("enableOpenAIToCreateContent"), true)
 		).put(
-			_ENABLE_DALLE_TO_CREATE_IMAGES_PROPERTY,
+			"enableDALLEToCreateImages",
 			GetterUtil.getBoolean(
-				properties.get(_ENABLE_DALLE_TO_CREATE_IMAGES_PROPERTY), true)
+				properties.get("enableDALLEToCreateImages"), true)
 		).build();
 	}
 
@@ -119,18 +117,6 @@ public class AICreatorOpenAIConfigurationUpgradeProcess extends UpgradeProcess {
 				_createDictionary(properties));
 		}
 	}
-
-	private static final String _API_KEY_PROPERTY = "apiKey";
-
-	private static final String _ENABLE_CHAT_GPT_TO_CREATE_CONTENT_PROPERTY =
-		"enableChatGPTToCreateContent";
-
-	private static final String _ENABLE_DALLE_TO_CREATE_IMAGES_PROPERTY =
-		"enableDALLEToCreateImages";
-
-	private static final String
-		_ENABLE_OPEN_AI_TO_CREATE_CONTENT_LEGACY_PROPERTY =
-			"enableOpenAIToCreateContent";
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final ConfigurationProvider _configurationProvider;

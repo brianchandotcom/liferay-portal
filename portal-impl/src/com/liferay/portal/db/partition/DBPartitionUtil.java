@@ -390,6 +390,8 @@ public class DBPartitionUtil {
 				"Removal of database partition extraction was rolled back",
 				exception1);
 		}
+
+		_companyIds.remove(companyId);
 	}
 
 	private static void _extractTable(

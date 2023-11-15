@@ -51,11 +51,11 @@ function JobInformation({job}) {
 						</a>
 					</>
 				)}
-				{job.pullRequestURL && (
+				{job.portalPullRequestURL && (
 					<>
 						<br />
-						Pull Request URL:{' '}
-						<a href={job.pullRequestURL}>{job.pullRequestURL}</a>
+						Portal Pull Request URL:{' '}
+						<a href={job.portalPullRequestURL}>{job.portalPullRequestURL}</a>
 					</>
 				)}
 			</ClayPanel.Body>

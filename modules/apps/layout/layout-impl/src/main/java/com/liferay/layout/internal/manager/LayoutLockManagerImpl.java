@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -503,9 +501,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 		return lockedLayoutsGroupConfigurations;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutLockManagerImpl.class);
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

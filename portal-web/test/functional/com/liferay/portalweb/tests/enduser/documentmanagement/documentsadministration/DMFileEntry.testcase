@@ -871,6 +871,31 @@ definition {
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.0");
 	}
 
+	@description = "This test verifies that a basic document's URL can be copied through the actions dropdown."
+	@priority = 4
+	test CanCopyBasicDocumentLinkViaActionsDropdown {
+		property custom.properties = "feature.flag.LPS-197477=true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copyLink(rowEntry = "DM Document Title");
+
+		Search.searchWithPastedTerm();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "${portalURL}/documents/d/guest/video-shortcut");
+	}
+
 	@description = "This test ensures that a document can be copied to the global site folder."
 	@priority = 5
 	test CanCopyDocumentToGlobalSite {

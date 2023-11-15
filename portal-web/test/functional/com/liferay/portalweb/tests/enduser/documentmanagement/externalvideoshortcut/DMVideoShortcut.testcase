@@ -489,6 +489,41 @@ definition {
 			videoShortcutList = "Test Facebook Video,Test Vimeo Video,Test YouTube Video,Test Facebook Video");
 	}
 
+	@description = "This test ensures that a user can copy the link of an external video shortcut when sharing is disabled."
+	@priority = 4
+	test CanCopyLinkViaActionsDropdownAfterDisablingSharing {
+		property custom.properties = "feature.flag.LPS-197477=true";
+		property test.liferay.virtual.instance = "false";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.sharing.internal.configuration.SharingCompanyConfiguration");
+
+		Uncheck(
+			checkboxName = "Enabled",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.clickSave();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Video Shortcut",
+			videoURL = "https://www.twitch.tv/esl_csgo");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copyLink(
+			rowEntry = "Video Shortcut",
+			sharingDisabled = "true");
+
+		Search.searchWithPastedTerm();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+			value1 = "${portalURL}/documents/d/guest/video-shortcut");
+	}
+
 	@description = "This test ensures that a video shortcut can be copied to a site folder."
 	@priority = 5
 	test CanCopyVideoShortcutToOtherSite {

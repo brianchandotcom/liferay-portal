@@ -29,7 +29,7 @@ public interface DBPartitionVirtualInstanceInsertionConfiguration {
 	@Meta.AD(name = "new-web-id", required = false)
 	public String newWebId();
 
-	@Meta.AD(name = "web-id")
-	public String webId();
+	@Meta.AD(name = "company-id")
+	public String companyId();
 
 }

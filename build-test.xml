@@ -7779,6 +7779,32 @@ ${docker.start.error}</fail>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-docker-playwright">
+		<sequential>
+			<propertyregex
+				input="${portal.dir}"
+				property="portal.dir.name"
+				regexp=".*\/(.*)"
+				select="\1"
+			/>
+
+			<local name="host.git.dir" />
+
+			<get-host-git-dir />
+
+			<local name="portal.url" />
+
+			<condition else="" property="env.portal.url.arg" value="--env=PORTAL_URL=http://${env.HOSTNAME}:8080">
+				<isset property="env.HOSTNAME" />
+			</condition>
+
+			<start-docker-container image="${playwright.docker.image}" name="${playwright.docker.host}">\
+				${env.portal.url.arg} \
+				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
+			</start-docker-container>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-test-smtp-server">
 		<sequential>
 			<mirrors-get
@@ -8138,6 +8164,12 @@ ${docker.start.error}</fail>
 			<get-operating-system-property property.name="operating.system.host" />
 
 			<stop-docker-container name="${operating.system.host}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-docker-playwright">
+		<sequential>
+			<stop-docker-container name="${playwright.docker.host}" />
 		</sequential>
 	</macrodef>
 

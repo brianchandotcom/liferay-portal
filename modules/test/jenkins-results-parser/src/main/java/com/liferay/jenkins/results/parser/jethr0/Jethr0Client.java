@@ -8,6 +8,9 @@ package com.liferay.jenkins.results.parser.jethr0;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.Jethr0BuildUpdater;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -15,7 +18,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface Jethr0Client {
+public interface Jethr0Client extends Closeable {
+
+	public void close() throws IOException;
 
 	public void connect();
 
@@ -28,8 +33,6 @@ public interface Jethr0Client {
 		long jobId, String buildName);
 
 	public void createBuildRun(long buildId);
-
-	public void disconnect();
 
 	public Environment getEnvironment();
 

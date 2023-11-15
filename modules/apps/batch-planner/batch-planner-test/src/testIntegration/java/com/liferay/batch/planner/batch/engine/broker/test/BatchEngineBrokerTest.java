@@ -234,7 +234,7 @@ public class BatchEngineBrokerTest {
 		_assertCSVFiles(
 			_batchEngineExportTaskLocalService.openContentInputStream(
 				batchEngineExportTask.getBatchEngineExportTaskId()),
-			_getInputStream(getClass(), "csv/expected-object-definition.csv"),
+			_getInputStream("csv/expected-object-definition.csv"),
 			objectDefinitionName);
 	}
 
@@ -353,7 +353,7 @@ public class BatchEngineBrokerTest {
 			_getObjectDefinitionExportInputStream(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				_objectDefinitionExportCSVFieldNames),
-			_getInputStream(getClass(), "csv/expected-object-definition.csv"),
+			_getInputStream("csv/expected-object-definition.csv"),
 			_objectDefinition1.getShortName());
 	}
 
@@ -784,8 +784,7 @@ public class BatchEngineBrokerTest {
 
 		File file = _file.createTempFile("json");
 
-		String template = StreamUtil.toString(
-			_getInputStream(getClass(), templateName));
+		String template = StreamUtil.toString(_getInputStream(templateName));
 
 		Link link = LinkUtil.toLink(
 			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
@@ -812,7 +811,7 @@ public class BatchEngineBrokerTest {
 
 		File file = _file.createTempFile(extension);
 
-		Files.copy(_getInputStream(getClass(), fileName), file.toPath());
+		Files.copy(_getInputStream(fileName), file.toPath());
 
 		return file;
 	}
@@ -980,8 +979,8 @@ public class BatchEngineBrokerTest {
 		return groupId;
 	}
 
-	private InputStream _getInputStream(Class<?> clazz, String fileName) {
-		return clazz.getResourceAsStream(
+	private InputStream _getInputStream(String fileName) {
+		return getClass().getResourceAsStream(
 			StringBundler.concat(
 				"/com/liferay/batch/planner/batch/engine/broker/test",
 				"/dependencies/", fileName));

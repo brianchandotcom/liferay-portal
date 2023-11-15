@@ -252,6 +252,10 @@ public abstract class BaseBuild implements Build {
 			JSONObject descriptionJSONObject = getBuildJSONObject(
 				"description");
 
+			if (descriptionJSONObject == null) {
+				return null;
+			}
+
 			String description = descriptionJSONObject.optString("description");
 
 			if (description.equals("")) {
@@ -323,7 +327,13 @@ public abstract class BaseBuild implements Build {
 			return new JSONObject(archiveFileContent);
 		}
 
-		return JenkinsAPIUtil.getAPIJSONObject(getBuildURL(), tree);
+		String buildURL = getBuildURL();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(buildURL)) {
+			return null;
+		}
+
+		return JenkinsAPIUtil.getAPIJSONObject(buildURL, tree);
 	}
 
 	@Override
@@ -789,6 +799,10 @@ public abstract class BaseBuild implements Build {
 
 		JSONObject builtOnJSONObject = getBuildJSONObject("builtOn");
 
+		if (builtOnJSONObject == null) {
+			return null;
+		}
+
 		String slaveName = builtOnJSONObject.optString("builtOn");
 
 		if (slaveName.equals("")) {
@@ -947,6 +961,10 @@ public abstract class BaseBuild implements Build {
 	public long getQueuingDuration() {
 		JSONObject buildJSONObject = getBuildJSONObject(
 			"actions[queuingDurationMillis]");
+
+		if (buildJSONObject == null) {
+			return 0;
+		}
 
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
 

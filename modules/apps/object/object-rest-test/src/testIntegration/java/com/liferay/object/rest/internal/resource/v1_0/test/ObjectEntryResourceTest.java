@@ -6840,8 +6840,8 @@ public class ObjectEntryResourceTest {
 	private static BundleContext _bundleContext;
 	private static ServiceRegistration<?> _serviceRegistration;
 	private static TaxonomyCategoryResource _taxonomyCategoryResource;
-	private static TestDLFileEntryModelListener _testDLFileEntryModelListener =
-		new TestDLFileEntryModelListener();
+	private static final TestDLFileEntryModelListener
+		_testDLFileEntryModelListener = new TestDLFileEntryModelListener();
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

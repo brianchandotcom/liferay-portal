@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -115,7 +116,11 @@ public class KBFolderFinderImpl
 			sb.append(sql);
 			sb.append(") UNION ALL (");
 
-			sql = _customSQL.get(getClass(), COUNT_F_BY_G_P, queryDefinition);
+			QueryDefinition<?> kbFolderQueryDefinition =
+				_getKBFolderQueryDefinition(queryDefinition);
+
+			sql = _customSQL.get(
+				getClass(), COUNT_F_BY_G_P, kbFolderQueryDefinition);
 
 			if (inlineSQLHelper) {
 				sql = _inlineSQLHelper.replacePermissionCheck(
@@ -139,7 +144,7 @@ public class KBFolderFinderImpl
 			queryPos.add(queryDefinition.getStatus());
 			queryPos.add(groupId);
 			queryPos.add(parentResourcePrimKey);
-			queryPos.add(queryDefinition.getStatus());
+			queryPos.add(kbFolderQueryDefinition.getStatus());
 
 			int count = 0;
 
@@ -208,7 +213,11 @@ public class KBFolderFinderImpl
 			sb.append(sql);
 			sb.append(" UNION ALL ");
 
-			sql = _customSQL.get(getClass(), FIND_F_BY_G_P, queryDefinition);
+			QueryDefinition<?> kbFolderQueryDefinition =
+				_getKBFolderQueryDefinition(queryDefinition);
+
+			sql = _customSQL.get(
+				getClass(), FIND_F_BY_G_P, kbFolderQueryDefinition);
 
 			if (inlineSQLHelper) {
 				sql = _inlineSQLHelper.replacePermissionCheck(
@@ -253,7 +262,7 @@ public class KBFolderFinderImpl
 			queryPos.add(queryDefinition.getStatus());
 			queryPos.add(groupId);
 			queryPos.add(parentResourcePrimKey);
-			queryPos.add(queryDefinition.getStatus());
+			queryPos.add(kbFolderQueryDefinition.getStatus());
 
 			List<Object> models = new ArrayList<>();
 
@@ -287,6 +296,27 @@ public class KBFolderFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private QueryDefinition<?> _getKBFolderQueryDefinition(
+		QueryDefinition<?> queryDefinition) {
+
+		QueryDefinition<?> kbFolderQueryDefinition = new QueryDefinition<>();
+
+		kbFolderQueryDefinition.setStatus(
+			queryDefinition.getStatus(), queryDefinition.isExcludeStatus());
+
+		if (!queryDefinition.isExcludeStatus() &&
+			(queryDefinition.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED) &&
+			(queryDefinition.getStatus() !=
+				WorkflowConstants.STATUS_IN_TRASH)) {
+
+			kbFolderQueryDefinition.setStatus(
+				WorkflowConstants.STATUS_APPROVED);
+		}
+
+		return kbFolderQueryDefinition;
 	}
 
 	@Reference

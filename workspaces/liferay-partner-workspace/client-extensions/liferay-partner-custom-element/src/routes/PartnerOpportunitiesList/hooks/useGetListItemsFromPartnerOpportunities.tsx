@@ -5,7 +5,7 @@
 
 import {useMemo} from 'react';
 
-import DealRegistrationDTO from '../../../common/interfaces/dto/dealRegistrationDTO';
+import OpportunityPartnerRoleDTO from '../../../common/interfaces/dto/opportunityPartnerRoleDTO';
 import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
@@ -18,7 +18,7 @@ export default function useGetListItemsFromPartnerOpportunities(
 	filtersTerm: string,
 	sort: string
 ) {
-	const swrResponse = useGet<LiferayItems<DealRegistrationDTO[]>>(
+	const swrResponse = useGet<LiferayItems<OpportunityPartnerRoleDTO[]>>(
 		filtersTerm &&
 			`/o/${LiferayAPIs.OBJECT}/${ResourceName.OPPORTUNITIES_PARTNER_ROLE_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}`
 	);

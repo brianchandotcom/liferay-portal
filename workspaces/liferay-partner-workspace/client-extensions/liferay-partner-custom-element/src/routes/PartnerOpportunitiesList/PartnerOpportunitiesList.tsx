@@ -26,8 +26,6 @@ import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFromPartnerOpportunities';
 import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
-import getItemPartnerOpportunity from './utils/getItemPartnerOpportunity';
-import getOpportunityByErc from './utils/getOpportunityByErc';
 
 interface IProps {
 	closedOpportunitiesFilter: string;
@@ -135,13 +133,7 @@ const PartnerOpportunitiesList = ({
 
 	const handleCustomClickOnRow = async (row: PartnerOpportunitiesItem) => {
 		setIsVisibleModal(true);
-		const opportunityERC = String(row['OPPORTUNITY']);
-
-		if (opportunityERC) {
-			const opportunity = await getOpportunityByErc(opportunityERC);
-			const rowModal = getItemPartnerOpportunity(opportunity);
-			setModalContent(rowModal);
-		}
+		setModalContent(row);
 	};
 
 	const getModal = () => {

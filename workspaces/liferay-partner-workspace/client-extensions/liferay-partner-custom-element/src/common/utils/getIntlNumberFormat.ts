@@ -12,3 +12,10 @@ export default function getIntlNumberFormat(currency?: LiferayPicklist) {
 		style: 'currency',
 	});
 }
+
+export function getIntlNumberFormatString(currency?: string) {
+	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+		currency: currency || 'USD',
+		style: 'currency',
+	});
+}

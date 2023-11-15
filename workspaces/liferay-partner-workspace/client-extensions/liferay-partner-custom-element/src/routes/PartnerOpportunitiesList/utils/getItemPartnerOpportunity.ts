@@ -4,14 +4,13 @@
  */
 
 import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpportunitiesColumnKey';
-import DealRegistrationDTO from '../../../common/interfaces/dto/dealRegistrationDTO';
+import OpportunityPartnerRoleDTO from '../../../common/interfaces/dto/opportunityPartnerRoleDTO';
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
-import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
-import getOpportunityAmount from './getOpportunityAmount';
+import {getIntlNumberFormatString} from '../../../common/utils/getIntlNumberFormat';
 import getOpportunityDates from './getOpportunityDates';
 
-export default function getItemPartnerOpportunity(item: DealRegistrationDTO) {
+export default function getItemPartnerOpportunity(item: OpportunityPartnerRoleDTO) {
 	return {
 		[PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME]: item.partnerAccountName
 			? item.partnerAccountName
@@ -28,10 +27,6 @@ export default function getItemPartnerOpportunity(item: DealRegistrationDTO) {
 		[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.accountName
 			? item.accountName
 			: ' - ',
-		...(item.amount
-			? getOpportunityAmount(item.amount, item.currency)
-			: {[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: ' - '}),
-
 		[PartnerOpportunitiesColumnKey.CLOSE_DATE]: item.closeDate
 			? getDateCustomFormat(
 					item.closeDate,
@@ -50,10 +45,10 @@ export default function getItemPartnerOpportunity(item: DealRegistrationDTO) {
 		[PartnerOpportunitiesColumnKey.STAGE]: item.stage ? item.stage : '- ',
 		[PartnerOpportunitiesColumnKey.TYPE]: item.type ? item.type : '- ',
 		[PartnerOpportunitiesColumnKey.CURRENCY]:
-			item.currency && item.currency.name ? item.currency.name : '- ',
+			item.currency ? item.currency : '- ',
 		[PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR]:
-			item.subscriptionArr && item.currency && item.currency.key
-				? getIntlNumberFormat(item.currency).format(
+			item.subscriptionArr && item.currency
+				? getIntlNumberFormatString(item.currency).format(
 						item.subscriptionArr
 				  )
 				: '- ',

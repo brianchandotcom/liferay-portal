@@ -14,8 +14,7 @@ const currentFiscalYearEnd = `${currentYear}-12-31`;
 
 const fiscalYearFilterCloseDate = `closeDate ge ${currentFiscalYearStart} and closeDate le ${currentFiscalYearEnd}`;
 const fiscalYearFilterSubmitDate = `submitDate ge ${currentFiscalYearStart}T00:00:00Z and submitDate le ${currentFiscalYearEnd}T23:59:59Z`;
-const fiscalYearFilterDateCreated = `dateCreated ge ${currentFiscalYearStart}T00:00:00Z and dateCreated le ${currentFiscalYearEnd}T23:59:59Z`;
-const previousToCurrentYearFilterDateCreated = `dateCreated ge ${previousFiscalYearStart}T00:00:00Z and dateCreated le ${currentFiscalYearEnd}T23:59:59Z`;
+const previousToCurrentYearFilterSubmitDate = `submitDate ge ${previousFiscalYearStart}T00:00:00Z and submitDate le ${currentFiscalYearEnd}T23:59:59Z`;
 
 // const fiscalYearFilterCreatedDate = `createdDate ge ${currentFiscalYearStart}T00:00:00Z and createdDate le ${currentFiscalYearEnd}T23:59:59Z`;
 
@@ -88,11 +87,11 @@ export const Filters = {
 		opportunities: `stage eq 'Closed Won' and ${fiscalYearFilterCloseDate}`,
 	},
 	MDF_CLAIM_LISTING: {
-		channelsCompleted: `${mdfClaimCompletedFilter} and ${previousToCurrentYearFilterDateCreated}`,
+		channelsCompleted: `${mdfClaimCompletedFilter} and ${previousToCurrentYearFilterSubmitDate}`,
 		channelsOpen: `${mdfClaimOpenFilter} and (mdfClaimStatus ne 'draft')`,
 		completedList: mdfClaimCompletedListStatus,
 		openList: mdfClaimOpenListStatus,
-		partnersCompleted: `${mdfClaimCompletedFilter} and ${fiscalYearFilterDateCreated} `,
+		partnersCompleted: `${mdfClaimCompletedFilter} and ${fiscalYearFilterSubmitDate} `,
 		partnersOpen: `${mdfClaimOpenFilter}`,
 	},
 	MDF_DASHBOARD: {
@@ -100,11 +99,11 @@ export const Filters = {
 		requests: `mdfRequestStatus ne 'draft' and ${fiscalYearFilterSubmitDate}`,
 	},
 	MDF_REQUEST_LISTING: {
-		channelsCompleted: `${mdfRequestCompletedFilter} and ${previousToCurrentYearFilterDateCreated}`,
+		channelsCompleted: `${mdfRequestCompletedFilter} and ${previousToCurrentYearFilterSubmitDate}`,
 		channelsOpen: `${mdfRequestOpenFilter} and (mdfRequestStatus ne 'draft')`,
 		completedList: mdfRequestCompletedListStatus,
 		openList: mdfRequestOpenListStatus,
-		partnersCompleted: `${mdfRequestCompletedFilter} and ${fiscalYearFilterDateCreated}`,
+		partnersCompleted: `${mdfRequestCompletedFilter} and ${fiscalYearFilterSubmitDate}`,
 		partnersOpen: `${mdfRequestOpenFilter}`,
 	},
 	OPPORTUNITY_LISTING: {

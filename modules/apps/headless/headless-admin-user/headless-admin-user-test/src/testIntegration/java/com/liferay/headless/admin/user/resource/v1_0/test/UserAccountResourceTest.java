@@ -34,6 +34,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -76,6 +78,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -115,6 +118,9 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Javier Gamarra
@@ -382,26 +388,68 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		Group group = GroupTestUtil.addGroup();
 
-		_testGetUserAccountWithRoles(
-			group,
-			() -> _groupLocalService.addUserGroup(user.getUserId(), group),
-			user);
+		Role groupRole = RoleTestUtil.addRole(
+			"Test Site Role", RoleConstants.TYPE_SITE);
 
-		Organization organization = OrganizationTestUtil.addOrganization();
+		User groupUser = UserTestUtil.addGroupUser(group, "Test Site Role");
 
-		_testGetUserAccountWithRoles(
-			organization.getGroup(),
-			() -> _organizationLocalService.addUserOrganization(
-				user.getUserId(), organization),
-			user);
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			"headless-admin-user/v1.0/user-accounts/" + groupUser.getUserId(),
+			Http.Method.GET);
 
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+		JSONArray actualSiteBriefs_jsonArray = (JSONArray)jsonObject.get(
+			"siteBriefs");
 
-		_testGetUserAccountWithRoles(
-			userGroup.getGroup(),
-			() -> _userGroupLocalService.addUserUserGroup(
-				user.getUserId(), userGroup),
-			user);
+		JSONArray expectedSiteBriefs_jsonArray = JSONUtil.put(
+			JSONUtil.put(
+				"name", group.getGroupKey()
+			).put(
+				"roleBriefs",
+				JSONUtil.put(
+					JSONUtil.put(
+						"id", groupRole.getRoleId()
+					).put(
+						"name", groupRole.getName()
+					))
+			));
+
+		JSONAssert.assertEquals(
+			expectedSiteBriefs_jsonArray.toString(),
+			actualSiteBriefs_jsonArray.toString(), JSONCompareMode.LENIENT);
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_testUser));
+
+			_testGetUserAccountWithRoles(
+				group,
+				() -> _groupLocalService.addUserGroup(user.getUserId(), group),
+				user);
+
+			Organization organization = OrganizationTestUtil.addOrganization();
+
+			_testGetUserAccountWithRoles(
+				organization.getGroup(),
+				() -> _organizationLocalService.addUserOrganization(
+					user.getUserId(), organization),
+				user);
+
+			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+			_testGetUserAccountWithRoles(
+				userGroup.getGroup(),
+				() -> _userGroupLocalService.addUserUserGroup(
+					user.getUserId(), userGroup),
+				user);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	@Override

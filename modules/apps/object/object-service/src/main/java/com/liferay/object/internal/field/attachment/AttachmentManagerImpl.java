@@ -27,8 +27,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -76,7 +75,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		validateFileSize(
 			fileName, fileContent.length, objectFieldId, !user.isGuestUser());
 
-		DLFolder dlFolder = fetchDLFolder(
+		DLFolder dlFolder = getDLFolder(
 			companyId, groupId, objectFieldId, serviceContext,
 			serviceContext.getUserId());
 
@@ -96,55 +95,6 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	}
 
 	@Override
-	public DLFolder fetchDLFolder(
-		long companyId, long groupId, long objectFieldId,
-		ServiceContext serviceContext, long userId) {
-
-		try {
-			Long dlFolderId = null;
-
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectFieldId);
-
-			boolean showFilesInDocumentsAndMedia = GetterUtil.getBoolean(
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
-					objectField.getObjectFieldSettings()));
-
-			if (showFilesInDocumentsAndMedia) {
-				String storageDLFolderPath = ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
-					objectField.getObjectFieldSettings());
-
-				dlFolderId = _getStorageDLFolderId(
-					companyId, groupId, serviceContext, storageDLFolderPath);
-			}
-			else {
-				ObjectDefinition objectDefinition =
-					objectField.getObjectDefinition();
-
-				dlFolderId = _getRepositoryFolderId(
-					companyId, groupId, objectDefinition.getPortletId(),
-					serviceContext, userId);
-			}
-
-			if (dlFolderId == null) {
-				return null;
-			}
-
-			return _dlFolderLocalService.fetchDLFolder(dlFolderId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return null;
-		}
-	}
-
-	@Override
 	public String[] getAcceptedFileExtensions(long objectFieldId) {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
@@ -154,6 +104,42 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		String value = objectFieldSetting.getValue();
 
 		return value.split("\\s*,\\s*");
+	}
+
+	@Override
+	public DLFolder getDLFolder(
+			long companyId, long groupId, long objectFieldId,
+			ServiceContext serviceContext, long userId)
+		throws PortalException {
+
+		Long dlFolderId = null;
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectFieldId);
+
+		boolean showFilesInDocumentsAndMedia = GetterUtil.getBoolean(
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+				objectField.getObjectFieldSettings()));
+
+		if (showFilesInDocumentsAndMedia) {
+			String storageDLFolderPath = ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+				objectField.getObjectFieldSettings());
+
+			dlFolderId = _getStorageDLFolderId(
+				companyId, groupId, serviceContext, storageDLFolderPath);
+		}
+		else {
+			ObjectDefinition objectDefinition =
+				objectField.getObjectDefinition();
+
+			dlFolderId = _getRepositoryFolderId(
+				companyId, groupId, objectDefinition.getPortletId(),
+				serviceContext, userId);
+		}
+
+		return _dlFolderLocalService.getDLFolder(dlFolderId);
 	}
 
 	@Override
@@ -222,7 +208,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 	private Repository _getRepository(
 			long groupId, String portletId, ServiceContext serviceContext)
-		throws Exception {
+		throws PortalException {
 
 		Repository repository = _portletFileRepository.fetchPortletRepository(
 			groupId, portletId);
@@ -243,7 +229,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	private Long _getRepositoryFolderId(
 			long companyId, long groupId, String portletId,
 			ServiceContext serviceContext, long userId)
-		throws Exception {
+		throws PortalException {
 
 		Repository repository = _getRepository(
 			groupId, portletId, serviceContext);
@@ -272,7 +258,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	private Long _getStorageDLFolderId(
 			long companyId, long groupId, ServiceContext serviceContext,
 			String storageDLFolderPath)
-		throws Exception {
+		throws PortalException {
 
 		long storageDLFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
@@ -299,9 +285,6 @@ public class AttachmentManagerImpl implements AttachmentManager {
 	}
 
 	private static final long _FILE_LENGTH_MB = 1024 * 1024;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AttachmentManagerImpl.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

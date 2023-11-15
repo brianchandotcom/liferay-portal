@@ -719,9 +719,8 @@ public class CTCollectionLocalServiceImpl
 
 			DataSource dataSource = ctPersistence.getDataSource();
 
-			Connection connection = dataSource.getConnection();
-
-			try (PreparedStatement preparedStatement =
+			try (Connection connection = dataSource.getConnection();
+				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						StringBundler.concat(
 							"select count(*) from ",

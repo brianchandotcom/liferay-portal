@@ -22,7 +22,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property portal.version = "7.4.13.u72";
+		property portal.version = "2023.q3.1";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
 
@@ -44,7 +44,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property portal.version = "7.4.13.u72";
+		property portal.version = "2023.q3.1";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
 
@@ -71,7 +71,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property portal.version = "7.4.13.u72";
+		property portal.version = "2023.q3.1";
 		property test.assert.warning.exceptions = "false";
 		property upgrade.reports.enabled = "true";
 
@@ -91,7 +91,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property portal.version = "7.4.13.u72";
+		property portal.version = "2023.q3.1";
 		property test.assert.warning.exceptions = "false";
 		property upgrade.reports.enabled = "true";
 

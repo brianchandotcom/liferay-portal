@@ -24,13 +24,13 @@ export default function NavigationMenuConfiguration({
 }) {
 	const form = document.getElementById(`${namespace}fm`);
 
-	const displayStyleValue = document.getElementById(
+	const displayStyle = document.getElementById(
 		`${namespace}preferences--displayStyle--`
 	);
 
 	const resetPreview = (option) => {
 		const displayDepthSelect = getFormElement(form, 'displayDepth');
-		const displayStyle = option || displayStyleValue;
+		const displayStyleValue = option || displayStyle.value;
 		const expandedLevelsSelect = getFormElement(form, 'expandedLevels');
 		const rootMenuItemIdInput = getFormElement(form, 'rootMenuItemId');
 		const rootMenuItemLevelSelect = getFormElement(
@@ -62,7 +62,7 @@ export default function NavigationMenuConfiguration({
 			siteNavigationMenuTypeInput
 		) {
 			data.displayDepth = displayDepthSelect.value;
-			data.displayStyle = displayStyle;
+			data.displayStyle = displayStyleValue;
 			data.expandedLevels = expandedLevelsSelect.value;
 			data.rootMenuItemLevel = rootMenuItemLevelSelect.value;
 			data.rootMenuItemType = rootMenuItemTypeSelect.value;

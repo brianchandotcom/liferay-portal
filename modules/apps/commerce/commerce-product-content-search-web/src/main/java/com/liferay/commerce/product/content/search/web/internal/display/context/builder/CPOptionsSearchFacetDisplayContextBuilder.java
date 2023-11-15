@@ -225,13 +225,17 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	}
 
 	private List<Facet> _getFacets() {
-		List<Facet> filledFacets = new ArrayList<>();
-
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			_portletSharedSearchRequest.search(_renderRequest);
 
 		Facet facet = portletSharedSearchResponse.getFacet(
 			CPField.OPTION_NAMES);
+
+		if (facet == null) {
+			return Collections.emptyList();
+		}
+
+		List<Facet> filledFacets = new ArrayList<>();
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 

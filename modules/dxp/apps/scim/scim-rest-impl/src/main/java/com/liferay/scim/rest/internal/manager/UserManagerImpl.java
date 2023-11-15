@@ -120,17 +120,20 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public void deleteUser(String userId) throws CharonException {
-		ScimUser scimUser = _fetchScimUser(
-			CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
-
-		if (scimUser == null) {
-			return;
-		}
-
 		try {
+			ScimUser scimUser = _getScimUser(
+				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
+
+			if (scimUser == null) {
+				return;
+			}
+
 			_userLocalService.updateStatus(
 				GetterUtil.getLong(userId), WorkflowConstants.STATUS_INACTIVE,
 				new ServiceContext());
+		}
+		catch (AbstractCharonException abstractCharonException) {
+			ReflectionUtil.throwException(abstractCharonException);
 		}
 		catch (PortalException portalException) {
 			throw new CharonException(
@@ -158,18 +161,19 @@ public class UserManagerImpl implements UserManager {
 	public User getUser(String userId, Map<String, Boolean> requiredAttributes)
 		throws BadRequestException, CharonException, NotFoundException {
 
-		ScimUser scimUser = _fetchScimUser(
-			CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
-
-		if ((scimUser == null) || !scimUser.isActive()) {
-			throw new NotFoundException("No user found with user ID " + userId);
-		}
-
 		try {
+			ScimUser scimUser = _getScimUser(
+				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
+
+			if (!scimUser.isActive()) {
+				throw new NotFoundException(
+					"No user found with user ID " + userId);
+			}
+
 			return ScimUserUtil.toUser(scimUser);
 		}
-		catch (Exception exception) {
-			throw new CharonException(exception.getMessage(), exception);
+		catch (AbstractCharonException abstractCharonException) {
+			return ReflectionUtil.throwException(abstractCharonException);
 		}
 	}
 
@@ -342,28 +346,6 @@ public class UserManagerImpl implements UserManager {
 		return null;
 	}
 
-	private ScimUser _fetchScimUser(long companyId, long userId) {
-		com.liferay.portal.kernel.model.User portalUser =
-			_userLocalService.fetchUserById(userId);
-
-		if (portalUser == null) {
-			return null;
-		}
-
-		ScimClientOAuth2ApplicationConfiguration
-			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(companyId);
-
-		String scimClientId = ScimClientUtil.generateScimClientId(
-			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
-
-		if (!Objects.equals(_getScimClientId(portalUser), scimClientId)) {
-			return null;
-		}
-
-		return _toScimUser(portalUser);
-	}
-
 	private String _getScimClientId(
 		com.liferay.portal.kernel.model.User portalUser) {
 
@@ -439,6 +421,37 @@ public class UserManagerImpl implements UserManager {
 
 			return ReflectionUtil.throwException(exception);
 		}
+	}
+
+	private ScimUser _getScimUser(long companyId, long userId)
+		throws AbstractCharonException {
+
+		com.liferay.portal.kernel.model.User portalUser =
+			_userLocalService.fetchUserById(userId);
+
+		if (portalUser == null) {
+			throw new NotFoundException("No user found with user ID " + userId);
+		}
+
+		String userScimClientId = _getScimClientId(portalUser);
+
+		if (Validator.isNull(userScimClientId)) {
+			throw new NotFoundException("No user found with user ID " + userId);
+		}
+
+		ScimClientOAuth2ApplicationConfiguration
+			scimClientOAuth2ApplicationConfiguration =
+				_getScimClientOAuth2ApplicationConfiguration(companyId);
+
+		String scimClientId = ScimClientUtil.generateScimClientId(
+			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
+
+		if (!Objects.equals(userScimClientId, scimClientId)) {
+			throw new ConflictException(
+				"User was provisioned by another SCIM client");
+		}
+
+		return _toScimUser(portalUser);
 	}
 
 	private void _saveScimClientId(

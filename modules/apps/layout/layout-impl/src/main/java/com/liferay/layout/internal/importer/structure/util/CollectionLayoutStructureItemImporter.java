@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,7 @@ public class CollectionLayoutStructureItemImporter
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)
 					layoutStructure.addCollectionStyledLayoutStructureItem(
-						pageElement.getId(),
+						_getCollectionItemId(pageElement), pageElement.getId(),
 						layoutStructureItemImporterContext.getParentItemId(),
 						layoutStructureItemImporterContext.getPosition());
 
@@ -238,6 +240,18 @@ public class CollectionLayoutStructureItemImporter
 		}
 
 		return null;
+	}
+
+	private String _getCollectionItemId(PageElement pageElement) {
+		PageElement[] pageElements = pageElement.getPageElements();
+
+		if (ArrayUtil.isEmpty(pageElements)) {
+			return PortalUUIDUtil.generate();
+		}
+
+		PageElement childPageElement = pageElements[0];
+
+		return childPageElement.getId();
 	}
 
 	private JSONObject _getCollectionJSONObject(

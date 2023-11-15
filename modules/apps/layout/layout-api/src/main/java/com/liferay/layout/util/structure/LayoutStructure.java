@@ -191,6 +191,14 @@ public class LayoutStructure {
 	public LayoutStructureItem addCollectionStyledLayoutStructureItem(
 		String itemId, String parentItemId, int position) {
 
+		return addCollectionStyledLayoutStructureItem(
+			PortalUUIDUtil.generate(), itemId, parentItemId, position);
+	}
+
+	public LayoutStructureItem addCollectionStyledLayoutStructureItem(
+		String collectionItemItemId, String itemId, String parentItemId,
+		int position) {
+
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem =
 				new CollectionStyledLayoutStructureItem(itemId, parentItemId);
@@ -198,6 +206,7 @@ public class LayoutStructure {
 		_updateLayoutStructure(collectionStyledLayoutStructureItem, position);
 
 		addCollectionItemLayoutStructureItem(
+			collectionItemItemId,
 			collectionStyledLayoutStructureItem.getItemId(), 0);
 
 		return collectionStyledLayoutStructureItem;

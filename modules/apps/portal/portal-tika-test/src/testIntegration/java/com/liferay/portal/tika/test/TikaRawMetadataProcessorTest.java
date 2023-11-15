@@ -51,13 +51,12 @@ public class TikaRawMetadataProcessorTest {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
-		List<DDMFormFieldValue> httpHeadersContentTypeValues =
-			ddmFormFieldValuesMap.get("HttpHeaders_CONTENT_TYPE");
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"HttpHeaders_CONTENT_TYPE");
 
-		DDMFormFieldValue httpHeadersContentTypeValue =
-			httpHeadersContentTypeValues.get(0);
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
-		Value value = httpHeadersContentTypeValue.getValue();
+		Value value = ddmFormFieldValue.getValue();
 
 		String valueString = value.getString(value.getDefaultLocale());
 

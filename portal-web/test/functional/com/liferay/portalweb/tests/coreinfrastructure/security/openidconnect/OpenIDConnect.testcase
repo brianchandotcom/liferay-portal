@@ -635,8 +635,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9: Users could login with instance-level configured OpenID Connect provider. Blocked by LPS-200899."
-	@ignore = "true"
+	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9: Users could login with instance-level configured OpenID Connect provider."
 	@priority = 5
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property portal.acceptance = "true";
@@ -701,8 +700,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-40911. Users could login and logout using OpenID Connect provider. Blocked by LPS-200899."
-	@ignore = "true"
+	@description = "This is a use case for LRQA-40911. Users could login and logout using OpenID Connect provider."
 	@priority = 5
 	test OpenIDConnectSmoke {
 		property portal.acceptance = "true";
@@ -955,8 +953,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-148619. User could log in and log out using Google as OpenID Connect provider, using custom parameters for the connection. Blocked by LPS-200899."
-	@ignore = "true"
+	@description = "This is a use case for LPS-148619. User could log in and log out using Google as OpenID Connect provider, using custom parameters for the connection."
 	@priority = 5
 	test OpenIDConnectWithGoogleCustomParameters {
 		property dummy.socket.proxy.disabled = "true";

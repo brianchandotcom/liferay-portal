@@ -598,19 +598,15 @@ public class DisplayPageDisplayContext {
 		Long[] classTypeIds = classNameIdsMap.get(
 			layoutPageTemplateEntry.getClassNameId());
 
-		if ((layoutPageTemplateEntry.getClassTypeId() == 0) &&
-			ArrayUtil.isEmpty(classTypeIds)) {
+		if (((layoutPageTemplateEntry.getClassTypeId() == 0) &&
+			 ArrayUtil.isEmpty(classTypeIds)) ||
+			ArrayUtil.contains(
+				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
 
 			return true;
 		}
 
-		if (!ArrayUtil.contains(
-				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
-
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	private Map<Long, Long[]> _allowedClassNameIdsMap;

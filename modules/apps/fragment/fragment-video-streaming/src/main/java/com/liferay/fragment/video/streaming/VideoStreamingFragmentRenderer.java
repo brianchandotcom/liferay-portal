@@ -50,8 +50,7 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 					"fields",
 					JSONUtil.putAll(
 						_createFieldJSONObject("url", "url", "text"),
-						_createFieldJSONObject(
-							"subtitles", "subtitles", "text"),
+						_createFieldJSONObject("subtitle", "subtitles", "text"),
 						_createFieldJSONObject(
 							"autoplay", "autoplay", "checkbox"),
 						_createFieldJSONObject("loop", "loop", "checkbox"),

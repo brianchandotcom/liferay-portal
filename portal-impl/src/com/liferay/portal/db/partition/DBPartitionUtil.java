@@ -185,6 +185,20 @@ public class DBPartitionUtil {
 		return companyId;
 	}
 
+	public static boolean insertDBPartition(long companyId)
+		throws PortalException {
+
+		if (!DBPartition.isPartitionEnabled() ||
+			(companyId == _defaultCompanyId)) {
+
+			return false;
+		}
+
+		_insertDBPartition(companyId);
+
+		return true;
+	}
+
 	public static boolean removeDBPartition(long companyId)
 		throws PortalException {
 
@@ -689,6 +703,70 @@ public class DBPartitionUtil {
 
 			return "utf8";
 		}
+	}
+
+	private static void _insertDBPartition(long companyId)
+		throws PortalException {
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		try (Statement statement = connection.createStatement()) {
+			String whereClause = " where companyId = " + companyId;
+
+			_copyData(
+				"Company", _getSchemaName(companyId), _defaultSchemaName,
+				statement, whereClause);
+			_copyData(
+				"VirtualHost", _getSchemaName(companyId), _defaultSchemaName,
+				statement, whereClause);
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_defaultSchemaName, dbInspector.getSchema(), null,
+					new String[] {"TABLE"})) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (dbInspector.isControlTable(
+							_getCompanyIds(), tableName)) {
+
+						statement.executeUpdate(
+							_getDropTableSQL(companyId, tableName));
+
+						statement.executeUpdate(
+							_getCreateViewSQL(companyId, tableName));
+					}
+				}
+			}
+		}
+		catch (Exception exception1) {
+			try (Statement statement = connection.createStatement()) {
+				_deleteCompanyData(
+					companyId, "Company", _defaultSchemaName, statement);
+				_deleteCompanyData(
+					companyId, "VirtualHost", _defaultSchemaName, statement);
+			}
+			catch (Exception exception2) {
+				throw new PortalException(
+					"Unable to remove data inserted into the default schema " +
+						"Company/VirtualHost tables for company " + companyId,
+					exception2);
+			}
+
+			throw new PortalException(
+				StringBundler.concat(
+					"Unable to move exported standalone schema. Recover a ",
+					"backup of the database schema ", _getSchemaName(companyId),
+					"."),
+				exception1);
+		}
+
+		_companyIds.add(companyId);
 	}
 
 	private static boolean _isSkip(Connection connection, String tableName)

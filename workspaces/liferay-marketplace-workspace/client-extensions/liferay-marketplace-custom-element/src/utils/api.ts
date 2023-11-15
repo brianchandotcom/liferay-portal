@@ -74,75 +74,22 @@ export function createApp({
 	});
 }
 
-// HeadlessCommerceAdminPricing.getPricelist
-
-export async function getPricelist() {
+export async function getTierPrice(channelId: number, productId: number | undefined, accountId: number | undefined) {
 	const response = await fetch(
-		`${baseURL}o/headless-commerce-admin-pricing/v2.0/price-lists`,
+		`${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?accountId=${accountId}&skus.accountId=${accountId}&nestedFields=skus`,
 		{
 			headers,
 			method: 'GET',
 		}
 	);
 
-	return await response.json();
-}
+	const {skus = []} = await response.json();
 
-export async function getPricelistByCatalogName(catalogName: string) {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists?filter=type eq 'price-list'&search=contains(catalogName,'${catalogName}')`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
+	const tierPrices:[any?] = [];
 
-	return await response.json();
-}
-
-// HeadlessCommerceAdminPricing.getPricelist
-
-export async function getPriceEntrieListByPricelistId(priceListId: string) {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListId}/price-entries`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	return response.json();
-}
-
-export async function getTierPriceByPriceEntrieId(priceEntriId: string) {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-entries/${priceEntriId}/tier-prices`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	return response.json();
-}
-
-export async function getTierPrice(catalogName: string) {
-	const priceList = await getPricelistByCatalogName(catalogName);
-
-	const listPriceId = priceList?.items[0]?.id;
-
-	const getPriceEntrie = await getPriceEntrieListByPricelistId(listPriceId);
-	const priceEntrieList = getPriceEntrie?.items;
-
-	const tierPrices = await Promise.all(
-		priceEntrieList.map(async (priceEntrieList: any) => {
-			const tierPrice = await getTierPriceByPriceEntrieId(
-				priceEntrieList.priceEntryId
-			);
-
-			return {skuId: priceEntrieList.skuId, tierPrice: tierPrice.items};
-		})
-	);
+	skus.forEach((sku: any) => {
+		tierPrices.push({skuId: sku.id, tierPrice: sku.tierPrices || []});
+	});
 
 	return tierPrices;
 }

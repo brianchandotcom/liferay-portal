@@ -32,12 +32,15 @@ definition {
 
 	@summary = "Default summary"
 	macro configureDisplayStyle(displayStyle = null) {
-		Click(locator1 = "Dropdown#TRIGGER");
+		Click(
+			key_fieldLabel = ${fieldName},
+			locator1 = "SystemSettings#DROPDOWN_MENU");
 
 		DropdownMenuItem.click(menuItem = ${displayStyle});
 
 		AssertTextEquals(
-			locator1 = "Dropdown#SELECTED_VALUE",
+			key_fieldLabel = ${fieldName},
+			locator1 = "SystemSettings#DROPDOWN_MENU",
 			value1 = ${displayStyle});
 
 		SystemSettings.saveConfiguration();

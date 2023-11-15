@@ -1548,11 +1548,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.addRootLayoutStructureItem();
-
 		if (pageDefinition != null) {
 			PageElement pageElement = pageDefinition.getPageElement();
+
+			LayoutStructureItem rootLayoutStructureItem =
+				layoutStructure.addRootLayoutStructureItem(pageElement.getId());
 
 			if ((pageElement.getType() == PageElement.Type.ROOT) &&
 				(pageElement.getPageElements() != null)) {
@@ -1590,6 +1590,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			layout = _layoutLocalService.fetchLayout(layout.getPlid());
 
 			layout = _updateLayoutSettings(userId, layout, settings);
+		}
+		else {
+			layoutStructure.addRootLayoutStructureItem();
 		}
 
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);

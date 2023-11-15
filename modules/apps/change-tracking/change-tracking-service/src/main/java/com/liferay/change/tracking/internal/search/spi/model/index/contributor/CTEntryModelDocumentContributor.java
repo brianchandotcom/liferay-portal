@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -193,6 +195,15 @@ public class CTEntryModelDocumentContributor
 			if (modelAttributes.containsKey("groupId")) {
 				groupId = (long)modelAttributes.get("groupId");
 			}
+			else if (modelAttributes.containsKey("plid")) {
+				long plid = (long)modelAttributes.get("plid");
+
+				Layout layout = _layoutLocalService.fetchLayout(plid);
+
+				if (layout != null) {
+					groupId = layout.getGroupId();
+				}
+			}
 		}
 
 		Group group = null;
@@ -266,6 +277,9 @@ public class CTEntryModelDocumentContributor
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Localization _localization;

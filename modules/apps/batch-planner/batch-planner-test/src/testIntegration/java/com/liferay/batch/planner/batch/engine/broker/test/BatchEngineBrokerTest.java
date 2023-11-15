@@ -182,6 +182,11 @@ public class BatchEngineBrokerTest {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				_objectDefinition2.getObjectDefinitionId());
 		}
+
+		if (_company2 != null) {
+			_companyLocalService.deleteCompany(_company2);
+			_company2 = null;
+		}
 	}
 
 	@Test
@@ -196,53 +201,41 @@ public class BatchEngineBrokerTest {
 
 		_company2 = _addCompany(companyId, "test.com");
 
-		try {
-			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
+		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 
-			_objectDefinition1 = _publishObjectDefinition(
-				_company2.getCompanyId(), objectDefinitionName,
-				ObjectDefinitionConstants.SCOPE_COMPANY, user);
+		_objectDefinition1 = _publishObjectDefinition(
+			_company2.getCompanyId(), objectDefinitionName,
+			ObjectDefinitionConstants.SCOPE_COMPANY, user);
 
-			_objectDefinitionLocalService.updateExternalReferenceCode(
-				_objectDefinition1.getObjectDefinitionId(),
-				_OBJECT_DEFINITION_1_ERC);
+		_objectDefinitionLocalService.updateExternalReferenceCode(
+			_objectDefinition1.getObjectDefinitionId(),
+			_OBJECT_DEFINITION_1_ERC);
 
-			BatchPlannerPlan batchPlannerPlan =
-				_batchPlannerPlanLocalService.addBatchPlannerPlan(
-					user.getUserId(), true,
-					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-					StringPool.SLASH,
-					"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-					RandomTestUtil.randomString(), 0, null, false);
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				user.getUserId(), true,
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, StringPool.SLASH,
+				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+				RandomTestUtil.randomString(), 0, null, false);
 
-			for (String fieldName : _objectDefinitionExportCSVFieldNames) {
-				_batchPlannerMappingLocalService.addBatchPlannerMapping(
-					user.getUserId(), batchPlannerPlan.getBatchPlannerPlanId(),
-					fieldName, "String", fieldName, "String", StringPool.BLANK);
-			}
-
-			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
-
-			BatchEngineExportTask batchEngineExportTask =
-				_getFinishedBatchEngineExportTask(
-					batchPlannerPlan.getBatchPlannerPlanId(),
-					_company2.getCompanyId());
-
-			_assertCSVFiles(
-				_batchEngineExportTaskLocalService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId()),
-				_getInputStream(
-					getClass(), "csv/expected-object-definition.csv"),
-				objectDefinitionName);
+		for (String fieldName : _objectDefinitionExportCSVFieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				user.getUserId(), batchPlannerPlan.getBatchPlannerPlanId(),
+				fieldName, "String", fieldName, "String", StringPool.BLANK);
 		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				_objectDefinition1.getObjectDefinitionId());
 
-			_objectDefinition1 = null;
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
 
-			_companyLocalService.deleteCompany(_company2);
-		}
+		BatchEngineExportTask batchEngineExportTask =
+			_getFinishedBatchEngineExportTask(
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				_company2.getCompanyId());
+
+		_assertCSVFiles(
+			_batchEngineExportTaskLocalService.openContentInputStream(
+				batchEngineExportTask.getBatchEngineExportTaskId()),
+			_getInputStream(getClass(), "csv/expected-object-definition.csv"),
+			objectDefinitionName);
 	}
 
 	@Test
@@ -259,73 +252,60 @@ public class BatchEngineBrokerTest {
 
 		_company2 = _addCompany(companyId, "test.com");
 
-		try {
-			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
+		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 
-			_objectDefinition2 = _publishObjectDefinition(
-				_company2.getCompanyId(), "TestObject",
-				ObjectDefinitionConstants.SCOPE_COMPANY, user);
+		_objectDefinition2 = _publishObjectDefinition(
+			_company2.getCompanyId(), "TestObject",
+			ObjectDefinitionConstants.SCOPE_COMPANY, user);
 
-			_addObjectEntry(
-				_company2.getCompanyId(), _company2.getGroupId(),
-				_objectDefinition2, user.getUserId());
+		_addObjectEntry(
+			_company2.getCompanyId(), _company2.getGroupId(),
+			_objectDefinition2, user.getUserId());
 
-			BatchPlannerPlan batchPlannerPlan =
-				_batchPlannerPlanLocalService.addBatchPlannerPlan(
-					TestPropsValues.getUserId(), true,
-					BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-					StringPool.SLASH,
-					"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-					RandomTestUtil.randomString(), 0, "C_TestObject", false);
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), true,
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, StringPool.SLASH,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				RandomTestUtil.randomString(), 0, "C_TestObject", false);
 
-			for (String fieldName : _objectEntryExportFieldNames) {
-				_batchPlannerMappingLocalService.addBatchPlannerMapping(
-					TestPropsValues.getUserId(),
-					batchPlannerPlan.getBatchPlannerPlanId(), fieldName,
-					"String", fieldName, "String", StringPool.BLANK);
-			}
-
-			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
-
-			BatchEngineExportTask batchEngineExportTask =
-				_getFinishedBatchEngineExportTask(
-					batchPlannerPlan.getBatchPlannerPlanId(),
-					TestPropsValues.getCompanyId());
-
-			_objectMapper.setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							VulcanPropertyFilter.of(
-								new HashSet<>(_objectEntryExportFieldNames),
-								null));
-					}
-				});
-
-			JsonNode expectedJsonNode = _getExpectedJsonNode(
-				_objectDefinition1, objectEntry1.getObjectEntryId());
-
-			JsonNode jsonNode = _objectMapper.readTree(
-				_getZipInputStream(
-					_batchEngineExportTaskLocalService.openContentInputStream(
-						batchEngineExportTask.getBatchEngineExportTaskId())));
-
-			Assert.assertTrue(jsonNode.isArray());
-			Assert.assertEquals(1, jsonNode.size());
-
-			_assertEqualsExport(
-				expectedJsonNode, _objectEntryExportFieldNames,
-				jsonNode.get(0));
+		for (String fieldName : _objectEntryExportFieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
 		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				_objectDefinition2.getObjectDefinitionId());
 
-			_objectDefinition2 = null;
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
 
-			_companyLocalService.deleteCompany(_company2);
-		}
+		BatchEngineExportTask batchEngineExportTask =
+			_getFinishedBatchEngineExportTask(
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				TestPropsValues.getCompanyId());
+
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectEntryExportFieldNames), null));
+				}
+			});
+
+		JsonNode expectedJsonNode = _getExpectedJsonNode(
+			_objectDefinition1, objectEntry1.getObjectEntryId());
+
+		JsonNode jsonNode = _objectMapper.readTree(
+			_getZipInputStream(
+				_batchEngineExportTaskLocalService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId())));
+
+		Assert.assertTrue(jsonNode.isArray());
+		Assert.assertEquals(1, jsonNode.size());
+
+		_assertEqualsExport(
+			expectedJsonNode, _objectEntryExportFieldNames, jsonNode.get(0));
 	}
 
 	@Test

@@ -1174,9 +1174,10 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getCompanyId(), objectDefinitionName,
 			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
 
-		_objectDefinitionLocalService.updateExternalReferenceCode(
-			_objectDefinition1.getObjectDefinitionId(),
-			_OBJECT_DEFINITION_1_ERC);
+		_objectDefinition1 =
+			_objectDefinitionLocalService.updateExternalReferenceCode(
+				_objectDefinition1.getObjectDefinitionId(),
+				_OBJECT_DEFINITION_1_ERC);
 
 		_objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),

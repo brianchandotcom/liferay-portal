@@ -110,11 +110,7 @@
 						},
 						{
 							"name": "showFilesInDocumentsAndMedia",
-							"value": "true"
-						},
-						{
-							"name": "storageDLFolderPath",
-							"value": "/J3Y7Ticket"
+							"value": "false"
 						}
 					],
 					"required": false,

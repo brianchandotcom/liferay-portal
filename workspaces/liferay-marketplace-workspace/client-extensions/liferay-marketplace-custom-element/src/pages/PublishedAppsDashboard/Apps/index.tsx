@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
-import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
+import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import appsIcon from '../../../assets/icons/apps_fill_icon.svg';
 import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
@@ -20,9 +20,7 @@ import {appTableHeaders} from '../PublishedDashboardPageUtil';
 const Apps = () => {
 	const [page, setPage] = useState(1);
 
-	const {catalogId, publishedAppTable} = useOutletContext<
-		any
-	>();
+	const {catalogId, publishedAppTable} = useOutletContext<any>();
 	const navigate = useNavigate();
 
 	return (
@@ -39,9 +37,7 @@ const Apps = () => {
 				title: 'Apps',
 			}}
 			onButtonClick={() => {
-				navigate(
-					`/app/create?catalogId=${catalogId}`
-				);
+				navigate(`/app/create?catalogId=${catalogId}`);
 			}}
 		>
 			<DashboardTable<AppProps>

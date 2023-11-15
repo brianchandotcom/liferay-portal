@@ -7,11 +7,10 @@ import classNames from 'classnames';
 
 import './DashboardNavigationList.scss';
 
-import {NavLink, useLocation, useParams} from 'react-router-dom';
+import {NavLink, useLocation} from 'react-router-dom';
 
 import {DashboardListItems} from './DashboardNavigation';
 import {DashboardNavigationListItem} from './DashboardNavigationListItem';
-import { Liferay } from '../../liferay/liferay';
 
 interface DashboardNavigationListProps {
 	navigationItemMock: DashboardListItems;

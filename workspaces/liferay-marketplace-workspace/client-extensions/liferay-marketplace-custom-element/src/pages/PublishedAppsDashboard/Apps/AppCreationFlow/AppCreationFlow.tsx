@@ -19,9 +19,6 @@ import {CustomizeAppStorefrontPage} from '../../../StorefrontPage/CustomizeAppSt
 import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
-
-import {useParams} from 'react-router-dom';
-
 import {Liferay} from '../../../../liferay/liferay';
 import {useAppContext} from '../../../../manage-app-state/AppManageState';
 import {DefineAppProfilePage} from '../../../DefineAppProfilePage/DefineAppProfilePage';

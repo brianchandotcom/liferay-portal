@@ -6,9 +6,9 @@
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useMemo, useState} from 'react';
-import {useParams} from 'react-router-dom';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {Liferay} from '../../liferay/liferay';
 import {
 	MemberProps,
 	adminRoles,
@@ -21,7 +21,6 @@ import {DashboardTable, TableHeaders} from '../DashboardTable/DashboardTable';
 import {InviteMemberModal} from '../InviteMemberModal/InviteMemberModal';
 import {MemberProfile} from '../MemberProfile/MemberProfile';
 import useMembers from './useMembers';
-import { Liferay } from '../../liferay/liferay';
 
 interface MembersPageProps {
 	icon: string;
@@ -73,9 +72,11 @@ export function MembersPage({
 
 	const marketplaceContext = useMarketplaceContext();
 
-	const currentUserAccountBriefs = marketplaceContext.myUserAccount?.accountBriefs?.find(
-		(accountBrief: {id: number}) => accountBrief.id === selectedAccount?.id
-	);
+	const currentUserAccountBriefs =
+		marketplaceContext.myUserAccount?.accountBriefs?.find(
+			(accountBrief: {id: number}) =>
+				accountBrief.id === selectedAccount?.id
+		);
 
 	const myUserAccount = useMemo(
 		() => ({
@@ -96,7 +97,7 @@ export function MembersPage({
 	);
 
 	const {members, mutate: mutateMembers} = useMembers({
-		accountId: accountId ?? ((selectedAccount?.id as unknown) as string),
+		accountId: accountId ?? (selectedAccount?.id as unknown as string),
 		isCustomerDashboard,
 		isPublisherDashboard,
 		selectedAccount,

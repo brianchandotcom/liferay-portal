@@ -22,9 +22,9 @@ export interface IOAuth2Client {
 interface ILiferay {
 	CommerceContext: {
 		account?: {
-			accountId: number | string | null,
-		},
-	},
+			accountId: number | string | null;
+		};
+	};
 	MarketplaceCustomerFlow: {appId: number};
 	OAuth2Client: IOAuth2Client;
 	Service: Function;

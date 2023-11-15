@@ -63,7 +63,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-138634. Relaunch export process for default site. Blocked by LRQA-73610."
+	@description = "This is a test for LPS-138634. Relaunch export process for default site."
 	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-default-site-export";

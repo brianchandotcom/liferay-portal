@@ -242,7 +242,7 @@ public class JobRestController {
 		JSONArray jobsJSONArray = new JSONArray();
 
 		List<JobEntity> jobEntities = new ArrayList<>(
-			_jobEntityRepository.getByState(JobEntity.State.COMPLETED));
+			_jobEntityRepository.getAll());
 
 		Collections.sort(
 			jobEntities,

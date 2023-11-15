@@ -768,7 +768,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		PortletDataContext portletDataContext, Portlet portlet) {
 
 		try {
-			if (!ExportImportThreadLocal.isLayoutStagingInProcess()) {
+			if (!ExportImportThreadLocal.isStagingInProcess()) {
 				return true;
 			}
 

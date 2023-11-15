@@ -82,6 +82,18 @@ public abstract class BaseEntityDALO<T extends Entity>
 	}
 
 	@Override
+	public Set<T> getAllAfterCreatedDate(Date createdDate) {
+		return getAll(
+			"dateCreated gt " + StringUtil.toString(createdDate), null);
+	}
+
+	@Override
+	public Set<T> getAllAfterModifiedDate(Date modifiedDate) {
+		return getAll(
+			"dateModified gt " + StringUtil.toString(modifiedDate), null);
+	}
+
+	@Override
 	public T update(T entity) {
 		JSONObject responseJSONObject = _update(entity.getJSONObject());
 

@@ -896,7 +896,9 @@ definition {
 				configurationName = "Asset Categories Web",
 				configurationScope = "System Scope");
 
-			SystemSettings.configureDisplayStyle(displayStyle = "Flattened Tree");
+			SystemSettings.configureDisplayStyle(
+				displayStyle = "Flattened Tree",
+				fieldName = "Category Navigation Display Style");
 		}
 
 		task ("Add a category") {

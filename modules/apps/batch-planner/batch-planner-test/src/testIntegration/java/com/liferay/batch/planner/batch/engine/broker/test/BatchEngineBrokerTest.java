@@ -314,27 +314,6 @@ public class BatchEngineBrokerTest {
 
 		_setUpObjectDefinition(objectDefinitionName);
 
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(), true,
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, StringPool.SLASH,
-				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-				RandomTestUtil.randomString(), 0, null, false);
-
-		for (String fieldName : _objectDefinitionExportFieldNames) {
-			_batchPlannerMappingLocalService.addBatchPlannerMapping(
-				TestPropsValues.getUserId(),
-				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
-				fieldName, "String", StringPool.BLANK);
-		}
-
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
-
-		BatchEngineExportTask batchEngineExportTask =
-			_getFinishedBatchEngineExportTask(
-				batchPlannerPlan.getBatchPlannerPlanId(),
-				TestPropsValues.getCompanyId());
-
 		_objectMapper.setFilterProvider(
 			new SimpleFilterProvider() {
 				{
@@ -350,8 +329,9 @@ public class BatchEngineBrokerTest {
 
 		JsonNode jsonNode = _objectMapper.readTree(
 			_getZipInputStream(
-				_batchEngineExportTaskLocalService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId())));
+				_getObjectDefinitionExportInputStream(
+					BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+					_objectDefinitionExportFieldNames)));
 
 		Assert.assertTrue(jsonNode.isArray());
 		Assert.assertTrue(jsonNode.size() >= 2);
@@ -378,30 +358,10 @@ public class BatchEngineBrokerTest {
 			_objectDefinition1.getObjectDefinitionId(),
 			_OBJECT_DEFINITION_1_ERC);
 
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(), true,
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, StringPool.SLASH,
-				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-				RandomTestUtil.randomString(), 0, null, false);
-
-		for (String fieldName : _objectDefinitionExportCSVFieldNames) {
-			_batchPlannerMappingLocalService.addBatchPlannerMapping(
-				TestPropsValues.getUserId(),
-				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
-				fieldName, "String", StringPool.BLANK);
-		}
-
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
-
-		BatchEngineExportTask batchEngineExportTask =
-			_getFinishedBatchEngineExportTask(
-				batchPlannerPlan.getBatchPlannerPlanId(),
-				TestPropsValues.getCompanyId());
-
 		_assertCSVFiles(
-			_batchEngineExportTaskLocalService.openContentInputStream(
-				batchEngineExportTask.getBatchEngineExportTaskId()),
+			_getObjectDefinitionExportInputStream(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectDefinitionExportCSVFieldNames),
 			_getInputStream(getClass(), "csv/expected-object-definition.csv"),
 			objectDefinitionName);
 	}
@@ -1034,6 +994,35 @@ public class BatchEngineBrokerTest {
 			StringBundler.concat(
 				"/com/liferay/batch/planner/batch/engine/broker/test",
 				"/dependencies/", fileName));
+	}
+
+	private InputStream _getObjectDefinitionExportInputStream(
+			String externalType, List<String> fieldNames)
+		throws Exception {
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), true, externalType,
+				StringPool.SLASH,
+				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+				RandomTestUtil.randomString(), 0, null, false);
+
+		for (String fieldName : fieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
+		}
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		BatchEngineExportTask batchEngineExportTask =
+			_getFinishedBatchEngineExportTask(
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				TestPropsValues.getCompanyId());
+
+		return _batchEngineExportTaskLocalService.openContentInputStream(
+			batchEngineExportTask.getBatchEngineExportTaskId());
 	}
 
 	private ZipInputStream _getZipInputStream(InputStream inputStream)

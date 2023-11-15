@@ -140,6 +140,10 @@ public abstract class BaseEntityRepository<T extends Entity>
 		return entities;
 	}
 
+	protected Map<Long, T> getEntitiesMap() {
+		return _entitiesMap;
+	}
+
 	protected abstract EntityDALO<T> getEntityDALO();
 
 	protected <U extends Entity> T updateParentToChildRelationshipsFromDALO(

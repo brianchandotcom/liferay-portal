@@ -35,9 +35,9 @@
 	],
 	"items": [
 		{
-			"attachment":{
-				"fileBase64" : "MSAgIEV4YW1wbGUgb2YgYW4gYXR0YWNobWVudA0KIA==",
-				"name" : "ticket_1.pdf"
+			"attachment": {
+				"fileBase64": "MSAgIEV4YW1wbGUgb2YgYW4gYXR0YWNobWVudA0KIA==",
+				"name": "ticket_1.pdf"
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
@@ -67,9 +67,9 @@
 			}
 		},
 		{
-			"attachment":{
-				"fileBase64" : "MSAgIEV4YW1wbGUgb2YgYW4gYXR0YWNobWVudA0KIA==",
-				"name" : "ticket_2.pdf"
+			"attachment": {
+				"fileBase64": "MSAgIEV4YW1wbGUgb2YgYW4gYXR0YWNobWVudA0KIA==",
+				"name": "ticket_2.pdf"
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
@@ -99,9 +99,9 @@
 			}
 		},
 		{
-			"attachment":{
-				"fileBase64" : "MSAgIEV4YW1wbGUgb2YgYW4gYXR0YWNobWVudA0KIA==",
-				"name" : "ticket_3.pdf"
+			"attachment": {
+				"fileBase64": "MSAgIEV4YW1wbGUgb2YgYW4gYXR0YWNobWVudA0KIA==",
+				"name": "ticket_3.pdf"
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",

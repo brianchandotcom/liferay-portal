@@ -359,7 +359,6 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = ${currentOption},
 			labelName = ${labelName},
 			optionName = ${picklistOption});
 

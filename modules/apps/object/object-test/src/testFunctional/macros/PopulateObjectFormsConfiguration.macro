@@ -21,27 +21,10 @@ definition {
 	macro mapFormField(fieldLabelName = null) {
 		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
 
-		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
-
-		Click(
-			key_fieldLabelName = ${fieldLabelName},
-			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
-
-		WaitForPageLoad();
-	}
-
-	@summary = "Default summary"
-	macro mapFormObjectField(formObjectField = null, fieldLabelName = null) {
-		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
-
-		AssertClick(
-			key_formObjectField = ${formObjectField},
-			locator1 = "PopulateObjectFormsConfiguration#FORM_OBJECT_FIELD",
-			value1 = ${formObjectField});
-
-		Click(
-			key_fieldLabelName = ${fieldLabelName},
-			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Choose an Option",
+			labelName = "Object Field",
+			optionName = ${fieldLabelName});
 
 		WaitForPageLoad();
 	}
@@ -117,41 +100,14 @@ definition {
 	macro viewUnmappedFormField(fieldLabelName = null) {
 		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
 
-		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
+		Click(
+			key_currentOption = "Choose an Option",
+			key_labelName = "Object Field",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		AssertElementPresent(
-			key_fieldLabelName = ${fieldLabelName},
-			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
-	}
-
-	@summary = "Default summary"
-	macro viewUnmappedFormFieldsError(fieldLabel = null) {
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_MODAL_TITLE");
-
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_MODAL_BODY");
-
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_PANEL_TITLE");
-
-		var fieldType = StringUtil.toLowerCase(${fieldType});
-
-		AssertElementPresent(
-			key_fieldLabel = ${fieldLabel},
-			key_fieldType = ${fieldType},
-			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_PANEL_BODY");
-	}
-
-	@summary = "Default summary"
-	macro viewUnmappedObjectRequiredFieldsError(fieldLabelName = null, fieldType = null) {
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_TITLE");
-
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_BODY");
-
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_TITLE");
-
-		AssertElementPresent(
-			key_fieldLabelName = ${fieldLabelName},
-			key_fieldType = ${fieldType},
-			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_BODY");
+			key_optionName = ${fieldLabelName},
+			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 	}
 
 }

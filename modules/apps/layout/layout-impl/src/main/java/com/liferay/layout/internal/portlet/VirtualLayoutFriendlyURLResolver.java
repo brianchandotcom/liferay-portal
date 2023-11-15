@@ -6,6 +6,7 @@
 package com.liferay.layout.internal.portlet;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
@@ -39,13 +40,7 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 
 		// Group friendly URL
 
-		String groupFriendlyURL = null;
-
-		int pos = friendlyURL.indexOf(CharPool.SLASH, 3);
-
-		if (pos != -1) {
-			groupFriendlyURL = friendlyURL.substring(2, pos);
-		}
+		String groupFriendlyURL = _getGroupFriendlyURL(friendlyURL);
 
 		if (Validator.isNull(groupFriendlyURL)) {
 			return mainPath;
@@ -58,13 +53,8 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 			return mainPath;
 		}
 
-		// Layout friendly URL
-
-		String layoutFriendlyURL = null;
-
-		if ((pos != -1) && ((pos + 1) != friendlyURL.length())) {
-			layoutFriendlyURL = friendlyURL.substring(pos);
-		}
+		String layoutFriendlyURL = _getLayoutFriendlyURL(
+			friendlyURL, groupFriendlyURL);
 
 		if (Validator.isNull(layoutFriendlyURL)) {
 			return mainPath;
@@ -88,12 +78,10 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 
 		// Group friendly URL
 
-		String groupFriendlyURL = null;
+		String groupFriendlyURL = _getGroupFriendlyURL(friendlyURL);
 
-		int pos = friendlyURL.indexOf(CharPool.SLASH, 3);
-
-		if (pos != -1) {
-			groupFriendlyURL = friendlyURL.substring(2, pos);
+		if (Validator.isNull(groupFriendlyURL)) {
+			return null;
 		}
 
 		Group group = _groupLocalService.fetchFriendlyURLGroup(
@@ -103,13 +91,8 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 			return null;
 		}
 
-		// Layout friendly URL
-
-		String layoutFriendlyURL = null;
-
-		if ((pos != -1) && ((pos + 1) != friendlyURL.length())) {
-			layoutFriendlyURL = friendlyURL.substring(pos);
-		}
+		String layoutFriendlyURL = _getLayoutFriendlyURL(
+			friendlyURL, groupFriendlyURL);
 
 		LayoutQueryStringComposite layoutQueryStringComposite =
 			_portal.getActualLayoutQueryStringComposite(
@@ -144,6 +127,38 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 	@Override
 	public String getURLSeparator() {
 		return VirtualLayoutConstants.CANONICAL_URL_SEPARATOR;
+	}
+
+	private String _getGroupFriendlyURL(String friendlyURL) {
+		String urlSeparator = getURLSeparator();
+
+		String url = friendlyURL.substring(urlSeparator.length());
+
+		if (Validator.isNull(url) || !url.startsWith(StringPool.SLASH)) {
+			return null;
+		}
+
+		int pos = url.indexOf(CharPool.SLASH, 1);
+
+		if (pos != -1) {
+			return url.substring(0, pos);
+		}
+
+		return null;
+	}
+
+	private String _getLayoutFriendlyURL(
+		String friendlyURL, String groupFriendlyURL) {
+
+		String urlSeparator = getURLSeparator();
+
+		int pos = urlSeparator.length() + groupFriendlyURL.length();
+
+		if (pos < friendlyURL.length()) {
+			return friendlyURL.substring(pos);
+		}
+
+		return null;
 	}
 
 	@Reference

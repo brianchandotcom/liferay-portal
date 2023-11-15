@@ -9,6 +9,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.exception.KBArticleDisplayDateException;
 import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -106,10 +107,7 @@ public class UpdateKBArticleMVCActionCommand
 
 		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
-		Date displayDate = ParamUtil.getDate(
-			actionRequest, "displayDate",
-			DateFormatFactoryUtil.getSimpleDateFormat(
-				"yyyy-MM-dd HH:mm", user.getTimeZone()));
+		Date displayDate = _getDisplayDate(actionRequest, user.getTimeZone());
 		Date expirationDate = _getExpirationDate(
 			actionRequest, true, user.getTimeZone());
 		Date reviewDate = _getReviewDate(
@@ -272,6 +270,24 @@ public class UpdateKBArticleMVCActionCommand
 		}
 
 		return redirect;
+	}
+
+	private Date _getDisplayDate(ActionRequest actionRequest, TimeZone timeZone)
+		throws Exception {
+
+		Date now = new Date();
+
+		Date displayDate = ParamUtil.getDate(
+			actionRequest, "displayDate",
+			DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd HH:mm", timeZone));
+
+		if ((displayDate == null) || displayDate.before(now)) {
+			throw new KBArticleDisplayDateException(
+				"Schedule date " + displayDate + " is in the past");
+		}
+
+		return displayDate;
 	}
 
 	private Date _getExpirationDate(

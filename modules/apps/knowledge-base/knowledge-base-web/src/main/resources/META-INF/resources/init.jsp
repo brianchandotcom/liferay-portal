@@ -56,6 +56,7 @@ page import="com.liferay.knowledge.base.constants.KBPortletKeys" %><%@
 page import="com.liferay.knowledge.base.exception.DuplicateKBFolderNameException" %><%@
 page import="com.liferay.knowledge.base.exception.InvalidKBFolderNameException" %><%@
 page import="com.liferay.knowledge.base.exception.KBArticleContentException" %><%@
+page import="com.liferay.knowledge.base.exception.KBArticleDisplayDateException" %><%@
 page import="com.liferay.knowledge.base.exception.KBArticleExpirationDateException" %><%@
 page import="com.liferay.knowledge.base.exception.KBArticleImportException" %><%@
 page import="com.liferay.knowledge.base.exception.KBArticlePriorityException" %><%@

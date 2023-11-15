@@ -270,6 +270,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 				</c:if>
 
 				<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
+				<liferay-ui:error exception="<%= KBArticleDisplayDateException.class %>" message="please-enter-a-valid-schedule-date" />
 				<liferay-ui:error exception="<%= KBArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 				<liferay-ui:error exception="<%= KBArticleReviewDateException.class %>" message="please-enter-a-valid-review-date" />
 				<liferay-ui:error exception="<%= KBArticleStatusException.class %>" message="this-article-cannot-be-published-because-its-parent-has-not-been-published" />

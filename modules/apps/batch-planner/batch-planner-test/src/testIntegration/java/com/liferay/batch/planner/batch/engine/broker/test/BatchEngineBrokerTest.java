@@ -689,15 +689,23 @@ public class BatchEngineBrokerTest {
 
 		Assert.assertNotNull(actualLineString);
 
+		boolean found = false;
+
 		while (actualLineString != null) {
 			if (actualLineString.contains(externalReferenceCode)) {
 				_assertCSVContent(
 					_getContentRow(actualLineString),
 					_getContentRow(expectedUnsyncBufferedReader.readLine()));
+				found = true;
 			}
 
 			actualLineString = actualUnsyncBufferedReader.readLine();
 		}
+
+		Assert.assertTrue(
+			"There is no CSV line for externalReferenceCode: " +
+				externalReferenceCode,
+			found);
 	}
 
 	private void _assertEqualsImport(

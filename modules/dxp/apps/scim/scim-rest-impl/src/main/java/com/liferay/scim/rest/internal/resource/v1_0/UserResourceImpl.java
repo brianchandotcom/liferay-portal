@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.scim.rest.dto.v1_0.User;
 import com.liferay.scim.rest.internal.manager.UserManagerImpl;
+import com.liferay.scim.rest.internal.manager.UserResourceManagerImpl;
 import com.liferay.scim.rest.resource.v1_0.UserResource;
 
 import java.util.Collections;
@@ -105,7 +106,7 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	}
 
 	private static final UserResourceManager _userResourceManager =
-		new UserResourceManager();
+		new UserResourceManagerImpl();
 
 	static {
 		AbstractResourceManager.setEndpointURLMap(

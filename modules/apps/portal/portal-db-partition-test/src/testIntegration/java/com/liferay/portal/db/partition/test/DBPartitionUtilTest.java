@@ -153,6 +153,54 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testExtractAndInsertDBPartition() throws Exception {
+		try {
+			int totalCompanies = _getDefaultSchemaTableCount("Company");
+			int totalVirtualHosts = _getDefaultSchemaTableCount("VirtualHost");
+
+			addDBPartitions();
+			insertPartitionRequiredData();
+
+			HashMap<Long, List<String>> viewNames = new HashMap<>();
+			HashMap<Long, Integer> tablesCount = new HashMap<>();
+
+			for (long companyId : COMPANY_IDS) {
+				viewNames.put(companyId, _getObjectNames("VIEW", companyId));
+				tablesCount.put(companyId, _getTablesCount(companyId));
+			}
+
+			extractDBPartitions();
+
+			Assert.assertEquals(
+				totalCompanies, _getDefaultSchemaTableCount("Company"));
+			Assert.assertEquals(
+				totalVirtualHosts, _getDefaultSchemaTableCount("VirtualHost"));
+
+			insertDBPartitions();
+
+			Assert.assertEquals(
+				totalCompanies + COMPANY_IDS.length,
+				_getDefaultSchemaTableCount("Company"));
+			Assert.assertEquals(
+				totalVirtualHosts + COMPANY_IDS.length,
+				_getDefaultSchemaTableCount("VirtualHost"));
+
+			for (long companyId : COMPANY_IDS) {
+				Assert.assertEquals(
+					viewNames.get(companyId),
+					_getObjectNames("VIEW", companyId));
+				Assert.assertEquals(
+					(int)tablesCount.get(companyId),
+					_getTablesCount(companyId));
+			}
+		}
+		finally {
+			deletePartitionRequiredData();
+			removeDBPartitions();
+		}
+	}
+
+	@Test
 	public void testExtractDBPartition() throws Exception {
 		addDBPartitions();
 
@@ -307,6 +355,19 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(1) from " + fullTableName + whereClause);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		throw new Exception("Table does not exist");
+	}
+
+	private int _getDefaultSchemaTableCount(String tableName) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(1) from " + tableName);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

@@ -116,6 +116,22 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		return "address";
 	}
 
+	public String getCommerceAddressAPIURL() {
+		if (CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS ==
+				_type) {
+
+			return "/commerce.commerceaddress/get-billing-commerce-addresses";
+		}
+
+		if (CommerceChannelAccountEntryRelConstants.TYPE_SHIPPING_ADDRESS ==
+				_type) {
+
+			return "/commerce.commerceaddress/get-shipping-commerce-addresses";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public List<CommerceAddress> getCommerceAddresses() throws PortalException {
 		if (CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS ==
 				_type) {

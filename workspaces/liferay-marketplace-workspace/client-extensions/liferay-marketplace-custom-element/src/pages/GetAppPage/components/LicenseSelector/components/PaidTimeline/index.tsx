@@ -5,7 +5,9 @@
 
 import {useEffect, useState} from 'react';
 
+import { useMarketplaceContext } from '../../../../../../context/MarketplaceContext';
 import useCart from '../../../../../../hooks/useCart';
+import { Liferay } from '../../../../../../liferay/liferay';
 import {getLicenseDescription, getTierPrice} from '../../../../../../utils/api';
 import LicenseCard from '../../LicenseCard';
 
@@ -15,24 +17,24 @@ interface PaidTimelineProps {
 }
 
 export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
+	const {channel} = useMarketplaceContext();
 	const [skuInfo, setSkuInfo] = useState({});
 	const [tierPrices, setTierPrices] = useState<any[]>([]);
 
 	const {id: productId, skus} = product || {};
+	const accountId = Liferay.CommerceContext.account?.accountId;
 
 	useEffect(() => {
 		(async () => {
-			const catalogName = product?.catalog?.name;
-
 			const [tierpriceData, skuDescription] = await Promise.all([
-				getTierPrice(catalogName as string),
+				getTierPrice(channel.id, product?.productId, Number(accountId)),
 				getLicenseDescription(),
 			]);
 
 			setTierPrices(tierpriceData);
 			setSkuInfo(skuDescription?.items[0]);
 		})();
-	}, [product?.catalog?.name]);
+	}, [accountId, channel.id, product?.productId]);
 
 	const purchasebleSkus = skus?.filter((sku) =>
 		sku?.skuOptions.find(

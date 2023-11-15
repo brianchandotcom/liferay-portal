@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper;
 
+import com.liferay.ai.creator.openai.display.context.util.AICreatorOpenAIMenuItemFactory;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;
@@ -21,6 +22,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -306,6 +308,30 @@ public class MenuItemProvider {
 		return urlMenuItem;
 	}
 
+	public MenuItem getAICreatorMenuItem(
+		Folder folder, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
+
+		if (!_featureFlagManager.isEnabled("LPS-196648")) {
+			return null;
+		}
+
+		long folderId = _getFolderId(folder);
+
+		if (!_hasPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), folderId,
+				ActionKeys.ADD_DOCUMENT)) {
+
+			return null;
+		}
+
+		return _aiCreatorOpenAIMenuItemFactory.
+			createAICreatorCreateImageMenuItem(
+				_getRepositoryId(folder, themeDisplay), folderId,
+				_getDefaultFileEntryTypeId(folderId), themeDisplay);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
@@ -556,10 +582,16 @@ public class MenuItemProvider {
 		_dlFileEntryTypeIconProviderServiceTrackerMap;
 
 	@Reference
+	private AICreatorOpenAIMenuItemFactory _aiCreatorOpenAIMenuItemFactory;
+
+	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

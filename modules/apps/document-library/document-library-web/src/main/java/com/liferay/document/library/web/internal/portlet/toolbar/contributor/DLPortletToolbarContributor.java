@@ -11,6 +11,7 @@ import com.liferay.document.library.web.internal.portlet.toolbar.contributor.hel
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.MenuItemProvider;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -118,6 +119,13 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 				portletResponse);
 		}
 
+		if (_featureFlagManager.isEnabled("LPS-196648")) {
+			_add(
+				menuItems,
+				_menuItemProvider.getAICreatorMenuItem(
+					folder, themeDisplay, portletRequest));
+		}
+
 		MenuItem lastExtensionMenuItem = null;
 
 		if (!menuItems.isEmpty()) {
@@ -171,6 +179,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	@Reference
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private MenuItemProvider _menuItemProvider;

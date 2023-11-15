@@ -168,6 +168,7 @@ definition {
 	@description = "This is a test for COMMERCE-9743, As a buyer I can view Payment Subscription field on the Product Details page with multiple SKUs"
 	@priority = 3
 	test CanViewPaymentSubscriptionOnProductDetailsPageWithMultipleSKU {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site") {

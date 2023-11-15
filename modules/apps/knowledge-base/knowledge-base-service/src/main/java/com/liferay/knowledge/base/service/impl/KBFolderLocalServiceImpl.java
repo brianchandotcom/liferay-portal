@@ -139,7 +139,7 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 			if (includeTrashedEntries ||
 				!_trashHelper.isInTrashExplicitly(childKBFolder)) {
 
-				deleteKBFolder(childKBFolder);
+				deleteKBFolder(childKBFolder.getKbFolderId());
 			}
 		}
 

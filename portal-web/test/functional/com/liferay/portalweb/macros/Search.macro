@@ -46,6 +46,25 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro searchWithPastedTerm() {
+		WaitForElementPresent(locator1 = "TextInput#SEARCH");
+
+		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
+
+		Type.sendKeys(
+			locator1 = "TextInput#SEARCH",
+			value1 = "keys=CONTROL,v");
+
+		KeyPress(
+			locator1 = "TextInput#SEARCH",
+			value1 = "\RETURN");
+
+		if (!(isSet(modal))) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+		}
+	}
+
+	@summary = "Default summary"
 	macro viewNotPresentInContentBody(siteName = null, elementValue = null) {
 		AssertClick(
 			key_rowEntry = ${siteName},

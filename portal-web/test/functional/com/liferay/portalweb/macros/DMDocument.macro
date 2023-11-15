@@ -1441,6 +1441,23 @@ definition {
 		}
 	}
 
+	@summary = "Copy a document's URL through the actions dropdown"
+	macro copyLink(rowEntry = null, sharingDisabled = null) {
+		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
+
+		if (!(isSet(sharingDisabled))) {
+			MouseOver(
+				key_menuItem = "Share",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+
+		Click(
+			key_menuItem = "Copy Link",
+			locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
+
+		Alert.viewSuccessMessage();
+	}
+
 	@summary = "Default summary"
 	macro deleteCP(dmDocumentTitle = null) {
 		if (isSet(recycleBinDisabled)) {

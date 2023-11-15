@@ -592,11 +592,11 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private LocalGitBranch _createRemoteGitRefLocalGitBranch() {
-		String senderBranchHeadSHA = _getSenderBranchHeadSHA();
+		String senderBranchSHA = getSenderBranchSHA();
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		if (!gitWorkingDirectory.localSHAExists(senderBranchHeadSHA)) {
+		if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
 			List<GitRemote> gitHubDevGitRemotes =
 				GitHubDevSyncUtil.getGitHubDevGitRemotes(gitWorkingDirectory);
 
@@ -626,14 +626,14 @@ public abstract class BaseWorkspaceGitRepository
 					continue;
 				}
 
-				if (!gitWorkingDirectory.localSHAExists(senderBranchHeadSHA)) {
+				if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
 					continue;
 				}
 
 				break;
 			}
 
-			if (!gitWorkingDirectory.localSHAExists(senderBranchHeadSHA)) {
+			if (!gitWorkingDirectory.localSHAExists(senderBranchSHA)) {
 				gitWorkingDirectory.fetch(_getSenderRemoteGitRef());
 			}
 		}

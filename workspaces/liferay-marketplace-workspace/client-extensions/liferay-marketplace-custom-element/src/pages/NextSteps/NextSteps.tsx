@@ -23,10 +23,10 @@ import './NextSteps.scss';
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
+import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {PaymentStatus} from '../GetAppPage/enums/PaymentStatus';
 import getProductPriceModel from '../GetAppPage/utils/getProductPriceModel';
 import useNextSteps from './useNextSteps';
-import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 
 interface NextStepsProps {
 	children?: ReactNode;
@@ -215,15 +215,18 @@ export function NextSteps({
 				<NewAppPageFooterButtons
 					backButtonText="Go to Dashboard"
 					onClickBack={() => {
-						CommerceSelectAccountImpl.selectAccount(cart?.accountId).then(() => {
+						return CommerceSelectAccountImpl.selectAccount(
+							cart?.accountId
+						).then(() => {
 							Liferay.CommerceContext.account = {
-								accountId: cart?.accountId
+								accountId: cart?.accountId,
 							};
-							window.location.href = Liferay.ThemeDisplay.getCanonicalURL().replace(
-								'/next-steps',
-								`/customer-dashboard`
-							);
-						});						
+							window.location.href =
+								Liferay.ThemeDisplay.getCanonicalURL().replace(
+									'/next-steps',
+									`/customer-dashboard`
+								);
+						});
 					}}
 					onClickContinue={() => {
 						if (onClickContinue) {

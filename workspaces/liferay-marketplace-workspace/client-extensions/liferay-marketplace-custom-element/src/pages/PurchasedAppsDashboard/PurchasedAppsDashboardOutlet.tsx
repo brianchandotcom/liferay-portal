@@ -4,7 +4,7 @@
  */
 
 import {useEffect, useState} from 'react';
-import {Outlet, useParams} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {
@@ -74,61 +74,65 @@ const PurchasedAppsDashboardOutlet = () => {
 		getAccountCommerce();
 	}, [selectedAccount?.id]);
 
-	const {
-		data: placedOrders = {items: [], totalCount: 0},
-		key,
-	} = usePurchasedOrders({
-		accountId: selectedAccount?.id,
-		channelId: channel?.id,
-		orderTypeExternalReferenceCodes: ['CLOUDAPP', 'DXPAPP'],
-		page,
-		pageSize: 10,
-	});
+	const {data: placedOrders = {items: [], totalCount: 0}, key} =
+		usePurchasedOrders({
+			accountId: selectedAccount?.id,
+			channelId: channel?.id,
+			orderTypeExternalReferenceCodes: ['CLOUDAPP', 'DXPAPP'],
+			page,
+			pageSize: 10,
+		});
 
-	const {
-		data: placedOrdersWithAttachements = {items: [], totalCount: 0},
-	} = useSWR(`/${key}/with-attachments/${placedOrders.totalCount}`, async () => {
-		if (!selectedAccount?.id && channel?.id) {
-			return {items: [], totalCount: 0};
-		}
+	const {data: placedOrdersWithAttachements = {items: [], totalCount: 0}} =
+		useSWR(
+			`/${key}/with-attachments/${placedOrders.totalCount}`,
+			async () => {
+				if (!selectedAccount?.id && channel?.id) {
+					return {items: [], totalCount: 0};
+				}
 
-		const orders = await Promise.all(
-			placedOrders.items.map(async (order) => {
-				const [placeOrderItem] = order.placedOrderItems;
+				const orders = await Promise.all(
+					placedOrders.items.map(async (order) => {
+						const [placeOrderItem] = order.placedOrderItems;
 
-				const version = await getCustomFieldExpandoValue({
-					className: 'com.liferay.commerce.product.model.CPInstance',
-					classPK: placeOrderItem.skuId,
-					columnName: 'version',
-					companyId: Number(Liferay.ThemeDisplay.getCompanyId()),
-					tableName: 'CUSTOM_FIELDS',
-				});
+						const version = await getCustomFieldExpandoValue({
+							className:
+								'com.liferay.commerce.product.model.CPInstance',
+							classPK: placeOrderItem.skuId,
+							columnName: 'version',
+							companyId: Number(
+								Liferay.ThemeDisplay.getCompanyId()
+							),
+							tableName: 'CUSTOM_FIELDS',
+						});
 
-				const attachments = await getProductAttachments(
-					selectedAccount.id,
-					channel.id as number,
-					placeOrderItem.productId
+						const attachments = await getProductAttachments(
+							selectedAccount.id,
+							channel.id as number,
+							placeOrderItem.productId
+						);
+
+						return {
+							...order,
+							name: placeOrderItem.name,
+							productId: order.placedOrderItems[0].productId,
+							thumbnail:
+								getThumbnailByProductAttachment(attachments),
+							type: placeOrderItem.subscription
+								? 'Subscription'
+								: 'Perpetual',
+							version: Object.keys(version).length ? version : '',
+							virtualURL: placeOrderItem?.virtualItemURLs,
+						};
+					})
 				);
 
 				return {
-					...order,
-					name: placeOrderItem.name,
-					productId: order.placedOrderItems[0].productId,
-					thumbnail: getThumbnailByProductAttachment(attachments),
-					type: placeOrderItem.subscription
-						? 'Subscription'
-						: 'Perpetual',
-					version: Object.keys(version).length ? version : '',
-					virtualURL: placeOrderItem?.virtualItemURLs,
+					items: orders,
+					totalCount: placedOrders.totalCount,
 				};
-			})
+			}
 		);
-
-		return {
-			items: orders,
-			totalCount: placedOrders.totalCount,
-		};
-	});
 
 	return (
 		<div className="purchased-apps-dashboard-page-container">

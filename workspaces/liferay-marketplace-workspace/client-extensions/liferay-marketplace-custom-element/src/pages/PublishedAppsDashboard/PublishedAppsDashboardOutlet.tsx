@@ -4,7 +4,7 @@
  */
 
 import {useEffect, useMemo, useState} from 'react';
-import {Outlet, useParams} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 import useSWR from 'swr';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
@@ -12,6 +12,7 @@ import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
 
 import './PublishedAppsDashboard.scss';
+import {Liferay} from '../../liferay/liferay';
 import {
 	getAccountInfoFromCommerce,
 	getAccounts,
@@ -28,7 +29,6 @@ import {
 	getProductTypeFromSpecifications,
 	initialDashboardNavigationItems,
 } from './PublishedDashboardPageUtil';
-import { Liferay } from '../../liferay/liferay';
 
 const PAGE_SIZE = 10;
 
@@ -58,9 +58,8 @@ const useAccountCached = (accounts: any[], accountId: string | null) => {
 const PublishedAppsDashboardOutlet = () => {
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
-	const [showDashboardNavigation, setShowDashboardNavigation] = useState(
-		true
-	);
+	const [showDashboardNavigation, setShowDashboardNavigation] =
+		useState(true);
 	const {accountId} = Liferay.CommerceContext.account || {};
 	const [page, setPage] = useState(1);
 
@@ -116,9 +115,10 @@ const PublishedAppsDashboardOutlet = () => {
 			'attachments,productChannels'
 		);
 
-		const appListProductSpecifications = await getAppListProductSpecifications(
-			getAppListProductIds(products)
-		);
+		const appListProductSpecifications =
+			await getAppListProductSpecifications(
+				getAppListProductIds(products)
+			);
 
 		const producsFiltered = products
 			.filter((product) => {

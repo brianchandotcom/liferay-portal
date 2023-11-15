@@ -11,9 +11,9 @@ import {getAccountImage} from '../../utils/util';
 import {DashboardNavigationList} from './DashboardNavigationList';
 
 import './DashboardNavigation.scss';
-import {AppProps} from '../DashboardTable/DashboardTable';
-import { Liferay } from '../../liferay/liferay';
+import {Liferay} from '../../liferay/liferay';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
+import {AppProps} from '../DashboardTable/DashboardTable';
 export interface DashboardListItems {
 	itemIcon: string;
 	itemName: string;
@@ -76,9 +76,11 @@ export function DashboardNavigation({
 							active={account.id === currentAccount?.id}
 							key={account.id}
 							onClick={() => {
-								CommerceSelectAccountImpl.selectAccount(account.id).then(() => {
+								return CommerceSelectAccountImpl.selectAccount(
+									account.id
+								).then(() => {
 									Liferay.CommerceContext.account = {
-										accountId: account.id
+										accountId: account.id,
 									};
 									navigate(`/`);
 									window.location.reload();

@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_AUDIT_EXPERIENCE_SELECTOR</td>
+	<td>//div[contains(@class,'page-audit__experience-selector')]//button[@aria-label='Experience Selector']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_AUDIT_NAME</td>
 	<td>//div[contains(@class,'page-audit')]//div[contains(@class,'justify-content')]</td>
 	<td></td>

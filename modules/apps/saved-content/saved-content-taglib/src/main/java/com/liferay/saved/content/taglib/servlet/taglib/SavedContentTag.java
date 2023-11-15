@@ -129,6 +129,7 @@ public class SavedContentTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:label",
 				_getLabel(httpServletRequest, themeDisplay));
+
 			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:saved", _saved);
 		}

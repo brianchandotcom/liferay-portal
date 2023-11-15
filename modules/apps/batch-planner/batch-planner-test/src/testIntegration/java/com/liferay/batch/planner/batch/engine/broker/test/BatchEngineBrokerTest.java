@@ -191,11 +191,7 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testExportCompanyScopeObjectDefinitionCSV() throws Exception {
-		String objectDefinitionName = "TestObjectCSV";
-
-		_objectDefinition2 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), objectDefinitionName,
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+		_setUpObjectDefinition("TestObjectCSV");
 
 		long companyId = _counterLocalService.increment();
 
@@ -203,39 +199,16 @@ public class BatchEngineBrokerTest {
 
 		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 
-		_objectDefinition1 = _publishObjectDefinition(
-			_company2.getCompanyId(), objectDefinitionName,
+		_objectDefinition2 = _publishObjectDefinition(
+			_company2.getCompanyId(), "TestObjectCSV",
 			ObjectDefinitionConstants.SCOPE_COMPANY, user);
 
-		_objectDefinitionLocalService.updateExternalReferenceCode(
-			_objectDefinition1.getObjectDefinitionId(),
-			_OBJECT_DEFINITION_1_ERC);
-
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				user.getUserId(), true,
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, StringPool.SLASH,
-				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-				RandomTestUtil.randomString(), 0, null, false);
-
-		for (String fieldName : _objectDefinitionExportCSVFieldNames) {
-			_batchPlannerMappingLocalService.addBatchPlannerMapping(
-				user.getUserId(), batchPlannerPlan.getBatchPlannerPlanId(),
-				fieldName, "String", fieldName, "String", StringPool.BLANK);
-		}
-
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
-
-		BatchEngineExportTask batchEngineExportTask =
-			_getFinishedBatchEngineExportTask(
-				batchPlannerPlan.getBatchPlannerPlanId(),
-				_company2.getCompanyId());
-
 		_assertEqualsExportCSV(
-			_batchEngineExportTaskLocalService.openContentInputStream(
-				batchEngineExportTask.getBatchEngineExportTaskId()),
+			_getObjectDefinitionExportInputStream(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectDefinitionExportCSVFieldNames),
 			_getInputStream("csv/expected-object-definition.csv"),
-			objectDefinitionName);
+			_objectDefinition1.getExternalReferenceCode());
 	}
 
 	@Test
@@ -317,7 +290,7 @@ public class BatchEngineBrokerTest {
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				_objectDefinitionExportCSVFieldNames),
 			_getInputStream("csv/expected-object-definition.csv"),
-			_objectDefinition1.getShortName());
+			_objectDefinition1.getExternalReferenceCode());
 	}
 
 	@Test
@@ -719,7 +692,7 @@ public class BatchEngineBrokerTest {
 
 	private void _assertEqualsExportCSV(
 			InputStream actualInputStream, InputStream expectedInputStream,
-			String objectDefinitionName)
+			String externalReferenceCode)
 		throws Exception {
 
 		UnsyncBufferedReader actualUnsyncBufferedReader =
@@ -739,7 +712,7 @@ public class BatchEngineBrokerTest {
 		Assert.assertNotNull(actualLineString);
 
 		while (actualLineString != null) {
-			if (actualLineString.contains(objectDefinitionName)) {
+			if (actualLineString.contains(externalReferenceCode)) {
 				_assertCSVContent(
 					_getContentRow(actualLineString),
 					_getContentRow(expectedUnsyncBufferedReader.readLine()));

@@ -100,9 +100,54 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 							<c:choose>
 								<c:when test='<%= type.equals("date") %>'>
 									<clay:col
-										md="3"
+										md="4"
 									>
 										<aui:field-wrapper helpMessage="entry-report-date-parameters-help" label="<%= HtmlUtil.escape(key) %>" />
+									</clay:col>
+
+									<clay:col
+										md="4"
+									>
+										<aui:select label="" name='<%= "useVariable" + HtmlUtil.escapeAttribute(key) %>' onChange='<%= "useVariable" + keyJSId + "();" %>' showEmptyOption="<%= true %>">
+											<aui:option label="start-date" value="startDate" />
+											<aui:option label="end-date" value="endDate" />
+										</aui:select>
+
+										<script type="text/javascript">
+											function useVariable<%= keyJSId %>() {
+												let type = document.getElementById(
+													'<%= liferayPortletResponse.getNamespace() %>useVariable<%= HtmlUtil.escapeJS(key) %>'
+												).value;
+
+												let day = document.getElementById(
+													'<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Day'
+												);
+
+												let month = document.getElementById(
+													'<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Month'
+												);
+
+												let year = document.getElementById(
+													'<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Year'
+												);
+
+												if (type == 'startDate' || type == 'endDate') {
+													day.disabled = true;
+													month.disabled = true;
+													year.disabled = true;
+
+													if (type == 'endDate') {
+														document.<portlet:namespace />fm.<portlet:namespace />endDateType[1].checked =
+															'true';
+													}
+												}
+												else {
+													day.disabled = false;
+													month.disabled = false;
+													year.disabled = false;
+												}
+											}
+										</script>
 									</clay:col>
 
 									<clay:col
@@ -130,60 +175,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 											yearValue="<%= calendar.get(Calendar.YEAR) %>"
 										/>
 									</clay:col>
-
-									<clay:col
-										md="6"
-									>
-										<aui:select label="" name='<%= "useVariable" + HtmlUtil.escapeAttribute(key) %>' onChange='<%= "useVariable" + keyJSId + "();" %>' showEmptyOption="<%= true %>">
-											<aui:option label="start-date" value="startDate" />
-											<aui:option label="end-date" value="endDate" />
-										</aui:select>
-
-										<script type="text/javascript">
-											function useVariable<%= keyJSId %>() {
-												var A = AUI();
-
-												var type = A.one(
-													'#<%= liferayPortletResponse.getNamespace() %>useVariable<%= HtmlUtil.escapeJS(key) %>'
-												).get('value');
-												var day = A.one(
-													'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Day'
-												);
-												var month = A.one(
-													'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Month'
-												);
-												var year = A.one(
-													'#<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Year'
-												);
-
-												if (type == 'startDate' || type == 'endDate') {
-													day.attr('disabled', 'disabled');
-													month.attr('disabled', 'disabled');
-													year.attr('disabled', 'disabled');
-
-													if (type == 'endDate') {
-														document.<portlet:namespace />fm.<portlet:namespace />endDateType[1].checked =
-															'true';
-													}
-												}
-												else {
-													day.attr('disabled', '');
-													month.attr('disabled', '');
-													year.attr('disabled', '');
-												}
-											}
-										</script>
-									</clay:col>
 								</c:when>
 								<c:otherwise>
 									<clay:col
-										md="3"
+										md="4"
 									>
 										<%= HtmlUtil.escape(key) %>
 									</clay:col>
 
 									<clay:col
-										md="9"
+										md="8"
 									>
 										<span class="field field-text" id="aui_3_2_0_1428">
 											<input class="form-control" name="<portlet:namespace />parameterValue<%= HtmlUtil.escapeAttribute(key) %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" /><br />

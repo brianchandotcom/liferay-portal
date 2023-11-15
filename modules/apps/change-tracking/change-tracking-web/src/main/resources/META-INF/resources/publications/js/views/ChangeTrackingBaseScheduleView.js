@@ -144,16 +144,12 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 						'-' +
 						this.pad(split[2]) +
 						'T' +
-						time.hours +
-						':' +
-						time.minutes +
+						time +
 						':00'
 				);
 			}
 
-			return new Date(
-				date + 'T' + time.hours + ':' + time.minutes + ':00'
-			);
+			return new Date(date + 'T' + time + ':00');
 		}
 
 		return new Date(
@@ -163,9 +159,7 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 				'-' +
 				this.pad(date.getDate()) +
 				'T' +
-				time.hours +
-				':' +
-				time.minutes +
+				time +
 				':00'
 		);
 	}
@@ -198,7 +192,7 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 	}
 
 	getTimeClassName() {
-		const className = 'input-group-item';
+		const className = 'clay-time input-group-item input-group-item-shrink';
 
 		if (this.state.timeError || this.state.validationError) {
 			return className + ' has-error';
@@ -313,11 +307,11 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 	}
 
 	isValidTime(time) {
-		if (time.hours !== '--' && time.minutes !== '--') {
-			return true;
+		if (time === undefined) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	pad(value) {

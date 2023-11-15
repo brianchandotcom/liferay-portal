@@ -12,7 +12,6 @@ import ClayList from '@clayui/list';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayPanel from '@clayui/panel';
-import ClayTimePicker from '@clayui/time-picker';
 import {navigate, openConfirmModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -55,10 +54,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			date: null,
 			dateError: '',
 			formError: null,
-			time: {
-				hours: '--',
-				minutes: '--',
-			},
+			time: null,
 			timeError: '',
 			validationError: null,
 		};
@@ -220,17 +216,27 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 
 							<div className={this.getTimeClassName()}>
 								<div>
-									<ClayTimePicker
+									<input
+										className="form-control"
 										disabled={
 											!!this.unresolvedConflicts.length
 										}
-										onChange={this.handleTimeChange}
-										spritemap={this.spritemap}
-										timezone={this.timeZone}
+										onChange={(event) =>
+											this.handleTimeChange(
+												event.target.value
+											)
+										}
+										type="time"
 										value={this.state.time}
 									/>
 
 									{this.getTimeHelpText()}
+								</div>
+
+								<div className="input-group-item input-group-item-shrink">
+									<span className="input-group-text">
+										({this.timeZone})
+									</span>
 								</div>
 							</div>
 						</div>

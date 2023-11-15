@@ -9,7 +9,6 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -79,12 +78,9 @@ public class ReschedulePublicationDisplayContext {
 				String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH)))
 		).put(
 			"scheduledTime",
-			JSONUtil.put(
-				"hours",
-				String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY))
-			).put(
-				"minutes", String.format("%02d", calendar.get(Calendar.MINUTE))
-			)
+			String.format(
+				"%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE))
 		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(

@@ -55,11 +55,11 @@ public class UpgradeMissingListTypes extends UpgradeProcess {
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"insert into ListType (companyId, listTypeId, name, type_) " +
+				"insert into ListType (listTypeId, companyId, name, type_) " +
 					"values (?, ?, ?, ?)")) {
 
-			preparedStatement.setLong(1, companyId);
-			preparedStatement.setLong(2, increment(ListType.class.getName()));
+			preparedStatement.setLong(1, increment(ListType.class.getName()));
+			preparedStatement.setLong(2, companyId);
 			preparedStatement.setString(3, name);
 			preparedStatement.setString(4, type);
 

@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>PAGE_AUDIT_BUTTON</td>
-	<td>//*[contains(@class, 'lexicon-icon-info-circle')]</td>
+	<td>//button[.//*[contains(@class,'lexicon-icon-info-circle')]] | //button[.//*[contains(@class,'lexicon-icon-search-experiences')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -172,7 +172,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR</td>
-	<td>//div[contains(@class,'sidenav-menu') and descendant::span[contains(.,'Page Audit')]]</td>
+	<td>//div[contains(@class,'layout-reports-panel') and contains(@class,'open')]</td>
 	<td></td>
 </tr>
 </tbody>

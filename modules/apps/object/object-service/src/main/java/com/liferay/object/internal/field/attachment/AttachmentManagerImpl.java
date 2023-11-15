@@ -76,8 +76,8 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		validateFileSize(
 			fileName, fileContent.length, objectFieldId, !user.isGuestUser());
 
-		DLFolder dlFolder = getDLFolder(
-			objectFieldId, companyId, groupId, serviceContext,
+		DLFolder dlFolder = fetchDLFolder(
+			companyId, groupId, objectFieldId, serviceContext,
 			serviceContext.getUserId());
 
 		try (InputStream inputStream = new ByteArrayInputStream(fileContent)) {

@@ -3,6 +3,7 @@ definition {
 
 	property app.server.types = "tomcat";
 	property ci.retries.disabled = "true";
+	property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 	property database.types = "mysql";
 	property liferay.online.properties = "true";
 	property portal.release = "true";
@@ -25,12 +26,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		PortalInstances.openVirtualInstancesAdmin();
-
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
 
 		User.firstLoginUI(
 			password = "test",
@@ -100,12 +99,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		PortalInstances.openVirtualInstancesAdmin();
-
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

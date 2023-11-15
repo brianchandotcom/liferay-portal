@@ -283,12 +283,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		PortalInstances.openVirtualInstancesAdmin();
-
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
 
 		SignOut.signOut();
 
@@ -411,12 +409,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		PortalInstances.openVirtualInstancesAdmin();
-
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
 
 		User.firstLoginUI(
 			password = "test",
@@ -462,19 +458,15 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		PortalInstances.openVirtualInstancesAdmin();
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
 
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
-
-		PortalInstances.openVirtualInstancesAdmin();
-
-		PortalInstances.addCP(
-			mailDomain = "www.baker.com",
-			virtualHost = "www.baker.com",
-			webId = "www.baker.com");
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.baker.com",
+			portalInstanceId = "www.baker.com",
+			virtualHost = "www.baker.com");
 
 		User.firstLoginUI(
 			password = "test",

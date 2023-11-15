@@ -56,17 +56,15 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 207");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		PopulateObjectFormsConfiguration.mapFormObjectField(
-			fieldLabelName = "Field Picklist",
-			formObjectField = "Choose an Option");
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Field Picklist");
 
 		Form.gotoAdvancedTab();
 
@@ -105,8 +103,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 208");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -169,8 +167,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 151597");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -226,8 +224,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 209");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -283,8 +281,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 210");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -345,17 +343,15 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 211");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		PopulateObjectFormsConfiguration.mapFormObjectField(
-			fieldLabelName = "Field Picklist",
-			formObjectField = "Choose an Option");
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Field Picklist");
 
 		Form.gotoBasicTab();
 
@@ -381,7 +377,12 @@ definition {
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
-		AssertElementPresent(
+		Click(
+			key_currentOption = "Choose an Option",
+			key_labelName = "Select Object",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+
+		AssertElementNotPresent(
 			key_optionName = "Custom Object 212",
 			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 	}
@@ -448,9 +449,10 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormViewBuilder.validatePredefinedSelectFromList(
-			fieldName = "Data Provider Select Field",
-			fieldValue = "Choose an Option");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Choose an Option",
+			labelName = "Data Provider Select Field",
+			optionName = "Entry Test");
 
 		AssertElementPresent(
 			key_currentOption = "Entry Test",

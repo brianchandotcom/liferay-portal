@@ -525,7 +525,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject239");
 
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Item Test 1");
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+			currentOption = "Choose an Option",
+			labelName = "Field Picklist",
+			picklistOption = "Item Test 1");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject239");
 
@@ -1144,7 +1147,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject254");
 
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Item Test 1");
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+			currentOption = "Choose an Option",
+			labelName = "Field Picklist",
+			picklistOption = "Item Test 1");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject254");
 
@@ -2113,7 +2119,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject273");
 
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Item Test 1");
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+			currentOption = "Choose an Option",
+			labelName = "Field Picklist",
+			picklistOption = "Item Test 1");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject273");
 

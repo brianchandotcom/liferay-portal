@@ -816,11 +816,10 @@ definition {
 				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
 				value1 = "01/01/2022");
 
-			Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
-
-			Click(
-				key_picklistOption = "Picklist Item Test 1",
-				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Choose an Option",
+				labelName = "Custom Picklist",
+				optionName = "Picklist Item Test 1");
 
 			WaitForPageLoad();
 

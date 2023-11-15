@@ -793,13 +793,13 @@ definition {
 			PopulateObjectFormsConfiguration.openFormSettings();
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Default",
-				labelName = "Select a Storage Type",
-				optionName = "Object");
+				currentOption = "Padrão",
+				labelName = "Selecionar um tipo de armazenamento",
+				optionName = "Objeto");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "No Workflow",
-				labelName = "Select a Workflow",
+				currentOption = "Escolha uma Opção",
+				labelName = "Selecionar objetos",
 				optionName = "Custom Object 147730");
 
 			Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -885,7 +885,7 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject298");
 
 		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-			currentOption = "Escolha uma Opção",
+			currentOption = "Choose an Option",
 			labelName = "Field Picklist",
 			picklistOption = "Teste de entrada");
 
@@ -967,6 +967,8 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147729");
 
 		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+			currentOption = "Escolha uma Opção",
+			labelName = "Field Picklist",
 			picklistOption = "Teste de entrada",
 			saveName = "Salvar");
 

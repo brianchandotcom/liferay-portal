@@ -108,7 +108,10 @@ definition {
 		task ("Then the user can add an object entry") {
 			ObjectAdmin.goToCustomObject(objectName = "ImportedSimpleObject175691");
 
-			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Picklist Item 1");
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				currentOption = "Choose an Option",
+				labelName = "Field Picklist",
+				picklistOption = "Picklist Item 1");
 
 			ObjectAdmin.goToCustomObject(objectName = "ImportedSimpleObject175691");
 
@@ -150,7 +153,10 @@ definition {
 		task ("Then the user can add an object entry") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175679");
 
-			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Picklist Item 1");
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				currentOption = "Choose an Option",
+				labelName = "Field Picklist",
+				picklistOption = "Picklist Item 1");
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175679");
 
@@ -261,6 +267,8 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175689");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				currentOption = "Escolha uma Opção",
+				labelName = "Field Picklist",
 				picklistOption = "Item da lista de seleção 1",
 				saveName = "Salvar");
 

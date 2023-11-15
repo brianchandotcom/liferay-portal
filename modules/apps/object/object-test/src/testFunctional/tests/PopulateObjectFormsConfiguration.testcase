@@ -53,8 +53,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 303");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -94,8 +94,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 304");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -133,8 +133,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 305");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -180,8 +180,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 310");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -235,8 +235,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 312");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -280,8 +280,8 @@ definition {
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "No Workflow",
-			labelName = "Select a Workflow",
+			currentOption = "Choose an Option",
+			labelName = "Select Object",
 			optionName = "Custom Object 313");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");

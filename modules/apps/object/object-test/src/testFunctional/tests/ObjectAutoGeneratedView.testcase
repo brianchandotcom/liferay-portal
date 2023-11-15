@@ -291,7 +291,10 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject199");
 
-		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Entry Test");
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+			currentOption = "Choose an Option",
+			labelName = "Field Picklist",
+			picklistOption = "Entry Test");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject199");
 

@@ -276,18 +276,15 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormViewBuilder.validatePredefinedSelectFromList(
-			fieldName = "Select from List",
-			fieldValue = "Choose an Option");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Choose an Option",
+			labelName = "Data Provider Select Field",
+			optionName = "Option 2");
 
-		Click(
-			key_fieldName = "Select from List",
-			key_fieldValue = "Choose an Option",
-			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SELECTLIST");
-
-		FormFields.viewSelectFromListOption(optionValue = "Option 2");
-
-		FormFields.viewDeletedSelectFromListOption(optionValue = "Option 1");
+		AssertElementPresent(
+			key_currentOption = "Option 1",
+			key_labelName = "Data Provider Select Field",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "Verify that a Select From List Field can be required"

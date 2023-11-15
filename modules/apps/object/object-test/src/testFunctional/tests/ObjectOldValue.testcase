@@ -162,7 +162,7 @@ definition {
 
 			ObjectAdmin.selectDropdownItem(
 				currentOption = "Choose an Option",
-				labelName = "Custom Text Field",
+				labelName = "Custom Picklist Field",
 				optionName = "Open");
 
 			PortletEntry.save();
@@ -175,7 +175,7 @@ definition {
 
 			ObjectAdmin.selectDropdownItem(
 				currentOption = "Open",
-				labelName = "Custom Text Field",
+				labelName = "Custom Picklist Field",
 				optionName = "In Progress");
 
 			PortletEntry.save();
@@ -889,7 +889,10 @@ definition {
 		task ("When an entry is created") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175196");
 
-			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Open");
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				currentOption = "Choose an Option",
+				labelName = "Custom Picklist Field",
+				picklistOption = "Open");
 		}
 
 		task ("Then the validation condition is met and the entry can be updated") {

@@ -53,7 +53,7 @@ definition {
 				folderLabel = "Folder A",
 				locator1 = "ObjectAdmin#SIDEBAR_ITEM");
 
-			ObjectModelBuilder.openObjectFolderInModelBuilder(objectFolderName = "Folder A");
+			ObjectModelBuilder.openObjectFolderInModelBuilder(objectFolderName = "FolderA");
 
 			Click(
 				key_folderName = "Folder B",

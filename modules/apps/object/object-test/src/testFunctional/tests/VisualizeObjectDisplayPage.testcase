@@ -120,7 +120,10 @@ definition {
 		for (var entryName : list "1,2") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject315");
 
-			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Item Test ${entryName}");
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				currentOption = "Choose an Option",
+				labelName = "Field Picklist",
+				picklistOption = "Item Test ${entryName}");
 		}
 
 		Navigator.openURL();

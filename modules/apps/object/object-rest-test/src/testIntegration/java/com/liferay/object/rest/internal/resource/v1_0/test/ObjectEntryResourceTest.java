@@ -6046,13 +6046,13 @@ public class ObjectEntryResourceTest {
 			RandomTestUtil.randomString() + ".err", httpMethod, null,
 			objectDefinition);
 
-		// File validation: name is null
+		// File validation: file name is null
 
 		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
 			(fileContent, fileName) -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Title is null"
+				"title", "File name is null"
 			),
 			null, RandomTestUtil.randomString(), null, httpMethod, null,
 			objectDefinition);
@@ -6214,13 +6214,13 @@ public class ObjectEntryResourceTest {
 			RandomTestUtil.randomString() + ".err", httpMethod, null,
 			objectDefinition);
 
-		// File validation: name is null
+		// File validation: file name is null
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			(fileContent, fileName) -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Title is null"
+				"title", "File name is null"
 			),
 			null, RandomTestUtil.randomString(), null, httpMethod, null,
 			objectDefinition);
@@ -6360,13 +6360,13 @@ public class ObjectEntryResourceTest {
 			null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + ".err", null, objectDefinition);
 
-		// File validation: name is null
+		// File validation: file name is null
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			(fileContent, fileName) -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Title is null"
+				"title", "File name is null"
 			),
 			null, RandomTestUtil.randomString(), null, null, objectDefinition);
 

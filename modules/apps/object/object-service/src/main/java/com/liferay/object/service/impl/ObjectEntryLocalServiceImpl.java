@@ -1593,12 +1593,11 @@ public class ObjectEntryLocalServiceImpl
 
 			DLFolder dlFileEntryFolder = dlFileEntry.getFolder();
 
-			DLFolder dlFolder = _attachmentManager.fetchDLFolder(
+			DLFolder dlFolder = _attachmentManager.getDLFolder(
 				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
 				objectFieldId, serviceContext, userId);
 
-			if ((dlFolder == null) ||
-				Objects.equals(
+			if (Objects.equals(
 					dlFileEntryFolder.getFolderId(), dlFolder.getFolderId())) {
 
 				return;

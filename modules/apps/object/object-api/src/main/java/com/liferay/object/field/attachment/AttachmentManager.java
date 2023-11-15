@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -22,11 +23,12 @@ public interface AttachmentManager {
 			long objectFieldId, ServiceContext serviceContext)
 		throws Exception;
 
-	public DLFolder fetchDLFolder(
-		long companyId, long groupId, long objectFieldId,
-		ServiceContext serviceContext, long userId);
-
 	public String[] getAcceptedFileExtensions(long objectFieldId);
+
+	public DLFolder getDLFolder(
+			long companyId, long groupId, long objectFieldId,
+			ServiceContext serviceContext, long userId)
+		throws PortalException;
 
 	public long getMaximumFileSize(long objectFieldId, boolean signedIn);
 

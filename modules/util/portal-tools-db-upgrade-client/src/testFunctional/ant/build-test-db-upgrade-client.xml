@@ -603,6 +603,26 @@
 		<clean-database-upgrade-client />
 	</target>
 
+	<target name="create-write-protected-directory">
+		<get-database-upgrade-client-paths />
+
+		<mkdir dir="${db.upgrade.client.home}/temp" />
+
+		<if>
+			<os family="windows" />
+			<then>
+				<execute>
+					cacls ${db.upgrade.client.home}/temp /e /p everyone:n
+				</execute>
+			</then>
+			<else>
+				<execute>
+					chattr +i ${db.upgrade.client.home}/temp
+				</execute>
+			</else>
+		</if>
+	</target>
+
 	<target name="delete-indexes-sql">
 		<get-test-app-server-lib-portal-dir />
 
@@ -619,6 +639,26 @@
 			basedir="${test.app.server.lib.portal.dir}/portal-impl"
 			destfile="${test.app.server.lib.portal.dir}/portal-impl.jar"
 		/>
+	</target>
+
+	<target name="delete-write-protected-directory">
+		<get-database-upgrade-client-paths />
+
+		<if>
+			<os family="windows" />
+			<then>
+				<execute>
+					cacls ${db.upgrade.client.home}/temp /e /p everyone:f
+				</execute>
+			</then>
+			<else>
+				<execute>
+					chattr -i ${db.upgrade.client.home}/temp
+				</execute>
+			</else>
+		</if>
+
+		<delete dir="${db.upgrade.client.home}/temp" />
 	</target>
 
 	<target name="execute-all-pending-upgrades-from-gogo-shell">

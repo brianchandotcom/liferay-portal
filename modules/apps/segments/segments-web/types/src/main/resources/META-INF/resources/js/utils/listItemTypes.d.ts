@@ -7,3 +7,5 @@ export declare const LIST_ITEM_TYPES: {
 	readonly header: 'header';
 	readonly listItem: 'listItem';
 };
+export declare type ItemTypeKeys = keyof typeof LIST_ITEM_TYPES;
+export declare type ItemTypeValues = typeof LIST_ITEM_TYPES[ItemTypeKeys];

@@ -193,15 +193,12 @@ public class BatchEngineBrokerTest {
 	public void testExportCompanyScopeObjectDefinitionCSV() throws Exception {
 		_setUpObjectDefinition("TestObjectCSV");
 
-		long companyId = _counterLocalService.increment();
-
-		_company2 = _addCompany(companyId, "test.com");
-
-		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
+		_company2 = _addCompany("test.com");
 
 		_objectDefinition2 = _publishObjectDefinition(
 			_company2.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_COMPANY, user);
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			UserTestUtil.getAdminUser(_company2.getCompanyId()));
 
 		_assertEqualsExportCSV(
 			_getObjectDefinitionExportInputStream(
@@ -221,9 +218,7 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			_objectDefinition1, TestPropsValues.getUserId());
 
-		long companyId = _counterLocalService.increment();
-
-		_company2 = _addCompany(companyId, "test.com");
+		_company2 = _addCompany("test.com");
 
 		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 
@@ -532,7 +527,9 @@ public class BatchEngineBrokerTest {
 			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
 	}
 
-	private Company _addCompany(long companyId, String webId) throws Exception {
+	private Company _addCompany(String webId) throws Exception {
+		long companyId = _counterLocalService.increment();
+
 		WebAppPool.put(
 			companyId, WebKeys.PORTLET_CATEGORY, new PortletCategory());
 

@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 
 	@Override
-	public String process() throws Exception {
+	public String process() throws InvalidJSONException {
 		JSONObject jenkinsCohortJSONObject = getJenkinsCohortJSONObject();
 
 		JenkinsCohortEntityRepository jenkinsCohortEntityRepository =

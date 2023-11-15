@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class CreateBuildRunEventHandler extends BaseObjectEventHandler {
 
 	@Override
-	public String process() throws Exception {
+	public String process() throws InvalidJSONException {
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
 		JSONObject buildJSONObject = getBuildJSONObject();

@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public interface EventHandler {
 
-	public String process() throws Exception;
+	public String process() throws InvalidJSONException;
 
 	public enum EventType {
 

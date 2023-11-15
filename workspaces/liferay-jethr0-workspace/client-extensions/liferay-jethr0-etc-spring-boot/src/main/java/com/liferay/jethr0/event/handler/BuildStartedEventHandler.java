@@ -23,7 +23,7 @@ import org.json.JSONObject;
 public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 
 	@Override
-	public String process() throws Exception {
+	public String process() throws InvalidJSONException {
 		BuildRunEntity buildRunEntity = getBuildRun();
 
 		buildRunEntity.setJenkinsBuildURL(getJenkinsBuildURL());

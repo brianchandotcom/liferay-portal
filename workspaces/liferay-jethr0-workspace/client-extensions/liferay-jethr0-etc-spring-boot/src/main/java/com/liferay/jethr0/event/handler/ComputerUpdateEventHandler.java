@@ -22,7 +22,7 @@ public class ComputerUpdateEventHandler extends BaseJenkinsEventHandler {
 	}
 
 	@Override
-	public String process() throws Exception {
+	public String process() throws InvalidJSONException {
 		JenkinsQueue jenkinsQueue = getJenkinsQueue();
 
 		if (!jenkinsQueue.isInitialized()) {

@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 
 	@Override
-	public String process() throws Exception {
+	public String process() throws InvalidJSONException {
 		BuildRunEntity buildRunEntity = getBuildRun();
 
 		buildRunEntity.setDuration(getBuildDuration());

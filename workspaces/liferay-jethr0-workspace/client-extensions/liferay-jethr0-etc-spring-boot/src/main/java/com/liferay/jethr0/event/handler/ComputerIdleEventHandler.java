@@ -30,7 +30,7 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 	}
 
 	@Override
-	public String process() throws Exception {
+	public String process() throws InvalidJSONException {
 		JenkinsQueue jenkinsQueue = getJenkinsQueue();
 
 		if (!jenkinsQueue.isInitialized()) {

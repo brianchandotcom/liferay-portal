@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class QueueJobEventHandler extends BaseObjectEventHandler {
 
 	@Override
-	public String process() throws Exception {
+	public String process() throws InvalidJSONException {
 		JobEntity jobEntity = getJobEntity(getJobJSONObject());
 
 		jobEntity.setState(JobEntity.State.QUEUED);

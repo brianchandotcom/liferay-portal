@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class CreateJobEventHandler extends BaseObjectEventHandler {
 
 	@Override
-	public String process() throws Exception {
+	public String process() throws InvalidJSONException {
 		JSONObject jobJSONObject = getJobJSONObject();
 
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();

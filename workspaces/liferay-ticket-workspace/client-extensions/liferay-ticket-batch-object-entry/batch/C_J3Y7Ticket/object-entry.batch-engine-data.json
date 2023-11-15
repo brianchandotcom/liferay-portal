@@ -62,8 +62,8 @@
 				"name": "Open"
 			},
 			"type": {
-				"key": "siteIssue",
-				"name": "Site Issue"
+				"key": "other",
+				"name": "Other"
 			}
 		},
 		{
@@ -76,8 +76,8 @@
 			"description": "No, we don’t have any retail stores because we make the digital experience even better.",
 			"externalReferenceCode": "TICKET_2",
 			"priority": {
-				"key": "minor",
-				"name": "Minor"
+				"key": "critical",
+				"name": "Critical"
 			},
 			"region": {
 				"key": "lATAM",
@@ -94,8 +94,8 @@
 				"name": "Open"
 			},
 			"type": {
-				"key": "siteIssue",
-				"name": "Site Issue"
+				"key": "other",
+				"name": "Other"
 			}
 		},
 		{
@@ -108,8 +108,8 @@
 			"description": "All our glasses and sunglasses are a Standard Size. For the majority of people, this Standard Size is the correct fit on the face.",
 			"externalReferenceCode": "TICKET_3",
 			"priority": {
-				"key": "minor",
-				"name": "Minor"
+				"key": "major",
+				"name": "Major"
 			},
 			"region": {
 				"key": "lATAM",
@@ -126,8 +126,8 @@
 				"name": "Open"
 			},
 			"type": {
-				"key": "siteIssue",
-				"name": "Site Issue"
+				"key": "other",
+				"name": "Other"
 			}
 		},
 		{
@@ -136,12 +136,12 @@
 			"description": "I need to understand what's the process for sending my glassess to a review as they have different problems in the side pieces.",
 			"externalReferenceCode": "TICKET_4",
 			"priority": {
-				"key": "minor",
-				"name": "Minor"
+				"key": "moderate",
+				"name": "Moderate"
 			},
 			"region": {
-				"key": "lATAM",
-				"name": "LATAM"
+				"key": "aPAC",
+				"name": "APAC"
 			},
 			"status": {
 				"code": 0,
@@ -150,12 +150,12 @@
 			},
 			"subject": "Asking for help related to my glasses, model 45TRGR",
 			"ticketStatus": {
-				"key": "open",
-				"name": "Open"
+				"key": "inProgress",
+				"name": "In Progress"
 			},
 			"type": {
-				"key": "siteIssue",
-				"name": "Site Issue"
+				"key": "other",
+				"name": "Other"
 			}
 		},
 		{
@@ -164,12 +164,12 @@
 			"description": "I need to adquire another pair of glasses. For existing customers, are you thinking on creating a specific promotion?",
 			"externalReferenceCode": "TICKET_5",
 			"priority": {
-				"key": "minor",
-				"name": "Minor"
+				"key": "unassigned",
+				"name": "Unassigned"
 			},
 			"region": {
-				"key": "lATAM",
-				"name": "LATAM"
+				"key": "aPAC",
+				"name": "APAC"
 			},
 			"status": {
 				"code": 0,
@@ -178,12 +178,12 @@
 			},
 			"subject": "Is there any expected promo for this summer?",
 			"ticketStatus": {
-				"key": "open",
-				"name": "Open"
+				"key": "inProgress",
+				"name": "In Progress"
 			},
 			"type": {
-				"key": "siteIssue",
-				"name": "Site Issue"
+				"key": "other",
+				"name": "Other"
 			}
 		},
 		{
@@ -192,12 +192,12 @@
 			"description": "I want to know what are the main recommended brands to clean my glasses, model 45TRGR",
 			"externalReferenceCode": "TICKET_6",
 			"priority": {
-				"key": "minor",
-				"name": "Minor"
+				"key": "unassigned",
+				"name": "Unassigned"
 			},
 			"region": {
-				"key": "lATAM",
-				"name": "LATAM"
+				"key": "aPAC",
+				"name": "APAC"
 			},
 			"status": {
 				"code": 0,
@@ -210,8 +210,8 @@
 				"name": "Open"
 			},
 			"type": {
-				"key": "siteIssue",
-				"name": "Site Issue"
+				"key": "other",
+				"name": "Other"
 			}
 		}
 	]

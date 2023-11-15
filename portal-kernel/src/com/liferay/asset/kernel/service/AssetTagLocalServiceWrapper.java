@@ -843,11 +843,6 @@ public class AssetTagLocalServiceWrapper
 	}
 
 	@Override
-	public int getTagsSize(long groupId, String name) {
-		return _assetTagLocalService.getTagsSize(groupId, name);
-	}
-
-	@Override
 	public boolean hasAssetEntryAssetTag(long entryId, long tagId) {
 		return _assetTagLocalService.hasAssetEntryAssetTag(entryId, tagId);
 	}

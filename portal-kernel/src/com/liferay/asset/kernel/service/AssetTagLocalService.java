@@ -650,9 +650,6 @@ public interface AssetTagLocalService
 	public int getTagsSize(long groupId, long classNameId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTagsSize(long groupId, String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasAssetEntryAssetTag(long entryId, long tagId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

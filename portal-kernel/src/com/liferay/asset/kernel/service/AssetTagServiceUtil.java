@@ -146,10 +146,6 @@ public class AssetTagServiceUtil {
 			groupId, classNameId, name);
 	}
 
-	public static int getVisibleAssetsTagsCount(long groupId, String name) {
-		return getService().getVisibleAssetsTagsCount(groupId, name);
-	}
-
 	public static void mergeTags(long fromTagId, long toTagId)
 		throws PortalException {
 

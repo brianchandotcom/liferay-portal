@@ -13,10 +13,6 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
  */
 public class AssetTagFinderUtil {
 
-	public static int countByG_N(long groupId, String name) {
-		return getFinder().countByG_N(groupId, name);
-	}
-
 	public static int countByG_C_N(
 		long groupId, long classNameId, String name) {
 

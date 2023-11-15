@@ -173,11 +173,6 @@ public class AssetTagServiceWrapper
 	}
 
 	@Override
-	public int getVisibleAssetsTagsCount(long groupId, String name) {
-		return _assetTagService.getVisibleAssetsTagsCount(groupId, name);
-	}
-
-	@Override
 	public void mergeTags(long fromTagId, long toTagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

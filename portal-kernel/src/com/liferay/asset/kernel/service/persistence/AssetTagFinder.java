@@ -14,8 +14,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetTagFinder {
 
-	public int countByG_N(long groupId, String name);
-
 	public int countByG_C_N(long groupId, long classNameId, String name);
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> findByG_C_N(

@@ -123,9 +123,6 @@ public interface AssetTagService extends BaseService {
 	public int getVisibleAssetsTagsCount(
 		long groupId, long classNameId, String name);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getVisibleAssetsTagsCount(long groupId, String name);
-
 	public void mergeTags(long fromTagId, long toTagId) throws PortalException;
 
 	public void mergeTags(long[] fromTagIds, long toTagId)

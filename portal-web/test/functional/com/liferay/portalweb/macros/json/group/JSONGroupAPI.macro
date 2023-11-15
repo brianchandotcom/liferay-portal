@@ -144,7 +144,7 @@ definition {
 			var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = ${portalURL});
 		}
 		else {
-			var companyId = JSONCompany.getCompanyId();
+			var companyId = JSONCompany.getCompanyId(portalURL = ${portalURL});
 		}
 
 		if (!(isSet(defaultLocale))) {

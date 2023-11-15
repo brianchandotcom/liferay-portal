@@ -642,7 +642,7 @@ definition {
 		task ("Open Content Performance panel") {
 			PageAudit.openPageAuditSidebar();
 
-			AssertVisible(locator1 = "PageAudit#SIDEBAR");
+			AssertElementPresent(locator1 = "PageAudit#SIDEBAR");
 		}
 
 		task ("Logout and login") {
@@ -652,7 +652,7 @@ definition {
 		}
 
 		task ("Check if panel is closed") {
-			AssertNotVisible(locator1 = "PageAudit#SIDEBAR");
+			AssertElementNotPresent(locator1 = "PageAudit#SIDEBAR");
 		}
 	}
 
@@ -1329,9 +1329,7 @@ definition {
 		}
 
 		task ("Then it is possible to select the experience through the performance tab") {
-			Click(
-				ariaLabel = "Experience Selector",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+			Click(locator1 = "PageAudit#PAGE_AUDIT_EXPERIENCE_SELECTOR");
 
 			MenuItem.click(menuItem = "Experience");
 

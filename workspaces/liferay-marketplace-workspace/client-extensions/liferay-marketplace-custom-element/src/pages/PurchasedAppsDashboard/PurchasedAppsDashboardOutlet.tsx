@@ -87,7 +87,7 @@ const PurchasedAppsDashboardOutlet = () => {
 
 	const {
 		data: placedOrdersWithAttachements = {items: [], totalCount: 0},
-	} = useSWR(`/${key}/with-attachments`, async () => {
+	} = useSWR(`/${key}/with-attachments/${placedOrders.totalCount}`, async () => {
 		if (!selectedAccount?.id && channel?.id) {
 			return {items: [], totalCount: 0};
 		}

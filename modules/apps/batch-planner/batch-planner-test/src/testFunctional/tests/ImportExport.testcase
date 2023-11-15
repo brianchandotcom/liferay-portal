@@ -42,14 +42,10 @@ definition {
 				fieldValue = "Stock Entry");
 		}
 
-		task ("Given in Import/Export center") {
+		task ("When Exporting File with JSONT format in Import/Export center") {
 			BatchEngine.setUpGlobalIds();
 
-			ImportExport.openImportExportAdmin();
-		}
-
-		task ("When Exporting File with JSONT format") {
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "C_Stock (v1_0 - Liferay Object REST)",
 				exportFields = "name",
 				exportFileFormat = "JSONT");
@@ -164,9 +160,7 @@ definition {
 		}
 
 		task ("When the user selects specific channel fields for export and exports the channels in CSV format") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "Channel (v1_0 - Liferay Headless Commerce Admin Channel)",
 				exportFields = "name,type,currencyCode",
 				exportFileFormat = "CSV");
@@ -253,9 +247,7 @@ definition {
 		}
 
 		task ("When the user selects specific channel fields in JSON format") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "C_Stock (v1_0 - Liferay Object REST)",
 				exportFields = "name",
 				exportFileFormat = "JSON");
@@ -288,16 +280,10 @@ definition {
 				fieldValue = "Stock Entry");
 		}
 
-		task ("Given in Import/Export center") {
+		task ("When the user selects specific channel fields in JSONL format in Import/Export center") {
 			BatchEngine.setUpGlobalIds();
 
-			ImportExport.openImportExportAdmin();
-		}
-
-		task ("When the user selects specific channel fields in JSONL format") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "C_Stock (v1_0 - Liferay Object REST)",
 				exportFields = "name",
 				exportFileFormat = "JSONL");
@@ -338,9 +324,7 @@ definition {
 		}
 
 		task ("When the user selects CSV as Export File Format and exports the accounts") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
 				exportFileFormat = "CSV");
@@ -381,9 +365,7 @@ definition {
 		}
 
 		task ("When the user exports the accounts in CSV format with Contains Headers not checked") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				containsHeaders = "false",
 				entityType = "Account (v1_0 - Liferay Headless Admin User)",
 				exportFields = "name,type,description,externalReferenceCode",
@@ -410,9 +392,7 @@ definition {
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				fileName = "json_objectDefinition_import_approved.json");
 
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFileFormat = "JSON");
 		}
@@ -686,9 +666,7 @@ definition {
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				fileName = "json_objectDefinition_import_approved.json");
 
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFileFormat = "JSON");
 		}
@@ -917,9 +895,7 @@ definition {
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				fileName = "json_objectDefinition_import_approved.json");
 
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFileFormat = "JSON");
 		}

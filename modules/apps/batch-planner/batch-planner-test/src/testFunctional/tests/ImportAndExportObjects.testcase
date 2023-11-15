@@ -104,17 +104,13 @@ definition {
 		}
 
 		task ("When user export custom object as entity type") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "C_Subject (v1_0 - Liferay Object REST)",
 				exportFields = "Attribute Code",
 				exportFileFormat = "JSON");
 		}
 
 		task ("Then zip file contains related file type export successfully") {
-			ImportExport.unzipDownloadedExportFile();
-
 			BatchEngine.assertExportedFileContainsCorrectObject(
 				expectedValue = "Math",
 				fileName = "export.json",
@@ -167,17 +163,13 @@ definition {
 		}
 
 		task ("When user export custom object as entity type") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				exportFields = "Attribute Code",
 				exportFileFormat = "JSON");
 		}
 
 		task ("Then zip file contains related file type export successfully") {
-			ImportExport.unzipDownloadedExportFile();
-
 			BatchEngine.assertExportedFileContainsCorrectObject(
 				expectedValue = "Pearl",
 				fileName = "export.json",
@@ -226,9 +218,7 @@ definition {
 		}
 
 		task ("When user export custom object with all attributes codes selected") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				exportFields = "name,creator,customAttachment,customBoolean,customLongText,customPicklist,customPrecisionDecimal,",
 				exportFileFormat = "JSON");
@@ -276,17 +266,13 @@ definition {
 		}
 
 		task ("When user export custom object as entity type and map attribute codes") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				exportFields = "Attribute Code",
 				exportFileFormat = "JSON");
 		}
 
 		task ("Then the zip file contains a related file type export successfully") {
-			ImportExport.unzipDownloadedExportFile();
-
 			BatchEngine.assertExportedFileContainsCorrectObject(
 				expectedValue = "Jessica",
 				fileName = "export.json",
@@ -305,16 +291,14 @@ definition {
 		}
 
 		task ("When user export custom object with all attribute codes selected") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				exportFields = "Attribute Code",
 				exportFileFormat = "JSON");
 		}
 
 		task ("Then the zip file contains a related file type export successfully") {
-			ImportExport.unzipDownloadedExportFile();
+			ImportExport.assertDownloadedFileName(downloadedFile = "export.json");
 		}
 
 		task ("And Then no error in server console") {

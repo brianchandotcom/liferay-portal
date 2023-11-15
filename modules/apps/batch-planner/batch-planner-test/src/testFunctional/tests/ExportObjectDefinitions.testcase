@@ -36,9 +36,7 @@ definition {
 		}
 
 		task ("When I export ObjectDefinition to a JSON format file in Import/Export center") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFields = "active,label,name",
 				exportFileFormat = "JSON");
@@ -67,9 +65,7 @@ definition {
 		}
 
 		task ("When I export ObjectDefinition to a JSONL format file in Import/Export center") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFields = "name",
 				exportFileFormat = "JSONL");
@@ -90,9 +86,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When I export ObjectDefinition to a JSON format file in Import/Export center") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFileFormat = "JSON");
 		}
@@ -120,9 +114,7 @@ definition {
 		}
 
 		task ("When I export ObjectDefinition with only objectFields mapped to a JSONT format file in Import/Export center") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFields = "objectFields",
 				exportFileFormat = "JSONT");
@@ -144,9 +136,7 @@ definition {
 	@priority = 4
 	test CanSeeExportFileDialog {
 		task ("When export ObjectDefinition to a JSON format file in Import/Export center") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.exportFile(
+			ImportExport.exportAndUnzipFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFileFormat = "JSON");
 		}

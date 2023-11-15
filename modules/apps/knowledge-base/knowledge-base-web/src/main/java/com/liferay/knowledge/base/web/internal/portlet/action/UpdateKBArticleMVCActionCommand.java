@@ -277,6 +277,10 @@ public class UpdateKBArticleMVCActionCommand
 
 		Date now = new Date();
 
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			return now;
+		}
+
 		Date displayDate = ParamUtil.getDate(
 			actionRequest, "displayDate",
 			DateFormatFactoryUtil.getSimpleDateFormat(

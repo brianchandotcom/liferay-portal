@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.text.Format;
 
@@ -480,6 +481,14 @@ public class EditKBArticleDisplayContext {
 		KBArticle kbArticle = getKBArticle();
 
 		if ((kbArticle != null) && kbArticle.isScheduled()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSchedulerEnabled() {
+		if (PropsValues.SCHEDULER_ENABLED) {
 			return true;
 		}
 

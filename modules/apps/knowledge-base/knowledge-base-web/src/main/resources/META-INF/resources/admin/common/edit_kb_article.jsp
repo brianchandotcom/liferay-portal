@@ -59,7 +59,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						/>
 
 						<c:choose>
-							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188058") %>'>
+							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188058") && editKBArticleDisplayContext.isSchedulerEnabled() %>'>
 								<c:choose>
 									<c:when test="<%= editKBArticleDisplayContext.isScheduled() %>">
 										<span class="lfr-portal-tooltip">
@@ -187,22 +187,24 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						/>
 					</aui:fieldset>
 
-					<liferay-frontend:fieldset
-						collapsed="<%= true %>"
-						collapsible="<%= true %>"
-						cssClass="panel-unstyled"
-						label="expiration-date"
-					>
-						<aui:model-context bean="<%= editKBArticleDisplayContext.getKBArticle() %>" model="<%= KBArticle.class %>" />
+					<c:if test="<%= editKBArticleDisplayContext.isSchedulerEnabled() %>">
+						<liferay-frontend:fieldset
+							collapsed="<%= true %>"
+							collapsible="<%= true %>"
+							cssClass="panel-unstyled"
+							label="expiration-date"
+						>
+							<aui:model-context bean="<%= editKBArticleDisplayContext.getKBArticle() %>" model="<%= KBArticle.class %>" />
 
-						<p class="text-secondary">
-							<liferay-ui:message key="including-an-expiration-date-will-allow-your-articles-to-expire-automatically-and-become-unpublished" />
-						</p>
+							<p class="text-secondary">
+								<liferay-ui:message key="including-an-expiration-date-will-allow-your-articles-to-expire-automatically-and-become-unpublished" />
+							</p>
 
-						<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= editKBArticleDisplayContext.isNeverExpire() %>" formName="fm" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
+							<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= editKBArticleDisplayContext.isNeverExpire() %>" formName="fm" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
 
-						<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= editKBArticleDisplayContext.isNeverReview() %>" formName="fm" name="reviewDate" wrapperCssClass="mb-3 review-date" />
-					</liferay-frontend:fieldset>
+							<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= editKBArticleDisplayContext.isNeverReview() %>" formName="fm" name="reviewDate" wrapperCssClass="mb-3 review-date" />
+						</liferay-frontend:fieldset>
+					</c:if>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
 						<liferay-asset:input-asset-links
@@ -368,6 +370,8 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 			"kbArticle", editKBArticleDisplayContext.getKBArticle()
 		).put(
 			"publishAction", WorkflowConstants.ACTION_PUBLISH
+		).put(
+			"schedulerEnabled", FeatureFlagManagerUtil.isEnabled("LPS-188058") && editKBArticleDisplayContext.isSchedulerEnabled()
 		).build()
 	%>'
 	module="admin/js/EditKBArticle"

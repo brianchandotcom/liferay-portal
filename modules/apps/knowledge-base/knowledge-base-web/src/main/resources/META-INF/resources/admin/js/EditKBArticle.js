@@ -15,7 +15,12 @@ function attachListener(element, eventType, callback) {
 	};
 }
 
-export default function EditKBArticle({kbArticle, namespace, publishAction}) {
+export default function EditKBArticle({
+	kbArticle,
+	namespace,
+	publishAction,
+	schedulerEnabled,
+}) {
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
 	);
@@ -68,7 +73,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	let scheduleItem;
 	let scheduledButton;
 
-	if (Liferay.FeatureFlags['LPS-188058']) {
+	if (schedulerEnabled) {
 		publishButton = document.getElementById(`${namespace}publishItem`);
 
 		scheduledButton = document.getElementById(
@@ -128,7 +133,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			}
 		}
 
-		if (Liferay.FeatureFlags['LPS-188058']) {
+		if (schedulerEnabled) {
 			beforeSubmit();
 			submitForm(form);
 		}
@@ -146,7 +151,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 		}),
 	];
 
-	if (Liferay.FeatureFlags['LPS-188058']) {
+	if (schedulerEnabled) {
 		eventHandlers.push(
 			attachListener(scheduleItem, 'click', openScheduleModal)
 		);

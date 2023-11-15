@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -36,6 +37,7 @@
 					},
 					"name": "customName"
 				},
+				"id": "item2",
 				"type": "Section"
 			}
 		],

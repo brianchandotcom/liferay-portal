@@ -1,46 +1,54 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
 					"gutters": false,
 					"numberOfColumns": 6
 				},
+				"id": "item2",
 				"pageElements": [
 					{
 						"definition": {
 							"size": 2
 						},
+						"id": "item3",
 						"type": "Column"
 					},
 					{
 						"definition": {
 							"size": 2
 						},
+						"id": "item4",
 						"type": "Column"
 					},
 					{
 						"definition": {
 							"size": 2
 						},
+						"id": "item5",
 						"type": "Column"
 					},
 					{
 						"definition": {
 							"size": 2
 						},
+						"id": "item6",
 						"type": "Column"
 					},
 					{
 						"definition": {
 							"size": 2
 						},
+						"id": "item7",
 						"type": "Column"
 					},
 					{
 						"definition": {
 							"size": 2
 						},
+						"id": "item8",
 						"type": "Column"
 					}
 				],

@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -59,6 +60,7 @@
 					],
 					"verticalAlignment": "top"
 				},
+				"id": "item2",
 				"pageElements": [
 					{
 						"definition": {
@@ -81,6 +83,7 @@
 							],
 							"size": 12
 						},
+						"id": "item3",
 						"type": "Column"
 					}
 				],

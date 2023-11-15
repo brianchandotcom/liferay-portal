@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -25,6 +26,7 @@
 						"shadow": "None"
 					}
 				},
+				"id": "item2",
 				"pageElements": [
 					{
 						"definition": {
@@ -55,6 +57,7 @@
 								"shadow": "None"
 							}
 						},
+						"id": "item3",
 						"type": "Section"
 					},
 					{
@@ -92,6 +95,7 @@
 								"shadow": "None"
 							}
 						},
+						"id": "item4",
 						"type": "Section"
 					}
 				],

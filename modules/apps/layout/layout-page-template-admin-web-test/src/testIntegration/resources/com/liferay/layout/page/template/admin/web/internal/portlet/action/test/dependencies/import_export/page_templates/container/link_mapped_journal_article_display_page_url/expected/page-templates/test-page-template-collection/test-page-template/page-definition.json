@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -39,6 +40,7 @@
 						"shadow": "None"
 					}
 				},
+				"id": "item2",
 				"type": "Section"
 			}
 		],

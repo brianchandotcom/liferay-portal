@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -8,6 +9,7 @@
 						]
 					}
 				},
+				"id": "item2",
 				"type": "DropZone"
 			}
 		],

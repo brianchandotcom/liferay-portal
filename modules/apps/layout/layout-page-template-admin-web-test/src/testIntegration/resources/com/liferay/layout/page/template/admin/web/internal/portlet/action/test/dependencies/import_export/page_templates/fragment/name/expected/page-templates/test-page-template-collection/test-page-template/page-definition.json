@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -26,6 +27,7 @@
 					"indexed": true,
 					"name": "customName"
 				},
+				"id": "item2",
 				"type": "Fragment"
 			}
 		],

@@ -289,7 +289,7 @@ public class LayoutStructure {
 	public LayoutStructureItem addFragmentDropZoneLayoutStructureItem(
 		String parentItemId, int position) {
 
-		return addFormStyledLayoutStructureItem(
+		return addFragmentDropZoneLayoutStructureItem(
 			PortalUUIDUtil.generate(), parentItemId, position);
 	}
 

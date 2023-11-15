@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -41,6 +42,7 @@
 						"width": "w-auto"
 					}
 				},
+				"id": "item2",
 				"type": "Fragment"
 			}
 		],

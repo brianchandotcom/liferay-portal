@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -22,6 +23,7 @@
 					"layout": {
 					}
 				},
+				"id": "item2",
 				"type": "Form"
 			}
 		],

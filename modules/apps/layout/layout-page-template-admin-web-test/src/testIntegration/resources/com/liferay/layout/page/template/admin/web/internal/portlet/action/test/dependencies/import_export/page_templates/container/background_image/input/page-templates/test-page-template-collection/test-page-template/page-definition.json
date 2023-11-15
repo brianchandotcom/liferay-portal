@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -35,6 +36,7 @@
 						"widthType": "Fluid"
 					}
 				},
+				"id": "item2",
 				"pageElements": [
 					{
 						"definition": {
@@ -75,6 +77,7 @@
 								"widthType": "Fluid"
 							}
 						},
+						"id": "item3",
 						"type": "Section"
 					},
 					{
@@ -122,6 +125,7 @@
 								"widthType": "Fluid"
 							}
 						},
+						"id": "item4",
 						"type": "Section"
 					}
 				],

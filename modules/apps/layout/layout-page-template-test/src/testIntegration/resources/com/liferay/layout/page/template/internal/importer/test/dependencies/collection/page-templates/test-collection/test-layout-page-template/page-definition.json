@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -15,12 +16,14 @@
 					"numberOfItemsPerPage": 1,
 					"paginationType": "Simple"
 				},
+				"id": "item2",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item3",
 						"type": "CollectionItem"
 					},
 					{
@@ -28,6 +31,7 @@
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item4",
 						"type": "CollectionItem"
 					}
 				],

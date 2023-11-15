@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -12,6 +13,7 @@
 					"numberOfColumns": 2,
 					"numberOfItems": 4
 				},
+				"id": "item2",
 				"pageElements": [
 				],
 				"type": "Collection"

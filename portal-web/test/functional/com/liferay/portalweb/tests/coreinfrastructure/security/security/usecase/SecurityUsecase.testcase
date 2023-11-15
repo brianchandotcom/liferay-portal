@@ -25,6 +25,351 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-197701. TC-4: Verify that the list consists of the Site type ID when visiting Asset Libraries control panel page."
+	@priority = 3
+	test AssertAssetLibrariesControlPanelResponseHeaderIncludesSiteTypeID {
+		property custom.properties = "service.pre.action.track.theme.display=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Add an Asset Library") {
+			JSONDepot.addDepot(
+				depotDescription = "This is the description of a depot",
+				depotName = "Test Depot Name");
+		}
+
+		task ("When: Get the Asset Libraries control panel page header info") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var curl = '''http://localhost:8080/group/asset-library-${depotId}/~/control_panel/manage?SM_USER=test@liferay.com -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Verify that 5t and 4x show in the response header") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 5t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 4x");
+		}
+	}
+
+	@description = "This is a use case for LPS-197701. TC-5: Verify that the list consists of the Site type ID when visiting Global control panel page."
+	@priority = 3
+	test AssertGlobalControlPanelResponseHeaderIncludesSiteTypeID {
+		property custom.properties = "service.pre.action.track.theme.display=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When: Get the Global control panel header info") {
+			var curl = '''http://localhost:8080/group/global/~/control_panel/manage?SM_USER=test@liferay.com -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Verify that 0t, 1x, 4x, and s show in the response header.") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 0t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 1x");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 4x");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: s");
+		}
+	}
+
+	@description = "This is a use case for LPS-197701. TC-3: Verify that the list consists of the Site type ID when visiting organization site."
+	@priority = 3
+	test AssertOrganizationSiteResponseHeaderIncludesSiteTypeID {
+		property custom.properties = "service.pre.action.track.theme.display=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Add an organization and an organization site with a public page") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			Organization.openOrganizationsAdmin();
+
+			Organization.addSiteCP(orgName = "Organization Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(pageName = "Public Page");
+		}
+
+		task ("When: Get the organization site page header info") {
+			var curl = '''http://localhost:8080/web/organization-name?SM_USER=test@liferay.com -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Verify that 3t, 9x, and s show in the response header") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 3t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 9x");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: s");
+		}
+	}
+
+	@description = "This is a use case for LPS-197701. TC-8: Verify that the list consists of the Site type ID when visiting page template page."
+	@priority = 3
+	test AssertPageTemplatePageResponseHeaderIncludesSiteTypeID {
+		property custom.properties = "service.pre.action.track.theme.display=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Create a page template and add a widget page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Guest",
+				layoutPageTemplateCollectionName = "Test Page Template Set");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Guest",
+				layoutPageTemplateCollectionName = "Test Page Template Set",
+				layoutPageTemplateEntryName = "Test Widget Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
+		}
+
+		task ("When: Get the page template page header info") {
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Guest",
+				layoutPageTemplateEntryName = "Test Widget Page Template Name",
+				layoutPageTemplateType = "Widget Page Template");
+
+			var curl = '''http://localhost:8080/group/template-${layoutPrototypeId}?SM_USER=test@liferay.com -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Verify that 0t and 8x show in the response header.") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 0t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 8x");
+		}
+	}
+
+	@description = "This is a use case for LPS-197701. TC-6: Verify that the list consists of the Site type ID when visiting Profile page and Dashboard page which are inherited from User Group."
+	@priority = 3
+	test AssertProfileAndDashboardPagesResponseHeadersIncludeSiteTypeID {
+		property custom.properties = "service.pre.action.track.theme.display=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Create a user group with a public page and add user to user group") {
+			JSONUserGroup.addUserGroup(
+				userGroupDescription = "UG UserGroup Name Description",
+				userGroupName = "UG UserGroup Name");
+
+			JSONUserGroup.addLayout(
+				layoutName = "UG Public Page",
+				userGroupName = "UG UserGroup Name");
+
+			JSONUser.addUserToUserGroup(
+				userEmailAddress = "test@liferay.com",
+				userGroupName = "UG UserGroup Name");
+		}
+
+		task ("When: Get the My profile and My Dashboard pages header info") {
+			var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = "UG UserGroup Name");
+			var dashboardCurl = '''http://localhost:8080/user/test/home?SM_USER=test@liferay.com -I''';
+
+			var dashboardResponse = JSONCurlUtil.post(${dashboardCurl});
+			var profileCurl = '''http://localhost:8080/web/test/~/${userGroupId}/ug-public-page?SM_USER=test@liferay.com -I''';
+
+			var profileResponse = JSONCurlUtil.post(${profileCurl});
+		}
+
+		task ("Then: Verify that 0t, 10x and 6x show in the response header.") {
+			TestUtils.assertPartialEquals(
+				actual = ${profileResponse},
+				expected = "X-Liferay-Request-Group: 0t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${profileResponse},
+				expected = "X-Liferay-Request-Group: 10x");
+
+			TestUtils.assertPartialEquals(
+				actual = ${profileResponse},
+				expected = "X-Liferay-Request-Group: 6x");
+		}
+
+		task ("And: Verify that 0t and 5x show in the response header.") {
+			TestUtils.assertPartialEquals(
+				actual = ${dashboardResponse},
+				expected = "X-Liferay-Request-Group: 0t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${dashboardResponse},
+				expected = "X-Liferay-Request-Group: 5x");
+		}
+	}
+
+	@description = "This is a use case for LPS-197701. TC-2: Verify that the list consists of the Site type ID when visiting restricted child site."
+	@priority = 3
+	test AssertRestrictedChildSiteResponseHeaderIncludesSiteTypeID {
+		property custom.properties = "service.pre.action.track.theme.display=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Add a site and a restricted child site with a public page") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			HeadlessSite.addSite(
+				membershipType = "Restricted",
+				parentSiteName = "Site Name",
+				siteName = "Child Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Child Site Name",
+				layoutName = "Test Page",
+				parentGroupName = "Site Name");
+		}
+
+		task ("When: Get the child site page header info") {
+			var curl = '''http://localhost:8080/web/child-site-name?SM_USER=test@liferay.com -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Verify that 2t, 2x, and s show in the response header") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 2t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 2x");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: s");
+		}
+	}
+
+	@description = "This is a use case for LPS-197701. TC-7: Verify that the list consists of the Site type ID when visiting site template page."
+	@priority = 3
+	test AssertSiteTemplatePageResponseHeaderIncludesSiteTypeID {
+		property custom.properties = "service.pre.action.track.theme.display=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Create a site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		}
+
+		task ("When: Get the site template page header info") {
+			var siteTemplateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = "Site Template Name");
+
+			var curl = '''http://localhost:8080/group/${siteTemplateId}?SM_USER=test@liferay.com -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Verify that 0t and 7x show in the response header.") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 0t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: 7x");
+		}
+	}
+
+	@description = "This is a use case for LPS-197701. TC-1: Verify that the list consists of the Site type ID when visiting staging site and live site."
+	@priority = 3
+	test AssertStagingAndLiveSiteResponseHeadersIncludeSiteTypeID {
+		property custom.properties = "service.pre.action.track.theme.display=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenLocation=\"REQUEST\"";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Add a site with a public page and enable local staging") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
+
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+		}
+
+		task ("When: Get the staging and live sites page header info") {
+			var curl = '''http://localhost:8080/web/site-name-staging?SM_USER=test@liferay.com -I''';
+
+			var stagingSiteResponse = JSONCurlUtil.post(${curl});
+			var curl = '''http://localhost:8080/web/site-name?SM_USER=test@liferay.com -I''';
+
+			var liveSiteResponse = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Verify that 1t and 3x show in the response header of staging site page") {
+			TestUtils.assertPartialEquals(
+				actual = ${stagingSiteResponse},
+				expected = "X-Liferay-Request-Group: 1t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${stagingSiteResponse},
+				expected = "X-Liferay-Request-Group: 3x");
+		}
+
+		task ("And: Verify that 1t, 3x, and s show in the response header of live site page") {
+			TestUtils.assertPartialEquals(
+				actual = ${liveSiteResponse},
+				expected = "X-Liferay-Request-Group: 1t");
+
+			TestUtils.assertPartialEquals(
+				actual = ${liveSiteResponse},
+				expected = "X-Liferay-Request-Group: 3x");
+
+			TestUtils.assertPartialEquals(
+				actual = ${liveSiteResponse},
+				expected = "X-Liferay-Request-Group: s");
+		}
+	}
+
 	@description = "This is a use case for LPS-107017. Create user via JSONWSAPUI."
 	@priority = 5
 	test CreateUserViaJSONWSAPIUI {

@@ -323,26 +323,16 @@ public class BatchEngineBrokerTest {
 				}
 			});
 
-		JsonNode expectedJsonNode = _getExpectedJsonNode(_objectDefinition1);
-
-		JsonNode jsonNode = _objectMapper.readTree(
-			_getZipInputStream(
-				_getObjectDefinitionExportInputStream(
-					BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-					_objectDefinitionExportFieldNames)));
-
-		Assert.assertTrue(jsonNode.isArray());
-		Assert.assertTrue(jsonNode.size() >= 2);
-
-		JsonNode actualJsonNode = _getActualJsonNode(
-			jsonNode, _objectDefinition1.getShortName());
-
-		Assert.assertNotNull(
-			"Object definition is not exported", actualJsonNode);
-
 		_assertEqualsExport(
-			expectedJsonNode, _objectDefinitionExportFieldNames,
-			actualJsonNode);
+			_getExpectedJsonNode(_objectDefinition1),
+			_objectDefinitionExportFieldNames,
+			_getActualJsonNode(
+				_objectMapper.readTree(
+					_getZipInputStream(
+						_getObjectDefinitionExportInputStream(
+							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+							_objectDefinitionExportFieldNames))),
+				_objectDefinition1.getShortName()));
 	}
 
 	@Test

@@ -128,6 +128,23 @@ public class HeadlessBuilderResourceImpl {
 				null));
 	}
 
+	@Consumes({"application/json", "application/xml"})
+	@Path(HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX + "/{path: .*}")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	public Response post(
+			@PathParam("scopeKey") String scopeKey,
+			@PathParam("path") String path, Map<String, Object> properties)
+		throws Exception {
+
+		return _executePostEndpoint(
+			path, APIApplication.Endpoint.Scope.SITE,
+			endpoint -> _endpointHelper.postObjectEntry(
+				_company.getCompanyId(), properties,
+				endpoint.getRequestSchema(), endpoint.getResponseSchema(),
+				scopeKey));
+	}
+
 	private <T> Response _executeGetEndpoint(
 			String path, APIApplication.Endpoint.Scope scope,
 			UnsafeFunction<APIApplication.Endpoint, T, Exception>

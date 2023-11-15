@@ -261,13 +261,13 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				_embeddedPortletIds.set(embeddedPortletIds);
 			}
 
-			String rootPortletId = portlet.getRootPortletId();
+			String embeddedPortletId = portlet.getPortletId();
 
-			if (embeddedPortletIds.search(rootPortletId) > -1) {
+			if (embeddedPortletIds.search(embeddedPortletId) > -1) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"The application cannot include itself: " +
-							rootPortletId);
+							embeddedPortletId);
 				}
 
 				String errorMessage = LanguageUtil.get(
@@ -355,7 +355,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 					httpServletResponse, portletRenderParts);
 			}
 
-			embeddedPortletIds.push(rootPortletId);
+			embeddedPortletIds.push(embeddedPortletId);
 
 			boolean lifecycleRender = themeDisplay.isLifecycleRender();
 

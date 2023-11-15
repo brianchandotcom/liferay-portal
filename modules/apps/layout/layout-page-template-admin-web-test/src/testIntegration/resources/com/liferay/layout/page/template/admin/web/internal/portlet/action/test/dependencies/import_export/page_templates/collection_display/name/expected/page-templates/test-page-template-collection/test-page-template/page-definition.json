@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item3",
 		"pageElements": [
 			{
 				"definition": {
@@ -40,12 +41,14 @@
 					"showAllItems": false,
 					"templateKey": ""
 				},
+				"id": "item1",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item2",
 						"type": "CollectionItem"
 					}
 				],

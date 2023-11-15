@@ -1,5 +1,6 @@
 {
 	"pageElement": {
+		"id": "item1",
 		"pageElements": [
 			{
 				"definition": {
@@ -19,12 +20,14 @@
 					"showAllItems": false,
 					"templateKey": ""
 				},
+				"id": "item2",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item3",
 						"type": "CollectionItem"
 					}
 				],
@@ -48,12 +51,14 @@
 					"showAllItems": false,
 					"templateKey": ""
 				},
+				"id": "item4",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item5",
 						"type": "CollectionItem"
 					}
 				],
@@ -76,12 +81,14 @@
 					"showAllItems": false,
 					"templateKey": ""
 				},
+				"id": "item6",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item7",
 						"type": "CollectionItem"
 					}
 				],
@@ -105,12 +112,14 @@
 					"showAllItems": true,
 					"templateKey": ""
 				},
+				"id": "item8",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item9",
 						"type": "CollectionItem"
 					}
 				],
@@ -133,12 +142,14 @@
 					"showAllItems": false,
 					"templateKey": ""
 				},
+				"id": "item10",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item11",
 						"type": "CollectionItem"
 					}
 				],
@@ -151,12 +162,14 @@
 					"numberOfItemsPerPage": 5,
 					"showAllItems": false
 				},
+				"id": "item12",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item13",
 						"type": "CollectionItem"
 					}
 				],
@@ -179,12 +192,14 @@
 					"showAllItems": false,
 					"templateKey": ""
 				},
+				"id": "item14",
 				"pageElements": [
 					{
 						"definition": {
 							"collectionItemConfig": {
 							}
 						},
+						"id": "item15",
 						"type": "CollectionItem"
 					}
 				],

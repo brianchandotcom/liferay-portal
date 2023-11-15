@@ -9,6 +9,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.ArrayList;
@@ -56,7 +57,13 @@ public abstract class LayoutStructureItem {
 	}
 
 	public LayoutStructureItem(String itemId, String parentItemId) {
-		_itemId = itemId;
+		if (Validator.isNotNull(itemId)) {
+			_itemId = itemId;
+		}
+		else {
+			_itemId = PortalUUIDUtil.generate();
+		}
+
 		_parentItemId = parentItemId;
 
 		_childrenItemIds = new ArrayList<>();

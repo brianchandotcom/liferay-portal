@@ -137,6 +137,17 @@ public class Jethr0BuildUpdater
 	}
 
 	@Override
+	protected void runQueued() {
+		Build build = getBuild();
+
+		build.setStatus("queued");
+
+		if (isBuildRunning()) {
+			runRunning();
+		}
+	}
+
+	@Override
 	protected void runStarting() {
 		_jethr0Client.subscribe(this);
 

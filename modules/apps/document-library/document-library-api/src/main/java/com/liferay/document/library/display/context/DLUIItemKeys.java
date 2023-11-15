@@ -13,6 +13,8 @@ public class DLUIItemKeys {
 
 	public static final String ADD_FOLDER = "#add-folder";
 
+	public static final String AI_CREATOR = "#ai-creator";
+
 	public static final String CANCEL_CHECKOUT =
 		DLUIItemKeys.class.getName() + "#cancel-checkout";
 

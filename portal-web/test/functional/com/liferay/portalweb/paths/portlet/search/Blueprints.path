@@ -351,6 +351,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_TOTAL_HITS</td>
+	<td>//span[contains(@class,'total-hits-label') and contains(.,'${key_resultTotal}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_INFO_BUTTON</td>
 	<td>//button[contains(.,'Search Framework Indexer Clauses')]//span[*[name()='svg'][contains(@class,'lexicon-icon-question-circle')]]</td>
 	<td></td>

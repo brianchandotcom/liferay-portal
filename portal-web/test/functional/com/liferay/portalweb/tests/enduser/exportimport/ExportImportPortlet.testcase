@@ -110,8 +110,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-73362. Verify if custom fields can be added and deleted through importing their LAR file. Blocked by LPS-149168."
-	@ignore = "true"
+	@description = "This is a use case for LRQA-73362. Verify if custom fields can be added and deleted through importing their LAR file."
 	@priority = 3
 	test CustomFieldDeletionViaImporting {
 		property app.server.bundles.size = "1";

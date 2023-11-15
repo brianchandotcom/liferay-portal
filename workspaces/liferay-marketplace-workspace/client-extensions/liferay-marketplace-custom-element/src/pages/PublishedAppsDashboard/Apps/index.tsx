@@ -16,7 +16,6 @@ import {
 } from '../../../components/DashboardTable/DashboardTable';
 import {PublishedAppsDashboardTableRow} from '../../../components/DashboardTable/PublishedAppsDashboardTableRow';
 import {appTableHeaders} from '../PublishedDashboardPageUtil';
-import { Liferay } from '../../../liferay/liferay';
 
 const Apps = () => {
 	const [page, setPage] = useState(1);
@@ -28,6 +27,7 @@ const Apps = () => {
 
 	return (
 		<DashboardPage
+			buttonDisabled={!(catalogId && catalogId > 0)}
 			buttonMessage={
 				<>
 					<ClayIcon className="mr-1" symbol="plus" />

@@ -18,6 +18,7 @@ export type DashboardListItems = {
 };
 
 type DashBoardPageProps = {
+	buttonDisabled?: boolean,
 	buttonMessage?: string | ReactNode | boolean;
 	children: ReactNode;
 	messages: {
@@ -28,6 +29,7 @@ type DashBoardPageProps = {
 };
 
 const DashboardPage: React.FC<DashBoardPageProps> = ({
+	buttonDisabled = false,
 	buttonMessage,
 	children,
 	messages,
@@ -38,7 +40,7 @@ const DashboardPage: React.FC<DashBoardPageProps> = ({
 			<Header description={messages.description} title={messages.title} />
 
 			{buttonMessage && (
-				<ClayButton onClick={onButtonClick}>{buttonMessage}</ClayButton>
+				<ClayButton disabled={buttonDisabled} onClick={onButtonClick}>{buttonMessage}</ClayButton>
 			)}
 		</div>
 

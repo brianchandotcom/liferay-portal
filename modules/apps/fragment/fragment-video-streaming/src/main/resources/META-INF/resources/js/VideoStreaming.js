@@ -40,6 +40,7 @@ export default function VideoStreaming({
 		content.firstElementChild.style.width = contentWidth + 'px';
 	}
 
+	// eslint-disable-next-line no-undef
 	const player = videojs('fragmentVideoJsURL', configuration);
 
 	player.ready(() => {

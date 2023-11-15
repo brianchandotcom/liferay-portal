@@ -11,10 +11,13 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -135,6 +138,28 @@ public class KBFolderStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(kbFolder, importedKBFolder);
+	}
+
+	@Override
+	protected void doRestoreStagedModel(
+			PortletDataContext portletDataContext, KBFolder kbFolder)
+		throws Exception {
+
+		KBFolder existingKBFolder = fetchStagedModelByUuidAndGroupId(
+			kbFolder.getUuid(), portletDataContext.getScopeGroupId());
+
+		if ((existingKBFolder == null) || !existingKBFolder.isInTrash()) {
+			return;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			KBArticle.class.getName());
+
+		if (trashHandler.isRestorable(existingKBFolder.getKbFolderId())) {
+			trashHandler.restoreTrashEntry(
+				portletDataContext.getUserId(kbFolder.getUserUuid()),
+				existingKBFolder.getKbFolderId());
+		}
 	}
 
 	@Reference

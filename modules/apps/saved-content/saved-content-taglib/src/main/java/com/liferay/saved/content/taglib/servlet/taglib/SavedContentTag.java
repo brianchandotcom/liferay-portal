@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -187,7 +186,8 @@ public class SavedContentTag extends IncludeTag {
 		).put(
 			"enabled", _isEnabled(themeDisplay)
 		).put(
-			"mySavedContentURL", StringPool.BLANK
+			"mySavedContentURL",
+			_getMySavedContentURL(httpServletRequest, themeDisplay)
 		).put(
 			"portletNamespace",
 			PortalUtil.getPortletNamespace(
@@ -211,6 +211,20 @@ public class SavedContentTag extends IncludeTag {
 		return LanguageUtil.format(
 			httpServletRequest, "save-x",
 			_getContentTitle(themeDisplay.getLocale()));
+	}
+
+	private String _getMySavedContentURL(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				httpServletRequest, MySavedContentPortletKeys.MY_SAVED_CONTENT,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/saved_content/view_my_saved_content"
+		).setBackURL(
+			themeDisplay.getURLCurrent()
+		).buildString();
 	}
 
 	private String _getURL(HttpServletRequest httpServletRequest) {

@@ -960,9 +960,9 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
 			value1 = ${entry1},
-			value2 = ${entry},
-			value3 = ${entry},
-			value4 = ${entry});
+			value2 = ${entry2},
+			value3 = ${entry3},
+			value4 = ${entry4});
 	}
 
 	@summary = "Default summary"

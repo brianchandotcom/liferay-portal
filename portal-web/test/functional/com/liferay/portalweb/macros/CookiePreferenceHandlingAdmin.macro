@@ -93,7 +93,7 @@ definition {
 
 	@description = "Enable Cookie Preference handling with Explicit cookie setting disabled on instance level"
 	@summary = "Default summary"
-	macro enablePreferenceHandlingWithOutCookieConsentInInstanceSittings() {
+	macro enablePreferenceHandlingWithOutCookieConsentInInstanceSettings() {
 		CookieNavigator.gotoInstanceSettings(portlet = "Preference Handling");
 
 		FormFields.enableCheckbox(fieldName = "Enabled");

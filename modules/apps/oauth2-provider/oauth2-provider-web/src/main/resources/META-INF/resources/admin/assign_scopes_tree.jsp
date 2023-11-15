@@ -141,64 +141,73 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 	</clay:sheet>
 </clay:container-fluid>
 
-<aui:script sandbox="<%= true %>">
-	AUI().use('node', 'aui-modal', (A) => {
-		A.all('input[name="<portlet:namespace />scopeAliases"]').each(function () {
-			this.on('click', function () {
-				<portlet:namespace />recalculateScopeChildrens(this);
-				<portlet:namespace />recalculateScopeParents(this);
-			});
-		});
+<aui:script require="frontend-js-web/index as frontendJsWeb" sandbox="<%= true %>">
+	const {delegate} = frontendJsWeb;
 
-		<portlet:namespace />recalculateScopeChildrens = function (
-			checkboxElement
-		) {
-			var valueId = checkboxElement.val();
-			var isChecked = checkboxElement.attr('checked');
+	delegate(
+		document.body,
+		'click',
+		'input[name="<portlet:namespace />scopeAliases"]',
+		(event) => {
+			recalculateScopeChildrens(event.target);
+			recalculateScopeParents(event.target);
+		}
+	);
 
-			A.all('input[data-parent=' + valueId + ']').each(function () {
-				this.attr('checked', isChecked);
-				var hasChildrens = checkboxElement.attr('data-has-childrens');
+	const recalculateScopeChildrens = (checkboxElement) => {
+		const valueId = checkboxElement.value;
+		const isChecked = checkboxElement.checked;
+
+		document
+			.querySelectorAll('input[data-parent="' + valueId + '"]')
+			.forEach((element) => {
+				element.checked = isChecked;
+				const hasChildrens = checkboxElement.dataset.hasChildrens;
 				if (hasChildrens) {
-					<portlet:namespace />recalculateScopeChildrens(this);
+					recalculateScopeChildrens(element);
 				}
 			});
-		};
+	};
 
-		<portlet:namespace />recalculateScopeParents = function (checkboxElement) {
-			var parent = checkboxElement.attr('data-parent');
-			var isChecked = checkboxElement.attr('checked');
+	const recalculateScopeParents = (checkboxElement) => {
+		const parent = checkboxElement.dataset.parent;
+		const isChecked = checkboxElement.checked;
 
-			if (parent && !isChecked) {
-				var parentElement = A.one('input[value=' + parent + ']');
-				parentElement.attr('checked', isChecked);
-				<portlet:namespace />recalculateScopeParents(parentElement);
-			}
-		};
+		if (parent && !isChecked) {
+			const parentElement = document.querySelector(
+				'input[value="' + parent + '"]'
+			);
+			parentElement.checked = isChecked;
+			recalculateScopeParents(parentElement);
+		}
+	};
 
-		<portlet:namespace />checkNewScopesInCheckedParents = function () {
-			A.all('input[data-has-childrens="true"]').each(function () {
-				if (this._node.checked) {
-					var parentValue = this._node.value;
-					A.all('input[data-parent=' + parentValue + ']').each(
-						function () {
-							if (!this._node.checked) {
-								this._node.checked = true;
+	const checkNewScopesInCheckedParents = () => {
+		document
+			.querySelectorAll('input[data-has-childrens="true"]')
+			.forEach((parent) => {
+				if (parent.checked) {
+					const parentValue = parent.value;
+					document
+						.querySelectorAll(
+							'input[data-parent="' + parentValue + '"]'
+						)
+						.forEach((element) => {
+							if (!element.checked) {
+								element.checked = true;
 
-								var elementId = this._node.value;
+								const elementId = element.value;
 
-								var container = document.getElementById(
+								const container = document.getElementById(
 									elementId + '-container'
 								);
 
 								container.classList.add('added-scope');
 							}
-						}
-					);
+						});
 				}
 			});
-		};
+	};
 
-		<portlet:namespace />checkNewScopesInCheckedParents();
-	});
+	checkNewScopesInCheckedParents();
 </aui:script>

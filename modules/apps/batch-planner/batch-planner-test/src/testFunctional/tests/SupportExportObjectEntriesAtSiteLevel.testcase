@@ -1,0 +1,259 @@
+@component-name = "portal-batch-planner"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Import/Export";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given site scoped Student, Subject, and company scope University object definition with text field 'name' created") {
+			var studentId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name",
+				scope = "site");
+
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "subject",
+				en_US_plural_label = "subjects",
+				name = "Subject",
+				requiredStringFieldName = "name",
+				scope = "site");
+
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "university",
+				en_US_plural_label = "universities",
+				name = "University",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given many-to-many studentsSubjects relationship created") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Subject",
+				deletionType = "cascade",
+				name = "studentsSubjects",
+				parentObjectName = "Student",
+				type = "manyToMany");
+		}
+
+		task ("And Given one-to-many studentAccounts relationship created") {
+			var accountId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "StudentAccounts",
+				name = "studentAccounts",
+				objectDefinitionId1 = ${studentId},
+				objectDefinitionId2 = ${accountId},
+				type = "oneToMany");
+		}
+
+		task ("And Given object entries of Student, Subject, Account created with related entries") {
+			var accountEntryId = AccountAPI.createAccount(name = "accountForStudent");
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Able",
+				scopeKey = "true");
+			var subjectEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "English",
+				scopeKey = "true");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "students",
+				objectEntry1 = ${studentEntryId},
+				objectEntry2 = ${accountEntryId},
+				relationshipName = "studentAccounts");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "students",
+				objectEntry1 = ${studentEntryId},
+				objectEntry2 = ${subjectEntryId},
+				relationshipName = "studentsSubjects");
+		}
+
+		task ("And Given navigate to export in Data Migration Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		BatchPlanner.batchPlannerTearDown();
+
+		AccountAPI.tearDownAllAccounts();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test CanDownloadFileWithAllFieldsSelected {
+		property portal.acceptance = "true";
+
+		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("When exporting file in JSON format with all fields selected") {
+			var scope = TestCase.getSiteName();
+
+			ImportExport.configureExport(
+				exportFileFormat = "JSON",
+				scope = ${scope});
+
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then all fields values available in the downloaded file") {
+			ImportExport.unzipDownloadedExportFile();
+
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "students",
+				scopeKey = "true");
+			var totalFieldsList = "creator,dateCreated,dateModified,externalReferenceCode,id,keywords,name,scopeKey,status";
+
+			for (var fieldName : list ${totalFieldsList}) {
+				var expectedValue = JSONPathUtil.getProperty(
+					property = "$.items..[0]${fieldName}",
+					response = ${response});
+
+				BatchEngine.assertExportedFileContainsCorrectObject(
+					expectedValue = ${expectedValue},
+					fileName = "export.json",
+					jsonObject = "$..[0]${fieldName}");
+			}
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "DELETE,GET,GET,PUT,PATCH",
+				fileName = "export.json",
+				jsonObject = "$..actions..method");
+		}
+	}
+
+	@priority = 4
+	test CanExportSpecificFieldsWithJSONTConfigurationNode {
+		property portal.acceptance = "true";
+
+		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type and current site as Scope in Data Migration Center --> Export File") {
+			var scope = TestCase.getSiteName();
+
+			ImportExport.configureExport(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFileFormat = "JSONT",
+				scope = ${scope});
+		}
+
+		task ("When exporting file in JSONT format with field 'name' selected") {
+			ImportExport.mapExport(exportFields = "name");
+
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then 'name' value for created entry, actions node, configuration node available in the dowloaded file") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "Able",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.items..name");
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "POST,DELETE,PUT",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.actions..method");
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.configuration.className");
+		}
+	}
+
+	@priority = 4
+	test CannotSeeScopeSelectorForObjectDefinitionsScopedByCompany {
+		property portal.acceptance = "true";
+
+		task ("When 'C_University (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_University (v1_0 - Liferay Object REST)");
+		}
+
+		task ("Then 'Scope' selector is not present") {
+			AssertElementNotPresent(locator1 = "Select#SCOPE_CONFIGURATION");
+		}
+	}
+
+	@priority = 5
+	test CanSeeCreatedSiteInScopeSelector {
+		property portal.acceptance = "true";
+
+		task ("And Given a new site named test") {
+			HeadlessSite.addSite(siteName = "test");
+		}
+
+		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type and default site as scope in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("When click the scope selector") {
+			Click(locator1 = "Select#SCOPE_CONFIGURATION");
+		}
+
+		task ("Then test site present in the dropdown list") {
+			AssertElementPresent(
+				key_scopeName = "test",
+				locator1 = "Select#SCOPE_SELECTED");
+		}
+	}
+
+	@priority = 4
+	test CanSelectAllExistingFields {
+		property portal.acceptance = "true";
+
+		task ("When selecting 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("Then the list of fields to select contains all the fields available with GET request") {
+			var fieldList = "name,actions,creator,dateCreated,dateModified,externalReferenceCode,id,keywords,scopeKey,status";
+
+			ImportExport.mapExport(exportFields = ${fieldList});
+		}
+	}
+
+	@priority = 4
+	test CanSelectGlobalSiteAsScope {
+		property portal.acceptance = "true";
+
+		task ("When 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("Then Global site available as scope") {
+			ImportExport.configureExport(
+				exportFileFormat = "JSON",
+				scope = "Global");
+
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+	}
+
+}

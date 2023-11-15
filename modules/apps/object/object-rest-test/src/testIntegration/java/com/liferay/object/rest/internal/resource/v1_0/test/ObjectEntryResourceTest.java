@@ -5969,11 +5969,8 @@ public class ObjectEntryResourceTest {
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		String randomFileContent = RandomTestUtil.randomString();
-		String randomFileName = RandomTestUtil.randomString();
-
-		fileEntry.setFileBase64(Base64.encode(randomFileContent.getBytes()));
-		fileEntry.setName(randomFileName + ".txt");
+		fileEntry.setFileBase64(Base64.encode(RandomTestUtil.randomBytes()));
+		fileEntry.setName(RandomTestUtil.randomString() + ".txt");
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -6140,11 +6137,8 @@ public class ObjectEntryResourceTest {
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		String randomFileContent = RandomTestUtil.randomString();
-		String randomFileName = RandomTestUtil.randomString();
-
-		fileEntry.setFileBase64(Base64.encode(randomFileContent.getBytes()));
-		fileEntry.setName(randomFileName + ".txt");
+		fileEntry.setFileBase64(Base64.encode(RandomTestUtil.randomBytes()));
+		fileEntry.setName(RandomTestUtil.randomString() + ".txt");
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

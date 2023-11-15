@@ -5,6 +5,8 @@
 
 package com.liferay.customer.object.model;
 
+import com.liferay.petra.string.StringBundler;
+
 import org.json.JSONObject;
 
 /**
@@ -52,7 +54,7 @@ public class TicketAttachment {
 	}
 
 	public String getGCSObjectName() {
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("tickets/");
 		sb.append(_zendeskTicketId);

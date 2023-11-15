@@ -6,6 +6,7 @@
 package com.liferay.customer.object.service;
 
 import com.liferay.customer.object.model.TicketAttachment;
+import com.liferay.petra.string.StringBundler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -83,6 +84,40 @@ public class TicketAttachmentWebService {
 		return new TicketAttachment(jsonObject);
 	}
 
+	public TicketAttachment approveTicketAttachment(
+			Jwt jwt, long ticketAttachmentId)
+		throws Exception {
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		JSONObject statusJSONObject = new JSONObject();
+
+		statusJSONObject.put("code", TicketAttachment.STATUS_APPROVED);
+
+		requestJSONObject.put("status", statusJSONObject);
+
+		JSONObject jsonObject = new JSONObject(
+			WebClient.create(
+				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+			).patch(
+			).uri(
+				"/o/c/ticketattachments/" + ticketAttachmentId
+			).accept(
+				MediaType.APPLICATION_JSON
+			).contentType(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			).body(
+				BodyInserters.fromValue(requestJSONObject.toString())
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
+
+		return new TicketAttachment(jsonObject);
+	}
+
 	public void deleteTicketAttachment(Jwt jwt, long ticketAttachmentId)
 		throws Exception {
 
@@ -136,7 +171,7 @@ public class TicketAttachmentWebService {
 			Jwt jwt, String fileName, String md5Checksum, long zendeskTicketId)
 		throws Exception {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("/o/c/ticketattachments?filter=fileName eq '");
 		sb.append(fileName);

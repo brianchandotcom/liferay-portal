@@ -13,6 +13,8 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -87,7 +89,7 @@ public class GoogleCloudStorageWebService {
 	public String getUploadSessionURL(String bucketName, String objectName)
 		throws Exception {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("https://storage.googleapis.com/upload/storage/v1/b/");
 		sb.append(bucketName);

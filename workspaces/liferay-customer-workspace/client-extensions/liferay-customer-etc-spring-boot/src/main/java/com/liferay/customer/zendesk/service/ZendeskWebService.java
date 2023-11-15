@@ -7,17 +7,21 @@ package com.liferay.customer.zendesk.service;
 
 import com.liferay.customer.zendesk.model.ZendeskOrganization;
 import com.liferay.customer.zendesk.model.ZendeskTicket;
+import com.liferay.customer.zendesk.model.ZendeskUser;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Base64;
 
 import javax.annotation.PostConstruct;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -25,6 +29,107 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Component
 public class ZendeskWebService {
+
+	public void addAgentZendeskTicketComment(
+			String htmlBody, long zendeskTicketId, long zendeskUserId)
+		throws Exception {
+
+		JSONObject commentJSONObject = new JSONObject();
+
+		commentJSONObject.put(
+			"author_id", zendeskUserId
+		).put(
+			"html_body", htmlBody
+		).put(
+			"public", true
+		);
+
+		JSONObject ticketJSONObject = new JSONObject();
+
+		ticketJSONObject.put("comment", commentJSONObject);
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("ticket", ticketJSONObject);
+
+		WebClient.create(
+			_zendeskURL
+		).put(
+		).uri(
+			"/api/v2/tickets/" + zendeskTicketId + ".json"
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, _zendeskAuthorization
+		).body(
+			BodyInserters.fromValue(jsonObject.toString())
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+	}
+
+	public void addEndUserZendeskTicketComment(
+			String emailAddress, String htmlBody, long zendeskTicketId)
+		throws Exception {
+
+		JSONObject commentJSONObject = new JSONObject();
+
+		commentJSONObject.put("html_body", htmlBody);
+
+		JSONObject ticketJSONObject = new JSONObject();
+
+		ticketJSONObject.put("comment", commentJSONObject);
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("request", ticketJSONObject);
+
+		WebClient.create(
+			_zendeskURL
+		).put(
+		).uri(
+			"/api/v2/requests/" + zendeskTicketId + ".json"
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, _getCredentials(emailAddress)
+		).body(
+			BodyInserters.fromValue(jsonObject.toString())
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+	}
+
+	public ZendeskUser fetchZendeskUser(String emailAddress) throws Exception {
+		JSONObject jsonObject = new JSONObject(
+			WebClient.create(
+				_zendeskURL
+			).get(
+			).uri(
+				"/api/v2/users/search.json?query=" + emailAddress
+			).accept(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION, _zendeskAuthorization
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
+
+		JSONArray jsonArray = jsonObject.getJSONArray("users");
+
+		if (jsonArray.length() <= 0) {
+			return null;
+		}
+
+		return new ZendeskUser(jsonArray.getJSONObject(0));
+	}
 
 	public ZendeskOrganization getZendeskOrganization(
 			long zendeskOrganizationId)
@@ -72,15 +177,19 @@ public class ZendeskWebService {
 
 	@PostConstruct
 	public void init() throws Exception {
+		_zendeskAuthorization = _getCredentials(_zendeskAPIEmailAddress);
+	}
+
+	private String _getCredentials(String emailAddress) throws Exception {
 		Base64.Encoder encoder = Base64.getEncoder();
 
-		String zendeskCredentials =
-			_zendeskAPIEmailAddress + "/token:" + _zendeskAPIToken;
+		String zendeskCredentials = emailAddress + "/token:" + _zendeskAPIToken;
 
 		String encodedZendeskCredentials = new String(
-			encoder.encode(zendeskCredentials.getBytes("UTF-8")), "UTF-8");
+			encoder.encode(zendeskCredentials.getBytes(StringPool.UTF8)),
+			StringPool.UTF8);
 
-		_zendeskAuthorization = "Basic " + encodedZendeskCredentials;
+		return "Basic " + encodedZendeskCredentials;
 	}
 
 	@Value("${liferay.customer.zendesk.api.email.address}")

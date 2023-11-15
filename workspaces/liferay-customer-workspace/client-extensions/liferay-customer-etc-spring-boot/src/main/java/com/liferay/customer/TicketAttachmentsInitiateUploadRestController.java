@@ -15,6 +15,8 @@ import com.liferay.customer.zendesk.service.ZendeskWebService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,11 +67,18 @@ public class TicketAttachmentsInitiateUploadRestController
 						type, zendeskTicketId);
 			}
 
-			return new ResponseEntity<>(
+			JSONObject jsonObject = new JSONObject();
+
+			jsonObject.put(
+				"gcsSessionURL",
 				_googleCloudStorageWebService.getUploadSessionURL(
 					ticketAttachment.getGCSBucketName(),
-					ticketAttachment.getGCSObjectName()),
-				HttpStatus.OK);
+					ticketAttachment.getGCSObjectName())
+			).put(
+				"ticketAttachmentId", ticketAttachment.getTicketAttachmentId()
+			);
+
+			return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -16,7 +16,9 @@ const filterCreationActions = ({
 		if (
 			!action.data?.permissionKey ||
 			(action.data?.permissionKey &&
-				globalCollectionActions[action.data.permissionKey])
+				Object.keys(globalCollectionActions)
+					.map((globalAction) => globalAction.toLowerCase())
+					.includes(action.data.permissionKey.toLowerCase()))
 		) {
 			return action;
 		}

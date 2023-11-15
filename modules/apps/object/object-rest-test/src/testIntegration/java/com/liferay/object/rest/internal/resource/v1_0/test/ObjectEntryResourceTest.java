@@ -176,8 +176,6 @@ public class ObjectEntryResourceTest {
 			TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
 
-		_testDLFileEntryModelListener = new TestDLFileEntryModelListener();
-
 		_serviceRegistration = _bundleContext.registerService(
 			ModelListener.class, _testDLFileEntryModelListener, null);
 	}
@@ -6848,7 +6846,8 @@ public class ObjectEntryResourceTest {
 	private static BundleContext _bundleContext;
 	private static ServiceRegistration<?> _serviceRegistration;
 	private static TaxonomyCategoryResource _taxonomyCategoryResource;
-	private static TestDLFileEntryModelListener _testDLFileEntryModelListener;
+	private static TestDLFileEntryModelListener _testDLFileEntryModelListener =
+		new TestDLFileEntryModelListener();
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

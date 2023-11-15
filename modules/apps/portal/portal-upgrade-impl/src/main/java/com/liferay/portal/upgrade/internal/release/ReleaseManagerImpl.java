@@ -12,11 +12,13 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.osgi.debug.SystemChecker;
@@ -388,7 +390,9 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			Release release = _releaseLocalService.fetchRelease(
 				bundleSymbolicName);
 
-			if (release == null) {
+			if ((release == null) ||
+				StringUtil.equals("0.0.0", release.getSchemaVersion())) {
+
 				try {
 					schemaCreator.create();
 
@@ -397,13 +401,19 @@ public class ReleaseManagerImpl implements ReleaseManager {
 						"0.0.0");
 
 					release.setVerified(true);
+				}
+				catch (Exception exception) {
+					release = _releaseLocalService.addRelease(
+						bundleSymbolicName, "0.0.0");
 
+					release.setState(ReleaseConstants.STATE_UPGRADE_FAILURE);
+
+					ReflectionUtil.throwException(exception);
+				}
+				finally {
 					release = _releaseLocalService.updateRelease(release);
 
 					_releasePublisher.publish(release, true);
-				}
-				catch (Exception exception) {
-					ReflectionUtil.throwException(exception);
 				}
 			}
 

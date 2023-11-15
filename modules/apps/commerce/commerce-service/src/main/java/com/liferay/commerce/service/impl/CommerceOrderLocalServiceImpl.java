@@ -61,7 +61,9 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -2209,6 +2211,53 @@ public class CommerceOrderLocalServiceImpl
 		return searchContext;
 	}
 
+	private JSONObject _getCommerceOrderJSONObject(
+			CommerceOrder commerceOrder,
+			DTOConverter<?, ?> commerceOrderDTOConverter)
+		throws Exception {
+
+		DefaultDTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				_dtoConverterRegistry, commerceOrder.getCommerceOrderId(),
+				LocaleUtil.getSiteDefault(), null, null);
+
+		dtoConverterContext.setAttribute("secure", Boolean.FALSE);
+
+		JSONObject commerceOrderJSONObject = _jsonFactory.createJSONObject(
+			String.valueOf(
+				commerceOrderDTOConverter.toDTO(dtoConverterContext)));
+
+		JSONArray commerceOrderItemsJSONArray = _jsonFactory.createJSONArray();
+
+		DTOConverter<?, ?> commerceOrderItemDTOConverter =
+			_dtoConverterRegistry.getDTOConverter(
+				CommerceOrderItem.class.getName());
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			dtoConverterContext = new DefaultDTOConverterContext(
+				_dtoConverterRegistry,
+				commerceOrderItem.getCommerceOrderItemId(),
+				LocaleUtil.getSiteDefault(), null, null);
+
+			dtoConverterContext.setAttribute("secure", Boolean.FALSE);
+
+			JSONObject commerceOrderItemJSONObject =
+				_jsonFactory.createJSONObject(
+					_jsonFactory.looseSerializeDeep(
+						commerceOrderItemDTOConverter.toDTO(
+							dtoConverterContext)));
+
+			commerceOrderItemsJSONArray.put(commerceOrderItemJSONObject);
+		}
+
+		commerceOrderJSONObject.put("orderItems", commerceOrderItemsJSONArray);
+
+		return commerceOrderJSONObject;
+	}
+
 	private List<CommerceOrder> _getCommerceOrders(Hits hits)
 		throws PortalException {
 
@@ -2373,16 +2422,8 @@ public class CommerceOrderLocalServiceImpl
 						"classPK", commerceOrder.getCommerceOrderId()
 					).put(
 						"commerceOrder",
-						() -> {
-							Object object = commerceOrderDTOConverter.toDTO(
-								new DefaultDTOConverterContext(
-									_dtoConverterRegistry,
-									commerceOrder.getCommerceOrderId(),
-									LocaleUtil.getSiteDefault(), null, null));
-
-							return _jsonFactory.createJSONObject(
-								_jsonFactory.looseSerializeDeep(object));
-						}
+						_getCommerceOrderJSONObject(
+							commerceOrder, commerceOrderDTOConverter)
 					).put(
 						"commerceOrderId", commerceOrder.getCommerceOrderId()
 					).put(

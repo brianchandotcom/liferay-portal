@@ -299,6 +299,7 @@ type ApplicationStatusKeys = 'published' | 'unpublished';
 type EndpointDataError = {
 	parameter: boolean;
 	path: boolean;
+	pathParameter: boolean;
 	retrieveType: boolean;
 	scope: boolean;
 };

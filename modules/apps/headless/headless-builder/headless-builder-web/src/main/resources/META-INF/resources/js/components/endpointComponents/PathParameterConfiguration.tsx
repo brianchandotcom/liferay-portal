@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {Text} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {
 	Dispatch,
@@ -22,12 +24,14 @@ import {removeLeadingForwardSlash} from '../utils/string';
 
 interface PathParameterConfigurationProps {
 	data: Partial<APIEndpointUIData>;
+	displayError: EndpointDataError;
 	selectedResponseBodySchema: SelectOption | undefined;
 	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
 }
 
 export default function PathParameterConfiguration({
 	data,
+	displayError,
 	selectedResponseBodySchema,
 	setData,
 }: PathParameterConfigurationProps) {
@@ -114,82 +118,79 @@ export default function PathParameterConfiguration({
 	return (
 		<>
 			{selectedResponseBodySchema && (
-				<ClayForm.Group>
-					<label htmlFor="selectTrigger">
-						{Liferay.Language.get('path-parameter-property')}
+				<>
+					<ClayForm.Group
+						className={classNames({
+							'has-error': displayError.pathParameter,
+						})}
+					>
+						<label htmlFor="selectTrigger">
+							{Liferay.Language.get('path-parameter-property')}
 
-						<span className="ml-1 reference-mark text-warning">
-							<ClayIcon symbol="asterisk" />
-						</span>
-					</label>
+							<span className="ml-1 reference-mark text-warning">
+								<ClayIcon symbol="asterisk" />
+							</span>
+						</label>
 
-					<Select
-						dropDownSearchAriaLabel={Liferay.Language.get(
-							'search-for-a-parameter-property-or-use-the-arrow-keys-to-navigate-and-select-a-parameter-property-from-the-list'
-						)}
-						onClick={handleSelectPathParameter}
-						options={pathParameterOptions}
-						placeholder={Liferay.Language.get(
-							'select-an-option'
-						)}
-						searchable
-						selectedOption={selectedPathParameter}
-					/>
-
-					{displayError.pathParameter && (
-						<ClayAlert
-							className="mt-2"
-							displayType="danger"
-							title={Liferay.Language.get(
-								'please-select-a-path-parameter-property'
+						<Select
+							dropDownSearchAriaLabel={Liferay.Language.get(
+								'search-for-a-parameter-property-or-use-the-arrow-keys-to-navigate-and-select-a-parameter-property-from-the-list'
 							)}
-							variant="feedback"
-						></ClayAlert>
-					)}
+							onClick={handleSelectPathParameter}
+							options={pathParameterOptions}
+							placeholder={Liferay.Language.get(
+								'select-an-option'
+							)}
+							searchable
+							selectedOption={selectedPathParameter}
+						/>
 
-					<Text as="p" id="hostTextPreview" size={3}>
-						{sub(
-							Liferay.Language.get(
-								'this-property-from-the-schema-will-be-mapped-to-path-parameter-x'
-							),
-							removeLeadingForwardSlash(data.parameter!)
+						{displayError.pathParameter && (
+							<ClayAlert
+								className="mt-2"
+								displayType="danger"
+								title={Liferay.Language.get(
+									'please-select-a-path-parameter-property'
+								)}
+								variant="feedback"
+							></ClayAlert>
 						)}
-					</Text>
-				</ClayForm.Group>
 
-				<ClayForm.Group>
-					<Text as="p" id="hostTextPreview" weight="lighter">
-						{sub(
-							Liferay.Language.get(
-								'this-property-from-the-schema-will-be-mapped-to-path-parameter-x'
-							),
-							removeLeadingForwardSlash(data.parameter!)
-						)}
-					</Text>
+						<Text as="p" id="hostTextPreview" weight="lighter">
+							{sub(
+								Liferay.Language.get(
+									'this-property-from-the-schema-will-be-mapped-to-path-parameter-x'
+								),
+								removeLeadingForwardSlash(data.parameter!)
+							)}
+						</Text>
+					</ClayForm.Group>
 
-					<label>
-						{Liferay.Language.get('path-parameter-description')}
-					</label>
+					<ClayForm.Group>
+						<label>
+							{Liferay.Language.get('path-parameter-description')}
+						</label>
 
-					<textarea
-						aria-label={Liferay.Language.get(
-							'add-a-description-here'
-						)}
-						autoComplete="off"
-						className="form-control"
-						id="pathParameter"
-						onChange={({target: {value}}) =>
-							setData((previousData) => ({
-								...previousData,
-								pathParameterDescription: value,
-							}))
-						}
-						placeholder={Liferay.Language.get(
-							'add-a-description-here'
-						)}
-						value={data.pathParameterDescription}
-					/>
-				</ClayForm.Group>
+						<textarea
+							aria-label={Liferay.Language.get(
+								'add-a-description-here'
+							)}
+							autoComplete="off"
+							className="form-control"
+							id="pathParameter"
+							onChange={({target: {value}}) =>
+								setData((previousData) => ({
+									...previousData,
+									pathParameterDescription: value,
+								}))
+							}
+							placeholder={Liferay.Language.get(
+								'add-a-description-here'
+							)}
+							value={data.pathParameterDescription}
+						/>
+					</ClayForm.Group>
+				</>
 			)}
 		</>
 	);

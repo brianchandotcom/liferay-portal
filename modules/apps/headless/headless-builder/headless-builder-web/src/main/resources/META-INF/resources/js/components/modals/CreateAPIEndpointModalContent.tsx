@@ -37,6 +37,7 @@ export function CreateAPIEndpointModalContent({
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
 		parameter: false,
 		path: false,
+		pathParameter: false,
 		retrieveType: false,
 		scope: false,
 	});

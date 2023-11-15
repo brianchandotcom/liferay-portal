@@ -67,6 +67,7 @@ export default function EditAPIEndpoint({
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
 		parameter: false,
 		path: false,
+		pathParameter: false,
 		retrieveType: false,
 		scope: false,
 	});
@@ -114,6 +115,10 @@ export default function EditAPIEndpoint({
 
 		if (localUIData.retrieveType?.key === 'singleElement') {
 			mandatoryFields.push('parameter');
+
+			if (localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId) {
+				mandatoryFields.push('pathParameter');
+			}
 		}
 
 		if (!Object.keys(localUIData!).length) {
@@ -596,6 +601,7 @@ export default function EditAPIEndpoint({
 											currentAPIApplicationId
 										}
 										data={localUIData}
+										displayError={displayError}
 										schemaAPIURLPath={apiURLPaths.schemas}
 										setData={setLocalUIData}
 									/>

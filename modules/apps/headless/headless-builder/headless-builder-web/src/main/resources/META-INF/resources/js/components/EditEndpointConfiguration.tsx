@@ -14,6 +14,7 @@ import {getAllItems} from './utils/fetchUtil';
 interface EditEndpointConfigurationProps {
 	currentAPIApplicationId: string;
 	data: Partial<APIEndpointUIData>;
+	displayError: EndpointDataError;
 	schemaAPIURLPath: string;
 	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
 }
@@ -21,6 +22,7 @@ interface EditEndpointConfigurationProps {
 export default function EditEndpointConfiguration({
 	currentAPIApplicationId,
 	data,
+	displayError,
 	schemaAPIURLPath,
 	setData,
 }: EditEndpointConfigurationProps) {
@@ -100,6 +102,7 @@ export default function EditEndpointConfiguration({
 			{data.retrieveType?.key === 'singleElement' ? (
 				<PathParameterConfiguration
 					data={data}
+					displayError={displayError}
 					selectedResponseBodySchema={selectedResponseBodySchema}
 					setData={setData}
 				/>

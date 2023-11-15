@@ -26,7 +26,6 @@ page import="com.liferay.commerce.address.web.internal.display.context.CommerceC
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceCountriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceRegionsManagementToolbarDisplayContext" %><%@
-page import="com.liferay.commerce.model.CommerceAddress" %><%@
 page import="com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryRelException" %><%@
 page import="com.liferay.commerce.product.model.CommerceChannel" %><%@

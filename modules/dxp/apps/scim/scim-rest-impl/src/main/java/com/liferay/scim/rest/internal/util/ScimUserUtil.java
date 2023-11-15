@@ -39,6 +39,7 @@ import org.wso2.charon3.core.attributes.ComplexAttribute;
 import org.wso2.charon3.core.attributes.DefaultAttributeFactory;
 import org.wso2.charon3.core.attributes.SimpleAttribute;
 import org.wso2.charon3.core.config.SCIMUserSchemaExtensionBuilder;
+import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.MultiValuedComplexType;
 import org.wso2.charon3.core.objects.plainobjects.ScimName;
@@ -89,53 +90,59 @@ public class ScimUserUtil {
 		return scimUser;
 	}
 
-	public static User toUser(ScimUser scimUser) throws Exception {
-		User user = new User();
+	public static User toUser(ScimUser scimUser) throws CharonException {
+		try {
+			User user = new User();
 
-		user.replaceActive(scimUser.isActive());
-		user.replaceEmails(
-			Collections.singletonList(
-				new MultiValuedComplexType(
-					"default", true, null, scimUser.getEmailAddress(), null)));
+			user.replaceActive(scimUser.isActive());
+			user.replaceEmails(
+				Collections.singletonList(
+					new MultiValuedComplexType(
+						"default", true, null, scimUser.getEmailAddress(),
+						null)));
 
-		ScimName scimName = new ScimName();
+			ScimName scimName = new ScimName();
 
-		scimName.setFamilyName(scimUser.getLastName());
-		scimName.setGivenName(scimUser.getFirstName());
-		scimName.setMiddleName(scimUser.getMiddleName());
+			scimName.setFamilyName(scimUser.getLastName());
+			scimName.setGivenName(scimUser.getFirstName());
+			scimName.setMiddleName(scimUser.getMiddleName());
 
-		user.replaceName(scimName);
+			user.replaceName(scimName);
 
-		user.replaceTitle(scimUser.getJobTitle());
+			user.replaceTitle(scimUser.getJobTitle());
 
-		SCIMResourceSchemaManager scimResourceSchemaManager =
-			SCIMResourceSchemaManager.getInstance();
+			SCIMResourceSchemaManager scimResourceSchemaManager =
+				SCIMResourceSchemaManager.getInstance();
 
-		user.setAttribute(
-			_createLiferayUserExtensionComplexAttribute(scimUser),
-			scimResourceSchemaManager.getUserResourceSchema());
+			user.setAttribute(
+				_createLiferayUserExtensionComplexAttribute(scimUser),
+				scimResourceSchemaManager.getUserResourceSchema());
 
-		Date createDate = scimUser.getCreateDate();
+			Date createDate = scimUser.getCreateDate();
 
-		user.setCreatedInstant(createDate.toInstant());
+			user.setCreatedInstant(createDate.toInstant());
 
-		user.setExternalId(scimUser.getExternalReferenceCode());
-		user.setId(scimUser.getId());
+			user.setExternalId(scimUser.getExternalReferenceCode());
+			user.setId(scimUser.getId());
 
-		Date modifiedDate = scimUser.getModifiedDate();
+			Date modifiedDate = scimUser.getModifiedDate();
 
-		user.setLastModifiedInstant(modifiedDate.toInstant());
+			user.setLastModifiedInstant(modifiedDate.toInstant());
 
-		user.setLocation(
-			StringBundler.concat(
-				AbstractResourceManager.getResourceEndpointURL(
-					SCIMConstants.USER_ENDPOINT),
-				CharPool.FORWARD_SLASH, scimUser.getId()));
-		user.setResourceType(SCIMConstants.USER);
-		user.setSchemas();
-		user.setUserName(scimUser.getScreenName());
+			user.setLocation(
+				StringBundler.concat(
+					AbstractResourceManager.getResourceEndpointURL(
+						SCIMConstants.USER_ENDPOINT),
+					CharPool.FORWARD_SLASH, scimUser.getId()));
+			user.setResourceType(SCIMConstants.USER);
+			user.setSchemas();
+			user.setUserName(scimUser.getScreenName());
 
-		return user;
+			return user;
+		}
+		catch (Exception exception) {
+			throw new CharonException(exception.getMessage(), exception);
+		}
 	}
 
 	private static AttributeSchema _createAttributeSchema() {

@@ -218,11 +218,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
-	public int getVisibleAssetsTagsCount(long groupId, String name) {
-		return assetTagFinder.countByG_N(groupId, name);
-	}
-
-	@Override
 	public void mergeTags(long fromTagId, long toTagId) throws PortalException {
 		AssetTag tag = assetTagLocalService.getTag(fromTagId);
 

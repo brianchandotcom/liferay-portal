@@ -7,6 +7,7 @@ export default function VideoStreaming({
 	autoplay,
 	loop,
 	muted,
+	subtitles,
 	videoHeight,
 	videoWidth,
 }) {

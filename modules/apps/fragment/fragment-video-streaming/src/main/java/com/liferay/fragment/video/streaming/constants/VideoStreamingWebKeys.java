@@ -20,6 +20,9 @@ public class VideoStreamingWebKeys {
 	public static final String VIDEO_STREAMING_SOURCE_URL =
 		"VIDEO_STREAMING_SOURCE_URL";
 
+	public static final String VIDEO_STREAMING_SUBTITLES =
+		"VIDEO_STREAMING_SUBTITLES";
+
 	public static final String VIDEO_STREAMING_VIDEO_HEIGHT =
 		"VIDEO_STREAMING_VIDEO_HEIGHT";
 

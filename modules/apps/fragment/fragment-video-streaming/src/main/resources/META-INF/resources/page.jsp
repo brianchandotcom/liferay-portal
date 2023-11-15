@@ -22,6 +22,7 @@
 		<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
 	</div>
 </div>
+
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
@@ -30,6 +31,8 @@
 			"loop", (Boolean)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_LOOP)
 		).put(
 			"muted", (Boolean)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_MUTED)
+		).put(
+			"subtitles", (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_SUBTITLES)
 		).put(
 			"videoHeight", (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_VIDEO_HEIGHT)
 		).put(

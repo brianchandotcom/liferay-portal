@@ -37,6 +37,36 @@ import org.json.JSONObject;
 public abstract class BaseJethr0Client implements Jethr0Client {
 
 	@Override
+	public synchronized void close() throws IOException {
+		if (_connection == null) {
+			return;
+		}
+
+		synchronized (_messageConsumers) {
+			try {
+				for (MessageConsumer messageConsumer :
+						_messageConsumers.values()) {
+
+					if (messageConsumer != null) {
+						messageConsumer.close();
+					}
+				}
+
+				if (_connection != null) {
+					_connection.close();
+				}
+			}
+			catch (JMSException jmsException) {
+				throw new IOException(jmsException);
+			}
+			finally {
+				_connection = null;
+				_messageConsumers.clear();
+			}
+		}
+	}
+
+	@Override
 	public synchronized void connect() {
 		if (_connection != null) {
 			return;
@@ -140,36 +170,6 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 		);
 
 		sendJRPMessageToJethr0(jsonObject.toString());
-	}
-
-	@Override
-	public synchronized void disconnect() {
-		if (_connection == null) {
-			return;
-		}
-
-		synchronized (_messageConsumers) {
-			try {
-				for (MessageConsumer messageConsumer :
-						_messageConsumers.values()) {
-
-					if (messageConsumer != null) {
-						messageConsumer.close();
-					}
-				}
-
-				if (_connection != null) {
-					_connection.close();
-				}
-			}
-			catch (JMSException jmsException) {
-				throw new RuntimeException(jmsException);
-			}
-			finally {
-				_connection = null;
-				_messageConsumers.clear();
-			}
-		}
 	}
 
 	@Override

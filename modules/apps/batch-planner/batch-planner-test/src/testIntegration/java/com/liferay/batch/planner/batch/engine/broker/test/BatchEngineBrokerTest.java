@@ -349,10 +349,6 @@ public class BatchEngineBrokerTest {
 	public void testExportObjectDefinitionCSV() throws Exception {
 		_setUpObjectDefinition("TestObjectCSV");
 
-		_objectDefinitionLocalService.updateExternalReferenceCode(
-			_objectDefinition1.getObjectDefinitionId(),
-			_OBJECT_DEFINITION_1_ERC);
-
 		_assertCSVFiles(
 			_getObjectDefinitionExportInputStream(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
@@ -1227,6 +1223,10 @@ public class BatchEngineBrokerTest {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), objectDefinitionName,
 			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+
+		_objectDefinitionLocalService.updateExternalReferenceCode(
+			_objectDefinition1.getObjectDefinitionId(),
+			_OBJECT_DEFINITION_1_ERC);
 
 		_objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),

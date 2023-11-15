@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _createObjectEntryWithName(externalReferenceCode = null, keywords = null,taxonomyCategoryIds = null,name = null,virtualHost = null,en_US_plural_label = null,token = null) {
+	macro _createObjectEntryWithName(keywords = null, taxonomyCategoryIds = null, name = null, scopeKey = null, virtualHost = null, en_US_plural_label = null, externalReferenceCode = null, token = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var response = CustomObjectAPI.createObjectEntryWithFields(
@@ -74,6 +74,7 @@ definition {
 			fieldName = "name",
 			fieldValue = ${name},
 			keywords = ${keywords},
+			scopeKey = ${scopeKey},
 			taxonomyCategoryIds = ${taxonomyCategoryIds},
 			token = ${token},
 			virtualHost = ${virtualHost});
@@ -827,12 +828,13 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createObjectEntryWithName(externalReferenceCode = null, keywords = null,taxonomyCategoryIds = null,name = null,secondFieldValue = null,virtualHost = null,en_US_plural_label = null,token = null) {
+	macro createObjectEntryWithName(keywords = null, taxonomyCategoryIds = null, name = null, scopeKey = null, secondFieldValue = null, virtualHost = null, en_US_plural_label = null, externalReferenceCode = null, token = null) {
 		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
 			en_US_plural_label = ${en_US_plural_label},
 			externalReferenceCode = ${externalReferenceCode},
 			keywords = ${keywords},
 			name = ${name},
+			scopeKey = ${scopeKey},
 			secondFieldValue = ${secondFieldValue},
 			taxonomyCategoryIds = ${taxonomyCategoryIds},
 			token = ${token},
@@ -1033,6 +1035,20 @@ definition {
 		if (isSet(parameter)) {
 			var curl = '''
 				${portalURL}/o/c/${en_US_plural_label_lowercase}?${parameter} \
+					-u test@liferay.com:test
+			''';
+		}
+		else if (isSet(scopeKey)) {
+			if (!(isSet(groupName))) {
+				var groupName = "Guest";
+			}
+
+			var scopeKey = JSONGroupAPI._getSiteIdByGroupKeyNoSelenium(
+				groupName = ${groupName},
+				token = ${token});
+
+			var curl = '''
+				${portalURL}/o/c/${en_US_plural_label_lowercase}/scopes/${scopeKey} \
 					-u test@liferay.com:test
 			''';
 		}

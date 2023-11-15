@@ -231,7 +231,7 @@ public class BatchEngineBrokerTest {
 				batchPlannerPlan.getBatchPlannerPlanId(),
 				_company2.getCompanyId());
 
-		_assertCSVFiles(
+		_assertEqualsExportCSV(
 			_batchEngineExportTaskLocalService.openContentInputStream(
 				batchEngineExportTask.getBatchEngineExportTaskId()),
 			_getInputStream("csv/expected-object-definition.csv"),
@@ -339,7 +339,7 @@ public class BatchEngineBrokerTest {
 	public void testExportObjectDefinitionCSV() throws Exception {
 		_setUpObjectDefinition("TestObjectCSV");
 
-		_assertCSVFiles(
+		_assertEqualsExportCSV(
 			_getObjectDefinitionExportInputStream(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				_objectDefinitionExportCSVFieldNames),
@@ -689,7 +689,35 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
-	private void _assertCSVFiles(
+	private void _assertEqualsExport(
+		JsonNode expectedJsonNode, List<String> fieldNames, JsonNode jsonNode) {
+
+		for (String fieldName : fieldNames) {
+			JsonNode expectedFieldJsonNode = expectedJsonNode.get(fieldName);
+
+			JsonNode fieldJsonNode = jsonNode.get(fieldName);
+
+			if (Objects.equals(fieldName, "actions")) {
+				_assertActions(fieldJsonNode, "delete");
+				_assertActions(fieldJsonNode, "get");
+				_assertActions(fieldJsonNode, "permissions");
+				_assertActions(fieldJsonNode, "update");
+			}
+			else {
+				if ((expectedFieldJsonNode == null) &&
+					(fieldJsonNode == null)) {
+
+					continue;
+				}
+
+				Assert.assertEquals(
+					fieldName + " value mismatch",
+					expectedFieldJsonNode.toString(), fieldJsonNode.toString());
+			}
+		}
+	}
+
+	private void _assertEqualsExportCSV(
 			InputStream actualInputStream, InputStream expectedInputStream,
 			String objectDefinitionName)
 		throws Exception {
@@ -716,34 +744,6 @@ public class BatchEngineBrokerTest {
 			}
 
 			actualLineString = actualUnsyncBufferedReader.readLine();
-		}
-	}
-
-	private void _assertEqualsExport(
-		JsonNode expectedJsonNode, List<String> fieldNames, JsonNode jsonNode) {
-
-		for (String fieldName : fieldNames) {
-			JsonNode expectedFieldJsonNode = expectedJsonNode.get(fieldName);
-
-			JsonNode fieldJsonNode = jsonNode.get(fieldName);
-
-			if (Objects.equals(fieldName, "actions")) {
-				_assertActions(fieldJsonNode, "delete");
-				_assertActions(fieldJsonNode, "get");
-				_assertActions(fieldJsonNode, "permissions");
-				_assertActions(fieldJsonNode, "update");
-			}
-			else {
-				if ((expectedFieldJsonNode == null) &&
-					(fieldJsonNode == null)) {
-
-					continue;
-				}
-
-				Assert.assertEquals(
-					fieldName + " value mismatch",
-					expectedFieldJsonNode.toString(), fieldJsonNode.toString());
-			}
 		}
 	}
 

@@ -11,5 +11,5 @@
 
 <liferay-portlet:runtime
 	persistSettings='<%= ParamUtil.getBoolean(request, "persistSettings", true) %>'
-	portletName='<%= ParamUtil.getString(request, "testRuntimePortletId", (String)request.getAttribute("testRuntimePortletId")) %>'
+	portletName='<%= ParamUtil.getString(request, "testRuntimePortletId") %>'
 />

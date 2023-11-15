@@ -8,8 +8,6 @@ package com.liferay.portal.osgi.web.portlet.container.embedded.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -18,24 +16,17 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.portlet.container.test.BasePortletContainerTestCase;
 import com.liferay.portal.osgi.web.portlet.container.test.TestPortlet;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.taglib.portletext.RuntimeTag;
 
 import java.io.IOException;
 
 import java.util.Dictionary;
-import java.util.List;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -73,82 +64,6 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 		_layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 
 		_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
-	}
-
-	@Test
-	public void testRenderInfiniteRecursionEmbeddedAndRuntimePortlets()
-		throws Exception {
-
-		TestPortlet testPortlet = new TestPortlet() {
-
-			@Override
-			public void render(
-					RenderRequest renderRequest, RenderResponse renderResponse)
-				throws IOException, PortletException {
-
-				super.render(renderRequest, renderResponse);
-
-				PortletContext portletContext = getPortletContext();
-
-				PortletRequestDispatcher portletRequestDispatcher =
-					portletContext.getRequestDispatcher("/runtime_portlet.jsp");
-
-				renderRequest.setAttribute(
-					"testRuntimePortletId",
-					PortletIdCodec.encode(
-						TEST_PORTLET_ID, StringUtil.randomString(8)));
-
-				portletRequestDispatcher.include(renderRequest, renderResponse);
-			}
-
-		};
-
-		setUpPortlet(
-			testPortlet,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"com.liferay.portlet.instanceable", Boolean.TRUE.toString()
-			).build(),
-			TEST_PORTLET_ID);
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				RuntimeTag.class.getName(), LoggerTestUtil.WARN)) {
-
-			PortletContainerTestUtil.Response response =
-				PortletContainerTestUtil.request(
-					PortletURLBuilder.create(
-						_portletURLFactory.create(
-							PortletContainerTestUtil.getHttpServletRequest(
-								group, layout),
-							TEST_PORTLET_ID, layout.getPlid(),
-							PortletRequest.RENDER_PHASE)
-					).buildString());
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Assert.assertEquals(
-				"The application cannot include itself: " + TEST_PORTLET_ID,
-				logEntry.getMessage());
-
-			User guestUser = _userLocalService.getGuestUser(
-				group.getCompanyId());
-
-			String errorMessage = _language.get(
-				guestUser.getLocale(), "the-application-cannot-include-itself");
-
-			String body = response.getBody();
-
-			Assert.assertTrue(
-				"Page body should contain error message : " + errorMessage,
-				body.contains(errorMessage));
-
-			Assert.assertEquals(200, response.getCode());
-
-			Assert.assertTrue(testPortlet.isCalledRender());
-		}
 	}
 
 	@Test

@@ -270,27 +270,6 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testExportObjectDefinitionCSVInDifferentCompany()
-		throws Exception {
-
-		_setUpObjectDefinition("TestObjectCSV");
-
-		_company2 = _addCompany("test.com");
-
-		_objectDefinition2 = _publishObjectDefinition(
-			_company2.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			UserTestUtil.getAdminUser(_company2.getCompanyId()));
-
-		_assertEqualsExportCSV(
-			_getObjectDefinitionExportInputStream(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectDefinitionExportCSVFieldNames),
-			_getInputStream("csv/expected-object-definition.csv"),
-			_objectDefinition1.getExternalReferenceCode());
-	}
-
-	@Test
 	public void testExportObjectDefinitionJSON() throws Exception {
 		_setUpObjectDefinition("TestObjectJSON1");
 

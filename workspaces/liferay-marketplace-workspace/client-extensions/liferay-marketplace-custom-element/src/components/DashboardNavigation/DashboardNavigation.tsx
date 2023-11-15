@@ -73,6 +73,7 @@ export function DashboardNavigation({
 				<ClayDropDown.ItemList>
 					{accounts.map((account) => (
 						<ClayDropDown.Item
+							active={account.id === currentAccount?.id}
 							key={account.id}
 							onClick={() => {
 								CommerceSelectAccountImpl.selectAccount(account.id).then(() => {

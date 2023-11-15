@@ -21,7 +21,7 @@ public class PanelGroupTag extends BaseContainerTag {
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
-		setDynamicAttribute(StringPool.BLANK, "aria-orentation", "vertical");
+		setDynamicAttribute(StringPool.BLANK, "aria-orientation", "vertical");
 		setDynamicAttribute(StringPool.BLANK, "role", "tablist");
 
 		return super.doStartTag();

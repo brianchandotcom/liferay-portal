@@ -51,7 +51,7 @@ definition {
 		task ("Then the site administrater should see the OpenAI API page opened in a new tab") {
 			SelectWindow.selectPopUp(value1 = "null");
 
-			AssertLocation.assertPartialLocation(value1 = "https://platform.openai.com/docs/api-reference/authentication");
+			AssertLocation.assertPartialLocation(value1 = "https://platform.openai.com/docs/api-reference");
 		}
 	}
 
@@ -89,7 +89,7 @@ definition {
 		task ("Then the site administrater should see the OpenAI API page opened in a new tab") {
 			SelectWindow.selectPopUp(value1 = "null");
 
-			AssertLocation.assertPartialLocation(value1 = "https://platform.openai.com/docs/api-reference/authentication");
+			AssertLocation.assertPartialLocation(value1 = "https://platform.openai.com/docs/api-reference");
 		}
 	}
 

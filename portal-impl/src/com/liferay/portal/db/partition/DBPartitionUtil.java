@@ -290,6 +290,17 @@ public class DBPartitionUtil {
 				whereClause));
 	}
 
+	private static void _deleteCompanyData(
+			long companyId, String tableName, String schemaName,
+			Statement statement)
+		throws Exception {
+
+		statement.executeUpdate(
+			StringBundler.concat(
+				"delete from ", schemaName, StringPool.PERIOD, tableName,
+				" where companyId = ", companyId));
+	}
+
 	private static void _dropDBPartition(long companyId)
 		throws PortalException {
 
@@ -707,15 +718,11 @@ public class DBPartitionUtil {
 			String toSchemaName, Statement statement)
 		throws Exception {
 
-		String whereClause = " where companyId = " + companyId;
-
 		_copyData(
-			tableName, fromSchemaName, toSchemaName, statement, whereClause);
+			tableName, fromSchemaName, toSchemaName, statement,
+			" where companyId = " + companyId);
 
-		statement.executeUpdate(
-			StringBundler.concat(
-				"delete from ", fromSchemaName, StringPool.PERIOD, tableName,
-				whereClause));
+		_deleteCompanyData(companyId, tableName, fromSchemaName, statement);
 	}
 
 	private static void _restoreTable(

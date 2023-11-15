@@ -12,7 +12,7 @@ import {
 	ARROW_RIGHT_KEY_CODE,
 	ARROW_UP_KEY_CODE,
 } from '../utils/keyboardCodes';
-import {LIST_ITEM_TYPES} from '../utils/listItemTypes';
+import {ItemTypeValues, LIST_ITEM_TYPES} from '../utils/listItemTypes';
 
 const ALLOWED_KEY_CODES = [
 	ARROW_DOWN_KEY_CODE,
@@ -21,9 +21,15 @@ const ALLOWED_KEY_CODES = [
 	ARROW_UP_KEY_CODE,
 ];
 
-export default function useKeyboardNavigation({handleOpen, key, type}) {
-	const [element, setElement] = useState(null);
-	const [isTarget, setIsTarget] = useState(false);
+interface Props {
+	handleOpen: (key: string, editing: boolean) => void;
+	key: string;
+	type: ItemTypeValues;
+}
+
+export default function useKeyboardNavigation({handleOpen, key, type}: Props) {
+	const [element, setElement] = useState<HTMLElement | null>(null);
+	const [isTarget, setIsTarget] = useState<boolean>(false);
 
 	useEffect(() => {
 		const list = element?.closest('.panel-group');
@@ -31,18 +37,19 @@ export default function useKeyboardNavigation({handleOpen, key, type}) {
 
 		const isFirstChild = list && listItem && listItem === list?.firstChild;
 
-		setIsTarget(isFirstChild && element.tagName === 'BUTTON');
+		setIsTarget(!!isFirstChild && element?.tagName === 'BUTTON');
 	}, [element]);
 
 	const rtl =
-		Liferay.Language.direction?.[themeDisplay?.getLanguageId()] === 'rtl';
+		Liferay.Language.direction?.[Liferay.ThemeDisplay.getLanguageId()] ===
+		'rtl';
 
 	useEventListener(
 		'keydown',
 		(event) => {
-			const {code} = event;
+			const {code} = <KeyboardEvent>event;
 
-			if (!ALLOWED_KEY_CODES.includes(code)) {
+			if (!ALLOWED_KEY_CODES.includes(code) || !element) {
 				return;
 			}
 
@@ -66,43 +73,60 @@ export default function useKeyboardNavigation({handleOpen, key, type}) {
 			}
 		},
 		true,
+
+		// @ts-ignore
+
 		element
 	);
+
+	// @ts-ignore
 
 	useEventListener('focus', () => setIsTarget(true), true, element);
 
 	useEventListener(
 		'blur',
 		(event) => {
-			const list = event.target.closest('.panel-group');
+			const keyboardEvent = (event as unknown) as React.FocusEvent<
+				HTMLElement
+			>;
 
-			const nextActiveElement = event.relatedTarget;
+			const list = keyboardEvent.target?.closest('.panel-group');
 
-			if (list.contains(nextActiveElement)) {
+			const nextActiveElement = <HTMLElement>keyboardEvent.relatedTarget;
+
+			if (list && list.contains(nextActiveElement)) {
 				setIsTarget(false);
 			}
 		},
 		true,
+
+		// @ts-ignore
+
 		element
 	);
 
 	return {isTarget, setElement};
 }
 
-function onHeaderKeyDown(element, keyCode, handleOpen, key) {
+function onHeaderKeyDown(
+	element: HTMLElement,
+	keyCode: string,
+	handleOpen: (key: string, editing: boolean) => void,
+	key: string
+) {
 	if (keyCode === ARROW_DOWN_KEY_CODE) {
 
 		// Target first item of the list. If it's collapsed, target next header
 
 		const panel = element.closest('.panel');
-		const firstItem = panel.querySelector('li');
-		const isCollapsed = panel.querySelector('.collapsed');
+		const firstItem = panel?.querySelector('li');
+		const isCollapsed = panel?.querySelector('.collapsed');
 
 		if (!isCollapsed && firstItem) {
 			firstItem.focus();
 		}
 		else {
-			const nextCollapse = panel.nextSibling;
+			const nextCollapse = panel?.nextSibling as HTMLElement;
 			const nextHeader = nextCollapse?.querySelector('button');
 
 			nextHeader?.focus();
@@ -113,7 +137,7 @@ function onHeaderKeyDown(element, keyCode, handleOpen, key) {
 		// Target last item of the previous list. If it's collapsed, target previous header
 
 		const panel = element.closest('.panel');
-		const previousCollapse = panel.previousSibling;
+		const previousCollapse = panel?.previousSibling as HTMLElement;
 
 		if (!previousCollapse) {
 			return;
@@ -124,12 +148,14 @@ function onHeaderKeyDown(element, keyCode, handleOpen, key) {
 		const previousList = previousCollapse.querySelector('ul');
 
 		if (!isPreviousCollapse && previousList) {
-			const lastItem = previousList.lastChild;
+			const lastItem = previousList.lastChild as HTMLElement;
 
 			lastItem.focus();
 		}
 		else {
-			const previousHeader = previousCollapse.querySelector('button');
+			const previousHeader = previousCollapse.querySelector(
+				'button'
+			) as HTMLElement;
 
 			previousHeader.focus();
 		}
@@ -142,19 +168,20 @@ function onHeaderKeyDown(element, keyCode, handleOpen, key) {
 	}
 }
 
-function onListItemKeyDown(element, keyCode) {
+function onListItemKeyDown(element: HTMLElement, keyCode: string) {
 	if (keyCode === ARROW_UP_KEY_CODE) {
 
 		// Target previous list item. If it's the first one, target header
 
 		if (element.previousSibling) {
-			element.previousSibling.focus();
+			const previousSibling = element.previousSibling as HTMLElement;
+			previousSibling.focus();
 		}
 		else {
 			const panel = element.closest('.panel');
-			const header = panel.querySelector('.panel-header');
+			const header = panel?.querySelector('.panel-header') as HTMLElement;
 
-			header.focus();
+			header?.focus();
 		}
 	}
 	else if (keyCode === ARROW_DOWN_KEY_CODE) {
@@ -162,12 +189,15 @@ function onListItemKeyDown(element, keyCode) {
 		// Target next list item. If it's the last one, target next header
 
 		if (element.nextSibling) {
-			element.nextSibling.focus();
+			const nextSibling = element.nextSibling as HTMLElement;
+			nextSibling.focus();
 		}
 		else {
 			const panel = element.closest('.panel');
-			const nextPanel = panel.nextSibling;
-			const nextHeader = nextPanel?.querySelector('.panel-header');
+			const nextPanel = panel?.nextSibling as HTMLElement;
+			const nextHeader = nextPanel?.querySelector(
+				'.panel-header'
+			) as HTMLElement;
 
 			nextHeader?.focus();
 		}
@@ -179,7 +209,7 @@ function onListItemKeyDown(element, keyCode) {
 		if (document.activeElement === element) {
 			const dragSpan = element.querySelector('span');
 
-			dragSpan.focus();
+			dragSpan?.focus();
 		}
 	}
 	else if (keyCode === ARROW_LEFT_KEY_CODE) {

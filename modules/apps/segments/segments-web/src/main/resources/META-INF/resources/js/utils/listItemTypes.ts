@@ -7,3 +7,6 @@ export const LIST_ITEM_TYPES = {
 	header: 'header',
 	listItem: 'listItem',
 } as const;
+
+export type ItemTypeKeys = keyof typeof LIST_ITEM_TYPES;
+export type ItemTypeValues = typeof LIST_ITEM_TYPES[ItemTypeKeys];

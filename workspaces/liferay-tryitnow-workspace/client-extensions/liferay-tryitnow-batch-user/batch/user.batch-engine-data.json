@@ -7,8 +7,7 @@
 			"onErrorFail": "false",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		},
-		"version": "v1.0"
+		}
 	},
 	"items": [
 		{

@@ -1,26 +1,13 @@
 {
-	"actions": {
-		"create": {
-			"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions",
-			"method": "POST"
-		},
-		"createBatch": {
-			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
-			"method": "POST"
-		}
-	},
 	"configuration": {
 		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
-		"companyId": 0,
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
 			"onErrorFail": "false",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		},
-		"userId": 0,
-		"version": "v1.0"
+		}
 	},
 	"facets": [
 	],

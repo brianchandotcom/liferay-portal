@@ -310,9 +310,7 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testExportObjectDefinition() throws Exception {
-		String objectDefinitionName = "TestObjectJSON1";
-
-		_setUpObjectDefinition(objectDefinitionName);
+		_setUpObjectDefinition("TestObjectJSON1");
 
 		_objectMapper.setFilterProvider(
 			new SimpleFilterProvider() {
@@ -337,11 +335,10 @@ public class BatchEngineBrokerTest {
 		Assert.assertTrue(jsonNode.size() >= 2);
 
 		JsonNode actualJsonNode = _getActualJsonNode(
-			jsonNode, objectDefinitionName);
+			jsonNode, _objectDefinition1.getShortName());
 
 		Assert.assertNotNull(
-			objectDefinitionName + " object definition is not exported",
-			actualJsonNode);
+			"Object definition is not exported", actualJsonNode);
 
 		_assertEqualsExport(
 			expectedJsonNode, _objectDefinitionExportFieldNames,
@@ -350,9 +347,7 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testExportObjectDefinitionCSV() throws Exception {
-		String objectDefinitionName = "TestObjectCSV";
-
-		_setUpObjectDefinition(objectDefinitionName);
+		_setUpObjectDefinition("TestObjectCSV");
 
 		_objectDefinitionLocalService.updateExternalReferenceCode(
 			_objectDefinition1.getObjectDefinitionId(),
@@ -363,7 +358,7 @@ public class BatchEngineBrokerTest {
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				_objectDefinitionExportCSVFieldNames),
 			_getInputStream(getClass(), "csv/expected-object-definition.csv"),
-			objectDefinitionName);
+			_objectDefinition1.getShortName());
 	}
 
 	@Test

@@ -125,6 +125,7 @@ import java.util.function.BiFunction;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -174,6 +175,16 @@ public class ObjectEntryResourceTest {
 			UserLocalServiceUtil.getGuestUserId(TestPropsValues.getCompanyId()),
 			TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
+
+		_testDLFileEntryModelListener = new TestDLFileEntryModelListener();
+
+		_serviceRegistration = _bundleContext.registerService(
+			ModelListener.class, _testDLFileEntryModelListener, null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceRegistration.unregister();
 	}
 
 	@Before
@@ -4500,30 +4511,14 @@ public class ObjectEntryResourceTest {
 	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField()
 		throws Exception {
 
-		TestDLFileEntryModelListener testDLFileEntryModelListener =
-			new TestDLFileEntryModelListener();
-
-		ServiceRegistration<?> serviceRegistration =
-			_bundleContext.registerService(
-				ModelListener.class, testDLFileEntryModelListener, null);
-
-		try {
-			_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-				Http.Method.PATCH, _objectDefinition1,
-				testDLFileEntryModelListener);
-			_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-				Http.Method.PUT, _objectDefinition1,
-				testDLFileEntryModelListener);
-			_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-				Http.Method.PATCH, _siteScopedObjectDefinition1,
-				testDLFileEntryModelListener);
-			_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-				Http.Method.PUT, _siteScopedObjectDefinition1,
-				testDLFileEntryModelListener);
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
+			Http.Method.PATCH, _objectDefinition1);
+		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
+			Http.Method.PUT, _objectDefinition1);
+		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
+			Http.Method.PATCH, _siteScopedObjectDefinition1);
+		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
+			Http.Method.PUT, _siteScopedObjectDefinition1);
 	}
 
 	@FeatureFlags("LPS-174455")
@@ -4531,30 +4526,14 @@ public class ObjectEntryResourceTest {
 	public void testPatchPutCustomObjectEntryWithAttachmentField()
 		throws Exception {
 
-		TestDLFileEntryModelListener testDLFileEntryModelListener =
-			new TestDLFileEntryModelListener();
-
-		ServiceRegistration<?> serviceRegistration =
-			_bundleContext.registerService(
-				ModelListener.class, testDLFileEntryModelListener, null);
-
-		try {
-			_testPatchPutCustomObjectEntryWithAttachmentField(
-				Http.Method.PATCH, _objectDefinition1,
-				testDLFileEntryModelListener);
-			_testPatchPutCustomObjectEntryWithAttachmentField(
-				Http.Method.PUT, _objectDefinition1,
-				testDLFileEntryModelListener);
-			_testPatchPutCustomObjectEntryWithAttachmentField(
-				Http.Method.PATCH, _siteScopedObjectDefinition1,
-				testDLFileEntryModelListener);
-			_testPatchPutCustomObjectEntryWithAttachmentField(
-				Http.Method.PUT, _siteScopedObjectDefinition1,
-				testDLFileEntryModelListener);
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			Http.Method.PATCH, _objectDefinition1);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			Http.Method.PUT, _objectDefinition1);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			Http.Method.PATCH, _siteScopedObjectDefinition1);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			Http.Method.PUT, _siteScopedObjectDefinition1);
 	}
 
 	@Test
@@ -4582,23 +4561,9 @@ public class ObjectEntryResourceTest {
 	public void testPostCustomObjectEntryWithAttachmentField()
 		throws Exception {
 
-		TestDLFileEntryModelListener testDLFileEntryModelListener =
-			new TestDLFileEntryModelListener();
-
-		ServiceRegistration<?> serviceRegistration =
-			_bundleContext.registerService(
-				ModelListener.class, testDLFileEntryModelListener, null);
-
-		try {
-			_testPostCustomObjectEntryWithAttachmentField(
-				_objectDefinition1, testDLFileEntryModelListener);
-
-			_testPostCustomObjectEntryWithAttachmentField(
-				_siteScopedObjectDefinition1, testDLFileEntryModelListener);
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		_testPostCustomObjectEntryWithAttachmentField(_objectDefinition1);
+		_testPostCustomObjectEntryWithAttachmentField(
+			_siteScopedObjectDefinition1);
 	}
 
 	@Test
@@ -6066,8 +6031,7 @@ public class ObjectEntryResourceTest {
 
 	private void
 			_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-				Http.Method httpMethod, ObjectDefinition objectDefinition,
-				TestDLFileEntryModelListener testDLFileEntryModelListener)
+				Http.Method httpMethod, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		// File validation: extension not allowed
@@ -6117,7 +6081,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6133,7 +6097,7 @@ public class ObjectEntryResourceTest {
 				JSONUtil.put(
 					"fileBase64", Base64.encode(fileContent.getBytes())
 				).put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6149,7 +6113,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6160,7 +6124,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", StringUtil.replace(fileName, ".txt", " (1).txt")
 				)),
@@ -6235,8 +6199,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _testPatchPutCustomObjectEntryWithAttachmentField(
-			Http.Method httpMethod, ObjectDefinition objectDefinition,
-			TestDLFileEntryModelListener testDLFileEntryModelListener)
+			Http.Method httpMethod, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		// File validation: extension not allowed
@@ -6286,7 +6249,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6302,7 +6265,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6313,7 +6276,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", StringUtil.replace(fileName, ".txt", " (1).txt")
 				)),
@@ -6328,7 +6291,7 @@ public class ObjectEntryResourceTest {
 				JSONUtil.put(
 					"fileBase64", Base64.encode(fileContent.getBytes())
 				).put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6383,8 +6346,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _testPostCustomObjectEntryWithAttachmentField(
-			ObjectDefinition objectDefinition,
-			TestDLFileEntryModelListener testDLFileEntryModelListener)
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		// File validation: extension not allowed
@@ -6431,7 +6393,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6446,7 +6408,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6457,7 +6419,7 @@ public class ObjectEntryResourceTest {
 			(fileContent, fileName) -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONUtil.put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", StringUtil.replace(fileName, ".txt", " (1).txt")
 				)),
@@ -6472,7 +6434,7 @@ public class ObjectEntryResourceTest {
 				JSONUtil.put(
 					"fileBase64", Base64.encode(fileContent.getBytes())
 				).put(
-					"id", testDLFileEntryModelListener.getLastFileEntryId()
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
 				).put(
 					"name", fileName
 				)),
@@ -6884,7 +6846,9 @@ public class ObjectEntryResourceTest {
 
 	private static AssetVocabulary _assetVocabulary;
 	private static BundleContext _bundleContext;
+	private static ServiceRegistration<?> _serviceRegistration;
 	private static TaxonomyCategoryResource _taxonomyCategoryResource;
+	private static TestDLFileEntryModelListener _testDLFileEntryModelListener;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
@@ -6947,7 +6911,7 @@ public class ObjectEntryResourceTest {
 	@DeleteAfterTestRun
 	private ObjectField _userSystemObjectField;
 
-	private class TestDLFileEntryModelListener
+	private static class TestDLFileEntryModelListener
 		extends BaseModelListener<DLFileEntry> {
 
 		public Long getLastFileEntryId() {

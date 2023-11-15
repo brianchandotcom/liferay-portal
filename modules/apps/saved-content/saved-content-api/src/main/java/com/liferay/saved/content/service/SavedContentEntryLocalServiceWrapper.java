@@ -96,6 +96,20 @@ public class SavedContentEntryLocalServiceWrapper
 			persistedModel);
 	}
 
+	@Override
+	public void deleteSavedContentEntries(
+		long groupId, long classNameId, long classPK) {
+
+		_savedContentEntryLocalService.deleteSavedContentEntries(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public void deleteSavedContentEntriesByUserId(long userId) {
+		_savedContentEntryLocalService.deleteSavedContentEntriesByUserId(
+			userId);
+	}
+
 	/**
 	 * Deletes the saved content entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

@@ -92,6 +92,16 @@ public class SavedContentEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteSavedContentEntries(
+		long groupId, long classNameId, long classPK) {
+
+		getService().deleteSavedContentEntries(groupId, classNameId, classPK);
+	}
+
+	public static void deleteSavedContentEntriesByUserId(long userId) {
+		getService().deleteSavedContentEntriesByUserId(userId);
+	}
+
 	/**
 	 * Deletes the saved content entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

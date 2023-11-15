@@ -103,6 +103,11 @@ public interface SavedContentEntryLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteSavedContentEntries(
+		long groupId, long classNameId, long classPK);
+
+	public void deleteSavedContentEntriesByUserId(long userId);
+
 	/**
 	 * Deletes the saved content entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

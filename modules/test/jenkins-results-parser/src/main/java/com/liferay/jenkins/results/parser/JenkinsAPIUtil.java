@@ -37,17 +37,30 @@ public class JenkinsAPIUtil {
 			sb.append(tree);
 		}
 
-		try {
-			return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
+		final String jenkinsAPIURL = sb.toString();
 
-			String errorMessage =
-				"Unable to get Jenkins API JSON object from " + sb.toString();
+		Retryable<JSONObject> retryable = new Retryable<JSONObject>() {
 
-			throw new RuntimeException(errorMessage, ioException);
-		}
+			@Override
+			public JSONObject execute() {
+				try {
+					return JenkinsResultsParserUtil.toJSONObject(
+						jenkinsAPIURL, false);
+				}
+				catch (IOException ioException) {
+					ioException.printStackTrace();
+
+					String errorMessage =
+						"Unable to get Jenkins API JSON object from " +
+							jenkinsAPIURL;
+
+					throw new RuntimeException(errorMessage, ioException);
+				}
+			}
+
+		};
+
+		return retryable.executeWithRetries();
 	}
 
 	public static Map<String, String> getBuildParameters(

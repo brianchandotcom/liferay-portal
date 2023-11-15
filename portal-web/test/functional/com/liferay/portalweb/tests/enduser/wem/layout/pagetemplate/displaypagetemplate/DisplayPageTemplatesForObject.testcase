@@ -678,7 +678,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "PurchaseOrder");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-				currentOption = "Choose an Option",
 				labelName = "Type",
 				picklistOption = "Apple");
 

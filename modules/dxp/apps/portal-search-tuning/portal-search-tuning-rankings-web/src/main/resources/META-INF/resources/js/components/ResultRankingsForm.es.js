@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
 import {openToast} from 'frontend-js-web';
@@ -147,6 +148,12 @@ class ResultRankingsForm extends Component {
 		showDebugger: process.env.NODE_ENV === 'development',
 
 		/**
+		 * Toggles on and off the alert message.
+		 * @type {boolean}
+		 */
+		showMessage: this.props.initialStatus === 'not-applicable',
+
+		/**
 		 * Indicates whether ranking is active, inactive or achived.
 		 * @type {string}
 		 */
@@ -190,6 +197,22 @@ class ResultRankingsForm extends Component {
 		this._handleFetchResultsDataVisible();
 		this._handleFetchResultsDataHidden();
 	}
+
+	/**
+	 * Gets the alert message according to the scope type of the result ranking.
+	 */
+	_getAlertMessage = () => {
+		if (this.props.initialSXPBlueprintExternalReferenceCode) {
+			return Liferay.Language.get(
+				'this-ranking-is-no-longer-applicable-to-searches-because-the-blueprint-it-was-associated-with-was-deleted'
+			);
+		}
+		else {
+			return Liferay.Language.get(
+				'this-ranking-is-no-longer-applicable-to-searches-because-the-site-it-was-associated-with-was-deleted'
+			);
+		}
+	};
 
 	/**
 	 * Gets the added changes in hidden from the initial and current states.
@@ -581,6 +604,15 @@ class ResultRankingsForm extends Component {
 	};
 
 	/**
+	 * Handles what happens when the user clicks the close button on the alert message.
+	 */
+	_handleShowMessage = () => {
+		this.setState((state) => ({
+			showMessage: !state.showMessage,
+		}));
+	};
+
+	/**
 	 * Handles updating the alias list.
 	 * @param {array} keywords The list of the new aliases (array of list-value
 	 * objects).
@@ -743,6 +775,7 @@ class ResultRankingsForm extends Component {
 			resultIdsPinned,
 			scopeDisplayName,
 			showDebugger,
+			showMessage,
 			status,
 			totalResultsHiddenCount,
 			totalResultsVisibleCount,
@@ -778,6 +811,19 @@ class ResultRankingsForm extends Component {
 					className="result-rankings-container"
 					formSize="lg"
 				>
+					{showMessage && (
+						<ClayAlert
+							className="w-100"
+							displayType="warning"
+							hideCloseIcon={false}
+							onClose={this._handleShowMessage}
+							title={Liferay.Language.get('warning')}
+							variant="inline"
+						>
+							{this._getAlertMessage()}
+						</ClayAlert>
+					)}
+
 					<ClayLayout.Sheet className="form-section-header">
 						<label>{Liferay.Language.get('query')}</label>
 

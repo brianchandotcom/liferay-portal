@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -271,6 +273,28 @@ public class KBArticleStagedModelDataHandler
 			kbArticleResourcePrimKeys.put(
 				kbArticle.getResourcePrimKey(),
 				importedKBArticle.getResourcePrimKey());
+		}
+	}
+
+	@Override
+	protected void doRestoreStagedModel(
+			PortletDataContext portletDataContext, KBArticle kbArticle)
+		throws Exception {
+
+		KBArticle existingKBArticle = fetchStagedModelByUuidAndGroupId(
+			kbArticle.getUuid(), portletDataContext.getScopeGroupId());
+
+		if ((existingKBArticle == null) || !existingKBArticle.isInTrash()) {
+			return;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			KBArticle.class.getName());
+
+		if (trashHandler.isRestorable(existingKBArticle.getKbArticleId())) {
+			trashHandler.restoreTrashEntry(
+				portletDataContext.getUserId(kbArticle.getUserUuid()),
+				existingKBArticle.getKbArticleId());
 		}
 	}
 

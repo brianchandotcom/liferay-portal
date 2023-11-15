@@ -64,11 +64,9 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-142518. TC-8 Verify that cookies will have 6 months of lifetime when they are accepted or declined. Blocked by LRCI-2917."
-	@ignore = "true"
+	@description = "This is a use case for LPS-142518. TC-8 Verify that cookies will have 12 months of lifetime when they are accepted."
 	@priority = 5
-	test CookiesLifetimeIsSixMonthsWhenTheyAreSaved {
-		property portal.acceptance = "quarantine";
+	test VerifyCookiesLifetime {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -80,7 +78,7 @@ definition {
 			CookieHelper.checkAllCookieAreAcceptedAndSaved();
 		}
 
-		task ("Then: Cookie category related cookies are saved with 6 months as expiration time.") {
+		task ("Then: Cookie category related cookies are saved with 12 months as expiration time.") {
 			CookieBanner.checkIfCookiesHasSixMonthsAsExpirationDate();
 		}
 	}
@@ -134,7 +132,7 @@ definition {
 				portlet = "Preference Handling",
 				siteURLKey = "guest");
 
-			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithOutCookieConsentInInstanceSittings();
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithOutCookieConsentInInstanceSettings();
 		}
 
 		task ("When: End User first visits the site") {

@@ -98,6 +98,9 @@ import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.maven.artifact.versioning.ArtifactVersion;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
+
 /**
  * @author Hugo Huijser
  */
@@ -682,6 +685,76 @@ public class SourceFormatter {
 	private void _checkBreakingChangeMessage(List<String> commitMessages)
 		throws Exception {
 
+		List<String> currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
+			_sourceFormatterArgs.getBaseDirName(),
+			_sourceFormatterArgs.getGitWorkingBranchName());
+
+		File portalDir = SourceFormatterUtil.getPortalDir(
+			_sourceFormatterArgs.getBaseDirName(),
+			_sourceFormatterArgs.getMaxLineLength());
+
+		outerLoop:
+		for (String currentBranchFileName : currentBranchFileNames) {
+			if (!currentBranchFileName.endsWith("/bnd.bnd") ||
+				currentBranchFileName.contains("-test/")) {
+
+				continue;
+			}
+
+			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
+				_sourceFormatterArgs.getBaseDirName(),
+				_sourceFormatterArgs.getGitWorkingBranchName(),
+				new File(
+					portalDir, currentBranchFileName
+				).getAbsolutePath());
+
+			String oldVersion = null;
+			String newVersion = null;
+
+			for (String line : StringUtil.splitLines(currentBranchFileDiff)) {
+				if (!line.contains("Bundle-Version:")) {
+					continue;
+				}
+
+				int pos = line.indexOf(":");
+
+				String version = StringUtil.trim(line.substring(pos + 1));
+
+				if (line.startsWith(StringPool.PLUS)) {
+					newVersion = version;
+				}
+				else if (line.startsWith(StringPool.DASH)) {
+					oldVersion = version;
+				}
+			}
+
+			if ((newVersion != null) && (oldVersion != null)) {
+				ArtifactVersion newArtifactVersion = new DefaultArtifactVersion(
+					newVersion);
+				ArtifactVersion oldArtifactVersion = new DefaultArtifactVersion(
+					oldVersion);
+
+				if (newArtifactVersion.getMajorVersion() <=
+						oldArtifactVersion.getMajorVersion()) {
+
+					continue;
+				}
+
+				for (String commitMessage : commitMessages) {
+					String[] parts = commitMessage.split(":", 2);
+
+					if (parts[1].contains("# breaking_change_report")) {
+						continue outerLoop;
+					}
+				}
+
+				throw new Exception(
+					StringBundler.concat(
+						"When ", currentBranchFileName, " updated,\n",
+						"# breaking_change_report is necessary"));
+			}
+		}
+
 		for (String commitMessage : commitMessages) {
 			String[] parts = commitMessage.split(":", 2);
 
@@ -747,10 +820,6 @@ public class SourceFormatter {
 				}
 
 				String filePath = StringUtil.trim(trimmedLine.substring(7));
-
-				File portalDir = SourceFormatterUtil.getPortalDir(
-					_sourceFormatterArgs.getBaseDirName(),
-					_sourceFormatterArgs.getMaxLineLength());
 
 				File file = new File(portalDir, filePath);
 

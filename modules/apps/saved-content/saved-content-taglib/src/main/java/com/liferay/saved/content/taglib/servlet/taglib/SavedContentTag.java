@@ -277,7 +277,7 @@ public class SavedContentTag extends IncludeTag {
 		if (!_saved) {
 			SavedContentEntry savedContentEntry =
 				SavedContentEntryLocalServiceUtil.fetchSavedContentEntry(
-					_groupId, userId, _className, _classPK);
+					userId, _groupId, _className, _classPK);
 
 			if (savedContentEntry != null) {
 				_saved = true;

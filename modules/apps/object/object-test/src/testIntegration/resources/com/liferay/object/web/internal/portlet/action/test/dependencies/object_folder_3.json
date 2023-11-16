@@ -1,0 +1,282 @@
+{
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"externalReferenceCode": "OBJECTFOLDER3",
+	"label": {
+		"en_US": "Object Folder 3"
+	},
+	"name": "TestObjectFolder3",
+	"objectFolderItems": [
+		{
+			"linkedObjectDefinition": false,
+			"objectDefinition": {
+				"accountEntryRestricted": false,
+				"accountEntryRestrictedObjectFieldName": "",
+				"actions": {
+					"delete": {
+					},
+					"get": {
+					},
+					"permissions": {
+					},
+					"update": {
+					}
+				},
+				"active": true,
+				"defaultLanguageId": "en_US",
+				"enableCategorization": true,
+				"enableComments": false,
+				"enableLocalization": false,
+				"enableObjectEntryHistory": false,
+				"externalReferenceCode": "OBJECTDEFINITION1",
+				"label": {
+					"en_US": "Object Definition 1"
+				},
+				"modifiable": true,
+				"name": "ObjectDefinition1",
+				"objectActions": [
+				],
+				"objectFields": [
+					{
+						"DBType": "String",
+						"businessType": "Text",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Author"
+						},
+						"localized": false,
+						"name": "creator",
+						"objectFieldSettings": [
+						],
+						"readOnly": "true",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "String",
+						"unique": false
+					},
+					{
+						"DBType": "Date",
+						"businessType": "Date",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Create Date"
+						},
+						"localized": false,
+						"name": "createDate",
+						"objectFieldSettings": [
+						],
+						"readOnly": "true",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "Date",
+						"unique": false
+					},
+					{
+						"DBType": "String",
+						"businessType": "Text",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "External Reference Code"
+						},
+						"localized": false,
+						"name": "externalReferenceCode",
+						"objectFieldSettings": [
+						],
+						"readOnly": "false",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "String",
+						"unique": false
+					},
+					{
+						"DBType": "Long",
+						"businessType": "LongInteger",
+						"indexed": true,
+						"indexedAsKeyword": true,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "ID"
+						},
+						"localized": false,
+						"name": "id",
+						"objectFieldSettings": [
+						],
+						"readOnly": "true",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "Long",
+						"unique": false
+					},
+					{
+						"DBType": "Date",
+						"businessType": "Date",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Modified Date"
+						},
+						"localized": false,
+						"name": "modifiedDate",
+						"objectFieldSettings": [
+						],
+						"readOnly": "true",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "Date",
+						"unique": false
+					},
+					{
+						"DBType": "String",
+						"businessType": "Text",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Status"
+						},
+						"localized": false,
+						"name": "status",
+						"objectFieldSettings": [
+						],
+						"readOnly": "true",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "String",
+						"unique": false
+					},
+					{
+						"DBType": "String",
+						"businessType": "Text",
+						"externalReferenceCode": "TextObjectFieldERC",
+						"indexed": true,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "en_US",
+						"label": {
+							"en_US": "Text Object Field"
+						},
+						"localized": false,
+						"name": "textObjectField",
+						"objectFieldSettings": [
+						],
+						"readOnly": "false",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": false,
+						"type": "String",
+						"unique": false
+					}
+				],
+				"objectFolderExternalReferenceCode": "OBJECTFOLDER3",
+				"objectLayouts": [
+				],
+				"objectRelationships": [
+					{
+						"deletionType": "prevent",
+						"externalReferenceCode": "ObjectRelationship1ERC",
+						"label": {
+							"en_US": "Object Relationship 1"
+						},
+						"name": "objectRelationship1",
+						"objectDefinitionExternalReferenceCode1": "OBJECTDEFINITION1",
+						"objectDefinitionExternalReferenceCode2": "OBJECTDEFINITION2",
+						"objectDefinitionModifiable2": true,
+						"objectDefinitionName2": "OBJECTDEFINITION2",
+						"objectDefinitionSystem2": false,
+						"objectField": {
+							"DBType": "Long",
+							"businessType": "Relationship",
+							"externalReferenceCode": "ObjectRelationship1ObjectFieldERC",
+							"indexed": true,
+							"indexedAsKeyword": false,
+							"indexedLanguageId": "",
+							"label": {
+								"en_US": "Object Relationship 1 Object Field"
+							},
+							"localized": false,
+							"name": "r_objectRelationship1_c_objectDefinition1Id",
+							"objectFieldSettings": [
+								{
+									"name": "objectDefinition1ShortName",
+									"value": "ObjectDefinition1"
+								},
+								{
+									"name": "objectRelationshipERCObjectFieldName",
+									"value": "r_objectRelationship1_c_objectDefinition1ERC"
+								}
+							],
+							"readOnly": "false",
+							"readOnlyConditionExpression": "",
+							"relationshipType": "oneToMany",
+							"required": false,
+							"state": false,
+							"system": false,
+							"type": "Long",
+							"unique": false
+						},
+						"parameterObjectFieldId": 0,
+						"parameterObjectFieldName": "",
+						"reverse": false,
+						"system": false,
+						"type": "oneToMany"
+					}
+				],
+				"objectValidationRules": [
+				],
+				"objectViews": [
+				],
+				"panelCategoryKey": "",
+				"parameterRequired": false,
+				"pluralLabel": {
+					"en_US": "Object Definition 1s"
+				},
+				"portlet": true,
+				"restContextPath": "/o/c/objectdefinition1s",
+				"scope": "company",
+				"status": {
+					"code": 0,
+					"label": "approved",
+					"label_i18n": "Approved"
+				},
+				"system": false,
+				"titleObjectFieldName": "id"
+			},
+			"objectDefinitionExternalReferenceCode": "OBJECTDEFINITION1",
+			"positionX": 432,
+			"positionY": 591
+		},
+		{
+			"linkedObjectDefinition": true,
+			"objectDefinitionExternalReferenceCode": "OBJECTDEFINITION2",
+			"positionX": 850,
+			"positionY": 408
+		}
+	]
+}

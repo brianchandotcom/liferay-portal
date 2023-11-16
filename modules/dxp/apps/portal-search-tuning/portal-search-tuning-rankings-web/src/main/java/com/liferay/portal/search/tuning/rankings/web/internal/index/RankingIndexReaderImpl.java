@@ -158,6 +158,10 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 			_queries.term(
 				RankingFields.STATUS, ResultRankingsConstants.INACTIVE));
 
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term(
+				RankingFields.STATUS, ResultRankingsConstants.NOT_APPLICABLE));
+
 		return booleanQuery;
 	}
 

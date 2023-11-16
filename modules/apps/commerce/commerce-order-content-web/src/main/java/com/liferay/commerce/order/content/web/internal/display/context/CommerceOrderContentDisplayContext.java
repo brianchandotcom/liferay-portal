@@ -32,6 +32,9 @@ import com.liferay.commerce.order.importer.type.CommerceOrderImporterType;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
+import com.liferay.commerce.payment.constants.CommercePaymentIntegrationConstants;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -130,6 +133,8 @@ public class CommerceOrderContentDisplayContext {
 			CommerceOrderService commerceOrderService,
 			CommerceOrderStatusRegistry commerceOrderStatusRegistry,
 			CommerceOrderTypeService commerceOrderTypeService,
+			CommercePaymentIntegrationRegistry
+				commercePaymentIntegrationRegistry,
 			CommercePaymentMethodGroupRelLocalService
 				commercePaymentMethodGroupRelLocalService,
 			CommercePaymentMethodRegistry commercePaymentMethodRegistry,
@@ -152,6 +157,8 @@ public class CommerceOrderContentDisplayContext {
 		_commerceOrderService = commerceOrderService;
 		_commerceOrderStatusRegistry = commerceOrderStatusRegistry;
 		_commerceOrderTypeService = commerceOrderTypeService;
+		_commercePaymentIntegrationRegistry =
+			commercePaymentIntegrationRegistry;
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
@@ -1351,9 +1358,23 @@ public class CommerceOrderContentDisplayContext {
 			_commercePaymentMethodRegistry.getCommercePaymentMethod(
 				commercePaymentMethodKey);
 
-		return ArrayUtil.contains(
-			CommercePaymentMethodConstants.TYPES_ONLINE,
-			commercePaymentMethod.getPaymentType());
+		if (commercePaymentMethod != null) {
+			return ArrayUtil.contains(
+				CommercePaymentMethodConstants.TYPES_ONLINE,
+				commercePaymentMethod.getPaymentType());
+		}
+
+		CommercePaymentIntegration commercePaymentIntegration =
+			_commercePaymentIntegrationRegistry.getCommercePaymentIntegration(
+				commercePaymentMethodKey);
+
+		if (commercePaymentIntegration != null) {
+			return ArrayUtil.contains(
+				CommercePaymentIntegrationConstants.TYPES_ONLINE,
+				commercePaymentIntegration.getPaymentIntegrationType());
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -1377,6 +1398,8 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 	private final Format _commerceOrderTimeFormat;
 	private final CommerceOrderTypeService _commerceOrderTypeService;
+	private final CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;

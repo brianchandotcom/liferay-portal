@@ -19,6 +19,7 @@ import Search from '../../common/components/TableHeader/Search';
 import {LiferayPicklistName} from '../../common/enums/liferayPicklistName';
 import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
 import {ObjectActionName} from '../../common/enums/objectActionName';
+import {PermissionActionType} from '../../common/enums/permissionActionType';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
@@ -246,15 +247,16 @@ const MDFClaimList = () => {
 				</div>
 
 				<div className="mb-2 mb-lg-0">
-					{!!dataCSV.items?.length && (
-						<CSVLink
-							className="btn btn-secondary mr-2"
-							data={dataCSV.items}
-							filename="MDF Claim.csv"
-						>
-							Export MDF Claim
-						</CSVLink>
-					)}
+					{!!dataCSV.items?.length &&
+						actions?.includes(PermissionActionType.EXPORT) && (
+							<CSVLink
+								className="btn btn-secondary mr-2"
+								data={dataCSV.items}
+								filename="MDF Claim.csv"
+							>
+								Export MDF Claim
+							</CSVLink>
+						)}
 				</div>
 			</TableHeader>
 

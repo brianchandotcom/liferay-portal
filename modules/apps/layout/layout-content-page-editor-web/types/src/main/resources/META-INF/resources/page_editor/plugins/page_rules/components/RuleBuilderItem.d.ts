@@ -6,6 +6,7 @@
 import {ReactNode, Ref} from 'react';
 interface RuleBuilderItemProps {
 	children: ReactNode;
+	description: string;
 	onDeleteButtonClick: () => void;
 	showDeleteButton: boolean;
 	type: 'action' | 'condition';
@@ -13,6 +14,7 @@ interface RuleBuilderItemProps {
 }
 export default function RuleBuilderItem({
 	children,
+	description,
 	onDeleteButtonClick,
 	showDeleteButton,
 	type,

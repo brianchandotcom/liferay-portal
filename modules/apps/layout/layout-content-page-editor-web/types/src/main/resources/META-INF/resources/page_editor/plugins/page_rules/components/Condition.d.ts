@@ -18,6 +18,28 @@ interface ConditionProps {
 	showDeleteButton: boolean;
 	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
 }
+export declare const CONDITION_TYPE_ITEMS: readonly [
+	{
+		readonly label: string;
+		readonly value: 'user';
+	}
+];
+export declare const CONDITION_ITEMS: {
+	readonly user: readonly [
+		{
+			readonly label: string;
+			readonly value: 'user';
+		},
+		{
+			readonly label: string;
+			readonly value: 'role';
+		},
+		{
+			readonly label: string;
+			readonly value: 'segment';
+		}
+	];
+};
 export default function Condition({
 	condition,
 	onConditionChange,

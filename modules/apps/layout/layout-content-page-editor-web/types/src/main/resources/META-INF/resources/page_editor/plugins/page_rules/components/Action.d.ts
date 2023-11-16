@@ -22,6 +22,22 @@ interface ActionProps {
 	showDeleteButton: boolean;
 	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
 }
+export declare const ACTION_TYPE_ITEMS: readonly [
+	{
+		readonly label: string;
+		readonly value: 'show';
+	},
+	{
+		readonly label: string;
+		readonly value: 'hide';
+	}
+];
+export declare const ACTION_ITEMS: readonly [
+	{
+		readonly label: string;
+		readonly value: 'fragment';
+	}
+];
 export default function Action({
 	action,
 	layoutDataItems,

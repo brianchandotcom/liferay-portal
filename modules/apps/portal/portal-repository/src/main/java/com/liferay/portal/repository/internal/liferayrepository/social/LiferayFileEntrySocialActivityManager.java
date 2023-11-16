@@ -3,20 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.repository.liferayrepository.social;
+package com.liferay.portal.repository.internal.liferayrepository.social;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
+@Component(
 	property = "model.class.name=com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry",
 	service = SocialActivityManager.class
 )
@@ -30,10 +31,10 @@ public class LiferayFileEntrySocialActivityManager
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return socialActivityLocalService;
+		return _socialActivityLocalService;
 	}
 
-	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService socialActivityLocalService;
+	@Reference
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

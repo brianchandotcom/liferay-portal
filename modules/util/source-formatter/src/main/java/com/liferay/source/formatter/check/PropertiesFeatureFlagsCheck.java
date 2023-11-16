@@ -165,7 +165,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					deprecationFeatureFlagKeyMatcher.group(1));
 			}
 
-			StringBundler sb = new StringBundler(_featureFlagKeys.size() * 14);
+			StringBundler sb = new StringBundler(_featureFlagKeys.size() * 15);
 
 			for (String featureFlagKey : _featureFlagKeys) {
 				String featureFlagPropertyKey =

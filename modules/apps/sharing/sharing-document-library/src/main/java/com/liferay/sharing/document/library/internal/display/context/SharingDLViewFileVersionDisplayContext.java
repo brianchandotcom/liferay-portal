@@ -160,11 +160,13 @@ public class SharingDLViewFileVersionDisplayContext
 			return dropdownItems;
 		}
 
-		dropdownItems.add(
-			Math.min(i, dropdownItems.size()),
-			_sharingDropdownItemFactory.createShareDropdownItem(
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest));
+		if (_isSharingEnabled()) {
+			dropdownItems.add(
+				Math.min(i, dropdownItems.size()),
+				_sharingDropdownItemFactory.createShareDropdownItem(
+					DLFileEntryConstants.getClassName(),
+					_fileEntry.getFileEntryId(), _httpServletRequest));
+		}
 
 		return dropdownItems;
 	}
@@ -217,11 +219,13 @@ public class SharingDLViewFileVersionDisplayContext
 				}
 			}
 			else {
-				dropdownItems.add(
-					i,
-					_sharingDropdownItemFactory.createShareDropdownItem(
-						DLFileEntryConstants.getClassName(),
-						_fileEntry.getFileEntryId(), _httpServletRequest));
+				if (_isSharingEnabled()) {
+					dropdownItems.add(
+						i,
+						_sharingDropdownItemFactory.createShareDropdownItem(
+							DLFileEntryConstants.getClassName(),
+							_fileEntry.getFileEntryId(), _httpServletRequest));
+				}
 			}
 
 			return true;

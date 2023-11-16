@@ -7,6 +7,7 @@ package com.liferay.portal.db.partition.sql;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,6 +16,15 @@ import java.sql.SQLException;
  * @author Alberto Chaparro
  */
 public interface DBPartitionSQL {
+
+	public default String getCatalog(
+			Connection connection, String partitionName)
+		throws SQLException {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		return dbInspector.getCatalog();
+	}
 
 	public default String getCopyDataSQL(
 		String fromPartitionName, String toPartitionName, String tableName,
@@ -62,6 +72,14 @@ public interface DBPartitionSQL {
 
 		return StringBundler.concat(
 			"drop view if exists ", partitionName, StringPool.PERIOD, viewName);
+	}
+
+	public default String getSchema(
+		Connection connection, String partitionName) {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		return dbInspector.getSchema();
 	}
 
 	public void setPartition(Connection connection, String partitionName)

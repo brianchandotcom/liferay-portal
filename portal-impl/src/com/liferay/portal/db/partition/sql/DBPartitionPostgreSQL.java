@@ -42,6 +42,11 @@ public class DBPartitionPostgreSQL implements DBPartitionSQL {
 	}
 
 	@Override
+	public String getSchema(Connection connection, String partitionName) {
+		return partitionName;
+	}
+
+	@Override
 	public void setPartition(Connection connection, String partitionName)
 		throws SQLException {
 

@@ -19,6 +19,13 @@ import java.sql.SQLException;
 public class DBPartitionMySQL implements DBPartitionSQL {
 
 	@Override
+	public String getCatalog(Connection connection, String partitionName)
+		throws SQLException {
+
+		return partitionName;
+	}
+
+	@Override
 	public String getCreatePartitionSQL(
 			Connection connection, String partitionName)
 		throws SQLException {

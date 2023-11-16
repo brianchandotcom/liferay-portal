@@ -566,7 +566,16 @@ public class DBPartitionUtil {
 
 			@Override
 			public String getCatalog() throws SQLException {
-				return _getPartitionName(CompanyThreadLocal.getCompanyId());
+				return _dbPartitionSQL.getCatalog(
+					connection,
+					_getPartitionName(CompanyThreadLocal.getCompanyId()));
+			}
+
+			@Override
+			public String getSchema() {
+				return _dbPartitionSQL.getSchema(
+					connection,
+					_getPartitionName(CompanyThreadLocal.getCompanyId()));
 			}
 
 			@Override

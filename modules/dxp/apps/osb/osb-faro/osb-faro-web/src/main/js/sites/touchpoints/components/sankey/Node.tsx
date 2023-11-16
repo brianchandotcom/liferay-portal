@@ -53,7 +53,7 @@ export const Node = ({
 	height: initialHeight,
 	hovered,
 	index,
-	onNodeChange,
+	onNodeChange = () => {},
 	payload,
 	selectedNode,
 	width: initialWidth,
@@ -85,7 +85,7 @@ export const Node = ({
 
 					<text
 						x={MAIN_NODE_WIDTH / 2 - 2}
-						y={MAIN_NODE_HEIGHT / 2 + 20}
+						y={MAIN_NODE_HEIGHT / 2 + 60}
 					>
 						{toThousands(payload.value)}
 					</text>

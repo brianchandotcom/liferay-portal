@@ -1,11 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from './Link';
-import {
-	MAIN_NODE_HEIGHT,
-	MAIN_NODE_WIDTH,
-	SANKEY_HEIGHT,
-	SANKEY_WIDTH
-} from './utils';
+import {MAIN_NODE_WIDTH, SANKEY_HEIGHT, SANKEY_WIDTH} from './utils';
 import {Node} from './Node';
 import {Tooltip as RechartsTooltip, Sankey as SankeyChart} from 'recharts';
 import {Tooltip} from './Tooltip';
@@ -14,12 +9,12 @@ const Sankey = ({data}) => {
 	const [hovered, setMouseEnter] = useState(false);
 	const [selectedNode, setSelectedNode] = useState(null);
 
-	const emptyState = !data.links.length && data.nodes.length === 1;
+	const marginTop = 60;
 
 	return (
 		<SankeyChart
 			data={data}
-			height={emptyState ? MAIN_NODE_HEIGHT : SANKEY_HEIGHT}
+			height={SANKEY_HEIGHT}
 			link={
 				<Link
 					hovered={hovered}
@@ -28,10 +23,9 @@ const Sankey = ({data}) => {
 				/>
 			}
 			linkCurvature={0.3}
-			margin={{bottom: 30, right: 20, top: 60}}
+			margin={{bottom: 30, right: 20, top: marginTop}}
 			node={
 				<Node
-					emptyState={emptyState}
 					hovered={hovered}
 					onNodeChange={setSelectedNode}
 					selectedNode={selectedNode}
@@ -46,7 +40,7 @@ const Sankey = ({data}) => {
 				setMouseEnter(false);
 			}}
 			sort={false}
-			width={emptyState ? MAIN_NODE_WIDTH : SANKEY_WIDTH}
+			width={SANKEY_WIDTH}
 		>
 			<RechartsTooltip
 				allowEscapeViewBox={{x: true, y: true}}

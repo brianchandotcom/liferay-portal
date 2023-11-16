@@ -1,0 +1,2259 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}feature.flag.COMMERCE-11922=true${line.separator}jsonws.web.service.paths.excludes=";
+	property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
+	property osgi.module.configurations = "enabled=\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		task ("Given a Minium site") {
+			CommerceConfiguration.commerceSetUp(minium = "true");
+		}
+
+		task ("And an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-12831. As a buyer, I want to be able to view the included option value that cannot work when the product is not purchasable"
+	@priority = 4
+	test CannotRequiredInBundleWorkWhenProductIsNotPurchasable {
+		property portal.acceptance = "false";
+
+		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration.scoped~default.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showUnselectableOptions=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("And U-Joint Requires in Product Bundle to ABS Sensor is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Requires in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_value = "Requires in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And Brake Rotors Incompatible in Product Bundle to Premium Brake Pads is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Premium Brake Pads"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Brake Rotors",
+				key_relation = "Incompatible in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "Brake Rotors",
+				key_value = "Incompatible in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And a new bundled product with two options(each one value) and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			for (var index : list "1,2") {
+				CommerceJSONOptionsAPI._addCommerceOption(
+					fieldType = "select",
+					optionKey = "option${index}",
+					optionName = "Option${index}",
+					optionValues = "value${index}:Value${index}:1");
+			}
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceProductOptions.editProductOption(
+					key_option = ${optionName},
+					key_priceType = "Static",
+					productOptionPriceType = "true",
+					productOptionRequired = "true",
+					productOptionSkuContributor = "true");
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("And the admin selects SKUs as the linked product for values") {
+			for (var optionValueList : list "Option1:Value1:MIN93015,Option2:Value2:MIN55861") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionName}:", "");
+
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And U-Joint's SKU MIN55861 is configured as not purchasable") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				productSku = "MIN55861",
+				purchasable = "false");
+		}
+
+		task ("And the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And assert that the default values shown as value1 and value2") {
+			for (var optionValueList : list "Option1:Value1,Option2:Value2") {
+				var fsOptionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var fsOptionValue = StringUtil.extractLast(${optionValueList}, ":");
+
+				AssertTextEquals(
+					key_optionName = ${fsOptionName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+					value1 = ${fsOptionValue});
+			}
+		}
+
+		task ("When trying to add to cart the combination value1 and value2") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("Then an alert message shows up 'Danger:The product is no longer available.'") {
+			Alert.viewErrorMessage(errorMessage = "Danger:The product is no longer available.");
+		}
+	}
+
+	@description = "COMMERCE-12832. As a buyer, I want to be able to view the included option value that cannot work when the product is out of stock"
+	@priority = 4
+	test CannotRequiredInBundleWorkWhenProductIsOutOfStock {
+		property portal.acceptance = "false";
+
+		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration.scoped~default.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showUnselectableOptions=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("And U-Joint Requires in Product Bundle to ABS Sensor is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Requires in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_value = "Requires in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And Brake Rotors Incompatible in Product Bundle to Premium Brake Pads is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Premium Brake Pads"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Brake Rotors",
+				key_relation = "Incompatible in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "Brake Rotors",
+				key_value = "Incompatible in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And a new bundled product with two options(each one value) and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			for (var index : list "1,2") {
+				CommerceJSONOptionsAPI._addCommerceOption(
+					fieldType = "select",
+					optionKey = "option${index}",
+					optionName = "Option${index}",
+					optionValues = "value${index}:Value${index}:1");
+			}
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceProductOptions.editProductOption(
+					key_option = ${optionName},
+					key_priceType = "Static",
+					productOptionPriceType = "true",
+					productOptionRequired = "true",
+					productOptionSkuContributor = "true");
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("And the admin selects SKUs as the linked product for values") {
+			for (var optionValueList : list "Option1:Value1:MIN93015,Option2:Value2:MIN55861") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionName}:", "");
+
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And U-Joint's SKU MIN55861 inventory is set as 0 for each warehouse") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN55861",
+					quantity = 0,
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And U-Joint's Allow Back Order is disabled") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("And the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And assert that the default values shown as value1 and value2") {
+			for (var optionValueList : list "Option1:Value1,Option2:Value2") {
+				var fsOptionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var fsOptionValue = StringUtil.extractLast(${optionValueList}, ":");
+
+				AssertTextEquals(
+					key_optionName = ${fsOptionName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+					value1 = ${fsOptionValue});
+			}
+		}
+
+		task ("When trying to add to cart the combination value1 and value2") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("Then an alert message shows up 'Danger:The specified quantity is unavailable.'") {
+			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+		}
+	}
+
+	@description = "COMMERCE-12803. As an admin, I want to be able to verify the excluded Product Relation is bidirectional"
+	@priority = 5
+	test VerifyExcludedProductRelationIsBidirectional {
+		property portal.acceptance = "true";
+
+		task ("When U-Joint Incompatible in Product Bundle to ABS Sensor is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Incompatible in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_value = "Incompatible in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("Then the ABS Sensor entry is visible under U-Joint's Product Relations tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"U-Joint"''');
+
+			CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			AssertElementPresent(
+				key_productName = "ABS Sensor",
+				key_value = "Incompatible in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("When the ABS Sensor entry is deleted from U-Joint's Product Relations tab") {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Delete",
+				rowEntry = "ABS Sensor");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "Sorry, no results were found.");
+		}
+
+		task ("Then the U-Joint entry is removed from ABS Sensor's Product Relations tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "Sorry, no results were found.");
+		}
+	}
+
+	@description = "COMMERCE-12809. As a buyer, I want to be able to verify the included and excluded option values by combining the Products Limit rule"
+	@priority = 5
+	test VerifyIncludedAndExcludedCombiningProductsLimitRule {
+		property portal.acceptance = "true";
+
+		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration.scoped~default.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showUnselectableOptions=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("And U-Joint Requires in Product Bundle to ABS Sensor is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Requires in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_value = "Requires in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And Brake Rotors Incompatible in Product Bundle to Premium Brake Pads is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Premium Brake Pads"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Brake Rotors",
+				key_relation = "Incompatible in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "Brake Rotors",
+				key_value = "Incompatible in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And a new bundled product with two options(each two values) and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1,value2:Value2:2");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option2",
+				optionName = "Option2",
+				optionValues = "value3:Value3:1,value4:Value4:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceProductOptions.editProductOption(
+					key_option = ${optionName},
+					key_priceType = "Static",
+					productOptionPriceType = "true",
+					productOptionRequired = "true",
+					productOptionSkuContributor = "true");
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("And the admin selects SKUs as the linked product for values") {
+			for (var optionValueList : list "Option1:Value1:MIN93015,Option1:Value2:MIN93019,Option2:Value3:MIN55861,Option2:Value4:MIN93020") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionName}:", "");
+
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And an active order rule with products limit type is created") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description 1",
+				orderRuleName = "Test Order Rule 1",
+				orderRuleType = "Products Limit",
+				productNames = "U-Joint",
+				quantity = "0.9");
+		}
+
+		task ("And the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And assert that the default values shown as value1 and value3") {
+			for (var optionValueList : list "Option1:Value1,Option2:Value3") {
+				var fsOptionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var fsOptionValue = StringUtil.extractLast(${optionValueList}, ":");
+
+				AssertTextEquals(
+					key_optionName = ${fsOptionName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+					value1 = ${fsOptionValue});
+			}
+		}
+
+		task ("When adding to cart the configuration value1 and value3 and proceeding with the checkout") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then a warning message shows up 'No more than 0.9 products in this product range can be purchased together.'") {
+			AssertElementPresent(
+				key_text = "No more than 0.9 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is impossible to continue the checkout") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And opens the dropdown od option2") {
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+		}
+
+		task ("Then the message appears in the value3 of option2 dropdown item 'No more than 0.9 products in this product range can be purchased together.'") {
+			AssertElementPresent(
+				key_optionName = "Value3",
+				key_warning = "No more than 0.9 products in this product range can be purchased together.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+
+		task ("When the buyer selects value1 value4 combination") {
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			Click(
+				key_optionName = "Value1",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			Click(
+				key_optionName = "Value4",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+		}
+
+		task ("Then the message appears in the value3 of option2 dropdown item 'No more than 0.9 products in this product range can be purchased together.'") {
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value3",
+				key_warning = "No more than 0.9 products in this product range can be purchased together.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+
+			AssertElementPresent(
+				key_optionName = "Value4",
+				key_warning = "",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+
+		task ("And the messages appear in the value1 and value2 of option1 dropdown items") {
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value1",
+				key_warning = "ABS Sensor requires U-Joint to be purchased also.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+
+			AssertElementPresent(
+				key_optionName = "Value2",
+				key_warning = "Premium Brake Pads cannot be combined with Brake Rotors.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+	}
+
+	@description = "COMMERCE-12805. As a buyer, I want to be able to verify the included and excluded option values are disabled with reason messages"
+	@priority = 5
+	test VerifyIncludedAndExcludedOptionValuesAreDisabledWithReasonMessage {
+		property portal.acceptance = "true";
+
+		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration.scoped~default.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showUnselectableOptions=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("And U-Joint Requires in Product Bundle to ABS Sensor is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Requires in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_value = "Requires in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And Brake Rotors Incompatible in Product Bundle to Premium Brake Pads is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Premium Brake Pads"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Brake Rotors",
+				key_relation = "Incompatible in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "Brake Rotors",
+				key_value = "Incompatible in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And a new bundled product with two options(each two values) and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1,value2:Value2:2");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option2",
+				optionName = "Option2",
+				optionValues = "value3:Value3:1,value4:Value4:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceProductOptions.editProductOption(
+					key_option = ${optionName},
+					key_priceType = "Static",
+					productOptionPriceType = "true",
+					productOptionRequired = "true",
+					productOptionSkuContributor = "true");
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("And the admin selects SKUs as the linked product for values and sets the value2 and value4 as default") {
+			for (var optionValueList : list "Option1:Value1:MIN93015,Option1:Value2:MIN93019,Option2:Value3:MIN55861,Option2:Value4:MIN93020") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionName}:", "");
+
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+
+			for (var optionValueList : list "Option1:Value2,Option2:Value4") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var optionValueName = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.clickEntryDropdownMenuItem(
+					entryName = ${optionValueName},
+					menuItem = "Toggle Default");
+
+				Alert.viewSuccessMessage();
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("Then assert that the default values shown as value2 and value4") {
+			for (var optionValueList : list "Option1:Value2,Option2:Value4") {
+				var fsOptionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var fsOptionValue = StringUtil.extractLast(${optionValueList}, ":");
+
+				AssertTextEquals(
+					key_optionName = ${fsOptionName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+					value1 = ${fsOptionValue});
+			}
+		}
+
+		task ("When trying to add to cart the configuration value2 and value4") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("Then an alert message shows up 'Danger:Brake Rotors cannot be combined with Premium Brake Pads.'") {
+			Alert.viewErrorMessage(errorMessage = "Danger:Brake Rotors cannot be combined with Premium Brake Pads.");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("Then the messages appear in the value1 and value2 of option1 dropdown items") {
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value1",
+				key_warning = "ABS Sensor requires U-Joint to be purchased also.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+
+			AssertElementPresent(
+				key_optionName = "Value2",
+				key_warning = "Premium Brake Pads cannot be combined with Brake Rotors.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+
+		task ("And the message appears in the value4 of option2 dropdown item 'No more than 1 products in this product range can be purchased together.'") {
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value3",
+				key_warning = "",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+
+			AssertElementPresent(
+				key_optionName = "Value4",
+				key_warning = "Brake Rotors cannot be combined with Premium Brake Pads.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+	}
+
+	@description = "COMMERCE-12810. As a buyer, I want to be able to verify the included and excluded option values are disabled with reason messages without SKU Contributor"
+	@priority = 5
+	test VerifyIncludedAndExcludedOptionValuesAreDisabledWithReasonMessageWithoutSKUContributor {
+		property portal.acceptance = "true";
+
+		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration.scoped~default.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showUnselectableOptions=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("And U-Joint Requires in Product Bundle to ABS Sensor is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Requires in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_value = "Requires in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And Brake Rotors Incompatible in Product Bundle to Premium Brake Pads is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Premium Brake Pads"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Brake Rotors",
+				key_relation = "Incompatible in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "Brake Rotors",
+				key_value = "Incompatible in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And a new bundled product with two options(each two values) and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1,value2:Value2:2");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option2",
+				optionName = "Option2",
+				optionValues = "value3:Value3:1,value4:Value4:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceProductOptions.editProductOption(
+					key_option = ${optionName},
+					key_priceType = "Static",
+					productOptionPriceType = "true",
+					productOptionRequired = "true");
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("And the admin selects SKUs as the linked product for values and sets the value1 and value4 as default") {
+			for (var optionValueList : list "Option1:Value1:MIN93015,Option1:Value2:MIN93019,Option2:Value3:MIN55861,Option2:Value4:MIN93020") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionName}:", "");
+
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+
+			for (var optionValueList : list "Option1:Value1,Option2:Value4") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var optionValueName = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.clickEntryDropdownMenuItem(
+					entryName = ${optionValueName},
+					menuItem = "Toggle Default");
+
+				Alert.viewSuccessMessage();
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("Then assert that the default values shown as value1 and value4") {
+			for (var optionValueList : list "Option1:Value1,Option2:Value4") {
+				var fsOptionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var fsOptionValue = StringUtil.extractLast(${optionValueList}, ":");
+
+				AssertTextEquals(
+					key_optionName = ${fsOptionName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+					value1 = ${fsOptionValue});
+			}
+		}
+
+		task ("When trying to add to cart the configuration value1 and value4") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("Then an alert message shows up 'Danger:ABS Sensor requires U-Joint to be purchased also.'") {
+			Alert.viewErrorMessage(errorMessage = "Danger:ABS Sensor requires U-Joint to be purchased also.");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("Then a message appears in the value1 of option1 dropdown item 'ABS Sensor requires U-Joint to be purchased also.'") {
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value1",
+				key_warning = "ABS Sensor requires U-Joint to be purchased also.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+
+			AssertElementPresent(
+				key_optionName = "Value2",
+				key_warning = "",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+
+		task ("And no messages appear in the value3 and value4 of option2 dropdown items") {
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			for (var optionValueName : list "Value3,Value4") {
+				AssertElementPresent(
+					key_optionName = ${optionValueName},
+					key_warning = "",
+					locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12808. As a buyer, I want to be able to verify the included and excluded option values on the mini-cart edit panel"
+	@priority = 4
+	test VerifyIncludedAndExcludedOptionValuesOnTheMinicartEdit {
+		property portal.acceptance = "false";
+
+		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration.scoped~default.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showUnselectableOptions=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("And U-Joint Requires in Product Bundle to ABS Sensor is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Requires in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_value = "Requires in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And Brake Rotors Incompatible in Product Bundle to Premium Brake Pads is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Premium Brake Pads"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Brake Rotors",
+				key_relation = "Incompatible in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "Brake Rotors",
+				key_value = "Incompatible in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("And a new bundled product with two options(each two values) and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1,value2:Value2:2");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option2",
+				optionName = "Option2",
+				optionValues = "value3:Value3:1,value4:Value4:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceProductOptions.editProductOption(
+					key_option = ${optionName},
+					key_priceType = "Static",
+					productOptionPriceType = "true",
+					productOptionRequired = "true",
+					productOptionSkuContributor = "true");
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("And the admin selects SKUs as the linked product for values") {
+			for (var optionValueList : list "Option1:Value1:MIN93015,Option1:Value2:MIN93019,Option2:Value3:MIN55861,Option2:Value4:MIN93020") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionName}:", "");
+
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And adds to cart the combination value1 value3") {
+			for (var optionValueList : list "Option1:Value1,Option2:Value3") {
+				var fsOptionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var fsOptionValue = StringUtil.extractLast(${optionValueList}, ":");
+
+				AssertTextEquals(
+					key_optionName = ${fsOptionName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+					value1 = ${fsOptionValue});
+			}
+
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("When edits the order item from the minicart") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "VALUE1VALUE3");
+		}
+
+		task ("And selects value1 value4 combination") {
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT");
+
+			Click(
+				key_optionName = "Value1",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT");
+
+			Click(
+				key_optionName = "Value4",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+		}
+
+		task ("Then it's not possible to save") {
+			AssertElementPresent(
+				key_text = "Save",
+				locator1 = "Button#ANY_DISABLED");
+		}
+
+		task ("And the messages appear in the value1 and value2 of option1 dropdown items") {
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value1",
+				key_warning = "ABS Sensor requires U-Joint to be purchased also.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+
+			AssertElementPresent(
+				key_optionName = "Value2",
+				key_warning = "Premium Brake Pads cannot be combined with Brake Rotors.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+
+		task ("And no messages appear in the value3 and value4 of option2 dropdown items") {
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			for (var optionValueName : list "Value3,Value4") {
+				AssertElementPresent(
+					key_optionName = ${optionValueName},
+					key_warning = "",
+					locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+			}
+		}
+
+		task ("When the buyer selects value2 value3 combination") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.gotoEditMiniCartItemProductOption(cartItemSku = "VALUE1VALUE3");
+
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT");
+
+			Click(
+				key_optionName = "Value2",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT");
+
+			Click(
+				key_optionName = "Value3",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+		}
+
+		task ("And the message appears in the value4 of option2 dropdown item") {
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value4",
+				key_warning = "Brake Rotors cannot be combined with Premium Brake Pads.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+
+		task ("And no messages appear in all other values dropdown items") {
+			AssertElementPresent(
+				key_optionName = "Value3",
+				key_warning = "",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			for (var optionValueName : list "Value1,Value2") {
+				AssertElementPresent(
+					key_optionName = ${optionValueName},
+					key_warning = "",
+					locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12804. As an admin, I want to be able to verify the included Product Relation is unidirectional"
+	@priority = 5
+	test VerifyIncludedProductRelationIsUnidirectional {
+		property portal.acceptance = "true";
+
+		task ("When U-Joint Requires in Product Bundle to ABS Sensor is added") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Requires in Bundle Product");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_value = "Requires in Bundle",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+
+		task ("Then the ABS Sensor entry is not visible under U-Joint's Product Relations tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"U-Joint"''');
+
+			CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "Sorry, no results were found.");
+		}
+	}
+
+	@description = "COMMERCE-12796. As a buyer, I want to be able to view the Products Limit rule applied to the bundled product"
+	@priority = 5
+	test VerifyProductsLimitRule {
+		property portal.acceptance = "true";
+
+		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration.scoped~default.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showUnselectableOptions=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("And an active order rule with products limit type is created") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description",
+				orderRuleName = "Test Order Rule",
+				orderRuleType = "Products Limit",
+				productNames = "ABS Sensor,U-Joint",
+				quantity = 1);
+		}
+
+		task ("And a new bundled product with two options(each two values) and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1,value2:Value2:2");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option2",
+				optionName = "Option2",
+				optionValues = "value3:Value3:1,value4:Value4:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Option1,Option2") {
+				CommerceProductOptions.editProductOption(
+					key_option = ${optionName},
+					key_priceType = "Static",
+					productOptionPriceType = "true",
+					productOptionRequired = "true");
+
+				SelectFrameTop();
+			}
+		}
+
+		task ("And the admin selects SKUs as the linked product for value1 of option1 and value3 of option2 and sets the values as default") {
+			for (var optionValueList : list "Option1:Value1:MIN93015,Option2:Value3:MIN55861") {
+				var optionName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionName}:", "");
+
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${optionName});
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.clickEntryDropdownMenuItem(
+					entryName = ${optionValueName},
+					menuItem = "Toggle Default");
+
+				Alert.viewSuccessMessage();
+
+				SelectFrameTop();
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("Then assert that the default values shown as value1 and value3") {
+			for (var optionValueList : list "Option1:Value1,Option2:Value3") {
+				var fsOptionName = StringUtil.extractFirst(${optionValueList}, ":");
+				var fsOptionValue = StringUtil.extractLast(${optionValueList}, ":");
+
+				AssertTextEquals(
+					key_optionName = ${fsOptionName},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+					value1 = ${fsOptionValue});
+			}
+		}
+
+		task ("When adding to cart the configuration value1 and value3 and proceeding with the checkout") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then a warning message shows up 'No more than 1 products in this product range can be purchased together.'") {
+			AssertElementPresent(
+				key_text = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is impossible to continue the checkout") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And selects value1 from option1 in the dropdown") {
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			Click(
+				key_optionName = "Value1",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+		}
+
+		task ("Then the message appears in the value3 of option2 dropdown item 'No more than 1 products in this product range can be purchased together.'") {
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value3",
+				key_warning = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And selects value3 from option2 in the dropdown") {
+			Click(
+				key_optionName = "Option2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			Click(
+				key_optionName = "Value3",
+				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+		}
+
+		task ("Then the message appears in the value1 of option1 dropdown item 'No more than 1 products in this product range can be purchased together.'") {
+			Click(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			AssertElementPresent(
+				key_optionName = "Value1",
+				key_warning = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+	}
+
+	@description = "COMMERCE-12799. As a buyer, I want to be able to view the Products Limit rule applied to the bundled product considering the rule's priority"
+	@priority = 4
+	test VerifyProductsLimitRulesConsideringRulesPriority {
+		property portal.acceptance = "false";
+
+		task ("Given two active order rules with products limit type and different priority are created") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description 1",
+				orderRuleName = "Test Order Rule 1",
+				orderRuleType = "Products Limit",
+				priority = 0,
+				productNames = "ABS Sensor",
+				quantity = 1);
+
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description 2",
+				orderRuleName = "Test Order Rule 2",
+				orderRuleType = "Products Limit",
+				priority = 1,
+				productNames = "ABS Sensor",
+				quantity = "1.1");
+		}
+
+		task ("And a new bundled product with an option and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Option1",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Option1",
+				key_priceType = "Static",
+				productOptionPriceType = "true",
+				productOptionRequired = "true");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects MIN93015 as the linked product for value1 and sets the value as default") {
+			CommerceNavigator.gotoEntry(entryName = "Option1");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Toggle Default");
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			CommerceProductOptions.editOptionValue(
+				optionValue = "Value1",
+				sku = "MIN93015");
+		}
+
+		task ("And the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("When adding to cart the configuration value1 twice and proceeding with the checkout") {
+			for (var count : list "1,2") {
+				Type(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = 1);
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the warning message shows up 'No more than 1.1 products in this product range can be purchased together.'") {
+			AssertElementPresent(
+				key_text = "No more than 1.1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is impossible to continue the checkout") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+	}
+
+	@description = "COMMERCE-12800. As a buyer, I want to be able to view the Products Limit rule applied to the bundled product with account eligibility"
+	@priority = 4
+	test VerifyProductsLimitRuleWithAccountEligibility {
+		property portal.acceptance = "false";
+
+		task ("Given a second account associated with buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				createNewAccount = "true",
+				existingUser = "true",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an active order rule with products limit type and the account eligibility for Commerce Account 2 is created") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description 1",
+				orderRuleName = "Test Order Rule 1",
+				orderRuleType = "Products Limit",
+				productNames = "ABS Sensor",
+				quantity = 1);
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(accountsEligibility = "Commerce Account 2");
+		}
+
+		task ("And a new bundled product with an option and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Option1",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Option1",
+				key_priceType = "Static",
+				productOptionPriceType = "true",
+				productOptionRequired = "true");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects MIN93015 as the linked product for value1 and sets the value as default") {
+			CommerceNavigator.gotoEntry(entryName = "Option1");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Toggle Default");
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			CommerceProductOptions.editOptionValue(
+				optionValue = "Value1",
+				sku = "MIN93015");
+		}
+
+		task ("And the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("When adding to cart the configuration value1 with Commerce Account twice and proceeding with the checkout") {
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account");
+
+			for (var count : list "1,2") {
+				Type(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = 1);
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the warning message doesn't show up 'No more than 1 products in this product range can be purchased together.'") {
+			AssertElementNotPresent(
+				key_text = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is possible to continue the checkout") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+
+		task ("When adding to cart the configuration value1 with Commerce Account 2 twice and proceeding with the checkout") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 2");
+
+			for (var count : list "1,2") {
+				Type(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = 1);
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the warning message shows up 'No more than 1 products in this product range can be purchased together.'") {
+			AssertElementPresent(
+				key_text = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is impossible to continue the checkout") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+	}
+
+	@description = "COMMERCE-12801. As a buyer, I want to be able to view the Products Limit rule applied to the bundled product with channel eligibility"
+	@priority = 4
+	test VerifyProductsLimitRuleWithChannelEligibility {
+		property portal.acceptance = "false";
+
+		task ("Given a second Minium site associated with buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium 2",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And an active order rule with products limit type and the channel eligibility for Minium Portal 2 is created") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description 1",
+				orderRuleName = "Test Order Rule 1",
+				orderRuleType = "Products Limit",
+				productNames = "ABS Sensor",
+				quantity = 1);
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Minium 2 Portal");
+		}
+
+		task ("And a new bundled product with an option and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Option1",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Option1",
+				key_priceType = "Static",
+				productOptionPriceType = "true",
+				productOptionRequired = "true");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects MIN93015 as the linked product for value1 and sets the value as default") {
+			CommerceNavigator.gotoEntry(entryName = "Option1");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Toggle Default");
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			CommerceProductOptions.editOptionValue(
+				optionValue = "Value1",
+				sku = "MIN93015");
+		}
+
+		task ("And the buyer navigates to Bundled Product's detail page on Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("When adding to cart the configuration value1 twice and proceeding with the checkout") {
+			for (var count : list "1,2") {
+				Type(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = 1);
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the warning message doesn't show up 'No more than 1 products in this product range can be purchased together.'") {
+			AssertElementNotPresent(
+				key_text = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is possible to continue the checkout") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page on Minium 2 site") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2/p/bundled-product");
+		}
+
+		task ("And adding to cart the configuration value1 twice and proceeding with the checkout") {
+			for (var count : list "1,2") {
+				Type(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = 1);
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the warning message shows up 'No more than 1 products in this product range can be purchased together.'") {
+			AssertElementPresent(
+				key_text = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is impossible to continue the checkout") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+	}
+
+	@description = "COMMERCE-12797. As a buyer, I want to be able to view the Products Limit rule applied to decimal UOM quantity"
+	@priority = 5
+	test VerifyProductsLimitRuleWithDecimalUOMQuantity {
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}feature.flag.COMMERCE-11922=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration.scoped~default.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showUnselectableOptions=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("And an active order rule with products limit type is created") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description",
+				orderRuleName = "Test Order Rule",
+				orderRuleType = "Products Limit",
+				productNames = "ABS Sensor",
+				quantity = "1.1");
+		}
+
+		task ("And one UOM is added to a SKU (MIN93015)") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				incrementalOrderQuantity = "1.2",
+				productSKU = "MIN93015",
+				uomKey = "UOM1KEY",
+				uomName = "UOM1");
+		}
+
+		task ("And ABS Sensor's Multiple Order Quantity is set to 1.2") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				multipleOrderQuantity = "1.2",
+				productName = "ABS Sensor");
+		}
+
+		task ("And a new bundled product with an option and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Option1",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Option1",
+				key_priceType = "Static",
+				productOptionPriceType = "true",
+				productOptionRequired = "true");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects SKUs as the linked product for value1 of option1 and value3 of option2 and sets the values as default") {
+			CommerceNavigator.gotoEntry(entryName = "Option1");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Toggle Default");
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			CommerceProductOptions.editOptionValue(
+				optionValue = "Value1",
+				quantity = "1.2",
+				sku = "MIN93015 - UOM1KEY");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("Then assert that the default value shown as value1") {
+			AssertTextEquals(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = "Value1");
+		}
+
+		task ("And opens the option's dropdown, can view a warning message 'No more than 1.1 products in this product range can be purchased together.' shown with the default value") {
+			AssertClick(
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = "Value1");
+
+			AssertElementPresent(
+				key_optionName = "Value1",
+				key_warning = "No more than 1.1 products in this product range can be purchased together.",
+				locator1 = "CommerceEntry#DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE");
+		}
+
+		task ("When adding to cart the configuration value1 and proceeding with the checkout") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the warning message shows up 'No more than 1.1 products in this product range can be purchased together.'") {
+			AssertElementPresent(
+				key_text = "No more than 1.1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is impossible to continue the checkout") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+	}
+
+	@description = "COMMERCE-12802. As a buyer, I want to be able to view the Products Limit rule applied to the bundled product with order type eligibility"
+	@priority = 4
+	test VerifyProductsLimitRuleWithOrderTypeEligibility {
+		property portal.acceptance = "false";
+
+		task ("Given two active order types") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type ${orderTypeNumber} Description",
+					orderTypeName = "Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("And an active order rule with products limit type and the order type eligibility for Order Type 2 is created") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description 1",
+				orderRuleName = "Test Order Rule 1",
+				orderRuleType = "Products Limit",
+				productNames = "ABS Sensor",
+				quantity = 1);
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(orderTypesEligibility = "Order Type 2");
+		}
+
+		task ("And a new bundled product with an option and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option1",
+				optionName = "Option1",
+				optionValues = "value1:Value1:1");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Option1",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Option1",
+				key_priceType = "Static",
+				productOptionPriceType = "true",
+				productOptionRequired = "true");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects MIN93015 as the linked product for value1 and sets the value as default") {
+			CommerceNavigator.gotoEntry(entryName = "Option1");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Toggle Default");
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			CommerceProductOptions.editOptionValue(
+				optionValue = "Value1",
+				sku = "MIN93015");
+		}
+
+		task ("When the buyer creates a new order using Order Type 1 from the pending orders page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders(orderType = "Order Type 1");
+		}
+
+		task ("And adds to cart the configuration value1 twice and proceeding with the checkout") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+
+			for (var count : list "1,2") {
+				Type(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = 1);
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the warning message doesn't show up 'No more than 1 products in this product range can be purchased together.'") {
+			AssertElementNotPresent(
+				key_text = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is possible to continue the checkout") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+
+		task ("When the buyer creates a new order using Order Type 2 from the pending orders page") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders(orderType = "Order Type 2");
+		}
+
+		task ("And adds to cart the configuration value1 twice and proceeding with the checkout") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+
+			for (var count : list "1,2") {
+				Type(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = 1);
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the warning message shows up 'No more than 1 products in this product range can be purchased together.'") {
+			AssertElementPresent(
+				key_text = "No more than 1 products in this product range can be purchased together.",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
+
+		task ("And it is impossible to continue the checkout") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+		}
+	}
+
+}

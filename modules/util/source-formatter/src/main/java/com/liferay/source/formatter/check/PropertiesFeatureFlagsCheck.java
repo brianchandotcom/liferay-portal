@@ -51,8 +51,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 		_checkUnnecessaryFeatureFlags(fileName, content);
 
-		content = _generateFeatureFlags(content);
-		content = _generateFeatureFlagUI(fileName, content);
+		content = _generateFeatureFlagProperties(content);
+		content = _generateFeatureFlagUIProperties(fileName, content);
 
 		return content;
 	}
@@ -85,7 +85,9 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _generateFeatureFlags(String content) throws IOException {
+	private String _generateFeatureFlagProperties(String content)
+		throws IOException {
+
 		_featureFlagKeys = new ArrayList<>();
 
 		List<String> fileNames = SourceFormatterUtil.filterFileNames(
@@ -209,7 +211,39 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _generateFeatureFlagUI(String fileName, String content)
+	private String _generateFeatureFlagUIProperties(
+		Map<String, String> properties) {
+
+		StringBundler sb = new StringBundler(properties.size() * 15);
+
+		for (Map.Entry<String, String> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			String environmentVariable = ToolsUtil.encodeEnvironmentProperty(
+				key);
+
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.FOUR_SPACES);
+			sb.append(StringPool.POUND);
+			sb.append(StringPool.NEW_LINE);
+			sb.append("    # Env: ");
+			sb.append(environmentVariable);
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.FOUR_SPACES);
+			sb.append(StringPool.POUND);
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.FOUR_SPACES);
+			sb.append(key);
+			sb.append(StringPool.EQUAL);
+			sb.append(entry.getValue());
+		}
+
+		return sb.toString();
+	}
+
+	private String _generateFeatureFlagUIProperties(
+			String fileName, String content)
 		throws IOException {
 
 		Matcher matcher = _featureFlagUIPattern.matcher(content);
@@ -280,37 +314,6 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return StringUtil.replaceFirst(
 			content, matchedFeatureFlags, featureFlagUIProperties,
 			matcher.start(2));
-	}
-
-	private String _generateFeatureFlagUIProperties(
-		Map<String, String> properties) {
-
-		StringBundler sb = new StringBundler(properties.size() * 15);
-
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			String key = entry.getKey();
-
-			String environmentVariable = ToolsUtil.encodeEnvironmentProperty(
-				key);
-
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.FOUR_SPACES);
-			sb.append(StringPool.POUND);
-			sb.append(StringPool.NEW_LINE);
-			sb.append("    # Env: ");
-			sb.append(environmentVariable);
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.FOUR_SPACES);
-			sb.append(StringPool.POUND);
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.FOUR_SPACES);
-			sb.append(key);
-			sb.append(StringPool.EQUAL);
-			sb.append(entry.getValue());
-		}
-
-		return sb.toString();
 	}
 
 	private List<String> _getFeatureFlagKeys(

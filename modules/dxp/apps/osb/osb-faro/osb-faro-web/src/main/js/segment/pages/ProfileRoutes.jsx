@@ -207,7 +207,7 @@ export class SegmentProfileRoutes extends React.Component {
 								containers={[
 									Containers.SegmentMembershipCard,
 									Containers.SegmentCompositionCard,
-									this.props.segmentType ===
+									segment.segmentType ===
 										SegmentTypes.Dynamic &&
 										Containers.SegmentCriteriaCard,
 									Containers.TopInterestsCard,

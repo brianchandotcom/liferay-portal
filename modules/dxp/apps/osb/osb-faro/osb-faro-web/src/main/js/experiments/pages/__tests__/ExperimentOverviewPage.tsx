@@ -303,6 +303,8 @@ describe('ExperimentOverviewPage', () => {
 			/>
 		);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		expect(await findByText(/published/i)).toBeInTheDocument();
@@ -316,6 +318,8 @@ describe('ExperimentOverviewPage', () => {
 				status='TERMINATED'
 			/>
 		);
+
+		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 

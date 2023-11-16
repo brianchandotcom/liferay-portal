@@ -11,7 +11,7 @@ exports[`Unique Visitors Cell should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#caret-top"
+          href="#caret-top"
         />
       </svg>
        
@@ -34,7 +34,7 @@ exports[`Unique Visitors Cell should render negative improvements 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#caret-bottom"
+          href="#caret-bottom"
         />
       </svg>
        

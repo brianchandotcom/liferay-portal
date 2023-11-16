@@ -7,13 +7,14 @@ import {mockSegment} from 'test/data';
 import {noop} from 'lodash';
 import {Routes} from 'shared/util/router';
 import {times} from 'lodash';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('SearchableModal', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<MemoryRouter
 				initialEntries={['/workspace/23/settings/data-source']}
@@ -36,11 +37,13 @@ describe('SearchableModal', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with an empty state', () => {
-		const {queryByText} = render(
+	it('should render with an empty state', async () => {
+		const {container, queryByText} = render(
 			<MemoryRouter
 				initialEntries={['/workspace/23/settings/data-source']}
 			>
@@ -57,6 +60,8 @@ describe('SearchableModal', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('There are no items found.')).toBeTruthy();
 	});

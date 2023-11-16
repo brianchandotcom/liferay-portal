@@ -58,7 +58,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-bottom"
+                        href="#caret-bottom"
                       />
                     </svg>
                   </button>
@@ -77,7 +77,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-ascending"
+                      href="#order-arrow-ascending"
                     />
                   </svg>
                 </a>
@@ -111,7 +111,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#search"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -150,7 +150,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#order-arrow-up"
+                        href="#order-arrow-up"
                       />
                     </svg>
                   </span>
@@ -198,7 +198,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#individual-dynamic-segment"
+                          href="#individual-dynamic-segment"
                         />
                       </svg>
                     </div>
@@ -251,7 +251,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-bottom"
+                  href="#caret-bottom"
                 />
               </svg>
             </button>
@@ -277,7 +277,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-left-small"
+                    href="#angle-left-small"
                   />
                 </svg>
               </a>
@@ -305,7 +305,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-right-small"
+                    href="#angle-right-small"
                   />
                 </svg>
               </a>

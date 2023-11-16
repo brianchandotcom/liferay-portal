@@ -7,6 +7,7 @@ import {cleanup, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -31,20 +32,24 @@ const DefaultComponent = ({queryString = '', ...otherProps}) => (
 describe('InterestTopics', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
+
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render page not found puts a invalid page', () => {
+	it('should render page not found puts a invalid page', async () => {
 		API.blockedKeywords.search.mockReturnValueOnce(
 			Promise.resolve({items: [], total: 0})
 		);
 
 		const {container} = render(<DefaultComponent queryString='?page=33' />);
+
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 
@@ -77,7 +82,7 @@ describe('InterestTopics', () => {
 		expect(queryByText('Add Keyword')).toBeNull();
 	});
 
-	it('should render with an empty state', () => {
+	it('should render with an empty state', async () => {
 		API.blockedKeywords.search.mockReturnValue(
 			Promise.resolve({items: [], total: 0})
 		);
@@ -86,24 +91,28 @@ describe('InterestTopics', () => {
 			<DefaultComponent queryString='?query=foo' />
 		);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
 
 		expect(container.querySelector('.no-results-root')).toMatchSnapshot();
 	});
 
-	it('should render with a message to add keywords if there are none', () => {
+	it('should render with a message to add keywords if there are none', async () => {
 		API.blockedKeywords.search.mockReturnValueOnce(
 			Promise.resolve({items: [], total: 0})
 		);
 
 		const {container} = render(<DefaultComponent />);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
 
 		expect(container.querySelector('.no-results-root')).toMatchSnapshot();
 	});
 
-	it('should render with a member-specific message to add keywords if there are none', () => {
+	it('should render with a member-specific message to add keywords if there are none', async () => {
 		API.user.fetchCurrentUser.mockReturnValueOnce(
 			Promise.resolve(data.mockMemberUser('24'))
 		);
@@ -129,6 +138,8 @@ describe('InterestTopics', () => {
 				</MemoryRouter>
 			</Provider>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 

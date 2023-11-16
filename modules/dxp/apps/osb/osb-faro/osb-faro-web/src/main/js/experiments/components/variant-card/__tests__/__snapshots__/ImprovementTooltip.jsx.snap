@@ -12,7 +12,7 @@ exports[`Unique Visitors Tooltip should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#caret-top"
+          href="#caret-top"
         />
       </svg>
       <span

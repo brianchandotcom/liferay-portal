@@ -6,6 +6,7 @@ import {DataSource} from 'shared/util/records';
 import {ClearData as DataSourceClearData} from '../ClearData';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -18,7 +19,7 @@ const defaultProps = {
 describe('DataSourceClearData', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<StaticRouter>
@@ -28,6 +29,8 @@ describe('DataSourceClearData', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

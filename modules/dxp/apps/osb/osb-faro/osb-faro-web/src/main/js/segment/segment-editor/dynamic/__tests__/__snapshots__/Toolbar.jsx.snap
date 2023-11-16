@@ -45,7 +45,7 @@ exports[`Toolbar should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#pencil"
+                    href="#pencil"
                   />
                 </svg>
               </button>
@@ -96,7 +96,7 @@ exports[`Toolbar should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#question-circle-full"
+                    href="#question-circle-full"
                   />
                 </svg>
               </span>
@@ -144,7 +144,7 @@ exports[`Toolbar should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#view"
+                      href="#view"
                     />
                   </svg>
                 </span>

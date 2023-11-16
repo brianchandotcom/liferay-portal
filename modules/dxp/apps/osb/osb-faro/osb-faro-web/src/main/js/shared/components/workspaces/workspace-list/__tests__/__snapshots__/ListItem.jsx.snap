@@ -41,7 +41,7 @@ exports[`WorkspaceListItem should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#angle-right-small"
+              href="#angle-right-small"
             />
           </svg>
         </div>

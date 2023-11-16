@@ -13,7 +13,7 @@ exports[`CriteriaSidebarItem should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#drag"
+          href="#drag"
         />
       </svg>
     </span>
@@ -28,7 +28,7 @@ exports[`CriteriaSidebarItem should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#text"
+            href="#text"
           />
         </svg>
       </span>

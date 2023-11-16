@@ -6,13 +6,14 @@ import {cleanup, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('IndividualDetails', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<StaticRouter>
 				<Provider store={mockStore()}>
@@ -29,6 +30,8 @@ describe('IndividualDetails', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

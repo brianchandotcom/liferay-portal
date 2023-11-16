@@ -19,7 +19,7 @@ exports[`Filter should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#caret-bottom"
+            href="#caret-bottom"
           />
         </svg>
       </button>
@@ -59,7 +59,7 @@ exports[`Filter should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </div>

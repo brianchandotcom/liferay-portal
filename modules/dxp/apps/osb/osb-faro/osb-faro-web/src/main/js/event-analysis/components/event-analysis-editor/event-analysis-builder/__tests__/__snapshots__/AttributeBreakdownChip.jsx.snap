@@ -20,7 +20,7 @@ exports[`AttributeBreakdownChip render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#drag"
+              href="#drag"
             />
           </svg>
         </div>
@@ -36,7 +36,7 @@ exports[`AttributeBreakdownChip render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#text"
+                href="#text"
               />
             </svg>
           </div>
@@ -61,7 +61,7 @@ exports[`AttributeBreakdownChip render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times-circle"
+              href="#times-circle"
             />
           </svg>
         </button>

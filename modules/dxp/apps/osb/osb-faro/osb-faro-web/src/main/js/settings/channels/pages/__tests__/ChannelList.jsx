@@ -19,7 +19,7 @@ const defaultProps = {
 describe('Channels List', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter
@@ -33,6 +33,8 @@ describe('Channels List', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

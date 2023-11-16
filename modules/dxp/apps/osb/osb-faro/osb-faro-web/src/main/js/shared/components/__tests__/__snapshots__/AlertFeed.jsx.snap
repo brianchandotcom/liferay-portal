@@ -18,7 +18,7 @@ exports[`AlertFeed should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#info-circle"
+              href="#info-circle"
             />
           </svg>
         </span>
@@ -36,7 +36,7 @@ exports[`AlertFeed should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>
@@ -64,7 +64,7 @@ exports[`AlertFeed should render with a message comprised of language keys with 
             role="presentation"
           >
             <use
-              xlink:href="#info-circle"
+              href="#info-circle"
             />
           </svg>
         </span>
@@ -85,7 +85,7 @@ exports[`AlertFeed should render with a message comprised of language keys with 
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>
@@ -113,7 +113,7 @@ exports[`AlertFeed should render with modal open 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#info-circle"
+              href="#info-circle"
             />
           </svg>
         </span>
@@ -131,7 +131,7 @@ exports[`AlertFeed should render with modal open 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>

@@ -34,7 +34,7 @@ exports[`NoResultsDisplay should render component with icon 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#home"
+            href="#home"
           />
         </svg>
       </div>

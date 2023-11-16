@@ -51,7 +51,7 @@ exports[`WorkspaceList should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </div>
@@ -101,7 +101,7 @@ exports[`WorkspaceList should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </div>
@@ -151,7 +151,7 @@ exports[`WorkspaceList should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </div>
@@ -214,7 +214,7 @@ exports[`WorkspaceList should render WorkspaceList with friendlyURL 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </div>
@@ -264,7 +264,7 @@ exports[`WorkspaceList should render WorkspaceList with friendlyURL 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </div>

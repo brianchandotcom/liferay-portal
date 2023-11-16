@@ -165,15 +165,17 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 
 					<Form.GroupItem shrink>
 						<Picker
-							items={TEXT_OPERATORS.map(({key, label}) => ({
-								label,
-								value: key
-							}))}
+							items={
+								TEXT_OPERATORS.map(({key, label}) => ({
+									key,
+									label
+								})) as {label: string; key: string}[]
+							}
 							onSelectionChange={this.handleOperatorChange}
 							selectedKey={selectedOperatorKey}
 						>
-							{({label, value}) => (
-								<Option key={value}>{label}</Option>
+							{({key, label}) => (
+								<Option key={key}>{label}</Option>
 							)}
 						</Picker>
 					</Form.GroupItem>
@@ -200,10 +202,12 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 								)
 							) : (
 								<Picker
-									items={options.map(option => ({
-										label: option.label,
-										value: option.value
-									}))}
+									items={
+										options.map(({label, value}) => ({
+											label,
+											value
+										})) as {label: string; value: string}[]
+									}
 									onBlur={this.handleBlur}
 									onSelectionChange={this.handleValueChange}
 									selectedKey={value}

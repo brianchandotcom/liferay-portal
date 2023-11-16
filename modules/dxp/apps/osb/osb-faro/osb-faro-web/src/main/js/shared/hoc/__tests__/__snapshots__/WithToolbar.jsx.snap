@@ -43,7 +43,7 @@ exports[`withToolbar renders 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#search"
+                      href="#search"
                     />
                   </svg>
                 </button>

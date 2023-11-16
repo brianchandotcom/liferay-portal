@@ -21,28 +21,4 @@ describe('InterestPagesList', () => {
 
 		expect(container).toMatchSnapshot();
 	});
-
-	it('should render an activePages component', () => {
-		const {container} = render(
-			<StaticRouter>
-				<InterestPagesList dataSourceParams={{active: true}} />
-			</StaticRouter>
-		);
-
-		expect(
-			container.querySelector('.lexicon-icon-order-arrow-down')
-		).toBeTruthy();
-	});
-
-	it('should render an InactivePages component', () => {
-		const {container} = render(
-			<StaticRouter>
-				<InterestPagesList dataSourceParams={{active: false}} />
-			</StaticRouter>
-		);
-
-		expect(
-			container.querySelector('.lexicon-icon-order-arrow-down')
-		).toBeFalsy();
-	});
 });

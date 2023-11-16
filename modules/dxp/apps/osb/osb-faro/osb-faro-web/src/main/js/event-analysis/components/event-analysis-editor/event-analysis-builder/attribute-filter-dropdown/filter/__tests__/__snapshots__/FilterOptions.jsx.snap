@@ -17,7 +17,7 @@ exports[`FilterOptions should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-left-small"
+            href="#angle-left-small"
           />
         </svg>
         Back To Attributes
@@ -39,7 +39,7 @@ exports[`FilterOptions should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#pencil"
+                href="#pencil"
               />
             </svg>
           </button>
@@ -141,7 +141,7 @@ exports[`FilterOptions should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-bottom"
+                        href="#caret-bottom"
                       />
                     </svg>
                   </div>

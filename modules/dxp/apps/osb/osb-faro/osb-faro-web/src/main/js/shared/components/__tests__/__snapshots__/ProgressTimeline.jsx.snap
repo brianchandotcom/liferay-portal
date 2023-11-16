@@ -21,7 +21,7 @@ exports[`ProgressTimeline should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#check"
+            href="#check"
           />
         </svg>
       </div>

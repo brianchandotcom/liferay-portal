@@ -8,6 +8,7 @@ import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {User} from 'shared/util/records';
 import {UserRoleNames} from 'shared/util/constants';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -29,15 +30,17 @@ const DefaultComponent = props => (
 describe('UserList', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
-	it("should render rows as disabled without row actions, invite members button, or checkboxes if the current user's role is member", () => {
+	it("should render rows as disabled without row actions, invite members button, or checkboxes if the current user's role is member", async () => {
 		const {container, queryByTestId, queryByText} = render(
 			<DefaultComponent
 				currentUser={
@@ -47,6 +50,8 @@ describe('UserList', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelector(

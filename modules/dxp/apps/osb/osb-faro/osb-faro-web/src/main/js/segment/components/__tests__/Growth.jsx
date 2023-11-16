@@ -7,11 +7,30 @@ import SegmentGrowthWithList, {
 import {MemoryRouter, Route} from 'react-router-dom';
 import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('SegmentGrowthWithList', () => {
-	it('should render', () => {
+	const {ResizeObserver} = window;
+
+	beforeEach(() => {
+		delete window.ResizeObserver;
+
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn()
+		}));
+	});
+
+	afterEach(() => {
+		window.ResizeObserver = ResizeObserver;
+
+		jest.restoreAllMocks();
+	});
+
+	it('should render', async () => {
 		const {container} = render(
 			<MemoryRouter
 				initialEntries={[
@@ -38,11 +57,31 @@ describe('SegmentGrowthWithList', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 });
 
 describe('SegmentGrowthChart', () => {
+	const {ResizeObserver} = window;
+
+	beforeEach(() => {
+		delete window.ResizeObserver;
+
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn()
+		}));
+	});
+
+	afterEach(() => {
+		window.ResizeObserver = ResizeObserver;
+
+		jest.restoreAllMocks();
+	});
+
 	it('should render', () => {
 		const {container} = render(
 			<SegmentGrowthChart data={[]} onPointSelect={jest.fn()} />

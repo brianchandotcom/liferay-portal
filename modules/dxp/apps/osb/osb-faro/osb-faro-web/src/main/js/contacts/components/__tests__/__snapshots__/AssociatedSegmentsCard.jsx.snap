@@ -43,7 +43,7 @@ exports[`AssociatedSegmentsCard should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#search"
+                  href="#search"
                 />
               </svg>
             </button>
@@ -70,7 +70,7 @@ exports[`AssociatedSegmentsCard should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#individual-dynamic-segment"
+                    href="#individual-dynamic-segment"
                   />
                 </svg>
               </div>
@@ -111,7 +111,7 @@ exports[`AssociatedSegmentsCard should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#individual-dynamic-segment"
+                    href="#individual-dynamic-segment"
                   />
                 </svg>
               </div>
@@ -154,7 +154,7 @@ exports[`AssociatedSegmentsCard should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -206,7 +206,7 @@ exports[`AssociatedSegmentsCard should render with an no results display 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#search"
+                  href="#search"
                 />
               </svg>
             </button>
@@ -240,7 +240,7 @@ exports[`AssociatedSegmentsCard should render with an no results display 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>

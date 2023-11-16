@@ -5,6 +5,7 @@ import WorkspaceListItem from '../ListItem';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {ProjectStates} from 'shared/util/constants';
 import {StaticRouter} from 'react-router-dom';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -24,12 +25,12 @@ describe('WorkspaceListItem', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render a workspace item as enabled if is unavailable and the user clicks the item to reload and it then changes to available', () => {
+	it('should render a workspace item as enabled if is unavailable and the user clicks the item to reload and it then changes to available', async () => {
 		API.projects.fetch.mockImplementationOnce(() =>
 			Promise.resolve(data.mockProject('23'))
 		);
 
-		const {queryByText} = render(
+		const {container, queryByText} = render(
 			<StaticRouter>
 				<WorkspaceListItem projectState={ProjectStates.Unavailable} />
 			</StaticRouter>
@@ -42,6 +43,8 @@ describe('WorkspaceListItem', () => {
 		fireEvent.click(button);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			queryByText('Workspace unavailable; click to reload.')

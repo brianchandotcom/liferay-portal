@@ -6,6 +6,7 @@ import {IndividualFieldMapping} from '../IndividualFieldMapping';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router-dom';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -16,7 +17,7 @@ const defaultProps = {
 };
 
 describe('IndividualFieldMapping', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<StaticRouter>
@@ -26,6 +27,8 @@ describe('IndividualFieldMapping', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

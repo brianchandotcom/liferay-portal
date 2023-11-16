@@ -12,6 +12,7 @@ import {
 } from 'test/graphql-data';
 import {mockIndividual} from 'test/data';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -29,6 +30,24 @@ const inputValue = 'add to cart';
 const searchKeyword = {keywords: inputValue};
 
 describe('IndividualProfileCard', () => {
+	const {ResizeObserver} = window;
+
+	beforeEach(() => {
+		delete window.ResizeObserver;
+
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn()
+		}));
+	});
+
+	afterEach(() => {
+		window.ResizeObserver = ResizeObserver;
+
+		jest.restoreAllMocks();
+	});
+
 	it('should render', async () => {
 		const {container} = render(
 			<DefaultComponent>
@@ -50,7 +69,7 @@ describe('IndividualProfileCard', () => {
 			</DefaultComponent>
 		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

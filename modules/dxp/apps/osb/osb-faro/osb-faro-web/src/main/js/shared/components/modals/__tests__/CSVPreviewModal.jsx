@@ -2,11 +2,12 @@ import CSVPreviewModal from '../CSVPreviewModal';
 import React from 'react';
 import {noop} from 'lodash';
 import {render} from '@testing-library/react';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('CSVPreviewModal', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<CSVPreviewModal
 				fileName='test'
@@ -17,6 +18,8 @@ describe('CSVPreviewModal', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

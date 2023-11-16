@@ -18,7 +18,7 @@ exports[`Pagination should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-left-small"
+            href="#angle-left-small"
           />
         </svg>
       </a>
@@ -46,7 +46,7 @@ exports[`Pagination should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -72,7 +72,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
           role="presentation"
         >
           <use
-            xlink:href="#angle-left-small"
+            href="#angle-left-small"
           />
         </svg>
       </a>
@@ -195,7 +195,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -221,7 +221,7 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
           role="presentation"
         >
           <use
-            xlink:href="#angle-left-small"
+            href="#angle-left-small"
           />
         </svg>
       </a>
@@ -297,7 +297,7 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -324,7 +324,7 @@ exports[`Pagination should render with a lot of pages 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-left-small"
+            href="#angle-left-small"
           />
         </svg>
       </a>
@@ -399,7 +399,7 @@ exports[`Pagination should render with a lot of pages 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -427,7 +427,7 @@ exports[`Pagination should render with buttons if passed an onChange handler 1`]
           role="presentation"
         >
           <use
-            xlink:href="#angle-left-small"
+            href="#angle-left-small"
           />
         </svg>
       </button>
@@ -457,7 +457,7 @@ exports[`Pagination should render with buttons if passed an onChange handler 1`]
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </button>

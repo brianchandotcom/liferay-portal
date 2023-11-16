@@ -355,7 +355,7 @@ exports[`Workspace Settting should render 1`] = `
                                     role="presentation"
                                   >
                                     <use
-                                      xlink:href="#times"
+                                      href="#times"
                                     />
                                   </svg>
                                 </button>
@@ -402,7 +402,7 @@ exports[`Workspace Settting should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#question-circle-full"
+                          href="#question-circle-full"
                         />
                       </svg>
                     </span>

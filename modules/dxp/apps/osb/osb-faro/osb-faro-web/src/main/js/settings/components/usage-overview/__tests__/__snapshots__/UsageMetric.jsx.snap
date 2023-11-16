@@ -21,7 +21,7 @@ exports[`UsageMetric should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#faro-page-views"
+            href="#faro-page-views"
           />
         </svg>
       </div>

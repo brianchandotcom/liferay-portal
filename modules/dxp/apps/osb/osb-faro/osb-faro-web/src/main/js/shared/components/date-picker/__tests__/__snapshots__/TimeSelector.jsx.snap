@@ -10,7 +10,7 @@ exports[`TimeSelector should render 1`] = `
       role="presentation"
     >
       <use
-        xlink:href="#time"
+        href="#time"
       />
     </svg>
     <input

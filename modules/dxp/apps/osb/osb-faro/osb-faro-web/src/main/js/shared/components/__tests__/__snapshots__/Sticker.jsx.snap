@@ -10,7 +10,7 @@ exports[`Sticker should render 1`] = `
       role="presentation"
     >
       <use
-        xlink:href="#file"
+        href="#file"
       />
     </svg>
   </div>

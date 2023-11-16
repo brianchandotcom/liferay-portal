@@ -5,6 +5,7 @@ import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -24,10 +25,12 @@ const DefaultComponent = props => (
 describe('BaseDetails', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -38,12 +41,14 @@ describe('BaseDetails', () => {
 		expect(container.querySelector('.loading-animation')).toBeTruthy();
 	});
 
-	it('should render w/ ErrorDisplay', () => {
-		const {queryByText} = render(
+	it('should render w/ ErrorDisplay', async () => {
+		const {container, queryByText} = render(
 			<DefaultComponent dataSourceFn={() => Promise.reject({})} />
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('Reload')).toBeTruthy();
 	});

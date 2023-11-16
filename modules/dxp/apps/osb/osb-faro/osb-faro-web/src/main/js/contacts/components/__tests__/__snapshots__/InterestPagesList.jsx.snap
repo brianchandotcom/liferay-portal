@@ -38,7 +38,7 @@ exports[`InterestPagesList should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#caret-bottom"
+                      href="#caret-bottom"
                     />
                   </svg>
                 </button>
@@ -57,7 +57,7 @@ exports[`InterestPagesList should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#order-arrow-ascending"
+                    href="#order-arrow-ascending"
                   />
                 </svg>
               </a>
@@ -91,7 +91,7 @@ exports[`InterestPagesList should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#search"
+                        href="#search"
                       />
                     </svg>
                   </button>
@@ -144,7 +144,7 @@ exports[`InterestPagesList should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-up"
+                      href="#order-arrow-up"
                     />
                   </svg>
                 </span>

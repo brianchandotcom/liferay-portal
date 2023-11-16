@@ -27,7 +27,7 @@ exports[`SearchInput should render input 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#search"
+              href="#search"
             />
           </svg>
         </button>

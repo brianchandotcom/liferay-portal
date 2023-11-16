@@ -23,6 +23,24 @@ const devices = [
 ];
 
 describe('OperatingSystem', () => {
+	const {ResizeObserver} = window;
+
+	beforeEach(() => {
+		delete window.ResizeObserver;
+
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn()
+		}));
+	});
+
+	afterEach(() => {
+		window.ResizeObserver = ResizeObserver;
+
+		jest.restoreAllMocks();
+	});
+
 	it('should render', () => {
 		const {container} = render(<OperatingSystem devices={devices} />);
 

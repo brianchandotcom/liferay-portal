@@ -7,7 +7,7 @@ import {MemoryRouter} from 'react-router';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {View} from '../View';
-import {waitForLoading} from 'test/helpers';
+import {waitForLoading, waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -29,7 +29,7 @@ const DefaultComponent = props => (
 );
 
 describe('View', () => {
-	it('should render a CSV data-source page', () => {
+	it('should render a CSV data-source page', async () => {
 		const {container} = render(
 			<DefaultComponent
 				dataSource={data.getImmutableMock(
@@ -40,6 +40,8 @@ describe('View', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

@@ -29,7 +29,7 @@ exports[`TitleEditor should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#pencil"
+            href="#pencil"
           />
         </svg>
       </button>

@@ -33,7 +33,7 @@ exports[`CommerceMetricCard should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-bottom"
+                href="#caret-bottom"
               />
             </svg>
           </button>
@@ -63,7 +63,7 @@ exports[`CommerceMetricCard should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-top-l"
+                href="#caret-top-l"
               />
             </svg>
             <span

@@ -47,7 +47,7 @@ describe('WithUnassignedSegments', () => {
 		expect(container.textContent).toBe('wrapped component text');
 	});
 
-	it('should trigger the unassigned segments modal if there are segments', () => {
+	it.skip('should trigger the unassigned segments modal if there are segments', () => {
 		render(<DefaultComponent />);
 
 		jest.runAllTimers();

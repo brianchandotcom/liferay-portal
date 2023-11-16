@@ -17,7 +17,7 @@ exports[`EmbeddedAlertList should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#exclamation-full"
+            href="#exclamation-full"
           />
         </svg>
       </span>

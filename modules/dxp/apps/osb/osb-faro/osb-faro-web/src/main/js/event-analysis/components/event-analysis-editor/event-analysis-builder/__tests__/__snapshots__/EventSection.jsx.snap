@@ -32,7 +32,7 @@ exports[`EventSection render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#plus"
+              href="#plus"
             />
           </svg>
         </button>
@@ -80,7 +80,7 @@ exports[`EventSection render with event 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times-circle"
+                  href="#times-circle"
                 />
               </svg>
             </button>

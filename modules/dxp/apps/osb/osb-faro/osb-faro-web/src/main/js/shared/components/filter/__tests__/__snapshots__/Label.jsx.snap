@@ -23,7 +23,7 @@ exports[`Label should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#icon-root times"
+            href="#icon-root times"
           />
         </svg>
       </button>

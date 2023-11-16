@@ -38,7 +38,7 @@ exports[`Event Analysis Editor render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#plus"
+                  href="#plus"
                 />
               </svg>
             </button>

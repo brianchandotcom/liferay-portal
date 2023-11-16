@@ -29,7 +29,7 @@ exports[`HeaderDefault should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </button>

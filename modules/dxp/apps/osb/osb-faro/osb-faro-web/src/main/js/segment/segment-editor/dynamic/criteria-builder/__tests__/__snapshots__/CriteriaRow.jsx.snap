@@ -24,7 +24,7 @@ exports[`CriteriaRow should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#drag"
+            href="#drag"
           />
         </svg>
       </div>
@@ -98,7 +98,7 @@ exports[`CriteriaRow should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#caret-bottom"
+                          href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -161,7 +161,7 @@ exports[`CriteriaRow should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#calendar"
+                        href="#calendar"
                       />
                     </svg>
                   </button>
@@ -192,7 +192,7 @@ exports[`CriteriaRow should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#ellipsis-v"
+                href="#ellipsis-v"
               />
             </svg>
           </button>

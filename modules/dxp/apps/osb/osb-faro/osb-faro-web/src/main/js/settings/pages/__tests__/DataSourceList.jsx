@@ -14,6 +14,7 @@ import {MemoryRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {RemoteData} from 'shared/util/records';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -69,15 +70,19 @@ describe('DataSourceList', () => {
 		refetch: () => {}
 	}));
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with an empty state', () => {
+	it('should render with an empty state', async () => {
 		API.dataSource.search.mockReturnValueOnce(
 			Promise.resolve({items: [], total: 0})
 		);
@@ -90,12 +95,16 @@ describe('DataSourceList', () => {
 			<DefaultComponent queryString='?query=foo' />
 		);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.no-results-root')).toMatchSnapshot();
 	});
 
-	it('should render with a message to connect datasources if there are none', () => {
+	it('should render with a message to connect datasources if there are none', async () => {
 		API.dataSource.search.mockReturnValueOnce(
 			Promise.resolve({items: [], total: 0})
 		);
@@ -106,12 +115,16 @@ describe('DataSourceList', () => {
 
 		const {container} = render(<DefaultComponent />);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.no-results-root')).toMatchSnapshot();
 	});
 
-	it('should render toast for one data source with invalid credentials', () => {
+	it('should render toast for one data source with invalid credentials', async () => {
 		API.dataSource.search.mockReturnValueOnce(
 			Promise.resolve({
 				items: [
@@ -142,7 +155,11 @@ describe('DataSourceList', () => {
 
 		const {container} = render(<DefaultComponent />);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelectorAll('.embedded-alert-list-root')[1]
@@ -161,7 +178,7 @@ describe('DataSourceList', () => {
 		expect(queryByText('Add Data Source')).toBeNull();
 	});
 
-	it('should render with a member-specific message to connect datasources if there are none', () => {
+	it('should render with a member-specific message to connect datasources if there are none', async () => {
 		API.user.fetchCurrentUser.mockReturnValueOnce(
 			Promise.resolve(data.mockMemberUser('24'))
 		);
@@ -176,12 +193,16 @@ describe('DataSourceList', () => {
 
 		const {container} = render(<DefaultUserComponent />);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.no-results-root')).toMatchSnapshot();
 	});
 
-	it("should render toast for one data source with invalid credentials for a member's view", () => {
+	it("should render toast for one data source with invalid credentials for a member's view", async () => {
 		API.user.fetchCurrentUser.mockReturnValueOnce(
 			Promise.resolve(data.mockMemberUser('24'))
 		);
@@ -202,14 +223,18 @@ describe('DataSourceList', () => {
 
 		const {container} = render(<DefaultUserComponent />);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelectorAll('.embedded-alert-list-root')[1]
 		).toMatchSnapshot();
 	});
 
-	it('should render toast for multiple data sources with invalid credentials', () => {
+	it('should render toast for multiple data sources with invalid credentials', async () => {
 		API.dataSource.search.mockReturnValue(
 			Promise.resolve({
 				items: [
@@ -226,14 +251,18 @@ describe('DataSourceList', () => {
 
 		const {container} = render(<DefaultComponent />);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelectorAll('.embedded-alert-list-root')[1]
 		).toMatchSnapshot();
 	});
 
-	it("should render toast for multiple data sources with invalid credentials for a member's view", () => {
+	it("should render toast for multiple data sources with invalid credentials for a member's view", async () => {
 		API.user.fetchCurrentUser.mockReturnValueOnce(
 			Promise.resolve(data.mockMemberUser('24'))
 		);
@@ -254,7 +283,11 @@ describe('DataSourceList', () => {
 
 		const {container} = render(<DefaultUserComponent />);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelectorAll('.embedded-alert-list-root')[1]

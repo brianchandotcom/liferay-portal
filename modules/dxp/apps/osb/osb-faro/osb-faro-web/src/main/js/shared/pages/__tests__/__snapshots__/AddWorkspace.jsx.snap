@@ -20,7 +20,7 @@ exports[`AddWorkspace should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#liferay-logo"
+              href="#liferay-logo"
             />
           </svg>
         </a>
@@ -47,7 +47,7 @@ exports[`AddWorkspace should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-bottom"
+                  href="#caret-bottom"
                 />
               </svg>
             </div>
@@ -71,7 +71,7 @@ exports[`AddWorkspace should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#ac-logo"
+                  href="#ac-logo"
                 />
               </svg>
               <span
@@ -424,7 +424,7 @@ exports[`AddWorkspace should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#question-circle-full"
+                              href="#question-circle-full"
                             />
                           </svg>
                         </span>

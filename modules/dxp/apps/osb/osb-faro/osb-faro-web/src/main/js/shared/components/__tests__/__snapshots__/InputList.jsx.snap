@@ -29,7 +29,7 @@ exports[`InputList should paste a text in inputList 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#info-circle"
+              href="#info-circle"
             />
           </svg>
         </span>
@@ -154,7 +154,7 @@ exports[`InputList should render with existing items 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                href="#times"
               />
             </svg>
           </button>
@@ -181,7 +181,7 @@ exports[`InputList should render with existing items 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                href="#times"
               />
             </svg>
           </button>

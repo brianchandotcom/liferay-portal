@@ -33,7 +33,7 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                   role="presentation"
                 >
                   <use
-                    xlink:href="#ac-event-icon"
+                    href="#ac-event-icon"
                   />
                 </svg>
                 <span
@@ -127,7 +127,7 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                     role="presentation"
                   >
                     <use
-                      xlink:href="#ac-event-icon"
+                      href="#ac-event-icon"
                     />
                   </svg>
                   <span
@@ -149,7 +149,7 @@ Firefox"
                       role="presentation"
                     >
                       <use
-                        xlink:href="#devices"
+                        href="#devices"
                       />
                     </svg>
                   </span>
@@ -160,7 +160,7 @@ Firefox"
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-top"
+                  href="#caret-top"
                 />
               </svg>
             </div>
@@ -324,7 +324,7 @@ Firefox"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#caret-bottom"
+                          href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -385,7 +385,7 @@ Firefox"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#caret-bottom"
+                          href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -421,7 +421,7 @@ Firefox"
                   role="presentation"
                 >
                   <use
-                    xlink:href="#ac-event-icon"
+                    href="#ac-event-icon"
                   />
                 </svg>
                 <span
@@ -515,7 +515,7 @@ Firefox"
                     role="presentation"
                   >
                     <use
-                      xlink:href="#ac-event-icon"
+                      href="#ac-event-icon"
                     />
                   </svg>
                   <span
@@ -535,7 +535,7 @@ Firefox"
                       role="presentation"
                     >
                       <use
-                        xlink:href="#mobile-portrait"
+                        href="#mobile-portrait"
                       />
                     </svg>
                   </span>
@@ -546,7 +546,7 @@ Firefox"
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-top"
+                  href="#caret-top"
                 />
               </svg>
             </div>
@@ -694,7 +694,7 @@ Firefox"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#caret-bottom"
+                          href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -755,7 +755,7 @@ Firefox"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#caret-bottom"
+                          href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -839,7 +839,7 @@ Firefox"
                     role="presentation"
                   >
                     <use
-                      xlink:href="#ac-event-icon"
+                      href="#ac-event-icon"
                     />
                   </svg>
                   <span
@@ -859,7 +859,7 @@ Firefox"
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-display"
+                        href="#ac-display"
                       />
                     </svg>
                   </span>
@@ -870,7 +870,7 @@ Firefox"
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-top"
+                  href="#caret-top"
                 />
               </svg>
             </div>
@@ -1023,7 +1023,7 @@ Firefox"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#caret-bottom"
+                          href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -1086,7 +1086,7 @@ Firefox"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#caret-bottom"
+                          href="#caret-bottom"
                         />
                       </svg>
                     </div>

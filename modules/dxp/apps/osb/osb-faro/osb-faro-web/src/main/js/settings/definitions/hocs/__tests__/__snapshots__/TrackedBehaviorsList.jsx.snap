@@ -40,7 +40,7 @@ exports[`TrackedBehaviorsList should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#question-circle-full"
+                      href="#question-circle-full"
                     />
                   </svg>
                 </span>

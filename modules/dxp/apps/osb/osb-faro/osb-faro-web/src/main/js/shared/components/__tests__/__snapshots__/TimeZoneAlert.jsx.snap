@@ -14,7 +14,7 @@ exports[`TimeZoneAlert should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#exclamation-full"
+          href="#exclamation-full"
         />
       </svg>
     </span>
@@ -32,7 +32,7 @@ exports[`TimeZoneAlert should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#times"
+          href="#times"
         />
       </svg>
     </button>

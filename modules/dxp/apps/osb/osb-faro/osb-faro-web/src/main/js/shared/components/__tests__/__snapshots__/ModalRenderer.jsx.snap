@@ -36,7 +36,7 @@ exports[`ModalRenderer should pass props to modal: should render with title 'Foo
                 role="presentation"
               >
                 <use
-                  xlink:href="#times"
+                  href="#times"
                 />
               </svg>
             </button>
@@ -118,7 +118,7 @@ exports[`ModalRenderer should render multiple modals 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times"
+                  href="#times"
                 />
               </svg>
             </button>
@@ -180,7 +180,7 @@ exports[`ModalRenderer should render multiple modals 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times"
+                  href="#times"
                 />
               </svg>
             </button>
@@ -254,7 +254,7 @@ exports[`ModalRenderer should render test modal 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times"
+                  href="#times"
                 />
               </svg>
             </button>

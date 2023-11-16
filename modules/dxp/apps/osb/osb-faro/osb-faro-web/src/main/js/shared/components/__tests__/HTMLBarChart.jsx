@@ -327,7 +327,7 @@ describe('HTMLBarChart', () => {
 
 		expect(
 			container.querySelector('.icon.text-l-secondary').firstChild
-		).toHaveAttribute('xlink:href', '#angle-down');
+		).toHaveAttribute('href', '#angle-down');
 	});
 
 	it('should render an arrow down icon when the scroll is at the end of content', () => {
@@ -408,10 +408,7 @@ describe('HTMLBarChart', () => {
 			/>
 		);
 
-		expect(container.querySelector('use')).toHaveAttribute(
-			'xlink:href',
-			'#home'
-		);
+		expect(container.querySelector('use')).toHaveAttribute('href', '#home');
 
 		expect(container.querySelector(`${CLASSNAME}-column`)).toBeTruthy();
 	});

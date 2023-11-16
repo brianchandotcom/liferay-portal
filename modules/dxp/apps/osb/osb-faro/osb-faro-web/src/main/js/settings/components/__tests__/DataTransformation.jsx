@@ -7,6 +7,7 @@ import {fromJS} from 'immutable';
 import {mockFieldMapping, mockMapping} from 'test/data';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -45,15 +46,17 @@ describe('processFieldMappings', () => {
 });
 
 describe('DataTransformation', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
+
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render w/ the done button enabled', () => {
+	it('should render w/ the done button enabled', async () => {
 		API.dataSource.fetchMappings.mockReturnValue(
 			Promise.resolve([
 				mockMapping('Matched Field', {
@@ -62,9 +65,11 @@ describe('DataTransformation', () => {
 			])
 		);
 
-		const {getByText} = render(<DefaultComponent />);
+		const {container, getByText} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Done')).not.toBeDisabled();
 	});

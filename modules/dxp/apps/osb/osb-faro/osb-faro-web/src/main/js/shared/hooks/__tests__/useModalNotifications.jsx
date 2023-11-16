@@ -14,6 +14,7 @@ import {
 } from 'shared/util/records/Notification';
 import {Provider} from 'react-redux';
 import {range} from 'lodash';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -28,10 +29,10 @@ const WrapperComponent = connect(null, {close, open})(({close, open}) => {
 });
 
 describe('useModalNotifications', () => {
-	it('should open a notification modal', () => {
+	it('should open a notification modal', async () => {
 		mockGetDateNow(data.getTimestamp(0));
 
-		API.notifications.fetchNotifications.mockReturnValue(
+		API.notifications.fetchNotifications.mockReturnValueOnce(
 			Promise.resolve(
 				range(1).map(i =>
 					data.mockNotification(i, {
@@ -49,12 +50,16 @@ describe('useModalNotifications', () => {
 			</Provider>
 		);
 
+		await waitForLoadingToBeRemoved(container);
+
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should open another notification modal after closing one when having multiple modals', () => {
+	it('should open another notification modal after closing one when having multiple modals', async () => {
 		mockGetDateNow(data.getTimestamp(0));
 
 		API.notifications.fetchNotifications.mockReturnValue(
@@ -68,7 +73,7 @@ describe('useModalNotifications', () => {
 			)
 		);
 
-		const {getByText} = render(
+		const {container, getByText} = render(
 			<Provider store={mockStore()}>
 				<ModalRenderer />
 				<WrapperComponent />
@@ -76,6 +81,8 @@ describe('useModalNotifications', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(getByText('Do This Later'));
 

@@ -144,7 +144,7 @@ exports[`View should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#view"
+                      href="#view"
                     />
                   </svg>
                 </button>

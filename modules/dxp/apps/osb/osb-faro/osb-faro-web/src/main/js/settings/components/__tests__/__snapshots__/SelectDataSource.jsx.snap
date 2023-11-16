@@ -26,7 +26,7 @@ exports[`SelectDataSource should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#csv-logo"
+                href="#csv-logo"
               />
             </svg>
           </div>
@@ -57,7 +57,7 @@ exports[`SelectDataSource should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#liferay-logo"
+                href="#liferay-logo"
               />
             </svg>
           </div>
@@ -99,7 +99,7 @@ exports[`SelectDataSource should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#salesforce-logo"
+                href="#salesforce-logo"
               />
             </svg>
           </div>

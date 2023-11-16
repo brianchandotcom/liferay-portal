@@ -28,7 +28,7 @@ exports[`SearchableModal should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>
@@ -60,7 +60,7 @@ exports[`SearchableModal should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-ascending"
+                      href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -94,7 +94,7 @@ exports[`SearchableModal should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#times"
+                          href="#times"
                         />
                       </svg>
                     </button>

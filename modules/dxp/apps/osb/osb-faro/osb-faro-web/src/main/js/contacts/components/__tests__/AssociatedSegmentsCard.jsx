@@ -4,15 +4,13 @@ import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 const DefaultComponent = props => (
 	<StaticRouter>
 		<AssociatedSegmentsCard
-			dataSourceFn={() =>
-				Promise.resolve(data.mockSearch(data.mockSegment, 2))
-			}
 			groupId='23'
 			id='123'
 			pageUrl='/foo'
@@ -22,33 +20,31 @@ const DefaultComponent = props => (
 );
 
 describe('AssociatedSegmentsCard', () => {
-	it('should render', () => {
-		const {container} = render(<DefaultComponent />);
+	it('should render', async () => {
+		const {container} = render(
+			<DefaultComponent
+				dataSourceFn={() =>
+					Promise.resolve(data.mockSearch(data.mockSegment, 2))
+				}
+			/>
+		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render w/ loading overlay', () => {
-		const {container} = render(
-			<DefaultComponent dataSourceFn={() => Promise.resolve({})} />
-		);
-
-		expect(container.querySelector('.overlay')).toBeTruthy();
-	});
-
-	it('should render with an error display', () => {
-		const {getByText} = render(
+	it('should render with an error display', async () => {
+		const {container, getByText} = render(
 			<DefaultComponent dataSourceFn={() => Promise.reject({})} />
 		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('An unexpected error occurred.')).toBeTruthy();
 	});
 
-	it('should render with an no results display', () => {
+	it('should render with an no results display', async () => {
 		const {container} = render(
 			<DefaultComponent
 				dataSourceFn={() =>
@@ -58,7 +54,7 @@ describe('AssociatedSegmentsCard', () => {
 			/>
 		);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

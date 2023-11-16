@@ -66,6 +66,7 @@ exports[`Recharts Util getAxisTickText should render when returned function is c
 <div>
   <text
     class="recharts-text"
+    fill="#808080"
     style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
     text-anchor="middle"
     x="12"

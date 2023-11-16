@@ -111,10 +111,12 @@ export default class StringInput extends React.Component<IStringInputProps> {
 										'has-error': showError
 									})}
 									data-testid='value-select'
-									items={options.map(option => ({
-										label: option.label,
-										value: option.value
-									}))}
+									items={
+										options.map(({label, value}) => ({
+											label,
+											value
+										})) as {label: string; value: string}[]
+									}
 									onBlur={this.handleBlur}
 									onSelectionChange={this.handleChange}
 									selectedKey={value}

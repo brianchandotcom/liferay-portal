@@ -59,7 +59,7 @@ exports[`AccountDetails should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#order-arrow-ascending"
+                        href="#order-arrow-ascending"
                       />
                     </svg>
                   </button>
@@ -93,7 +93,7 @@ exports[`AccountDetails should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#search"
+                            href="#search"
                           />
                         </svg>
                       </button>
@@ -162,7 +162,7 @@ exports[`AccountDetails should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#order-arrow-up"
+                          href="#order-arrow-up"
                         />
                       </svg>
                     </span>

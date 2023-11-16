@@ -21,7 +21,7 @@ exports[`InvitePeople renders 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>
@@ -56,7 +56,7 @@ exports[`InvitePeople renders 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#question-circle-full"
+                  href="#question-circle-full"
                 />
               </svg>
             </span>

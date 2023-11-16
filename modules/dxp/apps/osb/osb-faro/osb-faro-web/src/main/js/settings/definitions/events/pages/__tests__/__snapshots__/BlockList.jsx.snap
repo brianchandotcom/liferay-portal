@@ -123,7 +123,7 @@ exports[`BlockList should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#order-arrow-ascending"
+                        href="#order-arrow-ascending"
                       />
                     </svg>
                   </a>
@@ -157,7 +157,7 @@ exports[`BlockList should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#search"
+                            href="#search"
                           />
                         </svg>
                       </button>

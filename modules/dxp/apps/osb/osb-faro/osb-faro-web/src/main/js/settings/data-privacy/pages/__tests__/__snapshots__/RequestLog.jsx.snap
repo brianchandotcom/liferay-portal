@@ -89,7 +89,7 @@ exports[`RequestLog should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#caret-bottom"
+                          href="#caret-bottom"
                         />
                       </svg>
                     </button>
@@ -108,7 +108,7 @@ exports[`RequestLog should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#order-arrow-descending"
+                        href="#order-arrow-descending"
                       />
                     </svg>
                   </a>
@@ -142,7 +142,7 @@ exports[`RequestLog should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#search"
+                            href="#search"
                           />
                         </svg>
                       </button>

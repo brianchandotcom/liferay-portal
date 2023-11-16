@@ -81,7 +81,7 @@ exports[`Individuals Dashboard Distribution renders 1`] = `
                                 role="presentation"
                               >
                                 <use
-                                  xlink:href="#caret-bottom"
+                                  href="#caret-bottom"
                                 />
                               </svg>
                             </div>
@@ -108,7 +108,7 @@ exports[`Individuals Dashboard Distribution renders 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#ac-satellite"
+                            href="#ac-satellite"
                           />
                         </svg>
                       </div>
@@ -158,7 +158,7 @@ exports[`Individuals Dashboard Distribution renders with data source empty state
           role="presentation"
         >
           <use
-            xlink:href="#ac-satellite"
+            href="#ac-satellite"
           />
         </svg>
       </div>

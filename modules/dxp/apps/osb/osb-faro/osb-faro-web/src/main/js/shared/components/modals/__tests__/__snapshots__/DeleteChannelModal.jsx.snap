@@ -24,7 +24,7 @@ exports[`DeleteChannelModal renders without data source alert message 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#warning-full"
+                href="#warning-full"
               />
             </svg>
             Delete ?
@@ -39,7 +39,7 @@ exports[`DeleteChannelModal renders without data source alert message 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                href="#times"
               />
             </svg>
           </button>

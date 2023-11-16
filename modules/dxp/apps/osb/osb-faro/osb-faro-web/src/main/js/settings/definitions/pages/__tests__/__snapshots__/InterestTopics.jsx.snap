@@ -122,7 +122,7 @@ exports[`InterestTopics should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#order-arrow-ascending"
+                        href="#order-arrow-ascending"
                       />
                     </svg>
                   </a>
@@ -157,7 +157,7 @@ exports[`InterestTopics should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#search"
+                            href="#search"
                           />
                         </svg>
                       </button>
@@ -213,7 +213,7 @@ exports[`InterestTopics should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#order-arrow-up"
+                          href="#order-arrow-up"
                         />
                       </svg>
                     </span>
@@ -282,7 +282,7 @@ exports[`InterestTopics should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#trash"
+                          href="#trash"
                         />
                       </svg>
                     </button>
@@ -314,7 +314,7 @@ exports[`InterestTopics should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#caret-bottom"
+                    href="#caret-bottom"
                   />
                 </svg>
               </button>
@@ -340,7 +340,7 @@ exports[`InterestTopics should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-left-small"
+                      href="#angle-left-small"
                     />
                   </svg>
                 </a>
@@ -368,7 +368,7 @@ exports[`InterestTopics should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-right-small"
+                      href="#angle-right-small"
                     />
                   </svg>
                 </a>
@@ -419,7 +419,7 @@ exports[`InterestTopics should render with a member-specific message to add keyw
         role="presentation"
       >
         <use
-          xlink:href="#ac-satellite"
+          href="#ac-satellite"
         />
       </svg>
     </div>
@@ -452,7 +452,7 @@ exports[`InterestTopics should render with a message to add keywords if there ar
         role="presentation"
       >
         <use
-          xlink:href="#ac-satellite"
+          href="#ac-satellite"
         />
       </svg>
     </div>
@@ -492,7 +492,7 @@ exports[`InterestTopics should render with an empty state 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#ac-no-results-found"
+          href="#ac-no-results-found"
         />
       </svg>
     </div>

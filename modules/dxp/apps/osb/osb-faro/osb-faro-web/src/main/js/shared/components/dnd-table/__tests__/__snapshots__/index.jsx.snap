@@ -47,7 +47,7 @@ exports[`DndTable renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#drag"
+                    href="#drag"
                   />
                 </svg>
               </div>

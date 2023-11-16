@@ -51,7 +51,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#pencil"
+                        href="#pencil"
                       />
                     </svg>
                   </button>
@@ -102,7 +102,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#question-circle-full"
+                        href="#question-circle-full"
                       />
                     </svg>
                   </span>
@@ -150,7 +150,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#view"
+                          href="#view"
                         />
                       </svg>
                     </span>
@@ -234,7 +234,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#search"
+                              href="#search"
                             />
                           </svg>
                         </button>
@@ -297,7 +297,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#ac-rule"
+                                href="#ac-rule"
                               />
                             </svg>
                             Drag and drop criterion from the right to add rules.
@@ -310,7 +310,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#ac-group"
+                                href="#ac-group"
                               />
                             </svg>
                             Drag and drop over an existing criteria to form groups.

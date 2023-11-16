@@ -5,13 +5,14 @@ import {cleanup, render} from '@testing-library/react';
 import {mockSegment} from 'test/data';
 import {SEGMENTS} from 'shared/util/router';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('InterestsCard', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<StaticRouter>
 				<InterestsCard
@@ -23,6 +24,8 @@ describe('InterestsCard', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

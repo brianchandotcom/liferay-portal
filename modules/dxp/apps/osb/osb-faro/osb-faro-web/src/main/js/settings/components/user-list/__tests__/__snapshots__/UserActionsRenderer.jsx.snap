@@ -21,7 +21,7 @@ exports[`UserActionsRenderer should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#trash"
+          href="#trash"
         />
       </svg>
     </button>

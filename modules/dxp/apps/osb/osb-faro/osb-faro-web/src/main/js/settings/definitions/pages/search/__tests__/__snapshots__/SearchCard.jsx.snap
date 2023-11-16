@@ -60,7 +60,7 @@ exports[`SearchCard should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#trash"
+                href="#trash"
               />
             </svg>
           </button>
@@ -74,7 +74,7 @@ exports[`SearchCard should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#plus"
+                href="#plus"
               />
             </svg>
           </button>

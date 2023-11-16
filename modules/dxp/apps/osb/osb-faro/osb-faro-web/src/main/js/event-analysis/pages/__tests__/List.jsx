@@ -123,6 +123,8 @@ describe('Event Analysis List', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(managementBar.querySelector('.lexicon-icon-trash')).toBeTruthy();
 	});
 });

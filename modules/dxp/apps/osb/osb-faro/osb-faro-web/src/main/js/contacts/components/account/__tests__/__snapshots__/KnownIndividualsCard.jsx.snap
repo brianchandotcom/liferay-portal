@@ -139,7 +139,7 @@ exports[`KnownIndividualsCard should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -203,7 +203,7 @@ exports[`KnownIndividualsCard should render w/ NoResultsDisplay 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>

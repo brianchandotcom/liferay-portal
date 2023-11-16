@@ -48,7 +48,7 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#drag"
+                    href="#drag"
                   />
                 </svg>
               </div>
@@ -64,7 +64,7 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#text"
+                      href="#text"
                     />
                   </svg>
                 </div>
@@ -89,7 +89,7 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#times-circle"
+                    href="#times-circle"
                   />
                 </svg>
               </button>
@@ -114,7 +114,7 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#drag"
+                    href="#drag"
                   />
                 </svg>
               </div>
@@ -130,7 +130,7 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#text"
+                      href="#text"
                     />
                   </svg>
                 </div>
@@ -155,7 +155,7 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#times-circle"
+                    href="#times-circle"
                   />
                 </svg>
               </button>
@@ -179,7 +179,7 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#plus"
+              href="#plus"
             />
           </svg>
         </button>

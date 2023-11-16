@@ -10,7 +10,7 @@ exports[`SummaryCardRun should render component 1`] = `
       role="presentation"
     >
       <use
-        xlink:href="#home"
+        href="#home"
       />
     </svg>
     <div>

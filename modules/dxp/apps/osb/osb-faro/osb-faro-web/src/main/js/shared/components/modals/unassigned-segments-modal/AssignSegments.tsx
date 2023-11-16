@@ -90,14 +90,14 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 		<td>
 			<Picker
 				data-testid={`select-${id}`}
-				items={options}
+				items={options as {label: string; value: string}[]}
 				onSelectionChange={selectedValue =>
 					updateSegment(id, selectedValue)
 				}
 				required
 				selectedKey={channelMappings[id]}
 			>
-				{item => <Option key={item as string}>{item}</Option>}
+				{({label, value}) => <Option key={value}>{label}</Option>}
 			</Picker>
 		</td>
 	);

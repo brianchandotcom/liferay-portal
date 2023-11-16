@@ -73,7 +73,7 @@ exports[`Individuals Dashboard renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#caret-bottom"
+                    href="#caret-bottom"
                   />
                 </svg>
               </button>

@@ -9,6 +9,7 @@ import {Provider} from 'react-redux';
 import {Segment} from 'shared/util/records';
 import {SegmentTypes} from 'shared/util/constants';
 import {StaticSegmentEdit} from '../Static';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -23,7 +24,7 @@ describe('StaticSegmentEdit', () => {
 		isShowingNavigationWarning = false;
 	});
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<BrowserRouter>
 				<Provider store={mockStore()}>
@@ -31,6 +32,8 @@ describe('StaticSegmentEdit', () => {
 				</Provider>
 			</BrowserRouter>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 

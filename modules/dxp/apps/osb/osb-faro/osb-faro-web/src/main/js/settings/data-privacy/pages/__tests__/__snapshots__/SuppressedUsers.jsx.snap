@@ -79,7 +79,7 @@ exports[`SuppressedUsers should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#search"
+                              href="#search"
                             />
                           </svg>
                         </button>
@@ -160,7 +160,7 @@ exports[`SuppressedUsers should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#order-arrow-down"
+                            href="#order-arrow-down"
                           />
                         </svg>
                       </span>
@@ -222,7 +222,7 @@ exports[`SuppressedUsers should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#caret-bottom"
+                      href="#caret-bottom"
                     />
                   </svg>
                 </button>
@@ -248,7 +248,7 @@ exports[`SuppressedUsers should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-left-small"
+                        href="#angle-left-small"
                       />
                     </svg>
                   </a>
@@ -276,7 +276,7 @@ exports[`SuppressedUsers should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-right-small"
+                        href="#angle-right-small"
                       />
                     </svg>
                   </a>

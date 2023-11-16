@@ -13,7 +13,7 @@ exports[`SummarySection Variant should render component 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#caret-top"
+          href="#caret-top"
         />
       </svg>
        50% lift

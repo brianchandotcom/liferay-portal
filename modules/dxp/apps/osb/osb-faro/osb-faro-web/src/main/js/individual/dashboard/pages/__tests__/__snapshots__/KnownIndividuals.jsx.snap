@@ -67,7 +67,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#caret-bottom"
+                            href="#caret-bottom"
                           />
                         </svg>
                       </button>
@@ -86,7 +86,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#order-arrow-ascending"
+                          href="#order-arrow-ascending"
                         />
                       </svg>
                     </a>
@@ -120,7 +120,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#search"
+                              href="#search"
                             />
                           </svg>
                         </button>
@@ -160,7 +160,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#order-arrow-up"
+                            href="#order-arrow-up"
                           />
                         </svg>
                       </span>
@@ -296,7 +296,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#caret-bottom"
+                      href="#caret-bottom"
                     />
                   </svg>
                 </button>
@@ -322,7 +322,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-left-small"
+                        href="#angle-left-small"
                       />
                     </svg>
                   </a>
@@ -350,7 +350,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-right-small"
+                        href="#angle-right-small"
                       />
                     </svg>
                   </a>
@@ -387,7 +387,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders with data source em
               role="presentation"
             >
               <use
-                xlink:href="#ac-satellite"
+                href="#ac-satellite"
               />
             </svg>
           </div>

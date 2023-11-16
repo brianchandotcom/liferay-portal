@@ -48,7 +48,7 @@ exports[`ProgressBar should render a complete progress bar without error 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#check-circle"
+            href="#check-circle"
           />
         </svg>
       </div>
@@ -82,7 +82,7 @@ exports[`ProgressBar should render a progress bar with error 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#times-circle"
+            href="#times-circle"
           />
         </svg>
       </div>

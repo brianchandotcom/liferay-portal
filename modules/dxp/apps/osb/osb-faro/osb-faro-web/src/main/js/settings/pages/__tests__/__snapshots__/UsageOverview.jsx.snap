@@ -78,7 +78,7 @@ exports[`UsageOverview should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-individual"
+                        href="#ac-individual"
                       />
                     </svg>
                   </div>
@@ -145,7 +145,7 @@ exports[`UsageOverview should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#faro-page-views"
+                        href="#faro-page-views"
                       />
                     </svg>
                   </div>
@@ -229,7 +229,7 @@ exports[`UsageOverview should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-up"
+                        href="#angle-up"
                       />
                     </svg>
                   </div>
@@ -272,7 +272,7 @@ exports[`UsageOverview should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#ac-individual"
+                              href="#ac-individual"
                             />
                           </svg>
                           <span
@@ -292,7 +292,7 @@ exports[`UsageOverview should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#faro-page-views"
+                              href="#faro-page-views"
                             />
                           </svg>
                           <span
@@ -312,7 +312,7 @@ exports[`UsageOverview should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#ac-users"
+                              href="#ac-users"
                             />
                           </svg>
                           <span
@@ -418,7 +418,7 @@ exports[`UsageOverview should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#ac-individual"
+                            href="#ac-individual"
                           />
                         </svg>
                         <span
@@ -486,7 +486,7 @@ exports[`UsageOverview should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#faro-page-views"
+                            href="#faro-page-views"
                           />
                         </svg>
                         <span

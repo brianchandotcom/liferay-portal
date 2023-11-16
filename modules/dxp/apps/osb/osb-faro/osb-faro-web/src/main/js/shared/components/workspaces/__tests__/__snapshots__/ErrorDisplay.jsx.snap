@@ -17,7 +17,7 @@ exports[`WorkspacesErrorDisplay should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#liferay-logo"
+            href="#liferay-logo"
           />
         </svg>
       </a>
@@ -44,7 +44,7 @@ exports[`WorkspacesErrorDisplay should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-bottom"
+                href="#caret-bottom"
               />
             </svg>
           </div>
@@ -68,7 +68,7 @@ exports[`WorkspacesErrorDisplay should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#ac-logo"
+                href="#ac-logo"
               />
             </svg>
             <span

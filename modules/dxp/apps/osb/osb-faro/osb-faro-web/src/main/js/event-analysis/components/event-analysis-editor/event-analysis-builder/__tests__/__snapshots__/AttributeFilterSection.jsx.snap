@@ -51,7 +51,7 @@ exports[`AttributeFilterSection renders w/ filter 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#text"
+                      href="#text"
                     />
                   </svg>
                 </div>
@@ -78,7 +78,7 @@ exports[`AttributeFilterSection renders w/ filter 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#times-circle"
+                    href="#times-circle"
                   />
                 </svg>
               </button>
@@ -102,7 +102,7 @@ exports[`AttributeFilterSection renders w/ filter 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#plus"
+              href="#plus"
             />
           </svg>
         </button>

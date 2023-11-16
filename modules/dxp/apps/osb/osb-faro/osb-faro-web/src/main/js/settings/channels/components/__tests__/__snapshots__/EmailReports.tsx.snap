@@ -24,7 +24,7 @@ exports[`EmailReports should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#cog"
+            href="#cog"
           />
         </svg>
       </span>

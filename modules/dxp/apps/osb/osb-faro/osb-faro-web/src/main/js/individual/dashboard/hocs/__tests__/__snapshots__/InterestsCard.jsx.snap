@@ -4,6 +4,7 @@ exports[`InterestsCard renders 1`] = `
 <div>
   <div
     class="card card-root interests-card-root"
+    id="topInterestsAsOfYesterdayCardRoot"
     style="min-height: 536px;"
   >
     <div
@@ -367,7 +368,7 @@ exports[`InterestsCard renders 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -380,6 +381,7 @@ exports[`InterestsCard renders with empty data 1`] = `
 <div>
   <div
     class="card card-root interests-card-root"
+    id="topInterestsAsOfYesterdayCardRoot"
     style="min-height: 536px;"
   >
     <div
@@ -432,7 +434,7 @@ exports[`InterestsCard renders with empty data 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>

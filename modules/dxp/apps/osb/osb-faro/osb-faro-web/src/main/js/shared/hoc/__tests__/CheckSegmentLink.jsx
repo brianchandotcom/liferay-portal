@@ -2,6 +2,7 @@ import * as API from 'shared/api';
 import CheckSegmentLink from '../CheckSegmentLink';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -25,7 +26,7 @@ describe('CheckSegmentLink', () => {
 		expect(getByText('Wrapped component text')).toBeTruthy();
 	});
 
-	it('should request and replace url if channelId is not in location', () => {
+	it('should request and replace url if channelId is not in location', async () => {
 		const spy = jest.fn();
 		const WrappedComponent = CheckSegmentLink(RenderText);
 
@@ -33,7 +34,7 @@ describe('CheckSegmentLink', () => {
 			Promise.resolve({channelId: 123, id: 456})
 		);
 
-		render(
+		const {container} = render(
 			<WrappedComponent
 				groupId='faro-dev-liferay'
 				history={{replace: spy}}
@@ -45,6 +46,8 @@ describe('CheckSegmentLink', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(spy).toBeCalledWith(
 			'/workspace/faro-dev-liferay/123/contacts/segments/456'

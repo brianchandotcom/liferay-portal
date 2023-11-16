@@ -33,7 +33,7 @@ exports[`ChangeLegend should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-top"
+              href="#caret-top"
             />
           </svg>
           200.0%

@@ -4,6 +4,7 @@ exports[`ActiveIndividualsCard should render 1`] = `
 <div>
   <div
     class="card card-root"
+    id="activeIndividualsCardRoot"
     style="min-height: 536px;"
   >
     <div

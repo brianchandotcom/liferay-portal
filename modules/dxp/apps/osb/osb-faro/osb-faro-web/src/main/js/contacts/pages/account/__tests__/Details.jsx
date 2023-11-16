@@ -6,6 +6,7 @@ import {Account} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -27,6 +28,8 @@ describe('AccountDetails', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

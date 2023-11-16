@@ -8,6 +8,7 @@ import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {SegmentTypes} from 'shared/util/constants';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.mock('shared/apollo/client', () => ({
 	query: jest.fn()
@@ -52,6 +53,8 @@ describe('Edit', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
@@ -77,11 +80,13 @@ describe('Edit', () => {
 			})
 		);
 
-		const {getByText} = render(
+		const {container, getByText} = render(
 			<DefaultComponent type={SegmentTypes.Dynamic} />
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Dynamic Segment')).toBeTruthy();
 	});

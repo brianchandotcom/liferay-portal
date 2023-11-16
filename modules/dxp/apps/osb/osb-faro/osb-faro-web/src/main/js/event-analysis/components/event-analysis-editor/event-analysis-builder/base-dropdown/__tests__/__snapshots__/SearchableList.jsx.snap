@@ -12,7 +12,7 @@ exports[`BaseDropdownSearchableList should render 1`] = `
         class="input-group input-group-sm"
       >
         <div
-          class="input-group-item"
+          class="input-group-item input-group-item-focusable"
         >
           <input
             class="form-control input-group-inset input-group-inset-after"
@@ -33,7 +33,7 @@ exports[`BaseDropdownSearchableList should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                  href="/o/osb-faro-web/dist/sprite.svg#search"
                 />
               </svg>
             </button>

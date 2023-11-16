@@ -6,11 +6,12 @@ import {Individual} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('IndividualAssociatedSegments', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<StaticRouter>
 				<Provider store={mockStore()}>
@@ -25,6 +26,8 @@ describe('IndividualAssociatedSegments', () => {
 				</Provider>
 			</StaticRouter>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 

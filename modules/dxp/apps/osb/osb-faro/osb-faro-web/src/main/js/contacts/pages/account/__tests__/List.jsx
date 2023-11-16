@@ -5,11 +5,12 @@ import {MemoryRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('List', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter
@@ -23,6 +24,8 @@ describe('List', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

@@ -10,7 +10,7 @@ exports[`SegmentSticker should render 1`] = `
       role="presentation"
     >
       <use
-        xlink:href="#individual-static-segment"
+        href="#individual-static-segment"
       />
     </svg>
   </div>

@@ -113,7 +113,7 @@ exports[`SummaryCard should render a running SummaryCard 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#web-content"
+                    href="#web-content"
                   />
                 </svg>
               </span>

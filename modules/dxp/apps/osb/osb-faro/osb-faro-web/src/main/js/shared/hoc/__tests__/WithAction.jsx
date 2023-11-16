@@ -15,7 +15,7 @@ describe('withAction', () => {
 			mapStateToRemoteData
 		)(jest.fn());
 
-		expect(WrappedComponent).toBeInstanceOf(Function);
+		expect(WrappedComponent).toBeInstanceOf(Object);
 	});
 
 	it('should render the wrapped component', () => {

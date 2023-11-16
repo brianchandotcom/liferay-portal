@@ -29,7 +29,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#ac-logo"
+              href="#ac-logo"
             />
           </svg>
         </a>
@@ -44,7 +44,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#sites"
+                href="#sites"
               />
             </svg>
           </div>
@@ -61,7 +61,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-right"
+                href="#caret-right"
               />
             </svg>
           </div>
@@ -99,7 +99,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-page"
+                        href="#ac-page"
                       />
                     </svg>
                   </span>
@@ -129,7 +129,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-assets"
+                        href="#ac-assets"
                       />
                     </svg>
                   </span>
@@ -159,7 +159,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-event-analysis"
+                        href="#ac-event-analysis"
                       />
                     </svg>
                   </span>
@@ -202,7 +202,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-segment"
+                        href="#ac-segment"
                       />
                     </svg>
                   </span>
@@ -232,7 +232,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-individual"
+                        href="#ac-individual"
                       />
                     </svg>
                   </span>
@@ -275,7 +275,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-test"
+                        href="#ac-test"
                       />
                     </svg>
                   </span>
@@ -340,7 +340,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#cog"
+                      href="#cog"
                     />
                   </svg>
                 </span>
@@ -370,7 +370,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-left-small"
+                      href="#angle-left-small"
                     />
                   </svg>
                 </span>

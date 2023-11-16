@@ -10,6 +10,7 @@ import {mockGetDateNow} from 'test/mock-date';
 import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -32,26 +33,30 @@ describe('AccessTokenList', () => {
 
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should display the card with the options to create a new token if there is no token', () => {
+	it('should display the card with the options to create a new token if there is no token', async () => {
 		API.apiTokens.search.mockReturnValueOnce(Promise.resolve([]));
 
 		const {container, queryByTestId} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(queryByTestId('generate-token-button')).toBeTruthy();
 		expect(container.querySelector('.table-root')).toBeNull();
 	});
 
-	it('should show the generated token in a list and the "Generate Token" button should no longer be visible', () => {
+	it('should show the generated token in a list and the "Generate Token" button should no longer be visible', async () => {
 		API.apiTokens.search.mockReturnValueOnce(Promise.resolve([]));
 
 		const {container, getByTestId, queryByTestId} = render(
@@ -60,6 +65,8 @@ describe('AccessTokenList', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container.querySelector('.table-root')).toBeNull();
 		expect(queryByTestId('generate-token-button')).toBeTruthy();
 
@@ -67,22 +74,28 @@ describe('AccessTokenList', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container.querySelector('.table-root')).toMatchSnapshot();
 		expect(queryByTestId('generate-token-button')).toBeNull();
 	});
 
-	it('should open a modal to confirm revoking a token', () => {
-		const {getByText} = render(<DefaultComponent />);
+	it('should open a modal to confirm revoking a token', async () => {
+		const {container, getByText} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(getByText('Revoke'));
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(open).toBeCalled();
 	});
-	it('should display the "Generate Token" card  above the table if the token is expired', () => {
+	it('should display the "Generate Token" card  above the table if the token is expired', async () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([
 				data.mockApiToken({
@@ -95,13 +108,15 @@ describe('AccessTokenList', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(
 			getByText(container.querySelector('.card-body'), 'Generate Token')
 		).toBeTruthy();
 		expect(container.querySelector('.table-root')).toMatchSnapshot();
 	});
 
-	it('should render the correct date on expiration date column when generated token is 30 days', () => {
+	it('should render the correct date on expiration date column when generated token is 30 days', async () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([
 				data.mockApiToken({
@@ -115,6 +130,8 @@ describe('AccessTokenList', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(
 			getByText(
 				container.querySelector('td:nth-child(3)'),
@@ -123,7 +140,7 @@ describe('AccessTokenList', () => {
 		).toMatchSnapshot();
 	});
 
-	it('should render the correct date on expiration date column when generated token is 6 months', () => {
+	it('should render the correct date on expiration date column when generated token is 6 months', async () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([
 				data.mockApiToken({
@@ -137,6 +154,8 @@ describe('AccessTokenList', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(
 			getByText(
 				container.querySelector('td:nth-child(3)'),
@@ -145,7 +164,7 @@ describe('AccessTokenList', () => {
 		).toMatchSnapshot();
 	});
 
-	it('should render the correct date on expiration date column when generated token is 1 year', () => {
+	it('should render the correct date on expiration date column when generated token is 1 year', async () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([
 				data.mockApiToken({
@@ -159,6 +178,8 @@ describe('AccessTokenList', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(
 			getByText(
 				container.querySelector('td:nth-child(3)'),
@@ -167,7 +188,7 @@ describe('AccessTokenList', () => {
 		).toMatchSnapshot();
 	});
 
-	it('should render indefinite on expiration date column when generated token is indefinite', () => {
+	it('should render indefinite on expiration date column when generated token is indefinite', async () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([
 				data.mockApiToken({
@@ -180,6 +201,8 @@ describe('AccessTokenList', () => {
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			getByText(container.querySelector('td:nth-child(3)'), 'Indefinite')

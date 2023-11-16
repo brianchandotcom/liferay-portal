@@ -129,7 +129,7 @@ exports[`Event Analysis List should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#caret-bottom"
+                            href="#caret-bottom"
                           />
                         </svg>
                       </button>
@@ -148,7 +148,7 @@ exports[`Event Analysis List should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#order-arrow-ascending"
+                          href="#order-arrow-ascending"
                         />
                       </svg>
                     </a>
@@ -182,7 +182,7 @@ exports[`Event Analysis List should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#search"
+                              href="#search"
                             />
                           </svg>
                         </button>
@@ -222,7 +222,7 @@ exports[`Event Analysis List should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#order-arrow-up"
+                            href="#order-arrow-up"
                           />
                         </svg>
                       </span>
@@ -318,7 +318,7 @@ exports[`Event Analysis List should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#trash"
+                              href="#trash"
                             />
                           </svg>
                         </button>
@@ -398,7 +398,7 @@ exports[`Event Analysis List should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#trash"
+                              href="#trash"
                             />
                           </svg>
                         </button>
@@ -431,7 +431,7 @@ exports[`Event Analysis List should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#caret-bottom"
+                      href="#caret-bottom"
                     />
                   </svg>
                 </button>
@@ -457,7 +457,7 @@ exports[`Event Analysis List should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-left-small"
+                        href="#angle-left-small"
                       />
                     </svg>
                   </a>
@@ -485,7 +485,7 @@ exports[`Event Analysis List should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-right-small"
+                        href="#angle-right-small"
                       />
                     </svg>
                   </a>

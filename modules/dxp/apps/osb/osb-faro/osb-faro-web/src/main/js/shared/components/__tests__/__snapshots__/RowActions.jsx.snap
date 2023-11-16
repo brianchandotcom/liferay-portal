@@ -21,7 +21,7 @@ exports[`RowActions should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#ellipsis-v"
+            href="#ellipsis-v"
           />
         </svg>
       </button>

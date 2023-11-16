@@ -14,7 +14,7 @@ exports[`Alert should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#info-circle"
+          href="#info-circle"
         />
       </svg>
     </span>

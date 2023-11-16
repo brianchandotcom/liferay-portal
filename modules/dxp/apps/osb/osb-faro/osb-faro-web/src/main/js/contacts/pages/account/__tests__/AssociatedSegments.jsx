@@ -6,11 +6,12 @@ import {Account} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('AccountAssociatedSegments', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<StaticRouter>
 				<Provider store={mockStore()}>
@@ -27,6 +28,8 @@ describe('AccountAssociatedSegments', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

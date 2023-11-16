@@ -4,6 +4,7 @@ exports[`CompositionCard should render 1`] = `
 <div>
   <div
     class="card card-root composition-card-root"
+    id="segmentCompositionCardRoot"
   >
     <div
       class="card-header"

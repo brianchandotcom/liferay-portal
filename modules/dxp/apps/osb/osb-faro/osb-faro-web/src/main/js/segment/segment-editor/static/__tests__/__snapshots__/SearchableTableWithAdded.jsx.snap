@@ -28,7 +28,7 @@ exports[`SearchableTableWithAdded should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#order-arrow-ascending"
+                  href="#order-arrow-ascending"
                 />
               </svg>
             </a>
@@ -62,7 +62,7 @@ exports[`SearchableTableWithAdded should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#search"
+                      href="#search"
                     />
                   </svg>
                 </button>
@@ -104,7 +104,7 @@ exports[`SearchableTableWithAdded should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-up"
+                      href="#order-arrow-up"
                     />
                   </svg>
                 </span>
@@ -160,7 +160,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
                 role="presentation"
               >
                 <use
-                  xlink:href="#order-arrow-ascending"
+                  href="#order-arrow-ascending"
                 />
               </svg>
             </a>
@@ -194,7 +194,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
                     role="presentation"
                   >
                     <use
-                      xlink:href="#search"
+                      href="#search"
                     />
                   </svg>
                 </button>
@@ -273,7 +273,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-up"
+                      href="#order-arrow-up"
                     />
                   </svg>
                 </span>
@@ -402,7 +402,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </button>
@@ -429,7 +429,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
               role="presentation"
             >
               <use
-                xlink:href="#angle-left-small"
+                href="#angle-left-small"
               />
             </svg>
           </button>
@@ -459,7 +459,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
               role="presentation"
             >
               <use
-                xlink:href="#angle-right-small"
+                href="#angle-right-small"
               />
             </svg>
           </button>

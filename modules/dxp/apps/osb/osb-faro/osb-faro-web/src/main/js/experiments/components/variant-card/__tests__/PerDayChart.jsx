@@ -25,7 +25,25 @@ const MOCK_CONTEXT = {
 };
 
 describe('PerDayChart', () => {
-	afterEach(cleanup);
+	const {ResizeObserver} = window;
+
+	beforeEach(() => {
+		delete window.ResizeObserver;
+
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn()
+		}));
+	});
+
+	afterEach(() => {
+		window.ResizeObserver = ResizeObserver;
+
+		jest.restoreAllMocks();
+
+		cleanup();
+	});
 
 	it('should render', async () => {
 		const {container} = render(

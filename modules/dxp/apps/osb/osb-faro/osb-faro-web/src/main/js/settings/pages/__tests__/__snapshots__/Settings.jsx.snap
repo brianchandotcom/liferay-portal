@@ -23,7 +23,7 @@ exports[`Setttings should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#angle-left-small"
+                href="#angle-left-small"
               />
             </svg>
           </span>
@@ -70,7 +70,7 @@ exports[`Setttings should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#ac-api"
+                      href="#ac-api"
                     />
                   </svg>
                 </span>
@@ -92,7 +92,7 @@ exports[`Setttings should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#definitions"
+                      href="#definitions"
                     />
                   </svg>
                 </span>
@@ -114,7 +114,7 @@ exports[`Setttings should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#data-privacy-lock"
+                      href="#data-privacy-lock"
                     />
                   </svg>
                 </span>
@@ -136,7 +136,7 @@ exports[`Setttings should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#faro-data-source"
+                      href="#faro-data-source"
                     />
                   </svg>
                 </span>
@@ -169,7 +169,7 @@ exports[`Setttings should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#user-management"
+                      href="#user-management"
                     />
                   </svg>
                 </span>
@@ -191,7 +191,7 @@ exports[`Setttings should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#ac-page"
+                      href="#ac-page"
                     />
                   </svg>
                 </span>
@@ -213,7 +213,7 @@ exports[`Setttings should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#usage"
+                      href="#usage"
                     />
                   </svg>
                 </span>
@@ -235,7 +235,7 @@ exports[`Setttings should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#cog"
+                      href="#cog"
                     />
                   </svg>
                 </span>

@@ -126,7 +126,7 @@ exports[`StaticSegmentEdit should render 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#caret-bottom"
+                                href="#caret-bottom"
                               />
                             </svg>
                           </button>
@@ -146,7 +146,7 @@ exports[`StaticSegmentEdit should render 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#order-arrow-ascending"
+                              href="#order-arrow-ascending"
                             />
                           </svg>
                         </button>
@@ -180,7 +180,7 @@ exports[`StaticSegmentEdit should render 1`] = `
                                 role="presentation"
                               >
                                 <use
-                                  xlink:href="#search"
+                                  href="#search"
                                 />
                               </svg>
                             </button>
@@ -224,7 +224,7 @@ exports[`StaticSegmentEdit should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#ac-individual"
+                          href="#ac-individual"
                         />
                       </svg>
                     </div>

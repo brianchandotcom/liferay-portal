@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {Segment} from 'shared/util/records';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -27,10 +28,12 @@ describe('Membership', () => {
 		</Provider>
 	);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<WrappedComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -43,10 +46,12 @@ describe('MembershipChart', () => {
 		</StaticRouter>
 	);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<WrappedComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

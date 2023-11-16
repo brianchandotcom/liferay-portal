@@ -28,7 +28,7 @@ exports[`ExportLogModal renders 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>
@@ -76,7 +76,7 @@ exports[`ExportLogModal renders 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#calendar"
+                      href="#calendar"
                     />
                   </svg>
                 </button>

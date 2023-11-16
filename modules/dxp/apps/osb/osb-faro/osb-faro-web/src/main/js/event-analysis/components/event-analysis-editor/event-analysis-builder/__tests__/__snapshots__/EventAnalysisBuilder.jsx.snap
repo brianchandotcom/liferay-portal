@@ -35,7 +35,7 @@ exports[`Event Analysis Builder render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#plus"
+                href="#plus"
               />
             </svg>
           </button>
@@ -105,7 +105,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#times-circle"
+                    href="#times-circle"
                   />
                 </svg>
               </button>
@@ -144,7 +144,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#plus"
+                href="#plus"
               />
             </svg>
           </button>
@@ -181,7 +181,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#plus"
+                href="#plus"
               />
             </svg>
           </button>

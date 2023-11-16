@@ -62,7 +62,7 @@ exports[`NoPropertiesAvailable should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#ac-satellite"
+                  href="#ac-satellite"
                 />
               </svg>
             </div>

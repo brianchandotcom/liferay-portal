@@ -216,7 +216,7 @@ exports[`AccessTokenList should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#copy"
+                            href="#copy"
                           />
                         </svg>
                       </button>
@@ -333,7 +333,7 @@ exports[`AccessTokenList should show the generated token in a list and the "Gene
                 role="presentation"
               >
                 <use
-                  xlink:href="#copy"
+                  href="#copy"
                 />
               </svg>
             </button>

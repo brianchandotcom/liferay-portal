@@ -4,6 +4,7 @@ import React from 'react';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {noop} from 'lodash';
 import {Provider} from 'react-redux';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -23,8 +24,8 @@ describe('InvitePeople', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('renders the connected state when invitations have been sent', () => {
-		const {queryByPlaceholderText, queryByText} = render(
+	it('renders the connected state when invitations have been sent', async () => {
+		const {container, queryByPlaceholderText, queryByText} = render(
 			<Provider store={mockStore()}>
 				<InvitePeople dxpConnected onClose={noop} onNext={noop} />
 			</Provider>
@@ -42,12 +43,14 @@ describe('InvitePeople', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(queryByText(inviteSentMessage)).not.toBeNull();
 		expect(queryByText('Next')).not.toBeNull();
 	});
 
-	it('renders the "Done" button invitations have been sent without connecting dxp', () => {
-		const {queryByPlaceholderText, queryByText} = render(
+	it('renders the "Done" button invitations have been sent without connecting dxp', async () => {
+		const {container, queryByPlaceholderText, queryByText} = render(
 			<Provider store={mockStore()}>
 				<InvitePeople
 					dxpConnected={false}
@@ -68,6 +71,8 @@ describe('InvitePeople', () => {
 		fireEvent.click(queryByText('Send Invitations'));
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText(inviteSentMessage)).not.toBeNull();
 		expect(queryByText('Done')).not.toBeNull();

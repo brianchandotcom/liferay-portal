@@ -30,7 +30,7 @@ exports[`DataTransformation should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#faro-connection-success-ovals"
+            href="#faro-connection-success-ovals"
           />
         </svg>
         0 fields mapped.
@@ -39,7 +39,7 @@ exports[`DataTransformation should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#faro-connection-error-ovals"
+            href="#faro-connection-error-ovals"
           />
         </svg>
         1 fields not mapped.
@@ -108,7 +108,7 @@ exports[`DataTransformation should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#caret-bottom"
+                      href="#caret-bottom"
                     />
                   </svg>
                 </button>
@@ -126,7 +126,7 @@ exports[`DataTransformation should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#faro-connection-error-ovals"
+                href="#faro-connection-error-ovals"
               />
             </svg>
           </div>
@@ -152,7 +152,7 @@ exports[`DataTransformation should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#caret-bottom"
+                      href="#caret-bottom"
                     />
                   </svg>
                 </button>
@@ -174,7 +174,7 @@ exports[`DataTransformation should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#exclamation-full"
+                  href="#exclamation-full"
                 />
               </svg>
             </span>
@@ -194,7 +194,7 @@ exports[`DataTransformation should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times-circle"
+                  href="#times-circle"
                 />
               </svg>
             </button>

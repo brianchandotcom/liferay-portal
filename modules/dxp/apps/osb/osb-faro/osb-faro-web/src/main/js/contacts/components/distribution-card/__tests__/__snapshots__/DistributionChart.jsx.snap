@@ -20,7 +20,7 @@ exports[`DistributionCard DistributionChart renders 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#angle-right-small"
+          href="#angle-right-small"
         />
       </svg>
     </a>
@@ -52,7 +52,7 @@ exports[`DistributionCard DistributionChart renders empty state via props with n
         role="presentation"
       >
         <use
-          xlink:href="#angle-right-small"
+          href="#angle-right-small"
         />
       </svg>
     </a>

@@ -8,6 +8,7 @@ import {MemoryRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -38,15 +39,19 @@ describe('Activities', () => {
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render with error display', async () => {
 		API.activities.fetchHistory.mockReturnValueOnce(Promise.reject({}));
 
-		const {getByText} = render(<DefaultComponent pageDisplay />);
+		const {container, getByText} = render(<DefaultComponent pageDisplay />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Page Not Found')).toBeTruthy();
 	});

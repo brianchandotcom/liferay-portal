@@ -19,7 +19,7 @@ describe('SegmentSticker', () => {
 		);
 
 		expect(container.querySelector('use')).toHaveAttribute(
-			'xlink:href',
+			'href',
 			'#individual-dynamic-segment'
 		);
 	});
@@ -30,7 +30,7 @@ describe('SegmentSticker', () => {
 		);
 
 		expect(container.querySelector('use')).toHaveAttribute(
-			'xlink:href',
+			'href',
 			'#warning'
 		);
 	});

@@ -64,7 +64,7 @@ exports[`CustomStringInput should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-bottom"
+                  href="#caret-bottom"
                 />
               </svg>
             </div>
@@ -140,7 +140,7 @@ exports[`CustomStringInput should render with data 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-bottom"
+                  href="#caret-bottom"
                 />
               </svg>
             </div>

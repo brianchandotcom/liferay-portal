@@ -6,6 +6,7 @@ import {MemoryRouter, Route} from 'react-router-dom';
 import {noop} from 'lodash';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -24,10 +25,12 @@ const DefaultComponent = props => (
 describe('UserRequest', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

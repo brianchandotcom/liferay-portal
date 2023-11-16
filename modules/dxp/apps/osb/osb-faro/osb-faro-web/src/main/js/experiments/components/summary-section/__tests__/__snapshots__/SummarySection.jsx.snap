@@ -33,7 +33,7 @@ exports[`SummarySection MetricType should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#web-content"
+          href="#web-content"
         />
       </svg>
     </span>
@@ -68,7 +68,7 @@ exports[`SummarySection Variant should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#caret-top"
+          href="#caret-top"
         />
       </svg>
        5% lift

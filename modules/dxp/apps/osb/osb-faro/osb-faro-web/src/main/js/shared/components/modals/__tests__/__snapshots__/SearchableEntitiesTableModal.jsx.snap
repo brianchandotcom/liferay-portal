@@ -28,7 +28,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>
@@ -63,7 +63,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#order-arrow-ascending"
+                        href="#order-arrow-ascending"
                       />
                     </svg>
                   </button>
@@ -97,7 +97,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#search"
+                            href="#search"
                           />
                         </svg>
                       </button>
@@ -136,7 +136,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#order-arrow-up"
+                          href="#order-arrow-up"
                         />
                       </svg>
                     </span>

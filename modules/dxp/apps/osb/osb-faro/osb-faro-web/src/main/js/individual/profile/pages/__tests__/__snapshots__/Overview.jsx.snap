@@ -54,7 +54,7 @@ exports[`IndividualOverview should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#search"
+                        href="#search"
                       />
                     </svg>
                   </button>
@@ -100,7 +100,7 @@ exports[`IndividualOverview should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#caret-bottom"
+                    href="#caret-bottom"
                   />
                 </svg>
               </button>
@@ -111,12 +111,8 @@ exports[`IndividualOverview should render 1`] = `
           >
             <div
               class="recharts-responsive-container"
-              style="width: 100%; height: 340px;"
-            >
-              <div
-                style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
-              />
-            </div>
+              style="width: 100%; height: 340px; min-width: 0;"
+            />
             <div
               class="selected-info"
             >
@@ -172,7 +168,7 @@ exports[`IndividualOverview should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#ac-event-icon"
+                          href="#ac-event-icon"
                         />
                       </svg>
                       <span
@@ -238,7 +234,7 @@ exports[`IndividualOverview should render 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#ac-event-icon"
+                            href="#ac-event-icon"
                           />
                         </svg>
                         <span
@@ -258,7 +254,7 @@ Chrome"
                             role="presentation"
                           >
                             <use
-                              xlink:href="#ac-display"
+                              href="#ac-display"
                             />
                           </svg>
                         </span>
@@ -269,7 +265,7 @@ Chrome"
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-bottom"
+                        href="#caret-bottom"
                       />
                     </svg>
                   </div>
@@ -341,7 +337,7 @@ Chrome"
                               role="presentation"
                             >
                               <use
-                                xlink:href="#caret-bottom"
+                                href="#caret-bottom"
                               />
                             </svg>
                           </div>
@@ -376,7 +372,7 @@ Chrome"
                   role="presentation"
                 >
                   <use
-                    xlink:href="#caret-bottom"
+                    href="#caret-bottom"
                   />
                 </svg>
               </button>
@@ -403,7 +399,7 @@ Chrome"
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-left-small"
+                      href="#angle-left-small"
                     />
                   </svg>
                 </button>
@@ -483,7 +479,7 @@ Chrome"
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-right-small"
+                      href="#angle-right-small"
                     />
                   </svg>
                 </button>
@@ -534,7 +530,7 @@ Chrome"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right-small"
+                href="#angle-right-small"
               />
             </svg>
           </a>
@@ -583,7 +579,7 @@ Chrome"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right-small"
+                href="#angle-right-small"
               />
             </svg>
           </a>
@@ -630,7 +626,7 @@ Chrome"
                     role="presentation"
                   >
                     <use
-                      xlink:href="#search"
+                      href="#search"
                     />
                   </svg>
                 </button>
@@ -657,7 +653,7 @@ Chrome"
                       role="presentation"
                     >
                       <use
-                        xlink:href="#individual-dynamic-segment"
+                        href="#individual-dynamic-segment"
                       />
                     </svg>
                   </div>
@@ -700,7 +696,7 @@ Chrome"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right-small"
+                href="#angle-right-small"
               />
             </svg>
           </a>

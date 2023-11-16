@@ -1,17 +1,26 @@
 import HeaderDefault from '../HeaderDefault';
 import React from 'react';
+import {createMemoryHistory} from 'history';
 import {fireEvent, render} from '@testing-library/react';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockTimeRangeReq} from 'test/graphql-data';
+import {Router} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
-const DefaultComponent = props => (
-	<MockedProvider mocks={[mockTimeRangeReq()]}>
-		<HeaderDefault label='Title' {...props} />
-	</MockedProvider>
-);
+const DefaultComponent = props => {
+	const history = createMemoryHistory();
+
+	return (
+		<Router history={history}>
+			<MockedProvider mocks={[mockTimeRangeReq()]}>
+				<HeaderDefault label='Title' {...props} />
+			</MockedProvider>
+		</Router>
+	);
+};
+
 describe('HeaderDefault', () => {
 	it('should render', () => {
 		const {container} = render(<DefaultComponent />);

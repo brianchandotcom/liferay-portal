@@ -28,7 +28,7 @@ exports[`CriteriaSidebar should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </button>
@@ -68,7 +68,7 @@ exports[`CriteriaSidebar should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#search"
+                      href="#search"
                     />
                   </svg>
                 </button>
@@ -101,7 +101,7 @@ exports[`CriteriaSidebar should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#drag"
+                    href="#drag"
                   />
                 </svg>
               </span>
@@ -116,7 +116,7 @@ exports[`CriteriaSidebar should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#text"
+                      href="#text"
                     />
                   </svg>
                 </span>
@@ -146,7 +146,7 @@ exports[`CriteriaSidebar should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#drag"
+                    href="#drag"
                   />
                 </svg>
               </span>
@@ -161,7 +161,7 @@ exports[`CriteriaSidebar should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#text"
+                      href="#text"
                     />
                   </svg>
                 </span>

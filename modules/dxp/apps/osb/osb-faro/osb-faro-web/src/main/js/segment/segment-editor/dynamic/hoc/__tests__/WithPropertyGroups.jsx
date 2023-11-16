@@ -4,6 +4,7 @@ import React from 'react';
 import withPropertyGroups from '../WithPropertyGroups';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.mock('shared/apollo/client', () => ({
 	query: jest.fn()
@@ -34,7 +35,7 @@ const TestComponent = ({propertyGroupsIList}) => (
 );
 
 describe('WithPropertyGroups', () => {
-	it('should pass propertyGroups to the WrappedComponent', () => {
+	it('should pass propertyGroups to the WrappedComponent', async () => {
 		API.fieldMappings.search.mockReturnValueOnce(
 			Promise.resolve({
 				items: [
@@ -133,6 +134,8 @@ describe('WithPropertyGroups', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

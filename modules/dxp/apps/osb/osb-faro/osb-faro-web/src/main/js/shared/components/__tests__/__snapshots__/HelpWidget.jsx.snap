@@ -21,7 +21,7 @@ exports[`HelpWidget should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#ac-question-mark"
+            href="#ac-question-mark"
           />
         </svg>
       </button>

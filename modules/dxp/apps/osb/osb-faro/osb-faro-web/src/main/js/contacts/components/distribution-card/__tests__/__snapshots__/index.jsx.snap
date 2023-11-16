@@ -4,6 +4,7 @@ exports[`DistributionCard renders /w AddPropertyForm 1`] = `
 <div>
   <div
     class="card card-root distribution-card-root"
+    id="distributionBreakdownCardRoot"
     style="min-height: 536px;"
   >
     <div
@@ -33,7 +34,7 @@ exports[`DistributionCard renders /w AddPropertyForm 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#plus"
+              href="#plus"
             />
           </svg>
         </button>
@@ -106,7 +107,7 @@ exports[`DistributionCard renders /w AddPropertyForm 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#caret-bottom"
+                              href="#caret-bottom"
                             />
                           </svg>
                         </div>
@@ -168,6 +169,7 @@ exports[`DistributionCard renders 1`] = `
 <div>
   <div
     class="card card-root distribution-card-root"
+    id="distributionBreakdownCardRoot"
     style="min-height: 536px;"
   >
     <div
@@ -202,7 +204,7 @@ exports[`DistributionCard renders 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#times"
+                        href="#times"
                       />
                     </svg>
                   </button>
@@ -221,7 +223,7 @@ exports[`DistributionCard renders 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#plus"
+              href="#plus"
             />
           </svg>
         </button>
@@ -244,7 +246,7 @@ exports[`DistributionCard renders 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -257,6 +259,7 @@ exports[`DistributionCard renders empty state via props with noResultsRenderer 1
 <div>
   <div
     class="card card-root distribution-card-root"
+    id="distributionBreakdownCardRoot"
     style="min-height: 536px;"
   >
     <div
@@ -291,7 +294,7 @@ exports[`DistributionCard renders empty state via props with noResultsRenderer 1
                       role="presentation"
                     >
                       <use
-                        xlink:href="#times"
+                        href="#times"
                       />
                     </svg>
                   </button>
@@ -310,7 +313,7 @@ exports[`DistributionCard renders empty state via props with noResultsRenderer 1
             role="presentation"
           >
             <use
-              xlink:href="#plus"
+              href="#plus"
             />
           </svg>
         </button>
@@ -337,7 +340,7 @@ exports[`DistributionCard renders empty state via props with noResultsRenderer 1
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>
@@ -350,6 +353,7 @@ exports[`DistributionCard renders w/ showAddDataSource 1`] = `
 <div>
   <div
     class="card card-root distribution-card-root"
+    id="distributionBreakdownCardRoot"
     style="min-height: 536px;"
   >
     <div

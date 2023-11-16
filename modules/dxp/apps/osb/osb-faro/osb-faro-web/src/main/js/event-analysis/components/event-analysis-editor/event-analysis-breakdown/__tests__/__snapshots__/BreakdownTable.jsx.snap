@@ -35,7 +35,7 @@ exports[`BreakdownTable render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-up"
+                      href="#order-arrow-up"
                     />
                   </svg>
                 </span>
@@ -203,7 +203,7 @@ exports[`BreakdownTable render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-bottom"
+                href="#caret-bottom"
               />
             </svg>
           </button>
@@ -230,7 +230,7 @@ exports[`BreakdownTable render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-left-small"
+                  href="#angle-left-small"
                 />
               </svg>
             </button>
@@ -260,7 +260,7 @@ exports[`BreakdownTable render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </button>

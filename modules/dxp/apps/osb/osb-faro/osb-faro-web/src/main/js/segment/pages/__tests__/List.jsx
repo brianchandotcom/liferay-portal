@@ -10,6 +10,7 @@ import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 import {UnassignedSegmentsContext} from 'shared/context/unassignedSegments';
 import {User} from 'shared/util/records';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -48,10 +49,12 @@ const DefaultComponent = ({queryString = '', ...otherProps}) => (
 );
 
 describe('List', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

@@ -31,7 +31,7 @@ exports[`DistributionCard Tabs renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#times"
+                    href="#times"
                   />
                 </svg>
               </button>
@@ -50,7 +50,7 @@ exports[`DistributionCard Tabs renders 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#plus"
+          href="#plus"
         />
       </svg>
     </button>

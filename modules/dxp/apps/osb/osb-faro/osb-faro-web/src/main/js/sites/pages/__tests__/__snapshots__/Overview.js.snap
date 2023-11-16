@@ -15,6 +15,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root analytics-metrics-card"
+          id="siteActivityCardRoot"
           style="min-height: 605px;"
         >
           <div
@@ -82,6 +83,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root top-pages-card-root table-tabs-root"
+          id="topPagesCardRoot"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -169,7 +171,7 @@ exports[`Sites Dashboard Overview render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </a>
@@ -181,6 +183,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root acquisitions-card-root table-tabs-root"
+          id="acquisitionsCardRoot"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -268,6 +271,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root visitors-by-time-card"
+          id="visitorsByTimeCardRoot"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -297,6 +301,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root search-terms-card-root"
+          id="searchTermsCardRoot"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -348,6 +353,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root interests-card-root"
+          id="interestsCardRoot"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -405,7 +411,7 @@ exports[`Sites Dashboard Overview render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </a>
@@ -423,6 +429,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root analytics-locations-card"
+          id="sessionsByLocationCardRoot"
           style="min-height: 536px;"
         >
           <div
@@ -457,6 +464,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root analytics-devices-card"
+          id="sessionTechnologyCardRoot"
           style="min-height: 536px;"
         >
           <div
@@ -495,6 +503,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root cohort-analysis-card-root"
+          id="cohortAnalysisCardRoot"
         >
           <div
             aria-hidden="true"

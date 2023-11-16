@@ -4,6 +4,7 @@ import {cleanup, render} from '@testing-library/react';
 import {mockIndividual} from 'test/data';
 import {SelectionProvider} from 'shared/context/selection';
 import {times} from 'lodash';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 import {withStaticRouter} from 'test/mock-router';
 
 jest.unmock('react-dom');
@@ -56,7 +57,7 @@ describe('SearchableEntityTable', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render w/ Checkboxes', () => {
+	it('should render w/ Checkboxes', async () => {
 		const {container} = render(
 			<SelectionProvider>
 				<DefaultComponent
@@ -72,6 +73,8 @@ describe('SearchableEntityTable', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelectorAll('tr.clickable input[type=checkbox]')

@@ -4,6 +4,7 @@ import SegmentProfileCard from '../ProfileCard';
 import {render} from '@testing-library/react';
 import {Segment} from 'shared/util/records';
 import {StaticRouter} from 'react-router-dom';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -20,10 +21,12 @@ const DefaultComponent = props => (
 );
 
 describe('SegmentProfileCard', () => {
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

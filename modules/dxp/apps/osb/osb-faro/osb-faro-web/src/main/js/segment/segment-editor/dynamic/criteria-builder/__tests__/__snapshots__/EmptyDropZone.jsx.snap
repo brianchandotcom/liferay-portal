@@ -19,7 +19,7 @@ exports[`EmptyDropZone should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#ac-rule"
+            href="#ac-rule"
           />
         </svg>
         Drag and drop criterion from the right to add rules.
@@ -32,7 +32,7 @@ exports[`EmptyDropZone should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#ac-group"
+            href="#ac-group"
           />
         </svg>
         Drag and drop over an existing criteria to form groups.

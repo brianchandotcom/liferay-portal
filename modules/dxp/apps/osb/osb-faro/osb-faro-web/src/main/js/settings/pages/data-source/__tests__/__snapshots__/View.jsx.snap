@@ -67,7 +67,7 @@ exports[`View should render a CSV data-source page 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#pencil"
+                        href="#pencil"
                       />
                     </svg>
                   </button>
@@ -161,7 +161,7 @@ exports[`View should render a CSV data-source page 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-bottom"
+                        href="#caret-bottom"
                       />
                     </svg>
                   </button>
@@ -181,7 +181,7 @@ exports[`View should render a CSV data-source page 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#faro-connection-success-ovals"
+                  href="#faro-connection-success-ovals"
                 />
               </svg>
             </div>
@@ -207,7 +207,7 @@ exports[`View should render a CSV data-source page 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-bottom"
+                        href="#caret-bottom"
                       />
                     </svg>
                   </button>
@@ -442,7 +442,7 @@ exports[`View should render a Liferay data-source page 1`] = `
                                 role="presentation"
                               >
                                 <use
-                                  xlink:href="#pencil"
+                                  href="#pencil"
                                 />
                               </svg>
                             </button>
@@ -882,7 +882,7 @@ exports[`View should render a Salesforce data-source page 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#view"
+                                href="#view"
                               />
                             </svg>
                           </button>

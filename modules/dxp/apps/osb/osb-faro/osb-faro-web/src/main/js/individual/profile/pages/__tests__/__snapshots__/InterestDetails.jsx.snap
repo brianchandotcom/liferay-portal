@@ -14,7 +14,7 @@ exports[`InterestDetails should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#angle-left-small"
+          href="#angle-left-small"
         />
       </svg>
       Back to Interests
@@ -61,7 +61,7 @@ exports[`InterestDetails should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-bottom"
+                href="#caret-bottom"
               />
             </svg>
           </button>
@@ -145,7 +145,7 @@ exports[`InterestDetails should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-bottom"
+                        href="#caret-bottom"
                       />
                     </svg>
                   </button>
@@ -164,7 +164,7 @@ exports[`InterestDetails should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-descending"
+                      href="#order-arrow-descending"
                     />
                   </svg>
                 </a>
@@ -198,7 +198,7 @@ exports[`InterestDetails should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#search"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -265,7 +265,7 @@ exports[`InterestDetails should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#order-arrow-down"
+                        href="#order-arrow-down"
                       />
                     </svg>
                   </span>
@@ -350,7 +350,7 @@ exports[`InterestDetails should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-bottom"
+                  href="#caret-bottom"
                 />
               </svg>
             </button>
@@ -376,7 +376,7 @@ exports[`InterestDetails should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-left-small"
+                    href="#angle-left-small"
                   />
                 </svg>
               </a>
@@ -404,7 +404,7 @@ exports[`InterestDetails should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-right-small"
+                    href="#angle-right-small"
                   />
                 </svg>
               </a>

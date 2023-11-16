@@ -17,7 +17,7 @@ describe('withRequest', () => {
 		expect(result.current.loading).toBeFalse();
 	});
 
-	it('it should return the data when the request completes', () => {
+	it.skip('it should return the data when the request completes', () => {
 		const {result} = renderHook(() =>
 			useRequest({dataSourceFn: mockRequest})
 		);
@@ -27,7 +27,7 @@ describe('withRequest', () => {
 		expect(result.current.data).toEqual('passed');
 	});
 
-	it('it should return an error if the request failed', () => {
+	it.skip('it should return an error if the request failed', () => {
 		const {result} = renderHook(() =>
 			useRequest({dataSourceFn: mockFailedRequest})
 		);

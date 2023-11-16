@@ -24,7 +24,7 @@ exports[`BatchActionModal should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>
@@ -51,7 +51,7 @@ exports[`BatchActionModal should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-bottom"
+                  href="#caret-bottom"
                 />
               </svg>
             </button>

@@ -9,6 +9,7 @@ import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -109,7 +110,7 @@ describe('SuccessDisplayIf', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render an error page if there was an error fetching the project', () => {
+	it('should render an error page if there was an error fetching the project', async () => {
 		API.projects.fetch.mockReturnValue(
 			Promise.reject({message: 'foo rejection from server'})
 		);
@@ -123,6 +124,8 @@ describe('SuccessDisplayIf', () => {
 				</Provider>
 			</StaticRouter>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 

@@ -28,7 +28,7 @@ exports[`ContactSalesModal should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#times"
+              href="#times"
             />
           </svg>
         </button>

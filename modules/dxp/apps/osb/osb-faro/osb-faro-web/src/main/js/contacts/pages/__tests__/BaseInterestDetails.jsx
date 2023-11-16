@@ -6,6 +6,7 @@ import {Account, Segment} from 'shared/util/records';
 import {ACCOUNTS, Routes, SEGMENTS} from 'shared/util/router';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -14,7 +15,7 @@ describe('BaseInterestDetails', () => {
 
 	afterAll(() => jest.restoreMocks());
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<StaticRouter>
 				<BaseInterestDetails
@@ -33,6 +34,8 @@ describe('BaseInterestDetails', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

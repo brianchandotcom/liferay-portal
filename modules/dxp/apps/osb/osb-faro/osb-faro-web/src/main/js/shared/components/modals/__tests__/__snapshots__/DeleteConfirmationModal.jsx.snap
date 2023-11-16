@@ -24,7 +24,7 @@ exports[`DeleteConfirmationModal renders 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#warning-full"
+                href="#warning-full"
               />
             </svg>
             Test title
@@ -39,7 +39,7 @@ exports[`DeleteConfirmationModal renders 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                href="#times"
               />
             </svg>
           </button>

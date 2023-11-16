@@ -4,6 +4,7 @@ exports[`AcquisitionsCard renders 1`] = `
 <div>
   <div
     class="card card-root"
+    id="acquisitionsCardRoot"
   >
     <div
       class="card-header align-items-center d-flex justify-content-between"
@@ -29,7 +30,7 @@ exports[`AcquisitionsCard renders 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </button>

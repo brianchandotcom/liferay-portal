@@ -34,7 +34,7 @@ exports[`RoleRenderer should render as being edited 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </button>

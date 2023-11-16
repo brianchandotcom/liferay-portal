@@ -71,7 +71,7 @@ exports[`View Channel should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#pencil"
+                    href="#pencil"
                   />
                 </svg>
               </button>
@@ -108,7 +108,7 @@ exports[`View Channel should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#cog"
+                    href="#cog"
                   />
                 </svg>
               </span>
@@ -223,7 +223,7 @@ exports[`View Channel should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#ac-no-sites"
+                    href="#ac-no-sites"
                   />
                 </svg>
               </div>

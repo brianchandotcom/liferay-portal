@@ -87,7 +87,7 @@ exports[`AddDataSource should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#liferay-logo"
+                    href="#liferay-logo"
                   />
                 </svg>
               </div>

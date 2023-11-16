@@ -148,7 +148,7 @@ exports[`DataTransformationList should render 1`] = `
       Suggestions Title
     </div>
   </div>
-  <Connect(_class)
+  <Component
     className=""
     dataSourceFn={[Function]}
     fieldIMap={
@@ -190,7 +190,7 @@ exports[`DataTransformationList should render 1`] = `
       }
     }
   />
-  <Connect(_class)
+  <Component
     className=""
     dataSourceFn={[Function]}
     fieldIMap={

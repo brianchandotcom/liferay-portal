@@ -99,7 +99,7 @@ exports[`Event Analysis Create should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#pencil"
+                        href="#pencil"
                       />
                     </svg>
                   </button>
@@ -169,7 +169,7 @@ exports[`Event Analysis Create should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#plus"
+                        href="#plus"
                       />
                     </svg>
                   </button>
@@ -289,7 +289,7 @@ exports[`Event Analysis Create should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#caret-bottom"
+                      href="#caret-bottom"
                     />
                   </svg>
                 </button>

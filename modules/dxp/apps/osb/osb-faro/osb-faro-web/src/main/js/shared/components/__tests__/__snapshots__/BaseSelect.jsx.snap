@@ -43,7 +43,7 @@ exports[`BaseSelect should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#caret-bottom"
+            href="#caret-bottom"
           />
         </svg>
       </div>
@@ -77,7 +77,7 @@ exports[`BaseSelect should render as disabled 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#caret-bottom"
+            href="#caret-bottom"
           />
         </svg>
       </div>
@@ -110,7 +110,7 @@ exports[`BaseSelect should render with Graphql 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#caret-bottom"
+            href="#caret-bottom"
           />
         </svg>
       </div>

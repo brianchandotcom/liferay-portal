@@ -15,6 +15,7 @@ import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
 import {User} from 'shared/util/records';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -33,20 +34,24 @@ const DefaultComponent = props => (
 describe('NoPropertiesAvailable', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		API.dataSource.search.mockReturnValueOnce(Promise.resolve({total: 0}));
 
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render w/ Create Property button', () => {
-		const {queryByText} = render(<DefaultComponent />);
+	it('should render w/ Create Property button', async () => {
+		const {container, queryByText} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('Create Property')).toBeTruthy();
 	});
@@ -63,14 +68,18 @@ describe('NoPropertiesAvailable', () => {
 		expect(queryByRole('button')).toBeNull();
 	});
 
-	it('should call open on "Start" click', () => {
+	it('should call open on "Start" click', async () => {
 		API.dataSource.search.mockReturnValueOnce(Promise.resolve({total: 0}));
 
-		const {queryByText} = render(<DefaultComponent open={open} />);
+		const {container, queryByText} = render(
+			<DefaultComponent open={open} />
+		);
 
 		expect(open).not.toBeCalled();
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(queryByText('Start'));
 

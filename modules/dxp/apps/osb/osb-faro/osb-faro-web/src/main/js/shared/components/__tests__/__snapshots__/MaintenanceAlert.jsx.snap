@@ -25,7 +25,7 @@ exports[`MaintenanceAlert should render w/ maintenance alert 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#warning-full"
+            href="#warning-full"
           />
         </svg>
       </span>
@@ -43,7 +43,7 @@ exports[`MaintenanceAlert should render w/ maintenance alert 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#times"
+            href="#times"
           />
         </svg>
       </button>

@@ -5,6 +5,7 @@ import {createOrderIOMap} from 'shared/util/pagination';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {noop} from 'lodash';
 import {Routes} from 'shared/util/router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -81,7 +82,7 @@ describe('SelectItemsModal', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with selectedItems with the disable selected datasource', () => {
+	it('should render with selectedItems with the disable selected datasource', async () => {
 		const {container} = render(
 			<DefaultComponent
 				disabledSelectedDataSourceFn={() =>
@@ -91,11 +92,11 @@ describe('SelectItemsModal', () => {
 		);
 
 		jest.runAllTimers();
-
+		await waitForLoadingToBeRemoved(container);
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with a successful submit', () => {
+	it('should render with a successful submit', async () => {
 		const {container, getByText} = render(
 			<DefaultComponent
 				onClose={noop}
@@ -106,11 +107,13 @@ describe('SelectItemsModal', () => {
 		);
 
 		fireEvent.click(getByText(MESSAGE));
+
 		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with an unsuccessful submit', () => {
+	it('should render with an unsuccessful submit', async () => {
 		const {container, getByText} = render(
 			<DefaultComponent
 				onClose={noop}
@@ -123,11 +126,13 @@ describe('SelectItemsModal', () => {
 		);
 
 		fireEvent.click(getByText(MESSAGE));
+
 		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with a blank submit', () => {
+	it('should render with a blank submit', async () => {
 		const {container, getByText} = render(
 			<DefaultComponent
 				onClose={noop}
@@ -139,6 +144,7 @@ describe('SelectItemsModal', () => {
 
 		fireEvent.click(getByText(MESSAGE));
 		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 		expect(container).toMatchSnapshot();
 	});
 

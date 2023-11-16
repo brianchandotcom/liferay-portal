@@ -29,7 +29,7 @@ exports[`FilterAndOrder should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </span>
@@ -82,7 +82,7 @@ exports[`FilterAndOrder should render filters as a flat list 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </span>
@@ -123,7 +123,7 @@ exports[`FilterAndOrder should render filters as a flat list 1`] = `
                 tabindex="-1"
               >
                 <div
-                  class="custom-control custom-checkbox"
+                  class="custom-control custom-checkbox custom-control-outside"
                 >
                   <label>
                     <input
@@ -154,7 +154,7 @@ exports[`FilterAndOrder should render filters as a flat list 1`] = `
                 tabindex="-1"
               >
                 <div
-                  class="custom-control custom-checkbox"
+                  class="custom-control custom-checkbox custom-control-outside"
                 >
                   <label>
                     <input
@@ -216,7 +216,7 @@ exports[`FilterAndOrder should render with filter by options 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </span>
@@ -274,7 +274,7 @@ exports[`FilterAndOrder should render with filter by options 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-right"
+                        href="#caret-right"
                       />
                     </svg>
                   </span>
@@ -305,7 +305,7 @@ exports[`FilterAndOrder should render with filter by options 1`] = `
                 tabindex="-1"
               >
                 <div
-                  class="custom-control custom-checkbox"
+                  class="custom-control custom-checkbox custom-control-outside"
                 >
                   <label>
                     <input
@@ -336,7 +336,7 @@ exports[`FilterAndOrder should render with filter by options 1`] = `
                 tabindex="-1"
               >
                 <div
-                  class="custom-control custom-checkbox"
+                  class="custom-control custom-checkbox custom-control-outside"
                 >
                   <label>
                     <input
@@ -398,7 +398,7 @@ exports[`FilterAndOrder should render with order by options 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </span>
@@ -443,7 +443,7 @@ exports[`FilterAndOrder should render with order by options 1`] = `
                   tabindex="-1"
                 >
                   <div
-                    class="custom-control custom-radio"
+                    class="custom-control custom-radio custom-control-outside"
                   >
                     <label>
                       <input
@@ -508,7 +508,7 @@ exports[`FilterAndOrder should render with order by options and filter by option
             role="presentation"
           >
             <use
-              xlink:href="#caret-bottom"
+              href="#caret-bottom"
             />
           </svg>
         </span>
@@ -566,7 +566,7 @@ exports[`FilterAndOrder should render with order by options and filter by option
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-right"
+                        href="#caret-right"
                       />
                     </svg>
                   </span>
@@ -605,7 +605,7 @@ exports[`FilterAndOrder should render with order by options and filter by option
                   tabindex="-1"
                 >
                   <div
-                    class="custom-control custom-radio"
+                    class="custom-control custom-radio custom-control-outside"
                   >
                     <label>
                       <input
@@ -653,7 +653,7 @@ exports[`FilterAndOrder should render with order by options and filter by option
                 tabindex="-1"
               >
                 <div
-                  class="custom-control custom-checkbox"
+                  class="custom-control custom-checkbox custom-control-outside"
                 >
                   <label>
                     <input
@@ -684,7 +684,7 @@ exports[`FilterAndOrder should render with order by options and filter by option
                 tabindex="-1"
               >
                 <div
-                  class="custom-control custom-checkbox"
+                  class="custom-control custom-checkbox custom-control-outside"
                 >
                   <label>
                     <input

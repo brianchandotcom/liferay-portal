@@ -30,7 +30,7 @@ exports[`DateInput should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#calendar"
+              href="#calendar"
             />
           </svg>
         </button>

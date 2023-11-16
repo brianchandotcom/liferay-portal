@@ -24,7 +24,7 @@ exports[`EventChip render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#times-circle"
+            href="#times-circle"
           />
         </svg>
       </button>

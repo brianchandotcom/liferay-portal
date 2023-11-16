@@ -7,6 +7,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -26,10 +27,12 @@ const DefaultComponent = props => (
 describe('ChannelUserList', () => {
 	afterEach(cleanup);
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -55,10 +58,12 @@ describe('ChannelUserList', () => {
 		expect(open).toBeCalled();
 	});
 
-	it('should open a modal to remove users', () => {
-		const {queryByTestId} = render(<DefaultComponent />);
+	it('should open a modal to remove users', async () => {
+		const {debug, queryByTestId} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
+
+		debug();
 
 		fireEvent.click(queryByTestId('delete-user'));
 

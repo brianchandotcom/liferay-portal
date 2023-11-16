@@ -51,7 +51,7 @@ exports[`BlockListCard should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#order-arrow-ascending"
+                    href="#order-arrow-ascending"
                   />
                 </svg>
               </a>
@@ -85,7 +85,7 @@ exports[`BlockListCard should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#search"
+                        href="#search"
                       />
                     </svg>
                   </button>
@@ -125,7 +125,7 @@ exports[`BlockListCard should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-up"
+                      href="#order-arrow-up"
                     />
                   </svg>
                 </span>
@@ -232,7 +232,7 @@ exports[`BlockListCard should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#undo"
+                        href="#undo"
                       />
                     </svg>
                   </button>
@@ -248,7 +248,7 @@ exports[`BlockListCard should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-hidden"
+                        href="#ac-hidden"
                       />
                     </svg>
                   </button>
@@ -322,7 +322,7 @@ exports[`BlockListCard should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#undo"
+                        href="#undo"
                       />
                     </svg>
                   </button>
@@ -338,7 +338,7 @@ exports[`BlockListCard should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#ac-hidden"
+                        href="#ac-hidden"
                       />
                     </svg>
                   </button>
@@ -371,7 +371,7 @@ exports[`BlockListCard should render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-bottom"
+                href="#caret-bottom"
               />
             </svg>
           </button>
@@ -397,7 +397,7 @@ exports[`BlockListCard should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-left-small"
+                  href="#angle-left-small"
                 />
               </svg>
             </a>
@@ -425,7 +425,7 @@ exports[`BlockListCard should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right-small"
+                  href="#angle-right-small"
                 />
               </svg>
             </a>

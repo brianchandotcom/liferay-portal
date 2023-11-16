@@ -10,7 +10,7 @@ exports[`Workspace Empty State - CardEmpty should render CardEmpty 1`] = `
       role="presentation"
     >
       <use
-        xlink:href="#home"
+        href="#home"
       />
     </svg>
     <p>
@@ -42,7 +42,7 @@ exports[`Workspace Empty State should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#ac-integration"
+            href="#ac-integration"
           />
         </svg>
         <p>
@@ -67,7 +67,7 @@ exports[`Workspace Empty State should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#ac-page-analytics"
+            href="#ac-page-analytics"
           />
         </svg>
         <p>

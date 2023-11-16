@@ -7,12 +7,8 @@ exports[`SegmentGrowthChart should render 1`] = `
   >
     <div
       class="recharts-responsive-container"
-      style="width: 100%; height: 360px;"
-    >
-      <div
-        style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
-      />
-    </div>
+      style="width: 100%; height: 360px; min-width: 0;"
+    />
     <div
       class="no-results-root flex-grow-1"
     >
@@ -58,12 +54,8 @@ exports[`SegmentGrowthWithList should render 1`] = `
       >
         <div
           class="recharts-responsive-container"
-          style="width: 100%; height: 360px;"
-        >
-          <div
-            style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
-          />
-        </div>
+          style="width: 100%; height: 360px; min-width: 0;"
+        />
       </div>
     </div>
     <div
@@ -103,7 +95,7 @@ exports[`SegmentGrowthWithList should render 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#order-arrow-ascending"
+                      href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -137,7 +129,7 @@ exports[`SegmentGrowthWithList should render 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#search"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -176,7 +168,7 @@ exports[`SegmentGrowthWithList should render 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#order-arrow-up"
+                        href="#order-arrow-up"
                       />
                     </svg>
                   </span>
@@ -256,7 +248,7 @@ exports[`SegmentGrowthWithList should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-bottom"
+                  href="#caret-bottom"
                 />
               </svg>
             </button>
@@ -283,7 +275,7 @@ exports[`SegmentGrowthWithList should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-left-small"
+                    href="#angle-left-small"
                   />
                 </svg>
               </button>
@@ -313,7 +305,7 @@ exports[`SegmentGrowthWithList should render 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-right-small"
+                    href="#angle-right-small"
                   />
                 </svg>
               </button>

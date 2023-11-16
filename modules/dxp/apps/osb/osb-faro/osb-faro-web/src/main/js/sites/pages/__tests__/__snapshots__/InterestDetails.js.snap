@@ -23,7 +23,7 @@ exports[`Sites Dashboard InterestDetails render 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#angle-left-small"
+                href="#angle-left-small"
               />
             </svg>
             Back to Interests
@@ -90,7 +90,7 @@ exports[`Sites Dashboard InterestDetails render 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#search"
+                                href="#search"
                               />
                             </svg>
                           </button>

@@ -15,7 +15,7 @@ exports[`PlanBreakdown should render 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#ac-users"
+              href="#ac-users"
             />
           </svg>
           <span

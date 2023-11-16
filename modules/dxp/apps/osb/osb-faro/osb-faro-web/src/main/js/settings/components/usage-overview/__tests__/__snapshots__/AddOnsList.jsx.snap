@@ -23,7 +23,7 @@ exports[`AddOnsList should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#ac-individual"
+                  href="#ac-individual"
                 />
               </svg>
               <span
@@ -91,7 +91,7 @@ exports[`AddOnsList should render 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#faro-page-views"
+                  href="#faro-page-views"
                 />
               </svg>
               <span

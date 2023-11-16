@@ -15,7 +15,7 @@ describe('SummarySection Variant', () => {
 		);
 
 		expect(container.querySelector('use')).toHaveAttribute(
-			'xlink:href',
+			'href',
 			'#caret-top'
 		);
 
@@ -26,7 +26,7 @@ describe('SummarySection Variant', () => {
 		const {container} = render(<Variant lift='50%' status='down' />);
 
 		expect(container.querySelector('use')).toHaveAttribute(
-			'xlink:href',
+			'href',
 			'#caret-bottom'
 		);
 	});

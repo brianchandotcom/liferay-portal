@@ -10,6 +10,7 @@ import {
 	withChannelProvider
 } from 'test/mock-channel-context';
 import {Provider} from 'react-redux';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 import {withStaticRouter} from 'test/mock-router';
 
 jest.unmock('react-dom');
@@ -32,7 +33,7 @@ describe('withSidebar', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with the sidebar', () => {
+	it('should render with the sidebar', async () => {
 		const WrappedComponent = compose(
 			withChannelProvider,
 			withStaticRouter,
@@ -51,6 +52,8 @@ describe('withSidebar', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

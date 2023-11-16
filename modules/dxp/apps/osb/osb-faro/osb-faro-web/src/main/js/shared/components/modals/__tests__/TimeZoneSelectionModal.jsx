@@ -6,13 +6,14 @@ import {mockGetDateNow} from 'test/mock-date';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
 describe('TimeZoneSelectionModal', () => {
 	mockGetDateNow(data.getTimestamp(0));
 
-	it('should render', () => {
+	it('should render', async () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<StaticRouter>
@@ -22,6 +23,8 @@ describe('TimeZoneSelectionModal', () => {
 		);
 
 		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

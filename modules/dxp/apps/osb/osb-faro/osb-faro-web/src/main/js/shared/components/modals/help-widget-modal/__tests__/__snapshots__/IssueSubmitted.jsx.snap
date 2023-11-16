@@ -20,7 +20,7 @@ exports[`IssueSubmitted should render 1`] = `
         role="presentation"
       >
         <use
-          xlink:href="#times"
+          href="#times"
         />
       </svg>
     </button>
@@ -33,7 +33,7 @@ exports[`IssueSubmitted should render 1`] = `
       role="presentation"
     >
       <use
-        xlink:href="#ac-no-sites"
+        href="#ac-no-sites"
       />
     </svg>
     <h3>

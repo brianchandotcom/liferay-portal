@@ -1936,6 +1936,17 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro fillResetPasswordFields(password = null) {
+		Type(
+			locator1 = "TextInput#PASSWORD_1",
+			value1 = ${password});
+
+		Type(
+			locator1 = "TextInput#PASSWORD_2",
+			value1 = ${password});
+	}
+
+	@summary = "Default summary"
 	macro firstLoginByScreenNamePG(virtualHostsURL = null, userScreenName = null, userEmailAddress = null, newPassword = null) {
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = ${virtualHostsURL});
@@ -2047,7 +2058,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro firstLoginUI(localization = null, idpName = null, localizedAgree = null, localizedSaveButton = null, samlMultiIdPs = null, userEmailAddress = null, newPassword = null, userId = null, password = null, authenticationMethod = null, domain = null, userScreenName = null, specificURL = null, rememberMeChecked = null, localizedAnswer = null) {
+	macro firstLoginUI(localization = null, idpName = null, localizedAgree = null, localizedSaveButton = null, samlMultiIdPs = null, userEmailAddress = null, newPassword = null, userId = null, password = null, authenticationMethod = null, domain = null, userScreenName = null, specificURL = null, rememberMeChecked = null, localizedAnswer = null, successful = null) {
 		if (isSet(specificURL)) {
 			Navigator.openSpecificURL(
 				domain = ${domain},
@@ -2099,7 +2110,8 @@ definition {
 		if (IsElementPresent(locator1 = "TextInput#PASSWORD_2")) {
 			User.resetPassword(
 				localizedSaveButton = ${localizedSaveButton},
-				newPassword = ${newPassword});
+				newPassword = ${newPassword},
+				successful = ${successful});
 		}
 
 		if (isSet(localizedAnswer)) {
@@ -2472,34 +2484,25 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro resetPassword(localizedSaveButton = null, newPassword = null) {
+	macro resetPassword(localizedSaveButton = null, newPassword = null, successful = null) {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
 			if (isSet(newPassword)) {
-				Type(
-					locator1 = "TextInput#PASSWORD_1",
-					value1 = ${newPassword});
-
-				Type(
-					locator1 = "TextInput#PASSWORD_2",
-					value1 = ${newPassword});
+				User.fillResetPasswordFields(password = ${newPassword});
 			}
 			else {
-				Type(
-					locator1 = "TextInput#PASSWORD_1",
-					value1 = "test");
-
-				Type(
-					locator1 = "TextInput#PASSWORD_2",
-					value1 = "test");
+				User.fillResetPasswordFields(password = "test");
 			}
 
 			if (isSet(localizedSaveButton)) {
 				Button.click(button = ${localizedSaveButton});
 			}
-			else {
+			else if (isSet(successful) && (${successful} == "true")) {
 				Button.clickSubmitButton();
 
 				AssertElementNotPresent(locator1 = "TextInput#REENTER_PASSWORD");
+			}
+			else {
+				Button.clickSubmitButton();
 			}
 		}
 	}

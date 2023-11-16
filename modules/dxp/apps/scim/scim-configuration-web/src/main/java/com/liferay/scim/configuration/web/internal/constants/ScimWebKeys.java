@@ -10,6 +10,8 @@ package com.liferay.scim.configuration.web.internal.constants;
  */
 public class ScimWebKeys {
 
+	public static final String SCIM_CONFIGURATION = "SCIM_CONFIGURATION";
+
 	public static final String SCIM_MATCHER_FIELD = "SCIM_MATCHER_FIELD";
 
 	public static final String SCIM_OAUTH2_ACCESS_TOKEN =

@@ -552,9 +552,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 							attachmentFile));
 				}
 
-				ObjectNode writeNode = (ObjectNode)childJsonNode;
+				ObjectNode objectNode = (ObjectNode)childJsonNode;
 
-				writeNode.put(
+				objectNode.put(
 					"fileBase64",
 					_base64Encoder.encodeToString(
 						Files.readAllBytes(attachmentFile.toPath())));
@@ -573,15 +573,17 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		Path relativeTargetFilePath = projectDirPath.relativize(file.toPath());
 
-		Path cxBuildDir = Paths.get(
+		Path cxBuildDirPath = Paths.get(
 			String.valueOf(_project.getBuildDir()),
 			ClientExtensionProjectConfigurator.CLIENT_EXTENSION_BUILD_DIR);
 
-		Path resolvedTargetPath = cxBuildDir.resolve(relativeTargetFilePath);
+		Path resolvedTargetPath = cxBuildDirPath.resolve(
+			relativeTargetFilePath);
 
-		ObjectWriter writer = _objectMapper.writer();
+		ObjectWriter objectWriter = _objectMapper.writer();
 
-		Files.write(resolvedTargetPath, writer.writeValueAsBytes(rootJsonNode));
+		Files.write(
+			resolvedTargetPath, objectWriter.writeValueAsBytes(rootJsonNode));
 
 		Logger logger = getLogger();
 

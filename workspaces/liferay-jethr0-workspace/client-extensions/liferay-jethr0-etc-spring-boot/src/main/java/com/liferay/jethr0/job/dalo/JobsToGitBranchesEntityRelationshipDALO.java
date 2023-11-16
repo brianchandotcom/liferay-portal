@@ -7,8 +7,8 @@ package com.liferay.jethr0.job.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.gitbranch.GitBranchEntity;
-import com.liferay.jethr0.gitbranch.GitBranchEntityFactory;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
+import com.liferay.jethr0.git.branch.GitBranchEntityFactory;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.JobEntityFactory;
 

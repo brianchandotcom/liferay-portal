@@ -8,15 +8,14 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.fragment.web.internal.portlet.util.ExportUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
 
 import java.util.ArrayList;
@@ -71,13 +70,17 @@ public class ExportFragmentCollectionsMVCResourceCommand
 						exportFragmentCollectionId));
 			}
 
-			File file = ExportUtil.exportFragmentCollections(
-				fragmentCollections, _zipWriterFactory.getZipWriter());
+			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
+
+			for (FragmentCollection fragmentCollection : fragmentCollections) {
+				fragmentCollection.populateZipWriter(zipWriter);
+			}
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
 				"collections-" + Time.getTimestamp() + ".zip",
-				new FileInputStream(file), ContentTypes.APPLICATION_ZIP);
+				new FileInputStream(zipWriter.getFile()),
+				ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

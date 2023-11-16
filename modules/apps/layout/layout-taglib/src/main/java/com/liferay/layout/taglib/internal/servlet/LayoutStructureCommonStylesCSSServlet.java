@@ -139,7 +139,8 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		}
 
 		if ((layout == null) ||
-			(!layout.isTypeAssetDisplay() && !layout.isTypeContent())) {
+			(!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
+			 !layout.isTypePortlet())) {
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 

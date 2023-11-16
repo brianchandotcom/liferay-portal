@@ -49,7 +49,8 @@ int type = commerceChannelAccountEntryRelDisplayContext.getType();
 					var callbackList = [
 						{
 							commerceChannelId: '0',
-							name: '<liferay-ui:message key="all-channels" />',
+							name:
+								'<%= LanguageUtil.get(request, commerceChannelAccountEntryRelDisplayContext.getCommerceChannelsEmptyOptionKey()) %>',
 						},
 					];
 
@@ -92,6 +93,7 @@ int type = commerceChannelAccountEntryRelDisplayContext.getType();
 			},
 			selectDesc: 'name',
 			selectId: 'commerceAddressId',
+			selectNullable: <%= false %>,
 			selectVal:
 				'<%= (commerceChannelAccountEntryRel == null) ? '0' : commerceChannelAccountEntryRel.getClassPK() %>',
 		},

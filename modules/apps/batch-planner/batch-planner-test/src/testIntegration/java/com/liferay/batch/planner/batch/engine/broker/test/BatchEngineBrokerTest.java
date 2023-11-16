@@ -304,15 +304,18 @@ public class BatchEngineBrokerTest {
 	public void testExportObjectDefinitionCSV() throws Exception {
 		_setUpObjectDefinition("TestObjectCSV");
 
-		_assertEqualsExportCSV(
-			_getExportInputStream(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectDefinitionExportCSVFieldNames,
-				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-				null),
-			_getInputStream("csv/expected-object-definition.csv"),
-			_objectDefinition1.getExternalReferenceCode(),
-			_objectDefinitionExportCSVFieldNames);
+		try (FileInputStream fileInputStream = new FileInputStream(
+				_prepareObjectDefintionCSVFile(_objectDefinition1))) {
+
+			_assertEqualsExportCSV(
+				_getExportInputStream(
+					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+					_objectDefinitionExportCSVFieldNames,
+					"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+					null),
+				fileInputStream, _objectDefinition1.getExternalReferenceCode(),
+				_objectDefinitionExportCSVFieldNames);
+		}
 	}
 
 	@Test
@@ -1016,6 +1019,32 @@ public class BatchEngineBrokerTest {
 		zipInputStream.getNextEntry();
 
 		return zipInputStream;
+	}
+
+	private File _prepareObjectDefintionCSVFile(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		File file = _file.createTempFile("csv");
+
+		String template = StreamUtil.toString(
+			_getInputStream("object_definition.csv"));
+
+		template = StringUtil.replace(
+			template,
+			new String[] {
+				"$[OBJECT_DEFINITION_DATE_CREATED]",
+				"$[OBJECT_DEFINITION_DATE_MODIFIED]", "$[OBJECT_DEFINITION_ID]"
+			},
+			new String[] {
+				_toDateString(objectDefinition.getCreateDate()),
+				_toDateString(objectDefinition.getModifiedDate()),
+				String.valueOf(objectDefinition.getObjectDefinitionId())
+			});
+
+		_file.write(file, template);
+
+		return file;
 	}
 
 	private File _prepareObjectEntryCSVFile(ObjectEntry objectEntry)

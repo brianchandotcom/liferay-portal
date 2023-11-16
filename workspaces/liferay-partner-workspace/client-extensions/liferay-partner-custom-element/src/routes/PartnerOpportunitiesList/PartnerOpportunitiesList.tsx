@@ -110,12 +110,8 @@ const PartnerOpportunitiesList = ({
 			label: 'Close Date',
 		},
 		{
-			columnKey: PartnerOpportunitiesColumnKey.START_DATE,
-			label: 'Start Date',
-		},
-		{
-			columnKey: PartnerOpportunitiesColumnKey.END_DATE,
-			label: 'End Date',
+			columnKey: PartnerOpportunitiesColumnKey.SUBSCRIPTION_TERM,
+			label: 'Subscription Term',
 		},
 		{
 			columnKey: PartnerOpportunitiesColumnKey.PARTNER_REP_NAME,

@@ -8,67 +8,61 @@ import OpportunityPartnerRoleDTO from '../../../common/interfaces/dto/opportunit
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 import {getIntlNumberFormatString} from '../../../common/utils/getIntlNumberFormat';
-import getOpportunityDates from './getOpportunityDates';
 
 export default function getItemPartnerOpportunity(item: OpportunityPartnerRoleDTO) {
 	return {
-		[PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME]: item.partnerAccountName
-			? item.partnerAccountName
-			: ' - ',
-		...(item.projectSubscriptionStartDate
-			? getOpportunityDates(
-					item.projectSubscriptionStartDate,
-					item.projectSubscriptionEndDate
-			  )
-			: {
-					[PartnerOpportunitiesColumnKey.START_DATE]: ' - ',
-					[PartnerOpportunitiesColumnKey.END_DATE]: ' - ',
-			  }),
-		[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.accountName
-			? item.accountName
-			: ' - ',
+		[PartnerOpportunitiesColumnKey.ACTIVE]: item.active
+			? item.active
+			: false,
 		[PartnerOpportunitiesColumnKey.CLOSE_DATE]: item.closeDate
 			? getDateCustomFormat(
 					item.closeDate,
 					customFormatDateOptions.SHORT_MONTH
 			  )
 			: '- ',
-		[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
-			item.partnerFirstName ? item.partnerFirstName : ''
-		}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
-		[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.partnerEmail
-			? item.partnerEmail
+		[PartnerOpportunitiesColumnKey.CREATED_DATE]: item.dateCreated
+			? getDateCustomFormat(
+				item.dateCreated,
+				customFormatDateOptions.SHORT_MONTH
+			)
+			: '- ',
+		[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.accountName
+			? item.accountName
 			: ' - ',
-		[PartnerOpportunitiesColumnKey.LIFERAY_REP]: item.ownerName
-			? item.ownerName
-			: ' - ',
-		[PartnerOpportunitiesColumnKey.STAGE]: item.stage ? item.stage : '- ',
-		[PartnerOpportunitiesColumnKey.TYPE]: item.type ? item.type : '- ',
 		[PartnerOpportunitiesColumnKey.CURRENCY]:
 			item.currency ? item.currency : '- ',
-		[PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR]:
-			item.subscriptionArr && item.currency
-				? getIntlNumberFormatString(item.currency).format(
-						item.subscriptionArr
-				  )
-				: '- ',
 		[PartnerOpportunitiesColumnKey.GROWTH_ARR]: item.growthArr
 			? item.growthArr
 			: '- ',
 		[PartnerOpportunitiesColumnKey.HAS_RENEWAL]: item.hasRenewal
 			? item.hasRenewal
 			: false,
-		[PartnerOpportunitiesColumnKey.CREATED_DATE]: item.dateCreated
-			? getDateCustomFormat(
-					item.dateCreated,
-					customFormatDateOptions.SHORT_MONTH
-			  )
-			: '- ',
+		[PartnerOpportunitiesColumnKey.LIFERAY_REP]: item.ownerName
+			? item.ownerName
+			: ' - ',
 		[PartnerOpportunitiesColumnKey.OPPORTUNITY]: item.opportunity
 			? item.opportunity
 			: '',
-		[PartnerOpportunitiesColumnKey.ACTIVE]: item.active
-			? item.active
-			: false,
+		[PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME]: item.partnerAccountName
+			? item.partnerAccountName
+			: ' - ',
+		[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.partnerEmail
+			? item.partnerEmail
+			: ' - ',
+		[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
+				item.partnerFirstName ? item.partnerFirstName : ''
+			}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
+		[PartnerOpportunitiesColumnKey.STAGE]: item.stage ? item.stage : '- ',
+		[PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR]:
+			item.subscriptionArr && item.currency
+				? getIntlNumberFormatString(item.currency).format(
+						item.subscriptionArr
+				  )
+				: '- ',
+		[PartnerOpportunitiesColumnKey.SUBSCRIPTION_TERM]: item.subscriptionTerm
+			? item.subscriptionTerm
+			: ' - ',
+		[PartnerOpportunitiesColumnKey.TYPE]: item.type ? item.type : '- ',
+		
 	};
 }

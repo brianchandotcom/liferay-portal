@@ -32,5 +32,6 @@ export default interface OpportunityPartnerRole extends LiferayObject {
 	stage: string;
 	status: string;
 	subscriptionArr: number;
+	subscriptionTerm: string;
 	type: OpportunityType;
 }

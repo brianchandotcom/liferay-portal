@@ -26,57 +26,6 @@
 			"type": "Boolean"
 		},
 		{
-			"DBType": "Boolean",
-			"externalReferenceCode": "Primary_Seller__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Seller"
-			},
-			"name": "primarySeller",
-			"required": false,
-			"type": "Boolean"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Role__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Role"
-			},
-			"name": "role",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opportunity__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Opportunity"
-			},
-			"name": "opportunity",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_Partner_Account_Name__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Partner Account Name"
-			},
-			"name": "partnerAccountName",
-			"required": false,
-			"type": "String"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "Opp_Account_Name__c",
@@ -86,123 +35,6 @@
 				"en_US": "Account Name"
 			},
 			"name": "accountName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"externalReferenceCode": "Opp_Project_Subscription_Start_Date__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Project Subscription Start Date"
-			},
-			"name": "projectSubscriptionStartDate",
-			"required": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"externalReferenceCode": "Opp_Project_Subscription_End_Date__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Project Subscription End Date"
-			},
-			"name": "projectSubscriptionEndDate",
-			"required": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Partner_First_Name__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Partner First Name"
-			},
-			"name": "partnerFirstName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Partner_Last_Name__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Partner Last Name"
-			},
-			"name": "partnerLastName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Partner_Email__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Partner Email"
-			},
-			"name": "partnerEmail",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Contact_Email__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Contact Email"
-			},
-			"name": "primaryContactEmail",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Contact_First_Name__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Contact First Name"
-			},
-			"name": "primaryContactFirstName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_Primary_Contact_Last_Name__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Contact Last Name"
-			},
-			"name": "primaryContactLastName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_OwnerId__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Opportunity Owner"
-			},
-			"name": "opportunityOwner",
 			"required": false,
 			"type": "String"
 		},
@@ -220,19 +52,6 @@
 			"type": "String"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "Opp_StageName__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Stage"
-			},
-			"name": "stage",
-			"required": false,
-			"type": "String"
-		},
-		{
 			"DBType": "Date",
 			"businessType": "Date",
 			"externalReferenceCode": "Opp_CloseDate__c",
@@ -244,6 +63,44 @@
 			"name": "closeDate",
 			"required": false,
 			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opp_CurrencyIsoCode__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"name": "currency",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opp_Growth_ARR__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Growth ARR"
+			},
+			"name": "growthArr",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "Opp_Has_Renewal_Indicator__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Has Renewal"
+			},
+			"name": "hasRenewal",
+			"required": false,
+			"type": "Boolean"
 		},
 		{
 			"DBType": "String",
@@ -274,26 +131,65 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Opp_Type__c",
+			"externalReferenceCode": "Opp_OwnerId__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Type"
+				"en_US": "Opportunity Owner"
 			},
-			"name": "type",
+			"name": "opportunityOwner",
 			"required": false,
 			"type": "String"
 		},
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Opp_Growth_ARR__c",
+			"externalReferenceCode": "Opp_Partner_Account_Name__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Growth ARR"
+				"en_US": "Partner Account Name"
 			},
-			"name": "growthArr",
+			"name": "partnerAccountName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opp_Primary_Partner_Email__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Email"
+			},
+			"name": "partnerEmail",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opp_Primary_Partner_First_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner First Name"
+			},
+			"name": "partnerFirstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opp_Primary_Partner_Last_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Last Name"
+			},
+			"name": "partnerLastName",
 			"required": false,
 			"type": "String"
 		},
@@ -313,13 +209,26 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Opp_CurrencyIsoCode__c",
+			"externalReferenceCode": "Opp_StageName__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Currency"
+				"en_US": "Stage"
 			},
-			"name": "currency",
+			"name": "stage",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opp_Sub_Term__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Subscription Term"
+			},
+			"name": "subscriptionTerm",
 			"required": false,
 			"type": "String"
 		},
@@ -337,16 +246,55 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Boolean",
-			"externalReferenceCode": "Opp_Has_Renewal_Indicator__c",
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opp_Type__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Has Renewal"
+				"en_US": "Type"
 			},
-			"name": "hasRenewal",
+			"name": "type",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Opportunity__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Opportunity"
+			},
+			"name": "opportunity",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "Primary_Seller__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Seller"
+			},
+			"name": "primarySeller",
 			"required": false,
 			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Role__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Role"
+			},
+			"name": "role",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:OpportunityPartnerRoleSF$]"

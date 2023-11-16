@@ -31,5 +31,6 @@ export default interface OpportunityPartnerRoleDTO {
 	stage?: string;
 	status?: string;
 	subscriptionArr?: number;
+	subscriptionTerm?: string;
 	type?: OpportunityType;
 }

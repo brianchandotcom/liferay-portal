@@ -65,7 +65,7 @@ export function createApp({
 			description: {en_US: appDescription},
 			name: {en_US: appName},
 			productChannels,
-			productConfiguration: {allowBackOrder: true, maxOrderQuantity: 1},
+			productConfiguration: {allowBackOrder: true},
 			productStatus: 2,
 			productType: 'virtual',
 		}),
@@ -74,7 +74,11 @@ export function createApp({
 	});
 }
 
-export async function getTierPrice(channelId: number, productId: number | undefined, accountId: number | undefined) {
+export async function getTierPrice(
+	channelId: number,
+	productId: number | undefined,
+	accountId: number | undefined
+) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?accountId=${accountId}&skus.accountId=${accountId}&nestedFields=skus`,
 		{
@@ -85,7 +89,7 @@ export async function getTierPrice(channelId: number, productId: number | undefi
 
 	const {skus = []} = await response.json();
 
-	const tierPrices:[any?] = [];
+	const tierPrices: [any?] = [];
 
 	skus.forEach((sku: any) => {
 		tierPrices.push({skuId: sku.id, tierPrice: sku.tierPrices || []});

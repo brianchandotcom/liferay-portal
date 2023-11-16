@@ -28,8 +28,8 @@ const OrderDetailsStatusDescription = ({
 		<div className="order-details-publisher">{productOwner}</div>
 
 		<div className="align-items-center app-details-status d-flex mx-3">
-			<OrderStatus orderStatus={order?.paymentStatusInfo.label}>
-				{order?.paymentStatusLabel}
+			<OrderStatus orderStatus={order?.orderStatusInfo.label}>
+				{order?.orderStatusInfo.label}
 			</OrderStatus>
 		</div>
 

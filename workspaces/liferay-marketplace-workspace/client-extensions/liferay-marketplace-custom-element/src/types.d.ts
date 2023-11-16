@@ -108,6 +108,7 @@ type Cart = {
 	cartItems: CartItem[];
 	currencyCode: string;
 	id: number;
+	orderStatusInfo: {[key: string]: string};
 	orderTypeExternalReferenceCode: string;
 	orderTypeId: number;
 	paymentMethod: string;

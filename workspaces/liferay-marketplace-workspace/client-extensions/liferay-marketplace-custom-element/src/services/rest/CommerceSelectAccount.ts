@@ -9,7 +9,7 @@ class CommerceSelectAccount {
 	async selectAccount(accountId: string | number) {
 		const body = new FormData();
 
-		body.append('accountId', accountId + '');
+		body.append('accountId', accountId as string);
 
 		return fetch(
 			`/o/commerce-ui/set-current-account?groupId=${Liferay.ThemeDisplay.getScopeGroupId()}&p_auth=${

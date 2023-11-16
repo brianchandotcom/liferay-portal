@@ -58,8 +58,9 @@ const useAccountCached = (accounts: any[], accountId: string | null) => {
 const PublishedAppsDashboardOutlet = () => {
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
-	const [showDashboardNavigation, setShowDashboardNavigation] =
-		useState(true);
+	const [showDashboardNavigation, setShowDashboardNavigation] = useState(
+		true
+	);
 	const {accountId} = Liferay.CommerceContext.account || {};
 	const [page, setPage] = useState(1);
 
@@ -115,10 +116,9 @@ const PublishedAppsDashboardOutlet = () => {
 			'attachments,productChannels'
 		);
 
-		const appListProductSpecifications =
-			await getAppListProductSpecifications(
-				getAppListProductIds(products)
-			);
+		const appListProductSpecifications = await getAppListProductSpecifications(
+			getAppListProductIds(products)
+		);
 
 		const productSpecificationsMap = appListProductSpecifications.map(
 			(productSpecification, index) => ({

@@ -119,8 +119,8 @@ definition {
 				locator1 = "Checkbox#CHECKBOX_DISABLED");
 
 			AssertElementPresent(
-				key_text = "Control Panel > Object",
-				locator1 = "Dropdown#ANY_DISABLED");
+				locator1 = "Button#DISABLED_BUTTON",
+				value1 = "Object");
 		}
 
 		task ("and When the user publishes Parent") {

@@ -188,7 +188,7 @@ public class ReportController extends BaseFaroController {
 			outputStream.flush();
 		};
 
-		String fileName;
+		String fileName = null;
 
 		if (StringUtil.equals(type, "individual") &&
 			Validator.isNotNull(assetType)) {

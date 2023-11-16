@@ -283,16 +283,14 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 				int x = key.lastIndexOf(".");
 
-				for (String enforcePropertyKeyName :
-						_ENFORCE_PROPERTY_KEY_NAMES) {
+				for (String enforcePropertyName : _ENFORCE_PROPERTY_NAMES) {
+					String featureFlagUIPropertyName =
+						key.substring(0, x) + "." + enforcePropertyName;
 
-					String featureFlagUIPropertyKey =
-						key.substring(0, x) + "." + enforcePropertyKeyName;
-
-					if (!properties.containsKey(featureFlagUIPropertyKey)) {
+					if (!properties.containsKey(featureFlagUIPropertyName)) {
 						addMessage(
 							fileName,
-							"Missing property '" + featureFlagUIPropertyKey +
+							"Missing property '" + featureFlagUIPropertyName +
 								"' in ## Feature Flag UI block");
 					}
 				}
@@ -370,7 +368,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return featureFlagKeys;
 	}
 
-	private static final String[] _ENFORCE_PROPERTY_KEY_NAMES = {
+	private static final String[] _ENFORCE_PROPERTY_NAMES = {
 		"description", "title"
 	};
 

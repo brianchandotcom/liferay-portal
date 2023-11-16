@@ -15,7 +15,7 @@
 							</div>
 						</#if>
 
-						<@liferay_aui["a"]
+						<@clay["a"]
 							cssClass="language-entry-long-text"
 							href=entry.getURL()
 							label=entryLanguage

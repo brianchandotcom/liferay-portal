@@ -6,11 +6,12 @@
 package com.liferay.site.initializer.extender;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import org.osgi.annotation.versioning.ProviderType;
 
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Nilton Vieira

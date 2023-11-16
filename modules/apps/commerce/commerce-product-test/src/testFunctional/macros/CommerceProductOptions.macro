@@ -62,6 +62,13 @@ definition {
 			entryName = ${sku},
 			label = "SKU");
 
+		if (isSet(quantity)) {
+			Type(
+				key_fieldLabel = "Quantity",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${quantity});
+		}
+
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();

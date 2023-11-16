@@ -20,29 +20,54 @@ definition {
 
 		Button.clickSubmitButton();
 
-		if (isSet(amount)) {
-			Type(
-				key_text = ${orderRuleType},
-				locator1 = "TextInput#ANY",
-				value1 = ${amount});
-		}
+		if (${orderRuleType} == "Minimum Order Amount") {
+			if (isSet(amount)) {
+				Type(
+					key_text = ${orderRuleType},
+					locator1 = "TextInput#ANY",
+					value1 = ${amount});
+			}
 
-		if (isSet(orderRuleCurrency)) {
-			Select(
-				key_selectFieldLabel = "Currency",
-				locator1 = "Select#ANY",
-				value1 = ${orderRuleCurrency});
-		}
+			if (isSet(orderRuleCurrency)) {
+				Select(
+					key_selectFieldLabel = "Currency",
+					locator1 = "Select#ANY",
+					value1 = ${orderRuleCurrency});
+			}
 
-		if (isSet(applyTo)) {
-			Select(
-				key_selectFieldLabel = "Apply To",
-				locator1 = "Select#ANY",
-				value1 = ${applyTo});
+			if (isSet(applyTo)) {
+				Select(
+					key_selectFieldLabel = "Apply To",
+					locator1 = "Select#ANY",
+					value1 = ${applyTo});
+			}
+		}
+		else if (${orderRuleType} == "Products Limit") {
+			if (isSet(quantity)) {
+				Type(
+					key_fieldLabel = "Quantity",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${quantity});
+			}
+
+			if (isSet(productNames)) {
+				for (var productName : list ${productNames}) {
+					CommerceRelations.assignSingleRelationToProductsEntry(
+						entryName = ${productName},
+						title = "Add Products");
+				}
+			}
 		}
 
 		if (${active} == "true") {
 			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
+		}
+
+		if (isSet(priority)) {
+			Type(
+				key_fieldLabel = "Priority",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${priority});
 		}
 
 		Button.clickPublish();

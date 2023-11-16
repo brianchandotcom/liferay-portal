@@ -46,6 +46,7 @@ public class DeleteKBArticlesAndFoldersMVCActionCommand
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
 		long[] kbArticleResourcePrimKeys = ParamUtil.getLongValues(
 			actionRequest, "rowIdsKBArticle");
 		long[] kbFolderIds = ParamUtil.getLongValues(

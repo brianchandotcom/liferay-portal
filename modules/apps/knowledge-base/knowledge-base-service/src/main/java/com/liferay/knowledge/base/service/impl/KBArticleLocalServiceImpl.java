@@ -1534,8 +1534,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticle = kbArticlePersistence.update(kbArticle);
 
-		// Indexer
-
 		Indexer<KBArticle> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			KBArticle.class);
 

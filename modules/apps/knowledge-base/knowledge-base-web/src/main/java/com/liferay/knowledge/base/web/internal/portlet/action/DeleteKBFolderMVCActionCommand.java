@@ -40,6 +40,7 @@ public class DeleteKBFolderMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
 		long kbFolderId = ParamUtil.getLong(actionRequest, "kbFolderId");
 
 		if (cmd.equals(Constants.MOVE_TO_TRASH) &&

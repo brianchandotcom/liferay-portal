@@ -77,7 +77,7 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 
 	@Override
 	public List<KBArticle> getAncestorKBArticles() throws PortalException {
-		return _getAncestorData(Function.identity());
+		return _getAncestors(Function.identity());
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 
 		ancestorResourcePrimaryKeys.add(getResourcePrimKey());
 		ancestorResourcePrimaryKeys.addAll(
-			_getAncestorData(KBArticleModel::getResourcePrimKey));
+			_getAncestors(KBArticleModel::getResourcePrimKey));
 
 		if (getKbFolderId() == KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return ancestorResourcePrimaryKeys;
@@ -249,10 +249,10 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 		return false;
 	}
 
-	private <T> List<T> _getAncestorData(Function<KBArticle, T> function)
+	private <T> List<T> _getAncestors(Function<KBArticle, T> function)
 		throws PortalException {
 
-		List<T> ancestorData = new ArrayList<>();
+		List<T> ancestors = new ArrayList<>();
 
 		KBArticle kbArticle = this;
 
@@ -260,7 +260,7 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 			try {
 				kbArticle = kbArticle.getParentKBArticle();
 
-				ancestorData.add(function.apply(kbArticle));
+				ancestors.add(function.apply(kbArticle));
 			}
 			catch (NoSuchArticleException noSuchArticleException) {
 				if (kbArticle.isInTrash()) {
@@ -271,7 +271,7 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 			}
 		}
 
-		return ancestorData;
+		return ancestors;
 	}
 
 	private long _attachmentsFolderId;

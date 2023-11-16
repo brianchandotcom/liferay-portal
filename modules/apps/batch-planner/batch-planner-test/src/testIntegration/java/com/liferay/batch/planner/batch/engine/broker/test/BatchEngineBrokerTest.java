@@ -265,7 +265,7 @@ public class BatchEngineBrokerTest {
 			_getObjectDefinitionExportInputStream(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				_objectDefinitionExportCSVFieldNames),
-			_getInputStream("csv/expected-object-definition.csv"),
+			_getInputStream("object_definition.csv"),
 			_objectDefinition1.getExternalReferenceCode());
 	}
 

@@ -1025,6 +1025,8 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
+		Refresh();
+
 		Navigator.openSitePage(
 			baseURL = "http://localhost:9080",
 			pageName = "Staging DM Page",

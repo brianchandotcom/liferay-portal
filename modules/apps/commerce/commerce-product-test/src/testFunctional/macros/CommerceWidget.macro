@@ -293,6 +293,123 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "This macro can be used for editing user information from Organization Management Chart."
+	macro editUserInformationFromOrganizationManagement(userBirthday = null, userEmailAddress = null, userFirstName = null, userImage = null, userLanguage = null, userLastName = null, userMiddleName = null, userPrefix = null, userScreenName = null, userSuffix = null) {
+		if (isSet(viewAndEditUser)) {
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${userName});
+
+			Click(
+				key_nodeName = ${userName},
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+			Click(
+				key_menuItem = "View",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			Click(locator1 = "Icon#SIDEBAR_HEADER_ACTION_VERTICAL_ELLIPSIS_BUTTON");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+		else {
+			Click(locator1 = "Icon#SIDEBAR_HEADER_ACTION_VERTICAL_ELLIPSIS_BUTTON");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		if (isSet(userImage)) {
+			User.changeProfileImage(imageName = ${userImage});
+		}
+
+		if (isSet(userScreenName)) {
+			PortletEntry.inputText(
+				fieldLabel = "Screen Name",
+				text = ${userScreenName});
+		}
+
+		if (isSet(userEmailAddress)) {
+			PortletEntry.inputText(
+				fieldLabel = "Email Address",
+				text = ${userEmailAddress});
+		}
+
+		if (isSet(userLanguage)) {
+			Select(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LANGUAGE_SELECT",
+				value1 = ${userLanguage});
+		}
+
+		if (${userLanguage} == "English (United States)") {
+			if (isSet(userPrefix)) {
+				Select(
+					locator1 = "UsersAndOrganizationsEditUser#DETAILS_PREFIX_SELECT",
+					value1 = ${userPrefix});
+			}
+
+			if (isSet(userMiddleName)) {
+				PortletEntry.inputText(
+					fieldLabel = "Middle Name",
+					text = ${userMiddleName});
+			}
+
+			if (isSet(userSuffix)) {
+				Select(
+					locator1 = "UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECT",
+					value1 = ${userSuffix});
+			}
+		}
+
+		if (isSet(userFirstName)) {
+			PortletEntry.inputText(
+				fieldLabel = "First Name",
+				text = ${userFirstName});
+		}
+
+		if (isSet(userLastName)) {
+			PortletEntry.inputText(
+				fieldLabel = "Last Name",
+				text = ${userLastName});
+		}
+
+		if (isSet(userJobTitle)) {
+			PortletEntry.inputText(
+				fieldLabel = "Job Title",
+				text = ${userJobTitle});
+		}
+
+		if (isSet(userBirthday)) {
+			Click(locator1 = "FormFields#DATE_CALENDAR");
+
+			if (isSet(valueYear)) {
+				Click(locator1 = "FormFields#YEAR_CALENDAR_FIELD");
+
+				Click(
+					key_optionYear = ${valueYear},
+					locator1 = "FormFields#YEAR_CALENDAR_OPTION");
+			}
+
+			if (isSet(valueMonth)) {
+				Select(
+					key_valueName = "month",
+					locator1 = "FormFields#DATE_CALENDAR_FIELD",
+					value1 = ${valueMonth});
+			}
+
+			if (isSet(valueDay)) {
+				Click(
+					key_valueDay = ${valueDay},
+					locator1 = "FormFields#DATE_CALENDAR_DAY");
+			}
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	@summary = "Default summary"
 	macro gotoSVGNode(key_orgType = null, key_nodeName = null) {
 		Click(locator1 = "Button#EXPAND");
@@ -398,6 +515,21 @@ definition {
 		Refresh();
 
 		Click(locator1 = "Button#EXPAND");
+	}
+
+	@summary = "This macro can be used for removing user from Account in Organization Management Chart."
+	macro removeUserFromAccount(userName = null, accountName = null) {
+		CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${userName});
+
+		Click(
+			key_nodeName = ${userName},
+			locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+		ClickNoError(
+			key_menuItem = "Remove",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		AssertConfirm(value1 = "${userName} will be removed from ${accountName}.");
 	}
 
 	@summary = "This macro can be used for navigating to the Organization Management Widget entry."
@@ -713,6 +845,38 @@ definition {
 			AssertElementPresent(
 				key_fieldValue = ${accountDetails},
 				locator1 = "CommerceWidget#ASSERT_ACCOUNT_DETAILS_AT_SIDEBAR");
+		}
+	}
+
+	@summary = "This macro can be used for asserting user information from Organization Management Chart."
+	macro viewUserInformationAtSidebar(userBirthday = null, userEmailAddress = null, userFirstName = null, userID = null, userImage = null, userLanguage = null, userLastName = null, userMiddleName = null, userPrefix = null, userScreenName = null, userSuffix = null) {
+		if (isSet(viewCurrentInfo)) {
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${userName});
+
+			Click(
+				key_nodeName = ${userName},
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+			Click(
+				key_menuItem = "View",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		var userID = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
+
+		if (${userLanguage} == "English (United States)") {
+			for (var userInformationList : list "${userBirthday},${userEmailAddress},${userFirstName},${userID},${userImage},${userJobTitle},${userLanguage},${userLastName},${userMiddleName},${userPrefix},${userScreenName},${userSuffix}") {
+				AssertElementPresent(
+					key_fieldValue = ${userInformationList},
+					locator1 = "CommerceWidget#ASSERT_ACCOUNT_DETAILS_AT_SIDEBAR");
+			}
+		}
+		else {
+			for (var userInformationList : list "${userBirthday},${userEmailAddress},${userFirstName},${userID},${userImage},${userJobTitle},${userLanguage},${userLastName},${userScreenName}") {
+				AssertElementPresent(
+					key_fieldValue = ${userInformationList},
+					locator1 = "CommerceWidget#ASSERT_ACCOUNT_DETAILS_AT_SIDEBAR");
+			}
 		}
 	}
 

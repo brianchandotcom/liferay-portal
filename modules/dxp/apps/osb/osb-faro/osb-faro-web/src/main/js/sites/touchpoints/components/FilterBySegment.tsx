@@ -172,7 +172,7 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 				)}
 			</ClayDropDown.ItemList>
 
-			{!filteredItems.length && (
+			{!!items.length && !filteredItems.length && (
 				<ClayDropDown.Section>
 					<NoResultsDisplay
 						description={

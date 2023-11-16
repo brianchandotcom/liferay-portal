@@ -301,6 +301,14 @@ export default function propsTransformer({
 		});
 	};
 
+	const openCreateAIImage = (aiImageCreatorAvailable, aiImageCreatorURL) => {
+		console.log(
+			'openCreateAIImage',
+			aiImageCreatorAvailable,
+			aiImageCreatorURL
+		);
+	};
+
 	const permissions = () => {
 		const map = new Map();
 
@@ -385,6 +393,14 @@ export default function propsTransformer({
 			}
 			else if (action === 'permissions') {
 				permissions();
+			}
+		},
+		onCreationMenuItemClick: (event, {item}) => {
+			if (item?.data?.action === 'openAICreateImage') {
+				openCreateAIImage(
+					item?.data?.available,
+					item?.data?.aiCreatorURL
+				);
 			}
 		},
 		onFilterDropdownItemClick(event, {item}) {

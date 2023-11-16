@@ -198,22 +198,22 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 
 	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
+		<#if entity.isChangeTrackingEnabled()>
+			try(SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
+		</#if>
+
 		<#list entityColumns as entityColumn>
 			<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 			</#if>
 		</#list>
 
-		<#if entity.isChangeTrackingEnabled()>
-			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
-		</#if>
-
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		<#if !entityFinder.hasCustomComparator()>
 			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
-				if (${useCache}) {
+				if (useFinderCache) {
 					finderPath = _finderPathWithoutPaginationFindBy${entityFinder.name};
 					finderArgs = new Object[] {
 						<#list entityColumns as entityColumn>
@@ -230,7 +230,7 @@ that may or may not be enforced with a unique index at the database level. Case
 					};
 				}
 			}
-			else if (${useCache}) {
+			else if (useFinderCache) {
 		</#if>
 
 		finderPath = _finderPathWithPaginationFindBy${entityFinder.name};
@@ -252,7 +252,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		List<${entity.name}> list = null;
 
-		if (${useCache}) {
+		if (useFinderCache) {
 			list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -294,13 +294,13 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				cacheResult(list);
 
-				if (${useCache}) {
+				if (useFinderCache) {
 					${finderCache}.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
 				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					if (${useCache}) {
+					if (useFinderCache) {
 						${finderCache}.removeResult(finderPath, finderArgs);
 					}
 				</#if>
@@ -313,6 +313,10 @@ that may or may not be enforced with a unique index at the database level. Case
 		}
 
 		return list;
+
+		<#if entity.isChangeTrackingEnabled()>
+			}
+		</#if>
 	}
 
 	/**
@@ -1616,13 +1620,13 @@ that may or may not be enforced with a unique index at the database level. Case
 		}
 
 		<#if entity.isChangeTrackingEnabled()>
-			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
+			try(SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
 		</#if>
 
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
-			if (${useCache}) {
+			if (useFinderCache) {
 				finderArgs = new Object[] {
 					<#list entityColumns as entityColumn>
 						<#if entityColumn.hasArrayableOperator()>
@@ -1640,7 +1644,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				};
 			}
 		}
-		else if (${useCache}) {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				<#list entityColumns as entityColumn>
 					<#if entityColumn.hasArrayableOperator()>
@@ -1658,7 +1662,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		List<${entity.name}> list = null;
 
-		if (${useCache}) {
+		if (useFinderCache) {
 			list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1706,13 +1710,13 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				cacheResult(list);
 
-				if (${useCache}) {
+				if (useFinderCache) {
 					${finderCache}.putResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
 				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					if (${useCache}) {
+					if (useFinderCache) {
 						${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
 					}
 				</#if>
@@ -1725,6 +1729,10 @@ that may or may not be enforced with a unique index at the database level. Case
 		}
 
 		return list;
+
+		<#if entity.isChangeTrackingEnabled()>
+			}
+		</#if>
 	}
 </#if>
 
@@ -1978,13 +1986,13 @@ that may or may not be enforced with a unique index at the database level. Case
 		}
 
 		<#if entity.isChangeTrackingEnabled()>
-			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
+			try(SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
 		</#if>
 
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
-			if (${useCache}) {
+			if (useFinderCache) {
 				finderArgs = new Object[] {
 					<#list entityColumns as entityColumn>
 						<#if entityColumn.hasArrayableOperator()>
@@ -2000,7 +2008,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				};
 			}
 		}
-		else if (${useCache}) {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				<#list entityColumns as entityColumn>
 					<#if entityColumn.hasArrayableOperator()>
@@ -2016,7 +2024,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		List<${entity.name}> list = null;
 
-		if (${useCache}) {
+		if (useFinderCache) {
 			list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -2097,13 +2105,13 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				cacheResult(list);
 
-				if (${useCache}) {
+				if (useFinderCache) {
 					${finderCache}.putResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
 				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					if (${useCache}) {
+					if (useFinderCache) {
 						${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
 					}
 				</#if>
@@ -2113,6 +2121,10 @@ that may or may not be enforced with a unique index at the database level. Case
 		}
 
 		return list;
+
+		<#if entity.isChangeTrackingEnabled()>
+			}
+		</#if>
 	}
 
 	private List<${entity.name}> _findBy${entityFinder.name}(
@@ -2271,6 +2283,10 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 
 	boolean useFinderCache) {
+		<#if entity.isChangeTrackingEnabled()>
+			try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
+		</#if>
+
 		<#list entityColumns as entityColumn>
 			<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
@@ -2301,10 +2317,6 @@ that may or may not be enforced with a unique index at the database level. Case
 			result = ${finderCache}.getResult(_finderPathFetchBy${entityFinder.name}, finderArgs, this);
 		}
 
-		<#if entity.isChangeTrackingEnabled()>
-			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
-		</#if>
-
 		if (result instanceof ${entity.name}) {
 			${entity.name} ${entity.variableName} = (${entity.name})result;
 
@@ -2327,23 +2339,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			) {
 				result = null;
 			}
-
-			<#if serviceBuilder.isVersionGTE_7_3_0() && entity.isChangeTrackingEnabled()>
-				else if (!${ctPersistenceHelper}.isProductionMode(${entity.name}.class, ${entity.variableName}.getPrimaryKey())) {
-					result = null;
-				}
-			<#elseif entity.isChangeTrackingEnabled()>
-				else if (!productionMode) {
-					result = null;
-				}
-			</#if>
 		}
-
-		<#if entity.isChangeTrackingEnabled()>
-			else if (!productionMode && result instanceof List<?>) {
-				result = null;
-			}
-		</#if>
 
 		if (result == null) {
 			StringBundler sb = new StringBundler(${entityColumns?size + 2});
@@ -2368,7 +2364,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				List<${entity.name}> list = query.list();
 
 				if (list.isEmpty()) {
-					if (${useCache}) {
+					if (useFinderCache) {
 						${finderCache}.putResult(_finderPathFetchBy${entityFinder.name}, finderArgs, list);
 					}
 				}
@@ -2378,11 +2374,7 @@ that may or may not be enforced with a unique index at the database level. Case
 							Collections.sort(list, Collections.reverseOrder());
 
 							if (_log.isWarnEnabled()) {
-								<#if entity.isChangeTrackingEnabled()>
-									if (!productionMode || !useFinderCache) {
-								<#else>
-									if (!useFinderCache) {
-								</#if>
+								if (!useFinderCache) {
 									finderArgs = new Object[] {
 										<#list entityColumns as entityColumn>
 											<#if stringUtil.equals(entityColumn.type, "Date")>
@@ -2412,7 +2404,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			}
 			catch (Exception exception) {
 				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					if (${useCache}) {
+					if (useFinderCache) {
 						${finderCache}.removeResult(_finderPathFetchBy${entityFinder.name}, finderArgs);
 					}
 				</#if>
@@ -2430,5 +2422,9 @@ that may or may not be enforced with a unique index at the database level. Case
 		else {
 			return (${entity.name})result;
 		}
+
+		<#if entity.isChangeTrackingEnabled()>
+			}
+		</#if>
 	}
 </#if>

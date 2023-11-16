@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LRUMap;
@@ -370,11 +372,15 @@ public class FinderCacheImpl
 
 	@Override
 	public void removeCache(String className) {
-		_portalCaches.remove(className);
+		PortalCache<Serializable, Serializable> portalCache =
+			_portalCaches.remove(className);
 
-		String groupKey = _GROUP_KEY_PREFIX.concat(className);
+		if (portalCache instanceof CTAwarePortalCache) {
+			CTAwarePortalCache ctAwarePortalCache =
+				(CTAwarePortalCache)portalCache;
 
-		_multiVMPool.removePortalCache(groupKey);
+			ctAwarePortalCache.destroy();
+		}
 
 		_finderPathsMap.remove(className);
 	}
@@ -637,52 +643,58 @@ public class FinderCacheImpl
 			return portalCache;
 		}
 
+		String groupKey = _GROUP_KEY_PREFIX.concat(className);
+
+		String modleImplClassName = className;
+
+		if (className.endsWith(".List1") || className.endsWith(".List2")) {
+			modleImplClassName = className.substring(0, className.length() - 6);
+		}
+
 		boolean sharded = false;
 
-		if (DBPartition.isPartitionEnabled()) {
-			String modleImplClassName = className;
+		ArgumentsResolverHolder argumentsResolverHolder =
+			_serviceTrackerMap.getService(modleImplClassName);
 
-			if (className.endsWith(".List1") || className.endsWith(".List2")) {
-				modleImplClassName = className.substring(
-					0, className.length() - 6);
-			}
+		if (argumentsResolverHolder != null) {
+			ArgumentsResolver argumentsResolver =
+				argumentsResolverHolder.getArgumentsResolver();
 
-			ArgumentsResolverHolder argumentsResolverHolder =
-				_serviceTrackerMap.getService(modleImplClassName);
+			if (!Objects.equals(
+					argumentsResolver.getClassName(),
+					argumentsResolver.getTableName())) {
 
-			if (argumentsResolverHolder != null) {
-				ArgumentsResolver argumentsResolver =
-					argumentsResolverHolder.getArgumentsResolver();
+				Class<?> clazz = argumentsResolver.getClass();
 
-				if (!Objects.equals(
-						argumentsResolver.getClassName(),
-						argumentsResolver.getTableName())) {
+				ClassLoader classLoader = clazz.getClassLoader();
 
-					Class<?> clazz = argumentsResolver.getClass();
+				try {
+					Class<?> modelImplClass = classLoader.loadClass(
+						argumentsResolver.getClassName());
 
-					ClassLoader classLoader = clazz.getClassLoader();
-
-					try {
-						Class<?> modelImplClass = classLoader.loadClass(
-							argumentsResolver.getClassName());
-
+					if (DBPartition.isPartitionEnabled()) {
 						sharded = DBPartition.isPartitionedModel(
 							modelImplClass);
 					}
-					catch (ClassNotFoundException classNotFoundException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(classNotFoundException);
-						}
+
+					if (CTModel.class.isAssignableFrom(modelImplClass)) {
+						portalCache = new CTAwarePortalCache(
+							_multiVMPool, groupKey, false, sharded);
+					}
+				}
+				catch (ClassNotFoundException classNotFoundException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(classNotFoundException);
 					}
 				}
 			}
 		}
 
-		String groupKey = _GROUP_KEY_PREFIX.concat(className);
-
-		portalCache =
-			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(groupKey, false, sharded);
+		if (portalCache == null) {
+			portalCache =
+				(PortalCache<Serializable, Serializable>)
+					_multiVMPool.getPortalCache(groupKey, false, sharded);
+		}
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);
@@ -695,7 +707,9 @@ public class FinderCacheImpl
 	}
 
 	private boolean _isLocalCacheEnabled() {
-		if (_localCache == null) {
+		if ((_localCache == null) &&
+			!CTCollectionThreadLocal.isProductionMode()) {
+
 			return false;
 		}
 

@@ -299,11 +299,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			featureFlagUIPropertiesMap.put(key, value);
 		}
 
-		String featureFlagUIProperties = _generateFeatureFlagUIProperties(
-			featureFlagUICommonPropertiesMap);
-
-		featureFlagUIProperties =
-			featureFlagUIProperties +
+		String featureFlagUIProperties =
+			_generateFeatureFlagUIProperties(featureFlagUICommonPropertiesMap) +
 				_generateFeatureFlagUIProperties(featureFlagUIPropertiesMap);
 
 		return StringUtil.replaceFirst(

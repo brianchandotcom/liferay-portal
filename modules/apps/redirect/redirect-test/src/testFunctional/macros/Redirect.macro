@@ -242,7 +242,7 @@ definition {
 		DropdownMenuItem.click(menuItem = ${redirectionType});
 
 		AssertTextEquals(
-			locator1 = "Dropdown#SELECTED_VALUE",
+			locator1 = "Dropdown#TRIGGER",
 			value1 = ${redirectionType});
 
 		SystemSettings.saveConfiguration();

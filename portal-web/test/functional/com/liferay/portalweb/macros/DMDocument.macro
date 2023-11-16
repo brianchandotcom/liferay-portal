@@ -1218,7 +1218,7 @@ definition {
 			DropdownMenuItem.click(menuItem = ${cacheControl});
 
 			AssertTextEquals(
-				locator1 = "Dropdown#SELECTED_VALUE",
+				locator1 = "Dropdown#TRIGGER",
 				value1 = ${cacheControl});
 		}
 

@@ -6,15 +6,11 @@
 package com.liferay.commerce.account.web.internal.display.context;
 
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
-import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -59,19 +55,7 @@ public class AccountAddressQualifiersDisplayContext {
 			getAccountAddressChannelFDSActionDropdownItems()
 		throws PortalException {
 
-		return getFDSActionTemplates(
-			PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(
-					_httpServletRequest, CommerceChannel.class.getName(),
-					PortletProvider.Action.MANAGE)
-			).setMVCRenderCommandName(
-				"/commerce_channels/edit_commerce_channel"
-			).setRedirect(
-				_cpRequestHelper.getCurrentURL()
-			).setParameter(
-				"commerceChannelId", "{channel.id}"
-			).buildString(),
-			false);
+		return getFDSActionTemplates();
 	}
 
 	public String getAccountAddressChannelsAPIURL() throws PortalException {
@@ -102,26 +86,15 @@ public class AccountAddressQualifiersDisplayContext {
 		return "all";
 	}
 
-	protected List<FDSActionDropdownItem> getFDSActionTemplates(
-		String portletURL, boolean sidePanel) {
-
+	protected List<FDSActionDropdownItem> getFDSActionTemplates() {
 		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
 
 		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
-			portletURL, "pencil", "edit",
-			LanguageUtil.get(_httpServletRequest, "edit"), "get", null, null);
-
-		if (sidePanel) {
-			fdsActionDropdownItem.setTarget("sidePanel");
-		}
+			null, "trash", "remove",
+			LanguageUtil.get(_httpServletRequest, "remove"), "delete", "delete",
+			"headless");
 
 		fdsActionDropdownItems.add(fdsActionDropdownItem);
-
-		fdsActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				null, "trash", "remove",
-				LanguageUtil.get(_httpServletRequest, "remove"), "delete",
-				"delete", "headless"));
 
 		return fdsActionDropdownItems;
 	}

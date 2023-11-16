@@ -18,8 +18,24 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 
 long commerceAddressId = BeanParamUtil.getLong(baseAddressCheckoutStepDisplayContext.getCommerceOrder(), request, paramName);
 
-if (commerceAddressId == 0) {
+CommerceAddress orderCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
+
+if ((orderCommerceAddress == null) || (orderCommerceAddress.getClassNameId() != PortalUtil.getClassNameId(CommerceOrder.class))) {
 	commerceAddressId = baseAddressCheckoutStepDisplayContext.getDefaultCommerceAddressId(commerceContext.getCommerceChannelId());
+
+	boolean validCommerceAddressId = false;
+
+	if (!validCommerceAddressId) {
+		for (CommerceAddress validCommerceAddress : commerceAddresses) {
+			if (commerceAddressId == validCommerceAddress.getCommerceAddressId()) {
+				validCommerceAddressId = true;
+			}
+		}
+	}
+
+	if (!validCommerceAddressId) {
+		commerceAddressId = 0;
+	}
 }
 
 String selectLabel = "choose-" + baseAddressCheckoutStepDisplayContext.getTitle();
@@ -63,6 +79,9 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 					}
 					%>
 
+					<c:if test="<%= (currentCommerceAddress != null) && (currentCommerceAddress.getClassNameId() == PortalUtil.getClassNameId(CommerceOrder.class)) %>">
+						<aui:option data-city="<%= HtmlUtil.escapeAttribute(currentCommerceAddress.getCity()) %>" data-country="<%= HtmlUtil.escapeAttribute(String.valueOf(currentCommerceAddress.getCountryId())) %>" data-name="<%= HtmlUtil.escapeAttribute(currentCommerceAddress.getName()) %>" data-phone-number="<%= HtmlUtil.escapeAttribute(currentCommerceAddress.getPhoneNumber()) %>" data-region="<%= HtmlUtil.escapeAttribute(String.valueOf(currentCommerceAddress.getRegionId())) %>" data-street-1="<%= HtmlUtil.escapeAttribute(currentCommerceAddress.getStreet1()) %>" data-street-2="<%= Validator.isNotNull(currentCommerceAddress.getStreet2()) ? HtmlUtil.escapeAttribute(currentCommerceAddress.getStreet2()) : StringPool.BLANK %>" data-street-3="<%= Validator.isNotNull(currentCommerceAddress.getStreet3()) ? HtmlUtil.escapeAttribute(currentCommerceAddress.getStreet3()) : StringPool.BLANK %>" data-zip="<%= HtmlUtil.escapeAttribute(currentCommerceAddress.getZip()) %>" label="<%= HtmlUtil.escape(currentCommerceAddress.getName()) %>" selected="<%= true %>" value="<%= currentCommerceAddress.getCommerceAddressId() %>" />
+					</c:if>
 				</aui:select>
 			</c:if>
 		</c:if>

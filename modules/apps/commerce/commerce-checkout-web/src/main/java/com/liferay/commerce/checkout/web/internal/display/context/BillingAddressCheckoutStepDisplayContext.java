@@ -78,13 +78,9 @@ public class BillingAddressCheckoutStepDisplayContext
 	public long getDefaultCommerceAddressId(long commerceChannelId)
 		throws PortalException {
 
+		long billingAddressId = 0;
+
 		CommerceOrder commerceOrder = getCommerceOrder();
-
-		long billingAddressId = commerceOrder.getBillingAddressId();
-
-		if (billingAddressId > 0) {
-			return billingAddressId;
-		}
 
 		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 

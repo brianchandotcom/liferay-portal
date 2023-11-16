@@ -5,7 +5,6 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -21,7 +20,8 @@ public class UpgradeListTypeType extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (DBPartition.isPartitionEnabled()) {
-			_upgradeCompany(CompanyThreadLocal.getCompanyId());
+			_updateListType(CompanyThreadLocal.getCompanyId(), "intranet");
+			_updateListType(CompanyThreadLocal.getCompanyId(), "public");
 
 			return;
 		}
@@ -29,28 +29,25 @@ public class UpgradeListTypeType extends UpgradeProcess {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
-			_upgradeCompany(companyId);
+			_updateListType(companyId, "intranet");
+			_updateListType(companyId, "public");
 		}
 	}
 
 	private void _updateListType(long companyId, String name) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"update ListType set type_ = ",
-					"'com.liferay.portal.kernel.model.Company.website' where ",
-					"companyId = ? and name = ? and type_ = ",
-					"'com.liferay.account.model.AccountEntry.address'"))) {
+				"update ListType set type_ = ? where companyId = ? and name " +
+					"= ? and type_ = ?")) {
 
-			preparedStatement.setLong(1, companyId);
-			preparedStatement.setString(2, name);
+			preparedStatement.setString(
+				1, "com.liferay.portal.kernel.model.Company.website");
+			preparedStatement.setLong(2, companyId);
+			preparedStatement.setString(3, name);
+			preparedStatement.setString(
+				4, "com.liferay.account.model.AccountEntry.address");
 
 			preparedStatement.executeUpdate();
 		}
-	}
-
-	private void _upgradeCompany(long companyId) throws Exception {
-		_updateListType(companyId, "intranet");
-		_updateListType(companyId, "public");
 	}
 
 }

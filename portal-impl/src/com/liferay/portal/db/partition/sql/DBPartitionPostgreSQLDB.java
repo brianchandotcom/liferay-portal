@@ -14,7 +14,7 @@ import java.sql.SQLException;
 /**
  * @author Alberto Chaparro
  */
-public class DBPartitionPostgreSQL implements DBPartitionSQL {
+public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
 	@Override
 	public String getCreatePartitionSQL(

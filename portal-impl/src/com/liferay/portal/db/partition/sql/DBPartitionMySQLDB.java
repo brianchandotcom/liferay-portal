@@ -16,7 +16,7 @@ import java.sql.SQLException;
 /**
  * @author Alberto Chaparro
  */
-public class DBPartitionMySQL implements DBPartitionSQL {
+public class DBPartitionMySQLDB implements DBPartitionDB {
 
 	@Override
 	public String getCatalog(Connection connection, String partitionName)

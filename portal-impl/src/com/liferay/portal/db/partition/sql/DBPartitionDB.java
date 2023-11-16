@@ -13,7 +13,7 @@ import java.sql.SQLException;
 /**
  * @author Alberto Chaparro
  */
-public interface DBPartitionSQL {
+public interface DBPartitionDB {
 
 	public default String getCatalog(
 			Connection connection, String partitionName)

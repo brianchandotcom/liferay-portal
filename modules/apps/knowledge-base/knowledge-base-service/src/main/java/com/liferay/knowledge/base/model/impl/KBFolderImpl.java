@@ -29,12 +29,12 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 
 	@Override
 	public List<Long> getAncestorKBFolderIds() throws PortalException {
-		return _getAncestorData(KBFolderModel::getKbFolderId);
+		return _getAncestors(KBFolderModel::getKbFolderId);
 	}
 
 	@Override
 	public List<KBFolder> getAncestors() throws PortalException {
-		return _getAncestorData(Function.identity());
+		return _getAncestors(Function.identity());
 	}
 
 	@Override
@@ -99,10 +99,10 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 		return false;
 	}
 
-	private <T> List<T> _getAncestorData(Function<KBFolder, T> function)
+	private <T> List<T> _getAncestors(Function<KBFolder, T> function)
 		throws PortalException {
 
-		List<T> ancestorData = new ArrayList<>();
+		List<T> ancestors = new ArrayList<>();
 
 		KBFolder kbFolder = this;
 
@@ -110,7 +110,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 			try {
 				kbFolder = kbFolder.getParentKBFolder();
 
-				ancestorData.add(function.apply(kbFolder));
+				ancestors.add(function.apply(kbFolder));
 			}
 			catch (NoSuchFolderException noSuchFolderException) {
 				if (kbFolder.isInTrash()) {
@@ -121,7 +121,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 			}
 		}
 
-		return ancestorData;
+		return ancestors;
 	}
 
 	private long _classNameId;

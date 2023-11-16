@@ -6,7 +6,7 @@ import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import Loading, {Align} from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {
 	createOrderIOMap,
@@ -50,115 +50,17 @@ const filterBySegment: React.FC<IFilterBySegment> = ({onFilterChange}) => {
 	return (
 		<div className='d-flex justify-content-between w-100 analytics-segment-filter-root'>
 			<div className='align-items-center d-flex'>
-				<ClayDropDown
-					closeOnClick
-					trigger={
-						<ClayButton
-							borderless
-							disabled={loading}
-							displayType='secondary'
-							size='sm'
-						>
-							{loading && <Loading align={Align.Left} />}
+				<Dropdown
+					channelId={channelId}
+					groupId={groupId}
+					items={data?.items ?? []}
+					loading={loading}
+					onFilterChange={item => {
+						setSelectedItem(item);
 
-							{Liferay.Language.get('filter')}
-
-							<ClayIcon className='ml-2' symbol='caret-bottom' />
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.Search
-						placeholder={Liferay.Language.get('search')}
-					/>
-
-					<ClayDropDown.ItemList
-						items={[
-							{
-								children: data?.items ?? [],
-								id: 1,
-								name: sub(Liferay.Language.get('filter-by-x'), [
-									Liferay.Language.get('segment')
-								])
-							}
-						]}
-					>
-						{(item: Item) => (
-							<ClayDropDown.Group
-								header={item.name}
-								items={item.children}
-								key={item.name}
-							>
-								{(item: Item) => (
-									<ClayDropDown.Item
-										key={item.name}
-										onClick={() => {
-											setSelectedItem(item);
-
-											onFilterChange(item);
-										}}
-									>
-										{item.name}
-									</ClayDropDown.Item>
-								)}
-							</ClayDropDown.Group>
-						)}
-					</ClayDropDown.ItemList>
-
-					{!data?.items.length && (
-						<ClayDropDown.Section>
-							<NoResultsDisplay
-								description={
-									<div
-										className='d-flex flex-column justify-content-center'
-										style={{minHeight: 240}}
-									>
-										<h4 className='no-results-title'>
-											{Liferay.Language.get(
-												'there-are-no-segments'
-											)}
-										</h4>
-
-										{Liferay.Language.get(
-											'start-by-creating-a-segment'
-										)}
-
-										<a
-											className='d-block mb-3'
-											href={
-												URLConstants.SegmentsDocumentationLink
-											}
-											key='DOCUMENTATION'
-											target='_blank'
-										>
-											{Liferay.Language.get(
-												'learn-more-about-segments'
-											)}
-										</a>
-									</div>
-								}
-								title={null}
-							/>
-						</ClayDropDown.Section>
-					)}
-
-					<ClayDropDown.Section>
-						<ClayLink
-							block
-							button
-							displayType={
-								!data?.items.length ? 'primary' : 'secondary'
-							}
-							href={toRoute(Routes.CONTACTS_LIST_SEGMENT, {
-								channelId,
-								groupId,
-								type: SEGMENTS
-							})}
-							small
-						>
-							{Liferay.Language.get('create-segment')}
-						</ClayLink>
-					</ClayDropDown.Section>
-				</ClayDropDown>
+						onFilterChange(item);
+					}}
+				/>
 
 				{selectedItem && (
 					<ClayLabel
@@ -200,6 +102,157 @@ const filterBySegment: React.FC<IFilterBySegment> = ({onFilterChange}) => {
 				</div>
 			)}
 		</div>
+	);
+};
+
+const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
+	const [value, setValue] = useState('');
+
+	const filteredItems = useMemo(() => {
+		if (!value) {
+			return items;
+		}
+
+		return items.filter(
+			({name}) => name.match(new RegExp(value, 'i')) !== null
+		);
+	}, [items, value]);
+
+	return (
+		<ClayDropDown
+			closeOnClick
+			trigger={
+				<ClayButton
+					borderless
+					disabled={loading}
+					displayType='secondary'
+					size='sm'
+				>
+					{loading && <Loading align={Align.Left} />}
+
+					{Liferay.Language.get('filter')}
+
+					<ClayIcon className='ml-2' symbol='caret-bottom' />
+				</ClayButton>
+			}
+		>
+			<ClayDropDown.Search
+				onChange={setValue}
+				placeholder={Liferay.Language.get('search')}
+			/>
+
+			<ClayDropDown.ItemList
+				items={[
+					{
+						children: filteredItems,
+						id: 1,
+						name: sub(Liferay.Language.get('filter-by-x'), [
+							Liferay.Language.get('segment')
+						])
+					}
+				]}
+			>
+				{(item: Item) => (
+					<ClayDropDown.Group
+						header={item.name}
+						items={item.children}
+						key={item.name}
+					>
+						{(item: Item) => (
+							<ClayDropDown.Item
+								key={item.name}
+								onClick={() => {
+									onFilterChange(item);
+								}}
+							>
+								{item.name}
+							</ClayDropDown.Item>
+						)}
+					</ClayDropDown.Group>
+				)}
+			</ClayDropDown.ItemList>
+
+			{!filteredItems.length && (
+				<ClayDropDown.Section>
+					<NoResultsDisplay
+						description={
+							<div
+								className='d-flex flex-column justify-content-center'
+								style={{minHeight: 240}}
+							>
+								<h4 className='no-results-title'>
+									{Liferay.Language.get(
+										'there-are-no-results-found'
+									)}
+								</h4>
+
+								{Liferay.Language.get(
+									'please-try-a-different-search-term'
+								)}
+							</div>
+						}
+						title={null}
+					/>
+				</ClayDropDown.Section>
+			)}
+
+			{!items.length && (
+				<ClayDropDown.Section>
+					<NoResultsDisplay
+						description={
+							<div
+								className='d-flex flex-column justify-content-center'
+								style={{minHeight: 240}}
+							>
+								<h4 className='no-results-title'>
+									{Liferay.Language.get(
+										'there-are-no-segments'
+									)}
+								</h4>
+
+								{Liferay.Language.get(
+									'start-by-creating-a-segment'
+								)}
+
+								<a
+									className='d-block mb-3'
+									href={
+										URLConstants.SegmentsDocumentationLink
+									}
+									key='DOCUMENTATION'
+									target='_blank'
+								>
+									{Liferay.Language.get(
+										'learn-more-about-segments'
+									)}
+								</a>
+							</div>
+						}
+						title={null}
+					/>
+				</ClayDropDown.Section>
+			)}
+
+			<ClayDropDown.Section>
+				<ClayLink
+					block
+					button
+					displayType={
+						!items.length || !filteredItems.length
+							? 'primary'
+							: 'secondary'
+					}
+					href={toRoute(Routes.CONTACTS_LIST_SEGMENT, {
+						channelId,
+						groupId,
+						type: SEGMENTS
+					})}
+					small
+				>
+					{Liferay.Language.get('create-segment')}
+				</ClayLink>
+			</ClayDropDown.Section>
+		</ClayDropDown>
 	);
 };
 

@@ -195,8 +195,9 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			<liferay-ui:message arguments="<%= new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)} %>" key="showing-x-to-x-of-x-entries" />
 		</p>
 
+		<nav aria-label="pagination">
 		<ul class="pagination">
-			<li class="page-item <%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
+			<span class="page-item <%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
 				<c:choose>
 					<c:when test="<%= cur > 1 %>">
 						<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur -1) : "" %>" title="<%= LanguageUtil.get(request, "previous-page") %>">
@@ -219,7 +220,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						</div>
 					</c:otherwise>
 				</c:choose>
-			</li>
+			</span>
 
 			<c:choose>
 				<c:when test="<%= pages <= 5 %>">
@@ -416,7 +417,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				</c:otherwise>
 			</c:choose>
 
-			<li class="page-item <%= (cur < pages) ? StringPool.BLANK : "disabled" %>">
+			<span class="page-item <%= (cur < pages) ? StringPool.BLANK : "disabled" %>">
 				<c:choose>
 					<c:when test="<%= cur < pages %>">
 						<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur + 1) : "" %>" title="<%= LanguageUtil.get(request, "next-page") %>">
@@ -439,8 +440,9 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						</div>
 					</c:otherwise>
 				</c:choose>
-			</li>
+			</span>
 		</ul>
+	</nav>
 	</div>
 </c:if>
 

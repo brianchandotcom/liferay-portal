@@ -5,16 +5,13 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.db.partition.DBPartition;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.util.PortalInstances;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Luis Ortiz
@@ -36,78 +33,24 @@ public class UpgradeMissingListTypes extends UpgradeProcess {
 		}
 	}
 
-	private void _addListType(long companyId, String name, String type)
-		throws Exception {
-
+	private void _updateListType(long companyId, String name) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select * from ListType where companyId = ? and name = ? and " +
-					"type_ = ?")) {
+				StringBundler.concat(
+					"update ListType set type_ = ",
+					"'com.liferay.portal.kernel.model.Company.website' where ",
+					"companyId = ? and name = ? and type_ = ",
+					"'com.liferay.account.model.AccountEntry.address'"))) {
 
 			preparedStatement.setLong(1, companyId);
 			preparedStatement.setString(2, name);
-			preparedStatement.setString(3, type);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return;
-				}
-			}
-		}
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"insert into ListType (listTypeId, companyId, name, type_) " +
-					"values (?, ?, ?, ?)")) {
-
-			preparedStatement.setLong(1, increment(ListType.class.getName()));
-			preparedStatement.setLong(2, companyId);
-			preparedStatement.setString(3, name);
-			preparedStatement.setString(4, type);
 
 			preparedStatement.executeUpdate();
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to add list type", exception);
-			}
-		}
-	}
-
-	private void _deleteListType(long companyId, String name, String type)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"delete from ListType where companyId = ? and name = ? and " +
-					"type_ = ?")) {
-
-			preparedStatement.setLong(1, companyId);
-			preparedStatement.setString(2, name);
-			preparedStatement.setString(3, type);
-
-			preparedStatement.executeUpdate();
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to delete list type", exception);
-			}
 		}
 	}
 
 	private void _upgradeCompany(long companyId) throws Exception {
-		_addListType(
-			companyId, "intranet",
-			"com.liferay.portal.kernel.model.Company.website");
-		_addListType(
-			companyId, "public",
-			"com.liferay.portal.kernel.model.Company.website");
-		_deleteListType(
-			companyId, "intranet",
-			"com.liferay.account.model.AccountEntry.address");
-		_deleteListType(
-			companyId, "public",
-			"com.liferay.account.model.AccountEntry.address");
+		_updateListType(companyId, "intranet");
+		_updateListType(companyId, "public");
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeMissingListTypes.class);
 
 }

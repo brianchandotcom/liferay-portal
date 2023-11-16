@@ -1166,11 +1166,9 @@ public class BatchEngineBrokerTest {
 		return jsonNode;
 	}
 
-	private void _setUpObjectDefinition(String objectDefinitionName)
-		throws Exception {
-
+	private void _setUpObjectDefinition(String name) throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), objectDefinitionName,
+			TestPropsValues.getCompanyId(), name,
 			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
 
 		_objectDefinition1 =

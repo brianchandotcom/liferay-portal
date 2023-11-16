@@ -11,7 +11,6 @@
 	<bean class="com.liferay.portal.kernel.repository.RepositoryFactoryUtil" id="com.liferay.portal.kernel.repository.RepositoryFactoryUtil">
 		<property name="repositoryFactory" ref="com.liferay.portal.kernel.repository.RepositoryFactory" />
 	</bean>
-	<bean class="com.liferay.portal.repository.RepositoryProviderImpl" id="com.liferay.portal.kernel.repository.RepositoryProvider" />
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" />
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" />
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" />

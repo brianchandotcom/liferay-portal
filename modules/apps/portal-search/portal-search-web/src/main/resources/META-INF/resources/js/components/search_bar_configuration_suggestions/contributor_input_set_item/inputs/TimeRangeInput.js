@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import {Option, Picker} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -54,44 +53,22 @@ export default function TimeRangeInput({onChange, value}) {
 
 			<ClayInput.Group>
 				<ClayInput.Group>
-					<ClayDropDown
+					<Picker
 						active={activeDropdown}
-						className="w-100"
-						closeOnClick={true}
-						closeOnClickOutside={true}
+						aria-labelledby={Liferay.Language.get('time-range')}
+						items={TIME_RANGE_TYPES}
 						onActiveChange={setActiveDropdown}
-						trigger={
-							<ClayButton
-								className="form-control form-control-select"
-								displayType="secondary"
-							>
-								{value ? (
-									TIME_RANGE_TYPES.find(
-										(item) => item.value === value
-									)?.label
-								) : (
-									<span className="text-secondary">
-										{Liferay.Util.sub(
-											Liferay.Language.get('select-x'),
-											Liferay.Language.get('time-range')
-										)}
-									</span>
-								)}
-							</ClayButton>
-						}
+						onSelectionChange={onChange}
+						placeholder={Liferay.Util.sub(
+							Liferay.Language.get('select-x'),
+							Liferay.Language.get('time-range')
+						)}
+						selectedKey={value || ''}
 					>
-						<ClayDropDown.ItemList items={TIME_RANGE_TYPES}>
-							{(item) => (
-								<ClayDropDown.Item
-									key={item.value}
-									name={item.value}
-									onClick={() => onChange(item.value)}
-								>
-									{item.label}
-								</ClayDropDown.Item>
-							)}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
+						{(item) => (
+							<Option key={item.value}>{item.label}</Option>
+						)}
+					</Picker>
 				</ClayInput.Group>
 			</ClayInput.Group>
 		</ClayInput.GroupItem>

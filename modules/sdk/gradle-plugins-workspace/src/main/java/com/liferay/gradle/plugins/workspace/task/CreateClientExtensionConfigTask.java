@@ -491,8 +491,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		if ((classNameJsonNode == null) ||
 			!Objects.equals(
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				classNameJsonNode.asText())) {
+				classNameJsonNode.asText(),
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry")) {
 
 			return;
 		}

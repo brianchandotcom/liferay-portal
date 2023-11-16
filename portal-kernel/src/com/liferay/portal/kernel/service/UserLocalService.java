@@ -1810,12 +1810,13 @@ public interface UserLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchBySocial(
-		long companyId, long[] groupIds, String keywords, int start, int end);
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchBySocial(
-		long companyId, long[] groupIds, String keywords, int start, int end,
-		OrderByComparator<User> orderByComparator);
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end, OrderByComparator<User> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchBySocial(

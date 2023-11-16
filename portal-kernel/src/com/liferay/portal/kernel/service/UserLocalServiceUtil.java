@@ -2220,18 +2220,20 @@ public class UserLocalServiceUtil {
 	}
 
 	public static List<User> searchBySocial(
-		long companyId, long[] groupIds, String keywords, int start, int end) {
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end) {
 
 		return getService().searchBySocial(
-			companyId, groupIds, keywords, start, end);
+			companyId, groupIds, userGroupIds, keywords, start, end);
 	}
 
 	public static List<User> searchBySocial(
-		long companyId, long[] groupIds, String keywords, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end, OrderByComparator<User> orderByComparator) {
 
 		return getService().searchBySocial(
-			companyId, groupIds, keywords, start, end, orderByComparator);
+			companyId, groupIds, userGroupIds, keywords, start, end,
+			orderByComparator);
 	}
 
 	public static List<User> searchBySocial(

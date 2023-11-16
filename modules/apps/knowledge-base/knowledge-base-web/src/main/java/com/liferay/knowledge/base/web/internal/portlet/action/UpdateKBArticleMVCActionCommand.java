@@ -275,10 +275,10 @@ public class UpdateKBArticleMVCActionCommand
 	private Date _getDisplayDate(ActionRequest actionRequest, TimeZone timeZone)
 		throws Exception {
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (!PropsValues.SCHEDULER_ENABLED) {
-			return now;
+			return date;
 		}
 
 		Date displayDate = ParamUtil.getDate(
@@ -286,7 +286,7 @@ public class UpdateKBArticleMVCActionCommand
 			DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyy-MM-dd HH:mm", timeZone));
 
-		if ((displayDate == null) || displayDate.before(now)) {
+		if ((displayDate == null) || displayDate.before(date)) {
 			throw new KBArticleDisplayDateException(
 				"Schedule date " + displayDate + " is in the past");
 		}

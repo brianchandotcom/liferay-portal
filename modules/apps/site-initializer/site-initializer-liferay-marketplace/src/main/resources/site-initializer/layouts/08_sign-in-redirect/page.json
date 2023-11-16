@@ -1,11 +1,11 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/get-app",
+	"friendlyURL": "/sign-in",
 	"hidden": true,
-	"name": "Get App",
+	"name": "Sign in",
 	"name_i18n": {
-		"en_US": "Get App"
+		"en_US": "Sign in"
 	},
 	"permissions": [
 		{

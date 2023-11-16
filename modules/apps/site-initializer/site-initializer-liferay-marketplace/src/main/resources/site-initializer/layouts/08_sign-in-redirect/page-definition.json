@@ -1,0 +1,25 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+			  "definition": {
+				"fragment": {
+				  "key": "local-storage-page-sign-in",
+				  "siteKey":  "[$GROUP_KEY$]"
+				},
+				"fragmentConfig": {},
+				"fragmentFields": [],
+				"indexed": true
+			  },
+			  "type": "Fragment"
+			}
+		  ],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		}
+	},
+	"version": 1.1
+}

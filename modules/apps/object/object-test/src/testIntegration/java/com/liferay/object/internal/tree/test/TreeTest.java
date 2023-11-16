@@ -112,13 +112,13 @@ public class TreeTest {
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Inject
 	private static ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 
 	@Inject
 	private static TreeFactory _treeFactory;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

@@ -1072,9 +1072,6 @@ public class ObjectRelationshipLocalServiceTest {
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Inject
-	private ObjectEntryLocalService _objectEntryLocalService;
-
 	private static final Pattern _pattern = Pattern.compile(
 		"R_[A-Z][0-9][A-Z][0-9]$");
 	private static ObjectDefinition _systemObjectDefinition1;
@@ -1084,6 +1081,9 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

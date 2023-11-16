@@ -502,6 +502,10 @@ definition {
 
 	@summary = "Default summary"
 	macro unzipDownloadedExportFile() {
+		WaitForElementPresent(
+			key_text = "Download",
+			locator1 = "Button#ANY");
+
 		Button.click(button = "Download");
 
 		DownloadTempFile();

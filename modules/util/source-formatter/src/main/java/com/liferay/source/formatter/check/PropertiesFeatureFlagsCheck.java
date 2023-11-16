@@ -88,7 +88,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	private String _generateFeatureFlagProperties(String content)
 		throws IOException {
 
-		_featureFlagKeys = new ArrayList<>();
+		List<String> featureFlagKeys = new ArrayList<>();
 
 		List<String> fileNames = SourceFormatterUtil.filterFileNames(
 			_allFileNames, new String[] {"**/test/**"},
@@ -98,13 +98,13 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			},
 			getSourceFormatterExcludes(), true);
 
-		for (String curFileName : fileNames) {
-			curFileName = StringUtil.replace(
-				curFileName, CharPool.BACK_SLASH, CharPool.SLASH);
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-			String fileContent = FileUtil.read(new File(curFileName));
+			String fileContent = FileUtil.read(new File(fileName));
 
-			if (curFileName.endsWith("bnd.bnd")) {
+			if (fileName.endsWith("bnd.bnd")) {
 				String liferaySiteInitializerFeatureFlagKey =
 					BNDSourceUtil.getDefinitionValue(
 						fileContent, "Liferay-Site-Initializer-Feature-Flag");
@@ -113,39 +113,36 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					continue;
 				}
 
-				_featureFlagKeys.add(liferaySiteInitializerFeatureFlagKey);
+				featureFlagKeys.add(liferaySiteInitializerFeatureFlagKey);
 			}
-			else if (curFileName.endsWith(".java")) {
-				_featureFlagKeys.addAll(
+			else if (fileName.endsWith(".java")) {
+				featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern1));
-				_featureFlagKeys.addAll(_getFeatureFlagKeys(fileContent, true));
+				featureFlagKeys.addAll(_getFeatureFlagKeys(fileContent, true));
 			}
-			else if (curFileName.endsWith(".json")) {
-				_featureFlagKeys.addAll(
+			else if (fileName.endsWith(".json")) {
+				featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern4));
 			}
-			else if (curFileName.endsWith(".jsp") ||
-					 curFileName.endsWith(".jspf")) {
-
-				_featureFlagKeys.addAll(
+			else if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
+				featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern3));
-				_featureFlagKeys.addAll(
-					_getFeatureFlagKeys(fileContent, false));
+				featureFlagKeys.addAll(_getFeatureFlagKeys(fileContent, false));
 			}
 			else {
-				_featureFlagKeys.addAll(
+				featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern3));
 			}
 		}
 
-		ListUtil.distinct(_featureFlagKeys, new NaturalOrderStringComparator());
+		ListUtil.distinct(featureFlagKeys, new NaturalOrderStringComparator());
 
 		Matcher matcher = _featureFlagsPattern.matcher(content);
 
 		if (matcher.find()) {
 			String matchedFeatureFlags = matcher.group(2);
 
-			if (_featureFlagKeys.isEmpty()) {
+			if (featureFlagKeys.isEmpty()) {
 				if (matchedFeatureFlags.contains("feature.flag.")) {
 					return StringUtil.replaceFirst(
 						content, matchedFeatureFlags, StringPool.BLANK,
@@ -165,9 +162,9 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					deprecationFeatureFlagKeyMatcher.group(1));
 			}
 
-			StringBundler sb = new StringBundler(_featureFlagKeys.size() * 15);
+			StringBundler sb = new StringBundler(featureFlagKeys.size() * 15);
 
-			for (String featureFlagKey : _featureFlagKeys) {
+			for (String featureFlagKey : featureFlagKeys) {
 				String featureFlagPropertyKey =
 					"feature.flag." + featureFlagKey;
 
@@ -393,6 +390,5 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		"(\n|\\A)##\n## Feature Flag UI\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 
 	private List<String> _allFileNames;
-	private List<String> _featureFlagKeys;
 
 }

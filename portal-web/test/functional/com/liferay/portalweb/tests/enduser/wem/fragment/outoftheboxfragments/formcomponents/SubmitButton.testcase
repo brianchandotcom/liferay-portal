@@ -521,6 +521,100 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191474. The Save Draft option is disabled on the object so a warning pop up message appears when trying to publish the page."
+	@priority = 5
+	test ViewWarningMessageWhenPublishingContentPageWithSaveAsDraftOptionDisabled {
+		property custom.properties = "feature.flag.LPS-173135=true";
+
+		task ("Given an object entry is disable 'Allow Users to Save Entries as Draft'") {
+			task ("View 'Allow Users to Save Entries as Draft' in object") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Purchase Order");
+
+				AssertNotChecked(
+					key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				CreateObject.saveObject();
+			}
+		}
+
+		task ("When adding a form container and change the submit button to draft") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to the object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Change the submit button to draft") {
+				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+
+				Select(
+					key_fieldLabel = "Submitted Entry Status",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Draft");
+			}
+		}
+
+		task ("Then the published entry is not saved as draft in object") {
+			task ("Publish and view the warning message") {
+				Button.click(button = "Publish");
+
+				AssertTextEquals(
+					locator1 = "Modal#HEADER",
+					value1 = "Save as Draft Not Available");
+
+				Modal.publish(
+					action = "Cancel",
+					warningMessage = "Purchase Order form does not allow creating entries as draft. Review the button configuration and set it to approved to generate valid entries.");
+
+				Button.click(button = "Publish");
+
+				Modal.publish(warningMessage = "Purchase Order form does not allow creating entries as draft. Review the button configuration and set it to approved to generate valid entries.");
+			}
+
+			task ("Write “testDraft2” on the placeholder and submit the form") {
+				Type(
+					key_text = "Name",
+					locator1 = "TextInput#ANY",
+					value1 = "testDraft2");
+
+				Button.clickSubmitButton();
+
+				AssertElementPresent(
+					locator1 = "Message#ERROR",
+					value1 = "An error occurred while sending the form information.");
+
+				task ("View the no entry in object") {
+					ApplicationsMenu.gotoPortlet(
+						category = "Object",
+						panel = "Control Panel",
+						portlet = "Purchase Orders");
+
+					AssertTextEquals(
+						locator1 = "Message#EMPTY_STATE_INFO",
+						value1 = "No Results Found");
+				}
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-189534. The site administrator should see warning message when publishing form content page without submit type fragment."
 	@priority = 3
 	test ViewWarningMessageWhenPublishingFormContentPageWithoutSubmitTypeFragment {

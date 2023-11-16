@@ -92,12 +92,12 @@
 </tr>
 <tr>
 	<td>TRIGGER</td>
-	<td>//button[contains(.,'Choose an Option')]</td>
+	<td>//div[contains(@class,'ddm-row')]//button[@role='combobox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TRIGGER_2</td>
-	<td>xpath=(//a[*[name()='svg'][contains(@class,'icon-caret-double')]])[2]</td>
+	<td>xpath=(//div[contains(@class,'ddm-row')])[2]//button[@role='combobox']</td>
 	<td></td>
 </tr>
 <tr>

@@ -55,6 +55,34 @@ public class SavedContentEntryServiceWrapper
 			groupId, className, classPK);
 	}
 
+	@Override
+	public java.util.List<SavedContentEntry> getGroupUserSavedContentEntries(
+			long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _savedContentEntryService.getGroupUserSavedContentEntries(
+			groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<SavedContentEntry> getGroupUserSavedContentEntries(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _savedContentEntryService.getGroupUserSavedContentEntries(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getGroupUserSavedContentEntriesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _savedContentEntryService.getGroupUserSavedContentEntriesCount(
+			groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -63,6 +91,15 @@ public class SavedContentEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _savedContentEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public SavedContentEntry getSavedContentEntry(
+			long groupId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _savedContentEntryService.getSavedContentEntry(
+			groupId, className, classPK);
 	}
 
 	@Override

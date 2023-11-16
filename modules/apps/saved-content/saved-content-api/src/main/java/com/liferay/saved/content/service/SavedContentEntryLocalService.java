@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.saved.content.exception.NoSuchSavedContentEntryException;
 import com.liferay.saved.content.model.SavedContentEntry;
 
 import java.io.Serializable;
@@ -310,6 +311,11 @@ public interface SavedContentEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SavedContentEntry getSavedContentEntry(long savedContentEntryId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SavedContentEntry getSavedContentEntry(
+			long userId, long groupId, String className, long classPK)
+		throws NoSuchSavedContentEntryException;
 
 	/**
 	 * Returns the saved content entry matching the UUID and group.

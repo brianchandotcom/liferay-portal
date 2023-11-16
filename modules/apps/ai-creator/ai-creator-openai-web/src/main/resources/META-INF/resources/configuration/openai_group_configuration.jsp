@@ -26,12 +26,12 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 			</c:when>
 			<c:when test="<%= !companyChatGTPEnabled && companyDALLEEnabled %>">
 				<clay:alert
-					message="to-enable-chatgpt-in-this-site,-it-must-also-be-enabled-from-instance-settings"
+					message="to-enable-chatgpt-for-this-site,-first-enable-it-for-your-instance"
 				/>
 			</c:when>
 			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") && companyChatGTPEnabled && !companyDALLEEnabled %>'>
 				<clay:alert
-					message="to-enable-dalle-in-this-site,-it-must-also-be-enabled-from-instance-settings"
+					message="to-enable-dalle-for-this-site,-first-enable-it-for-your-instance"
 				/>
 			</c:when>
 		</c:choose>

@@ -16,6 +16,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -109,8 +110,16 @@ public class ScimNotificationSchedulerJobConfiguration
 		return body;
 	}
 
+	private boolean _isEnabled() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-96845")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _notify(Company company) {
-		if (!company.isActive()) {
+		if (!_isEnabled() || !company.isActive()) {
 			return;
 		}
 

@@ -391,9 +391,11 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
-			groupName = "Guest");
+			groupName = "Site Name");
 
 		JSONPublications.addPublication(publicationName = "Publication 2 Name");
 
@@ -401,7 +403,7 @@ definition {
 
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
-			groupName = "Guest");
+			groupName = "Site Name");
 
 		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
@@ -409,7 +411,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Folder",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC Folder Name",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -424,7 +426,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Folder",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC Folder Name",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -441,9 +443,11 @@ definition {
 	@description = "Assert explanation of missing requirements conflict displays"
 	@priority = 4
 	test ExplainMissingRequirementConflict {
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
-			groupName = "Guest");
+			groupName = "Site Name");
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -452,10 +456,10 @@ definition {
 		JSONWebcontent.addFolder(
 			folderDescription = "WC SubFolder Description",
 			folderName = "WC SubFolder Name",
-			groupName = "Guest",
+			groupName = "Site Name",
 			parentFolderName = "WC Folder Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		Publications.workOnProduction();
 
@@ -463,7 +467,7 @@ definition {
 			assetType = "Web Content Folder",
 			folderName = "WC Folder Name");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 		RecycleBin.emptyCP();
 
@@ -475,7 +479,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Folder",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC SubFolder Name",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -494,16 +498,18 @@ definition {
 	test ResolveDeletionModificationConflictPublicationsByDiscarding {
 		property portal.acceptance = "true";
 
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "Guest",
+			groupName = "Site Name",
 			title = "WC WebContent Title");
 
 		JSONPublications.addPublication(publicationName = "Publication 1 Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -513,7 +519,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -528,7 +534,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC WebContent Title",
 			changeType = "Deleted",
 			changeUser = "Test Test");
@@ -541,20 +547,20 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC WebContent Title",
 			changeType = "Deleted",
 			changeUser = "Test Test",
 			publicationName = "Publication 1 Name",
 			publishedPublication = "true");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
 
 		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title 2 Edit");
 
@@ -562,7 +568,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC WebContent Title 2 Edit",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -591,13 +597,13 @@ definition {
 
 		Publications.publishPublication(publicationName = "Publication 2 Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No web content was found.");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 		RecycleBin.viewCP(
 			assetName = "WC WebContent Title",
@@ -610,6 +616,8 @@ definition {
 	test ResolveDuplicateNameConflictPublicationsByEditing {
 		property portal.acceptance = "true";
 
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONPublications.addPublication(publicationName = "Publication Name 1");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
@@ -617,7 +625,7 @@ definition {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name ",
-			groupName = "Guest");
+			groupName = "Site Name");
 
 		JSONPublications.addPublication(publicationName = "Publication Name 2");
 
@@ -626,7 +634,7 @@ definition {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
+			groupName = "Site Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
@@ -634,13 +642,13 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 1");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name");
 

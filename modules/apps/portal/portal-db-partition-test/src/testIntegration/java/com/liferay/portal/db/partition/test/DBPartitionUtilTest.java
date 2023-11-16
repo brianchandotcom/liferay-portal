@@ -59,8 +59,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void setUp() throws Exception {
 		for (long companyId : COMPANY_IDS) {
 			db.runSQL(
-				"create schema if not exists " + getSchemaName(companyId) +
-					" character set utf8");
+				dbPartitionDB.getCreatePartitionSQL(
+					connection, getSchemaName(companyId)));
 		}
 	}
 

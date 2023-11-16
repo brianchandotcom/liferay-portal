@@ -11,8 +11,8 @@ runGradleTest {
 		}.singleFile
 
 		assert !file.text.contains("@batch_object_entry_file_base64@")
-		assert file.text.contains('{"fileBase64":"Zm9vCg==","name":"ticket_1.txt"}')
-		assert file.text.contains('{"fileBase64":"YmFyCg==","name":"ticket_2.txt"}')
-		assert file.text.contains('{"fileBase64":"YmF6Cg==","name":"ticket_3.txt"}')
+		assert file.text.contains('{"fileBase64":"Zm9vCg==","name":"foo_filename_1.txt"}')
+		assert file.text.contains('{"fileBase64":"YmFyCg==","name":"foo_filename_2.txt"}')
+		assert file.text.contains('{"fileBase64":"YmF6Cg==","name":"foo_filename_3.txt"}')
 	}
 }

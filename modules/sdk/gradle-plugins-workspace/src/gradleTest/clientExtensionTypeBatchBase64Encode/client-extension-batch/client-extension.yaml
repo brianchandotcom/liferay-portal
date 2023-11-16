@@ -1,15 +1,15 @@
 assemble:
     - from: batch
       into: batch
-liferay-ticket-batch-object-entry:
-    name: Liferay Ticket Batch Object Entry
-    oAuthApplicationHeadlessServer: liferay-ticket-batch-object-entry-oauth-application-headless-server
+batch:
+    name: Batch
+    oAuthApplicationHeadlessServer: oauth
     type: batch
-liferay-ticket-batch-object-entry-oauth-application-headless-server:
+oauth:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Ticket Batch Object Entry OAuth Application Headless Server
+    name: Oauth
     scopes:
-        - C_J3Y7Ticket.everything
+        - C_FooModel.everything
         - Liferay.Headless.Batch.Engine.everything
     type: oAuthApplicationHeadlessServer

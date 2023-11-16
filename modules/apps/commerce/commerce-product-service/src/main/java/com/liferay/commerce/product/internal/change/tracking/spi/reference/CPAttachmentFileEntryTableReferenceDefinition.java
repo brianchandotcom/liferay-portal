@@ -59,6 +59,9 @@ public class CPAttachmentFileEntryTableReferenceDefinition
 						CPAttachmentFileEntry.class.getName())
 				)
 			)
+		).assetEntryReference(
+			CPAttachmentFileEntryTable.INSTANCE.CPAttachmentFileEntryId,
+			CPAttachmentFileEntry.class
 		);
 	}
 

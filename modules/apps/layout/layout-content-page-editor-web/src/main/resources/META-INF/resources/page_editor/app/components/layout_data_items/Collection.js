@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
@@ -287,6 +288,8 @@ const Collection = React.memo(
 
 		const numberOfItems = getNumberOfItems(collection, collectionConfig);
 
+		const isMounted = useIsMounted();
+
 		useEffect(() => {
 			if (
 				activePage > collectionConfig.numberOfPages &&
@@ -347,11 +350,14 @@ const Collection = React.memo(
 					.then((response) => {
 						const {itemSubtype, itemType, ...collection} = response;
 
-						setCollection(
-							!!collection.length && collection.items?.length > 0
-								? collection
-								: {...collection, ...emptyCollection}
-						);
+						if (isMounted()) {
+							setCollection(
+								!!collection.length &&
+									collection.items?.length > 0
+									? collection
+									: {...collection, ...emptyCollection}
+							);
+						}
 
 						// LPS-133832
 						// Update itemType/itemSubtype if the user changes the type of the collection
@@ -398,7 +404,9 @@ const Collection = React.memo(
 						}
 					})
 					.finally(() => {
-						setLoading(false);
+						if (isMounted()) {
+							setLoading(false);
+						}
 					});
 			}
 		}, [
@@ -410,6 +418,7 @@ const Collection = React.memo(
 			itemClassNameId,
 			itemClassPK,
 			itemExternalReferenceCode,
+			isMounted,
 			languageId,
 			segmentsExperienceId,
 		]);

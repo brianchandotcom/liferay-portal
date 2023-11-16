@@ -20,12 +20,6 @@ import org.json.JSONObject;
  */
 public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 
-	public BuildCompletedEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
-	}
-
 	@Override
 	public String process() throws InvalidJSONException {
 		BuildRunEntity buildRunEntity = getBuildRun();
@@ -72,6 +66,12 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 		updateJRPStatus(buildRunEntity, buildEntity, jobEntity, "completed");
 
 		return buildRunEntity.toString();
+	}
+
+	protected BuildCompletedEventHandler(
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
-import com.liferay.jethr0.event.EventJmsController;
+import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
@@ -58,8 +58,10 @@ public class JenkinsQueue {
 		update();
 	}
 
-	public void setEventJmsController(EventJmsController eventJmsController) {
-		_eventJmsController = eventJmsController;
+	public void setJenkinsEventProcessor(
+		JenkinsEventProcessor jenkinsEventProcessor) {
+
+		_jenkinsEventProcessor = jenkinsEventProcessor;
 	}
 
 	public void update() {
@@ -98,7 +100,7 @@ public class JenkinsQueue {
 						buildEntity, BuildRunEntity.State.QUEUED);
 				}
 
-				_eventJmsController.sendToJenkins(
+				_jenkinsEventProcessor.sendMessage(
 					String.valueOf(
 						buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)),
 					HashMapBuilder.put(
@@ -122,8 +124,8 @@ public class JenkinsQueue {
 	@Autowired
 	private BuildRunEntityRepository _buildRunEntityRepository;
 
-	private EventJmsController _eventJmsController;
 	private boolean _initialized;
+	private JenkinsEventProcessor _jenkinsEventProcessor;
 
 	@Autowired
 	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;

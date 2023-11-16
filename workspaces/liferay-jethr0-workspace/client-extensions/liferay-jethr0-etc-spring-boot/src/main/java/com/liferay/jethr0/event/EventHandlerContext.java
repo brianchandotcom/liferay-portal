@@ -9,6 +9,8 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
+import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
@@ -41,12 +43,12 @@ public class EventHandlerContext {
 		return _buildRunEntityRepository;
 	}
 
-	public EventJmsController getEventJmsController() {
-		return _eventJmsController;
-	}
-
 	public JenkinsCohortEntityRepository getJenkinsCohortEntityRepository() {
 		return _jenkinsCohortEntityRepository;
+	}
+
+	public JenkinsEventProcessor getJenkinsEventProcessor() {
+		return _jenkinsEventProcessor;
 	}
 
 	public JenkinsNodeEntityRepository getJenkinsNodeEntityRepository() {
@@ -65,12 +67,22 @@ public class EventHandlerContext {
 		return _jobEntityRepository;
 	}
 
+	public JRPEventProcessor getJRPEventProcessor() {
+		return _jrpEventProcessor;
+	}
+
 	public String getLiferayPortalURL() {
 		return _liferayPortalURL;
 	}
 
-	public void setEventJmsController(EventJmsController eventJmsController) {
-		_eventJmsController = eventJmsController;
+	public void setJenkinsEventProcessor(
+		JenkinsEventProcessor jenkinsEventProcessor) {
+
+		_jenkinsEventProcessor = jenkinsEventProcessor;
+	}
+
+	public void setJRPEventProcessor(JRPEventProcessor jrpEventProcessor) {
+		_jrpEventProcessor = jrpEventProcessor;
 	}
 
 	@Autowired
@@ -85,10 +97,10 @@ public class EventHandlerContext {
 	@Autowired
 	private BuildRunEntityRepository _buildRunEntityRepository;
 
-	private EventJmsController _eventJmsController;
-
 	@Autowired
 	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;
+
+	private JenkinsEventProcessor _jenkinsEventProcessor;
 
 	@Autowired
 	private JenkinsNodeEntityRepository _jenkinsNodeEntityRepository;
@@ -101,6 +113,8 @@ public class EventHandlerContext {
 
 	@Autowired
 	private JobEntityRepository _jobEntityRepository;
+
+	private JRPEventProcessor _jrpEventProcessor;
 
 	@Value(
 		"${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.main.domain}"

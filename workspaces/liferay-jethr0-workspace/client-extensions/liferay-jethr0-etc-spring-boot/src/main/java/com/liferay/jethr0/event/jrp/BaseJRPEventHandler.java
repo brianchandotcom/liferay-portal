@@ -20,8 +20,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseJRPEventHandler
-	extends BaseEventHandler implements JRPEventHandler {
+public abstract class BaseJRPEventHandler extends BaseEventHandler {
 
 	protected BaseJRPEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {

@@ -16,12 +16,6 @@ import org.json.JSONObject;
  */
 public class ComputerUpdateEventHandler extends BaseJenkinsEventHandler {
 
-	public ComputerUpdateEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
-	}
-
 	@Override
 	public String process() throws InvalidJSONException {
 		JenkinsQueue jenkinsQueue = getJenkinsQueue();
@@ -33,6 +27,12 @@ public class ComputerUpdateEventHandler extends BaseJenkinsEventHandler {
 		JenkinsNodeEntity jenkinsNodeEntity = updateJenkinsNodeEntity();
 
 		return jenkinsNodeEntity.toString();
+	}
+
+	protected ComputerUpdateEventHandler(
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

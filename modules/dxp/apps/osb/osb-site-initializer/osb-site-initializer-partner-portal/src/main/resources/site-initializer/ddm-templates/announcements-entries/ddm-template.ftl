@@ -51,17 +51,6 @@
 				</div>
 
 				<div class="col-auto d-flex mx-n2">
-					<@liferay_ui["user-portrait"]
-						size="sm"
-						userId=curEntry.getUserId()
-						userName=curEntry.getUserName()
-					/>
-
-					<div class="flex-wrap ml-2 mt-n1">
-						<div class="font-weight-semi-bold text-neutral-10 text-paragraph-xs">
-							${htmlUtil.escape(curEntry.getUserName())}
-						</div>
-
 						<div class="text-neutral-8 text-paragraph-xxs">
 							${dateUtil.getDate(curEntry.getPublishDate(), "MMM dd, yyyy", locale)}
 						</div>

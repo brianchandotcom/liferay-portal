@@ -5,7 +5,10 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v4_7_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
@@ -15,38 +18,20 @@ public class KBFolderUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("KBFolder", "status")) {
-			alterTableAddColumn("KBFolder", "status", "INTEGER");
+		runSQL(
+			StringBundler.concat(
+				"update KBFolder set status = ",
+				WorkflowConstants.STATUS_APPROVED, ", statusByUserId = userId",
+				", statusByUserName = userName, statusDate = modifiedDate"));
+	}
 
-			runSQL(
-				"update KBFolder set status = " +
-					WorkflowConstants.STATUS_APPROVED +
-						" where status is null");
-		}
-
-		if (!hasColumn("KBFolder", "statusByUserId")) {
-			alterTableAddColumn("KBFolder", "statusByUserId", "LONG");
-
-			runSQL(
-				"update KBFolder set statusByUserId = userId where " +
-					"statusByUserId is null");
-		}
-
-		if (!hasColumn("KBFolder", "statusByUserName")) {
-			alterTableAddColumn("KBFolder", "statusByUserName", "VARCHAR(75)");
-
-			runSQL(
-				"update KBFolder set statusByUserName = userName where " +
-					"statusByUserName is null");
-		}
-
-		if (!hasColumn("KBFolder", "statusDate")) {
-			alterTableAddColumn("KBFolder", "statusDate", "DATE");
-
-			runSQL(
-				"update KBFolder set statusDate = modifiedDate where " +
-					"statusDate is null");
-		}
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"KBFolder", "status INTEGER", "statusByUserId LONG",
+				"statusByUserName VARCHAR(75)", "statusDate DATE")
+		};
 	}
 
 }

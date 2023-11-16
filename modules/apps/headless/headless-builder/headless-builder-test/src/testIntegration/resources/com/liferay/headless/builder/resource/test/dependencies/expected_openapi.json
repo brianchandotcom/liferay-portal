@@ -33,6 +33,9 @@
 						"description": "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileBase64`)",
 						"type": "string"
 					},
+					"folder": {
+						"$ref": "#/components/schemas/Folder"
+					},
 					"id": {
 						"format": "int64",
 						"type": "integer"
@@ -52,6 +55,26 @@
 				"type": "object",
 				"xml": {
 					"name": "FileEntry"
+				}
+			},
+			"Folder": {
+				"properties": {
+					"externalReferenceCode": {
+						"type": "string"
+					},
+					"siteId": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.Folder",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"xml": {
+					"name": "Folder"
 				}
 			},
 			"Link": {

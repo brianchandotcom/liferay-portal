@@ -103,9 +103,11 @@ definition {
 		property custom.properties = "feature.flag.LPS-171364=true";
 
 		task ("Add 1 web content and 2 different publications") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "WC WebContent Title");
 
 			JSONPublications.addPublication(publicationName = "Publication 1 Name");
@@ -116,7 +118,7 @@ definition {
 		task ("Select Publication 2 and edit the title of the web content") {
 			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -171,14 +173,14 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Article",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Edited in Publication 2 Name",
 				changeType = "Added",
 				changeUser = "Test Test");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Translation",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Edited in Publication 2 Name",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -190,9 +192,11 @@ definition {
 		property custom.properties = "feature.flag.LPS-171364=true";
 
 		task ("Add 1 web content and 2 different publications") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "WC WebContent Title");
 
 			JSONPublications.addPublication(publicationName = "Publication 1 Name");
@@ -203,7 +207,7 @@ definition {
 		task ("Make an edit to the web content title in each publication") {
 			JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -213,7 +217,7 @@ definition {
 
 			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -244,14 +248,14 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Article",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title 2 Edit",
 				changeType = "Added",
 				changeUser = "Test Test");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Translation",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title 2 Edit",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -262,14 +266,14 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Article",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title 1 Edit",
 				changeType = "Added",
 				changeUser = "Test Test");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Translation",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title 1 Edit",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -290,7 +294,9 @@ definition {
 		task ("Under Publication 2, add a structure, template, and web content utilizing that structure") {
 			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			NavItem.gotoStructures();
 
@@ -302,7 +308,7 @@ definition {
 
 			WebContentStructures.saveCP(structureName = "Test Structure Name");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			NavItem.gotoTemplates();
 
@@ -312,7 +318,7 @@ definition {
 				templateFieldNames = "Text",
 				templateName = "Test Template Name");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure Name");
 

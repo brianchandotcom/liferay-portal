@@ -156,7 +156,7 @@ public class KnowledgeBaseUtil {
 
 		List<KBFolder> kbFolders = kbFolder.getAncestorKBFolders();
 
-		StringBundler sb = new StringBundler((kbFolders.size() * 3) + 5);
+		StringBundler sb = new StringBundler((kbFolders.size() * 4) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
@@ -167,6 +167,7 @@ public class KnowledgeBaseUtil {
 			sb.append(StringPool.RAQUO_CHAR);
 			sb.append(StringPool.SPACE);
 			sb.append(currrentKBFolder.getName());
+			sb.append(StringPool.SPACE);
 		}
 
 		sb.append(StringPool.RAQUO_CHAR);

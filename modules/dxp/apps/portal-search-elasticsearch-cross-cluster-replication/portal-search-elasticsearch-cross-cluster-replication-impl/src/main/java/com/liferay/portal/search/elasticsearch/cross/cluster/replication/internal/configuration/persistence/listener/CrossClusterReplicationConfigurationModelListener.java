@@ -10,6 +10,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -324,6 +326,18 @@ public class CrossClusterReplicationConfigurationModelListener
 				properties);
 		}
 
+		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
+
+		if ((localClusterNode == null) &&
+			(ccrLocalClusterConnectionConfigurations.length > 1)) {
+
+			throw new ConfigurationModelListenerException(
+				_getMessage(
+					"please-set-only-one-config-when-liferay-is-not-clustered"),
+				CrossClusterReplicationConfiguration.class, getClass(),
+				properties);
+		}
+
 		List<String> connectionIds = TransformUtil.transform(
 			_searchEngineInformation.getConnectionInformationList(),
 			connectionInformation -> connectionInformation.getConnectionId());
@@ -354,6 +368,9 @@ public class CrossClusterReplicationConfigurationModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CrossClusterReplicationConfigurationModelListener.class);
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private SearchEngineInformation _searchEngineInformation;

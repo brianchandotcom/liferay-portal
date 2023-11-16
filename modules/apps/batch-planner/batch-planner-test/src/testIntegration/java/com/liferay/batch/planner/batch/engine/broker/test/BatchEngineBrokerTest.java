@@ -205,29 +205,19 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getGroupId(), _objectDefinition1,
 			TestPropsValues.getUserId());
 
+		_addObjectEntryInDifferentCompany("TestObjectCSV");
+
 		try (FileInputStream fileInputStream = new FileInputStream(
 				_prepareCSVFile(
 					objectEntry.getCreateDate(), "object_entry.csv",
 					objectEntry.getObjectEntryId(),
 					objectEntry.getModifiedDate()))) {
 
-			_company2 = _addCompany("test.com");
-
-			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
-
-			_objectDefinition2 = _publishObjectDefinition(
-				_company2.getCompanyId(), "TestObjectCSV",
-				ObjectDefinitionConstants.SCOPE_COMPANY, user);
-
-			_addObjectEntry(
-				_company2.getCompanyId(), RandomTestUtil.randomString(),
-				_company2.getGroupId(), _objectDefinition2, user.getUserId());
-
 			_assertEqualsExportCSV(
 				_getExportInputStream(
 					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 					_objectEntryExportCSVFieldNames,
-					"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
 					"C_TestObjectCSV"),
 				fileInputStream, objectEntry.getExternalReferenceCode(),
 				_objectEntryExportCSVFieldNames);
@@ -245,38 +235,7 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getGroupId(), _objectDefinition1,
 			TestPropsValues.getUserId());
 
-		_company2 = _addCompany("test.com");
-
-		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
-
-		_objectDefinition2 = _publishObjectDefinition(
-			_company2.getCompanyId(), "TestObject",
-			ObjectDefinitionConstants.SCOPE_COMPANY, user);
-
-		_addObjectEntry(
-			_company2.getCompanyId(), RandomTestUtil.randomString(),
-			_company2.getGroupId(), _objectDefinition2, user.getUserId());
-
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(), true,
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, StringPool.SLASH,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				RandomTestUtil.randomString(), 0, "C_TestObject", false);
-
-		for (String fieldName : _objectEntryExportFieldNames) {
-			_batchPlannerMappingLocalService.addBatchPlannerMapping(
-				TestPropsValues.getUserId(),
-				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
-				fieldName, "String", StringPool.BLANK);
-		}
-
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
-
-		BatchEngineExportTask batchEngineExportTask =
-			_getFinishedBatchEngineExportTask(
-				batchPlannerPlan.getBatchPlannerPlanId(),
-				TestPropsValues.getCompanyId());
+		_addObjectEntryInDifferentCompany("TestObject");
 
 		_objectMapper.setFilterProvider(
 			new SimpleFilterProvider() {
@@ -288,19 +247,18 @@ public class BatchEngineBrokerTest {
 				}
 			});
 
-		JsonNode expectedJsonNode = _getExpectedJsonNode(
-			_objectDefinition1, objectEntry1.getObjectEntryId());
-
-		JsonNode jsonNode = _objectMapper.readTree(
-			_getZipInputStream(
-				_batchEngineExportTaskLocalService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId())));
-
-		Assert.assertTrue(jsonNode.isArray());
-		Assert.assertEquals(1, jsonNode.size());
-
 		_assertEqualsExport(
-			expectedJsonNode, _objectEntryExportFieldNames, jsonNode.get(0));
+			_getExpectedJsonNode(
+				_objectDefinition1, objectEntry1.getObjectEntryId()),
+			_objectEntryExportFieldNames,
+			_getActualJsonNode(
+				_objectMapper.readTree(
+					_getZipInputStream(
+						_getExportInputStream(
+							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+							_objectEntryExportFieldNames,
+							"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+							false, "C_TestObject")))));
 	}
 
 	@Test
@@ -318,7 +276,7 @@ public class BatchEngineBrokerTest {
 					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 					_objectDefinitionExportCSVFieldNames,
 					"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-					null),
+					false, null),
 				fileInputStream, _objectDefinition1.getExternalReferenceCode(),
 				_objectDefinitionExportCSVFieldNames);
 		}
@@ -350,7 +308,7 @@ public class BatchEngineBrokerTest {
 							_objectDefinitionExportFieldNames,
 							"com.liferay.object.admin.rest.dto.v1_0." +
 								"ObjectDefinition",
-							null))),
+							false, null))),
 				_objectDefinition1.getShortName()));
 	}
 
@@ -380,7 +338,7 @@ public class BatchEngineBrokerTest {
 				_getExportInputStream(
 					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 					_objectEntryExportCSVFieldNames,
-					"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
 					"C_TestObjectCSV"),
 				fileInputStream, objectEntry.getExternalReferenceCode(),
 				_objectEntryExportCSVFieldNames);
@@ -403,32 +361,6 @@ public class BatchEngineBrokerTest {
 			_group.getGroupId(), _objectDefinition1,
 			TestPropsValues.getUserId());
 
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(), true,
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, StringPool.SLASH,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				RandomTestUtil.randomString(), 0, "C_TestObject", false);
-
-		for (String fieldName : _objectEntryExportFieldNames) {
-			_batchPlannerMappingLocalService.addBatchPlannerMapping(
-				TestPropsValues.getUserId(),
-				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
-				fieldName, "String", StringPool.BLANK);
-		}
-
-		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
-			TestPropsValues.getUserId(),
-			batchPlannerPlan.getBatchPlannerPlanId(), "siteId",
-			String.valueOf(TestPropsValues.getGroupId()));
-
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
-
-		BatchEngineExportTask batchEngineExportTask =
-			_getFinishedBatchEngineExportTask(
-				batchPlannerPlan.getBatchPlannerPlanId(),
-				TestPropsValues.getCompanyId());
-
 		_objectMapper.setFilterProvider(
 			new SimpleFilterProvider() {
 				{
@@ -439,19 +371,18 @@ public class BatchEngineBrokerTest {
 				}
 			});
 
-		JsonNode expectedJsonNode = _getExpectedJsonNode(
-			_objectDefinition1, objectEntry1.getObjectEntryId());
-
-		JsonNode jsonNode = _objectMapper.readTree(
-			_getZipInputStream(
-				_batchEngineExportTaskLocalService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId())));
-
-		Assert.assertTrue(jsonNode.isArray());
-		Assert.assertEquals(1, jsonNode.size());
-
 		_assertEqualsExport(
-			expectedJsonNode, _objectEntryExportFieldNames, jsonNode.get(0));
+			_getExpectedJsonNode(
+				_objectDefinition1, objectEntry1.getObjectEntryId()),
+			_objectEntryExportFieldNames,
+			_getActualJsonNode(
+				_objectMapper.readTree(
+					_getZipInputStream(
+						_getExportInputStream(
+							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+							_objectEntryExportFieldNames,
+							"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+							true, "C_TestObject")))));
 	}
 
 	@Test
@@ -707,6 +638,22 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
+	private void _addObjectEntryInDifferentCompany(String name)
+		throws Exception {
+
+		_company2 = _addCompany("test.com");
+
+		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
+
+		_objectDefinition2 = _publishObjectDefinition(
+			_company2.getCompanyId(), name,
+			ObjectDefinitionConstants.SCOPE_COMPANY, user);
+
+		_addObjectEntry(
+			_company2.getCompanyId(), RandomTestUtil.randomString(),
+			_company2.getGroupId(), _objectDefinition2, user.getUserId());
+	}
+
 	private void _assertActions(JsonNode fieldJsonNode, String fieldName) {
 		JsonNode jsonNode = fieldJsonNode.get(fieldName);
 
@@ -903,6 +850,13 @@ public class BatchEngineBrokerTest {
 		return objectViewSortColumn;
 	}
 
+	private JsonNode _getActualJsonNode(JsonNode arrayJsonNode) {
+		Assert.assertTrue(arrayJsonNode.isArray());
+		Assert.assertEquals(1, arrayJsonNode.size());
+
+		return arrayJsonNode.get(0);
+	}
+
 	private JsonNode _getActualJsonNode(JsonNode arrayJsonNode, String name) {
 		for (JsonNode jsonNode : arrayJsonNode) {
 			JsonNode nameJsonNode = jsonNode.get("name");
@@ -956,7 +910,8 @@ public class BatchEngineBrokerTest {
 
 	private InputStream _getExportInputStream(
 			String externalType, List<String> fieldNames,
-			String internalClassName, String taskItemDelegateName)
+			String internalClassName, boolean siteScope,
+			String taskItemDelegateName)
 		throws Exception {
 
 		BatchPlannerPlan batchPlannerPlan =
@@ -970,6 +925,13 @@ public class BatchEngineBrokerTest {
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
 				fieldName, "String", StringPool.BLANK);
+		}
+
+		if (siteScope) {
+			_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), "siteId",
+				String.valueOf(TestPropsValues.getGroupId()));
 		}
 
 		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());

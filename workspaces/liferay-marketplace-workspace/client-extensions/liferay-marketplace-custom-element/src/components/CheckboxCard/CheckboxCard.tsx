@@ -27,27 +27,20 @@ export function CheckboxCard({
 	tooltip,
 }: CheckboxProps) {
 	return (
-		<>
-			<div
-				className={classNames('checkbox-container d-flex p-3 rounded', {
-					'checkbox-container-checked': checked,
-				})}
-			>
-				<ClayCheckbox
-					checked={checked}
-					onChange={() => onChange(label)}
-				/>
-				<div className="mx-2">
-					<h4>{label}</h4>
-					<p className="checkbox-container-description">
-						{description}
-					</p>
-				</div>
-
-				<div className="radio-card-title-tooltip">
-					<Tooltip tooltip={tooltip} />
-				</div>
+		<div
+			className={classNames('checkbox-container d-flex p-3 rounded', {
+				'checkbox-container-checked': checked,
+			})}
+		>
+			<ClayCheckbox checked={checked} onChange={() => onChange(label)} />
+			<div className="mx-2">
+				<h4>{label}</h4>
+				<p className="checkbox-container-description">{description}</p>
 			</div>
-		</>
+
+			<div className="radio-card-title-tooltip">
+				<Tooltip tooltip={tooltip} />
+			</div>
+		</div>
 	);
 }

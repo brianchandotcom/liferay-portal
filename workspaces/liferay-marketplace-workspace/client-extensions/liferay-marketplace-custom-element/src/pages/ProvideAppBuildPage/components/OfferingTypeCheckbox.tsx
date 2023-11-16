@@ -4,6 +4,7 @@
  */
 
 import {CheckboxCard} from '../../../components/CheckboxCard/CheckboxCard';
+
 interface OfferingTypeCheckboxProps {
 	handleSelectCheckbox: (label: string) => void;
 	offeringTypes: OfferingType[];
@@ -16,7 +17,7 @@ export default function OfferingTypeCheckbox({
 	selectedValue,
 }: OfferingTypeCheckboxProps) {
 	return (
-		<div className="provide-app-build-page-app-build-checkbox-container">
+		<>
 			{offeringTypes?.map((type) => (
 				<CheckboxCard
 					checked={selectedValue.includes(type?.label)}
@@ -26,6 +27,6 @@ export default function OfferingTypeCheckbox({
 					onChange={handleSelectCheckbox}
 				/>
 			))}
-		</div>
+		</>
 	);
 }

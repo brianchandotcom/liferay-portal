@@ -152,8 +152,9 @@ export function ProvideAppBuildPage({
 				vocabId: marketplaceLiferayPlatformOfferingId,
 			});
 
-			const fullyManagedOption = platformOfferingList.filter((item) =>
-				selectedCheckboxValue.includes(item.name)
+			const fullyManagedOption = platformOfferingList.filter(
+				(platformOffering) =>
+					selectedCheckboxValue.includes(platformOffering.name)
 			);
 
 			if (fullyManagedOption) {
@@ -287,13 +288,15 @@ export function ProvideAppBuildPage({
 				tooltip="Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested."
 				tooltipText="More Info"
 			>
-				<OfferingTypeCheckbox
-					handleSelectCheckbox={handleSelectCheckbox}
-					offeringTypes={
-						offeringTypesDescription[String(appType.value)]
-					}
-					selectedValue={selectedCheckboxValue}
-				/>
+				<div className="provide-app-build-page-app-build-checkbox-container">
+					<OfferingTypeCheckbox
+						handleSelectCheckbox={handleSelectCheckbox}
+						offeringTypes={
+							offeringTypesDescription[String(appType.value)]
+						}
+						selectedValue={selectedCheckboxValue}
+					/>
+				</div>
 			</Section>
 
 			<Section

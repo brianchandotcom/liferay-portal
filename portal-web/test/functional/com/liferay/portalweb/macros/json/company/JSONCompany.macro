@@ -126,8 +126,12 @@ definition {
 			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
+		if (isSet(specificURL)) {
+			var domain = ${specificURL};
+		}
+
 		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = JSONUtil2.getDefaultUserEmail();
+			var creatorEmailAddress = JSONUtil2.getDefaultUserEmail(domain = ${domain});
 		}
 
 		if (!(isSet(creatorPassword))) {

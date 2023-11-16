@@ -241,7 +241,8 @@ definition {
 		if (isSet(noSelenium)) {
 			var companyId = JSONCompany.getCompanyIdNoSelenium(
 				portalInstanceName = ${portalInstanceName},
-				portalURL = ${portalURL});
+				portalURL = ${portalURL},
+				specificURL = ${specificURL});
 		}
 		else {
 			var companyId = JSONCompany.getCompanyId(

@@ -3982,7 +3982,6 @@ components:
                     # @review
                     description:
                         The page rule ID.
-                    readOnly: true
                     type: string
                 name:
                     # @review
@@ -4018,7 +4017,6 @@ components:
                     # @review
                     description:
                         The page rule action's ID.
-                    readOnly: true
                     type: string
                 itemId:
                     # @review
@@ -4045,7 +4043,6 @@ components:
                     # @review
                     description:
                         The page rule condition's ID.
-                    readOnly: true
                     type: string
                 type:
                     # @review

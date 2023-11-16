@@ -208,7 +208,6 @@ public class AdminPortlet extends BaseKBPortlet {
 				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_ARTICLE, parentKBArticle);
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER, parentKBFolder);
-			renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 			KBTemplate kbTemplate = null;
 
@@ -221,7 +220,9 @@ public class AdminPortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE, kbTemplate);
+
 			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
+			renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 		}
 		catch (NoSuchArticleException | NoSuchFolderException |
 			   NoSuchTemplateException | PrincipalException exception) {

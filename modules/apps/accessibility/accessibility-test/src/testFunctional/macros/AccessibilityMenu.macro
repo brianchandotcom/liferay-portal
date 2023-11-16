@@ -60,7 +60,9 @@ definition {
 
 	@summary = "It asserts that the user can access the Accessibility Menu modal by the user's profile menu."
 	macro assertCanAccessAccessibilityMenuModalByTheUserProfileMenu() {
-		AccessibilityMenu.OpenUserProfileMenu();
+		Navigator.openURL();
+
+		UserBar.gotoDropdown();
 
 		ClickNoError(
 			key_dropdownItem = "Accessibility Menu",
@@ -89,7 +91,9 @@ definition {
 
 	@summary = "It asserts that the user cannot access the Accessibility Menu by the user's profile menu."
 	macro assertCannotAccessAccessibilityMenuModalByTheUserProfileMenu() {
-		AccessibilityMenu.OpenUserProfileMenu();
+		Navigator.openURL();
+
+		UserBar.gotoDropdown();
 
 		AssertElementNotPresent(
 			key_modal_title = "Accessibility Menu",
@@ -171,13 +175,6 @@ definition {
 			key_link = "Open Accessibility Menu",
 			locator1 = "AccessibilityMenu#QUICK_LINK",
 			value1 = "\ENTER");
-	}
-
-	@summary = "It the user's profile menu."
-	macro OpenUserProfileMenu() {
-		Navigator.openURL();
-
-		UserBar.gotoDropdown();
 	}
 
 	@summary = "It resets the Accessibility Menu option to its default options."

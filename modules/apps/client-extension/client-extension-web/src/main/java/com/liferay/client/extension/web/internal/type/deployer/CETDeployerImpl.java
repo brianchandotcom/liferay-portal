@@ -8,6 +8,7 @@ package com.liferay.client.extension.web.internal.type.deployer;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CustomElementCET;
+import com.liferay.client.extension.type.EditorConfigurationCET;
 import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.client.extension.type.JSImportMapsEntryCET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
@@ -17,10 +18,13 @@ import com.liferay.client.extension.web.internal.portlet.CETPortletFriendlyURLMa
 import com.liferay.client.extension.web.internal.portlet.CustomElementCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.IFrameCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.CETPortletConfigurationAction;
+import com.liferay.client.extension.web.internal.portlet.editor.config.contributor.CETEditorConfigContributor;
+import com.liferay.client.extension.web.internal.util.CETUtil;
 import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -54,6 +58,12 @@ public class CETDeployerImpl implements CETDeployer {
 				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
 
 			return _deploy((CustomElementCET)cet);
+		}
+		else if (Objects.equals(
+					cet.getType(),
+					ClientExtensionEntryConstants.TYPE_EDITOR_CONFIGURATION)) {
+
+			return _deploy((EditorConfigurationCET)cet);
 		}
 		else if (Objects.equals(
 					cet.getType(), ClientExtensionEntryConstants.TYPE_IFRAME)) {
@@ -107,6 +117,19 @@ public class CETDeployerImpl implements CETDeployer {
 					customElementCET, _npmResolver, portletId)));
 
 		return serviceRegistrations;
+	}
+
+	private List<ServiceRegistration<?>> _deploy(
+		EditorConfigurationCET editorConfigurationCET) {
+
+		return Arrays.asList(
+			_register(
+				EditorConfigContributor.class,
+				new CETEditorConfigContributor(
+					editorConfigurationCET.getEditorConfigKeys(),
+					editorConfigurationCET.getEditorNames(),
+					editorConfigurationCET.getPortletNames(),
+					editorConfigurationCET.getURL())));
 	}
 
 	private List<ServiceRegistration<?>> _deploy(IFrameCET iFrameCET) {

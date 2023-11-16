@@ -43,15 +43,9 @@ definition {
 		task ("Open Page Audit panel and assert the progress bar") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			TestUtils.hardRefresh();
-
-			WaitForPageLoad();
-
 			PageAudit.openPageAuditSidebar();
 
-			Click(
-				key_text = "reload",
-				locator1 = "Icon#ANY");
+			Button.click(button = "Launch Page Audit");
 
 			AssertVisible(locator1 = "PageAudit#PROGRESS_BAR");
 		}

@@ -12,6 +12,9 @@ public class ClientExtensionEntryConstants {
 
 	public static final String TYPE_CUSTOM_ELEMENT = "customElement";
 
+	public static final String TYPE_EDITOR_CONFIGURATION =
+		"editorConfiguration";
+
 	public static final String TYPE_FDS_CELL_RENDERER = "fdsCellRenderer";
 
 	public static final String TYPE_FDS_FILTER = "fdsFilter";

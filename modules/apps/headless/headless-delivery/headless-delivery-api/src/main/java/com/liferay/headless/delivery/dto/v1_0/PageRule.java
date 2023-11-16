@@ -114,7 +114,7 @@ public class PageRule implements Serializable {
 	}
 
 	@GraphQLField(description = "The page rule ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
 	@Schema(description = "The custom name of a Page rule.")

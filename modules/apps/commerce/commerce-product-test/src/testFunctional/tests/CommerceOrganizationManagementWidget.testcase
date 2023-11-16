@@ -1218,6 +1218,99 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12875. As a user, I can delete another user definetely from Organization Management Chart."
+	@priority = 5
+	test CanUserDeleteAnotherUserFromOrganizationManagementChart {
+		property portal.acceptance = "true";
+
+		task ("Given a second account with a new user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "new@liferay.com",
+				userFirstName = "New",
+				userLastName = "User",
+				userScreenName = "newuser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an organization is created and the accounts are linked to it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Org 1",
+				organizationSite = "false");
+
+			for (var accountNameList : list "Commerce Account,Commerce Account 2") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = ${accountNameList},
+					organizationName = "Org 1");
+			}
+		}
+
+		task ("And the user is given a Regular role and required permissions are given to that role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Organization",
+				roleTitle = "Power User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+				roleTitle = "Power User");
+
+			for (var resourceActionList : list "MANAGE_USERS,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceActionList},
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Power User");
+			}
+
+			for (var resourceAction : list "DELETE,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.portal.kernel.model.User",
+					roleTitle = "Power User");
+			}
+		}
+
+		task ("When the user navigates to the widget page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+		}
+
+		task ("And deletes the user from Organization Management Chart") {
+			CommerceWidget.deleteEntryFromOrganizationManagement(entryName = "New User");
+		}
+
+		task ("Then the account will be deleted definetely both from Organization Management Chart and from Users and Organizations Page") {
+			CommerceWidget.clearOrganizationManagementWidgetSearchBar();
+
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "New User");
+
+			AssertElementNotPresent(
+				key_columnOption = "New User",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			User.openUsersAdmin();
+
+			LexiconEntry.viewNoEntry(rowEntry = "New User");
+		}
+	}
+
 	@description = "COMMERCE-12824. As a user, I can edit account details from Organization Management Chart."
 	@priority = 5
 	test CanUserEditAccountDetailsFromOrganizationManagementChart {
@@ -1292,6 +1385,125 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12874. As a user, I can edit user information from Organization Management Chart."
+	@priority = 5
+	test CanUserEditUserInformationFromOrganizationManagementChart {
+		property portal.acceptance = "true";
+
+		task ("Given a second account with a new user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "new@liferay.com",
+				userFirstName = "New",
+				userLastName = "User",
+				userScreenName = "newuser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an organization is created and the accounts are linked to it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Org 1",
+				organizationSite = "false");
+
+			for (var accountNameList : list "Commerce Account,Commerce Account 2") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = ${accountNameList},
+					organizationName = "Org 1");
+			}
+		}
+
+		task ("And the user is given a Regular role and required permissions are given to that role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var resourceNameList : list "com.liferay.account.model.AccountEntry,com.liferay.portal.kernel.model.Organization") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW",
+					resourceName = ${resourceNameList},
+					roleTitle = "Power User");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_USERS",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Power User");
+
+			for (var resourceAction : list "DELETE,UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.portal.kernel.model.User",
+					roleTitle = "Power User");
+			}
+		}
+
+		task ("When the user navigates to the widget page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+		}
+
+		task ("Then can view current account details") {
+			CommerceWidget.viewUserInformationAtSidebar(
+				userBirthday = "02/01/1970",
+				userEmailAddress = "new@liferay.com",
+				userFirstName = "New",
+				userImage = "Default",
+				userJobTitle = "-",
+				userLanguage = "English (United States)",
+				userLastName = "User",
+				userMiddleName = "-",
+				userName = "New User",
+				userPrefix = "-",
+				userScreenName = "newuser",
+				userSuffix = "-",
+				viewCurrentInfo = "true");
+		}
+
+		task ("When the user edits user information from Organization Management Chart") {
+			CommerceWidget.editUserInformationFromOrganizationManagement(
+				userBirthday = "true",
+				userEmailAddress = "new1@liferay.com",
+				userFirstName = "New1",
+				userImage = "Commerce_Blue.jpg",
+				userJobTitle = "Account Manager",
+				userLanguage = "Portuguese (Brazil)",
+				userLastName = "User1",
+				userMiddleName = "Test",
+				userPrefix = "Mr",
+				userScreenName = "newtestuser1",
+				userSuffix = "Jr",
+				valueDay = 10,
+				valueMonth = "March",
+				valueYear = 1998);
+		}
+
+		task ("Then the edited fields are saved and shown correctly") {
+			CommerceWidget.viewUserInformationAtSidebar(
+				userBirthday = "03/10/1998",
+				userEmailAddress = "new1@liferay.com",
+				userFirstName = "New1",
+				userImage = "Custom Image",
+				userJobTitle = "Account Manager",
+				userLanguage = "Portuguese (Brazil)",
+				userLastName = "User1",
+				userMiddleName = "Test",
+				userName = "New1 Test User1",
+				userPrefix = "Mr",
+				userScreenName = "newtestuser1",
+				userSuffix = "Jr");
+		}
+	}
+
 	@description = "COMMERCE-12826 . As a user, I can remove account from the organization in Organization Management Chart."
 	@priority = 4
 	test CanUserRemoveAccountFromOrganization {
@@ -1354,6 +1566,105 @@ definition {
 			AssertElementPresent(
 				key_searchResults = "0 Result for Commerce Account",
 				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+		}
+	}
+
+	@description = "COMMERCE-12876. As a user, I can remove user from the account in Organization Management Chart."
+	@priority = 4
+	test CanUserRemoveAnotherUserFromAccountInOrganizationManagementChart {
+		property portal.acceptance = "false";
+
+		task ("Given a second account with a new user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "new@liferay.com",
+				userFirstName = "New",
+				userLastName = "User",
+				userScreenName = "newuser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an organization is created and the accounts are linked to it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Org 1",
+				organizationSite = "false");
+
+			for (var accountNameList : list "Commerce Account,Commerce Account 2") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = ${accountNameList},
+					organizationName = "Org 1");
+			}
+		}
+
+		task ("And the user is given a Regular role and required permissions are given to that role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var resourceNameList : list "com.liferay.account.model.AccountEntry,com.liferay.portal.kernel.model.Organization") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW",
+					resourceName = ${resourceNameList},
+					roleTitle = "Power User");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+				roleTitle = "Power User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_USERS",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Power User");
+
+			for (var resourceAction : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.portal.kernel.model.User",
+					roleTitle = "Power User");
+			}
+		}
+
+		task ("When the user navigates to the widget page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+		}
+
+		task ("And removes the user from the account in Organization Management Chart") {
+			CommerceWidget.removeUserFromAccount(
+				accountName = "Commerce Account 2",
+				userName = "New User");
+		}
+
+		task ("Then the user will be removed from the account") {
+			CommerceWidget.clearOrganizationManagementWidgetSearchBar();
+
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = "New User");
+
+			AssertElementNotPresent(
+				key_entry = "New User",
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
+
+			AssertElementPresent(
+				key_searchResults = "0 Result for New User",
+				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+		}
+
+		task ("But the user is not deleted definetely from the system") {
+			User.openUsersAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "New User");
 		}
 	}
 
@@ -1430,6 +1741,105 @@ definition {
 
 			Click(
 				key_nodeName = "Commerce Account",
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+			for (var menuItem : list "Edit,Delete,Remove,View") {
+				AssertElementPresent(
+					key_menuItem = ${menuItem},
+					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12873. As a user, I can view options as Edit, Delete, Remove, View for user in Organization Management Chart if the necessary permissions are given."
+	@priority = 5
+	test CanUserViewActionOptionsForUserInOrganizationManagementChart {
+		property portal.acceptance = "true";
+
+		task ("Given a second account with a new user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "new@liferay.com",
+				userFirstName = "New",
+				userLastName = "User",
+				userScreenName = "newuser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an organization is created and the accounts are linked to it") {
+			JSONOrganization.addOrganization(
+				organizationName = "Org 1",
+				organizationSite = "false");
+
+			for (var accountNameList : list "Commerce Account,Commerce Account 2") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = ${accountNameList},
+					organizationName = "Org 1");
+			}
+		}
+
+		task ("And the buyer user is given a Regular role and View permissions are given to that role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var resourceNameList : list "com.liferay.account.model.AccountEntry,com.liferay.portal.kernel.model.Organization,com.liferay.portal.kernel.model.User") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW",
+					resourceName = ${resourceNameList},
+					roleTitle = "Power User");
+			}
+		}
+
+		task ("When the buyer user navigates to the widget page clicking the new user's ellipsis") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = "New User");
+
+			Click(
+				key_nodeName = "New User",
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+		}
+
+		task ("Then can verify Edit, Delete and Remove options are not shown to the user without permissions, only View option is shown") {
+			for (var menuItem : list "Edit,Delete,Remove") {
+				AssertElementNotPresent(
+					key_menuItem = ${menuItem},
+					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			}
+
+			AssertElementPresent(
+				key_menuItem = "View",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("When the necessary permissions are given to the user (User > View, Update, Delete)") {
+			for (var resourceAction : list "DELETE,UPDATE,VIEW,") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.portal.kernel.model.User",
+					roleTitle = "Power User");
+			}
+
+			Refresh();
+		}
+
+		task ("Then can verify Edit, Delete, Remove and View options are shown") {
+			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = "New User");
+
+			Click(
+				key_nodeName = "New User",
 				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
 
 			for (var menuItem : list "Edit,Delete,Remove,View") {

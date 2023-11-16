@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.fragment.model.FragmentEntry;
@@ -97,19 +98,24 @@ public class FragmentEntryLinkStagedModelDataHandler
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId());
 
-		if ((fragmentEntry != null) &&
-			(fragmentEntry.getGroupId() != fragmentEntryLink.getGroupId())) {
+		if (fragmentEntry != null) {
+			if (fragmentEntry.getGroupId() != fragmentEntryLink.getGroupId()) {
+				Group group = _groupLocalService.fetchGroup(
+					fragmentEntry.getGroupId());
 
-			Group group = _groupLocalService.fetchGroup(
-				fragmentEntry.getGroupId());
+				if (group != null) {
+					fragmentEntryLinkElement.addAttribute(
+						"fragment-entry-group-key", group.getGroupKey());
+				}
 
-			if (group != null) {
 				fragmentEntryLinkElement.addAttribute(
-					"fragment-entry-group-key", group.getGroupKey());
+					"fragment-entry-key", fragmentEntry.getFragmentEntryKey());
 			}
-
-			fragmentEntryLinkElement.addAttribute(
-				"fragment-entry-key", fragmentEntry.getFragmentEntryKey());
+			else {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, fragmentEntryLink, fragmentEntry,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
 		}
 
 		portletDataContext.addClassedModel(

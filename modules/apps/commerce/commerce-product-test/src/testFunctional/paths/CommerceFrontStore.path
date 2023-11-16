@@ -236,6 +236,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_OPTION_VALUE</td>
+	<td>//div/label[text()='${key_optionName}']/..//select/option[@value][text()='${key_optionValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_OPTION_VALUE_POSITION</td>
 	<td>//div/label[text()='${key_optionName}']/..//select/option[@value][${key_index}][text()='${key_optionValue}']</td>
 	<td></td>

@@ -51,6 +51,8 @@ definition {
 	@description = "This is a test for LPS-170205. The page designer can map Rich Text Input fragment to Rich Text field."
 	@priority = 5
 	test MapRichTextInputFragmentToRichTextField {
+		property portal.acceptance = "true";
+
 		task ("Given a pages designer has a Form Container on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

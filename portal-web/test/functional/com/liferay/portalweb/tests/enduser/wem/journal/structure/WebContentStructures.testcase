@@ -275,6 +275,7 @@ definition {
 	@description = "This is a test for LPS-184255. A warning will be added to alert that all references to the structureKey must be changed accordingly."
 	@priority = 5
 	test EditStructureKey {
+		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -352,6 +353,7 @@ definition {
 	@description = "This is a test for LPS-184255. Verify that the structure key has been changed after Override with the edited JSON file."
 	@priority = 5
 	test OverrideStructureKeyAfterImportStructure {
+		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -426,6 +428,8 @@ definition {
 	@description = "This is a test for LPS-156908. The web content designer could define an expiration date when edit default values for a new structure."
 	@priority = 5
 	test PredefineExpirationDateInCustomStructure {
+		property portal.acceptance = "true";
+
 		task ("Given the web content designer has a custom structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

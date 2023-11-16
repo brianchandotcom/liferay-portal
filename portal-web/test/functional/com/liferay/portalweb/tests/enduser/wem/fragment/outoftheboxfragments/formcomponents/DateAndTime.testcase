@@ -48,6 +48,8 @@ definition {
 	@description = "This is a test for LPS-191312. The page designer could map Date and Time field to Date and Time fragment."
 	@priority = 5
 	test MapDateAndTimeFragmentToDateAndTimeField {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a Form Container on a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},

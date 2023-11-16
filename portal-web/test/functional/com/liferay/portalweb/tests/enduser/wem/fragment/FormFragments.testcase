@@ -278,6 +278,7 @@ definition {
 	@priority = 5
 	test CannotSeeFormContainerAtViewAndPreviewModeAsUserWithoutViewPermissionForObject {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
 
 		task ("Given a user doesn't have view permission for custom object") {
 			ObjectAdmin.addObjectViaAPI(

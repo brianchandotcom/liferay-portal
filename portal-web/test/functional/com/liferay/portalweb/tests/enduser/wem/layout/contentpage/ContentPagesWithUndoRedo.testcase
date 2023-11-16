@@ -663,6 +663,8 @@ definition {
 	@priority = 5
 	@uitest
 	test UndoInteractionStatesHundredTimes {
+		property portal.acceptance = "true";
+
 		task ("Add a Tabs fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",

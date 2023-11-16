@@ -331,6 +331,8 @@ definition {
 	@description = "This is a test for LPS-169310. The tab selection of Add menu should be back to default in a new browser session."
 	@priority = 5
 	test PersistDefaultAddMenuTabSelectionInTheNewBrowserSession {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer selects the Content tab on the Add menu") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},

@@ -83,6 +83,8 @@ definition {
 	@description = "This is a test for LPS-194238. Filter is added to Locked pages with the scope pages in alphabetical order"
 	@priority = 5
 	test ViewOrderOfFilterByTypeOptions {
+		property portal.acceptance = "true";
+
 		var baseURL = PropsUtil.get("portal.url");
 
 		task ("Given a locked content pages") {
@@ -128,6 +130,8 @@ definition {
 	@description = "This is a test for LPS-194238. Sort is added to Locked Pages in alphabetical order."
 	@priority = 5
 	test ViewOrderOfOrderByOptions {
+		property portal.acceptance = "true";
+
 		var baseURL = PropsUtil.get("portal.url");
 
 		task ("Given a locked content page") {

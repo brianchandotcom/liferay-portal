@@ -308,6 +308,8 @@ definition {
 	@description = "This is a test for LPS-169877. The tag field can be used in a page template"
 	@priority = 5
 	test CanUseTagsInPageTemplate {
+		property portal.acceptance = "true";
+
 		var tagName1 = StringUtil.randomString(8);
 
 		var tagName1 = StringUtil.toLowerCase(${tagName1});
@@ -452,6 +454,8 @@ definition {
 	@description = "This is a test for LPS-169877. Both site and global tags are shown when the object scope is set to the site"
 	@priority = 5
 	test ViewAllTagsShownInObjectSiteScoped {
+		property portal.acceptance = "true";
+
 		var tagName1 = StringUtil.randomString(8);
 
 		var tagName1 = StringUtil.toLowerCase(${tagName1});
@@ -635,6 +639,8 @@ definition {
 	@description = "This is a test for LPS-169877. Only global tags are shown when the object scope is set to an instance"
 	@priority = 5
 	test ViewOnlyGlobalTagsShownInObjectInstanceScope {
+		property portal.acceptance = "true";
+
 		var tagName1 = StringUtil.randomString(8);
 
 		var tagName1 = StringUtil.toLowerCase(${tagName1});

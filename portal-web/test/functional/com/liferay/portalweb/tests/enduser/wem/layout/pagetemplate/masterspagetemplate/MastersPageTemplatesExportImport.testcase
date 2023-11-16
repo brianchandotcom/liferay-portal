@@ -693,6 +693,8 @@ definition {
 	@description = "This is a test for LPS-173150. Assert new import master page templates works."
 	@priority = 5
 	test UploadAnotherFile {
+		property portal.acceptance = "true";
+
 		task ("Given a user accesses to the Page Templates import page") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 

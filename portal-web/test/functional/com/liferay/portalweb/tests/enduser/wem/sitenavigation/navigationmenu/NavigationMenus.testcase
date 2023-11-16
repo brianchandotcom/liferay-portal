@@ -34,6 +34,8 @@ definition {
 	@description = "This is a test for LPS-172782. The navigation menu creator could add child item."
 	@priority = 5
 	test AddChildNavigationMenuItem {
+		property portal.acceptance = "true";
+
 		task ("Given a navigation menu creator has a navigation menu") {
 			JSONCategory.addVocabulary(
 				groupName = ${randomSiteName},
@@ -468,6 +470,8 @@ definition {
 	@description = "This is a test for LPS-172782. The navigation menu creator could add sibling item."
 	@priority = 5
 	test AddSiblingNavigationMenuItems {
+		property portal.acceptance = "true";
+
 		task ("Given a navigation menu creator has a navigation menu with an item") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},

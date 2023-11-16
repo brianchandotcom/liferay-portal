@@ -86,11 +86,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECTED_VALUE</td>
-	<td>//div[@class='option-selected']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TRIGGER</td>
 	<td>//div[contains(@class,'ddm-row')]//button[@role='combobox']</td>
 	<td></td>

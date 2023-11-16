@@ -1,0 +1,45 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Sites Administration";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+	}
+
+	@description = "This is a test for LPS-199455. The Select Template page should comply with WCAG 2.1 AA standard."
+	@priority = 3
+	test ViewAccessibilityOfSelectTemplate {
+		task ("Given a site administrator accesses to the sites admin") {
+			Site.openSitesAdmin();
+		}
+
+		task ("When the site administrator adds a new site") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the Select Template page should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//nav[contains(@class,'menubar')]");
+
+			AssertElementAccessible(locator1 = "//dl[contains(@class,'card-page')]");
+
+			AssertAttributeValue(
+				key_card = "Welcome",
+				locator1 = "Card#CARD_TITLE",
+				value1 = "aria-label",
+				value2 = "Select Template: Welcome");
+		}
+	}
+
+}

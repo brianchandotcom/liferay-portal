@@ -185,8 +185,9 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 									className='p-2'
 									date={dateRange}
 									displayLabel={false}
-									maxDate={moment().subtract(0, 'd')}
-									minDate={moment().subtract(1, 'years')}
+									maxDate={moment().subtract(1, 'days')}
+									maxRange={365}
+									minDate={moment().subtract(10, 'years')}
 									onSelect={({
 										end,
 										start

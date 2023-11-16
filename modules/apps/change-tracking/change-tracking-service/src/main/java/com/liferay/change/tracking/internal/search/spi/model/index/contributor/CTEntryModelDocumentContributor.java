@@ -198,10 +198,16 @@ public class CTEntryModelDocumentContributor
 			else if (modelAttributes.containsKey("plid")) {
 				long plid = (long)modelAttributes.get("plid");
 
-				Layout layout = _layoutLocalService.fetchLayout(plid);
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								ctCollectionId)) {
 
-				if (layout != null) {
-					groupId = layout.getGroupId();
+					Layout layout = _layoutLocalService.fetchLayout(plid);
+
+					if (layout != null) {
+						groupId = layout.getGroupId();
+					}
 				}
 			}
 		}

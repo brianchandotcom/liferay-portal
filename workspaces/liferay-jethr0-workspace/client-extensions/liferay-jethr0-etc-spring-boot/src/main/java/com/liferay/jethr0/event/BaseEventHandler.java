@@ -12,6 +12,8 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
+import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
@@ -53,12 +55,12 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getBuildRunRepository();
 	}
 
-	protected EventJmsController getEventJmsController() {
-		return _eventHandlerContext.getEventJmsController();
-	}
-
 	protected JenkinsCohortEntityRepository getJenkinsCohortEntityRepository() {
 		return _eventHandlerContext.getJenkinsCohortEntityRepository();
+	}
+
+	protected JenkinsEventProcessor getJenkinsEventProcessor() {
+		return _eventHandlerContext.getJenkinsEventProcessor();
 	}
 
 	protected JenkinsNodeEntityRepository getJenkinsNodeEntityRepository() {
@@ -75,6 +77,10 @@ public abstract class BaseEventHandler implements EventHandler {
 
 	protected JobEntityRepository getJobEntityRepository() {
 		return _eventHandlerContext.getJobEntityRepository();
+	}
+
+	protected JRPEventProcessor getJRPEventProcessor() {
+		return _eventHandlerContext.getJRPEventProcessor();
 	}
 
 	protected String getLiferayPortalURL() {
@@ -100,7 +106,7 @@ public abstract class BaseEventHandler implements EventHandler {
 			return;
 		}
 
-		EventJmsController eventJmsController = getEventJmsController();
+		JRPEventProcessor jrpEventProcessor = getJRPEventProcessor();
 
 		Map<String, String> messageProperties = HashMapBuilder.put(
 			"jenkinsBuildId", buildParameterEntity.getValue()
@@ -142,7 +148,7 @@ public abstract class BaseEventHandler implements EventHandler {
 
 		jsonObject.put("status", status);
 
-		eventJmsController.sendToJRP(jsonObject.toString(), messageProperties);
+		jrpEventProcessor.sendMessage(jsonObject.toString(), messageProperties);
 	}
 
 	private final EventHandlerContext _eventHandlerContext;

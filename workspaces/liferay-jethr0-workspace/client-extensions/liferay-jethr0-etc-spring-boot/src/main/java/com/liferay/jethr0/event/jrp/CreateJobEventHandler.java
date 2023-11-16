@@ -22,12 +22,6 @@ import org.json.JSONObject;
  */
 public class CreateJobEventHandler extends BaseJRPEventHandler {
 
-	public CreateJobEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
-	}
-
 	@Override
 	public String process() throws InvalidJSONException {
 		JSONObject jobJSONObject = getJobJSONObject();
@@ -101,6 +95,12 @@ public class CreateJobEventHandler extends BaseJRPEventHandler {
 		jobEntityRepository.update(jobEntity);
 
 		return jobEntity.toString();
+	}
+
+	protected CreateJobEventHandler(
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

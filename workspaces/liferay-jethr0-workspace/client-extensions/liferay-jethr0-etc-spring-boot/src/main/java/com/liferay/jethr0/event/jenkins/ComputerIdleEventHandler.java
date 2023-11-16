@@ -11,7 +11,6 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.event.EventHandlerContext;
-import com.liferay.jethr0.event.EventJmsController;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
@@ -23,12 +22,6 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
-
-	public ComputerIdleEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
-	}
 
 	@Override
 	public String process() throws InvalidJSONException {
@@ -62,9 +55,10 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 		BuildRunEntity buildRunEntity = buildRunEntityRepository.create(
 			buildEntity, BuildRunEntity.State.QUEUED);
 
-		EventJmsController eventJmsController = getEventJmsController();
+		JenkinsEventProcessor jenkinsEventProcessor =
+			getJenkinsEventProcessor();
 
-		eventJmsController.sendToJenkins(
+		jenkinsEventProcessor.sendMessage(
 			String.valueOf(
 				buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)),
 			HashMapBuilder.put(
@@ -88,6 +82,12 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 		buildRunEntityRepository.update(buildRunEntity);
 
 		return jenkinsNodeEntity.toString();
+	}
+
+	protected ComputerIdleEventHandler(
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

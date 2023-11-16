@@ -5,14 +5,16 @@
 
 package com.liferay.jethr0.event;
 
-import org.json.JSONObject;
+import java.util.Map;
 
 /**
  * @author Michael Hashimoto
  */
-public interface EventHandlerFactory {
+public interface EventProcessor {
 
-	public EventHandler newEventHandler(JSONObject messageJSONObject)
-		throws IllegalArgumentException;
+	public void receiveMessage(String message);
+
+	public void sendMessage(
+		String message, Map<String, String> messageProperties);
 
 }

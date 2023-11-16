@@ -20,12 +20,6 @@ import org.json.JSONObject;
  */
 public class CreateJenkinsCohortEventHandler extends BaseJRPEventHandler {
 
-	public CreateJenkinsCohortEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
-	}
-
 	@Override
 	public String process() throws InvalidJSONException {
 		JSONObject jenkinsCohortJSONObject = getJenkinsCohortJSONObject();
@@ -64,6 +58,12 @@ public class CreateJenkinsCohortEventHandler extends BaseJRPEventHandler {
 		jenkinsCohortEntityRepository.update(jenkinsCohortEntity);
 
 		return jenkinsCohortEntity.toString();
+	}
+
+	protected CreateJenkinsCohortEventHandler(
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

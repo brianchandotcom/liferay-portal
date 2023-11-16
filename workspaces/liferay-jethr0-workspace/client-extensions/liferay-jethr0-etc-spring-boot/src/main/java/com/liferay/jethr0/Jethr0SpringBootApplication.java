@@ -9,7 +9,8 @@ import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBo
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.entity.EntityInitializer;
 import com.liferay.jethr0.event.EventHandlerContext;
-import com.liferay.jethr0.event.EventJmsController;
+import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
+import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.queue.JobQueue;
 
@@ -42,8 +43,11 @@ public class Jethr0SpringBootApplication {
 		EventHandlerContext eventHandlerContext =
 			configurableApplicationContext.getBean(EventHandlerContext.class);
 
-		eventHandlerContext.setEventJmsController(
-			configurableApplicationContext.getBean(EventJmsController.class));
+		eventHandlerContext.setJenkinsEventProcessor(
+			configurableApplicationContext.getBean(
+				JenkinsEventProcessor.class));
+		eventHandlerContext.setJRPEventProcessor(
+			configurableApplicationContext.getBean(JRPEventProcessor.class));
 
 		EntityInitializer entityInitializer =
 			configurableApplicationContext.getBean(EntityInitializer.class);
@@ -69,8 +73,9 @@ public class Jethr0SpringBootApplication {
 		JenkinsQueue jenkinsQueue = configurableApplicationContext.getBean(
 			JenkinsQueue.class);
 
-		jenkinsQueue.setEventJmsController(
-			configurableApplicationContext.getBean(EventJmsController.class));
+		jenkinsQueue.setJenkinsEventProcessor(
+			configurableApplicationContext.getBean(
+				JenkinsEventProcessor.class));
 
 		jenkinsQueue.initialize();
 	}

@@ -23,8 +23,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseJenkinsEventHandler
-	extends BaseEventHandler implements JenkinsEventHandler {
+public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 
 	protected BaseJenkinsEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {

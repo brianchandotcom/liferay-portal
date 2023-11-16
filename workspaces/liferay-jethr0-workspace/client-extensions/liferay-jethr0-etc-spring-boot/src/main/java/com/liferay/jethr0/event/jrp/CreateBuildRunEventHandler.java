@@ -22,12 +22,6 @@ import org.json.JSONObject;
  */
 public class CreateBuildRunEventHandler extends BaseJRPEventHandler {
 
-	public CreateBuildRunEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
-	}
-
 	@Override
 	public String process() throws InvalidJSONException {
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
@@ -70,6 +64,12 @@ public class CreateBuildRunEventHandler extends BaseJRPEventHandler {
 		updateJRPStatus(buildRunEntity, buildEntity, jobEntity, "queued");
 
 		return buildRunEntity.toString();
+	}
+
+	protected CreateBuildRunEventHandler(
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

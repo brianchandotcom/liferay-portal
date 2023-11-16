@@ -18,12 +18,6 @@ import org.json.JSONObject;
  */
 public class QueueJobEventHandler extends BaseJRPEventHandler {
 
-	public QueueJobEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
-	}
-
 	@Override
 	public String process() throws InvalidJSONException {
 		JobEntity jobEntity = getJobEntity(getJobJSONObject());
@@ -43,6 +37,12 @@ public class QueueJobEventHandler extends BaseJRPEventHandler {
 		jenkinsQueue.invoke();
 
 		return jobEntity.toString();
+	}
+
+	protected QueueJobEventHandler(
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

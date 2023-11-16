@@ -351,6 +351,12 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 			/>
 		</div>
 
+		<div>
+			<react:component
+				module="document_library/js/ai/ConfigureAIModal"
+			/>
+		</div>
+
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />
 	</c:otherwise>
 </c:choose>

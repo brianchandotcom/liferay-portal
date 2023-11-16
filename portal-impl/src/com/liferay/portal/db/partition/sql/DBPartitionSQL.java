@@ -17,47 +17,54 @@ import java.sql.SQLException;
 public interface DBPartitionSQL {
 
 	public default String getCopyDataSQL(
-		String fromSchemaName, String toSchemaName, String tableName,
+		String fromPartitionName, String toPartitionName, String tableName,
 		String whereClause) {
 
 		return StringBundler.concat(
-			"insert into ", toSchemaName, StringPool.PERIOD, tableName,
-			" select * from ", fromSchemaName, StringPool.PERIOD, tableName,
+			"insert into ", toPartitionName, StringPool.PERIOD, tableName,
+			" select * from ", fromPartitionName, StringPool.PERIOD, tableName,
 			whereClause);
 	}
 
-	public String getCreateSchemaSQL(Connection connection, String schemaName)
+	public String getCreatePartitionSQL(
+			Connection connection, String partitionName)
 		throws SQLException;
 
 	public String getCreateTableSQL(
-		String fromSchemaName, String toSchemaName, String tableName);
+		String fromPartitionName, String toPartitionName, String tableName);
 
 	public default String getCreateViewSQL(
-		String fromSchemaName, String toSchemaName, String viewName) {
+		String fromPartitionName, String toPartitionName, String viewName) {
 
 		return StringBundler.concat(
-			"create or replace view ", toSchemaName, StringPool.PERIOD,
-			viewName, " as select * from ", fromSchemaName, StringPool.PERIOD,
-			viewName);
+			"create or replace view ", toPartitionName, StringPool.PERIOD,
+			viewName, " as select * from ", fromPartitionName,
+			StringPool.PERIOD, viewName);
 	}
 
-	public default String getDropSchemaSQL(String schemaName) {
-		return "drop schema " + schemaName;
+	public String getDefaultPartitionName(Connection connection)
+		throws SQLException;
+
+	public default String getDropPartitionSQL(String partitionName) {
+		return "drop schema " + partitionName;
 	}
 
-	public default String getDropTableSQL(String schemaName, String tableName) {
+	public default String getDropTableSQL(
+		String partitionName, String tableName) {
+
 		return StringBundler.concat(
-			"drop table if exists ", schemaName, StringPool.PERIOD, tableName);
+			"drop table if exists ", partitionName, StringPool.PERIOD,
+			tableName);
 	}
 
-	public default String getDropViewSQL(String schemaName, String viewName) {
+	public default String getDropViewSQL(
+		String partitionName, String viewName) {
+
 		return StringBundler.concat(
-			"drop view if exists ", schemaName, StringPool.PERIOD, viewName);
+			"drop view if exists ", partitionName, StringPool.PERIOD, viewName);
 	}
 
-	public String getPartitionName(Connection connection) throws SQLException;
-
-	public void setPartition(Connection connection, String schemaName)
+	public void setPartition(Connection connection, String partitionName)
 		throws SQLException;
 
 }

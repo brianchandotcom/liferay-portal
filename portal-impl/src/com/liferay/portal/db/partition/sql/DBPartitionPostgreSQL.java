@@ -17,32 +17,35 @@ import java.sql.SQLException;
 public class DBPartitionPostgreSQL implements DBPartitionSQL {
 
 	@Override
-	public String getCreateSchemaSQL(Connection connection, String schemaName)
+	public String getCreatePartitionSQL(
+			Connection connection, String partitionName)
 		throws SQLException {
 
-		return "create schema if not exists " + schemaName;
+		return "create schema if not exists " + partitionName;
 	}
 
 	@Override
 	public String getCreateTableSQL(
-		String fromSchemaName, String toSchemaName, String tableName) {
+		String fromPartitionName, String toPartitionName, String tableName) {
 
 		return StringBundler.concat(
-			"create table if not exists ", toSchemaName, StringPool.PERIOD,
-			tableName, " (like ", fromSchemaName, StringPool.PERIOD, tableName,
-			" INCLUDING ALL)");
+			"create table if not exists ", toPartitionName, StringPool.PERIOD,
+			tableName, " (like ", fromPartitionName, StringPool.PERIOD,
+			tableName, " INCLUDING ALL)");
 	}
 
 	@Override
-	public String getPartitionName(Connection connection) throws SQLException {
+	public String getDefaultPartitionName(Connection connection)
+		throws SQLException {
+
 		return connection.getSchema();
 	}
 
 	@Override
-	public void setPartition(Connection connection, String schemaName)
+	public void setPartition(Connection connection, String partitionName)
 		throws SQLException {
 
-		connection.setSchema(schemaName);
+		connection.setSchema(partitionName);
 	}
 
 }

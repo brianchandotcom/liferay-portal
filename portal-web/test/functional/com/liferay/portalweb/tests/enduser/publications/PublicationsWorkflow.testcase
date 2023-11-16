@@ -124,7 +124,9 @@ definition {
 				publicationName = "Publication Name");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -170,7 +172,7 @@ definition {
 
 		/*PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeStatus = "Pending",
 			changeTitle = "WC WebContent Title",
 			changeType = "Added",
@@ -208,7 +210,9 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "site-name");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -218,10 +222,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -245,12 +246,7 @@ definition {
 				publicationName = "Publication Name");
 		}
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -296,7 +292,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeStatus = "Pending",
 			changeTitle = "WC WebContent Title 1",
 			changeType = "Added",
@@ -306,7 +302,7 @@ definition {
 
 		/*PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeStatus = "Approved",
 			changeTitle = "WC WebContent Title 2",
 			changeType = "Added",

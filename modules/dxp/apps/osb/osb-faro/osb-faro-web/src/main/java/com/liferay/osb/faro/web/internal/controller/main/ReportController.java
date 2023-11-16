@@ -188,13 +188,25 @@ public class ReportController extends BaseFaroController {
 			outputStream.flush();
 		};
 
+		String fileName;
+
+		if (StringUtil.equals(type, "individual") &&
+			Validator.isNotNull(assetType)) {
+
+			fileName = String.format(
+				"analytics-cloud-%s-known-individuals-%s", assetType,
+				LocalDate.now());
+		}
+		else {
+			fileName = String.format(
+				"analytics-cloud-%ss-list-%s", type, LocalDate.now());
+		}
+
 		return Response.ok(
 			streamingOutput, "application/csv"
 		).header(
 			HttpHeaders.CONTENT_DISPOSITION,
-			String.format(
-				"filename=\"analytics-cloud-%ss-list-%s.csv\"", type,
-				LocalDate.now())
+			String.format("filename=\"%s.csv\"", fileName, LocalDate.now())
 		).build();
 	}
 

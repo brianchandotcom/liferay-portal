@@ -7,6 +7,7 @@ package com.liferay.fragment.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -144,18 +145,18 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
-		try {
-			exportImportStagedModel(stagedModel);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
-
 		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)stagedModel;
 
 		Assert.assertNotNull(
 			_fragmentEntryLocalService.getFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId()));
+
+		try {
+			_exportImportStagedModel(stagedModel, true);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
 
 		StagedModel importedStagedModel = getStagedModel(
 			stagedModel.getUuid(), liveGroup);
@@ -244,6 +245,40 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		Assert.assertEquals(
 			importedFragmentEntryLink.getPosition(),
 			fragmentEntryLink.getPosition());
+	}
+
+	private void _exportImportStagedModel(
+			StagedModel stagedModel,
+			boolean deleteFragmentEntryAndFragmentEntryLinkBeforeImport)
+		throws Exception {
+
+		if (!deleteFragmentEntryAndFragmentEntryLinkBeforeImport) {
+			exportImportStagedModel(stagedModel);
+
+			return;
+		}
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)stagedModel;
+
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			fragmentEntryLink);
+
+		_fragmentEntryLocalService.deleteFragmentEntry(
+			fragmentEntryLink.getFragmentEntryId());
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
 	}
 
 	private String _read(String fileName) throws Exception {

@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.event.handler;
+package com.liferay.jethr0.event.jrp;
 
+import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
@@ -17,7 +18,13 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
+public class CreateJenkinsCohortEventHandler extends BaseJRPEventHandler {
+
+	public CreateJenkinsCohortEventHandler(
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+
+		super(eventHandlerContext, messageJSONObject);
+	}
 
 	@Override
 	public String process() throws InvalidJSONException {
@@ -57,12 +64,6 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 		jenkinsCohortEntityRepository.update(jenkinsCohortEntity);
 
 		return jenkinsCohortEntity.toString();
-	}
-
-	protected CreateJenkinsCohortEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

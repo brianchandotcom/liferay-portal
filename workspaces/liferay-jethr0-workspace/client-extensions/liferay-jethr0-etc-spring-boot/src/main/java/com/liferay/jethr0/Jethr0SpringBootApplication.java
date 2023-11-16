@@ -8,8 +8,8 @@ package com.liferay.jethr0;
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.entity.EntityInitializer;
-import com.liferay.jethr0.event.controller.EventJmsController;
-import com.liferay.jethr0.event.handler.EventHandlerContext;
+import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.event.EventJmsController;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.queue.JobQueue;
 

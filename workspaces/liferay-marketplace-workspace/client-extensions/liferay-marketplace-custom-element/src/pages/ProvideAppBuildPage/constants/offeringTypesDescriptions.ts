@@ -5,11 +5,7 @@
 
 import {AppType} from '../enums/AppType';
 
-type OfferingTypesProps = {
-	[key in string]: Array<OfferingType>;
-};
-
-export const offeringTypesDescription: OfferingTypesProps = {
+export const offeringTypesDescription = {
 	[AppType.CLOUD]: [
 		{
 			description:
@@ -44,4 +40,4 @@ export const offeringTypesDescription: OfferingTypesProps = {
 			label: 'Fully-Managed',
 		},
 	],
-};
+} as const;

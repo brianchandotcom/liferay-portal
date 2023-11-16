@@ -5,11 +5,11 @@
 
 import {CheckboxCard} from '../../../components/CheckboxCard/CheckboxCard';
 
-interface OfferingTypeCheckboxProps {
+type OfferingTypeCheckboxProps = {
 	handleSelectCheckbox: (label: string) => void;
 	offeringTypes: OfferingType[];
 	selectedValue: string[];
-}
+};
 
 export default function OfferingTypeCheckbox({
 	handleSelectCheckbox,

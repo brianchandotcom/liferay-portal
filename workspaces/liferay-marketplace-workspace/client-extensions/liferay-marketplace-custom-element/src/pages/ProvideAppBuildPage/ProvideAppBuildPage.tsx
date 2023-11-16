@@ -292,7 +292,9 @@ export function ProvideAppBuildPage({
 					<OfferingTypeCheckbox
 						handleSelectCheckbox={handleSelectCheckbox}
 						offeringTypes={
-							offeringTypesDescription[String(appType.value)]
+							(offeringTypesDescription[
+								appType.value as AppType
+							] as unknown) as OfferingType[]
 						}
 						selectedValue={selectedCheckboxValue}
 					/>

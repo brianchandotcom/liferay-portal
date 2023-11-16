@@ -839,6 +839,21 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro launchDXPUI() {
+		Navigator.openURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = ${userEmailAddress});
+		}
+	}
+
+	@summary = "Default summary"
 	macro logInPause() {
 
 		// Pause is necessary because poshi logs in from one user to another quickly. For more information about pause see LRAC-9514

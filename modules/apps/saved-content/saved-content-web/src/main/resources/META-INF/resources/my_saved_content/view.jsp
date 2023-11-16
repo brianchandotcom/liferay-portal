@@ -58,7 +58,7 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 							monospaced="<%= true %>"
 							small="<%= true %>"
 							target="_blank"
-							title='<%= LanguageUtil.get(request, "open-in-a-new-tab") %>'
+							title='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
 							type="button"
 						/>
 					</div>
@@ -73,7 +73,7 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 							icon="trash"
 							monospaced="<%= true %>"
 							small="<%= true %>"
-							title='<%= LanguageUtil.get(request, "remove-content") %>'
+							title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escapeAttribute(assetTitle)) %>'
 							type="button"
 						/>
 					</div>

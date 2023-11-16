@@ -197,10 +197,10 @@ public class KBFolderWrapper
 	}
 
 	@Override
-	public java.util.List<KBFolder> getAncestors()
+	public java.util.List<KBFolder> getAncestorKBFolders()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return model.getAncestors();
+		return model.getAncestorKBFolders();
 	}
 
 	@Override

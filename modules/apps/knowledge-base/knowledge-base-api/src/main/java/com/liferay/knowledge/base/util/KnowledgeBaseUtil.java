@@ -154,7 +154,7 @@ public class KnowledgeBaseUtil {
 
 		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
 
-		List<KBFolder> kbFolders = kbFolder.getAncestors();
+		List<KBFolder> kbFolders = kbFolder.getAncestorKBFolders();
 
 		StringBundler sb = new StringBundler((kbFolders.size() * 3) + 5);
 

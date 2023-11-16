@@ -33,7 +33,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 	}
 
 	@Override
-	public List<KBFolder> getAncestors() throws PortalException {
+	public List<KBFolder> getAncestorKBFolders() throws PortalException {
 		return _getAncestors(Function.identity());
 	}
 

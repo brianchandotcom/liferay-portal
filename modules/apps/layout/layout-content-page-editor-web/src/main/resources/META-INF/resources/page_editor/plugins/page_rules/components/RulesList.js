@@ -6,13 +6,17 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
+import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import deleteRule from '../../../app/thunks/deleteRule';
+import useActionValues from '../../../app/utils/useActionValues';
+import useConditionValues from '../../../app/utils/useConditionValues';
 import RulesModal from './RulesModal';
 
 export default function RulesList() {
@@ -77,6 +81,16 @@ export default function RulesList() {
 }
 
 function Rule({onDelete, onEdit, rule}) {
+	const items = useSelector((state) =>
+		Object.values(state.layoutData.items).map((item) => ({
+			label: selectLayoutDataItemLabel(state, item),
+			value: item.itemId,
+		}))
+	);
+
+	const conditions = useConditionValues(rule);
+	const actions = useActionValues({...rule, items});
+
 	return (
 		<ClayList.Item className="p-2 page-editor__rule" key={rule.id}>
 			<ClayList.ItemField expand>
@@ -120,6 +134,66 @@ function Rule({onDelete, onEdit, rule}) {
 					</ClayDropDown>
 				</div>
 			</ClayList.ItemField>
+
+			<ClayList.ItemField className="mt-3" expand>
+				<p className="align-items-center c-gap-2 d-flex flex-wrap">
+					{conditions.map((condition, index) => (
+						<Condition
+							condition={condition}
+							index={index}
+							key={condition.id}
+						/>
+					))}
+
+					{actions.map((action) => (
+						<Action action={action} key={action.id} />
+					))}
+				</p>
+			</ClayList.ItemField>
 		</ClayList.Item>
+	);
+}
+
+function Condition({condition, index}) {
+	return (
+		<>
+			<span
+				className={classNames('font-weight-semi-bold', {
+					'text-uppercase': index > 0,
+				})}
+			>
+				{condition.prefix}
+			</span>
+
+			<ClayLabel className="m-0" displayType="secondary">
+				{condition.type}
+			</ClayLabel>
+
+			{condition.condition}
+
+			<ClayLabel className="m-0" displayType="secondary">
+				{condition.value}
+			</ClayLabel>
+		</>
+	);
+}
+
+function Action({action}) {
+	return (
+		<>
+			{action.prefix ? (
+				<span className="font-weight-semi-bold text-uppercase">
+					{action.prefix}
+				</span>
+			) : null}
+
+			<span className="font-weight-semi-bold">{action.type}</span>
+
+			{action.action}
+
+			<ClayLabel className="m-0" displayType="secondary">
+				{action.item}
+			</ClayLabel>
+		</>
 	);
 }

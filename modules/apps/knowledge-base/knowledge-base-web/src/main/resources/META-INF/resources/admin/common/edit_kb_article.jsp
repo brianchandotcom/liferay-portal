@@ -66,9 +66,9 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 											<clay:button
 												cssClass="c-mr-3"
 												displayType="primary"
-												icon="time"
+												icon="date-time"
 												id='<%= liferayPortletResponse.getNamespace() + "scheduledButton" %>'
-												label="scheduled"
+												label="edit-schedule"
 												small="<%= true %>"
 												title='<%= LanguageUtil.format(request, "this-article-will-be-published-on-x", editKBArticleDisplayContext.getUserFormattedDisplayDateString()) %>'
 												type="button"

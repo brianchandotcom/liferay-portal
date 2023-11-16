@@ -25,20 +25,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		TestUtils.hardRefresh();
-
-		PageAudit.tearDownSystemSettingsConfigurations();
-
-		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
-
 	@description = "LPS-119066 Given the Page Audit Panel When the audit is launched (the API is called) Then a progress bar shows and moves forward while retrieving the data until they can be shown."
 	@priority = 3
 	@uitest

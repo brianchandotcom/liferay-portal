@@ -1541,6 +1541,8 @@ definition {
 	@description = "This is a test for LPS-188478. Assert new import page of fragment works."
 	@priority = 5
 	test UploadAnotherFile {
+		property portal.acceptance = "true";
+
 		task ("Given a user accesses to the Fragments import page") {
 			FragmentsAdminNavigator.gotoImportCollection();
 

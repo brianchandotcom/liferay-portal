@@ -1529,6 +1529,8 @@ main();
 	@description = "This is a test for LPS-147897. The page designer could map the date field in specific date format to date fragment."
 	@priority = 5
 	test MapDateFieldToFragmentWithDateEditableField {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a fragment with date editable field") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 

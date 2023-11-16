@@ -163,6 +163,8 @@ definition {
 	@description = "This is a test for LPS-192836. Assert can select feature image from Document and Media in web content creation."
 	@priority = 5
 	test AddWebContentWithFeaturedImageFromDocumentsAndMedia {
+		property portal.acceptance = "true";
+
 		task ("Given a user accesses to the web content editor") {
 			HeadlessSite.addSite(
 				siteName = "Site Name",

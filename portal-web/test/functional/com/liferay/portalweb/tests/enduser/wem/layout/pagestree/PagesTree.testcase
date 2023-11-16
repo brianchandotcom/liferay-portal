@@ -353,6 +353,8 @@ definition {
 	@description = "This is a test for LPS-148241. Page crashes when edit public pages via page tree"
 	@priority = 5
 	test BackToPreviousPageWhenConfigurePagesViaPageTree {
+		property portal.acceptance = "true";
+
 		task ("Given a site administrator goes to configure Pages via Page Tree") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},

@@ -736,6 +736,8 @@ definition {
 	@description = "This is a test for LPS-167949. The page designer could filter collection by contains all tags."
 	@priority = 5
 	test FilterResultsOfCollectionDisplayByContainsAllTags {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a Collection Display and two Collection Filter on page") {
 			HeadlessWebcontent.addBasicWebContent(
 				assetTagNames = "huawei",
@@ -865,6 +867,8 @@ definition {
 	@description = "This is a test for LPS-167949. The page designer could filter collection by contains any tags."
 	@priority = 5
 	test FilterResultsOfCollectionDisplayByContainsAnyTags {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a Collection Display and Collection Filter on page") {
 			HeadlessWebcontent.addBasicWebContent(
 				assetTagNames = "huawei",

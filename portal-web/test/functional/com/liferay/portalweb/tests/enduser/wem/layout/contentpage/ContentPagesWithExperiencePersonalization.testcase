@@ -248,6 +248,8 @@ definition {
 	@description = "This is a test for LPS-143321. After clicking on discard draft the page continues to run."
 	@priority = 5
 	test DiscardContentPageDraft {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a content page with draft and experience") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

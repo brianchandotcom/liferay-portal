@@ -16,7 +16,7 @@ import java.sql.PreparedStatement;
 /**
  * @author Luis Ortiz
  */
-public class UpgradeMissingListTypes extends UpgradeProcess {
+public class UpgradeListTypeType extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

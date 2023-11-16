@@ -357,7 +357,7 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(29, 1, 1), new DummyUpgradeProcess());
 
 		upgradeVersionTreeMap.put(
-			new Version(29, 1, 2), new UpgradeMissingListTypes());
+			new Version(29, 1, 2), new UpgradeListTypeType());
 	}
 
 }

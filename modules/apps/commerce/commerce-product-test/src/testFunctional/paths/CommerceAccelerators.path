@@ -761,7 +761,7 @@
 </tr>
 <tr>
 	<td>MINI_CART_PRODUCT_OPTIONS_SELECT</td>
-	<td>//div[contains(@class,'mini-cart-edit-item')]//div/label[text()='${key_optionName}']/..//select</td>
+	<td>//div[contains(@class,'mini-cart-edit-item')]//div/label[text()='${key_optionName}']/..//select | //div[contains(@class,'mini-cart-edit-item')]//div/label[text()='${key_optionName}']/..//button</td>
 	<td></td>
 </tr>
 <tr>

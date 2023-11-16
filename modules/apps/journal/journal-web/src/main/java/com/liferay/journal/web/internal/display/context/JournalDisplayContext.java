@@ -1133,26 +1133,7 @@ public class JournalDisplayContext {
 		).put(
 			"searchResults", getTab()
 		).put(
-			"searchResultsOptions",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"label",
-					LanguageUtil.get(_themeDisplay.getLocale(), "web-content")
-				).put(
-					"value", "web-content"
-				),
-				JSONUtil.put(
-					"label",
-					LanguageUtil.get(_themeDisplay.getLocale(), "versions")
-				).put(
-					"value", "versions"
-				),
-				JSONUtil.put(
-					"label",
-					LanguageUtil.get(_themeDisplay.getLocale(), "comments")
-				).put(
-					"value", "comments"
-				))
+			"searchResultsOptions", _getSearchResultsOptionsJSONArray()
 		).put(
 			"searchURL",
 			PortletURLBuilder.createRenderURL(
@@ -1791,6 +1772,35 @@ public class JournalDisplayContext {
 			_httpServletRequest, "searchLocation", "current-folder");
 
 		return _searchLocation;
+	}
+
+	private JSONArray _getSearchResultsOptionsJSONArray() {
+		JSONArray jsonArray = JSONUtil.put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(_themeDisplay.getLocale(), "web-content")
+			).put(
+				"value", "web-content"
+			));
+
+		if (isIndexAllArticleVersions()) {
+			jsonArray.put(
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(_themeDisplay.getLocale(), "versions")
+				).put(
+					"value", "versions"
+				));
+		}
+
+		jsonArray.put(
+			JSONUtil.put(
+				"label", LanguageUtil.get(_themeDisplay.getLocale(), "comments")
+			).put(
+				"value", "comments"
+			));
+
+		return jsonArray;
 	}
 
 	private Sort _getSort() {

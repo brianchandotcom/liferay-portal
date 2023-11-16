@@ -306,15 +306,17 @@ definition {
 	@description = "Filter Publications Changes."
 	@priority = 4
 	test CanFilterChangesInReview {
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content 1",
-			groupName = "Guest",
+			groupName = "Site Name",
 			title = "WC WebContent Title 1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Site Name",
 			guestPermissions = "false",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
@@ -325,11 +327,11 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.moveToRecycleBinCP(webContentTitle = "WC WebContent Title 1");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.editCP(
 			dmDocumentDescription = "DM Document Description",
@@ -369,7 +371,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC WebContent Title 1",
 			changeType = "Deleted",
 			changeUser = "Test Test");
@@ -388,7 +390,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "DM Document Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test");
@@ -402,19 +404,19 @@ definition {
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
-			checkboxName = "Guest",
+			checkboxName = "Site Name",
 			menuItem = "Sites");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "DM Document Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC WebContent Title 1",
 			changeType = "Deleted",
 			changeUser = "Test Test");
@@ -448,7 +450,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "DM Document Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test");
@@ -467,7 +469,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "WC WebContent Title 1",
 			changeType = "Deleted",
 			changeUser = "Test Test");
@@ -493,9 +495,11 @@ definition {
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 		}
 
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content Title",
-			groupName = "Guest",
+			groupName = "Site Name",
 			title = "WC Title Title");
 
 		task ("Publish the Publication") {
@@ -984,7 +988,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Guest");
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "Document Description",
@@ -995,7 +1001,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "DM Document Title",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -1567,30 +1573,32 @@ definition {
 	@description = "This is a use case for LPS-191376 - As a Publication Reviewer I do not want to see information related to portlet preferences on the Review Changes screen."
 	@priority = 3
 	test PortletPreferenceChangesCannotAppearWhenChangedOnContentPage {
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		task ("Create two Web Contents") {
 			for (var order : list "1,2") {
 				JSONWebcontent.addWebContent(
 					content = "WC${order} content",
-					groupName = "Guest",
+					groupName = "Site Name",
 					title = "WC${order}");
 			}
 		}
 
 		task ("Create a Content Page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Guest",
+				groupName = "Site Name",
 				layoutName = "Test Content Page",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Guest",
+				groupName = "Site Name",
 				layoutName = "Test Content Page");
 		}
 
 		task ("Add Web Content widget to content page and configure it to display WC1") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page",
-				siteName = "Guest");
+				siteName = "Site Name");
 
 			PageEditor.addWidget(
 				collectionName = "Content Management",
@@ -1610,7 +1618,7 @@ definition {
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page",
-				siteName = "Guest");
+				siteName = "Site Name");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC2");
 
@@ -1636,7 +1644,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Portlet Preference Value",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Preferences for Web Content Display on Test Content Page",
 				changeType = "Modified",
 				changeUser = "Test Test");
@@ -1646,28 +1654,30 @@ definition {
 	@description = "This is a use case for LPS-191376 - As a Publication Reviewer I do not want to see information related to portlet preferences on the Review Changes screen."
 	@priority = 3
 	test PortletPreferenceChangesCannotAppearWhenChangedOnWidgetPage {
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		task ("Create two Web Contents") {
 			for (var order : list "1,2") {
 				JSONWebcontent.addWebContent(
 					content = "WC${order} content",
-					groupName = "Guest",
+					groupName = "Site Name",
 					title = "WC${order}");
 			}
 		}
 
 		task ("Create a Widget Page, add Web Content Display and configure it to display WC1") {
 			JSONLayout.addPublicLayout(
-				groupName = "Guest",
+				groupName = "Site Name",
 				layoutName = "Test Widget Page");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
+				groupName = "Site Name",
 				layoutName = "Test Widget Page",
 				widgetName = "Web Content Display");
 
 			Navigator.openSitePage(
 				pageName = "Test Widget Page",
-				siteName = "Guest");
+				siteName = "Site Name");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC1");
 
@@ -1681,7 +1691,7 @@ definition {
 
 			Navigator.openSitePage(
 				pageName = "Test Widget Page",
-				siteName = "Guest");
+				siteName = "Site Name");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC2");
 
@@ -1705,7 +1715,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Portlet Preference Value",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Preferences for Web Content Display on Test Widget Page",
 				changeType = "Modified",
 				changeUser = "Test Test");
@@ -1925,15 +1935,25 @@ definition {
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 		}
 
-		task ("Make a change to the Home Page by adding a button fragment in it") {
+		task ("Add a content Page by adding a button fragment in it") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Site Name",
+				layoutName = "Test Page Name");
+
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Home Page",
-				siteName = "Guest");
+				pageName = "Test Page Name",
+				siteName = "Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Button",
-				targetFragmentName = "Image");
+				fragmentName = "Button");
 
 			PageEditor.publish();
 		}
@@ -1953,21 +1973,23 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Page",
-				changeSite = "Guest",
-				changeTitle = "Home",
-				changeType = "Modified",
+				changeSite = "Site Name",
+				changeTitle = "Test Page Name",
+				changeType = "Added",
 				changeUser = "Test Test");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Fragment Entry Link",
-				changeSite = "Guest",
-				changeTitle = "Button for Home.",
+				changeSite = "Site Name",
+				changeTitle = "Button for Test Page Name.",
 				changeType = "Added",
 				changeUser = "Test Test");
 		}
 
-		task ("Assert that the fragment button is present at the home page") {
-			Navigator.gotoPage(pageName = "Home");
+		task ("Assert that the fragment button is present at the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Site Nam");
 
 			AssertTextEquals(
 				fragmentName = "button",
@@ -1985,7 +2007,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 

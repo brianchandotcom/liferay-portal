@@ -10,9 +10,12 @@ import com.liferay.jethr0.event.EventHandler;
 
 import org.json.JSONObject;
 
+import org.springframework.context.annotation.Configuration;
+
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 
 	@Override

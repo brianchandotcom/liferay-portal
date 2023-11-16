@@ -165,7 +165,7 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 	}
 
 	private long _getJobArchiveAge() {
-		return Long.getLong(_jobArchiveAgeInDays) * 1000 * 60 * 60 * 24;
+		return Long.valueOf(_jobArchiveAgeInDays) * 1000 * 60 * 60 * 24;
 	}
 
 	private JobEntity _updateJobToBuildsRelationshipsFromDALO(

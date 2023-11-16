@@ -12,9 +12,12 @@ import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONObject;
 
+import org.springframework.context.annotation.Configuration;
+
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class JenkinsEventHandlerFactory extends BaseEventHandlerFactory {
 
 	@Override

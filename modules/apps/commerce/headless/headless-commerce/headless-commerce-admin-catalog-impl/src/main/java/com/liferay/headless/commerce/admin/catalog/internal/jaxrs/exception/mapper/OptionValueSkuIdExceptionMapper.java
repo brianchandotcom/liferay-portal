@@ -34,7 +34,7 @@ public class OptionValueSkuIdExceptionMapper
 			cpDefinitionOptionValueRelCPInstanceException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Option value skuId is invalid");
+			Response.Status.BAD_REQUEST, "Option value sku ID is invalid");
 	}
 
 }

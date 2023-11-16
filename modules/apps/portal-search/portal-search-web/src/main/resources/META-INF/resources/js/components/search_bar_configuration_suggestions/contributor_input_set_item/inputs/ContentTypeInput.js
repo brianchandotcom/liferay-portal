@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayDropDown from '@clayui/drop-down';
+import {Option, Picker} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -40,7 +40,15 @@ const CONTENT_TYPES = [
 export default function ContentTypeInput({onBlur, onChange, touched, value}) {
 	const [activeDropdown, setActiveDropdown] = useState(false);
 
-	const _handleChange = (event) => {
+	const _handleActiveDropdownChange = (newValue) => {
+		if (!newValue) {
+			onBlur();
+		}
+
+		setActiveDropdown(newValue);
+	};
+
+	const _handleInputChange = (event) => {
 
 		// To use validation from 'required' field, keep the onChange and value
 		// properties but make its behavior resemble readOnly (input can only be
@@ -48,6 +56,27 @@ export default function ContentTypeInput({onBlur, onChange, touched, value}) {
 
 		event.preventDefault();
 	};
+
+	const Trigger = React.forwardRef(({children, ...otherProps}, ref) => (
+		<ClayInput
+			className="form-control-select"
+			onChange={_handleInputChange}
+			placeholder={Liferay.Util.sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('content-type')
+			)}
+			ref={ref}
+			required
+			style={{
+				caretColor: 'transparent',
+				cursor: 'pointer',
+			}}
+			value={value && children}
+			{...otherProps}
+			tabIndex={0}
+			type="text"
+		/>
+	));
 
 	return (
 		<ClayInput.GroupItem
@@ -75,52 +104,21 @@ export default function ContentTypeInput({onBlur, onChange, touched, value}) {
 
 			<ClayInput.Group>
 				<ClayInput.Group>
-					<ClayDropDown
+					<Picker
 						active={activeDropdown}
-						className="w-100"
-						closeOnClick={true}
-						closeOnClickOutside={true}
-						onActiveChange={(value) => {
-							if (!value) {
-								onBlur();
-							}
-
-							setActiveDropdown(value);
-						}}
-						trigger={
-							<ClayInput
-								className="form-control form-control-select"
-								onChange={_handleChange}
-								placeholder={Liferay.Util.sub(
-									Liferay.Language.get('select-x'),
-									Liferay.Language.get('content-type')
-								)}
-								required
-								style={{
-									caretColor: 'transparent',
-									cursor: 'pointer',
-								}}
-								type="text"
-								value={
-									CONTENT_TYPES.find(
-										({className}) => className === value
-									)?.displayName
-								}
-							/>
-						}
+						aria-labelledby={Liferay.Language.get('content-type')}
+						as={Trigger}
+						items={CONTENT_TYPES}
+						onActiveChange={_handleActiveDropdownChange}
+						onSelectionChange={onChange}
+						selectedKey={value}
 					>
-						<ClayDropDown.ItemList items={CONTENT_TYPES}>
-							{({className, displayName}) => (
-								<ClayDropDown.Item
-									key={className}
-									name={className}
-									onClick={() => onChange(className)}
-								>
-									{displayName}
-								</ClayDropDown.Item>
-							)}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
+						{(item) => (
+							<Option key={item.className}>
+								{item.displayName}
+							</Option>
+						)}
+					</Picker>
 				</ClayInput.Group>
 			</ClayInput.Group>
 		</ClayInput.GroupItem>

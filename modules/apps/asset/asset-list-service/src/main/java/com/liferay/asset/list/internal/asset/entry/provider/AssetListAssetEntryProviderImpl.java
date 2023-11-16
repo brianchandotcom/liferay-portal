@@ -540,7 +540,7 @@ public class AssetListAssetEntryProviderImpl
 
 		for (String[] assetTagArrayNames : assetTagNames) {
 			TermsFilter assetTagIdTermsFilter = new TermsFilter(
-				Field.ASSET_TAG_NAMES);
+				Field.ASSET_TAG_NAMES + ".raw");
 
 			assetTagIdTermsFilter.addValues(
 				ArrayUtil.toStringArray(assetTagArrayNames));

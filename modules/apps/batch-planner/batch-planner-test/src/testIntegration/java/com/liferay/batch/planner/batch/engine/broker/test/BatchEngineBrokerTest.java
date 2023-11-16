@@ -609,16 +609,15 @@ public class BatchEngineBrokerTest {
 	}
 
 	private void _assertColumnNames(
-		List<String> actualColumnNames, List<String> expectedColumnNames) {
+		List<String> expectedColumnNames, List<String> actualColumnNames) {
 
 		Assert.assertEquals(
-			actualColumnNames, _objectDefinitionExportCSVFieldNames);
-
+			_objectDefinitionExportCSVFieldNames, actualColumnNames);
 		Assert.assertEquals(expectedColumnNames, actualColumnNames);
 	}
 
 	private void _assertCSVContent(
-		List<String> actualContentRow, List<String> expectedContentRow) {
+		List<String> expectedContentRow, List<String> actualContentRow) {
 
 		int index = 0;
 
@@ -681,8 +680,8 @@ public class BatchEngineBrokerTest {
 				new InputStreamReader(expectedInputStream));
 
 		_assertColumnNames(
-			_getContentRow(actualUnsyncBufferedReader.readLine()),
-			_getContentRow(expectedUnsyncBufferedReader.readLine()));
+			_getContentRow(expectedUnsyncBufferedReader.readLine()),
+			_getContentRow(actualUnsyncBufferedReader.readLine()));
 
 		String actualLineString = actualUnsyncBufferedReader.readLine();
 
@@ -693,8 +692,9 @@ public class BatchEngineBrokerTest {
 		while (actualLineString != null) {
 			if (actualLineString.contains(externalReferenceCode)) {
 				_assertCSVContent(
-					_getContentRow(actualLineString),
-					_getContentRow(expectedUnsyncBufferedReader.readLine()));
+					_getContentRow(expectedUnsyncBufferedReader.readLine()),
+					_getContentRow(actualLineString));
+
 				found = true;
 			}
 

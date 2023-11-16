@@ -34,19 +34,21 @@ definition {
 		}
 
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
 		}
 
 		task ("Create a dynamic asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
 		}
 
 		task ("Assert Asset List Entry names and types") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 			AssertTextEquals.assertPartialText(
 				key_title = "Manual Asset List Test",
@@ -76,7 +78,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Asset List Entry",
 				changeType = "Added",
 				changeUser = "Test Test",
@@ -84,7 +86,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Asset List Entry",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -97,14 +99,16 @@ definition {
 	@priority = 3
 	test CanDeleteAssetList {
 		task ("Create a manual asset list") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONAssetlist.addManualAssetListEntry(
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "Manual Asset List Test");
 		}
 
 		task ("Create a dynamic asset list") {
 			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "Dynamic Asset List Test");
 		}
 
@@ -115,7 +119,7 @@ definition {
 		}
 
 		task ("Delete both asset lists") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 			AssetListsAdmin.deleteEntry(assetListTitle = "Manual Asset List Test");
 
@@ -131,7 +135,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Asset List Entry",
 				changeType = "Deleted",
 				changeUser = "Test Test",
@@ -139,7 +143,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Asset List Entry",
 				changeType = "Deleted",
 				changeUser = "Test Test");
@@ -152,8 +156,10 @@ definition {
 	@priority = 3
 	test CanEditAssetList {
 		task ("Create a manual asset list") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONAssetlist.addManualAssetListEntry(
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "Manual Asset List Test");
 		}
 
@@ -164,7 +170,7 @@ definition {
 		}
 
 		task ("Rename the asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 			AssetListsAdmin.renameAssetList(
 				newAssetListTitle = "Manual Asset List Edit",
@@ -176,7 +182,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Asset List Entry",
 				changeType = "Modified",
 				changeUser = "Test Test",
@@ -186,7 +192,7 @@ definition {
 		}
 
 		task ("Assert that the edited name remains after publishing the Publication") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 			AssertTextEquals.assertPartialText(
 				key_title = "Manual Asset List Edit",
@@ -205,8 +211,10 @@ definition {
 	@priority = 3
 	test CanResolveAssetListConflictByDiscarding {
 		task ("Create a manual asset list") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONAssetlist.addManualAssetListEntry(
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "Manual Asset List Test");
 		}
 
@@ -214,7 +222,7 @@ definition {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
-				groupName = "Guest");
+				groupName = "Site Name");
 		}
 
 		task ("Add new Publication and use it") {
@@ -224,7 +232,7 @@ definition {
 		}
 
 		task ("Select Blog Entry as item type and add the new blog to the Asset List") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Asset List Test");
 
@@ -246,11 +254,11 @@ definition {
 			JSONDocument.addFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "DM Document Title",
-				groupName = "Guest");
+				groupName = "Site Name");
 		}
 
 		task ("Select Document as item type and add the new Document to the Asset List") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Asset List Test");
 

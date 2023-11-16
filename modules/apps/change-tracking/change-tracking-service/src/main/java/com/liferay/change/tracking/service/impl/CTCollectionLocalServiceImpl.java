@@ -1096,6 +1096,15 @@ public class CTCollectionLocalServiceImpl
 			_ctEntryPersistence.remove(ctEntry);
 		}
 
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			CTPersistence<?> ctPersistence = ctService.getCTPersistence();
+
+			ctPersistence.clearCache(new HashSet<>(modelClassPKs));
+		}
+
 		int processedClassPKs = 0;
 
 		while (processedClassPKs < modelClassPKs.size()) {
@@ -1234,6 +1243,22 @@ public class CTCollectionLocalServiceImpl
 			ctEntry.setCtCollectionId(toCTCollectionId);
 
 			_ctEntryLocalService.updateCTEntry(ctEntry);
+		}
+
+		CTPersistence<?> ctPersistence = ctService.getCTPersistence();
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					fromCTCollectionId)) {
+
+			ctPersistence.clearCache(new HashSet<>(modelClassPKs));
+		}
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					toCTCollectionId)) {
+
+			ctPersistence.clearCache(new HashSet<>(modelClassPKs));
 		}
 
 		int processedClassPKs = 0;

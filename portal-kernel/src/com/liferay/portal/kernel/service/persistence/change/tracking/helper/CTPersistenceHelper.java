@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.service.persistence.change.tracking.helper;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.io.Serializable;
@@ -26,5 +27,12 @@ public interface CTPersistenceHelper {
 		Class<T> ctModelClass, Serializable primaryKey);
 
 	public <T extends CTModel<T>> boolean isRemove(T ctModel);
+
+	public <T extends CTModel<T>> SafeCloseable
+		setCTCollectionIdWithSafeCloseable(Class<T> ctModelClass);
+
+	public <T extends CTModel<T>> SafeCloseable
+		setCTCollectionIdWithSafeCloseable(
+			Class<T> ctModelClass, Serializable primaryKey);
 
 }

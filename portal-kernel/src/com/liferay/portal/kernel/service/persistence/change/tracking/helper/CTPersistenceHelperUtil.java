@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.service.persistence.change.tracking.helper;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
@@ -61,6 +63,35 @@ public class CTPersistenceHelperUtil {
 		}
 
 		return ctPersistenceHelper.isRemove(ctModel);
+	}
+
+	public static <T extends CTModel<T>> SafeCloseable
+		setCTCollectionIdWithSafeCloseable(Class<T> ctModelClass) {
+
+		CTPersistenceHelper ctPersistenceHelper =
+			_ctPersistenceHelperSnapshot.get();
+
+		if (ctPersistenceHelper == null) {
+			return CTCollectionThreadLocal.setProductionModeWithSafeCloseable();
+		}
+
+		return ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+			ctModelClass);
+	}
+
+	public static <T extends CTModel<T>> SafeCloseable
+		setCTCollectionIdWithSafeCloseable(
+			Class<T> ctModelClass, Serializable primaryKey) {
+
+		CTPersistenceHelper ctPersistenceHelper =
+			_ctPersistenceHelperSnapshot.get();
+
+		if (ctPersistenceHelper == null) {
+			return CTCollectionThreadLocal.setProductionModeWithSafeCloseable();
+		}
+
+		return ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+			ctModelClass, primaryKey);
 	}
 
 	private CTPersistenceHelperUtil() {

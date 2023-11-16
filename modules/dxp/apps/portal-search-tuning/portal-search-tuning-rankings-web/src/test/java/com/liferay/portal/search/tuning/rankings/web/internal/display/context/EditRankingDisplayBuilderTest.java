@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -76,8 +77,9 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 		Assert.assertEquals(
 			"resultsRankingUid",
 			editRankingDisplayContext.getResultsRankingUid());
-
-		Assert.assertFalse(editRankingDisplayContext.getInactive());
+		Assert.assertEquals(
+			ResultRankingsConstants.ACTIVE,
+			editRankingDisplayContext.getStatus());
 
 		Assert.assertNotNull(editRankingDisplayContext.getData());
 	}

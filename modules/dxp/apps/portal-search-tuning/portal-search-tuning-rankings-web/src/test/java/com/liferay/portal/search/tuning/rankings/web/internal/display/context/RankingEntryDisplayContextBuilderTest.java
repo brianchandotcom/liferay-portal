@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -55,12 +56,6 @@ public class RankingEntryDisplayContextBuilderTest {
 		).getHiddenDocumentIds();
 
 		Mockito.doReturn(
-			false
-		).when(
-			_ranking
-		).isInactive();
-
-		Mockito.doReturn(
 			"indexName"
 		).when(
 			_ranking
@@ -91,6 +86,12 @@ public class RankingEntryDisplayContextBuilderTest {
 		).getRankingDocumentId();
 
 		Mockito.doReturn(
+			"active"
+		).when(
+			_ranking
+		).getStatus();
+
+		Mockito.doReturn(
 			"sxpBlueprintExternalReferenceCode"
 		).when(
 			_ranking
@@ -108,9 +109,10 @@ public class RankingEntryDisplayContextBuilderTest {
 		Assert.assertEquals(
 			"1", rankingEntryDisplayContext.getPinnedResultsCount());
 		Assert.assertEquals(
+			ResultRankingsConstants.ACTIVE,
+			rankingEntryDisplayContext.getStatus());
+		Assert.assertEquals(
 			"rankingDocumentId", rankingEntryDisplayContext.getUid());
-
-		Assert.assertFalse(rankingEntryDisplayContext.getInactive());
 	}
 
 	private final Ranking _ranking = Mockito.mock(Ranking.class);

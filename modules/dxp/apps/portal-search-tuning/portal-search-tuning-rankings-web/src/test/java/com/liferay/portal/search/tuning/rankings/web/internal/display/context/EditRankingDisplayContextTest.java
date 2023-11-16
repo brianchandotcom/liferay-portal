@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
@@ -36,15 +37,14 @@ public class EditRankingDisplayContextTest {
 		editRankingDisplayContext.setBackURL("backURL");
 		editRankingDisplayContext.setData(data);
 		editRankingDisplayContext.setFormName("formName");
-		editRankingDisplayContext.setInactive(false);
 		editRankingDisplayContext.setKeywords("keywords");
 		editRankingDisplayContext.setRedirect("redirect");
 		editRankingDisplayContext.setResultsRankingUid("resultsRankingUid");
+		editRankingDisplayContext.setStatus(ResultRankingsConstants.ACTIVE);
 
 		Assert.assertEquals(111L, editRankingDisplayContext.getCompanyId());
 		Assert.assertEquals("backURL", editRankingDisplayContext.getBackURL());
 		Assert.assertEquals(data, editRankingDisplayContext.getData());
-		Assert.assertFalse(editRankingDisplayContext.getInactive());
 		Assert.assertEquals(
 			"formName", editRankingDisplayContext.getFormName());
 		Assert.assertEquals(
@@ -54,6 +54,9 @@ public class EditRankingDisplayContextTest {
 		Assert.assertEquals(
 			"resultsRankingUid",
 			editRankingDisplayContext.getResultsRankingUid());
+		Assert.assertEquals(
+			ResultRankingsConstants.ACTIVE,
+			editRankingDisplayContext.getStatus());
 	}
 
 }

@@ -65,6 +65,13 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		RankingIndexName rankingIndexName,
 		String sxpBlueprintExternalReferenceCode) {
 
+		if (Validator.isBlank(queryString) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-159650") &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-157988")) {
+
+			return null;
+		}
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(rankingIndexName.getIndexName());

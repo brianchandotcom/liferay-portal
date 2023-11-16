@@ -1,0 +1,52 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Sites Administration";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+	}
+
+	@description = "This is a test for LPS-199455. The site administrator could select template provided by liferay via keyboard during site creation."
+	@priority = 4
+	test SelectTemplateProvidedByLiferayViaKeyboard {
+		task ("Given a site administrator accesses to the sites admin") {
+			Site.openSitesAdmin();
+		}
+
+		task ("When the site administrator adds a new site") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the site administrator could select template provided by liferay via keyboard") {
+			WaitForPageLoad();
+
+			KeyPress(
+				key_menuBar = "Provided by Liferay",
+				locator1 = "MenuBar#NAV_LINK",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "//div[contains(@class,'card-type-asset')][normalize-space()='Blank Site']");
+
+			KeyPress(
+				locator1 = "//div[contains(@class,'card-type-asset')][normalize-space()='Blank Site']",
+				value1 = "\ENTER");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Add Site");
+		}
+	}
+
+}

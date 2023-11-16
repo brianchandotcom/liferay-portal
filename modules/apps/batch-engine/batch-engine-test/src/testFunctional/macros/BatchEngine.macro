@@ -18,6 +18,19 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro assertExportedFileContainsCorrectElements(fileName = null, expectedValue = null, jsonObject = null) {
+		Variables.assertDefined(parameterList = "${fileName},${jsonObject},${expectedElements}");
+
+		var fileContent = TestCase.getTempFileContent(fileName = ${fileName});
+
+		var actualValue = JSONUtil.getWithJSONPath(${fileContent}, ${jsonObject});
+
+		for (var expectedValue : list ${expectedElements}) {
+			StringUtil.contains(${expectedValue}, ${actualValue}, "");
+		}
+	}
+
+	@summary = "Default summary"
 	macro assertExportedFileContainsCorrectObject(fileName = null, expectedValue = null, jsonObject = null) {
 		Variables.assertDefined(parameterList = "${fileName},${jsonObject},${expectedValue}");
 

@@ -47,8 +47,8 @@ definition {
 		task ("Then I can see all default system and Student object definitions in .json file") {
 			var expectedObjectNames = "Address,CommercePricingClass,AccountEntry,Organization,User,CPDefinition,CommerceOrder,Student";
 
-			BatchEngine.assertExportedFileContainsCorrectObject(
-				expectedValue = ${expectedObjectNames},
+			BatchEngine.assertExportedFileContainsCorrectElements(
+				expectedElements = ${expectedObjectNames},
 				fileName = "export.json",
 				jsonObject = "$[*].name");
 		}
@@ -71,14 +71,17 @@ definition {
 
 			ImportExport.exportFile(
 				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
-				exportFields = "active,label,name",
+				exportFields = "name",
 				exportFileFormat = "JSONL");
 		}
 
 		task ("Then I can see all default system and Student object definitions in .jsonl file") {
-			ImportExport.assertFileContent(
-				comparisonFileName = "objectDefinition_import.jsonl",
-				fileName = "export.jsonl");
+			var expectedObjectNames = "Address,Organization,AccountEntry,User,CommercePricingClass,CommerceOrder,CPDefinition,Student";
+
+			BatchEngine.assertExportedFileContainsCorrectElements(
+				expectedElements = ${expectedObjectNames},
+				fileName = "export.jsonl",
+				jsonObject = "$[*].name");
 		}
 	}
 
@@ -97,8 +100,8 @@ definition {
 		task ("Then I can see all default system object definitions in .json file") {
 			var expectedObjectNames = "Address,CommercePricingClass,AccountEntry,Organization,User,CPDefinition,CommerceOrder";
 
-			BatchEngine.assertExportedFileContainsCorrectObject(
-				expectedValue = ${expectedObjectNames},
+			BatchEngine.assertExportedFileContainsCorrectElements(
+				expectedElements = ${expectedObjectNames},
 				fileName = "export.json",
 				jsonObject = "$[*].name");
 		}

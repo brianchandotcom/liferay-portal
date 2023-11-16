@@ -36,11 +36,7 @@ function getTitle(key: TitleKey, type: Type) {
 }
 
 function getColor(key: TitleKey) {
-	if (
-		key === TitleKey.Direct ||
-		key === TitleKey.DropOffs ||
-		key === TitleKey.Others
-	) {
+	if (key === TitleKey.DropOffs || key === TitleKey.Others) {
 		return SECONDARY_NODE_COLOR;
 	}
 

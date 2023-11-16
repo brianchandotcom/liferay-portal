@@ -26,6 +26,7 @@ import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
+import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -199,13 +200,29 @@ public class AccountEntryLocalServiceTest {
 			Assert.fail();
 		}
 		catch (ModelListenerException modelListenerException) {
-			String message = modelListenerException.getMessage();
-
-			Assert.assertTrue(message.contains("This name is invalid."));
-
 			Assert.assertTrue(
 				modelListenerException.getCause() instanceof
-					ObjectValidationRuleEngineException.InvalidFields);
+					ObjectValidationRuleEngineException);
+
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+					(ObjectValidationRuleEngineException)
+						modelListenerException.getCause();
+
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
+
+			Assert.assertEquals(
+				objectValidationRuleResults.toString(), 1,
+				objectValidationRuleResults.size());
+
+			ObjectValidationRuleResult objectValidationRuleResult =
+				objectValidationRuleResults.get(0);
+
+			Assert.assertEquals(
+				"This name is invalid.",
+				objectValidationRuleResult.getErrorMessage());
 		}
 
 		try {
@@ -215,13 +232,29 @@ public class AccountEntryLocalServiceTest {
 			Assert.fail();
 		}
 		catch (ModelListenerException modelListenerException) {
-			String message = modelListenerException.getMessage();
-
-			Assert.assertTrue(message.contains("This name is invalid."));
-
 			Assert.assertTrue(
 				modelListenerException.getCause() instanceof
-					ObjectValidationRuleEngineException.InvalidFields);
+					ObjectValidationRuleEngineException);
+
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+					(ObjectValidationRuleEngineException)
+						modelListenerException.getCause();
+
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
+
+			Assert.assertEquals(
+				objectValidationRuleResults.toString(), 1,
+				objectValidationRuleResults.size());
+
+			ObjectValidationRuleResult objectValidationRuleResult =
+				objectValidationRuleResults.get(0);
+
+			Assert.assertEquals(
+				"This name is invalid.",
+				objectValidationRuleResult.getErrorMessage());
 		}
 	}
 

@@ -77,6 +77,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_PREFIX_SELECT</td>
+	<td>//div[contains(.,'Prefix')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_LANGUAGE_SELECT</td>
+	<td>//div[contains(.,'Language')]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_SUFFIX_SELECT</td>
 	<td>//div[contains(.,'Suffix')]/select</td>
 	<td></td>

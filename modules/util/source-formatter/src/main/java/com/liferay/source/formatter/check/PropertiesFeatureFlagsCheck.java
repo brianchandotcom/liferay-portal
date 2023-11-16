@@ -303,9 +303,13 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			_generateFeatureFlagUIProperties(featureFlagUICommonPropertiesMap) +
 				_generateFeatureFlagUIProperties(featureFlagUIPropertiesMap);
 
-		return StringUtil.replaceFirst(
-			content, matchedFeatureFlags, featureFlagUIProperties,
-			matcher.start(2));
+		if (!StringUtil.equals(matchedFeatureFlags, featureFlagUIProperties)) {
+			return StringUtil.replaceFirst(
+				content, matchedFeatureFlags, featureFlagUIProperties,
+				matcher.start(2));
+		}
+
+		return content;
 	}
 
 	private List<String> _getFeatureFlagKeys(

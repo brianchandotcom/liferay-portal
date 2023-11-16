@@ -308,7 +308,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-90924. Blocked by LPS-180479."
-	@ignore = "true"
 	@priority = 3
 	test PublishPageRevisionWithPortletSettingsChanges {
 		ProductMenu.gotoPortlet(
@@ -344,7 +343,7 @@ definition {
 			workflowAssetType = "Page Revision",
 			workflowTask = "Review");
 
-		Workflow.gotoPreviewView();
+		Workflow.gotoPreviewView(pageRevision = "true");
 
 		Page.viewWithWorkflowPG(workflowStatus = "Pending (Review)");
 
@@ -372,7 +371,7 @@ definition {
 			workflowAssetType = "Page Revision",
 			workflowTask = "Review");
 
-		Workflow.gotoPreviewView();
+		Workflow.gotoPreviewView(pageRevision = "true");
 
 		Page.viewWithWorkflowPG(workflowStatus = "Pending (Review)");
 
@@ -398,7 +397,7 @@ definition {
 
 		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Page Revision Page");
 
-		Workflow.gotoPreviewView();
+		Workflow.gotoPreviewView(pageRevision = "true");
 
 		Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
 

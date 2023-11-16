@@ -1,6 +1,6 @@
 export const MAIN_NODE_COLOR = '#50D2A0';
 
-export const MAIN_NODE_HEIGHT = 280;
+export const MAIN_NODE_HEIGHT = 80;
 
 export const MAIN_NODE_WIDTH = 120;
 
@@ -8,7 +8,7 @@ export const SANKEY_HEIGHT = 600;
 
 export const SANKEY_WIDTH = 1200;
 
-export const EMPTY_NODE_COLOR = '#CDCED9';
+export const EMPTY_NODE_COLOR = '#E7E7ED';
 
 export const SECONDARY_NODE_COLOR = '#A7A9BC';
 

@@ -65,10 +65,8 @@ function FieldOperator({
 		if (operator !== '') {
 			setOperatorValue(operator);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [operator]);
-
-	console.log('operator', operator);
-	console.log('operatorValue', operatorValue);
 
 	return (
 		<>

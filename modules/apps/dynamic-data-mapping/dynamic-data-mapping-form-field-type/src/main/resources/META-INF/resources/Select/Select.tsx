@@ -37,19 +37,21 @@ function Select({
 }: SelectProps) {
 	const [selectedLabel, setSelectedLabel] = useState('');
 	let newSelectedKey = selectedKey;
-	
+
 	if (!selectedKey?.length && showEmptyOption) {
 		newSelectedKey = 'chooseAnOption';
 	}
 
-	if(typeof(selectedKey) !== 'string' && selectedKey?.[0] === '') {
+	if (typeof selectedKey !== 'string' && selectedKey?.[0] === '') {
 		newSelectedKey = undefined;
 	}
 
 	let selectedItem: string | string[] | undefined = newSelectedKey;
 
 	if (newSelectedKey !== 'chooseAnOption') {
-		selectedItem = newSelectedKey ?? (predefinedValue?.length ? predefinedValue : undefined);
+		selectedItem =
+			newSelectedKey ??
+			(predefinedValue?.length ? predefinedValue : undefined);
 	}
 	else if (
 		newSelectedKey === 'chooseAnOption' &&
@@ -73,13 +75,13 @@ function Select({
 
 		if (selectedOption) {
 			setSelectedLabel(selectedOption.label);
-		} else {
+		}
+		else {
 			setSelectedLabel(Liferay.Language.get('choose-an-option'));
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedKey, selectedItem, options]);
-
+	}, [selectedKey, selectedItem]);
 
 	return (
 		<div
@@ -106,23 +108,20 @@ function Select({
 						({value}) => value === newItemKey
 					);
 
+					if (field.value === 'chooseAnOption') {
+						onChange({}, [null]);
+					}
+
 					onChange({}, [field.value]);
 
-					if(onSelectionChange) {
+					if (onSelectionChange) {
 						onSelectionChange(itemKey);
 					}
 				}}
-				// onKeyDown={(event: KeyboardEvent) => {
-				// 	if (event.key === 'ArrowDown') {
-                //         event.preventDefault();
-				// 		console.log('entrou')
-
-				// 		const select = document.querySelector('.dropdown-menu-select.show')?.firstChild?.firstChild;
-				// 		(select as HTMLElement)?.focus()
-                //     }
-				// }}
 				placeholder={placeholder}
-				selectedKey={selectedItem}
+				selectedKey={
+					selectedItem === null ? 'chooseAnOption' : selectedItem
+				}
 			>
 				{(group) => (
 					<DropDown.Group header={group.label} items={group.items}>
@@ -203,7 +202,7 @@ const Main = ({
 			!normalizedOptions.find((option) => option.value === value[0])
 		) {
 			newValue = undefined;
-		} //acho que eh pra limpar o campo quando eu deletar uma opcao do select
+		}
 
 		if (
 			normalizedOptions.length &&
@@ -254,20 +253,30 @@ const Main = ({
 						multiple={multiple}
 						name={`${name}_field`}
 						onChange={onChange}
-						options={normalizedOptions}
 						onSelectionChange={onSelectionChange}
+						options={normalizedOptions}
 						placeholder={placeholder}
 						predefinedValue={newPredefinedValue}
 						readOnly={readOnly}
 						required={otherProps.required}
-						selectedKey={selectedKey ??	 (newValue as string)}
+						selectedKey={selectedKey ?? (newValue as string)}
 						showEmptyOption={showEmptyOption}
 						viewMode={viewMode}
 					/>
 				)}
 			</ClayTooltipProvider>
 
-			<input name={name} type="hidden" value={newValue} />
+			<input
+				name={name}
+				type="hidden"
+				value={
+					multiple
+						? newValue
+						: newValue?.[0] === 'chooseAnOption'
+						? undefined
+						: newValue
+				}
+			/>
 		</FieldBase>
 	);
 };

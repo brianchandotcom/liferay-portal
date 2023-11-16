@@ -27,7 +27,7 @@ interface MainProps {
 	onBlur?: any;
 	onChange: any;
 	onFocus?: any;
-	onSelectionChange?: (value: React.Key)=> void;
+	onSelectionChange?: (value: React.Key) => void;
 	options: any[];
 	placeholder?: string;
 	predefinedValue?: string[] | string;
@@ -47,7 +47,8 @@ interface Option<T> {
 	value: T;
 }
 
-interface SelectProps extends Omit<MainProps, 'editingLanguageId' | 'value' | 'selectedKey'> {
+interface SelectProps
+	extends Omit<MainProps, 'editingLanguageId' | 'value' | 'selectedKey'> {
 	selectedKey?: string;
 	viewMode: unknown;
 }

@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -147,8 +148,11 @@ public abstract class BaseFacetedSearcherTestCase {
 		_users = userSearchFixture.getUsers();
 	}
 
-	protected Map<String, String> toMap(User user, String... tags) {
-		return userSearchFixture.toMap(user, tags);
+	protected Map<String, String> toMap(
+		User user, UnsafeFunction<String, String, Exception> unsafeFunction,
+		String... tags) {
+
+		return userSearchFixture.toMap(user, unsafeFunction, tags);
 	}
 
 	protected JournalArticleSearchFixture journalArticleSearchFixture;

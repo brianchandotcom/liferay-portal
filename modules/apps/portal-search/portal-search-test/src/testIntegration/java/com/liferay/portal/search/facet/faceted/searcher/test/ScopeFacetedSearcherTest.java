@@ -6,6 +6,7 @@
 package com.liferay.portal.search.facet.faceted.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
@@ -13,9 +14,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.search.test.util.SearchMapUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -73,6 +76,42 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	public void testSearchFromSearchPortletWithScopeEverything()
 		throws Exception {
 
+		_testSearchFromSearchPortletWithScopeEverything(
+			StringUtil::toLowerCase);
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testSearchFromSearchPortletWithScopeEverythingWithCaseSensitiveTags()
+		throws Exception {
+
+		_testSearchFromSearchPortletWithScopeEverything(s -> s);
+	}
+
+	@Test
+	public void testSearchFromSearchPortletWithScopeThisSite()
+		throws Exception {
+
+		_testSearchFromSearchPortletWithScopeThisSite(StringUtil::toLowerCase);
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testSearchFromSearchPortletWithScopeThisSiteWithCaseSensitiveTags()
+		throws Exception {
+
+		_testSearchFromSearchPortletWithScopeThisSite(s -> s);
+	}
+
+	protected static Map<String, Integer> toMap(Group group, Integer count) {
+		return Collections.singletonMap(
+			String.valueOf(group.getGroupId()), count);
+	}
+
+	private void _testSearchFromSearchPortletWithScopeEverything(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
+		throws Exception {
+
 		Group group1 = userSearchFixture.addGroup();
 
 		String keyword = RandomTestUtil.randomString();
@@ -102,13 +141,14 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			facet.getFieldName(), searchContext, hits, frequencies);
 
 		Map<String, String> tags = SearchMapUtil.join(
-			toMap(user1, tag1), toMap(user2, tag2));
+			toMap(user1, unsafeFunction, tag1),
+			toMap(user2, unsafeFunction, tag2));
 
 		assertTags(keyword, hits, tags, searchContext);
 	}
 
-	@Test
-	public void testSearchFromSearchPortletWithScopeThisSite()
+	private void _testSearchFromSearchPortletWithScopeThisSite(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
 		throws Exception {
 
 		Group group1 = userSearchFixture.addGroup();
@@ -140,14 +180,9 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);
 
-		Map<String, String> tags = toMap(user1, tag1);
+		Map<String, String> tags = toMap(user1, unsafeFunction, tag1);
 
 		assertTags(keyword, hits, tags, searchContext);
-	}
-
-	protected static Map<String, Integer> toMap(Group group, Integer count) {
-		return Collections.singletonMap(
-			String.valueOf(group.getGroupId()), count);
 	}
 
 	@Inject

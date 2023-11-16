@@ -16,6 +16,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -284,85 +286,33 @@ public class AssetPublisherHelperTest {
 
 	@Test
 	public void testGetAssetTagNamesContainsAllTagName() throws Exception {
-		String assetTagName = RandomTestUtil.randomString();
-
-		AssetQueryRule assetQueryRule = new AssetQueryRule(
-			true, true, "assetTags", new String[] {assetTagName});
-
-		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(
-				ListUtil.fromArray(assetQueryRule));
-
-		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
-			portletPreferences);
-
-		Assert.assertEquals(
-			Arrays.toString(assetTagNames), 1, assetTagNames.length);
-
-		if (!_featureFlagManager.isEnabled("LPS-194362")) {
-			Assert.assertEquals(
-				StringUtil.toLowerCase(assetTagName), assetTagNames[0]);
-		}
-		else {
-			Assert.assertEquals(assetTagName, assetTagNames[0]);
-		}
+		_testGetAssetTagNamesContainsAllTagName(StringUtil::toLowerCase);
 	}
 
 	@Test
 	public void testGetAssetTagNamesContainsAllTagNames() throws Exception {
-		String assetTagName1 = RandomTestUtil.randomString();
-		String assetTagName2 = RandomTestUtil.randomString();
+		_testGetAssetTagNamesContainsAllTagNames(StringUtil::toLowerCase);
+	}
 
-		AssetQueryRule assetQueryRule = new AssetQueryRule(
-			true, true, "assetTags",
-			new String[] {assetTagName1, assetTagName2});
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testGetAssetTagNamesContainsAllTagNamesWithCaseSensitiveTags()
+		throws Exception {
 
-		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(
-				ListUtil.fromArray(assetQueryRule));
+		_testGetAssetTagNamesContainsAllTagNames(s -> s);
+	}
 
-		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
-			portletPreferences);
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testGetAssetTagNamesContainsAllTagNameWithCaseSensitiveTags()
+		throws Exception {
 
-		Assert.assertEquals(
-			Arrays.toString(assetTagNames), 2, assetTagNames.length);
-
-		if (!_featureFlagManager.isEnabled("LPS-194362")) {
-			Assert.assertEquals(
-				StringUtil.toLowerCase(assetTagName1), assetTagNames[0]);
-			Assert.assertEquals(
-				StringUtil.toLowerCase(assetTagName2), assetTagNames[1]);
-		}
-		else {
-			Assert.assertEquals(assetTagName1, assetTagNames[0]);
-			Assert.assertEquals(assetTagName2, assetTagNames[1]);
-		}
+		_testGetAssetTagNamesContainsAllTagName(s -> s);
 	}
 
 	@Test
 	public void testGetAssetTagNamesContainsAnyTagName() throws Exception {
-		String assetTagName = RandomTestUtil.randomString();
-
-		AssetQueryRule assetQueryRule = new AssetQueryRule(
-			true, false, "assetTags", new String[] {assetTagName});
-
-		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(
-				ListUtil.fromArray(assetQueryRule));
-
-		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
-			portletPreferences);
-
-		Assert.assertEquals(
-			Arrays.toString(assetTagNames), 1, assetTagNames.length);
-
-		if (!_featureFlagManager.isEnabled("LPS-194362")) {
-			Assert.assertEquals(
-				StringUtil.toLowerCase(assetTagName), assetTagNames[0]);
-		}
-		else {
-			Assert.assertEquals(assetTagName, assetTagNames[0]);
-		}
+		_testGetAssetTagNamesContainsAnyTagName(StringUtil::toLowerCase);
 	}
 
 	@Test
@@ -383,6 +333,14 @@ public class AssetPublisherHelperTest {
 
 		Assert.assertEquals(
 			Arrays.toString(assetTagNames), 0, assetTagNames.length);
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testGetAssetTagNamesContainsAnyTagNameWithCaseSensitiveTags()
+		throws Exception {
+
+		_testGetAssetTagNamesContainsAnyTagName(s -> s);
 	}
 
 	@Test
@@ -549,6 +507,78 @@ public class AssetPublisherHelperTest {
 		}
 
 		return portletPreferences;
+	}
+
+	private void _testGetAssetTagNamesContainsAllTagName(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
+		throws Exception {
+
+		String assetTagName = RandomTestUtil.randomString();
+
+		AssetQueryRule assetQueryRule = new AssetQueryRule(
+			true, true, "assetTags", new String[] {assetTagName});
+
+		PortletPreferences portletPreferences =
+			getAssetPublisherPortletPreferences(
+				ListUtil.fromArray(assetQueryRule));
+
+		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
+			portletPreferences);
+
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 1, assetTagNames.length);
+
+		Assert.assertEquals(
+			unsafeFunction.apply(assetTagName), assetTagNames[0]);
+	}
+
+	private void _testGetAssetTagNamesContainsAllTagNames(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
+		throws Exception {
+
+		String assetTagName1 = RandomTestUtil.randomString();
+		String assetTagName2 = RandomTestUtil.randomString();
+
+		AssetQueryRule assetQueryRule = new AssetQueryRule(
+			true, true, "assetTags",
+			new String[] {assetTagName1, assetTagName2});
+
+		PortletPreferences portletPreferences =
+			getAssetPublisherPortletPreferences(
+				ListUtil.fromArray(assetQueryRule));
+
+		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
+			portletPreferences);
+
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 2, assetTagNames.length);
+		Assert.assertEquals(
+			unsafeFunction.apply(assetTagName1), assetTagNames[0]);
+		Assert.assertEquals(
+			unsafeFunction.apply(assetTagName2), assetTagNames[1]);
+	}
+
+	private void _testGetAssetTagNamesContainsAnyTagName(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
+		throws Exception {
+
+		String assetTagName = RandomTestUtil.randomString();
+
+		AssetQueryRule assetQueryRule = new AssetQueryRule(
+			true, false, "assetTags", new String[] {assetTagName});
+
+		PortletPreferences portletPreferences =
+			getAssetPublisherPortletPreferences(
+				ListUtil.fromArray(assetQueryRule));
+
+		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
+			portletPreferences);
+
+		Assert.assertEquals(
+			Arrays.toString(assetTagNames), 1, assetTagNames.length);
+
+		Assert.assertEquals(
+			unsafeFunction.apply(assetTagName), assetTagNames[0]);
 	}
 
 	private static Configuration _assetPublisherWebConfiguration;

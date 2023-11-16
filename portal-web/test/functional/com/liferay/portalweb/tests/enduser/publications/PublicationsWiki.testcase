@@ -32,19 +32,17 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Wiki");
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
+		// Workaround LPS-201153
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
+
 		WikiPage.addCP(
-			contentImageName = "Document_2.jpg",
-			groupName = "Guest",
-			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
-			siteURLKey = "guest",
-			wikiAdmin = "true",
-			wikiNodeName = "Wiki Node Name",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -54,14 +52,14 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Node",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Wiki Node Name",
 			changeType = "Added",
 			changeUser = "Test Test");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Page",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Wiki Page Title",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -72,19 +70,17 @@ definition {
 	@description = "Assert that is possible to delete a Wiki Page within a publication and then publish it"
 	@priority = 3
 	test CanDeleteWikiPageWithinPublications {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Wiki");
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
+		// Workaround LPS-201153
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
+
 		WikiPage.addCP(
-			contentImageName = "Document_2.jpg",
-			groupName = "Guest",
-			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
-			siteURLKey = "guest",
-			wikiAdmin = "true",
-			wikiNodeName = "Wiki Node Name",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title");
 
@@ -92,7 +88,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
 
@@ -103,7 +99,7 @@ definition {
 			wikiNodeName = "Wiki Node Name",
 			wikiPageTitle = "Wiki Page Title");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 		WikiNode.deleteCP(
 			assetType = "Wiki Node",
@@ -116,12 +112,12 @@ definition {
 		// Workaround LPS-183473
 
 		/*PublicationsChanges.filterChangesByItem(
-			checkboxName = "Guest",
+			checkboxName = "Site Name",
 			menuItem = "Sites");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Page",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Wiki Page Title (1.0)",
 			changeType = "Deleted",
 			changeUser = "Test Test");
@@ -132,7 +128,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Node",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Wiki Node Name",
 			changeType = "Deleted",
 			changeUser = "Test Test");*/
@@ -144,20 +140,22 @@ definition {
 	@priority = 3
 	test CanEditWikiPageWithinPublications {
 		task ("Create Wiki Node and Wiki Page with Attachment") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONWiki.addWikiNode(
-				groupName = "Guest",
+				groupName = "Site Name",
 				wikiNodeDescription = "Wiki Node Description",
 				wikiNodeName = "Wiki Node Test");
 
 			JSONWiki.addWikiPage(
-				groupName = "Guest",
+				groupName = "Site Name",
 				wikiNodeName = "Wiki Node Test",
 				wikiPageContent = "Wiki Page Content",
 				wikiPageName = "Wiki Page Test");
 
 			JSONWiki.addAttachmentToWikiPage(
 				fileName = "Document_1.txt",
-				groupName = "Guest",
+				groupName = "Site Name",
 				mimeType = "text/txt",
 				wikiNodeName = "Wiki Node Test",
 				wikiPageName = "Wiki Page Test");
@@ -168,7 +166,7 @@ definition {
 		JSONPublications.selectPublication(publicationName = "Test Publication");
 
 		task ("Edit Wiki Node and Wiki Page") {
-			WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+			WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 			WikiNode.editCP(
 				wikiNodeDescription = "Wiki Node Description",
@@ -179,8 +177,8 @@ definition {
 			WikiNavigator.gotoNode(wikiNodeName = "WIKI NODE");
 
 			WikiPage.editPageCP(
-				groupName = "Guest",
-				siteURLKey = "guest",
+				groupName = "Site Name",
+				siteURLKey = "site-name",
 				wikiNodeName = "WIKI NODE",
 				wikiPageContentEdit = "WIKI PAGE",
 				wikiPageTitle = "Wiki Page Test");
@@ -193,21 +191,21 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Wiki Node",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WIKI NODE",
 				changeType = "Modified",
 				changeUser = "Test Test");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Wiki Page",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Wiki Page Test (1.0)",
 				changeType = "Modified",
 				changeUser = "Test Test");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Wiki Page",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "Wiki Page Test (1.1)",
 				changeType = "Added",
 				changeUser = "Test Test");

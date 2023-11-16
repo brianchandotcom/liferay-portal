@@ -406,6 +406,16 @@ public class SavedContentEntryLocalServiceWrapper
 			savedContentEntryId);
 	}
 
+	@Override
+	public SavedContentEntry getSavedContentEntry(
+			long userId, long groupId, String className, long classPK)
+		throws com.liferay.saved.content.exception.
+			NoSuchSavedContentEntryException {
+
+		return _savedContentEntryLocalService.getSavedContentEntry(
+			userId, groupId, className, classPK);
+	}
+
 	/**
 	 * Returns the saved content entry matching the UUID and group.
 	 *

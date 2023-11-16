@@ -360,6 +360,15 @@ public class SavedContentEntryLocalServiceUtil {
 		return getService().getSavedContentEntry(savedContentEntryId);
 	}
 
+	public static SavedContentEntry getSavedContentEntry(
+			long userId, long groupId, String className, long classPK)
+		throws com.liferay.saved.content.exception.
+			NoSuchSavedContentEntryException {
+
+		return getService().getSavedContentEntry(
+			userId, groupId, className, classPK);
+	}
+
 	/**
 	 * Returns the saved content entry matching the UUID and group.
 	 *

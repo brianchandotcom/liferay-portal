@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_OPTIONS_SELECT</td>
-	<td>//div/label[text()='${key_optionName}']/..//select</td>
+	<td>//div/label[text()='${key_optionName}']/..//select | //div/label[text()='${key_optionName}']/..//button</td>
 	<td></td>
 </tr>
 <tr>

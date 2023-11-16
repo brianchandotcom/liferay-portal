@@ -355,6 +355,39 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
+	public void testExportSiteScopeObjectEntryCSV() throws Exception {
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObjectCSV",
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			TestPropsValues.getCompanyId(), _OBJECT_ENTRY_ERC_1,
+			TestPropsValues.getGroupId(), _objectDefinition1,
+			TestPropsValues.getUserId());
+
+		try (FileInputStream fileInputStream = new FileInputStream(
+				_prepareCSVFile(
+					objectEntry.getCreateDate(), "object_entry.csv",
+					objectEntry.getObjectEntryId(),
+					objectEntry.getModifiedDate()))) {
+
+			_addObjectEntry(
+				TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+				_group.getGroupId(), _objectDefinition1,
+				TestPropsValues.getUserId());
+
+			_assertEqualsExportCSV(
+				_getExportInputStream(
+					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+					_objectEntryExportCSVFieldNames,
+					"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"C_TestObjectCSV"),
+				fileInputStream, objectEntry.getExternalReferenceCode(),
+				_objectEntryExportCSVFieldNames);
+		}
+	}
+
+	@Test
 	public void testExportSiteScopeObjectEntryJSON() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",

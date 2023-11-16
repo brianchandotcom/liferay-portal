@@ -301,12 +301,21 @@ export default function propsTransformer({
 		});
 	};
 
-	const openCreateAIImage = (aiImageCreatorAvailable, aiImageCreatorURL) => {
-		console.log(
-			'openCreateAIImage',
-			aiImageCreatorAvailable,
-			aiImageCreatorURL
-		);
+	const openCreateAIImage = (aiCreatorDALLEEnabled, aiImageCreatorURL) => {
+		if (!aiCreatorDALLEEnabled) {
+			Liferay.componentReady(`${portletNamespace}ConfigueAIModal`).then(
+				(configureAIModal) => {
+					configureAIModal.open();
+				}
+			);
+		}
+		else {
+			openSelectionModal({
+				size: 'lg',
+				title: Liferay.Language.get('create-ai-image'),
+				url: aiImageCreatorURL,
+			});
+		}
 	};
 
 	const permissions = () => {
@@ -398,7 +407,7 @@ export default function propsTransformer({
 		onCreationMenuItemClick: (event, {item}) => {
 			if (item?.data?.action === 'openAICreateImage') {
 				openCreateAIImage(
-					item?.data?.available,
+					item?.data?.aiCreatorDALLEEnabled,
 					item?.data?.aiCreatorURL
 				);
 			}

@@ -206,7 +206,10 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getUserId());
 
 		try (FileInputStream fileInputStream = new FileInputStream(
-				_prepareObjectEntryCSVFile(objectEntry))) {
+				_prepareCSVFile(
+					objectEntry.getCreateDate(), "object_entry.csv",
+					objectEntry.getObjectEntryId(),
+					objectEntry.getModifiedDate()))) {
 
 			_company2 = _addCompany("test.com");
 
@@ -305,7 +308,10 @@ public class BatchEngineBrokerTest {
 		_setUpObjectDefinition("TestObjectCSV");
 
 		try (FileInputStream fileInputStream = new FileInputStream(
-				_prepareObjectDefintionCSVFile(_objectDefinition1))) {
+				_prepareCSVFile(
+					_objectDefinition1.getCreateDate(), "object_definition.csv",
+					_objectDefinition1.getObjectDefinitionId(),
+					_objectDefinition1.getModifiedDate()))) {
 
 			_assertEqualsExportCSV(
 				_getExportInputStream(
@@ -1021,50 +1027,20 @@ public class BatchEngineBrokerTest {
 		return zipInputStream;
 	}
 
-	private File _prepareObjectDefintionCSVFile(
-			ObjectDefinition objectDefinition)
+	private File _prepareCSVFile(
+			Date createDate, String fileName, long id, Date modifiedDate)
 		throws Exception {
 
 		File file = _file.createTempFile("csv");
 
-		String template = StreamUtil.toString(
-			_getInputStream("object_definition.csv"));
+		String template = StreamUtil.toString(_getInputStream(fileName));
 
 		template = StringUtil.replace(
 			template,
+			new String[] {"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]"},
 			new String[] {
-				"$[OBJECT_DEFINITION_DATE_CREATED]",
-				"$[OBJECT_DEFINITION_DATE_MODIFIED]", "$[OBJECT_DEFINITION_ID]"
-			},
-			new String[] {
-				_toDateString(objectDefinition.getCreateDate()),
-				_toDateString(objectDefinition.getModifiedDate()),
-				String.valueOf(objectDefinition.getObjectDefinitionId())
-			});
-
-		_file.write(file, template);
-
-		return file;
-	}
-
-	private File _prepareObjectEntryCSVFile(ObjectEntry objectEntry)
-		throws Exception {
-
-		File file = _file.createTempFile("csv");
-
-		String template = StreamUtil.toString(
-			_getInputStream("expected-object-entry.csv"));
-
-		template = StringUtil.replace(
-			template,
-			new String[] {
-				"$[OBJECT_ENTRY_DATE_CREATED]", "$[OBJECT_ENTRY_DATE_MODIFIED]",
-				"$[OBJECT_ENTRY_ID]"
-			},
-			new String[] {
-				_toDateString(objectEntry.getCreateDate()),
-				_toDateString(objectEntry.getModifiedDate()),
-				String.valueOf(objectEntry.getObjectEntryId())
+				_toDateString(createDate), _toDateString(modifiedDate),
+				String.valueOf(id)
 			});
 
 		_file.write(file, template);

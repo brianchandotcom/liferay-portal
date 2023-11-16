@@ -10,11 +10,7 @@ import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../components/Section/Section';
-import {
-	getProduct,
-	getProductSKU,
-	getProductSpecifications,
-} from '../../utils/api';
+import {getProduct} from '../../utils/api';
 import {getThumbnailByProductAttachment, showAppImage} from '../../utils/util';
 import {CardSectionsBody} from './CardSectionsBody';
 import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
@@ -46,7 +42,7 @@ export function ReviewAndSubmitAppPage({
 
 			const productResponse = await getProduct({
 				appERC: productERC,
-				nestedFields: 'images,attachments',
+				nestedFields: 'attachments,images,skus,productSpecifications',
 			});
 
 			const productCategories: string[] = [];
@@ -61,17 +57,10 @@ export function ReviewAndSubmitAppPage({
 				}
 			});
 
-			const skuResponse = await getProductSKU({
-				appProductId: productId,
-			});
+			const productSpecifications = productResponse.productSpecifications || [];
+			const skus = productResponse.skus || [];
 
-			const productSpecificationsResponse = await getProductSpecifications(
-				{
-					appProductId: productId,
-				}
-			);
-
-			const nonTrialSKU = skuResponse?.items.find(
+			const nonTrialSKU = skus.find(
 				({skuOptions: [trialOption]}) => trialOption?.value === 'no'
 			);
 
@@ -96,7 +85,7 @@ export function ReviewAndSubmitAppPage({
 			let licenseType = '';
 			let priceModel = '';
 
-			productSpecificationsResponse.forEach((specification) => {
+			productSpecifications.forEach((specification) => {
 				const {specificationKey, value} = specification;
 				const localizedValue = value['en_US'];
 

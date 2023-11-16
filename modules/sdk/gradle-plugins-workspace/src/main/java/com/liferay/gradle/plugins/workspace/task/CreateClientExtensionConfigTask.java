@@ -513,23 +513,25 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				continue;
 			}
 
-			for (JsonNode childNode : itemJsonNode) {
-				if (!childNode.isObject()) {
+			for (JsonNode childJsonNode : itemJsonNode) {
+				if (!childJsonNode.isObject()) {
 					continue;
 				}
 
-				JsonNode fileBase64Node = childNode.findValue("fileBase64");
+				JsonNode fileBase64JsonNode = childJsonNode.findValue(
+					"fileBase64");
 
-				if ((fileBase64Node == null) ||
+				if ((fileBase64JsonNode == null) ||
 					!Objects.equals(
-						_BATCH_OBJECT_FILE_TOKEN, fileBase64Node.asText())) {
+						_BATCH_OBJECT_FILE_TOKEN,
+						fileBase64JsonNode.asText())) {
 
 					continue;
 				}
 
-				JsonNode nameNode = childNode.findValue("name");
+				JsonNode nameJsonNode = childJsonNode.findValue("name");
 
-				if (nameNode == null) {
+				if (nameJsonNode == null) {
 					throw new GradleException(
 						String.format(
 							"No name field found with token %s",
@@ -539,8 +541,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				File attachmentFile = new File(
 					parentFile,
 					String.format(
-						"attachments/%s/%s", externalReferenceCodeJsonNode.asText(),
-						nameNode.asText()));
+						"attachments/%s/%s",
+						externalReferenceCodeJsonNode.asText(),
+						nameJsonNode.asText()));
 
 				if (!attachmentFile.exists()) {
 					throw new GradleException(
@@ -549,7 +552,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 							attachmentFile));
 				}
 
-				ObjectNode writeNode = (ObjectNode)childNode;
+				ObjectNode writeNode = (ObjectNode)childJsonNode;
 
 				writeNode.put(
 					"fileBase64",

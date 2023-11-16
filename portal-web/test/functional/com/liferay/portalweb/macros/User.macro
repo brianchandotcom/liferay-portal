@@ -2484,6 +2484,23 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro RequestPasswordResetLink(userEmailAddress = null) {
+		ACUtils.clickGenericHyperlink(hyperlinkText = "Request a new password reset link.");
+
+		Type(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = ${userEmailAddress});
+
+		Button.clickNext();
+
+		AssertClick(
+			locator1 = "Button#SEND_PASSWORD_RESET_LINK",
+			value1 = "Send Password Reset Link");
+
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+	}
+
+	@summary = "Default summary"
 	macro resetPassword(localizedSaveButton = null, newPassword = null, successful = null) {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
 			if (isSet(newPassword)) {

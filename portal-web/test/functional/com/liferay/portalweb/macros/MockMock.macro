@@ -246,6 +246,27 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro openPasswordSettingBodyLink(subject = null, asset = null, content = null) {
+		var key_asset = ${asset};
+
+		MockMock._gotoMail();
+
+		MockMock._gotoMailMessage(asset = ${asset});
+
+		MockMock._viewMailMessage(
+			content = ${content},
+			subject = ${subject});
+
+		var bodyContent = selenium.getText("MockMock#MOCKMOCK_MESSAGE_BODY");
+
+		var bodyContent = StringUtil.extractLast(${bodyContent}, " here: ");
+
+		var bodyURL = StringUtil.extractFirst(${bodyContent}, "<br /><br /> Enjoy!");
+
+		Navigator.openSpecificURL(url = ${bodyURL});
+	}
+
+	@summary = "Default summary"
 	macro viewFormattedHTMLTextDiffs(newContent = null, sender = null, recipient = null, asset = null, oldContent = null) {
 		MockMock._gotoMail();
 

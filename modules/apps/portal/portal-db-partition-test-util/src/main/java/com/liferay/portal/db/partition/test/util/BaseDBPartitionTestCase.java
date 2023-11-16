@@ -185,54 +185,45 @@ public abstract class BaseDBPartitionTestCase {
 
 		_dbPartitionEnabled = DBPartition.isPartitionEnabled();
 
-		if (_dbPartitionEnabled) {
-			connection = DataAccess.getConnection();
+		if (!_dbPartitionEnabled) {
+			_originalDatabasePartitionEnabled = PropsUtil.get(
+				"database.partition.enabled");
 
-			dbInspector = new DBInspector(connection);
+			PropsUtil.set("database.partition.enabled", "true");
 
-			_dbPartitionDB = ReflectionTestUtil.getFieldValue(
-				DBPartitionUtil.class, "_dbPartitionDB");
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
+				_DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class,
+				"_DATABASE_PARTITION_THREAD_POOL_ENABLED", true);
 
-			return;
+			DBPartitionUtil.setDefaultCompanyId(portal.getDefaultCompanyId());
+
+			_lazyConnectionDataSourceProxy =
+				(LazyConnectionDataSourceProxy)DBInitUtil.getDataSource();
+
+			_currentDataSource =
+				_lazyConnectionDataSourceProxy.getTargetDataSource();
+
+			DataSource dbPartitionDataSource = _wrapDataSource(
+				DBPartitionUtil.wrapDataSource(_currentDataSource));
+
+			_lazyConnectionDataSourceProxy.setTargetDataSource(
+				dbPartitionDataSource);
+
+			_restartComponent(
+				"com.liferay.portal.db.partition",
+				"com.liferay.portal.db.partition.internal.component.enabler." +
+					"DBPartitionComponentEnabler");
 		}
-
-		_originalDatabasePartitionEnabled = PropsUtil.get(
-			"database.partition.enabled");
-
-		PropsUtil.set("database.partition.enabled", "true");
-
-		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
-			_DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
-		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED",
-			true);
-
-		DBPartitionUtil.setDefaultCompanyId(portal.getDefaultCompanyId());
-
-		_lazyConnectionDataSourceProxy =
-			(LazyConnectionDataSourceProxy)DBInitUtil.getDataSource();
-
-		_currentDataSource =
-			_lazyConnectionDataSourceProxy.getTargetDataSource();
-
-		DataSource dbPartitionDataSource = _wrapDataSource(
-			DBPartitionUtil.wrapDataSource(_currentDataSource));
-
-		_dbPartitionDB = ReflectionTestUtil.getFieldValue(
-			DBPartitionUtil.class, "_dbPartitionDB");
-
-		_lazyConnectionDataSourceProxy.setTargetDataSource(
-			dbPartitionDataSource);
-
-		_restartComponent(
-			"com.liferay.portal.db.partition",
-			"com.liferay.portal.db.partition.internal.component.enabler." +
-				"DBPartitionComponentEnabler");
 
 		connection = DataAccess.getConnection();
 
 		dbInspector = new DBInspector(connection);
+
+		dbPartitionDB = ReflectionTestUtil.getFieldValue(
+			DBPartitionUtil.class, "_dbPartitionDB");
 	}
 
 	protected static void extractDBPartitions() throws Exception {

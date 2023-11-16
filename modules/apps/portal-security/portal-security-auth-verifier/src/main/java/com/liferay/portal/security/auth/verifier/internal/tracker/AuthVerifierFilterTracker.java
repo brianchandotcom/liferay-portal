@@ -385,15 +385,11 @@ public class AuthVerifierFilterTracker {
 				}
 			}
 
-			String contextName = GetterUtil.getString(
-				serviceReference.getProperty(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME));
-
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				StringBundler.concat(
-					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-					"=", contextName, ")"));
+				GetterUtil.getString(
+					serviceReference.getProperty(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME)));
 		}
 
 	}

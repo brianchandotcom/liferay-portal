@@ -7,7 +7,7 @@ package com.liferay.jethr0.job;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.gitbranch.GitBranchEntity;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;

@@ -96,7 +96,9 @@ const LicenseSectorCard: React.FC<any> = ({
 							className="license__card__tier__price__text"
 							key={index}
 						>
-							{`${tier?.minimumQuantity || tier?.quantity} License: ${tier?.priceFormatted} each`}
+							{`${
+								tier?.minimumQuantity || tier?.quantity
+							} License: ${tier?.priceFormatted} each`}
 						</span>
 					))}
 				</div>

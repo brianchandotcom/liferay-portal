@@ -75,17 +75,19 @@ export function DashboardNavigation({
 						<ClayDropDown.Item
 							active={account.id === currentAccount?.id}
 							key={account.id}
-							onClick={() => {
-								return CommerceSelectAccountImpl.selectAccount(
+							onClick={() =>
+								CommerceSelectAccountImpl.selectAccount(
 									account.id
 								).then(() => {
 									Liferay.CommerceContext.account = {
 										accountId: account.id,
 									};
-									navigate(`/`);
+
+									navigate('/');
+
 									window.location.reload();
-								});
-							}}
+								})
+							}
 						>
 							{account.name}
 						</ClayDropDown.Item>

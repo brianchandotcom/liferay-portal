@@ -146,7 +146,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 								>
 									<DropDown.ItemList>
 										{orderTypeExternalReferenceCode ===
-											OrderType.DXP && (
+											OrderType.CLOUD && (
 											<ClayTooltipProvider>
 												<DropDown.Item
 													data-tooltip-align="left"

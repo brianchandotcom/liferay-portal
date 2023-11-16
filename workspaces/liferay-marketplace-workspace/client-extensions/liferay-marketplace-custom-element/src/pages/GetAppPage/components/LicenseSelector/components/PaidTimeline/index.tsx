@@ -5,9 +5,9 @@
 
 import {useEffect, useState} from 'react';
 
-import { useMarketplaceContext } from '../../../../../../context/MarketplaceContext';
+import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
 import useCart from '../../../../../../hooks/useCart';
-import { Liferay } from '../../../../../../liferay/liferay';
+import {Liferay} from '../../../../../../liferay/liferay';
 import {getLicenseDescription, getTierPrice} from '../../../../../../utils/api';
 import LicenseCard from '../../LicenseCard';
 

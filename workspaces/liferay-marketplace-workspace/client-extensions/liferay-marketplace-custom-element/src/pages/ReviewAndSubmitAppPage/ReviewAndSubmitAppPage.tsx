@@ -57,7 +57,8 @@ export function ReviewAndSubmitAppPage({
 				}
 			});
 
-			const productSpecifications = productResponse.productSpecifications || [];
+			const productSpecifications =
+				productResponse.productSpecifications || [];
 			const skus = productResponse.skus || [];
 
 			const nonTrialSKU = skus.find(

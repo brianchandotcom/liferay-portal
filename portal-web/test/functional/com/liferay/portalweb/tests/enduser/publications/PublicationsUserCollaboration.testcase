@@ -133,9 +133,11 @@ definition {
 
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "WC WebContent Title");
 		}
 
@@ -146,7 +148,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Article",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -185,9 +187,11 @@ definition {
 
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "WC WebContent Title");
 		}
 
@@ -198,7 +202,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Article",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -221,7 +225,7 @@ definition {
 		task ("Assert guest user can view Publication with link") {
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Article",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -302,9 +306,11 @@ definition {
 
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "WC WebContent Title");
 		}
 
@@ -315,7 +321,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Article",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title",
 				changeType = "Added",
 				changeUser = "Test Test");
@@ -357,9 +363,11 @@ definition {
 
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 
+			HeadlessSite.addSite(siteName = "Site Name");
+
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = "Guest",
+				groupName = "Site Name",
 				title = "WC WebContent Title");
 		}
 
@@ -370,7 +378,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Web Content Article",
-				changeSite = "Guest",
+				changeSite = "Site Name",
 				changeTitle = "WC WebContent Title",
 				changeType = "Added",
 				changeUser = "Test Test");

@@ -16,9 +16,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alvaro Saugar
  */
-@Component(
-	service = UserNotificationDefinition.class
-)
+@Component(service = UserNotificationDefinition.class)
 public class ScimUserNotificationDefinition extends UserNotificationDefinition {
 
 	public ScimUserNotificationDefinition() {

@@ -23,9 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alvaro Saugar
  */
-@Component(
-	service = UserNotificationHandler.class
-)
+@Component(service = UserNotificationHandler.class)
 public class ScimUserNotificationHandler extends BaseUserNotificationHandler {
 
 	public ScimUserNotificationHandler() {
@@ -35,8 +33,8 @@ public class ScimUserNotificationHandler extends BaseUserNotificationHandler {
 
 	@Override
 	protected String getBody(
-		UserNotificationEvent userNotificationEvent,
-		ServiceContext serviceContext)
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(

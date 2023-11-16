@@ -16,7 +16,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
@@ -71,18 +68,8 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return () -> {
-
-			_companyLocalService.forEachCompany(
-				company -> {
-
-					if (!company.isActive()) {
-						return;
-					}
-
-					_sendNotification(company.getCompanyId());
-				});
-		};
+		return () -> _companyLocalService.forEachCompany(
+			company -> _notify(company));
 	}
 
 	public OrderByComparator<OAuth2Authorization> getOrderByComparator() {
@@ -92,7 +79,8 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.MINUTE);
+		return TriggerConfiguration.createTriggerConfiguration(
+			1, TimeUnit.MINUTE);
 	}
 
 	protected ClassLoader getClassLoader() {
@@ -108,7 +96,7 @@ public class ScimNotificationSchedulerJobConfiguration
 			body = StringUtil.read(
 				getClassLoader(),
 				"com/liferay/scim/configuration/web/internal/dependencies" +
-				"/body.tmpl");
+					"/body.tmpl");
 
 			body = StringUtil.replace(
 				body, new String[] {"[$DATE_EXPIRATION_ACCESS_TOKEN$]"},
@@ -121,9 +109,16 @@ public class ScimNotificationSchedulerJobConfiguration
 		return body;
 	}
 
+	private void _notify(Company company) {
+		if (!company.isActive()) {
+			return;
+		}
+
+		_sendNotification(company.getCompanyId());
+	}
 
 	private void _sendEmail(
-		Company company, String subject, String body, List<User> users)
+			Company company, String subject, String body, List<User> users)
 		throws Exception {
 
 		String defaultEmailFromAddress = "scim-notification@" + company.getMx();
@@ -165,9 +160,9 @@ public class ScimNotificationSchedulerJobConfiguration
 
 			for (OAuth2Application oAuth2Application : oAuth2Applications) {
 				if (oAuth2Application.getClientId(
-				).startsWith(
-					_SCIM_CLIENT_ID_PREFIX
-				)) {
+					).startsWith(
+						_SCIM_CLIENT_ID_PREFIX
+					)) {
 
 					List<OAuth2Authorization> applicationOAuth2Authorizations =
 						_oAuth2AuthorizationLocalService.
@@ -177,7 +172,8 @@ public class ScimNotificationSchedulerJobConfiguration
 								getOrderByComparator());
 
 					if ((applicationOAuth2Authorizations != null) &&
-						!(applicationOAuth2Authorizations.isEmpty())) {
+						!applicationOAuth2Authorizations.isEmpty()) {
+
 						OAuth2Authorization applicationOAuth2Authorization =
 							applicationOAuth2Authorizations.get(0);
 
@@ -235,8 +231,7 @@ public class ScimNotificationSchedulerJobConfiguration
 		try {
 			for (User user : users) {
 				NotificationEvent notificationEvent = new NotificationEvent(
-					System.currentTimeMillis(),
-					ScimWebKeys.SCIM_CONFIGURATION,
+					System.currentTimeMillis(), ScimWebKeys.SCIM_CONFIGURATION,
 					JSONUtil.put("body", body));
 
 				notificationEvent.setDeliveryType(

@@ -1362,9 +1362,6 @@ definition {
 	@description = "This is a use case for LPS-124898 TC-5: Verify Token Refresh Offset cannot be saved with a value under 30 second. Blocked by LPS-138193."
 	@priority = 5
 	test VerifyTokenRefreshOffsetMinimum {
-		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~default.config";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1372,7 +1369,9 @@ definition {
 
 		OpenIDConnect.setTokenRefreshOffset(expirationTime = 20);
 
-		WaitForConsoleTextPresent(value1 = "Token refresh offset needs to be at least 30 seconds");
+		AssertVisible(
+			key_alertMessage = "Token refresh offset is less than 30 seconds",
+			locator1 = "Message#ERROR_ENTER_ANY");
 
 		AssertTextEquals(
 			locator1 = "OpenIDConnect#TOKEN_REFRESH_OFFSET",

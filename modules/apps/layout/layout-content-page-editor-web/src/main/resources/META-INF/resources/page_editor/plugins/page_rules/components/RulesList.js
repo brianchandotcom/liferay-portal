@@ -81,14 +81,16 @@ function Rule({onDelete, onEdit, rule}) {
 
 	return (
 		<ClayList.Item
-			className={classNames({active: hovered})}
+			className={classNames('p-2', {active: hovered})}
 			key={rule.id}
 			onMouseLeave={() => setHovered(false)}
 			onMouseOver={() => setHovered(true)}
 		>
 			<ClayList.ItemField expand>
 				<div className="align-items-center d-flex">
-					<span className="flex-grow-1">{rule.name}</span>
+					<span className="flex-grow-1 font-weight-semi-bold">
+						{rule.name}
+					</span>
 
 					<ClayDropDown
 						onMouseOver={(event) => event.stopPropagation()}

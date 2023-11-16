@@ -72,7 +72,7 @@ public abstract class BaseDBPartitionTestCase {
 	public static void assume() {
 		db = DBManagerUtil.getDB();
 
-		Assume.assumeTrue(db.getDBType() == DBType.MYSQL);
+		Assume.assumeTrue(db.isSupportsDBPartition());
 	}
 
 	protected static void addDBPartitions() throws Exception {

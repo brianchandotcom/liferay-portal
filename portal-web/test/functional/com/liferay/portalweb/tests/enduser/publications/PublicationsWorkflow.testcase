@@ -114,6 +114,14 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "site-name");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
@@ -123,8 +131,6 @@ definition {
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication Name");
 		}
-
-		HeadlessSite.addSite(siteName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "1",
+					"label": "Panel ID",
+					"name": "panelId",
+					"type": "text"
+				}
+			],
+			"label": "button-options"
+		}
+	]
+}

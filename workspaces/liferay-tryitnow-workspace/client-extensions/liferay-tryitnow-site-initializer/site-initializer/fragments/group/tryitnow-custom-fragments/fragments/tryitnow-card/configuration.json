@@ -1,0 +1,38 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "type",
+					"name": "type",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "elevated",
+								"value": ""
+							},
+							{
+								"label": "outlined",
+								"value": "card-outlined"
+							},
+							{
+								"label": "flat",
+								"value": "card-flat"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "interactive",
+					"name": "interactive",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

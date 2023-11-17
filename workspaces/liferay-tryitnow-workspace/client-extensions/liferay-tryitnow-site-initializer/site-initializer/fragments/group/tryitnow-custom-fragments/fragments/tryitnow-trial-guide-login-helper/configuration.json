@@ -1,0 +1,31 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "sam",
+					"label": "Person",
+					"name": "person",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Sam",
+								"value": "sam"
+							},
+							{
+								"label": "Carl",
+								"value": "carl"
+							},
+							{
+								"label": "Adam",
+								"value": "adam"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

@@ -174,9 +174,8 @@ definition {
 
 		task ("Then can click on the name link of the blocked page just using the keyboard") {
 			KeyPress(
-				key_columnName = "name",
 				key_tableEntry = "404 Error Utility Page",
-				locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX",
 				value1 = "\TAB");
 
 			KeyPress(

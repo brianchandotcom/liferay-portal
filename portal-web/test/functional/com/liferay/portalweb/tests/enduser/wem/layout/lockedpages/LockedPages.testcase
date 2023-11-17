@@ -20,6 +20,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194499. In the list of locked pages, the name of the content page is clickable and the link opens the content page in a new tab."
+	@priority = 5
+	test NavigateToLockedPagesInList {
+		var siteName = selenium.getText("Home#SITE_NAME");
+		var baseURL = PropsUtil.get("portal.url");
+
+		task ("Given a locked content page and locked collection page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addCollectionPage(
+				collectionName = "Recent Content",
+				pageName = "Collection Page Name",
+				tabName = "Collection Providers");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Button",
+				targetFragmentName = "Container");
+		}
+
+		task ("When navigating to the Locked Pages admin page") {
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+		}
+
+		task ("Then the name of the content page is clickable") {
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "name",
+				tableEntry = "Test Page Name");
+		}
+
+		task ("And the link opens the content page in a new tab") {
+			SelectWindow(value1 = "title=Test Page Name - Test Site Name - ${siteName}");
+
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
+
+			Close.closeAndSelectWindow(value1 = "title=Locked Pages - Test Site Name - ${siteName}");
+		}
+
+		task ("Then the name of the collection page is clickable") {
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "name",
+				tableEntry = "Collection Page Name");
+		}
+
+		task ("And the link opens the collection page in a new tab") {
+			SelectWindow(value1 = "title=Collection Page Name - Test Site Name - ${siteName}");
+
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "Collection Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-182024. The administrator could search locked pages in Locked Pages admin."
 	@priority = 4
 	test SearchLockedPagesInLockedPagesAdmin {

@@ -166,7 +166,7 @@ type ContainerList = {
 	[key in Containers]: TransformedContainer;
 };
 
-const formatContainers = (containers: Containers[]): ContainerList =>
+export const formatContainers = (containers: Containers[]): ContainerList =>
 	containers.reduce((acc, id) => {
 		acc[id] = {
 			...CONTAINERS[id],

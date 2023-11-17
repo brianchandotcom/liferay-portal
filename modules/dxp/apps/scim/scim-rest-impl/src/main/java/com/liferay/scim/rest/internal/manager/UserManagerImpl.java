@@ -432,7 +432,8 @@ public class UserManagerImpl implements UserManager {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
 			portalUser.getCompanyId(),
-			_classNameLocalService.getClassNameId(User.class.getName()),
+			_classNameLocalService.getClassNameId(
+				com.liferay.portal.kernel.model.User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		if (expandoTable == null) {

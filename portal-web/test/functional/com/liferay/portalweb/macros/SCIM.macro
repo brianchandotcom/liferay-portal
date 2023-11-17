@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureSCIM() {
+	macro configureSCIM(matcherField = null, applicationName = null) {
 		if (isSet(applicationName)) {
 			Type(
 				locator1 = "SCIM#OAUTH2_APPLICATION_NAME_FIELD",

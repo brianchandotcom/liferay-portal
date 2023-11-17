@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "guest",
+					"label": "Group Key",
+					"name": "groupKey",
+					"type": "text"
+				}
+			],
+			"label": "Configs"
+		}
+	]
+}

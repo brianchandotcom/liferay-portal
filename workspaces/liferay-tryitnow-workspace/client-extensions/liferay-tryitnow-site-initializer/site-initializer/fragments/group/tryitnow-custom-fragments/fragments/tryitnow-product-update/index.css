@@ -1,0 +1,31 @@
+.fragment_549 {
+}
+
+.fragment_549 h5{
+	max-width:300px;
+}
+.fragment_549 .icon-container{
+	position:relative;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.fragment_549 .product-update-container{
+	padding:16px;
+	display:flex;
+	flex-direction:row;
+	border-radius: 10px;
+	border-width:1px;
+	border-style:solid;
+}
+
+.fragment_549 .product-update-info{
+	margin-left:20px;
+	display:flex;
+	flex-direction:column;
+}
+
+.fragment_549 .product-update-info .info-item{
+	margin-bottom:4px;
+}

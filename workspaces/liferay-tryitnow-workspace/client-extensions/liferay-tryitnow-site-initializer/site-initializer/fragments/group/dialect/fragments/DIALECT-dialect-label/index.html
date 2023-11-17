@@ -1,0 +1,19 @@
+<div class="label-root">
+	<span class="label label${configuration.type}-${configuration.variant} ${configuration.size} m-0">
+		[#if configuration.iconBefore?has_content]
+			<span class="label-item label-item-before">
+				[@clay["icon"] symbol="${configuration.iconBefore}" /]
+			</span>
+		[/#if]
+
+		<span class="label-item label-item-expand">
+			<div data-lfr-editable-id="label" data-lfr-editable-type="text">Label</div>
+		</span>
+
+		[#if configuration.iconAfter?has_content]
+			<span class="label-item label-item-after">
+				[@clay["icon"] symbol="${configuration.iconAfter}" /]
+			</span>
+		[/#if]
+	</span>
+</div>

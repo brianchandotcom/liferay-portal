@@ -1,0 +1,29 @@
+.clarity-tabs .icon-img{
+	width:48px !important;
+	height:48px !important;
+}
+
+.clarity-tabs .tab-panel{
+	flex-grow: 2;
+}
+
+.clarty-tabs .tab-panel-item img{
+	width:970px !important;
+	height:536px !important;
+}
+
+.clarity-nav-button{
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	max-width: 326px;
+	height: 133px;
+}
+
+.clarity-nav-button span{
+	margin-left:5px;
+}
+
+.clarity-tabs .tab-panel-item, .clarity-tabs .tab-panel-item div{
+	height: 100%;
+}

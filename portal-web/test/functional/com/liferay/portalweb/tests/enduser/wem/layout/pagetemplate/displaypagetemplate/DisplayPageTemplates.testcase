@@ -1266,10 +1266,10 @@ definition {
 
 			User.logoutPG();
 
-			User.firstLoginUI(
+			User.firstLoginPG(
 				password = "test",
-				specificURL = ${url},
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea@liferay.com",
+				virtualHostsURL = ${url});
 		}
 
 		task ("View the content is in published version") {

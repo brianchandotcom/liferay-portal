@@ -73,15 +73,10 @@ export default function useKeyboardNavigation({handleOpen, key, type}: Props) {
 			}
 		},
 		true,
-
-		// @ts-ignore
-
-		element
+		element as Node
 	);
 
-	// @ts-ignore
-
-	useEventListener('focus', () => setIsTarget(true), true, element);
+	useEventListener('focus', () => setIsTarget(true), true, element as Node);
 
 	useEventListener(
 		'blur',
@@ -99,10 +94,7 @@ export default function useKeyboardNavigation({handleOpen, key, type}: Props) {
 			}
 		},
 		true,
-
-		// @ts-ignore
-
-		element
+		element as Node
 	);
 
 	return {isTarget, setElement};
@@ -153,11 +145,11 @@ function onHeaderKeyDown(
 			lastItem.focus();
 		}
 		else {
-			const previousHeader = previousCollapse.querySelector(
+			const previousHeader = previousCollapse.querySelector<HTMLElement>(
 				'button'
-			) as HTMLElement;
+			);
 
-			previousHeader.focus();
+			previousHeader?.focus();
 		}
 	}
 	else if (keyCode === ARROW_RIGHT_KEY_CODE) {

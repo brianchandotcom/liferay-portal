@@ -26,6 +26,8 @@ import com.liferay.document.library.repository.cmis.internal.model.CMISFileEntry
 import com.liferay.document.library.repository.cmis.internal.model.CMISFileVersion;
 import com.liferay.document.library.repository.cmis.internal.model.CMISFolder;
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
+import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -57,15 +59,19 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
+
+import java.lang.ref.Reference;
 
 import java.math.BigInteger;
 
@@ -79,6 +85,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
@@ -125,12 +135,11 @@ public class CMISRepository extends BaseCmisRepository {
 		CMISRepositoryConfiguration cmisRepositoryConfiguration,
 		CMISRepositoryHandler cmisRepositoryHandler,
 		CMISSearchQueryBuilder cmisSearchQueryBuilder,
-		CMISSessionCache cmisSessionCache, LockManager lockManager) {
+		LockManager lockManager) {
 
 		_cmisRepositoryConfiguration = cmisRepositoryConfiguration;
 		_cmisRepositoryHandler = cmisRepositoryHandler;
 		_cmisSearchQueryBuilder = cmisSearchQueryBuilder;
-		_cmisSessionCache = cmisSessionCache;
 		_lockManager = lockManager;
 	}
 
@@ -872,7 +881,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public Session getSession() throws PortalException {
-		Session session = _cmisSessionCache.get(_sessionKey);
+		Session session = _get(_sessionKey);
 
 		if (session == null) {
 			SessionImpl sessionImpl =
@@ -880,7 +889,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 			session = sessionImpl.getSession();
 
-			_cmisSessionCache.put(_sessionKey, session);
+			_put(_sessionKey, session);
 		}
 
 		if (_cmisRepositoryDetector == null) {
@@ -1863,6 +1872,31 @@ public class CMISRepository extends BaseCmisRepository {
 		return dlFolderLocalService.fetchFolder(repository.getDlFolderId());
 	}
 
+	private Session _get(String key) {
+		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+
+		if (httpSession == null) {
+			return null;
+		}
+
+		TransientValue<Session> transientValue =
+			(TransientValue<Session>)httpSession.getAttribute(key);
+
+		if (transientValue == null) {
+			return null;
+		}
+
+		Object value = transientValue.getValue();
+
+		if (value instanceof Session) {
+			return (Session)value;
+		}
+
+		httpSession.removeAttribute(key);
+
+		return null;
+	}
+
 	private org.apache.chemistry.opencmis.client.api.Folder _getCmisFolder(
 			Session session, long folderId)
 		throws PortalException {
@@ -2094,6 +2128,22 @@ public class CMISRepository extends BaseCmisRepository {
 
 			throw new PrincipalException.MustBeAuthenticated(login);
 		}
+	}
+
+	private void _put(String key, Session session) {
+		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+
+		if (httpSession == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get HTTP session");
+			}
+
+			return;
+		}
+
+		httpSession.setAttribute(key, new TransientValue<>(session));
+
+		_sessions.putIfAbsent(httpSession.getId(), httpSession);
 	}
 
 	private Hits _search(SearchContext searchContext, Query query)
@@ -2377,8 +2427,11 @@ public class CMISRepository extends BaseCmisRepository {
 	private CMISRepositoryDetector _cmisRepositoryDetector;
 	private final CMISRepositoryHandler _cmisRepositoryHandler;
 	private final CMISSearchQueryBuilder _cmisSearchQueryBuilder;
-	private final CMISSessionCache _cmisSessionCache;
 	private final LockManager _lockManager;
 	private String _sessionKey;
+	private final ConcurrentMap<String, HttpSession> _sessions =
+		new ConcurrentReferenceValueHashMap<>(
+			new ConcurrentHashMap<String, Reference<HttpSession>>(),
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 }

@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterSearcher;
 import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 
@@ -44,7 +43,7 @@ public class SearchResultPermissionFilterFactoryImpl
 		PermissionChecker permissionChecker) {
 
 		return new DefaultSearchResultPermissionFilter(
-			facetPostProcessor, indexerRegistry, permissionChecker, props,
+			facetPostProcessor, indexerRegistry, permissionChecker,
 			relatedEntryIndexerRegistry,
 			searchContext -> _search(
 				searchResultPermissionFilterSearcher, searchContext),
@@ -66,9 +65,6 @@ public class SearchResultPermissionFilterFactoryImpl
 
 	@Reference
 	protected IndexerRegistry indexerRegistry;
-
-	@Reference
-	protected Props props;
 
 	@Reference
 	protected RelatedEntryIndexerRegistry relatedEntryIndexerRegistry;

@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -141,7 +140,6 @@ public class DefaultSearchResultPermissionFilterTest {
 		return new DefaultSearchResultPermissionFilter(
 			Mockito.mock(FacetPostProcessor.class),
 			Mockito.mock(IndexerRegistry.class), _permissionChecker,
-			Mockito.mock(Props.class),
 			Mockito.mock(RelatedEntryIndexerRegistry.class), _searchFunction,
 			searchRequestBuilderFactory,
 			_defaultSearchResultPermissionFilterConfiguration);

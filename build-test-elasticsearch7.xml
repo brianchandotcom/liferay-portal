@@ -95,13 +95,21 @@
 		<attribute name="elasticsearch.java.home" />
 
 		<sequential>
-			<replace
-				file="${elasticsearch.dir}/bin/elasticsearch-env"
-			>
-				<replacetoken><![CDATA[#!/bin/bash]]></replacetoken>
-				<replacevalue><![CDATA[#!/bin/bash
-ES_JAVA_HOME=@{elasticsearch.java.home}]]></replacevalue>
-			</replace>
+			<if>
+				<isset property="env.JENKINS_HOME" />
+				<then>
+					<replace
+						file="${elasticsearch.dir}/bin/elasticsearch-env"
+					>
+						<replacetoken><![CDATA[#!/bin/bash]]></replacetoken>
+						<replacevalue><![CDATA[#!/bin/bash
+		ES_JAVA_HOME=@{elasticsearch.java.home}]]></replacevalue>
+					</replace>
+				</then>
+				<else>
+					<echo>Set ${elasticsearch.dir}/bin/elasticsearch-env manually.</echo>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

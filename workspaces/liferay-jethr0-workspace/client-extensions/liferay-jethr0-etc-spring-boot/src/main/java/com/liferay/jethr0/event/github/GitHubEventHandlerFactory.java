@@ -35,17 +35,23 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 			JSONObject commentJSONObject = messageJSONObject.optJSONObject(
 				"comment");
 
-			EventHandlerContext eventHandlerContext = getEventHandlerContext();
-
 			if (commentJSONObject != null) {
+				EventHandlerContext eventHandlerContext =
+					getEventHandlerContext();
+
 				String body = commentJSONObject.getString("body");
 
 				if (body.startsWith("ci:help")) {
 					return new CIHelpGitHubEventHandler(
 						eventHandlerContext, messageJSONObject);
 				}
+				else if (body.startsWith("ci:test")) {
+					return new CITestGitHubEventHandler(
+						eventHandlerContext, messageJSONObject);
+				}
 
-				throw new IllegalArgumentException("Invalid \"body\"");
+				throw new IllegalArgumentException(
+					"Invalid \"body\" from comment JSON");
 			}
 		}
 

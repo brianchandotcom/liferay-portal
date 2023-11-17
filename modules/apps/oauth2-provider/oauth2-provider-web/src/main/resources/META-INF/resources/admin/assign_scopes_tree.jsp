@@ -67,13 +67,13 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 													<c:when test="${parentNodes.size() > 0}">
 													<div class="col-md-8">
 														<div class="scope-children-${parentNodes.size()}">
-															<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-childrens="true" data-parent="${parentNodes.getFirst().value}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
+															<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-children="true" data-parent="${parentNodes.getFirst().value}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
 														</div>
 													</div>
 													</c:when>
 													<c:otherwise>
 													<div class="col-md-8">
-														<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-childrens="true" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
+														<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-children="true" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
 													</div>
 													</c:otherwise>
 												</c:choose>
@@ -149,12 +149,12 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 		'click',
 		'input[name="<portlet:namespace />scopeAliases"]',
 		(event) => {
-			recalculateScopeChildrens(event.target);
+			recalculateScopeChildren(event.target);
 			recalculateScopeParents(event.target);
 		}
 	);
 
-	const recalculateScopeChildrens = (checkboxElement) => {
+	const recalculateScopeChildren = (checkboxElement) => {
 		const valueId = checkboxElement.value;
 		const isChecked = checkboxElement.checked;
 
@@ -162,9 +162,9 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 			.querySelectorAll('input[data-parent="' + valueId + '"]')
 			.forEach((element) => {
 				element.checked = isChecked;
-				const hasChildrens = checkboxElement.dataset.hasChildrens;
-				if (hasChildrens) {
-					recalculateScopeChildrens(element);
+				const hasChildren = checkboxElement.dataset.hasChildren;
+				if (hasChildren) {
+					recalculateScopeChildren(element);
 				}
 			});
 	};
@@ -184,7 +184,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 
 	const checkNewScopesInCheckedParents = () => {
 		document
-			.querySelectorAll('input[data-has-childrens="true"]')
+			.querySelectorAll('input[data-has-children="true"]')
 			.forEach((parent) => {
 				if (parent.checked) {
 					const parentValue = parent.value;

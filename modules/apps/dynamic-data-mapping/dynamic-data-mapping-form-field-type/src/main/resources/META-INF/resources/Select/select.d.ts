@@ -19,6 +19,7 @@ interface MainProps {
 	defaultSearch?: boolean;
 	editingLanguageId?: Locale;
 	fixedOptions?: Option<string>[];
+	id?: string;
 	label: string;
 	localizedValue?: any;
 	localizedValueEdited?: any;

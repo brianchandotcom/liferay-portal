@@ -72,6 +72,7 @@ function FieldOperator({
 		<>
 			<Timeline.FormGroupItem>
 				<FieldStateless
+					id="field-operator-id-test"
 					onChange={(event) => {
 						const operator = event.value[0];
 
@@ -96,6 +97,7 @@ function FieldOperator({
 			{isBinaryOperator(operator) && left.type !== 'user' && (
 				<Timeline.FormGroupItem>
 					<FieldStateless
+						id="field-binary-operator-id-test"
 						onChange={(event) =>
 							onChange({
 								payload: event.value[0],
@@ -149,11 +151,14 @@ function FieldLeft({
 						value: 'user',
 					},
 				]}
+				id="field-left-id-test"
 				onChange={onChange}
 				onSelectionChange={(itemKey) => {
-					setFieldLeftSelectedKey(itemKey);
 					setOperatorValue(undefined);
-					setReload(true);
+					if (itemKey !== fieldLeftSelectedKey) {
+						setReload(true);
+					}
+					setFieldLeftSelectedKey(itemKey);
 				}}
 				options={fields}
 				placeholder={Liferay.Language.get('choose-an-option')}
@@ -244,6 +249,7 @@ function FieldRight({fields, left, right, roles, ...otherProps}) {
 				{...otherProps}
 				{...props}
 				dataType={left.field?.dataType}
+				id="field-right-id-test"
 				showEmptyOption={false}
 				type={
 					left.type === 'user'
@@ -327,21 +333,26 @@ export function Conditions({
 								size="sm"
 							/>
 						) : (
-							<FieldOperator
-								fields={fields}
-								left={left}
-								onChange={({payload, type}) =>
-									dispatch({
-										payload: {loc: index, value: payload},
-										type,
-									})
-								}
-								operator={operator}
-								operatorValue={operatorValue}
-								operatorsByType={operatorsByType}
-								right={right}
-								setOperatorValue={setOperatorValue}
-							/>
+							fieldLeftSelectedKey && (
+								<FieldOperator
+									fields={fields}
+									left={left}
+									onChange={({payload, type}) =>
+										dispatch({
+											payload: {
+												loc: index,
+												value: payload,
+											},
+											type,
+										})
+									}
+									operator={operator}
+									operatorValue={operatorValue}
+									operatorsByType={operatorsByType}
+									right={right}
+									setOperatorValue={setOperatorValue}
+								/>
+							)
 						)}
 
 						{right && right.type && (

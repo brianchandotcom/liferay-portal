@@ -113,6 +113,7 @@ describe('Editor', () => {
 
 	beforeEach(() => {
 		global.fetch.mockResponse(JSON.stringify(FIELDS_TYPES));
+		jest.useFakeTimers();
 	});
 
 	beforeAll(() => {
@@ -173,7 +174,7 @@ describe('Editor', () => {
 					'shows operators related to texts when field left is a %p',
 					async ({type}) => {
 						const props = defaultProps();
-						const {getByText} = render(
+						const {getByTestId, getByText} = render(
 							<Editor
 								{...props}
 								onChange={() => {}}
@@ -187,28 +188,29 @@ describe('Editor', () => {
 								.querySelectorAll('.ddm-field')[0];
 						});
 
-						const fieldLeft = document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[0]
-							.querySelector('button');
+						const fieldLeft = await waitFor(() => {
+							return getByTestId('field-left-id-test');
+						});
 
 						userEvent.click(fieldLeft);
 
 						const selectedItem = getByText(type);
+
 						fireEvent.click(selectedItem);
 
-						await waitFor(() => {
-							return document
-								.querySelectorAll('.timeline-item')[1]
-								.querySelectorAll('.ddm-field')[1];
+						await waitFor(() =>
+							getByTestId('field-operator-id-test')
+						);
+
+						act(() => {
+							jest.runAllTimers();
 						});
 
-						const fieldOperator = document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[1]
-							.querySelector('button');
+						const fieldOperator = getByTestId(
+							'field-operator-id-test'
+						);
 
-						userEvent.click(fieldOperator);
+						fireEvent.click(fieldOperator);
 
 						TEXT_OPERATORS.forEach((operator) => {
 							expect(getByText(operator)).toBeTruthy();
@@ -220,7 +222,7 @@ describe('Editor', () => {
 					'shows operators related to numbers when field left is a %p',
 					async ({type}) => {
 						const props = defaultProps();
-						const {getByText} = render(
+						const {getByTestId, getByText} = render(
 							<Editor
 								{...props}
 								onChange={() => {}}
@@ -234,28 +236,29 @@ describe('Editor', () => {
 								.querySelectorAll('.ddm-field')[0];
 						});
 
-						const fieldLeft = document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[0]
-							.querySelector('button');
+						const fieldLeft = await waitFor(() => {
+							return getByTestId('field-left-id-test');
+						});
 
 						userEvent.click(fieldLeft);
 
 						const selectedItem = getByText(type);
+
 						fireEvent.click(selectedItem);
 
-						await waitFor(() => {
-							return document
-								.querySelectorAll('.timeline-item')[1]
-								.querySelectorAll('.ddm-field')[1];
+						await waitFor(() =>
+							getByTestId('field-operator-id-test')
+						);
+
+						act(() => {
+							jest.runAllTimers();
 						});
 
-						const fieldOperator = document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[1]
-							.querySelector('button');
+						const fieldOperator = getByTestId(
+							'field-operator-id-test'
+						);
 
-						userEvent.click(fieldOperator);
+						fireEvent.click(fieldOperator);
 
 						NUMBER_OPERATORS.forEach((operator) => {
 							expect(getByText(operator)).toBeTruthy();
@@ -265,7 +268,7 @@ describe('Editor', () => {
 
 				it('shows operators related to roles when field left is an User', async () => {
 					const props = defaultProps();
-					const {getByText} = render(
+					const {getByTestId, getByText} = render(
 						<Editor
 							{...props}
 							onChange={() => {}}
@@ -279,30 +282,25 @@ describe('Editor', () => {
 							.querySelectorAll('.ddm-field')[0];
 					});
 
-					const fieldLeft = document
-						.querySelectorAll('.timeline-item')[1]
-						.querySelectorAll('.ddm-field')[0]
-						.querySelector('button');
+					const fieldLeft = await waitFor(() => {
+						return getByTestId('field-left-id-test');
+					});
 
 					userEvent.click(fieldLeft);
 
 					const selectedItem = getByText('user');
+
 					fireEvent.click(selectedItem);
 
-					await waitFor(() => {
-						return document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[1];
+					await waitFor(() => getByTestId('field-operator-id-test'));
+
+					act(() => {
+						jest.runAllTimers();
 					});
 
-					const fieldOperator = document
-						.querySelectorAll('.timeline-item')[1]
-						.querySelectorAll('.ddm-field')[1]
-						.querySelector('button');
+					const fieldOperator = getByTestId('field-operator-id-test');
 
-					await act(async () => {
-						fireEvent.click(fieldOperator);
-					});
+					fireEvent.click(fieldOperator);
 
 					USER_OPERATORS.forEach((operator) => {
 						expect(getByText(operator)).toBeTruthy();
@@ -323,7 +321,7 @@ describe('Editor', () => {
 
 						/** For document_library field to be displayed a user must by signed in */
 						Liferay.ThemeDisplay.isSignedIn = mockIsSignedIn;
-						const {getByText} = render(
+						const {getByTestId, getByText} = render(
 							<Editor
 								{...props}
 								onChange={() => {}}
@@ -337,39 +335,42 @@ describe('Editor', () => {
 								.querySelectorAll('.ddm-field')[0];
 						});
 
-						const fieldLeft = document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[0]
-							.querySelector('button');
+						const fieldLeft = await waitFor(() => {
+							return getByTestId('field-left-id-test');
+						});
 
 						userEvent.click(fieldLeft);
 
 						const selectedItem = getByText(type);
 						fireEvent.click(selectedItem);
 
-						await waitFor(() => {
-							return document
-								.querySelectorAll('.timeline-item')[1]
-								.querySelectorAll('.ddm-field')[1];
+						await waitFor(() =>
+							getByTestId('field-operator-id-test')
+						);
+
+						act(() => {
+							jest.runAllTimers();
 						});
 
-						const fieldOperator = document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[1]
-							.querySelector('button');
+						const fieldOperator = getByTestId(
+							'field-operator-id-test'
+						);
 
-						userEvent.click(fieldOperator);
+						fireEvent.click(fieldOperator);
+
+						act(() => {
+							jest.runAllTimers();
+						});
 
 						await act(async () => {
 							fireEvent.click(getByText('Is equal to'));
 						});
 
-						const actionsType = document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[2]
-							.querySelector('button');
+						const binaryOperator = await waitFor(() => {
+							return getByTestId('field-binary-operator-id-test');
+						});
 
-						fireEvent.click(actionsType);
+						fireEvent.click(binaryOperator);
 
 						await act(async () => {
 							fireEvent.click(getByText('value'));
@@ -381,6 +382,7 @@ describe('Editor', () => {
 								.querySelectorAll('.ddm-field')[3]
 								.querySelector(selector);
 						});
+
 						expect(
 							document
 								.querySelectorAll('.timeline-item')[1]
@@ -395,7 +397,7 @@ describe('Editor', () => {
 					const mockIsSignedIn = jest.fn();
 
 					Liferay.ThemeDisplay.isSignedIn = mockIsSignedIn;
-					const {getByText, queryAllByText} = render(
+					const {getAllByText, getByTestId, getByText} = render(
 						<Editor
 							{...props}
 							onChange={() => {}}
@@ -409,39 +411,39 @@ describe('Editor', () => {
 							.querySelectorAll('.ddm-field')[0];
 					});
 
-					const fieldLeft = document
-						.querySelectorAll('.timeline-item')[1]
-						.querySelectorAll('.ddm-field')[0]
-						.querySelector('button');
+					const fieldLeft = await waitFor(() => {
+						return getByTestId('field-left-id-test');
+					});
 
 					userEvent.click(fieldLeft);
 
 					const selectedItem = getByText('text');
+
 					fireEvent.click(selectedItem);
 
-					await waitFor(() => {
-						return document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[1];
+					await waitFor(() => getByTestId('field-operator-id-test'));
+
+					act(() => {
+						jest.runAllTimers();
 					});
 
-					const fieldOperator = document
-						.querySelectorAll('.timeline-item')[1]
-						.querySelectorAll('.ddm-field')[1]
-						.querySelector('button');
+					const fieldOperator = getByTestId('field-operator-id-test');
 
-					userEvent.click(fieldOperator);
+					fireEvent.click(fieldOperator);
+
+					act(() => {
+						jest.runAllTimers();
+					});
 
 					await act(async () => {
 						fireEvent.click(getByText('Is equal to'));
 					});
 
-					const actionsType = document
-						.querySelectorAll('.timeline-item')[1]
-						.querySelectorAll('.ddm-field')[2]
-						.querySelector('button');
+					const binaryOperator = await waitFor(() => {
+						return getByTestId('field-binary-operator-id-test');
+					});
 
-					fireEvent.click(actionsType);
+					fireEvent.click(binaryOperator);
 
 					await act(async () => {
 						fireEvent.click(getByText('other-field'));
@@ -451,30 +453,20 @@ describe('Editor', () => {
 						NUMBER_TYPE_FIELDS
 					).concat(UPLOAD_TYPE_FIELD);
 
-					await act(async () => {
-						document
-							.querySelectorAll('.timeline-item')[1]
-							.querySelectorAll('.ddm-field')[3]
-							.querySelector('button');
+					const otherValueButton = await waitFor(() => {
+						return getByTestId('field-right-id-test');
 					});
-
-					const otherValueButton = document
-						.querySelectorAll('.timeline-item')[1]
-						.querySelectorAll('.ddm-field')[3]
-						.querySelector('button');
 
 					fireEvent.click(otherValueButton);
 
 					allFields.forEach(({type}) => {
-						const fieldOption = queryAllByText(
-							(content, element) => {
-								return (
-									element.tagName.toLowerCase() ===
-										'button' && content.startsWith(type)
-								);
-							}
-						);
-						expect(fieldOption).toBeTruthy();
+						const fieldOccurency = getAllByText(type).length;
+						if (type === 'text') {
+							expect(fieldOccurency).toBe(2);
+						}
+						else {
+							expect(fieldOccurency).toBe(1);
+						}
 					});
 				});
 			});

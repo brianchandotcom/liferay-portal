@@ -14,6 +14,7 @@ declare const Main: ({
 	multiple,
 	name,
 	onChange,
+	id,
 	onSelectionChange,
 	options,
 	placeholder,

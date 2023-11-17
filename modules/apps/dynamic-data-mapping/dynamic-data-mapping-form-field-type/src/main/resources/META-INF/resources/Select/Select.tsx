@@ -22,6 +22,7 @@ import {toArray} from './selectOperations';
 import type {Locale} from '../types';
 
 function Select({
+	id,
 	label,
 	name,
 	onChange,
@@ -94,8 +95,8 @@ function Select({
 			<Picker
 				aria-labelledby={name}
 				aria-required={required}
+				data-testId={id}
 				disabled={readOnly}
-				id="picker"
 				items={[{items: options, label}]}
 				onSelectionChange={(itemKey: React.Key) => {
 					let newItemKey: React.Key | null = itemKey;
@@ -145,6 +146,7 @@ const Main = ({
 	multiple = false,
 	name,
 	onChange,
+	id,
 	onSelectionChange,
 	options = [],
 	placeholder = Liferay.Language.get('choose-an-option'),
@@ -247,6 +249,7 @@ const Main = ({
 				) : (
 					<Select
 						fixedOptions={fixedOptions}
+						id={id}
 						label={label}
 						localizedValue={undefined}
 						localizedValueEdited={undefined}

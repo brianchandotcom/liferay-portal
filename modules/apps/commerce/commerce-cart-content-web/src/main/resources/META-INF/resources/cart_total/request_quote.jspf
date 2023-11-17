@@ -8,6 +8,8 @@
 <%
 boolean manageNotesPermission = commerceCartContentTotalDisplayContext.hasPermission(CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES);
 boolean manageRestrictedNotesPermission = commerceCartContentTotalDisplayContext.hasPermission(CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES);
+
+CommerceOrder commerceOrder = commerceCartContentTotalDisplayContext.getCommerceOrder();
 %>
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editRequestQuoteURL" />
@@ -19,7 +21,29 @@ boolean manageRestrictedNotesPermission = commerceCartContentTotalDisplayContext
 
 	<div class="hide" id="<portlet:namespace />requestQuoteNote">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="requestQuote" />
-		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceCartContentTotalDisplayContext.getCommerceOrderId() %>" />
+		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
+
+		<c:choose>
+			<c:when test="<%= commerceOrder.isGuestOrder() %>">
+				<div>
+					<aui:input label="" name="emailAddress" placeholder="enter-an-email-address" required="<%= true %>" type="text">
+						<aui:validator name="email" />
+					</aui:input>
+				</div>
+			</c:when>
+			<c:otherwise>
+
+				<%
+				User currentUser = themeDisplay.getUser();
+				%>
+
+				<div>
+					<aui:input label="" name="emailAddress" placeholder="enter-an-email-address" required="<%= true %>" type="text" value="<%= currentUser.getEmailAddress() %>">
+						<aui:validator name="email" />
+					</aui:input>
+				</div>
+			</c:otherwise>
+		</c:choose>
 
 		<c:if test="<%= manageNotesPermission || manageRestrictedNotesPermission %>">
 			<aui:input label="" name="content" placeholder="type-your-note-here" type="textarea" />

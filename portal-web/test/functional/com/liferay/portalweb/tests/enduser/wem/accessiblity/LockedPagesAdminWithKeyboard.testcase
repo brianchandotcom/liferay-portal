@@ -146,6 +146,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194499. Using keyboard navigation, the name of the Utility page in the Locked Pages list is clickable and opens the Utility page in a new tab."
+	@priority = 4
+	test NavigateToLockedPageInListViaKeyboard {
+		var siteName = selenium.getText("Home#SITE_NAME");
+		var baseURL = PropsUtil.get("portal.url");
+
+		task ("Given a locked utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When navigating to the locked pages admin page") {
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+		}
+
+		task ("Then can click on the name link of the blocked page just using the keyboard") {
+			KeyPress(
+				key_columnName = "name",
+				key_tableEntry = "404 Error Utility Page",
+				locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_columnName = "name",
+				key_tableEntry = "404 Error Utility Page",
+				locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+				value1 = "\ENTER");
+
+			SelectWindow(value1 = "title=404 Error Utility Page - Test Site Name - ${siteName}");
+
+			ControlMenu.viewHeaderDraftTitle(headerTitle = "404 Error Utility Page");
+		}
+	}
+
 	@description = "This is a test for LPS-182024. The administrator could unlock locked page via keyboard."
 	@priority = 4
 	test UnlockLockedPageViaKeyboard {

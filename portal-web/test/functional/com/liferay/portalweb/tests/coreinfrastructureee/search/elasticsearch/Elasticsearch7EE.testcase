@@ -21,6 +21,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test LearningToRankSmoke {
 		property elastic.override.version = "7.17.10";

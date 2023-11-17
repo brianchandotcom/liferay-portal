@@ -140,4 +140,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182728. The user should see the field error below the Date fragment."
+	@priority = 3
+	test ViewDateFieldErrorMessageWhenPartialValidationFailure {
+		task ("Given a user has a content page where a mapped Date fragment has a partial validation") {
+			JSONObject.addObjectValidation(
+				errorMessage = "Please enter a valid date.",
+				fieldName = "purchaseDate",
+				labelName = "Date Validation",
+				objectName = "PurchaseOrder",
+				outputValidationType = "partialValidation",
+				script = "futureDates(purchaseDate, '2023-08-01')",
+				validationType = "ddm");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user submits form with invalid value") {
+			Type.sendKeys(
+				key_text = "Purchase Date",
+				locator1 = "TextInput#ANY",
+				value1 = 05102023);
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see a field error message below Date") {
+			Alert.viewFieldErrorMessage(
+				errorMessage = "Please enter a valid date.",
+				fieldLabel = "Purchase Date");
+		}
+	}
+
 }

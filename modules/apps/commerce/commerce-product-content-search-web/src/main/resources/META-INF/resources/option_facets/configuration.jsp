@@ -24,6 +24,7 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = new CPOp
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
+		<liferay-ui:error key="exceededMaxOptionsLimit" message="maximum-options-cannot-exceed-100" />
 		<liferay-ui:error key="exceededMaxTermsLimit" message="maximum-terms-cannot-exceed-100" />
 
 		<liferay-frontend:fieldset
@@ -45,6 +46,7 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = new CPOp
 			collapsible="<%= true %>"
 			label="advanced-configuration"
 		>
+			<aui:input label="max-options" name="preferences--maxOptions--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxOptions", null), 10) %>' />
 			<aui:input label="max-terms" name="preferences--maxTerms--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxTerms", null), 10) %>' />
 			<aui:input label="frequency-threshold" name="preferences--frequencyThreshold--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("frequencyThreshold", null), 1) %>' />
 			<aui:input label="display-frequencies" name="preferences--frequenciesVisible--" type="checkbox" value='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true) %>' />

@@ -1,0 +1,117 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "4",
+					"label": "number-of-tabs",
+					"name": "numberOfTabs",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "underline",
+					"label": "tab-style",
+					"name": "tabStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "primary",
+								"value": "underline"
+							},
+							{
+								"label": "secondary",
+								"value": "secondary"
+							},
+							{
+								"label": "tertiary",
+								"value": "tertiary"
+							},
+							{
+								"label": "segment",
+								"value": "segment"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "horizontal",
+					"description": "tab-direction",
+					"label": "tab-direction",
+					"name": "tabDirection",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "vertical",
+								"value": "nav-vertical"
+							},
+							{
+								"label": "horizontal",
+								"value": ""
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "bottom",
+					"description": "tab-active-bar-position",
+					"label": "tab-active-bar-position",
+					"name": "tabActiveBarPosition",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "bottom",
+								"value": ""
+							},
+							{
+								"label": "top",
+								"value": "nav-active-bar-top"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "check-circle",
+					"label": "icon-name",
+					"name": "iconName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "none",
+					"description": "icon-alignment",
+					"label": "icon-alignment",
+					"name": "iconAlignment",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "none"
+							},
+							{
+								"value": "right"
+							},
+							{
+								"value": "left"
+							}
+						]
+					}
+				}
+			],
+			"label": "tabs-options"
+		}
+	]
+}

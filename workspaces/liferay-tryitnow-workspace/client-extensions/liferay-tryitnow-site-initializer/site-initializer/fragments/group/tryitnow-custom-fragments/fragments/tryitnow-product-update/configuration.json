@@ -1,0 +1,28 @@
+{
+	"fieldSets": [
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"defaultValue": "var(--color-brand-primary)",
+					"label": "Separator Color",
+					"name": "separatorColor",
+					"type": "colorPicker"
+				},
+				{
+					"defaultValue": "120px",
+					"label": "Min Height",
+					"name": "minHeight",
+					"type": "text"
+				},
+				{
+					"defaultValue": "32px",
+					"label": "Icon Width And Height",
+					"name": "iconWidthAndHeight",
+					"type": "text"
+				}
+			],
+			"label": "separator-options"
+		}
+	]
+}

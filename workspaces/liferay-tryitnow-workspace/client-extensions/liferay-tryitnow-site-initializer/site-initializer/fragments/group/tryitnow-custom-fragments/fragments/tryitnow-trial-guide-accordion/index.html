@@ -1,0 +1,246 @@
+<div class="fragment_1025 position-relative">
+    <div name="panel" class="panel" id="panel">
+        <div class="panel-header">
+            <div class="panel-header-left">
+                <div name="txt-step-incomplete"
+                    class="animate__animated animate__fadeIn d-none panel-step bg-brand-primary-darken-1">
+                    <lfr-editable id="txt-step" name="txt-step" type="text">1</lfr-editable>
+                </div>
+                <div name="txt-step-complete"
+                    class="animate__animated animate__fadeIn d-none panel-step bg-brand-primary-lighten-5">
+                    <img src="[resources:check.svg]" />
+                </div>
+                <h4 class="text-neutral-9">
+                    <lfr-editable id="txt-header" name="txt-header" type="text">Customer of Clarity</lfr-editable>
+                </h4>
+            </div>
+            <div class="panel-header-right">
+                <button name="btn-incomplete" onclick="markAsIncomplete(${configuration.panelId})"
+                    class="animate__animated animate__fadeIn mark-as-incomplete d-none pr-4">
+                    Mark as Incomplete
+                    <img name="incomplete-spinner" class="animate__animated animate__fadeIn d-none spinner"
+                        src="[resources:loading.svg]" />
+                </button>
+                <button name="btn-complete" onclick="markAsComplete(${configuration.panelId})"
+                    class="animate__animated animate__fadeIn mark-as-complete d-none pr-4">
+                    Mark as Complete
+                    <img name="complete-spinner" class="animate__animated animate__fadeIn d-none spinner"
+                        src="[resources:loading.svg]" />
+                </button>
+                <p class="text-neutral-9">
+                    <lfr-editable id="txt-time-to-read" name="txt-time-to-read" type="text">4 min</lfr-editable>
+                </p>
+                <div class="panel-toggle " onclick="toggle(${configuration.panelId})">
+                    <span name="arrow" class="arrow arrow-collapse">^</span>
+                </div>
+            </div>
+        </div>
+        <div name="panel-body" class="panel-body">
+            <lfr-drop-zone></lfr-drop-zone>
+        </div>
+    </div>
+</div>
+<script>
+    {
+        var steps = {};
+        const arrows = document.getElementsByName('arrow');
+        const panelBodies = document.getElementsByName('panel-body');
+        const panels = document.getElementsByName('panel');
+        const stepCheckElements = document.getElementsByName('txt-step-complete');
+        const stepNumberElements = document.getElementsByName('txt-step-incomplete');
+        const btnMarkAsCompleteElements = document.getElementsByName('btn-complete');
+        const btnMarkAsCompleteSpinnerElements = document.getElementsByName('complete-spinner');
+        const btnMarkAsIncompleteElements = document.getElementsByName('btn-incomplete');
+        const btnMarkAsIncompleteSpinnerElements = document.getElementsByName('incomplete-spinner');
+
+
+        function toggle(id) {
+            let arrow = arrows[+id - 1];
+            let panelBody = panelBodies[+id - 1];
+            let panel = panels[+id - 1];
+            if (arrow.classList.contains('arrow-expand')) {
+                arrow.classList.remove('arrow-expand');
+                arrow.classList.add('arrow-collapse');
+
+                panelBody.classList.remove('panel-body-expand');
+                panelBody.classList.add('panel-body-collapse');
+
+                panel.classList.remove('panel-expand');
+                panel.classList.add('panel-collapse');
+
+            } else if (arrow.classList.contains('arrow-collapse')) {
+                arrow.classList.remove('arrow-collapse');
+                arrow.classList.add('arrow-expand');
+
+                panelBody.classList.remove('panel-body-collapse');
+                panelBody.classList.add('panel-body-expand');
+
+                panel.classList.remove('panel-collapse');
+                panel.classList.add('panel-expand');
+            }
+        }
+
+
+        function updateStep(data, success, error) {
+            console.log(data);
+            $.ajax({
+                url: '/o/c/progresstrackers/' + data.id + '?p_auth='+Liferay.authToken,
+                success: success,
+                error: error,
+                method: 'PUT',
+                data: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+
+        function showToastSuccess(message) {
+            $.toast({
+                heading: 'Success',
+                text: message,
+                position: 'top-right',
+                icon: 'success',
+                stack: true,
+                bgColor: '#4caf50',
+                textColor: 'white'
+            });
+        }
+
+        function showToastError(message) {
+            $.toast({
+                heading: 'Error',
+                text: message,
+                position: 'top-right',
+                icon: 'error',
+                stack: true
+            });
+        }
+
+        function markAsComplete(id) {
+            let btnMarkAsCompleteElement = btnMarkAsCompleteElements[id - 1];
+            let btnMarkAsIncompleteElement = btnMarkAsIncompleteElements[id - 1];
+            let btnMarkAsCompleteSpinnerElement = btnMarkAsCompleteSpinnerElements[id - 1];
+            let stepCheckElement = stepCheckElements[id - 1];
+            let stepNumberElement = stepNumberElements[id -1];
+
+            replaceCSSClasses(btnMarkAsCompleteElement, 'pr-4');
+            replaceCSSClasses(btnMarkAsCompleteSpinnerElement, 'd-none', 'd-block');
+
+            function success() {
+                replaceCSSClasses(btnMarkAsCompleteElement, null, 'pr-4');
+
+                replaceCSSClasses(btnMarkAsIncompleteElement,'d-none','d-flex')
+                replaceCSSClasses(btnMarkAsCompleteElement, 'd-flex', 'd-none');
+
+                replaceCSSClasses(stepCheckElement,'d-none','d-flex');
+                replaceCSSClasses(stepNumberElement,'d-flex','d-none');
+                
+                replaceCSSClasses(btnMarkAsCompleteSpinnerElement, 'd-block', 'd-none');
+                //showToastSuccess('Marked as Complete successfully!');
+            }
+
+            function error() {
+                showToastError('Something went wrong, please try again later.');
+                replaceCSSClasses(btnMarkAsCompleteElement, null, 'pr-4');
+                replaceCSSClasses(btnMarkAsCompleteSpinnerElement, 'd-block', 'd-none');
+                loadData();
+            }
+
+            updateStep({
+                id: steps[(id - 1)].id,
+                done: true,
+                stepNumber: steps[id - 1].stepNumber
+            }, success, error)
+        }
+
+        function markAsIncomplete(id) {
+            let btnMarkAsIncompleteElement = btnMarkAsIncompleteElements[id - 1];
+            let btnMarkAsCompleteElement = btnMarkAsCompleteElements[id - 1];
+            let btnMarkAsIncompleteSpinnerElement = btnMarkAsIncompleteSpinnerElements[id - 1];
+            let stepCheckElement = stepCheckElements[id - 1];
+            let stepNumberElement = stepNumberElements[id -1];
+
+            replaceCSSClasses(btnMarkAsIncompleteElement, 'pr-4');
+            replaceCSSClasses(btnMarkAsIncompleteSpinnerElement, 'd-none', 'd-block');
+
+            function success() {
+
+                replaceCSSClasses(btnMarkAsIncompleteElement, null, 'pr-4');
+
+                replaceCSSClasses(btnMarkAsIncompleteElement, 'd-flex', 'd-none');
+                replaceCSSClasses(btnMarkAsCompleteElement,'d-none','d-flex')
+
+                replaceCSSClasses(stepCheckElement,'d-flex','d-none');
+                replaceCSSClasses(stepNumberElement,'d-none','d-flex');
+
+                replaceCSSClasses(btnMarkAsIncompleteSpinnerElement, 'd-block', 'd-none');
+                //showToastSuccess('Marked as Incomplete successfully!');
+            }
+
+            function error() {
+                showToastError('Something went wrong, please try again later.');
+                replaceCSSClasses(btnMarkAsIncompleteElement, null, 'pr-4');
+                replaceCSSClasses(btnMarkAsIncompleteSpinnerElement, 'd-block', 'd-none');
+                loadData();
+            }
+
+            updateStep({
+                id: steps[(id - 1)].id,
+                done: false,
+                stepNumber: steps[id - 1].stepNumber
+            }, success, error)
+        }
+
+        function loadData() {
+            $.ajax({
+                url: '/o/c/progresstrackers?p_auth='+Liferay.authToken,
+                method: 'GET',
+                success: success,
+                error: error,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            function error() {
+                showToastError('Could not load data.');
+            }
+
+            function success(data) {
+                let stepCheckElement = stepCheckElements[${ configuration.panelId }-1];
+                let stepNumberElement = stepNumberElements[${ configuration.panelId }-1];
+                let btnMarkAsCompleteElement = btnMarkAsCompleteElements[${ configuration.panelId }-1];
+                let btnMarkAsIncompleteElement = btnMarkAsIncompleteElements[${ configuration.panelId }-1];
+                const step = data.items.find(i => i.stepNumber == ${ configuration.panelId });
+                if (step) {
+                    steps[${ configuration.panelId } - 1] = {
+                        stepNumber: step.stepNumber,
+                            done: step.done,
+                                id : step.id
+                    };
+
+                    if (steps[${ configuration.panelId } - 1].done) {
+                        replaceCSSClasses(stepCheckElement, 'd-none', 'd-flex');
+
+                        replaceCSSClasses(btnMarkAsIncompleteElement, 'd-none', 'd-flex')
+
+                    } else {
+                        replaceCSSClasses(stepNumberElement, 'd-none', 'd-flex');
+
+                        replaceCSSClasses(btnMarkAsCompleteElement, 'd-none', 'd-flex');
+                    }
+                }
+            }
+        }
+
+        function replaceCSSClasses(element, removeClass, addClass) {
+            if (removeClass)
+                element.classList.remove(removeClass);
+            if (addClass)
+                element.classList.add(addClass);
+        }
+
+        loadData();
+    }
+</script>

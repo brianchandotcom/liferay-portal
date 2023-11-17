@@ -1,0 +1,44 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "check-circle",
+					"label": "icon-name",
+					"name": "iconName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "32px",
+					"label": "icon-size",
+					"name": "iconSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "18px"
+							},
+							{
+								"value": "32px"
+							},
+							{
+								"value": "48px"
+							},
+							{
+								"value": "64px"
+							},
+							{
+								"value": "128px"
+							},
+							{
+								"value": "256px"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

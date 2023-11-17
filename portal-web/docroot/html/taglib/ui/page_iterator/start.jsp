@@ -197,7 +197,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 		<nav aria-label="pagination">
 		<ul class="pagination">
-			<span class="page-item <%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
+			<li class="page-item <%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
 				<c:choose>
 					<c:when test="<%= cur > 1 %>">
 						<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur -1) : "" %>" title="<%= LanguageUtil.get(request, "previous-page") %>">
@@ -220,7 +220,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						</div>
 					</c:otherwise>
 				</c:choose>
-			</span>
+			</li>
 
 			<c:choose>
 				<c:when test="<%= pages <= 5 %>">
@@ -258,14 +258,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 3, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 3) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>3</a>
 					</li>
 					<li class="dropdown page-item">
-						<button aria-haspopup="true" class="dropdown-toggle page-link page-link" data-toggle="liferay-dropdown">
+						<button aria-haspopup="true" class="dropdown-toggle page-link page-link" data-toggle="liferay-dropdown" aria-controls="dropdown-pages-1">
 							<span aria-hidden="true">...</span>
 
 							<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 						</button>
 
 						<div class="dropdown-menu dropdown-menu-top-center">
-							<ul class="inline-scroller link-list">
+							<ul class="inline-scroller link-list" id="dropdown-pages-1" aria-expanded="false">
 
 								<%
 								for (int i = 4; i < initialPages; i++) {
@@ -294,14 +294,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 1) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>1</a>
 					</li>
 					<li class="dropdown page-item">
-						<button aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown">
+						<button aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown" aria-controls="dropdown-pages-2">
 							<span aria-hidden="true">...</span>
 
 							<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 						</button>
 
 						<div class="dropdown-menu dropdown-menu-top-center">
-							<ul class="inline-scroller link-list" data-max-index="<%= pages - 2 %>">
+							<ul class="inline-scroller link-list" data-max-index="<%= pages - 2 %>" id="dropdown-pages-2" aria-expanded="false">
 
 								<%
 								for (int i = 2; i < ((initialPages > (cur - 2)) ? cur - 2 : initialPages); i++) {
@@ -335,14 +335,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 					<c:if test="<%= (cur - 3) > 1 %>">
 						<li class="dropdown page-item">
-							<button aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown">
+							<button aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown" aria-controls="dropdown-pages-3">
 								<span aria-hidden="true">...</span>
 
 								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 							</button>
 
 							<div class="dropdown-menu dropdown-menu-top-center">
-								<ul class="inline-scroller link-list" data-max-index="<%= cur - 1 %>">
+								<ul class="inline-scroller link-list" data-max-index="<%= cur - 1 %>" id="dropdown-pages-3" aria-expanded="false">
 					</c:if>
 
 					<%
@@ -381,14 +381,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 					<c:if test="<%= (cur + 3) < pages %>">
 						<li class="dropdown page-item">
-							<button aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown">
+							<button aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown" aria-controls="dropdown-pages-4">
 								<span aria-hidden="true">...</span>
 
 								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 							</button>
 
 							<div class="dropdown-menu dropdown-menu-top-center">
-								<ul class="inline-scroller link-list" data-current-index="<%= cur + 2 %>">
+								<ul class="inline-scroller link-list" data-current-index="<%= cur + 2 %>" id="dropdown-pages-4" aria-expanded="false">
 					</c:if>
 
 					<%
@@ -417,7 +417,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				</c:otherwise>
 			</c:choose>
 
-			<span class="page-item <%= (cur < pages) ? StringPool.BLANK : "disabled" %>">
+			<li class="page-item <%= (cur < pages) ? StringPool.BLANK : "disabled" %>">
 				<c:choose>
 					<c:when test="<%= cur < pages %>">
 						<a class="lfr-portal-tooltip page-link" href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur + 1) : "" %>" title="<%= LanguageUtil.get(request, "next-page") %>">
@@ -440,7 +440,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						</div>
 					</c:otherwise>
 				</c:choose>
-			</span>
+			</li>
 		</ul>
 	</nav>
 	</div>

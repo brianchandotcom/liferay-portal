@@ -17,8 +17,7 @@ const getSiteURL = () => {
 
 const productSignIn = localStorage.getItem('productName');
 
-if (productSignIn) {
-	if (isLogged) {
-		location.href = `${getSiteURL()}/p/${productSignIn}`;
-	}
+if (productSignIn && isLogged) {
+	const productURL = `${getSiteURL()}/p/${productSignIn}`;
+	location.href = productURL;
 }

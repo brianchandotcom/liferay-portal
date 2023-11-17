@@ -1612,9 +1612,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectDropdownItem(optionName = null,currentOption = null,labelName = null) {
+	macro selectDropdownItem(optionName = null,labelName = null) {
 		Click(
-			key_currentOption = ${currentOption},
 			key_labelName = ${labelName},
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 

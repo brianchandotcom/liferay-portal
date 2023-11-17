@@ -8,8 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-
 User selUser = PortalUtil.getSelectedUser(request);
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
@@ -19,13 +17,6 @@ if (selUser != null) {
 }
 
 portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_user");
-
-if (Validator.isNotNull(backURL)) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
-
-	portletURL.setParameter("backURL", backURL);
-}
 %>
 
 <liferay-frontend:screen-navigation

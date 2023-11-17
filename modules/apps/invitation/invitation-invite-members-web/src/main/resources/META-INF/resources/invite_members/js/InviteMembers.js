@@ -31,7 +31,6 @@ export default function InviteMembers({
 	const [invitedUsersIds, setInvitedUsersIds] = useState([]);
 	const [roleId, setRoleId] = useState('');
 	const [teamId, setTeamId] = useState('');
-	const [numTotalUsers, setNumTotalUsers] = useState(0);
 	const [users, setUsers] = useState([]);
 	const [viewMoreCount, setViewMoreCount] = useState(1);
 
@@ -52,8 +51,7 @@ export default function InviteMembers({
 				method: 'POST',
 			})
 				.then((response) => response.json())
-				.then(({count, users}) => {
-					setNumTotalUsers(count);
+				.then(({users}) => {
 					setUsers(users);
 				});
 		},
@@ -352,7 +350,7 @@ export default function InviteMembers({
 
 									{!!users.length && <Users />}
 
-									{numTotalUsers / (viewMoreCount * 50) >
+									{users.length / (viewMoreCount * 50) >
 										1 && (
 										<div className="d-flex justify-content-center">
 											<ClayButton

@@ -19,6 +19,7 @@ export declare function ObjectDefinitionNode({
 		name,
 		objectFields,
 		selected,
+		showAllObjectFields,
 		status,
 		system,
 	},

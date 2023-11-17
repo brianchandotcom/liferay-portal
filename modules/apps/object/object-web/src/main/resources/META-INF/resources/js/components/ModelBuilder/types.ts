@@ -5,7 +5,6 @@
 
 import {Edge, Elements, Node} from 'react-flow-renderer';
 
-import {DeletedObjectDefinition} from '../ViewObjectDefinitions/ViewObjectDefinitions';
 import {TYPES} from './ModelBuilderContext/typesEnum';
 
 declare type TDropDownType =

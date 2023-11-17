@@ -8,14 +8,12 @@ import ClayCard from '@clayui/card';
 import React from 'react';
 
 import './EmptyObjectFolderCard.scss';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {TYPES} from '../ModelBuilderContext/typesEnum';
 
-interface EmptyObjectFolderCardProps {
-	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
-}
+export default function EmptyObjectFolderCard() {
+	const [{modelBuilderModals}, dispatch] = useObjectFolderContext();
 
-export default function EmptyObjectFolderCard({
-	setShowModal,
-}: EmptyObjectFolderCardProps) {
 	return (
 		<ClayCard className="lfr-objects__model-builder-empty-object-folder-card-container">
 			<ClayCard.Body className="lfr-objects__model-builder-empty-object-folder-card-body">
@@ -38,10 +36,15 @@ export default function EmptyObjectFolderCard({
 
 				<ClayButton
 					onClick={() =>
-						setShowModal((previousState: ModelBuilderModals) => ({
-							...previousState,
-							addObjectDefinition: true,
-						}))
+						dispatch({
+							payload: {
+								modelBuilderModals: {
+									...modelBuilderModals,
+									addObjectDefinition: true,
+								},
+							},
+							type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+						})
 					}
 					size="sm"
 				>

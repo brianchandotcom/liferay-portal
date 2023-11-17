@@ -14,7 +14,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  */
 @Component(service = CommerceMLIndexer.class)
-public class FrequentPatternCommerceMLRecommendationIndexer
+public class ProductContentRecommendationCommerceMLIndexer
 	extends BaseCommerceMLIndexer {
 
 	@Override
@@ -34,9 +34,9 @@ public class FrequentPatternCommerceMLRecommendationIndexer
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
-		"frequent-pattern-commerce-ml-recommendation-mappings.json";
+		"product-commerce-ml-recommendation-mappings.json";
 
 	private static final String _INDEX_NAME_PATTERN =
-		"%s-frequent-pattern-commerce-ml-recommendation";
+		"%s-product-content-commerce-ml-recommendation";
 
 }

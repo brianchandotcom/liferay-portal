@@ -342,7 +342,7 @@ public abstract class BaseCommerceMLForecastServiceImpl
 	protected static final String SORTABLE_FIELD_SUFFIX = "_sortable";
 
 	@Reference(
-		target = "(component.name=com.liferay.commerce.machine.learning.internal.forecast.search.index.CommerceMLForecastIndexer)"
+		target = "(component.name=com.liferay.commerce.machine.learning.internal.forecast.search.index.ForecastCommerceMLIndexer)"
 	)
 	protected volatile CommerceMLIndexer commerceMLIndexer;
 

@@ -240,7 +240,7 @@ public class FrequentPatternCommerceMLRecommendationManagerImpl
 		FrequentPatternCommerceMLRecommendationManagerImpl.class);
 
 	@Reference(
-		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.FrequentPatternCommerceMLRecommendationIndexer)"
+		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.FrequentPatternRecommendationCommerceMLIndexer)"
 	)
 	private CommerceMLIndexer _commerceMLIndexer;
 

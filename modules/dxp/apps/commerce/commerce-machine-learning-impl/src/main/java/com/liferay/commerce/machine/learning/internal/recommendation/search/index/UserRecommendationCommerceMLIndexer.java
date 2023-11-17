@@ -14,8 +14,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  */
 @Component(service = CommerceMLIndexer.class)
-public class ProductInteractionCommerceMLRecommendationIndexer
-	extends BaseCommerceMLIndexer {
+public class UserRecommendationCommerceMLIndexer extends BaseCommerceMLIndexer {
 
 	@Override
 	public void createIndex(long companyId) {
@@ -34,9 +33,9 @@ public class ProductInteractionCommerceMLRecommendationIndexer
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
-		"product-commerce-ml-recommendation-mappings.json";
+		"user-commerce-ml-recommendation-mappings.json";
 
 	private static final String _INDEX_NAME_PATTERN =
-		"%s-product-interaction-commerce-ml-recommendation";
+		"%s-user-commerce-ml-recommendation";
 
 }

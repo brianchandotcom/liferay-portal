@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.machine.learning.internal.recommendation.search.index;
+package com.liferay.commerce.machine.learning.internal.forecast.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
 import com.liferay.commerce.machine.learning.internal.search.index.helper.BaseCommerceMLIndexer;
@@ -14,8 +14,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  */
 @Component(service = CommerceMLIndexer.class)
-public class ProductContentCommerceMLRecommendationIndexer
-	extends BaseCommerceMLIndexer {
+public class ForecastCommerceMLIndexer extends BaseCommerceMLIndexer {
 
 	@Override
 	public void createIndex(long companyId) {
@@ -34,9 +33,8 @@ public class ProductContentCommerceMLRecommendationIndexer
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
-		"product-commerce-ml-recommendation-mappings.json";
+		"commerce-ml-forecast-mappings.json";
 
-	private static final String _INDEX_NAME_PATTERN =
-		"%s-product-content-commerce-ml-recommendation";
+	private static final String _INDEX_NAME_PATTERN = "%s-commerce-ml-forecast";
 
 }

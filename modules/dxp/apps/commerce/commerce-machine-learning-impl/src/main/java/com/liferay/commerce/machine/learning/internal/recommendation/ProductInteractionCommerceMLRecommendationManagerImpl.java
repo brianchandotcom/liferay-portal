@@ -105,7 +105,7 @@ public class ProductInteractionCommerceMLRecommendationManagerImpl
 	}
 
 	@Reference(
-		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.ProductInteractionCommerceMLRecommendationIndexer)"
+		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.ProductInteractionRecommendationCommerceMLIndexer)"
 	)
 	private CommerceMLIndexer _commerceMLIndexer;
 

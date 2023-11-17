@@ -77,18 +77,18 @@ export declare function getObjectFolderActions(
 	actions?: ObjectFolderActions
 ): (
 	| {
-			type: string;
-			label?: undefined;
-			onClick?: undefined;
-			symbolLeft?: undefined;
-			value?: undefined;
-	  }
-	| {
 			label: string;
 			onClick: () => void;
 			symbolLeft: string;
 			value: string;
 			type?: undefined;
+	  }
+	| {
+			type: string;
+			label?: undefined;
+			onClick?: undefined;
+			symbolLeft?: undefined;
+			value?: undefined;
 	  }
 )[];
 export declare function getUpdatedModelBuilderStructurePayload(

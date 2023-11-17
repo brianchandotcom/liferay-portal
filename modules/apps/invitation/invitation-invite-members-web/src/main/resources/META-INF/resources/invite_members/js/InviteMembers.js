@@ -117,9 +117,9 @@ export default function InviteMembers({
 				<div key={user.userId}>
 					<ClayList.Item className="border-0 p-1" flex>
 						<ClayList.ItemField className="justify-content-center">
-							{invitedUsers.find(
-								(invitedUser) =>
-									invitedUser.userId === user.userId
+							{invitedUsersIds.find(
+								(invitedUsersId) =>
+									invitedUsersId === user.userId
 							) ? (
 								<ClayButtonWithIcon
 									aria-label={sub(

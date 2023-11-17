@@ -89,7 +89,6 @@ definition {
 				locator1 = "ObjectAdmin#PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Choose an Option",
 				labelName = "Default Value",
 				optionName = "Item Test 1");
 
@@ -177,7 +176,6 @@ definition {
 				locator1 = "ObjectAdmin#PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Choose an Option",
 				labelName = "Default Value",
 				optionName = "Item Test 1");
 
@@ -211,7 +209,6 @@ definition {
 				locator1 = "ObjectAdmin#PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Item Test 1",
 				labelName = "Default Value",
 				optionName = "Item Test 2");
 
@@ -392,7 +389,6 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Choose an Option",
 				labelName = "Default Value",
 				optionName = "Picklist Item 1");
 

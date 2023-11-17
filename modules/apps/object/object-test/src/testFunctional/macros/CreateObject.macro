@@ -137,15 +137,15 @@ definition {
 
 	@summary = "Default summary"
 	macro assertValuesOnScope(valuePanelCategory = null, valueScope = null) {
-		AssertElementPresent(
-			key_currentOption = ${valueScope},
+		AssertTextEquals(
 			key_labelName = "Scope",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = ${valueScope});
 
-		AssertElementPresent(
-			key_currentOption = ${valuePanelCategory},
+		AssertTextEquals(
 			key_labelName = "Panel Link",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = ${valuePanelCategory});
 	}
 
 	@summary = "Default summary"
@@ -281,7 +281,6 @@ definition {
 	@summary = "Default summary"
 	macro selectTitleField(currentOption = null,fieldLabel = null) {
 		ObjectAdmin.selectDropdownItem(
-			currentOption = ${currentOption},
 			labelName = "Entry Title Field",
 			optionName = ${fieldLabel});
 	}

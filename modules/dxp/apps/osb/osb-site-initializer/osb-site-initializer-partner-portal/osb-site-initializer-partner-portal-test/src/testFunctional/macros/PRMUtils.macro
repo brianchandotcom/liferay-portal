@@ -172,7 +172,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = ${objectName});
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 

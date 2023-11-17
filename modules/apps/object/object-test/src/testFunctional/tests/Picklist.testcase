@@ -134,10 +134,10 @@ definition {
 
 			FormFields.viewRequiredAsterisk();
 
-			AssertElementPresent(
-				key_currentOption = "Picklist Item Test",
+			AssertTextEquals(
 				key_labelName = "Field Picklist",
-				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+				value1 = "Picklist Item Test");
 
 			PortletEntry.save();
 		}
@@ -268,7 +268,6 @@ definition {
 			Form.gotoAdvancedTab();
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Picklist Item Test 1",
 				labelName = "Input as Value",
 				optionName = "Picklist Item Test 2");
 
@@ -294,10 +293,10 @@ definition {
 
 			FormFields.viewRequiredAsterisk();
 
-			AssertElementPresent(
-				key_currentOption = "Picklist Item Test 2",
+			AssertTextEquals(
 				key_labelName = "Field Picklist",
-				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+				value1 = "Picklist Item Test 2");
 
 			PortletEntry.save();
 		}
@@ -793,12 +792,10 @@ definition {
 			PopulateObjectFormsConfiguration.openFormSettings();
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Padrão",
 				labelName = "Selecionar um tipo de armazenamento",
 				optionName = "Objeto");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Escolha uma Opção",
 				labelName = "Selecionar objetos",
 				optionName = "Custom Object 147730");
 
@@ -811,14 +808,9 @@ definition {
 				localeBasic = "Avançado",
 				localeFields = "Campos");
 
-			AssertClick(
-				key_formObjectField = "Escolha uma Opção",
-				locator1 = "PopulateObjectFormsConfiguration#FORM_OBJECT_FIELD",
-				value1 = "Escolha uma Opção");
-
-			Click(
-				key_fieldLabelName = "Field Picklist",
-				locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
+			ObjectAdmin.selectDropdownItem(
+				labelName = "Campo de objeto",
+				optionName = "Field Picklist");
 		}
 
 		task ("Publish and go to published form") {
@@ -828,11 +820,13 @@ definition {
 		}
 
 		task ("Assert that Picklist Item is translated") {
-			Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
+			Click(
+				key_labelName = "Selecionar da lista",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			AssertElementPresent(
-				key_label = "Teste de entrada",
-				locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
+				key_optionName = "Teste de entrada",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 		}
 	}
 
@@ -885,7 +879,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject298");
 
 		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-			currentOption = "Choose an Option",
 			labelName = "Field Picklist",
 			picklistOption = "Teste de entrada");
 
@@ -967,7 +960,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147729");
 
 		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-			currentOption = "Escolha uma Opção",
 			labelName = "Field Picklist",
 			picklistOption = "Teste de entrada",
 			saveName = "Salvar");
@@ -1034,12 +1026,10 @@ definition {
 				value1 = "Lista de itens");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Escolha uma Opção",
 				labelName = "Tipo",
 				optionName = "Lista de seleção");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Escolha uma Opção",
 				labelName = "Lista de seleção",
 				optionName = "Teste na lista");
 

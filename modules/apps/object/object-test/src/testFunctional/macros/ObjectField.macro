@@ -45,7 +45,6 @@ definition {
 		ObjectField.typeLabel(content = ${newContent});
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Decimal",
 			labelName = "Output",
 			optionName = ${newTypeFormula});
 
@@ -65,7 +64,6 @@ definition {
 	@summary = "Default summary"
 	macro selectOptionOnRequestFiles(option = null) {
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Request Files",
 			optionName = ${option});
 	}
@@ -73,7 +71,6 @@ definition {
 	@summary = "Default summary"
 	macro selectType(fieldType = null) {
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Type",
 			optionName = ${fieldType});
 	}

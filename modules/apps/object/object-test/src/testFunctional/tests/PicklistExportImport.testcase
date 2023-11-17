@@ -109,7 +109,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "ImportedSimpleObject175691");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-				currentOption = "Choose an Option",
 				labelName = "Field Picklist",
 				picklistOption = "Picklist Item 1");
 
@@ -154,7 +153,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175679");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-				currentOption = "Choose an Option",
 				labelName = "Field Picklist",
 				picklistOption = "Picklist Item 1");
 
@@ -267,7 +265,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175689");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-				currentOption = "Escolha uma Opção",
 				labelName = "Field Picklist",
 				picklistOption = "Item da lista de seleção 1",
 				saveName = "Salvar");

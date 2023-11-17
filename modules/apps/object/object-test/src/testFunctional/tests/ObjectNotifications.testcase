@@ -64,10 +64,10 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "View");
 
-			AssertElementPresent(
-				key_currentOption = "Custom Object 161924",
+			AssertTextEquals(
 				key_labelName = "Data Source",
-				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+				value1 = "Custom Object 161924");
 
 			AssertElementPresent(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
 		}
@@ -185,7 +185,6 @@ definition {
 			MenuItem.click(menuItem = "Email");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select a Data Source",
 				labelName = "Data Source",
 				optionName = "Custom Object B 183441");
 
@@ -246,7 +245,6 @@ definition {
 				subject = "Subject");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Entity",
 				optionName = "User");
 
@@ -293,13 +291,12 @@ definition {
 
 			ObjectNotifications.viewUserNotificationTemplateDetails(
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-				name = "Notification Template",
+				name = "User Notification Template",
 				notificationType = "User Notification",
 				recipientType = "User",
 				subject = "Subject content");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Entity",
 				optionName = "User");
 
@@ -1131,9 +1128,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object A");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Text Field A");
+			CreateObject.selectTitleField(fieldLabel = "Text Field A");
 
 			CreateObject.saveObject();
 		}
@@ -1336,9 +1331,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object A");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Text Field A");
+			CreateObject.selectTitleField(fieldLabel = "Text Field A");
 
 			CreateObject.saveObject();
 		}

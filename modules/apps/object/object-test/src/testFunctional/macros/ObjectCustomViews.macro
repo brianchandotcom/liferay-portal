@@ -27,12 +27,10 @@ definition {
 		}
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Columns",
 			optionName = ${columnOption});
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Ascending",
 			labelName = "Sorting",
 			optionName = ${sortOption});
 
@@ -52,7 +50,6 @@ definition {
 			locator1 = "ObjectCustomViews#FIELD_VIEW_FILTER_DROPDOWN_OPTION");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Filter Type",
 			optionName = ${filterType});
 
@@ -93,7 +90,6 @@ definition {
 
 		if (isSet(filterType)) {
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Filter Type",
 				optionName = ${filterType});
 		}

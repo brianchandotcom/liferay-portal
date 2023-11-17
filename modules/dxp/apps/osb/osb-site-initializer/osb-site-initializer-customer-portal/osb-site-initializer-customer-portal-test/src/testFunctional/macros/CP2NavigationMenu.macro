@@ -12,7 +12,6 @@ definition {
 		CreateObject.checkToggleActive();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 

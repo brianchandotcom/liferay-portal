@@ -71,9 +71,7 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		CreateObject.selectTitleField(
-			currentOption = "Name",
-			fieldLabel = "Type");
+		CreateObject.selectTitleField(fieldLabel = "Type");
 
 		CreateObject.saveObject();
 
@@ -532,9 +530,7 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		CreateObject.selectTitleField(
-			currentOption = "Name",
-			fieldLabel = "Description");
+		CreateObject.selectTitleField(fieldLabel = "Description");
 
 		CreateObject.saveObject();
 
@@ -581,10 +577,10 @@ definition {
 		for (var label : list "Name,Type") {
 			ObjectAdmin.goToFieldsDetails(label = ${label});
 
-			AssertElementPresent(
-				key_currentOption = "Text",
+			AssertTextEquals(
 				key_labelName = "Type",
-				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+				value1 = "Text");
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
 
@@ -747,9 +743,7 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		CreateObject.selectTitleField(
-			currentOption = "Name",
-			fieldLabel = "Entry Title Field");
+		CreateObject.selectTitleField(fieldLabel = "Entry Title Field");
 
 		CreateObject.saveObject();
 
@@ -773,9 +767,7 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		CreateObject.selectTitleField(
-			currentOption = "Name",
-			fieldLabel = "Type");
+		CreateObject.selectTitleField(fieldLabel = "Type");
 
 		CreateObject.saveObject();
 
@@ -783,10 +775,10 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		AssertElementPresent(
-			key_currentOption = "Type",
+		AssertTextEquals(
 			key_labelName = "Entry Title Field",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Type");
 	}
 
 	@description = "LPS-151765 - Verify if the Widget option is disable on System Object Account"

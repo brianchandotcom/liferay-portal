@@ -161,7 +161,6 @@ definition {
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Choose an Option",
 				labelName = "Custom Picklist Field",
 				optionName = "Open");
 
@@ -174,7 +173,6 @@ definition {
 			ObjectPortlet.viewEntryDetails(entry = "Open");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Open",
 				labelName = "Custom Picklist Field",
 				optionName = "In Progress");
 
@@ -890,7 +888,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175196");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-				currentOption = "Choose an Option",
 				labelName = "Custom Picklist Field",
 				picklistOption = "Open");
 		}
@@ -901,7 +898,6 @@ definition {
 			ObjectPortlet.viewEntryDetails(entry = "Open");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Open",
 				labelName = "Custom Picklist Field",
 				optionName = "In Progress");
 

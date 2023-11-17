@@ -17,7 +17,6 @@ definition {
 	@summary = "Default summary"
 	macro addNotificationTemplateAttachment(objectLabel = null) {
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select a Data Source",
 			labelName = "Data Source",
 			optionName = ${objectLabel});
 
@@ -115,7 +114,6 @@ definition {
 
 		if (isSet(recipientType)) {
 			Click(
-				key_currentOption = "Definition of Terms",
 				key_labelName = "Recipients",
 				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
@@ -336,10 +334,10 @@ definition {
 			locator1 = "TextArea#ANY",
 			value1 = ${subject});
 
-		AssertElementPresent(
-			key_currentOption = ${recipientType},
+		AssertTextEquals(
 			key_labelName = "Recipients",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = ${recipientType});
 
 		if (isSet(externalReferenceCode)) {
 			AssertElementPresent(

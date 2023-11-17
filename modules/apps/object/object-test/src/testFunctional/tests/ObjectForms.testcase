@@ -51,12 +51,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 207");
 
@@ -98,12 +96,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 208");
 
@@ -162,12 +158,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 151597");
 
@@ -219,12 +213,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 209");
 
@@ -276,12 +268,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 210");
 
@@ -338,12 +328,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 211");
 
@@ -373,12 +361,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		Click(
-			key_currentOption = "Choose an Option",
 			key_labelName = "Select Object",
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
@@ -450,14 +436,13 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Data Provider Select Field",
 			optionName = "Entry Test");
 
-		AssertElementPresent(
-			key_currentOption = "Entry Test",
+		AssertTextEquals(
 			key_labelName = "Data Provider Select Field",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Entry Test");
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Text field in Form"
@@ -551,7 +536,6 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 

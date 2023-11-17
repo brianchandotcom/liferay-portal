@@ -2368,9 +2368,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter} 149238");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Custom Field ${letter} 149238");
+			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter} 149238");
 
 			CreateObject.saveObject();
 		}

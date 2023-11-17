@@ -82,7 +82,6 @@ definition {
 		CreateObject.checkToggleActive();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Content & Data");
 
@@ -526,7 +525,6 @@ definition {
 		ObjectPortlet.selectObject(label = ${title});
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Choose an Option");
 
@@ -810,7 +808,6 @@ definition {
 		CreateObject.checkToggleActive();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 

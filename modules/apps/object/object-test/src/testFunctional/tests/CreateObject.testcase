@@ -380,16 +380,14 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 8");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
 		AssertElementPresent(
-			key_currentOption = "Custom Field",
 			key_labelName = "Entry Title Field",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Custom Field");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add an Object with the Add Object Definition permission"
@@ -505,9 +503,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 141652");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -535,9 +531,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 141653");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -604,9 +598,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 10");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -722,12 +714,10 @@ definition {
 			value1 = "Custom Relationship");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Type",
 			optionName = "One to Many");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Many Records Of",
 			optionName = "Custom Object 13");
 
@@ -1421,9 +1411,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 141661");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -2239,12 +2227,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 59");
 
@@ -2970,9 +2956,7 @@ definition {
 
 				ObjectPortlet.selectCustomObject(label = "Custom Object ${letter} 74");
 
-				CreateObject.selectTitleField(
-					currentOption = "ID",
-					fieldLabel = "Custom Field ${letter}");
+				CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
 
 				PortletEntry.publish();
 			}
@@ -3254,9 +3238,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 79");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -3478,12 +3460,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 85");
 
@@ -3767,10 +3747,10 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		AssertElementPresent(
-			key_currentOption = "English (United States)",
+		AssertTextEquals(
 			key_labelName = "Language",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "English (United States)");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
@@ -3798,7 +3778,6 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Text",
 			labelName = "Type",
 			optionName = "Date");
 
@@ -3806,10 +3785,10 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		AssertElementPresent(
-			key_currentOption = "Date",
+		AssertTextEquals(
 			key_labelName = "Type",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Date");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
@@ -3912,7 +3891,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 96");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Users");
 
@@ -3944,7 +3922,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 97");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Users");
 
@@ -4104,14 +4081,11 @@ definition {
 			fieldName = "ObjectEdit101",
 			pluralLabelName = "Objects Edit 101");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		ObjectAdmin.selectObjectScope(fieldOption = "Company");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 
@@ -4130,9 +4104,9 @@ definition {
 			value1 = "Objects Edit 101");
 
 		AssertElementPresent(
-			key_currentOption = "Custom Field",
 			key_labelName = "Entry Title Field",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Custom Field");
 
 		CreateObject.assertValuesOnScope(
 			valuePanelCategory = "Object",
@@ -4246,9 +4220,8 @@ definition {
 		ObjectAdmin.selectObjectScope(optionName = "Site");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
-			optionName = "Object");
+			optionName = "Navigation");
 
 		CreateObject.saveObject();
 
@@ -4257,8 +4230,8 @@ definition {
 		}
 
 		CreateObject.assertValuesOnScope(
-			valuePanelCategory = "Object",
-			valueScope = "Company");
+			valuePanelCategory = "Navigation",
+			valueScope = "Site");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view Entries with Custom Layout Created"
@@ -4606,9 +4579,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 111");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "BigDecimal");
+		CreateObject.selectTitleField(fieldLabel = "BigDecimal");
 
 		CreateObject.saveObject();
 
@@ -4651,9 +4622,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 112");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Boolean");
+		CreateObject.selectTitleField(fieldLabel = "Boolean");
 
 		CreateObject.saveObject();
 
@@ -4697,9 +4666,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 113");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Date");
+		CreateObject.selectTitleField(fieldLabel = "Date");
 
 		CreateObject.saveObject();
 
@@ -4742,9 +4709,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 114");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Double");
+		CreateObject.selectTitleField(fieldLabel = "Double");
 
 		CreateObject.saveObject();
 
@@ -4791,9 +4756,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 115");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Integer");
+		CreateObject.selectTitleField(fieldLabel = "Integer");
 
 		CreateObject.saveObject();
 
@@ -4840,9 +4803,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 141616");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Long");
+		CreateObject.selectTitleField(fieldLabel = "Long");
 
 		CreateObject.saveObject();
 
@@ -4875,9 +4836,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 116");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -4945,9 +4904,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 141620");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -5017,9 +4974,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 141624");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -5099,9 +5054,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 141617");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Field Picklist");
+			CreateObject.selectTitleField(fieldLabel = "Field Picklist");
 
 			CreateObject.saveObject();
 		}
@@ -5110,7 +5063,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject141617");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-				currentOption = "Choose an Option",
 				labelName = "Field Picklist",
 				picklistOption = "Picklist Item");
 		}
@@ -5142,9 +5094,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 141623");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -5208,9 +5158,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 117");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -5459,9 +5407,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 122");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
 		PortletEntry.publish();
 
@@ -5493,9 +5439,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 122");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field B");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
 		PortletEntry.publish();
 
@@ -5563,9 +5507,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 123");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
 		CreateObject.saveObject();
 
@@ -5599,9 +5541,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 123");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field B");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
 		CreateObject.saveObject();
 
@@ -5677,9 +5617,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 124");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
 		CreateObject.saveObject();
 
@@ -5759,9 +5697,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter} 125");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Custom Field ${letter}");
+			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
 
 			CreateObject.saveObject();
 
@@ -5953,9 +5889,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 127");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
 		PortletEntry.publish();
 
@@ -5985,9 +5919,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 127");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field B");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
 		PortletEntry.publish();
 
@@ -6063,9 +5995,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 128");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
 		CreateObject.saveObject();
 
@@ -6099,9 +6029,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 128");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field B");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
 		CreateObject.saveObject();
 
@@ -6181,9 +6109,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 129");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
 		CreateObject.saveObject();
 
@@ -6422,7 +6348,6 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Integer",
 			labelName = "Type",
 			optionName = "Text");
 
@@ -6460,7 +6385,6 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Text",
 			labelName = "Type",
 			optionName = "Integer");
 
@@ -6524,10 +6448,10 @@ definition {
 
 		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 
-		AssertElementPresent(
-			key_currentOption = "English (United States)",
+		AssertTextEquals(
 			key_labelName = "Language",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "English (United States)");
 	}
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Object Admin of the Main Instance and vice versa"
@@ -6587,7 +6511,6 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
@@ -6749,9 +6672,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 145");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -7238,9 +7159,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 148");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -7804,10 +7723,10 @@ definition {
 
 		ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship");
 
-		AssertElementPresent(
-			key_currentOption = "Prevent",
+		AssertTextEquals(
 			key_labelName = "Deletion Type",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Prevent");
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"
@@ -7845,9 +7764,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 163");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		PortletEntry.publish();
 
@@ -7875,9 +7792,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 163");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field B");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		PortletEntry.publish();
 
@@ -7950,9 +7865,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 164");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
 		CreateObject.saveObject();
 
@@ -7982,9 +7895,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 164");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field B");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field B");
 
 		CreateObject.saveObject();
 
@@ -8059,9 +7970,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object A 165");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field A");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field A");
 
 		CreateObject.saveObject();
 
@@ -8230,9 +8139,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter} 169");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Custom Field ${letter}");
+			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
 
 			CreateObject.saveObject();
 		}
@@ -8969,7 +8876,6 @@ definition {
 		ObjectAdmin.selectObjectScope(optionName = "Site");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Site Builder");
 
@@ -8987,7 +8893,7 @@ definition {
 
 		CreateObject.assertValuesOnScope(
 			valuePanelCategory = "Site Builder",
-			valueScope = "Company");
+			valueScope = "Site");
 	}
 
 	@description = "LPS-151877 - Verify that, when adding a new Object with Account Restriction, the Account Restriction field turns into a mandatory field for the created Object"
@@ -9141,12 +9047,10 @@ definition {
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Default",
 			labelName = "Select a Storage Type",
 			optionName = "Object");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Select Object",
 			optionName = "Custom Object 178");
 

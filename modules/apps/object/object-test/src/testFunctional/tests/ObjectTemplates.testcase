@@ -83,7 +83,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149241");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 
@@ -167,7 +166,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149245");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 
@@ -249,7 +247,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149246");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 
@@ -331,7 +328,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149242");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 
@@ -413,7 +409,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149244");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 
@@ -490,7 +485,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149243");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 
@@ -509,7 +503,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject149243");
 
 		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-			currentOption = "Choose an Option",
 			labelName = "Field Picklist",
 			picklistOption = "Item Test");
 
@@ -586,7 +579,6 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149240");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 

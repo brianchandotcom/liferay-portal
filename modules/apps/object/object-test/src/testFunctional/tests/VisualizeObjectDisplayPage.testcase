@@ -121,7 +121,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject315");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
-				currentOption = "Choose an Option",
 				labelName = "Field Picklist",
 				picklistOption = "Item Test ${entryName}");
 		}
@@ -714,13 +713,10 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 326");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Select an option",
 			labelName = "Panel Link",
 			optionName = "Object");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Field");
+		CreateObject.selectTitleField(fieldLabel = "Field");
 
 		CreateObject.saveObject();
 

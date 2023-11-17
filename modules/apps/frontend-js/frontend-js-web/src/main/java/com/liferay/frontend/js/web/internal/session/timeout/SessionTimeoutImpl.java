@@ -69,20 +69,19 @@ public class SessionTimeoutImpl implements SessionTimeout {
 	}
 
 	private static final SessionTimeoutConfiguration
-		_SESSION_TIMEOUT_CONFIGURATION =
-			new SessionTimeoutConfiguration() {
+		_SESSION_TIMEOUT_CONFIGURATION = new SessionTimeoutConfiguration() {
 
-				@Override
-				public boolean autoExtend() {
-					return SessionTimeoutUtil.AUTO_EXTEND;
-				}
+			@Override
+			public boolean autoExtend() {
+				return SessionTimeoutUtil.AUTO_EXTEND;
+			}
 
-				@Override
-				public int autoExtendOffset() {
-					return SessionTimeoutUtil.AUTO_EXTEND_OFFSET;
-				}
+			@Override
+			public int autoExtendOffset() {
+				return SessionTimeoutUtil.AUTO_EXTEND_OFFSET;
+			}
 
-			};
+		};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SessionTimeoutImpl.class);

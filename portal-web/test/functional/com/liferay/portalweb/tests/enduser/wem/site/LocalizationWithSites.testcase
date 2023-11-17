@@ -491,10 +491,10 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			User.firstLoginUI(
+			User.firstLoginPG(
 				password = "test",
-				specificURL = "${portalURL}/fr/web/test-site-name-1",
-				userEmailAddress = "test@liferay.com");
+				userEmailAddress = "test@liferay.com",
+				virtualHostsURL = "${portalURL}/fr/web/test-site-name-1");
 
 			AssertLocation(value1 = "${portalURL}/web/test-site-name-1");
 		}

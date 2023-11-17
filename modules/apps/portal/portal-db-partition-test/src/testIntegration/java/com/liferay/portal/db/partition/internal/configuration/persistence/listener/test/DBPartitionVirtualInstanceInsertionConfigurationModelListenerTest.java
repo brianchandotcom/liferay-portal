@@ -25,7 +25,9 @@ public class DBPartitionVirtualInstanceInsertionConfigurationModelListenerTest
 	@Test
 	public void testDeployConfiguration() throws Exception {
 		deployConfiguration(
-			_PID, "newWebId=T\"testNewWebId\"\nwebId=T\"testWebId\"\n");
+			_PID,
+			"newWebId=T\"testNewWebId\"\ncompanyId=L\"" + COMPANY_IDS[0] +
+				"\"\n");
 
 		verifyConfigurationIsDeletedAfterDeploy(_PID);
 	}

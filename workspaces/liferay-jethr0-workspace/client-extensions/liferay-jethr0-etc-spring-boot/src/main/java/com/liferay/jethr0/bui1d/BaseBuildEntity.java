@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.bui1d;
 
-import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.EnvironmentEntity;
@@ -32,20 +31,6 @@ import org.json.JSONObject;
  */
 public abstract class BaseBuildEntity
 	extends BaseEntity implements BuildEntity {
-
-	@Override
-	public void addBuildParameterEntities(
-		Set<BuildParameterEntity> buildParameterEntities) {
-
-		addRelatedEntities(buildParameterEntities);
-	}
-
-	@Override
-	public void addBuildParameterEntity(
-		BuildParameterEntity buildParameterEntity) {
-
-		addRelatedEntity(buildParameterEntity);
-	}
 
 	@Override
 	public void addBuildRunEntities(Set<BuildRunEntity> buildRunEntities) {
@@ -268,20 +253,6 @@ public abstract class BaseBuildEntity
 		Set<BuildEntity> childBuildEntities = _getAllChildBuildEntities();
 
 		return childBuildEntities.contains(childBuildEntity);
-	}
-
-	@Override
-	public void removeBuildParameterEntities(
-		Set<BuildParameterEntity> buildParameterEntities) {
-
-		removeRelatedEntities(buildParameterEntities);
-	}
-
-	@Override
-	public void removeBuildParameterEntity(
-		BuildParameterEntity buildParameterEntity) {
-
-		removeRelatedEntity(buildParameterEntity);
 	}
 
 	@Override

@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.bui1d;
 
-import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.EnvironmentEntity;
@@ -24,12 +23,6 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public interface BuildEntity extends Entity {
-
-	public void addBuildParameterEntities(
-		Set<BuildParameterEntity> buildParameterEntities);
-
-	public void addBuildParameterEntity(
-		BuildParameterEntity buildParameterEntity);
 
 	public void addBuildRunEntities(Set<BuildRunEntity> buildRunEntities);
 
@@ -83,12 +76,6 @@ public interface BuildEntity extends Entity {
 	public boolean isInitialBuild();
 
 	public boolean isParentBuildEntity(BuildEntity buildEntity);
-
-	public void removeBuildParameterEntities(
-		Set<BuildParameterEntity> buildParameterEntities);
-
-	public void removeBuildParameterEntity(
-		BuildParameterEntity buildParameterEntity);
 
 	public void removeBuildRunEntities(Set<BuildRunEntity> buildRunEntities);
 

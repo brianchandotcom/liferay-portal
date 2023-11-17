@@ -27,46 +27,6 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "BuildParameter",
-			"label": {
-				"en_US": "Build Parameter"
-			},
-			"name": "BuildParameter",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Name"
-					},
-					"name": "name",
-					"required": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"label": {
-						"en_US": "Value"
-					},
-					"name": "value",
-					"required": true,
-					"type": "Clob"
-				}
-			],
-			"panelCategoryKey": "",
-			"pluralLabel": {
-				"en_US": "Build Parameters"
-			},
-			"portlet": false,
-			"scope": "company",
-			"status": {
-				"code": 0,
-				"label": "approved",
-				"label_i18n": "Approved"
-			}
-		},
-		{
 			"externalReferenceCode": "Environment",
 			"label": {
 				"en_US": "Environment"
@@ -808,16 +768,6 @@
 				}
 			],
 			"objectRelationships": [
-				{
-					"deletionType": "cascade",
-					"label": {
-						"en_US": "Build to Build Parameters"
-					},
-					"name": "buildToBuildParameters",
-					"objectDefinitionExternalReferenceCode1": "Build",
-					"objectDefinitionExternalReferenceCode2": "BuildParameter",
-					"type": "oneToMany"
-				},
 				{
 					"deletionType": "cascade",
 					"label": {

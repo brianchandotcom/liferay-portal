@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.FutureTask;
 
 import org.osgi.framework.Bundle;
@@ -33,7 +35,9 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public class IndexUpdaterUtil {
 
 	public static void updateAllIndexes() {
-		updatePortalIndexes();
+		if (!_updatedBundleSymbolicNames.contains("portal")) {
+			updatePortalIndexes();
+		}
 
 		BundleTracker<Void> bundleTracker = new BundleTracker<>(
 			SystemBundleUtil.getBundleContext(), Bundle.ACTIVE,
@@ -45,7 +49,11 @@ public class IndexUpdaterUtil {
 
 					if (BundleUtil.isLiferayServiceBundle(bundle)) {
 						try {
-							updateIndexes(bundle);
+							if (!_updatedBundleSymbolicNames.contains(
+									bundle.getSymbolicName())) {
+
+								updateIndexes(bundle);
+							}
 						}
 						catch (Exception exception) {
 							_log.error(exception);
@@ -110,6 +118,8 @@ public class IndexUpdaterUtil {
 					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 				}
 			});
+
+		_updatedBundleSymbolicNames.add(bundle.getSymbolicName());
 	}
 
 	public static void updatePortalIndexes() {
@@ -142,6 +152,8 @@ public class IndexUpdaterUtil {
 				_log.warn(exception);
 			}
 		}
+
+		_updatedBundleSymbolicNames.add("portal");
 	}
 
 	private static void _updatePortalIndexes(DB db, Connection connection)
@@ -154,5 +166,8 @@ public class IndexUpdaterUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexUpdaterUtil.class);
+
+	private static final Set<String> _updatedBundleSymbolicNames =
+		new HashSet<>();
 
 }

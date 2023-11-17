@@ -1818,28 +1818,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOptionsPositionHorizontal(key_text2 = null, key_text1 = null) {
-		AssertElementPresent(
-			key_text = ${key_text1},
-			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
-
-		AssertElementPresent(
-			key_text = ${key_text2},
-			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
-	}
-
-	@summary = "Default summary"
-	macro viewOptionsPositionNotHorizontal(key_text2 = null, key_text1 = null) {
-		AssertElementNotPresent(
-			key_text = ${key_text1},
-			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
-
-		AssertElementNotPresent(
-			key_text = ${key_text2},
-			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
-	}
-
-	@summary = "Default summary"
 	macro viewOptionsRowFieldName(fieldName = null, rowNumber = null) {
 		AssertTextEquals(
 			key_rowNumber = ${rowNumber},

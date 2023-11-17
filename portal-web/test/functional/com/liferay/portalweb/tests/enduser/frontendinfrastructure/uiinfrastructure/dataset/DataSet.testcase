@@ -103,7 +103,7 @@ definition {
 
 			Type(
 				key_label = "List of Items per Page",
-				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				locator1 = "DataSet#EDIT_DATA_SET_ITEMS",
 				value1 = "4, 8, 20, 40, 50");
 
 			Type(

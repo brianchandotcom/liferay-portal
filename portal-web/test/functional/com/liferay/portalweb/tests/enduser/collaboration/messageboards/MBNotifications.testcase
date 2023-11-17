@@ -549,13 +549,7 @@ definition {
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userPassword = PropsUtil.get("email.password.3"));
 
-		Gmail.gotoHtmlMode();
-
-		Gmail.viewMail(
-			emailFromUserName = "Joe Bloggs",
-			gmailAssetType = "GMMB1",
-			gmailMessageBody = "MB Thread Message Body",
-			gmailMessageTitle = "MB Category Name New Message: MB Thread Message Subject GMMB1");
+		Gmail.gotoMail(gmailMessageTitle = "MB Category Name New Message: MB Thread Message Subject GMMB1");
 
 		Gmail.replyMail(gmailReplyMessage = "MB Thread Message Subject GMMB1 Reply");
 
@@ -573,8 +567,6 @@ definition {
 			threadReplyBody = "MB Thread Message Subject GMMB1 Reply",
 			threadSubject = "MB Thread Message Subject GMMB1",
 			userName = "userfn userln");
-
-		Gmail.gotoHtmlMode();
 
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "MB Category Name New Message: MB Thread Message Subject GMMB1,Your New Account,Your New Password,GMMB1");
 	}

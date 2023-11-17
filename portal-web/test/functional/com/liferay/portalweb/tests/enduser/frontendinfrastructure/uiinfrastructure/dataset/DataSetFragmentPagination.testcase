@@ -68,7 +68,7 @@ definition {
 		task ("Then the default List of items per Page values are: 10, 20, 30 ,40 and default value per page is 10") {
 			Type(
 				key_label = "List of Items per Page",
-				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				locator1 = "DataSet#EDIT_DATA_SET_ITEMS",
 				value1 = "10, 20, 30, 40");
 
 			Type(
@@ -220,7 +220,7 @@ definition {
 		task ("When the user adds invalid values on the Pagination fields //List of items per Page: 100, 200 //Default items per Page: 4") {
 			Type(
 				key_label = "List of Items per Page",
-				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				locator1 = "DataSet#EDIT_DATA_SET_ITEMS",
 				value1 = "100, 200");
 
 			Type(
@@ -308,7 +308,7 @@ definition {
 		task ("Then the default List of items per Page values are: 4, 8, 20, 40, 60/ and default value per gage is 20") {
 			Type(
 				key_label = "List of Items per Page",
-				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				locator1 = "DataSet#EDIT_DATA_SET_ITEMS",
 				value1 = "10, 20, 30, 40");
 
 			Type(

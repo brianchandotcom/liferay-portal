@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_DATA_SET_ITEMS</td>
+	<td>//textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_DATA_SET_VIEW</td>
 	<td>//div[contains(@class,"sheet-section")]//div[contains(@class,"form-group") and contains (.,'${key_type}')]//input[contains(@class,"form-control")]</td>
 	<td></td>

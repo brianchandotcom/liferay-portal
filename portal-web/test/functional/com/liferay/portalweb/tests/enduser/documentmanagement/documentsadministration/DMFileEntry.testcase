@@ -893,7 +893,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-			value1 = "${portalURL}/documents/d/guest/video-shortcut");
+			value1 = "${portalURL}/documents/d/guest/dm-document-title");
 	}
 
 	@description = "This test ensures that a document can be copied to the global site folder."

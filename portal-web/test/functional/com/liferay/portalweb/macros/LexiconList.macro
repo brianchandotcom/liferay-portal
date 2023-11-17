@@ -23,7 +23,7 @@ definition {
 		MenuItem.clickNoError(menuItem = ${item});
 	}
 
-	@summary = "Default summary"
+	@summary = "Go to location by clicking on the breadcrumb item in the entry"
 	macro clickListEntryBreadcrumbItem(listEntry = null) {
 		Click(
 			key_breadcrumbName = ${breadcrumbName},

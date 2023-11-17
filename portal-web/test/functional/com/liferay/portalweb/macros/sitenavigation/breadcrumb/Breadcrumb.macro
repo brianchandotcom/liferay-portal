@@ -54,7 +54,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
+	@summary = "Go to breadcrumb entry"
 	macro gotoEntry(breadcrumbName = null) {
 		Click(
 			key_breadcrumbName = ${breadcrumbName},

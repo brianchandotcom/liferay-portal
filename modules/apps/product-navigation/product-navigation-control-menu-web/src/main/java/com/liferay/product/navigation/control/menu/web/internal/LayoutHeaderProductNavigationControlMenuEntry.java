@@ -217,7 +217,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isTypeContent()) {
+		if (!layout.isTypeContent() && !layout.isTypeAssetDisplay()) {
 			return false;
 		}
 

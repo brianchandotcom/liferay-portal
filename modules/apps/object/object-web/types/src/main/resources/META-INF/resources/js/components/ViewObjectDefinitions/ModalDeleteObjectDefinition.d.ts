@@ -5,15 +5,16 @@
 
 /// <reference types="react" />
 
-import {DeletedObjectDefinition} from './ViewObjectDefinitions';
 interface ModalDeleteObjectDefinitionProps {
+	handleDeleteObjectDefinition: (
+		value: DeletedObjectDefinition | null
+	) => void;
 	handleOnClose: () => void;
 	objectDefinition: DeletedObjectDefinition;
-	setDeletedObjectDefinition: (value: DeletedObjectDefinition | null) => void;
 }
 export declare function ModalDeleteObjectDefinition({
+	handleDeleteObjectDefinition,
 	handleOnClose,
 	objectDefinition,
-	setDeletedObjectDefinition,
 }: ModalDeleteObjectDefinitionProps): JSX.Element;
 export {};

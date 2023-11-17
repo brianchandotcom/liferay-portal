@@ -34,6 +34,13 @@ type DefinitionAction = {
 	method: string;
 };
 
+interface DeletedObjectDefinition {
+	hasObjectRelationship: boolean;
+	id: number;
+	name: string;
+	objectEntriesCount: number;
+}
+
 type DefinitionActions = {
 	delete: DefinitionAction;
 	get: DefinitionAction;

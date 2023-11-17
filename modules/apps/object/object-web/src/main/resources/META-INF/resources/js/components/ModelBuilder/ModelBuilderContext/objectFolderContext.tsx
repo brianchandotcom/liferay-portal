@@ -6,7 +6,6 @@
 import React, {createContext, useContext, useReducer} from 'react';
 import {Elements} from 'react-flow-renderer';
 
-import {DeletedObjectDefinition} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import {
 	LeftSidebarItem,
 	ObjectRelationshipEdgeData,

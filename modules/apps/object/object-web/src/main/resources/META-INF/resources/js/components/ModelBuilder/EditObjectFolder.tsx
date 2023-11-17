@@ -4,7 +4,13 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {FlowElement, useStore} from 'react-flow-renderer';
+import {
+	Elements,
+	FlowElement,
+	Node,
+	isNode,
+	useStore,
+} from 'react-flow-renderer';
 
 import {Scope} from '../ObjectDetails/EditObjectDetails';
 import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
@@ -21,6 +27,19 @@ import {RightSideBar} from './RightSidebar/index';
 
 import './EditObjectFolder.scss';
 
+import {
+	API,
+	ModalEditExternalReferenceCode,
+	openToast,
+} from '@liferay/object-js-components-web';
+import {createResourceURL} from 'frontend-js-web';
+
+import {formatActionURL} from '../../utils/fds';
+import {ModalAddObjectField} from '../ObjectField/ModalAddObjectField';
+import {ModalAddObjectRelationship} from '../ObjectRelationship/ModalAddObjectRelationship';
+import {ModalDeleteObjectDefinition} from '../ViewObjectDefinitions/ModalDeleteObjectDefinition';
+import {RedirectToEditObjectDetailsModal} from './ObjectDefinitionNode/RedirectToEditObjectDetailsModal';
+
 interface EditObjectFolder {
 	companies: Scope[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
@@ -34,35 +53,85 @@ export default function EditObjectFolder({
 }: EditObjectFolder) {
 	const [
 		{
+			baseResourceURL,
+			deleteObjectDefinition,
+			editObjectDefinitionURL,
 			elements,
 			isLoadingObjectFolder,
+			modelBuilderModals,
 			objectDefinitionsStorageTypes,
 			objectFolderName,
 			rightSidebarType,
+			selectedObjectDefinitionNode,
 			selectedObjectFolder,
 			showChangesSaved,
 		},
 		dispatch,
 	] = useObjectFolderContext();
 
+	const [
+		objectRelationshipParameterRequired,
+		setObjectRelationshipParameterRequired,
+	] = useState(false);
+
 	const store = useStore();
 
 	const {nodes} = store.getState();
 
-	const [showModal, setShowModal] = useState<ModelBuilderModals>({
-		addObjectDefinition: false,
-		addObjectField: false,
-		addObjectFolder: false,
-		addObjectRelationship: false,
-		deleteObjectDefinition: false,
-		deleteObjectFolder: false,
-		deleteObjectRelationship: false,
-		editObjectDefinitionExternalReferenceCode: false,
-		editObjectFolder: false,
-		moveObjectDefinition: false,
-		publishObjectDefinitions: false,
-		redirectToEditObjectDefinitionDetails: false,
-	});
+	const handleDeleteObjectDefinition = (
+		deleteObjectDefinition: DeletedObjectDefinition
+	) => {
+		dispatch({
+			payload: {
+				newDeleteObjectDefinition: deleteObjectDefinition,
+			},
+			type: TYPES.SET_DELETE_OBJECT_DEFINITION,
+		});
+	};
+
+	const updateModelBuilderStructure = async (
+		newObjectRelationshipId: number
+	) => {
+		const payload = await getUpdatedModelBuilderStructurePayload(
+			selectedObjectFolder.name
+		);
+
+		dispatch({
+			payload: {
+				...payload,
+				rightSidebarType: 'objectRelationshipDetails',
+				selectedObjectRelationshipId: newObjectRelationshipId,
+			},
+			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
+		});
+
+		dispatch({
+			payload: {
+				selectedObjectRelationshipId: newObjectRelationshipId,
+			},
+			type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
+		});
+	};
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			if (selectedObjectDefinitionNode) {
+				const url = createResourceURL(baseResourceURL, {
+					objectDefinitionId: selectedObjectDefinitionNode.data?.id,
+					p_p_resource_id:
+						'/object_definitions/get_object_relationship_info',
+				}).href;
+
+				const {parameterRequired} = await API.fetchJSON<{
+					parameterRequired: boolean;
+				}>(url);
+
+				setObjectRelationshipParameterRequired(parameterRequired);
+			}
+		};
+
+		makeFetch();
+	}, [baseResourceURL, selectedObjectDefinitionNode]);
 
 	useEffect(() => {
 		dispatch({
@@ -110,13 +179,18 @@ export default function EditObjectFolder({
 
 	return (
 		<>
-			{showModal.addObjectDefinition && (
+			{modelBuilderModals.addObjectDefinition && (
 				<ModalAddObjectDefinition
 					handleOnClose={() =>
-						setShowModal((previousState: ModelBuilderModals) => ({
-							...previousState,
-							addObjectDefinition: false,
-						}))
+						dispatch({
+							payload: {
+								modelBuilderModals: {
+									...modelBuilderModals,
+									addObjectDefinition: false,
+								},
+							},
+							type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+						})
 					}
 					objectDefinitionsStorageTypes={
 						objectDefinitionsStorageTypes
@@ -139,16 +213,202 @@ export default function EditObjectFolder({
 				/>
 			)}
 
-			{showModal.editObjectFolder && (
+			{modelBuilderModals.addObjectField &&
+				selectedObjectDefinitionNode?.data && (
+					<ModalAddObjectField
+						baseResourceURL={baseResourceURL}
+						creationLanguageId={
+							selectedObjectDefinitionNode.data.defaultLanguageId
+						}
+						objectDefinitionExternalReferenceCode={
+							selectedObjectDefinitionNode.data
+								.externalReferenceCode
+						}
+						objectDefinitionName={
+							selectedObjectDefinitionNode.data.name
+						}
+						onAfterSubmit={(newObjectField) => {
+							const {edges, nodes} = store.getState();
+							dispatch({
+								payload: {
+									newObjectField,
+									objectDefinitionExternalReferenceCode: selectedObjectDefinitionNode
+										?.data?.externalReferenceCode as string,
+									objectDefinitionNodes: nodes,
+									objectRelationshipEdges: edges,
+									selectedObjectDefinitionNode,
+								},
+								type: TYPES.ADD_OBJECT_FIELD,
+							});
+
+							openToast({
+								message: Liferay.Language.get(
+									'the-field-was-successfully-added'
+								),
+								type: 'success',
+							});
+							dispatch({
+								payload: {
+									modelBuilderModals: {
+										...modelBuilderModals,
+										addObjectField: false,
+									},
+								},
+								type:
+									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+							});
+							dispatch({
+								payload: {
+									objectDefinitionExternalReferenceCode: selectedObjectDefinitionNode
+										.data?.externalReferenceCode as string,
+									showAllObjectFields: selectedObjectDefinitionNode
+										.data?.showAllObjectFields as boolean,
+								},
+								type: TYPES.SET_SHOW_ALL_OBJECT_FIELDS,
+							});
+						}}
+						setVisibility={() =>
+							dispatch({
+								payload: {
+									modelBuilderModals: {
+										...modelBuilderModals,
+										addObjectField: false,
+									},
+								},
+								type:
+									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+							})
+						}
+					/>
+				)}
+
+			{modelBuilderModals.addObjectRelationship &&
+				selectedObjectDefinitionNode?.data && (
+					<ModalAddObjectRelationship
+						baseResourceURL={baseResourceURL}
+						handleOnClose={() => {
+							dispatch({
+								payload: {
+									modelBuilderModals: {
+										...modelBuilderModals,
+										addObjectRelationship: false,
+									},
+								},
+								type:
+									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+							});
+						}}
+						objectDefinitionExternalReferenceCode1={
+							selectedObjectDefinitionNode.data
+								.externalReferenceCode
+						}
+						objectRelationshipParameterRequired={
+							objectRelationshipParameterRequired
+						}
+						onAfterSubmit={(newObjectRelationshipId: number) =>
+							updateModelBuilderStructure(newObjectRelationshipId)
+						}
+						reload={false}
+					/>
+				)}
+
+			{modelBuilderModals.deleteObjectDefinition &&
+				deleteObjectDefinition && (
+					<ModalDeleteObjectDefinition
+						handleDeleteObjectDefinition={() =>
+							handleDeleteObjectDefinition
+						}
+						handleOnClose={() => {
+							dispatch({
+								payload: {
+									modelBuilderModals: {
+										...modelBuilderModals,
+										deleteObjectDefinition: false,
+									},
+								},
+								type:
+									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+							});
+						}}
+						objectDefinition={deleteObjectDefinition}
+					/>
+				)}
+
+			{modelBuilderModals.editObjectDefinitionExternalReferenceCode &&
+				selectedObjectDefinitionNode?.data && (
+					<ModalEditExternalReferenceCode
+						externalReferenceCode={
+							selectedObjectDefinitionNode.data
+								.externalReferenceCode
+						}
+						handleOnClose={() => {
+							dispatch({
+								payload: {
+									modelBuilderModals: {
+										...modelBuilderModals,
+										editObjectDefinitionExternalReferenceCode: false,
+									},
+								},
+								type:
+									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+							});
+						}}
+						helpMessage={Liferay.Language.get(
+							'unique-key-for-referencing-the-object-definition'
+						)}
+						onExternalReferenceCodeChange={(
+							externalReferenceCode: string
+						) => {
+							const updatedElements = elements.map((element) => {
+								if (
+									isNode(element) &&
+									(element as Node<ObjectDefinitionNodeData>)
+										.data?.id ===
+										selectedObjectDefinitionNode.data?.id
+								) {
+									return {
+										...element,
+										data: {
+											...element.data,
+											externalReferenceCode,
+										},
+									};
+								}
+
+								return element;
+							}) as Elements<ObjectDefinitionNodeData>;
+
+							dispatch({
+								payload: {
+									newElements: updatedElements,
+								},
+								type: TYPES.SET_ELEMENTS,
+							});
+						}}
+						onGetEntity={() =>
+							API.getObjectDefinitionById(
+								selectedObjectDefinitionNode.data?.id as number
+							)
+						}
+						saveURL={`/o/object-admin/v1.0/object-definitions/${selectedObjectDefinitionNode.data.id}`}
+					/>
+				)}
+
+			{modelBuilderModals.editObjectFolder && (
 				<ModalEditObjectFolder
 					externalReferenceCode={
 						selectedObjectFolder.externalReferenceCode
 					}
 					handleOnClose={() => {
-						setShowModal((previousState) => ({
-							...previousState,
-							editObjectFolder: false,
-						}));
+						dispatch({
+							payload: {
+								modelBuilderModals: {
+									...modelBuilderModals,
+									editObjectFolder: false,
+								},
+							},
+							type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+						});
 					}}
 					id={selectedObjectFolder.id}
 					initialLabel={selectedObjectFolder.label}
@@ -156,19 +416,46 @@ export default function EditObjectFolder({
 				/>
 			)}
 
-			{showModal.publishObjectDefinitions && (
+			{modelBuilderModals.publishObjectDefinitions && (
 				<ModalPublishObjectDefinitions
 					disableAutoClose={true}
 					dispatch={dispatch}
 					elements={elements}
 					handleOnClose={() => {
-						setShowModal((previousState) => ({
-							...previousState,
-							publishObjectDefinitions: false,
-						}));
+						dispatch({
+							payload: {
+								modelBuilderModals: {
+									...modelBuilderModals,
+									publishObjectDefinitions: false,
+								},
+							},
+							type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+						});
 					}}
 				/>
 			)}
+
+			{modelBuilderModals.redirectToEditObjectDefinitionDetails &&
+				selectedObjectDefinitionNode?.data && (
+					<RedirectToEditObjectDetailsModal
+						handleOnClose={() => {
+							dispatch({
+								payload: {
+									modelBuilderModals: {
+										...modelBuilderModals,
+										redirectToEditObjectDefinitionDetails: false,
+									},
+								},
+								type:
+									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+							});
+						}}
+						viewObjectDetailsURL={formatActionURL(
+							editObjectDefinitionURL,
+							selectedObjectDefinitionNode.data.id
+						)}
+					/>
+				)}
 
 			<EditObjectFolderHeader
 				hasDraftObjectDefinitions={elements.some(
@@ -177,13 +464,13 @@ export default function EditObjectFolder({
 							?.status?.code === 2
 				)}
 				selectedObjectFolder={selectedObjectFolder}
-				setShowModal={setShowModal}
 			/>
+
 			<div className="lfr-objects__model-builder-content">
-				<LeftSidebar setShowModal={setShowModal} />
+				<LeftSidebar />
 
 				{!elements.length && !isLoadingObjectFolder && (
-					<EmptyObjectFolderCard setShowModal={setShowModal} />
+					<EmptyObjectFolderCard />
 				)}
 
 				<Diagram />

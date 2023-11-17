@@ -217,6 +217,14 @@ public class BaseCommerceContextHttp implements CommerceContext {
 			}
 
 			if (_commerceOrder != null) {
+				if (_commerceOrder.isGuestOrder()) {
+					httpSession.removeAttribute(
+						CommerceOrder.class.getName() + StringPool.POUND +
+							groupId);
+
+					return _commerceOrder;
+				}
+
 				httpSession.setAttribute(
 					CommerceOrder.class.getName() + StringPool.POUND + groupId,
 					_commerceOrder.getUuid());

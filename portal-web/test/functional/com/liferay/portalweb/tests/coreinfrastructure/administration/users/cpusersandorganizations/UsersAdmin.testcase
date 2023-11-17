@@ -971,6 +971,42 @@ definition {
 			locator1 = "ProductMenu#PORTLET");
 	}
 
+	@description = "This is a test for LPS-200153. As an admin, I can receive a notification after creating a new user when the Single Approver workflow is applied to User"
+	@priority = 5
+	test CanReceiveNewUserNotificationsWhenSingleApproverWorkflowIsAppliedToUser {
+		property portal.acceptance = "true";
+
+		task ("Given Workflow is configured to Single Approver for User") {
+			Workflow.openWorkflowListView();
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "User");
+		}
+
+		task ("When a new user is created") {
+			User.openUsersAdmin();
+
+			User.addCP(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Then a notification is sent to the Admin User containing the new user") {
+			Navigator.openURL();
+
+			Notifications.viewBadgeCount(notificationCount = 1);
+
+			Notifications.gotoNotifications();
+
+			WorkflowAsset.viewNotification(contentBody = "Test Test sent you a User for review in the workflow.");
+		}
+	}
+
 	@priority = 4
 	test ChangeUserPassword {
 		property portal.acceptance = "true";

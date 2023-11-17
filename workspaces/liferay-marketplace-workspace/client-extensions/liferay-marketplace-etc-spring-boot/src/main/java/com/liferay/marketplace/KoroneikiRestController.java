@@ -28,6 +28,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -184,6 +185,21 @@ public class KoroneikiRestController extends BaseRestController {
 		JSONObject commerceOrderJSONObject = jsonObject.getJSONObject(
 			"commerceOrder");
 
+		if (commerceOrderJSONObject.getInt("paymentStatus") !=
+				_COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Skipping Order ",
+						commerceOrderJSONObject.getLong("id"),
+						" Current Payment Status: ",
+						commerceOrderJSONObject.getInt("paymentStatus")));
+			}
+
+			return;
+		}
+
 		JSONArray orderItemsJSONArray = commerceOrderJSONObject.getJSONArray(
 			"orderItems");
 
@@ -248,9 +264,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
 		int successCount = 0;
-		ZonedDateTime zonedDateTime = ZonedDateTime.parse(
-			commerceOrderJSONObject.getString("createDate"),
-			DateTimeFormatter.ISO_DATE_TIME);
+		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
 		for (int i = 0; i < orderItemsJSONArray.length(); i++) {
 			ProductPurchase productPurchase = new ProductPurchase();
@@ -333,27 +347,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 		order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
 
-		if (dxpLicenseUsageTypePropertiesMap.get("developer") ||
-			(dxpLicenseUsageTypePropertiesMap.get("standard") &&
-			 (commerceOrderJSONObject.getInt("paymentStatus") ==
-				 _COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED))) {
-
-			_orderResource.patchOrder(
-				commerceOrderJSONObject.getLong("id"), order);
-		}
-		else if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
-			order.setPaymentStatus(_COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED);
-
-			_orderResource.patchOrder(
-				commerceOrderJSONObject.getLong("id"), order);
-		}
-		else if (!dxpLicenseUsageTypePropertiesMap.get("developer") &&
-				 !dxpLicenseUsageTypePropertiesMap.get("standard") &&
-				 !dxpLicenseUsageTypePropertiesMap.get("trial")) {
-
-			_orderResource.patchOrder(
-				commerceOrderJSONObject.getLong("id"), order);
-		}
+		_orderResource.patchOrder(commerceOrderJSONObject.getLong("id"), order);
 	}
 
 	private String _getProductKey(String skuString, Collection<Sku> skus) {

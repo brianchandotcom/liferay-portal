@@ -1,0 +1,33 @@
+definition {
+
+    @summary = "Clears segment search filter"
+    macro clearSegmentSearchFilter() {
+        Type.sendKeys(
+            locator1 = "ACSettings#SEARCH_BAR",
+            value1 = "keys=CONTROL,a");
+
+        Type.sendKeys(
+            locator1 = "ACSettings#SEARCH_BAR",
+            value1 = "keys=CONTROL,x");
+    }
+
+    @summary = "Asserts the dropdown segment filter"
+    macro viewSegmentDropdown() {
+        for (var name : list ${nameList}) {
+			var key_nameList = ${name};
+
+			WaitForPageLoad();
+
+			while ((IsElementNotPresent(locator1 = "ACUtils#PAGE_SEGMENT_FILTER")) && (maxIterations = "50")) {
+				ACUtils.searchBar(searchItem = ${name});
+
+                ACPagePath.clearSegmentSearchFilter();
+			}
+
+			AssertTextEquals(
+				locator1 = "ACUtils#PAGE_SEGMENT_FILTER",
+				value1 = ${name});
+		}
+    }
+
+}

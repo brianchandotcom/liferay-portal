@@ -128,4 +128,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182728. The user should see the field error below the Checkbox fragment."
+	@priority = 3
+	test ViewCheckboxFieldErrorMessageWhenPartialValidationFailure {
+		task ("Given a user has a content page where a mapped Checkbox fragment has a partial validation") {
+			JSONObject.addObjectValidation(
+				errorMessage = "Please accept the terms of use and Privacy Policy.",
+				fieldName = "iAcceptTheTermsOfUseAndPrivacyPolicy",
+				labelName = "Checkbox Validation",
+				objectName = "PurchaseOrder",
+				outputValidationType = "partialValidation",
+				script = "iAcceptTheTermsOfUseAndPrivacyPolicy == true",
+				validationType = "ddm");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user submits form with invalid value") {
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see a field error message below Checkbox") {
+			AssertTextEquals(
+				fieldLabel = "I accept the terms of use and Privacy Policy",
+				locator1 = "Message#ERROR_CHECKBOX_FIELD",
+				value1 = "Please accept the terms of use and Privacy Policy.");
+		}
+	}
+
 }

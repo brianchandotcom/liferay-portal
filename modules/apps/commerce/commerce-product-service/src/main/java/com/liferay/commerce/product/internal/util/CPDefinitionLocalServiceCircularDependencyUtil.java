@@ -8,8 +8,8 @@ package com.liferay.commerce.product.internal.util;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,17 +21,26 @@ public class CPDefinitionLocalServiceCircularDependencyUtil {
 	public static CPDefinition copyCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
-		return _cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+		CPDefinitionLocalService cpDefinitionLocalService =
+			_cpDefinitionLocalServiceSnapshot.get();
+
+		return cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
 	}
 
 	public static boolean isVersionable(long cpDefinitionId) {
-		return _cpDefinitionLocalService.isVersionable(cpDefinitionId);
+		CPDefinitionLocalService cpDefinitionLocalService =
+			_cpDefinitionLocalServiceSnapshot.get();
+
+		return cpDefinitionLocalService.isVersionable(cpDefinitionId);
 	}
 
 	public static boolean isVersionable(
 		long cpDefinitionId, HttpServletRequest httpServletRequest) {
 
-		return _cpDefinitionLocalService.isVersionable(
+		CPDefinitionLocalService cpDefinitionLocalService =
+			_cpDefinitionLocalServiceSnapshot.get();
+
+		return cpDefinitionLocalService.isVersionable(
 			cpDefinitionId, httpServletRequest);
 	}
 
@@ -40,15 +49,16 @@ public class CPDefinitionLocalServiceCircularDependencyUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _cpDefinitionLocalService.
-			updateCPDefinitionIgnoreSKUCombinations(
-				cpDefinitionId, ignoreSKUCombinations, serviceContext);
+		CPDefinitionLocalService cpDefinitionLocalService =
+			_cpDefinitionLocalServiceSnapshot.get();
+
+		return cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionId, ignoreSKUCombinations, serviceContext);
 	}
 
-	private static volatile CPDefinitionLocalService _cpDefinitionLocalService =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			CPDefinitionLocalService.class,
+	private static final Snapshot<CPDefinitionLocalService>
+		_cpDefinitionLocalServiceSnapshot = new Snapshot<>(
 			CPDefinitionLocalServiceCircularDependencyUtil.class,
-			"_cpDefinitionLocalService", true);
+			CPDefinitionLocalService.class);
 
 }

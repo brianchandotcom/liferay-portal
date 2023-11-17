@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -61,7 +62,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -189,9 +189,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		// Commerce product definition option value rels
 
 		if (importOptionValue) {
-			_cpDefinitionOptionValueRelLocalService.
-				importCPDefinitionOptionRels(
-					cpDefinitionOptionRelId, serviceContext);
+			CPDefinitionOptionValueRelLocalService
+				cpDefinitionOptionValueRelLocalService =
+					_cpDefinitionOptionValueRelLocalServiceSnapshot.get();
+
+			cpDefinitionOptionValueRelLocalService.importCPDefinitionOptionRels(
+				cpDefinitionOptionRelId, serviceContext);
 		}
 
 		// Commerce product instances
@@ -288,9 +291,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		// Commerce product definition option value rels
 
 		if (importOptionValue) {
-			_cpDefinitionOptionValueRelLocalService.
-				importCPDefinitionOptionRels(
-					cpDefinitionOptionRelId, serviceContext);
+			CPDefinitionOptionValueRelLocalService
+				cpDefinitionOptionValueRelLocalService =
+					_cpDefinitionOptionValueRelLocalServiceSnapshot.get();
+
+			cpDefinitionOptionValueRelLocalService.importCPDefinitionOptionRels(
+				cpDefinitionOptionRelId, serviceContext);
 		}
 
 		// Commerce product instances
@@ -338,8 +344,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition option value rels
 
+		CPDefinitionOptionValueRelLocalService
+			cpDefinitionOptionValueRelLocalService =
+				_cpDefinitionOptionValueRelLocalServiceSnapshot.get();
+
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			_cpDefinitionOptionValueRelLocalService.
+			cpDefinitionOptionValueRelLocalService.
 				getCPDefinitionOptionValueRels(
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -456,8 +466,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				continue;
 			}
 
+			CPDefinitionOptionValueRelLocalService
+				cpDefinitionOptionValueRelLocalService =
+					_cpDefinitionOptionValueRelLocalServiceSnapshot.get();
+
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				_cpDefinitionOptionValueRelLocalService.
+				cpDefinitionOptionValueRelLocalService.
 					fetchCPDefinitionOptionValueRel(
 						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 						skuOptionJSONObject.getString("skuOptionValueKey"));
@@ -546,8 +560,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			}
 
 			for (int j = 0; j < valueJSONArray.length(); j++) {
+				CPDefinitionOptionValueRelLocalService
+					cpDefinitionOptionValueRelLocalService =
+						_cpDefinitionOptionValueRelLocalServiceSnapshot.get();
+
 				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-					_cpDefinitionOptionValueRelLocalService.
+					cpDefinitionOptionValueRelLocalService.
 						fetchCPDefinitionOptionValueRel(
 							cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 							valueJSONArray.getString(j));
@@ -1070,8 +1088,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			return;
 		}
 
+		CPDefinitionOptionValueRelLocalService
+			cpDefinitionOptionValueRelLocalService =
+				_cpDefinitionOptionValueRelLocalServiceSnapshot.get();
+
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			_cpDefinitionOptionValueRelLocalService.
+			cpDefinitionOptionValueRelLocalService.
 				getCPDefinitionOptionValueRels(cpDefinitionOptionRelId);
 
 		if (ListUtil.isEmpty(cpDefinitionOptionValueRels)) {
@@ -1084,7 +1106,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			if (cpDefinitionOptionValueRel.getPrice() == null) {
 				cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
 
-				_cpDefinitionOptionValueRelLocalService.
+				cpDefinitionOptionValueRelLocalService.
 					updateCPDefinitionOptionValueRel(
 						cpDefinitionOptionValueRel);
 			}
@@ -1151,10 +1173,14 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				"Price type must be dynamic");
 		}
 
+		CPDefinitionOptionValueRelLocalService
+			cpDefinitionOptionValueRelLocalService =
+				_cpDefinitionOptionValueRelLocalServiceSnapshot.get();
+
 		if (cpDefinitionOptionRel.isNew() ||
 			!cpDefinitionOptionRel.isPriceContributor() ||
 			Objects.equals(cpDefinitionOptionRel.getPriceType(), priceType) ||
-			!_cpDefinitionOptionValueRelLocalService.
+			!cpDefinitionOptionValueRelLocalService.
 				hasCPDefinitionOptionValueRels(
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId()) ||
 			Objects.equals(
@@ -1170,12 +1196,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
 
-	private static volatile CPDefinitionOptionValueRelLocalService
-		_cpDefinitionOptionValueRelLocalService =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				CPDefinitionOptionValueRelLocalService.class,
-				CPDefinitionOptionRelLocalServiceImpl.class,
-				"_cpDefinitionOptionValueRelLocalService", true);
+	private static final Snapshot<CPDefinitionOptionValueRelLocalService>
+		_cpDefinitionOptionValueRelLocalServiceSnapshot = new Snapshot<>(
+			CPDefinitionOptionRelLocalServiceImpl.class,
+			CPDefinitionOptionValueRelLocalService.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

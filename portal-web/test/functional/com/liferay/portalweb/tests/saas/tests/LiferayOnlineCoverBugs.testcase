@@ -11,7 +11,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 
 		HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
 			domain = "www.able.com",

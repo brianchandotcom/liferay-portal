@@ -7,6 +7,8 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.BaseEventHandlerFactory;
 import com.liferay.jethr0.event.EventHandler;
+import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONObject;
 
@@ -22,7 +24,32 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 	public EventHandler newEventHandler(JSONObject messageJSONObject)
 		throws IllegalArgumentException {
 
-		throw new IllegalArgumentException();
+		String action = messageJSONObject.optString("action");
+
+		if (StringUtil.isNullOrEmpty(action)) {
+			throw new IllegalArgumentException(
+				"Missing \"action\" from message JSON");
+		}
+
+		if (action.equals("created")) {
+			JSONObject commentJSONObject = messageJSONObject.optJSONObject(
+				"comment");
+
+			EventHandlerContext eventHandlerContext = getEventHandlerContext();
+
+			if (commentJSONObject != null) {
+				String body = commentJSONObject.getString("body");
+
+				if (body.startsWith("ci:help")) {
+					return new CIHelpGitHubEventHandler(
+						eventHandlerContext, messageJSONObject);
+				}
+
+				throw new IllegalArgumentException("Invalid \"body\"");
+			}
+		}
+
+		throw new IllegalArgumentException("Invalid \"action\": " + action);
 	}
 
 }

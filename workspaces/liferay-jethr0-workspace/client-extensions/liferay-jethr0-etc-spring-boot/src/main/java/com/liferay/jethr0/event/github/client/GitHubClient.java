@@ -11,14 +11,16 @@ import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.util.BaseRetryable;
 import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
+
 import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.net.URL;
 
 /**
  * @author Michael Hashimoto
@@ -41,9 +43,7 @@ public class GitHubClient {
 		return StringUtil.combine("token ", _gitHubToken);
 	}
 
-	private JSONObject _requestPost(
-		URL url, JSONObject requestJSONObject) {
-
+	private JSONObject _requestPost(URL url, JSONObject requestJSONObject) {
 		Retryable<JSONObject> retryable = new BaseRetryable<JSONObject>() {
 
 			@Override
@@ -74,8 +74,8 @@ public class GitHubClient {
 			@Override
 			protected String getRetryMessage(int retryCount) {
 				return StringUtil.combine(
-					"Unable to post to ", url, ". Retry attempt ",
-					retryCount, " of ", maxRetries);
+					"Unable to post to ", url, ". Retry attempt ", retryCount,
+					" of ", maxRetries);
 			}
 
 		};

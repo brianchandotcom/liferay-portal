@@ -236,9 +236,9 @@ public class DefaultObjectEntryManagerImplTest
 		).put(
 			"localizedTextObjectFieldName_i18n",
 			HashMapBuilder.put(
-				"en_US", "en_US localizedTextObjectFieldValue"
+				"en_US", "en_US localizedTextObjectFieldValue1"
 			).put(
-				"pt_BR", "pt_BR localizedTextObjectFieldValue"
+				"pt_BR", "pt_BR localizedTextObjectFieldValue1"
 			).build()
 		).build();
 		_objectDefinition1 = _createObjectDefinition(
@@ -1701,7 +1701,7 @@ public class DefaultObjectEntryManagerImplTest
 						"en_US localizedRichTextObjectFieldValue"
 					).put(
 						"localizedTextObjectFieldName",
-						"en_US localizedTextObjectFieldValue"
+						"en_US localizedTextObjectFieldValue1"
 					).put(
 						"picklistObjectFieldName", picklistObjectFieldValue1
 					).put(
@@ -1734,6 +1734,13 @@ public class DefaultObjectEntryManagerImplTest
 						properties = HashMapBuilder.<String, Object>put(
 							_objectRelationshipFieldName,
 							parentObjectEntry2.getId()
+						).put(
+							"localizedTextObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US", "en_US localizedTextObjectFieldValue2"
+							).put(
+								"pt_BR", "pt_BR localizedTextObjectFieldValue2"
+							).build()
 						).put(
 							"picklistObjectFieldName", picklistObjectFieldValue2
 						).put(
@@ -1926,7 +1933,7 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"search", "en_US"
 			).build(),
-			childObjectEntry1);
+			childObjectEntry1,childObjectEntry2);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"search", "pt_BR"
@@ -1980,12 +1987,12 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"sort", "localizedTextObjectFieldName:asc"
 			).build(),
-			childObjectEntry2, childObjectEntry1);
+			childObjectEntry1, childObjectEntry2);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "localizedTextObjectFieldName:desc"
 			).build(),
-			childObjectEntry1, childObjectEntry2);
+			childObjectEntry2, childObjectEntry1);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "textObjectFieldName:asc"
@@ -2614,7 +2621,7 @@ public class DefaultObjectEntryManagerImplTest
 				"en_US localizedRichTextObjectFieldValue"
 			).put(
 				"localizedTextObjectFieldName",
-				"en_US localizedTextObjectFieldValue"
+				"en_US localizedTextObjectFieldValue1"
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
@@ -2631,7 +2638,7 @@ public class DefaultObjectEntryManagerImplTest
 				"pt_BR localizedRichTextObjectFieldValue"
 			).put(
 				"localizedTextObjectFieldName",
-				"pt_BR localizedTextObjectFieldValue"
+				"pt_BR localizedTextObjectFieldValue1"
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
@@ -2727,9 +2734,9 @@ public class DefaultObjectEntryManagerImplTest
 		).put(
 			"localizedTextObjectFieldName_i18n",
 			HashMapBuilder.put(
-				"en_US", "en_US localizedTextObjectFieldValue"
+				"en_US", "en_US localizedTextObjectFieldValue1"
 			).put(
-				"pt_BR", "pt_BR localizedTextObjectFieldValue"
+				"pt_BR", "pt_BR localizedTextObjectFieldValue1"
 			).build()
 		).build();
 
@@ -2785,7 +2792,7 @@ public class DefaultObjectEntryManagerImplTest
 				"en_US localizedRichTextObjectFieldValue"
 			).put(
 				"localizedTextObjectFieldName",
-				"en_US localizedTextObjectFieldValue"
+				"en_US localizedTextObjectFieldValue1"
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),
@@ -2799,7 +2806,7 @@ public class DefaultObjectEntryManagerImplTest
 				"localizedRichTextObjectFieldNameRawText", ""
 			).put(
 				"localizedTextObjectFieldName",
-				"pt_BR localizedTextObjectFieldValue"
+				"pt_BR localizedTextObjectFieldValue1"
 			).putAll(
 				_localizedObjectFieldI18nValues
 			).build(),

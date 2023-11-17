@@ -95,8 +95,10 @@ public class UpgradeRecorder {
 
 		messages.put(message, occurrences);
 
-		if (message.contains(VerifyException.class.getName())) {
-			_verifyProcessStatus = false;
+		if (!_verifyProcessError &&
+			message.contains(VerifyException.class.getName())) {
+
+			_verifyProcessError = true;
 		}
 	}
 
@@ -163,6 +165,10 @@ public class UpgradeRecorder {
 			}
 		}
 
+		if (!_errorMessages.isEmpty()) {
+			_log.info("Errors occurred during upgrade, check logs");
+		}
+
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			ThreadContext.clearMap();
 		}
@@ -182,7 +188,7 @@ public class UpgradeRecorder {
 	}
 
 	private String _calculateResult() {
-		if (!_verifyProcessStatus) {
+		if (_verifyProcessError) {
 			return "failure";
 		}
 
@@ -313,7 +319,7 @@ public class UpgradeRecorder {
 	private static String _type;
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();
-	private static boolean _verifyProcessStatus;
+	private static boolean _verifyProcessError;
 	private static final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 

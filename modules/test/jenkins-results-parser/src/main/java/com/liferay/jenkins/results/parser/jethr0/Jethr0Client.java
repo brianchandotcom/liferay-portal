@@ -44,9 +44,9 @@ public interface Jethr0Client extends Closeable {
 
 	public String liferayDXPRequest(String urlPath, String message);
 
-	public void sendJRPMessageToJethr0(String message);
+	public void sendGitHubMessageToJethr0(String message);
 
-	public void sendWebhookMessageToJethr0(String message);
+	public void sendJRPMessageToJethr0(String message);
 
 	public String springBootRequest(String urlPath);
 

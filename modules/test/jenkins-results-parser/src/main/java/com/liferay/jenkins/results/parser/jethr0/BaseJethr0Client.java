@@ -200,6 +200,25 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 	}
 
 	@Override
+	public void sendGitHubMessageToJethr0(String message) {
+		connect();
+
+		try {
+			Session session = _connection.createSession(
+				false, Session.AUTO_ACKNOWLEDGE);
+
+			Queue queue = session.createQueue(getJMSGitHubToJethr0QueueName());
+
+			MessageProducer messageProducer = session.createProducer(queue);
+
+			messageProducer.send(session.createTextMessage(message));
+		}
+		catch (JMSException jmsException) {
+			throw new RuntimeException(jmsException);
+		}
+	}
+
+	@Override
 	public void sendJRPMessageToJethr0(String message) {
 		connect();
 
@@ -217,25 +236,6 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 				"jenkinsMasterName", _jenkinsMaster.getName());
 
 			messageProducer.send(textMessage);
-		}
-		catch (JMSException jmsException) {
-			throw new RuntimeException(jmsException);
-		}
-	}
-
-	@Override
-	public void sendWebhookMessageToJethr0(String message) {
-		connect();
-
-		try {
-			Session session = _connection.createSession(
-				false, Session.AUTO_ACKNOWLEDGE);
-
-			Queue queue = session.createQueue(getJMSWebhookToJethr0QueueName());
-
-			MessageProducer messageProducer = session.createProducer(queue);
-
-			messageProducer.send(session.createTextMessage(message));
 		}
 		catch (JMSException jmsException) {
 			throw new RuntimeException(jmsException);
@@ -351,6 +351,8 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 
 	protected abstract String getJMSBrokerURL();
 
+	protected abstract String getJMSGitHubToJethr0QueueName();
+
 	protected abstract String getJMSJethr0ToJRPQueueName();
 
 	protected abstract String getJMSJRPToJethr0QueueName();
@@ -358,8 +360,6 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 	protected abstract String getJMSUserName();
 
 	protected abstract String getJMSUserPassword();
-
-	protected abstract String getJMSWebhookToJethr0QueueName();
 
 	protected abstract URL getLiferayDXPURL();
 

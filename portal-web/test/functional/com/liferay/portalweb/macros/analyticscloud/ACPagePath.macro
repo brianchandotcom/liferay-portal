@@ -6,9 +6,9 @@ definition {
 			locator1 = "ACSettings#SEARCH_BAR",
 			value1 = "keys=CONTROL,a");
 
-		Type.sendKeys(
+		KeyPress(
 			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "keys=CONTROL,x");
+			value1 = "\BACK_SPACE");
 	}
 
 	@summary = "Asserts the dropdown segment filter"

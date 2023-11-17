@@ -64,30 +64,18 @@ definition {
 				portlet = "Locked Pages");
 		}
 
-		task ("Then the name of the content page is clickable") {
-			LexiconTable.clickTableEntryColumnLink(
-				columnName = "name",
-				tableEntry = "Test Page Name");
-		}
+		task ("Then in the list of locked page names are clickable and the link opens the pages in a new tab") {
+			for (var pageName : list "Test Page Name,Collection Page Name") {
+				LexiconTable.clickTableEntryColumnLink(
+					columnName = "name",
+					tableEntry = ${pageName});
 
-		task ("And the link opens the content page in a new tab") {
-			SelectWindow(value1 = "title=Test Page Name - Test Site Name - ${siteName}");
+				SelectWindow(value1 = "title=${pageName} - Test Site Name - ${siteName}");
 
-			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
+				ControlMenu.viewHeaderDraftTitle(headerTitle = ${pageName});
 
-			Close.closeAndSelectWindow(value1 = "title=Locked Pages - Test Site Name - ${siteName}");
-		}
-
-		task ("Then the name of the collection page is clickable") {
-			LexiconTable.clickTableEntryColumnLink(
-				columnName = "name",
-				tableEntry = "Collection Page Name");
-		}
-
-		task ("And the link opens the collection page in a new tab") {
-			SelectWindow(value1 = "title=Collection Page Name - Test Site Name - ${siteName}");
-
-			ControlMenu.viewHeaderDraftTitle(headerTitle = "Collection Page Name");
+				Close.closeAndSelectWindow(value1 = "title=Locked Pages - Test Site Name - ${siteName}");
+			}
 		}
 	}
 

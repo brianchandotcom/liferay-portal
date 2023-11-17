@@ -32,8 +32,6 @@ definition {
 	macro login(userPassword = null, userEmailAddress = null) {
 		Navigator.openSpecificURL(url = "http://www.gmail.com");
 
-		WaitForPageLoad();
-
 		var key_userEmailAddress = ${userEmailAddress};
 
 		if (IsElementNotPresent(locator1 = "Gmail#SCREENNAME")) {

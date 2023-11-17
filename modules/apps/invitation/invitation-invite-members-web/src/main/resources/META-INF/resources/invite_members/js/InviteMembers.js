@@ -405,26 +405,31 @@ export default function InviteMembers({
 											)}
 										</label>
 
-										<ClayInput
-											id={`${namespace}emailAddress`}
-											type="text"
-										/>
-									</ClayForm.Group>
+										<ClayInput.Group>
+											<ClayInput.GroupItem prepend>
+												<ClayInput
+													id={`${namespace}emailAddress`}
+													type="text"
+												/>
+											</ClayInput.GroupItem>
 
-									<ClayButton
-										className="c-mb-3"
-										displayType="secondary"
-										name={`${namespace}emailButton`}
-										onClick={() =>
-											onAddEmailClicklHandler()
-										}
-										size="sm"
-										type="button"
-									>
-										{Liferay.Language.get(
-											'add-email-address'
-										)}
-									</ClayButton>
+											<ClayInput.GroupItem append shrink>
+												<ClayButton
+													className="c-mb-3"
+													displayType="secondary"
+													name={`${namespace}emailButton`}
+													onClick={() =>
+														onAddEmailClicklHandler()
+													}
+													type="button"
+												>
+													{Liferay.Language.get(
+														'add-email-address'
+													)}
+												</ClayButton>
+											</ClayInput.GroupItem>
+										</ClayInput.Group>
+									</ClayForm.Group>
 								</div>
 
 								<label>

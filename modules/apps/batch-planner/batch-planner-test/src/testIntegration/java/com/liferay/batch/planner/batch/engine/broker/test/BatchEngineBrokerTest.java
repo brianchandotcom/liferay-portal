@@ -97,6 +97,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -211,7 +212,7 @@ public class BatchEngineBrokerTest {
 				_prepareCSVFile(
 					objectEntry.getCreateDate(), "object_entry.csv",
 					objectEntry.getObjectEntryId(),
-					objectEntry.getModifiedDate()))) {
+					objectEntry.getModifiedDate(), false))) {
 
 			_assertEqualsExportCSV(
 				_getExportInputStream(
@@ -269,7 +270,7 @@ public class BatchEngineBrokerTest {
 				_prepareCSVFile(
 					_objectDefinition1.getCreateDate(), "object_definition.csv",
 					_objectDefinition1.getObjectDefinitionId(),
-					_objectDefinition1.getModifiedDate()))) {
+					_objectDefinition1.getModifiedDate(), false))) {
 
 			_assertEqualsExportCSV(
 				_getExportInputStream(
@@ -316,23 +317,23 @@ public class BatchEngineBrokerTest {
 	public void testExportSiteScopeObjectEntryCSV() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			TestPropsValues.getCompanyId(), _OBJECT_ENTRY_ERC_1,
 			TestPropsValues.getGroupId(), _objectDefinition1,
 			TestPropsValues.getUserId());
 
+		_addObjectEntry(
+			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), _objectDefinition1,
+			TestPropsValues.getUserId());
+
 		try (FileInputStream fileInputStream = new FileInputStream(
 				_prepareCSVFile(
 					objectEntry.getCreateDate(), "object_entry.csv",
 					objectEntry.getObjectEntryId(),
-					objectEntry.getModifiedDate()))) {
-
-			_addObjectEntry(
-				TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
-				_group.getGroupId(), _objectDefinition1,
-				TestPropsValues.getUserId());
+					objectEntry.getModifiedDate(), true))) {
 
 			_assertEqualsExportCSV(
 				_getExportInputStream(
@@ -351,7 +352,7 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getCompanyId(), "TestObject",
 			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
 
-		ObjectEntry objectEntry1 = _addObjectEntry(
+		ObjectEntry objectEntry = _addObjectEntry(
 			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
 			TestPropsValues.getGroupId(), _objectDefinition1,
 			TestPropsValues.getUserId());
@@ -373,7 +374,7 @@ public class BatchEngineBrokerTest {
 
 		_assertEqualsExport(
 			_getExpectedJsonNode(
-				_objectDefinition1, objectEntry1.getObjectEntryId()),
+				_objectDefinition1, objectEntry.getObjectEntryId()),
 			_objectEntryExportFieldNames,
 			_getActualJsonNode(
 				_objectMapper.readTree(
@@ -717,7 +718,7 @@ public class BatchEngineBrokerTest {
 
 		String actualLineString = actualUnsyncBufferedReader.readLine();
 
-		String expectedLine = expectedUnsyncBufferedReader.readLine();
+		String expectedLineString = expectedUnsyncBufferedReader.readLine();
 
 		Assert.assertNotNull(actualLineString);
 
@@ -725,7 +726,7 @@ public class BatchEngineBrokerTest {
 
 		while (actualLineString != null) {
 			if (actualLineString.contains(externalReferenceCode)) {
-				Assert.assertEquals(expectedLine, actualLineString);
+				Assert.assertEquals(expectedLineString, actualLineString);
 
 				found = true;
 			}
@@ -1023,19 +1024,31 @@ public class BatchEngineBrokerTest {
 	}
 
 	private File _prepareCSVFile(
-			Date createDate, String fileName, long id, Date modifiedDate)
+			Date createDate, String fileName, long id, Date modifiedDate,
+			boolean siteScope)
 		throws Exception {
 
 		File file = _file.createTempFile("csv");
 
 		String template = StreamUtil.toString(_getInputStream(fileName));
 
+		String groupNameString = null;
+
+		if (siteScope) {
+			Group group = GroupLocalServiceUtil.getGroup(
+				TestPropsValues.getGroupId());
+
+			groupNameString = group.getGroupKey();
+		}
+
 		template = StringUtil.replace(
 			template,
-			new String[] {"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]"},
+			new String[] {
+				"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]", "$[SCOPE_KEY]"
+			},
 			new String[] {
 				_toDateString(createDate), _toDateString(modifiedDate),
-				String.valueOf(id)
+				String.valueOf(id), groupNameString
 			});
 
 		_file.write(file, template);

@@ -23,6 +23,7 @@ boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute
 String method = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:method"));
 String name = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:name"));
 String onSubmit = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:onSubmit"));
+String title = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:title"));
 boolean validateOnBlur = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:validateOnBlur")));
 Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("LIFERAY_SHARED_aui:form:validatorTagsMap");
 boolean wrappedFormContent = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:wrappedFormContent")));

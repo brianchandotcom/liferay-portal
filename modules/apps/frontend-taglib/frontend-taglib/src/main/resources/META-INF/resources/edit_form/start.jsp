@@ -18,7 +18,7 @@ String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));
 
 		<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 			<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-				<div aria-label="<%= HtmlUtil.escape(portletDisplay.getTitle()) %>" class="input-container" role="group">
+				<div aria-label="<%= HtmlUtil.escape(Validator.isNotNull(title) ? title : portletDisplay.getTitle()) %>" class="input-container" role="group">
 			</c:if>
 
 			<aui:input name="formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />

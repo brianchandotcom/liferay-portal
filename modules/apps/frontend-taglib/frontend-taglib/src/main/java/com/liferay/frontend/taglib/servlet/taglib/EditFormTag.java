@@ -59,6 +59,10 @@ public class EditFormTag extends IncludeTag {
 		return _portletNamespace;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
 	public boolean isEscapeXml() {
 		return _escapeXml;
 	}
@@ -132,6 +136,10 @@ public class EditFormTag extends IncludeTag {
 		_portletNamespace = portletNamespace;
 	}
 
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	public void setUseNamespace(boolean useNamespace) {
 		_useNamespace = useNamespace;
 	}
@@ -158,6 +166,7 @@ public class EditFormTag extends IncludeTag {
 		_name = "fm";
 		_onSubmit = null;
 		_portletNamespace = null;
+		_title = null;
 		_useNamespace = true;
 		_validateOnBlur = true;
 		_wrappedFormContent = true;
@@ -212,6 +221,8 @@ public class EditFormTag extends IncludeTag {
 			"liferay-frontend:edit-form:onSubmit", _onSubmit);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:edit-form:portletNamespace", _portletNamespace);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:edit-form:title", _title);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:edit-form:useNamespace",
 			String.valueOf(_useNamespace));
@@ -273,6 +284,7 @@ public class EditFormTag extends IncludeTag {
 	private String _name = "fm";
 	private String _onSubmit;
 	private String _portletNamespace;
+	private String _title;
 	private boolean _useNamespace = true;
 	private boolean _validateOnBlur = true;
 	private final Map<String, List<ValidatorTag>> _validatorTagsMap =

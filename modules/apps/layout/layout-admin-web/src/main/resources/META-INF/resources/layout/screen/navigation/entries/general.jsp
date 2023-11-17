@@ -40,6 +40,7 @@ portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 	method="post"
 	name="editLayoutFm"
 	onSubmit="event.preventDefault();"
+	title='<%= LanguageUtil.get(request, "general") %>'
 	wrappedFormContent="<%= false %>"
 >
 	<aui:input name="redirect" type="hidden" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selLayout.getPlid())) %>" />

@@ -8,9 +8,9 @@ package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 import com.liferay.headless.delivery.dto.v1_0.PageRule;
 import com.liferay.headless.delivery.dto.v1_0.PageRuleAction;
 import com.liferay.headless.delivery.dto.v1_0.PageRuleCondition;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.PageRulesUtil;
 import com.liferay.layout.converter.ConditionTypeConverter;
 import com.liferay.layout.util.structure.LayoutStructureRule;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -47,34 +47,11 @@ public class PageRuleDTOConverter
 				name = layoutStructureRule.getName();
 				pageRuleActions = JSONUtil.toArray(
 					layoutStructureRule.getActionsJSONArray(),
-					jsonObject -> _toPageRuleAction(jsonObject),
-					PageRuleAction.class);
+					PageRulesUtil::toPageRuleAction, PageRuleAction.class);
 				pageRuleConditions = JSONUtil.toArray(
 					layoutStructureRule.getConditionsJSONArray(),
-					jsonObject -> _toPageRuleCondition(jsonObject),
+					PageRulesUtil::toPageRuleCondition,
 					PageRuleCondition.class);
-			}
-		};
-	}
-
-	private PageRuleAction _toPageRuleAction(JSONObject jsonObject) {
-		return new PageRuleAction() {
-			{
-				action = jsonObject.getString("action");
-				id = jsonObject.getString("id");
-				itemId = jsonObject.getString("itemId");
-				type = jsonObject.getString("type");
-			}
-		};
-	}
-
-	private PageRuleCondition _toPageRuleCondition(JSONObject jsonObject) {
-		return new PageRuleCondition() {
-			{
-				condition = jsonObject.getString("condition");
-				id = jsonObject.getString("id");
-				type = jsonObject.getString("type");
-				value = jsonObject.getString("value");
 			}
 		};
 	}

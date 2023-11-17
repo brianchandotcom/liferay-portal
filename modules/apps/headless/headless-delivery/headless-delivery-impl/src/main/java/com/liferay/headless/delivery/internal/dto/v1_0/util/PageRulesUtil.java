@@ -24,6 +24,28 @@ import java.util.List;
  */
 public class PageRulesUtil {
 
+	public static PageRuleAction toPageRuleAction(JSONObject jsonObject) {
+		return new PageRuleAction() {
+			{
+				action = jsonObject.getString("action");
+				id = jsonObject.getString("id");
+				itemId = jsonObject.getString("itemId");
+				type = jsonObject.getString("type");
+			}
+		};
+	}
+
+	public static PageRuleCondition toPageRuleCondition(JSONObject jsonObject) {
+		return new PageRuleCondition() {
+			{
+				condition = jsonObject.getString("condition");
+				id = jsonObject.getString("id");
+				type = jsonObject.getString("type");
+				value = jsonObject.getString("value");
+			}
+		};
+	}
+
 	public static PageRule[] toPageRules(
 		List<LayoutStructureRule> layoutStructureRules) {
 
@@ -42,7 +64,7 @@ public class PageRulesUtil {
 					name = layoutStructureRule.getName();
 					pageRuleActions = JSONUtil.toArray(
 						layoutStructureRule.getActionsJSONArray(),
-						jsonObject -> _toPageRuleAction(jsonObject),
+						jsonObject -> toPageRuleAction(jsonObject),
 						exception -> {
 							if (_log.isWarnEnabled()) {
 								_log.warn(exception);
@@ -51,7 +73,7 @@ public class PageRulesUtil {
 						PageRuleAction.class);
 					pageRuleConditions = JSONUtil.toArray(
 						layoutStructureRule.getConditionsJSONArray(),
-						jsonObject -> _toPageRuleCondition(jsonObject),
+						jsonObject -> toPageRuleCondition(jsonObject),
 						exception -> {
 							if (_log.isWarnEnabled()) {
 								_log.warn(exception);
@@ -61,30 +83,6 @@ public class PageRulesUtil {
 				}
 			},
 			PageRule.class);
-	}
-
-	private static PageRuleAction _toPageRuleAction(JSONObject jsonObject) {
-		return new PageRuleAction() {
-			{
-				action = jsonObject.getString("action");
-				id = jsonObject.getString("id");
-				itemId = jsonObject.getString("itemId");
-				type = jsonObject.getString("type");
-			}
-		};
-	}
-
-	private static PageRuleCondition _toPageRuleCondition(
-		JSONObject jsonObject) {
-
-		return new PageRuleCondition() {
-			{
-				condition = jsonObject.getString("condition");
-				id = jsonObject.getString("id");
-				type = jsonObject.getString("type");
-				value = jsonObject.getString("value");
-			}
-		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PageRulesUtil.class);

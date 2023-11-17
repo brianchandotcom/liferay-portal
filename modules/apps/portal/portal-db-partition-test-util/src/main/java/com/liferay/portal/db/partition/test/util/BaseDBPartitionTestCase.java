@@ -276,12 +276,6 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static void insertDBPartitions() throws Exception {
-		insertDBPartitions(COMPANY_IDS);
-	}
-
-	protected static void insertDBPartitions(long[] companyIds)
-		throws Exception {
-
 		CurrentConnection defaultCurrentConnection =
 			CurrentConnectionUtil.getCurrentConnection();
 
@@ -292,7 +286,7 @@ public abstract class BaseDBPartitionTestCase {
 				CurrentConnectionUtil.class, "_currentConnection",
 				currentConnection);
 
-			for (long companyId : companyIds) {
+			for (long companyId : COMPANY_IDS) {
 				DBPartitionUtil.insertDBPartition(companyId);
 			}
 		}

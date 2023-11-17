@@ -188,9 +188,7 @@ public class DBPartitionUtil {
 	public static boolean insertDBPartition(long companyId)
 		throws PortalException {
 
-		if (!DBPartition.isPartitionEnabled() ||
-			(companyId == _defaultCompanyId)) {
-
+		if (!DBPartition.isPartitionEnabled()) {
 			return false;
 		}
 

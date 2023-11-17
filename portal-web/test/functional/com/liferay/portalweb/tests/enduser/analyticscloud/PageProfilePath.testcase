@@ -312,4 +312,82 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-14836 | Automation ID: LRAC-15061 | Test Summary: The dropdown is updated when a segment is deleted"
+	@priority = 5
+	test ViewSegmentDropdownList {
+		task ("Create a site and a blog and add to a page") {
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage(entryTitle = "Blog test");
+		}
+
+		task ("Connect AC to DXP") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the page, then close the sessions") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blog test",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+		}
+
+		task ("Create four dynamic segments") {
+			for (var n : list "1,2,3,4") {
+				ACNavigation.goToSegments();
+
+				ACSegments.createDynamicSegment();
+
+				ACUtils.setItemName(itemName = "Dynamic Segment Test ${n}");
+
+				ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+				ACSegments.addSegmentField(segmentField = "email");
+
+				ACSegments.editTextCriterion(textInput = "test@liferay.com");
+
+				ACSegments.saveSegment();
+			}
+		}
+
+		task ("Navigate to Pages tab") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Set time filter use 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to page report entry") {
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
+
+			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
+		}
+
+		task ("Go to the Path tab") {
+			ACNavigation.switchTab(tabName = "Path");
+		}
+
+		task ("Click Filter button") {
+			Button.click(button = "Filter");
+		}
+
+		task ("View segments on the list") {
+			ACPagePath.viewSegmentDropdown(nameList = "Dynamic Segment Test 1,Dynamic Segment Test 2,Dynamic Segment Test 3,Dynamic Segment Test 4");
+		}
+	}
+
 }

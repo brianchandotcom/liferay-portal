@@ -134,12 +134,10 @@ definition {
 		}
 
 		task ("Go to Virtual Instance Created") {
-			User.firstLoginUI(
+			User.firstLoginPG(
 				password = "test",
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
-
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
 		}
 
 		task ("Assert that the Virtual Instance is not connected with AC") {

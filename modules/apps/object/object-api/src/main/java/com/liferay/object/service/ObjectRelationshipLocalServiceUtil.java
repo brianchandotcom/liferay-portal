@@ -383,6 +383,16 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().getObjectRelationship(objectDefinitionId1, name);
 	}
 
+	public static ObjectRelationship
+			getObjectRelationshipByExternalReferenceCode(
+				String externalReferenceCode, long companyId,
+				long objectDefinitionId1)
+		throws PortalException {
+
+		return getService().getObjectRelationshipByExternalReferenceCode(
+			externalReferenceCode, companyId, objectDefinitionId1);
+	}
+
 	public static ObjectRelationship getObjectRelationshipByObjectDefinitionId(
 			long objectDefinitionId, String name)
 		throws Exception {

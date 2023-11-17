@@ -19,7 +19,7 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 }) => {
 	const dispatch = useDispatch();
 	const {onClick} = useDownloadCSV({type: 'individual'});
-	const {observer, onClose, onOpenChange, open} = useModal();
+	const {observer, onOpenChange, open} = useModal();
 
 	return (
 		<>
@@ -29,64 +29,71 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 			/>
 
 			{open && (
-				<ClayModal observer={observer}>
-					<ClayForm
-						onSubmit={event => {
-							event.preventDefault();
+				<Modal
+					observer={observer}
+					onClose={() => onOpenChange(false)}
+					onSubmit={() => {
+						onOpenChange(false);
 
-							onOpenChange(false);
+						dispatch(
+							addAlert({
+								alertType: Alert.Types.Default,
+								message: sub(
+									Liferay.Language.get(
+										'the-x-file-is-being-generated-and-your-download-will-start-soon'
+									),
+									['CSV']
+								) as string
+							})
+						);
 
-							dispatch(
-								addAlert({
-									alertType: Alert.Types.Default,
-									message: sub(
-										Liferay.Language.get(
-											'the-x-file-is-being-generated-and-your-download-will-start-soon'
-										),
-										['CSV']
-									) as string
-								})
-							);
-
-							onClick(null);
-						}}
-					>
-						<ClayModal.Header>
-							{Liferay.Language.get('download-report')}
-						</ClayModal.Header>
-
-						<ClayModal.Body>
-							<p>
-								{
-									sub(
-										Liferay.Language.get(
-											'this-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results'
-										),
-										[toLocale(10000)]
-									) as string
-								}
-							</p>
-						</ClayModal.Body>
-
-						<ClayModal.Footer
-							last={
-								<ClayButton.Group spaced>
-									<ClayButton
-										displayType='secondary'
-										onClick={onClose}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
-
-									<ClayButton type='submit'>
-										{Liferay.Language.get('download')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
-						/>
-					</ClayForm>
-				</ClayModal>
+						onClick(null);
+					}}
+				/>
 			)}
 		</>
 	);
 };
+
+export const Modal = ({observer, onClose, onSubmit}) => (
+	<ClayModal observer={observer}>
+		<ClayForm
+			onSubmit={event => {
+				event.preventDefault();
+
+				onSubmit();
+			}}
+		>
+			<ClayModal.Header>
+				{Liferay.Language.get('download-report')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<p>
+					{
+						sub(
+							Liferay.Language.get(
+								'this-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results'
+							),
+							[toLocale(10000)]
+						) as string
+					}
+				</p>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton displayType='secondary' onClick={onClose}>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton type='submit'>
+							{Liferay.Language.get('download')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</ClayForm>
+	</ClayModal>
+);

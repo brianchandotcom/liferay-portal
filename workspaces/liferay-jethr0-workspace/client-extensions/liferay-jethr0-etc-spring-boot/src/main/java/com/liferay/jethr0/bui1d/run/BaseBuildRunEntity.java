@@ -6,7 +6,6 @@
 package com.liferay.jethr0.bui1d.run;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
@@ -17,6 +16,7 @@ import java.net.URL;
 import java.time.Instant;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -51,12 +51,13 @@ public abstract class BaseBuildRunEntity
 
 		JSONObject jobParametersJSONObject = new JSONObject();
 
-		for (BuildParameterEntity buildParameterEntity :
-				buildEntity.getBuildParameterEntities()) {
+		Map<String, String> buildParameters = buildEntity.getBuildParameters();
+
+		for (Map.Entry<String, String> buildParameter :
+				buildParameters.entrySet()) {
 
 			jobParametersJSONObject.put(
-				buildParameterEntity.getName(),
-				buildParameterEntity.getValue());
+				buildParameter.getKey(), buildParameter.getValue());
 		}
 
 		jobParametersJSONObject.put(

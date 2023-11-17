@@ -6,7 +6,6 @@
 package com.liferay.jethr0.job;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -75,12 +74,11 @@ public abstract class BasePortalPullRequestJobEntity
 		}
 
 		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
-			BuildParameterEntity buildParameterEntity =
-				initialBuildEntity.getBuildParameterEntity("PULL_REQUEST_URL");
+			String pullRequestURL = initialBuildEntity.getBuildParameterValue(
+				"PULL_REQUEST_URL");
 
-			if (buildParameterEntity != null) {
-				_portalPullRequestURL = StringUtil.toURL(
-					buildParameterEntity.getValue());
+			if (!StringUtil.isNullOrEmpty(pullRequestURL)) {
+				_portalPullRequestURL = StringUtil.toURL(pullRequestURL);
 
 				return _portalPullRequestURL;
 			}
@@ -110,20 +108,14 @@ public abstract class BasePortalPullRequestJobEntity
 
 	protected String getBuildParameterValue(String buildParameterName) {
 		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
-			BuildParameterEntity buildParameterEntity =
-				initialBuildEntity.getBuildParameterEntity(buildParameterName);
-
-			if (buildParameterEntity == null) {
-				continue;
-			}
-
-			String buildParameterValue = buildParameterEntity.getValue();
+			String buildParameterValue =
+				initialBuildEntity.getBuildParameterValue(buildParameterName);
 
 			if (StringUtil.isNullOrEmpty(buildParameterValue)) {
 				continue;
 			}
 
-			return buildParameterEntity.getValue();
+			return buildParameterValue;
 		}
 
 		return null;
@@ -208,13 +200,13 @@ public abstract class BasePortalPullRequestJobEntity
 		JSONObject initialBuildJSONObject = new JSONObject();
 
 		initialBuildJSONObject.put(
-			"buildParameters", _getInitialBuildParametersJSONArray()
-		).put(
 			"initialBuild", true
 		).put(
 			"jenkinsJobName", getJenkinsJobName()
 		).put(
 			"name", "top-level"
+		).put(
+			"parameters", String.valueOf(_getInitialBuildParametersJSONArray())
 		).put(
 			"state", BuildEntity.State.OPENED
 		);

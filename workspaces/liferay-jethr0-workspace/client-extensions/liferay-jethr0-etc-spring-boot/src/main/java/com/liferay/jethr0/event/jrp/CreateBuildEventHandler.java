@@ -6,10 +6,8 @@
 package com.liferay.jethr0.event.jrp;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
@@ -28,28 +26,8 @@ public class CreateBuildEventHandler extends BaseJRPEventHandler {
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		JSONObject buildJSONObject = getBuildJSONObject();
-
 		BuildEntity buildEntity = buildEntityRepository.create(
-			jobEntity, buildJSONObject);
-
-		JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
-			"parameters");
-
-		if ((parametersJSONObject != null) && !parametersJSONObject.isEmpty()) {
-			BuildParameterEntityRepository buildParameterEntityRepository =
-				getBuildParameterRepository();
-
-			for (String key : parametersJSONObject.keySet()) {
-				BuildParameterEntity buildParameterEntity =
-					buildParameterEntityRepository.create(
-						buildEntity, key, parametersJSONObject.getString(key));
-
-				buildEntity.addBuildParameterEntity(buildParameterEntity);
-
-				buildParameterEntity.setBuildEntity(buildEntity);
-			}
-		}
+			jobEntity, getBuildJSONObject());
 
 		if (jobEntity.getState() == JobEntity.State.COMPLETED) {
 			jobEntity.setState(JobEntity.State.QUEUED);

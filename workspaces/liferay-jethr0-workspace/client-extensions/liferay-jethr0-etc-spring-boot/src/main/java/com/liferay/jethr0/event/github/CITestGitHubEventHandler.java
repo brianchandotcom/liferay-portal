@@ -5,18 +5,14 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
-import com.liferay.jethr0.util.StringUtil;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -51,31 +47,11 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 		JobEntity jobEntity = jobEntityRepository.create(jsonObject);
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
-		BuildParameterEntityRepository buildParameterEntityRepository =
-			getBuildParameterRepository();
 
 		for (JSONObject initialBuildJSONObject :
 				jobEntity.getInitialBuildJSONObjects()) {
 
-			BuildEntity buildEntity = buildEntityRepository.create(
-				jobEntity, initialBuildJSONObject);
-
-			JSONArray buildParametersJSONArray =
-				initialBuildJSONObject.optJSONArray("buildParameters");
-
-			for (int i = 0; i < buildParametersJSONArray.length(); i++) {
-				JSONObject buildParameterJSONObject =
-					buildParametersJSONArray.getJSONObject(i);
-
-				if (StringUtil.isNullOrEmpty(
-						buildParameterJSONObject.getString("value"))) {
-
-					continue;
-				}
-
-				buildParameterEntityRepository.create(
-					buildEntity, buildParameterJSONObject);
-			}
+			buildEntityRepository.create(jobEntity, initialBuildJSONObject);
 		}
 
 		BuildQueue buildQueue = getBuildQueue();

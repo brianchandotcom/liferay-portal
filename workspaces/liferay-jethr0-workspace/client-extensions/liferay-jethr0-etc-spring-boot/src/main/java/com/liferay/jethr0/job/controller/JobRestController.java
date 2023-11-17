@@ -51,19 +51,7 @@ public class JobRestController {
 		for (JSONObject initialBuildJSONObject :
 				jobEntity.getInitialBuildJSONObjects()) {
 
-			BuildEntity buildEntity = _buildEntityRepository.create(
-				jobEntity, initialBuildJSONObject);
-
-			JSONArray buildParametersJSONArray =
-				initialBuildJSONObject.optJSONArray("buildParameters");
-
-			for (int i = 0; i < buildParametersJSONArray.length(); i++) {
-				JSONObject buildParameterJSONObject =
-					buildParametersJSONArray.getJSONObject(i);
-
-				_buildParameterEntityRepository.create(
-					buildEntity, buildParameterJSONObject);
-			}
+			_buildEntityRepository.create(jobEntity, initialBuildJSONObject);
 		}
 
 		if (jobEntity.getState() == JobEntity.State.QUEUED) {

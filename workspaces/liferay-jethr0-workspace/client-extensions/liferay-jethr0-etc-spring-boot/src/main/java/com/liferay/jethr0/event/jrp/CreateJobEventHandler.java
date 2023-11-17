@@ -5,9 +5,7 @@
 
 package com.liferay.jethr0.event.jrp;
 
-import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
@@ -33,28 +31,12 @@ public class CreateJobEventHandler extends BaseJRPEventHandler {
 		JSONArray buildsJSONArray = jobJSONObject.optJSONArray("builds");
 
 		if ((buildsJSONArray != null) && !buildsJSONArray.isEmpty()) {
-			BuildParameterEntityRepository buildParameterEntityRepository =
-				getBuildParameterRepository();
 			BuildEntityRepository buildEntityRepository = getBuildRepository();
 
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-				BuildEntity buildEntity = buildEntityRepository.create(
-					jobEntity, buildJSONObject);
-
-				JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
-					"parameters");
-
-				if (parametersJSONObject != null) {
-					for (String key : parametersJSONObject.keySet()) {
-						buildParameterEntityRepository.create(
-							buildEntity, key,
-							parametersJSONObject.getString(key));
-					}
-				}
-
-				buildEntityRepository.update(buildEntity);
+				buildEntityRepository.create(jobEntity, buildJSONObject);
 			}
 		}
 

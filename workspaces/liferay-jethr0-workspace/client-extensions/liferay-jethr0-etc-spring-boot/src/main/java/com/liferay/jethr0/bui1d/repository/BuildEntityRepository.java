@@ -17,6 +17,9 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 
+import java.util.Map;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,21 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
 	public BuildEntity create(
 		JobEntity jobEntity, boolean initialBuild, String jenkinsJobName,
-		String name, BuildEntity.State state) {
+		String name, Map<String, String> parameters, BuildEntity.State state) {
+
+		JSONArray parametersJSONArray = new JSONArray();
+
+		for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+			JSONObject parameterJSONObject = new JSONObject();
+
+			parameterJSONObject.put(
+				"name", parameter.getKey()
+			).put(
+				"value", parameter.getValue()
+			);
+
+			parametersJSONArray.put(parameterJSONObject);
+		}
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -40,6 +57,8 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 			"jenkinsJobName", jenkinsJobName
 		).put(
 			"name", name
+		).put(
+			"parameters", parametersJSONArray.toString()
 		).put(
 			"state", state.getJSONObject()
 		);
@@ -106,11 +125,7 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 			_jobEntityRepository.getById(buildEntity.getJobEntityId()),
 			buildEntity);
 
-		buildEntity = _updateBuildToBuildRunRelationshipsFromDALO(buildEntity);
-		buildEntity = _updateBuildToBuildParameterRelationshipsFromDALO(
-			buildEntity);
-
-		return buildEntity;
+		return _updateBuildToBuildRunRelationshipsFromDALO(buildEntity);
 	}
 
 	@Override
@@ -121,19 +136,6 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 			buildEntity);
 
 		return buildEntity;
-	}
-
-	private BuildEntity _updateBuildToBuildParameterRelationshipsFromDALO(
-		BuildEntity parentBuildEntity) {
-
-		return updateParentToChildRelationshipsFromDALO(
-			parentBuildEntity, _buildToBuildParametersEntityRelationshipDALO,
-			_buildParameterEntityRepository,
-			(buildEntity, buildParameterEntity) -> relateBuildToBuildParameter(
-				buildEntity, buildParameterEntity),
-			buildEntity -> buildEntity.getBuildParameterEntities(),
-			(buildEntity, buildParameterEntity) ->
-				buildEntity.removeBuildParameterEntity(buildParameterEntity));
 	}
 
 	private BuildEntity _updateBuildToBuildRunRelationshipsFromDALO(

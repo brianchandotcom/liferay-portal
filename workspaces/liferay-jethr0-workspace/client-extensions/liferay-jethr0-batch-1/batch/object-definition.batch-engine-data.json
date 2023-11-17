@@ -782,6 +782,17 @@
 					"required": true,
 					"type": "String"
 				},
+
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"indexed": false,
+					"label": {
+						"en_US": "Parameters"
+					},
+					"name": "parameters",
+					"type": "Clob"
+				},
 				{
 					"DBType": "String",
 					"businessType": "Picklist",

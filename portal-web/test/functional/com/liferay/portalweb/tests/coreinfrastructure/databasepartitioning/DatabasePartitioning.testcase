@@ -611,7 +611,7 @@ definition {
 		task ("Restart server") {
 			Portlet.shutdownServer();
 
-			Portlet.startServer(keepOsGiState = "true");
+			Portlet.startServer(deleteLiferayHome = "false");
 		}
 
 		task ("Access Virtual Instance and verify that is visible in the UI") {

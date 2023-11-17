@@ -18,7 +18,7 @@ export default function InviteMembers({
 	assignRolesPermission,
 	getAvailableUsersURL,
 	manageTeamsPermission,
-	namespace,
+	portletNamespace,
 	roles,
 	scopeGroupId,
 	sendInvitesURL,
@@ -39,7 +39,7 @@ export default function InviteMembers({
 			const url = new URL(getAvailableUsersURL);
 
 			const body = new URLSearchParams(
-				Liferay.Util.ns(namespace, {
+				Liferay.Util.ns(portletNamespace, {
 					end,
 					keywords,
 					start: 0,
@@ -55,7 +55,7 @@ export default function InviteMembers({
 					setUsers(users);
 				});
 		},
-		[getAvailableUsersURL, namespace]
+		[getAvailableUsersURL, portletNamespace]
 	);
 
 	useEffect(() => {
@@ -63,8 +63,9 @@ export default function InviteMembers({
 	}, [fetchAvailableUsers, viewMoreCount]);
 
 	const onAddEmailClickHandler = () => {
-		const emailValue = document.getElementById(`${namespace}emailAddress`)
-			.value;
+		const emailValue = document.getElementById(
+			`${portletNamespace}emailAddress`
+		).value;
 
 		if (
 			emailValue &&
@@ -273,36 +274,36 @@ export default function InviteMembers({
 					<ClayModal.Body scrollable>
 						<ClayForm
 							action={sendInvitesURL}
-							id={`${namespace}fm`}
+							id={`${portletNamespace}fm`}
 							method="post"
-							name={`${namespace}fm`}
+							name={`${portletNamespace}fm`}
 						>
 							<ClayInput
-								name={`${namespace}groupId`}
+								name={`${portletNamespace}groupId`}
 								type="hidden"
 								value={scopeGroupId}
 							/>
 
 							<ClayInput
-								name={`${namespace}receiverUserIds`}
+								name={`${portletNamespace}receiverUserIds`}
 								type="hidden"
 								value={invitedUsersIds.join(',')}
 							/>
 
 							<ClayInput
-								name={`${namespace}receiverEmailAddresses`}
+								name={`${portletNamespace}receiverEmailAddresses`}
 								type="hidden"
 								value={invitedEmails.join(',')}
 							/>
 
 							<ClayInput
-								name={`${namespace}invitedRoleId`}
+								name={`${portletNamespace}invitedRoleId`}
 								type="hidden"
 								value={roleId}
 							/>
 
 							<ClayInput
-								name={`${namespace}invitedTeamId`}
+								name={`${portletNamespace}invitedTeamId`}
 								type="hidden"
 								value={teamId}
 							/>
@@ -325,8 +326,8 @@ export default function InviteMembers({
 
 								<ClayForm.Group className="input-text-wrapper">
 									<ClayInput
-										id={`${namespace}inviteUserSearch`}
-										name={`${namespace}userName`}
+										id={`${portletNamespace}inviteUserSearch`}
+										name={`${portletNamespace}userName`}
 										onChange={(event) => {
 											searchUsersCallback(event);
 										}}
@@ -338,7 +339,7 @@ export default function InviteMembers({
 
 								<div
 									className="search"
-									id={`${namespace}membersList`}
+									id={`${portletNamespace}membersList`}
 								>
 									{!users.length && (
 										<Text color="muted" size={3}>
@@ -389,14 +390,16 @@ export default function InviteMembers({
 									</ClayTooltipProvider>
 								</label>
 
-								<div id={`${namespace}invitedMembersList`}>
+								<div
+									id={`${portletNamespace}invitedMembersList`}
+								>
 									{!!invitedUsers && <InvitedUsers />}
 								</div>
 
 								<div className="button-holder controls">
 									<ClayForm.Group>
 										<label
-											htmlFor={`${namespace}emailAddress`}
+											htmlFor={`${portletNamespace}emailAddress`}
 										>
 											{Liferay.Language.get(
 												'invite-by-email'
@@ -406,7 +409,7 @@ export default function InviteMembers({
 										<ClayInput.Group>
 											<ClayInput.GroupItem prepend>
 												<ClayInput
-													id={`${namespace}emailAddress`}
+													id={`${portletNamespace}emailAddress`}
 													type="text"
 												/>
 											</ClayInput.GroupItem>
@@ -415,7 +418,7 @@ export default function InviteMembers({
 												<ClayButton
 													className="c-mb-3"
 													displayType="secondary"
-													name={`${namespace}emailButton`}
+													name={`${portletNamespace}emailButton`}
 													onClick={() =>
 														onAddEmailClickHandler()
 													}
@@ -436,7 +439,7 @@ export default function InviteMembers({
 									)}
 								</label>
 
-								<div id={`${namespace}invitedEmailList`}>
+								<div id={`${portletNamespace}invitedEmailList`}>
 									{!!invitedEmails && <InvitedEmails />}
 								</div>
 
@@ -516,7 +519,7 @@ export default function InviteMembers({
 								</ClayButton>
 
 								<ClayButton
-									form={`${namespace}fm`}
+									form={`${portletNamespace}fm`}
 									type="submit"
 								>
 									{Liferay.Language.get('send-invitations')}

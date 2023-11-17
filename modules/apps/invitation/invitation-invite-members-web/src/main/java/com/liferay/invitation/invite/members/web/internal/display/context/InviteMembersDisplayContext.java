@@ -60,8 +60,6 @@ public class InviteMembersDisplayContext {
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), ActionKeys.MANAGE_TEAMS)
 		).put(
-			"namespace", _renderResponse.getNamespace()
-		).put(
 			"roles",
 			TransformUtil.transform(
 				UsersAdminUtil.filterGroupRoles(

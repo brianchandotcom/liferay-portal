@@ -20,6 +20,7 @@ const ActionButton = ({
 	identifier,
 	isAbleToDownloadAggregateKeys,
 	isAdminOrPartnerManager,
+	isAdminUserAccount,
 	productName,
 	project,
 	sessionId,
@@ -124,7 +125,7 @@ const ActionButton = ({
 		productName
 	);
 
-	if (isAdminOrPartnerManager) {
+	if (isAdminUserAccount || isAdminOrPartnerManager) {
 		return (
 			<ButtonDropDown
 				items={activationKeysActionsItems}

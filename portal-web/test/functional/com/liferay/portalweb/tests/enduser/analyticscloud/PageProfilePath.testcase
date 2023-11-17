@@ -312,7 +312,7 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-14836 | Automation ID: LRAC-15061 | Test Summary: The dropdown is updated when a segment is deleted"
+	@description = "Feature ID: LRAC-14836 | Automation ID: LRAC-15061 | Test Summary: The filter shows all segments"
 	@priority = 5
 	test ViewSegmentDropdownList {
 		task ("Create a site and a blog and add to a page") {

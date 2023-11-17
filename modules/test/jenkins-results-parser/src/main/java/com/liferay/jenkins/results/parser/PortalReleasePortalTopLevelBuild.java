@@ -181,6 +181,13 @@ public class PortalReleasePortalTopLevelBuild
 
 	@Override
 	protected String getReleaseRepositoryName() {
+		String portalRepositoryName = getParameterValue(
+			"TEST_PORTAL_REPOSITORY_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalRepositoryName)) {
+			return portalRepositoryName;
+		}
+
 		String portalReleaseVersion = getParameterValue(
 			"TEST_PORTAL_RELEASE_VERSION");
 

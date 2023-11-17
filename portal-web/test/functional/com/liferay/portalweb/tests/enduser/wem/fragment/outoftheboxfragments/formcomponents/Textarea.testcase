@@ -372,4 +372,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182728. The user should see the field error below the Textarea fragment."
+	@priority = 3
+	test ViewTextareaFieldErrorMessageWhenPartialValidationFailure {
+		task ("Given a user has a content page where a mapped Textarea fragment has a partial validation") {
+			JSONObject.addObjectValidation(
+				errorMessage = "Please enter a valid comment.",
+				fieldName = "comments",
+				labelName = "Textarea Validation",
+				objectName = "PurchaseOrder",
+				outputValidationType = "partialValidation",
+				script = "NOT(contains(comments, 'Test'))",
+				validationType = "ddm");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user submits form with invalid value") {
+			FormFields.editTextArea(
+				fieldName = "comments",
+				fieldValue = "Test");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see a field error message below Textarea") {
+			Alert.viewFieldErrorMessage(
+				errorMessage = "Please enter a valid comment.",
+				fieldLabel = "Comments");
+		}
+	}
+
 }

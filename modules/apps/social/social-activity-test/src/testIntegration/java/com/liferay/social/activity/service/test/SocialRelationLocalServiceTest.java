@@ -205,9 +205,13 @@ public class SocialRelationLocalServiceTest {
 		Set<Long> groupIds = SetUtil.intersect(
 			dlc3User.getGroupIds(), dlc4User.getGroupIds());
 
+		Set<Long> userGroupIds = SetUtil.intersect(
+			dlc3User.getUserGroupIds(), dlc4User.getUserGroupIds());
+
 		List<User> users = UserLocalServiceUtil.searchBySocial(
 			TestPropsValues.getCompanyId(),
-			ArrayUtil.toArray(groupIds.toArray(new Long[0])), "dlc",
+			ArrayUtil.toArray(groupIds.toArray(new Long[0])),
+			ArrayUtil.toArray(userGroupIds.toArray(new Long[0])), "dlc",
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		users = ListUtil.remove(users, groupUsers);

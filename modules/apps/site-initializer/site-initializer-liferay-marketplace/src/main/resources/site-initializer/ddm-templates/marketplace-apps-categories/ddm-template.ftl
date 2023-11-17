@@ -89,12 +89,12 @@
 			<#list productTypes as productType>
 				<#if productType.value?upper_case == PRODUCT_TYPE_DXP>
 					<#assign
-						icon = "ir-icon-dxp-svg"
+						icon = "dxp-svg"
 						type = "DXP App"
 					/>
 				<#elseif productType.value?upper_case == PRODUCT_TYPE_CLOUD>
 					<#assign
-						icon = "ir-icon-cloud-svg"
+						icon = "cloud-svg"
 						type = "Cloud App"
 					/>
 				</#if>

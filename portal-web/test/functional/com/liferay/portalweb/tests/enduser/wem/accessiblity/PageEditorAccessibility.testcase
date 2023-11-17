@@ -869,6 +869,31 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196461. The Page Rules section complies with WCAG 2.1 AA standard."
+	@priority = 2
+	test ViewAccessibilityOfPageRulesPanel {
+		property custom.properties = "feature.flag.LPS-169837=true";
+
+		task ("Given a page designer has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page designer opens the Page Rules panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.gotoTab(tabName = "Page Rules");
+		}
+
+		task ("Then the Page Rules panel should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[@aria-label='Page Rules Panel']");
+		}
+	}
+
 	@description = "This is a test for LPS-165296. The screen reader should be able to distinguish between view mode and edit mode."
 	@priority = 3
 	test ViewPageTitleOfViewModeAndEditMode {

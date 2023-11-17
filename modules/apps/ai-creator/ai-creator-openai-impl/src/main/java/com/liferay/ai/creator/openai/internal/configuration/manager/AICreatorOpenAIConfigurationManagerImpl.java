@@ -67,7 +67,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	}
 
 	@Override
-	public boolean isAICreatorChatGTPCompanyEnabled(long companyId)
+	public boolean isAICreatorChatGPTCompanyEnabled(long companyId)
 		throws ConfigurationException {
 
 		AICreatorOpenAICompanyConfiguration
@@ -85,10 +85,10 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	}
 
 	@Override
-	public boolean isAICreatorChatGTPGroupEnabled(long companyId, long groupId)
+	public boolean isAICreatorChatGPTGroupEnabled(long companyId, long groupId)
 		throws ConfigurationException {
 
-		if (!isAICreatorChatGTPCompanyEnabled(companyId)) {
+		if (!isAICreatorChatGPTCompanyEnabled(companyId)) {
 			return false;
 		}
 

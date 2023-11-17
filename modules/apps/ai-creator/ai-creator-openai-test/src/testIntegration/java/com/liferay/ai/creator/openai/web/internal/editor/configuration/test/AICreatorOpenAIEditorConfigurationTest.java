@@ -60,9 +60,9 @@ public class AICreatorOpenAIEditorConfigurationTest {
 		_originalAPIKey =
 			_aiCreatorOpenAIConfigurationManager.
 				getAICreatorOpenAICompanyAPIKey(_group.getCompanyId());
-		_originalChatGTPEnabled =
+		_originalChatGPTEnabled =
 			_aiCreatorOpenAIConfigurationManager.
-				isAICreatorChatGTPCompanyEnabled(_group.getCompanyId());
+				isAICreatorChatGPTCompanyEnabled(_group.getCompanyId());
 		_originalDALLEEnabled =
 			_aiCreatorOpenAIConfigurationManager.isAICreatorDALLECompanyEnabled(
 				_group.getCompanyId());
@@ -72,7 +72,7 @@ public class AICreatorOpenAIEditorConfigurationTest {
 	public void tearDown() throws Exception {
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				_group.getCompanyId(), _originalAPIKey, _originalChatGTPEnabled,
+				_group.getCompanyId(), _originalAPIKey, _originalChatGPTEnabled,
 				_originalDALLEEnabled);
 
 		_groupLocalService.deleteGroup(_group);
@@ -284,7 +284,7 @@ public class AICreatorOpenAIEditorConfigurationTest {
 	private GroupLocalService _groupLocalService;
 
 	private String _originalAPIKey;
-	private boolean _originalChatGTPEnabled;
+	private boolean _originalChatGPTEnabled;
 	private boolean _originalDALLEEnabled;
 
 	@Inject

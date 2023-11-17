@@ -100,7 +100,7 @@ public class AICreatorOpenAIEditorConfigContributor
 
 		try {
 			if (_aiCreatorOpenAIConfigurationManager.
-					isAICreatorChatGTPGroupEnabled(companyId, groupId)) {
+					isAICreatorChatGPTGroupEnabled(companyId, groupId)) {
 
 				return true;
 			}

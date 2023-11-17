@@ -13,6 +13,7 @@ import appsIcon from '../../../../assets/icons/apps_fill_icon.svg';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus, {OrderStatuses} from '../../../../components/OrderStatus';
 import Table from '../../../../components/Table/Table';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderType} from '../../../../enums/OrderType';
 import i18n from '../../../../i18n';
 import {showAppImage} from '../../../../utils/util';
@@ -23,6 +24,7 @@ type AppsTableProps = {
 
 const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 	const navigate = useNavigate();
+	const {properties} = useMarketplaceContext();
 
 	if (!items.length) {
 		return (
@@ -182,14 +184,20 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 											Manage License Key(s)
 										</DropDown.Item>
 
-										<DropDown.Item
-											onClick={() => {
-												window.location.href =
-													'https://console.marketplacedemo.liferay.sh/projects';
-											}}
-										>
-											{i18n.translate('access-console')}
-										</DropDown.Item>
+										{orderTypeExternalReferenceCode ===
+											OrderType.CLOUD && (
+											<DropDown.Item
+												onClick={() => {
+													window.open(
+														properties.cloudBaseURL
+													);
+												}}
+											>
+												{i18n.translate(
+													'access-console'
+												)}
+											</DropDown.Item>
+										)}
 
 										{orderTypeExternalReferenceCode ===
 											OrderType.DXP && (

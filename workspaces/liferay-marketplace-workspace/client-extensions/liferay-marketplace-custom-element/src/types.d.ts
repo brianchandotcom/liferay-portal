@@ -177,6 +177,10 @@ type Channel = {
 	type: string;
 };
 
+type DefaultProperties = {
+	cloudBaseURL: string;
+};
+
 interface CommerceAccount extends Omit<Account, 'description'> {
 	active: boolean;
 	logoURL: string;

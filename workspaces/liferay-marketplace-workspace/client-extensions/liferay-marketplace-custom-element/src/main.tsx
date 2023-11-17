@@ -17,6 +17,10 @@ class WebComponent extends HTMLElement {
 	private root: Root | undefined;
 
 	connectedCallback() {
+		const properties = {
+			cloudBaseURL: this.getAttribute('cloudBaseURL') || '',
+		};
+
 		if (!this.root) {
 			this.root = createRoot(this);
 
@@ -28,7 +32,7 @@ class WebComponent extends HTMLElement {
 						revalidateOnFocus: false,
 					}}
 				>
-					<MarketplaceContextProvider>
+					<MarketplaceContextProvider properties={properties}>
 						<AppContextProvider gravatarAPI={GRAVATAR_API}>
 							<App route={this.getAttribute('route') || '/'} />
 						</AppContextProvider>

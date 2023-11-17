@@ -91,6 +91,92 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182022. In the list of locked pages, the name of the Collection page, Master page, Content page template, Display page template are clickable and the link opens the pages in a new tab."
+	@priority = 5
+	test NavigateToLockedPageTemplatesInList {
+		var siteName = selenium.getText("Home#SITE_NAME");
+		var baseURL = PropsUtil.get("portal.url");
+
+		task ("Given locked pages of various types") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Master Page Name");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Button",
+				scope = "Master");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Page Template Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "DPT Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "DPT Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When navigating to the locked pages admin page") {
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Locked Pages");
+		}
+
+		task ("Then in the list of locked pages names are clickable and the link opens the pages in a new tab") {
+			for (var pageName : list "Master Page Name,Page Template Name,DPT Name") {
+				LexiconTable.clickTableEntryColumnLink(
+					columnName = "name",
+					tableEntry = ${pageName});
+
+				SelectWindow(value1 = "title=${pageName} - Test Site Name - ${siteName}");
+
+				ControlMenu.viewHeaderDraftTitle(headerTitle = ${pageName});
+
+				Close.closeAndSelectWindow(value1 = "title=Locked Pages - Test Site Name - ${siteName}");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-182024. The administrator could search locked pages in Locked Pages admin."
 	@priority = 4
 	test SearchLockedPagesInLockedPagesAdmin {

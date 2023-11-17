@@ -126,6 +126,14 @@ const Blog: React.FC<{
 							assetId={assetId}
 							assetType='blog'
 							disabled={dataSourceStates.empty}
+							infoMessage={
+								sub(
+									Liferay.Language.get(
+										'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
+									),
+									[Liferay.Language.get('individuals')]
+								) as string
+							}
 							type='individual'
 						/>
 					</div>

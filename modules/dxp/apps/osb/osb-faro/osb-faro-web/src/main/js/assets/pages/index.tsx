@@ -10,6 +10,7 @@ import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Router} from 'shared/types';
+import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useDataSource} from 'shared/hooks/useDataSource';
@@ -108,6 +109,14 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
+							infoMessage={
+								sub(
+									Liferay.Language.get(
+										'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
+									),
+									[Liferay.Language.get('blogs')]
+								) as string
+							}
 							type='blog'
 						/>
 					</div>
@@ -119,6 +128,18 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
+							infoMessage={
+								sub(
+									Liferay.Language.get(
+										'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
+									),
+									[
+										Liferay.Language.get(
+											'documents-and-media'
+										)
+									]
+								) as string
+							}
 							type='document'
 						/>
 					</div>
@@ -129,6 +150,14 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
+							infoMessage={
+								sub(
+									Liferay.Language.get(
+										'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
+									),
+									[Liferay.Language.get('forms')]
+								) as string
+							}
 							type='form'
 						/>
 					</div>
@@ -139,6 +168,14 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
+							infoMessage={
+								sub(
+									Liferay.Language.get(
+										'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
+									),
+									[Liferay.Language.get('web-content')]
+								) as string
+							}
 							type='journal'
 						/>
 					</div>

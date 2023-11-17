@@ -13,6 +13,7 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
+import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useDataSource} from 'shared/hooks/useDataSource';
@@ -136,6 +137,14 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 						{matchedRoute === Routes.SITES_TOUCHPOINTS && (
 							<DownloadCSVReport
 								disabled={dataSourceStates.empty}
+								infoMessage={
+									sub(
+										Liferay.Language.get(
+											'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
+										),
+										[Liferay.Language.get('pages')]
+									) as string
+								}
 								type='page'
 							/>
 						)}

@@ -63,6 +63,19 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro editJobItem(jobItemName = null) {
+		Variables.assertDefined(parameterList = ${jobItemName});
+
+		Click(
+			key_name = ${jobItemName},
+			locator1 = "JobScheduler#JOB_ITEM_KEBAB_MENU");
+
+		ClickNoError(
+			key_option = "Edit",
+			locator1 = "JobScheduler#KEBAB_MENU_OPTION");
+	}
+
+	@summary = "Default summary"
 	macro openJobSchedulerAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},

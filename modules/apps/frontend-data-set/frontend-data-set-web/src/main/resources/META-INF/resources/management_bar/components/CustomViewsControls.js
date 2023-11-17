@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -14,6 +15,30 @@ import React, {useContext, useRef, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import ViewsContext from '../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
+
+const DEFAULT_VIEW_ID = 'DEFAULT_VIEW';
+
+const CustomViewsControlsTrigger = React.forwardRef(
+	({triggerLabel, viewUpdated, ...otherProps}, ref) => (
+		<ClayButton
+			{...otherProps}
+			aria-label={Liferay.Language.get('views')}
+			className="custom-views-selection dropdown-toggle"
+			displayType="unstyled"
+			ref={ref}
+		>
+			<span className="navbar-text-truncate">{triggerLabel}</span>
+
+			{viewUpdated && (
+				<span className="inline-item-after reference-mark view-updated-mark">
+					<ClayIcon symbol="asterisk" />
+				</span>
+			)}
+
+			<ClayIcon className="ml-2" symbol="caret-bottom" />
+		</ClayButton>
+	)
+);
 
 const CustomViewsControls = () => {
 	const {appURL, id: fdsName, namespace, portletId} = useContext(
@@ -33,7 +58,6 @@ const CustomViewsControls = () => {
 		viewsDispatch,
 	] = useContext(ViewsContext);
 
-	const [viewsDropdownActive, setViewsDropdownActive] = useState(false);
 	const [actionsDropdownActive, setActionsDropdownActive] = useState(false);
 
 	const customViewLabelInputRef = useRef();
@@ -306,69 +330,43 @@ const CustomViewsControls = () => {
 		});
 	};
 
+	const handleSelectionChange = (id) => {
+		if (id === DEFAULT_VIEW_ID) {
+			viewsDispatch({
+				type: VIEWS_ACTION_TYPES.RESET_TO_DEFAULT_VIEW,
+			});
+		}
+		else {
+			viewsDispatch({
+				type: VIEWS_ACTION_TYPES.UPDATE_ACTIVE_CUSTOM_VIEW,
+				value: id,
+			});
+		}
+	};
+
 	return (
 		<>
 			<ManagementToolbar.Item>
-				<ClayDropDown
-					active={viewsDropdownActive}
-					className="custom-views-selection"
-					hasLeftSymbols
-					onActiveChange={setViewsDropdownActive}
-					trigger={
-						<ClayButton displayType="unstyled">
-							<span className="navbar-text-truncate">
-								{activeCustomViewId
-									? customViews[activeCustomViewId]
-											.customViewLabel
-									: Liferay.Language.get('default-view')}
-							</span>
-
-							{viewUpdated && (
-								<span className="inline-item-after reference-mark view-updated-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							)}
-
-							<ClayIcon className="ml-2" symbol="caret-bottom" />
-						</ClayButton>
+				<Picker
+					as={CustomViewsControlsTrigger}
+					items={[...Object.keys(customViews), DEFAULT_VIEW_ID]}
+					onSelectionChange={handleSelectionChange}
+					selectedKey={activeCustomViewId ?? DEFAULT_VIEW_ID}
+					triggerLabel={
+						activeCustomViewId
+							? customViews[activeCustomViewId].customViewLabel
+							: Liferay.Language.get('default-view')
 					}
+					viewUpdated={viewUpdated}
 				>
-					<ClayDropDown.ItemList>
-						{Object.keys(customViews).map((id) => (
-							<ClayDropDown.Item
-								key={id}
-								onClick={() => {
-									viewsDispatch({
-										type:
-											VIEWS_ACTION_TYPES.UPDATE_ACTIVE_CUSTOM_VIEW,
-										value: id,
-									});
-
-									setViewsDropdownActive(false);
-								}}
-								symbolLeft={
-									id === activeCustomViewId && 'check'
-								}
-							>
-								{customViews[id].customViewLabel}
-							</ClayDropDown.Item>
-						))}
-
-						<ClayDropDown.Item
-							onClick={() => {
-								viewsDispatch({
-									type:
-										VIEWS_ACTION_TYPES.RESET_TO_DEFAULT_VIEW,
-								});
-
-								setViewsDropdownActive(false);
-							}}
-							symbolLeft={!activeCustomViewId && 'check'}
-						>
-							{Liferay.Language.get('default-view')}
-						</ClayDropDown.Item>
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
+					{(id) => (
+						<Option key={id}>
+							{id === DEFAULT_VIEW_ID
+								? Liferay.Language.get('default-view')
+								: customViews[id].customViewLabel}
+						</Option>
+					)}
+				</Picker>
 			</ManagementToolbar.Item>
 
 			<ManagementToolbar.Item>
@@ -379,6 +377,9 @@ const CustomViewsControls = () => {
 					onActiveChange={setActionsDropdownActive}
 					trigger={
 						<ClayButton
+							aria-label={Liferay.Language.get(
+								'show-view-actions'
+							)}
 							displayType="unstyled"
 							title={Liferay.Language.get('show-view-actions')}
 						>

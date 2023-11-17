@@ -7,7 +7,6 @@ package com.liferay.portal.db.partition.internal.configuration.persistence.liste
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceExtractionConfiguration;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.Dictionary;
@@ -36,10 +35,7 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListener
 	public void doOnAfterSave(Dictionary<String, Object> properties)
 		throws Exception {
 
-		Company company = _companyLocalService.getCompanyByWebId(
-			(String)properties.get("webId"));
-
-		_companyLocalService.extractCompany(company.getCompanyId());
+		_companyLocalService.extractCompany((long)properties.get("companyId"));
 	}
 
 	@Override

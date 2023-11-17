@@ -20,7 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DBPartitionVirtualInstanceExtractionConfiguration {
 
-	@Meta.AD(name = "web-id")
-	public String webId();
+	@Meta.AD(name = "company-id")
+	public String companyId();
 
 }

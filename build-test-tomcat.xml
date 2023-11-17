@@ -47,7 +47,9 @@
 	<target name="run-tomcat">
 		<lstopwatch action="start" name="run.tomcat" />
 
-		<antcall target="run-simple-server" />
+		<antcall target="run-simple-server">
+			<param name="cold.startup.testing" value="${cold.startup.testing}" />
+		</antcall>
 
 		<lstopwatch action="total" name="run.tomcat" />
 	</target>

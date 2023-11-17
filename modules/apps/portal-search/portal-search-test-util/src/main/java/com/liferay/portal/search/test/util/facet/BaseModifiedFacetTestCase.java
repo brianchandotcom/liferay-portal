@@ -44,7 +44,8 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 				helper.search();
 
 				helper.assertFrequencies(
-					facet, Arrays.asList("custom-range=2"));
+					facet,
+					Arrays.asList("[20170101000000 TO 20170105000000]=2"));
 			});
 	}
 
@@ -60,7 +61,8 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 		String customRange = "[11110101010101 TO 22220202020202]";
 
 		List<String> expectedRanges = Arrays.asList(
-			"[11110101010101 TO 19990101010101]=0", "custom-range=1",
+			"[11110101010101 TO 19990101010101]=0",
+			"[11110101010101 TO 22220202020202]=1",
 			"[19990202020202 TO 22220202020202]=1");
 
 		assertSearchFacet(

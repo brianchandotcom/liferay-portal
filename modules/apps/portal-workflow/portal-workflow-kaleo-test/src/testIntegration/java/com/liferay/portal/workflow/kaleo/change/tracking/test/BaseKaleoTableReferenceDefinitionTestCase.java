@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.workflow.kaleo.definition.Condition;
+import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Notification;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.TaskForm;
@@ -119,22 +119,12 @@ public abstract class BaseKaleoTableReferenceDefinitionTestCase
 			serviceContext);
 	}
 
-	protected KaleoNode addKaleoNode(
-			KaleoInstance kaleoInstance, Condition condition)
+	protected KaleoNode addKaleoNode(KaleoInstance kaleoInstance, Node node)
 		throws Exception {
 
 		return _kaleoNodeLocalService.addKaleoNode(
 			kaleoInstance.getKaleoDefinitionId(),
-			kaleoInstance.getKaleoDefinitionVersionId(), condition,
-			serviceContext);
-	}
-
-	protected KaleoNode addKaleoNode(KaleoInstance kaleoInstance, Task task)
-		throws Exception {
-
-		return _kaleoNodeLocalService.addKaleoNode(
-			kaleoInstance.getKaleoDefinitionId(),
-			kaleoInstance.getKaleoDefinitionVersionId(), task, serviceContext);
+			kaleoInstance.getKaleoDefinitionVersionId(), node, serviceContext);
 	}
 
 	protected KaleoNotification addKaleoNotification(

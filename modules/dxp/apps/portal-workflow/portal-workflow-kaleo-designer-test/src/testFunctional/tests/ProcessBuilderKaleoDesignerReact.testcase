@@ -591,6 +591,8 @@ definition {
 
 		Button.clickPublish();
 
+		Alert.viewSuccessMessage();
+
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(key_locale = "pt_BR");
 
 		for (var nodeTypes : list "start,end") {
@@ -606,6 +608,10 @@ definition {
 			connectorLabelEdit = "pt_Start-End Connector");
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "pt_Workflow Definition");
+
+		Button.clickUpdate();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
 
 		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
 

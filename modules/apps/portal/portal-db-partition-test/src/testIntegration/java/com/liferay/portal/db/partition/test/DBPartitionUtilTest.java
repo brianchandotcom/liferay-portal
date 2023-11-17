@@ -155,8 +155,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	@Test
 	public void testExtractAndInsertDBPartition() throws Exception {
 		try {
-			int totalCompanies = _getDefaultSchemaTableCount("Company");
-			int totalVirtualHosts = _getDefaultSchemaTableCount("VirtualHost");
+			int companyCount = _getDefaultSchemaCount("Company");
+			int virtualHostCount = _getDefaultSchemaCount("VirtualHost");
 
 			addDBPartitions();
 			insertPartitionRequiredData();
@@ -172,18 +172,18 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			extractDBPartitions();
 
 			Assert.assertEquals(
-				totalCompanies, _getDefaultSchemaTableCount("Company"));
+				companyCount, _getDefaultSchemaCount("Company"));
 			Assert.assertEquals(
-				totalVirtualHosts, _getDefaultSchemaTableCount("VirtualHost"));
+				virtualHostCount, _getDefaultSchemaCount("VirtualHost"));
 
 			insertDBPartitions();
 
 			Assert.assertEquals(
-				totalCompanies + COMPANY_IDS.length,
-				_getDefaultSchemaTableCount("Company"));
+				companyCount + COMPANY_IDS.length,
+				_getDefaultSchemaCount("Company"));
 			Assert.assertEquals(
-				totalVirtualHosts + COMPANY_IDS.length,
-				_getDefaultSchemaTableCount("VirtualHost"));
+				virtualHostCount + COMPANY_IDS.length,
+				_getDefaultSchemaCount("VirtualHost"));
 
 			for (long companyId : COMPANY_IDS) {
 				Assert.assertEquals(
@@ -365,7 +365,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		throw new Exception("Table does not exist");
 	}
 
-	private int _getDefaultSchemaTableCount(String tableName) throws Exception {
+	private int _getDefaultSchemaCount(String tableName) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(1) from " + tableName);
 			ResultSet resultSet = preparedStatement.executeQuery()) {

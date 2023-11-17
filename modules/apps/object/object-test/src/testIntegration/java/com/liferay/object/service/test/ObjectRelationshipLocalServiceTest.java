@@ -532,6 +532,36 @@ public class ObjectRelationshipLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("Baker"),
 			objectRelationship1.getLabelMap());
 
+		ObjectRelationship reverseObjectRelationship =
+			_objectRelationshipLocalService.fetchReverseObjectRelationship(
+				objectRelationship1, true);
+
+		Assert.assertEquals(
+			objectRelationship1.getDeletionType(),
+			reverseObjectRelationship.getDeletionType());
+		Assert.assertEquals(
+			objectRelationship1.getLabelMap(),
+			reverseObjectRelationship.getLabelMap());
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		reverseObjectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				externalReferenceCode,
+				reverseObjectRelationship.getObjectRelationshipId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
+				LocalizedMapUtil.getLocalizedMap("Able"), null);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			reverseObjectRelationship.getExternalReferenceCode());
+		Assert.assertEquals(
+			objectRelationship1.getDeletionType(),
+			reverseObjectRelationship.getDeletionType());
+		Assert.assertEquals(
+			objectRelationship1.getLabelMap(),
+			reverseObjectRelationship.getLabelMap());
+
 		ObjectRelationship objectRelationship2 =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				_objectRelationshipLocalService,
@@ -625,27 +655,6 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationship5.getObjectRelationshipId(),
 				objectRelationship5.getParameterObjectFieldId(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				null));
-
-		ObjectRelationship reverseObjectRelationship =
-			_objectRelationshipLocalService.fetchReverseObjectRelationship(
-				objectRelationship1, true);
-
-		Assert.assertEquals(
-			objectRelationship1.getDeletionType(),
-			reverseObjectRelationship.getDeletionType());
-		Assert.assertEquals(
-			objectRelationship1.getLabelMap(),
-			reverseObjectRelationship.getLabelMap());
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipReverseException.class,
-			"Reverse object relationships cannot be updated",
-			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				reverseObjectRelationship.getExternalReferenceCode(),
-				reverseObjectRelationship.getObjectRelationshipId(), 0,
-				reverseObjectRelationship.getDeletionType(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				null));
 

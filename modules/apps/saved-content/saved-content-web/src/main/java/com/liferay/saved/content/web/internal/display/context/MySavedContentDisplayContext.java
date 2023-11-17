@@ -94,7 +94,7 @@ public class MySavedContentDisplayContext {
 			new SearchContainer(
 				_liferayPortletRequest, null, null, "curEntry",
 				SearchContainer.DEFAULT_DELTA, _getPortletURL(), null,
-				"no-saved-content-were-found");
+				"no-saved-content-was-found");
 
 		searchContainer.setResultsAndTotal(
 			() -> SavedContentEntryServiceUtil.getGroupUserSavedContentEntries(

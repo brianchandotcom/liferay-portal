@@ -22,7 +22,7 @@ if (Validator.isNotNull(backURL)) {
 
 <clay:container-fluid>
 	<liferay-ui:search-container
-		emptyResultsMessage="no-saved-content-were-found"
+		emptyResultsMessage="no-saved-content-was-found"
 		searchContainer="<%= mySavedContentDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

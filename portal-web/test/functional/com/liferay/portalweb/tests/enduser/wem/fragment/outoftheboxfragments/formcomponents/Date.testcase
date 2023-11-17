@@ -35,19 +35,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
-		}
-	}
-
 	@description = "This is a test for LPS-151158 and LPS-155502. The page creator could configure the Date fragment. View the behaviors of Help Text and Label."
 	@priority = 5
 	test ConfigureDate {

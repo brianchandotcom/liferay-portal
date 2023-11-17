@@ -122,185 +122,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AssetPublisherPortlet extends MVCPortlet {
 
-	public void getFieldValue(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				resourceRequest);
-
-			String className = ParamUtil.getString(
-				resourceRequest, "className");
-			long classTypeId = ParamUtil.getLong(
-				resourceRequest, "classTypeId");
-			String fieldName = ParamUtil.getString(resourceRequest, "name");
-
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
-
-			ClassType classType = classTypeReader.getClassType(
-				classTypeId, themeDisplay.getLocale());
-
-			ClassTypeField classTypeField = classType.getClassTypeField(
-				fieldName);
-
-			Fields fields = (Fields)serviceContext.getAttribute(
-				Fields.class.getName() + classTypeField.getClassTypeId());
-
-			if (fields == null) {
-				String fieldsNamespace = ParamUtil.getString(
-					resourceRequest, "fieldsNamespace");
-
-				fields = DDMUtil.getFields(
-					classTypeField.getClassTypeId(), fieldsNamespace,
-					serviceContext);
-			}
-
-			Field field = fields.get(fieldName);
-
-			Serializable fieldValue = field.getValue(
-				themeDisplay.getLocale(), 0);
-
-			JSONObject jsonObject = jsonFactory.createJSONObject();
-
-			if (fieldValue != null) {
-				jsonObject.put("success", true);
-			}
-			else {
-				jsonObject.put("success", false);
-
-				writeJSON(resourceRequest, resourceResponse, jsonObject);
-
-				return;
-			}
-
-			jsonObject.put(
-				"displayValue", _getDisplayFieldValue(field, themeDisplay)
-			).put(
-				"value",
-				() -> {
-					if (fieldValue instanceof Boolean) {
-						return (Boolean)fieldValue;
-					}
-
-					if (fieldValue instanceof Date) {
-						DateFormat dateFormat =
-							DateFormatFactoryUtil.getSimpleDateFormat(
-								"yyyyMM ddHHmmss");
-
-						return dateFormat.format(fieldValue);
-					}
-
-					if (fieldValue instanceof Double) {
-						return (Double)fieldValue;
-					}
-
-					if (fieldValue instanceof Float) {
-						return (Float)fieldValue;
-					}
-
-					if (fieldValue instanceof Integer) {
-						return (Integer)fieldValue;
-					}
-
-					if (fieldValue instanceof Number) {
-						return String.valueOf(fieldValue);
-					}
-
-					return (String)fieldValue;
-				}
-			);
-
-			writeJSON(resourceRequest, resourceResponse, jsonObject);
-		}
-		catch (Exception exception) {
-			throw new PortletException(exception);
-		}
-	}
-
-	public void getRSS(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException {
-
-		PortletPreferences portletPreferences =
-			resourceRequest.getPreferences();
-
-		boolean enableRss = GetterUtil.getBoolean(
-			portletPreferences.getValue("enableRss", null));
-
-		if (!portal.isRSSFeedsEnabled() || !enableRss) {
-			try {
-				portal.sendRSSFeedsDisabledError(
-					resourceRequest, resourceResponse);
-			}
-			catch (ServletException servletException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(servletException);
-				}
-			}
-
-			return;
-		}
-
-		String currentURL = portal.getCurrentURL(resourceRequest);
-
-		String cacheability = HttpComponentsUtil.getParameter(
-			currentURL, "p_p_cacheability", false);
-
-		if (cacheability.equals(ResourceURL.FULL)) {
-			HttpServletResponse httpServletResponse =
-				portal.getHttpServletResponse(resourceResponse);
-
-			String redirectURL = HttpComponentsUtil.removeParameter(
-				currentURL, "p_p_cacheability");
-
-			httpServletResponse.sendRedirect(redirectURL);
-
-			return;
-		}
-
-		resourceResponse.setContentType(ContentTypes.TEXT_XML_UTF8);
-
-		try (OutputStream outputStream =
-				resourceResponse.getPortletOutputStream()) {
-
-			String rootPortletId = PortletIdCodec.decodePortletName(
-				portal.getPortletId(resourceRequest));
-
-			AssetPublisherDisplayContext assetPublisherDisplayContext =
-				new AssetPublisherDisplayContext(
-					assetHelper, assetListAssetEntryProvider,
-					assetListEntrySegmentsEntryRelLocalService,
-					assetPublisherCustomizerRegistry.
-						getAssetPublisherCustomizer(rootPortletId),
-					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebHelper, infoItemServiceRegistry,
-					itemSelector, portal, resourceRequest, resourceResponse,
-					resourceRequest.getPreferences(), requestContextMapper,
-					segmentsEntryRetriever);
-
-			resourceRequest.setAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
-				assetPublisherDisplayContext);
-
-			byte[] bytes = assetRSSHelper.getRSS(
-				resourceRequest, resourceResponse);
-
-			outputStream.write(bytes);
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get RSS feed", exception);
-		}
-	}
-
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -322,10 +143,10 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			resourceRequest.getResourceID());
 
 		if (resourceID.equals("getFieldValue")) {
-			getFieldValue(resourceRequest, resourceResponse);
+			_getFieldValue(resourceRequest, resourceResponse);
 		}
 		else if (resourceID.equals("getRSS")) {
-			getRSS(resourceRequest, resourceResponse);
+			_getRSS(resourceRequest, resourceResponse);
 		}
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
@@ -521,6 +342,185 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		}
 
 		return fieldValue;
+	}
+
+	private void _getFieldValue(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				resourceRequest);
+
+			String className = ParamUtil.getString(
+				resourceRequest, "className");
+			long classTypeId = ParamUtil.getLong(
+				resourceRequest, "classTypeId");
+			String fieldName = ParamUtil.getString(resourceRequest, "name");
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
+			ClassTypeReader classTypeReader =
+				assetRendererFactory.getClassTypeReader();
+
+			ClassType classType = classTypeReader.getClassType(
+				classTypeId, themeDisplay.getLocale());
+
+			ClassTypeField classTypeField = classType.getClassTypeField(
+				fieldName);
+
+			Fields fields = (Fields)serviceContext.getAttribute(
+				Fields.class.getName() + classTypeField.getClassTypeId());
+
+			if (fields == null) {
+				String fieldsNamespace = ParamUtil.getString(
+					resourceRequest, "fieldsNamespace");
+
+				fields = DDMUtil.getFields(
+					classTypeField.getClassTypeId(), fieldsNamespace,
+					serviceContext);
+			}
+
+			Field field = fields.get(fieldName);
+
+			Serializable fieldValue = field.getValue(
+				themeDisplay.getLocale(), 0);
+
+			JSONObject jsonObject = jsonFactory.createJSONObject();
+
+			if (fieldValue != null) {
+				jsonObject.put("success", true);
+			}
+			else {
+				jsonObject.put("success", false);
+
+				writeJSON(resourceRequest, resourceResponse, jsonObject);
+
+				return;
+			}
+
+			jsonObject.put(
+				"displayValue", _getDisplayFieldValue(field, themeDisplay)
+			).put(
+				"value",
+				() -> {
+					if (fieldValue instanceof Boolean) {
+						return (Boolean)fieldValue;
+					}
+
+					if (fieldValue instanceof Date) {
+						DateFormat dateFormat =
+							DateFormatFactoryUtil.getSimpleDateFormat(
+								"yyyyMM ddHHmmss");
+
+						return dateFormat.format(fieldValue);
+					}
+
+					if (fieldValue instanceof Double) {
+						return (Double)fieldValue;
+					}
+
+					if (fieldValue instanceof Float) {
+						return (Float)fieldValue;
+					}
+
+					if (fieldValue instanceof Integer) {
+						return (Integer)fieldValue;
+					}
+
+					if (fieldValue instanceof Number) {
+						return String.valueOf(fieldValue);
+					}
+
+					return (String)fieldValue;
+				}
+			);
+
+			writeJSON(resourceRequest, resourceResponse, jsonObject);
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
+	}
+
+	private void _getRSS(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException {
+
+		PortletPreferences portletPreferences =
+			resourceRequest.getPreferences();
+
+		boolean enableRss = GetterUtil.getBoolean(
+			portletPreferences.getValue("enableRss", null));
+
+		if (!portal.isRSSFeedsEnabled() || !enableRss) {
+			try {
+				portal.sendRSSFeedsDisabledError(
+					resourceRequest, resourceResponse);
+			}
+			catch (ServletException servletException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(servletException);
+				}
+			}
+
+			return;
+		}
+
+		String currentURL = portal.getCurrentURL(resourceRequest);
+
+		String cacheability = HttpComponentsUtil.getParameter(
+			currentURL, "p_p_cacheability", false);
+
+		if (cacheability.equals(ResourceURL.FULL)) {
+			HttpServletResponse httpServletResponse =
+				portal.getHttpServletResponse(resourceResponse);
+
+			String redirectURL = HttpComponentsUtil.removeParameter(
+				currentURL, "p_p_cacheability");
+
+			httpServletResponse.sendRedirect(redirectURL);
+
+			return;
+		}
+
+		resourceResponse.setContentType(ContentTypes.TEXT_XML_UTF8);
+
+		try (OutputStream outputStream =
+				resourceResponse.getPortletOutputStream()) {
+
+			String rootPortletId = PortletIdCodec.decodePortletName(
+				portal.getPortletId(resourceRequest));
+
+			AssetPublisherDisplayContext assetPublisherDisplayContext =
+				new AssetPublisherDisplayContext(
+					assetHelper, assetListAssetEntryProvider,
+					assetListEntrySegmentsEntryRelLocalService,
+					assetPublisherCustomizerRegistry.
+						getAssetPublisherCustomizer(rootPortletId),
+					assetPublisherHelper, assetPublisherWebConfiguration,
+					assetPublisherWebHelper, infoItemServiceRegistry,
+					itemSelector, portal, resourceRequest, resourceResponse,
+					resourceRequest.getPreferences(), requestContextMapper,
+					segmentsEntryRetriever);
+
+			resourceRequest.setAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
+				assetPublisherDisplayContext);
+
+			byte[] bytes = assetRSSHelper.getRSS(
+				resourceRequest, resourceResponse);
+
+			outputStream.write(bytes);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get RSS feed", exception);
+		}
 	}
 
 	private static final String _ALIAS = "asset-list";

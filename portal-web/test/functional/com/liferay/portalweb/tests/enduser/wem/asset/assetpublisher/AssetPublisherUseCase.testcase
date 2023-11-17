@@ -81,13 +81,13 @@ definition {
 				privateVirtualHosts = "true");
 		}
 
-		task ("Sign in the prviate virtual host") {
+		task ("Sign in the private virtual host") {
 			User.logoutPG();
 
 			User.firstLoginPG(virtualHostsURL = "http://www.baker.com:8080");
 		}
 
-		task ("View prviate pages") {
+		task ("View private pages") {
 			for (var sitePageName : list "Welcome,Documents and Media,News") {
 				AssertElementPresent(
 					key_pageName = ${sitePageName},
@@ -209,7 +209,7 @@ definition {
 		}
 
 		task ("Sign in the public virtual host") {
-			User.firstLoginUI(specificURL = "http://www.able.com:8080");
+			User.firstLoginPG(virtualHostsURL = "http://www.able.com:8080");
 		}
 
 		task ("Add a public page in organization site") {

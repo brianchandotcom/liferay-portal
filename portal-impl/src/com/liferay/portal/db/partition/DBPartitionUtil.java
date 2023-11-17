@@ -709,16 +709,9 @@ public class DBPartitionUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
+		List<String> companyIdControlTableNames = new ArrayList<>();
+
 		try (Statement statement = connection.createStatement()) {
-			String whereClause = " where companyId = " + companyId;
-
-			_copyData(
-				"Company", _getSchemaName(companyId), _defaultSchemaName,
-				statement, whereClause);
-			_copyData(
-				"VirtualHost", _getSchemaName(companyId), _defaultSchemaName,
-				statement, whereClause);
-
 			DBInspector dbInspector = new DBInspector(connection);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -733,6 +726,15 @@ public class DBPartitionUtil {
 					if (dbInspector.isControlTable(
 							_getCompanyIds(), tableName)) {
 
+						if (dbInspector.hasColumn(tableName, "companyId")) {
+							_copyData(
+								tableName, _getSchemaName(companyId),
+								_defaultSchemaName, statement,
+								" where companyId = " + companyId);
+
+							companyIdControlTableNames.add(tableName);
+						}
+
 						statement.executeUpdate(
 							_getDropTableSQL(companyId, tableName));
 
@@ -744,23 +746,29 @@ public class DBPartitionUtil {
 		}
 		catch (Exception exception1) {
 			try (Statement statement = connection.createStatement()) {
-				_deleteCompanyData(
-					companyId, "Company", _defaultSchemaName, statement);
-				_deleteCompanyData(
-					companyId, "VirtualHost", _defaultSchemaName, statement);
+				for (String companyIdControlTable :
+						companyIdControlTableNames) {
+
+					_deleteCompanyData(
+						companyId, companyIdControlTable, _defaultSchemaName,
+						statement);
+				}
 			}
 			catch (Exception exception2) {
 				throw new PortalException(
-					"Unable to remove data inserted into the default schema " +
-						"Company/VirtualHost tables for company " + companyId,
+					StringBundler.concat(
+						"Unable to roll back the data inserted into the ",
+						"default schema for tables ",
+						companyIdControlTableNames, " and company ID ",
+						companyId),
 					exception2);
 			}
 
 			throw new PortalException(
 				StringBundler.concat(
-					"Unable to move exported standalone schema. Recover a ",
-					"backup of the database schema ", _getSchemaName(companyId),
-					"."),
+					"Unable to roll back the insertion of database partition. ",
+					"Recover a backup of the database schema ",
+					_getSchemaName(companyId), "."),
 				exception1);
 		}
 

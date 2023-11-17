@@ -112,8 +112,6 @@ definition {
 				fragmentName = "Button",
 				scope = "Master");
 
-			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
-
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",
 				layoutPageTemplateCollectionName = "Page Template Collection");
@@ -124,6 +122,8 @@ definition {
 				layoutPageTemplateEntryName = "Page Template Name",
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/test-site-name/~/control_panel/manage/-/style_books/style_books");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
@@ -137,13 +137,13 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
-
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "DPT Name",
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
+
+			Open.openInTheNewTab(value1 = "${baseURL}/group/test-site-name/~/control_panel/manage/-/style_books/style_books");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
@@ -155,7 +155,7 @@ definition {
 		}
 
 		task ("When navigating to the locked pages admin page") {
-			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+			Open.openInTheNewTab(value1 = "${baseURL}/group/test-site-name/~/control_panel/manage/-/style_books/style_books");
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",

@@ -165,7 +165,7 @@ definition {
 		}
 
 		task ("When navigating to the locked pages admin page") {
-			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name");
+			Open.openInTheNewTab(value1 = "${baseURL}/group/test-site-name/~/control_panel/manage/-/style_books/style_books");
 
 			ProductMenu.gotoPortlet(
 				category = "Configuration",

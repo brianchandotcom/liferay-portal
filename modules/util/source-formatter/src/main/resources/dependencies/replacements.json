@@ -386,6 +386,29 @@
 	},
 	{
 		"classNames": [
+			"PortletDisplay"
+		],
+		"from": "getPortletInstanceConfiguration(Class<T>)",
+		"issueKey": "LPS-195850",
+		"newImports": [
+			"com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil",
+			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
+		],
+		"to": "ConfigurationProviderUtil.getPortletInstanceConfiguration(param#0#, ServiceContextThreadLocal.getServiceContext().getThemeDisplay())"
+	},
+	{
+		"from": "portletDisplay.getPortletInstanceConfiguration(Class<T>)",
+		"issueKey": "LPS-195850",
+		"newImports": [
+			"com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil"
+		],
+		"to": "ConfigurationProviderUtil.getPortletInstanceConfiguration(param#0#, themeDisplay)",
+		"validExtensions": [
+			"jsp"
+		]
+	},
+	{
+		"classNames": [
 			"CaptchaUtil"
 		],
 		"from": "serveImage(ResourceRequest, ResourceResponse)",

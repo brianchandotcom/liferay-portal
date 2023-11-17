@@ -273,12 +273,7 @@ public abstract class BaseAggregationFilteringTestCase
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String range : ranges) {
-			jsonArray.put(
-				JSONUtil.put(
-					"label", range
-				).put(
-					"range", range
-				));
+			jsonArray.put(JSONUtil.put("range", range));
 		}
 
 		dataJSONObject.put("ranges", jsonArray);

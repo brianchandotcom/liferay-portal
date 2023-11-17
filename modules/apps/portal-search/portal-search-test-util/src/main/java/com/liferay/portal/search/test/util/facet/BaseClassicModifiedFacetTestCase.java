@@ -65,7 +65,7 @@ public abstract class BaseClassicModifiedFacetTestCase
 				for (TermCollector termCollector : termCollectors) {
 					String term = termCollector.getTerm();
 
-					Assert.assertTrue(term.contains(" TO *"));
+					Assert.assertTrue(term.contains("00 TO 20"));
 				}
 			});
 	}

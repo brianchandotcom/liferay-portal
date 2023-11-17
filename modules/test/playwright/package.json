@@ -1,14 +1,16 @@
 {
-  "name": "playwright",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@playwright/test": "^1.39.0",
-    "@types/node": "^20.9.0"
-  }
+	"author": "",
+	"description": "",
+	"devDependencies": {
+		"@playwright/test": "1.39.0",
+		"@types/node": "^20.9.0"
+	},
+	"keywords": [
+	],
+	"license": "ISC",
+	"main": "index.js",
+	"name": "liferay-playwright",
+	"scripts": {
+	},
+	"version": "1.0.0"
 }

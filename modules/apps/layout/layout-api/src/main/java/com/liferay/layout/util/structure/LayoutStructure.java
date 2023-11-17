@@ -354,7 +354,9 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem =
 			LayoutStructureItemUtil.create(itemType, parentItemId);
 
-		layoutStructureItem.setItemId(itemId);
+		if (Validator.isNotNull(itemId)) {
+			layoutStructureItem.setItemId(itemId);
+		}
 
 		_updateLayoutStructure(layoutStructureItem, position);
 

@@ -5,6 +5,7 @@
 
 package com.liferay.wiki.service.impl;
 
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.exception.RestoreEntryException;
@@ -55,6 +58,7 @@ import com.liferay.wiki.model.WikiPageDisplay;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
 import com.liferay.wiki.service.persistence.WikiPagePersistence;
+import com.liferay.wiki.validator.WikiPageTitleValidator;
 
 import java.io.InputStream;
 
@@ -62,7 +66,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -540,11 +543,14 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(Map<String, Object> properties) {
 		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
 			WikiGroupServiceConfiguration.class, properties);
+
+		_mediaWikiImporter = new MediaWikiImporter(
+			_assetTagLocalService, _companyLocalService, _portletFileRepository,
+			_userLocalService, _wikiGroupServiceConfiguration,
+			_wikiPageLocalService, _wikiPageTitleValidator, _zipReaderFactory);
 
 		_portalCache = _multiVMPool.getPortalCache(
 			WikiPageDisplay.class.getName());
@@ -635,12 +641,17 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		WikiNodeLocalServiceImpl.class);
 
 	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
 
-	@Reference
 	private MediaWikiImporter _mediaWikiImporter;
 
 	@Reference
@@ -673,5 +684,11 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 	@Reference
 	private WikiPagePersistence _wikiPagePersistence;
+
+	@Reference
+	private WikiPageTitleValidator _wikiPageTitleValidator;
+
+	@Reference
+	private ZipReaderFactory _zipReaderFactory;
 
 }

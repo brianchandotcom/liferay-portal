@@ -21,8 +21,8 @@ definition {
 
 		if (IsElementNotPresent(locator1 = "Gmail#INBOX")) {
 			Gmail.login(
-				userEmailAddress = PropsUtil.get("email.address.3"),
-				userPassword = PropsUtil.get("email.password.3"));
+				userEmailAddress = PropsUtil.get("email.address.2"),
+				userPassword = PropsUtil.get("email.password.2"));
 
 			WaitForElementPresent(locator1 = "Gmail#INBOX");
 		}
@@ -45,7 +45,7 @@ definition {
 		task ("Given a gmail user with permission to add and post on message boards") {
 			JSONUser.addUserWithRole(
 				roleTitle = "Administrator",
-				userEmailAddress = PropsUtil.get("email.address.3"),
+				userEmailAddress = PropsUtil.get("email.address.2"),
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
@@ -53,7 +53,7 @@ definition {
 
 		task ("And given the user creates a message board") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = PropsUtil.get("email.address.3"),
+				userLoginEmailAddress = PropsUtil.get("email.address.2"),
 				userLoginFullName = "userfn userln");
 
 			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
@@ -81,8 +81,8 @@ definition {
 
 		task ("When the owner of the message board logs in to their email account") {
 			Gmail.login(
-				userEmailAddress = PropsUtil.get("email.address.3"),
-				userPassword = PropsUtil.get("email.password.3"));
+				userEmailAddress = PropsUtil.get("email.address.2"),
+				userPassword = PropsUtil.get("email.password.2"));
 
 			WaitForElementPresent(locator1 = "Gmail#INBOX");
 		}

@@ -6,7 +6,6 @@
 package com.liferay.jethr0.event;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
@@ -104,17 +103,17 @@ public abstract class BaseEventHandler implements EventHandler {
 			return;
 		}
 
-		BuildParameterEntity buildParameterEntity =
-			buildEntity.getBuildParameterEntity("JENKINS_BUILD_ID");
+		String jenkinsBuildId = buildEntity.getBuildParameterValue(
+			"JENKINS_BUILD_ID");
 
-		if (buildParameterEntity == null) {
+		if (StringUtil.isNullOrEmpty(jenkinsBuildId)) {
 			return;
 		}
 
 		JRPEventProcessor jrpEventProcessor = getJRPEventProcessor();
 
 		Map<String, String> messageProperties = HashMapBuilder.put(
-			"jenkinsBuildId", buildParameterEntity.getValue()
+			"jenkinsBuildId", jenkinsBuildId
 		).put(
 			"jethr0JobId",
 			() -> {

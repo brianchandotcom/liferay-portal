@@ -17,11 +17,14 @@ import com.liferay.jethr0.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -77,21 +80,13 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public Set<BuildParameterEntity> getBuildParameterEntities() {
-		return getRelatedEntities(BuildParameterEntity.class);
+	public Map<String, String> getBuildParameters() {
+		return _parameters;
 	}
 
 	@Override
-	public BuildParameterEntity getBuildParameterEntity(String name) {
-		for (BuildParameterEntity buildParameterEntity :
-				getBuildParameterEntities()) {
-
-			if (Objects.equals(name, buildParameterEntity.getName())) {
-				return buildParameterEntity;
-			}
-		}
-
-		return null;
+	public String getBuildParameterValue(String name) {
+		return _parameters.get(name);
 	}
 
 	@Override
@@ -128,15 +123,14 @@ public abstract class BaseBuildEntity
 
 	@Override
 	public JenkinsNodeEntity.Type getJenkinsNodeType() {
-		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
-			"NODE_TYPE");
+		String nodeTypeValue = getBuildParameterValue("NODE_TYPE");
 
-		if (buildParameterEntity == null) {
+		if (StringUtil.isNullOrEmpty(nodeTypeValue)) {
 			return JenkinsNodeEntity.Type.SLAVE;
 		}
 
 		JenkinsNodeEntity.Type type = JenkinsNodeEntity.Type.getByKey(
-			buildParameterEntity.getValue());
+			nodeTypeValue);
 
 		if (type == null) {
 			return JenkinsNodeEntity.Type.SLAVE;
@@ -159,6 +153,20 @@ public abstract class BaseBuildEntity
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
+		JSONArray parametersJSONArray = new JSONArray();
+
+		for (Map.Entry<String, String> parameter : _parameters.entrySet()) {
+			JSONObject parameterJSONObject = new JSONObject();
+
+			parameterJSONObject.put(
+				"name", parameter.getKey()
+			).put(
+				"value", parameter.getValue()
+			);
+
+			parametersJSONArray.put(parameterJSONObject);
+		}
+
 		State state = getState();
 
 		jsonObject.put(
@@ -167,6 +175,8 @@ public abstract class BaseBuildEntity
 			"jenkinsJobName", getJenkinsJobName()
 		).put(
 			"name", getName()
+		).put(
+			"parameters", String.valueOf(parametersJSONArray)
 		).put(
 			"r_jobToBuilds_c_jobId", getJobEntityId()
 		).put(
@@ -190,47 +200,36 @@ public abstract class BaseBuildEntity
 
 	@Override
 	public int getMaxNodeCount() {
-		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
-			"MAX_NODE_COUNT");
+		String maxNodeCount = getBuildParameterValue("MAX_NODE_COUNT");
 
-		if (buildParameterEntity == null) {
-			buildParameterEntity = getBuildParameterEntity(
-				"MAXIMUM_SLAVES_PER_HOST");
+		if (StringUtil.isNullOrEmpty(maxNodeCount)) {
+			maxNodeCount = getBuildParameterValue("MAXIMUM_SLAVES_PER_HOST");
 		}
 
-		if (buildParameterEntity == null) {
+		if (StringUtil.isNullOrEmpty(maxNodeCount) ||
+			!maxNodeCount.matches("\\d+")) {
+
 			return _DEFAULT_MAX_NODE_COUNT;
 		}
 
-		String value = buildParameterEntity.getValue();
-
-		if ((value == null) || !value.matches("\\d+")) {
-			return _DEFAULT_MAX_NODE_COUNT;
-		}
-
-		return Integer.valueOf(value);
+		return Integer.valueOf(maxNodeCount);
 	}
 
 	@Override
 	public int getMinNodeRAM() {
-		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
-			"MIN_NODE_RAM");
+		String minNodeRAM = getBuildParameterValue("MIN_NODE_RAM");
 
-		if (buildParameterEntity == null) {
-			buildParameterEntity = getBuildParameterEntity("MINIMUM_SLAVE_RAM");
+		if (StringUtil.isNullOrEmpty(minNodeRAM)) {
+			minNodeRAM = getBuildParameterValue("MINIMUM_SLAVE_RAM");
 		}
 
-		if (buildParameterEntity == null) {
+		if (StringUtil.isNullOrEmpty(minNodeRAM) ||
+			!minNodeRAM.matches("\\d+")) {
+
 			return _DEFAULT_MIN_NODE_RAM;
 		}
 
-		String value = buildParameterEntity.getValue();
-
-		if ((value == null) || !value.matches("\\d+")) {
-			return _DEFAULT_MIN_NODE_RAM;
-		}
-
-		return Integer.valueOf(value);
+		return Integer.valueOf(minNodeRAM);
 	}
 
 	@Override
@@ -319,16 +318,10 @@ public abstract class BaseBuildEntity
 
 	@Override
 	public boolean requiresGoodBattery() {
-		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
+		String requiresGoodBattery = getBuildParameterValue(
 			"REQUIRES_GOOD_BATTERY");
 
-		if (buildParameterEntity == null) {
-			return false;
-		}
-
-		String requiresGoodBattery = buildParameterEntity.getValue();
-
-		if ((requiresGoodBattery == null) ||
+		if (StringUtil.isNullOrEmpty(requiresGoodBattery) ||
 			!Objects.equals(
 				StringUtil.toLowerCase(requiresGoodBattery), "true")) {
 
@@ -368,6 +361,18 @@ public abstract class BaseBuildEntity
 		_jobEntityId = jsonObject.optLong("r_jobToBuilds_c_jobId");
 		_name = jsonObject.getString("name");
 		_state = State.get(jsonObject.getJSONObject("state"));
+
+		JSONArray parametersJSONArray = new JSONArray(
+			jsonObject.getString("parameters"));
+
+		for (int i = 0; i < parametersJSONArray.length(); i++) {
+			JSONObject parameterJSONObject = parametersJSONArray.getJSONObject(
+				i);
+
+			_parameters.put(
+				parameterJSONObject.getString("name"),
+				parameterJSONObject.getString("value"));
+		}
 	}
 
 	private Set<BuildEntity> _getAllChildBuildEntities() {
@@ -403,6 +408,7 @@ public abstract class BaseBuildEntity
 	private JobEntity _jobEntity;
 	private long _jobEntityId;
 	private final String _name;
+	private final Map<String, String> _parameters = new HashMap<>();
 	private final Set<BuildEntity> _parentBuildEntities = new HashSet<>();
 	private State _state;
 

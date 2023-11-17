@@ -36,23 +36,23 @@
 </clay:container-fluid>
 
 <aui:script>
-	var onSendPushNotification = function (result) {
-		var success = document.getElementById('<portlet:namespace />success');
+	const onSendPushNotification = function (result) {
+		const success = document.getElementById('<portlet:namespace />success');
 
 		if (success) {
 			success.classList.replace('show', 'hide');
 
-			var error = document.getElementById('<portlet:namespace />error');
+			const error = document.getElementById('<portlet:namespace />error');
 
 			if (error) {
 				success.classList.replace('show', 'hide');
 			}
 
-			if (AUI().Object.isEmpty(result)) {
+			if (!Object.keys(result).length) {
 				success.classList.replace('hide', 'show');
 			}
 			else {
-				var paragraph = error.querySelector('p');
+				const paragraph = error.querySelector('p');
 
 				if (paragraph) {
 					paragraph.textContent = result;
@@ -63,13 +63,13 @@
 		}
 	};
 
-	var form = document.getElementById('<portlet:namespace />fm');
+	const form = document.getElementById('<portlet:namespace />fm');
 
 	if (form) {
 		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 
-			var message = form.querySelector('#<portlet:namespace />message');
+			const message = form.querySelector('#<portlet:namespace />message');
 
 			if (message) {
 				Liferay.Service(

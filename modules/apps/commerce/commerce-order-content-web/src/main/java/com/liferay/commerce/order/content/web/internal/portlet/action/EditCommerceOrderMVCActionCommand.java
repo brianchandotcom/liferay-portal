@@ -60,6 +60,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -211,9 +213,14 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, long commerceOrderId)
 		throws Exception {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		httpServletRequest.setAttribute("mergeGuestOrder", Boolean.FALSE);
+
 		CommerceOrder currentCommerceOrder =
 			_commerceOrderHttpHelper.getCurrentCommerceOrder(
-				_portal.getHttpServletRequest(actionRequest));
+				httpServletRequest);
 
 		if ((currentCommerceOrder == null) ||
 			(commerceOrderId != currentCommerceOrder.getCommerceOrderId())) {

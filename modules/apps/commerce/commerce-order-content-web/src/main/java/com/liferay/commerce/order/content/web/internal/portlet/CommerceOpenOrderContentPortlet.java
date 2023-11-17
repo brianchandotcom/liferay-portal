@@ -51,6 +51,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -152,8 +154,13 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 					commerceOrderUuid, groupId);
 			}
 
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(portletRequest);
+
+			httpServletRequest.setAttribute("mergeGuestOrder", Boolean.FALSE);
+
 			return _commerceOrderHttpHelper.getCurrentCommerceOrder(
-				_portal.getHttpServletRequest(portletRequest));
+				httpServletRequest);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

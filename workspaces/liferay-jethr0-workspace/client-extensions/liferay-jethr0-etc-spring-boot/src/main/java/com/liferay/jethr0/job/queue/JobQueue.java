@@ -89,7 +89,8 @@ public class JobQueue {
 
 		addJobEntities(
 			_jobEntityRepository.getByState(
-				JobEntity.State.QUEUED, JobEntity.State.RUNNING));
+				JobEntity.State.OPENED, JobEntity.State.QUEUED,
+				JobEntity.State.RUNNING));
 
 		update();
 	}

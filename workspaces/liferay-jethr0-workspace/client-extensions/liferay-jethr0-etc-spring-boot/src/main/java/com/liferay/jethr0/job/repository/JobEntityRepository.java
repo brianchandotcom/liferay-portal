@@ -68,7 +68,17 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 	}
 
 	public Set<JobEntity> getByState(JobEntity.State... states) {
-		return addAll(_jobEntityDALO.getJobsByState(states));
+		Set<JobEntity> jobEntities = new HashSet<>();
+
+		for (JobEntity jobEntity : getAll()) {
+			for (JobEntity.State state : states) {
+				if (state == jobEntity.getState()) {
+					jobEntities.add(jobEntity);
+				}
+			}
+		}
+
+		return jobEntities;
 	}
 
 	@Override
@@ -85,6 +95,11 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		Date date = new Date(System.currentTimeMillis() - _getJobArchiveAge());
 
 		addAll(_jobEntityDALO.getAllAfterModifiedDate(date));
+
+		addAll(
+			_jobEntityDALO.getJobsByState(
+				JobEntity.State.OPENED, JobEntity.State.QUEUED,
+				JobEntity.State.RUNNING));
 	}
 
 	@Override
@@ -133,12 +148,17 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 		Map<Long, JobEntity> entitiesMap = getEntitiesMap();
 
+		long jobCount = entitiesMap.size();
+
 		for (Long jobEntityId : jobEntityIds) {
 			entitiesMap.remove(jobEntityId);
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Archived " + jobEntityIds.size() + " jobs");
+			_log.info(
+				StringUtil.combine(
+					"Archived ", jobEntityIds.size(), " of ", jobCount,
+					" jobs"));
 		}
 	}
 

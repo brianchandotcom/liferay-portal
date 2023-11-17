@@ -211,6 +211,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 								...objectDefinitionNode.data,
 								objectFields: newObjectFields,
 								selected: true,
+								showAllObjectFields: true,
 							},
 						};
 
@@ -228,7 +229,6 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							...objectDefinitionNode.data,
 							objectFields: unselectedObjectFields,
 							selected: false,
-							showAllObjectFields: true,
 						},
 					};
 				}
@@ -963,10 +963,18 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 		case TYPES.SET_SHOW_ALL_OBJECT_FIELDS: {
 			const {
 				objectDefinitionExternalReferenceCode,
-				objectDefinitionNodes,
-				objectRelationshipEdges,
 				showAllObjectFields,
 			} = action.payload;
+
+			const {elements} = state;
+
+			const objectDefinitionNodes = elements.filter((element) =>
+				isNode(element)
+			) as Node<ObjectDefinitionNodeData>[];
+
+			const objectRelationshipEdges = elements.filter((element) =>
+				isEdge(element)
+			) as Edge<ObjectRelationshipEdgeData>[];
 
 			const newObjectDefinitionNodes = objectDefinitionNodes.map(
 				(objectDefinitionNode) => {

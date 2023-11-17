@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -128,7 +129,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -2664,13 +2664,18 @@ public class CPDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		CommercePriceListLocalService commercePriceListLocalService =
+			_commercePriceListLocalServiceSnapshot.get();
+
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.
-				getCatalogBaseCommercePriceListByType(
-					cpInstance.getGroupId(), type);
+			commercePriceListLocalService.getCatalogBaseCommercePriceListByType(
+				cpInstance.getGroupId(), type);
+
+		CommercePriceEntryLocalService commercePriceEntryLocalService =
+			_commercePriceEntryLocalServiceSnapshot.get();
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryLocalService.fetchCommercePriceEntry(
+			commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(), cpInstanceUuid,
 				StringPool.BLANK);
 
@@ -2680,7 +2685,7 @@ public class CPDefinitionLocalServiceImpl
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		_commercePriceEntryLocalService.addCommercePriceEntry(
+		commercePriceEntryLocalService.addCommercePriceEntry(
 			null, cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(),
 			commercePriceEntry.getPrice(),
@@ -3313,18 +3318,14 @@ public class CPDefinitionLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLocalServiceImpl.class);
 
-	private static volatile CommercePriceEntryLocalService
-		_commercePriceEntryLocalService =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				CommercePriceEntryLocalService.class,
-				CPDefinitionLocalServiceImpl.class,
-				"_commercePriceEntryLocalService", true);
-	private static volatile CommercePriceListLocalService
-		_commercePriceListLocalService =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				CommercePriceListLocalService.class,
-				CPDefinitionLocalServiceImpl.class,
-				"_commercePriceListLocalService", true);
+	private static final Snapshot<CommercePriceEntryLocalService>
+		_commercePriceEntryLocalServiceSnapshot = new Snapshot<>(
+			CPDefinitionLocalServiceImpl.class,
+			CommercePriceEntryLocalService.class);
+	private static final Snapshot<CommercePriceListLocalService>
+		_commercePriceListLocalServiceSnapshot = new Snapshot<>(
+			CPDefinitionLocalServiceImpl.class,
+			CommercePriceListLocalService.class);
 
 	@Reference
 	private AccountGroupRelLocalService _accountGroupRelLocalService;

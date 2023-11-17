@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -539,6 +540,13 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		User user = _portal.getUser(httpServletRequest);
 
 		if ((user == null) || user.isGuestUser()) {
+			return commerceOrder;
+		}
+
+		boolean mergeGuestOrder = GetterUtil.getBoolean(
+			httpServletRequest.getAttribute("mergeGuestOrder"), true);
+
+		if (!mergeGuestOrder) {
 			return commerceOrder;
 		}
 

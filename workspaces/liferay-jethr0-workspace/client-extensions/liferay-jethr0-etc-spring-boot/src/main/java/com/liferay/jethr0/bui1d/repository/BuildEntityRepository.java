@@ -7,9 +7,7 @@ package com.liferay.jethr0.bui1d.repository;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildEntityDALO;
-import com.liferay.jethr0.bui1d.dalo.BuildToBuildParametersEntityRelationshipDALO;
 import com.liferay.jethr0.bui1d.dalo.BuildToBuildRunsEntityRelationshipDALO;
-import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
@@ -85,26 +83,12 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 	public synchronized void initializeRelationships() {
 	}
 
-	public void relateBuildToBuildParameter(
-		BuildEntity buildEntity, BuildParameterEntity buildParameterEntity) {
-
-		buildEntity.addBuildParameterEntity(buildParameterEntity);
-
-		buildParameterEntity.setBuildEntity(buildEntity);
-	}
-
 	public void relateBuildToBuildRun(
 		BuildEntity buildEntity, BuildRunEntity buildRunEntity) {
 
 		buildEntity.addBuildRunEntity(buildRunEntity);
 
 		buildRunEntity.setBuildEntity(buildEntity);
-	}
-
-	public void setBuildParameterEntityRepository(
-		BuildParameterEntityRepository buildParameterEntityRepository) {
-
-		_buildParameterEntityRepository = buildParameterEntityRepository;
 	}
 
 	public void setBuildRunEntityRepository(
@@ -130,8 +114,6 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
 	@Override
 	protected BuildEntity updateRelationshipsToDALO(BuildEntity buildEntity) {
-		_buildToBuildParametersEntityRelationshipDALO.updateChildEntities(
-			buildEntity);
 		_buildToBuildRunsEntityRelationshipDALO.updateChildEntities(
 			buildEntity);
 
@@ -154,12 +136,7 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 	@Autowired
 	private BuildEntityDALO _buildEntityDALO;
 
-	private BuildParameterEntityRepository _buildParameterEntityRepository;
 	private BuildRunEntityRepository _buildRunEntityRepository;
-
-	@Autowired
-	private BuildToBuildParametersEntityRelationshipDALO
-		_buildToBuildParametersEntityRelationshipDALO;
 
 	@Autowired
 	private BuildToBuildRunsEntityRelationshipDALO

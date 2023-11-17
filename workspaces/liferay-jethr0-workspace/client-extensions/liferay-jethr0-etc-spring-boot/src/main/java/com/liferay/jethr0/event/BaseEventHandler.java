@@ -8,7 +8,6 @@ package com.liferay.jethr0.event;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
@@ -37,10 +36,6 @@ public abstract class BaseEventHandler implements EventHandler {
 
 		_eventHandlerContext = eventHandlerContext;
 		_messageJSONObject = messageJSONObject;
-	}
-
-	protected BuildParameterEntityRepository getBuildParameterRepository() {
-		return _eventHandlerContext.getBuildParameterRepository();
 	}
 
 	protected BuildQueue getBuildQueue() {

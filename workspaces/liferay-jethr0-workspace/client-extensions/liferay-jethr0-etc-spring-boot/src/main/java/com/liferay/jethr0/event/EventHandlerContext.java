@@ -7,7 +7,6 @@ package com.liferay.jethr0.event;
 
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
@@ -27,10 +26,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class EventHandlerContext {
-
-	public BuildParameterEntityRepository getBuildParameterRepository() {
-		return _buildParameterEntityRepository;
-	}
 
 	public BuildQueue getBuildQueue() {
 		return _buildQueue;
@@ -92,9 +87,6 @@ public class EventHandlerContext {
 
 	@Autowired
 	private BuildEntityRepository _buildEntityRepository;
-
-	@Autowired
-	private BuildParameterEntityRepository _buildParameterEntityRepository;
 
 	@Autowired
 	private BuildQueue _buildQueue;

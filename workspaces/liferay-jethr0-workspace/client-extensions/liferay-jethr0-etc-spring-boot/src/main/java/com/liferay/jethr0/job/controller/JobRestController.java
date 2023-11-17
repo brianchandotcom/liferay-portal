@@ -8,7 +8,6 @@ package com.liferay.jethr0.job.controller;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
@@ -267,9 +266,6 @@ public class JobRestController {
 
 	@Autowired
 	private BuildEntityRepository _buildEntityRepository;
-
-	@Autowired
-	private BuildParameterEntityRepository _buildParameterEntityRepository;
 
 	@Autowired
 	private BuildQueue _buildQueue;

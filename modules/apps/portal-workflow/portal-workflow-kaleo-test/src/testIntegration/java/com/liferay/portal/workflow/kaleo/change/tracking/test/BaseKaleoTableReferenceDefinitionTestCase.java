@@ -86,19 +86,7 @@ public abstract class BaseKaleoTableReferenceDefinitionTestCase
 			StringUtil.randomString(), new Date(),
 			ServiceContextTestUtil.getServiceContext());
 
-		return _kaleoInstanceLocalService.addKaleoInstance(
-			1, 1, StringUtil.randomString(), 1,
-			HashMapBuilder.<String, Serializable>put(
-				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
-				(Serializable)BlogsEntry.class.getName()
-			).put(
-				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
-				String.valueOf(blogsEntry.getEntryId())
-			).put(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
-				(Serializable)serviceContext
-			).build(),
-			serviceContext);
+		return addKaleoInstance(blogsEntry);
 	}
 
 	protected KaleoInstance addKaleoInstance(BlogsEntry blogsEntry)

@@ -22,7 +22,6 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
 			labelName = "Object Field",
 			optionName = ${fieldLabelName});
 
@@ -79,17 +78,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPicklistObject(picklistItem = null) {
-		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
-
-		Click(
-			key_label = ${picklistItem},
-			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-
-		IFrame.selectTopFrame();
-	}
-
-	@summary = "Default summary"
 	macro viewRequiredFieldOptionDisabled() {
 		Form.gotoBasicTab();
 
@@ -101,7 +89,6 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
 
 		Click(
-			key_currentOption = "Choose an Option",
 			key_labelName = "Object Field",
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 

@@ -1212,9 +1212,7 @@ definition {
 
 				ObjectPortlet.selectCustomObject(label = "Preference");
 
-				CreateObject.selectTitleField(
-					currentOption = "ID",
-					fieldLabel = "Food Preferences");
+				CreateObject.selectTitleField(fieldLabel = "Food Preferences");
 
 				CreateObject.saveObject();
 

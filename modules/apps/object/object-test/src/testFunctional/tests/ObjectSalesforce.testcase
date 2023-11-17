@@ -77,7 +77,6 @@ definition {
 			ObjectPortlet.selectCustomObject(label = "Poshi Test");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Panel Link",
 				optionName = "Object");
 
@@ -195,7 +194,6 @@ definition {
 			ObjectPortlet.selectCustomObject(label = "Contact");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Panel Link",
 				optionName = "Object");
 

@@ -277,14 +277,13 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Choose an Option",
-			labelName = "Data Provider Select Field",
+			labelName = "Select from List",
 			optionName = "Option 2");
 
-		AssertElementPresent(
-			key_currentOption = "Option 1",
-			key_labelName = "Data Provider Select Field",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+		AssertTextEquals(
+			key_labelName = "Select from List",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Option 2");
 	}
 
 	@description = "Verify that a Select From List Field can be required"

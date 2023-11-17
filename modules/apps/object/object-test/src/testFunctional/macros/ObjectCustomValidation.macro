@@ -21,7 +21,6 @@ definition {
 			value1 = ${validationName});
 
 		ObjectAdmin.selectDropdownItem(
-			currentOption = "Expression Builder",
 			labelName = "Type",
 			optionName = ${validationType});
 

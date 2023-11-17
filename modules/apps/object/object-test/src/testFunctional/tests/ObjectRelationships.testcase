@@ -241,9 +241,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 290");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -420,9 +418,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 163661");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Custom Field");
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 			CreateObject.saveObject();
 
@@ -876,9 +872,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 149249");
 
-		CreateObject.selectTitleField(
-			currentOption = "ID",
-			fieldLabel = "Custom Field");
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 		CreateObject.saveObject();
 
@@ -1009,9 +1003,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 1");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Custom Field");
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 			CreateObject.saveObject();
 
@@ -1019,9 +1011,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 2");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Custom Field");
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 			CreateObject.saveObject();
 		}
@@ -1094,9 +1084,7 @@ definition {
 
 				ObjectPortlet.selectCustomObject(label = "Custom Object 156677");
 
-				CreateObject.selectTitleField(
-					currentOption = "ID",
-					fieldLabel = "Custom Field");
+				CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 				CreateObject.saveObject();
 
@@ -1486,9 +1474,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object LPS163658");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Custom Field");
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 			CreateObject.saveObject();
 
@@ -1950,17 +1936,19 @@ definition {
 				key_type = "Relationships",
 				locator1 = "ObjectAdmin#TAB_TYPE");
 
-			Click(locator1 = "ObjectAdmin#LAYOUT_ENTRY_CHOOSE_OPTION");
+			Click(
+				key_labelName = "Relationship",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 		}
 
 		task ("Assert that a label indicating the Parent and Child relationships are displayed") {
 			AssertElementPresent(
-				key_relationType = "Parent",
-				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS");
+				key_optionName = "Parent",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 
 			AssertElementPresent(
-				key_relationType = "Child",
-				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS");
+				key_optionName = "Child",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 		}
 	}
 
@@ -2067,9 +2055,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 163657");
 
-			CreateObject.selectTitleField(
-				currentOption = "ID",
-				fieldLabel = "Custom Field");
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
 			CreateObject.saveObject();
 
@@ -2136,9 +2122,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "User");
 
-		CreateObject.selectTitleField(
-			currentOption = "First Name",
-			fieldLabel = "Screen Name");
+		CreateObject.selectTitleField(fieldLabel = "Screen Name");
 
 		CreateObject.saveObject();
 
@@ -2146,10 +2130,10 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "User");
 
-		AssertElementPresent(
-			key_currentOption = "Screen Name",
+		AssertTextEquals(
 			key_labelName = "Entry Title Field",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+			value1 = "Screen Name");
 	}
 
 	@description = "LPS-193697 - Verify the user can switch the relationship order between the parent and child object definitions"
@@ -2201,12 +2185,10 @@ definition {
 				value1 = "Relationship");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Type",
 				optionName = "One to Many");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Many Records Of",
 				optionName = "Custom Object 697");
 		}
@@ -2315,12 +2297,10 @@ definition {
 			LexiconEntry.gotoAdd();
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Type",
 				optionName = "Many to Many");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Many Records Of",
 				optionName = "Custom Object 195296");
 		}

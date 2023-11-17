@@ -158,10 +158,10 @@ definition {
 				locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
 				value1 = "Custom Objects1");
 
-			AssertElementPresent(
-				key_currentOption = "Custom Field Text",
+			AssertTextEquals(
 				key_labelName = "Entry Title Field",
-				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
+				value1 = "Custom Field Text");
 
 			CreateObject.assertValuesOnScope(
 				valuePanelCategory = "Content & Data",
@@ -295,7 +295,6 @@ definition {
 				fieldValue = "06/15/2023");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Picklist Item 1",
 				labelName = "Custom Field Picklist",
 				optionName = "Picklist Item 2");
 

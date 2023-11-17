@@ -190,7 +190,6 @@ definition {
 				locator1 = "FormFields#OPTION_SELECTED");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Fields",
 				optionName = "Custom Field");
 

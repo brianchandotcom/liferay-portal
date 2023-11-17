@@ -197,7 +197,6 @@ definition {
 			ObjectAdmin.goToDetailsTab();
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Panel Link",
 				optionName = "Object");
 
@@ -1988,7 +1987,6 @@ definition {
 			ObjectAdmin.goToDetailsTab();
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Panel Link",
 				optionName = "Object");
 
@@ -2148,7 +2146,6 @@ definition {
 			ObjectPortlet.selectCustomObject(label = "DataSetObject");
 
 			ObjectAdmin.selectDropdownItem(
-				currentOption = "Select an option",
 				labelName = "Panel Link",
 				optionName = "Object");
 

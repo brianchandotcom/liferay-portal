@@ -129,6 +129,7 @@ export default function InviteMembers({
 									className="lfr-portal-tooltip"
 									displayType="unstyled"
 									onClick={() => onUserClickHandler(user)}
+									size="xs"
 									symbol="times"
 									title={Liferay.Language.get('remove')}
 								/>
@@ -140,6 +141,7 @@ export default function InviteMembers({
 									className="lfr-portal-tooltip"
 									displayType="unstyled"
 									onClick={() => onUserClickHandler(user)}
+									size="xs"
 									symbol="check"
 									title={Liferay.Language.get(
 										'user-already-invited'
@@ -154,17 +156,18 @@ export default function InviteMembers({
 									className="lfr-portal-tooltip"
 									displayType="unstyled"
 									onClick={() => onUserClickHandler(user)}
+									size="xs"
 									symbol="plus"
 									title={Liferay.Language.get('add')}
 								/>
 							)}
 						</ClayList.ItemField>
 
-						<ClayList.ItemField className="justify-content-center">
+						<ClayList.ItemField className="justify-content-center pl-0">
 							{user.userFullName}
 						</ClayList.ItemField>
 
-						<ClayList.ItemField className="justify-content-center">
+						<ClayList.ItemField className="justify-content-center pl-0 pt-1">
 							<Text color="muted" size={2}>
 								{user.userEmailAddress}
 							</Text>
@@ -177,18 +180,18 @@ export default function InviteMembers({
 
 	const InvitedEmails = () => {
 		return (
-			<ClayTable>
+			<ClayTable borderless>
 				<ClayTable.Body>
 					{invitedEmails.map((invitedEmail) => {
 						return (
 							<ClayTable.Row key={invitedEmail}>
-								<ClayTable.Cell>
+								<ClayTable.Cell className="pb-0 pt-0">
 									<Text size={3} weight="semi-bold">
 										{invitedEmail}
 									</Text>
 								</ClayTable.Cell>
 
-								<ClayTable.Cell className="text-right">
+								<ClayTable.Cell className="pb-0 pt-0 text-right">
 									<ClayButtonWithIcon
 										aria-label={sub(
 											Liferay.Language.get('remove-x'),
@@ -219,22 +222,22 @@ export default function InviteMembers({
 
 	const InvitedUsers = () => {
 		return (
-			<ClayTable>
+			<ClayTable borderless>
 				<ClayTable.Body>
 					{invitedUsers.map((invitedUser) => {
 						return (
 							<ClayTable.Row key={invitedUser.userId}>
-								<ClayTable.Cell>
+								<ClayTable.Cell className="pb-0 pt-0">
 									<p className="c-mb-0 font-weight-semi-bold small">
 										{invitedUser.userFullName}
 									</p>
 								</ClayTable.Cell>
 
-								<ClayTable.Cell>
+								<ClayTable.Cell className="pb-0 pt-0">
 									{invitedUser.userEmailAddress}
 								</ClayTable.Cell>
 
-								<ClayTable.Cell className="text-right">
+								<ClayTable.Cell className="pb-0 pt-0 text-right">
 									<ClayButtonWithIcon
 										aria-label={sub(
 											Liferay.Language.get('remove-x'),
@@ -306,24 +309,21 @@ export default function InviteMembers({
 								value={teamId}
 							/>
 
-							<div className="sheet">
 								<div className="c-mb-3">
 									<label>
 										{Liferay.Language.get('find-members')}
 									</label>
 
-									<p className="small text-muted">
+									<span className="small text-muted">
 										<ClayIcon
-											className="ml-1 mr-1"
+											className="ml-2 mr-1"
 											symbol="check"
 										/>
 
-										<span>
-											{Liferay.Language.get(
-												'previous-invitation-was-sent'
-											)}
-										</span>
-									</p>
+										{Liferay.Language.get(
+											'previous-invitation-was-sent'
+										)}
+									</span>
 
 									<ClayForm.Group className="input-text-wrapper">
 										<ClayInput
@@ -418,6 +418,7 @@ export default function InviteMembers({
 											onClick={() =>
 												onAddEmailClicklHandler()
 											}
+											size="sm"
 											type="button"
 										>
 											{Liferay.Language.get(
@@ -500,7 +501,6 @@ export default function InviteMembers({
 											</ClayForm.Group>
 										)}
 								</div>
-							</div>
 						</ClayForm>
 					</ClayModal.Body>
 

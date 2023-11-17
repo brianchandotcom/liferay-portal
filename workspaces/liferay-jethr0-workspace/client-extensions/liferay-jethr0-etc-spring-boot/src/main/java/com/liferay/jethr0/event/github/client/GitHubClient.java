@@ -6,7 +6,6 @@
 package com.liferay.jethr0.event.github.client;
 
 import com.liferay.jethr0.event.github.comment.GitHubComment;
-import com.liferay.jethr0.event.github.comment.GitHubCommentFactory;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.util.BaseRetryable;
 import com.liferay.jethr0.util.Retryable;
@@ -35,7 +34,7 @@ public class GitHubClient {
 
 		requestJSONObject.put("body", body);
 
-		return GitHubCommentFactory.newGitHubComment(
+		return new GitHubComment(
 			_requestPost(gitHubIssue.getCommentsURL(), requestJSONObject));
 	}
 

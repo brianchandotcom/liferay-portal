@@ -194,6 +194,42 @@ definition {
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
+	@description = "This is a use case for LPS-198982."
+	@priority = 3
+	test CannotPublishDraftsOfWorkflowEnabledEntities {
+		task ("Enable workflow for any change tracking enabled entity") {
+			Workflow.openWorkflowProcessBuilderConfiguration();
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Web Content Article");
+		}
+
+		task ("Add and select a new publication") {
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+		}
+
+		task ("Create the entity and save it as a draft") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addDraft(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Attempt to publish the publication and assert it is blocked with an error message") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			Publications.viewConflictingChangesWarning(warningMessage = "This publication contains unapproved changes that must be approved before publishing.");
+		}
+	}
+
 	@description = "This is a use case for LPS-159649."
 	@priority = 4
 	test CannotPublishPublicationWithPendingAssetEntries {

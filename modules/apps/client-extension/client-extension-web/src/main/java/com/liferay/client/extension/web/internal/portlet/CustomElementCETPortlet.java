@@ -154,6 +154,10 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 		for (int i = 0; i < urls.length; i++) {
 			urls[i] = HttpComponentsUtil.addParameter(
 				urls[i], "t", lastModified);
+
+			if (!urls[i].startsWith("module:")) {
+				urls[i] = "nocombo:" + urls[i];
+			}
 		}
 
 		return urls;

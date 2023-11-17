@@ -56,36 +56,44 @@ public class PortletRenderUtilTest {
 		_assertEquals(
 			Arrays.asList(
 				"/header-portal.css?t=7",
-				"http://example.com/header-portal.css",
 				"/o/portlet-web/header-portlet.css?t=7",
-				"http://example.com/header-portlet.css"),
+				"http://example.com/header-portal.css",
+				"http://example.com/header-portlet.css",
+				"nocombo:/header-portal.css?t=7",
+				"nocombo:/o/portlet-web/header-portlet.css?t=7"),
 			portletRenderParts.getHeaderCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/header-portal.js?t=7", "module:/header-portal.js?t=7",
+				"/header-portal.js?t=7", "/o/portlet-web/header-portlet.js?t=7",
 				"http://example.com/header-portal.js",
-				"module:http://example.com/header-portal.js",
-				"/o/portlet-web/header-portlet.js?t=7",
-				"module:/o/portlet-web/header-portlet.js?t=7",
 				"http://example.com/header-portlet.js",
+				"nocombo:/header-portal.js?t=7",
+				"nocombo:/o/portlet-web/header-portlet.js?t=7",
+				"module:/header-portal.js?t=7",
+				"module:/o/portlet-web/header-portlet.js?t=7",
+				"module:http://example.com/header-portal.js",
 				"module:http://example.com/header-portlet.js"),
 			portletRenderParts.getHeaderJavaScriptPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/footer-portal.js?t=7", "module:/footer-portal.js?t=7",
+				"/footer-portal.js?t=7", "/o/portlet-web/footer-portlet.js?t=7",
 				"http://example.com/footer-portal.js",
-				"module:http://example.com/footer-portal.js",
-				"/o/portlet-web/footer-portlet.js?t=7",
-				"module:/o/portlet-web/footer-portlet.js?t=7",
 				"http://example.com/footer-portlet.js",
-				"module:http://example.com/footer-portlet.js"),
+				"module:/footer-portal.js?t=7",
+				"module:/o/portlet-web/footer-portlet.js?t=7",
+				"module:http://example.com/footer-portal.js",
+				"module:http://example.com/footer-portlet.js",
+				"nocombo:/footer-portal.js?t=7",
+				"nocombo:/o/portlet-web/footer-portlet.js?t=7"),
 			portletRenderParts.getFooterJavaScriptPaths());
 		_assertEquals(
 			Arrays.asList(
 				"/footer-portal.css?t=7",
-				"http://example.com/footer-portal.css",
 				"/o/portlet-web/footer-portlet.css?t=7",
-				"http://example.com/footer-portlet.css"),
+				"http://example.com/footer-portal.css",
+				"http://example.com/footer-portlet.css",
+				"nocombo:/footer-portal.css?t=7",
+				"nocombo:/o/portlet-web/footer-portlet.css?t=7"),
 			portletRenderParts.getFooterCssPaths());
 
 		Assert.assertEquals(portletHTML, portletRenderParts.getPortletHTML());
@@ -105,38 +113,46 @@ public class PortletRenderUtilTest {
 		_assertEquals(
 			Arrays.asList(
 				"/portal/header-portal.css?t=7",
-				"http://example.com/header-portal.css",
 				"/portal/o/portlet-web/header-portlet.css?t=7",
-				"http://example.com/header-portlet.css"),
+				"http://example.com/header-portal.css",
+				"http://example.com/header-portlet.css",
+				"nocombo:/portal/header-portal.css?t=7",
+				"nocombo:/portal/o/portlet-web/header-portlet.css?t=7"),
 			portletRenderParts.getHeaderCssPaths());
 		_assertEquals(
 			Arrays.asList(
 				"/portal/header-portal.js?t=7",
-				"module:/portal/header-portal.js?t=7",
-				"http://example.com/header-portal.js",
-				"module:http://example.com/header-portal.js",
 				"/portal/o/portlet-web/header-portlet.js?t=7",
-				"module:/portal/o/portlet-web/header-portlet.js?t=7",
+				"http://example.com/header-portal.js",
 				"http://example.com/header-portlet.js",
-				"module:http://example.com/header-portlet.js"),
+				"module:/portal/header-portal.js?t=7",
+				"module:/portal/o/portlet-web/header-portlet.js?t=7",
+				"module:http://example.com/header-portal.js",
+				"module:http://example.com/header-portlet.js",
+				"nocombo:/portal/header-portal.js?t=7",
+				"nocombo:/portal/o/portlet-web/header-portlet.js?t=7"),
 			portletRenderParts.getHeaderJavaScriptPaths());
 		_assertEquals(
 			Arrays.asList(
 				"/portal/footer-portal.css?t=7",
-				"http://example.com/footer-portal.css",
 				"/portal/o/portlet-web/footer-portlet.css?t=7",
-				"http://example.com/footer-portlet.css"),
+				"http://example.com/footer-portal.css",
+				"http://example.com/footer-portlet.css",
+				"nocombo:/portal/footer-portal.css?t=7",
+				"nocombo:/portal/o/portlet-web/footer-portlet.css?t=7"),
 			portletRenderParts.getFooterCssPaths());
 		_assertEquals(
 			Arrays.asList(
 				"/portal/footer-portal.js?t=7",
-				"module:/portal/footer-portal.js?t=7",
-				"http://example.com/footer-portal.js",
-				"module:http://example.com/footer-portal.js",
 				"/portal/o/portlet-web/footer-portlet.js?t=7",
-				"module:/portal/o/portlet-web/footer-portlet.js?t=7",
+				"http://example.com/footer-portal.js",
 				"http://example.com/footer-portlet.js",
-				"module:http://example.com/footer-portlet.js"),
+				"module:/portal/footer-portal.js?t=7",
+				"module:/portal/o/portlet-web/footer-portlet.js?t=7",
+				"module:http://example.com/footer-portal.js",
+				"module:http://example.com/footer-portlet.js",
+				"nocombo:/portal/footer-portal.js?t=7",
+				"nocombo:/portal/o/portlet-web/footer-portlet.js?t=7"),
 			portletRenderParts.getFooterJavaScriptPaths());
 
 		Assert.assertEquals(portletHTML, portletRenderParts.getPortletHTML());
@@ -157,21 +173,25 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"http://example.com/header-portal.css",
 				"http://example.com/header-portlet.css",
+				"nocombo:/portal/header-portal.css",
+				"nocombo:/portal/o/portlet-web/header-portlet.css",
 				StringBundler.concat(
-					"/portal/combo?minifierType=&themeId=theme_id&",
+					"/portal/combo?minifierType=css&themeId=theme_id&",
 					"com.liferay.portlet.1:/portal/o/portlet-web",
 					"/header-portlet.css&/portal/header-portal.css&t=8")),
 			portletRenderParts.getHeaderCssPaths());
 		_assertEquals(
 			Arrays.asList(
+				"http://example.com/header-portal.js",
+				"http://example.com/header-portlet.js",
 				"module:http://example.com/header-portal.js",
 				"module:http://example.com/header-portlet.js",
 				"module:/portal/header-portal.js",
 				"module:/portal/o/portlet-web/header-portlet.js",
-				"http://example.com/header-portal.js",
-				"http://example.com/header-portlet.js",
+				"nocombo:/portal/header-portal.js",
+				"nocombo:/portal/o/portlet-web/header-portlet.js",
 				StringBundler.concat(
-					"/portal/combo?minifierType=&themeId=theme_id&",
+					"/portal/combo?minifierType=js&themeId=theme_id&",
 					"com.liferay.portlet.1:/portal/o/portlet-web",
 					"/header-portlet.js&/portal/header-portal.js&t=8")),
 			portletRenderParts.getHeaderJavaScriptPaths());
@@ -179,21 +199,25 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"http://example.com/footer-portal.css",
 				"http://example.com/footer-portlet.css",
+				"nocombo:/portal/footer-portal.css",
+				"nocombo:/portal/o/portlet-web/footer-portlet.css",
 				StringBundler.concat(
-					"/portal/combo?minifierType=&themeId=theme_id&",
+					"/portal/combo?minifierType=css&themeId=theme_id&",
 					"com.liferay.portlet.1:/portal/o/portlet-web",
 					"/footer-portlet.css&/portal/footer-portal.css&t=8")),
 			portletRenderParts.getFooterCssPaths());
 		_assertEquals(
 			Arrays.asList(
-				"module:http://example.com/footer-portal.js",
-				"module:http://example.com/footer-portlet.js",
-				"module:/portal/footer-portal.js",
-				"module:/portal/o/portlet-web/footer-portlet.js",
 				"http://example.com/footer-portal.js",
 				"http://example.com/footer-portlet.js",
+				"module:/portal/footer-portal.js",
+				"module:/portal/o/portlet-web/footer-portlet.js",
+				"module:http://example.com/footer-portal.js",
+				"module:http://example.com/footer-portlet.js",
+				"nocombo:/portal/footer-portal.js",
+				"nocombo:/portal/o/portlet-web/footer-portlet.js",
 				StringBundler.concat(
-					"/portal/combo?minifierType=&themeId=theme_id&",
+					"/portal/combo?minifierType=js&themeId=theme_id&",
 					"com.liferay.portlet.1:/portal/o/portlet-web",
 					"/footer-portlet.js&/portal/footer-portal.js&t=8")),
 			portletRenderParts.getFooterJavaScriptPaths());
@@ -216,21 +240,25 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"http://example.com/header-portal.css",
 				"http://example.com/header-portlet.css",
+				"nocombo:/header-portal.css",
+				"nocombo:/o/portlet-web/header-portlet.css",
 				StringBundler.concat(
-					"/combo?minifierType=&themeId=theme_id&",
+					"/combo?minifierType=css&themeId=theme_id&",
 					"com.liferay.portlet.1:/o/portlet-web/header-portlet.css&",
 					"/header-portal.css&t=8")),
 			portletRenderParts.getHeaderCssPaths());
 		_assertEquals(
 			Arrays.asList(
+				"http://example.com/header-portal.js",
+				"http://example.com/header-portlet.js",
 				"module:http://example.com/header-portal.js",
 				"module:http://example.com/header-portlet.js",
 				"module:/header-portal.js",
 				"module:/o/portlet-web/header-portlet.js",
-				"http://example.com/header-portal.js",
-				"http://example.com/header-portlet.js",
+				"nocombo:/header-portal.js",
+				"nocombo:/o/portlet-web/header-portlet.js",
 				StringBundler.concat(
-					"/combo?minifierType=&themeId=theme_id&",
+					"/combo?minifierType=js&themeId=theme_id&",
 					"com.liferay.portlet.1:/o/portlet-web/header-portlet.js&",
 					"/header-portal.js&t=8")),
 			portletRenderParts.getHeaderJavaScriptPaths());
@@ -238,21 +266,25 @@ public class PortletRenderUtilTest {
 			Arrays.asList(
 				"http://example.com/footer-portal.css",
 				"http://example.com/footer-portlet.css",
+				"nocombo:/footer-portal.css",
+				"nocombo:/o/portlet-web/footer-portlet.css",
 				StringBundler.concat(
-					"/combo?minifierType=&themeId=theme_id&",
+					"/combo?minifierType=css&themeId=theme_id&",
 					"com.liferay.portlet.1:/o/portlet-web/footer-portlet.css&",
 					"/footer-portal.css&t=8")),
 			portletRenderParts.getFooterCssPaths());
 		_assertEquals(
 			Arrays.asList(
+				"http://example.com/footer-portal.js",
+				"http://example.com/footer-portlet.js",
 				"module:http://example.com/footer-portal.js",
 				"module:http://example.com/footer-portlet.js",
 				"module:/footer-portal.js",
 				"module:/o/portlet-web/footer-portlet.js",
-				"http://example.com/footer-portal.js",
-				"http://example.com/footer-portlet.js",
+				"nocombo:/footer-portal.js",
+				"nocombo:/o/portlet-web/footer-portlet.js",
 				StringBundler.concat(
-					"/combo?minifierType=&themeId=theme_id&",
+					"/combo?minifierType=js&themeId=theme_id&",
 					"com.liferay.portlet.1:/o/portlet-web/footer-portlet.js&",
 					"/footer-portal.js&t=8")),
 			portletRenderParts.getFooterJavaScriptPaths());
@@ -461,7 +493,8 @@ public class PortletRenderUtilTest {
 			_portlet.getFooterPortalCss()
 		).thenReturn(
 			Arrays.asList(
-				"/footer-portal.css", "http://example.com/footer-portal.css")
+				"/footer-portal.css", "nocombo:/footer-portal.css",
+				"http://example.com/footer-portal.css")
 		);
 
 		Mockito.when(
@@ -469,6 +502,7 @@ public class PortletRenderUtilTest {
 		).thenReturn(
 			Arrays.asList(
 				"/footer-portal.js", "module:/footer-portal.js",
+				"nocombo:/footer-portal.js",
 				"http://example.com/footer-portal.js",
 				"module:http://example.com/footer-portal.js")
 		);
@@ -477,7 +511,8 @@ public class PortletRenderUtilTest {
 			_portlet.getFooterPortletCss()
 		).thenReturn(
 			Arrays.asList(
-				"/footer-portlet.css", "http://example.com/footer-portlet.css")
+				"/footer-portlet.css", "nocombo:/footer-portlet.css",
+				"http://example.com/footer-portlet.css")
 		);
 
 		Mockito.when(
@@ -485,6 +520,7 @@ public class PortletRenderUtilTest {
 		).thenReturn(
 			Arrays.asList(
 				"/footer-portlet.js", "module:/footer-portlet.js",
+				"nocombo:/footer-portlet.js",
 				"http://example.com/footer-portlet.js",
 				"module:http://example.com/footer-portlet.js")
 		);
@@ -493,7 +529,8 @@ public class PortletRenderUtilTest {
 			_portlet.getHeaderPortalCss()
 		).thenReturn(
 			Arrays.asList(
-				"/header-portal.css", "http://example.com/header-portal.css")
+				"/header-portal.css", "nocombo:/header-portal.css",
+				"http://example.com/header-portal.css")
 		);
 
 		Mockito.when(
@@ -501,6 +538,7 @@ public class PortletRenderUtilTest {
 		).thenReturn(
 			Arrays.asList(
 				"/header-portal.js", "module:/header-portal.js",
+				"nocombo:/header-portal.js",
 				"http://example.com/header-portal.js",
 				"module:http://example.com/header-portal.js")
 		);
@@ -509,7 +547,8 @@ public class PortletRenderUtilTest {
 			_portlet.getHeaderPortletCss()
 		).thenReturn(
 			Arrays.asList(
-				"/header-portlet.css", "http://example.com/header-portlet.css")
+				"/header-portlet.css", "nocombo:/header-portlet.css",
+				"http://example.com/header-portlet.css")
 		);
 
 		Mockito.when(
@@ -517,6 +556,7 @@ public class PortletRenderUtilTest {
 		).thenReturn(
 			Arrays.asList(
 				"/header-portlet.js", "module:/header-portlet.js",
+				"nocombo:/header-portlet.js",
 				"http://example.com/header-portlet.js",
 				"module:http://example.com/header-portlet.js")
 		);

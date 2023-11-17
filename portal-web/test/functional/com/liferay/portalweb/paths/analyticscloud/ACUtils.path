@@ -80,7 +80,11 @@
 </tr>
 
 <!-- FILTER ORDER -->
-
+<tr>
+	<td>PAGE_SEGMENT_FILTER</td>
+	<td>//button[contains(@class,'dropdown-item') and text()='${key_nameList}']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ORDER_ARROW_BUTTON_ASC</td>
 	<td>//*[contains(@class,'lexicon-icon-order-arrow-up')]//ancestor::a</td>

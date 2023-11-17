@@ -1,9 +1,9 @@
-.tooltip-container {
+.get-app-container {
 	display: inline-block;
 	position: relative;
 }
 
-.tooltip-container .tooltiptext {
+.get-app-container .tooltiptext {
 	background-color: #333;
 	border-radius: 6px;
 	color: #fff;
@@ -17,7 +17,7 @@
 	z-index: 1;
 }
 
-.tooltip-container .tooltiptext::before {
+.get-app-container .tooltiptext::before {
     border-color: transparent transparent #333 transparent;
     border-style: solid;
     border-width: 5px;
@@ -28,7 +28,7 @@
     position: absolute;
 }
 
-.tooltip-container:hover .tooltiptext {
+.get-app-container:hover .tooltiptext {
 	opacity: 1;
 	visibility: visible;
 }

@@ -305,6 +305,10 @@ public class EditUserMVCActionCommand
 						return;
 					}
 				}
+
+				actionResponse.setRenderParameter("mvcPath", mvcPath);
+
+				throw exception;
 			}
 			else if (exception instanceof ModelListenerException) {
 				if (exception.getCause() instanceof PortalException) {

@@ -15,12 +15,10 @@ const getSiteURL = () => {
 	return '';
 };
 
+const productSignIn = localStorage.getItem('productName');
 
-const productSignIn = localStorage.getItem("productName");
-
-if(productSignIn){
-	if(isLogged){
-	   location.href=`${getSiteURL()}/p/${productSignIn}`
+if (productSignIn) {
+	if (isLogged) {
+		location.href = `${getSiteURL()}/p/${productSignIn}`;
 	}
-	
 }

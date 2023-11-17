@@ -2,18 +2,20 @@
 	"pageElement": {
 		"pageElements": [
 			{
-			  "definition": {
-				"fragment": {
-				  "key": "local-storage-page-sign-in",
-				  "siteKey":  "[$GROUP_KEY$]"
+				"definition": {
+					"fragment": {
+						"key": "local-storage-page-sign-in",
+						"siteKey": "[$GROUP_KEY$]"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
 				},
-				"fragmentConfig": {},
-				"fragmentFields": [],
-				"indexed": true
-			  },
-			  "type": "Fragment"
+				"type": "Fragment"
 			}
-		  ],
+		],
 		"type": "Root"
 	},
 	"settings": {

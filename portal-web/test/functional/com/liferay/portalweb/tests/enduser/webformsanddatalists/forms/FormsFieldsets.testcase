@@ -1445,17 +1445,21 @@ definition {
 			optionName = "Option 2",
 			optionValue = 2);
 
-		FormFields.viewOptionsPositionNotHorizontal(
-			key_text1 = "Option 1",
-			key_text2 = "Option 2");
+		for (var optionValue : list "Option 1,Option 2") {
+			AssertElementNotPresent(
+				key_text = ${optionValue},
+				locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+		}
 
 		Form.gotoAdvancedTab();
 
 		FormFields.enableSwitch(fieldName = "Inline");
 
-		FormFields.viewOptionsPositionHorizontal(
-			key_text1 = "Option 1",
-			key_text2 = "Option 2");
+		for (var optionValue : list "Option 1,Option 2") {
+			AssertElementPresent(
+				key_text = ${optionValue},
+				locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+		}
 
 		Form.save();
 
@@ -1475,9 +1479,11 @@ definition {
 			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
-		FormFields.viewOptionsPositionHorizontal(
-			key_text1 = "Option 1",
-			key_text2 = "Option 2");
+		for (var optionValue : list "Option 1,Option 2") {
+			AssertElementPresent(
+				key_text = ${optionValue},
+				locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+		}
 
 		Form.save();
 
@@ -1485,9 +1491,11 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewOptionsPositionHorizontal(
-			key_text1 = "Option 1",
-			key_text2 = "Option 2");
+		for (var optionValue : list "Option 1,Option 2") {
+			AssertElementPresent(
+				key_text = ${optionValue},
+				locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+		}
 	}
 
 	@description = "Verify that an Allow Multiple Selections Property persists after being added to a Form via Fieldset"

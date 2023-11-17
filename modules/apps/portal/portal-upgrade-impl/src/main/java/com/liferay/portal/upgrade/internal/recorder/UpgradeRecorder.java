@@ -162,11 +162,13 @@ public class UpgradeRecorder {
 						StringUtil.toUpperCase(_type.substring(0, 1)),
 						_type.substring(1), " upgrade finished with result ",
 						_result));
-			}
-		}
 
-		if (!_errorMessages.isEmpty()) {
-			_log.info("Errors occurred during upgrade, check logs");
+				if (!_result.equals("failure") && !_errorMessages.isEmpty()) {
+					_log.info(
+						"Unrelated errors occur during the upgrade, please " +
+							"check the logs");
+				}
+			}
 		}
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {

@@ -634,8 +634,7 @@ definition {
 		task ("Log out and log in as created user") {
 			UserBar.signOut();
 
-			User.firstLoginPG(
-				userEmailAddress = "user1@liferay.com");
+			User.firstLoginPG(userEmailAddress = "user1@liferay.com");
 
 			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 		}

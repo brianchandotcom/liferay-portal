@@ -21,10 +21,10 @@ public interface AICreatorOpenAIConfigurationManager {
 	public String getAICreatorOpenAIGroupAPIKey(long companyId, long groupId)
 		throws ConfigurationException;
 
-	public boolean isAICreatorChatGTPCompanyEnabled(long companyId)
+	public boolean isAICreatorChatGPTCompanyEnabled(long companyId)
 		throws ConfigurationException;
 
-	public boolean isAICreatorChatGTPGroupEnabled(long companyId, long groupId)
+	public boolean isAICreatorChatGPTGroupEnabled(long companyId, long groupId)
 		throws ConfigurationException;
 
 	public boolean isAICreatorDALLECompanyEnabled(long companyId)

@@ -38,11 +38,11 @@ public class AICreatorOpenAICompanyConfigurationDisplayContext
 	}
 
 	@Override
-	protected boolean isAICreatorChatGTPEnabled()
+	protected boolean isAICreatorChatGPTEnabled()
 		throws ConfigurationException {
 
 		return _aiCreatorOpenAIConfigurationManager.
-			isAICreatorChatGTPCompanyEnabled(_themeDisplay.getCompanyId());
+			isAICreatorChatGPTCompanyEnabled(_themeDisplay.getCompanyId());
 	}
 
 	@Override

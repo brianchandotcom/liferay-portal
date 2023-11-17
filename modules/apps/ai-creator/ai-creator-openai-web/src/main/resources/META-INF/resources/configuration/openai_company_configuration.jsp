@@ -40,10 +40,10 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 		expand="<%= true %>"
 	>
 		<clay:checkbox
-			checked="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.isChatGTPEnabled() %>"
-			id='<%= liferayPortletResponse.getNamespace() + "enableChatGTP" %>'
+			checked="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.isChatGPTEnabled() %>"
+			id='<%= liferayPortletResponse.getNamespace() + "enableChatGPT" %>'
 			label='<%= LanguageUtil.get(request, "enable-chatgpt-to-create-content") %>'
-			name='<%= liferayPortletResponse.getNamespace() + "enableChatGTP" %>'
+			name='<%= liferayPortletResponse.getNamespace() + "enableChatGPT" %>'
 		/>
 	</clay:content-col>
 </clay:content-row>

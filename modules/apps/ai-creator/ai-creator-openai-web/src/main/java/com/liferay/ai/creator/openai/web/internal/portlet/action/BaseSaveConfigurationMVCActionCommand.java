@@ -75,7 +75,7 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 		}
 
 		saveAICreatorOpenAIConfiguration(
-			apiKey, ParamUtil.getBoolean(actionRequest, "enableChatGTP"),
+			apiKey, ParamUtil.getBoolean(actionRequest, "enableChatGPT"),
 			ParamUtil.getBoolean(actionRequest, "enableDALLE"), themeDisplay);
 
 		SessionMessages.add(

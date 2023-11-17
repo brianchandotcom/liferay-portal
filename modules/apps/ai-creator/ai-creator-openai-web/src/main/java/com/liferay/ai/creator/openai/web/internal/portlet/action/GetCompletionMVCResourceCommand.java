@@ -49,7 +49,7 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		if (!_aiCreatorOpenAIConfigurationManager.
-				isAICreatorChatGTPGroupEnabled(
+				isAICreatorChatGPTGroupEnabled(
 					themeDisplay.getCompanyId(),
 					themeDisplay.getScopeGroupId())) {
 

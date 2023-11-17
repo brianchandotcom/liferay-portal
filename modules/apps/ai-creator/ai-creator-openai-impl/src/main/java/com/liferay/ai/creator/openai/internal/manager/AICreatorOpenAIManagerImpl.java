@@ -37,7 +37,7 @@ public class AICreatorOpenAIManagerImpl implements AICreatorOpenAIManager {
 
 		try {
 			if (_aiCreatorOpenAIConfigurationManager.
-					isAICreatorChatGTPGroupEnabled(companyId, groupId)) {
+					isAICreatorChatGPTGroupEnabled(companyId, groupId)) {
 
 				return true;
 			}

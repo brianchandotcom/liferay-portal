@@ -213,7 +213,7 @@ public class MethodNamingCheck extends BaseCheck {
 		}
 
 		if (methodName.matches(".*" + innerClassName + "[0-9]*") ||
-			methodName.matches("_?get" + innerClassName + ".*")) {
+			methodName.matches("_?get.*" + innerClassName + ".*")) {
 
 			return;
 		}

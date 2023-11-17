@@ -413,6 +413,11 @@ public class UpgradeCatchAllCheck {
 		_addressService.addAddress(userId, className, classPK, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary, serviceContext);
 	}
 
+	public void method(PortletDisplay portletDisplay, Class<T> clazz) {
+		portletDisplay.getPortletInstanceConfiguration(clazz);
+		portletDisplay.getPortletInstanceConfiguration(null);
+	}
+
 	public void method(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 

@@ -225,6 +225,7 @@ interface ObjectDefinitionNodeData
 	linkedObjectDefinition: boolean;
 	objectFields: ObjectFieldNodeRow[];
 	selected: boolean;
+	showAllObjectFields: boolean;
 }
 
 interface ObjectEntry {

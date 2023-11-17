@@ -558,7 +558,7 @@ definition {
 		task ("Log out and log in as created user") {
 			UserBar.signOut();
 
-			User.firstLoginUPG(
+			User.firstLoginPG(
 				password = "password",
 				userEmailAddress = "user1@liferay.com");
 

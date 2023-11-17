@@ -81,7 +81,7 @@ public class MostViewedContentRecommendationInfoItemCollectionProvider
 					_mostViewedContentRecommendationManager.
 						getMostViewedContentRecommendations(
 							assetCategoryIds, serviceContext.getCompanyId(),
-							pagination.getStart(), pagination.getEnd(),
+							pagination.getEnd(), pagination.getStart(),
 							serviceContext.getUserId()),
 					mostViewedContentRecommendation ->
 						_assetEntryLocalService.fetchEntry(

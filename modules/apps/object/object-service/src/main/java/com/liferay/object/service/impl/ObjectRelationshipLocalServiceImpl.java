@@ -529,6 +529,7 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinitionId1);
 	}
 
+	@Override
 	public ObjectRelationship fetchObjectRelationshipByExternalReferenceCode(
 		String externalReferenceCode, long companyId,
 		long objectDefinitionId1) {

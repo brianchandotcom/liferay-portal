@@ -37,35 +37,45 @@ export default function SourceBuilder() {
 	);
 
 	useEffect(() => {
-		if (currentEditor?.mode === 'source' && elements) {
-			const metadata = {
-				description: definitionDescription,
-				name: definitionName,
-				version,
-			};
+		function loadXmlContent() {
+			if (currentEditor?.mode === 'source' && elements) {
+				const metadata = {
+					description: definitionDescription,
+					name: definitionName,
+					version,
+				};
 
-			const xmlContent = serializeDefinition(
-				xmlNamespace,
-				metadata,
-				elements.filter(isNode),
-				elements.filter(isEdge)
-			);
+				const xmlContent = serializeDefinition(
+					xmlNamespace,
+					metadata,
+					elements.filter(isNode),
+					elements.filter(isEdge)
+				);
 
-			if (xmlContent) {
-				currentEditor.setData(xmlContent);
+				if (xmlContent) {
+					currentEditor.setData(xmlContent);
 
-				setLoading(false);
+					setLoading(false);
+				}
 			}
 		}
 
+		const interval = setInterval(() => {
+			if (currentEditor) {
+				if (currentEditor.mode !== 'source') {
+					setTimeout(() => {
+						currentEditor.setMode('source');
+					}, 1000);
+				}
+				else {
+					clearInterval(interval);
+					loadXmlContent();
+				}
+			}
+		}, 1000);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditor, definitionName, elements, version]);
-
-	useEffect(() => {
-		if (currentEditor && currentEditor.mode !== 'source') {
-			currentEditor.setMode('source');
-		}
-	}, [currentEditor]);
 
 	useEffect(() => {
 		if (showInvalidContentMessage) {

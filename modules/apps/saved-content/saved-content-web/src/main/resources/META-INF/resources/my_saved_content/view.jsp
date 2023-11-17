@@ -46,38 +46,32 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-smallest"
 			>
-				<div class="btn-group">
-					<div class="btn-group-item">
-						<clay:link
-							aria-label='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
-							borderless="<%= true %>"
-							cssClass="lfr-portal-tooltip"
-							displayType="secondary"
-							href="<%= mySavedContentDisplayContext.getURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
-							icon="shortcut"
-							monospaced="<%= true %>"
-							small="<%= true %>"
-							target="_blank"
-							title='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
-							type="button"
-						/>
-					</div>
+				<clay:link
+					aria-label='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
+					borderless="<%= true %>"
+					cssClass="lfr-portal-tooltip mr-2"
+					displayType="secondary"
+					href="<%= mySavedContentDisplayContext.getURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
+					icon="shortcut"
+					monospaced="<%= true %>"
+					small="<%= true %>"
+					target="_blank"
+					title='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
+					type="button"
+				/>
 
-					<div class="btn-group-item">
-						<clay:link
-							aria-label='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escapeAttribute(assetTitle)) %>'
-							borderless="<%= true %>"
-							cssClass="lfr-portal-tooltip"
-							displayType="secondary"
-							href="<%= mySavedContentDisplayContext.getRemoveSavedContentURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
-							icon="trash"
-							monospaced="<%= true %>"
-							small="<%= true %>"
-							title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escapeAttribute(assetTitle)) %>'
-							type="button"
-						/>
-					</div>
-				</div>
+				<clay:link
+					aria-label='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escapeAttribute(assetTitle)) %>'
+					borderless="<%= true %>"
+					cssClass="lfr-portal-tooltip"
+					displayType="secondary"
+					href="<%= mySavedContentDisplayContext.getRemoveSavedContentURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
+					icon="trash"
+					monospaced="<%= true %>"
+					small="<%= true %>"
+					title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escapeAttribute(assetTitle)) %>'
+					type="button"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

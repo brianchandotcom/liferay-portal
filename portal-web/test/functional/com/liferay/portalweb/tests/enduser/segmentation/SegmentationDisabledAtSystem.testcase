@@ -101,10 +101,10 @@ definition {
 			}
 
 			task ("Login at the second instance") {
-				User.firstLoginUI(
+				User.firstLoginPG(
 					password = "test",
-					specificURL = "http://www.able.com:8080",
-					userEmailAddress = "test@www.able.com");
+					userEmailAddress = "test@www.able.com",
+					virtualHostsURL = "http://www.able.com:8080");
 			}
 		}
 
@@ -125,7 +125,7 @@ definition {
 		task ("Return to first Instance") {
 			User.logoutPG();
 
-			User.firstLoginUI();
+			User.firstLoginPG();
 		}
 	}
 
@@ -148,10 +148,10 @@ definition {
 			}
 
 			task ("Login at the second instance") {
-				User.firstLoginUI(
+				User.firstLoginPG(
 					password = "test",
-					specificURL = "http://www.able.com:8080",
-					userEmailAddress = "test@www.able.com");
+					userEmailAddress = "test@www.able.com",
+					virtualHostsURL = "http://www.able.com:8080");
 			}
 		}
 
@@ -168,7 +168,7 @@ definition {
 		task ("Return to first Instance") {
 			User.logoutPG();
 
-			User.firstLoginUI();
+			User.firstLoginPG();
 		}
 	}
 

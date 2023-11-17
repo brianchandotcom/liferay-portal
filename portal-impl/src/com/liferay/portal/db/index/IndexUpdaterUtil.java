@@ -100,7 +100,7 @@ public class IndexUpdaterUtil {
 					"Updating database indexes for " +
 						bundle.getSymbolicName());
 
-				if (Validator.isNotNull(companyId) && _log.isInfoEnabled()) {
+				if (Validator.isNotNull(companyId)) {
 					message += " and company " + companyId;
 				}
 
@@ -121,9 +121,7 @@ public class IndexUpdaterUtil {
 					String message = new String(
 						"Updating portal database indexes");
 
-					if (Validator.isNotNull(companyId) &&
-						_log.isInfoEnabled()) {
-
+					if (Validator.isNotNull(companyId)) {
 						message += " for company " + companyId;
 					}
 

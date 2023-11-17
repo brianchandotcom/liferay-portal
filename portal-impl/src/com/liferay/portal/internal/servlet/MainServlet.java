@@ -8,6 +8,7 @@ package com.liferay.portal.internal.servlet;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.events.ShutdownHelperUtil;
 import com.liferay.portal.events.StartupAction;
@@ -390,6 +391,10 @@ public class MainServlet extends HttpServlet {
 			DBUpgrader.upgradeModules(true);
 
 			StartupHelperUtil.setUpgrading(false);
+		}
+
+		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
+			IndexUpdaterUtil.updateAllIndexes();
 		}
 
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, Boolean.TRUE);

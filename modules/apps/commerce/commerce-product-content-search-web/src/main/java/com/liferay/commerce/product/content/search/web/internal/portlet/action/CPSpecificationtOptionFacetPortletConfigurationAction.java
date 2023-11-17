@@ -60,10 +60,19 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "preferences--");
 
+		String maxSpecifications = unicodeProperties.getProperty(
+			"maxSpecifications");
+
+		if (Validator.isNumber(maxSpecifications) &&
+			(GetterUtil.getInteger(maxSpecifications) > _MAX_SIZE_LIMIT)) {
+
+			SessionErrors.add(actionRequest, "exceededMaxSpecificationsLimit");
+		}
+
 		String maxTerms = unicodeProperties.getProperty("maxTerms");
 
 		if (Validator.isNumber(maxTerms) &&
-			(GetterUtil.getInteger(maxTerms) > _MAX_TERMS_LIMIT)) {
+			(GetterUtil.getInteger(maxTerms) > _MAX_SIZE_LIMIT)) {
 
 			SessionErrors.add(actionRequest, "exceededMaxTermsLimit");
 		}
@@ -73,7 +82,7 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 		}
 	}
 
-	private static final int _MAX_TERMS_LIMIT = 100;
+	private static final int _MAX_SIZE_LIMIT = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSpecificationtOptionFacetPortletConfigurationAction.class);

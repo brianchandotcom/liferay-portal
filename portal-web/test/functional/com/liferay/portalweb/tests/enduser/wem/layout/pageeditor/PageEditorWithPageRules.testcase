@@ -1,0 +1,65 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPS-169837=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Page Editor";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-196461. There is a new section for Page Rules in the left side bar."
+	@priority = 3
+	test OpenPageRulesPanel {
+		task ("Given a page designer has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page designer navigates to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer could open the Page Rules panel") {
+			MouseOver(
+				key_text = "rules",
+				locator1 = "Icon#ANY");
+
+			AssertVisible(
+				key_content = "Page Rules",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Rules Yet");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "Fortunately, it is very easy to add new ones.");
+
+			AssertVisible(
+				key_text = "New Rule",
+				locator1 = "Button#ANY");
+		}
+	}
+
+}

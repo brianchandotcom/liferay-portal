@@ -150,15 +150,15 @@ definition {
 				portlet = "Locked Pages");
 		}
 
-		task ("Then in the list of locked pages names are clickable and the link opens the pages in a new tab") {
-			for (var pageName : list "Master Page Name,Page Template Name,DPT Name") {
+		task ("Then in the list of locked page template names are clickable and the link opens the pages in a new tab") {
+			for (var pageTemplateName : list "Master Page Name,Page Template Name,DPT Name") {
 				LexiconTable.clickTableEntryColumnLink(
 					columnName = "name",
-					tableEntry = ${pageName});
+					tableEntry = ${pageTemplateName});
 
-				SelectWindow(value1 = "title=${pageName} - Test Site Name - ${siteName}");
+				SelectWindow(value1 = "title=${pageTemplateName} - Test Site Name - ${siteName}");
 
-				ControlMenu.viewHeaderDraftTitle(headerTitle = ${pageName});
+				ControlMenu.viewHeaderDraftTitle(headerTitle = ${pageTemplateName});
 
 				Close.closeAndSelectWindow(value1 = "title=Locked Pages - Test Site Name - ${siteName}");
 			}

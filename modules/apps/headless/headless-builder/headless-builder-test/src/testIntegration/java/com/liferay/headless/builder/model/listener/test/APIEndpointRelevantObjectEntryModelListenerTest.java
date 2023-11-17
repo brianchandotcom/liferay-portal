@@ -866,7 +866,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"POST API endpoints retrieve type must be \"singleElement\"."
+				"POST API endpoints retrieve type must be \"singleElement.\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

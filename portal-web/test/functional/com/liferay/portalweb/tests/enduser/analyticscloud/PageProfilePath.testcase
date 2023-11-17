@@ -309,6 +309,7 @@ definition {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no segments.");
+		}
 	}
 
 }

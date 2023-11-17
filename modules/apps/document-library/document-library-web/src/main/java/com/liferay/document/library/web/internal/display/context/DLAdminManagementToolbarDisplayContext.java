@@ -60,7 +60,9 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -294,18 +296,36 @@ public class DLAdminManagementToolbarDisplayContext
 		creationMenu.setItemsIconAlignment("left");
 
 		for (Menu menu : menus) {
-			List<URLMenuItem> urlMenuItems =
-				(List<URLMenuItem>)(List<?>)menu.getMenuItems();
+			List<MenuItem> menuItems = menu.getMenuItems();
 
-			for (URLMenuItem urlMenuItem : urlMenuItems) {
-				creationMenu.addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setData(urlMenuItem.getData());
-						dropdownItem.setHref(urlMenuItem.getURL());
-						dropdownItem.setIcon(urlMenuItem.getIcon());
-						dropdownItem.setLabel(urlMenuItem.getLabel());
-						dropdownItem.setSeparator(urlMenuItem.hasSeparator());
-					});
+			for (MenuItem menuItem : menuItems) {
+				if (menuItem instanceof URLMenuItem) {
+					URLMenuItem urlMenuItem = (URLMenuItem)menuItem;
+
+					creationMenu.addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setData(urlMenuItem.getData());
+							dropdownItem.setHref(urlMenuItem.getURL());
+							dropdownItem.setIcon(urlMenuItem.getIcon());
+							dropdownItem.setLabel(urlMenuItem.getLabel());
+							dropdownItem.setSeparator(
+								urlMenuItem.hasSeparator());
+						});
+				}
+				else if (menuItem instanceof JavaScriptMenuItem) {
+					JavaScriptMenuItem javaScriptMenuItem =
+						(JavaScriptMenuItem)menuItem;
+
+					creationMenu.addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setData(javaScriptMenuItem.getData());
+							dropdownItem.setIcon(javaScriptMenuItem.getIcon());
+							dropdownItem.setLabel(
+								javaScriptMenuItem.getLabel());
+							dropdownItem.setSeparator(
+								javaScriptMenuItem.hasSeparator());
+						});
+				}
 			}
 		}
 

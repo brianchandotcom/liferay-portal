@@ -138,7 +138,8 @@ public class UpgradeRecorder {
 		_filter(_warningMessages);
 
 		_result = _calculateResult();
-		_type = _calculateType();
+
+		_type = _calculateType(_result);
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			ThreadContext.put("upgrade.type", _type);
@@ -146,15 +147,8 @@ public class UpgradeRecorder {
 		}
 
 		if (_log.isInfoEnabled()) {
-			if (_type.equals("no upgrade")) {
-				if (_result.equals("success")) {
-					_log.info("No pending upgrades to run");
-				}
-				else {
-					_log.info(
-						"Upgrade process failed or upgrade dependencies are " +
-							"not resolved");
-				}
+			if (_type.equals("no upgrade") && _result.equals("success")) {
+				_log.info("No pending upgrades to run");
 			}
 			else {
 				_log.info(
@@ -209,7 +203,7 @@ public class UpgradeRecorder {
 		}
 	}
 
-	private String _calculateType() {
+	private String _calculateType(String result) {
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
 				moduleSchemaVersions._setFinal(schemaVersion));
@@ -249,6 +243,10 @@ public class UpgradeRecorder {
 			}
 
 			type = "micro";
+		}
+
+		if (type.equals("no upgrade") && !result.equals("success")) {
+			return "major";
 		}
 
 		return type;

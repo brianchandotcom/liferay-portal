@@ -45,7 +45,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Joao Victor Alves
  */
-@Component(service = LocalEntityManager.class)
+@Component(
+	configurationPid = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration",
+	service = LocalEntityManager.class
+)
 public class KeyStoreLocalEntityManager implements LocalEntityManager {
 
 	@Override

@@ -34,7 +34,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  * @author Stian Sigvartsen
  */
-@Component(service = CredentialResolver.class)
+@Component(
+	configurationPid = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration",
+	service = CredentialResolver.class
+)
 public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 
 	@Override

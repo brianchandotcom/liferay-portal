@@ -1110,7 +1110,7 @@ definition {
 				-u ${userLoginInfo}
 		''';
 
-		var objectFiedERC = JSONCurlUtil.get(${curl}, "externalReferenceCode");
+		var objectFiedERC = JSONCurlUtil.get(${curl}, "$..['externalReferenceCode']");
 
 		return ${objectFiedERC};
 	}

@@ -67,7 +67,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	public static final int MONTH = 30;
 
-	public static final int WEEK = 7;
+	public static final int TEN_DAYS = 10;
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
@@ -82,8 +82,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			1, TimeUnit.MINUTE);
+		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
 	}
 
 	protected ClassLoader getClassLoader() {
@@ -195,8 +194,8 @@ public class ScimNotificationSchedulerJobConfiguration
 						int daysBetween = DateUtil.getDaysBetween(
 							new Date(), accessTokenExpirationDate);
 
-						if ((daysBetween == MONTH) || (daysBetween == WEEK) ||
-							(daysBetween == DAY)) {
+						if ((daysBetween == MONTH) ||
+							(daysBetween == TEN_DAYS) || (daysBetween == DAY)) {
 
 							Role role = _roleLocalService.getRole(
 								companyId, RoleConstants.ADMINISTRATOR);

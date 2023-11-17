@@ -1,6 +1,6 @@
 import React from 'react';
 import {DownloadReportButton} from './DownloadReportButton';
-import {DownloadReportModal} from './DownloadReportModal';
+import {DownloadReportModal, ReportType} from './DownloadReportModal';
 import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
 import {useDownloadCSV} from './utils';
@@ -52,11 +52,9 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 					)}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onSubmit={dateRange => {
-						onClick(dateRange);
-					}}
+					onSubmit={onClick}
 					requiredDateRange
-					type='CSV'
+					type={ReportType.CSV}
 				/>
 			)}
 		</div>

@@ -6,9 +6,9 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v5_1_4;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.internal.upgrade.BasePollsPortletIdUpgradeProcess;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,37 +17,24 @@ import java.sql.ResultSet;
  * @author Rebeca Silva
  */
 public class PollsPortletIdToDDMPortletIdUpgradeProcess
-	extends BasePortletIdUpgradeProcess {
+	extends BasePollsPortletIdUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			StringBundler.concat(
-				"delete from Portlet where portletId = '", _PORTLET_ID_POLLS,
-				"' OR portletId = '", _PORTLET_ID_POLLS_DISPLAY, "'"));
+				"delete from Portlet where portletId = '", PORTLET_ID_POLLS,
+				"' OR portletId = '", PORTLET_ID_POLLS_DISPLAY, "'"));
 		runSQL(
 			StringBundler.concat(
 				"delete from ResourcePermission where name = '",
-				_PORTLET_ID_POLLS, "' OR name = '", _PORTLET_ID_POLLS_DISPLAY,
+				PORTLET_ID_POLLS, "' OR name = '", PORTLET_ID_POLLS_DISPLAY,
 				"'"));
+
+		removeDuplicatePortletPreferences();
 
 		super.doUpgrade();
 
-		_upgradePortletPreferenceValue();
-	}
-
-	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			{_PORTLET_ID_POLLS, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN},
-			{
-				_PORTLET_ID_POLLS_DISPLAY,
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
-			}
-		};
-	}
-
-	private void _upgradePortletPreferenceValue() throws Exception {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					StringBundler.concat(
@@ -72,11 +59,5 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 			updatePreparedStatement.executeBatch();
 		}
 	}
-
-	private static final String _PORTLET_ID_POLLS =
-		"com_liferay_polls_web_portlet_PollsPortlet";
-
-	private static final String _PORTLET_ID_POLLS_DISPLAY =
-		"com_liferay_polls_web_portlet_PollsDisplayPortlet";
 
 }

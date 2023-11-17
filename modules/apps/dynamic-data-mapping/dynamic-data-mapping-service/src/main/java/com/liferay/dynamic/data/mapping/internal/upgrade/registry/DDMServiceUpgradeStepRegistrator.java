@@ -540,6 +540,11 @@ public class DDMServiceUpgradeStepRegistrator
 				DDMStructureUpgradeProcess(
 					_jsonDDMFormDeserializer, _jsonDDMFormSerializer,
 					_language));
+
+		registry.register(
+			"5.4.1", "5.4.2",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_2.
+				PollsPortletIdToDDMPortletIdUpgradeProcess());
 	}
 
 	@Activate

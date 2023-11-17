@@ -20,7 +20,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-194499. In the list of locked pages, the name of the content page is clickable and the link opens the content page in a new tab."
+	@description = "This is a test for LPS-194499. In the list of locked pages, the name of the content page and collection page are clickable and the link opens the pages in a new tab."
 	@priority = 5
 	test NavigateToLockedPagesInList {
 		var siteName = selenium.getText("Home#SITE_NAME");
@@ -91,7 +91,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182022. In the list of locked pages, the name of the Collection page, Master page, Content page template, Display page template are clickable and the link opens the pages in a new tab."
+	@description = "This is a test for LPS-182022. In the list of locked pages, the name of the Master page, Content page template, Display page template are clickable and the link opens the pages in a new tab."
 	@priority = 5
 	test NavigateToLockedPageTemplatesInList {
 		var siteName = selenium.getText("Home#SITE_NAME");

@@ -12,7 +12,7 @@ export class ObjectDefinitionsPage {
 		this.createObjectFolderButton = page.getByRole('button', {
 			name: 'Create Folder',
 		});
-		this.objectFolderActionsLink = page.getByLabel('folder-actions');
+		this.objectFolderActionsLink = page.getByLabel('Object Folder Actions');
 		this.objectFolderDeleteFolderOption = page.getByRole('menuitem', {
 			name: 'Delete Folder',
 		});

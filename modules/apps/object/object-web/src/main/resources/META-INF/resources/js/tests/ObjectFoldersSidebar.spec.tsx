@@ -11,10 +11,8 @@ import ObjectFoldersSideBar from '../components/ViewObjectDefinitions/ObjectFold
 const emptyAction = {href: '', method: ''};
 
 const objectFolderActions = {
-	delete: emptyAction,
+	create: emptyAction,
 	get: emptyAction,
-	permissions: emptyAction,
-	update: emptyAction,
 };
 
 const ticketObjectFolder = {
@@ -39,11 +37,16 @@ const uncategorizedObjectFolder = {
 	objectFolderItems: [],
 };
 
+const objectFoldersRequestInfo = {
+	actions: objectFolderActions,
+	items: [ticketObjectFolder, uncategorizedObjectFolder],
+};
+
 describe('The ObjectFoldersSidebar component should', () => {
 	it('render all created object folders', () => {
 		render(
 			<ObjectFoldersSideBar
-				objectFolders={[ticketObjectFolder, uncategorizedObjectFolder]}
+				objectFoldersRequestInfo={objectFoldersRequestInfo}
 				selectedObjectFolder={uncategorizedObjectFolder}
 				setSelectedObjectFolder={() => {}}
 				setShowModal={() => {}}

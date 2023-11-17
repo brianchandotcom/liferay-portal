@@ -262,8 +262,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			if (jsonNode.has("dependencies")) {
 				List<String> dependencies = new ArrayList<>();
 
-				for (JsonNode dependency : jsonNode.get("dependencies")) {
-					dependencies.add(dependency.textValue());
+				for (JsonNode dependencyJsonNode :
+						jsonNode.get("dependencies")) {
+
+					dependencies.add(dependencyJsonNode.textValue());
 				}
 
 				pluginPackageProperties.put(

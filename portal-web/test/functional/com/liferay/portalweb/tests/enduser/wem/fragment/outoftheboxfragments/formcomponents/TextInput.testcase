@@ -35,19 +35,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
-		}
-	}
-
 	@description = "This is a test for LPS-149725. The pages designer can map the Text Input fragment entities text fields."
 	@priority = 4
 	test AddCustomTextInputFieldsOnContentPage {

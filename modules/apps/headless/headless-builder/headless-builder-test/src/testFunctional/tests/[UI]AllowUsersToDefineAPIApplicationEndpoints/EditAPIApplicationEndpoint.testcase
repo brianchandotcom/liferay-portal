@@ -35,6 +35,69 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test CanChangeSchemaOfEndpoint {
+		task ("And Given two API Schema in API Application") {
+			SchemaAPI.createAPISchema(
+				apiApplicationERC = "My-app",
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "schema1");
+
+			SchemaAPI.createAPISchema(
+				apiApplicationERC = "My-app",
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "schema2");
+		}
+
+		task ("And Given setting API Schema schema1 in Response Body Schema") {
+			APIBuilderUI.addAndPublishEndpointConfiguration(
+				entity = "Endpoints",
+				name = "testendpoint",
+				schemaName = "schema1",
+				title = "My-app");
+
+			AssertElementPresent(
+				key_optionName = "schema1",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
+
+		task ("When modifying endpoint again with API Schema schema2") {
+			APIBuilderUI.addAndPublishEndpointConfiguration(
+				entity = "Endpoints",
+				name = "testendpoint",
+				schemaName = "schema2",
+				title = "My-app");
+		}
+
+		task ("Then changes are saved correctly") {
+			Alert.viewSuccessMessage();
+
+			AssertElementPresent(
+				key_optionName = "schema2",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
+	}
+
+	@priority = 3
+	test CanCreateEndpointInPublishedAPIApplication {
+		task ("When editing API Application") {
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				title = "My-app");
+
+			APIBuilderUI.createAPIEndpoint(
+				path = "testendpoint2",
+				scope = "Company");
+		}
+
+		task ("Then API Endpoint can be created") {
+			AssertTextEquals(
+				key_fieldLabel = "Path",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "testendpoint2");
+		}
+	}
+
 	@priority = 4
 	test CannotModifyMethodOfCretaedEndpoint {
 		property portal.acceptance = "true";
@@ -239,6 +302,32 @@ definition {
 				key_placeHolder = "Enter Path",
 				locator1 = "TextInput#ANY_PLACEHOLDER",
 				value1 = "updatedendpoint");
+		}
+	}
+
+	@priority = 3
+	test GetIsDefaultMethodValue {
+		property portal.acceptance = "true";
+
+		task ("Given a created endpoint") {
+			EndpointAPI.createAPIEndpoint(
+				apiApplicationERC = "My-app",
+				name = "testendpoint",
+				path = "/testendpoint");
+		}
+
+		task ("When creating endpoint with valid data") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				name = "testendpoint",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("Then enpoint method is GET by default") {
+			AssertTextEquals(
+				locator1 = "Button#DISABLED_BUTTON",
+				value1 = "GET");
 		}
 	}
 

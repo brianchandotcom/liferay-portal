@@ -21,6 +21,28 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="requestQuote" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
+		<c:choose>
+			<c:when test="<%= commerceOrder.isGuestOrder() %>">
+				<div>
+					<aui:input label="" name="emailAddress" placeholder="enter-an-email-address" required="<%= true %>" type="text">
+						<aui:validator name="email" />
+					</aui:input>
+				</div>
+			</c:when>
+			<c:otherwise>
+
+				<%
+				User currentUser = themeDisplay.getUser();
+				%>
+
+				<div>
+					<aui:input label="" name="emailAddress" placeholder="enter-an-email-address" required="<%= true %>" type="text" value="<%= currentUser.getEmailAddress() %>">
+						<aui:validator name="email" />
+					</aui:input>
+				</div>
+			</c:otherwise>
+		</c:choose>
+
 		<c:if test="<%= manageNotesPermission || manageRestrictedNotesPermission %>">
 			<aui:input label="" name="content" placeholder="type-your-note-here" type="textarea" />
 

@@ -147,15 +147,16 @@ public class CTEntryModelDocumentContributor
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
-		if ((ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) ||
-			((ctCollection != null) &&
-			 (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
-			 ((ctEntry.getChangeType() ==
-				 CTConstants.CT_CHANGE_TYPE_ADDITION) ||
-			  (ctEntry.getChangeType() ==
-				  CTConstants.CT_CHANGE_TYPE_MODIFICATION)))) {
-
-			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		if (ctCollection != null) {
+			try {
+				ctCollectionId = _ctDisplayRendererRegistry.getCtCollectionId(
+					ctCollection, ctEntry);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
 		}
 
 		T model = _ctDisplayRendererRegistry.fetchCTModel(

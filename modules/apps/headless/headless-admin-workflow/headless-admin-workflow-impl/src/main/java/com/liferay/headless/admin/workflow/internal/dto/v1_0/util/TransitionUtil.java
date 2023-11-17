@@ -30,10 +30,7 @@ public class TransitionUtil {
 
 		Transition transition = new Transition();
 
-		transition.setLabel(
-			LabelUtil.getLabel(
-				workflowTransition.getName(), workflowTransition.getLabelMap(),
-				locale));
+		transition.setLabel(workflowTransition.getLabel(locale));
 		transition.setName(workflowTransition.getName());
 		transition.setSourceNodeName(workflowTransition.getSourceNodeName());
 		transition.setTargetNodeName(workflowTransition.getTargetNodeName());

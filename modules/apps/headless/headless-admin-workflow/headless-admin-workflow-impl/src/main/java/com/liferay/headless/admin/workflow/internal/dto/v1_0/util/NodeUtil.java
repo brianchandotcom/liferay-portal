@@ -18,9 +18,7 @@ public class NodeUtil {
 	public static Node toNode(Locale locale, WorkflowNode workflowNode) {
 		Node node = new Node();
 
-		node.setLabel(
-			LabelUtil.getLabel(
-				workflowNode.getName(), workflowNode.getLabelMap(), locale));
+		node.setLabel(workflowNode.getLabel(locale));
 		node.setName(workflowNode.getName());
 		node.setType(
 			() -> {

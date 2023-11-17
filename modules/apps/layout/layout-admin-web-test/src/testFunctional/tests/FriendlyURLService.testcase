@@ -179,6 +179,7 @@ definition {
 	@priority = 3
 	test CanDisableLocalizedRedirectMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -202,10 +203,7 @@ definition {
 			configurationName = "Friendly URL Redirection",
 			configurationScope = "Virtual Instance Scope");
 
-		Uncheck(
-			checkboxName = "Show Alternative Layout Friendly URL Message",
-			key_tableEntry = "Show Alternative Layout Friendly URL Message",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.disableCheckbox(fieldName = "Show Alternative Layout Friendly URL Message");
 
 		SystemSettings.saveConfiguration();
 

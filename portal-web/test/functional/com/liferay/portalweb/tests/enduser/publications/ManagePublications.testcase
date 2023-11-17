@@ -55,6 +55,10 @@ definition {
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication 2 Name");
 
+			PublicationsChanges.filterChangesByItem(
+				checkboxName = "Site",
+				menuItem = "Types");
+
 			PublicationsChanges.gotoMoveChangeToAnotherPublication(
 				changeCategory = "Site",
 				changeTitle = "Test Site Name",
@@ -334,6 +338,10 @@ definition {
 			PublicationsNavigator.gotoReviewChanges(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication 2 Name");
+
+			PublicationsChanges.filterChangesByItem(
+				checkboxName = "Web Content Article",
+				menuItem = "Types");
 
 			PublicationsChanges.gotoMoveChangeToAnotherPublication(
 				changeCategory = "Web Content Article",

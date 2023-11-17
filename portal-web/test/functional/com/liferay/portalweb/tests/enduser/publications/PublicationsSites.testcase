@@ -59,6 +59,10 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
+		PublicationsChanges.filterChangesByItem(
+			checkboxName = "Site",
+			menuItem = "Types");
+
 		PublicationsChanges.viewChanges(
 			changeCategory = "Site",
 			changeSite = "Site Name",
@@ -92,6 +96,10 @@ definition {
 		Site.viewCP(siteName = "Site Name");
 
 		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.filterChangesByItem(
+			checkboxName = "Site",
+			menuItem = "Types");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Site",

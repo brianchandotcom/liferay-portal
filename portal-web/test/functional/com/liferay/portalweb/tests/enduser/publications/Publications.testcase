@@ -1971,12 +1971,22 @@ definition {
 				key_publicationName = "Publication Name",
 				locator1 = "Publications#PUBLICATION_NAME_VIEW");
 
+			PublicationsChanges.filterChangesByItem(
+				checkboxName = "Page",
+				menuItem = "Types");
+
 			PublicationsChanges.viewChanges(
 				changeCategory = "Page",
 				changeSite = "Site Name",
 				changeTitle = "Test Page Name",
 				changeType = "Added",
 				changeUser = "Test Test");
+
+			PublicationsChanges.filterChangesByItem(
+				checkboxName = "Fragment Entry Link",
+				menuItem = "Types");
+
+			Pagination.changePagination(itemsPerPage = "40 Items");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Fragment Entry Link",
@@ -1989,7 +1999,7 @@ definition {
 		task ("Assert that the fragment button is present at the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Site Nam");
+				siteName = "Site Name");
 
 			AssertTextEquals(
 				fragmentName = "button",

@@ -62,7 +62,7 @@ export default function InviteMembers({
 		fetchAvailableUsers({end: viewMoreCount * 50});
 	}, [fetchAvailableUsers, viewMoreCount]);
 
-	const onAddEmailClicklHandler = () => {
+	const onAddEmailClickHandler = () => {
 		const emailValue = document.getElementById(`${namespace}emailAddress`)
 			.value;
 
@@ -417,7 +417,7 @@ export default function InviteMembers({
 													displayType="secondary"
 													name={`${namespace}emailButton`}
 													onClick={() =>
-														onAddEmailClicklHandler()
+														onAddEmailClickHandler()
 													}
 													type="button"
 												>

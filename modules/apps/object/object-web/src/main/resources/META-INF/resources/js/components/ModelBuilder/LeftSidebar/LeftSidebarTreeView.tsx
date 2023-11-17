@@ -73,7 +73,7 @@ export default function LeftSidebarTreeView({
 		objectDefinitionId: number;
 		objectFolderName: string;
 	}) => {
-		const objectFolders = await API.getAllObjectFolders();
+		const {items: objectFolders} = await API.getAllObjectFolders();
 
 		const currentObjectFolder = objectFolders.find(
 			(objectFolder) => objectFolder.name === objectFolderName

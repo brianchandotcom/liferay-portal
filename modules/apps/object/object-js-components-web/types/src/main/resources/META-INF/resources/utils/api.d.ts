@@ -4,10 +4,10 @@
  */
 
 interface Actions {
-	delete: HTTPMethod;
-	get: HTTPMethod;
-	permissions: HTTPMethod;
-	update: HTTPMethod;
+	delete?: HTTPMethod;
+	get?: HTTPMethod;
+	permissions?: HTTPMethod;
+	update?: HTTPMethod;
 }
 interface HTTPMethod {
 	href: string;
@@ -77,6 +77,10 @@ interface ObjectFolder {
 	name: string;
 	objectFolderItems: ObjectFolderItem[];
 }
+interface ObjectFolderRequestInfo {
+	actions: Actions;
+	items: ObjectFolder[];
+}
 declare type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
 interface ObjectRelationship {
 	deletionType: string;
@@ -115,7 +119,7 @@ export declare function fetchJSON<T>(
 	init?: RequestInit
 ): Promise<T>;
 export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
-export declare function getAllObjectFolders(): Promise<ObjectFolder[]>;
+export declare function getAllObjectFolders(): Promise<ObjectFolderRequestInfo>;
 export declare function getList<T>(url: string): Promise<T[]>;
 export declare function getListTypeDefinition(
 	listTypeDefinitionId: number

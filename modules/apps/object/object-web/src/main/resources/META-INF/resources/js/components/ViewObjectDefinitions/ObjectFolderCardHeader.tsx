@@ -40,7 +40,7 @@ export default function ObjectFolderCardHeader({
 						trigger={
 							<ClayButton
 								aria-label={Liferay.Language.get(
-									'folder-actions'
+									'object-folder-actions'
 								)}
 								className="component-action"
 								displayType="unstyled"

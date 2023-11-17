@@ -3,17 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Text} from '@clayui/core';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {SetStateAction} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 
 interface ObjectFoldersSidebarProps {
-	objectFolders: ObjectFolder[];
+	objectFoldersRequestInfo: ObjectFoldersRequestInfo;
 	selectedObjectFolder: ObjectFolder;
 	setSelectedObjectFolder: (
 		value: SetStateAction<Partial<ObjectFolder>>
@@ -22,11 +24,37 @@ interface ObjectFoldersSidebarProps {
 }
 
 export default function ObjectFoldersSideBar({
-	objectFolders,
+	objectFoldersRequestInfo,
 	selectedObjectFolder,
 	setSelectedObjectFolder,
 	setShowModal,
 }: ObjectFoldersSidebarProps) {
+	const objectFoldersKebabOptions = [];
+
+	if (selectedObjectFolder.actions.get) {
+		objectFoldersKebabOptions.push({
+			label: sub(
+				Liferay.Language.get('export-x'),
+				Liferay.Language.get('object-folder')
+			),
+			onClick: () => {},
+			symbolLeft: 'export',
+			value: 'exportObjectFolder',
+		});
+	}
+
+	if (objectFoldersRequestInfo.actions.create) {
+		objectFoldersKebabOptions.push({
+			label: sub(
+				Liferay.Language.get('import-x'),
+				Liferay.Language.get('object-folder')
+			),
+			onClick: () => {},
+			symbolLeft: 'import',
+			value: 'importObjectFolder',
+		});
+	}
+
 	return (
 		<div className="lfr__object-web-view-object-definitions-object-folder-list-container">
 			<div className="lfr__object-web-view-object-definitions-object-folder-list-header">
@@ -53,11 +81,29 @@ export default function ObjectFoldersSideBar({
 					>
 						<ClayIcon symbol="plus" />
 					</ClayButton>
+
+					<ClayDropDownWithItems
+						items={objectFoldersKebabOptions}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'object-folder-actions'
+								)}
+								className="component-action"
+								displayType="unstyled"
+								monospaced
+								onClick={(event) => {
+									event?.stopPropagation();
+								}}
+								symbol="ellipsis-v"
+							/>
+						}
+					/>
 				</div>
 			</div>
 
 			<ClayList className="lfr__object-web-view-object-definitions-object-folder-list">
-				{objectFolders.map((currentObjectFolder) => (
+				{objectFoldersRequestInfo.items.map((currentObjectFolder) => (
 					<ClayList.Item
 						action
 						active={

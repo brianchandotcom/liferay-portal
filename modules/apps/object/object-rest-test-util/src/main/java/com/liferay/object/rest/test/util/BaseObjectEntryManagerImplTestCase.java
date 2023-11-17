@@ -142,6 +142,9 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 				SortFactoryUtil.create(sort[0], Objects.equals(sort[1], "desc"))
 			};
 		}
+		else {
+			sorts = new Sort[] {SortFactoryUtil.create("createDate", false)};
+		}
 
 		Page<ObjectEntry> page = getObjectEntries(context, sorts);
 

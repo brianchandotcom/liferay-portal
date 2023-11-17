@@ -209,7 +209,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/pagina-de-prueba");
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/test-source-page");
 
 		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
 
@@ -217,7 +217,9 @@ definition {
 			key_pageName = "Pagina de prueba",
 			locator1 = "Home#PAGE_ACTIVE");
 
-		AssertNotVisible(locator1 = "Message#INFO");
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "Message#INFO_2",
+			value1 = "Usted fue redirigido a ${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
 	}
 
 	@description = "This ensures that Users can re-add the same friendly URL for different languages in a layout."
@@ -404,7 +406,7 @@ definition {
 			localizedFriendlyURLList = "/pagina-de-prueba,/nueva-pagina-de-prueba",
 			localizedNameList = "Pagina de prueba,-");
 
-		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/pagina-de-prueba");
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/test-source-page");
 
 		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
 
@@ -412,7 +414,9 @@ definition {
 			key_pageName = "Pagina de prueba",
 			locator1 = "Home#PAGE_ACTIVE");
 
-		AssertVisible(locator1 = "Message#INFO");
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#INFO_2",
+			value1 = "Usted fue redirigido a ${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
 	}
 
 	@description = "This ensures that the old friendlyURL can be removed from the history."

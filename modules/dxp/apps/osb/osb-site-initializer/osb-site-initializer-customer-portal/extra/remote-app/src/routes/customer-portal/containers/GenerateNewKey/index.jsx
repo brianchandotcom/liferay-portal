@@ -6,10 +6,12 @@
 import {useEffect, useState} from 'react';
 import {Navigate, useLocation, useOutletContext} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
 import {putDeactivateKeys} from '~/common/services/liferay/rest/raysource/LicenseKeys';
 import {useCustomerPortal} from '../../context';
 import {ALERT_DOWNLOAD_TYPE, STATUS_CODE} from '../../utils/constants';
 import {hasAdminOrPartnerManager} from '../ActivationKeysTable/utils/hasAdminOrPartnerManager';
+import {hasAdminUserAccount} from '../ActivationKeysTable/utils/hasAdminUserAccount';
 import GenerateNewKeySkeleton from './Skeleton';
 import ComplimentaryDate from './pages/ComplimentaryDate';
 import RequiredInformation from './pages/RequiredInformation';
@@ -24,6 +26,7 @@ const GenerateNewKey = ({
 	setHasKeyComplimentary,
 }) => {
 	const {provisioningServerAPI} = useAppPropertiesContext();
+	const {data: myAccount} = useGetMyUserAccount();
 	const [{project, sessionId, userAccount}] = useCustomerPortal();
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
@@ -44,12 +47,14 @@ const GenerateNewKey = ({
 		setHasSideMenu(false);
 	}, [setHasSideMenu]);
 
+	const isAdminUserAccount = hasAdminUserAccount(myAccount);
+
 	const isAdminOrPartnerManager = hasAdminOrPartnerManager(
 		project,
 		userAccount
 	);
 
-	if (!isAdminOrPartnerManager) {
+	if (!isAdminUserAccount && !isAdminOrPartnerManager) {
 		return <Navigate replace={true} to={`/${project?.accountKey}`} />;
 	}
 

@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import {useCallback, useMemo, useState} from 'react';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
 import i18n from '../../../../../../common/I18n';
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
@@ -13,6 +14,7 @@ import {has100YearsDifference} from '../../utils';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {ALERT_ACTIVATION_MULTIPLE_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertMultipleKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
+import {hasAdminUserAccount} from '../../utils/hasAdminUserAccount';
 import ActionButton from '../ActionButton';
 import BadgeFilter from '../BadgeFilter';
 import DeactivateButton from '../Deactivate';
@@ -35,6 +37,10 @@ const ActivationKeysTableHeader = ({
 	const {
 		userAccountsState: [userAccounts],
 	} = useGetAccountUserAccount(project);
+
+	const {data: myAccount} = useGetMyUserAccount();
+
+	const isAdminUserAccount = hasAdminUserAccount(myAccount);
 
 	const isAdminOrPartnerManager = useMemo(() => {
 		const currentUser = userAccounts?.find(
@@ -149,7 +155,8 @@ const ActivationKeysTableHeader = ({
 									])}
 								</p>
 
-								{isAdminOrPartnerManager &&
+								{(isAdminUserAccount ||
+									isAdminOrPartnerManager) &&
 									allowSelfProvisioning && (
 										<DeactivateButton
 											deactivateKeysStatus={
@@ -172,7 +179,7 @@ const ActivationKeysTableHeader = ({
 						)}
 
 						{featureFlags.includes('ISSD-78') &&
-							isAdminOrPartnerManager &&
+							(isAdminUserAccount || isAdminOrPartnerManager) &&
 							allowSelfProvisioning &&
 							activationKeysByStatusPaginatedChecked.length >=
 								2 &&
@@ -200,6 +207,7 @@ const ActivationKeysTableHeader = ({
 								isAbleToDownloadAggregateKeys
 							}
 							isAdminOrPartnerManager={isAdminOrPartnerManager}
+							isAdminUserAccount={isAdminUserAccount}
 							productName={productName}
 							project={project}
 							sessionId={sessionId}

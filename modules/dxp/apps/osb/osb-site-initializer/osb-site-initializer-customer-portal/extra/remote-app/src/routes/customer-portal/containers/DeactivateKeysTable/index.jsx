@@ -6,6 +6,7 @@
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Navigate, useOutletContext} from 'react-router-dom';
+import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
 import i18n from '../../../../common/I18n';
 import Table from '../../../../common/components/Table';
 import {useCustomerPortal} from '../../context';
@@ -20,6 +21,7 @@ import {
 } from '../ActivationKeysTable/utils/constants/columns-definitions';
 import {getTooltipContentRenderer} from '../ActivationKeysTable/utils/getTooltipContentRenderer';
 import {hasAdminOrPartnerManager} from '../ActivationKeysTable/utils/hasAdminOrPartnerManager';
+import {hasAdminUserAccount} from '../ActivationKeysTable/utils/hasAdminUserAccount';
 import DeactivateKeysSkeleton from './Skeleton';
 import DeactivateKeysTableFooter from './components/Footer';
 import DeactivationKeysTableHeader from './components/Header';
@@ -27,6 +29,7 @@ import useFilters from './components/Header/hooks/useFilters';
 import {DEACTIVATE_COLUMNS} from './utils/constants';
 
 const DeactivateKeysTable = ({initialFilter, productName}) => {
+	const {data: myAccount} = useGetMyUserAccount();
 	const [{project, sessionId, userAccount}] = useCustomerPortal();
 	const {setHasSideMenu} = useOutletContext();
 
@@ -89,12 +92,14 @@ const DeactivateKeysTable = ({initialFilter, productName}) => {
 		[]
 	);
 
+	const isAdminUserAccount = hasAdminUserAccount(myAccount);
+
 	const isAdminOrPartnerManager = hasAdminOrPartnerManager(
 		project,
 		userAccount
 	);
 
-	if (!isAdminOrPartnerManager) {
+	if (!isAdminUserAccount && !isAdminOrPartnerManager) {
 		return <Navigate replace={true} to={`/${project?.accountKey}`} />;
 	}
 

@@ -2,22 +2,28 @@ definition {
 
 	@summary = "Default summary"
 	macro deleteSpecificMail(gmailMessageTitleList = null) {
+		Navigator.openSpecificURL(url = "http://www.gmail.com");
+
 		for (var gmailMessageTitle : list ${gmailMessageTitleList}) {
 			var key_gmailMessageTitle = ${gmailMessageTitle};
 
-			if (IsElementPresent(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX")) {
-				Check(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX");
+			if (IsElementPresent(locator1 = "Gmail#GMAIL_EMAIL_MESSAGE_TITLE")) {
+				Click(locator1 = "Gmail#GMAIL_EMAIL_MESSAGE_TITLE");
 
-				Click(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON");
+				MouseOver(locator1 = "Gmail#GMAIL_EMAIL_TOOLBAR");
 
-				WaitForPageLoad();
+				Click(locator1 = "Gmail#GMAIL_EMAIL_DELETE");
+
+				Navigator.openSpecificURL(url = "http://www.gmail.com");
+
+				AssertElementNotPresent(locator1 = "Gmail#GMAIL_EMAIL_MESSAGE_TITLE");
 			}
 		}
 	}
 
 	@summary = "Default summary"
 	macro gotoHtmlMode() {
-		Navigator.openSpecificURL(url = "https://mail.google.com/mail/?ui=html&zy=h");
+		Navigator.openSpecificURL(url = "http://www.gmail.com/?ui=html&zy=h");
 
 		if (IsElementPresent(locator1 = "Gmail#GMAIL_HTML_MODE_CONFIRMATION")) {
 			Click(locator1 = "Gmail#GMAIL_HTML_MODE_CONFIRMATION");
@@ -27,26 +33,10 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMail(emailFromUserName = null, gmailMessageTitle = null, gmailAssetType = null) {
-		var key_gmailAssetType = ${gmailAssetType};
-
-		if (IsElementNotPresent(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME")) {
-			Click(
-				locator1 = "Gmail#GMAIL_HTML_MODE_REFRESH",
-				value1 = "Refresh");
-		}
-
-		while (!(IsTextEqual.isPartialText(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME", value1 = ${emailFromUserName}))) {
-			WaitForPageLoad();
-		}
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME",
-			value1 = ${emailFromUserName});
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE",
-			value1 = ${gmailMessageTitle});
+	macro gotoMail(gmailMessageTitle = null) {
+		Click(
+			key_gmailMessageTitle = ${gmailMessageTitle},
+			locator1 = "Gmail#GMAIL_EMAIL_MESSAGE_TITLE");
 
 		WaitForElementPresent.waitForLastScript();
 	}
@@ -186,25 +176,20 @@ definition {
 
 	@summary = "Default summary"
 	macro replyMail(gmailReplyMessage = null) {
+		if (!(IsElementPresent(locator1 = "Gmail#GMAIL_EMAIL_REPLY_TEXTBOX"))) {
+			Click(locator1 = "Gmail#GMAIL_EMAIL_REPLY");
+		}
+
 		Type(
-			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+			locator1 = "Gmail#GMAIL_EMAIL_REPLY_TEXTBOX",
 			value1 = ${gmailReplyMessage});
 
-		AssertClick(
-			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_SEND_BUTTON",
-			value1 = "Send");
-
-		AssertTextEquals(
-			locator1 = "Gmail#SUCCESS_MESSAGE",
-			value1 = "Your message has been sent.");
+		Click(locator1 = "Gmail#GMAIL_EMAIL_SEND");
 	}
 
 	@summary = "Default summary"
 	macro viewMail(emailFromUserName = null, gmailMessageTitle = null, gmailMessageBody = null, gmailAssetType = null, gmailMessageAttachment = null) {
-		Gmail.gotoMail(
-			emailFromUserName = ${emailFromUserName},
-			gmailAssetType = ${gmailAssetType},
-			gmailMessageTitle = ${gmailMessageTitle});
+		Gmail.gotoMail(gmailMessageTitle = ${gmailMessageTitle});
 
 		var key_gmailAssetType = ${gmailAssetType};
 

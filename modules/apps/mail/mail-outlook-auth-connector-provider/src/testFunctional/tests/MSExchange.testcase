@@ -19,16 +19,12 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
-		Gmail.gotoHtmlMode();
-
 		if (IsElementNotPresent(locator1 = "Gmail#INBOX")) {
 			Gmail.login(
 				userEmailAddress = PropsUtil.get("email.address.3"),
 				userPassword = PropsUtil.get("email.password.3"));
 
 			WaitForElementPresent(locator1 = "Gmail#INBOX");
-
-			Gmail.gotoHtmlMode();
 		}
 
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "MB Thread Message Subject");
@@ -92,14 +88,7 @@ definition {
 		}
 
 		task ("Then they can view the reply in their inbox") {
-			Gmail.gotoHtmlMode();
-
-			Gmail.viewMail(
-				emailFromUserName = "userfn userln",
-				gmailAssetType = "userln (2)",
-				gmailMessageBody = "Message Boards Body Reply",
-				gmailMessageTitle = " MB Thread Message Subject",
-				viewReply = "true");
+			Gmail.gotoMail(gmailMessageTitle = "MB Thread Message Subject");
 		}
 
 		task ("When the user submits a response via email") {
@@ -121,8 +110,6 @@ definition {
 				threadSubject = "MB Thread Message Subject",
 				userName = "userfn userln");
 		}
-
-		Gmail.gotoHtmlMode();
 
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "MB Thread Message Subject");
 

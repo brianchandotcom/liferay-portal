@@ -80,7 +80,32 @@
 </tr>
 <tr>
 	<td>GMAIL_EMAIL_MESSAGE_TITLE</td>
-	<td>//tr/td[contains(.,'${key_gmailMessageTitle}')]//a/span</td>
+	<td>//span[@class='bog']/span[contains(.,'${key_gmailMessageTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_EMAIL_REPLY</td>
+	<td>//span[@role='link' and contains(text(),'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_EMAIL_REPLY_TEXTBOX</td>
+	<td>//div[@role='textbox' and @contenteditable='true']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_EMAIL_SEND</td>
+	<td>//div[@role='button' and contains(text(),'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_EMAIL_DELETE</td>
+	<td>//div[not(contains(@style,'none'))]/div[@role='button' and @aria-label='Delete']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_EMAIL_TOOLBAR</td>
+	<td>//div[@gh='mtb']</td>
 	<td></td>
 </tr>
 <tr>

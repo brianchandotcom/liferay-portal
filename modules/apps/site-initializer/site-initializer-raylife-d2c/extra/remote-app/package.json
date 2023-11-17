@@ -26,7 +26,7 @@
 		"@clayui/label": "*",
 		"@clayui/loading-indicator": "^3.60.0",
 		"@googlemaps/js-api-loader": "^1.12.2",
-		"axios": "0.24.0",
+		"axios": "1.6.2",
 		"classnames": "2.3.1",
 		"react": "^17.0.2",
 		"react-dom": "17.0.2",

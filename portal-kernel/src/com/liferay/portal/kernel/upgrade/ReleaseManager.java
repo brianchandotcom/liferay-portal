@@ -13,8 +13,8 @@ public interface ReleaseManager {
 
 	public String getShortStatusMessage(boolean onlyRequiredUpgrades);
 
-	public String getStatusMessage(boolean showUpgradeSteps);
+	public String getStatus() throws Exception;
 
-	public boolean isUpgraded() throws Exception;
+	public String getStatusMessage(boolean showUpgradeSteps);
 
 }

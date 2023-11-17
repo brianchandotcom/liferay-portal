@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_AUTHORIZATIONS_EXPIRATION</td>
+	<td>//td[@class=' lfr-expiration-column'][contains(.,'${key_expiration}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_CLIENT_CREDENTIALS_USER_SELECTED</td>
 	<td>//td[contains(@class,'lfr-screen-name-column')]/a[contains(.,'${key_clientCredentialsUser}')]</td>
 	<td></td>

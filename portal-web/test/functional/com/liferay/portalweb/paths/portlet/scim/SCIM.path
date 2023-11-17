@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>SCIM</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SCIM</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>OAUTH2_APPLICATION_NAME_FIELD</td>
+	<td>//input[contains(@name,'oAuth2ApplicationName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MATCHER_FIELD</td>
+	<td>//div[label[contains(@for,'matcherField')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCESS_TOKEN_FIELD</td>
+	<td>//input[contains(@id,'oAuth2AccessToken')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_ACCESS_TOKEN_BUTTON</td>
+	<td>//button[contains(@id,'copyAccessToken')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

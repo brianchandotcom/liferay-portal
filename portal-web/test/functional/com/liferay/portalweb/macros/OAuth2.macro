@@ -1036,6 +1036,11 @@ definition {
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No authorizations were found.");
 		}
+		else if (isSet(expiration)) {
+			AssertElementPresent(
+				key_expiration = ${expiration},
+				locator1 = "OAuth2#ADMIN_AUTHORIZATIONS_EXPIRATION");
+		}
 		else {
 			AssertElementPresent(
 				key_userName = ${userName},

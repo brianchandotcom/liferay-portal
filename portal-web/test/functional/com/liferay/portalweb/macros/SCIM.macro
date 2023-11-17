@@ -1,0 +1,26 @@
+definition {
+
+	@summary = "Default summary"
+	macro configureSCIM() {
+		if (isSet(applicationName)) {
+			Type(
+				locator1 = "SCIM#OAUTH2_APPLICATION_NAME_FIELD",
+				value1 = ${applicationName});
+		}
+
+		if (isSet(matcherField)) {
+			Select(
+				locator1 = "SCIM#MATCHER_FIELD",
+				value1 = ${matcherField});
+		}
+
+		if (isSet(generateAccessToken)) {
+			Button.click(button = "Generate");
+
+			AssertConfirm(value1 = "Are you sure you want to generate a new access token?");
+		}
+
+		PortletEntry.save();
+	}
+
+}

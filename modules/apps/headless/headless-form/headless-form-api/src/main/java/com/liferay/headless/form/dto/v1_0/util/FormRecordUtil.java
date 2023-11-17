@@ -14,7 +14,6 @@ import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -87,9 +86,8 @@ public class FormRecordUtil {
 	}
 
 	private static FormDocument _toFormDocument(
-			DLAppService dlAppService, DLURLHelper dlurlHelper, Locale locale,
-			Value localizedValue)
-		throws Exception {
+		DLAppService dlAppService, DLURLHelper dlurlHelper, Locale locale,
+		Value localizedValue) {
 
 		FileEntry fileEntry = null;
 
@@ -102,18 +100,18 @@ public class FormRecordUtil {
 			if (fileEntryId > 0) {
 				fileEntry = dlAppService.getFileEntry(fileEntryId);
 			}
+
+			if (fileEntry != null) {
+				return FormDocumentUtil.toFormDocument(dlurlHelper, fileEntry);
+			}
 		}
-		catch (JSONException jsonException) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(jsonException);
+				_log.warn(exception);
 			}
 		}
 
-		if (fileEntry == null) {
-			return null;
-		}
-
-		return FormDocumentUtil.toFormDocument(dlurlHelper, fileEntry);
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(FormRecordUtil.class);

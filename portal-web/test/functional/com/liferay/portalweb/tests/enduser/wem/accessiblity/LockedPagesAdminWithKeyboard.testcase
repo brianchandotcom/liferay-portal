@@ -178,6 +178,11 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX",
 				value1 = "\TAB");
 
+			AssertElementFocused(
+				key_columnName = "name",
+				key_tableEntry = "404 Error Utility Page",
+				locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+
 			KeyPress(
 				key_columnName = "name",
 				key_tableEntry = "404 Error Utility Page",

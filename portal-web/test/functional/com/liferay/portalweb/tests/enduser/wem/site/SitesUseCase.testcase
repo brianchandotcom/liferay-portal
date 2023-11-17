@@ -472,10 +472,11 @@ definition {
 		}
 
 		task ("Log in from private page virtual URL as the created user") {
-			User.firstLoginUI(
-				specificURL = "http://www.able.com:8080/test-private-page",
+			User.firstLoginPG(
 				userEmailAddress = "userea@liferay.com",
 				userPassword = "test");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
 		}
 
 		task ("View private page in virtual host") {
@@ -534,7 +535,9 @@ definition {
 		}
 
 		task ("Log in public page in virtual host") {
-			User.firstLoginUI(specificURL = "http://www.baker.com:8080");
+			User.firstLoginPG();
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 		}
 
 		task ("Add a user and set require password reset") {
@@ -555,10 +558,11 @@ definition {
 		task ("Log out and log in as created user") {
 			UserBar.signOut();
 
-			User.firstLoginUI(
+			User.firstLoginUPG(
 				password = "password",
-				specificURL = "http://www.baker.com:8080",
 				userEmailAddress = "user1@liferay.com");
+
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 		}
 
 		task ("Click Send New Verification Code") {
@@ -604,7 +608,9 @@ definition {
 		}
 
 		task ("Log in instance in virtual host") {
-			User.firstLoginUI(specificURL = "http://www.able.com:8080");
+			User.firstLoginPG();
+
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 		}
 
 		task ("Edit Email Verification Notification in instance settings") {
@@ -628,9 +634,10 @@ definition {
 		task ("Log out and log in as created user") {
 			UserBar.signOut();
 
-			User.firstLoginUI(
-				specificURL = "http://www.baker.com:8080",
+			User.firstLoginPG(
 				userEmailAddress = "user1@liferay.com");
+
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 		}
 
 		task ("Edit user email address for email notification") {
@@ -1028,10 +1035,11 @@ definition {
 		}
 
 		task ("Log in as created user via private page virtual host") {
-			User.firstLoginUI(
+			User.firstLoginPG(
 				password = "test",
-				specificURL = "http://www.baker.com:8080/group/russia2018",
 				userEmailAddress = "userea@liferay.com");
+
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080/group/russia201");
 		}
 
 		task ("View private pages") {
@@ -1039,10 +1047,10 @@ definition {
 		}
 
 		task ("Log in as created user via site URL") {
-			User.firstLoginUI(
+			User.firstLoginPG(
 				password = "test",
-				specificURL = "${portalURL}/web/russia2018",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea@liferay.com",
+				virtualHostsURL = "${portalURL}/web/russia2018");
 		}
 
 		task ("Export site") {

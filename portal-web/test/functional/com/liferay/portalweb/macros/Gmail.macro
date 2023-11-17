@@ -7,7 +7,7 @@ definition {
 		for (var gmailMessageTitle : list ${gmailMessageTitleList}) {
 			var key_gmailMessageTitle = ${gmailMessageTitle};
 
-			if (IsElementPresent(locator1 = "Gmail#EMAIL_MESSAGE_TITLE")) {
+			while (IsElementPresent(locator1 = "Gmail#EMAIL_MESSAGE_TITLE")) {
 				Click(locator1 = "Gmail#EMAIL_MESSAGE_TITLE");
 
 				MouseOver(locator1 = "Gmail#EMAIL_TOOLBAR");
@@ -15,8 +15,6 @@ definition {
 				Click(locator1 = "Gmail#EMAIL_DELETE");
 
 				Navigator.openSpecificURL(url = "http://www.gmail.com");
-
-				AssertElementNotPresent(locator1 = "Gmail#EMAIL_MESSAGE_TITLE");
 			}
 		}
 	}

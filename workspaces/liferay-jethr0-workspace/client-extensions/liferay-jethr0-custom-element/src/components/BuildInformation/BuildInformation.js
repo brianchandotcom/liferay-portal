@@ -26,28 +26,35 @@ function BuildInformation({build}) {
 	let parameters = JSON.parse(build.parameters);
 
 	return (
-		<ClayPanel
-			collapsable
-			defaultExpanded
-			displayTitle="Build Information"
-			displayType="secondary"
-		>
-			<ClayPanel.Body>
-				Build Name: {build.name}
-				<br />
-				Build ID: {build.id}
-				<br />
-				Build State: {build.state.name}
-				<br />
-				Create Date: {toLocaleString(build.dateCreated)}
-				<br />
-				Modified Date: {toLocaleString(build.dateModified)}
-				{
-					parameters &&
-					(
-						<>
-							<br />
-							Parameters:
+		<>
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle="Build Information"
+				displayType="secondary"
+			>
+				<ClayPanel.Body>
+					Build Name: {build.name}
+					<br />
+					Build ID: {build.id}
+					<br />
+					Build State: {build.state.name}
+					<br />
+					Create Date: {toLocaleString(build.dateCreated)}
+					<br />
+					Modified Date: {toLocaleString(build.dateModified)}
+				</ClayPanel.Body>
+			</ClayPanel>
+			{
+				parameters &&
+				(
+					<ClayPanel
+						collapsable
+						displayTitle="Build Parameters"
+						displayType="secondary"
+						showCollapseIcon={true}
+					>
+						<ClayPanel.Body>
 							<Jethr0Table>
 								<thead>
 									<tr>
@@ -72,11 +79,11 @@ function BuildInformation({build}) {
 									})}
 								</tbody>
 							</Jethr0Table>
-						</>
-					)
-				}
-			</ClayPanel.Body>
-		</ClayPanel>
+						</ClayPanel.Body>
+					</ClayPanel>
+				)
+			}
+		</>
 	);
 }
 

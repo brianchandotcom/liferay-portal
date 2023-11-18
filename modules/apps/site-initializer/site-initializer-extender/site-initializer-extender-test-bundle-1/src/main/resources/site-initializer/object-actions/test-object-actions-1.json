@@ -1,0 +1,30 @@
+{
+	"object-actions": [
+		{
+			"active": true,
+			"label": {
+				"en_US": "Test Object Action 1"
+			},
+			"name": "TestObjectAction1",
+			"objectActionExecutorKey": "webhook",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"secret": "test",
+				"url": "http://localhost:8080"
+			}
+		},
+		{
+			"active": true,
+			"label": {
+				"en_US": "Test Object Action 2"
+			},
+			"name": "TestObjectAction2",
+			"objectActionExecutorKey": "groovy",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"script": "System.out.println(\"onAfterAdd\")"
+			}
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"
+}

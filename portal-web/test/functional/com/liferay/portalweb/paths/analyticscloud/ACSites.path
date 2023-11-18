@@ -154,6 +154,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_PATH_TOTAL</td>
+	<td>//*[contains(@class, 'recharts-sankey-nodes')]//*[text()='${key_pageTotal}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_SEGMENT_FILTER</td>
+	<td>//button[@title="Remove Filter"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POPOVER_ACTIVITIES_DATE_AND_TIME</td>
 	<td>//thead[@class="analytics-tooltip-chart-header"]//div[contains(@class,'text-right')]</td>
 	<td></td>

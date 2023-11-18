@@ -12,7 +12,9 @@ import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,10 +58,21 @@ public class FragmentEntryLinkCTDisplayRender
 
 	@Override
 	public boolean isHideable(FragmentEntryLink fragmentEntryLink) {
-		Layout layout = _layoutLocalService.fetchLayout(
-			fragmentEntryLink.getClassPK());
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					fragmentEntryLink.getCtCollectionId())) {
 
-		if (!layout.isDraft() && !layout.isDraftLayout()) {
+			Layout layout = _layoutLocalService.fetchLayout(
+				fragmentEntryLink.getClassPK());
+
+			if ((layout != null) &&
+				_layoutCTDisplayRenderer.isHideable(layout)) {
+
+				return true;
+			}
+		}
+
+		if (fragmentEntryLink.getOriginalFragmentEntryLinkId() == 0) {
 			return false;
 		}
 
@@ -128,6 +141,11 @@ public class FragmentEntryLinkCTDisplayRender
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(component.name=com.liferay.layout.admin.web.internal.change.tracking.spi.display.LayoutCTDisplayRenderer)"
+	)
+	private CTDisplayRenderer<Layout> _layoutCTDisplayRenderer;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

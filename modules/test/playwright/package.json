@@ -9,7 +9,7 @@
 	],
 	"license": "ISC",
 	"main": "index.js",
-	"name": "liferay-playwright",
+	"name": "@liferay/playwright",
 	"scripts": {
 	},
 	"version": "1.0.0"

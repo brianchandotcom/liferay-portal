@@ -2,9 +2,7 @@
 
 <#assign
 	groupFriendlyURL = "/web" + themeDisplay.getScopeGroup().getFriendlyURL()
-
 	isLandingPage = false
-
 	topLevelArticle = true
 />
 
@@ -14,7 +12,6 @@
 	<#if breadcrumbLinksJSONArray.length() gt 0>
 		<#assign
 			parentLink = breadcrumbLinksJSONArray.getJSONObject(0)?eval
-
 			topLevelArticle = false
 		/>
 	</#if>

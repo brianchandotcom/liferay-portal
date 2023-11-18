@@ -6,7 +6,6 @@ liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
     name: Liferay Jethr0 Etc Spring Boot OAuth Application Headless Server
     scopes:
         - C_Build.everything
-        - C_BuildParameter.everything
         - C_BuildRun.everything
         - C_Environment.everything
         - C_GitBranch.everything

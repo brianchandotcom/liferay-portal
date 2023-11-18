@@ -22,8 +22,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -138,20 +143,6 @@ public abstract class BaseBuildEntity
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		JSONArray parametersJSONArray = new JSONArray();
-
-		for (Map.Entry<String, String> parameter : _parameters.entrySet()) {
-			JSONObject parameterJSONObject = new JSONObject();
-
-			parameterJSONObject.put(
-				"name", parameter.getKey()
-			).put(
-				"value", parameter.getValue()
-			);
-
-			parametersJSONArray.put(parameterJSONObject);
-		}
-
 		State state = getState();
 
 		jsonObject.put(
@@ -161,7 +152,7 @@ public abstract class BaseBuildEntity
 		).put(
 			"name", getName()
 		).put(
-			"parameters", String.valueOf(parametersJSONArray)
+			"parameters", String.valueOf(_getBuildParametersJSONArray())
 		).put(
 			"r_jobToBuilds_c_jobId", getJobEntityId()
 		).put(
@@ -333,16 +324,28 @@ public abstract class BaseBuildEntity
 		_name = jsonObject.getString("name");
 		_state = State.get(jsonObject.getJSONObject("state"));
 
-		JSONArray parametersJSONArray = new JSONArray(
-			jsonObject.getString("parameters"));
+		String paramaters = jsonObject.getString("parameters");
 
-		for (int i = 0; i < parametersJSONArray.length(); i++) {
-			JSONObject parameterJSONObject = parametersJSONArray.getJSONObject(
-				i);
+		if (StringUtil.isNullOrEmpty(paramaters)) {
+			return;
+		}
 
-			_parameters.put(
-				parameterJSONObject.getString("name"),
-				parameterJSONObject.getString("value"));
+		try {
+			JSONArray parametersJSONArray = new JSONArray(paramaters);
+
+			for (int i = 0; i < parametersJSONArray.length(); i++) {
+				JSONObject parameterJSONObject =
+					parametersJSONArray.getJSONObject(i);
+
+				_parameters.put(
+					parameterJSONObject.getString("name"),
+					parameterJSONObject.getString("value"));
+			}
+		}
+		catch (JSONException jsonException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(jsonException);
+			}
 		}
 	}
 
@@ -369,9 +372,45 @@ public abstract class BaseBuildEntity
 		return parentBuildEntities;
 	}
 
+	private JSONArray _getBuildParametersJSONArray() {
+		JSONArray buildParametersJSONArray = new JSONArray();
+
+		if (_parameters.isEmpty()) {
+			return buildParametersJSONArray;
+		}
+
+		Set<String> parameterNames = new TreeSet<>(_parameters.keySet());
+
+		for (String parameterName : parameterNames) {
+			if (!parameterName.matches("[A-Z0-9_]+")) {
+				continue;
+			}
+
+			String parameterValue = _parameters.get(parameterName);
+
+			if (StringUtil.isNullOrEmpty(parameterValue)) {
+				continue;
+			}
+
+			JSONObject buildParameterJSONObject = new JSONObject();
+
+			buildParameterJSONObject.put(
+				"name", parameterName
+			).put(
+				"value", parameterValue
+			);
+
+			buildParametersJSONArray.put(buildParameterJSONObject);
+		}
+
+		return buildParametersJSONArray;
+	}
+
 	private static final int _DEFAULT_MAX_NODE_COUNT = 2;
 
 	private static final int _DEFAULT_MIN_NODE_RAM = 12;
+
+	private static final Log _log = LogFactory.getLog(BaseBuildEntity.class);
 
 	private final Set<BuildEntity> _childBuildEntities = new HashSet<>();
 	private final boolean _initialBuild;

@@ -191,7 +191,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 			protected String getRetryMessage(int retryCount) {
 				return StringUtil.combine(
 					"Unable to create ", _getEntityPluralLabel(),
-					". Retry attempt ", retryCount, " of ", maxRetries);
+					". Retry attempt ", retryCount, " of ", maxRetries, " ",
+					requestJSONObject);
 			}
 
 		};

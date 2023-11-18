@@ -11,11 +11,6 @@ definition {
 			value1 = "\BACK_SPACE");
 	}
 
-	@summary = "Removes the segment in page filter"
-	macro removeSegmentFilter() {
-		Click(locator1 = "ACSites#REMOVE_SEGMENT_FILTER");
-	}
-
 	@summary = "Selects the segment in page filter"
 	macro clickFilterSegment(segmentName = null) {
 		Click(
@@ -23,15 +18,19 @@ definition {
 			locator1 = "ACUtils#PAGE_SEGMENT_FILTER");
 	}
 
+	@summary = "Removes the segment in page filter"
+	macro removeSegmentFilter() {
+		Click(locator1 = "ACSites#REMOVE_SEGMENT_FILTER");
+	}
+
 	@summary = "Asserts the total of page path"
 	macro viewPagePathTotal(pageTotal = null) {
 		var key_pageTotal = ${pageTotal};
-		
+
 		AssertElementPresent(
 			locator1 = "ACSites#PAGE_PATH_TOTAL",
 			value1 = ${pageTotal});
 	}
-
 
 	@summary = "Asserts the dropdown segment filter"
 	macro viewSegmentDropdown(nameList = null) {

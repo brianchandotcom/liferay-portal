@@ -384,7 +384,7 @@ definition {
 		}
 
 		task ("Observe page total") {
-			ACPagePath.viewPagePathTotal(pageTotal = "1");
+			ACPagePath.viewPagePathTotal(pageTotal = 1);
 		}
 
 		task ("Click Filter button") {
@@ -396,7 +396,7 @@ definition {
 		}
 
 		task ("Observe page total changes with filter") {
-			ACPagePath.viewPagePathTotal(pageTotal = "0");
+			ACPagePath.viewPagePathTotal(pageTotal = 0);
 		}
 
 		task ("Remove segment from filter") {
@@ -404,7 +404,7 @@ definition {
 		}
 
 		task ("Observe page total changes with filter") {
-			ACPagePath.viewPagePathTotal(pageTotal = "1");
+			ACPagePath.viewPagePathTotal(pageTotal = 1);
 		}
 	}
 

@@ -127,8 +127,7 @@ public abstract class BaseJRPEventHandler extends BaseEventHandler {
 		).put(
 			"name", name
 		).put(
-			"parameters",
-			String.valueOf(buildJSONObject.optJSONArray("parameters"))
+			"parameters", buildJSONObject.optString("parameters")
 		).put(
 			"state", state.getJSONObject()
 		);

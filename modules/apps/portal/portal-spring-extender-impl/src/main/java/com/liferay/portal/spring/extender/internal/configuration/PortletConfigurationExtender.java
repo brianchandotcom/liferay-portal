@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -38,10 +39,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -98,6 +101,16 @@ public class PortletConfigurationExtender
 				exception);
 		}
 
+		_serviceRegistrations.put(
+			bundle.getSymbolicName(),
+			_bundleContext.registerService(
+				Configuration.class, portletConfiguration,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"name", "portlet"
+				).put(
+					"origin.bundle.symbolic.name", bundle.getSymbolicName()
+				).build()));
+
 		return portletConfiguration;
 	}
 
@@ -111,6 +124,13 @@ public class PortletConfigurationExtender
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
 		Configuration portletConfiguration) {
+
+		ServiceRegistration<Configuration> serviceRegistration =
+			_serviceRegistrations.remove(bundle.getSymbolicName());
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Activate
@@ -130,6 +150,14 @@ public class PortletConfigurationExtender
 		_bundleTracker.close();
 
 		_saveURLTimestamps(_bundleContext, _refreshedURLTimestamps);
+
+		for (ServiceRegistration<Configuration> serviceRegistration :
+				_serviceRegistrations.values()) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
 	}
 
 	private void _enqueue(
@@ -319,6 +347,8 @@ public class PortletConfigurationExtender
 	@Reference
 	private ResourceActions _resourceActions;
 
+	private final Map<String, ServiceRegistration<Configuration>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
 	private Map<String, Long> _urlTimestamps;
 
 }

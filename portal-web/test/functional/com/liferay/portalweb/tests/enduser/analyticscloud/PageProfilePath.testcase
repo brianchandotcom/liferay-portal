@@ -312,6 +312,102 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-14836 | Automation ID: LRAC-15062 | Test Summary: Remove segments from the filter"
+	@priority = 5
+	test RemoveSegmentFromFilter {
+		task ("Create a site and a blog and add to a page") {
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage(entryTitle = "Blog test");
+		}
+
+		task ("Connect AC to DXP") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the page, then close the sessions") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blog test",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
+		}
+
+		task ("Add an email field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "email");
+
+			ACSegments.selectOperator(operator = "is unknown");
+		}
+
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Navigate to Pages tab") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Set time filter use 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to page report entry") {
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
+
+			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
+		}
+
+		task ("Go to the Path tab") {
+			ACNavigation.switchTab(tabName = "Path");
+		}
+
+		task ("Observe page total") {
+			ACPagePath.viewPagePathTotal(pageTotal = "1");
+		}
+
+		task ("Click Filter button") {
+			Button.click(button = "Filter");
+		}
+
+		task ("Click Segment for filter") {
+			ACPagePath.clickFilterSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Observe page total changes with filter") {
+			ACPagePath.viewPagePathTotal(pageTotal = "0");
+		}
+
+		task ("Remove segment from filter") {
+			ACPagePath.removeSegmentFilter();
+		}
+
+		task ("Observe page total changes with filter") {
+			ACPagePath.viewPagePathTotal(pageTotal = "1");
+		}
+	}
+
 	@description = "Feature ID: LRAC-14836 | Automation ID: LRAC-15061 | Test Summary: The filter shows all segments"
 	@priority = 5
 	test ViewSegmentDropdownList {

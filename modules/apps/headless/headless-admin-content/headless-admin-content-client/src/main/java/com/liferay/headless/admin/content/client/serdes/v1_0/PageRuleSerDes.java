@@ -6,6 +6,8 @@
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.PageRule;
+import com.liferay.headless.admin.content.client.dto.v1_0.PageRuleAction;
+import com.liferay.headless.admin.content.client.dto.v1_0.PageRuleCondition;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -44,6 +46,20 @@ public class PageRuleSerDes {
 
 		sb.append("{");
 
+		if (pageRule.getConditionType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"conditionType\": ");
+
+			sb.append("\"");
+
+			sb.append(pageRule.getConditionType());
+
+			sb.append("\"");
+		}
+
 		if (pageRule.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -72,6 +88,46 @@ public class PageRuleSerDes {
 			sb.append("\"");
 		}
 
+		if (pageRule.getPageRuleActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageRuleActions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageRule.getPageRuleActions().length; i++) {
+				sb.append(pageRule.getPageRuleActions()[i]);
+
+				if ((i + 1) < pageRule.getPageRuleActions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (pageRule.getPageRuleConditions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageRuleConditions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageRule.getPageRuleConditions().length; i++) {
+				sb.append(pageRule.getPageRuleConditions()[i]);
+
+				if ((i + 1) < pageRule.getPageRuleConditions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -90,6 +146,14 @@ public class PageRuleSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (pageRule.getConditionType() == null) {
+			map.put("conditionType", null);
+		}
+		else {
+			map.put(
+				"conditionType", String.valueOf(pageRule.getConditionType()));
+		}
+
 		if (pageRule.getId() == null) {
 			map.put("id", null);
 		}
@@ -102,6 +166,24 @@ public class PageRuleSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(pageRule.getName()));
+		}
+
+		if (pageRule.getPageRuleActions() == null) {
+			map.put("pageRuleActions", null);
+		}
+		else {
+			map.put(
+				"pageRuleActions",
+				String.valueOf(pageRule.getPageRuleActions()));
+		}
+
+		if (pageRule.getPageRuleConditions() == null) {
+			map.put("pageRuleConditions", null);
+		}
+		else {
+			map.put(
+				"pageRuleConditions",
+				String.valueOf(pageRule.getPageRuleConditions()));
 		}
 
 		return map;
@@ -124,7 +206,14 @@ public class PageRuleSerDes {
 			PageRule pageRule, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "conditionType")) {
+				if (jsonParserFieldValue != null) {
+					pageRule.setConditionType(
+						PageRule.ConditionType.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					pageRule.setId((String)jsonParserFieldValue);
 				}
@@ -132,6 +221,41 @@ public class PageRuleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					pageRule.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageRuleActions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PageRuleAction[] pageRuleActionsArray =
+						new PageRuleAction[jsonParserFieldValues.length];
+
+					for (int i = 0; i < pageRuleActionsArray.length; i++) {
+						pageRuleActionsArray[i] = PageRuleActionSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					pageRule.setPageRuleActions(pageRuleActionsArray);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pageRuleConditions")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PageRuleCondition[] pageRuleConditionsArray =
+						new PageRuleCondition[jsonParserFieldValues.length];
+
+					for (int i = 0; i < pageRuleConditionsArray.length; i++) {
+						pageRuleConditionsArray[i] =
+							PageRuleConditionSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					pageRule.setPageRuleConditions(pageRuleConditionsArray);
 				}
 			}
 		}

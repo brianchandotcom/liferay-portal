@@ -1,0 +1,266 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.headless.admin.content.client.serdes.v1_0;
+
+import com.liferay.headless.admin.content.client.dto.v1_0.PageRuleAction;
+import com.liferay.headless.admin.content.client.json.BaseJSONParser;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.annotation.Generated;
+
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
+@Generated("")
+public class PageRuleActionSerDes {
+
+	public static PageRuleAction toDTO(String json) {
+		PageRuleActionJSONParser pageRuleActionJSONParser =
+			new PageRuleActionJSONParser();
+
+		return pageRuleActionJSONParser.parseToDTO(json);
+	}
+
+	public static PageRuleAction[] toDTOs(String json) {
+		PageRuleActionJSONParser pageRuleActionJSONParser =
+			new PageRuleActionJSONParser();
+
+		return pageRuleActionJSONParser.parseToDTOs(json);
+	}
+
+	public static String toJSON(PageRuleAction pageRuleAction) {
+		if (pageRuleAction == null) {
+			return "null";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		if (pageRuleAction.getAction() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"action\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageRuleAction.getAction()));
+
+			sb.append("\"");
+		}
+
+		if (pageRuleAction.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageRuleAction.getId()));
+
+			sb.append("\"");
+		}
+
+		if (pageRuleAction.getItemId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"itemId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageRuleAction.getItemId()));
+
+			sb.append("\"");
+		}
+
+		if (pageRuleAction.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageRuleAction.getType()));
+
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	public static Map<String, Object> toMap(String json) {
+		PageRuleActionJSONParser pageRuleActionJSONParser =
+			new PageRuleActionJSONParser();
+
+		return pageRuleActionJSONParser.parseToMap(json);
+	}
+
+	public static Map<String, String> toMap(PageRuleAction pageRuleAction) {
+		if (pageRuleAction == null) {
+			return null;
+		}
+
+		Map<String, String> map = new TreeMap<>();
+
+		if (pageRuleAction.getAction() == null) {
+			map.put("action", null);
+		}
+		else {
+			map.put("action", String.valueOf(pageRuleAction.getAction()));
+		}
+
+		if (pageRuleAction.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(pageRuleAction.getId()));
+		}
+
+		if (pageRuleAction.getItemId() == null) {
+			map.put("itemId", null);
+		}
+		else {
+			map.put("itemId", String.valueOf(pageRuleAction.getItemId()));
+		}
+
+		if (pageRuleAction.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(pageRuleAction.getType()));
+		}
+
+		return map;
+	}
+
+	public static class PageRuleActionJSONParser
+		extends BaseJSONParser<PageRuleAction> {
+
+		@Override
+		protected PageRuleAction createDTO() {
+			return new PageRuleAction();
+		}
+
+		@Override
+		protected PageRuleAction[] createDTOArray(int size) {
+			return new PageRuleAction[size];
+		}
+
+		@Override
+		protected void setField(
+			PageRuleAction pageRuleAction, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "action")) {
+				if (jsonParserFieldValue != null) {
+					pageRuleAction.setAction((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					pageRuleAction.setId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "itemId")) {
+				if (jsonParserFieldValue != null) {
+					pageRuleAction.setItemId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					pageRuleAction.setType((String)jsonParserFieldValue);
+				}
+			}
+		}
+
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		for (String[] strings : BaseJSONParser.JSON_ESCAPE_STRINGS) {
+			string = string.replace(strings[0], strings[1]);
+		}
+
+		return string;
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\": ");
+
+			Object value = entry.getValue();
+
+			Class<?> valueClass = value.getClass();
+
+			if (value instanceof Map) {
+				sb.append(_toJSON((Map)value));
+			}
+			else if (valueClass.isArray()) {
+				Object[] values = (Object[])value;
+
+				sb.append("[");
+
+				for (int i = 0; i < values.length; i++) {
+					sb.append("\"");
+					sb.append(_escape(values[i]));
+					sb.append("\"");
+
+					if ((i + 1) < values.length) {
+						sb.append(", ");
+					}
+				}
+
+				sb.append("]");
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
+				sb.append(_escape(entry.getValue()));
+				sb.append("\"");
+			}
+			else {
+				sb.append(String.valueOf(entry.getValue()));
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+}

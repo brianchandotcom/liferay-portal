@@ -46,6 +46,25 @@ public class PageElement implements Cloneable, Serializable {
 
 	protected Object definition;
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String id;
+
 	public PageElement[] getPageElements() {
 		return pageElements;
 	}

@@ -17,6 +17,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -29,6 +31,7 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -104,28 +107,31 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 
 		jobJSONObject.put("id", Long.valueOf(jobId));
 
-		JSONObject parametersJSONObject = new JSONObject();
+		JSONArray parametersJSONArray = new JSONArray();
 
-		for (Map.Entry<String, String> jenkinsBuildParameter :
-				jenkinsBuildParameters.entrySet()) {
+		Set<String> parameterNames = new TreeSet<>(
+			jenkinsBuildParameters.keySet());
 
-			String jenkinsBuildParameterName = jenkinsBuildParameter.getKey();
-
-			if (!jenkinsBuildParameterName.matches("[A-Z0-9_]+")) {
+		for (String parameterName : parameterNames) {
+			if (!parameterName.matches("[A-Z0-9_]+")) {
 				continue;
 			}
 
-			String jobInvocationParameterValue =
-				jenkinsBuildParameter.getValue();
+			String parameterValue = jenkinsBuildParameters.get(parameterName);
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(
-					jobInvocationParameterValue)) {
-
+			if (JenkinsResultsParserUtil.isNullOrEmpty(parameterValue)) {
 				continue;
 			}
 
-			parametersJSONObject.put(
-				jenkinsBuildParameterName, jobInvocationParameterValue);
+			JSONObject parameterJSONObject = new JSONObject();
+
+			parameterJSONObject.put(
+				"name", parameterName
+			).put(
+				"value", parameterValue
+			);
+
+			parametersJSONArray.put(parameterJSONObject);
 		}
 
 		JSONObject buildJSONObject = new JSONObject();
@@ -139,7 +145,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 		).put(
 			"name", buildName
 		).put(
-			"parameters", parametersJSONObject
+			"parameters", parametersJSONArray.toString()
 		);
 
 		JSONObject jsonObject = new JSONObject();

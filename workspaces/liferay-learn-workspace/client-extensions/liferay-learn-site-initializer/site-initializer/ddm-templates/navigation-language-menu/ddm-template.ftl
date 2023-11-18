@@ -2,10 +2,10 @@
 	<#if entries?has_content>
 		<#list entries as entry>
 			<#assign entryLanguage = entry.longDisplayName?
-																replace(" [beta]", "")?
-																replace("(australia)", "(Australia)")?
-																replace("(united states)", "(United States)")?
-																cap_first />
+				replace(" [beta]", "")?
+				replace("(australia)", "(Australia)")?
+				replace("(united states)", "(United States)")?
+				cap_first />
 
 			<#if !entry.isDisabled()>
 					<li class="${(entry.isSelected())?then('selected', '')} language-nav-item">

@@ -1,7 +1,7 @@
 liferay-learn-site-initializer:
     name: Liferay Learn Site Initializer
     oAuthApplicationHeadlessServer: liferay-learn-site-initializer-oauth-application-headless-server
-    siteExternalReferenceCode: liferayLearn
+    siteExternalReferenceCode: LIFERAY_LEARN
     siteName: Liferay Learn
     type: siteInitializer
 liferay-learn-site-initializer-oauth-application-headless-server:

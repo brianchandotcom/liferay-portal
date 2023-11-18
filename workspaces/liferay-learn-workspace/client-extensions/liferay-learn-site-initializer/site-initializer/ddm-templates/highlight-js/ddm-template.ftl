@@ -4,12 +4,10 @@
 */
 
 const HIGHLIGHT_ALERT_ID = 'highlightAlert';
-const HIGHLIGHT_TEXT_MATCH_ID = 'highlightTextMatch';
-const REMOVE_HIGHLIGHT_LINK_ID = 'removeHighlightLink';
-
 const HIGHLIGHT_PARAM = 'highlight';
-
+const HIGHLIGHT_TEXT_MATCH_ID = 'highlightTextMatch';
 const TRUNCATE_LENGTH = 50;
+const REMOVE_HIGHLIGHT_LINK_ID = 'removeHighlightLink';
 
 /**
 * Calls Sphinx utility to remove highlighted text.

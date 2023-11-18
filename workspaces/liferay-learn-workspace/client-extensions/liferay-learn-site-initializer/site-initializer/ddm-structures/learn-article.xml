@@ -2,8 +2,6 @@
 
 <root>
 	<structure>
-		<name>Learn-Article</name>
-		<description></description>
 		<definition>
 			<![CDATA[
 				{
@@ -128,5 +126,6 @@
 				}
 			]]>
 		</definition>
+		<name>Learn-Article</name>
 	</structure>
 </root>

@@ -6,8 +6,8 @@
 	<#if entries?has_content>
 		<#list entries as entry>
 			<#assign
-				searchEntryTitle = entry.getTitle()!""
 				searchEntryContent = entry.getContent()!languageUtil.get(locale, "no-content-preview", "No content preview")
+				searchEntryTitle = entry.getTitle()!""
 			/>
 
 			<#if searchEntryTitle?has_content>

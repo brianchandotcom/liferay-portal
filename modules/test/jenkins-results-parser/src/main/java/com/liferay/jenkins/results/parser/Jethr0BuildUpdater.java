@@ -42,7 +42,7 @@ public class Jethr0BuildUpdater
 	public void invoke() {
 		Build build = getBuild();
 
-		_invoke(build.getMinimumSlaveRAM(), build.getMaximumSlavesPerHost());
+		_invoke(build.getMaximumSlavesPerHost(), build.getMinimumSlaveRAM());
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class Jethr0BuildUpdater
 	public void reinvoke() {
 		Build build = getBuild();
 
-		_invoke(24, build.getMaximumSlavesPerHost());
+		_invoke(build.getMaximumSlavesPerHost(), 24);
 	}
 
 	protected Jethr0BuildUpdater(Build build, long jethr0JobId) {

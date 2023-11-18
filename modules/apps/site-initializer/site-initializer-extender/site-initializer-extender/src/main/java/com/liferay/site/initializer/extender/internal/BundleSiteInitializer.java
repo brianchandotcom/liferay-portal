@@ -100,7 +100,6 @@ import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -565,6 +564,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addObjectDefinitions(
 					serviceContext, siteNavigationMenuItemSettingsBuilder,
 					stringUtilReplaceValues));
+			_invoke(
+				() -> _addOrUpdateObjectFields(
+					serviceContext, stringUtilReplaceValues));
+			_invoke(
+				() -> _addObjectOrUpdateActions(
+					serviceContext, stringUtilReplaceValues));
 
 			_invoke(
 				() -> _addOrUpdateDDMTemplates(
@@ -1157,10 +1162,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith(".object-actions.json")) {
-				continue;
-			}
-
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
@@ -1210,49 +1211,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			stringUtilReplaceValues.put(
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
 				String.valueOf(objectDefinition.getId()));
-
-			if (Objects.equals(
-					objectDefinition.getScope(),
-					ObjectDefinitionConstants.SCOPE_COMPANY) &&
-				(existingObjectDefinition != null)) {
-
-				continue;
-			}
-
-			String objectActionsJSON = SiteInitializerUtil.read(
-				StringUtil.replaceLast(
-					resourcePath, ".json", ".object-actions.json"),
-				_servletContext);
-
-			if (objectActionsJSON == null) {
-				continue;
-			}
-
-			JSONArray jsonArray = _jsonFactory.createJSONArray(
-				objectActionsJSON);
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-				JSONObject parametersJSONObject = jsonObject.getJSONObject(
-					"parameters");
-
-				_objectActionLocalService.addOrUpdateObjectAction(
-					jsonObject.getString("externalReferenceCode"), 0,
-					serviceContext.getUserId(), objectDefinition.getId(),
-					jsonObject.getBoolean("active"),
-					jsonObject.getString("conditionExpression"),
-					jsonObject.getString("description"),
-					SiteInitializerUtil.toMap(
-						jsonObject.getString("errorMessage")),
-					SiteInitializerUtil.toMap(jsonObject.getString("label")),
-					jsonObject.getString("name"),
-					jsonObject.getString("objectActionExecutorKey"),
-					jsonObject.getString("objectActionTriggerKey"),
-					ObjectActionUtil.toParametersUnicodeProperties(
-						parametersJSONObject.toMap()),
-					jsonObject.getBoolean("system"));
-			}
 		}
 
 		_invoke(
@@ -1294,6 +1252,63 @@ public class BundleSiteInitializer implements SiteInitializer {
 			() -> _addOrUpdateObjectEntries(
 				serviceContext, siteNavigationMenuItemSettingsBuilder,
 				stringUtilReplaceValues));
+	}
+
+	private void _addObjectOrUpdateActions(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-actions");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			json = _replace(json, stringUtilReplaceValues);
+
+			if (json == null) {
+				continue;
+			}
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+			JSONArray jsonArray = jsonObject.getJSONArray("object-actions");
+
+			if (JSONUtil.isEmpty(jsonArray)) {
+				continue;
+			}
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject objectActionJSONObject = jsonArray.getJSONObject(i);
+
+				JSONObject parametersJSONObject =
+					objectActionJSONObject.getJSONObject("parameters");
+
+				_objectActionLocalService.addOrUpdateObjectAction(
+					objectActionJSONObject.getString("externalReferenceCode"),
+					0, serviceContext.getUserId(),
+					jsonObject.getLong("objectDefinitionId"),
+					objectActionJSONObject.getBoolean("active"),
+					objectActionJSONObject.getString("conditionExpression"),
+					objectActionJSONObject.getString("description"),
+					SiteInitializerUtil.toMap(
+						objectActionJSONObject.getString("errorMessage")),
+					SiteInitializerUtil.toMap(
+						objectActionJSONObject.getString("label")),
+					objectActionJSONObject.getString("name"),
+					objectActionJSONObject.getString("objectActionExecutorKey"),
+					objectActionJSONObject.getString("objectActionTriggerKey"),
+					ObjectActionUtil.toParametersUnicodeProperties(
+						parametersJSONObject.toMap()),
+					objectActionJSONObject.getBoolean("system"));
+			}
+		}
 	}
 
 	private void _addOrganizationUser(

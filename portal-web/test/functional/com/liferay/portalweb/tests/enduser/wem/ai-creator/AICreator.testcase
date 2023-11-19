@@ -35,7 +35,7 @@ definition {
 		}
 
 		task ("Then the site administrater should see OpenAI settings") {
-			FormFields.viewCheckboxChecked(fieldName = "Enable OpenAI to Create Content");
+			FormFields.viewCheckboxChecked(fieldName = "Enable ChatGPT to Create Content");
 
 			InputField.viewText(
 				fieldLabel = "API Key",
@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("Then the site administrater should see OpenAI settings") {
-			FormFields.viewCheckboxChecked(fieldName = "Enable OpenAI to Create Content");
+			FormFields.viewCheckboxChecked(fieldName = "Enable ChatGPT to Create Content");
 
 			InputField.viewText(
 				fieldLabel = "API Key",
@@ -107,7 +107,7 @@ definition {
 				configurationName = "OpenAI",
 				configurationScope = "Virtual Instance Scope");
 
-			FormFields.disableCheckbox(fieldName = "Enable OpenAI to Create Content");
+			FormFields.disableCheckbox(fieldName = "Enable ChatGPT to Create Content");
 
 			PortletEntry.save();
 		}
@@ -122,9 +122,9 @@ definition {
 			Navigator.gotoNavTab(navTab = "OpenAI");
 		}
 
-		task ("Then the site administrater should see the Enable OpenAI to Create Content is disabled") {
+		task ("Then the site administrater should see the Enable ChatGPT to Create Content is disabled") {
 			AssertNotEditable.assertNotEditableNotVisible(
-				checkboxName = "Enable OpenAI to Create Content",
+				checkboxName = "Enable ChatGPT to Create Content",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			Alert.viewInfoMessageSpecific(infoMessage = "To enable OpenAI in this site, it must also be enabled from instance settings.");

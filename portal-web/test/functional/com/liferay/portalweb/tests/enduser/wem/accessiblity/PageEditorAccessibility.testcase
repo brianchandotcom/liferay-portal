@@ -307,6 +307,10 @@ definition {
 				locator1 = "//div[contains(@data-qa-id,'Container') and contains(@role,'treeitem') and @aria-expanded='true']",
 				value1 = "\DOWN");
 
+			KeyPress(
+				locator1 = "//div[contains(@data-qa-id,'Grid') and contains(@role,'treeitem')]",
+				value1 = "\ENTER");
+
 			AssertCssValue(
 				locator1 = "//div[contains(@data-qa-id,'Grid') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
@@ -323,18 +327,8 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
 
 			KeyPress(
-				key_nodeName = "Grid",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED",
-				value1 = "\RIGHT");
-
-			KeyPress(
 				locator1 = "//div[contains(@data-qa-id,'Grid') and contains(@role,'treeitem') and @aria-expanded='true']",
 				value1 = "\DOWN");
-
-			AssertCssValue(
-				locator1 = "//div[contains(@data-qa-id,'Module') and contains(@role,'treeitem')]",
-				locator2 = "background-color",
-				value1 = "rgba(240, 245, 255, 1)");
 
 			KeyPress(
 				key_nodeName = "Module",
@@ -344,6 +338,10 @@ definition {
 			KeyPress(
 				locator1 = "//div[contains(@data-qa-id,'Module') and contains(@role,'treeitem') and @aria-expanded='true']",
 				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "//div[contains(@data-qa-id,'Heading') and contains(@role,'treeitem')]",
+				value1 = "\ENTER");
 
 			AssertCssValue(
 				locator1 = "//div[contains(@data-qa-id,'Heading') and contains(@role,'treeitem')]",

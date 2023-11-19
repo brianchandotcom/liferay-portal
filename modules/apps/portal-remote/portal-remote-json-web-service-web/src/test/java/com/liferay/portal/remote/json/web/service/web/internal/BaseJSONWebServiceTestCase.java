@@ -6,21 +6,19 @@
 package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.json.transformer.SortedHashMapJSONTransformer;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
-import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Method;
 
@@ -29,6 +27,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.junit.AfterClass;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
@@ -40,17 +43,16 @@ import org.springframework.mock.web.MockServletContext;
  */
 public abstract class BaseJSONWebServiceTestCase {
 
+	@AfterClass
+	public static void tearDownClass() {
+		_jsonWebServiceActionsManagerServiceRegistration.unregister();
+	}
+
 	protected static void initPortalServices() {
-		PropsUtil.setProps(new PropsImpl());
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
-		ReflectionTestUtil.setFieldValue(
-			new JSONWebServiceActionsManagerUtil(),
-			"_jsonWebServiceActionsManager",
-			new JSONWebServiceActionsManagerImpl());
+		_jsonWebServiceActionsManagerServiceRegistration =
+			_bundleContext.registerService(
+				JSONWebServiceActionsManager.class,
+				new JSONWebServiceActionsManagerImpl(), null);
 	}
 
 	protected static void registerAction(Object action) {
@@ -206,6 +208,11 @@ public abstract class BaseJSONWebServiceTestCase {
 
 		return jsonDeserializer.deserialize(json);
 	}
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static ServiceRegistration<JSONWebServiceActionsManager>
+		_jsonWebServiceActionsManagerServiceRegistration;
 
 	private class MockHttpServletRequest30 extends MockHttpServletRequest {
 

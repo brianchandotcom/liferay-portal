@@ -8,20 +8,15 @@ package com.liferay.portal.remote.json.web.service.web.internal;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PortalImpl;
 
 import java.io.File;
 
@@ -35,9 +30,7 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -60,28 +53,7 @@ public class JSONWebServiceServiceActionTest
 	public static void setUpClass() throws Exception {
 		initPortalServices();
 
-		Class<?> clazz = JSONWebServiceServiceAction.class;
-
-		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(new PortalImpl());
-
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PortalClassLoaderUtil.setClassLoader(null);
-	}
-
-	@Before
-	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			new JSONWebServiceActionsManagerUtil(),
-			"_jsonWebServiceActionsManager",
-			new JSONWebServiceActionsManagerImpl());
 	}
 
 	@After

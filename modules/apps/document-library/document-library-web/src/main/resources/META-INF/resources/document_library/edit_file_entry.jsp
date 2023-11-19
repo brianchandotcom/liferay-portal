@@ -438,7 +438,7 @@ renderResponse.setTitle(headerTitle);
 												).put(
 													"languageIds", DDMStructureUtil.getAvailableLanguageIds(themeDisplay)
 												).put(
-													"selectedLanguageId", themeDisplay.getLanguageId()
+													"selectedLanguageId", defaultLanguageId
 												).put(
 													"translatedLanguageIds", DDMStructureUtil.getTranslatedLanguageIds(ddmStructures, dlEditFileEntryDisplayContext, fileVersionId)
 												).build()

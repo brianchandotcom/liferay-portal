@@ -5,8 +5,7 @@
 
 package com.liferay.petra.url.pattern.mapper;
 
-import com.liferay.petra.url.pattern.mapper.internal.DynamicSizeTrieURLPatternMapper;
-import com.liferay.petra.url.pattern.mapper.internal.StaticSizeTrieURLPatternMapper;
+import com.liferay.petra.url.pattern.mapper.internal.SimpleURLPatternMapper;
 
 import java.util.Map;
 
@@ -17,11 +16,7 @@ import java.util.Map;
 public class URLPatternMapperFactory {
 
 	public static <T> URLPatternMapper<T> create(Map<String, T> values) {
-		if (values.size() > 64) {
-			return new DynamicSizeTrieURLPatternMapper<>(values);
-		}
-
-		return new StaticSizeTrieURLPatternMapper<>(values);
+		return new SimpleURLPatternMapper<>(values);
 	}
 
 }

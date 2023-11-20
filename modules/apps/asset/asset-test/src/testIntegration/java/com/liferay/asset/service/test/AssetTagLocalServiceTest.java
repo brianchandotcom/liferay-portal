@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -83,23 +85,13 @@ public class AssetTagLocalServiceTest {
 
 	@Test
 	public void testAddMultipleTags() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		_testAddMultipleTags(Arrays.asList("tag1", "tag2"));
+	}
 
-		int originalTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
-
-		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
-			serviceContext);
-
-		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag2",
-			serviceContext);
-
-		int actualTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
-
-		Assert.assertEquals(originalTagsCount + 2, actualTagsCount);
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testAddMultipleTagsWithCaseSensitive() throws PortalException {
+		_testAddMultipleTags(Arrays.asList("tag1", "Tag1", "tAg1", "TAG1"));
 	}
 
 	@Test
@@ -274,6 +266,29 @@ public class AssetTagLocalServiceTest {
 			RandomTestUtil.randomString(100),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private void _testAddMultipleTags(List<String> tagNames)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		int originalTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
+
+		for (String tagName : tagNames) {
+			AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
+				TestPropsValues.getUserId(), _group.getGroupId(), tagName,
+				serviceContext);
+
+			Assert.assertEquals(tagName, assetTag.getName());
+		}
+
+		int actualTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
+
+		Assert.assertEquals(
+			originalTagsCount + tagNames.size(), actualTagsCount);
 	}
 
 	@DeleteAfterTestRun

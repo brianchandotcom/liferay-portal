@@ -4,10 +4,10 @@
         .fragment_1025 .panel {
             padding: 32px;
             border-radius: 10px;
-            border: 1px solid var(--neutral-02, #DCDFDF);
-            background: var(--neutral-00, #FFF);
+            border: 1px solid var(--neutral-02, #dcdfdf);
+            background: var(--neutral-00, #fff);
             margin-bottom: 2rem !important;
-            box-shadow: 0px 10px 30px 0px rgba(4, 21, 21, 0.09);
+            box-shadow: 0 10px 30px 0 rgba(4, 21, 21, 0.09);
             max-height: 130px;
         }
 
@@ -45,7 +45,7 @@
         }
 
         .fragment_1025 .panel-toggle {
-            box-shadow: 0px 2px 7px 0px rgba(29, 140, 140, 0.24);
+            box-shadow: 0 2px 7px 0 rgba(29, 140, 140, 0.24);
             height: 48px;
             width: 48px;
             border-radius: 32px;
@@ -162,19 +162,19 @@
         .fragment_1025 .mark-as-complete {
             background-color: white;
             align-items: center;
-            border: 1px solid #3A4747;
+            border: 1px solid #3a4747;
             border-radius: 5px;
             padding: 6px 6px 6px 30px;
             margin-right: 24px;
             font-weight: 900;
             font-size: 14px;
             cursor: pointer;
-            color: #3A4747;
+            color: #3a4747;
             line-height: 2.5;
         }
 
         .fragment_1025 .mark-as-complete:hover {
-            background-color: #D0E7E7;
+            background-color: #d0e7e7;
         }
 
         .fragment_1025 .mark-as-incomplete {
@@ -186,12 +186,12 @@
             font-weight: 900;
             font-size: 14px;
             cursor: pointer;
-            color: #3A4747;
+            color: #3a4747;
             line-height: 2.5;
         }
 
         .fragment_1025 .mark-as-incomplete:hover {
-            border: 1px solid #3A4747;
+            border: 1px solid #3a4747;
             border-radius: 5px;
         }
 

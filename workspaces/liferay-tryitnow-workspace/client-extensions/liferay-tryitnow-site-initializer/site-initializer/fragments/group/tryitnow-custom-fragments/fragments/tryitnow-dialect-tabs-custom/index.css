@@ -13,11 +13,11 @@
 }
 
 .clarity-nav-button{
-	display: flex;
-	justify-content: left;
 	align-items: center;
-	max-width: 326px;
+	display: flex;
 	height: 133px;
+	justify-content: left;
+	max-width: 326px;
 }
 
 .clarity-nav-button span{

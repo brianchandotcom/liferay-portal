@@ -1,8 +1,8 @@
 .fragment_1101 .login-card {
     border-radius: 10px;
-    border: 1px solid var(--neutral-02, #DCDFDF);
-    background: var(--neutral-00, #FFF);
-    box-shadow: 0px 10px 30px 0px rgba(4, 21, 21, 0.09);
+    border: 1px solid var(--neutral-02, #dcdfdf);
+    background: var(--neutral-00, #fff);
+    box-shadow: 0 10px 30px 0 rgba(4, 21, 21, 0.09);
 
 }
 
@@ -17,7 +17,7 @@
 }
 
 .fragment_1101 .border-right {
-    border-right: 1px solid #DCDFDF;
+    border-right: 1px solid #dcdfdf;
 }
 
 .fragment_1101 .flex-grow-2 {
@@ -31,7 +31,7 @@
 }
 
 .fragment_1101 td.label {
-    color: var(--neutral-08, #3A4747);
+    color: var(--neutral-08, #3a4747);
     font-size: 13px;
     font-style: normal;
     font-weight: 600;
@@ -41,7 +41,7 @@
 .fragment_1101 td.value {
 	  cursor: pointer;
     border-radius: 8px;
-    background: var(--neutral-01, #F8F8F8);
+    background: var(--neutral-01, #f8f8f8);
     color: var(--neutral-07, #556161);
 
     font-size: 13px;

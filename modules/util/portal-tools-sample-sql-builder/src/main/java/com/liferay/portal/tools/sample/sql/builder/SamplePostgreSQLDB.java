@@ -21,6 +21,10 @@ public class SamplePostgreSQLDB extends PostgreSQLDB {
 
 	@Override
 	public String buildSQL(String template) throws IOException {
+		if (template.contains("$###,##0.00")) {
+			template = StringUtil.replace(template, "$###,##0.00", "$0.00");
+		}
+
 		return StringUtil.replace(super.buildSQL(template), "\\n", "\n");
 	}
 

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {AppType} from '../enums/AppType';
+import {ProductType} from '../../../enums/ProductType';
 
 export const offeringTypesDescription = {
-	[AppType.CLOUD]: [
+	[ProductType.CLOUD]: [
 		{
 			description:
 				'The cloud app is client extension based and is compatible with a customer’s self-hosted environment.',
@@ -23,7 +23,7 @@ export const offeringTypesDescription = {
 			label: 'Fully-Managed',
 		},
 	],
-	[AppType.DXP]: [
+	[ProductType.DXP]: [
 		{
 			description:
 				'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',

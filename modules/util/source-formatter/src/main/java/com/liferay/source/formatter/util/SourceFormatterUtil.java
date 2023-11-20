@@ -336,6 +336,13 @@ public class SourceFormatterUtil {
 		System.out.println(message);
 	}
 
+	public static List<String> matchFileContents(String baseDirName,
+			String searchContent, List<String> argList) {
+
+		return _matchFileContents(
+			baseDirName, searchContent, argList);
+	}
+
 	public static List<String> scanForFileNames(
 		String baseDirName, String[] includes) {
 
@@ -690,6 +697,32 @@ public class SourceFormatterUtil {
 				_gitTopLevelFolder + StringPool.SLASH + line));
 
 		return fileNames;
+	}
+
+	private static List<String> _matchFileContents(
+			final String baseDirName, final String searchContent,
+			final List<String> argList) {
+
+		List<String> args = new ArrayList<String>();
+
+		args.add("grep");
+		args.add(searchContent);
+
+		args.addAll(argList);
+
+		try {
+			List<String> lines = git(
+				args, baseDirName, null, false);
+
+			return lines;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
 	}
 
 	private static List<String> _scanForFileNames(

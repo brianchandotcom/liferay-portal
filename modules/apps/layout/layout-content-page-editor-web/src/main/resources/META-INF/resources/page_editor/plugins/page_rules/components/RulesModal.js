@@ -25,7 +25,9 @@ import {
 import ScreenReaderAnnouncerContext from './ScreenReaderContext';
 
 export default function RulesModal({editingRule, onCloseModal}) {
-	const {observer, onClose} = useModal({onClose: () => onCloseModal()});
+	const {observer, onClose} = useModal({
+		onClose: () => onCloseModal(editingRule?.id),
+	});
 
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);

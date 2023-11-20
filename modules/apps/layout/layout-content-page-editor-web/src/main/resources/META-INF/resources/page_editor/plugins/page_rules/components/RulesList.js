@@ -10,7 +10,7 @@ import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
@@ -22,6 +22,7 @@ import RulesModal from './RulesModal';
 export default function RulesList() {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [editingRule, setEditingRule] = useState(null);
+	const [savedRuleId, setSavedRuleId] = useState(null);
 
 	const rules = useSelector((state) => state.layoutData.pageRules);
 	const dispatch = useDispatch();
@@ -62,6 +63,8 @@ export default function RulesList() {
 						onDelete={onDeleteRule}
 						onEdit={onEditRule}
 						rule={rule}
+						savedRuleId={savedRuleId}
+						setSavedRuleId={setSavedRuleId}
 					/>
 				))}
 			</ClayList>
@@ -69,7 +72,11 @@ export default function RulesList() {
 			{modalVisible && (
 				<RulesModal
 					editingRule={editingRule}
-					onCloseModal={() => {
+					onCloseModal={(ruleId) => {
+						if (ruleId) {
+							setSavedRuleId(ruleId);
+						}
+
 						setEditingRule(null);
 
 						setModalVisible(false);
@@ -80,7 +87,17 @@ export default function RulesList() {
 	);
 }
 
-function Rule({onDelete, onEdit, rule}) {
+function Rule({onDelete, onEdit, rule, savedRuleId, setSavedRuleId}) {
+	const [triggerElement, setTriggerElement] = useState();
+
+	useEffect(() => {
+		if (savedRuleId === rule.id) {
+			triggerElement.focus();
+
+			setSavedRuleId(null);
+		}
+	}, [savedRuleId, triggerElement, rule, setSavedRuleId]);
+
 	const items = useSelector((state) =>
 		Object.values(state.layoutData.items).map((item) => ({
 			label: selectLayoutDataItemLabel(state, item),
@@ -116,6 +133,7 @@ function Rule({onDelete, onEdit, rule}) {
 								)}
 								borderless
 								displayType="secondary"
+								ref={setTriggerElement}
 								size="sm"
 								symbol="ellipsis-v"
 								title={sub(

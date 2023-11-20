@@ -6168,6 +6168,16 @@ public class ObjectEntryResourceTest {
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".err"),
 			httpMethod, null, objectDefinition, useExternalReferenceCode);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Unable to decode Base64 file"
+			),
+			_toFileEntry(
+				String::new, RandomTestUtil.randomString(7),
+				RandomTestUtil.randomString() + ".txt", null, null),
+			httpMethod, null, objectDefinition, useExternalReferenceCode);
 
 		// File with a nonexistent name
 
@@ -6350,6 +6360,16 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".err"),
+			null, objectDefinition);
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Unable to decode Base64 file"
+			),
+			_toFileEntry(
+				String::new, RandomTestUtil.randomString(7),
+				RandomTestUtil.randomString() + ".txt", null, null),
 			null, objectDefinition);
 
 		// File with a nonexistent name

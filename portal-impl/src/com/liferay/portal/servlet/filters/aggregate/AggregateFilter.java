@@ -16,6 +16,7 @@ import com.liferay.portal.internal.minifier.MinifierThreadLocal;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -530,8 +530,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				_noticeableFutures.computeIfAbsent(
 					cacheCommonFileName,
 					key -> {
+						PortalExecutorManager portalExecutorManager =
+							_portalExecutorManagerSnapshot.get();
+
 						NoticeableExecutorService noticeableExecutorService =
-							_portalExecutorManager.getPortalExecutor(
+							portalExecutorManager.getPortalExecutor(
 								AggregateFilter.class.getName());
 
 						return noticeableExecutorService.submit(
@@ -773,10 +776,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"^(\\.ie|\\.js\\.ie)([^}]*)}", Pattern.MULTILINE);
-	private static volatile PortalExecutorManager _portalExecutorManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PortalExecutorManager.class, AggregateFilter.class,
-			"_portalExecutorManager", false, true);
+	private static final Snapshot<PortalExecutorManager>
+		_portalExecutorManagerSnapshot = new Snapshot<>(
+			AggregateFilter.class, PortalExecutorManager.class);
 
 	private final Map<String, NoticeableFuture<String>> _noticeableFutures =
 		new ConcurrentHashMap<>();

@@ -5753,6 +5753,22 @@ public class ObjectEntryResourceTest {
 				"Object/" + objectFieldName));
 	}
 
+	private void _assertJSONObjectWithAttachmentField(
+			JSONObject jsonObject1, JSONObject jsonObject2)
+		throws Exception {
+
+		JSONAssert.assertEquals(
+			jsonObject1.toString(), jsonObject2.toString(),
+			JSONCompareMode.LENIENT);
+
+		if (jsonObject1.get(_OBJECT_FIELD_NAME_ATTACHMENT) != null) {
+			JSONAssert.assertEquals(
+				String.valueOf(jsonObject1.get(_OBJECT_FIELD_NAME_ATTACHMENT)),
+				String.valueOf(jsonObject2.get(_OBJECT_FIELD_NAME_ATTACHMENT)),
+				JSONCompareMode.STRICT);
+		}
+	}
+
 	private void _assertNestedFieldsFieldsInRelationships(
 		int currentDepth, int depth, JSONObject jsonObject,
 		String[] nestedFieldNames,
@@ -6281,20 +6297,8 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			endpoint, httpMethod);
 
-		JSONObject expectedJSONObject = expectedJSONObjectUnsafeFunction.apply(
-			fileEntry);
-
-		JSONAssert.assertEquals(
-			expectedJSONObject.toString(), jsonObject.toString(),
-			JSONCompareMode.LENIENT);
-
-		if (expectedJSONObject.get(_OBJECT_FIELD_NAME_ATTACHMENT) != null) {
-			JSONAssert.assertEquals(
-				String.valueOf(
-					expectedJSONObject.get(_OBJECT_FIELD_NAME_ATTACHMENT)),
-				String.valueOf(jsonObject.get(_OBJECT_FIELD_NAME_ATTACHMENT)),
-				JSONCompareMode.STRICT);
-		}
+		_assertJSONObjectWithAttachmentField(
+			expectedJSONObjectUnsafeFunction.apply(fileEntry), jsonObject);
 	}
 
 	private void _testPatchPutCustomObjectEntryWithAttachmentField(
@@ -6463,20 +6467,8 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			endpoint, httpMethod);
 
-		JSONObject expectedJSONObject = expectedJSONObjectUnsafeFunction.apply(
-			fileEntry);
-
-		JSONAssert.assertEquals(
-			expectedJSONObject.toString(), jsonObject.toString(),
-			JSONCompareMode.LENIENT);
-
-		if (expectedJSONObject.get(_OBJECT_FIELD_NAME_ATTACHMENT) != null) {
-			JSONAssert.assertEquals(
-				String.valueOf(
-					expectedJSONObject.get(_OBJECT_FIELD_NAME_ATTACHMENT)),
-				String.valueOf(jsonObject.get(_OBJECT_FIELD_NAME_ATTACHMENT)),
-				JSONCompareMode.STRICT);
-		}
+		_assertJSONObjectWithAttachmentField(
+			expectedJSONObjectUnsafeFunction.apply(fileEntry), jsonObject);
 	}
 
 	private void _testPostCustomObjectEntryWithAttachmentField(
@@ -6629,20 +6621,8 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			endpoint, Http.Method.POST);
 
-		JSONObject expectedJSONObject = expectedJSONObjectUnsafeFunction.apply(
-			fileEntry);
-
-		JSONAssert.assertEquals(
-			expectedJSONObject.toString(), jsonObject.toString(),
-			JSONCompareMode.LENIENT);
-
-		if (expectedJSONObject.get(_OBJECT_FIELD_NAME_ATTACHMENT) != null) {
-			JSONAssert.assertEquals(
-				String.valueOf(
-					expectedJSONObject.get(_OBJECT_FIELD_NAME_ATTACHMENT)),
-				String.valueOf(jsonObject.get(_OBJECT_FIELD_NAME_ATTACHMENT)),
-				JSONCompareMode.STRICT);
-		}
+		_assertJSONObjectWithAttachmentField(
+			expectedJSONObjectUnsafeFunction.apply(fileEntry), jsonObject);
 	}
 
 	private void

@@ -84,7 +84,6 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 
 		savedContentTag.setClassName(
 			GetterUtil.getString(displayObject.getObject(0)));
-
 		savedContentTag.setClassPK(
 			GetterUtil.getLong(displayObject.getObject(1)));
 

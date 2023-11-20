@@ -216,7 +216,8 @@ public class ModulesStructureTest {
 							}
 						}
 
-						if (!dirName.endsWith("poshi-standalone") &&
+						if (!dirName.endsWith("playwright") &&
+							!dirName.endsWith("poshi-standalone") &&
 							!liferaySpringBootDefaultsPlugin) {
 
 							Assert.assertFalse(
@@ -224,7 +225,9 @@ public class ModulesStructureTest {
 								Files.deleteIfExists(gradlePropertiesPath));
 						}
 
-						if (!dirName.endsWith("poshi-standalone")) {
+						if (!dirName.endsWith("playwright") &&
+							!dirName.endsWith("poshi-standalone")) {
+
 							Path settingsGradlePath = dirPath.resolve(
 								"settings.gradle");
 

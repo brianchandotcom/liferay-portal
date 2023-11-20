@@ -9,7 +9,6 @@ import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -56,9 +55,7 @@ public class RenderControlsDisplayContext {
 
 		String controlName = control.getControlName();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-189187") &&
-			controlName.equals(_DOCUMENT_LIBRARY_PREVIEWS_AND_THUMBNAILS)) {
-
+		if (controlName.equals(_DOCUMENT_LIBRARY_PREVIEWS_AND_THUMBNAILS)) {
 			return includeThumbnailsAndPreviewsDuringStaging();
 		}
 

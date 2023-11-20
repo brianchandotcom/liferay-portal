@@ -14,7 +14,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Stian Sigvartsen
  */
 @Component(
 	property = "indexer.class.name=com.liferay.portal.kernel.model.User",

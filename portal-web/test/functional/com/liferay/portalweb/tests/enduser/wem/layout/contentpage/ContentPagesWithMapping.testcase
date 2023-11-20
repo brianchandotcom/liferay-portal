@@ -2783,7 +2783,11 @@ definition {
 		}
 
 		task ("When the page creator hovers on the content page item") {
-			MouseOver(
+			MouseOver.javaScriptFocus(
+				key_nodeName = "Content Page Name",
+				locator1 = "Treeview#NODE_ITEM");
+
+			MouseOver.javaScriptFocus(
 				key_nodeName = "Content Page Name",
 				locator1 = "Treeview#NODE_ITEM");
 		}
@@ -2803,7 +2807,11 @@ definition {
 
 			Portlet.expandTree();
 
-			MouseOver(
+			MouseOver.javaScriptFocus(
+				key_nodeName = "Home",
+				locator1 = "Treeview#NODE_ITEM");
+
+			MouseOver.javaScriptFocus(
 				key_nodeName = "Home",
 				locator1 = "Treeview#NODE_ITEM");
 		}

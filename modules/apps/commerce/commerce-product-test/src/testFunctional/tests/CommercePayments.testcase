@@ -14,6 +14,53 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-12756. As an admin I can add a refund reason."
+	@priority = 5
+	test CanAddRefundReason {
+		property custom.properties = "feature.flag.COMMERCE-12754=true";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given the admin navigates to Payment page on System Settings") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Payment",
+				configurationName = "Refund Reasons",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("When adds a refund reason") {
+			CommercePaymentEntry.addRefundReason(
+				key = "test",
+				priority = 3,
+				refundName = "reason");
+		}
+
+		task ("Then the refund reason is added successfully") {
+			AssertElementPresent(
+				key_configurationEntry = "test",
+				locator1 = "SystemSettings#CONFIGURATION_ENTRY");
+		}
+
+		task ("When an admin adds a refund reason without a key") {
+			Button.clickAdd();
+
+			Type(
+				locator1 = "SystemSettings#KEY",
+				value1 = "");
+
+			Button.clickSave();
+		}
+
+		task ("Then the reason is not added") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "This field is required.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6219. MoneyOrder Payment Method lifecycle"
 	@priority = 5
 	test CancelPayment {
@@ -120,6 +167,86 @@ definition {
 			Refresh();
 
 			CommercePaymentStatus.assertPaymentStatus(statusValue = "Canceled");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12756. As an admin I can delete a refund reason."
+	@priority = 5
+	test CanDeleteRefundReason {
+		property custom.properties = "feature.flag.COMMERCE-12754=true";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given the admin navigates to Payment page on System Settings") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Payment",
+				configurationName = "Refund Reasons",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("And adds a refund reason") {
+			CommercePaymentEntry.addRefundReason(key = "test");
+
+			AssertElementPresent(
+				key_configurationEntry = "test",
+				locator1 = "SystemSettings#CONFIGURATION_ENTRY");
+		}
+
+		task ("When deletes the refund reason created") {
+			LexiconEntry.openEntryMenu(rowEntry = "test");
+
+			MenuItem.click(menuItem = "Delete");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the reason created is no longer present in the Refund Reason list") {
+			AssertElementNotPresent(
+				key_configurationEntry = "test",
+				locator1 = "SystemSettings#CONFIGURATION_ENTRY");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12756. As an admin I can edit a refund reason."
+	@priority = 5
+	test CanEditRefundReason {
+		property custom.properties = "feature.flag.COMMERCE-12754=true";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When the admin navigates to Payment page on System Settings") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Payment",
+				configurationName = "Refund Reasons",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("And adds a refund reason") {
+			CommercePaymentEntry.addRefundReason(key = "test");
+
+			AssertElementPresent(
+				key_configurationEntry = "test",
+				locator1 = "SystemSettings#CONFIGURATION_ENTRY");
+		}
+
+		task ("And opens the refund reason created") {
+			LexiconEntry.openEntryMenu(rowEntry = "test");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then can edit the refund reason created") {
+			CommercePaymentEntry.updateRefundReason(key = "NewKey");
+
+			AssertElementPresent(
+				key_configurationEntry = "NewKey",
+				locator1 = "SystemSettings#CONFIGURATION_ENTRY");
 		}
 	}
 

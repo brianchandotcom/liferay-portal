@@ -49,6 +49,11 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public boolean isDataPortletInstanceLevel() {
+		return _ddlPortletDataHandler.isDataPortletInstanceLevel();
+	}
+
+	@Override
 	public boolean isDisplayPortlet() {
 		return false;
 	}

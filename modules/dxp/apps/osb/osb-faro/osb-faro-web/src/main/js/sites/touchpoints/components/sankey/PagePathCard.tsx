@@ -8,6 +8,7 @@ import Sankey from './Sankey';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {getSafeRangeSelectors} from 'shared/util/util';
+import {RangeSelectors} from 'shared/types';
 import {SECONDARY_NODE_COLOR} from './utils';
 import {TitleKey, Type} from './types';
 import {useParams} from 'react-router-dom';
@@ -88,7 +89,15 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 	};
 }
 
-const PagePathCard = ({pathRangeSelectors, selectedSegment}) => {
+interface IPagePathCardProps {
+	rangeSelectors: RangeSelectors;
+	selectedSegment?: {id: string};
+}
+
+const PagePathCard: React.FC<IPagePathCardProps> = ({
+	rangeSelectors,
+	selectedSegment
+}) => {
 	const {channelId, title, touchpoint} = useParams();
 	const {data, error, loading} = useQuery(PagePathQuery, {
 		variables: {
@@ -98,7 +107,7 @@ const PagePathCard = ({pathRangeSelectors, selectedSegment}) => {
 			...(selectedSegment?.id && {
 				segmentId: selectedSegment.id
 			}),
-			...getSafeRangeSelectors(pathRangeSelectors)
+			...getSafeRangeSelectors(rangeSelectors)
 		}
 	});
 

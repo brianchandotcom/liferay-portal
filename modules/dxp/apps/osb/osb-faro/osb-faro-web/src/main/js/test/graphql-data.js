@@ -13,6 +13,7 @@ import getInterestsQuery from 'contacts/queries/InterestsQuery';
 import IndividualInterestsQuery from 'shared/queries/IndividualInterestsQuery';
 import IndividualMetricsQuery from 'shared/queries/IndividualMetricsQuery';
 import OrganizationsQuery from 'segment/segment-editor/dynamic/queries/OrganizationsQuery';
+import PagePathQuery from 'shared/queries/PagePathQuery';
 import PreferenceQuery from 'settings/data-privacy/queries/PreferenceQuery';
 import RecommendationActivitiesQuery from 'settings/recommendations/queries/RecommendationActivitiesQuery';
 import RecommendationJobRunsQuery from 'settings/recommendations/queries/RecommendationJobRunsQuery';
@@ -990,6 +991,25 @@ export function mockRecommendationReq(item = {}, mockVariables = {}) {
 					__typename: 'Job'
 				}
 			}
+		}
+	};
+}
+
+export function mockPagePathReq(data = []) {
+	return {
+		request: {
+			query: PagePathQuery,
+			variables: {
+				canonicalUrl: 'https://liferay.com/home',
+				channelId: '123',
+				rangeEnd: null,
+				rangeKey: 30,
+				rangeStart: null,
+				title: 'Liferay DXP - Home'
+			}
+		},
+		result: {
+			data
 		}
 	};
 }

@@ -250,4 +250,58 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182728. The user should see the field error below the Multiselect List fragment."
+	@priority = 3
+	test ViewMultiselectListFieldErrorMessageWhenPartialValidationFailure {
+		task ("Given a user has a content page where a Multiselect List fragment mapped to a mandatory Multiselect List field") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "MultiselectPicklist",
+				fieldLabelName = "Mandatory",
+				fieldName = "mandatory",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "PurchaseOrder",
+				picklistName = "Fruits");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user submits form without selection") {
+			Click(
+				key_indexNumber = 2,
+				key_text = "Show All",
+				locator1 = "Button#ANY_N");
+
+			for (var fieldLabel : list "Apple,Banana,Peach,Lemon,Pineapple,Watermelon") {
+				SetElementAttribute.removeElementAttribute(
+					attribute1 = "required",
+					locator1 = "//input[contains(@name,'mandatory')][contains(@id,'${fieldLabel}')]",
+					type = "checkbox");
+			}
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see a field error message below Multiselect List") {
+			AssertTextEquals(
+				locator1 = "//div[contains(@class,'multiselect-list')][.//span[normalize-space()='Mandatory']]//p[contains(@class,'text-danger')]",
+				value1 = "This field is required.");
+		}
+	}
+
 }

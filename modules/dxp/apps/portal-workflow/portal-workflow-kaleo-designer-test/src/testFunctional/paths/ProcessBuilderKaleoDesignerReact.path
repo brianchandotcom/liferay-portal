@@ -451,7 +451,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_TYPE_DROPDOWN</td>
-	<td>//input[contains(@placeholder,'Choose an Option')]</td>
+	<td>//*[@class='form-group'][contains(.,'Notification Type')]//input</td>
 	<td></td>
 </tr>
 <tr>

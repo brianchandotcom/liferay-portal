@@ -1150,9 +1150,7 @@ definition {
 
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA");
 
-		AssertElementPresent(
-			key_selectorField = "Notifications Type",
-			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN");
+		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN");
 
 		AssertElementPresent(
 			key_selectorField = "Execution Type",

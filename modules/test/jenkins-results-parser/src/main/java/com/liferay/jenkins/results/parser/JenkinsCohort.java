@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -194,9 +195,15 @@ public class JenkinsCohort {
 						_jenkinsMastersMap.size(), true);
 
 				ParallelExecutor<Void> parallelExecutor =
-					new ParallelExecutor<>(callables, threadPoolExecutor);
+					new ParallelExecutor<>(
+						callables, threadPoolExecutor, "update");
 
-				parallelExecutor.execute();
+				try {
+					parallelExecutor.execute();
+				}
+				catch (TimeoutException timeoutException) {
+					throw new RuntimeException(timeoutException);
+				}
 			}
 
 			for (String buildURL : buildURLs) {

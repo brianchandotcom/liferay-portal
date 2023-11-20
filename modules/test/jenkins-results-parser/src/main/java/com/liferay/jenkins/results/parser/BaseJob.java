@@ -33,6 +33,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -911,18 +912,26 @@ public abstract class BaseJob implements Job {
 		}
 
 		ParallelExecutor<BatchTestClassGroup> parallelExecutor =
-			new ParallelExecutor<>(callables, _executorService);
+			new ParallelExecutor<>(
+				callables, _executorService, "getBatchTestClassGroups");
 
-		List<BatchTestClassGroup> batchTestClassGroups =
-			parallelExecutor.execute();
+		List<BatchTestClassGroup> batchTestClassGroups;
 
-		for (List<Callable<BatchTestClassGroup>> testBaseDirCallables :
-				testBaseDirCallablesMap.values()) {
+		try {
+			batchTestClassGroups = parallelExecutor.execute();
 
-			parallelExecutor = new ParallelExecutor<>(
-				testBaseDirCallables, _executorService);
+			for (List<Callable<BatchTestClassGroup>> testBaseDirCallables :
+					testBaseDirCallablesMap.values()) {
 
-			batchTestClassGroups.addAll(parallelExecutor.execute());
+				parallelExecutor = new ParallelExecutor<>(
+					testBaseDirCallables, _executorService,
+					"getBatchTestClassGroups2");
+
+				batchTestClassGroups.addAll(parallelExecutor.execute());
+			}
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
 		}
 
 		batchTestClassGroups.removeAll(Collections.singleton(null));

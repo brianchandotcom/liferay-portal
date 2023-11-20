@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
@@ -25,6 +28,10 @@ import org.dom4j.Element;
 public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	public void addDownstreamBuilds(Map<String, String> urlAxisNames) {
+		if (urlAxisNames.isEmpty()) {
+			return;
+		}
+
 		final Build thisBuild = this;
 
 		List<Callable<Build>> callables = new ArrayList<>(urlAxisNames.size());
@@ -43,38 +50,55 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 			if (!hasBuildURL(url)) {
 				final String axisName = urlEntry.getValue();
+
 				final String buildURL = url;
 
-				Callable<Build> callable = new Callable<Build>() {
+				Matcher matcher = _buildURLPattern.matcher(buildURL);
 
-					@Override
-					public Build call() {
-						try {
-							return BuildFactory.newBuild(
-								buildURL, thisBuild, axisName);
-						}
-						catch (RuntimeException runtimeException) {
-							if (!isFromArchive()) {
-								NotificationUtil.sendSlackNotification(
-									runtimeException.getMessage() +
-										"\nBuild URL: " + buildURL,
-									"ci-notifications", "Build Object Failure");
+				String hostname = null;
+
+				if (matcher.matches()) {
+					hostname = matcher.group("hostname");
+				}
+
+				ParallelExecutor.SequentialCallable<Build> callable =
+					new ParallelExecutor.SequentialCallable<Build>(hostname) {
+
+						@Override
+						public Build call() {
+							try {
+								return BuildFactory.newBuild(
+									buildURL, thisBuild, axisName);
 							}
+							catch (RuntimeException runtimeException) {
+								if (!isFromArchive()) {
+									NotificationUtil.sendSlackNotification(
+										runtimeException.getMessage() +
+											"\nBuild URL: " +
+												thisBuild.getBuildURL(),
+										"ci-notifications",
+										"Build Object Failure");
+								}
 
-							return null;
+								return null;
+							}
 						}
-					}
 
-				};
+					};
 
 				callables.add(callable);
 			}
 		}
 
 		ParallelExecutor<Build> parallelExecutor = new ParallelExecutor<>(
-			callables, true, getExecutorService());
+			callables, true, getExecutorService(), "addDownstreamBuilds");
 
-		addDownstreamBuilds(parallelExecutor.execute(1000L * 60L * 60L * 3L));
+		try {
+			addDownstreamBuilds(parallelExecutor.execute(60L * 30L));
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 	}
 
 	@Override
@@ -451,25 +475,64 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 		List<Callable<Object>> callables = new ArrayList<>();
 
+		Map<String, Integer> statusCountMap = new HashMap<>(
+			downstreamBuilds.size());
+
 		for (final Build downstreamBuild : downstreamBuilds) {
-			Callable<Object> callable = new Callable<Object>() {
+			String status = downstreamBuild.getStatus();
 
-				@Override
-				public Object call() {
-					downstreamBuild.update();
+			if (!statusCountMap.containsKey(status)) {
+				statusCountMap.put(status, 0);
+			}
 
-					return null;
-				}
+			int count = statusCountMap.get(status);
 
-			};
+			statusCountMap.put(status, count + 1);
+
+			JenkinsMaster jenkinsMaster = downstreamBuild.getJenkinsMaster();
+
+			ParallelExecutor.SequentialCallable<Object> callable =
+				new ParallelExecutor.SequentialCallable<Object>(
+					jenkinsMaster.getName()) {
+
+					@Override
+					public Object call() {
+						downstreamBuild.update();
+
+						return null;
+					}
+
+				};
 
 			callables.add(callable);
 		}
 
-		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-			callables, getExecutorService());
+		StringBuilder sb = new StringBuilder("PDY created ");
 
-		parallelExecutor.execute();
+		sb.append(callables.size());
+		sb.append(" build update callables \n");
+
+		for (Map.Entry<String, Integer> statusCountMapEntry :
+				statusCountMap.entrySet()) {
+
+			sb.append("     ");
+			sb.append(statusCountMapEntry.getKey());
+			sb.append(":");
+			sb.append(statusCountMapEntry.getValue());
+			sb.append("\n");
+		}
+
+		System.out.println(sb.toString());
+
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			callables, getExecutorService(), "update");
+
+		try {
+			parallelExecutor.execute();
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 
 		findDownstreamBuilds();
 
@@ -552,29 +615,38 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		List<Callable<Element>> callables = new ArrayList<>();
 
 		for (final Build downstreamBuild : downstreamBuilds) {
-			Callable<Element> callable = new Callable<Element>() {
+			JenkinsMaster jenkinsMaster = downstreamBuild.getJenkinsMaster();
 
-				public Element call() {
-					return downstreamBuild.getGitHubMessageElement();
-				}
+			ParallelExecutor.SequentialCallable<Element> callable =
+				new ParallelExecutor.SequentialCallable<Element>(
+					jenkinsMaster.getName()) {
 
-			};
+					public Element call() {
+						return downstreamBuild.getGitHubMessageElement();
+					}
+
+				};
 
 			callables.add(callable);
 		}
 
 		ParallelExecutor<Element> parallelExecutor = new ParallelExecutor<>(
-			callables, getExecutorService());
+			callables, getExecutorService(), "getDownstreamBuildMessages");
 
-		List<Element> elements = parallelExecutor.execute();
+		try {
+			List<Element> elements = parallelExecutor.execute();
 
-		Map<Build, Element> elementsMap = new LinkedHashMap<>();
+			Map<Build, Element> elementsMap = new LinkedHashMap<>();
 
-		for (int i = 0; i < elements.size(); i++) {
-			elementsMap.put(downstreamBuilds.get(i), elements.get(i));
+			for (int i = 0; i < elements.size(); i++) {
+				elementsMap.put(downstreamBuilds.get(i), elements.get(i));
+			}
+
+			return elementsMap;
 		}
-
-		return elementsMap;
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 	}
 
 	protected List<Build> getFailedDownstreamBuilds() {
@@ -630,8 +702,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	protected boolean skipUpdate() {
-		if (isBuildModified() || hasModifiedDownstreamBuilds() ||
-			!Objects.equals(getStatus(), "completed")) {
+		boolean skipUpdate = super.skipUpdate();
+
+		if (!skipUpdate || hasModifiedDownstreamBuilds()) {
+			System.out.println("BaseParentBuild.skipUpdate - returning FALSE");
 
 			return false;
 		}
@@ -643,6 +717,9 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		Collections.sort(
 			_downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
 	}
+
+	private static final Pattern _buildURLPattern = Pattern.compile(
+		"http[s]?\\:\\/\\/(?<hostname>[^\\/]+)\\/.*");
 
 	private List<Build> _downstreamBuilds;
 

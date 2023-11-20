@@ -150,14 +150,22 @@ public class CISystemHistoryReportUtil {
 		}
 
 		ParallelExecutor<File> parallelExecutor = new ParallelExecutor<>(
-			callables, _executorService);
+			callables, _executorService, "WriteDateDurationsJavaScript");
 
-		List<File> completedJenkinsConsoleGzFiles = parallelExecutor.execute();
+		try {
+			List<File> completedJenkinsConsoleGzFiles =
+				parallelExecutor.execute();
 
-		completedJenkinsConsoleGzFiles.removeAll(Collections.singleton(null));
+			completedJenkinsConsoleGzFiles.removeAll(
+				Collections.singleton(null));
 
-		System.out.println(
-			"Processed " + completedJenkinsConsoleGzFiles.size() + " files");
+			System.out.println(
+				"Processed " + completedJenkinsConsoleGzFiles.size() +
+					" files");
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 
 		File durationsFile = new File(
 			_CI_SYSTEM_HISTORY_REPORT_DIR,

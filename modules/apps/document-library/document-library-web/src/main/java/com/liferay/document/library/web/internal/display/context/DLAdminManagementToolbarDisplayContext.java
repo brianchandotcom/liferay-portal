@@ -168,9 +168,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			() ->
-				stagedActions && !user.isGuestUser() &&
-				FeatureFlagManagerUtil.isEnabled("LPS-182512"),
+			() -> stagedActions && !user.isGuestUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "copy");
 				dropdownItem.setIcon("copy");

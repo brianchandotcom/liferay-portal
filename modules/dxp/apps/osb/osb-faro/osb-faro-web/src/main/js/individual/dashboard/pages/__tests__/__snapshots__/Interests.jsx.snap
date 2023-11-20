@@ -567,7 +567,7 @@ exports[`Individuals Dashboard Individuals Interests renders with data source em
       class="children-wrapper"
     >
       <div
-        class="no-results-root flex-grow-1 display-card"
+        class="no-results-root display-card flex-grow-1"
       >
         <div
           class="no-results-content"

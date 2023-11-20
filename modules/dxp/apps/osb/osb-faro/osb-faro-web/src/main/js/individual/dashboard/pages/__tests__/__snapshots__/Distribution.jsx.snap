@@ -145,7 +145,7 @@ exports[`Individuals Dashboard Distribution renders 1`] = `
 exports[`Individuals Dashboard Distribution renders with data source empty state 1`] = `
 <div>
   <div
-    class="no-results-root flex-grow-1 display-card"
+    class="no-results-root display-card flex-grow-1"
   >
     <div
       class="no-results-content"

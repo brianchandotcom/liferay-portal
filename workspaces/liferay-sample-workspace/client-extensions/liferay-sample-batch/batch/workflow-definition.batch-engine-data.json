@@ -1,22 +1,13 @@
 {
-	"actions": {
-		"createBatch": {
-			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition",
-			"method": "POST"
-		}
-	},
 	"configuration": {
 		"className": "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition",
-		"companyId": 0,
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "INSERT",
 			"importStrategy": "ON_ERROR_FAIL",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		},
-		"userId": 0,
-		"version": "v1.0"
+		}
 	},
 	"items": [
 		{

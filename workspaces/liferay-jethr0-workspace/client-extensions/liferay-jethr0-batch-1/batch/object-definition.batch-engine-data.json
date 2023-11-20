@@ -1,18 +1,4 @@
 {
-	"actions": {
-		"createBatch": {
-			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-			"method": "POST"
-		},
-		"deleteBatch": {
-			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-			"method": "DELETE"
-		},
-		"updateBatch": {
-			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-			"method": "PUT"
-		}
-	},
 	"configuration": {
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
 		"multiCompany": false,
@@ -22,8 +8,7 @@
 			"importStrategy": "ON_ERROR_FAIL",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		},
-		"version": "v1.0"
+		}
 	},
 	"items": [
 		{

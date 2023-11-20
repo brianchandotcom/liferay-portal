@@ -6560,7 +6560,7 @@ public class JenkinsResultsParserUtil {
 
 	private static final long _MILLIS_SECOND = 1000L;
 
-	private static final int _MILLIS_TIMEOUT_DEFAULT = 0;
+	private static final int _MILLIS_TIMEOUT_DEFAULT = 1000 * 60 * 5;
 
 	private static final String _PREFIX_TO_STRING_CACHE = "toStringCache-";
 

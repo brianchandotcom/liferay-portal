@@ -63,16 +63,24 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	}
 
 	protected void runMissing() {
-		_build.setStatus("missing");
-
 		if (isBuildQueued()) {
+			_build.setStatus("queued");
+
 			runQueued();
 
 			return;
 		}
 
 		if (isBuildRunning()) {
+			_build.setStatus("running");
+
 			runRunning();
+
+			return;
+		}
+
+		if (isBuildCompleted()) {
+			_build.setStatus("completed");
 
 			return;
 		}
@@ -82,6 +90,8 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 			_build.reset();
 
+			runStarting();
+
 			return;
 		}
 
@@ -89,10 +99,16 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	}
 
 	protected void runQueued() {
-		_build.setStatus("queued");
-
 		if (isBuildRunning()) {
+			_build.setStatus("running");
+
 			runRunning();
+
+			return;
+		}
+
+		if (isBuildCompleted()) {
+			_build.setStatus("completed");
 
 			return;
 		}
@@ -103,8 +119,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	}
 
 	protected void runReporting() {
-		_build.setStatus("reporting");
-
 		if (isBuildFailing()) {
 			_isApplySlaveOfflineRules();
 
@@ -119,18 +133,18 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	}
 
 	protected void runRunning() {
-		_build.setStatus("running");
-
 		if (!isBuildCompleted()) {
+			_build.setStatus("running");
+
 			return;
 		}
+
+		_build.setStatus("reporting");
 
 		runReporting();
 	}
 
 	protected void runStarting() {
-		_build.setStatus("starting");
-
 		Build.Invocation previousInvocation = _build.getPreviousInvocation();
 
 		if (previousInvocation != null) {

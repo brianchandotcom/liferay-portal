@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>FEATURED_IMAGE_URL_INPUT</td>
-	<td>//div[contains(@class,'input-String-wrapper')]/input[contains(@id,'URL')]</td>
+	<td>//input[contains(@id,'smallImageURL')]</td>
 	<td></td>
 </tr>
 <tr>

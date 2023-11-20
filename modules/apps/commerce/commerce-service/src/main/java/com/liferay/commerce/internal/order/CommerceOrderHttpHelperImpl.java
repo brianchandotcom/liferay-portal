@@ -12,6 +12,7 @@ import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderWebKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -544,7 +545,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		}
 
 		boolean mergeGuestOrder = GetterUtil.getBoolean(
-			httpServletRequest.getAttribute("mergeGuestOrder"), true);
+			httpServletRequest.getAttribute(
+				CommerceOrderWebKeys.MERGE_GUEST_ORDER),
+			true);
 
 		if (!mergeGuestOrder) {
 			return commerceOrder;

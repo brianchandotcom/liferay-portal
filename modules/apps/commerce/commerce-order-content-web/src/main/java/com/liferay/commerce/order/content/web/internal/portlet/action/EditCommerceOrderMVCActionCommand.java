@@ -9,6 +9,7 @@ import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderWebKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -216,7 +217,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
-		httpServletRequest.setAttribute("mergeGuestOrder", Boolean.FALSE);
+		httpServletRequest.setAttribute(
+			CommerceOrderWebKeys.MERGE_GUEST_ORDER, Boolean.FALSE);
 
 		CommerceOrder currentCommerceOrder =
 			_commerceOrderHttpHelper.getCurrentCommerceOrder(

@@ -385,6 +385,11 @@ public class ObjectServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"8.8.0", "8.8.1",
+			new com.liferay.object.internal.upgrade.v8_8_1.
+				ObjectFieldSettingUpgradeProcess());
 	}
 
 	@Reference

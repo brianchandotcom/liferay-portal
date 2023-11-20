@@ -23,12 +23,12 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			StringBundler.concat(
-				"delete from Portlet where portletId = '", PORTLET_ID_POLLS,
-				"' OR portletId = '", PORTLET_ID_POLLS_DISPLAY, "'"));
+				"delete from Portlet where portletId = '", _PORTLET_ID_POLLS,
+				"' OR portletId = '", _PORTLET_ID_POLLS_DISPLAY, "'"));
 		runSQL(
 			StringBundler.concat(
 				"delete from ResourcePermission where name = '",
-				PORTLET_ID_POLLS, "' OR name = '", PORTLET_ID_POLLS_DISPLAY,
+				_PORTLET_ID_POLLS, "' OR name = '", _PORTLET_ID_POLLS_DISPLAY,
 				"'"));
 
 		removeDuplicatePortletPreferences();
@@ -63,8 +63,11 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			{PORTLET_ID_POLLS, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN},
-			{PORTLET_ID_POLLS_DISPLAY, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM}
+			{_PORTLET_ID_POLLS, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN},
+			{
+				_PORTLET_ID_POLLS_DISPLAY,
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
+			}
 		};
 	}
 
@@ -72,7 +75,7 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ownerId, ownerType, plid from PortletPreferences ",
-					"where portletId = '", PORTLET_ID_POLLS, "'"));
+					"where portletId = '", _PORTLET_ID_POLLS, "'"));
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -94,10 +97,10 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 		}
 	}
 
-	protected static final String PORTLET_ID_POLLS =
+	private static final String _PORTLET_ID_POLLS =
 		"com_liferay_polls_web_portlet_PollsPortlet";
 
-	protected static final String PORTLET_ID_POLLS_DISPLAY =
+	private static final String _PORTLET_ID_POLLS_DISPLAY =
 		"com_liferay_polls_web_portlet_PollsDisplayPortlet";
 
 }

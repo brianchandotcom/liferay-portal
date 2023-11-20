@@ -734,7 +734,7 @@ public class GitHubDevSyncUtil {
 			callables, _threadPoolExecutor, "deleteOrphanedCacheBranches");
 
 		try {
-			parallelExecutor.execute(60L * 5L);
+			parallelExecutor.execute(60L * 15L);
 		}
 		catch (TimeoutException timeoutException) {
 			throw new RuntimeException(timeoutException);

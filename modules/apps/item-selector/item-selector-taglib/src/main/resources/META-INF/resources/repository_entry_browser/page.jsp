@@ -70,6 +70,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	filterLabelItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= repositoryEntriesCount %>"
 	orderDropdownItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
+	propsTransformer="repository_entry_browser/js/ItemSelectorRepositoryEntryBrowserManagementToolbarPropsTransformer"
 	searchActionURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchFormMethod="POST"
 	searchFormName="searchFm"
@@ -151,6 +152,12 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 				).build()
 			%>'
 			module="repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser"
+		/>
+	</div>
+
+	<div>
+		<react:component
+			module="repository_entry_browser/js/ItemSelectorRepositoryEntryBrowserConfigureAIModal"
 		/>
 	</div>
 

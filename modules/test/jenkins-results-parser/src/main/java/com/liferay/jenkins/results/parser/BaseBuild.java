@@ -1556,6 +1556,8 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void setStatus(String status) {
+		boolean different = _isDifferent(status, _status);
+
 		_previousStatus = _status;
 
 		_status = status;
@@ -1567,7 +1569,7 @@ public abstract class BaseBuild implements Build {
 		_statusDurations.put(
 			_previousStatus, _statusModifiedTime - previousStatusModifiedTime);
 
-		if (isParentBuildRoot()) {
+		if (different && isParentBuildRoot()) {
 			System.out.println(getBuildMessage());
 		}
 	}

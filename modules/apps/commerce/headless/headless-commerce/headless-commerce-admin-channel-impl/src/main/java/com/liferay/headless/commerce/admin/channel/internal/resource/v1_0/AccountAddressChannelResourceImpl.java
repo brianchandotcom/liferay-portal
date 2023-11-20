@@ -161,20 +161,21 @@ public class AccountAddressChannelResourceImpl
 		CommerceChannel commerceChannel;
 
 		if (Validator.isNull(
-				accountAddressChannel.getChannelExternalReferenceCode())) {
+				accountAddressChannel.
+					getAddressChannelExternalReferenceCode())) {
 
 			commerceChannel = _commerceChannelService.fetchCommerceChannel(
-				accountAddressChannel.getChannelId());
+				accountAddressChannel.getAddressChannelId());
 
 			if (commerceChannel == null) {
 				throw new NoSuchChannelException(
 					"Unable to find channel with commerce channel id " +
-						accountAddressChannel.getChannelId());
+						accountAddressChannel.getAddressChannelId());
 			}
 		}
 		else {
 			String externalReferenceCode =
-				accountAddressChannel.getChannelExternalReferenceCode();
+				accountAddressChannel.getAddressChannelExternalReferenceCode();
 
 			commerceChannel =
 				_commerceChannelService.fetchByExternalReferenceCode(

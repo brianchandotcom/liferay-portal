@@ -94,8 +94,7 @@ export function ProvideAppBuildPage({
 				},
 				type: TYPES.UPLOAD_BUILD_ZIP_FILES,
 			});
-		}
-		else {
+		} else {
 			dispatch({
 				payload: {
 					files: newUploadedFiles,
@@ -125,50 +124,47 @@ export function ProvideAppBuildPage({
 
 		let newCategories: Categories[] = [];
 
-		if (appType.value === AppType.CLOUD) {
-			let marketplaceLiferayPlatformOfferingId = 0;
-			let marketplaceLiferayVersionId = 0;
-			let marketplaceEditionId = 0;
+		let marketplaceLiferayPlatformOfferingId = 0;
+		let marketplaceLiferayVersionId = 0;
+		let marketplaceEditionId = 0;
 
-			vocabulariesResponse.items.forEach(
-				(vocab: {id: number; name: string}) => {
-					if (
-						vocab.name === 'Marketplace Liferay Platform Offering'
-					) {
-						marketplaceLiferayPlatformOfferingId = vocab.id;
-					}
-
-					if (vocab.name === 'Marketplace Liferay Version') {
-						marketplaceLiferayVersionId = vocab.id;
-					}
-
-					if (vocab.name === 'Marketplace Edition') {
-						marketplaceEditionId = vocab.id;
-					}
+		vocabulariesResponse.items.forEach(
+			(vocab: {id: number; name: string}) => {
+				if (vocab.name === 'Marketplace Liferay Platform Offering') {
+					marketplaceLiferayPlatformOfferingId = vocab.id;
 				}
-			);
 
-			const platformOfferingList = await getCategories({
-				vocabId: marketplaceLiferayPlatformOfferingId,
-			});
+				if (vocab.name === 'Marketplace Liferay Version') {
+					marketplaceLiferayVersionId = vocab.id;
+				}
 
-			const fullyManagedOption = platformOfferingList.filter(
-				(platformOffering) =>
-					selectedCheckboxValue.includes(platformOffering.name)
-			);
-
-			if (fullyManagedOption) {
-				fullyManagedOption.map((managedOption) => {
-					newCategories.push({
-						externalReferenceCode:
-							managedOption?.externalReferenceCode,
-						id: managedOption.id,
-						name: managedOption.name,
-						vocabulary: 'Marketplace Liferay Platform Offering',
-					});
-				});
+				if (vocab.name === 'Marketplace Edition') {
+					marketplaceEditionId = vocab.id;
+				}
 			}
+		);
 
+		const platformOfferingList = await getCategories({
+			vocabId: marketplaceLiferayPlatformOfferingId,
+		});
+
+		const fullyManagedOption = platformOfferingList.filter(
+			(platformOffering) =>
+				selectedCheckboxValue.includes(platformOffering.name)
+		);
+
+		if (fullyManagedOption) {
+			fullyManagedOption.map((managedOption) => {
+				newCategories.push({
+					externalReferenceCode: managedOption?.externalReferenceCode,
+					id: managedOption.id,
+					name: managedOption.name,
+					vocabulary: 'Marketplace Liferay Platform Offering',
+				});
+			});
+		}
+
+		if (appType.value === AppType.CLOUD) {
 			const liferayVersionList = await getCategories({
 				vocabId: marketplaceLiferayVersionId,
 			});
@@ -206,17 +202,18 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
-			newCategories = categories.items.filter((category) => {
-				if (
-					category.vocabulary !== 'marketplace edition' &&
-					category.vocabulary !== 'marketplace liferay version' &&
-					category.vocabulary !== 'liferay platform offering'
-				) {
-					return category;
-				}
-			});
+		} else {
+			newCategories = [
+				...categories.items.filter((category) => {
+					if (
+						category.vocabulary !== 'marketplace edition' &&
+						category.vocabulary !== 'marketplace liferay version'
+					) {
+						return category;
+					}
+				}),
+				...newCategories,
+			];
 		}
 
 		const body = newCategories.map((item) => {
@@ -402,8 +399,7 @@ export function ProvideAppBuildPage({
 								},
 								id: appType.id,
 							});
-						}
-						else {
+						} else {
 							const dataSpecification = await createSpecification(
 								{
 									body: {

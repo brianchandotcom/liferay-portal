@@ -15,6 +15,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -222,19 +223,16 @@ public class AssetTagLocalServiceTest {
 	public void testIncrementAssetCountWhenUpdatingAssetEntry()
 		throws PortalException {
 
-		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
-			_group.getGroupId());
+		_testIncrementAssetCountWhenUpdatingAssetEntry(new String[] {"tag1"});
+	}
 
-		assetEntry = _assetEntryLocalService.updateEntry(
-			TestPropsValues.getUserId(), assetEntry.getGroupId(),
-			assetEntry.getClassName(), assetEntry.getClassPK(), null,
-			new String[] {"tag"});
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testIncrementAssetCountWhenUpdatingAssetEntryWithCaseSensitive()
+		throws PortalException {
 
-		List<AssetTag> assetTags = assetEntry.getTags();
-
-		AssetTag assetTag = assetTags.get(0);
-
-		Assert.assertEquals(1, assetTag.getAssetCount());
+		_testIncrementAssetCountWhenUpdatingAssetEntry(
+			new String[] {"tag1", "Tag1", "TAG1"});
 	}
 
 	@Test(expected = AssetTagException.class)
@@ -263,6 +261,30 @@ public class AssetTagLocalServiceTest {
 
 		Assert.assertEquals(
 			originalTagsCount + tagNames.size(), actualTagsCount);
+	}
+
+	private void _testIncrementAssetCountWhenUpdatingAssetEntry(
+			String[] tagNames)
+		throws PortalException {
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		assetEntry = _assetEntryLocalService.updateEntry(
+			TestPropsValues.getUserId(), assetEntry.getGroupId(),
+			assetEntry.getClassName(), assetEntry.getClassPK(), null, tagNames);
+
+		List<AssetTag> assetTags = assetEntry.getTags();
+
+		Assert.assertEquals(
+			TransformUtil.transform(
+				assetTags, AssetTag::getName
+			).toString(),
+			tagNames.length, assetTags.size());
+
+		for (AssetTag assetTag : assetEntry.getTags()) {
+			Assert.assertEquals(1, assetTag.getAssetCount());
+		}
 	}
 
 	@Inject

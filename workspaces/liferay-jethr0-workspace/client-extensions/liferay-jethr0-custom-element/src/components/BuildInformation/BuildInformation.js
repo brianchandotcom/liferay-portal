@@ -6,7 +6,6 @@
 import ClayPanel from '@clayui/panel';
 
 import {toLocaleString} from '../../services/DateUtil';
-
 import Jethr0Table from '../Jethr0Table/Jethr0Table';
 
 function BuildInformation({build}) {
@@ -23,7 +22,7 @@ function BuildInformation({build}) {
 		);
 	}
 
-	let parameters = JSON.parse(build.parameters);
+	const parameters = JSON.parse(build.parameters);
 
 	return (
 		<>
@@ -45,44 +44,37 @@ function BuildInformation({build}) {
 					Modified Date: {toLocaleString(build.dateModified)}
 				</ClayPanel.Body>
 			</ClayPanel>
-			{
-				parameters &&
-				(
-					<ClayPanel
-						collapsable
-						displayTitle="Build Parameters"
-						displayType="secondary"
-						showCollapseIcon={true}
-					>
-						<ClayPanel.Body>
-							<Jethr0Table>
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Value</th>
-									</tr>
-								</thead>
-								<tbody>
-									{parameters.map((parameter) => {
-										return (
-											<tr key={parameter.name}>
-												<td
-													title={parameter.name}
-												>
-													{parameter.name}
-												</td>
-												<td>
-													{parameter.value}
-												</td>
-											</tr>
-										);
-									})}
-								</tbody>
-							</Jethr0Table>
-						</ClayPanel.Body>
-					</ClayPanel>
-				)
-			}
+			{parameters && (
+				<ClayPanel
+					collapsable
+					displayTitle="Build Parameters"
+					displayType="secondary"
+					showCollapseIcon={true}
+				>
+					<ClayPanel.Body>
+						<Jethr0Table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody>
+								{parameters.map((parameter) => {
+									return (
+										<tr key={parameter.name}>
+											<td title={parameter.name}>
+												{parameter.name}
+											</td>
+											<td>{parameter.value}</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</Jethr0Table>
+					</ClayPanel.Body>
+				</ClayPanel>
+			)}
 		</>
 	);
 }

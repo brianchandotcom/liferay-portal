@@ -742,7 +742,6 @@
 					"required": true,
 					"type": "String"
 				},
-
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",

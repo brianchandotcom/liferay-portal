@@ -155,9 +155,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-190586. Even with the option to be redirected to a DPT, if there are validation errors on the object entry the page creator will remain on the same page and get a validation error message."
+	@description = "This is a test for LPS-190586 and LPS-182728. Even with the option to be redirected to a DPT, if there are validation errors on the object entry the page creator will remain on the same page and get a validation error message. The user should see the general error on the top of form."
 	@priority = 4
-	test CannotRedirectToAssociatedDisplayPageTemplateWhenValidationFailed {
+	test CannotRedirectToAssociatedDisplayPageTemplateWhenValidationFailure {
 		task ("Given a page creator has a Form Container with redirection option to a DPT") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
@@ -169,29 +169,14 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Purchase Order");
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isInteger(age)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "The Age should be an integer.");
-
-			Button.clickSave();
-
-			WaitForElementNotPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
+			JSONObject.addObjectValidation(
+				errorMessage = "The Age should be an integer.",
+				fieldName = "age",
+				labelName = "Form Validation",
+				objectName = "PurchaseOrder",
+				outputValidationType = "fullValidation",
+				script = "isInteger(age)",
+				validationType = "ddm");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 

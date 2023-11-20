@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>AUDIT_LOG_MESSAGE_FORMAT</td>
-	<td>//div[contains(@data-field-name,'logMessageFormat')]//div[contains(@class,'option-selected')]</td>
+	<td>//div[contains(@data-field-name,'logMessageFormat')]//button</td>
 	<td></td>
 </tr>
 </tbody>

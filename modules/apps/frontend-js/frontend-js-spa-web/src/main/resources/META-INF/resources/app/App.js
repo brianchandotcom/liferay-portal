@@ -485,8 +485,8 @@ class App extends EventEmitter {
 					this.extractParams(route, path)
 				);
 			})
-			.then(() => nextScreen.evaluateStyles(this.surfaces))
 			.then(() => nextScreen.flip(this.surfaces))
+			.then(() => nextScreen.evaluateStyles(this.surfaces))
 			.then(() => nextScreen.evaluateScripts(this.surfaces))
 			.then(() => this.maybeUpdateScrollPositionState_())
 			.then(() => this.syncScrollPositionSyncThenAsync_())

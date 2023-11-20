@@ -687,35 +687,24 @@ export default function ChangeTrackingRenderView({
 	};
 
 	const navigate = (editURL, checkoutURL, confirmationMessage) => {
-		AUI().use('liferay-portlet-url', () => {
-			const editPortletURL = Liferay.PortletURL.createURL(editURL);
+		const editPortletURL = createPortletURL(editURL, {
+			redirect: window.location.pathname + window.location.search,
+		});
 
-			editPortletURL.setParameter(
-				'redirect',
-				window.location.pathname + window.location.search
-			);
+		if (!checkoutURL) {
+			navigateUtil(editPortletURL);
 
-			if (!checkoutURL) {
-				navigateUtil(editPortletURL.toString());
+			return;
+		}
 
-				return;
-			}
+		const checkoutPortletURL = createPortletURL(checkoutURL, {
+			redirect: editPortletURL,
+		});
 
-			const checkoutPortletURL = Liferay.PortletURL.createURL(
-				checkoutURL
-			);
-
-			checkoutPortletURL.setParameter(
-				'redirect',
-				editPortletURL.toString()
-			);
-
-			openConfirmModal({
-				message: confirmationMessage,
-				onConfirm: (isConfirmed) =>
-					isConfirmed &&
-					submitForm(document.hrefFm, checkoutPortletURL.toString()),
-			});
+		openConfirmModal({
+			message: confirmationMessage,
+			onConfirm: (isConfirmed) =>
+				isConfirmed && submitForm(document.hrefFm, checkoutPortletURL),
 		});
 	};
 

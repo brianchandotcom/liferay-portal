@@ -159,8 +159,6 @@ definition {
 	@description = "This test ensures that Users can copy multiple folders with documents at the same time."
 	@priority = 5
 	test CanBulkCopyFoldersWithFiles {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		for (var entryCount : list "1,2,3") {
@@ -232,8 +230,6 @@ definition {
 	@description = "This test ensures that a folder can be copied to the global site folder."
 	@priority = 5
 	test CanCopyFolderToGlobalSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -611,8 +607,6 @@ definition {
 	@description = "This test ensures that an error is displayed when copying a duplicated folder."
 	@priority = 4
 	test CannotCopyDuplicatedDocument {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONFolder.addFolder(

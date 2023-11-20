@@ -185,8 +185,6 @@ definition {
 	@description = "This ensures that a document in a connected site can be copied to the depot."
 	@priority = 5
 	test CanCopyDocumentFromConnectedSiteToDepot {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
@@ -213,8 +211,6 @@ definition {
 	@description = "This ensures that a document in a depot can be copied to the connected site."
 	@priority = 5
 	test CanCopyDocumentFromDepotToConnectedSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
@@ -245,8 +241,6 @@ definition {
 	@description = "This ensures that a folder in a connected site can be copied to the depot."
 	@priority = 5
 	test CanCopyFolderFromConnectedSiteToDepot {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
@@ -285,8 +279,6 @@ definition {
 	@description = "This ensures that a folder in a depot can be copied to the connected site."
 	@priority = 5
 	test CanCopyFolderFromDepotToConnectedSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
@@ -330,8 +322,6 @@ definition {
 	@description = "This ensures that a document in a depot can not be copied to an unconnected site."
 	@priority = 4
 	test CannotCopyDocumentFromDepotToUnconnectedSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -355,8 +345,6 @@ definition {
 	@description = "This ensures that a document in a site can not be copied to the unconnected depot."
 	@priority = 4
 	test CannotCopyDocumentFromUnconnectedSiteToDepot {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -380,8 +368,6 @@ definition {
 	@description = "This ensures that a folder in a depot can not be copied to an unconnected site."
 	@priority = 4
 	test CannotCopyFolderFromDepotToUnconnectedSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -403,8 +389,6 @@ definition {
 	@description = "This ensures that a folder in a site can not be copied to the unconnected depot."
 	@priority = 4
 	test CannotCopyFolderFromUnconnectedSiteToDepot {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",

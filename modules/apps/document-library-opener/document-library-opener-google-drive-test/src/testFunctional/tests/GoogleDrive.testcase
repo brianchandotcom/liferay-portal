@@ -399,8 +399,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanCopyGoogleDocFromDepotToSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
@@ -443,8 +441,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanCopyGoogleDocToOtherFolderInDepot {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -487,8 +483,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanCopyGoogleDocToOtherSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

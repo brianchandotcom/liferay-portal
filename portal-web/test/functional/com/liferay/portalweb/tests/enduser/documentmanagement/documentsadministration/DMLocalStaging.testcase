@@ -192,8 +192,6 @@ definition {
 	@description = "This ensures that a document can not be copied to a staging site."
 	@priority = 4
 	test CannotCopyDocumentToStagedSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -217,8 +215,6 @@ definition {
 	@description = "This ensures that a folder can not be copied to a staging site."
 	@priority = 4
 	test CannotCopyFolderToStagedSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",

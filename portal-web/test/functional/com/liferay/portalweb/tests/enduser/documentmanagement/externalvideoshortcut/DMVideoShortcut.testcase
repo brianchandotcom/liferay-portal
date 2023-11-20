@@ -527,8 +527,6 @@ definition {
 	@description = "This test ensures that a video shortcut can be copied to a site folder."
 	@priority = 5
 	test CanCopyVideoShortcutToOtherSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

@@ -475,7 +475,6 @@ definition {
 	@description = "This test ensures that users can not copy assets from SharePoint."
 	@priority = 4
 	test CannotCopyAssetsFromRepository {
-		property custom.properties = "feature.flag.LPS-182512=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

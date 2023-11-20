@@ -98,8 +98,6 @@ definition {
 	@description = "This test ensures that a file shortcut's tags can be copied from a parent to child site."
 	@priority = 4
 	test CanCopyTagFromDepotToConnectedSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		HeadlessSite.addSite(siteName = "Site Name 2");
 
 		JSONDepot.addDepot(
@@ -146,8 +144,6 @@ definition {
 	@description = "This test ensures that a file shortcut's tags can be copied from a parent to child site."
 	@priority = 4
 	test CanCopyTagFromParentToChildSite {
-		property custom.properties = "feature.flag.LPS-182512=true";
-
 		HeadlessSite.addSite(
 			parentSiteName = "Site Name",
 			siteName = "Child Site Name");

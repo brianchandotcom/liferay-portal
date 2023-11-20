@@ -54,6 +54,43 @@ public class MySavedContentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public AssetRenderer<?> getAssetRenderer(String className, long classPK)
+		throws PortalException {
+
+		try {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
+			if (assetRendererFactory == null) {
+				return null;
+			}
+
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
+
+			if (assetRenderer == null) {
+				return null;
+			}
+
+			return assetRenderer;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get asset renderer for class ", className,
+						" with primary key ", classPK),
+					exception);
+			}
+
+			throw new PortalException(
+				StringBundler.concat(
+					"Unable to get asset renderer for class ", className,
+					" with primary key ", classPK));
+		}
+	}
+
 	public String getAssetTitle(AssetRenderer<?> assetRenderer)
 		throws PortalException {
 

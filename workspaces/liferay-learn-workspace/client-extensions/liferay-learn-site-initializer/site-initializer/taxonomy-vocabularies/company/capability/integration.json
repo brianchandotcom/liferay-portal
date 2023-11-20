@@ -1,0 +1,11 @@
+{
+	"description": "Unify systems, applications, and data with a single platform.",
+	"description_i18n": {
+		"en_US": "Unify systems, applications, and data with a single platform."
+	},
+	"name": "Integration",
+	"name_i18n": {
+		"en_US": "Integration"
+	},
+	"viewableBy": "Anyone"
+}

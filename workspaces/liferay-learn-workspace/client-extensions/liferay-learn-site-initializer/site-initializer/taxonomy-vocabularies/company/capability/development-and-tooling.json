@@ -1,0 +1,11 @@
+{
+	"description": "Use out-of-the-box features and development tools to deliver solutions to users faster.",
+	"description_i18n": {
+		"en_US": "Use out-of-the-box features and development tools to deliver solutions to users faster."
+	},
+	"name": "Development and Tooling",
+	"name_i18n": {
+		"en_US": "Development and Tooling"
+	},
+	"viewableBy": "Anyone"
+}

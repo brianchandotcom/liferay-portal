@@ -1,0 +1,11 @@
+{
+	"description": "Send email notifications, test content updates, deliver solutions across multiple channels, and more with out-of-the-box platform features.",
+	"description_i18n": {
+		"en_US": "Send email notifications, test content updates, deliver solutions across multiple channels, and more with out-of-the-box platform features."
+	},
+	"name": "Platform",
+	"name_i18n": {
+		"en_US": "Platform"
+	},
+	"viewableBy": "Anyone"
+}

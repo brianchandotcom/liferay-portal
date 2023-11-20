@@ -1,0 +1,11 @@
+{
+	"description": "Protect users, data, and solutions with a platform designed with security in mind.",
+	"description_i18n": {
+		"en_US": "Protect users, data, and solutions with a platform designed with security in mind."
+	},
+	"name": "Security",
+	"name_i18n": {
+		"en_US": "Security"
+	},
+	"viewableBy": "Anyone"
+}

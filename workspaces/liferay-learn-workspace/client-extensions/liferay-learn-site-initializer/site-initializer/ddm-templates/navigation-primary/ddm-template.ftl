@@ -1,86 +1,130 @@
-<ul class="adt-navigation">
-	<#if entries?has_content>
-		<#list entries as navPrimaryItem>
-			<li class="adt-nav-item w-100">
-				<div class="adt-nav-text d-flex" tabindex="4">
-					<span class="adt-nav-title text-truncate">
-						${navPrimaryItem.getName()}
-					</span>
-					<span class="adt-nav-caret-bottom-icon align-self-center">
-						<svg class="lexicon-icon lexicon-icon-caret-bottom" role="presentation" viewBox="0 0 512 512"><use xlink:href="/o/admin-theme/images/clay/icons.svg#caret-bottom"></use></svg>
-					</span>
-				</div>
-				<@render_navigation_dropdown navPrimaryItem />
-			</li>
-		</#list>
+<#assign responseItems = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies").items />
+<#if responseItems?has_content>
+	<#list responseItems as vocabulary>
+	<#if stringUtil.equals(vocabulary.name, "Capability")>
+		<#if vocabulary.id?has_content>
+		<#assign capabilityId = vocabulary.id />
+	  </#if>
 	</#if>
-</ul>
+</#list>
+</#if>
+<#if capabilityId?has_content>
+	<#assign capabilitiesFieldsMap = {} />
+<#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${capabilityId}/taxonomy-categories").items as capability>
+	<#assign capabilitiesFieldsMap = capabilitiesFieldsMap +
+		{
+		capability.name:
+			{
+			"id": capability.id,
+			"description": capability.description
+		  }
+	  }
+	/>
+</#list>
+</#if>
+<div class="adt-navigation">
+	<#list entries as navPrimaryItem>
+	<#if navPrimaryItem.hasChildren()>
+		<#assign
+		columns = "12"
+		dropdownType = "dropdown"
+		menuType = ""
+		menuWidth = "width:200px; overflow-x:hidden;"
+		topPosition = "t-56"
+	  />
 
-<#macro render_navigation_dropdown
-	navPrimaryItem
->
-	<div class="adt-submenu">
-		<div class="adt-submenu-outer-wrapper">
-			<div class="adt-submenu-inner-wrapper">
+	  <#if navPrimaryItem.getName() == "Capabilities">
+		<#assign
+			columns = "3"
+		  dropdownType = "dropdown-wide dropdown-wide-container"
+		  menuType = "dropdown-menu-center p-5"
+		  menuWidth = "width:95%;"
+		  topPosition = "t-109"
+		/>
+	  </#if>
+
+<div class="${dropdownType}">
+		<div
+			class="adt-nav-item w-100"
+		  data-toggle="liferay-dropdown"
+	>
+<div class="adt-nav-text d-flex">
+			<span
+				aria-expanded="false"
+			  aria-haspopup="true"
+			  class="adt-nav-title text-truncate"
+			  id=${navPrimaryItem.getName()}
+		>
+				${navPrimaryItem.getName()}
+<svg class="lexicon-icon lexicon-icon-caret-bottom" role="presentation" viewBox="0 0 512 512">
+<use xlink:href="/o/admin-theme/images/clay/icons.svg#caret-bottom"></use>
+			  </svg>
+			</span>
+		  </div>
+		</div>
+
+		<div
+			aria-labelledby=${navPrimaryItem.getName()}
+		  class="dropdown-menu ${menuType} ${topPosition}"
+		  style="position: absolute; will-change: transform; border-radius:13px; ${menuWidth}">
+<div class="row">
 				<#list navPrimaryItem.getChildren() as navSecondaryItem>
+<div class="dropdown-item col-sm-${columns}" style="border-radius:13px;">
+					<#if capabilitiesFieldsMap?has_content && navPrimaryItem.getName() == "Capabilities">
+					<#assign categoryFields = capabilitiesFieldsMap[navSecondaryItem.getName()] />
+<a class="adt-submenu-item-link text-decoration-none" href="/search?category=${categoryFields['id']}" style="color: black;" tabindex="4">
+<h5 class="pl-3 pt-2">
+						${navSecondaryItem.getName()}
+					  </h5>
+					  <#if categoryFields["description"]?has_content>
+						<div
+							class="pl-3"
+						  style="padding-top: 0.5rem;">
+							${categoryFields["description"]}
+						</div>
+					  </#if>
+					</a>
+				  <#else>
 					<#assign
-						secondaryCustomFields = navSecondaryItem.getExpandoAttributes()!{}
-						backgroundColor = secondaryCustomFields["Submenu Background"]?first!""
-						childColumns = secondaryCustomFields["Submenu Child Columns"]?first!""
-						columnSpan = secondaryCustomFields["Submenu Column Span"]!?first!""
+						customFields = navSecondaryItem.getExpandoAttributes()!{}
+					  navItemIconId = customFields["Svg Sprite Map Id"]!""
 					/>
-
-					<#if childColumns?has_content>
-						<#assign childColumns = (columnSpan?number/childColumns?number)?floor?string />
-					</#if>
-
-					<#if columnSpan?has_content>
-						<#assign columnSpan = "_" + columnSpan + "-section-span" />
-					</#if>
-
-					<ul class="adt-submenu-section ${backgroundColor} ${columnSpan}">
-						<li class="adt-submenu-header color-neutral-8 font-size-small-caps">${navSecondaryItem.getName()}</li>
-
-						<#list navSecondaryItem.getChildren() as navTertiaryItem>
-							<#assign
-								tertiaryCustomFields = navTertiaryItem.getExpandoAttributes()
-								descriptionText = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Description"])!""
-								imageURL = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Image URL"])!""
-								menuItemType = tertiaryCustomFields["Menu Item Type"]?first!""
-								preheaderText = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Preheader"])!""
-							/>
-
-							<li class="adt-submenu-item-content ${menuItemType?lower_case}-type grid-column-span-${childColumns}">
-								<a class="adt-submenu-item-link" href="${navTertiaryItem.getURL()}" tabindex="4">
-									<#if stringUtil.equals(menuItemType, "Image") && imageURL?has_content>
-										<img class="adt-submenu-item-image" loading="lazy" src="${imageURL}" />
-									</#if>
-
-									<div class="adt-submenu-item-text">
-										<#if stringUtil.equals(menuItemType, "Image") && preheaderText?has_content>
-											<div class="adt-submenu-item-preheader color-neutral-3 font-weight-semi-bold">${preheaderText}</div>
-										</#if>
-
-										<h5 class="adt-submenu-item-title">${navTertiaryItem.getName()}</h5>
-
-										<#if (menuItemType == '' || stringUtil.equals(menuItemType, "Text")) && descriptionText?has_content>
-											<div class="adt-submenu-item-description">${descriptionText}</div>
-										</#if>
-									</div>
-								</a>
-							</li>
-						</#list>
-					</ul>
-				</#list>
+										<a class="adt-submenu-item-link text-decoration-none" href="${navSecondaryItem.getRegularURL()}" style="color: black;" tabindex="4">
+<div class="pl-2 pt-3">
+<img alt="${navSecondaryItem.getName()} Logo" class="lexicon-icon lexicon-icon-caret-bottom product-icon" role="presentation" src="${navItemIconId}" viewBox="0 0 512 512" />
+						<b class="pl-2">${navSecondaryItem.getName()}</b>
+					 </div>
+										</a>
+				  </#if>
+				</div>
+			  </#list>
 			</div>
 		</div>
-	</div>
-</#macro>
+	  </div>
+	<#else>
+<a class="adt-nav-item w-100" href="${navPrimaryItem.getRegularURL()}">
+<div class="adt-nav-text d-flex pr-3">
+<span class="adt-nav-title text-truncate">
+			  ${navPrimaryItem.getName()}
+			</span>
+		</div>
+	  </a>
+	</#if>
+</#list>
+</div>
 
-<#function getLocalizedExpandoValue expandoField>
-	<#list expandoField as language, expandoValue>
-		<#if language == locale>
-			<#return expandoValue />
-		</#if>
-	</#list>
-</#function>
+<style>
+.product-icon {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+.t-109 {
+	top: 109.5px!important;
+}
+.t-56 {
+	top: 55.5px!important;
+}
+.dropdown-item:active{
+	background-color:#f8f9fa;
+}
+</style>

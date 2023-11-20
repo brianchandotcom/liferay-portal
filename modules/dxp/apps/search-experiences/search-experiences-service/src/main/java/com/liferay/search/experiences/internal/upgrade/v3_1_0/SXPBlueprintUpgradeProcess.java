@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,12 +50,16 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				JSONObject elementInstanceJSONObject =
 					elementInstancesJSONArray.getJSONObject(i);
 
+				if (elementInstanceJSONObject == null) {
+					continue;
+				}
+
 				JSONObject sxpElementJSONObject =
 					elementInstanceJSONObject.getJSONObject("sxpElement");
 
-				if (sxpElementJSONObject == null)
-
+				if (sxpElementJSONObject == null) {
 					continue;
+				}
 
 				preparedStatement.setLong(
 					1, sxpElementJSONObject.getLong("id"));
@@ -116,6 +121,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	private String _getDefaultValueFromFieldXML(
 		String fieldXML, String fieldName) {
 
+		if (Validator.isBlank(fieldXML)) {
+			return StringPool.BLANK;
+		}
+
 		String fallBackFieldCreationValue = StringBundler.concat(
 			"<", fieldName, " language-id=\"", _getDefaultLocale(fieldXML),
 			"\">");
@@ -153,12 +162,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 				while (resultSet1.next()) {
-					String elementInstancesJSON = resultSet1.getString(
-						"elementInstancesJSON");
-
 					preparedStatement2.setString(
 						1,
-						_addFieldsToElementInstancesJSON(elementInstancesJSON));
+						_addFieldsToElementInstancesJSON(
+							resultSet1.getString("elementInstancesJSON")));
 
 					preparedStatement2.setLong(
 						2, resultSet1.getLong("sxpBlueprintId"));

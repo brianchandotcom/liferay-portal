@@ -181,7 +181,7 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 };
 
 ListItem.propTypes = {
-	disabled: PropTypes.bool.isRequired,
+	disabled: PropTypes.bool,
 	handlerRef: PropTypes.func.isRequired,
 	item: ITEM_PROPTYPES_SHAPE.isRequired,
 	onToggleHighlighted: PropTypes.func.isRequired,

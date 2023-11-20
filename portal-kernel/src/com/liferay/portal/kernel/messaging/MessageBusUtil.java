@@ -30,11 +30,11 @@ public class MessageBusUtil {
 	}
 
 	public static void sendMessage(String destinationName, Object payload) {
+		MessageBus messageBus = _messageBusSnapshot.get();
+
 		Message message = new Message();
 
 		message.setPayload(payload);
-
-		MessageBus messageBus = _messageBusSnapshot.get();
 
 		messageBus.sendMessage(destinationName, message);
 	}

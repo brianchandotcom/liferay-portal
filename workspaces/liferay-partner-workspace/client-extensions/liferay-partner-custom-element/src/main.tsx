@@ -85,12 +85,12 @@ const appRoutes: AppRouteComponent = {
 				) {
 					return items.filter(
 						(item) =>
-							item['TYPE'] === OpportunityType.NEW_BUSINESS ||
+							(item['TYPE'] === OpportunityType.NEW_BUSINESS ||
 							item['TYPE'] ===
 								OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
 							(item['TYPE'] ===
 								OpportunityType.EXISTING_BUSINESS &&
-								!item['HAS-RENEWAL']) &&
+								!item['HAS-RENEWAL'])) &&
 							item['ACTIVE']
 					);
 				}
@@ -99,13 +99,13 @@ const appRoutes: AppRouteComponent = {
 				) {
 					return items.filter(
 						(item) =>
-							item['TYPE'] === OpportunityType.NEW_BUSINESS ||
+							(item['TYPE'] === OpportunityType.NEW_BUSINESS ||
 							item['TYPE'] ===
 								OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
 							(item['TYPE'] ===
 								OpportunityType.EXISTING_BUSINESS &&
 								!item['HAS-RENEWAL'] &&
-								Number(item['GROWTH-ARR']) > 0) &&
+								Number(item['GROWTH-ARR']) > 0)) &&
 							item['ACTIVE']
 					);
 				}

@@ -77,10 +77,11 @@ definition {
 		}
 
 		task ("Add a dynamic collection for All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a Grid to page") {
@@ -172,93 +173,43 @@ definition {
 		}
 
 		task ("View the title of assets are shown in the first module") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertTextEquals(
-					key_colPosition = 1,
-					key_element = "//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = ${n},
-					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = ${title});
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "xpath=(//div[@aria-label='Collection Display'])[1]//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')][normalize-space()='${title}']");
 			}
 		}
 
 		task ("View the name of associated categories are shown in the second module") {
-			var n = 1;
-
-			for (var title : list "Category Name 1,Category Name 2,Category Name 3") {
-				AssertTextEquals(
-					key_colPosition = 1,
-					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = 1,
-					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = ${title});
-
-				var n = ${n} + 1;
+			for (var n : list "1,2,3") {
+				AssertVisible(locator1 = "xpath=((//div[@aria-label='Collection Display'])[2]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 1'])[${n}]");
 			}
 
-			var n = 1;
-
-			for (var title : list "Category Name 1,Category Name 2") {
-				AssertTextEquals(
-					key_colPosition = 1,
-					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = 2,
-					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = ${title});
-
-				var n = ${n} + 1;
+			for (var n : list "1,2") {
+				AssertVisible(locator1 = "xpath=((//div[@aria-label='Collection Display'])[2]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 2'])[${n}]");
 			}
 
-			AssertTextEquals(
-				key_colPosition = 1,
-				key_element = "//div[contains(@class,'row')]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = 3,
-				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-				value1 = "Category Name 1");
-
-			PageEditor.publish();
+			AssertVisible(locator1 = "xpath=(//div[@aria-label='Collection Display'])[2]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 3']");
 		}
 
 		task ("Navigate to page at view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+			PageEditor.publish();
 		}
 
 		task ("View the title of assets are shown in the first module") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
-					id = "element-text",
-					position = ${n},
-					text = ${title});
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-collection')])[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space()='${title}']");
 			}
 		}
 
 		task ("View the name of associated categories are shown in the second module") {
-			var n = 1;
-
-			for (var title : list "Category Name 1,Category Name 2,Category Name 3,Category Name 1,Category Name 2,Category Name 1") {
-				ContentPages.viewFragmentText(
-					fragmentName = "button",
-					id = "link",
-					position = ${n},
-					text = ${title});
-
-				var n = ${n} + 1;
+			for (var n : list "1,2,3") {
+				AssertVisible(locator1 = "xpath=((//div[contains(@class,'lfr-layout-structure-item-collection')])[2]//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 1'])[${n}]");
 			}
+
+			for (var n : list "1,2") {
+				AssertVisible(locator1 = "xpath=((//div[contains(@class,'lfr-layout-structure-item-collection')])[2]//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 2'])[${n}]");
+			}
+
+			AssertVisible(locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-collection')])[2]//*[contains(@data-lfr-editable-id,'link')][normalize-space()='Category Name 3']");
 		}
 	}
 

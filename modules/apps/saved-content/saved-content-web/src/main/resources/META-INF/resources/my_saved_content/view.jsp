@@ -33,7 +33,14 @@ if (Validator.isNotNull(backURL)) {
 		>
 
 			<%
-			String assetTitle = mySavedContentDisplayContext.getAssetTitle(savedContentEntry.getClassName(), savedContentEntry.getClassPK());
+				AssetRenderer<?> assetRenderer =
+					mySavedContentDisplayContext.getAssetRenderer(
+						savedContentEntry.getClassName(),
+						savedContentEntry.getClassPK());
+%>
+
+				String assetTitle = mySavedContentDisplayContext.getAssetTitle(assetRenderer);
+			String assetTitle = mySavedContentDisplayContext.getAssetTitle(assetRenderer);
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -51,7 +58,7 @@ if (Validator.isNotNull(backURL)) {
 					borderless="<%= true %>"
 					cssClass="lfr-portal-tooltip mr-2"
 					displayType="secondary"
-					href="<%= mySavedContentDisplayContext.getURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
+					href="<%= mySavedContentDisplayContext.getURL(assetRenderer) %>"
 					icon="shortcut"
 					monospaced="<%= true %>"
 					small="<%= true %>"

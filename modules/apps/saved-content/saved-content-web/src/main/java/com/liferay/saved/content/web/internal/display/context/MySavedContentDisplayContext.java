@@ -54,10 +54,8 @@ public class MySavedContentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAssetTitle(String className, long classPK)
+	public String getAssetTitle(AssetRenderer<?> assetRenderer)
 		throws PortalException {
-
-		AssetRenderer<?> assetRenderer = _getAssetRenderer(className, classPK);
 
 		if (assetRenderer == null) {
 			return null;
@@ -108,9 +106,7 @@ public class MySavedContentDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getURL(String className, long classPK) throws Exception {
-		AssetRenderer<?> assetRenderer = _getAssetRenderer(className, classPK);
-
+	public String getURL(AssetRenderer<?> assetRenderer) throws Exception {
 		if (assetRenderer == null) {
 			return null;
 		}
@@ -120,7 +116,7 @@ public class MySavedContentDisplayContext {
 			_themeDisplay.getURLCurrent());
 	}
 
-	private AssetRenderer<?> _getAssetRenderer(String className, long classPK)
+	public AssetRenderer<?> getAssetRenderer(String className, long classPK)
 		throws PortalException {
 
 		try {

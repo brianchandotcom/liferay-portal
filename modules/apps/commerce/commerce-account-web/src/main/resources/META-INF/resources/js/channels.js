@@ -18,10 +18,10 @@ export default function ({
 
 	function selectItem(channel) {
 		const channelData = {
+			addressChannelExternalReferenceCode: channel.externalReferenceCode,
+			addressChannelId: channel.id,
 			addressExternalReferenceCode,
 			addressId,
-			channelExternalReferenceCode: channel.externalReferenceCode,
-			channelId: channel.id,
 		};
 
 		return AccountAddressChannelResource.addAccountAddressChannel(

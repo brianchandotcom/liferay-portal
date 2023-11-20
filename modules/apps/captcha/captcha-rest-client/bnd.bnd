@@ -1,3 +1,9 @@
 Bundle-Name: Liferay Captcha REST Client
 Bundle-SymbolicName: com.liferay.captcha.rest.client
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.captcha.rest.client.dto.v1_0,\
+	com.liferay.captcha.rest.client.http,\
+	com.liferay.captcha.rest.client.pagination,\
+	com.liferay.captcha.rest.client.resource.v1_0,\
+	com.liferay.captcha.rest.client.serdes.v1_0

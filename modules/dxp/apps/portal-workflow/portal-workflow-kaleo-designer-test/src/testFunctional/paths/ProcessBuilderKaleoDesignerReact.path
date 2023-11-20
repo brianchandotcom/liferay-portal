@@ -471,7 +471,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_TYPE_OPTIONS</td>
-	<td>//span[contains(@class,'custom-control-label-text')and contains(text(),'${key_checkboxValue}')]//..//..//input[@type='checkbox']</td>
+	<td>//*[@class='dropdown-item' and contains(.,'${key_checkboxValue}')]//input</td>
 	<td></td>
 </tr>
 <tr>

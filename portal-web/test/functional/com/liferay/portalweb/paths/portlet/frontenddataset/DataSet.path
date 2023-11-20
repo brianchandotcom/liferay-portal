@@ -469,6 +469,21 @@
 	<td>xpath=(//div[(@class="dnd-tr")]/div[contains(@class,"dnd-td") and contains(string(), "${key_entryName}")]/..//*[contains(@class,'${key_icon}')])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ANY_DISABLED</td>
+	<td>//select[@placeholder="${key_placeholderText}"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS_N</td>
+	<td>xpath=(//tr[.//*[normalize-space(text())='${key_text}']]//button[contains(@class,'dropdown-toggle')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUS_N</td>
+	<td>xpath=(//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))] | //button[not(contains(@class,'borderless'))][not(contains(@class,'btn-unstyled'))][*[contains(@class,'icon-plus')]])[2]</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

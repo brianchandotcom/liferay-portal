@@ -260,11 +260,16 @@ definition {
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
 			value1 = ${clientSecret});
 
-		//SelectFrameTop();
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_TOKEN_URL",
-			value1 = "http://localhost:8080/o/oauth2/token");
+		if (isSet(tokenURL)) {
+			Type(
+				locator1 = "OAuth2#OAUTH2_TESTER_TOKEN_URL",
+				value1 = ${tokenURL});
+		}
+		else {
+			Type(
+				locator1 = "OAuth2#OAUTH2_TESTER_TOKEN_URL",
+				value1 = "http://localhost:8080/o/oauth2/token");
+		}
 
 		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_TOKEN");
 	}
@@ -320,7 +325,12 @@ definition {
 	macro deployInstanceConfigFile(osgiConfigFileName = null) {
 		var companyId = JSONCompany.getCompanyId();
 
-		AntCommands.runCommand("build-test-oauth2.xml", "prepare-oauth2-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
+		if (isSet(bundleId)) {
+			AntCommands.runCommand("build-test-oauth2.xml", "prepare-oauth2-osgi-configuration -Dbundle.id=${bundleId} -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
+		}
+		else {
+			AntCommands.runCommand("build-test-oauth2.xml", "prepare-oauth2-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
+		}
 	}
 
 	@summary = "Default summary"

@@ -7788,6 +7788,21 @@ ${docker.start.error}</fail>
 				select="\1"
 			/>
 
+			<local name="ip.address" />
+
+			<get-ip-address />
+
+			<local name="docker.add.host.hostname.arg" />
+			<local name="docker.add.host.node.name.arg" />
+
+			<condition else="" property="docker.add.host.hostname.arg" value="--add-host ${env.HOSTNAME}:${ip.address}">
+				<isset property="env.HOSTNAME" />
+			</condition>
+
+			<condition else="" property="docker.add.host.node.name.arg" value="--add-host ${env.NODE_NAME}:${ip.address}">
+				<isset property="env.NODE_NAME" />
+			</condition>
+
 			<local name="host.git.dir" />
 
 			<get-host-git-dir />
@@ -7799,6 +7814,8 @@ ${docker.start.error}</fail>
 			</condition>
 
 			<start-docker-container image="${playwright.docker.image}" name="${playwright.docker.host}">\
+				${docker.add.host.hostname.arg} \
+				${docker.add.host.node.name.arg} \
 				${env.portal.url.arg} \
 				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
 			</start-docker-container>

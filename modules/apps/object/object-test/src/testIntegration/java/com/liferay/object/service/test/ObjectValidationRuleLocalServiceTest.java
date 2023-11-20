@@ -177,10 +177,30 @@ public class ObjectValidationRuleLocalServiceTest {
 						RandomTestUtil.randomString()
 					).build())));
 
-		ObjectField dateObjectField = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(), "dateObjectField");
 		ObjectField textObjectField = _objectFieldLocalService.fetchObjectField(
 			_objectDefinition.getObjectDefinitionId(), "textObjectField");
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSettingValueException.
+				CompositeKeyMustHaveMinObjectFields.class,
+			"Add a minimum of two object fields to create unique composite " +
+				"keys",
+			() -> _addObjectValidationRule(
+				ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
+				errorLabelMap, StringPool.BLANK, nameLabelMap,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				StringPool.BLANK, false,
+				Collections.singletonList(
+					new ObjectValidationRuleSettingBuilder(
+					).name(
+						ObjectValidationRuleSettingConstants.
+							NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+					).value(
+						String.valueOf(textObjectField.getObjectFieldId())
+					).build())));
+
+		ObjectField dateObjectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(), "dateObjectField");
 
 		AssertUtils.assertFailure(
 			ObjectValidationRuleSettingValueException.InvalidValue.class,

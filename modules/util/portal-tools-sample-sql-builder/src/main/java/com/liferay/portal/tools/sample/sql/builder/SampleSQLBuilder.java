@@ -172,6 +172,10 @@ public class SampleSQLBuilder {
 
 			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
 		}
+		else if (BenchmarksPropsValues.DB_TYPE == DBType.POSTGRESQL) {
+			db = new SamplePostgreSQLDB(
+				db.getMajorVersion(), db.getMinorVersion());
+		}
 
 		Map<String, Writer> sqlWriters = new HashMap<>();
 		Map<String, StringBundler> insertSQLs = new HashMap<>();

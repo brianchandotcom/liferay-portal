@@ -205,6 +205,24 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test SortingIsLimitedByODataCharacterLimit {
+		task ("When setting the Sorting with 10001 characters") {
+			APIBuilderUI.addAndPublishEndpointConfiguration(
+				editValue = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Duis auctor orci nec justo ullamcorper, at fermentum risus accumsan. Nullam convallis risus id lectus congue, vitae tincidunt orci tristique. Nam quis elit eu libero dapibus lobortis. Suspendisse potenti. Curabitur placerat velit vitae arcu tempor, non vestibulum lectus auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia CuraLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Duis auctor orci nec justo ullamcorper, at fermentum risus accumsan. Nullam convallis risus id lectus congue, vitae tincidunt orci tristique. Nam quis elit eu libero dapibus lobortis. Suspendisse potenti. Curabitur placerat velit vitae arcu tempor, non vestibulum lectus auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia CuraLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Duis auctor orci nec justo ullamcorper, at fermentumqd",
+				entity = "Endpoints",
+				fieldName = "sort",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then error message of limitation to 10000 characters is present And Then Sorting setup is not saved") {
+			AssertElementPresent(
+				key_alertMessage = '''Object entry value exceeds the maximum length of 1000 characters for object field "oDataSort"''',
+				locator1 = "Message#ERROR_ENTER_ANY");
+		}
+	}
+
 	@priority = 5
 	test SortingIsPresentInEndpointConfiguration {
 		property portal.acceptance = "true";

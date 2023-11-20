@@ -80,8 +80,10 @@ export default function DisplayPageSelector({
 }
 
 DisplayPageSelector.propTypes = {
-	classNameId: PropTypes.string.isRequired,
-	classTypeId: PropTypes.string.isRequired,
+	mappingIds: PropTypes.shape({
+		classNameId: PropTypes.string,
+		classTypeId: PropTypes.string,
+	}).isRequired,
 	onConfigChange: PropTypes.func.isRequired,
 	selectedValue: PropTypes.string,
 };

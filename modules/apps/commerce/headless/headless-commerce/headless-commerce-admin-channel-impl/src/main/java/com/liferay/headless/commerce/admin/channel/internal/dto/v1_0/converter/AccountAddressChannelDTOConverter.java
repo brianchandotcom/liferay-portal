@@ -51,12 +51,12 @@ public class AccountAddressChannelDTOConverter
 				accountAddressChannelId =
 					accountAddressChannelRel.getCommerceChannelRelId();
 				actions = dtoConverterContext.getActions();
+				addressChannelExternalReferenceCode =
+					commerceChannel.getExternalReferenceCode();
+				addressChannelId = commerceChannel.getCommerceChannelId();
 				addressExternalReferenceCode =
 					address.getExternalReferenceCode();
 				addressId = address.getAddressId();
-				channelExternalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				channelId = commerceChannel.getCommerceChannelId();
 			}
 		};
 	}

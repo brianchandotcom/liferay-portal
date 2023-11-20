@@ -6,12 +6,14 @@
 package com.liferay.jenkins.results.parser.jethr0;
 
 import com.liferay.jenkins.results.parser.JenkinsMaster;
-import com.liferay.jenkins.results.parser.Jethr0BuildUpdater;
 
 import java.io.Closeable;
 import java.io.IOException;
 
 import java.util.Map;
+
+import javax.jms.JMSException;
+import javax.jms.MessageListener;
 
 import org.json.JSONObject;
 
@@ -52,9 +54,13 @@ public interface Jethr0Client extends Closeable {
 
 	public String springBootRequest(String urlPath, String message);
 
-	public void subscribe(Jethr0BuildUpdater jethr0BuildUpdater);
+	public void subscribe(
+			MessageListener messageListener, String messageSelector)
+		throws JMSException;
 
-	public void unsubscribe(Jethr0BuildUpdater jethr0BuildUpdater);
+	public void unsubscribe(
+			MessageListener messageListener, String messageSelector)
+		throws JMSException;
 
 	public enum Environment {
 

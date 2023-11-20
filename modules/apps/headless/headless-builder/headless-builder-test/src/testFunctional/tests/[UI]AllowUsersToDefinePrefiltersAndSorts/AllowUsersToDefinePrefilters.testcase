@@ -323,4 +323,30 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test PrefilterIsLimitedByODataCharacterLimit {
+		property portal.acceptance = "true";
+
+		task ("When setting the Filters with 1001 characters") {
+			APIBuilderUI.addAndPublishEndpointConfiguration(
+				editValue = "ddLoremipsumdolorsitametconsecteturadipisicingelitSeddoeiusmodtemporincididuntutlaboretolaborumExcepteursintoccaecatcupidatatnonproidentsuntinculpaquiofficiadeseruntmollitanimidestlaborumggggggggggggggggggggggfhddfghdfContrarytopopularbelief,LoremIpsumisnotsimplyrandomtext.IthasrootsinapieceofclassicalLatinliteraturefrom45BC,makingitover2000yearsold.RichardMcClintock,aLatinprofessoratHampdenyCollegeinVirginia,lookeduponeofthemoreobscureLatinwords,consectetur,fromaLoremIpsumpassage,andgoingthroughthecitesofthewordinclassicalliterature,discoveredtheundoubtablesource.LoremIpsumcomesfromsections1.10.32and1.10.33ofttdeFinibusBonorumetMalorum(TheExtremesofGoodandEvil)byCicero,writtenin45BC.Thisbookisatreatiseonthetheoryofethics,verypopularduringtheRenaissance.ThefirstlineofLoremIpsum,ttLoremipsumdolorsitamet..tt,comesfromalineinsection1.10.3extoftheprintingaggggggvcxxdsafaertgertrwryrttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttbdff",
+				entity = "Endpoints",
+				fieldName = "filter",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then error message of limitation to 1000 characters is present") {
+			AssertElementPresent(
+				key_alertText = "Object entry value exceeds the maximum length of 1000 characters for object field \"oDataFilter\"",
+				locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
+		}
+
+		task ("And Then Filtering setup is not saved") {
+			AssertElementNotPresent(
+				key_alertText = "The filter was updated.",
+				locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
+		}
+	}
+
 }

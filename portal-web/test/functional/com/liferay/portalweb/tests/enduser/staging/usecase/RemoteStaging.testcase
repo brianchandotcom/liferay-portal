@@ -207,6 +207,10 @@ definition {
 			publishTemplateName = "My Template Title",
 			scheduleProcess = "true");
 
+		// Pausing 300 seconds due to LRQA-83187
+
+		Pause(value1 = 300000);
+
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.viewPublishTask(publicationTitle = "My Publish Title");

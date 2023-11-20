@@ -136,6 +136,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLED_PROPERTY_CONTAINER</td>
+	<td>//button[(@class='property-container btn btn-unstyled') and contains(.,'${key_text}')]//div[contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_BUTTON_FROM_PROPERTY_BOX</td>
+	<td>//div[@class='autofit-row' and contains(.,'${key_commentValue}')]//button[contains(@aria-label, 'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAST_ELEMENT_IN_PROPERTY_BOX</td>
+	<td>//div[@class='autofit-row'][last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(text(),'Publish')]</td>
 	<td></td>

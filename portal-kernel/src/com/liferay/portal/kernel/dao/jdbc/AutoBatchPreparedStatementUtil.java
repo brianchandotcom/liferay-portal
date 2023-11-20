@@ -9,11 +9,11 @@ import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -79,10 +79,9 @@ public class AutoBatchPreparedStatementUtil {
 	private static final Method _closeMethod;
 	private static final Method _executeBatchMethod;
 	private static final Method _getConnectionMethod;
-	private static volatile PortalExecutorManager _portalExecutorManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PortalExecutorManager.class, AutoBatchPreparedStatementUtil.class,
-			"_portalExecutorManager", false, true);
+	private static final Snapshot<PortalExecutorManager>
+		_portalExecutorManagerSnapshot = new Snapshot<>(
+			AutoBatchPreparedStatementUtil.class, PortalExecutorManager.class);
 
 	static {
 		try {
@@ -220,8 +219,12 @@ public class AutoBatchPreparedStatementUtil {
 
 			PreparedStatement localPreparedStatement = getPreparedStatement();
 
+			NoticeableExecutorService noticeableExecutorService =
+				_portalExecutorManager.getPortalExecutor(
+					ConcurrentNoBatchInvocationHandler.class.getName());
+
 			NoticeableFuture<Void> noticeableFuture =
-				_noticeableExecutorService.submit(
+				noticeableExecutorService.submit(
 					() -> {
 						try {
 							actionUnsafeConsumer.accept(localPreparedStatement);
@@ -257,9 +260,8 @@ public class AutoBatchPreparedStatementUtil {
 
 		private final Set<Future<Void>> _futures = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
-		private final NoticeableExecutorService _noticeableExecutorService =
-			_portalExecutorManager.getPortalExecutor(
-				ConcurrentNoBatchInvocationHandler.class.getName());
+		private final PortalExecutorManager _portalExecutorManager =
+			_portalExecutorManagerSnapshot.get();
 
 	}
 

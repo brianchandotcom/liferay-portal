@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -287,7 +287,7 @@ public class BreadcrumbUtil {
 			return;
 		}
 
-		if (group.isActive() && _hasViewPermissions(group, themeDisplay)) {
+		if (group.isActive() && _hasViewPermissions(layoutSet, themeDisplay)) {
 			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
 				layoutSet, themeDisplay);
 
@@ -416,11 +416,13 @@ public class BreadcrumbUtil {
 	}
 
 	private static boolean _hasViewPermissions(
-		Group group, ThemeDisplay themeDisplay) {
+		LayoutSet layoutSet, ThemeDisplay themeDisplay) {
 
 		try {
-			if (GroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), group,
+			if (LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(),
+					LayoutLocalServiceUtil.getDefaultPlid(
+						layoutSet.getGroupId(), layoutSet.isPrivateLayout()),
 					ActionKeys.VIEW)) {
 
 				return true;

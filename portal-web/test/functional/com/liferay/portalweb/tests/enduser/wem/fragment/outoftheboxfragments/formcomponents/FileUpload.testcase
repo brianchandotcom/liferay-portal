@@ -30,19 +30,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "UploadObject");
-		}
-	}
-
 	@description = "This is a test for LPS-157806. Add custom text on Button Text field of File Upload fragment on content page."
 	@priority = 4
 	test AddCustomTextOnButtonTextFieldOnContentPage {

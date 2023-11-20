@@ -207,7 +207,7 @@ public class ParallelExecutor<T> {
 
 			sb.append(_parallelExecutor.toString());
 
-			if (getRemainingTaskCount() == 0) {
+			if ((getRemainingTaskCount() + getRunningTaskCount()) == 0) {
 				sb.append(" completed in ");
 			}
 			else {

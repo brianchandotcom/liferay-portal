@@ -160,32 +160,41 @@
 	}
 </aui:script>
 
-<aui:script>
-	AUI().ready('node', 'event', (A) => {
-		selectSampleFileType(A);
+<aui:script sandbox="<%= true %>">
+	function selectSampleFileType() {
+		const sampleFile = document.getElementById(
+			'lfr-definition-virtual-sample-button-row-message'
+		);
 
-		A.one('#<portlet:namespace />useSample').on('click', (b) => {
-			selectSampleFileType(A);
-		});
-	});
+		const isSampleFileSelected = sampleFile.classList.contains('hide');
 
-	function selectSampleFileType(A) {
-		var useSampleCheckbox = A.one('#<portlet:namespace />useSample');
+		const sampleURLInput = document.getElementById(
+			'<portlet:namespace />sampleURL'
+		);
+		const selectSampleFile = document.getElementById(
+			'<portlet:namespace />selectSampleFile'
+		);
 
-		var isSampleFileSelected = A.one(
-			'#lfr-definition-virtual-sample-button-row-message'
-		).hasClass('hide');
-
-		if (useSampleCheckbox.attr('checked')) {
-			A.one('#<portlet:namespace />sampleURL').attr(
-				'disabled',
-				isSampleFileSelected
-			);
-			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', false);
+		if (useSampleCheckbox.checked) {
+			if (isSampleFileSelected) {
+				sampleURLInput.setAttribute('disabled', '');
+			}
+			else {
+				sampleURLInput.removeAttribute('disabled');
+			}
+			selectSampleFile.removeAttribute('disabled');
 		}
 		else {
-			A.one('#<portlet:namespace />sampleURL').attr('disabled', true);
-			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', true);
+			sampleURLInput.setAttribute('disabled', '');
+			selectSampleFile.setAttribute('disabled', '');
 		}
 	}
+
+	const useSampleCheckbox = document.getElementById(
+		'<portlet:namespace />useSample'
+	);
+
+	selectSampleFileType();
+
+	useSampleCheckbox.addEventListener('click', selectSampleFileType);
 </aui:script>

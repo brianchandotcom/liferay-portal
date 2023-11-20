@@ -49,7 +49,11 @@ function AssetCategoriesSelector({
 						}}
 						portletURL={portletURL}
 						required={vocabulary.required}
-						selectedItems={vocabulary.selectedItems}
+						selectedItems={
+							vocabulary.selectedItems
+								? [...vocabulary.selectedItems]
+								: []
+						}
 						showLabel={showLabel}
 						singleSelect={vocabulary.singleSelect}
 						sourceItemsVocabularyIds={[vocabulary.id]}

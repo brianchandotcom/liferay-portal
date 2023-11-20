@@ -10,6 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
@@ -101,6 +102,13 @@ export default function RulesModal({editingRule, onCloseModal}) {
 					name,
 					ruleId: editingRule.id,
 				})
+			).then(() =>
+				openToast({
+					message: Liferay.Language.get(
+						'the-rule-was-updated-successfully'
+					),
+					type: 'success',
+				})
 			);
 		}
 		else {
@@ -110,6 +118,13 @@ export default function RulesModal({editingRule, onCloseModal}) {
 					conditionType,
 					conditions,
 					name,
+				})
+			).then(() =>
+				openToast({
+					message: Liferay.Language.get(
+						'the-rule-was-created-successfully'
+					),
+					type: 'success',
 				})
 			);
 		}

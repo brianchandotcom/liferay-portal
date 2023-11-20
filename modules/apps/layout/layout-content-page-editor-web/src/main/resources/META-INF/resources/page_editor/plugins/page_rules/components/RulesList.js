@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
@@ -33,6 +33,13 @@ export default function RulesList() {
 		dispatch(
 			deleteRule({
 				ruleId: rule.id,
+			})
+		).then(() =>
+			openToast({
+				message: Liferay.Language.get(
+					'the-rule-was-deleted-successfully'
+				),
+				type: 'success',
 			})
 		);
 	};

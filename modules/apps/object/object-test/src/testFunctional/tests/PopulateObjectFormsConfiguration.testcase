@@ -182,7 +182,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
 
-		PopulateObjectFormsConfiguration.saveFormObject();
+		Form.save();
 
 		AssertElementNotPresent(
 			locator1 = "FormsAdmin#FORMS_NAVIGATION_BAR_ITEM",

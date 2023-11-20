@@ -44,13 +44,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro saveFormObject() {
-		AssertClick(
-			locator1 = "PopulateObjectFormsConfiguration#BUTTON_SAVE_FORM",
-			value1 = "Save");
-	}
-
-	@summary = "Default summary"
 	macro selectCustomObject(label = null) {
 		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
 

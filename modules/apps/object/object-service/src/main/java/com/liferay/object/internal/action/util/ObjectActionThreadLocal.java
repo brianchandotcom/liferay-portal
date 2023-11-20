@@ -43,6 +43,21 @@ public class ObjectActionThreadLocal {
 		return _objectEntryIdsMapThreadLocal.get();
 	}
 
+	public static boolean isClearObjectEntryIdsMap() {
+		return _clearObjectEntryIdsMapThreadLocal.get();
+	}
+
+	public static void setClearObjectEntryIdsMap(
+		boolean clearObjectEntryIdsMap) {
+
+		_clearObjectEntryIdsMapThreadLocal.set(clearObjectEntryIdsMap);
+	}
+
+	private static final ThreadLocal<Boolean>
+		_clearObjectEntryIdsMapThreadLocal = new CentralizedThreadLocal<>(
+			ObjectActionThreadLocal.class +
+				"._clearObjectEntryIdsMapThreadLocal",
+			() -> true);
 	private static final ThreadLocal<Map<Long, Set<Long>>>
 		_objectEntryIdsMapThreadLocal = new CentralizedThreadLocal<>(
 			ObjectActionThreadLocal.class.getName() +

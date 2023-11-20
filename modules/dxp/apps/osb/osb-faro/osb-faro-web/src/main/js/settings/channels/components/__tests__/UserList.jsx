@@ -59,11 +59,9 @@ describe('ChannelUserList', () => {
 	});
 
 	it('should open a modal to remove users', async () => {
-		const {debug, queryByTestId} = render(<DefaultComponent />);
+		const {queryByTestId} = render(<DefaultComponent />);
 
 		jest.runAllTimers();
-
-		debug();
 
 		fireEvent.click(queryByTestId('delete-user'));
 

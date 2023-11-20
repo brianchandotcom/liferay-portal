@@ -177,6 +177,40 @@ public class ObjectValidationRuleLocalServiceTest {
 						RandomTestUtil.randomString()
 					).build())));
 
+		ObjectField dateObjectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(), "dateObjectField");
+		ObjectField textObjectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(), "textObjectField");
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSettingValueException.InvalidValue.class,
+			String.format(
+				"The value \"%s\" of the object validation rule setting " +
+					"\"%s\" is invalid",
+				dateObjectField.getObjectFieldId(),
+				ObjectValidationRuleSettingConstants.
+					NAME_COMPOSITE_KEY_OBJECT_FIELD_ID),
+			() -> _addObjectValidationRule(
+				ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
+				errorLabelMap, StringPool.BLANK, nameLabelMap,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				StringPool.BLANK, false,
+				Arrays.asList(
+					new ObjectValidationRuleSettingBuilder(
+					).name(
+						ObjectValidationRuleSettingConstants.
+							NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+					).value(
+						String.valueOf(dateObjectField.getObjectFieldId())
+					).build(),
+					new ObjectValidationRuleSettingBuilder(
+					).name(
+						ObjectValidationRuleSettingConstants.
+							NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+					).value(
+						String.valueOf(textObjectField.getObjectFieldId())
+					).build())));
+
 		String objectValidationRuleSettingValue = RandomTestUtil.randomString();
 
 		AssertUtils.assertFailure(
@@ -239,9 +273,6 @@ public class ObjectValidationRuleLocalServiceTest {
 
 		externalReferenceCode = RandomTestUtil.randomString();
 
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(), "textObjectField");
-
 		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 			externalReferenceCode, nameLabelMap,
@@ -253,18 +284,18 @@ public class ObjectValidationRuleLocalServiceTest {
 					ObjectValidationRuleSettingConstants.
 						NAME_OUTPUT_OBJECT_FIELD_ID
 				).value(
-					String.valueOf(objectField.getObjectFieldId())
+					String.valueOf(textObjectField.getObjectFieldId())
 				).build()));
 
 		_assertObjectValidationRule(
 			true, ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 			externalReferenceCode, nameLabelMap,
-			String.valueOf(objectField.getObjectFieldId()),
+			String.valueOf(textObjectField.getObjectFieldId()),
 			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
 			_VALID_DDM_SCRIPT, objectValidationRule);
 
 		_objectFieldLocalService.deleteObjectField(
-			objectField.getObjectFieldId());
+			textObjectField.getObjectFieldId());
 
 		objectValidationRule =
 			_objectValidationRuleLocalService.getObjectValidationRule(

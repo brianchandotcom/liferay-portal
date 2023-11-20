@@ -66,7 +66,7 @@ export function RuleBuilderActionSection({
 
 	const onDeleteAction = (action: Action, index: number) => {
 		if (actions.length === 1) {
-			setActions([{id: action.id} as Action]);
+			setActions([{id: uuidv4()} as Action]);
 		}
 		else {
 			const nextCondition = actions[index - 1] || actions[index + 1];
@@ -187,7 +187,7 @@ export function RuleBuilderConditionSection({
 
 	const onDeleteCondition = (condition: Condition, index: number) => {
 		if (conditions.length === 1) {
-			setConditions([{id: condition.id} as Condition]);
+			setConditions([{id: uuidv4()} as Condition]);
 		}
 		else {
 			const nextCondition =

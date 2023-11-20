@@ -610,7 +610,7 @@ definition {
 	macro addObjectValidation(validationType, objectName, labelName, fieldName = null) {
 		Variables.assertDefined(parameterList = "${objectName},${labelName},${script},${validationType}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
@@ -1089,7 +1089,7 @@ definition {
 
 	@summary = "Get the external reference code of an object field"
 	macro getObjectFieldERC(objectName, fieldName) {
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 

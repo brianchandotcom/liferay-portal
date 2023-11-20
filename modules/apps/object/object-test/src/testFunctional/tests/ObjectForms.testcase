@@ -109,6 +109,8 @@ definition {
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
 
+		Form.save();
+
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
@@ -168,6 +170,8 @@ definition {
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
 
+		Form.save();
+
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
@@ -225,6 +229,8 @@ definition {
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
 
+		Form.save();
+
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
@@ -277,6 +283,8 @@ definition {
 		Form.gotoAddField(fieldType = "Text");
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
+
+		Form.save();
 
 		Form.publishForm();
 

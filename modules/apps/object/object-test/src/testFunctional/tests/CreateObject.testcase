@@ -2240,6 +2240,8 @@ definition {
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
 
+		Form.save();
+
 		Form.publishForm();
 
 		ObjectAdmin.openObjectAdmin();
@@ -9059,6 +9061,8 @@ definition {
 		Form.gotoAddField(fieldType = "Text");
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
+
+		Form.save();
 
 		Form.publishForm();
 

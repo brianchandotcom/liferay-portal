@@ -479,6 +479,7 @@ type UserForm = {
 
 type OfferingType = {
 	description: string;
+	disabled?: boolean;
 	label: string;
 };
 

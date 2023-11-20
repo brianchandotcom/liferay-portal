@@ -14,6 +14,7 @@ import {Tooltip} from '../Tooltip/Tooltip';
 interface CheckboxProps {
 	checked: boolean;
 	description: string;
+	disabled?: boolean;
 	label: string;
 	onChange: (label: string) => void;
 	tooltip?: string;
@@ -22,6 +23,7 @@ interface CheckboxProps {
 export function CheckboxCard({
 	checked,
 	description,
+	disabled,
 	label,
 	onChange,
 	tooltip,
@@ -30,9 +32,14 @@ export function CheckboxCard({
 		<div
 			className={classNames('checkbox-container d-flex p-3 rounded', {
 				'checkbox-container-checked': checked,
+				'checkbox-container-disabled': disabled,
 			})}
 		>
-			<ClayCheckbox checked={checked} onChange={() => onChange(label)} />
+			<ClayCheckbox
+				checked={checked}
+				disabled={disabled}
+				onChange={() => onChange(label)}
+			/>
 			<div className="mx-2">
 				<h4>{label}</h4>
 				<p className="checkbox-container-description">{description}</p>

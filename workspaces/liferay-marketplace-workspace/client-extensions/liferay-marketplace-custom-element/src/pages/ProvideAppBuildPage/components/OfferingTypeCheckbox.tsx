@@ -22,6 +22,7 @@ export default function OfferingTypeCheckbox({
 				<CheckboxCard
 					checked={selectedValue.includes(type?.label)}
 					description={type.description}
+					disabled={type.disabled}
 					key={type.label}
 					label={type.label}
 					onChange={handleSelectCheckbox}

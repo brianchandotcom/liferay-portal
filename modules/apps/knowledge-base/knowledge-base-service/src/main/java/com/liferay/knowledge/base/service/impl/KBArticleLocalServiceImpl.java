@@ -1200,9 +1200,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		int oldStatus = kbArticle.getStatus();
 
-		kbArticle = updateStatus(
+		kbArticle = _updateStatus(
 			userId, kbArticle.getResourcePrimKey(),
 			WorkflowConstants.STATUS_IN_TRASH);
+
+		_assetEntryLocalService.updateVisible(
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey(), false);
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", kbArticle.getTitle());
@@ -1257,8 +1260,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
 			KBArticle.class.getName(), kbArticleId);
 
-		updateStatus(
+		kbArticle = _updateStatus(
 			userId, kbArticle.getResourcePrimKey(), trashEntry.getStatus());
+
+		if (kbArticle.isApproved()) {
+			_assetEntryLocalService.updateVisible(
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
+				true);
+		}
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", kbArticle.getTitle());
@@ -2627,6 +2636,30 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_indexWriterHelper.updatePermissionFields(
 			KBArticle.class.getName(), String.valueOf(resourcePrimKey));
+	}
+
+	private KBArticle _updateStatus(
+			long userId, long resourcePrimKey, int status)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		KBArticle kbArticle = getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		kbArticle.setStatus(status);
+		kbArticle.setStatusByUserId(user.getUserId());
+		kbArticle.setStatusByUserName(user.getFullName());
+		kbArticle.setStatusDate(new Date());
+
+		kbArticle = kbArticlePersistence.update(kbArticle);
+
+		Indexer<KBArticle> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			KBArticle.class);
+
+		indexer.reindex(kbArticle);
+
+		return kbArticle;
 	}
 
 	private void _validate(

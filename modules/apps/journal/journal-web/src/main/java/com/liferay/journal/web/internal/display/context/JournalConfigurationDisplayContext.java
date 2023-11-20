@@ -14,7 +14,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -54,9 +53,6 @@ public class JournalConfigurationDisplayContext {
 
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
-		_journalWebConfiguration =
-			(JournalWebConfiguration)httpServletRequest.getAttribute(
-				JournalWebConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -192,8 +188,6 @@ public class JournalConfigurationDisplayContext {
 		ddmStructureItemSelectorCriterion.setClassNameId(
 			PortalUtil.getClassNameId(JournalArticle.class));
 		ddmStructureItemSelectorCriterion.setMultiSelection(true);
-		ddmStructureItemSelectorCriterion.setSelectAncestorScopes(
-			_journalWebConfiguration.showAncestorScopesByDefault());
 		ddmStructureItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new DDMStructureItemSelectorReturnType());
 
@@ -247,7 +241,6 @@ public class JournalConfigurationDisplayContext {
 	private final ItemSelector _itemSelector;
 	private final JournalGroupServiceConfiguration
 		_journalGroupServiceConfiguration;
-	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _navigation;
 	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;

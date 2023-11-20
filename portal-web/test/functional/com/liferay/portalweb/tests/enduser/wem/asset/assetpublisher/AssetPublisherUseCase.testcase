@@ -84,7 +84,7 @@ definition {
 		task ("Sign in the private virtual host") {
 			User.logoutPG();
 
-			User.firstLoginPG(virtualHostsURL = "http://www.baker.com:8080");
+			User.firstLoginUI(specificURL = "http://www.baker.com:8080");
 		}
 
 		task ("View private pages") {
@@ -96,7 +96,7 @@ definition {
 		}
 
 		task ("Sign in the public virtual host") {
-			User.firstLoginPG(virtualHostsURL = "http://www.able.com:8080");
+			User.firstLoginUI(specificURL = "http://www.able.com:8080");
 		}
 
 		task ("View public pages not shown") {

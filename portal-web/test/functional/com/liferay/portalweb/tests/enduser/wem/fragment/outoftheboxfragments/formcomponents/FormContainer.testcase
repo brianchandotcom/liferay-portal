@@ -223,7 +223,9 @@ definition {
 		}
 
 		task ("Then the page creator will not be redirected and will see a validation error message") {
-			Alert.viewErrorMessage(errorMessage = "The Age should be an integer.");
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM",
+				value1 = "The Age should be an integer.");
 
 			Page.viewCurrentPage(pageName = "Test Page Name");
 		}

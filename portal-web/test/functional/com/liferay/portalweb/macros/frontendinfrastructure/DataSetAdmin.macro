@@ -3,7 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro addActions(messageType = null, icon = null, headlessAction = null, type = null, url = null, actionName = null, confirmationMessage = null, actionTab = null, variant = null, inputText = null) {
 		if (isSet(actionTab)) {
-		    Button.click(button = ${actionTab});
+			Button.click(button = ${actionTab});
 
 			if (${actionTab} == "Creation Actions") {
 				Click.mouseOverClick(locator1 = "DataSet#PLUS_N");
@@ -11,8 +11,8 @@ definition {
 		}
 		else {
 			LexiconEntry.gotoAdd();
-			}
-		
+		}
+
 		if (isSet(actionName)) {
 			var key_actionNameList = ${actionName};
 		}

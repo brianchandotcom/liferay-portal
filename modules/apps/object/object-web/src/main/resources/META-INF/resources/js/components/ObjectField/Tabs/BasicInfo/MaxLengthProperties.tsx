@@ -131,7 +131,7 @@ export function MaxLengthProperties({
 							onSettingsChange({
 								name: 'maxLength',
 								value:
-									Number(value) <= 280
+									Number(value) <= defaultMaxLength
 										? Number(value)
 										: (settings.maxLength as number),
 							})

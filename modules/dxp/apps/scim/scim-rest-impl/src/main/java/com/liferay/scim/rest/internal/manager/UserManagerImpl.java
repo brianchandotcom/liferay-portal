@@ -84,8 +84,7 @@ public class UserManagerImpl implements UserManager {
 		ConfigurationAdmin configurationAdmin,
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoTableLocalService expandoTableLocalService,
-		ExpandoValueLocalService expandoValueLocalService,
-		Searcher searcher,
+		ExpandoValueLocalService expandoValueLocalService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		UserLocalService userLocalService) {
 

@@ -1009,6 +1009,16 @@ public class DefaultObjectEntryManagerImpl
 		}
 	}
 
+	private byte[] _decode(String base64) {
+		try {
+			return Base64.decode(base64);
+		}
+		catch (Exception exception) {
+			throw new IllegalArgumentException(
+				"Error decoding base64 content", exception);
+		}
+	}
+
 	private void _disassociateRelatedModels(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship, long primaryKey1,
@@ -1437,8 +1447,8 @@ public class DefaultObjectEntryManagerImpl
 
 		com.liferay.portal.kernel.repository.model.FileEntry
 			serviceBuilderFileEntry = _attachmentManager.addFileEntry(
-				objectField.getCompanyId(),
-				Base64.decode(fileEntry.getFileBase64()), fileEntry.getName(),
+				objectField.getCompanyId(), _decode(fileEntry.getFileBase64()),
+				fileEntry.getName(),
 				getGroupId(objectDefinition, scopeKey, true),
 				objectField.getObjectFieldId(), serviceContext);
 

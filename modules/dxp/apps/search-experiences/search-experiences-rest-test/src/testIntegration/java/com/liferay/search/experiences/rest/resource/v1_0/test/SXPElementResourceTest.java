@@ -166,9 +166,17 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 			JSONUtil.put(
 				"description", description
 			).put(
+				"description_i18n",
+				Collections.singletonMap(
+					LocaleUtil.toLanguageId(LocaleUtil.US), description)
+			).put(
 				"elementDefinition", "{}"
 			).put(
 				"title", title
+			).put(
+				"title_i18n",
+				Collections.singletonMap(
+					LocaleUtil.toLanguageId(LocaleUtil.US), title)
 			).toString());
 
 		SXPElement postSXPElement = testPostSXPElement_addSXPElement(

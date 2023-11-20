@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Text} from '@clayui/core';
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import FiltersAndSorting from './endpointComponents/FiltersAndSorting';
@@ -26,9 +28,10 @@ export default function EditEndpointConfiguration({
 	schemaAPIURLPath,
 	setData,
 }: EditEndpointConfigurationProps) {
-	const [responseBodySchemaOptions, setResponseBodySchemaOptions] = useState<
-		SelectOption[]
-	>([]);
+	const [schemaOptions, setSchemaOptions] = useState<SelectOption[]>([]);
+	const [selectedRequestBodySchema, setSelectedRequestBodySchema] = useState<
+		SelectOption
+	>();
 	const [
 		selectedResponseBodySchema,
 		setSelectedResponseBodySchema,
@@ -47,40 +50,95 @@ export default function EditEndpointConfiguration({
 				: [];
 
 			if (options.length) {
-				setResponseBodySchemaOptions(options);
+				setSchemaOptions(options);
 			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		if (
-			data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId &&
-			responseBodySchemaOptions.length
-		) {
-			setSelectedResponseBodySchema(
-				responseBodySchemaOptions.find(
-					(option) =>
-						option.value ===
-						data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId?.toString()
-				)
-			);
+		if (schemaOptions.length) {
+			if (data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId) {
+				setSelectedResponseBodySchema(
+					schemaOptions.find(
+						(option) =>
+							option.value ===
+							data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId?.toString()
+					)
+				);
+			}
+			if (data.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId) {
+				setSelectedRequestBodySchema(
+					schemaOptions.find(
+						(option) =>
+							option.value ===
+							data.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId?.toString()
+					)
+				);
+			}
 		}
-	}, [data, responseBodySchemaOptions]);
+	}, [data, schemaOptions]);
 
-	const handleSelectResponseBodySchema = (value: string) => {
+	const handleSelectBodySchema = (
+		onChangeFn: Dispatch<SetStateAction<SelectOption | undefined>>,
+		property: string,
+		value: string
+	) => {
+
 		setData((previousValue) => ({
 			...previousValue,
-			r_responseAPISchemaToAPIEndpoints_c_apiSchemaId: Number(value),
+			[property]: Number(value),
 		}));
 
-		setSelectedResponseBodySchema(
-			responseBodySchemaOptions.find((option) => option.value === value)
-		);
+		onChangeFn(schemaOptions.find((option) => option.value === value));
 	};
 
 	return (
 		<ClayForm>
+			{data.httpMethod?.key === 'post' && (
+				<ClayForm.Group className="mb-4">
+					<>
+						<label htmlFor="selectTrigger">
+							{Liferay.Language.get('request-body-schema')}
+
+							<span className="ml-1 reference-mark text-warning">
+								<ClayIcon symbol="asterisk" />
+							</span>
+						</label>
+
+						<Select
+							disabled={false}
+							dropDownSearchAriaLabel={Liferay.Language.get(
+								'search-for-a-schema-or-use-the-arrow-keys-to-navigate-and-select-a-schema-from-the-list'
+							)}
+							onClick={(value) =>
+								handleSelectBodySchema(
+									setSelectedRequestBodySchema,
+									'r_requestAPISchemaToAPIEndpoints_c_apiSchemaId',
+									value
+								)
+							}
+							options={schemaOptions}
+							placeholder={Liferay.Language.get(
+								'select-a-schema'
+							)}
+							searchable
+							selectedOption={selectedRequestBodySchema}
+						/>
+					</>
+					<Text
+						as="p"
+						color="secondary"
+						id="hostTextPreview"
+						size={3}
+					>
+						{Liferay.Language.get(
+							'request-body-can-only-contain-properies-from-the-main-object'
+						)}
+					</Text>
+				</ClayForm.Group>
+			)}
+
 			<ClayForm.Group>
 				<label htmlFor="selectTrigger">
 					{Liferay.Language.get('response-body-schema')}
@@ -91,24 +149,34 @@ export default function EditEndpointConfiguration({
 					dropDownSearchAriaLabel={Liferay.Language.get(
 						'search-for-a-schema-or-use-the-arrow-keys-to-navigate-and-select-a-schema-from-the-list'
 					)}
-					onClick={handleSelectResponseBodySchema}
-					options={responseBodySchemaOptions}
+					onClick={(value) =>
+						handleSelectBodySchema(
+							setSelectedResponseBodySchema,
+							'r_responseAPISchemaToAPIEndpoints_c_apiSchemaId',
+							value
+						)
+					}
+					options={schemaOptions}
 					placeholder={Liferay.Language.get('select-a-schema')}
 					searchable
 					selectedOption={selectedResponseBodySchema}
 				/>
 			</ClayForm.Group>
 
-			{data.retrieveType?.key === 'singleElement' ? (
-				<PathParameterConfiguration
-					data={data}
-					displayError={displayError}
-					selectedResponseBodySchema={selectedResponseBodySchema}
-					setData={setData}
-				/>
-			) : (
-				<FiltersAndSorting data={data} setData={setData} />
-			)}
+			{data.httpMethod?.key === 'get' &&
+				data.retrieveType?.key === 'singleElement' && (
+					<PathParameterConfiguration
+						data={data}
+						displayError={displayError}
+						selectedResponseBodySchema={selectedResponseBodySchema}
+						setData={setData}
+					/>
+				)}
+
+			{data.retrieveType?.key === 'collection' &&
+				data.httpMethod?.key === 'get' && (
+					<FiltersAndSorting data={data} setData={setData} />
+				)}
 		</ClayForm>
 	);
 }

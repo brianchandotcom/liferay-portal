@@ -80,6 +80,50 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test CanRearrangeOrderOfPropertiesOnTheList {
+		task ("And Given 'name' field placed in Properties") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+
+			Click(
+				key_text = "name",
+				locator1 = "APIBuilder#PROPERTY_CONTAINER");
+
+			AssertElementPresent(
+				key_commentValue = "name",
+				locator1 = "PublicationsChanges#COMMENT_VALUE");
+		}
+
+		task ("When 'External Reference Code' field placed in Properties above 'name' field") {
+			Click(
+				key_text = "External Reference Code",
+				locator1 = "APIBuilder#PROPERTY_CONTAINER");
+
+			AssertElementPresent(
+				key_commentValue = "External Reference Code",
+				locator1 = "PublicationsChanges#COMMENT_VALUE");
+		}
+
+		task ("Then I can switch their order by dragging 'External Reference Code' uner 'name' field") {
+			AssertTextPresent(
+				locator1 = "APIBuilder#LAST_ELEMENT_IN_PROPERTY_BOX",
+				value1 = "name");
+
+			DragAndDrop.dragAndDrop(
+				key_commentValue = "External Reference Code",
+				locator1 = "PublicationsChanges#COMMENT_VALUE",
+				value1 = "0,45");
+
+			AssertTextPresent(
+				locator1 = "APIBuilder#LAST_ELEMENT_IN_PROPERTY_BOX",
+				value1 = "External Reference Code");
+		}
+	}
+
 	@priority = 4
 	test CanSearchThroughPropertiesFromTheList {
 		property portal.acceptance = "true";
@@ -118,6 +162,45 @@ definition {
 			AssertElementPresent(
 				key_commentValue = "External Reference Code",
 				locator1 = "PublicationsChanges#COMMENT_VALUE");
+		}
+	}
+
+	@priority = 3
+	test DroppedIntoPropertiesListObjectFieldIsDisabledInPropertiesSidebar {
+		task ("And Given fields of Address object definition present through View Related Objects'") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+
+			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "Postal Address");
+		}
+
+		task ("When adding 'ID' of Address to properties box") {
+			Click(
+				key_text = "ID",
+				locator1 = "APIBuilder#PROPERTY_CONTAINER");
+
+			AssertElementPresent(
+				key_commentValue = "ID",
+				locator1 = "PublicationsChanges#COMMENT_VALUE");
+		}
+
+		task ("Then 'ID' of Address disabled in Properties sidebar") {
+			AssertElementPresent(
+				key_text = "ID",
+				locator1 = "APIBuilder#DISABLED_PROPERTY_CONTAINER");
+		}
+
+		task ("And Then 'ID' of University enabled in Properties sidebar") {
+			Click(
+				ariaLabel = "Back",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			AssertElementNotPresent(
+				key_text = "ID",
+				locator1 = "APIBuilder#DISABLED_PROPERTY_CONTAINER");
 		}
 	}
 
@@ -194,6 +277,45 @@ definition {
 					locator1 = "CommerceWidget#PRODUCT_PUBLISHER_FILTER_ADD_SELECT_BUTTON");
 			}
 		}
+	}
+
+	@priority = 3
+	test PropertiesRemovedFromListAreEnabledInPropertiesSidebar {
+		task ("And Given 'name', 'External Reference Code', 'Create Date', 'ID' fields placed in Properties") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "University",
+				tabEntity = "Properties",
+				title = "My-app");
+
+			var fieldNameList = "name,External Reference Code,Create Date,ID";
+
+			for (var fieldName : list ${fieldNameList}) {
+				Click(
+					key_text = ${fieldName},
+					locator1 = "APIBuilder#PROPERTY_CONTAINER");
+			}
+		}
+
+		task ("And Given 'Create Date' field disabled in Properties sidebar") {
+			AssertElementPresent(
+				key_text = "Create Date",
+				locator1 = "APIBuilder#DISABLED_PROPERTY_CONTAINER");
+		}
+
+		task ("When removing 'Create Date' from Properties list") {
+			Click(
+				key_commentValue = "Create Date",
+				locator1 = "PublicationsChanges#COMMENT_VALUE");
+
+			Click(
+				key_commentValue = "Create Date",
+				locator1 = "APIBuilder#DELETE_BUTTON_FROM_PROPERTY_BOX");
+		}
+
+		AssertElementNotPresent(
+			key_text = "Create Date",
+			locator1 = "APIBuilder#DISABLED_PROPERTY_CONTAINER");
 	}
 
 	@priority = 5

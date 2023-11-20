@@ -25,21 +25,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteAllCustomObjectsViaAPI();
-
-			Picklist.deleteAllPicklistsViaAPI();
-		}
-	}
-
 	@description = "This is a test for LPS-149984. The page editor cannot add fragment into Form Container without mapping entity."
 	@priority = 4
 	test CannotAddFragmentToFormContainerWithoutMappingEntity {

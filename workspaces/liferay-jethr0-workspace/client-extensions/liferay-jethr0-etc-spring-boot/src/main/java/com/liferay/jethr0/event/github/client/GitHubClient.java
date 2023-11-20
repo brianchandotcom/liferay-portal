@@ -35,20 +35,26 @@ public class GitHubClient {
 		requestJSONObject.put("body", body);
 
 		return new GitHubComment(
-			_requestPost(gitHubIssue.getCommentsURL(), requestJSONObject));
+			new JSONObject(
+				_requestPost(gitHubIssue.getCommentsURL(), requestJSONObject)));
 	}
 
 	private String _getAuthorization() {
 		return StringUtil.combine("token ", _gitHubToken);
 	}
 
-	private JSONObject _requestPost(URL url, JSONObject requestJSONObject) {
-		Retryable<JSONObject> retryable = new BaseRetryable<JSONObject>() {
+	private String _requestPost(URL url, JSONObject requestJSONObject) {
+		String urlString = url.toString();
+
+		String gitHubURL = urlString.replaceAll(
+			"https://api\\.github\\.com", _gitHubProxyURL);
+
+		Retryable<String> retryable = new BaseRetryable<String>() {
 
 			@Override
-			public JSONObject execute() {
+			public String execute() {
 				String response = WebClient.create(
-					String.valueOf(url)
+					gitHubURL
 				).post(
 				).accept(
 					MediaType.APPLICATION_JSON
@@ -67,7 +73,7 @@ public class GitHubClient {
 					throw new RuntimeException("No response");
 				}
 
-				return new JSONObject(response);
+				return response;
 			}
 
 			@Override
@@ -81,6 +87,9 @@ public class GitHubClient {
 
 		return retryable.executeWithRetries();
 	}
+
+	@Value("${JETHR0_GITHUB_PROXY_URL:https://api.github.com}")
+	private String _gitHubProxyURL;
 
 	@Value("${JETHR0_GITHUB_TOKEN:github-token}")
 	private String _gitHubToken;

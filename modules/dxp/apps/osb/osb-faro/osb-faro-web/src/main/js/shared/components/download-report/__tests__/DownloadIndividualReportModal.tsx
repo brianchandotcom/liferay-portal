@@ -64,7 +64,7 @@ describe('DownloadReportIndividualModal CSV', () => {
 
 		expect(
 			getByText(
-				'This list will be downloaded respecting the current ordering, filter, and search results. The maximum number of entries supported per export is 10,000. Are you sure you want to download the CSV file?'
+				'This list will be downloaded respecting the current ordering and search results. The maximum number of entries supported per export is 10,000. Are you sure you want to download the CSV file?'
 			)
 		).toBeInTheDocument();
 

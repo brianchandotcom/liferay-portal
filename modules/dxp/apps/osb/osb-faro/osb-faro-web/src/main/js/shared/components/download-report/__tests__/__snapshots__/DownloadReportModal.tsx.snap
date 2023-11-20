@@ -86,7 +86,7 @@ exports[`DownloadReportModal CSV renders component 1`] = `
                     >
                       Info
                     </strong>
-                    The individuals list will be downloaded respecting the current ordering, filter, and search results. Please verify if the desired changes are applied.
+                    The Individuals list will be downloaded respecting the current ordering, filter, and search results. Please verify if the desired changes are applied.
                   </div>
                 </div>
               </div>
@@ -639,7 +639,6 @@ exports[`DownloadReportModal CSV renders component 1`] = `
                                 >
                                   <button
                                     class="button-root day-root btn btn-unstyled"
-                                    disabled=""
                                     type="button"
                                   >
                                     17
@@ -654,7 +653,6 @@ exports[`DownloadReportModal CSV renders component 1`] = `
                                 >
                                   <button
                                     class="button-root day-root btn btn-unstyled"
-                                    disabled=""
                                     type="button"
                                   >
                                     18
@@ -671,7 +669,6 @@ exports[`DownloadReportModal CSV renders component 1`] = `
                                 >
                                   <button
                                     class="button-root day-root btn btn-unstyled"
-                                    disabled=""
                                     type="button"
                                   >
                                     19
@@ -965,7 +962,7 @@ exports[`DownloadReportModal PDF renders component 1`] = `
       class="modal-dialog"
     >
       <div
-        aria-labelledby="clay-modal-label-1"
+        aria-labelledby="clay-modal-label-4"
         aria-modal="true"
         class="modal-content"
         role="dialog"
@@ -977,7 +974,7 @@ exports[`DownloadReportModal PDF renders component 1`] = `
           >
             <h1
               class="modal-title"
-              id="clay-modal-label-1"
+              id="clay-modal-label-4"
             >
               Download Report
             </h1>
@@ -1071,7 +1068,7 @@ exports[`DownloadReportModal PDF renders component 1`] = `
                 class="dropdown"
               >
                 <div
-                  aria-controls="clay-dropdown-menu-1"
+                  aria-controls="clay-dropdown-menu-4"
                   aria-expanded="false"
                   aria-haspopup="true"
                   class="input-group dropdown-toggle"
@@ -1109,7 +1106,7 @@ exports[`DownloadReportModal PDF renders component 1`] = `
                   <div
                     aria-hidden="true"
                     class="dropdown-menu"
-                    id="clay-dropdown-menu-1"
+                    id="clay-dropdown-menu-4"
                     role="presentation"
                     style="max-width: none; min-width: none;"
                   >
@@ -1590,7 +1587,6 @@ exports[`DownloadReportModal PDF renders component 1`] = `
                                 >
                                   <button
                                     class="button-root day-root btn btn-unstyled"
-                                    disabled=""
                                     type="button"
                                   >
                                     17
@@ -1605,7 +1601,6 @@ exports[`DownloadReportModal PDF renders component 1`] = `
                                 >
                                   <button
                                     class="button-root day-root btn btn-unstyled"
-                                    disabled=""
                                     type="button"
                                   >
                                     18
@@ -1622,7 +1617,6 @@ exports[`DownloadReportModal PDF renders component 1`] = `
                                 >
                                   <button
                                     class="button-root day-root btn btn-unstyled"
-                                    disabled=""
                                     type="button"
                                   >
                                     19

@@ -546,4 +546,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182728. The user should see the field error below the File Upload fragment."
+	@priority = 3
+	test ViewFileUploadFieldErrorMessageWhenPartialValidationFailure {
+		task ("Given a user has a content page where a File Upload fragment mapped to a mandatory Attachment field") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Attachment",
+				fieldLabelName = "Custom Attachment From Computer",
+				fieldName = "customAttachmentFromComputer",
+				fieldType = "Long",
+				fileSource = "userComputer",
+				isRequired = "true",
+				objectName = "UploadObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "UploadObject");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Upload Object");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user submits form without attachment") {
+			SetElementAttribute.removeElementAttribute(
+				attribute1 = "required",
+				locator1 = "TextInput#FILE");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see a field error message below File Upload") {
+			Alert.viewFieldErrorMessage(
+				errorMessage = "This field is required.",
+				fieldLabel = "Custom Attachment From Computer");
+		}
+	}
+
 }

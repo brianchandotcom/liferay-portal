@@ -238,6 +238,13 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = ${name});
 
+		if (isSet(fieldDescription)) {
+			Type(
+				key_value = "schema",
+				locator1 = "APIBuilder#DESCRIPTION",
+				value1 = ${fieldDescription});
+		}
+
 		Click(locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION");
 
 		Click(

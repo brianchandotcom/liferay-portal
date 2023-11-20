@@ -584,15 +584,21 @@ public class JournalManagementToolbarDisplayContext
 			).buildPortletURL(),
 			getNavigationParam(), getNavigation());
 
-		filterNavigationDropdownItems.add(
-			DropdownItemBuilder.putData(
-				"action", "openDDMStructuresSelector"
-			).setActive(
-				_journalDisplayContext.isNavigationStructure()
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "structures") +
-					StringPool.TRIPLE_PERIOD
-			).build());
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-194763") ||
+			(FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
+			 (_journalDisplayContext.getHighlightedDDMStructureId() <= 0))) {
+
+			filterNavigationDropdownItems.add(
+				DropdownItemBuilder.putData(
+					"action", "openDDMStructuresSelector"
+				).setActive(
+					_journalDisplayContext.isNavigationStructure()
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "structures") +
+						StringPool.TRIPLE_PERIOD
+				).build());
+		}
+
 		filterNavigationDropdownItems.add(
 			DropdownItemBuilder.putData(
 				"action", "openCategoriesSelector"

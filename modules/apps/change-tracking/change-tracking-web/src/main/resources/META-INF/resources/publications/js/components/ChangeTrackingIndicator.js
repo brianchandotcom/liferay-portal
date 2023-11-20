@@ -11,7 +11,11 @@ import ClayList from '@clayui/list';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayPopover from '@clayui/popover';
 import ClaySticker from '@clayui/sticker';
-import {navigate as navigateUtil, openConfirmModal} from 'frontend-js-web';
+import {
+	createPortletURL,
+	navigate as navigateUtil,
+	openConfirmModal,
+} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import PublicationTimeline from './PublicationTimeline';
@@ -54,22 +58,17 @@ export default function ChangeTrackingIndicator({
 	);
 
 	const navigate = (url, action) => {
-		AUI().use('liferay-portlet-url', () => {
-			const portletURL = Liferay.PortletURL.createURL(url);
-
-			portletURL.setParameter(
-				'redirect',
-				window.location.pathname + window.location.search
-			);
-
-			if (action) {
-				submitForm(document.hrefFm, portletURL.toString());
-
-				return;
-			}
-
-			navigateUtil(portletURL.toString());
+		const portletURL = createPortletURL(url, {
+			redirect: window.location.pathname + window.location.search,
 		});
+
+		if (action) {
+			submitForm(document.hrefFm, portletURL);
+
+			return;
+		}
+
+		navigateUtil(portletURL);
 	};
 
 	const dropdownItems = [];

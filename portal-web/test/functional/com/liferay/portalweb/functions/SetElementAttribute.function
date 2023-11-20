@@ -1,6 +1,24 @@
 @default = "setElementAttribute"
 definition {
 
+	function removeElementAttribute(locator1, attribute1) {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent(${locator1}, "false");
+
+		var javaScript = '''
+var element = document.evaluate("${locator1}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+element.removeAttribute("${attribute1}");
+		''';
+
+		ExecuteJavaScript(value1 = ${javaScript});
+
+		selenium.assertJavaScriptErrors("true");
+
+		selenium.assertLiferayErrors();
+	}
+
 	function setElementAttribute(locator1, value1, attribute1) {
 		WaitForSPARefresh();
 

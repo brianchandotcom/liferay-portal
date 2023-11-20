@@ -715,7 +715,8 @@ public class LayoutActionDropdownItemsProvider {
 	}
 
 	private boolean _isShowConvertToPageTemplateAction(Layout layout) {
-		if (LayoutPageTemplatePermission.contains(
+		if (layout.isTypeContent() &&
+			LayoutPageTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), layout.getGroupId(),
 				LayoutPageTemplateActionKeys.
 					ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) &&

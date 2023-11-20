@@ -974,6 +974,10 @@
 
 		<!-- Liferay Source Checks -->
 
+		<check name="JSONBatchEngineDataFileCheck">
+			<category name="Styling" />
+			<description name="Remove elements in `*.batch-engine-data.json` files." />
+		</check>
 		<check name="JSONDeprecatedPackagesCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds incorrect use of deprecated packages in `package.json` files." />
@@ -990,10 +994,6 @@
 		<check name="JSONPackageJSONDependencyVersionCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks the version for dependencies in `package.json` files." />
-		</check>
-		<check name="JSONUnnecessaryBatchAttributesCheck">
-			<category name="Styling" />
-			<description name="Checks unnecessary attributes in `*.batch-engine-data.json` files." />
 		</check>
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">

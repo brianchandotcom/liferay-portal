@@ -474,21 +474,21 @@ public class JournalManagementToolbarDisplayContext
 		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
-			"ddmStructureId",
+			"folderId", _journalDisplayContext.getFolderId()
+		).setParameter(
+			"highlightedDDMStructureId",
 			() -> {
-				long ddmStructureId =
-					_journalDisplayContext.getDDMStructureId();
+				long highlightedDDMStructureId =
+					_journalDisplayContext.getHighlightedDDMStructureId();
 
 				if (FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
-					(ddmStructureId > 0)) {
+					(highlightedDDMStructureId > 0)) {
 
-					return ddmStructureId;
+					return highlightedDDMStructureId;
 				}
 
 				return null;
 			}
-		).setParameter(
-			"folderId", _journalDisplayContext.getFolderId()
 		).setParameter(
 			"status", _journalDisplayContext.getStatus()
 		).buildString();

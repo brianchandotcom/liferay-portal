@@ -137,10 +137,6 @@ public class UserManagerImpl implements UserManager {
 			ScimUser scimUser = _getScimUser(
 				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(userId));
 
-			if (scimUser == null) {
-				return;
-			}
-
 			_userLocalService.updateStatus(
 				GetterUtil.getLong(userId), WorkflowConstants.STATUS_INACTIVE,
 				new ServiceContext());

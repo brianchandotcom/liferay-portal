@@ -1815,8 +1815,8 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				buildEqualsExpressionFilterString(
-					"localizedLongTextObjectFieldName",
-					"en_US localizedLongTextObjectFieldValue")
+					"localizedTextObjectFieldName",
+					"en_US localizedTextObjectFieldValue1")
 			).build(),
 			childObjectEntry1);
 

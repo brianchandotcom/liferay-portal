@@ -111,7 +111,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 			);
 		}
 
-		onCloseModal();
+		onClose();
 	};
 
 	const title = editingRule

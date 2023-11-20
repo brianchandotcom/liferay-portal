@@ -476,6 +476,12 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		List<Callable<Object>> callables = new ArrayList<>();
 
 		for (final Build downstreamBuild : downstreamBuilds) {
+			String status = downstreamBuild.getStatus();
+
+			if (status.equals("completed")) {
+				continue;
+			}
+
 			JenkinsMaster jenkinsMaster = downstreamBuild.getJenkinsMaster();
 
 			ParallelExecutor.SequentialCallable<Object> callable =

@@ -1,6 +1,10 @@
 @import 'cadmin-variables';
 
 html#{$cadmin-selector} .cadmin {
+	.page-editor__rule:hover {
+		background: $cadmin-list-group-active-bg;
+	}
+
 	.page-editor__rule-builder-item {
 		border: 1px solid $cadmin-gray-300;
 		border-radius: 0.25rem;

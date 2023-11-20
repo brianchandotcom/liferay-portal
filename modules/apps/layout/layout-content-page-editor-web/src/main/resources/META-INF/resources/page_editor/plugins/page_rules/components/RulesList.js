@@ -77,15 +77,8 @@ export default function RulesList() {
 }
 
 function Rule({onDelete, onEdit, rule}) {
-	const [hovered, setHovered] = useState(false);
-
 	return (
-		<ClayList.Item
-			className={classNames('p-2', {active: hovered})}
-			key={rule.id}
-			onMouseLeave={() => setHovered(false)}
-			onMouseOver={() => setHovered(true)}
-		>
+		<ClayList.Item className="p-2 page-editor__rule" key={rule.id}>
 			<ClayList.ItemField expand>
 				<div className="align-items-center d-flex">
 					<span className="flex-grow-1 font-weight-semi-bold">

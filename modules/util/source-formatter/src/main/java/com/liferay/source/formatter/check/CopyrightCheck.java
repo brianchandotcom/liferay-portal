@@ -12,8 +12,11 @@ import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -30,6 +33,50 @@ public class CopyrightCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private void _checkErrorFix(
+			String fileName, String absolutePath,
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		outerLoop:
+		for (String currentBranchFileName :
+				_getCurrentBranchFileNames(sourceFormatterArgs)) {
+
+			if (!absolutePath.endsWith(currentBranchFileName)) {
+				continue;
+			}
+
+			for (String currentBranchAddedFileNames :
+					_getCurrentBranchAddedFileName(sourceFormatterArgs)) {
+
+				if (absolutePath.endsWith(currentBranchAddedFileNames)) {
+					continue outerLoop;
+				}
+			}
+
+			Matcher matcher = _copyrightPattern.matcher(
+				GitUtil.getCurrentBranchFileDiff(
+					sourceFormatterArgs.getBaseDirName(),
+					sourceFormatterArgs.getGitWorkingBranchName(),
+					absolutePath));
+
+			List<String> years = new ArrayList<>();
+
+			while (matcher.find()) {
+				years.add(matcher.group(1));
+			}
+
+			if (years.size() != 2) {
+				continue;
+			}
+
+			if (!StringUtil.equals(years.get(0), years.get(1))) {
+				addMessage(
+					fileName, "Copyright year only change when add new file.");
+			}
+		}
 	}
 
 	private String _fixCopyright(
@@ -94,6 +141,8 @@ public class CopyrightCheck extends BaseFileCheck {
 			}
 		}
 
+		_checkErrorFix(fileName, absolutePath, sourceFormatterArgs);
+
 		return content;
 	}
 
@@ -110,6 +159,21 @@ public class CopyrightCheck extends BaseFileCheck {
 			sourceFormatterArgs.getGitWorkingBranchName());
 
 		return _currentBranchAddedFileNames;
+	}
+
+	private synchronized List<String> _getCurrentBranchFileNames(
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		if (_currentBranchFileNames != null) {
+			return _currentBranchFileNames;
+		}
+
+		_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName());
+
+		return _currentBranchFileNames;
 	}
 
 	private synchronized List<String> _getCurrentBranchRenamedFileNames(
@@ -131,7 +195,11 @@ public class CopyrightCheck extends BaseFileCheck {
 	private static final String _XML_DECLARATION =
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
+	private static final Pattern _copyrightPattern = Pattern.compile(
+		"[\\+-] \\* SPDX-FileCopyrightText: \\(c\\) (\\d{4}) " +
+			"Liferay, Inc\\. https://liferay\\.com");
 	private static List<String> _currentBranchAddedFileNames;
+	private static List<String> _currentBranchFileNames;
 	private static List<String> _currentBranchRenamedFileNames;
 
 }

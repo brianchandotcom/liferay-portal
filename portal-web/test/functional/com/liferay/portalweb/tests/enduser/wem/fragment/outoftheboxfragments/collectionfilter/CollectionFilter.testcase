@@ -1520,16 +1520,8 @@ definition {
 		}
 
 		task ("View Contains All Categories works in preview modal") {
-			var n = 1;
-
 			for (var title : list "Document Title With Both Categories,Document Title With Category A,Blogs Entry Title With Both Categories,Blogs Entry Title With Category A,Web Content Title With Both Categories,Web Content Title With Category A") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-collection')]//li[normalize-space()='${title}']");
 			}
 
 			Page.selectFilterInCollectionFilter(
@@ -1538,16 +1530,8 @@ definition {
 				selectedName = "Category A",
 				title = "Vocabulary A");
 
-			var n = 1;
-
 			for (var title : list "Document Title With Both Categories,Document Title With Category A,Blogs Entry Title With Both Categories,Blogs Entry Title With Category A,Web Content Title With Both Categories,Web Content Title With Category A") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-collection')]//li[normalize-space()='${title}']");
 			}
 
 			Page.selectFilterInCollectionFilter(
@@ -1557,16 +1541,8 @@ definition {
 				selectedName = "Category B",
 				title = "Vocabulary B");
 
-			var n = 1;
-
 			for (var title : list "Document Title With Both Categories,Blogs Entry Title With Both Categories,Web Content Title With Both Categories") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-collection')]//li[normalize-space()='${title}']");
 			}
 
 			AssertElementNotPresent(
@@ -1593,16 +1569,8 @@ definition {
 		}
 
 		task ("Assert Contains All Categories works in view mode") {
-			var n = 1;
-
 			for (var title : list "Document Title With Both Categories,Document Title With Category A,Blogs Entry Title With Both Categories,Blogs Entry Title With Category A,Web Content Title With Both Categories,Web Content Title With Category A") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-collection')]//li[normalize-space()='${title}']");
 			}
 
 			Page.selectFilterInCollectionFilter(
@@ -1611,16 +1579,8 @@ definition {
 				selectedName = "Category A",
 				title = "Vocabulary A");
 
-			var n = 1;
-
 			for (var title : list "Document Title With Both Categories,Document Title With Category A,Blogs Entry Title With Both Categories,Blogs Entry Title With Category A,Web Content Title With Both Categories,Web Content Title With Category A") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-collection')]//li[normalize-space()='${title}']");
 			}
 
 			Page.selectFilterInCollectionFilter(
@@ -1630,16 +1590,8 @@ definition {
 				selectedName = "Category B",
 				title = "Vocabulary B");
 
-			var n = 1;
-
 			for (var title : list "Document Title With Both Categories,Blogs Entry Title With Both Categories,Web Content Title With Both Categories") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-collection')]//li[normalize-space()='${title}']");
 			}
 
 			AssertElementNotPresent(

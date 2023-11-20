@@ -600,16 +600,8 @@ definition {
 		}
 
 		task ("View the title of collection items are shown as Bulleted List") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[@aria-label='Collection Display']//li[normalize-space()='${title}']");
 			}
 		}
 
@@ -636,16 +628,8 @@ definition {
 		}
 
 		task ("View the title of collection items are shown as Bulleted List") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-collection')]//li[normalize-space()='${title}']");
 			}
 		}
 

@@ -25,6 +25,13 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a display page template with Web Content Article and Basic Web Content") {
+			var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
+			DocumentAPI.addDocumentWithFileInSite(
+				dmDocumentTitle = "high_resolution_photo.jpg",
+				siteId = ${groupId},
+				sourceFileName = "high_resolution_photo.jpg");
+
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -49,8 +56,8 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
 				enableLazyLoading = "true",
-				panel = "Styles",
-				uploadFileName = "high_resolution_photo.jpg");
+				entryTitle = "high_resolution_photo.jpg",
+				panel = "Styles");
 
 			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo-jpg");
 
@@ -60,12 +67,6 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			Refresh();
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			PageEditor.gotoStyle(fragmentName = "Container");
-
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -196,6 +197,13 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a display page template with Web Content Article and Basic Web Content") {
+			var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
+			DocumentAPI.addDocumentWithFileInSite(
+				dmDocumentTitle = "high_resolution_photo.jpg",
+				siteId = ${groupId},
+				sourceFileName = "high_resolution_photo.jpg");
+
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -219,10 +227,10 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
 				enableLazyLoading = "true",
+				entryTitle = "high_resolution_photo.jpg",
 				paddingBottom = 3,
 				paddingTop = 3,
-				panel = "Styles",
-				uploadFileName = "high_resolution_photo.jpg");
+				panel = "Styles");
 
 			PageEditor.viewContainerStyle(
 				backgroundImage = "high_resolution_photo-jpg",
@@ -235,12 +243,6 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			Refresh();
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			PageEditor.gotoStyle(fragmentName = "Container");
-
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -379,6 +381,13 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a display page template with Web Content Article and Basic Web Content") {
+			var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
+			DocumentAPI.addDocumentWithFileInSite(
+				dmDocumentTitle = "high_resolution_photo.jpg",
+				siteId = ${groupId},
+				sourceFileName = "high_resolution_photo.jpg");
+
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -401,9 +410,9 @@ definition {
 
 			PageEditor.editFragmentImage(
 				enableLazyLoading = "true",
-				fileName = "high_resolution_photo.jpg",
 				fragmentName = "Card",
-				id = "01-img");
+				id = "01-img",
+				imageFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
@@ -416,14 +425,6 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
-			Refresh();
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			PageEditor.gotoImageSource(
-				fragmentName = "Card",
-				id = "01-img");
-
 			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}

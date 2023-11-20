@@ -27,9 +27,12 @@ export default {
 	'download-app': 'Download App',
 	'download-key': 'Download Key',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
+	'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc':
+		'DXP module-based apps are not supported on Liferay Experience Cloud (LXC).',
 	'environment': 'Environment',
 	'environment-type': 'Environment Type',
 	'expiration-date': 'Expiration Date',
+	'fully-managed': 'Fully-Managed',
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
@@ -59,6 +62,8 @@ export default {
 	'select-a-local-file-to-upload': 'Select a local file to upload',
 	'select-the-offering-of-liferay-your-app-is-compatible-with-the-compatibility-selections-will-determine-on-what-platforms-your-app-is-tested':
 		'Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested.',
+	'self-hosted': 'Self-Hosted',
+	'self-managed': 'Self-Managed',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'start-date': 'Start Date',
 	'status': 'Status',
@@ -66,6 +71,16 @@ export default {
 		'The app submission is compatible with Liferay Experience Cloud and ',
 	'the-app-submission-is-integrates-with-liferay-dxp-version-7-4-or-later':
 		'The app submission is integrates with Liferay DXP version 7.4 or later.',
+	'the-cloud-app-is-client-extension-based-and-is-compatible-with-a-customer’s-self-hosted-environment':
+		'The cloud app is client extension based and is compatible with a customer’s self-hosted environment.',
+	'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay-experience-cloud-lxc-it-fully-supports-and-deploys-on-extension-environments-in-lxc':
+		'The cloud app is client extension based and is compatible with Liferay Experience Cloud (LXC).  It fully supports and deploys on extension environments in LXC.',
+	'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay’s-self-managed-formerly-dxp-cloud-offering':
+		'The cloud app is client extension based and is compatible with Liferay’s Self-Managed (formerly DXP Cloud) offering.',
+	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp':
+		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',
+	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-hosted-liferay-cloud-formerly-dxp-cloud':
+		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP self-hosted Liferay Cloud (formerly DXP Cloud).',
 	'the-order-must-be-completed-before-licensing-this-app.':
 		'The order must be completed before licensing this app.',
 	'there-was-an-unexpected-error-while-attempting-to-deactivate-key-please-try-again-in-a-few-moments':

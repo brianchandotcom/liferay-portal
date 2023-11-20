@@ -4,40 +4,48 @@
  */
 
 import {ProductType} from '../../../enums/ProductType';
+import i18n from '../../../i18n';
 
 export const offeringTypesDescription = {
 	[ProductType.CLOUD]: [
 		{
-			description:
-				'The cloud app is client extension based and is compatible with a customer’s self-hosted environment.',
-			label: 'Self-Hosted',
+			description: i18n.translate(
+				'the-cloud-app-is-client-extension-based-and-is-compatible-with-a-customer’s-self-hosted-environment'
+			),
+			label: i18n.translate('self-hosted'),
 		},
 		{
-			description:
-				'The cloud app is client extension based and is compatible with Liferay’s Self-Managed (formerly DXP Cloud) offering.',
-			label: 'Self-Managed',
+			description: i18n.translate(
+				'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay’s-self-managed-formerly-dxp-cloud-offering'
+			),
+			label: i18n.translate('self-managed'),
 		},
 		{
-			description:
-				'The cloud app is client extension based and is compatible with Liferay Experience Cloud (LXC).  It fully supports and deploys on extension environments in LXC.',
-			label: 'Fully-Managed',
+			description: i18n.translate(
+				'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay-experience-cloud-lxc-it-fully-supports-and-deploys-on-extension-environments-in-lxc'
+			),
+			label: i18n.translate('fully-managed'),
 		},
 	],
 	[ProductType.DXP]: [
 		{
-			description:
-				'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',
-			label: 'Self-Hosted',
+			description: i18n.translate(
+				'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp'
+			),
+			label: i18n.translate('self-hosted'),
 		},
 		{
-			description:
-				'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP self-hosted Liferay Cloud (formerly DXP Cloud).',
-			label: 'Self-Managed',
+			description: i18n.translate(
+				'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-hosted-liferay-cloud-formerly-dxp-cloud'
+			),
+			label: i18n.translate('self-managed'),
 		},
 		{
-			description:
-				'DXP module-based apps are not supported on Liferay Experience Cloud (LXC).',
-			label: 'Fully-Managed',
+			description: i18n.translate(
+				'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc'
+			),
+			disabled: true,
+			label: i18n.translate('fully-managed'),
 		},
 	],
 } as const;

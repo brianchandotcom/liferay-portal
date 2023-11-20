@@ -5,17 +5,20 @@
 
 package com.liferay.source.formatter.check;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Seiphon Wang
@@ -23,14 +26,15 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 
 	@Override
-	protected String doProcess(String fileName, String absolutePath,
-			JavaTerm javaTerm, String fileContent) throws Exception {
+	protected String doProcess(
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
+		throws Exception {
 
 		String content = javaTerm.getContent();
 
-		if (!javaTerm.hasAnnotation("Component") ||
-				!_hasSubclass(javaTerm) ||
-				!_isAnnotationsInherit(absolutePath)) {
+		if (!javaTerm.hasAnnotation("Component") || !_hasSubclass(javaTerm) ||
+			!_isAnnotationsInherit(absolutePath)) {
 
 			return content;
 		}
@@ -49,16 +53,38 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 					String accessModifier = javaVariable.getAccessModifier();
 
 					if (javaTermContent.contains("@Reference") &&
-							accessModifier.equals("private")) {
+						accessModifier.equals("private")) {
 
-						addMessage(fileName, "The access modifier of variable '" +
-							javaVariable.getName() + "' should be 'protected'.");
+						addMessage(
+							fileName,
+							"The access modifier of variable '" +
+								javaVariable.getName() +
+									"' should be 'protected'.");
 					}
 				}
 			}
 		}
 
 		return content;
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
+	}
+
+	private boolean _hasSubclass(JavaTerm javaTerm) {
+		String className = javaTerm.getName();
+
+		List<String> lines = SourceFormatterUtil.matchFileContents(
+			getBaseDirName(), "extends " + className,
+			Arrays.asList("--", "*.java"));
+
+		if (!lines.isEmpty()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isAnnotationsInherit(String filePathString) {
@@ -71,11 +97,14 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 				List<String> lines = Files.readAllLines(bndPath);
 
 				for (String line : lines) {
-					if ("-dsannotations-options: inherit".equals(line)) {
+					if (Objects.equals(
+							line, "-dsannotations-options: inherit")) {
+
 						return true;
 					}
 				}
-			} catch (IOException ioException) {
+			}
+			catch (IOException ioException) {
 			}
 		}
 
@@ -102,22 +131,6 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 		}
 
 		return result;
-	}
-
-	private boolean _hasSubclass(JavaTerm javaTerm) {
-		String className = javaTerm.getName();
-
-		String baseDirName = getBaseDirName();
-
-		List<String> lines = SourceFormatterUtil.matchFileContents(
-			baseDirName, "extends " + className, Arrays.asList("--", "*.java"));
-
-		return lines.size() != 0;
-	}
-
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
 	}
 
 }

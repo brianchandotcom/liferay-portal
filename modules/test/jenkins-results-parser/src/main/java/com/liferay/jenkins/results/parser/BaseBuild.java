@@ -2912,18 +2912,9 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected boolean skipUpdate() {
-		System.out.println(
-			"skipUpdate isBuildModified: " + isBuildModified() + " status: \'" +
-				getStatus() + "\' is not completed=" +
-					!Objects.equals(getStatus(), "completed"));
-
 		if (isBuildModified() || !Objects.equals(getStatus(), "completed")) {
-			System.out.println("skipUpdate returning FALSE");
-
 			return false;
 		}
-
-		System.out.println("skipUpdate returning TRUE");
 
 		return true;
 	}

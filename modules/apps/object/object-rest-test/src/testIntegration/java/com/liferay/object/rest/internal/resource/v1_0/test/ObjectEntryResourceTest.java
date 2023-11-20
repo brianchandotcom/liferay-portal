@@ -6385,28 +6385,7 @@ public class ObjectEntryResourceTest {
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		// File validation: extension not allowed
-
-		_testPostCustomObjectEntryWithAttachmentField(
-			(fileContent, fileName) -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "Invalid file extension for " + fileName
-			),
-			null, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + ".err", null, objectDefinition);
-
-		// File validation: file name is null
-
-		_testPostCustomObjectEntryWithAttachmentField(
-			(fileContent, fileName) -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "File name is null"
-			),
-			null, RandomTestUtil.randomString(), null, null, objectDefinition);
-
-		// File validation: size limit exceeded
+		// File validation
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			(fileContent, fileName) -> JSONUtil.put(
@@ -6422,6 +6401,21 @@ public class ObjectEntryResourceTest {
 			RandomTestUtil.randomString(
 				(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
 			RandomTestUtil.randomString() + ".txt", null, objectDefinition);
+		_testPostCustomObjectEntryWithAttachmentField(
+			(fileContent, fileName) -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "File name is null"
+			),
+			null, RandomTestUtil.randomString(), null, null, objectDefinition);
+		_testPostCustomObjectEntryWithAttachmentField(
+			(fileContent, fileName) -> JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Invalid file extension for " + fileName
+			),
+			null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + ".err", null, objectDefinition);
 
 		// File with a nonexistent name
 
@@ -6436,33 +6430,7 @@ public class ObjectEntryResourceTest {
 			"fileBase64", RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + ".txt", null, objectDefinition);
 
-		// File with the same name
-
-		String name = RandomTestUtil.randomString();
-
-		_testPostCustomObjectEntryWithAttachmentField(
-			(fileContent, fileName) -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT,
-				JSONUtil.put(
-					"id", _testDLFileEntryModelListener.getLastFileEntryId()
-				).put(
-					"name", fileName
-				)),
-			"fileBase64", RandomTestUtil.randomString(), name + ".txt", null,
-			objectDefinition);
-
-		_testPostCustomObjectEntryWithAttachmentField(
-			(fileContent, fileName) -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT,
-				JSONUtil.put(
-					"id", _testDLFileEntryModelListener.getLastFileEntryId()
-				).put(
-					"name", StringUtil.replace(fileName, ".txt", " (1).txt")
-				)),
-			"fileBase64", RandomTestUtil.randomString(), name + ".txt", null,
-			objectDefinition);
-
-		// File in base64 encoding requested as nested field
+		// File with a nonexistent name and the Base64 content as a nested field
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			(fileContent, fileName) -> JSONUtil.put(
@@ -6476,6 +6444,31 @@ public class ObjectEntryResourceTest {
 				)),
 			null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + ".txt", "fileBase64",
+			objectDefinition);
+
+		// File with an existing name
+
+		String name = RandomTestUtil.randomString();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			(fileContent, fileName) -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"name", fileName
+				)),
+			"fileBase64", RandomTestUtil.randomString(), name + ".txt", null,
+			objectDefinition);
+		_testPostCustomObjectEntryWithAttachmentField(
+			(fileContent, fileName) -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"name", StringUtil.replace(fileName, ".txt", " (1).txt")
+				)),
+			"fileBase64", RandomTestUtil.randomString(), name + ".txt", null,
 			objectDefinition);
 	}
 

@@ -17,6 +17,7 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -341,6 +343,38 @@ public class AssetTagLocalServiceTest {
 		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(100), _serviceContext);
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testSearchWithCaseInsensitive() throws PortalException {
+		_assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			_serviceContext);
+
+		_assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "Tag1",
+			_serviceContext);
+
+		_assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
+			_serviceContext);
+
+		String[] tagNames = {"tag1", "Tag1", "TAG1"};
+
+		for (String tagName : tagNames) {
+			List<AssetTag> assetTags = _assetTagLocalService.search(
+				new long[] {_group.getGroupId()}, tagName, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			Assert.assertEquals(assetTags.toString(), 3, assetTags.size());
+
+			Assert.assertTrue(
+				ArrayUtil.containsAll(
+					TransformUtil.transformToArray(
+						assetTags, AssetTag::getName, String.class),
+					tagNames));
+		}
 	}
 
 	@FeatureFlags("LPS-194362")

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.redirect.exception.CircularRedirectEntryException;
 import com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException;
@@ -449,10 +450,16 @@ public class RedirectEntryLocalServiceImpl
 		if (exceptionType != -1) {
 			throw new LayoutFriendlyURLException(exceptionType);
 		}
+
+		_layoutLocalServiceHelper.validateFriendlyURLKeyword(
+			StringPool.SLASH + sourceURL);
 	}
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
 
 	@Reference
 	private RedirectNotFoundEntryLocalService

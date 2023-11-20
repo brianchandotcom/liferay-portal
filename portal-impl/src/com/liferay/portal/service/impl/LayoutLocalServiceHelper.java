@@ -406,6 +406,26 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			}
 		}
 
+		validateFriendlyURLKeyword(friendlyURL);
+
+		String layoutIdFriendlyURL = friendlyURL.substring(1);
+
+		if (Validator.isNumber(layoutIdFriendlyURL) &&
+			!layoutIdFriendlyURL.equals(String.valueOf(layoutId))) {
+
+			LayoutFriendlyURLException layoutFriendlyURLException =
+				new LayoutFriendlyURLException(
+					LayoutFriendlyURLException.POSSIBLE_DUPLICATE);
+
+			layoutFriendlyURLException.setKeywordConflict(layoutIdFriendlyURL);
+
+			throw layoutFriendlyURLException;
+		}
+	}
+
+	public void validateFriendlyURLKeyword(String friendlyURL)
+		throws LayoutFriendlyURLException {
+
 		LayoutImpl.validateFriendlyURLKeyword(friendlyURL);
 
 		if (friendlyURL.contains(Portal.FRIENDLY_URL_SEPARATOR) ||
@@ -473,7 +493,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		}
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			languageId = StringUtil.toLowerCase(
+			String languageId = StringUtil.toLowerCase(
 				LocaleUtil.toLanguageId(locale));
 
 			String i18nPathLanguageId =
@@ -501,20 +521,6 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 				throw layoutFriendlyURLException;
 			}
-		}
-
-		String layoutIdFriendlyURL = friendlyURL.substring(1);
-
-		if (Validator.isNumber(layoutIdFriendlyURL) &&
-			!layoutIdFriendlyURL.equals(String.valueOf(layoutId))) {
-
-			LayoutFriendlyURLException layoutFriendlyURLException =
-				new LayoutFriendlyURLException(
-					LayoutFriendlyURLException.POSSIBLE_DUPLICATE);
-
-			layoutFriendlyURLException.setKeywordConflict(layoutIdFriendlyURL);
-
-			throw layoutFriendlyURLException;
 		}
 	}
 

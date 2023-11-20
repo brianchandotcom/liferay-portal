@@ -43,24 +43,33 @@ if (Validator.isNotNull(backURL)) {
 			>
 				<p class="list-group-title"><%= assetTitle %></p>
 				<p class="list-group-subtitle"><%= ResourceActionsUtil.getModelResource(locale, savedContentEntry.getClassName()) %></p>
+
+				<c:if test="<%= !mySavedContentDisplayContext.isVisible(assetRenderer) %>">
+					<liferay-portal-workflow:status
+						showStatusLabel="<%= false %>"
+						status="<%= assetRenderer.getStatus() %>"
+					/>
+				</c:if>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest"
+				cssClass="table-cell-expand-smallest table-column-text-end"
 			>
-				<clay:link
-					aria-label='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
-					borderless="<%= true %>"
-					cssClass="lfr-portal-tooltip mr-2"
-					displayType="secondary"
-					href="<%= mySavedContentDisplayContext.getURL(assetRenderer) %>"
-					icon="shortcut"
-					monospaced="<%= true %>"
-					small="<%= true %>"
-					target="_blank"
-					title='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
-					type="button"
-				/>
+				<c:if test="<%= mySavedContentDisplayContext.isVisible(assetRenderer) %>">
+					<clay:link
+						aria-label='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
+						borderless="<%= true %>"
+						cssClass="lfr-portal-tooltip mr-2"
+						displayType="secondary"
+						href="<%= mySavedContentDisplayContext.getURL(assetRenderer) %>"
+						icon="shortcut"
+						monospaced="<%= true %>"
+						small="<%= true %>"
+						target="_blank"
+						title='<%= LanguageUtil.format(request, "open-x-in-a-new-tab", HtmlUtil.escapeAttribute(assetTitle)) %>'
+						type="button"
+					/>
+				</c:if>
 
 				<clay:link
 					aria-label='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escapeAttribute(assetTitle)) %>'

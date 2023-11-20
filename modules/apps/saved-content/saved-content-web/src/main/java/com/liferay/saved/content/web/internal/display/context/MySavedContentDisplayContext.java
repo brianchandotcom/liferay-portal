@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.saved.content.constants.MySavedContentPortletKeys;
 import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.service.SavedContentEntryServiceUtil;
@@ -153,41 +154,15 @@ public class MySavedContentDisplayContext {
 			_themeDisplay.getURLCurrent());
 	}
 
-	public AssetRenderer<?> getAssetRenderer(String className, long classPK)
-		throws PortalException {
+	public boolean isVisible(AssetRenderer<?> assetRenderer) {
+		if ((assetRenderer == null) ||
+			(assetRenderer.getStatus() == WorkflowConstants.STATUS_EXPIRED) ||
+			(assetRenderer.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
 
-		try {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
-			if (assetRendererFactory == null) {
-				return null;
-			}
-
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(classPK);
-
-			if (assetRenderer == null) {
-				return null;
-			}
-
-			return assetRenderer;
+			return false;
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to get asset renderer for class ", className,
-						" with primary key ", classPK),
-					exception);
-			}
 
-			throw new PortalException(
-				StringBundler.concat(
-					"Unable to get asset renderer for class ", className,
-					" with primary key ", classPK));
-		}
+		return true;
 	}
 
 	private PortletURL _getPortletURL() {

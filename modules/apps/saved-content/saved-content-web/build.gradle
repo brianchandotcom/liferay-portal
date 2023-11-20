@@ -10,6 +10,7 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:portal-workflow:portal-workflow-taglib")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")
 	compileOnly project(":apps:saved-content:saved-content-api")
 	compileOnly project(":apps:static:portal:portal-profile-api")

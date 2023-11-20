@@ -2345,7 +2345,8 @@ public class CommerceOrderLocalServiceImpl
 
 				DTOConverter<?, ?> commerceOrderDTOConverter =
 					_dtoConverterRegistry.getDTOConverter(
-						CommerceOrder.class.getName());
+						"Liferay.Headless.Commerce.Admin.Order",
+						CommerceOrder.class.getName(), "v1.0");
 
 				message.setPayload(
 					JSONUtil.put(

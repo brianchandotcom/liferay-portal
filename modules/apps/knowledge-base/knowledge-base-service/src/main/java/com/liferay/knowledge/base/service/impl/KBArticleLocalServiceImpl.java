@@ -1519,30 +1519,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
-	public KBArticle updateStatus(long userId, long resourcePrimKey, int status)
-		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
-
-		KBArticle kbArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-		kbArticle.setStatus(status);
-		kbArticle.setStatusByUserId(user.getUserId());
-		kbArticle.setStatusByUserName(user.getFullName());
-		kbArticle.setStatusDate(new Date());
-
-		kbArticle = kbArticlePersistence.update(kbArticle);
-
-		Indexer<KBArticle> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			KBArticle.class);
-
-		indexer.reindex(kbArticle);
-
-		return kbArticle;
-	}
-
-	@Override
 	public KBArticle updateStatus(
 			long userId, long resourcePrimKey, int status,
 			ServiceContext serviceContext)

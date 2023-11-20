@@ -607,9 +607,6 @@ public interface KBArticleLocalService
 
 	public void updatePriority(long resourcePrimKey, double priority);
 
-	public KBArticle updateStatus(long userId, long resourcePrimKey, int status)
-		throws PortalException;
-
 	public KBArticle updateStatus(
 			long userId, long resourcePrimKey, int status,
 			ServiceContext serviceContext)

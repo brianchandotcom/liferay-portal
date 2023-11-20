@@ -848,13 +848,6 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static KBArticle updateStatus(
-			long userId, long resourcePrimKey, int status)
-		throws PortalException {
-
-		return getService().updateStatus(userId, resourcePrimKey, status);
-	}
-
-	public static KBArticle updateStatus(
 			long userId, long resourcePrimKey, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {

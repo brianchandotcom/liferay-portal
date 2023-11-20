@@ -966,14 +966,6 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
-	public KBArticle updateStatus(long userId, long resourcePrimKey, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kbArticleLocalService.updateStatus(
-			userId, resourcePrimKey, status);
-	}
-
-	@Override
 	public KBArticle updateStatus(
 			long userId, long resourcePrimKey, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

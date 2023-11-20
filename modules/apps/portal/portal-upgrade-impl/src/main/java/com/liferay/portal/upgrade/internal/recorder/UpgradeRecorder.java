@@ -177,16 +177,10 @@ public class UpgradeRecorder {
 	}
 
 	private String _calculateResult() {
-		if (!_errorMessages.isEmpty()) {
-			return "failure";
-		}
-
 		try {
 			ReleaseManager releaseManager = _serviceTracker.getService();
 
-			if (!releaseManager.isUpgraded()) {
-				return "unresolved";
-			}
+			return releaseManager.getStatus();
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -196,12 +190,6 @@ public class UpgradeRecorder {
 
 			return "failure";
 		}
-
-		if (!_warningMessages.isEmpty()) {
-			return "warning";
-		}
-
-		return "success";
 	}
 
 	private String _calculateType() {

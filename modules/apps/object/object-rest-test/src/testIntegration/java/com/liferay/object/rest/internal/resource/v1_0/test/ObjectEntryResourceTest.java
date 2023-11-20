@@ -6846,7 +6846,7 @@ public class ObjectEntryResourceTest {
 	private static final String _LIST_TYPE_ENTRY_KEY =
 		"x" + RandomTestUtil.randomString();
 
-	private static final int _MAX_FILE_SIZE_VALUE = 10;
+	private static final int _MAX_FILE_SIZE_VALUE = 1;
 
 	private static final String _NEW_OBJECT_FIELD_VALUE_1 =
 		RandomTestUtil.randomString();

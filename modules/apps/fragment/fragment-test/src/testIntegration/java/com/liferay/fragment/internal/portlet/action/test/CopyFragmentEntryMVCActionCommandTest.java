@@ -196,11 +196,11 @@ public class CopyFragmentEntryMVCActionCommandTest {
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletActionResponse());
 		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.PORTLET_ID, FragmentPortletKeys.FRAGMENT);
+		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 		mockLiferayPortletActionRequest.setParameter(
 			"fragmentCollectionId", String.valueOf(fragmentCollectionId));
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.PORTLET_ID, FragmentPortletKeys.FRAGMENT);
 
 		return mockLiferayPortletActionRequest;
 	}
@@ -220,7 +220,6 @@ public class CopyFragmentEntryMVCActionCommandTest {
 		LayoutSet layoutSet = layout.getLayoutSet();
 
 		themeDisplay.setLayoutSet(layoutSet);
-
 		themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
 
 		themeDisplay.setPermissionChecker(

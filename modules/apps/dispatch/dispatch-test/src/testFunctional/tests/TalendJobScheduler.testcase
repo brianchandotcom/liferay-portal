@@ -1,0 +1,66 @@
+@component-name = "portal-dispatch"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Job Scheduler";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JobScheduler.openJobSchedulerAdmin();
+
+			if (IsElementPresent(key_name = "test", locator1 = "JobScheduler#JOB_ITEM_NAME")) {
+				JobScheduler.deleteJobItem(jobItemName = "test");
+			}
+		}
+	}
+
+	@priority = 4
+	test SwitchToTalendTabInJobScheduler {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given create a Job Scheduler with talend dispatchTaskExecutorType") {
+			JSONJobScheduler.createJobSchedulerTrigger(
+				dispatchTaskExecutorType = "talend",
+				name = "test");
+		}
+
+		task ("And Given go to Control Panel > Job Scheduler") {
+			JobScheduler.openJobSchedulerAdmin();
+		}
+
+		task ("When switch to Talend tab") {
+			JobScheduler.editJobItem(jobItemName = "test");
+
+			Click(
+				key_tab = "Talend",
+				locator1 = "NavTab#TAB_LINK");
+		}
+
+		task ("Then page loads correctly and no error in server console") {
+			AssertElementPresent(
+				key_fieldLabel = "Upload your Talend job file.",
+				locator1 = "SystemSettings#LABEL");
+
+			AssertElementPresent(locator1 = "Button#SAVE");
+
+			AssertElementPresent(locator1 = "Button#BACK");
+
+			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+		}
+	}
+
+}

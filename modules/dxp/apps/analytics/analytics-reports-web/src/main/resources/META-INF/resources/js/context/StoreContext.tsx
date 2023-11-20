@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {createContext, useReducer} from 'react';
+import React, {createContext} from 'react';
+
+import {useSafeReducer} from '../utils/useSafeReducer';
 
 interface Action {
 	type: 'ADD_WARNING' | null;
@@ -48,7 +50,10 @@ interface Props {
 }
 
 export function StoreContextProvider({children, value}: Props) {
-	const [state, dispatch] = useReducer(reducer, {...INITIAL_STATE, ...value});
+	const [state, dispatch] = useSafeReducer(reducer, {
+		...INITIAL_STATE,
+		...value,
+	});
 
 	return (
 		<StoreDispatchContext.Provider value={dispatch}>

@@ -5,15 +5,15 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useReducer} from 'react';
+import React, {useCallback, useEffect} from 'react';
 
 import {ChartStateContextProvider} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreContextProvider} from '../context/StoreContext';
 import {dataReducer, initialState} from '../context/dataReducer';
 import APIService from '../utils/APIService';
+import {useSafeReducer} from '../utils/useSafeReducer';
 import ConnectToAC from './ConnectToAC';
 import Navigation from './Navigation';
 
@@ -24,22 +24,11 @@ export default function AnalyticsReports({
 	hoverOrFocusEventTriggered,
 	isPanelStateOpen,
 }) {
-	const isMounted = useIsMounted();
-
-	const [state, dispatch] = useReducer(dataReducer, initialState);
-
-	const safeDispatch = useCallback(
-		(action) => {
-			if (isMounted()) {
-				dispatch(action);
-			}
-		},
-		[isMounted]
-	);
+	const [state, dispatch] = useSafeReducer(dataReducer, initialState);
 
 	const getData = useCallback(
 		(fetchURL, timeSpanKey, timeSpanOffset) => {
-			safeDispatch({type: 'LOAD_DATA'});
+			dispatch({type: 'LOAD_DATA'});
 
 			const body =
 				!timeSpanOffset && !!timeSpanKey
@@ -48,13 +37,13 @@ export default function AnalyticsReports({
 
 			APIService.getAnalyticsReportsData(fetchURL, body)
 				.then((data) =>
-					safeDispatch({
+					dispatch({
 						data: data.context,
 						type: 'SET_DATA',
 					})
 				)
 				.catch(() => {
-					safeDispatch({
+					dispatch({
 						error: Liferay.Language.get(
 							'an-unexpected-error-occurred'
 						),
@@ -62,7 +51,7 @@ export default function AnalyticsReports({
 					});
 				});
 		},
-		[safeDispatch]
+		[dispatch]
 	);
 
 	useEffect(() => {

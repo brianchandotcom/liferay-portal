@@ -157,17 +157,19 @@ public class GenerateReportsControllerBuildRunner
 
 		Map<String, Long> latestReportUpdateTimes = new HashMap<>();
 
-		for (Build build : builds) {
-			String buildDescription = _getBuildDescription(build);
+		for (GenerateReportsBuildRunner.Report report :
+				GenerateReportsBuildRunner.Report.values()) {
 
-			for (GenerateReportsBuildRunner.Report report :
-					GenerateReportsBuildRunner.Report.values()) {
+			String reportName = report.toString();
 
-				String reportName = report.toString();
+			for (Build build : builds) {
+				String buildDescription = _getBuildDescription(build);
 
 				if (buildDescription.contains(reportName)) {
 					latestReportUpdateTimes.put(
 						reportName, build.getStartTime());
+
+					break;
 				}
 			}
 		}

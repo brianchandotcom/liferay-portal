@@ -343,6 +343,22 @@ public class AssetTagLocalServiceTest {
 			RandomTestUtil.randomString(100), _serviceContext);
 	}
 
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testUpdateTagWithCaseSensitive() throws PortalException {
+		AssetTag assetTag = _assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			_serviceContext);
+
+		String tagName = "updated TAG1";
+
+		AssetTag actualAssetTag = _assetTagLocalService.updateTag(
+			TestPropsValues.getUserId(), assetTag.getTagId(), tagName,
+			_serviceContext);
+
+		Assert.assertEquals(tagName, actualAssetTag.getName());
+	}
+
 	private void _testAddMultipleTags(List<String> tagNames)
 		throws PortalException {
 

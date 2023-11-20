@@ -110,7 +110,7 @@
 						]
 					}
 				},
-					{
+				{
 					"dataType": "string",
 					"defaultValue": "w-100",
 					"label": "image-size",

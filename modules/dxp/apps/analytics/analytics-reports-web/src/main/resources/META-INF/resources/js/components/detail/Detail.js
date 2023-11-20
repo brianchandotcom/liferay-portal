@@ -101,6 +101,7 @@ export default function Detail({
 				<>
 					<div className="c-pt-3 c-px-3 d-flex" ref={refProp}>
 						<ClayButton
+							aria-label={Liferay.Language.get('back')}
 							displayType="unstyled"
 							onClick={() => {
 								onCurrentPageChange({view: 'main'});

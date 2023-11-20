@@ -1,0 +1,492 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-192282=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+		}
+
+		task ("And add new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the Action tab") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		DataSetAdmin.deleteAllDataSetEntries();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-194351 Confirm that the field field cannot be edited"
+	@priority = 4
+	test CanAssertThatTheTypeFieldIsDisabled {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button and edit") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then Error messages are displayed and the save button is disabled") {
+			AssertElementPresent(
+				key_placeholderText = "Please select an option.",
+				locator1 = "DataSet#ANY_DISABLED");
+		}
+	}
+
+	@description = "LPS-194351 confirm that when creating an action, and clicking on the three dots button, the "Edit" option is displayed"
+	@priority = 3
+	test CanAssertTheEditButtonAction {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			AssertElementPresent(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then the Delete and Edit option is listed in the dropdown menu") {
+			AssertElementPresent(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that a created action can be deleted, and a success message is displayed"
+	@priority = 5
+	test CanBeDeletedAction {
+		property portal.acceptance = "true";
+
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option and clicks on delete button") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then a modal is opened with the message: “Are you sure you want to delete this action?/ and click on delete") {
+			AssertElementPresent(
+				key_modalText = "Are you sure you want to delete this action?",
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
+
+			Click(locator1 = "Button#MODAL_DELETE");
+		}
+
+		task ("Then a successful toast message is displayed and the creation action list is empty") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that when trying to delete a created action, the deletion can be canceled using the cancel button"
+	@priority = 3
+	test CanCancelDeletionOnCancelButton {
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option and clicks on delete button") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And clicking on Cancel button inside the modal") {
+			Button.clickCancel();
+		}
+
+		task ("Then The item is not deleted") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that editing an action is canceled when the user clicks the cancel button"
+	@priority = 3
+	test CanCancelEditActionOnCancelButton {
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And Edit the action item created, and click on "Cancel" button") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Edited label");
+
+			Type(
+				key_fieldName = "Add a value here",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+
+			Button.clickCancel();
+		}
+
+		task ("And it appears on the creation Action tab table with the original label.") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that a created action can be edited and changes are displayed"
+	@priority = 5
+	test CanEditCreationAction {
+		property portal.acceptance = "true";
+
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And Edit the action item created") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Edited label");
+
+			Type(
+				key_fieldName = "Add a value here",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "xx-ee edited");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_mvcPath=%2Ffds_view.jsp&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryId=33344&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryLabel=Data+Set+Test&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsViewId=33346&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsViewLabel=View+Test");
+
+			PortletEntry.save();
+		}
+
+		task ("Then a successful toast message is displayed and it appears on the creation Action tab table with the new title and edit again") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edited label",
+				locator1 = "DataSet#FIELDS_TABLE");
+
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then Confirm that the edited values are present") {
+			AssertElementPresent(
+				key_unnamedTitle = "Edited label",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
+
+			AssertElementPresent(
+				key_unnamedTitle = "xx-ee edited",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that a created action can be edited and changes are displayed, and the Headless Action Key and Confirmation Message fields can be left empty"
+	@priority = 3
+	test SomeFieldsMayBeEmpty {
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And Edit the action item created") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Edited label");
+
+			Type(
+				key_fieldName = "Add a value here",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+
+			PortletEntry.save();
+		}
+
+		task ("Then a successful toast message is displayed and it appears on the creation Action tab table with the new title and edit again") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edited label",
+				locator1 = "DataSet#FIELDS_TABLE");
+
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then Confirm that the edited values are present") {
+			AssertElementPresent(
+				key_unnamedTitle = "Edited label",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
+
+			AssertElementPresent(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that when editing an already created Link action, it is not possible to leave the fields empty"
+	@priority = 4
+	test TheLinkActionFieldsCannotBeEmpty {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button and edit") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And go to Edit page for the action item created and leave the required fields, title and url empty") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "");
+		}
+
+		task ("Then Error messages are displayed and the save button is disabled") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "This field is required.");
+
+			AssertElementPresent(locator1 = "DataSet#ANY_BUTTON_DISABLED");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that when editing an already created modal action, it is not possible to leave the fields empty"
+	@priority = 4
+	test TheModalActionFieldsCannotBeEmpty {
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				inputText = "Products",
+				type = "Modal",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example",
+				variant = "Full Screen");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And go to Edit page for the action item created and leave the required fields, label, title and url empty") {
+			Type(
+				key_fieldName = "add-here-the-title-of-the-modal",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "");
+
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "");
+		}
+
+		task ("Then Error messages are displayed and the save button is disabled") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "This field is required.");
+
+			AssertElementPresent(locator1 = "DataSet#ANY_BUTTON_DISABLED");
+		}
+	}
+
+}

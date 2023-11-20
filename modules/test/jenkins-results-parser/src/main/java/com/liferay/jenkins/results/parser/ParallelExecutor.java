@@ -293,7 +293,17 @@ public class ParallelExecutor<T> {
 		}
 
 		public int getRunningTaskCount() {
-			return _runningTasks.size();
+			int runningTaskCount = 0;
+
+			for (Task<T> runningTask : _runningTasks) {
+				TaskCallable<T> taskCallable = runningTask.getCallable();
+
+				if (taskCallable.isRunning()) {
+					runningTaskCount++;
+				}
+			}
+
+			return runningTaskCount;
 		}
 
 		public int getTotalTaskCount() {

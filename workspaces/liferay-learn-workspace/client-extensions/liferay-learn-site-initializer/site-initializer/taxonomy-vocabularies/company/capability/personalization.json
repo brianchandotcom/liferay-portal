@@ -1,0 +1,11 @@
+{
+	"description": "Deliver more personalized and relevant content through enhanced segmentation, AI-generated recommendations, and A/B testing.",
+	"description_i18n": {
+		"en_US": "Deliver more personalized and relevant content through enhanced segmentation, AI-generated recommendations, and A/B testing."
+	},
+	"name": "Personalization",
+	"name_i18n": {
+		"en_US": "Personalization"
+	},
+	"viewableBy": "Anyone"
+}

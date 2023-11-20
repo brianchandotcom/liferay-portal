@@ -1,0 +1,11 @@
+{
+	"description": "Save users time with personalized, integrated, and organized search results.",
+	"description_i18n": {
+		"en_US": "Save users time with personalized, integrated, and organized search results."
+	},
+	"name": "Search",
+	"name_i18n": {
+		"en_US": "Search"
+	},
+	"viewableBy": "Anyone"
+}

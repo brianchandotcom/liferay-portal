@@ -1,0 +1,11 @@
+{
+	"description": "Deliver assets to any channel by managing, organizing, and publishing them in one place.",
+	"description_i18n": {
+		"en_US": "Deliver assets to any channel by managing, organizing, and publishing them in one place."
+	},
+	"name": "Digital Asset Management",
+	"name_i18n": {
+		"en_US": "Digital Asset Management"
+	},
+	"viewableBy": "Anyone"
+}

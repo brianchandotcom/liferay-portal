@@ -9,7 +9,7 @@
 					},
 					"fragmentConfig": {
 						"darkNav": true,
-						"navigationDDMTemplateKey": "NAVIGATION_BASIC",
+						"navigationDDMTemplateKey": "NAVIGATION_PRIMARY",
 						"searchBlueprintId": "[$SXP_BLUEPRINT_ID:blueprint$]",
 						"showAccountMenu": true,
 						"showCta": false,
@@ -83,7 +83,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "var(--color-action-primary-default)",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://www.liferay.com/"
 									},
 									"fragmentFields": [
 										{
@@ -112,7 +112,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "var(--color-state-success-darken-1)",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://help.liferay.com/hc/"
 									},
 									"fragmentFields": [
 										{
@@ -141,7 +141,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "var(--color-brand-primary-lighten-1)",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://liferay.dev/"
 									},
 									"fragmentFields": [
 										{
@@ -170,7 +170,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "var(--color-state-info-lighten-2)",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": ""
+										"menuItemUrl": "https://marketplace.liferay.com/"
 									},
 									"fragmentFields": [
 										{

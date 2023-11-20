@@ -1,0 +1,11 @@
+{
+	"description": "Deliver customized pages and sites on any device or channel.",
+	"description_i18n": {
+		"en_US": "Deliver customized pages and sites on any device or channel."
+	},
+	"name": "Sites",
+	"name_i18n": {
+		"en_US": "Sites"
+	},
+	"viewableBy": "Anyone"
+}

@@ -116,5 +116,60 @@
 		],
 		"name": "More Resources",
 		"typeSite": 1
+	},
+	{
+		"menuItems": [
+			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM16",
+				"name": "Capabilities",
+				"type": "node"
+			},
+			{
+				"menuItems": [
+					{
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM11",
+						"name": "Analytics Cloud",
+						"type": "url",
+						"url": "/w/analytics-cloud/index"
+					},
+					{
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM12",
+						"name": "Commerce",
+						"type": "url",
+						"url": "/w/commerce/index"
+					},
+					{
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM13",
+						"name": "DXP / Portal",
+						"type": "url",
+						"url": "/w/dxp-portal/index"
+					},
+					{
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM14",
+						"name": "DXP Cloud",
+						"type": "url",
+						"url": "/w/dxp-cloud/index"
+					},
+					{
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM15",
+						"name": "Reference",
+						"type": "url",
+						"url": "/w/reference/index"
+					}
+				],
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM17",
+				"name": "Products",
+				"type": "node"
+			},
+			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM18",
+				"name": "Courses",
+				"type": "url",
+				"url": "/w/courses/index"
+			}
+		],
+		"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM19",
+		"name": "Learn Site New Primary Navigation",
+		"typeSite": 1
 	}
 ]

@@ -247,17 +247,29 @@ public class ElasticsearchSearchEngine
 	protected void activate(Map<String, Object> properties) {
 		_elasticsearchConfigurationWrapper.register(this);
 
-		_checkNodeVersions();
+		Thread currentThread = Thread.currentThread();
 
-		if (StartupHelperUtil.isDBNew()) {
-			for (long companyId : _getIndexedCompanyIds()) {
-				removeCompany(companyId);
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			ElasticsearchSearchEngine.class.getClassLoader());
+
+		try {
+			_checkNodeVersions();
+
+			if (StartupHelperUtil.isDBNew()) {
+				for (long companyId : _getIndexedCompanyIds()) {
+					removeCompany(companyId);
+				}
 			}
+
+			_putTimestampPipeline();
+
+			initialize(CompanyConstants.SYSTEM);
 		}
-
-		_putTimestampPipeline();
-
-		initialize(CompanyConstants.SYSTEM);
+		finally {
+			currentThread.setContextClassLoader(classLoader);
+		}
 	}
 
 	protected void createBackupRepository() {

@@ -487,4 +487,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182728. The user should see the field error below the Select from List fragment."
+	@priority = 3
+	test ViewSelectFromListFieldErrorMessageWhenPartialValidationFailure {
+		task ("Given a user has a content page where a Select from List fragment mapped to a mandatory Select from List field") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Mandatory",
+				fieldName = "mandatory",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "PurchaseOrder",
+				picklistName = "Ticket Type");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user submits form without selection") {
+			SetElementAttribute.removeElementAttribute(
+				attribute1 = "required",
+				locator1 = "//label[normalize-space()='Mandatory']//following-sibling::div//input[contains(@id,'select-from-list')]");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see a field error message below Select from List") {
+			Alert.viewFieldErrorMessage(
+				errorMessage = "This field is required.",
+				fieldLabel = "Mandatory");
+		}
+	}
+
 }

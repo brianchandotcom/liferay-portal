@@ -99,7 +99,8 @@ const MDFRequestList = () => {
 			),
 		siteURL,
 		actions,
-		mutate
+		mutate,
+		isChannel
 	);
 
 	const getTable = (

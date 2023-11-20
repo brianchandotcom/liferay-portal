@@ -26,7 +26,8 @@ export default function getMDFListColumns(
 	) => boolean | undefined,
 	siteURL: string,
 	actions?: PermissionActionType[],
-	mutated?: KeyedMutator<LiferayItems<MDFRequestDTO[]>>
+	mutated?: KeyedMutator<LiferayItems<MDFRequestDTO[]>>,
+	isChannel?: boolean
 ): TableColumn<MDFRequestListItem>[] | undefined {
 	const getDropdownOptions = (row: MDFRequestListItem, index: number) => {
 		const isUserAssociated = hasUserAccountSameAccountEntryCurrentMDFRequest(
@@ -38,6 +39,14 @@ export default function getMDFListColumns(
 				const currentMDFRequestHasValidStatusToEdit =
 					row[MDFColumnKey.STATUS] === Status.DRAFT.name ||
 					row[MDFColumnKey.STATUS] === Status.REQUEST_MORE_INFO.name;
+
+				const currentMDFRequestHasValidStatusToRemove =
+					(isChannel &&
+						currentValue === PermissionActionType.DELETE &&
+						row.STATUS === 'Approved') ||
+					(!isChannel &&
+						currentValue === PermissionActionType.DELETE &&
+						row.STATUS === 'Draft');
 
 				if (currentValue === PermissionActionType.VIEW) {
 					previousValue.push({
@@ -71,10 +80,7 @@ export default function getMDFListColumns(
 					});
 				}
 
-				if (
-					currentValue === PermissionActionType.DELETE &&
-					row.STATUS === 'Approved'
-				) {
+				if (currentMDFRequestHasValidStatusToRemove) {
 					previousValue.push({
 						icon: 'trash',
 						key: 'delete',
@@ -99,8 +105,7 @@ export default function getMDFListColumns(
 											});
 
 											mutate(mutated);
-										}
-										catch (error: unknown) {
+										} catch (error: unknown) {
 											Liferay.Util.openToast({
 												message:
 													'Fail to delete MDF Request',

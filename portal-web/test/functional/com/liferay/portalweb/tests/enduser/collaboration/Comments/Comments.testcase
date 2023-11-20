@@ -316,10 +316,10 @@ definition {
 
 		Comments.configureCommentEditable(commentEditable = "true");
 
-		User.firstLoginPG(
+		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
 
 		JSONUser.addUser(
 			creatorEmailAddress = "test@www.able.com",
@@ -364,10 +364,10 @@ definition {
 
 		User.logoutPG(specificURL = "http://www.able.com:8080");
 
-		User.firstLoginPG(
+		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "userea@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "userea@www.able.com");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Test Page",

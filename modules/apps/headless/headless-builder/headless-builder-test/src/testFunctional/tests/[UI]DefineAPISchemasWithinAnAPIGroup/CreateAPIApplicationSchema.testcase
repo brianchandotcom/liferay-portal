@@ -133,6 +133,61 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test CannotCreateSchemaWithDescriptionSizeExceeded {
+		task ("When I fill and public in description field with 281 characters") {
+			APIBuilderUI.createAPISchema(
+				confirmCreation = "true",
+				fieldDescription = "fdsfsdfkjsijokersderedlakstiowerichaehtsljlncslmtafdsfsdfkjsijokersderedlakstiowerichaehtsljlncslmtafdsfsdfkjsijokersderedlakstiowerichaehtsljlncslmtafdsfsdfkjsijokersderedlakstiowerichaehtsljlncslmtafdsfsdfkjsijokersderedlakstiowerichaehtsljlncslmtafdsfsdfkjsijokersderedlakstiowq",
+				name = "testSchema",
+				objectDefinitionName = "APIApplication");
+		}
+
+		task ("Then error message 'Object entry value exceeds the maximum length of 280 characters for object field description' blocks schema from being created") {
+			Alert.viewErrorMessage(errorMessage = "Error:Object entry value exceeds the maximum length of 280 characters for object field");
+		}
+	}
+
+	@priority = 3
+	test CanSeeDescriptionOfDescriptionField {
+		task ("When I click Add New Schema") {
+			Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+		}
+
+		task ("Then a text 'Add a short description that describes this schema' visible in the Description field") {
+			AssertElementPresent(
+				key_fieldName = "Add a short description that describes this schema",
+				key_fieldValue = "Add a short description that describes this schema",
+				locator1 = "Translation#TARGET_LANGUAGE_TEXT_BOX_FIELD");
+		}
+	}
+
+	@priority = 3
+	test CanSeeDescriptionOfNameField {
+		task ("When I click Add New Schema") {
+			Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+		}
+
+		task ("Then a text 'testSchema_2' visible in the Name field") {
+			AssertElementPresent(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema_2");
+		}
+	}
+
+	@priority = 3
+	test CanSeeDescriptionOfObjectField {
+		task ("When I click Add New Schema") {
+			Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+		}
+
+		task ("Then a text ‘APIApplication’ visible in the Object field") {
+			AssertElementPresent(
+				locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION",
+				objectDefinitionName = "APIApplication");
+		}
+	}
+
 	@priority = 4
 	test CanSeeInfoOfCreatedSchema {
 		property portal.acceptance = "true";
@@ -154,6 +209,42 @@ definition {
 				locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION",
 				objectDefinitionName = "APIApplication",
 				value1 = "APIApplication");
+		}
+	}
+
+	@priority = 3
+	test CanSeeSuccessMessageWhenSchemaCreated {
+		task ("When I create a schema with valid Name and Object") {
+			APIBuilderUI.createAPISchema(
+				confirmCreation = "true",
+				fieldDescription = "Description default",
+				name = "testSchema_2",
+				objectDefinitionName = "APIApplication");
+		}
+
+		task ("Then success message appears") {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	@priority = 3
+	test SchemaFieldsAreVisibleInCreationModal {
+		task ("When I click Add New Schema") {
+			Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+		}
+
+		task ("Then Name, Description, Object fields are visible") {
+			AssertElementPresent(
+				fieldLabel = "Name",
+				locator1 = "FormViewBuilder#FIELD_LABEL");
+
+			AssertElementPresent(
+				fieldLabel = "Description",
+				locator1 = "FormViewBuilder#FIELD_LABEL");
+
+			AssertElementPresent(
+				fieldLabel = "Object",
+				locator1 = "FormViewBuilder#FIELD_LABEL");
 		}
 	}
 

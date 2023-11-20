@@ -209,7 +209,7 @@ definition {
 		}
 
 		task ("Sign in the public virtual host") {
-			User.firstLoginPG(virtualHostsURL = "http://www.able.com:8080");
+			User.firstLoginUI(specificURL = "http://www.able.com:8080");
 		}
 
 		task ("Add a public page in organization site") {

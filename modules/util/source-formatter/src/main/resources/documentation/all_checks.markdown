@@ -173,6 +173,7 @@ JSStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .js or .jsx
 JSWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .js or .jsx | Finds missing and unnecessary whitespace in `.js` files. |
 Java2HTMLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | Finds incorrect use of `.java.html` in `.jsp` files. |
 JavaAbstractMethodCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds incorrect `abstract` methods in `interface`. |
+JavaAccessModifierCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds incorrect Java access modifier usage. |
 JavaAggregateTestRuleParameterOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Checks the order of parameters in `new AggregateTestRule` calls. |
 JavaAnnotationDefaultAttributeCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Finds cases where the default value is passed to annotations in package `*.bnd.annotations` or `*.bind.annotations`. |
 JavaAnnotationsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on annotations. |

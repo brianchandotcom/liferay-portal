@@ -125,7 +125,7 @@ public class ConfigurationTestUtil {
 
 		Assert.assertNotNull(factoryPid);
 
-		CountDownLatch countDownLatch = new CountDownLatch(1);
+		CountDownLatch countDownLatch = new CountDownLatch(2);
 
 		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
 			_bundleContext.registerService(

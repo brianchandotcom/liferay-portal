@@ -59,7 +59,7 @@ const noop = () => {};
 
 describe('Navigation', () => {
 	beforeEach(() => {
-		fetch.mockResponse(JSON.stringify({}));
+		fetch.mockResponse(Promise.resolve(JSON.stringify({})));
 	});
 
 	afterEach(() => {

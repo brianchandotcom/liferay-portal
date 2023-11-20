@@ -30,6 +30,7 @@ export default function ChangeTrackingIndicator({
 	getSelectPublicationsURL,
 	iconClass,
 	iconName,
+	namespace,
 	orderByAscending,
 	orderByColumn,
 	preferencesPrefix,
@@ -324,6 +325,7 @@ export default function ChangeTrackingIndicator({
 						fetchDataURL={getSelectPublicationsURL}
 						filterEntries={filterEntries}
 						getListItem={getListItem}
+						namespace={namespace}
 						orderByItems={[
 							{
 								label: Liferay.Language.get('modified-date'),

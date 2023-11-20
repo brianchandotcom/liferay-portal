@@ -391,6 +391,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				return getSelectPublicationsURL.toString();
 			}
 		).put(
+			"namespace", _portal.getPortletNamespace(CTPortletKeys.PUBLICATIONS)
+		).put(
 			"orderByAscending",
 			portalPreferences.getValue(
 				CTPortletKeys.PUBLICATIONS, "select-order-by-ascending")

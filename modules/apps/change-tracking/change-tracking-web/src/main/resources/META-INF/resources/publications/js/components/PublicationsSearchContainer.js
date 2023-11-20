@@ -13,7 +13,7 @@ import ClayList from '@clayui/list';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {createPortletURL, fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 const PublicationsSearchContainer = ({
@@ -25,6 +25,7 @@ const PublicationsSearchContainer = ({
 	getListItem,
 	getTableHead,
 	getTableRow,
+	namespace,
 	orderByItems,
 	preferencesPrefix,
 	saveDisplayPreferenceURL,
@@ -122,16 +123,12 @@ const PublicationsSearchContainer = ({
 				return;
 			}
 
-			AUI().use('liferay-portlet-url', () => {
-				const portletURL = Liferay.PortletURL.createURL(
-					saveDisplayPreferenceURL
-				);
-
-				portletURL.setParameter('key', preferencesPrefix + '-' + key);
-				portletURL.setParameter('value', value.toString());
-
-				fetch(portletURL.toString());
+			const portletURL = createPortletURL(saveDisplayPreferenceURL, {
+				key: preferencesPrefix + '-' + key,
+				value,
 			});
+
+			fetch(portletURL);
 		},
 		[preferencesPrefix, saveDisplayPreferenceURL]
 	);
@@ -151,61 +148,24 @@ const PublicationsSearchContainer = ({
 	const onSubmit = useCallback(
 		(keywords, newDelta, newPage) => {
 			setResultsKeywords(keywords);
+			const portletURL = createPortletURL(fetchDataURL);
 
-			AUI().use('liferay-portlet-url', () => {
-				const portletURL = Liferay.PortletURL.createURL(fetchDataURL);
+			if (keywords) {
+				portletURL.searchParams.append(
+					`${namespace}keywords`,
+					keywords
+				);
+			}
+			else {
+				portletURL.searchParams.append(`${namespace}keywords`, '');
+			}
 
-				if (keywords) {
-					portletURL.setParameter('keywords', keywords);
-				}
-				else {
-					portletURL.setParameter('keywords', '');
-				}
+			setLoading(true);
 
-				setLoading(true);
-
-				fetch(portletURL.toString())
-					.then((response) => response.json())
-					.then((json) => {
-						if (!json.entries) {
-							const fetchData = {
-								errorMessage: Liferay.Language.get(
-									'an-unexpected-error-occurred'
-								),
-							};
-
-							setState((prevState) => ({
-								...prevState,
-								fetchData,
-							}));
-
-							setLoading(false);
-
-							return;
-						}
-
-						const newState = {
-							delta: newDelta,
-							fetchData: json,
-							page: newPage,
-						};
-
-						const lastPage = Math.ceil(
-							json.entries.length / newState.delta
-						);
-
-						if (lastPage < 1) {
-							newState.page = 1;
-						}
-						else if (newState.page > lastPage) {
-							newState.page = lastPage;
-						}
-
-						setState(newState);
-
-						setLoading(false);
-					})
-					.catch(() => {
+			fetch(portletURL)
+				.then((response) => response.json())
+				.then((json) => {
+					if (!json.entries) {
 						const fetchData = {
 							errorMessage: Liferay.Language.get(
 								'an-unexpected-error-occurred'
@@ -218,10 +178,47 @@ const PublicationsSearchContainer = ({
 						}));
 
 						setLoading(false);
-					});
-			});
+
+						return;
+					}
+
+					const newState = {
+						delta: newDelta,
+						fetchData: json,
+						page: newPage,
+					};
+
+					const lastPage = Math.ceil(
+						json.entries.length / newState.delta
+					);
+
+					if (lastPage < 1) {
+						newState.page = 1;
+					}
+					else if (newState.page > lastPage) {
+						newState.page = lastPage;
+					}
+
+					setState(newState);
+
+					setLoading(false);
+				})
+				.catch(() => {
+					const fetchData = {
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					};
+
+					setState((prevState) => ({
+						...prevState,
+						fetchData,
+					}));
+
+					setLoading(false);
+				});
 		},
-		[fetchDataURL]
+		[fetchDataURL, namespace]
 	);
 
 	const format = (key, args) => {

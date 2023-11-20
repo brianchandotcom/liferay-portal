@@ -40,7 +40,12 @@ import {useEffect, useState} from 'react';
 import {getCompanyId} from '../../liferay/constants';
 import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
 import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
+import {AppSpecification} from './enums/AppSpecification';
 import {AppType} from './enums/AppType';
+import {AppUploadType} from './enums/AppUploadType';
+import {AppVocabulary} from './enums/AppVocabulary';
+import {EditionOption} from './enums/EdtionOption';
+import {VersionOption} from './enums/VersionOption';
 
 interface ProvideAppBuildPageProps {
 	onClickBack: () => void;
@@ -130,15 +135,15 @@ export function ProvideAppBuildPage({
 
 		vocabulariesResponse.items.forEach(
 			(vocab: {id: number; name: string}) => {
-				if (vocab.name === 'Marketplace Liferay Platform Offering') {
+				if (vocab.name === AppVocabulary.LIFERAY_PLATFORM_OFFERING) {
 					marketplaceLiferayPlatformOfferingId = vocab.id;
 				}
 
-				if (vocab.name === 'Marketplace Liferay Version') {
+				if (vocab.name === AppVocabulary.LIFERAY_VERSION) {
 					marketplaceLiferayVersionId = vocab.id;
 				}
 
-				if (vocab.name === 'Marketplace Edition') {
+				if (vocab.name === AppVocabulary.EDITION) {
 					marketplaceEditionId = vocab.id;
 				}
 			}
@@ -159,7 +164,7 @@ export function ProvideAppBuildPage({
 					externalReferenceCode: managedOption?.externalReferenceCode,
 					id: managedOption.id,
 					name: managedOption.name,
-					vocabulary: 'Marketplace Liferay Platform Offering',
+					vocabulary: AppVocabulary.LIFERAY_PLATFORM_OFFERING,
 				});
 			});
 		}
@@ -170,7 +175,7 @@ export function ProvideAppBuildPage({
 			});
 
 			const liferayVersionOption = liferayVersionList.find(
-				(item) => item.name === '7.4'
+				(item) => item.name === VersionOption.SEVEN_FOUR
 			);
 
 			if (liferayVersionOption) {
@@ -179,7 +184,7 @@ export function ProvideAppBuildPage({
 						liferayVersionOption?.externalReferenceCode,
 					id: liferayVersionOption.id,
 					name: liferayVersionOption.name,
-					vocabulary: 'Marketplace Liferay Version',
+					vocabulary: AppVocabulary.LIFERAY_VERSION,
 				});
 			}
 
@@ -188,7 +193,7 @@ export function ProvideAppBuildPage({
 			});
 
 			const marketplaceEditionOption = marketplaceEditionList.find(
-				(item) => item.name === 'EE'
+				(item) => item.name === EditionOption.EE
 			);
 
 			if (marketplaceEditionOption) {
@@ -197,7 +202,7 @@ export function ProvideAppBuildPage({
 						marketplaceEditionOption?.externalReferenceCode,
 					id: marketplaceEditionOption.id,
 					name: marketplaceEditionOption.name,
-					vocabulary: 'Marketplace Edition',
+					vocabulary: AppVocabulary.EDITION,
 				});
 			}
 
@@ -206,8 +211,10 @@ export function ProvideAppBuildPage({
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
-						category.vocabulary !== 'marketplace edition' &&
-						category.vocabulary !== 'marketplace liferay version'
+						category.vocabulary !==
+							AppVocabulary.EDITION.toLowerCase() &&
+						category.vocabulary !==
+							AppVocabulary.LIFERAY_VERSION.toLowerCase()
 					) {
 						return category;
 					}
@@ -247,11 +254,11 @@ export function ProvideAppBuildPage({
 						icon={taskCheckedIcon}
 						onChange={() => {
 							dispatch({
-								payload: {id: appType.id, value: 'cloud'},
+								payload: {id: appType.id, value: AppType.CLOUD},
 								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
 							});
 						}}
-						selected={appType.value === 'cloud'}
+						selected={appType.value === AppType.CLOUD}
 						title="Yes"
 						tooltip={ReactDOMServer.renderToString(
 							<span>
@@ -269,11 +276,11 @@ export function ProvideAppBuildPage({
 						icon={cancelIcon}
 						onChange={() => {
 							dispatch({
-								payload: {id: appType.id, value: 'dxp'},
+								payload: {id: appType.id, value: AppType.DXP},
 								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
 							});
 						}}
-						selected={appType.value === 'dxp'}
+						selected={appType.value === AppType.DXP}
 						title="No"
 						tooltip="The app submission is integrates with Liferay DXP version 7.4 or later."
 					/>
@@ -311,11 +318,11 @@ export function ProvideAppBuildPage({
 						icon={cloudIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'LXC'},
+								payload: {value: AppUploadType.LXC},
 								type: TYPES.UPDATE_APP_BUILD,
 							});
 						}}
-						selected={appBuild === 'LXC'}
+						selected={appBuild === AppUploadType.LXC}
 						title="Via Liferay Experience Cloud Integration"
 						tooltip="In the future, you will be able to submit your app directly from Liferay Experience Cloud projects."
 					/>
@@ -326,11 +333,11 @@ export function ProvideAppBuildPage({
 						icon={githubIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'GitHub'},
+								payload: {value: AppUploadType.GITHUB},
 								type: TYPES.UPDATE_APP_BUILD,
 							});
 						}}
-						selected={appBuild === 'GitHub'}
+						selected={appBuild === AppUploadType.GITHUB}
 						title="Via GitHub Repo"
 						tooltip="In the future, you will be able to submit your app source code for additional support and partnership opportunities with Liferay."
 					/>
@@ -340,11 +347,11 @@ export function ProvideAppBuildPage({
 						icon={uploadIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'upload'},
+								payload: {value: AppUploadType.ZIP_UPLOAD},
 								type: TYPES.UPDATE_APP_BUILD,
 							});
 						}}
-						selected={appBuild === 'upload'}
+						selected={appBuild === AppUploadType.ZIP_UPLOAD}
 						title="Via ZIP Upload"
 						tooltip={ReactDOMServer.renderToString(
 							<span>
@@ -394,7 +401,7 @@ export function ProvideAppBuildPage({
 						if (appType.id) {
 							updateProductSpecification({
 								body: {
-									specificationKey: 'type',
+									specificationKey: AppSpecification.TYPE.toLowerCase(),
 									value: {en_US: appType.value},
 								},
 								id: appType.id,
@@ -403,8 +410,8 @@ export function ProvideAppBuildPage({
 							const dataSpecification = await createSpecification(
 								{
 									body: {
-										key: 'type',
-										title: {en_US: 'Type'},
+										key: AppSpecification.TYPE.toLowerCase(),
+										title: {en_US: AppSpecification.TYPE},
 									},
 								}
 							);

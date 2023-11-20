@@ -105,6 +105,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 			dispatch(
 				addRule({
 					actions,
+					conditionType,
 					conditions,
 					name,
 				})

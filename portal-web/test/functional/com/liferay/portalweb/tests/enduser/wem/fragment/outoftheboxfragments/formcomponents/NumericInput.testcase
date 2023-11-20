@@ -59,19 +59,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
-		}
-	}
-
 	@description = "This is a test for LPS-155169. The page creator could configure the Numeric Input framgent."
 	@priority = 4
 	test ConfigureNumericInput {

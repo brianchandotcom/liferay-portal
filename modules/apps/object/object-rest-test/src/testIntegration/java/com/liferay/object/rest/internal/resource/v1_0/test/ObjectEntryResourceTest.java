@@ -4521,14 +4521,14 @@ public class ObjectEntryResourceTest {
 	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField()
 		throws Exception {
 
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			Http.Method.PATCH, _objectDefinition1);
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			Http.Method.PUT, _objectDefinition1);
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			Http.Method.PATCH, _siteScopedObjectDefinition1);
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			Http.Method.PUT, _siteScopedObjectDefinition1);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			Http.Method.PATCH, _objectDefinition1, true);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			Http.Method.PUT, _objectDefinition1, true);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			Http.Method.PATCH, _siteScopedObjectDefinition1, true);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			Http.Method.PUT, _siteScopedObjectDefinition1, true);
 	}
 
 	@FeatureFlags("LPS-174455")
@@ -4537,13 +4537,13 @@ public class ObjectEntryResourceTest {
 		throws Exception {
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
-			Http.Method.PATCH, _objectDefinition1);
+			Http.Method.PATCH, _objectDefinition1, false);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
-			Http.Method.PUT, _objectDefinition1);
+			Http.Method.PUT, _objectDefinition1, false);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
-			Http.Method.PATCH, _siteScopedObjectDefinition1);
+			Http.Method.PATCH, _siteScopedObjectDefinition1, false);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
-			Http.Method.PUT, _siteScopedObjectDefinition1);
+			Http.Method.PUT, _siteScopedObjectDefinition1, false);
 	}
 
 	@Test
@@ -6127,182 +6127,9 @@ public class ObjectEntryResourceTest {
 			expectedFieldName, objectFieldNamesAndObjectFieldValues, type);
 	}
 
-	private void
-			_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-				Http.Method httpMethod, ObjectDefinition objectDefinition)
-		throws Exception {
-
-		// File validation
-
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				StringBundler.concat(
-					"File ", fileEntry.getName(),
-					" exceeds the maximum permitted size of ",
-					_MAX_FILE_SIZE_VALUE, " MB")
-			),
-			_toFileEntry(
-				Base64::encode,
-				RandomTestUtil.randomString(
-					(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
-				RandomTestUtil.randomString() + ".txt"),
-			httpMethod, null, objectDefinition);
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "File name is null"
-			),
-			_toFileEntry(Base64::encode, RandomTestUtil.randomString(), null),
-			httpMethod, null, objectDefinition);
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "Invalid file extension for " + fileEntry.getName()
-			),
-			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".err"),
-			httpMethod, null, objectDefinition);
-
-		// File with a nonexistent name
-
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT,
-				JSONUtil.put(
-					"id", _testDLFileEntryModelListener.getLastFileEntryId()
-				).put(
-					"link",
-					_getLinkJSONObject(
-						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
-				).put(
-					"name", fileEntry.getName()
-				)),
-			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".txt"),
-			httpMethod, null, objectDefinition);
-
-		// File with a nonexistent name and the Base64 content as a nested field
-
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT,
-				JSONUtil.put(
-					"fileBase64", fileEntry.getFileBase64()
-				).put(
-					"id", _testDLFileEntryModelListener.getLastFileEntryId()
-				).put(
-					"link",
-					_getLinkJSONObject(
-						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
-				).put(
-					"name", fileEntry.getName()
-				)),
-			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".txt"),
-			httpMethod, "fileBase64", objectDefinition);
-
-		// File with an existing name
-
-		com.liferay.object.rest.dto.v1_0.FileEntry testFileEntry = _toFileEntry(
-			Base64::encode, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + ".txt");
-
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT,
-				JSONUtil.put(
-					"id", _testDLFileEntryModelListener.getLastFileEntryId()
-				).put(
-					"link",
-					_getLinkJSONObject(
-						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
-				).put(
-					"name", fileEntry.getName()
-				)),
-			testFileEntry, httpMethod, null, objectDefinition);
-		_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-			fileEntry -> {
-				String newName = StringUtil.replace(
-					fileEntry.getName(), ".txt", " (1).txt");
-
-				return JSONUtil.put(
-					_OBJECT_FIELD_NAME_ATTACHMENT,
-					JSONUtil.put(
-						"id", _testDLFileEntryModelListener.getLastFileEntryId()
-					).put(
-						"link",
-						_getLinkJSONObject(
-							_testDLFileEntryModelListener.getLastFileEntryId(),
-							newName, objectDefinition)
-					).put(
-						"name", newName
-					));
-			},
-			testFileEntry, httpMethod, null, objectDefinition);
-	}
-
-	private void
-			_testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField(
-				UnsafeFunction
-					<com.liferay.object.rest.dto.v1_0.FileEntry, JSONObject,
-					 Exception> expectedJSONObjectUnsafeFunction,
-				com.liferay.object.rest.dto.v1_0.FileEntry fileEntry,
-				Http.Method httpMethod, String nestedFields,
-				ObjectDefinition objectDefinition)
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).put(
-				_OBJECT_FIELD_NAME_ATTACHMENT,
-				_toFileEntryJSONObject(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString() + ".txt")
-			).toString(),
-			_getEndpoint(TestPropsValues.getGroupId(), objectDefinition),
-			Http.Method.POST);
-
-		String endpoint =
-			_getEndpoint(TestPropsValues.getGroupId(), objectDefinition) +
-				"/by-external-reference-code/" +
-					jsonObject.getString("externalReferenceCode");
-
-		if (nestedFields != null) {
-			endpoint = StringBundler.concat(
-				endpoint, "?nestedFields=", _OBJECT_FIELD_NAME_ATTACHMENT, ".",
-				nestedFields);
-		}
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).put(
-				_OBJECT_FIELD_NAME_ATTACHMENT,
-				JSONFactoryUtil.createJSONObject(fileEntry.toString())
-			).put(
-				"externalReferenceCode",
-				jsonObject.getString("externalReferenceCode")
-			).toString(),
-			endpoint, httpMethod);
-
-		_assertJSONObjectWithAttachmentField(
-			expectedJSONObjectUnsafeFunction.apply(fileEntry), jsonObject);
-	}
-
 	private void _testPatchPutCustomObjectEntryWithAttachmentField(
-			Http.Method httpMethod, ObjectDefinition objectDefinition)
+			Http.Method httpMethod, ObjectDefinition objectDefinition,
+			boolean useExternalReferenceCode)
 		throws Exception {
 
 		// File validation
@@ -6322,7 +6149,7 @@ public class ObjectEntryResourceTest {
 				RandomTestUtil.randomString(
 					(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
 				RandomTestUtil.randomString() + ".txt"),
-			httpMethod, null, objectDefinition);
+			httpMethod, null, objectDefinition, useExternalReferenceCode);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -6330,7 +6157,7 @@ public class ObjectEntryResourceTest {
 				"title", "File name is null"
 			),
 			_toFileEntry(Base64::encode, RandomTestUtil.randomString(), null),
-			httpMethod, null, objectDefinition);
+			httpMethod, null, objectDefinition, useExternalReferenceCode);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -6340,7 +6167,7 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".err"),
-			httpMethod, null, objectDefinition);
+			httpMethod, null, objectDefinition, useExternalReferenceCode);
 
 		// File with a nonexistent name
 
@@ -6360,7 +6187,7 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt"),
-			httpMethod, null, objectDefinition);
+			httpMethod, null, objectDefinition, useExternalReferenceCode);
 
 		// File with a nonexistent name and the Base64 content as a nested field
 
@@ -6382,7 +6209,8 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt"),
-			httpMethod, "fileBase64", objectDefinition);
+			httpMethod, "fileBase64", objectDefinition,
+			useExternalReferenceCode);
 
 		// File with an existing name
 
@@ -6403,7 +6231,8 @@ public class ObjectEntryResourceTest {
 				).put(
 					"name", fileEntry.getName()
 				)),
-			testFileEntry, httpMethod, null, objectDefinition);
+			testFileEntry, httpMethod, null, objectDefinition,
+			useExternalReferenceCode);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> {
 				String newName = StringUtil.replace(
@@ -6422,7 +6251,8 @@ public class ObjectEntryResourceTest {
 						"name", newName
 					));
 			},
-			testFileEntry, httpMethod, null, objectDefinition);
+			testFileEntry, httpMethod, null, objectDefinition,
+			useExternalReferenceCode);
 	}
 
 	private void _testPatchPutCustomObjectEntryWithAttachmentField(
@@ -6431,7 +6261,7 @@ public class ObjectEntryResourceTest {
 				 Exception> expectedJSONObjectUnsafeFunction,
 			com.liferay.object.rest.dto.v1_0.FileEntry fileEntry,
 			Http.Method httpMethod, String nestedFields,
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition, boolean useExternalReferenceCode)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -6450,6 +6280,13 @@ public class ObjectEntryResourceTest {
 			objectDefinition.getRESTContextPath() + "/" +
 				jsonObject.getLong("id");
 
+		if (useExternalReferenceCode) {
+			endpoint =
+				_getEndpoint(TestPropsValues.getGroupId(), objectDefinition) +
+					"/by-external-reference-code/" +
+						jsonObject.getString("externalReferenceCode");
+		}
+
 		if (nestedFields != null) {
 			endpoint = StringBundler.concat(
 				endpoint, "?nestedFields=", _OBJECT_FIELD_NAME_ATTACHMENT, ".",
@@ -6462,6 +6299,9 @@ public class ObjectEntryResourceTest {
 			).put(
 				_OBJECT_FIELD_NAME_ATTACHMENT,
 				JSONFactoryUtil.createJSONObject(fileEntry.toString())
+			).put(
+				"externalReferenceCode",
+				jsonObject.getString("externalReferenceCode")
 			).put(
 				"id", jsonObject.getLong("id")
 			).toString(),

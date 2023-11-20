@@ -139,18 +139,6 @@ public class ScimUserUtil {
 	}
 
 	private static AttributeSchema _createAttributeSchema() {
-		if (_setEndpointURLMap) {
-			synchronized (ScimUserUtil.class) {
-				if (_setEndpointURLMap) {
-					AbstractResourceManager.setEndpointURLMap(
-						Collections.singletonMap(
-							SCIMConstants.USER_ENDPOINT, "/o/scim/Users"));
-
-					_setEndpointURLMap = false;
-				}
-			}
-		}
-
 		SCIMUserSchemaExtensionBuilder scimUserSchemaExtensionBuilder =
 			SCIMUserSchemaExtensionBuilder.getInstance();
 
@@ -406,6 +394,5 @@ public class ScimUserUtil {
 
 	private static final DCLSingleton<AttributeSchema>
 		_attributeSchemaDCLSingleton = new DCLSingleton<>();
-	private static boolean _setEndpointURLMap = true;
 
 }

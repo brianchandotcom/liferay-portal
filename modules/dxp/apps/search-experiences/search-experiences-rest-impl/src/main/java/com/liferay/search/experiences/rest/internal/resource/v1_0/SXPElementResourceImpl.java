@@ -43,7 +43,6 @@ import com.liferay.search.experiences.service.SXPElementService;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -422,12 +421,12 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	private void _validateTitleMapDefaultLocale(SXPElement sxpElement)
 		throws Exception {
 
-		Map<String, String> titleI18n = sxpElement.getTitle_i18n();
+		if (Validator.isBlank(
+				sxpElement.getTitle_i18n(
+				).get(
+					LocaleUtil.toLanguageId(LocaleUtil.getDefault())
+				))) {
 
-		String defaultLocaleTitle = titleI18n.get(
-			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
-
-		if (Validator.isBlank(defaultLocaleTitle)) {
 			throw new SXPElementNoDefaultLocaleTitleException();
 		}
 	}

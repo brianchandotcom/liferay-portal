@@ -490,7 +490,6 @@ public class ObjectFieldLocalServiceTest {
 			"The settings maxLength are not allowed for object field text",
 			() -> _addCustomObjectDefinitionWithTextObjectField(
 				"10", "false", null));
-
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.ExceedsMaxLength.class,
 			"The setting prefix exceeds the maximum length of 50",

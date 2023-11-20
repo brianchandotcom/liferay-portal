@@ -40,12 +40,12 @@ export function CheckboxCard({
 				disabled={disabled}
 				onChange={() => onChange(label)}
 			/>
-			<div className="mx-2">
+			<div className="mx-2 w-100">
 				<h4>{label}</h4>
 				<p className="checkbox-container-description">{description}</p>
 			</div>
 
-			<div className="radio-card-title-tooltip">
+			<div className="justify-content-end radio-card-title-tooltip">
 				<Tooltip tooltip={tooltip} />
 			</div>
 		</div>

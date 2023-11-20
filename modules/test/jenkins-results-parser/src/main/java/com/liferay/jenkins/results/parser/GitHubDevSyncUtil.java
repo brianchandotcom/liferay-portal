@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -127,9 +128,10 @@ public class GitHubDevSyncUtil {
 			gitRemotes.size());
 
 		for (final GitRemote gitRemote : gitRemotes) {
-			Callable<GitRemote> callable = new Callable<GitRemote>() {
+			SafeCallable<GitRemote> callable = new SafeCallable<GitRemote>(
+				gitRemote.getHostname()) {
 
-				public GitRemote call() {
+				public GitRemote safeCall() {
 					try {
 						if (gitWorkingDirectory.remoteGitBranchExists(
 								branchName, gitRemote.getRemoteURL())) {
@@ -150,9 +152,14 @@ public class GitHubDevSyncUtil {
 		}
 
 		ParallelExecutor<GitRemote> parallelExecutor = new ParallelExecutor<>(
-			callables, true, _threadPoolExecutor);
+			callables, true, _threadPoolExecutor, "getGitRemotesWithBranch");
 
-		return parallelExecutor.execute();
+		try {
+			return parallelExecutor.execute(60L * 5L);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 	}
 
 	public static String synchronizeToGitHubDev(
@@ -222,7 +229,8 @@ public class GitHubDevSyncUtil {
 		List<Callable<Object>> callables = new ArrayList<>();
 
 		for (final GitRemote gitHubDevGitRemote : gitHubDevGitRemotes) {
-			Callable<Object> callable = new SafeCallable<Object>() {
+			Callable<Object> callable = new SafeCallable<Object>(
+				gitHubDevGitRemote.getHostname()) {
 
 				@Override
 				public Object safeCall() {
@@ -250,9 +258,14 @@ public class GitHubDevSyncUtil {
 		}
 
 		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor);
+			callables, _threadPoolExecutor, "cacheBranches");
 
-		parallelExecutor.execute();
+		try {
+			parallelExecutor.execute(60L * 60L);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
@@ -420,7 +433,8 @@ public class GitHubDevSyncUtil {
 		List<Callable<Object>> callables = new ArrayList<>();
 
 		for (final GitRemote gitHubDevGitRemote : gitHubDevGitRemotes) {
-			Callable<Object> callable = new SafeCallable<Object>() {
+			Callable<Object> callable = new SafeCallable<Object>(
+				gitHubDevGitRemote.getHostname()) {
 
 				@Override
 				public Object safeCall() {
@@ -435,9 +449,14 @@ public class GitHubDevSyncUtil {
 		}
 
 		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor);
+			callables, _threadPoolExecutor, "deleteExpiredRemoteGitBranches");
 
-		parallelExecutor.execute();
+		try {
+			parallelExecutor.execute(60L * 5L);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
@@ -505,7 +524,8 @@ public class GitHubDevSyncUtil {
 		List<Callable<Object>> callables = new ArrayList<>();
 
 		for (final GitRemote gitHubDevGitRemote : gitHubDevGitRemotes) {
-			Callable<Object> callable = new SafeCallable<Object>() {
+			Callable<Object> callable = new SafeCallable<Object>(
+				gitHubDevGitRemote.getHostname()) {
 
 				@Override
 				public Object safeCall() {
@@ -520,9 +540,14 @@ public class GitHubDevSyncUtil {
 		}
 
 		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor);
+			callables, _threadPoolExecutor, "deleteExtraTimestampBranches");
 
-		parallelExecutor.execute();
+		try {
+			parallelExecutor.execute(60L * 5L);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
@@ -539,7 +564,8 @@ public class GitHubDevSyncUtil {
 		List<Callable<Boolean>> callables = new ArrayList<>();
 
 		for (final GitRemote gitRemote : gitRemotes) {
-			Callable<Boolean> callable = new SafeCallable<Boolean>() {
+			Callable<Boolean> callable = new SafeCallable<Boolean>(
+				gitRemote.getHostname()) {
 
 				@Override
 				public Boolean safeCall() {
@@ -558,9 +584,14 @@ public class GitHubDevSyncUtil {
 		}
 
 		ParallelExecutor<Boolean> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor);
+			callables, _threadPoolExecutor, "deleteFromAllRemotes");
 
-		parallelExecutor.execute();
+		try {
+			parallelExecutor.execute(60L * 5L);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
@@ -684,7 +715,8 @@ public class GitHubDevSyncUtil {
 		List<Callable<Object>> callables = new ArrayList<>(gitRemotes.size());
 
 		for (final GitRemote gitRemote : gitRemotes) {
-			Callable<Object> callable = new SafeCallable<Object>() {
+			Callable<Object> callable = new SafeCallable<Object>(
+				gitRemote.getHostname()) {
 
 				@Override
 				public Object safeCall() {
@@ -699,9 +731,14 @@ public class GitHubDevSyncUtil {
 		}
 
 		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor);
+			callables, _threadPoolExecutor, "deleteOrphanedCacheBranches");
 
-		parallelExecutor.execute();
+		try {
+			parallelExecutor.execute(60L * 5L);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 	}
 
 	protected static void deleteRemoteGitBranches(
@@ -905,7 +942,8 @@ public class GitHubDevSyncUtil {
 		List<Callable<Boolean>> callables = new ArrayList<>();
 
 		for (final GitRemote gitRemote : gitRemotes) {
-			Callable<Boolean> callable = new SafeCallable<Boolean>() {
+			Callable<Boolean> callable = new SafeCallable<Boolean>(
+				gitRemote.getHostname()) {
 
 				@Override
 				public Boolean safeCall() {
@@ -938,9 +976,14 @@ public class GitHubDevSyncUtil {
 		}
 
 		ParallelExecutor<Boolean> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor);
+			callables, _threadPoolExecutor, "pushToAllRemotes");
 
-		parallelExecutor.execute();
+		try {
+			parallelExecutor.execute(60L * 60L);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
@@ -960,7 +1003,8 @@ public class GitHubDevSyncUtil {
 		List<Callable<Boolean>> callables = new ArrayList<>(gitRemotes.size());
 
 		for (final GitRemote gitRemote : gitRemotes) {
-			Callable<Boolean> callable = new SafeCallable<Boolean>() {
+			Callable<Boolean> callable = new SafeCallable<Boolean>(
+				gitRemote.getHostname()) {
 
 				@Override
 				public Boolean safeCall() {
@@ -981,12 +1025,17 @@ public class GitHubDevSyncUtil {
 		}
 
 		ParallelExecutor<Boolean> parallelExecutor = new ParallelExecutor<>(
-			callables, _threadPoolExecutor);
+			callables, _threadPoolExecutor, "remoteGitBranchExists");
 
-		for (Boolean bool : parallelExecutor.execute()) {
-			if ((bool == null) || !bool) {
-				return false;
+		try {
+			for (Boolean bool : parallelExecutor.execute(60L * 5L)) {
+				if ((bool == null) || !bool) {
+					return false;
+				}
 			}
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
 		}
 
 		return true;
@@ -1601,7 +1650,16 @@ public class GitHubDevSyncUtil {
 	private static final ThreadPoolExecutor _threadPoolExecutor =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(8, true);
 
-	private abstract static class SafeCallable<T> implements Callable<T> {
+	private abstract static class SafeCallable<T>
+		extends ParallelExecutor.SequentialCallable<T> {
+
+		public SafeCallable() {
+			this(null);
+		}
+
+		public SafeCallable(String groupName) {
+			super(groupName);
+		}
 
 		@Override
 		public final T call() {

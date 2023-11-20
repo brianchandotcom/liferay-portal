@@ -33,6 +33,7 @@ import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,9 +76,14 @@ public abstract class BaseBuild implements Build {
 		}
 
 		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-			getArchiveCallables(), getExecutorService());
+			getArchiveCallables(), getExecutorService(), "archive");
 
-		parallelExecutor.execute();
+		try {
+			parallelExecutor.execute();
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 	}
 
 	@Override
@@ -1550,23 +1556,19 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void setStatus(String status) {
-		if (_isDifferent(status, _status)) {
-			_previousStatus = _status;
+		_previousStatus = _status;
 
-			_status = status;
+		_status = status;
 
-			long previousStatusModifiedTime = _statusModifiedTime;
+		long previousStatusModifiedTime = _statusModifiedTime;
 
-			_statusModifiedTime =
-				JenkinsResultsParserUtil.getCurrentTimeMillis();
+		_statusModifiedTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-			_statusDurations.put(
-				_previousStatus,
-				_statusModifiedTime - previousStatusModifiedTime);
+		_statusDurations.put(
+			_previousStatus, _statusModifiedTime - previousStatusModifiedTime);
 
-			if (isParentBuildRoot()) {
-				System.out.println(getBuildMessage());
-			}
+		if (isParentBuildRoot()) {
+			System.out.println(getBuildMessage());
 		}
 	}
 
@@ -1623,6 +1625,8 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public synchronized void update() {
 		if (skipUpdate()) {
+			System.out.println("Skipping build status: " + getStatus());
+
 			return;
 		}
 
@@ -2047,8 +2051,11 @@ public abstract class BaseBuild implements Build {
 	protected List<Callable<Object>> getArchiveCallables() {
 		List<Callable<Object>> archiveCallables = new ArrayList<>();
 
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
 		archiveCallables.add(
-			new Callable<Object>() {
+			new ParallelExecutor.SequentialCallable<Object>(
+				jenkinsMaster.getName()) {
 
 				@Override
 				public Object call() {
@@ -2059,7 +2066,8 @@ public abstract class BaseBuild implements Build {
 
 			});
 		archiveCallables.add(
-			new Callable<Object>() {
+			new ParallelExecutor.SequentialCallable<Object>(
+				jenkinsMaster.getName()) {
 
 				@Override
 				public Object call() {
@@ -2070,7 +2078,8 @@ public abstract class BaseBuild implements Build {
 
 			});
 		archiveCallables.add(
-			new Callable<Object>() {
+			new ParallelExecutor.SequentialCallable<Object>(
+				jenkinsMaster.getName()) {
 
 				@Override
 				public Object call() {
@@ -2081,7 +2090,8 @@ public abstract class BaseBuild implements Build {
 
 			});
 		archiveCallables.add(
-			new Callable<Object>() {
+			new ParallelExecutor.SequentialCallable<Object>(
+				jenkinsMaster.getName()) {
 
 				@Override
 				public Object call() {
@@ -2902,9 +2912,18 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected boolean skipUpdate() {
+		System.out.println(
+			"skipUpdate isBuildModified: " + isBuildModified() + " status: \'" +
+				getStatus() + "\' is not completed=" +
+					!Objects.equals(getStatus(), "completed"));
+
 		if (isBuildModified() || !Objects.equals(getStatus(), "completed")) {
+			System.out.println("skipUpdate returning FALSE");
+
 			return false;
 		}
+
+		System.out.println("skipUpdate returning TRUE");
 
 		return true;
 	}

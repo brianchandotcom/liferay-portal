@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.verify.VerifyException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -93,6 +94,10 @@ public class UpgradeRecorder {
 		occurrences++;
 
 		messages.put(message, occurrences);
+
+		if (message.contains(VerifyException.class.getName())) {
+			_verifyProcessStatus = false;
+		}
 	}
 
 	public void recordUpgradeProcessMessage(String loggerName, String message) {
@@ -177,6 +182,10 @@ public class UpgradeRecorder {
 	}
 
 	private String _calculateResult() {
+		if (!_verifyProcessStatus) {
+			return "failure";
+		}
+
 		try {
 			ReleaseManager releaseManager = _serviceTracker.getService();
 
@@ -304,6 +313,7 @@ public class UpgradeRecorder {
 	private static String _type;
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();
+	private static boolean _verifyProcessStatus;
 	private static final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 

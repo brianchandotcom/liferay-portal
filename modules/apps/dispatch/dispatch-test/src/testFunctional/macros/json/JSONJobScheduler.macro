@@ -149,4 +149,25 @@ definition {
 		return ${triggerIds};
 	}
 
+	@summary = "Default summary"
+	macro createJobSchedulerTrigger(name = null, dispatchTaskExecutorType = null) {
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/api/jsonws/dispatch.dispatchtrigger/add-dispatch-trigger \
+				-u test@liferay.com:test \
+				-d externalReferenceCode='' \
+				-d userId=${userId} \
+				-d dispatchTaskExecutorType=${dispatchTaskExecutorType} \
+				-d -dispatchTaskSettingsUnicodeProperties= \
+				-d name=${name}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 }

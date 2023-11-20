@@ -1,44 +1,44 @@
 {
-    "fieldSets": [
-        {
-            "fields": [
-							{
-                    "name": "containerWidthAndHeight",
-                    "label": "Container Width And Height",
-                    "type": "text",
-                    "defaultValue": "80px",
-                },
-								{
-                    "name": "containerPadding",
-                    "label": "Container Padding",
-                    "type": "text",
-                    "defaultValue": "6px",
-                },
-								{
-                    "name": "iconWidthAndHeight",
-                    "label": "Icon Width And Height",
-                    "type": "text",
-                    "defaultValue": "68px",
-                },
-								{
-                    "name": "imageWidthAndHeight",
-                    "label": "Image Width And Height",
-                    "type": "text",
-                    "defaultValue": "36px",
-                },
-                {
-                    "name": "containerBackgroundColor",
-                    "label": "Container Background color",
-                    "type": "colorPicker",
-                    "defaultValue": "var(--color-brand-primary)",
-                },
-                {
-                    "name": "iconBackgroundColor",
-                    "label": "Icon Background color",
-                    "type": "colorPicker",
-                    "defaultValue": "var(--color-brand-primary)",
-                }
-            ]
-        }
-    ]
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "80px",
+					"label": "Container Width And Height",
+					"name": "containerWidthAndHeight",
+					"type": "text"
+				},
+				{
+					"defaultValue": "6px",
+					"label": "Container Padding",
+					"name": "containerPadding",
+					"type": "text"
+				},
+				{
+					"defaultValue": "68px",
+					"label": "Icon Width And Height",
+					"name": "iconWidthAndHeight",
+					"type": "text"
+				},
+				{
+					"defaultValue": "36px",
+					"label": "Image Width And Height",
+					"name": "imageWidthAndHeight",
+					"type": "text"
+				},
+				{
+					"defaultValue": "var(--color-brand-primary)",
+					"label": "Container Background color",
+					"name": "containerBackgroundColor",
+					"type": "colorPicker"
+				},
+				{
+					"defaultValue": "var(--color-brand-primary)",
+					"label": "Icon Background color",
+					"name": "iconBackgroundColor",
+					"type": "colorPicker"
+				}
+			]
+		}
+	]
 }

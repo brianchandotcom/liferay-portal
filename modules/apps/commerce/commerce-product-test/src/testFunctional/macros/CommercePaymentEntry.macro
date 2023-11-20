@@ -1,0 +1,55 @@
+definition {
+
+	@summary = "This macro can be used for adding a refund reason."
+	macro addRefundReason(key = null) {
+		Button.clickAdd();
+
+		Type(
+			locator1 = "SystemSettings#KEY",
+			value1 = ${key});
+
+		if (isSet(refundName)) {
+			Type(
+				key_label = "Name",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = ${refundName});
+		}
+
+		if (isSet(priority)) {
+			Type(
+				key_fieldLabel = "Priority",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${priority});
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	@summary = "This macro can be used for updating a refund reason."
+	macro updateRefundReason(key = null) {
+		Type(
+			locator1 = "SystemSettings#KEY",
+			value1 = ${key});
+
+		if (isSet(refundName)) {
+			Type(
+				key_label = "Name",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = ${refundName});
+		}
+
+		if (isSet(priority)) {
+			Type(
+				key_fieldLabel = "Priority",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${priority});
+		}
+
+		Button.clickUpdate();
+
+		Alert.viewSuccessMessage();
+	}
+
+}

@@ -2,6 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
+JSONBatchEngineDataFileCheck | [Styling](styling_checks.markdown#styling-checks) | Remove elements in `*.batch-engine-data.json` files. |
 [JSONDeprecatedPackagesCheck](check/json_deprecated_packages_check.markdown#jsondeprecatedpackagescheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds incorrect use of deprecated packages in `package.json` files. |
 JSONPackageJSONBNDVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks the version for dependencies in `package.json` files. |
 JSONPackageJSONCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks content of `package.json` files. |

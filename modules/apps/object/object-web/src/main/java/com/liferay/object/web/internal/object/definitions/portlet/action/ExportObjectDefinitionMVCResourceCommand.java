@@ -5,10 +5,10 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
-import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.web.internal.object.definitions.portlet.action.util.ExportImportObjectDefinitionUtil;
 import com.liferay.object.web.internal.util.JSONObjectSanitizerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -19,17 +19,10 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -72,28 +65,8 @@ public class ExportObjectDefinitionMVCResourceCommand
 		ObjectDefinition objectDefinition =
 			objectDefinitionResource.getObjectDefinition(objectDefinitionId);
 
-		for (ObjectAction objectAction : objectDefinition.getObjectActions()) {
-			Map<String, Object> parameters =
-				(Map<String, Object>)objectAction.getParameters();
-
-			Object object = parameters.get("predefinedValues");
-
-			if (object == null) {
-				continue;
-			}
-
-			parameters.put(
-				"predefinedValues",
-				ListUtil.toList(
-					(ArrayList<LinkedHashMap>)object,
-					_jsonFactory::createJSONObject));
-		}
-
-		objectDefinition.setObjectFields(
-			ArrayUtil.filter(
-				objectDefinition.getObjectFields(),
-				objectField -> Validator.isNull(
-					objectField.getRelationshipType())));
+		ExportImportObjectDefinitionUtil.prepareObjectDefinitionForExport(
+			_jsonFactory, objectDefinition);
 
 		JSONObject objectDefinitionJSONObject = _jsonFactory.createJSONObject(
 			objectDefinition.toString());

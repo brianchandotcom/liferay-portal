@@ -79,7 +79,7 @@ export default function RuleBuilderItem({
 							: Liferay.Language.get('delete-condition')
 					}
 					borderless
-					className="page-editor__rule-builder-delete-button"
+					className="lfr-portal-tooltip page-editor__rule-builder-delete-button"
 					displayType="secondary"
 					onClick={() => onDeleteButtonClick()}
 					size="sm"

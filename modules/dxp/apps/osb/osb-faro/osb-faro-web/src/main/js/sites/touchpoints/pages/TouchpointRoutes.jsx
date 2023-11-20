@@ -183,7 +183,7 @@ function TouchpointRoutes({className, router}) {
 
 							<BundleRouter
 								componentProps={{
-									pathRangeSelectors,
+									rangeSelectors: pathRangeSelectors,
 									selectedSegment
 								}}
 								data={TouchpointPathPage}

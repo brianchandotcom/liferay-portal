@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.commerce.payment.audit,\
 	com.liferay.commerce.payment.configuration,\
 	com.liferay.commerce.payment.constants,\
+	com.liferay.commerce.payment.entry,\
 	com.liferay.commerce.payment.exception,\
 	com.liferay.commerce.payment.gateway,\
 	com.liferay.commerce.payment.integration,\

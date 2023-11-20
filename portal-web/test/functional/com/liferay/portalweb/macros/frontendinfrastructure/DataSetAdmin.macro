@@ -1,9 +1,28 @@
 definition {
 
 	@summary = "Default summary"
-	macro addActions(messageType = null, icon = null, headlessAction = null, type = null, url = null, actionName = null, confirmationMessage = null) {
+	macro addActions(messageType = null, icon = null, headlessAction = null, type = null, url = null, actionName = null, confirmationMessage = null, actionTab = null, variant = null, inputText = null) {
+		if (isSet(actionTab)) {
+		    Button.click(button = ${actionTab});
+
+			if (${actionTab} == "Creation Actions") {
+				Click.mouseOverClick(locator1 = "DataSet#PLUS_N");
+			}
+		}
+		else {
+			LexiconEntry.gotoAdd();
+			}
+		
 		if (isSet(actionName)) {
 			var key_actionNameList = ${actionName};
+		}
+
+		if (isSet(variant)) {
+			var key_variant = ${variant};
+		}
+
+		if (isSet(inputText)) {
+			var key_inputText = ${inputText};
 		}
 
 		if (isSet(icon)) {
@@ -19,8 +38,6 @@ definition {
 		}
 
 		for (var key_actionName : list ${key_actionNameList}) {
-			LexiconEntry.gotoAdd();
-
 			Type(
 				key_unnamedTitle = "",
 				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
@@ -62,6 +79,20 @@ definition {
 					key_placeholder = "Add a message here.",
 					locator1 = "FrontendDataSet#PLACEHOLDER",
 					value1 = ${confirmationMessage});
+			}
+
+			if (isSet(key_variant)) {
+				Select(
+					key_fieldLabel = "Variant",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${key_variant});
+			}
+
+			if (isSet(key_inputText)) {
+				Type(
+					key_fieldName = "add-here-the-title-of-the-modal",
+					locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+					value1 = ${key_inputText});
 			}
 
 			if (isSet(key_actionMessageType)) {

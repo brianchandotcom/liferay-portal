@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalService;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -47,6 +48,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Jürgen Kappler
  */
+@FeatureFlags("LPS-180328")
 @RunWith(Arquillian.class)
 public class UnlockLayoutsSchedulerJobConfigurationTest {
 

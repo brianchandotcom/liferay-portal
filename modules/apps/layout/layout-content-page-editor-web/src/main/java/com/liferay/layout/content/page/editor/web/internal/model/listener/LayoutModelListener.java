@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
@@ -23,7 +24,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterUpdate(Layout originalLayout, Layout layout) {
-		if (!layout.isDraftLayout() ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				layout.getCompanyId(), "LPS-180328") ||
+			!layout.isDraftLayout() ||
 			Objects.equals(layout.getStatus(), originalLayout.getStatus()) ||
 			!Objects.equals(
 				originalLayout.getStatus(), WorkflowConstants.STATUS_DRAFT)) {

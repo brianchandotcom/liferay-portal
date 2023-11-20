@@ -5,12 +5,10 @@
 
 package com.liferay.petra.url.pattern.mapper;
 
-import com.liferay.petra.url.pattern.mapper.internal.DynamicSizeTrieURLPatternMapper;
-import com.liferay.petra.url.pattern.mapper.internal.StaticSizeTrieURLPatternMapper;
+import com.liferay.petra.url.pattern.mapper.internal.SimpleURLPatternMapper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -29,21 +27,9 @@ public class URLPatternMapperFactoryTest {
 
 	@Test
 	public void testCreate() {
-		Map<String, String> map = new HashMap<>();
-
-		for (int i = 0; i < 64; i++) {
-			map.put("*.key" + i, "value" + i);
-		}
-
 		Assert.assertTrue(
-			URLPatternMapperFactory.create(map) instanceof
-				StaticSizeTrieURLPatternMapper<?>);
-
-		map.put("*.key" + 64, "value" + 64);
-
-		Assert.assertTrue(
-			URLPatternMapperFactory.create(map) instanceof
-				DynamicSizeTrieURLPatternMapper<?>);
+			URLPatternMapperFactory.create(Collections.emptyMap()) instanceof
+				SimpleURLPatternMapper<?>);
 	}
 
 }

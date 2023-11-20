@@ -73,7 +73,7 @@ export const Modal = ({observer, onClose, onSubmit}) => (
 					{
 						sub(
 							Liferay.Language.get(
-								'this-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results'
+								'this-list-will-be-downloaded-respecting-the-current-ordering-and-search-results'
 							),
 							[toLocale(10000)]
 						) as string
@@ -84,11 +84,15 @@ export const Modal = ({observer, onClose, onSubmit}) => (
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton displayType='secondary' onClick={onClose}>
+						<ClayButton
+							data-testid='cancel'
+							displayType='secondary'
+							onClick={onClose}
+						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton type='submit'>
+						<ClayButton data-testid='submit' type='submit'>
 							{Liferay.Language.get('download')}
 						</ClayButton>
 					</ClayButton.Group>

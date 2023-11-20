@@ -31,9 +31,14 @@ const WrapperCSVComponent = () => (
 				[toLocale(10000)]
 			) as string
 		}
-		infoMessage={Liferay.Language.get(
-			'the-individuals-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
-		)}
+		infoMessage={
+			sub(
+				Liferay.Language.get(
+					'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
+				),
+				[Liferay.Language.get('individuals')]
+			) as string
+		}
 		requiredDateRange
 		type={ReportType.CSV}
 	/>
@@ -159,7 +164,7 @@ describe('DownloadReportModal CSV', () => {
 
 		expect(
 			getByText(
-				'The individuals list will be downloaded respecting the current ordering, filter, and search results. Please verify if the desired changes are applied.'
+				'The Individuals list will be downloaded respecting the current ordering, filter, and search results. Please verify if the desired changes are applied.'
 			)
 		);
 
@@ -218,7 +223,7 @@ describe('DownloadReportModal CSV', () => {
 	});
 });
 
-describe.only('DownloadReportModal PDF', () => {
+describe('DownloadReportModal PDF', () => {
 	afterEach(() => {
 		jest.clearAllTimers();
 

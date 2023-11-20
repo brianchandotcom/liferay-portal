@@ -159,7 +159,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("and Given a mapped form fontainer on a content page") {
+		task ("and Given a mapped form container on a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "Object Page",

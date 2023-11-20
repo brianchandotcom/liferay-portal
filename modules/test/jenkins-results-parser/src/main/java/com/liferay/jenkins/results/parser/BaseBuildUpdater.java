@@ -154,7 +154,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			invoke();
 		}
 
-		runQueued();
+		_build.setStatus("queued");
 	}
 
 	private boolean _isApplyReinvokeRules() {

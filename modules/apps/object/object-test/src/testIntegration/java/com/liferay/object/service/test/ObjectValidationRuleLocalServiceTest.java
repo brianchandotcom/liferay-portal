@@ -132,7 +132,7 @@ public class ObjectValidationRuleLocalServiceTest {
 			() -> _addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 				StringPool.BLANK, nameLabelMap, outputType, _VALID_DDM_SCRIPT,
-				Collections.emptyList()));
+				false, Collections.emptyList()));
 
 		AssertUtils.assertFailure(
 			ObjectValidationRuleScriptException.class, "The script is required",
@@ -156,7 +156,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 				StringPool.BLANK, nameLabelMap,
 				ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
-				_VALID_DDM_SCRIPT, Collections.emptyList()));
+				_VALID_DDM_SCRIPT, false, Collections.emptyList()));
 		AssertUtils.assertFailure(
 			ObjectValidationRuleSettingNameException.NotAllowedName.class,
 			String.format(
@@ -167,7 +167,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 				StringPool.BLANK, nameLabelMap,
 				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-				_VALID_DDM_SCRIPT,
+				_VALID_DDM_SCRIPT, false,
 				Collections.singletonList(
 					new ObjectValidationRuleSettingBuilder(
 					).name(
@@ -191,7 +191,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 				StringPool.BLANK, nameLabelMap,
 				ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
-				_VALID_DDM_SCRIPT,
+				_VALID_DDM_SCRIPT, false,
 				Collections.singletonList(
 					new ObjectValidationRuleSettingBuilder(
 					).name(
@@ -246,7 +246,7 @@ public class ObjectValidationRuleLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 			externalReferenceCode, nameLabelMap,
 			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
-			_VALID_DDM_SCRIPT,
+			_VALID_DDM_SCRIPT, false,
 			Collections.singletonList(
 				new ObjectValidationRuleSettingBuilder(
 				).name(
@@ -449,7 +449,7 @@ public class ObjectValidationRuleLocalServiceTest {
 		return _addObjectValidationRule(
 			engine, errorLabelMap, externalReferenceCode, nameLabelMap,
 			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION, script,
-			Collections.emptyList());
+			false, Collections.emptyList());
 	}
 
 	private ObjectValidationRule _addObjectValidationRule(
@@ -464,18 +464,6 @@ public class ObjectValidationRuleLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(), true, engine,
 			errorLabelMap, nameLabelMap, outputType, script, system,
 			objectValidationRuleSettings);
-	}
-
-	private ObjectValidationRule _addObjectValidationRule(
-			String engine, Map<Locale, String> errorLabelMap,
-			String externalReferenceCode, Map<Locale, String> nameLabelMap,
-			String outputType, String script,
-			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
-		throws Exception {
-
-		return _addObjectValidationRule(
-			engine, errorLabelMap, externalReferenceCode, nameLabelMap,
-			outputType, script, false, objectValidationRuleSettings);
 	}
 
 	private ObjectValidationRule _addObjectValidationRule(

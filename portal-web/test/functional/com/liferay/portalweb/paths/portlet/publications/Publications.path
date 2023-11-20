@@ -221,13 +221,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISH_TIME_HOURS</td>
-	<td>//input[contains(@class,'clay-time-hours') and @type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TIME_MINUTES</td>
-	<td>//input[contains(@class,'clay-time-minutes') and @type='text']</td>
+	<td>PUBLISH_TIME</td>
+	<td>//input[@class='form-control' and @type='time']</td>
 	<td></td>
 </tr>
 <tr>

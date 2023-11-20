@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.security.ldap;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Properties;
 
@@ -18,71 +18,96 @@ public class LDAPSettingsUtil {
 			long ldapServerId, long companyId)
 		throws Exception {
 
-		return _ldapSettings.getContactExpandoMappings(ldapServerId, companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.getContactExpandoMappings(ldapServerId, companyId);
 	}
 
 	public static Properties getContactMappings(
 			long ldapServerId, long companyId)
 		throws Exception {
 
-		return _ldapSettings.getContactMappings(ldapServerId, companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.getContactMappings(ldapServerId, companyId);
 	}
 
 	public static String[] getErrorPasswordHistoryKeywords(long companyId) {
-		return _ldapSettings.getErrorPasswordHistoryKeywords(companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.getErrorPasswordHistoryKeywords(companyId);
 	}
 
 	public static Properties getGroupMappings(long ldapServerId, long companyId)
 		throws Exception {
 
-		return _ldapSettings.getGroupMappings(ldapServerId, companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.getGroupMappings(ldapServerId, companyId);
 	}
 
 	public static long getPreferredLDAPServerId(
 		long companyId, String screenName) {
 
-		return _ldapSettings.getPreferredLDAPServerId(companyId, screenName);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.getPreferredLDAPServerId(companyId, screenName);
 	}
 
 	public static String getPropertyPostfix(long ldapServerId) {
-		return _ldapSettings.getPropertyPostfix(ldapServerId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.getPropertyPostfix(ldapServerId);
 	}
 
 	public static Properties getUserExpandoMappings(
 			long ldapServerId, long companyId)
 		throws Exception {
 
-		return _ldapSettings.getUserExpandoMappings(ldapServerId, companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.getUserExpandoMappings(ldapServerId, companyId);
 	}
 
 	public static Properties getUserMappings(long ldapServerId, long companyId)
 		throws Exception {
 
-		return _ldapSettings.getUserMappings(ldapServerId, companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.getUserMappings(ldapServerId, companyId);
 	}
 
 	public static boolean isExportEnabled(long companyId) {
-		return _ldapSettings.isExportEnabled(companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.isExportEnabled(companyId);
 	}
 
 	public static boolean isExportGroupEnabled(long companyId) {
-		return _ldapSettings.isExportGroupEnabled(companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.isExportGroupEnabled(companyId);
 	}
 
 	public static boolean isImportEnabled(long companyId) {
-		return _ldapSettings.isImportEnabled(companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.isImportEnabled(companyId);
 	}
 
 	public static boolean isImportOnStartup(long companyId) {
-		return _ldapSettings.isImportOnStartup(companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.isImportOnStartup(companyId);
 	}
 
 	public static boolean isPasswordPolicyEnabled(long companyId) {
-		return _ldapSettings.isPasswordPolicyEnabled(companyId);
+		LDAPSettings ldapSettings = _ldapSettingsSnapshot.get();
+
+		return ldapSettings.isPasswordPolicyEnabled(companyId);
 	}
 
-	private static volatile LDAPSettings _ldapSettings =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			LDAPSettings.class, LDAPSettingsUtil.class, "_ldapSettings", false);
+	private static final Snapshot<LDAPSettings> _ldapSettingsSnapshot =
+		new Snapshot<>(LDAPSettingsUtil.class, LDAPSettings.class);
 
 }

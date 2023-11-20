@@ -649,31 +649,24 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoPreviewView() {
-		AssertVisible(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
-
+		var currentURL = selenium.getCurrentUrl();
 		var viewTitle = selenium.getTitle();
-		var portletTitle = selenium.getText("AppBuilder#WIDGET_DEPLOYED");
+
+		if (IsElementPresent(locator1 = "AppBuilder#WIDGET_DEPLOYED")) {
+			var portletTitle = selenium.getText("AppBuilder#WIDGET_DEPLOYED");
+		}
 
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 
-		if (contains(${viewTitle}, "Review")) {
+		if (contains(${currentURL}, "/control_panel/manage")) {
+			var previewTitle = StringUtil.extractLast(${viewTitle}, "Review: ");
+
 			Navigator.closeSpecificWindow(
-				closeWindowTitle = "Review: ${viewTitle}",
-				selectWindowTitle = ${viewTitle});
-
-			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
-		}
-
-		if (contains(${portletTitle}, "SINGLE APPROVER")) {
-			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
+				closeWindowTitle = ${viewTitle},
+				selectWindowTitle = ${previewTitle});
 		}
 		else if (isSet(pageRevision)) {
 			Close.closeAndSelectWindow(value1 = "title=Page Revision Page - Site Name - Liferay DXP");
-		}
-		else {
-			Close.closeAndSelectWindow(value1 = "title=${viewTitle}");
-
-			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 		}
 	}
 

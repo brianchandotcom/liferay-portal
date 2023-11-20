@@ -5,17 +5,26 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action.util;
 
+import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Gabriel Albuquerque
  */
-public class ExportImportObjectDefinitiontUtil {
+public class ExportImportObjectDefinitionUtil {
 
 	public static void apply(
 		JSONObject objectDefinitionJSONObject,
@@ -25,6 +34,33 @@ public class ExportImportObjectDefinitiontUtil {
 			objectDefinitionJSONObject, unsafeFunction, "objectLayouts",
 			"objectLayoutTabs", "objectLayoutBoxes", "objectLayoutRows",
 			"objectLayoutColumns");
+	}
+
+	public static void prepareObjectDefinitionForExport(
+		JSONFactory jsonFactory, ObjectDefinition objectDefinition) {
+
+		for (ObjectAction objectAction : objectDefinition.getObjectActions()) {
+			Map<String, Object> parameters =
+				(Map<String, Object>)objectAction.getParameters();
+
+			Object object = parameters.get("predefinedValues");
+
+			if (object == null) {
+				continue;
+			}
+
+			parameters.put(
+				"predefinedValues",
+				ListUtil.toList(
+					(ArrayList<LinkedHashMap>)object,
+					jsonFactory::createJSONObject));
+		}
+
+		objectDefinition.setObjectFields(
+			ArrayUtil.filter(
+				objectDefinition.getObjectFields(),
+				objectField -> Validator.isNull(
+					objectField.getRelationshipType())));
 	}
 
 	private static void _apply(

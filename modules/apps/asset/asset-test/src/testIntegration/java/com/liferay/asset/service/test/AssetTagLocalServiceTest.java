@@ -219,6 +219,35 @@ public class AssetTagLocalServiceTest {
 		}
 	}
 
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testFetchTagWithCaseSensitive() throws PortalException {
+		AssetTag expectedAssetTag1 = _assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
+			_serviceContext);
+
+		AssetTag expectedAssetTag2 = _assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "TAG",
+			_serviceContext);
+
+		AssetTag actualAssetTag1 = _assetTagLocalService.fetchTag(
+			_group.getGroupId(), "tag");
+
+		Assert.assertNotNull(actualAssetTag1);
+		Assert.assertEquals(
+			expectedAssetTag1.getTagId(), actualAssetTag1.getTagId());
+
+		AssetTag actualAssetTag2 = _assetTagLocalService.fetchTag(
+			_group.getGroupId(), "TAG");
+
+		Assert.assertNotNull(actualAssetTag2);
+		Assert.assertEquals(
+			expectedAssetTag2.getTagId(), actualAssetTag2.getTagId());
+
+		Assert.assertNull(
+			_assetTagLocalService.fetchTag(_group.getGroupId(), "Tag"));
+	}
+
 	@Test
 	public void testIncrementAssetCountWhenUpdatingAssetEntry()
 		throws PortalException {

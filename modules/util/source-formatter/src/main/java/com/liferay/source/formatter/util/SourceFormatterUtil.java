@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.ExcludeSyntax;
 import com.liferay.source.formatter.ExcludeSyntaxPattern;
@@ -222,7 +223,7 @@ public class SourceFormatterUtil {
 		}
 
 		try {
-			return StringUtil.read(url.openStream());
+			return URLUtil.toString(url);
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {

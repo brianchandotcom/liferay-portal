@@ -6,6 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.InputStream;
 
@@ -51,8 +52,8 @@ public class ResourceUtil {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				try (InputStream inputStream = url.openStream()) {
-					resources.add(StringUtil.read(inputStream));
+				try {
+					resources.add(URLUtil.toString(url));
 				}
 				catch (Exception exception) {
 					throw new RuntimeException(

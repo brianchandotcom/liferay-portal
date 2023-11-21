@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -288,8 +288,7 @@ public class ChainingCheck extends BaseCheck {
 					requiredChainingClassFileName));
 
 			return JavaClassParser.parseJavaClass(
-				requiredChainingClassFileName,
-				StringUtil.read(url.openStream()));
+				requiredChainingClassFileName, URLUtil.toString(url));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

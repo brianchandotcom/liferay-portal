@@ -8,6 +8,7 @@ package com.liferay.portal.db;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,8 +65,8 @@ public class DBResourceUtil {
 			return null;
 		}
 
-		try (InputStream inputStream = resource.openStream()) {
-			return StringUtil.read(inputStream);
+		try {
+			return URLUtil.toString(resource);
 		}
 		catch (IOException ioException) {
 			_log.error(

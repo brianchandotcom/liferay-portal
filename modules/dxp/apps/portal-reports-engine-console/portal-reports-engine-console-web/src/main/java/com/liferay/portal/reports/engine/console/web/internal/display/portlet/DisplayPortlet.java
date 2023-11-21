@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=reports-portlet",
 		"com.liferay.portlet.display-category=category.bi",
-		"com.liferay.portlet.footer-portlet-javascript=/admin/js/ReportParameters.js",
 		"com.liferay.portlet.header-portlet-css=/admin/css/main.css",
 		"com.liferay.portlet.icon=/icons/display.png",
 		"javax.portlet.display-name=Report Display",

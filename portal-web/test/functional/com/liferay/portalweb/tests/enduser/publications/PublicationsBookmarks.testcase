@@ -1,0 +1,75 @@
+@component-name = "portal-publications"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "Assert that we can publish the publication with a bookmark and a bookmark folder."
+	@priority = 4
+	test CanAddBookmarkAndBookmarkFolder {
+		task ("Add and select a new publication") {
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+		}
+
+		task ("Create a new site and add a new bookmark to a new bookmark folder") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONBookmarks.addFolder(
+				folderName = "Test Bookmark Folder",
+				groupName = "Site Name");
+
+			JSONBookmarks.addBookmarks(
+				folderName = "Test Bookmark Folder",
+				groupName = "Site Name",
+				name = "Test Bookmark",
+				url = "https://www.google.com");
+		}
+
+		task ("Assert that the folder and bookmark entry display when reviewing publication changes") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Bookmarks Entry",
+				changeSite = "Site Name",
+				changeTitle = "Test Bookmark",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Bookmarks Folder",
+				changeSite = "Site Name",
+				changeTitle = "Test Bookmark Folder",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+
+		task ("Assert that the changes can be published successfully") {
+			Publications.publishPublication(publicationName = "Test Publication");
+		}
+	}
+
+}

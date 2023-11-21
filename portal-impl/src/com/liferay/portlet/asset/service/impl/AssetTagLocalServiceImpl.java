@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetTagLocalServiceBaseImpl;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
-import com.liferay.social.kernel.util.SocialCounterPeriodUtil;
 
 import java.io.Serializable;
 
@@ -367,30 +366,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	@Override
 	public int getGroupTagsCount(long groupId) {
 		return assetTagPersistence.countByGroupId(groupId);
-	}
-
-	@Override
-	public List<AssetTag> getSocialActivityCounterOffsetTags(
-		long groupId, String socialActivityCounterName, int startOffset,
-		int endOffset) {
-
-		return getSocialActivityCounterPeriodTags(
-			groupId, socialActivityCounterName,
-			SocialCounterPeriodUtil.getStartPeriod(startOffset),
-			SocialCounterPeriodUtil.getEndPeriod(endOffset));
-	}
-
-	@Override
-	public List<AssetTag> getSocialActivityCounterPeriodTags(
-		long groupId, String socialActivityCounterName, int startPeriod,
-		int endPeriod) {
-
-		int periodLength = SocialCounterPeriodUtil.getPeriodLength(
-			SocialCounterPeriodUtil.getOffset(endPeriod));
-
-		return assetTagFinder.findByG_N_S_E(
-			groupId, socialActivityCounterName, startPeriod, endPeriod,
-			periodLength);
 	}
 
 	/**

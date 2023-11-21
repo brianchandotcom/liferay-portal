@@ -274,7 +274,6 @@ components:
         ObjectFolderItem:
             properties:
                 linkedObjectDefinition:
-                    readOnly: true
                     type: boolean
                 objectDefinition:
                     $ref: "#/components/schemas/ObjectDefinition"

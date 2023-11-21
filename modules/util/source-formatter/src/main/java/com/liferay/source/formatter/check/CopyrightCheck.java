@@ -99,28 +99,37 @@ public class CopyrightCheck extends BaseFileCheck {
 			}
 		}
 
-		Matcher matcher = _copyrightPattern.matcher(
-			GitUtil.getCurrentBranchFileDiff(
-				sourceFormatterArgs.getBaseDirName(),
-				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath));
+		for (String currentBranchFileName :
+				_getCurrentBranchFileNames(sourceFormatterArgs)) {
 
-		List<String> years = new ArrayList<>();
+			if (!absolutePath.endsWith(currentBranchFileName)) {
+				continue;
+			}
 
-		while (matcher.find()) {
-			years.add(matcher.group(1));
-		}
+			Matcher matcher = _copyrightPattern.matcher(
+				GitUtil.getCurrentBranchFileDiff(
+					sourceFormatterArgs.getBaseDirName(),
+					sourceFormatterArgs.getGitWorkingBranchName(),
+					absolutePath));
 
-		if (years.size() != 2) {
-			return content;
-		}
+			List<String> years = new ArrayList<>();
 
-		if (!StringUtil.equals(years.get(0), years.get(1))) {
-			return StringUtil.replaceFirst(
-				content,
-				"SPDX-FileCopyrightText: (c) " + years.get(1) +
-					" Liferay, Inc. https://liferay.com",
-				"SPDX-FileCopyrightText: (c) " + years.get(0) +
-					" Liferay, Inc. https://liferay.com");
+			while (matcher.find()) {
+				years.add(matcher.group(1));
+			}
+
+			if (years.size() != 2) {
+				return content;
+			}
+
+			if (!StringUtil.equals(years.get(0), years.get(1))) {
+				return StringUtil.replaceFirst(
+					content,
+					"SPDX-FileCopyrightText: (c) " + years.get(1) +
+						" Liferay, Inc. https://liferay.com",
+					"SPDX-FileCopyrightText: (c) " + years.get(0) +
+						" Liferay, Inc. https://liferay.com");
+			}
 		}
 
 		return content;
@@ -139,6 +148,21 @@ public class CopyrightCheck extends BaseFileCheck {
 			sourceFormatterArgs.getGitWorkingBranchName());
 
 		return _currentBranchAddedFileNames;
+	}
+
+	private synchronized List<String> _getCurrentBranchFileNames(
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		if (_currentBranchFileNames != null) {
+			return _currentBranchFileNames;
+		}
+
+		_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName());
+
+		return _currentBranchFileNames;
 	}
 
 	private synchronized List<String> _getCurrentBranchRenamedFileNames(
@@ -164,6 +188,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		"[\\+-] \\* SPDX-FileCopyrightText: \\(c\\) (\\d{4}) Liferay, Inc\\. " +
 			"https://liferay\\.com");
 	private static List<String> _currentBranchAddedFileNames;
+	private static List<String> _currentBranchFileNames;
 	private static List<String> _currentBranchRenamedFileNames;
 
 }

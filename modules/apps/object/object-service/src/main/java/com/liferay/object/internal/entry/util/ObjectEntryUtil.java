@@ -7,7 +7,6 @@ package com.liferay.object.internal.entry.util;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -28,10 +27,9 @@ import java.util.Map;
 public class ObjectEntryUtil {
 
 	public static JSONObject getPayloadJSONObject(
-			DTOConverterRegistry dtoConverterRegistry, JSONFactory jsonFactory,
-			String objectActionTriggerKey, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry, ObjectEntry originalObjectEntry, User user)
-		throws PortalException {
+		DTOConverterRegistry dtoConverterRegistry, JSONFactory jsonFactory,
+		String objectActionTriggerKey, ObjectDefinition objectDefinition,
+		ObjectEntry objectEntry, ObjectEntry originalObjectEntry, User user) {
 
 		return JSONUtil.put(
 			"classPK", objectEntry.getObjectEntryId()
@@ -79,9 +77,8 @@ public class ObjectEntryUtil {
 	}
 
 	private static Map<String, Object> _toDTO(
-			DTOConverterRegistry dtoConverterRegistry, JSONFactory jsonFactory,
-			ObjectEntry objectEntry, User user)
-		throws PortalException {
+		DTOConverterRegistry dtoConverterRegistry, JSONFactory jsonFactory,
+		ObjectEntry objectEntry, User user) {
 
 		DTOConverter<ObjectEntry, ?> dtoConverter =
 			(DTOConverter<ObjectEntry, ?>)dtoConverterRegistry.getDTOConverter(

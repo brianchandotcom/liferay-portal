@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -108,14 +109,15 @@ public class ObjectActionDownloadTriggerMessageListener
 			}
 		}
 
+		User user = _userLocalService.getUser(message.getLong("userId"));
+
 		_objectActionEngine.executeObjectActions(
 			objectDefinition.getClassName(), message.getLong("companyId"),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
 			() -> ObjectEntryUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
-				objectDefinition, objectEntry, null,
-				_userLocalService.getUser(message.getLong("userId"))),
+				objectDefinition, objectEntry, null, user),
 			message.getLong("userId"));
 	}
 

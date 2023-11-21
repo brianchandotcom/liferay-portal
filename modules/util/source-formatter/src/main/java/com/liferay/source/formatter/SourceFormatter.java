@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
@@ -97,9 +96,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.maven.artifact.versioning.ArtifactVersion;
-import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
 /**
  * @author Hugo Huijser
@@ -328,13 +324,7 @@ public class SourceFormatter {
 		_init();
 
 		if (_sourceFormatterArgs.isValidateCommitMessages()) {
-			List<String> commitMessages =
-				GitUtil.getCurrentBranchCommitMessages(
-					_sourceFormatterArgs.getBaseDirName(),
-					_sourceFormatterArgs.getGitWorkingBranchName());
-
-			_checkBreakingChangeMessage(commitMessages);
-			_validateCommitMessages(commitMessages);
+			_validateCommitMessages();
 		}
 
 		if (!_sourceFormatterArgs.isJavaParserEnabled()) {
@@ -680,204 +670,6 @@ public class SourceFormatter {
 
 		_sourceFormatterArgs.addRecentChangesFileNames(
 			dependentFileNames, null);
-	}
-
-	private void _checkBreakingChangeMessage(List<String> commitMessages)
-		throws Exception {
-
-		List<String> currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
-			_sourceFormatterArgs.getBaseDirName(),
-			_sourceFormatterArgs.getGitWorkingBranchName());
-
-		File portalDir = SourceFormatterUtil.getPortalDir(
-			_sourceFormatterArgs.getBaseDirName(),
-			_sourceFormatterArgs.getMaxLineLength());
-
-		outerLoop:
-		for (String currentBranchFileName : currentBranchFileNames) {
-			if (!currentBranchFileName.endsWith("/bnd.bnd") ||
-				currentBranchFileName.contains("-test/")) {
-
-				continue;
-			}
-
-			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
-				_sourceFormatterArgs.getBaseDirName(),
-				_sourceFormatterArgs.getGitWorkingBranchName(),
-				new File(
-					portalDir, currentBranchFileName
-				).getAbsolutePath());
-
-			String oldVersion = null;
-			String newVersion = null;
-
-			for (String line : StringUtil.splitLines(currentBranchFileDiff)) {
-				if (!line.contains("Bundle-Version:")) {
-					continue;
-				}
-
-				int pos = line.indexOf(":");
-
-				String version = StringUtil.trim(line.substring(pos + 1));
-
-				if (line.startsWith(StringPool.PLUS)) {
-					newVersion = version;
-				}
-				else if (line.startsWith(StringPool.DASH)) {
-					oldVersion = version;
-				}
-			}
-
-			if ((newVersion != null) && (oldVersion != null)) {
-				ArtifactVersion newArtifactVersion = new DefaultArtifactVersion(
-					newVersion);
-				ArtifactVersion oldArtifactVersion = new DefaultArtifactVersion(
-					oldVersion);
-
-				if (newArtifactVersion.getMajorVersion() <=
-						oldArtifactVersion.getMajorVersion()) {
-
-					continue;
-				}
-
-				for (String commitMessage : commitMessages) {
-					String[] parts = commitMessage.split(":", 2);
-
-					if (parts[1].contains("# breaking_change_report")) {
-						continue outerLoop;
-					}
-				}
-
-				throw new Exception(
-					StringBundler.concat(
-						"When ", currentBranchFileName, " updated,\n",
-						"# breaking_change_report is necessary"));
-			}
-		}
-
-		for (String commitMessage : commitMessages) {
-			String[] parts = commitMessage.split(":", 2);
-
-			if (!parts[1].contains("# breaking_change_report")) {
-				continue;
-			}
-
-			_checkMissingEmptyLinesAroundHeaders(parts);
-
-			String[] breakingChangeReports = parts[1].split("\n----");
-
-			for (String breakingChangeReport : breakingChangeReports) {
-				int alternativesCount = StringUtil.count(
-					breakingChangeReport, "## Alternatives");
-				int breakingChangeReportCount = StringUtil.count(
-					breakingChangeReport, "# breaking_change_report");
-				int whatCount = StringUtil.count(
-					breakingChangeReport, "## What");
-				int whyCount = StringUtil.count(breakingChangeReport, "## Why");
-
-				if ((alternativesCount > 1) ||
-					(breakingChangeReportCount != 1) || (whatCount != 1) ||
-					(whyCount != 1)) {
-
-					throw new Exception(
-						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0], ":\n",
-							"Each breaking change report should have one, and ",
-							"only one '# breaking_change_report', '## What', ",
-							"'## Why' and '## Alternatives'(Optional). Use ",
-							"'----' to split each breaking change."));
-				}
-
-				int alternativesPosition = breakingChangeReport.indexOf(
-					"## Alternatives");
-				int whatPosition = breakingChangeReport.indexOf("## What");
-				int whyPosition = breakingChangeReport.indexOf("## Why");
-
-				if ((whatPosition > whyPosition) ||
-					((alternativesPosition != -1) &&
-					 (whyPosition > alternativesPosition))) {
-
-					throw new Exception(
-						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0], ":\n",
-							"Incorrect order of headers: The correct order ",
-							"should be '## What' | '## Why' | '## ",
-							"Alternatives'"));
-				}
-
-				int lineNumber = SourceUtil.getLineNumber(
-					breakingChangeReport, whatPosition);
-
-				String trimmedLine = StringUtil.trimLeading(
-					SourceUtil.getLine(breakingChangeReport, lineNumber));
-
-				if (trimmedLine.length() == 7) {
-					throw new Exception(
-						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0],
-							":\nThere should be one file path after '## ",
-							"What'"));
-				}
-
-				String filePath = StringUtil.trim(trimmedLine.substring(7));
-
-				File file = new File(portalDir, filePath);
-
-				if (file.exists()) {
-					continue;
-				}
-
-				List<String> currentBranchDeletedFileNames =
-					GitUtil.getCurrentBranchDeletedFileNames(
-						_sourceFormatterArgs.getBaseDirName(),
-						_sourceFormatterArgs.getGitWorkingBranchName());
-
-				if (!currentBranchDeletedFileNames.contains(filePath)) {
-					throw new Exception(
-						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0], ":\n",
-							"'## What' should be followed by only one ",
-							"relative path, which is from ",
-							portalDir.getAbsolutePath()));
-				}
-			}
-		}
-	}
-
-	private void _checkMissingEmptyLinesAroundHeaders(String[] parts)
-		throws Exception {
-
-		if (!parts[1].endsWith("\n\n----")) {
-			throw new Exception(
-				StringBundler.concat(
-					"Found formatting issues in SHA ", parts[0], ":\n",
-					"The commit message contains '# breaking_change_report",
-					"' should end with '\\n\\n----'"));
-		}
-
-		for (String header : _BREAKING_CHANGE_REPORT_HEADER_NAMES) {
-			int x = parts[1].indexOf(header);
-
-			if (x == -1) {
-				continue;
-			}
-
-			int lineNumber = SourceUtil.getLineNumber(parts[1], x);
-
-			String nextLine = SourceUtil.getLine(parts[1], lineNumber + 1);
-			String previousLine = SourceUtil.getLine(parts[1], lineNumber - 1);
-
-			if (Validator.isNotNull(nextLine) ||
-				Validator.isNotNull(previousLine)) {
-
-				throw new Exception(
-					StringBundler.concat(
-						"Found formatting issues in SHA ", parts[0], ":\n",
-						"There should be an empty line after/before '----', ",
-						"'# breaking_change_report', '## What', '## Why' and ",
-						"'## Alternatives'"));
-			}
-		}
 	}
 
 	private boolean _containsDir(String dirName) {
@@ -1496,8 +1288,10 @@ public class SourceFormatter {
 			sourceProcessor.getSourceMismatchExceptions());
 	}
 
-	private void _validateCommitMessages(List<String> commitMessages)
-		throws Exception {
+	private void _validateCommitMessages() throws Exception {
+		List<String> commitMessages = GitUtil.getCurrentBranchCommitMessages(
+			_sourceFormatterArgs.getBaseDirName(),
+			_sourceFormatterArgs.getGitWorkingBranchName());
 
 		JIRAUtil.validateJIRAProjectNames(
 			commitMessages, _getPropertyValues("jira.project.keys"));
@@ -1527,11 +1321,6 @@ public class SourceFormatter {
 			}
 		}
 	}
-
-	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {
-		"----", "## Alternatives", "# breaking_change_report", "## What",
-		"## Why"
-	};
 
 	private static final String _PROPERTIES_FILE_NAME =
 		"source-formatter.properties";

@@ -84,6 +84,10 @@
 
 		<!-- Liferay Source Checks -->
 
+		<check name="BNDBreakingChangeCommitMessageCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that commit message should contain the schematized breaking changes." />
+		</check>
 		<check name="BNDExportsCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that modules not ending with `-api`, `-client`, `-spi`, `-taglib`, `-test-util` do not export packages." />

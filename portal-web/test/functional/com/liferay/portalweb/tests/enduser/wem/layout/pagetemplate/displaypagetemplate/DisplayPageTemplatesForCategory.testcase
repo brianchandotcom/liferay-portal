@@ -18,17 +18,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a test for LPS-110247 and LPS-112578. The user can create a display page template for Category and mark it as default. The new non-subcategory will be associated to the Default."
 	@priority = 5
 	test AddDisplayPageTemplateAndMarkItAsDefault {

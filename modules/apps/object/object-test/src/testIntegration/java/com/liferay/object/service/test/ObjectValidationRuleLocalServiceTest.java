@@ -18,6 +18,7 @@ import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.exception.ObjectValidationRuleSystemException;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
@@ -40,6 +41,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -176,6 +178,47 @@ public class ObjectValidationRuleLocalServiceTest {
 					).value(
 						RandomTestUtil.randomString()
 					).build())));
+
+		List<ObjectValidationRuleSetting> objectValidationRuleSettings =
+			new ArrayList<>();
+
+		for (int i = 0; i < 6; i++) {
+			objectValidationRuleSettings.add(
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID
+				).value(
+					() -> {
+						ObjectField objectField =
+							ObjectFieldUtil.addCustomObjectField(
+								new TextObjectFieldBuilder(
+								).userId(
+									TestPropsValues.getUserId()
+								).labelMap(
+									LocalizedMapUtil.getLocalizedMap(
+										RandomTestUtil.randomString())
+								).name(
+									"a" + RandomTestUtil.randomString()
+								).objectDefinitionId(
+									_objectDefinition.getObjectDefinitionId()
+								).build());
+
+						return String.valueOf(objectField.getObjectFieldId());
+					}
+				).build());
+		}
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSettingValueException.
+				CompositeKeyMustHaveMaxObjectFields.class,
+			"Add a maximum of five object fields to create unique composite " +
+				"keys",
+			() -> _addObjectValidationRule(
+				ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
+				errorLabelMap, StringPool.BLANK, nameLabelMap,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				StringPool.BLANK, false, objectValidationRuleSettings));
 
 		ObjectField textObjectField = _objectFieldLocalService.fetchObjectField(
 			_objectDefinition.getObjectDefinitionId(), "textObjectField");

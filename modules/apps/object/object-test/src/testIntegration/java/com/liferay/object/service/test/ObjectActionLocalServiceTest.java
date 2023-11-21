@@ -375,6 +375,19 @@ public class ObjectActionLocalServiceTest {
 
 		_objectDefinition = _publishCustomObjectDefinition();
 
+		// Create related object actions to test infinite loop handling
+
+		ObjectAction objectAction6 = _addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, unicodeProperties,
+			false);
+		ObjectAction objectAction7 = _addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, unicodeProperties,
+			false);
+
 		// Auto increment object field should not be populated by object actions
 
 		ObjectField autoIncrementObjectField =
@@ -452,6 +465,40 @@ public class ObjectActionLocalServiceTest {
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(_user));
 			PrincipalThreadLocal.setName(_user.getUserId());
+
+			// Add object entry
+
+			Assert.assertEquals(0, _argumentsList.size());
+
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				_objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "John"
+				).put(
+					"lastName", "Smith"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			// Related object actions must be executed correctly
+			// to avoid infinite loop
+
+			objectAction6 = _objectActionLocalService.getObjectAction(
+				objectAction6.getObjectActionId());
+			objectAction7 = _objectActionLocalService.getObjectAction(
+				objectAction7.getObjectActionId());
+
+			Assert.assertEquals(
+				objectAction6.getStatus(),
+				ObjectActionConstants.STATUS_SUCCESS);
+			Assert.assertEquals(
+				objectAction7.getStatus(),
+				ObjectActionConstants.STATUS_SUCCESS);
+
+			_objectActionLocalService.deleteObjectAction(objectAction6);
+			_objectActionLocalService.deleteObjectAction(objectAction7);
+
+			_argumentsList.clear();
 
 			// Add object entry
 

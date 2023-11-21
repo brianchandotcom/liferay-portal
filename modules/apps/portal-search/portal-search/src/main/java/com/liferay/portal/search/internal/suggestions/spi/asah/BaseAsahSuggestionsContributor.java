@@ -136,12 +136,6 @@ public abstract class BaseAsahSuggestionsContributor {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject itemJSONObject = jsonArray.getJSONObject(i);
 
-			String text = getText(itemJSONObject);
-
-			if (Validator.isBlank(text)) {
-				continue;
-			}
-
 			suggestions.add(
 				suggestionBuilderFactory.builder(
 				).attribute(
@@ -149,7 +143,7 @@ public abstract class BaseAsahSuggestionsContributor {
 				).score(
 					1.0F
 				).text(
-					text
+					getText(itemJSONObject)
 				).build());
 		}
 

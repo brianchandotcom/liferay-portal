@@ -11,9 +11,11 @@ import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.dalo.GitBranchEntityDALO;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
+import java.util.Objects;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -66,6 +68,30 @@ public class GitBranchEntityRepository
 	public void initialize() {
 		Set<GitBranchEntity> gitBranchEntities = _gitBranchEntityDALO.getByType(
 			GitBranchEntity.Type.UPSTREAM);
+
+		for (String gitHubUpstreamBranchURL :
+				_gitHubUpstreamBranchURLs.split(",")) {
+
+			boolean gitBranchEntryExists = false;
+
+			for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
+				URL gitBranchURL = gitBranchEntity.getURL();
+
+				if (Objects.equals(
+						gitBranchURL.toString(), gitHubUpstreamBranchURL)) {
+
+					gitBranchEntryExists = true;
+
+					break;
+				}
+			}
+
+			if (!gitBranchEntryExists) {
+				gitBranchEntities.add(
+					createUpstreamBranch(
+						StringUtil.toURL(gitHubUpstreamBranchURL)));
+			}
+		}
 
 		addAll(gitBranchEntities);
 	}

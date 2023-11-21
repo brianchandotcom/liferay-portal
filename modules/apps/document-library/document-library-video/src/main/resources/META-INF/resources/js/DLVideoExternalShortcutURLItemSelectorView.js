@@ -28,10 +28,6 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 	const isDisabled = !fields || loading;
 
 	const onClick = () => {
-		if (isDisabled) {
-			return;
-		}
-
 		getOpener().Liferay.fire(eventName, {
 			data: {
 				returnType,

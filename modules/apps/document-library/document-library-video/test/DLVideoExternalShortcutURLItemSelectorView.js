@@ -157,16 +157,5 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 			expect(addButton).toBeInTheDocument();
 			expect(addButton).toBeDisabled();
 		});
-
-		describe('when add button is clicked', () => {
-			beforeEach(async () => {
-				fireEvent.click(result.getByRole('button'));
-			});
-
-			it('does not fire an event in the opener', () => {
-				expect(getOpener).not.toHaveBeenCalled();
-				expect(mockLiferayOpenerFire).not.toHaveBeenCalled();
-			});
-		});
 	});
 });

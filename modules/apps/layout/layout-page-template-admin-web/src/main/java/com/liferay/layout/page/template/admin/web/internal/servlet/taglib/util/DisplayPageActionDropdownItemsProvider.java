@@ -196,9 +196,9 @@ public class DisplayPageActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "changeContentType");
+			dropdownItem.putData("assetType", _getTypeLabel());
 
 			if (count > 0) {
-				dropdownItem.putData("assetType", _getTypeLabel());
 				dropdownItem.putData("viewUsagesURL", _getViewUsagesURL());
 			}
 			else {

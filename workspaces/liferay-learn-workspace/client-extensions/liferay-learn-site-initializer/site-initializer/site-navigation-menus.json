@@ -118,6 +118,7 @@
 		"typeSite": 1
 	},
 	{
+		"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM19",
 		"menuItems": [
 			{
 				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM16",
@@ -125,6 +126,7 @@
 				"type": "node"
 			},
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM17",
 				"menuItems": [
 					{
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM11",
@@ -157,7 +159,6 @@
 						"url": "/w/reference/index"
 					}
 				],
-				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM17",
 				"name": "Products",
 				"type": "node"
 			},
@@ -168,7 +169,6 @@
 				"url": "/w/courses/index"
 			}
 		],
-		"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM19",
 		"name": "Learn Site New Primary Navigation",
 		"typeSite": 1
 	}

@@ -14,7 +14,7 @@ interface ListTypeEntry {
 	key: string;
 	listTypeDefinitionId: number;
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	nameMap: LocalizedValue<string>;
 }
 interface ListTypeEntryBaseFieldProps {
 	creationLanguageId?: Liferay.Language.Locale;
@@ -46,7 +46,7 @@ export function ListTypeEntryBaseField({
 						label: creationLanguageId
 							? getLocalizableLabel(
 									creationLanguageId,
-									item.name_i18n
+									item.nameMap
 							  )
 							: item.name,
 						value: item.key,

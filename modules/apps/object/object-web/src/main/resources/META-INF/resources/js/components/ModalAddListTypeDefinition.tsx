@@ -25,7 +25,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 	onClose,
 }) => {
 	const initialValues: TInitialValues = {
-		name_i18n: {[defaultLanguageId]: ''},
+		nameMap: {[defaultLanguageId]: ''},
 	};
 	const [error, setError] = useState<string>('');
 
@@ -44,8 +44,8 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 	const validate = (values: TInitialValues) => {
 		const errors: FormError<TInitialValues> = {};
 
-		if (!values.name_i18n[defaultLanguageId]) {
-			errors.name_i18n = REQUIRED_MSG;
+		if (!values.nameMap[defaultLanguageId]) {
+			errors.nameMap = REQUIRED_MSG;
 		}
 
 		return errors;
@@ -70,19 +70,19 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 					)}
 
 					<Input
-						error={errors.name_i18n}
+						error={errors.nameMap}
 						id="listTypeDefinitionName"
 						label={Liferay.Language.get('name')}
-						name="name_i18n"
+						name="nameMap"
 						onChange={({target: {value}}) =>
 							setValues({
-								name_i18n: {
+								nameMap: {
 									[defaultLanguageId]: value,
 								},
 							})
 						}
 						required
-						value={values.name_i18n[defaultLanguageId]}
+						value={values.nameMap[defaultLanguageId]}
 					/>
 				</ClayModal.Body>
 
@@ -114,7 +114,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 type TInitialValues = {
-	name_i18n: LocalizedValue<string>;
+	nameMap: LocalizedValue<string>;
 };
 
 const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {

@@ -52,7 +52,7 @@ const ListTypeDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 					setListTypeEntries(
 						items.map((item) => ({
 							...item,
-							name_i18n: fixLocaleKeys(item.name_i18n),
+							nameMap: fixLocaleKeys(item.nameMap),
 						}))
 					);
 				}

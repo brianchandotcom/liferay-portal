@@ -29,7 +29,7 @@ export default function EditListTypeDefinition({
 				externalReferenceCode: values.externalReferenceCode,
 				id: parseInt(listTypeDefinitionId, 10),
 				listTypeEntries: values.listTypeEntries,
-				name_i18n: values.name_i18n,
+				nameMap: values.nameMap,
 			});
 			saveAndReload();
 
@@ -54,11 +54,11 @@ export default function EditListTypeDefinition({
 	useEffect(() => {
 		API.getListTypeDefinition(parseInt(listTypeDefinitionId, 10)).then(
 			(response) => {
-				response.name_i18n = fixLocaleKeys(response.name_i18n);
+				response.nameMap = fixLocaleKeys(response.nameMap);
 				response.listTypeEntries = response.listTypeEntries.map(
 					(item) => ({
 						...item,
-						name_i18n: fixLocaleKeys(item.name_i18n),
+						nameMap: fixLocaleKeys(item.nameMap),
 					})
 				);
 				setValues(response);
@@ -78,12 +78,12 @@ export default function EditListTypeDefinition({
 					<Card title={Liferay.Language.get('basic-info')}>
 						<InputLocalized
 							disabled={readOnly}
-							error={errors.name_i18n}
+							error={errors.nameMap}
 							label={Liferay.Language.get('name')}
-							onChange={(name_i18n) => setValues({name_i18n})}
+							onChange={(nameMap) => setValues({nameMap})}
 							required
 							translations={
-								values.name_i18n as LocalizedValue<string>
+								values.nameMap as LocalizedValue<string>
 							}
 						/>
 

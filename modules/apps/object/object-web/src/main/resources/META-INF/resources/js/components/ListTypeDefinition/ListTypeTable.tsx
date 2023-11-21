@@ -26,7 +26,7 @@ interface ItemData {
 	id: number;
 	key: string;
 	name: {props: {id: number}};
-	name_i18n: LocalizedValue<string>;
+	nameMap: LocalizedValue<string>;
 }
 
 interface fdsItem {
@@ -94,7 +94,7 @@ function getDataSetProps(
 				itemId: itemData.id,
 				itemKey: itemData.key,
 				modalType: 'edit',
-				name_i18n: itemData.name_i18n,
+				nameMap: itemData.nameMap,
 				readOnly,
 				system: values.system,
 			});

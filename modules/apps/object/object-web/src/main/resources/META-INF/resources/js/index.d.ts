@@ -89,7 +89,7 @@ interface ListTypeDefinition {
 	key: string;
 	listTypeEntries: ListTypeEntry[];
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	nameMap: LocalizedValue<string>;
 	system: boolean;
 }
 
@@ -99,7 +99,7 @@ interface ListTypeEntry {
 	key: string;
 	listTypeDefinitionId: number;
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	nameMap: LocalizedValue<string>;
 }
 
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
@@ -460,7 +460,7 @@ interface PickListItem {
 	id: number;
 	key: string;
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	nameMap: LocalizedValue<string>;
 }
 
 interface PickList {
@@ -470,7 +470,7 @@ interface PickList {
 	key: string;
 	listTypeEntries: PickListItem[];
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	nameMap: LocalizedValue<string>;
 }
 
 interface PredefinedValue {

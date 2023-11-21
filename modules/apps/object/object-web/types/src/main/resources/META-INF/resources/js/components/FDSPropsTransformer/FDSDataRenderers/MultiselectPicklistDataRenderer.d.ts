@@ -7,7 +7,7 @@ interface MultiselectPicklistDataRendererProps {
 	value: {
 		key: string;
 		name: string;
-		name_i18n: string;
+		nameMap: string;
 	}[];
 }
 export default function MultiselectPicklistDataRenderer({

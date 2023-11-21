@@ -41,7 +41,7 @@ function ListTypeEntriesModal() {
 			itemId,
 			itemKey,
 			modalType,
-			name_i18n,
+			nameMap,
 			pickListId,
 			readOnly,
 			reloadIframeWindow,
@@ -70,12 +70,12 @@ function ListTypeEntriesModal() {
 		}));
 	};
 
-	const handleNameChange = (newName_i18n: LocalizedValue<string>) => {
+	const handleNameChange = (newNameMap: LocalizedValue<string>) => {
 		let newItemKey = itemKey;
 
 		if (modalType !== 'edit' && keyChanged === false) {
 			newItemKey = toCamelCase(
-				newName_i18n[defaultLanguageId] as string,
+				newNameMap[defaultLanguageId] as string,
 				true
 			);
 		}
@@ -83,7 +83,7 @@ function ListTypeEntriesModal() {
 		setState((previousValues) => ({
 			...previousValues,
 			itemKey: newItemKey,
-			name_i18n: newName_i18n,
+			nameMap: newNameMap,
 		}));
 	};
 
@@ -91,12 +91,12 @@ function ListTypeEntriesModal() {
 		externalReferenceCode?: string;
 		key?: string;
 		name?: string;
-		name_i18n?: string;
+		nameMap?: string;
 	}>({
 		externalReferenceCode: '',
 		key: '',
 		name: '',
-		name_i18n: '',
+		nameMap: '',
 	});
 
 	const resetModal = () => {
@@ -114,10 +114,8 @@ function ListTypeEntriesModal() {
 		const openModal = (modalProps: Partial<IModalState>) => {
 			const newModalProps = {...modalProps};
 
-			if (newModalProps.name_i18n) {
-				newModalProps.name_i18n = fixLocaleKeys(
-					newModalProps.name_i18n
-				);
+			if (newModalProps.nameMap) {
+				newModalProps.nameMap = fixLocaleKeys(newModalProps.nameMap);
 			}
 			setState(newModalProps);
 		};
@@ -145,10 +143,10 @@ function ListTypeEntriesModal() {
 		const errors: ObjectValidationErrors = {};
 		const externalReferenceCode = entry.externalReferenceCode;
 		const key = entry.key;
-		const name_i18n = entry.name_i18n?.[defaultLanguageId];
+		const nameMap = entry.nameMap?.[defaultLanguageId];
 
-		if (invalidateRequired(name_i18n)) {
-			errors.name_i18n = REQUIRED_MSG;
+		if (invalidateRequired(nameMap)) {
+			errors.nameMap = REQUIRED_MSG;
 		}
 
 		if (invalidateRequired(key)) {
@@ -172,7 +170,7 @@ function ListTypeEntriesModal() {
 		const errors: ObjectValidationErrors = validate({
 			externalReferenceCode: itemExternalReferenceCode,
 			key: itemKey,
-			name_i18n,
+			nameMap,
 		});
 
 		if (Object.keys(errors).length) {
@@ -185,7 +183,7 @@ function ListTypeEntriesModal() {
 					await API.postListTypeEntry({
 						key: itemKey,
 						listTypeDefinitionId: pickListId,
-						name_i18n,
+						nameMap,
 					});
 					openToast({
 						message: Liferay.Language.get(
@@ -198,7 +196,7 @@ function ListTypeEntriesModal() {
 					await API.putListTypeEntry({
 						externalReferenceCode: itemExternalReferenceCode,
 						id: itemId,
-						name_i18n,
+						nameMap,
 					});
 					openToast({
 						message: Liferay.Language.get(
@@ -229,12 +227,12 @@ function ListTypeEntriesModal() {
 
 				<InputLocalized
 					disabled={readOnly}
-					error={errors.name_i18n}
+					error={errors.nameMap}
 					id="locale"
 					label={Liferay.Language.get('name')}
 					onChange={handleNameChange}
 					required
-					translations={name_i18n ?? {[defaultLanguageId]: ''}}
+					translations={nameMap ?? {[defaultLanguageId]: ''}}
 				/>
 
 				<Input

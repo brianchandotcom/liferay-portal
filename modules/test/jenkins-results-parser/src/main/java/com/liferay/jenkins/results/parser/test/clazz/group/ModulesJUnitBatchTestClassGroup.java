@@ -66,15 +66,13 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		Set<File> releaseModuleAppDirs = _getReleaseModuleAppDirs();
 
-		if (releaseModuleAppDirs == null) {
-			return includesJobProperties;
-		}
-
-		for (File releaseModuleAppDir : releaseModuleAppDirs) {
-			includesJobProperties.add(
-				getJobProperty(
-					"test.batch.class.names.includes.modules",
-					releaseModuleAppDir, JobProperty.Type.INCLUDE_GLOB));
+		if (!releaseModuleAppDirs.isEmpty()) {
+			for (File releaseModuleAppDir : releaseModuleAppDirs) {
+				includesJobProperties.add(
+					getJobProperty(
+						"test.batch.class.names.includes.modules",
+						releaseModuleAppDir, JobProperty.Type.INCLUDE_GLOB));
+			}
 		}
 
 		return includesJobProperties;
@@ -265,6 +263,27 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		return bundledAppNames;
 	}
 
+	private Set<String> _getBundledModuleNames() {
+		Set<String> bundledModuleNames = new HashSet<>();
+
+		File liferayHome = _getLiferayHome();
+
+		if ((liferayHome == null) || !liferayHome.exists()) {
+			return bundledModuleNames;
+		}
+
+		List<File> bundledModules = JenkinsResultsParserUtil.findFiles(
+			liferayHome, ".*\\.jar");
+
+		for (File bundledModule : bundledModules) {
+			String bundledModuleName = bundledModule.getName();
+
+			bundledModuleNames.add(bundledModuleName);
+		}
+
+		return bundledModuleNames;
+	}
+
 	private List<JobProperty> _getJobProperties(
 		File file, String basePropertyName, JobProperty.Type jobType,
 		Set<File> traversedPropertyFileSet) {
@@ -341,6 +360,22 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		return new File(liferayHomePath);
 	}
 
+	private File _getReleaseModuleAppDir(File releaseModuleDir) {
+		if (releaseModuleDir.equals(
+				portalGitWorkingDirectory.getWorkingDirectory())) {
+
+			return null;
+		}
+
+		File appBndFile = new File(releaseModuleDir, "app.bnd");
+
+		if (appBndFile.exists()) {
+			return releaseModuleDir;
+		}
+
+		return _getReleaseModuleAppDir(releaseModuleDir.getParentFile());
+	}
+
 	private Set<File> _getReleaseModuleAppDirs() {
 		Set<String> bundledAppNames = _getBundledAppNames();
 
@@ -375,7 +410,61 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			}
 		}
 
+		if (releaseModuleAppDirs.isEmpty()) {
+			for (File releaseModuleDir : _getReleaseModuleDirs()) {
+				File releaseModuleAppDir = _getReleaseModuleAppDir(
+					releaseModuleDir);
+
+				if (releaseModuleAppDir == null) {
+					continue;
+				}
+
+				releaseModuleAppDirs.add(releaseModuleAppDir);
+			}
+		}
+
 		return releaseModuleAppDirs;
+	}
+
+	private Set<File> _getReleaseModuleDirs() {
+		Set<String> bundledModuleNames = _getBundledModuleNames();
+
+		Set<File> releaseModuleDirs = new HashSet<>();
+
+		for (File moduleDir : portalGitWorkingDirectory.getModuleDirs()) {
+			File bndBndFile = new File(moduleDir, "bnd.bnd");
+
+			String symbolicName = _getSymbolicName(bndBndFile);
+
+			for (String bundledModuleName : bundledModuleNames) {
+				if (!bundledModuleName.equals(symbolicName + ".jar")) {
+					continue;
+				}
+
+				List<File> skipTestIntegrationCheckFiles =
+					JenkinsResultsParserUtil.findFiles(
+						moduleDir, ".lfrbuild-ci-skip-test-integration-check");
+
+				if (!skipTestIntegrationCheckFiles.isEmpty()) {
+					System.out.println("Ignoring " + moduleDir);
+
+					continue;
+				}
+
+				releaseModuleDirs.add(moduleDir);
+
+				break;
+			}
+		}
+
+		return releaseModuleDirs;
+	}
+
+	private String _getSymbolicName(File bndBndFile) {
+		Properties bndBndProperties = JenkinsResultsParserUtil.getProperties(
+			bndBndFile);
+
+		return bndBndProperties.getProperty("Bundle-SymbolicName");
 	}
 
 	private static final Pattern _singleModuleBatchNamePattern =

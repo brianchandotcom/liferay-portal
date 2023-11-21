@@ -85,7 +85,12 @@ export default function HighlightedDDMStructuresConfiguration({
 				</ClayButton>
 			</div>
 
-			<StructureList structures={ddmStructures} />
+			<StructureList
+				onRemoveStructure={(nextStructures) =>
+					setDDMStructures(nextStructures)
+				}
+				structures={ddmStructures}
+			/>
 		</div>
 	);
 }

@@ -11,10 +11,11 @@ import React from 'react';
 import {DDMStructure} from './HighlightedDDMStructuresConfiguration';
 
 interface Props {
+	onRemoveStructure: (nextStructures: DDMStructure[]) => void;
 	structures: DDMStructure[];
 }
 
-export function StructureList({structures}: Props) {
+export function StructureList({onRemoveStructure, structures}: Props) {
 	return structures.length ? (
 		<ClayTable className="c-my-3">
 			<ClayTable.Head>
@@ -52,6 +53,15 @@ export function StructureList({structures}: Props) {
 									name
 								)}
 								displayType="unstyled"
+								onClick={() =>
+									onRemoveStructure(
+										structures.filter(
+											(structure) =>
+												structure.ddmStructureId !==
+												ddmStructureId
+										)
+									)
+								}
 								symbol="times-circle"
 								title={Liferay.Language.get('remove')}
 							/>

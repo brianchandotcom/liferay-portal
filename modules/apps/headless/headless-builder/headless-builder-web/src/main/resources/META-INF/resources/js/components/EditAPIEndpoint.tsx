@@ -98,13 +98,21 @@ export default function EditAPIEndpoint({
 				httpMethod: response.httpMethod,
 				parameter: getLastParameterFromPath(response.path),
 				path: getAllButLastParameterFromPath(response.path),
-				pathParameter: response.pathParameter,
-				pathParameterDescription: response.pathParameterDescription,
-				retrieveType: response.retrieveType,
+				...(response.pathParameter && {
+					pathParameter: response.pathParameter,
+				}),
+				...(response.pathParameterDescription && {
+					pathParameterDescription: response.pathParameterDescription,
+				}),
+				...(response.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId && {
+					r_requestAPISchemaToAPIEndpoints_c_apiSchemaId:
+						response.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId,
+				}),
 				...(response.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId && {
 					r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
 						response.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
 				}),
+				retrieveType: response.retrieveType,
 				scope: response.scope,
 			});
 		});
@@ -113,14 +121,14 @@ export default function EditAPIEndpoint({
 	function validateData() {
 		let isDataValid = true;
 
-		const mandatoryFields = ['httpMethod', 'path', 'retrieveType', 'scope'];
+		const mandatoryFields = ['httpMethod', 'parameter', 'path', 'scope'];
 
 		if (
 			localUIData.retrieveType?.key === 'singleElement' &&
 			localUIData.httpMethod?.key === 'get'
 		) {
 			mandatoryFields.push('parameter');
-
+			
 			if (localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId) {
 				mandatoryFields.push('pathParameter');
 			}
@@ -197,8 +205,8 @@ export default function EditAPIEndpoint({
 				let parameter: string | undefined = '';
 
 				if (
-					localUIData.retrieveType?.key === 'singleElement' &&
-					localUIData.httpMethod?.key === 'get'
+					localUIData.httpMethod?.key === 'get' &&
+					localUIData.retrieveType?.key === 'singleElement'
 				) {
 					parameter = localUIData.parameter;
 				}
@@ -212,9 +220,15 @@ export default function EditAPIEndpoint({
 									beginStringWithForwardSlash(parameter)
 							),
 						}),
+						httpMethod: {
+							key: localUIData.httpMethod?.key!,
+							name: localUIData.httpMethod?.name!,
+						},
 						pathParameter: localUIData.pathParameter,
 						pathParameterDescription:
 							localUIData.pathParameterDescription,
+						r_requestAPISchemaToAPIEndpoints_c_apiSchemaId:
+							localUIData.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId,
 						r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
 							localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
 						retrieveType: localUIData.retrieveType,

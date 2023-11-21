@@ -173,8 +173,8 @@ export default function EditEndpointConfiguration({
 					/>
 				)}
 
-			{data.retrieveType?.key === 'collection' &&
-				data.httpMethod?.key === 'get' && (
+			{data.httpMethod?.key === 'get' &&
+				data.retrieveType?.key === 'collection' && (
 					<FiltersAndSorting data={data} setData={setData} />
 				)}
 		</ClayForm>

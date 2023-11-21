@@ -214,7 +214,7 @@ public class BatchEngineBrokerTest {
 				_objectEntryExportCSVFieldNames,
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
 				"C_TestObjectCSV"),
-			_prepareCSVFile(
+			_getExpectedCSVString(
 				objectEntry.getCreateDate(), "object_entry.csv",
 				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate(),
 				false),
@@ -269,7 +269,7 @@ public class BatchEngineBrokerTest {
 				_objectDefinitionExportCSVFieldNames,
 				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
 				false, null),
-			_prepareCSVFile(
+			_getExpectedCSVString(
 				_objectDefinition1.getCreateDate(), "object_definition.csv",
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition1.getModifiedDate(), false),
@@ -329,7 +329,7 @@ public class BatchEngineBrokerTest {
 				_objectEntryExportCSVFieldNames,
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
 				"C_TestObjectCSV"),
-			_prepareCSVFile(
+			_getExpectedCSVString(
 				objectEntry.getCreateDate(), "object_entry.csv",
 				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate(),
 				true),
@@ -866,6 +866,39 @@ public class BatchEngineBrokerTest {
 		return Arrays.asList(line.split(StringPool.COMMA, -1));
 	}
 
+	private String _getExpectedCSVString(
+			Date createDate, String fileName, long id, Date modifiedDate,
+			boolean siteScope)
+		throws Exception {
+
+		File file = _file.createTempFile("csv");
+
+		String template = StreamUtil.toString(_getInputStream(fileName));
+
+		String groupNameString = null;
+
+		if (siteScope) {
+			Group group = GroupLocalServiceUtil.getGroup(
+				TestPropsValues.getGroupId());
+
+			groupNameString = group.getGroupKey();
+		}
+
+		template = StringUtil.replace(
+			template,
+			new String[] {
+				"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]", "$[SCOPE_KEY]"
+			},
+			new String[] {
+				_toDateString(createDate), _toDateString(modifiedDate),
+				String.valueOf(id), groupNameString
+			});
+
+		_file.write(file, template);
+
+		return FileUtil.read(file);
+	}
+
 	private JsonNode _getExpectedJsonNode(ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -1013,39 +1046,6 @@ public class BatchEngineBrokerTest {
 		zipInputStream.getNextEntry();
 
 		return zipInputStream;
-	}
-
-	private String _prepareCSVFile(
-			Date createDate, String fileName, long id, Date modifiedDate,
-			boolean siteScope)
-		throws Exception {
-
-		File file = _file.createTempFile("csv");
-
-		String template = StreamUtil.toString(_getInputStream(fileName));
-
-		String groupNameString = null;
-
-		if (siteScope) {
-			Group group = GroupLocalServiceUtil.getGroup(
-				TestPropsValues.getGroupId());
-
-			groupNameString = group.getGroupKey();
-		}
-
-		template = StringUtil.replace(
-			template,
-			new String[] {
-				"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]", "$[SCOPE_KEY]"
-			},
-			new String[] {
-				_toDateString(createDate), _toDateString(modifiedDate),
-				String.valueOf(id), groupNameString
-			});
-
-		_file.write(file, template);
-
-		return FileUtil.read(file);
 	}
 
 	private ObjectDefinition _publishObjectDefinition(

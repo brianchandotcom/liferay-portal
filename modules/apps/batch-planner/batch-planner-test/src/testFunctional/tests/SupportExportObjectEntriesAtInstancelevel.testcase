@@ -133,9 +133,17 @@ definition {
 
 		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
 			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+
+			ImportExport.configureExport(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFileFormat = "JSON");
 		}
 
 		task ("When exporting file in JSON format with all fields selected") {
+			ScrollWebElementIntoView(
+				key_text = "Export",
+				locator1 = "Button#ANY");
+
 			Button.click(button = "Export");
 
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");

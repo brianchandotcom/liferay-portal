@@ -7,6 +7,7 @@ package com.liferay.object.validation.rule.setting.builder;
 
 import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.service.persistence.ObjectValidationRuleSettingUtil;
+import com.liferay.petra.function.UnsafeSupplier;
 
 /**
  * @author Carolina Barbosa
@@ -27,6 +28,22 @@ public class ObjectValidationRuleSettingBuilder {
 		_objectValidationRuleSetting.setValue(value);
 
 		return this;
+	}
+
+	public ObjectValidationRuleSettingBuilder value(
+		UnsafeSupplier<String, Exception> unsafeSupplier) {
+
+		try {
+			_objectValidationRuleSetting.setValue(unsafeSupplier.get());
+
+			return this;
+		}
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private final ObjectValidationRuleSetting _objectValidationRuleSetting =

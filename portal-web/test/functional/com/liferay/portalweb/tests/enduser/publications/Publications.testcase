@@ -2255,4 +2255,66 @@ definition {
 		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 5,Publication Name 6,Publication Name 7");
 	}
 
+	@description = "This is a use case for LPS-200858"
+	@priority = 3
+	test ViewRelatedEntryDetails {
+		task ("Create and select a new publication") {
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+		}
+
+		task ("Make a change in the publication and go to review changes") {
+			JSONWebcontent.addWebContent(
+				content = "Test Web Content",
+				groupName = "Guest",
+				title = "Test Web Content");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+		}
+
+		task ("Select a change's details and navigate to a related entry via the parents/children tab") {
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Web Content Translation",
+				changeTitle = "Test Web Content");
+
+			PublicationsNavigator.gotoNavbar(navBarTitle = "Parents");
+
+			PublicationsChangeDetails.viewChangeDetailsInParents(
+				changeParentsCategory = "Web Content Article",
+				changeParentsTitle = "Test Web Content");
+
+			Click(
+				key_changeChildrenCategory = "Web Content Article",
+				key_changeChildrenTitle = "Test Web Content",
+				locator1 = "PublicationsChangeDetails#CHANGE_CHILDREN_TITLE");
+		}
+
+		task ("Assert that the details page changes to display the related entry's details") {
+			AssertElementPresent(
+				key_changeTitle = "Test Web Content",
+				locator1 = "PublicationsChanges#CHANGE_TITLE");
+
+			PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
+
+			PublicationsChangeDetails.viewChangeDetailsInData(
+				changeType = "Added",
+				columnName = "Name",
+				columnValueInPublication = "Test Web Content",
+				publicationName = "Test Publication");
+
+			PublicationsNavigator.gotoNavbar(navBarTitle = "Children");
+
+			PublicationsChangeDetails.viewChangeDetailsInChildren(
+				changeChildrenCategory = "Asset",
+				changeChildrenTitle = "Test Web Content");
+
+			PublicationsChangeDetails.viewChangeDetailsInChildren(
+				changeChildrenCategory = "Web Content Translation",
+				changeChildrenTitle = "Test Web Content");
+		}
+	}
+
 }

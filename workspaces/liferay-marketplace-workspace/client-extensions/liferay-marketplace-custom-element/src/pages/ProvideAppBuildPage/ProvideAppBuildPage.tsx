@@ -100,7 +100,8 @@ export function ProvideAppBuildPage({
 				},
 				type: TYPES.UPLOAD_BUILD_ZIP_FILES,
 			});
-		} else {
+		}
+		else {
 			dispatch({
 				payload: {
 					files: newUploadedFiles,
@@ -210,7 +211,8 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		} else {
+		}
+		else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -447,7 +449,8 @@ export function ProvideAppBuildPage({
 								},
 								id: appType.id,
 							});
-						} else {
+						}
+						else {
 							const dataSpecification = await createSpecification(
 								{
 									body: {

@@ -147,9 +147,11 @@ const SimpleInputModal = ({
 							>
 								{mainFieldLabel}
 
-								<span className="reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
+								{required ? (
+									<span className="reference-mark">
+										<ClayIcon symbol="asterisk" />
+									</span>
+								) : null}
 							</label>
 
 							<ClayInput

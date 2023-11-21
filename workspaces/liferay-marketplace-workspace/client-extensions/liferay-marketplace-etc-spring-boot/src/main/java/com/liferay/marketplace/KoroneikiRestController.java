@@ -94,6 +94,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 			ProductPurchase productPurchase = null;
 
+			outerLoop:
 			for (ProductPurchase currentProductPurchase :
 					productPurchaseView.getProductPurchases()) {
 
@@ -106,7 +107,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 						productPurchase = currentProductPurchase;
 
-						break;
+						break outerLoop;
 					}
 				}
 			}

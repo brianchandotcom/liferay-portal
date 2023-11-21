@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -63,6 +65,10 @@ public class UpgradeCatchAllCheck {
 		_htmlParser.extractText(null);
 
 		new ArrayList<>(LanguageUtil.getAvailableLocales());
+
+		CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST;
+		CookiesConstants.NAME_ID;
+		CookiesConstants.NAME_USER_UUID;
 	}
 
 	public void method(AssetCategory<?> assetCategory) {
@@ -95,6 +101,9 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(HttpServletRequest httpServletRequest, String name) {
+		CookieKeys.getCookie(httpServletRequest, "test123");
+		CookiesManagerUtil.getCookieValue(name, httpServletRequest);
+
 		CookieUtil.get(httpServletRequest, "test123");
 		CookiesManagerUtil.getCookieValue(name, httpServletRequest);
 	}

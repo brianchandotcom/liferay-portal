@@ -10,10 +10,7 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
-import {
-	PORTAL_TOOLTIP_TRIGGER_CLASS,
-	STATUS_TYPES,
-} from '../../utils/constants.es';
+import {PORTAL_TOOLTIP_TRIGGER_CLASS} from '../../utils/constants.es';
 
 /**
  * Filters out empty items and duplicate items. Compares both label and value
@@ -64,9 +61,13 @@ function trimListItems(list) {
 
 class Alias extends Component {
 	static propTypes = {
+		disabled: PropTypes.bool,
 		keywords: PropTypes.arrayOf(String),
 		onChange: PropTypes.func.isRequired,
-		resultRankingStatus: PropTypes.string,
+	};
+
+	static defaultProps = {
+		disabled: false,
 	};
 
 	state = {
@@ -82,7 +83,7 @@ class Alias extends Component {
 	};
 
 	render() {
-		const {keywords, resultRankingStatus} = this.props;
+		const {disabled, keywords} = this.props;
 
 		const {inputValue} = this.state;
 
@@ -105,10 +106,7 @@ class Alias extends Component {
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
-							disabled={
-								resultRankingStatus ===
-								STATUS_TYPES.NOT_APPLICABLE
-							}
+							disabled={disabled}
 							id="aliases-input"
 							items={transformListOfStringsToObjects(keywords)}
 							onChange={this._handleInputChange}
@@ -116,8 +114,7 @@ class Alias extends Component {
 							value={inputValue}
 						/>
 
-						{resultRankingStatus !==
-							STATUS_TYPES.NOT_APPLICABLE && (
+						{!disabled && (
 							<ClayForm.FeedbackGroup>
 								<ClayForm.Text>
 									{Liferay.Language.get(

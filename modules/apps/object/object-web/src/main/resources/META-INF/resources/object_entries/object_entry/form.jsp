@@ -211,6 +211,8 @@ portletDisplay.setURLBack(backURL);
 								body: JSON.stringify(values),
 								headers: new Headers({
 									'Accept': 'application/json',
+									'Accept-Language':
+										'<%= LanguageUtil.getBCP47LanguageId(request) %>',
 									'Content-Type': 'application/json',
 								}),
 								method: externalReferenceCode ? 'PATCH' : 'POST',

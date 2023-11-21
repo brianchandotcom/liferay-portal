@@ -346,6 +346,7 @@ export async function postObjectDefinitionPublish(objectDefinitionId: number) {
 	return await fetch(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish`,
 		{
+			headers,
 			method: 'POST',
 		}
 	);

@@ -8,6 +8,7 @@ package com.liferay.jethr0.event.github;
 import com.liferay.jethr0.event.BaseEventHandler;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
+import com.liferay.jethr0.event.github.repository.GitHubRepository;
 
 import org.json.JSONObject;
 
@@ -33,6 +34,22 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		}
 
 		return new GitHubIssue(issueJSONObject);
+	}
+
+	protected GitHubRepository getGitHubRepository()
+		throws InvalidJSONException {
+
+		JSONObject messageJSONObject = getMessageJSONObject();
+
+		JSONObject repositoryJSONObject = messageJSONObject.optJSONObject(
+			"repository");
+
+		if (repositoryJSONObject == null) {
+			throw new InvalidJSONException(
+				"Missing \"repository\" from message JSON");
+		}
+
+		return new GitHubRepository(repositoryJSONObject);
 	}
 
 }

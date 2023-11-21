@@ -2419,7 +2419,7 @@ public class AssetTagPersistenceImpl
 				QueryPos queryPos = QueryPos.getInstance(query);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				list = (List<AssetTag>)QueryUtil.list(
@@ -2693,7 +2693,7 @@ public class AssetTagPersistenceImpl
 		QueryPos queryPos = QueryPos.getInstance(query);
 
 		if (bindName) {
-			queryPos.add(name);
+			queryPos.add(StringUtil.toLowerCase(name));
 		}
 
 		if (orderByComparator != null) {
@@ -2980,7 +2980,7 @@ public class AssetTagPersistenceImpl
 				QueryPos queryPos = QueryPos.getInstance(query);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				count = (Long)query.uniqueResult();
@@ -3099,7 +3099,7 @@ public class AssetTagPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_NAME_NAME_2 =
-		"assetTag.name = ?";
+		"lower(assetTag.name) = ?";
 
 	private static final String _FINDER_COLUMN_NAME_NAME_3 =
 		"(assetTag.name IS NULL OR assetTag.name = '')";
@@ -3206,7 +3206,7 @@ public class AssetTagPersistenceImpl
 				for (AssetTag assetTag : list) {
 					if ((groupId != assetTag.getGroupId()) ||
 						!StringUtil.wildcardMatches(
-							assetTag.getName(), name, '_', '%', '\\', true)) {
+							assetTag.getName(), name, '_', '%', '\\', false)) {
 
 						list = null;
 
@@ -3264,7 +3264,7 @@ public class AssetTagPersistenceImpl
 				queryPos.add(groupId);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				list = (List<AssetTag>)QueryUtil.list(
@@ -3560,7 +3560,7 @@ public class AssetTagPersistenceImpl
 		queryPos.add(groupId);
 
 		if (bindName) {
-			queryPos.add(name);
+			queryPos.add(StringUtil.toLowerCase(name));
 		}
 
 		if (orderByComparator != null) {
@@ -3703,7 +3703,7 @@ public class AssetTagPersistenceImpl
 				for (AssetTag assetTag : list) {
 					if (!ArrayUtil.contains(groupIds, assetTag.getGroupId()) ||
 						!StringUtil.wildcardMatches(
-							assetTag.getName(), name, '_', '%', '\\', true)) {
+							assetTag.getName(), name, '_', '%', '\\', false)) {
 
 						list = null;
 
@@ -3766,7 +3766,7 @@ public class AssetTagPersistenceImpl
 				QueryPos queryPos = QueryPos.getInstance(query);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				list = (List<AssetTag>)QueryUtil.list(
@@ -3868,7 +3868,7 @@ public class AssetTagPersistenceImpl
 				queryPos.add(groupId);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				count = (Long)query.uniqueResult();
@@ -3965,7 +3965,7 @@ public class AssetTagPersistenceImpl
 				QueryPos queryPos = QueryPos.getInstance(query);
 
 				if (bindName) {
-					queryPos.add(name);
+					queryPos.add(StringUtil.toLowerCase(name));
 				}
 
 				count = (Long)query.uniqueResult();
@@ -3994,7 +3994,7 @@ public class AssetTagPersistenceImpl
 		"assetTag.groupId IN (";
 
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 =
-		"assetTag.name LIKE ?";
+		"lower(assetTag.name) LIKE ?";
 
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 =
 		"(assetTag.name IS NULL OR assetTag.name LIKE '')";

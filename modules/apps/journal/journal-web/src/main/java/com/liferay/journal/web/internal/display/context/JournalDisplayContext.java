@@ -99,6 +99,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -702,9 +703,23 @@ public class JournalDisplayContext {
 		return JSONUtil.toJSONArray(
 			getHighlightedDDMStructures(),
 			ddmStructure -> JSONUtil.put(
-				"ddmStructureId", ddmStructure.getStructureId()
+				"ddmStructureId", String.valueOf(ddmStructure.getStructureId())
 			).put(
 				"name", ddmStructure.getName(_themeDisplay.getLocale())
+			).put(
+				"scope",
+				() -> {
+					Group group = GroupLocalServiceUtil.fetchGroup(
+						ddmStructure.getGroupId());
+
+					if (group != null) {
+						return LanguageUtil.get(
+							_themeDisplay.getLocale(),
+							group.getScopeLabel(_themeDisplay));
+					}
+
+					return StringPool.BLANK;
+				}
 			));
 	}
 

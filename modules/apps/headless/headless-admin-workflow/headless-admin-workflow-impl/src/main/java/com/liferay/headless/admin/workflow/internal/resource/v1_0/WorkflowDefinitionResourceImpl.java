@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
@@ -56,7 +55,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 @CTAware
 public class WorkflowDefinitionResourceImpl
-	extends BaseWorkflowDefinitionResourceImpl implements EntityModelResource {
+	extends BaseWorkflowDefinitionResourceImpl {
 
 	@Override
 	public void create(

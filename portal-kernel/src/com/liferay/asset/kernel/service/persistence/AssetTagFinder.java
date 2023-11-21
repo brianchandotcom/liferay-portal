@@ -21,9 +21,4 @@ public interface AssetTagFinder {
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.asset.kernel.model.AssetTag> orderByComparator);
 
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		findByG_N_S_E(
-			long groupId, String name, int startPeriod, int endPeriod,
-			int periodLength);
-
 }

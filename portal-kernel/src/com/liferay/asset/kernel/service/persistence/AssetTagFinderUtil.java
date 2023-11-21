@@ -29,15 +29,6 @@ public class AssetTagFinderUtil {
 			groupId, classNameId, name, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		findByG_N_S_E(
-			long groupId, String name, int startPeriod, int endPeriod,
-			int periodLength) {
-
-		return getFinder().findByG_N_S_E(
-			groupId, name, startPeriod, endPeriod, periodLength);
-	}
-
 	public static AssetTagFinder getFinder() {
 		if (_finder == null) {
 			_finder = (AssetTagFinder)PortalBeanLocatorUtil.locate(

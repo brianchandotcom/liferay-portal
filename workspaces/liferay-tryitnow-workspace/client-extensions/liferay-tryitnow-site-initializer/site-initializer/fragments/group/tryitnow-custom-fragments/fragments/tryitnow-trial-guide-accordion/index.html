@@ -1,35 +1,39 @@
 <div class="fragment_1025 position-relative">
-<div class="panel" id="panel" name="panel">
-<div class="panel-header">
-<div class="panel-header-left">
-			<div class="animate__animated animate__fadeIn d-none panel-step bg-brand-primary-darken-1" name="txt-step-incomplete">
+	<div class="panel" id="panel" name="panel">
+		<div class="panel-header">
+			<div class="panel-header-left">
+				<div class="animate__animated animate__fadeIn d-none panel-step bg-brand-primary-darken-1" name="txt-step-incomplete">
 					<lfr-editable id="txt-step" name="txt-step" type="text">1</lfr-editable>
 				</div>
-			<div class="animate__animated animate__fadeIn d-none panel-step bg-brand-primary-lighten-5" name="txt-step-complete">
-<img src="[resources:check.svg]" />
+				<div class="animate__animated animate__fadeIn d-none panel-step bg-brand-primary-lighten-5" name="txt-step-complete">
+					<img src="[resources:check.svg]" />
 				</div>
-<h4 class="text-neutral-9">
-					<lfr-editable id="txt-header" name="txt-header" type="text">Customer of Clarity</lfr-editable>
+				<h4 class="text-neutral-9">
+					<lfr-editable id="txt-header" name="txt-header" type="text">
+						Customer of Clarity
+					</lfr-editable>
 				</h4>
 			</div>
-<div class="panel-header-right">
-			<button class="animate__animated animate__fadeIn mark-as-incomplete d-none pr-4" name="btn-incomplete" onclick="markAsIncomplete(${configuration.panelId})">
+			<div class="panel-header-right">
+				<button class="animate__animated animate__fadeIn mark-as-incomplete d-none pr-4" name="btn-incomplete" onclick="markAsIncomplete(${configuration.panelId})">
 					Mark as Incomplete
-				<img class="animate__animated animate__fadeIn d-none spinner" name="incomplete-spinner" src="[resources:loading.svg]" />
+					<img class="animate__animated animate__fadeIn d-none spinner" name="incomplete-spinner" src="[resources:loading.svg]" />
 				</button>
-			<button class="animate__animated animate__fadeIn mark-as-complete d-none pr-4" name="btn-complete" onclick="markAsComplete(${configuration.panelId})">
+				<button class="animate__animated animate__fadeIn mark-as-complete d-none pr-4" name="btn-complete" onclick="markAsComplete(${configuration.panelId})">
 					Mark as Complete
-				<img class="animate__animated animate__fadeIn d-none spinner" name="complete-spinner" src="[resources:loading.svg]" />
+					<img class="animate__animated animate__fadeIn d-none spinner" name="complete-spinner" src="[resources:loading.svg]" />
 				</button>
-<p class="text-neutral-9">
-					<lfr-editable id="txt-time-to-read" name="txt-time-to-read" type="text">4 min</lfr-editable>
+				<p class="text-neutral-9">
+					<lfr-editable id="txt-time-to-read" name="txt-time-to-read" type="text">
+						4 min
+					</lfr-editable>
 				</p>
-<div class="panel-toggle" onclick="toggle(${configuration.panelId})">
+				<div class="panel-toggle" onclick="toggle(${configuration.panelId})">
 					<span name="arrow" class="arrow arrow-collapse">^</span>
 				</div>
 			</div>
 		</div>
-<div class="panel-body" name="panel-body">
+		<div class="panel-body" name="panel-body">
 			<lfr-drop-zone></lfr-drop-zone>
 		</div>
 	</div>
@@ -55,20 +59,15 @@
 			if (arrow.classList.contains('arrow-expand')) {
 				arrow.classList.remove('arrow-expand');
 				arrow.classList.add('arrow-collapse');
-
 				panelBody.classList.remove('panel-body-expand');
 				panelBody.classList.add('panel-body-collapse');
-
 				panel.classList.remove('panel-expand');
 				panel.classList.add('panel-collapse');
-
 			} else if (arrow.classList.contains('arrow-collapse')) {
 				arrow.classList.remove('arrow-collapse');
 				arrow.classList.add('arrow-expand');
-
 				panelBody.classList.remove('panel-body-collapse');
 				panelBody.classList.add('panel-body-expand');
-
 				panel.classList.remove('panel-collapse');
 				panel.classList.add('panel-expand');
 			}
@@ -77,7 +76,7 @@
 		function updateStep(data, success, error) {
 			console.log(data);
 			$.ajax({
-				url: '/o/c/progresstrackers/' + data.id + '?p_auth='+Liferay.authToken,
+				url: '/o/c/m2h8progresstrackers/' + data.id + '?p_auth=' + Liferay.authToken,
 				success: success,
 				error: error,
 				method: 'PUT',
@@ -115,22 +114,18 @@
 			let btnMarkAsIncompleteElement = btnMarkAsIncompleteElements[id - 1];
 			let btnMarkAsCompleteSpinnerElement = btnMarkAsCompleteSpinnerElements[id - 1];
 			let stepCheckElement = stepCheckElements[id - 1];
-			let stepNumberElement = stepNumberElements[id -1];
+			let stepNumberElement = stepNumberElements[id - 1];
 
 			replaceCSSClasses(btnMarkAsCompleteElement, 'pr-4');
 			replaceCSSClasses(btnMarkAsCompleteSpinnerElement, 'd-none', 'd-block');
 
 			function success() {
 				replaceCSSClasses(btnMarkAsCompleteElement, null, 'pr-4');
-
-				replaceCSSClasses(btnMarkAsIncompleteElement,'d-none','d-flex')
+				replaceCSSClasses(btnMarkAsIncompleteElement, 'd-none', 'd-flex')
 				replaceCSSClasses(btnMarkAsCompleteElement, 'd-flex', 'd-none');
-
-				replaceCSSClasses(stepCheckElement,'d-none','d-flex');
-				replaceCSSClasses(stepNumberElement,'d-flex','d-none');
-
+				replaceCSSClasses(stepCheckElement, 'd-none', 'd-flex');
+				replaceCSSClasses(stepNumberElement, 'd-flex', 'd-none');
 				replaceCSSClasses(btnMarkAsCompleteSpinnerElement, 'd-block', 'd-none');
-				//showToastSuccess('Marked as Complete successfully!');
 			}
 
 			function error() {
@@ -152,23 +147,18 @@
 			let btnMarkAsCompleteElement = btnMarkAsCompleteElements[id - 1];
 			let btnMarkAsIncompleteSpinnerElement = btnMarkAsIncompleteSpinnerElements[id - 1];
 			let stepCheckElement = stepCheckElements[id - 1];
-			let stepNumberElement = stepNumberElements[id -1];
+			let stepNumberElement = stepNumberElements[id - 1];
 
 			replaceCSSClasses(btnMarkAsIncompleteElement, 'pr-4');
 			replaceCSSClasses(btnMarkAsIncompleteSpinnerElement, 'd-none', 'd-block');
 
 			function success() {
-
 				replaceCSSClasses(btnMarkAsIncompleteElement, null, 'pr-4');
-
 				replaceCSSClasses(btnMarkAsIncompleteElement, 'd-flex', 'd-none');
-				replaceCSSClasses(btnMarkAsCompleteElement,'d-none','d-flex')
-
-				replaceCSSClasses(stepCheckElement,'d-flex','d-none');
-				replaceCSSClasses(stepNumberElement,'d-none','d-flex');
-
+				replaceCSSClasses(btnMarkAsCompleteElement, 'd-none', 'd-flex')
+				replaceCSSClasses(stepCheckElement, 'd-flex', 'd-none');
+				replaceCSSClasses(stepNumberElement, 'd-none', 'd-flex');
 				replaceCSSClasses(btnMarkAsIncompleteSpinnerElement, 'd-block', 'd-none');
-				//showToastSuccess('Marked as Incomplete successfully!');
 			}
 
 			function error() {
@@ -187,7 +177,7 @@
 
 		function loadData() {
 			$.ajax({
-				url: '/o/c/progresstrackers?p_auth='+Liferay.authToken,
+				url: '/o/c/m2h8progresstrackers?p_auth=' + Liferay.authToken,
 				method: 'GET',
 				success: success,
 				error: error,
@@ -215,12 +205,9 @@
 
 					if (steps[${ configuration.panelId } - 1].done) {
 						replaceCSSClasses(stepCheckElement, 'd-none', 'd-flex');
-
 						replaceCSSClasses(btnMarkAsIncompleteElement, 'd-none', 'd-flex')
-
 					} else {
 						replaceCSSClasses(stepNumberElement, 'd-none', 'd-flex');
-
 						replaceCSSClasses(btnMarkAsCompleteElement, 'd-none', 'd-flex');
 					}
 				}

@@ -28,9 +28,9 @@ public interface CETImplFactory<T extends CET> {
 	public T create(PortletRequest portletRequest) throws PortalException;
 
 	public T create(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL,
+			String baseURL, long buildTimestamp, long companyId,
+			String description, String externalReferenceCode, String name,
+			Properties properties, String sourceCodeURL,
 			UnicodeProperties toTypeSettingsUnicodeProperties)
 		throws PortalException;
 

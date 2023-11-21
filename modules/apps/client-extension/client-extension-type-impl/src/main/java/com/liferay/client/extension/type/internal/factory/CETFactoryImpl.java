@@ -112,9 +112,9 @@ public class CETFactoryImpl implements CETFactory {
 
 		try {
 			return cetImplFactory.create(
-				baseURL, companyId, cetConfiguration.description(),
-				externalReferenceCode, cetConfiguration.name(),
-				_loadProperties(cetConfiguration),
+				baseURL, cetConfiguration.buildTimestamp(), companyId,
+				cetConfiguration.description(), externalReferenceCode,
+				cetConfiguration.name(), _loadProperties(cetConfiguration),
 				cetConfiguration.sourceCodeURL(),
 				_toTypeSettingsUnicodeProperties(cetConfiguration));
 		}

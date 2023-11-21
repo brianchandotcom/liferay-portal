@@ -47,7 +47,8 @@ public class ViewClientExtensionEntryMVCRenderCommand
 			renderRequest.setAttribute(
 				ClientExtensionAdminWebKeys.
 					VIEW_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
-				new ViewClientExtensionEntryDisplayContext(cet, renderRequest));
+				new ViewClientExtensionEntryDisplayContext(
+					cet.getRawCET(), renderRequest));
 
 			return "/admin/view_client_extension_entry.jsp";
 		}

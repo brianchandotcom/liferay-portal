@@ -33,16 +33,18 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseCETImpl implements CET {
+public abstract class BaseCETImpl implements CET, Cloneable {
 
 	public BaseCETImpl(ClientExtensionEntry clientExtensionEntry) {
+		long modifiedTimestamp;
+
 		if (clientExtensionEntry != null) {
 			_companyId = clientExtensionEntry.getCompanyId();
-			_createDate = clientExtensionEntry.getCreateDate();
 			_description = clientExtensionEntry.getDescription();
 			_externalReferenceCode =
 				clientExtensionEntry.getExternalReferenceCode();
@@ -59,25 +61,32 @@ public abstract class BaseCETImpl implements CET {
 
 			_sourceCodeURL = clientExtensionEntry.getSourceCodeURL();
 			_status = clientExtensionEntry.getStatus();
-			_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+			_rawTypeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
 				true
 			).load(
 				clientExtensionEntry.getTypeSettings()
 			).build();
+
+			modifiedTimestamp = _modifiedDate.getTime();
 		}
 		else {
-			_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+			_rawTypeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
 				true
 			).build();
+
+			modifiedTimestamp = 0;
 		}
+
+		_typeSettingsUnicodeProperties = _replaceVariables(
+			modifiedTimestamp, _rawTypeSettingsUnicodeProperties);
 	}
 
 	public BaseCETImpl(
-		String baseURL, long companyId, String description,
+		String baseURL, long buildTimestamp, long companyId, String description,
 		String externalReferenceCode, String name, Properties properties,
 		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
-		this(baseURL, typeSettingsUnicodeProperties);
+		this(baseURL, buildTimestamp, typeSettingsUnicodeProperties);
 
 		_companyId = companyId;
 		_description = description;
@@ -90,11 +99,16 @@ public abstract class BaseCETImpl implements CET {
 	}
 
 	public BaseCETImpl(
-		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, long modifiedTimestamp,
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		_baseURL = baseURL;
-		_typeSettingsUnicodeProperties = _transform(
+
+		_rawTypeSettingsUnicodeProperties = _transform(
 			baseURL, typeSettingsUnicodeProperties);
+
+		_typeSettingsUnicodeProperties = _replaceVariables(
+			modifiedTimestamp, _rawTypeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -137,6 +151,21 @@ public abstract class BaseCETImpl implements CET {
 	@Override
 	public Properties getProperties() {
 		return (Properties)_properties.clone();
+	}
+
+	@Override
+	public CET getRawCET() {
+		try {
+			BaseCETImpl baseCETImpl = (BaseCETImpl)super.clone();
+
+			baseCETImpl._typeSettingsUnicodeProperties =
+				baseCETImpl._rawTypeSettingsUnicodeProperties;
+
+			return baseCETImpl;
+		}
+		catch (CloneNotSupportedException cloneNotSupportedException) {
+			throw new RuntimeException(cloneNotSupportedException);
+		}
 	}
 
 	@Override
@@ -194,6 +223,28 @@ public abstract class BaseCETImpl implements CET {
 
 	protected abstract boolean isURLCETPropertyName(String name);
 
+	private UnicodeProperties _replaceVariables(
+		long modifiedTimestamp, UnicodeProperties unicodeProperties) {
+
+		UnicodeProperties transformedUnicodeProperties = new UnicodeProperties(
+			true);
+
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
+			String name = entry.getKey();
+			String value = entry.getValue();
+
+			if (isURLCETPropertyName(name)) {
+				value = value.replaceAll(
+					Pattern.quote("${modifiedTimestamp}"),
+					String.valueOf(modifiedTimestamp));
+			}
+
+			transformedUnicodeProperties.put(name, value);
+		}
+
+		return transformedUnicodeProperties;
+	}
+
 	private String _transform(String baseURL, String value) {
 		if (value.contains(StringPool.NEW_LINE)) {
 			List<String> values = new ArrayList<>();
@@ -238,15 +289,15 @@ public abstract class BaseCETImpl implements CET {
 
 	private String _baseURL = StringPool.BLANK;
 	private long _companyId;
-	private Date _createDate;
 	private String _description = StringPool.BLANK;
 	private String _externalReferenceCode = StringPool.BLANK;
 	private Date _modifiedDate;
 	private String _name = StringPool.BLANK;
 	private Properties _properties;
+	private final UnicodeProperties _rawTypeSettingsUnicodeProperties;
 	private boolean _readOnly;
 	private String _sourceCodeURL = StringPool.BLANK;
 	private int _status = WorkflowConstants.STATUS_APPROVED;
-	private final UnicodeProperties _typeSettingsUnicodeProperties;
+	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

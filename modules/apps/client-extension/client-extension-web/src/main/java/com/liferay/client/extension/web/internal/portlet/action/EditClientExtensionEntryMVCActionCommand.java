@@ -92,7 +92,7 @@ public class EditClientExtensionEntryMVCActionCommand
 				ClientExtensionAdminWebKeys.
 					EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
 				new EditClientExtensionEntryDisplayContext(
-					cet, clientExtensionEntry, actionRequest));
+					cet.getRawCET(), clientExtensionEntry, actionRequest));
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/admin/edit_client_extension_entry.jsp");
@@ -109,6 +109,8 @@ public class EditClientExtensionEntryMVCActionCommand
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		CET cet = _cetFactory.create(actionRequest, type);
+
+		cet = cet.getRawCET();
 
 		_clientExtensionEntryService.addClientExtensionEntry(
 			StringPool.BLANK, description, nameMap,
@@ -145,6 +147,8 @@ public class EditClientExtensionEntryMVCActionCommand
 
 		CET cet = _cetFactory.create(
 			actionRequest, clientExtensionEntry.getType());
+
+		cet = cet.getRawCET();
 
 		_clientExtensionEntryService.updateClientExtensionEntry(
 			clientExtensionEntry.getClientExtensionEntryId(), description,

@@ -24,6 +24,9 @@ public interface CETConfiguration {
 	@Meta.AD(type = Meta.Type.String)
 	public String baseURL();
 
+	@Meta.AD(required = false, type = Meta.Type.Long)
+	public long buildTimestamp();
+
 	@Meta.AD(required = false, type = Meta.Type.String)
 	public String description();
 

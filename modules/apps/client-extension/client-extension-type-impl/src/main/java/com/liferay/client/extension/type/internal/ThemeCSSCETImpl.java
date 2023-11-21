@@ -29,7 +29,7 @@ public class ThemeCSSCETImpl extends BaseCETImpl implements ThemeCSSCET {
 
 	public ThemeCSSCETImpl(PortletRequest portletRequest) {
 		this(
-			StringPool.BLANK,
+			StringPool.BLANK, 0,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
@@ -40,19 +40,21 @@ public class ThemeCSSCETImpl extends BaseCETImpl implements ThemeCSSCET {
 	}
 
 	public ThemeCSSCETImpl(
-		String baseURL, long companyId, String description,
+		String baseURL, long buildTimestamp, long companyId, String description,
 		String externalReferenceCode, String name, Properties properties,
 		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		super(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, typeSettingsUnicodeProperties);
+			baseURL, buildTimestamp, companyId, description,
+			externalReferenceCode, name, properties, sourceCodeURL,
+			typeSettingsUnicodeProperties);
 	}
 
 	public ThemeCSSCETImpl(
-		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, long buildTimestamp,
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		super(baseURL, typeSettingsUnicodeProperties);
+		super(baseURL, buildTimestamp, typeSettingsUnicodeProperties);
 	}
 
 	@Override

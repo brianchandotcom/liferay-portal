@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,14 +71,12 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 				"javax.portlet.version", "3.0"
 			).build();
 
-		long lastModified = System.currentTimeMillis();
-
 		String cssURLs = cet.getCSSURLs();
 
 		if (Validator.isNotNull(cssURLs)) {
 			dictionary.put(
 				"com.liferay.portlet.header-portal-css",
-				_prepareURLs(lastModified, cssURLs.split(StringPool.NEW_LINE)));
+				_prepareURLs(cssURLs.split(StringPool.NEW_LINE)));
 		}
 
 		String urls = cet.getURLs();
@@ -94,7 +91,7 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 
 		dictionary.put(
 			"com.liferay.portlet.header-portal-javascript",
-			_prepareURLs(lastModified, urlsArray));
+			_prepareURLs(urlsArray));
 
 		return dictionary;
 	}
@@ -150,11 +147,8 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 		printWriter.flush();
 	}
 
-	private String[] _prepareURLs(long lastModified, String[] urls) {
+	private String[] _prepareURLs(String[] urls) {
 		for (int i = 0; i < urls.length; i++) {
-			urls[i] = HttpComponentsUtil.addParameter(
-				urls[i], "t", lastModified);
-
 			if (!urls[i].startsWith("module:")) {
 				urls[i] = "nocombo:" + urls[i];
 			}

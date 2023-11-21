@@ -61,7 +61,7 @@ public class EditClientExtensionEntryMVCRenderCommand
 				ClientExtensionAdminWebKeys.
 					EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
 				new EditClientExtensionEntryDisplayContext(
-					cet, clientExtensionEntry, renderRequest));
+					cet.getRawCET(), clientExtensionEntry, renderRequest));
 
 			return "/admin/edit_client_extension_entry.jsp";
 		}

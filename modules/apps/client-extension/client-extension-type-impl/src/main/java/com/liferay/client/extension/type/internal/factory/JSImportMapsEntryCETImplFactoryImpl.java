@@ -42,14 +42,16 @@ public class JSImportMapsEntryCETImplFactoryImpl
 
 	@Override
 	public JSImportMapsEntryCET create(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, UnicodeProperties unicodeProperties)
+			String baseURL, long buildTimestamp, long companyId,
+			String description, String externalReferenceCode, String name,
+			Properties properties, String sourceCodeURL,
+			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		return new JSImportMapsEntryCETImpl(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, unicodeProperties);
+			baseURL, buildTimestamp, companyId, description,
+			externalReferenceCode, name, properties, sourceCodeURL,
+			unicodeProperties);
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class JSImportMapsEntryCETImplFactoryImpl
 
 		JSImportMapsEntryCET jsImportMapsEntryCET =
 			new JSImportMapsEntryCETImpl(
-				StringPool.BLANK, newTypeSettingsUnicodeProperties);
+				StringPool.BLANK, 0, newTypeSettingsUnicodeProperties);
 
 		if (Validator.isNull(jsImportMapsEntryCET.getBareSpecifier())) {
 			throw new ClientExtensionEntryTypeSettingsException(

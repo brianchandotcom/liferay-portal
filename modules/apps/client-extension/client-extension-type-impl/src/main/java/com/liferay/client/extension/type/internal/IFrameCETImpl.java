@@ -29,7 +29,7 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 
 	public IFrameCETImpl(PortletRequest portletRequest) {
 		this(
-			StringPool.BLANK,
+			StringPool.BLANK, 0,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
@@ -47,19 +47,21 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 	}
 
 	public IFrameCETImpl(
-		String baseURL, long companyId, String description,
+		String baseURL, long buildTimestamp, long companyId, String description,
 		String externalReferenceCode, String name, Properties properties,
 		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		super(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, typeSettingsUnicodeProperties);
+			baseURL, buildTimestamp, companyId, description,
+			externalReferenceCode, name, properties, sourceCodeURL,
+			typeSettingsUnicodeProperties);
 	}
 
 	public IFrameCETImpl(
-		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, long buildTimestamp,
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		super(baseURL, typeSettingsUnicodeProperties);
+		super(baseURL, 0, typeSettingsUnicodeProperties);
 	}
 
 	@Override

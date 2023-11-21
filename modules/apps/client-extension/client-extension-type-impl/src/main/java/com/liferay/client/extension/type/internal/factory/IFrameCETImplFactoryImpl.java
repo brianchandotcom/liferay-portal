@@ -42,14 +42,16 @@ public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
 
 	@Override
 	public IFrameCET create(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, UnicodeProperties unicodeProperties)
+			String baseURL, long buildTimestamp, long companyId,
+			String description, String externalReferenceCode, String name,
+			Properties properties, String sourceCodeURL,
+			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		return new IFrameCETImpl(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, unicodeProperties);
+			baseURL, buildTimestamp, companyId, description,
+			externalReferenceCode, name, properties, sourceCodeURL,
+			unicodeProperties);
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
 		throws PortalException {
 
 		IFrameCET newIFrameCET = new IFrameCETImpl(
-			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, 0, newTypeSettingsUnicodeProperties);
 
 		String friendlyURLMapping = newIFrameCET.getFriendlyURLMapping();
 
@@ -81,7 +83,7 @@ public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
 
 		if (oldTypeSettingsUnicodeProperties != null) {
 			IFrameCET oldIFrameCET = new IFrameCETImpl(
-				StringPool.NEW_LINE, oldTypeSettingsUnicodeProperties);
+				StringPool.NEW_LINE, 0, oldTypeSettingsUnicodeProperties);
 
 			if (newIFrameCET.isInstanceable() !=
 					oldIFrameCET.isInstanceable()) {

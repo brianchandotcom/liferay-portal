@@ -41,14 +41,16 @@ public class GlobalCSSCETImplFactoryImpl
 
 	@Override
 	public GlobalCSSCET create(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, UnicodeProperties unicodeProperties)
+			String baseURL, long buildTimestamp, long companyId,
+			String description, String externalReferenceCode, String name,
+			Properties properties, String sourceCodeURL,
+			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		return new GlobalCSSCETImpl(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, unicodeProperties);
+			baseURL, buildTimestamp, companyId, description,
+			externalReferenceCode, name, properties, sourceCodeURL,
+			unicodeProperties);
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class GlobalCSSCETImplFactoryImpl
 		throws PortalException {
 
 		GlobalCSSCET newGlobalCSSCET = new GlobalCSSCETImpl(
-			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, 0, newTypeSettingsUnicodeProperties);
 
 		String url = newGlobalCSSCET.getURL();
 

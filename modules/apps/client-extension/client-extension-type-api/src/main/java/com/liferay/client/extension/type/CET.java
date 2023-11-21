@@ -39,6 +39,8 @@ public interface CET {
 
 	public Properties getProperties();
 
+	public CET getRawCET();
+
 	@CETProperty(
 		defaultValue = "https://www.liferay.com", name = "sourceCodeURL",
 		type = CETProperty.Type.String

@@ -41,14 +41,16 @@ public class FDSFilterCETImplFactoryImpl
 
 	@Override
 	public FDSFilterCET create(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, UnicodeProperties unicodeProperties)
+			String baseURL, long buildTimestamp, long companyId,
+			String description, String externalReferenceCode, String name,
+			Properties properties, String sourceCodeURL,
+			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		return new FDSFilterCETImpl(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, unicodeProperties);
+			baseURL, buildTimestamp, companyId, description,
+			externalReferenceCode, name, properties, sourceCodeURL,
+			unicodeProperties);
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class FDSFilterCETImplFactoryImpl
 		throws PortalException {
 
 		FDSFilterCET fdsFilterCET = new FDSFilterCETImpl(
-			StringPool.BLANK, newTypeSettingsUnicodeProperties);
+			StringPool.BLANK, 0, newTypeSettingsUnicodeProperties);
 
 		if (Validator.isNull(fdsFilterCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(

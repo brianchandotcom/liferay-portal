@@ -40,14 +40,16 @@ public class ThemeJSCETImplFactoryImpl implements CETImplFactory<ThemeJSCET> {
 
 	@Override
 	public ThemeJSCET create(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, UnicodeProperties unicodeProperties)
+			String baseURL, long buildTimestamp, long companyId,
+			String description, String externalReferenceCode, String name,
+			Properties properties, String sourceCodeURL,
+			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		return new ThemeJSCETImpl(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, unicodeProperties);
+			baseURL, buildTimestamp, companyId, description,
+			externalReferenceCode, name, properties, sourceCodeURL,
+			unicodeProperties);
 	}
 
 	@Override
@@ -57,7 +59,7 @@ public class ThemeJSCETImplFactoryImpl implements CETImplFactory<ThemeJSCET> {
 		throws PortalException {
 
 		ThemeJSCET newThemeJSCET = new ThemeJSCETImpl(
-			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, 0, newTypeSettingsUnicodeProperties);
 
 		String url = newThemeJSCET.getURL();
 

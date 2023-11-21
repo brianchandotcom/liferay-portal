@@ -41,14 +41,16 @@ public class FDSCellRendererCETImplFactoryImpl
 
 	@Override
 	public FDSCellRendererCET create(
-			String baseURL, long companyId, String description,
-			String externalReferenceCode, String name, Properties properties,
-			String sourceCodeURL, UnicodeProperties unicodeProperties)
+			String baseURL, long buildTimestamp, long companyId,
+			String description, String externalReferenceCode, String name,
+			Properties properties, String sourceCodeURL,
+			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		return new FDSCellRendererCETImpl(
-			baseURL, companyId, description, externalReferenceCode, name,
-			properties, sourceCodeURL, unicodeProperties);
+			baseURL, buildTimestamp, companyId, description,
+			externalReferenceCode, name, properties, sourceCodeURL,
+			unicodeProperties);
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class FDSCellRendererCETImplFactoryImpl
 		throws PortalException {
 
 		FDSCellRendererCET fdsCellRendererCET = new FDSCellRendererCETImpl(
-			StringPool.BLANK, newTypeSettingsUnicodeProperties);
+			StringPool.BLANK, 0, newTypeSettingsUnicodeProperties);
 
 		if (Validator.isNull(fdsCellRendererCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(

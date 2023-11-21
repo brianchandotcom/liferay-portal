@@ -86,16 +86,36 @@ public class KoroneikiRestController extends BaseRestController {
 						Pagination.of(1, 10)
 				).getItems()) {
 
-			String endDate = null;
-
 			ProductPurchaseView productPurchaseView =
 				_productPurchaseViewResource.
 					getAccountAccountKeyProductProductKeyProductPurchaseView(
 						order.getAccountExternalReferenceCode(),
 						orderItem.getSkuExternalReferenceCode());
 
-			ProductPurchase productPurchase =
-				productPurchaseView.getProductPurchases()[0];
+			ProductPurchase productPurchase = null;
+
+			for (ProductPurchase productPurchase1 :
+					productPurchaseView.getProductPurchases()) {
+
+				for (ExternalLink externalLink :
+						productPurchase1.getExternalLinks()) {
+
+					if (Objects.equals(
+							externalLink.getEntityId(),
+							String.valueOf(orderId))) {
+
+						productPurchase = productPurchase1;
+
+						break;
+					}
+				}
+			}
+
+			if (productPurchase == null) {
+				continue;
+			}
+
+			String endDate = null;
 
 			if (!productPurchase.getPerpetual()) {
 				endDate = ZonedDateTime.ofInstant(
@@ -128,7 +148,10 @@ public class KoroneikiRestController extends BaseRestController {
 			for (ProductConsumption productConsumption :
 					productPurchaseView.getProductConsumptions()) {
 
-				if (productConsumption.getEndDate(
+				if (Objects.equals(
+						productPurchase.getKey(),
+						productConsumption.getProductPurchaseKey()) &&
+					productConsumption.getEndDate(
 					).after(
 						new Date()
 					)) {

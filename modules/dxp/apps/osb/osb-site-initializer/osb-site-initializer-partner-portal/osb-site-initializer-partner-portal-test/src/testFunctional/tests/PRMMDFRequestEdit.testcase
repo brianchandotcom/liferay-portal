@@ -384,8 +384,6 @@ definition {
 				targetRolesOptions = "Administrator");
 
 			Button.click(button = "Save as Draft");
-
-			Button.click(button = "See MDF Home");
 		}
 
 		task ("And the PMU goes to edit the draft MDF") {
@@ -403,6 +401,8 @@ definition {
 				newActivity = "Activity Name Added",
 				tactic = "Other",
 				typeOfActivity = "Miscellaneous Marketing");
+
+			Button.click(button = "See MDF Home");
 		}
 
 		task ("Then the MDF information will be updated") {

@@ -15,13 +15,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCustomViewName(key_nameCustomView = null) {
-		AssertElementPresent(
-			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
-			value1 = ${key_nameCustomView});
-	}
-
-	@summary = "Default summary"
 	macro assertFilterSummaryLabel(key_filter = null) {
 		AssertElementPresent(
 			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL",
@@ -39,9 +32,7 @@ definition {
 	macro changeCustomView(key_itemName = null) {
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
-		Click(
-			key_optionName = ${key_itemName},
-			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+		MenuItem.click(menuItem = ${key_itemName});
 	}
 
 	@summary = "Default summary"
@@ -157,9 +148,7 @@ definition {
 
 	@summary = "Default summary"
 	macro selectView(key_itemName = null) {
-		Click(
-			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
-			value1 = ${key_itemName});
+		MenuItem.click(menuItem = ${key_itemName});
 	}
 
 	@summary = "Default summary"

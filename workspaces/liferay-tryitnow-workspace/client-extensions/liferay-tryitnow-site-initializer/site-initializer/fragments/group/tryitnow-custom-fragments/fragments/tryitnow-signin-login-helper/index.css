@@ -1,71 +1,70 @@
 .fragment_1101 .login-card {
-    border-radius: 10px;
-    border: 1px solid var(--neutral-02, #dcdfdf);
-    background: var(--neutral-00, #fff);
-    box-shadow: 0 10px 30px 0 rgba(4, 21, 21, 0.09);
-
+	background: var(--neutral-00, #fff);
+	border: 1px solid var(--neutral-02, #dcdfdf);
+	border-radius: 10px;
+	box-shadow: 0 10px 30px 0 rgba(4, 21, 21, 0.09);
 }
 
 .fragment_1101 .login-card .col {
-    padding: 16px;
+	padding: 16px;
 }
 
 .fragment_1101 .login-card img {
-    width: 72px;
-    height: 72px;
-    border-radius: 72px;
+	border-radius: 72px;
+	height: 72px;
+	width: 72px;
 }
 
 .fragment_1101 .border-right {
-    border-right: 1px solid #dcdfdf;
+	border-right: 1px solid #dcdfdf;
 }
 
 .fragment_1101 .flex-grow-2 {
-    flex-grow: 2;
+	flex-grow: 2;
 }
 
 .fragment_1101 td {
-    vertical-align: baseline;
-    padding-right: 16px;
-    border: 0;
+	border: 0;
+	padding-right: 16px;
+	vertical-align: baseline;
 }
 
 .fragment_1101 td.label {
-    color: var(--neutral-08, #3a4747);
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px;
+	color: var(--neutral-08, #3a4747);
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 20px;
 }
 
 .fragment_1101 td.value {
-	  cursor: pointer;
-    border-radius: 8px;
-    background: var(--neutral-01, #f8f8f8);
-    color: var(--neutral-07, #556161);
+	background: var(--neutral-01, #f8f8f8);
+	border-radius: 8px;
+	color: var(--neutral-07, #556161);
+	cursor: pointer;
 
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    padding: 4px 16px;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 20px;
+	padding: 4px 16px;
 }
 
 .fragment_1101 td.value img {
-    width: 25px;
-    height: 25px;
-    margin-left: 30px;
+	height: 25px;
+	margin-left: 30px;
+	width: 25px;
 }
 
 .fragment_1101 td.value:hover {
-    transform: scale(1.05);
+	transform: scale(1.05);
 }
 
 .fragment_1101 .spacer {
-    padding: 4px;
+	padding: 4px;
 }
 
 .fragment_1101 p {
-    padding: 0;
-    margin: 0;
+	margin: 0;
+	padding: 0;
 }

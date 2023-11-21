@@ -1,4 +1,4 @@
-<div class="[#if (configuration.tabDirection == 'nav-vertical')]align-items-md-start d-md-flex[/#if]">
+<div class="[#if (configuration.tabDirection === 'nav-vertical')]align-items-md-start d-md-flex[/#if]">
 	<nav class="navbar navbar-collapse-absolute navbar-expand-md p-0">
 		<div class="d-md-none nav nav-${configuration.tabStyle} ${configuration.tabActiveBarPosition} ${configuration.tabDirection}">
 			<button aria-controls="navigationBarCollapse-${fragmentEntryLinkNamespace}" aria-expanded="false" aria-label="Tabs Toggle Navigation" class="active collapsed nav-link navbar-toggler navbar-toggler-link" data-toggle="collapse">
@@ -13,7 +13,7 @@
 				[#list 0..configuration.numberOfTabs-1 as i]
 					<li class="nav-item">
 						<button aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}" aria-selected="false" class="active nav-link navbar-text-truncate w-100" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab${i+1}-${fragmentEntryLinkNamespace}" role="tab">
-							[#if configuration.iconAlignment == 'left']
+							[#if configuration.iconAlignment === 'left']
 								[@clay["icon"] symbol="${configuration.iconName}" /]
 							[/#if]
 
@@ -21,7 +21,7 @@
 								Tab ${i+1}
 							</span>
 
-							[#if configuration.iconAlignment == 'right']
+							[#if configuration.iconAlignment === 'right']
 								[@clay["icon"] symbol="${configuration.iconName}" /]
 							[/#if]
 						</button>

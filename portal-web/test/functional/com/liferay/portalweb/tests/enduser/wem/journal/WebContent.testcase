@@ -1035,6 +1035,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196842. When searched and filtered content exists, the order must be applied to the displayed content."
+	@priority = 4
+	test OrderByTitleInSearchResults {
+		task ("Given two web contents with different names") {
+			for (var i : list "A,B") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content",
+					groupName = "Test Site Name",
+					title = "${i} Web Content Title");
+			}
+		}
+
+		task ("When filtering and sorting on the web content search page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Web Content");
+
+			ManagementBar.setFilterAndOrder(orderBy = "Title");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "A Web Content Title");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "B Web Content Title");
+
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		}
+
+		task ("Then it is possible to verify that the filter and sorting are still present") {
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "B Web Content Title");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "A Web Content Title");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "2 Results for \"web content\"");
+
+			Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+			AssertVisible(
+				key_menuItem = "Title",
+				locator1 = "WC#DROPDOWN_MENU_ITEM_ACTIVE");
+		}
+	}
+
 	@description = "This is a test for LPS-86845. A user can preview a draft or pending status Web Content article through the 'View Usages' screen."
 	@priority = 5
 	test PreviewDraftWebContentInWCD {

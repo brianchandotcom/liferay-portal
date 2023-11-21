@@ -15,6 +15,9 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -320,6 +324,35 @@ public class AssetTagLocalServiceTest {
 		}
 	}
 
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testGetTagsWithCaseInsensitive() throws Exception {
+		_assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag1",
+			_serviceContext);
+		_assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "Tag1",
+			_serviceContext);
+		_assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
+			_serviceContext);
+
+		String[] tagNames = {"tag1", "Tag1"};
+
+		Arrays.sort(tagNames);
+
+		_serviceContext.setAssetTagNames(tagNames);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
+
+		_getTags("tag1", tagNames);
+		_getTags("TAG1", tagNames);
+		_getTags("TAG1", Arrays.copyOfRange(tagNames, 0, 1), 0, 1);
+		_getTags("Tag1", Arrays.copyOfRange(tagNames, 0, 1), 0, 1);
+	}
+
 	@Test
 	public void testIncrementAssetCountWhenUpdatingAssetEntry()
 		throws PortalException {
@@ -393,6 +426,28 @@ public class AssetTagLocalServiceTest {
 		Assert.assertEquals(tagName, actualAssetTag.getName());
 	}
 
+	private void _getTags(String name, String[] expectedTagNames) {
+		_getTags(name, expectedTagNames, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	private void _getTags(
+		String name, String[] expectedTagNames, int start, int end) {
+
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+			_group.getGroupId(),
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
+			name, start, end);
+
+		Assert.assertEquals(
+			assetTags.toString(), expectedTagNames.length, assetTags.size());
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					assetTags, AssetTag::getName, String.class),
+				expectedTagNames));
+	}
+
 	private void _testAddMultipleTags(List<String> tagNames)
 		throws PortalException {
 
@@ -441,6 +496,9 @@ public class AssetTagLocalServiceTest {
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

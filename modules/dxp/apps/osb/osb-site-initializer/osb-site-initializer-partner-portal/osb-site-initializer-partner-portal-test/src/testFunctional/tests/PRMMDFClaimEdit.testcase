@@ -66,7 +66,7 @@ definition {
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 		}
 	}
 
@@ -90,7 +90,7 @@ definition {
 		task ("Given that the PMU creates a full claim with two activities") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
 				activityIndex = "0,1",
@@ -143,7 +143,7 @@ definition {
 		task ("Given that the PMU creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
 				allContents = "Document_2.jpg",
@@ -209,7 +209,7 @@ definition {
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
@@ -266,7 +266,7 @@ definition {
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
@@ -323,7 +323,7 @@ definition {
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
@@ -380,7 +380,7 @@ definition {
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
@@ -437,7 +437,7 @@ definition {
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",

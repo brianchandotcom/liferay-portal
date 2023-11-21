@@ -9,13 +9,15 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
+import {STATUS_TYPES} from '../utils/constants.es';
+
 class PageToolbar extends Component {
 	static props = {
 		onCancel: PropTypes.string.isRequired,
 		onChangeActive: PropTypes.func,
 		onPublish: PropTypes.func.isRequired,
 		onSaveAsDraft: PropTypes.func,
-		resultRankingStatus: PropTypes.string.isRequired,
+		status: PropTypes.string.isRequired,
 		submitDisabled: PropTypes.bool,
 	};
 
@@ -29,7 +31,7 @@ class PageToolbar extends Component {
 			onChangeActive,
 			onPublish,
 			onSaveAsDraft,
-			resultRankingStatus,
+			status,
 			submitDisabled,
 		} = this.props;
 
@@ -38,7 +40,7 @@ class PageToolbar extends Component {
 				aria-label={Liferay.Language.get('save')}
 				className="page-toolbar-root"
 			>
-				{resultRankingStatus !== 'not-applicable' && (
+				{status !== STATUS_TYPES.NOT_APPLICABLE && (
 					<ManagementToolbar.ItemList>
 						<ManagementToolbar.Item>
 							<label
@@ -46,7 +48,7 @@ class PageToolbar extends Component {
 								htmlFor="active-switch-input"
 							>
 								<input
-									checked={resultRankingStatus === 'active'}
+									checked={status === STATUS_TYPES.ACTIVE}
 									className="toggle-switch-check"
 									id="active-switch-input"
 									onChange={onChangeActive}
@@ -58,7 +60,7 @@ class PageToolbar extends Component {
 								</span>
 
 								<span className="toggle-switch-text-right">
-									{resultRankingStatus === 'active'
+									{status === STATUS_TYPES.ACTIVE
 										? Liferay.Language.get('active')
 										: Liferay.Language.get('inactive')}
 								</span>
@@ -80,7 +82,7 @@ class PageToolbar extends Component {
 						</ClayLink>
 					</ManagementToolbar.Item>
 
-					{onSaveAsDraft && resultRankingStatus !== 'not-applicable' && (
+					{onSaveAsDraft && status !== STATUS_TYPES.NOT_APPLICABLE && (
 						<ManagementToolbar.Item>
 							<ClayButton
 								displayType="secondary"
@@ -92,7 +94,7 @@ class PageToolbar extends Component {
 						</ManagementToolbar.Item>
 					)}
 
-					{resultRankingStatus === 'not-applicable' ? (
+					{status === STATUS_TYPES.NOT_APPLICABLE ? (
 						<ManagementToolbar.Item>
 							<ClayButton
 								className="link-outline-secondary"

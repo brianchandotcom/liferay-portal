@@ -8,6 +8,7 @@ import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {STATUS_TYPES} from '../../utils/constants.es';
 import ErrorBoundary from '../shared/ErrorBoundary.es';
 import AddResultModal from './AddResultModal.es';
 
@@ -36,7 +37,7 @@ function AddResult({
 		<>
 			<ClayButton
 				aria-label={Liferay.Language.get('add-result')}
-				disabled={resultRankingStatus === 'not-applicable'}
+				disabled={resultRankingStatus === STATUS_TYPES.NOT_APPLICABLE}
 				key="ADD_RESULT_BUTTON"
 				onClick={_handleAddResultButton}
 			>

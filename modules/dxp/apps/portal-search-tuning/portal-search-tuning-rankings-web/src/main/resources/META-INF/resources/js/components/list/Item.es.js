@@ -16,7 +16,7 @@ import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 import {findDOMNode} from 'react-dom';
 
-import {KEY_CODES} from '../../utils/constants.es';
+import {KEY_CODES, STATUS_TYPES} from '../../utils/constants.es';
 import DRAG_TYPES from '../../utils/drag-types.es';
 import {sub} from '../../utils/language.es';
 import {isNil} from '../../utils/util.es';
@@ -456,7 +456,9 @@ class Item extends PureComponent {
 					<ClayCheckbox
 						aria-label={Liferay.Language.get('select')}
 						checked={selected}
-						disabled={resultRankingStatus === 'not-applicable'}
+						disabled={
+							resultRankingStatus === STATUS_TYPES.NOT_APPLICABLE
+						}
 						onChange={this._handleSelect}
 					/>
 				</ClayLayout.ContentCol>
@@ -518,7 +520,7 @@ class Item extends PureComponent {
 					</ClayLayout.ContentSection>
 				</ClayLayout.ContentCol>
 
-				{resultRankingStatus !== 'not-applicable' && (
+				{resultRankingStatus !== STATUS_TYPES.NOT_APPLICABLE && (
 					<ClayLayout.ContentCol>
 						{pinned && <ResultPinIconDisplay />}
 

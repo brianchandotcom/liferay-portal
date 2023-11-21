@@ -10,7 +10,10 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
-import {PORTAL_TOOLTIP_TRIGGER_CLASS} from '../../utils/constants.es';
+import {
+	PORTAL_TOOLTIP_TRIGGER_CLASS,
+	STATUS_TYPES,
+} from '../../utils/constants.es';
 
 /**
  * Filters out empty items and duplicate items. Compares both label and value
@@ -102,7 +105,10 @@ class Alias extends Component {
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
-							disabled={resultRankingStatus === 'not-applicable'}
+							disabled={
+								resultRankingStatus ===
+								STATUS_TYPES.NOT_APPLICABLE
+							}
 							id="aliases-input"
 							items={transformListOfStringsToObjects(keywords)}
 							onChange={this._handleInputChange}
@@ -110,7 +116,8 @@ class Alias extends Component {
 							value={inputValue}
 						/>
 
-						{resultRankingStatus !== 'not-applicable' && (
+						{resultRankingStatus !==
+							STATUS_TYPES.NOT_APPLICABLE && (
 							<ClayForm.FeedbackGroup>
 								<ClayForm.Text>
 									{Liferay.Language.get(

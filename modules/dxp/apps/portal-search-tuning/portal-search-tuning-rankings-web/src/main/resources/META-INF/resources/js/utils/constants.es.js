@@ -25,6 +25,15 @@ export const DELTAS = [
 ];
 
 /**
+ * List of status types for result rankings.
+ */
+export const STATUS_TYPES = {
+	ACTIVE: 'active',
+	INACTIVE: 'inactive',
+	NOT_APPLICABLE: 'not-applicable',
+};
+
+/**
  * Delta that will be initially selected.
  */
 export const DEFAULT_DELTA = DELTAS[2]; // 20

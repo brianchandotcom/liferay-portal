@@ -11,6 +11,7 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
+import {STATUS_TYPES} from '../../utils/constants.es';
 import {getPluralMessage} from '../../utils/language.es';
 import AddResult from '../add_result/AddResult.es';
 import ItemDropdown from './ItemDropdown.es';
@@ -140,7 +141,8 @@ class SearchBar extends Component {
 									checked={this._hasSelectedIds()}
 									disabled={
 										!resultIds.length ||
-										resultRankingStatus === 'not-applicable'
+										resultRankingStatus ===
+											STATUS_TYPES.NOT_APPLICABLE
 									}
 									indeterminate={
 										!!selectedIds.length &&
@@ -270,7 +272,7 @@ class SearchBar extends Component {
 								<ManagementToolbar.ItemList expand>
 									{!!resultIds.length &&
 										resultRankingStatus !==
-											'not-applicable' && (
+											STATUS_TYPES.NOT_APPLICABLE && (
 											<ManagementToolbar.Item>
 												<span className="component-text navbar-text">
 													{Liferay.Language.get(

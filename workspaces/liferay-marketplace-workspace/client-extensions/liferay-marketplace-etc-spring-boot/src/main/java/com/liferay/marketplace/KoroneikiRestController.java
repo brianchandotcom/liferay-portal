@@ -210,7 +210,10 @@ public class KoroneikiRestController extends BaseRestController {
 				_COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Skipping Order " + commerceOrderJSONObject);
+				_log.info(
+					"Skipping postProductPurchase for order " +
+						commerceOrderJSONObject.getLong("id") +
+							" because payment status is not completed");
 			}
 
 			return;
@@ -228,6 +231,13 @@ public class KoroneikiRestController extends BaseRestController {
 			!Objects.equals(
 				order.getOrderTypeExternalReferenceCode(),
 				_ALLOWED_ORDER_TYPE)) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skipping postProductPurchase for order " +
+						commerceOrderJSONObject.getLong("id") +
+							" because order type is not supported");
+			}
 
 			return;
 		}

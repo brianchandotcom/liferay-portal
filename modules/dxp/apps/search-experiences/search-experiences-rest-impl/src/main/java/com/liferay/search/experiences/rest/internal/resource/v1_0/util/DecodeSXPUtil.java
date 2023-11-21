@@ -1,0 +1,43 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.search.experiences.rest.internal.resource.v1_0.util;
+
+import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+
+import java.net.URLDecoder;
+
+import javax.validation.Valid;
+
+/**
+ * @author Gustavo Lima
+ */
+public class DecodeSXPUtil {
+
+	public static void decodeSXPBlueprint(SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		@Valid
+		ElementInstance[] elementInstances = sxpBlueprint.getElementInstances();
+
+		for (ElementInstance elementInstance : elementInstances) {
+			decodeSXPElement(elementInstance.getSxpElement());
+		}
+	}
+
+	public static void decodeSXPElement(SXPElement sxpElement)
+		throws Exception {
+
+		sxpElement.setElementDefinition(
+			ElementDefinition.toDTO(
+				URLDecoder.decode(
+					String.valueOf(sxpElement.getElementDefinition()),
+					"UTF-8")));
+	}
+
+}

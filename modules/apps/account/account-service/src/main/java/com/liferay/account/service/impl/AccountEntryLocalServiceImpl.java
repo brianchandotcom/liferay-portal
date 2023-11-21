@@ -373,6 +373,12 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Override
+	public AccountEntry fetchSupplierAccountEntry(long userId) {
+		return accountEntryPersistence.fetchByU_T_First(
+			userId, AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER, null);
+	}
+
+	@Override
 	public AccountEntry fetchUserAccountEntry(
 		long userId, long accountEntryId) {
 

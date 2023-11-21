@@ -301,32 +301,40 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 					_accountEntryLocalService.fetchPersonAccountEntry(userId);
 
 				if (accountEntry == null) {
-					User user = _userLocalService.getUser(userId);
+					accountEntry =
+						_accountEntryLocalService.fetchSupplierAccountEntry(
+							userId);
 
-					if (user.isGuestUser()) {
-						accountEntry =
-							_accountEntryLocalService.getGuestAccountEntry(
-								commerceChannel.getCompanyId());
-					}
-					else {
-						ServiceContext serviceContext = new ServiceContext();
+					if (accountEntry == null) {
+						User user = _userLocalService.getUser(userId);
 
-						serviceContext.setCompanyId(user.getCompanyId());
-						serviceContext.setUserId(userId);
+						if (user.isGuestUser()) {
+							accountEntry =
+								_accountEntryLocalService.getGuestAccountEntry(
+									commerceChannel.getCompanyId());
+						}
+						else {
+							ServiceContext serviceContext =
+								new ServiceContext();
 
-						accountEntry =
-							_accountEntryLocalService.addAccountEntry(
-								userId,
-								AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-								user.getFullName(), null, null,
-								user.getEmailAddress(), null, StringPool.BLANK,
-								AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
-								WorkflowConstants.STATUS_APPROVED,
+							serviceContext.setCompanyId(user.getCompanyId());
+							serviceContext.setUserId(userId);
+
+							accountEntry =
+								_accountEntryLocalService.addAccountEntry(
+									userId,
+									AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+									user.getFullName(), null, null,
+									user.getEmailAddress(), null,
+									StringPool.BLANK,
+									AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
+									WorkflowConstants.STATUS_APPROVED,
+									serviceContext);
+
+							addAccountEntryUserRel(
+								accountEntry.getAccountEntryId(), userId,
 								serviceContext);
-
-						addAccountEntryUserRel(
-							accountEntry.getAccountEntryId(), userId,
-							serviceContext);
+						}
 					}
 				}
 			}

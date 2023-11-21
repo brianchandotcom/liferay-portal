@@ -29,7 +29,8 @@ public class AccountConstants {
 	public static final String ACCOUNT_ENTRY_TYPE_SUPPLIER = "supplier";
 
 	public static final String[] ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES = {
-		ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_PERSON
+		ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_PERSON,
+		ACCOUNT_ENTRY_TYPE_SUPPLIER
 	};
 
 	public static final String ACCOUNT_GROUP_NAME_GUEST = "Guest";

@@ -15,7 +15,10 @@ public class AccountEntryAllowedTypesUtil {
 
 	public static String[] getAllowedTypes(int commerceSiteType) {
 		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) {
-			return new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS};
+			return new String[] {
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER
+			};
 		}
 
 		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) {
@@ -25,7 +28,8 @@ public class AccountEntryAllowedTypesUtil {
 		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2X) {
 			return new String[] {
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER
 			};
 		}
 

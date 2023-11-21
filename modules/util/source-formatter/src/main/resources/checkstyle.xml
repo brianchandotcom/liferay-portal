@@ -930,6 +930,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.URLInputStreamCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks usages of `URL.openStream()`." />
+			<property name="enabled" value="false" />
 			<message key="replace.usage" value="Use method ''{0}'' instead of ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ValidatorIsNullCheck">

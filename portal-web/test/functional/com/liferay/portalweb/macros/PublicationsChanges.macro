@@ -230,6 +230,8 @@ definition {
 		var key_changeTitle = ${changeTitle};
 		var key_changeType = ${changeType};
 
+		WaitForElementPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_CATEGORY");
+
 		while (IsElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_CATEGORY")) {
 			Click(locator1 = "//*[contains(@class, 'page-link')]//*[contains(@class,'right')]");
 		}

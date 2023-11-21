@@ -1534,6 +1534,26 @@ definition {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
+	@summary = "Deleting one precise entry for the address eligibility section"
+	macro removeAddressEligibility(entryName = null, channelEntries = null) {
+		CommerceNavigator.gotoEntry(entryName = ${addressName});
+
+		Account.gotoAssigneeTab(assigneeTab = "Eligibility");
+
+		for (var channelEntry : list ${channelEntries}) {
+			Click(
+				key_channelEntry = ${channelEntry},
+				locator1 = "CommerceEntry#CHANNEL_ADDRESS_TRASH_ICON");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+			AssertElementNotPresent(
+				key_entryName = ${channelEntry},
+				key_table = "Channels",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+		}
+	}
+
 	@summary = "Default summary"
 	macro removeEntryEligibility(entryName = null, channelEligibility = null) {
 		CommerceNavigator.gotoEntry(entryName = ${entryName});

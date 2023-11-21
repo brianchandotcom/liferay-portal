@@ -3,10 +3,10 @@
 <script>
 	let href = window.location.href;
 
-	if (href.endsWith("/")){
+	if (href.endsWith("/")) {
 		href = href.substring(0, href.length - 1);
 		window.location.assign(href);
-		}
+	}
 </script>
 
 <#assign

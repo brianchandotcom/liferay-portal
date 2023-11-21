@@ -94,17 +94,17 @@ public class KoroneikiRestController extends BaseRestController {
 
 			ProductPurchase productPurchase = null;
 
-			for (ProductPurchase productPurchase1 :
+			for (ProductPurchase currentProductPurchase :
 					productPurchaseView.getProductPurchases()) {
 
 				for (ExternalLink externalLink :
-						productPurchase1.getExternalLinks()) {
+						currentProductPurchase.getExternalLinks()) {
 
 					if (Objects.equals(
 							externalLink.getEntityId(),
 							String.valueOf(orderId))) {
 
-						productPurchase = productPurchase1;
+						productPurchase = currentProductPurchase;
 
 						break;
 					}

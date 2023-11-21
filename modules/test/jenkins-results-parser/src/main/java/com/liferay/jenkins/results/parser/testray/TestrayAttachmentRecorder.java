@@ -66,6 +66,7 @@ public class TestrayAttachmentRecorder {
 				_recordGradlePluginsFiles();
 				_recordLiferayLogs();
 				_recordLiferayOSGiLogs();
+				_recordPlaywrightReportFile();
 				_recordPoshiReportFiles();
 				_recordWarnings();
 			}
@@ -673,6 +674,33 @@ public class TestrayAttachmentRecorder {
 					liferayOSGiLogFile, liferayOSGiLogFileContent);
 			}
 			catch (IOException ioException) {
+			}
+		}
+	}
+
+	private void _recordPlaywrightReportFile() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		if (portalGitWorkingDirectory != null) {
+			File playwrightReportFile = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"modules/test/playwright/playwright-report/index.html");
+
+			if (playwrightReportFile.exists()) {
+				File sourceReportDir = playwrightReportFile.getParentFile();
+
+				File recordedFilesBuildDir = _getRecordedFilesBuildDir();
+
+				try {
+					JenkinsResultsParserUtil.copy(
+						sourceReportDir,
+						new File(
+							recordedFilesBuildDir, sourceReportDir.getName()));
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
 			}
 		}
 	}

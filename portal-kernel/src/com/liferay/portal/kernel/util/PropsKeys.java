@@ -1103,10 +1103,6 @@ public interface PropsKeys {
 		"index.on.startup.delay";
 
 	public static final String
-		INDEX_PERMISSION_FILTER_SEARCH_AMPLIFICATION_FACTOR =
-			"index.permission.filter.search.amplification.factor";
-
-	public static final String
 		INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED =
 			"index.search.collated.spell.check.result.enabled";
 

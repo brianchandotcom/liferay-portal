@@ -129,12 +129,12 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 						{
 							id,
 							orderTypeExternalReferenceCode,
-							provisioningLabel,
 							virtualURL,
+							orderStatusInfo,
 						}
 					) => {
 						const orderStatusIsNotCompleted =
-							provisioningLabel !== OrderStatuses.COMPLETED;
+							orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
 						return (
 							<div onClick={(event) => event.stopPropagation()}>
@@ -148,41 +148,44 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 								>
 									<DropDown.ItemList>
 										{orderTypeExternalReferenceCode ===
-											OrderType.CLOUD && (
-											<ClayTooltipProvider>
+											OrderType.DXP && (
+											<>
+												<ClayTooltipProvider>
+													<DropDown.Item
+														data-tooltip-align="left"
+														disabled={
+															orderStatusIsNotCompleted
+														}
+														onClick={() =>
+															navigate(
+																`order/${id}/create-license`
+															)
+														}
+														title={
+															orderStatusIsNotCompleted
+																? i18n.translate(
+																		'the-order-must-be-completed-before-licensing-this-app.'
+																  )
+																: undefined
+														}
+													>
+														{i18n.translate(
+															'create-license-key'
+														)}
+													</DropDown.Item>
+												</ClayTooltipProvider>
+
 												<DropDown.Item
-													data-tooltip-align="left"
-													disabled={
-														orderStatusIsNotCompleted
-													}
-													onClick={() =>
+													onClick={() => {
 														navigate(
-															`order/${id}/create-license`
-														)
-													}
-													title={
-														orderStatusIsNotCompleted
-															? i18n.translate(
-																	'the-order-must-be-completed-before-licensing-this-app.'
-															  )
-															: undefined
-													}
+															`order/${id}/licenses`
+														);
+													}}
 												>
-													{i18n.translate(
-														'create-license-key'
-													)}
+													Manage License Key(s)
 												</DropDown.Item>
-											</ClayTooltipProvider>
+											</>
 										)}
-										<DropDown.Item
-											onClick={() => {
-												navigate(
-													`order/${id}/licenses`
-												);
-											}}
-										>
-											Manage License Key(s)
-										</DropDown.Item>
 
 										{orderTypeExternalReferenceCode ===
 											OrderType.CLOUD && (
@@ -208,7 +211,8 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 														orderStatusIsNotCompleted
 													}
 													onClick={() => {
-														window.location.href = virtualURL;
+														window.location.href =
+															virtualURL;
 													}}
 													title={
 														orderStatusIsNotCompleted

@@ -172,6 +172,27 @@ public class ListTypeDefinition implements Cloneable, Serializable {
 
 	protected String name;
 
+	public Map<String, String> getNameMap() {
+		return nameMap;
+	}
+
+	public void setNameMap(Map<String, String> nameMap) {
+		this.nameMap = nameMap;
+	}
+
+	public void setNameMap(
+		UnsafeSupplier<Map<String, String>, Exception> nameMapUnsafeSupplier) {
+
+		try {
+			nameMap = nameMapUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> nameMap;
+
 	public Map<String, String> getName_i18n() {
 		return name_i18n;
 	}

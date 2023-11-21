@@ -1383,6 +1383,14 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("nameMap", additionalAssertFieldName)) {
+				if (listTypeEntry.getNameMap() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
 				if (listTypeEntry.getName_i18n() == null) {
 					valid = false;
@@ -1587,6 +1595,17 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						listTypeEntry1.getName(), listTypeEntry2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("nameMap", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)listTypeEntry1.getNameMap(),
+						(Map)listTypeEntry2.getNameMap())) {
 
 					return false;
 				}
@@ -1930,6 +1949,11 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("nameMap")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("name_i18n")) {

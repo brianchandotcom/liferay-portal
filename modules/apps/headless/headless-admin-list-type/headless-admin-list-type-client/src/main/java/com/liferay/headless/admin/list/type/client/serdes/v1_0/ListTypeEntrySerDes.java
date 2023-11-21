@@ -145,6 +145,16 @@ public class ListTypeEntrySerDes {
 			sb.append("\"");
 		}
 
+		if (listTypeEntry.getNameMap() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nameMap\": ");
+
+			sb.append(_toJSON(listTypeEntry.getNameMap()));
+		}
+
 		if (listTypeEntry.getName_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -247,6 +257,13 @@ public class ListTypeEntrySerDes {
 			map.put("name", String.valueOf(listTypeEntry.getName()));
 		}
 
+		if (listTypeEntry.getNameMap() == null) {
+			map.put("nameMap", null);
+		}
+		else {
+			map.put("nameMap", String.valueOf(listTypeEntry.getNameMap()));
+		}
+
 		if (listTypeEntry.getName_i18n() == null) {
 			map.put("name_i18n", null);
 		}
@@ -323,6 +340,13 @@ public class ListTypeEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					listTypeEntry.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "nameMap")) {
+				if (jsonParserFieldValue != null) {
+					listTypeEntry.setNameMap(
+						(Map)ListTypeEntrySerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {

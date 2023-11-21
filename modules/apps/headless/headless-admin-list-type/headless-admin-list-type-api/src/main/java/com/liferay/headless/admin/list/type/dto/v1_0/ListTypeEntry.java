@@ -247,6 +247,35 @@ public class ListTypeEntry implements Serializable {
 
 	@Schema
 	@Valid
+	public Map<String, String> getNameMap() {
+		return nameMap;
+	}
+
+	public void setNameMap(Map<String, String> nameMap) {
+		this.nameMap = nameMap;
+	}
+
+	@JsonIgnore
+	public void setNameMap(
+		UnsafeSupplier<Map<String, String>, Exception> nameMapUnsafeSupplier) {
+
+		try {
+			nameMap = nameMapUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> nameMap;
+
+	@Schema
+	@Valid
 	public Map<String, String> getName_i18n() {
 		return name_i18n;
 	}
@@ -419,6 +448,16 @@ public class ListTypeEntry implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (nameMap != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nameMap\": ");
+
+			sb.append(_toJSON(nameMap));
 		}
 
 		if (name_i18n != null) {

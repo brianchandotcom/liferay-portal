@@ -194,6 +194,95 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
+	public void testGetAccountAddressChannelChannel() throws Exception {
+		Channel postChannel = testGetAccountAddressChannelChannel_addChannel();
+
+		Channel getChannel = channelResource.getAccountAddressChannelChannel(
+			testGetAccountAddressChannelChannel_getAccountAddressChannelId());
+
+		assertEquals(postChannel, getChannel);
+		assertValid(getChannel);
+	}
+
+	protected Long
+			testGetAccountAddressChannelChannel_getAccountAddressChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Channel testGetAccountAddressChannelChannel_addChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountAddressChannelChannel() throws Exception {
+		Channel channel =
+			testGraphQLGetAccountAddressChannelChannel_addChannel();
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountAddressChannelChannel",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"accountAddressChannelId",
+											testGraphQLGetAccountAddressChannelChannel_getAccountAddressChannelId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountAddressChannelChannel"))));
+	}
+
+	protected Long
+			testGraphQLGetAccountAddressChannelChannel_getAccountAddressChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountAddressChannelChannelNotFound()
+		throws Exception {
+
+		Long irrelevantAccountAddressChannelId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountAddressChannelChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountAddressChannelId",
+									irrelevantAccountAddressChannelId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Channel testGraphQLGetAccountAddressChannelChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
+	}
+
+	@Test
 	public void testGetChannelsPage() throws Exception {
 		Page<Channel> page = channelResource.getChannelsPage(
 			null, null, Pagination.of(1, 10), null);

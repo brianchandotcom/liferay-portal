@@ -5,11 +5,13 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.AccountAddressChannel;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelOrderType;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelTerm;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionOrderType;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionTerm;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.AccountAddressChannelResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
@@ -47,6 +49,14 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Mutation {
+
+	public static void setAccountAddressChannelResourceComponentServiceObjects(
+		ComponentServiceObjects<AccountAddressChannelResource>
+			accountAddressChannelResourceComponentServiceObjects) {
+
+		_accountAddressChannelResourceComponentServiceObjects =
+			accountAddressChannelResourceComponentServiceObjects;
+	}
 
 	public static void setChannelResourceComponentServiceObjects(
 		ComponentServiceObjects<ChannelResource>
@@ -106,6 +116,70 @@ public class Mutation {
 
 		_taxCategoryResourceComponentServiceObjects =
 			taxCategoryResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public boolean deleteAccountAddressChannel(
+			@GraphQLName("accountAddressChannelId") Long
+				accountAddressChannelId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountAddressChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountAddressChannelResource ->
+				accountAddressChannelResource.deleteAccountAddressChannel(
+					accountAddressChannelId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteAccountAddressChannelBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountAddressChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountAddressChannelResource ->
+				accountAddressChannelResource.deleteAccountAddressChannelBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public AccountAddressChannel
+			createAccountAddressByExternalReferenceCodeAccountAddressChannel(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("accountAddressChannel") AccountAddressChannel
+					accountAddressChannel)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountAddressChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountAddressChannelResource ->
+				accountAddressChannelResource.
+					postAccountAddressByExternalReferenceCodeAccountAddressChannel(
+						externalReferenceCode, accountAddressChannel));
+	}
+
+	@GraphQLField
+	public AccountAddressChannel createAccountAddressIdAccountAddressChannel(
+			@GraphQLName("addressId") Long addressId,
+			@GraphQLName("accountAddressChannel") AccountAddressChannel
+				accountAddressChannel)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountAddressChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountAddressChannelResource ->
+				accountAddressChannelResource.
+					postAccountAddressIdAccountAddressChannel(
+						addressId, accountAddressChannel));
 	}
 
 	@GraphQLField
@@ -521,6 +595,28 @@ public class Mutation {
 		}
 	}
 
+	private void _populateResourceContext(
+			AccountAddressChannelResource accountAddressChannelResource)
+		throws Exception {
+
+		accountAddressChannelResource.setContextAcceptLanguage(_acceptLanguage);
+		accountAddressChannelResource.setContextCompany(_company);
+		accountAddressChannelResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		accountAddressChannelResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		accountAddressChannelResource.setContextUriInfo(_uriInfo);
+		accountAddressChannelResource.setContextUser(_user);
+		accountAddressChannelResource.setGroupLocalService(_groupLocalService);
+		accountAddressChannelResource.setRoleLocalService(_roleLocalService);
+
+		accountAddressChannelResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		accountAddressChannelResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(ChannelResource channelResource)
 		throws Exception {
 
@@ -689,6 +785,8 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private static ComponentServiceObjects<AccountAddressChannelResource>
+		_accountAddressChannelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ChannelResource>
 		_channelResourceComponentServiceObjects;
 	private static ComponentServiceObjects

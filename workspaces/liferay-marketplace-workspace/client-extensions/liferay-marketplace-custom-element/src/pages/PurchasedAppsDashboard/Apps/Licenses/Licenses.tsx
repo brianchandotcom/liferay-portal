@@ -5,7 +5,7 @@
 
 import {format, isBefore} from 'date-fns';
 import {useMemo, useState} from 'react';
-import {useOutletContext, useParams} from 'react-router-dom';
+import {Link, useOutletContext, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
 import solutionsIcon from '../../../../assets/icons/bookmarks_icon.svg';
@@ -30,6 +30,9 @@ import LicenceKeyModalContent from './components/LicenseModalContent';
 import TableActions from './components/TableActions';
 import TitleSubtitleHeader from './components/TitleSubtitleHeader';
 import useLicenseActions from './useLicensesActions';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import {OrderStatuses} from '../../../../components/OrderStatus';
+import classNames from 'classnames';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
@@ -62,7 +65,11 @@ const Licenses = () => {
 			? 'On-Premise'
 			: 'Cloud';
 
-	const {data: licenseKeysResponse, isLoading, mutate} = useSWR(
+	const {
+		data: licenseKeysResponse,
+		isLoading,
+		mutate,
+	} = useSWR(
 		`/order-license-keys/${orderId}-${page}-${pageSize}`,
 		async () => {
 			try {
@@ -73,8 +80,7 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			}
-			catch (error) {
+			} catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -87,18 +93,18 @@ const Licenses = () => {
 	const isLicenseExpired = (expirationDate: string) =>
 		!isBefore(new Date(), new Date(expirationDate));
 
-	const {
-		onDeativateLicenseKey,
-		onDownload,
-		onViewLicenseKey,
-	} = useLicenseActions({
-		deactivateLicenseModal,
-		keyType,
-		licenseKeyModal,
-		mutate,
-		provisioningKoroneikiOAuth2,
-		setModal: setModalData,
-	});
+	const orderStatusIsNotCompleted =
+		placedOrder?.orderStatusInfo?.label !== OrderStatuses.COMPLETED;
+
+	const {onDeativateLicenseKey, onDownload, onViewLicenseKey} =
+		useLicenseActions({
+			deactivateLicenseModal,
+			keyType,
+			licenseKeyModal,
+			mutate,
+			provisioningKoroneikiOAuth2,
+			setModal: setModalData,
+		});
 
 	const buttonsInfo = useMemo(
 		() => ({
@@ -281,14 +287,31 @@ const Licenses = () => {
 				/>
 			) : (
 				<DashboardEmptyTable
-					button
-					buttonName={i18n.translate('create-license-key')}
 					description1={i18n.translate(
 						'create-new-licenses-and-they-will-show-up-here'
 					)}
 					icon={solutionsIcon}
 					title={i18n.translate('no-licenses-yet')}
-				/>
+				>
+					<ClayTooltipProvider>
+						<Link
+							data-tooltip-align="bottom"
+							title={
+								orderStatusIsNotCompleted
+									? i18n.translate(
+											'the-order-must-be-completed-before-licensing-this-app.'
+									  )
+									: undefined
+							}
+							className={classNames('btn btn-primary mt-4', {
+								disabled: orderStatusIsNotCompleted,
+							})}
+							to={`/order/${orderId}/create-license`}
+						>
+							{i18n.translate('create-license-key')}
+						</Link>
+					</ClayTooltipProvider>
+				</DashboardEmptyTable>
 			)}
 
 			{licenseKeyModal.open && (

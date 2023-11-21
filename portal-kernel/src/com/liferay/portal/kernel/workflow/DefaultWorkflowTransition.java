@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -26,16 +27,29 @@ public class DefaultWorkflowTransition implements WorkflowTransition {
 			return HtmlUtil.escape(label);
 		}
 
+		Language language = LanguageUtil.getLanguage();
+
+		if (_name == null) {
+			return HtmlUtil.escape(language.get(locale, "proceed"));
+		}
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		label = language.get(locale, _name);
+
+		if (!StringUtil.equalsIgnoreCase(
+				label, language.get(defaultLocale, _name))) {
+
+			return HtmlUtil.escape(label);
+		}
+
 		label = _labelMap.get(LocaleUtil.getSiteDefault());
 
 		if (label != null) {
 			return HtmlUtil.escape(label);
 		}
 
-		Language language = LanguageUtil.getLanguage();
-
-		return HtmlUtil.escape(
-			language.get(locale, (_name != null) ? _name : "proceed"));
+		return _name;
 	}
 
 	@Override

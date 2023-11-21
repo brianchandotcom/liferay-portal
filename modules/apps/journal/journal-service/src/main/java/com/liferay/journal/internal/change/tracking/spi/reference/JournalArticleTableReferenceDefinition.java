@@ -42,17 +42,17 @@ public class JournalArticleTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<JournalArticleTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.singleColumnReference(
+		childTableReferenceInfoBuilder.assetEntryReference(
+			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMStructureLinkTable.INSTANCE.classPK, JournalArticle.class
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMTemplateLinkTable.INSTANCE.classPK, JournalArticle.class
+		).classNameReference(
 			JournalArticleTable.INSTANCE.resourcePrimKey,
-			JournalArticleResourceTable.INSTANCE.resourcePrimKey
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				JournalArticleLocalizationTable.INSTANCE
-			).innerJoinON(
-				JournalArticleTable.INSTANCE,
-				JournalArticleTable.INSTANCE.id.eq(
-					JournalArticleLocalizationTable.INSTANCE.articlePK)
-			)
+			TranslationEntryTable.INSTANCE.classPK, JournalArticle.class
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				FriendlyURLEntryTable.INSTANCE
@@ -73,18 +73,6 @@ public class JournalArticleTableReferenceDefinition
 						ClassNameTable.INSTANCE.classNameId)
 				)
 			)
-		).classNameReference(
-			JournalArticleTable.INSTANCE.id,
-			DDMStructureLinkTable.INSTANCE.classPK, JournalArticle.class
-		).classNameReference(
-			JournalArticleTable.INSTANCE.id,
-			DDMTemplateLinkTable.INSTANCE.classPK, JournalArticle.class
-		).classNameReference(
-			JournalArticleTable.INSTANCE.resourcePrimKey,
-			TranslationEntryTable.INSTANCE.classPK, JournalArticle.class
-		).singleColumnReference(
-			JournalArticleTable.INSTANCE.id,
-			DDMStorageLinkTable.INSTANCE.classPK
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ImageTable.INSTANCE
@@ -96,10 +84,22 @@ public class JournalArticleTableReferenceDefinition
 					JournalArticleTable.INSTANCE.smallImage.eq(Boolean.TRUE)
 				)
 			)
-		).assetEntryReference(
-			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				JournalArticleLocalizationTable.INSTANCE
+			).innerJoinON(
+				JournalArticleTable.INSTANCE,
+				JournalArticleTable.INSTANCE.id.eq(
+					JournalArticleLocalizationTable.INSTANCE.articlePK)
+			)
 		).resourcePermissionReference(
 			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
+		).singleColumnReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMStorageLinkTable.INSTANCE.classPK
+		).singleColumnReference(
+			JournalArticleTable.INSTANCE.resourcePrimKey,
+			JournalArticleResourceTable.INSTANCE.resourcePrimKey
 		).systemEventReference(
 			JournalArticleTable.INSTANCE.id, JournalArticle.class
 		);
@@ -110,14 +110,11 @@ public class JournalArticleTableReferenceDefinition
 		ParentTableReferenceInfoBuilder<JournalArticleTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(
-			JournalArticleTable.INSTANCE
-		).singleColumnReference(
-			JournalArticleTable.INSTANCE.folderId,
-			JournalFolderTable.INSTANCE.folderId
-		).classNameReference(
+		parentTableReferenceInfoBuilder.classNameReference(
 			JournalArticleTable.INSTANCE.classPK,
 			DDMStructureTable.INSTANCE.structureId, DDMStructure.class
+		).groupedModel(
+			JournalArticleTable.INSTANCE
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				DDMStructureTable.INSTANCE
@@ -170,6 +167,9 @@ public class JournalArticleTableReferenceDefinition
 						LayoutTable.INSTANCE.groupId)
 				)
 			)
+		).singleColumnReference(
+			JournalArticleTable.INSTANCE.folderId,
+			JournalFolderTable.INSTANCE.folderId
 		);
 	}
 

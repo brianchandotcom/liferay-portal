@@ -115,8 +115,12 @@ public class CopyrightCheck extends BaseFileCheck {
 		}
 
 		if (!StringUtil.equals(years.get(0), years.get(1))) {
-			addMessage(
-				fileName, "Copyright year only change when add new file.");
+			return StringUtil.replaceFirst(
+				content,
+				"SPDX-FileCopyrightText: (c) " + years.get(1) +
+					" Liferay, Inc. https://liferay.com",
+				"SPDX-FileCopyrightText: (c) " + years.get(0) +
+					" Liferay, Inc. https://liferay.com");
 		}
 
 		return content;

@@ -1035,6 +1035,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196842. When varying filters or searching if order by is applied, the order by must be applied to the new search + filters."
+	@priority = 4
+	test OrderByDisplayDateInNewSearchResults {
+		task ("Given two web contents with different names") {
+			for (var i : list "A,B") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content",
+					groupName = "Test Site Name",
+					title = "${i} Web Content Title");
+			}
+		}
+
+		task ("When varying filters or searching if order by is applied") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Web");
+
+			ManagementBar.setFilterAndOrder(orderBy = "Title");
+
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "B Web Content Title");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "A Web Content Title");
+
+			Search.searchCP(searchTerm = "Content");
+
+			ManagementBar.setFilterAndOrder(orderBy = "Display Date");
+		}
+
+		task ("Then the order by must be applied to the new search + filters.") {
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "A Web Content Title");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "B Web Content Title");
+		}
+	}
+
 	@description = "This is a test for LPS-196842. When searched and filtered content exists, the order must be applied to the displayed content."
 	@priority = 4
 	test OrderByTitleInSearchResults {

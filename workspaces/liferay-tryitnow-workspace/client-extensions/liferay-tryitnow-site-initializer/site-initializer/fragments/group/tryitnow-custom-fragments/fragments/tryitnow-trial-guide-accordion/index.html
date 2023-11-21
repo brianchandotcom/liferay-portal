@@ -205,7 +205,7 @@
 				let stepNumberElement = stepNumberElements[${ configuration.panelId }-1];
 				let btnMarkAsCompleteElement = btnMarkAsCompleteElements[${ configuration.panelId }-1];
 				let btnMarkAsIncompleteElement = btnMarkAsIncompleteElements[${ configuration.panelId }-1];
-				const step = data.items.find(i => i.stepNumber == ${ configuration.panelId });
+				const step = data.items.find(i => i.stepNumber === ${ configuration.panelId });
 				if (step) {
 					steps[${ configuration.panelId } - 1] = {
 						stepNumber: step.stepNumber,

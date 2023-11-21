@@ -12,7 +12,9 @@ const tabItems = [].slice.call(
 );
 const tabPanelItems = [].slice.call(
 	fragmentElement.querySelectorAll(
-		'[data-fragment-namespace="' + 'custom-clarity-tabs' + '"].tab-panel-item'
+		'[data-fragment-namespace="' +
+			'custom-clarity-tabs' +
+			'"].tab-panel-item'
 	)
 );
 

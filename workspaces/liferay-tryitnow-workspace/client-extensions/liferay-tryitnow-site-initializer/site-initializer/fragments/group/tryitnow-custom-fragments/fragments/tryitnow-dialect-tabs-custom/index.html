@@ -1,5 +1,5 @@
 <div class="clarity-tabs">
-	<div class="[#if ('nav-vertical' == 'nav-vertical')]align-items-md-stretch d-md-flex [/#if]">
+	<div class="[#if ('nav-vertical' === 'nav-vertical')]align-items-md-stretch d-md-flex [/#if]">
 	<div class="tab-panel">
 		[#list 0..configuration.numberOfTabs-1 as i]
 			<div aria-labelledby="tab${i+1}-custom-clarity-tabs" class="d-none tab-panel-item" data-fragment-namespace="custom-clarity-tabs" id="tabPanel${i+1}-custom-clarity-tabs" role="tabpanel" tabindex="0">
@@ -22,7 +22,7 @@
 				[#list 0..configuration.numberOfTabs-1 as i]
 					<li class="nav-item">
 						<button aria-controls="tabPanel${i+1}-custom-clarity-tabs" aria-selected="false" class="active nav-link w-100 clarity-nav-button" data-fragment-namespace="custom-clarity-tabs" id="tab${i+1}-custom-clarity-tabs" role="tab">
-							[#if configuration.iconAlignment == 'left']
+							[#if configuration.iconAlignment === 'left']
 									<img alt="Responsive Image" class="icon-img ${configuration.imageSize}" src="[resources:Image.svg]" />
 							[/#if]
 
@@ -30,7 +30,7 @@
 								Tab ${i+1}
 							</span>
 
-							[#if configuration.iconAlignment == 'right']
+							[#if configuration.iconAlignment === 'right']
 									<img alt="Responsive Image" class="icon-img ${configuration.imageSize}" src="[resources:Image.svg]" />
 							[/#if]
 						</button>

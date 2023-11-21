@@ -1,18 +1,18 @@
-.clarity-tabs .icon-img{
-	width:48px !important;
-	height:48px !important;
+.clarity-tabs .icon-img {
+	height: 48px !important;
+	width: 48px !important;
 }
 
-.clarity-tabs .tab-panel{
+.clarity-tabs .tab-panel {
 	flex-grow: 2;
 }
 
-.clarty-tabs .tab-panel-item img{
-	width:970px !important;
-	height:536px !important;
+.clarty-tabs .tab-panel-item img {
+	height: 536px !important;
+	width: 970px !important;
 }
 
-.clarity-nav-button{
+.clarity-nav-button {
 	align-items: center;
 	display: flex;
 	height: 133px;
@@ -20,10 +20,11 @@
 	max-width: 326px;
 }
 
-.clarity-nav-button span{
-	margin-left:5px;
+.clarity-nav-button span {
+	margin-left: 5px;
 }
 
-.clarity-tabs .tab-panel-item, .clarity-tabs .tab-panel-item div{
+.clarity-tabs .tab-panel-item,
+.clarity-tabs .tab-panel-item div {
 	height: 100%;
 }

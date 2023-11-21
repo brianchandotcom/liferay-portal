@@ -6,9 +6,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -16,6 +14,8 @@ import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -25,7 +25,6 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
-import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +40,36 @@ import org.osgi.service.component.annotations.Reference;
 public class RankingIndexReaderImpl implements RankingIndexReader {
 
 	@Override
-	public List<Ranking> fetch(Group group) throws PortalException {
-		return fetch(
-			group.getExternalReferenceCode(), StringPool.BLANK,
-			_rankingIndexNameBuilder.getRankingIndexName(group.getCompanyId()),
-			StringPool.BLANK);
+	public List<Ranking> fetch(
+		boolean excludeInactiveStatus, String groupExternalReferenceCode,
+		String queryString, RankingIndexName rankingIndexName,
+		String sxpBlueprintExternalReferenceCode) {
+
+		if (rankingIndexName == null) {
+			return null;
+		}
+
+		BooleanQuery query = _getQuery(
+			excludeInactiveStatus, groupExternalReferenceCode, queryString,
+			sxpBlueprintExternalReferenceCode);
+
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
+
+		countSearchRequest.setIndexNames(rankingIndexName.getIndexName());
+		countSearchRequest.setQuery(query);
+
+		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
+			countSearchRequest);
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(rankingIndexName.getIndexName());
+		searchSearchRequest.setQuery(query);
+		searchSearchRequest.setSize((int)countSearchResponse.getCount());
+
+		return _getRankings(
+			rankingIndexName,
+			_searchEngineAdapter.execute(searchSearchRequest));
 	}
 
 	@Override
@@ -65,36 +89,32 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		RankingIndexName rankingIndexName,
 		String sxpBlueprintExternalReferenceCode) {
 
-		if (Validator.isBlank(queryString) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-159650") &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-157988")) {
-
+		if (Validator.isBlank(queryString)) {
 			return null;
 		}
 
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(rankingIndexName.getIndexName());
-		searchSearchRequest.setQuery(
-			_getQuery(
-				groupExternalReferenceCode, queryString,
-				sxpBlueprintExternalReferenceCode));
-		searchSearchRequest.setSize(1);
-
-		return _getRankings(
-			rankingIndexName,
-			_searchEngineAdapter.execute(searchSearchRequest));
+		return fetch(
+			true, groupExternalReferenceCode, queryString, rankingIndexName,
+			sxpBlueprintExternalReferenceCode);
 	}
 
 	@Override
-	public List<Ranking> fetch(SXPBlueprint sxpBlueprint)
-		throws PortalException {
+	public List<Ranking> fetchByGroupExternalReferenceCode(
+		String groupExternalReferenceCode, RankingIndexName rankingIndexName) {
 
 		return fetch(
-			StringPool.BLANK, StringPool.BLANK,
-			_rankingIndexNameBuilder.getRankingIndexName(
-				sxpBlueprint.getCompanyId()),
-			sxpBlueprint.getExternalReferenceCode());
+			false, groupExternalReferenceCode, StringPool.BLANK,
+			rankingIndexName, StringPool.BLANK);
+	}
+
+	@Override
+	public List<Ranking> fetchBySXPBlueprintExternalReferenceCode(
+		RankingIndexName rankingIndexName,
+		String sxpBlueprintExternalReferenceCode) {
+
+		return fetch(
+			false, StringPool.BLANK, StringPool.BLANK, rankingIndexName,
+			sxpBlueprintExternalReferenceCode);
 	}
 
 	@Override
@@ -133,8 +153,8 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 	}
 
 	private BooleanQuery _getQuery(
-		String groupExternalReferenceCode, String queryString,
-		String sxpBlueprintExternalReferenceCode) {
+		boolean excludeInactiveStatus, String groupExternalReferenceCode,
+		String queryString, String sxpBlueprintExternalReferenceCode) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -161,9 +181,11 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 					RankingFields.QUERY_STRINGS_KEYWORD, queryString));
 		}
 
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term(
-				RankingFields.STATUS, ResultRankingsConstants.INACTIVE));
+		if (excludeInactiveStatus) {
+			booleanQuery.addMustNotQueryClauses(
+				_queries.term(
+					RankingFields.STATUS, ResultRankingsConstants.INACTIVE));
+		}
 
 		booleanQuery.addMustNotQueryClauses(
 			_queries.term(

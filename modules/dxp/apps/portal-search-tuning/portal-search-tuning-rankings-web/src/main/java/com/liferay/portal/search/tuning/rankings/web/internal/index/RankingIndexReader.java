@@ -5,10 +5,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
-import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.List;
 
@@ -17,7 +14,10 @@ import java.util.List;
  */
 public interface RankingIndexReader {
 
-	public List<Ranking> fetch(Group group) throws PortalException;
+	public List<Ranking> fetch(
+		boolean excludeInactiveStatus, String groupExternalReferenceCode,
+		String queryString, RankingIndexName rankingIndexName,
+		String sxpBlueprintExternalReferenceCode);
 
 	public Ranking fetch(String id, RankingIndexName rankingIndexName);
 
@@ -26,8 +26,12 @@ public interface RankingIndexReader {
 		RankingIndexName rankingIndexName,
 		String sxpBlueprintExternalReferenceCode);
 
-	public List<Ranking> fetch(SXPBlueprint sxpBlueprint)
-		throws PortalException;
+	public List<Ranking> fetchByGroupExternalReferenceCode(
+		String groupExternalReferenceCode, RankingIndexName rankingIndexName);
+
+	public List<Ranking> fetchBySXPBlueprintExternalReferenceCode(
+		RankingIndexName rankingIndexName,
+		String sxpBlueprintExternalReferenceCode);
 
 	public boolean isExists(RankingIndexName rankingIndexName);
 

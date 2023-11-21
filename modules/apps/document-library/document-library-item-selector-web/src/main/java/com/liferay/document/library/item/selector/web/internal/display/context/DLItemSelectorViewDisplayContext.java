@@ -299,8 +299,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		}
 
 		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-			_getStagingAwareGroupId(), getFolderId(),
-			WorkflowConstants.STATUS_APPROVED, _getMimeTypes(), false, false);
+			_repository.getRepositoryId(), getFolderId(),
+			WorkflowConstants.STATUS_APPROVED, _getMimeTypes(), true, false);
 	}
 
 	public String getTitle() {

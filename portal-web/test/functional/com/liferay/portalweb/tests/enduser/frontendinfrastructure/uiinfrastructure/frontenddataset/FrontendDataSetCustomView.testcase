@@ -50,7 +50,7 @@ definition {
 	@priority = 5
 	test CanBeDeleted {
 		task ("Given A custom view is created") {
-			FrontendDataSetCustomView.createNewView(key_nameView = "New View");
+			FrontendDataSetCustomView.createNewView(entryName = "New View");
 		}
 
 		task ("When Deleting the custom view") {
@@ -58,7 +58,9 @@ definition {
 		}
 
 		task ("Then Assert the custom view no longer exists") {
-			FrontendDataSetCustomView.assertCustomViewName(key_nameCustomView = "New View");
+			AssertElementNotPresent(
+				key_name = "New View",
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 		}
 	}
 
@@ -66,7 +68,7 @@ definition {
 	@priority = 4
 	test CanBeEdited {
 		task ("And Given a custom view is created and selected") {
-			FrontendDataSetCustomView.createNewView(key_nameView = "New View");
+			FrontendDataSetCustomView.createNewView(entryName = "New View");
 		}
 
 		task ("When make edits to the view settings") {
@@ -89,7 +91,9 @@ definition {
 		}
 
 		task ("And Then edits are not applied to default view") {
-			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+			Click(
+				key_name = "New View",
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 			FrontendDataSetCustomView.selectView(key_itemName = "Default View");
 
@@ -124,7 +128,7 @@ definition {
 		}
 
 		task ("And When Save As the custom view") {
-			FrontendDataSetCustomView.createNewView(entryName = "TEST");
+			FrontendDataSetCustomView.createNewView(entryName = "New View");
 
 			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
@@ -134,7 +138,9 @@ definition {
 		}
 
 		task ("Then A new custom view is created and selected as current view") {
-			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+			Click(
+				key_name = "New View",
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 			FrontendDataSetCustomView.selectView(key_itemName = "Default View");
 
@@ -142,9 +148,11 @@ definition {
 				columnName = "Description",
 				locator1 = "FrontendDataSet#COLUMN_NAME");
 
-			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+			Click(
+				key_name = "Default View",
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
-			FrontendDataSetCustomView.selectView(key_itemName = "TEST");
+			FrontendDataSetCustomView.selectView(key_itemName = "New View");
 
 			AssertElementNotPresent(
 				key_columnName = "Description",
@@ -167,11 +175,13 @@ definition {
 				key_enableFilters = "Red",
 				key_filter = "Color");
 
-			FrontendDataSetCustomView.createNewView(entryName = "Custom View Name");
+			FrontendDataSetCustomView.createNewView(entryName = "New View");
 		}
 
 		task ("When open menu to select created custom view") {
-			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+			Click(
+				key_name = "New View",
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 		}
 
 		task ("Then option to select default view is available") {
@@ -183,7 +193,7 @@ definition {
 		task ("And Then option to select created custom view is available") {
 			AssertTextPresent(
 				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
-				value1 = "Custom View Name");
+				value1 = "New View");
 		}
 	}
 
@@ -218,15 +228,21 @@ definition {
 		}
 
 		task ("Then A new custom view is created, and selected as current view") {
-			FrontendDataSetCustomView.assertCustomViewName(key_nameCustomView = "FrontendDataSet View 2");
+			AssertElementPresent(
+				key_name = "FrontendDataSet View 2",
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
-			FrontendDataSetCustomView.changeCustomView(key_itemName = "FrontendDataSet View");
+			FrontendDataSetCustomView.changeCustomView(
+				key_itemName = "FrontendDataSet View",
+				key_name = "FrontendDataSet View");
 
 			FrontendDataSetCustomView.assertFilterSummaryLabel(key_filter = "Color: Blue, Green, Yellow");
 
 			FrontendDataSetCustomView.assertColumnPresent(key_field = "Description");
 
-			FrontendDataSetCustomView.changeCustomView(key_itemName = "FrontendDataSet View 2");
+			FrontendDataSetCustomView.changeCustomView(
+				key_itemName = "FrontendDataSet View 2",
+				key_name = "FrontendDataSet View");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 25 entries.");
 
@@ -263,7 +279,7 @@ definition {
 	@priority = 3
 	test HasActionsOnlyOnEllipsis {
 		task ("And Given created custom view") {
-			FrontendDataSetCustomView.createNewView(key_nameView = "New View");
+			FrontendDataSetCustomView.createNewView(entryName = "New View");
 		}
 
 		task ("When open ellipsis next to custom view") {
@@ -277,7 +293,9 @@ definition {
 		}
 
 		task ("When open select custom view button") {
-			FrontendDataSetCustomView.changeCustomView(key_itemName = "Default View");
+			FrontendDataSetCustomView.changeCustomView(
+				key_itemName = "Default View",
+				key_name = "New View");
 
 			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 		}
@@ -297,7 +315,7 @@ definition {
 	@priority = 4
 	test HasOptionToEditName {
 		task ("And Given created custom view") {
-			FrontendDataSetCustomView.createNewView(key_nameView = "TEST");
+			FrontendDataSetCustomView.createNewView(entryName = "TEST");
 		}
 
 		task ("When open ellisis next to custom view") {
@@ -341,11 +359,13 @@ definition {
 		}
 
 		task ("And Then Custom Views dropdown items are localized") {
-			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+			Click(
+				key_name = "Vista por defecto",
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
-			AssertTextEquals(
-				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
-				value1 = "Vista por defecto");
+			AssertElementPresent(
+				key_name = "Vista por defecto",
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 		}
 
 		task ("And Then Ellipsis dropdown 'Save' is localized") {

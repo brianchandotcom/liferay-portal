@@ -27,6 +27,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
@@ -37,10 +38,12 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -50,6 +53,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -212,9 +216,18 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		try {
 			CopyLayoutThreadLocal.setCopyLayout(true);
 
-			if (currentServiceContext == null) {
-				ServiceContextThreadLocal.pushServiceContext(
-					new ServiceContext());
+			User user = _getUser(
+				sourceLayout, targetLayout, currentServiceContext);
+
+			if ((currentServiceContext == null) ||
+				(currentServiceContext.getUserId() != user.getUserId())) {
+
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setCompanyId(targetLayout.getCompanyId());
+				serviceContext.setUserId(user.getUserId());
+
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
 			}
 
 			return TransactionInvokerUtil.invoke(
@@ -713,6 +726,34 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		).buildString();
 	}
 
+	private User _getUser(
+			Layout sourceLayout, Layout targetLayout,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = _userLocalService.fetchUser(targetLayout.getUserId());
+
+		if (user != null) {
+			return user;
+		}
+
+		user = _userLocalService.fetchUser(sourceLayout.getUserId());
+
+		if (user != null) {
+			return user;
+		}
+
+		if (serviceContext != null) {
+			user = serviceContext.fetchUser();
+		}
+
+		if (user != null) {
+			return user;
+		}
+
+		return GuestOrUserUtil.getGuestOrUser();
+	}
+
 	private boolean _hasLayoutClassedModelUsage(
 		List<LayoutClassedModelUsage> layoutClassedModelUsages,
 		LayoutClassedModelUsage targetLayoutClassedModelUsage) {
@@ -873,6 +914,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	@Reference
 	private Sites _sites;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	private class CopyLayoutCallable implements Callable<Layout> {
 

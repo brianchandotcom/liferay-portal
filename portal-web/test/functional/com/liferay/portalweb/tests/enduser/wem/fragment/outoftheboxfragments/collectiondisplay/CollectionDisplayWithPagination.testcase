@@ -469,7 +469,7 @@ definition {
 		}
 
 		task ("Navigate to page 3 in Collection Display") {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				key_pageNumber = 3,
 				locator1 = "Pagination#ANY_PAGE");
 		}
@@ -487,7 +487,7 @@ definition {
 		}
 
 		task ("Navigate to previous page in Collection Display") {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				locator1 = "Pagination#ICON",
 				type = "angle-left");
 		}
@@ -521,7 +521,7 @@ definition {
 		}
 
 		task ("Navigate to page 2 in Collection Display") {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				key_pageNumber = 2,
 				locator1 = "Pagination#ANY_PAGE");
 		}
@@ -539,7 +539,7 @@ definition {
 		}
 
 		task ("Navigate to next page in Collection Display") {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				locator1 = "Pagination#ICON",
 				type = "angle-right");
 		}
@@ -579,7 +579,7 @@ definition {
 		}
 
 		task ("Navigate to page 3 in Collection Display") {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				key_pageNumber = 3,
 				locator1 = "Pagination#ANY_PAGE");
 		}
@@ -597,7 +597,7 @@ definition {
 		}
 
 		task ("Navigate to previous page in Collection Display") {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				locator1 = "Pagination#ICON",
 				type = "angle-left");
 		}

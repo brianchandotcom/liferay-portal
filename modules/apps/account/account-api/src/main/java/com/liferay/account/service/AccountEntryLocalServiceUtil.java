@@ -300,6 +300,10 @@ public class AccountEntryLocalServiceUtil {
 		return getService().fetchPersonAccountEntry(userId);
 	}
 
+	public static AccountEntry fetchSupplierAccountEntry(long userId) {
+		return getService().fetchSupplierAccountEntry(userId);
+	}
+
 	public static AccountEntry fetchUserAccountEntry(
 		long userId, long accountEntryId) {
 

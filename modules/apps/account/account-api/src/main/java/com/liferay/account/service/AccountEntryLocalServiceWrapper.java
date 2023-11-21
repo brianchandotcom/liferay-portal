@@ -347,6 +347,13 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry fetchSupplierAccountEntry(
+		long userId) {
+
+		return _accountEntryLocalService.fetchSupplierAccountEntry(userId);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry fetchUserAccountEntry(
 		long userId, long accountEntryId) {
 

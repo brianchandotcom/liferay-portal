@@ -258,6 +258,9 @@ public interface AccountEntryLocalService
 	public AccountEntry fetchPersonAccountEntry(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry fetchSupplierAccountEntry(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountEntry fetchUserAccountEntry(long userId, long accountEntryId);
 
 	/**

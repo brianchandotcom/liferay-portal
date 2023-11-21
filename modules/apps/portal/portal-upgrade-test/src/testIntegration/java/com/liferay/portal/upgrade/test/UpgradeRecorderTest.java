@@ -68,22 +68,7 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testFailure() throws Exception {
-		StartupHelperUtil.setUpgrading(true);
-
-		ErrorUpgradeProcess errorUpgradeProcess = new ErrorUpgradeProcess();
-
-		errorUpgradeProcess.doUpgrade();
-
-		StartupHelperUtil.setUpgrading(false);
-
-		Assert.assertEquals("failure", _getResult());
-
-		Assert.assertEquals("no upgrade", _getType());
-	}
-
-	@Test
-	public void testFailureByPendingUpgrade() throws SQLException {
+	public void testFailureStatusByPendingCoreUpgrade() throws SQLException {
 		try (Connection connection = DataAccess.getConnection()) {
 			Version version = PortalUpgradeProcess.getCurrentSchemaVersion(
 				connection);
@@ -101,9 +86,9 @@ public class UpgradeRecorderTest {
 			}
 		}
 
-		Assert.assertEquals("unresolved", _getResult());
+		Assert.assertEquals("failure", _getResult());
 
-		Assert.assertEquals("no upgrade", _getType());
+		Assert.assertEquals("major", _getType());
 	}
 
 	@Test
@@ -135,7 +120,7 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testSuccessByNoUpgrades() {
+	public void testSuccessResultByNoUpgrades() {
 		StartupHelperUtil.setUpgrading(true);
 
 		StartupHelperUtil.setUpgrading(false);
@@ -146,7 +131,23 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testWarning() throws Exception {
+	public void testSuccessResultWithUnrelatedError() throws Exception {
+		StartupHelperUtil.setUpgrading(true);
+
+		UnrelatedErrorUpgradeProcess unrelatedErrorUpgradeProcess =
+			new UnrelatedErrorUpgradeProcess();
+
+		unrelatedErrorUpgradeProcess.doUpgrade();
+
+		StartupHelperUtil.setUpgrading(false);
+
+		Assert.assertEquals("success", _getResult());
+
+		Assert.assertEquals("no upgrade", _getType());
+	}
+
+	@Test
+	public void testSuccessResultWithWarning() throws Exception {
 		StartupHelperUtil.setUpgrading(true);
 
 		WarningUpgradeProcess warningUpgradeProcess =
@@ -156,7 +157,7 @@ public class UpgradeRecorderTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("warning", _getResult());
+		Assert.assertEquals("success", _getResult());
 
 		Assert.assertEquals("no upgrade", _getType());
 	}
@@ -254,7 +255,7 @@ public class UpgradeRecorderTest {
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
 
-	private class ErrorUpgradeProcess extends UpgradeProcess {
+	private class UnrelatedErrorUpgradeProcess extends UpgradeProcess {
 
 		@Override
 		protected void doUpgrade() {
@@ -263,8 +264,8 @@ public class UpgradeRecorderTest {
 					_upgradeRecorder, "_errorMessages");
 
 			errorMessages.put(
-				"ErrorUpgradeProcess",
-				Collections.singletonMap("Error on upgrade", 0));
+				"UnrelatedErrorUpgradeProcess",
+				Collections.singletonMap("Error during upgrade", 0));
 		}
 
 	}
@@ -279,7 +280,7 @@ public class UpgradeRecorderTest {
 
 			warningMessages.put(
 				"WarningUpgradeProcess",
-				Collections.singletonMap("Warn on upgrade", 0));
+				Collections.singletonMap("Warn during upgrade", 0));
 		}
 
 	}

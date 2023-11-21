@@ -218,13 +218,13 @@ public class ParallelExecutor<T> {
 				JenkinsResultsParserUtil.toDurationString(getDurationMillis()));
 			sb.append("\n Completed: ");
 			sb.append(getCompletedTaskCount());
-			sb.append("\n Submitted: ");
-			sb.append(getSubmittedTaskCount());
-			sb.append(" | Running: ");
+			sb.append(" / Running: ");
 			sb.append(getRunningTaskCount());
-			sb.append(" | Remaining: ");
+			sb.append(" / Submitted: ");
+			sb.append(getSubmittedTaskCount());
+			sb.append(" / Remaining: ");
 			sb.append(getRemainingTaskCount());
-			sb.append(" | Total: ");
+			sb.append(" / Total: ");
 			sb.append(getTotalTaskCount());
 			sb.append("\n Average task duration: ");
 			sb.append(
@@ -264,7 +264,7 @@ public class ParallelExecutor<T> {
 
 		public int getRemainingTaskCount() {
 			return getTotalTaskCount() - getRunningTaskCount() -
-				getCompletedTaskCount();
+				getSubmittedTaskCount() - getCompletedTaskCount();
 		}
 
 		public List<T> getResults() {
@@ -309,7 +309,17 @@ public class ParallelExecutor<T> {
 		}
 
 		public int getSubmittedTaskCount() {
-			return _runningTasks.size();
+			int submittedTaskCount = 0;
+
+			for (Task<T> runningTask : _runningTasks) {
+				TaskCallable<T> taskCallable = runningTask.getCallable();
+
+				if (!taskCallable.isRunning()) {
+					submittedTaskCount++;
+				}
+			}
+
+			return submittedTaskCount;
 		}
 
 		public int getTotalTaskCount() {

@@ -6,6 +6,7 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
@@ -32,6 +33,10 @@ public class BlogsAdminConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
+			return "/blogs_admin/configuration_browse.jsp";
+		}
+
 		return "/blogs_admin/configuration.jsp";
 	}
 

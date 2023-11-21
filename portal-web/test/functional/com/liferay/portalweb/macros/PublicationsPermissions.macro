@@ -138,7 +138,7 @@ definition {
 	macro assertViewerPermissions(publicationName = null) {
 		AssertElementPresent(locator1 = "Publications#REVIEW_CHANGES_BUTTON");
 
-		PublicationsNavigator.gotoReviewChanges(publicationName = ${publicationName});
+		Click(locator1 = "Publications#REVIEW_CHANGES_BUTTON");
 
 		PublicationsChanges.assertPublicationsCommentsCRUDPermissions();
 	}

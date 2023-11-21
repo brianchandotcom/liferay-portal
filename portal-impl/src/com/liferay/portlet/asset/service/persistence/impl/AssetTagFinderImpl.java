@@ -125,7 +125,11 @@ public class AssetTagFinderImpl
 					}
 
 					return predicate.and(
-						AssetTagTable.INSTANCE.name.like(_getName(name)));
+						DSLFunctionFactoryUtil.lower(
+							AssetTagTable.INSTANCE.name
+						).like(
+							StringUtil.toLowerCase(name)
+						));
 				}
 			).orderBy(
 				orderByStep -> {

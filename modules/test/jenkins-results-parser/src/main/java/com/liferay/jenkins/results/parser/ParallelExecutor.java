@@ -106,7 +106,7 @@ public class ParallelExecutor<T> {
 
 	public List<T> waitFor(Long timeoutSeconds) throws TimeoutException {
 		if (timeoutSeconds == null) {
-			timeoutSeconds = 1000 * 60 * 60 * 2L;
+			timeoutSeconds = 60L * 90L;
 		}
 
 		if ((_taskRunnable == null) || (_thread == null)) {

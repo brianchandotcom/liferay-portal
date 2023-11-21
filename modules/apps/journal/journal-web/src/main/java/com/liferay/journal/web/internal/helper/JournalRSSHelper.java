@@ -349,7 +349,7 @@ public class JournalRSSHelper {
 
 		List<JournalArticle> articles =
 			JournalSearcherUtil.transformJournalArticles(
-				searchResponse.getDocuments71(), false);
+				searchResponse.getDocuments71());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Syndicating " + articles.size() + " articles");

@@ -222,10 +222,13 @@
 		}
 
 		function replaceCSSClasses(element, removeClass, addClass) {
-			if (removeClass)
+			if (removeClass) {
 				element.classList.remove(removeClass);
-			if (addClass)
+			}
+
+			if (addClass) {
 				element.classList.add(addClass);
+			}
 		}
 
 		loadData();

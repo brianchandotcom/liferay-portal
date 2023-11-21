@@ -209,7 +209,7 @@ public class BatchEngineBrokerTest {
 		_addObjectEntryInDifferentCompany("TestObjectCSV");
 
 		_assertEqualsExportCSV(
-			_getExportInputStream(
+			_getExportFileString(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				_objectEntryExportCSVFieldNames,
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
@@ -251,12 +251,11 @@ public class BatchEngineBrokerTest {
 			_objectEntryExportFieldNames,
 			_getActualJsonNode(
 				_objectMapper.readTree(
-					_getZipInputStream(
-						_getExportInputStream(
-							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-							_objectEntryExportFieldNames,
-							"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-							false, "C_TestObject")))));
+					_getExportFileString(
+						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+						_objectEntryExportFieldNames,
+						"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
+						"C_TestObject"))));
 	}
 
 	@Test
@@ -264,7 +263,7 @@ public class BatchEngineBrokerTest {
 		_setUpObjectDefinition("TestObjectCSV");
 
 		_assertEqualsExportCSV(
-			_getExportInputStream(
+			_getExportFileString(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				_objectDefinitionExportCSVFieldNames,
 				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
@@ -297,13 +296,12 @@ public class BatchEngineBrokerTest {
 			_objectDefinitionExportFieldNames,
 			_getActualJsonNode(
 				_objectMapper.readTree(
-					_getZipInputStream(
-						_getExportInputStream(
-							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-							_objectDefinitionExportFieldNames,
-							"com.liferay.object.admin.rest.dto.v1_0." +
-								"ObjectDefinition",
-							false, null))),
+					_getExportFileString(
+						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+						_objectDefinitionExportFieldNames,
+						"com.liferay.object.admin.rest.dto.v1_0." +
+							"ObjectDefinition",
+						false, null)),
 				_objectDefinition1.getShortName()));
 	}
 
@@ -324,7 +322,7 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getUserId());
 
 		_assertEqualsExportCSV(
-			_getExportInputStream(
+			_getExportFileString(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				_objectEntryExportCSVFieldNames,
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
@@ -369,12 +367,11 @@ public class BatchEngineBrokerTest {
 			_objectEntryExportFieldNames,
 			_getActualJsonNode(
 				_objectMapper.readTree(
-					_getZipInputStream(
-						_getExportInputStream(
-							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-							_objectEntryExportFieldNames,
-							"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-							true, "C_TestObject")))));
+					_getExportFileString(
+						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+						_objectEntryExportFieldNames,
+						"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
+						"C_TestObject"))));
 	}
 
 	@Test
@@ -690,13 +687,14 @@ public class BatchEngineBrokerTest {
 	}
 
 	private void _assertEqualsExportCSV(
-			InputStream actualInputStream, String expectedCSVString,
+			String actualCSVString, String expectedCSVString,
 			String externalReferenceCode, List<String> fieldNames)
 		throws Exception {
 
 		UnsyncBufferedReader actualUnsyncBufferedReader =
 			new UnsyncBufferedReader(
-				new InputStreamReader(_getZipInputStream(actualInputStream)));
+				new InputStreamReader(
+					new ByteArrayInputStream(actualCSVString.getBytes())));
 
 		UnsyncBufferedReader expectedUnsyncBufferedReader =
 			new UnsyncBufferedReader(
@@ -934,7 +932,7 @@ public class BatchEngineBrokerTest {
 			JsonNode.class);
 	}
 
-	private InputStream _getExportInputStream(
+	private String _getExportFileString(
 			String externalType, List<String> fieldNames,
 			String internalClassName, boolean siteScope,
 			String taskItemDelegateName)
@@ -967,8 +965,10 @@ public class BatchEngineBrokerTest {
 				batchPlannerPlan.getBatchPlannerPlanId(),
 				TestPropsValues.getCompanyId());
 
-		return _batchEngineExportTaskLocalService.openContentInputStream(
-			batchEngineExportTask.getBatchEngineExportTaskId());
+		return StreamUtil.toString(
+			_getZipInputStream(
+				_batchEngineExportTaskLocalService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId())));
 	}
 
 	private BatchEngineExportTask _getFinishedBatchEngineExportTask(

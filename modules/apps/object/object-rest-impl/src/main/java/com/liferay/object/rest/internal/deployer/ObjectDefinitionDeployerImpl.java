@@ -47,6 +47,7 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -584,12 +585,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private List<ServiceRegistration<?>> _registerExceptionMappers(
 		String jaxRsApplicationName, ObjectDefinition objectDefinition) {
 
+		String selectCondition = StringBundler.concat(
+			"(|(liferay.objects.exception.mapper = true)(osgi.jaxrs.name= ",
+			jaxRsApplicationName, "))");
+
 		return Arrays.asList(
 			_bundleContext.registerService(
 				ExceptionMapper.class, new ObjectAssetCategoryExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+					"osgi.jaxrs.application.select", selectCondition
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -601,8 +605,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new ObjectEntryManagerHttpExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+					"osgi.jaxrs.application.select", selectCondition
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -614,8 +617,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new ObjectEntryStatusExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+					"osgi.jaxrs.application.select", selectCondition
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -627,8 +629,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new ObjectEntryValuesExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+					"osgi.jaxrs.application.select", selectCondition
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -640,8 +641,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new ObjectRelationshipDeletionTypeExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+					"osgi.jaxrs.application.select", selectCondition
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -654,8 +654,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectValidationRuleEngineExceptionMapper(
 					_jsonFactory, _language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+					"osgi.jaxrs.application.select", selectCondition
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -667,8 +666,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new RequiredObjectRelationshipExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+					"osgi.jaxrs.application.select", selectCondition
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
@@ -680,8 +678,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ExceptionMapper.class,
 				new UnsupportedOperationExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"
+					"osgi.jaxrs.application.select", selectCondition
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(

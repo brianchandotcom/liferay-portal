@@ -502,6 +502,8 @@ definition {
 		AssertElementPresent(locator1 = "Button#DONE");
 
 		Click(locator1 = "Button#DONE");
+
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Default summary"

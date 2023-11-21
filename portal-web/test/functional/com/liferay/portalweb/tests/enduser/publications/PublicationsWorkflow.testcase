@@ -322,8 +322,6 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Alert.viewSuccessMessage();
-
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
 
 		Workflow.confirmWorkflowAction();

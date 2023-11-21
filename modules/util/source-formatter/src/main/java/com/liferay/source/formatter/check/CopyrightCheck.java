@@ -157,8 +157,8 @@ public class CopyrightCheck extends BaseFileCheck {
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
 	private static final Pattern _copyrightPattern = Pattern.compile(
-		"[\\+-] \\* SPDX-FileCopyrightText: \\(c\\) (\\d{4}) " +
-			"Liferay, Inc\\. https://liferay\\.com");
+		"[\\+-] \\* SPDX-FileCopyrightText: \\(c\\) (\\d{4}) Liferay, Inc\\. " +
+			"https://liferay\\.com");
 	private static List<String> _currentBranchAddedFileNames;
 	private static List<String> _currentBranchRenamedFileNames;
 

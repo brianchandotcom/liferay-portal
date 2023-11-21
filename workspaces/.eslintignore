@@ -6,3 +6,4 @@ tmp/**
 types/**/*.d.ts
 yarn-*.js
 zippableResources/**
+**/*.min.js

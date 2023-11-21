@@ -284,6 +284,8 @@ definition {
 	@description = "This is a test for LPS-191474. An option is added to the Submit Fragment that allows users to save entries as draft."
 	@priority = 5
 	test EnableSaveAsDraftOptionAndViewTheEntryIsSavedAsDraft {
+		property custom.properties = "feature.flag.LPS-181663=true";
+
 		task ("Given an object entry is enable 'Allow Users to Save Entries as Draft'") {
 			task ("Enable 'Allow Users to Save Entries as Draft' in object") {
 				ObjectAdmin.openObjectAdmin();
@@ -524,7 +526,7 @@ definition {
 	@description = "This is a test for LPS-191474. The Save Draft option is disabled on the object so a warning pop up message appears when trying to publish the page."
 	@priority = 5
 	test ViewWarningMessageWhenPublishingContentPageWithSaveAsDraftOptionDisabled {
-		property custom.properties = "feature.flag.LPS-173135=true";
+		property custom.properties = "feature.flag.LPS-181663=true";
 
 		task ("Given an object entry is disable 'Allow Users to Save Entries as Draft'") {
 			task ("View 'Allow Users to Save Entries as Draft' in object") {

@@ -218,6 +218,8 @@ public class ParallelExecutor<T> {
 				JenkinsResultsParserUtil.toDurationString(getDurationMillis()));
 			sb.append("\n Completed: ");
 			sb.append(getCompletedTaskCount());
+			sb.append("\n Submitted: ");
+			sb.append(getSubmittedTaskCount());
 			sb.append(" | Running: ");
 			sb.append(getRunningTaskCount());
 			sb.append(" | Remaining: ");
@@ -304,6 +306,10 @@ public class ParallelExecutor<T> {
 			}
 
 			return runningTaskCount;
+		}
+
+		public int getSubmittedTaskCount() {
+			return _runningTasks.size();
 		}
 
 		public int getTotalTaskCount() {

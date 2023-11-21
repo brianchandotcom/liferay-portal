@@ -128,9 +128,9 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 						_,
 						{
 							id,
+							orderStatusInfo,
 							orderTypeExternalReferenceCode,
 							virtualURL,
-							orderStatusInfo,
 						}
 					) => {
 						const orderStatusIsNotCompleted =

@@ -4,22 +4,23 @@
  */
 
 import {ReactNode} from 'react';
+
 import './DashboardEmptyTable.scss';
 
 import ClayButton from '@clayui/button';
 
 export function DashboardEmptyTable({
 	button,
-	children,
 	buttonName,
+	children,
 	description1,
 	description2,
 	icon,
 	title,
 }: {
 	button?: boolean;
-	children?: ReactNode;
 	buttonName?: string;
+	children?: ReactNode;
 	description1: string;
 	description2?: string;
 	icon: string;

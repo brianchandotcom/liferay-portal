@@ -17,9 +17,12 @@ import i18n from '../../../../i18n';
 import './Licenses.scss';
 
 import {useModal} from '@clayui/modal';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import classNames from 'classnames';
 
 import DeactivateKeysModal from '../../../../components/DeactivateKeysModal/DeactivateKeysModal';
 import Modal from '../../../../components/Modal';
+import {OrderStatuses} from '../../../../components/OrderStatus';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderType} from '../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
@@ -30,9 +33,6 @@ import LicenceKeyModalContent from './components/LicenseModalContent';
 import TableActions from './components/TableActions';
 import TitleSubtitleHeader from './components/TitleSubtitleHeader';
 import useLicenseActions from './useLicensesActions';
-import {ClayTooltipProvider} from '@clayui/tooltip';
-import {OrderStatuses} from '../../../../components/OrderStatus';
-import classNames from 'classnames';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
@@ -295,6 +295,9 @@ const Licenses = () => {
 				>
 					<ClayTooltipProvider>
 						<Link
+							className={classNames('btn btn-primary mt-4', {
+								disabled: orderStatusIsNotCompleted,
+							})}
 							data-tooltip-align="bottom"
 							title={
 								orderStatusIsNotCompleted
@@ -303,9 +306,6 @@ const Licenses = () => {
 									  )
 									: undefined
 							}
-							className={classNames('btn btn-primary mt-4', {
-								disabled: orderStatusIsNotCompleted,
-							})}
 							to={`/order/${orderId}/create-license`}
 						>
 							{i18n.translate('create-license-key')}

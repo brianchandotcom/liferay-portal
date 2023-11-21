@@ -9,6 +9,12 @@ import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntityFactory;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +24,34 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class GitBranchEntityDALO extends BaseEntityDALO<GitBranchEntity> {
+
+	public Set<GitBranchEntity> getByType(GitBranchEntity.Type... types) {
+		Set<GitBranchEntity> gitBranchEntities = new HashSet<>();
+
+		if ((types == null) || (types.length == 0)) {
+			return gitBranchEntities;
+		}
+
+		Set<String> typeQueries = new HashSet<>();
+
+		for (GitBranchEntity.Type type : types) {
+			typeQueries.add("(type eq '" + type.getKey() + "')");
+		}
+
+		String filter = StringUtil.join(" or ", typeQueries);
+
+		List<GitBranchEntity.Type> typesList = Arrays.asList(types);
+
+		for (GitBranchEntity gitBranchEntity : getAll(filter, null)) {
+			if (!typesList.contains(gitBranchEntity.getType())) {
+				continue;
+			}
+
+			gitBranchEntities.add(gitBranchEntity);
+		}
+
+		return gitBranchEntities;
+	}
 
 	@Override
 	protected EntityFactory<GitBranchEntity> getEntityFactory() {

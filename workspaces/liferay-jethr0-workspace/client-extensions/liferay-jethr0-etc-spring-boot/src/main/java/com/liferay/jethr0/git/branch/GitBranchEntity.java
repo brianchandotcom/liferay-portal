@@ -6,15 +6,15 @@
 package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
-import org.json.JSONObject;
 
 import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto

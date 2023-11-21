@@ -6,7 +6,6 @@
 package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -164,7 +163,7 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private boolean _rebased;
 	private String _repositoryName;
-	private Type _type;
+	private final Type _type;
 	private String _upstreamBranchName;
 	private String _upstreamBranchSHA;
 	private URL _url;

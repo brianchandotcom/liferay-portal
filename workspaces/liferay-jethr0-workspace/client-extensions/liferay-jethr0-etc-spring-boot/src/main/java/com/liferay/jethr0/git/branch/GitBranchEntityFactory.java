@@ -24,6 +24,13 @@ public class GitBranchEntityFactory extends BaseEntityFactory<GitBranchEntity> {
 
 	@Override
 	public GitBranchEntity newEntity(JSONObject jsonObject) {
+		GitBranchEntity.Type type = GitBranchEntity.Type.get(
+			jsonObject.getJSONObject("type"));
+
+		if (type == GitBranchEntity.Type.UPSTREAM) {
+			return new UpstreamGitBranchEntity(jsonObject);
+		}
+
 		return new DefaultGitBranchEntity(jsonObject);
 	}
 

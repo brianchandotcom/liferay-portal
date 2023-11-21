@@ -401,11 +401,10 @@ definition {
 			portalInstanceId = "www.able.com",
 			virtualHost = "www.able.com");
 
-		User.firstLoginPG(
+		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://www.able.com:8080",
-			userEmailAddress = "test@liferay.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			userEmailAddress = "test@liferay.com");
 
 		Smoke.viewWelcomeContentPage();
 

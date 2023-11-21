@@ -1,0 +1,631 @@
+{
+	"$comment": "This JSON Schema is published to https://www.schemastore.org/json/. It can be found by searching under 'Liferay client-extension.yaml'. VSCode and IntelliJ IDEA both come with support for detecting schemas from SchemaStore.",
+	"$id": "https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/sdk/gradle-plugins-workspace/src/main/resources/schemas/client-extension.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"datatypes": {
+			"properties": {
+				"uniqueStringArray": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array",
+					"uniqueItems": true
+				}
+			}
+		},
+		"propertySets": {
+			"properties": {
+				"batchJob": {
+					"properties": {
+						"oAuthApplicationHeadlessServer": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"oAuthApplicationHeadlessServer"
+					],
+					"type": "object"
+				},
+				"externalService": {
+					"properties": {
+						".serviceAddress": {
+							"type": "string"
+						},
+						".serviceScheme": {
+							"type": "string"
+						},
+						"scopes": {
+							"$ref": "#/definitions/datatypes/properties/uniqueStringArray"
+						}
+					},
+					"required": [
+						".serviceAddress",
+						".serviceScheme",
+						"scopes"
+					],
+					"type": "object"
+				},
+				"url": {
+					"properties": {
+						"url": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"url"
+					],
+					"type": "object"
+				},
+				"webHook": {
+					"properties": {
+						"oAuth2ApplicationExternalReferenceCode": {
+							"type": "string"
+						},
+						"resourcePath": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"oAuth2ApplicationExternalReferenceCode",
+						"resourcePath"
+					],
+					"type": "object"
+				}
+			}
+		},
+		"schemas": {
+			"properties": {
+				"gradleCopySchema": {
+					"dependencies": {
+						"from": {
+							"not": {
+								"required": [
+									"fromTask"
+								]
+							}
+						},
+						"fromTask": {
+							"not": {
+								"required": [
+									"from"
+								]
+							}
+						}
+					},
+					"properties": {
+						"from": {
+							"description": "The source directory to copy from. If none is provided, the yaml file's directory is used. Mutually exclusive with 'fromTask'.",
+							"type": "string"
+						},
+						"fromTask": {
+							"description": "The name of a Gradle task. The outputs of the declared task will be copied. Mutually exclusive with 'from'.",
+							"type": "string"
+						},
+						"include": {
+							"$ref": "#/definitions/datatypes/properties/uniqueStringArray",
+							"description": "An array of glob patterns to include from the 'from' or 'fromTask' source. If none are provided, all contents will be copied."
+						},
+						"into": {
+							"description": "The destination directory inside the project's build directory. If none is provided, it it will go to the build directory root.",
+							"type": "string"
+						}
+					},
+					"type": "object"
+				}
+			}
+		},
+		"types": {
+			"properties": {
+				"batch": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/batchJob"
+						}
+					],
+					"description": "Description for batch"
+				},
+				"customElement": {
+					"allOf": [
+						{
+							"properties": {
+								"cssURLs": {
+									"$ref": "#/definitions/datatypes/properties/uniqueStringArray"
+								},
+								"friendlyURLMapping": {
+									"anyOf": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "string"
+										}
+									]
+								},
+								"htmlElementName": {
+									"description": "A lower-case kebab-case name to be used for the custom element. Must contain at least one hyphen.",
+									"pattern": "^[a-z]+-([a-z-]+)?[a-z]",
+									"type": "string"
+								},
+								"instanceable": {
+									"type": "boolean"
+								},
+								"jsonUrls": {
+									"$ref": "#/definitions/datatypes/properties/uniqueStringArray"
+								},
+								"key": {
+									"type": "string"
+								},
+								"portletCategoryName": {
+									"type": "string"
+								},
+								"properties": {
+									"type": "object"
+								},
+								"singleURL": {
+									"type": "string"
+								},
+								"urls": {
+									"$ref": "#/definitions/datatypes/properties/uniqueStringArray"
+								},
+								"useESM": {
+									"type": "boolean"
+								}
+							},
+							"required": [
+								"htmlElementName",
+								"urls"
+							],
+							"type": "object"
+						}
+					],
+					"description": "Description for customElement"
+				},
+				"fdsCellRenderer": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						}
+					],
+					"description": "Description for fdsCellRenderer"
+				},
+				"fdsFilter": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						}
+					],
+					"description": "Description for fdsFilter"
+				},
+				"globalCSS": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						}
+					],
+					"description": "Description for globalCSS"
+				},
+				"globalJS": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						}
+					],
+					"description": "Description for globalJS"
+				},
+				"iframe": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						},
+						{
+							"properties": {
+								"portletCategoryName": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					],
+					"description": "Description for iframe"
+				},
+				"instanceSettings": {
+					"allOf": [
+						{
+							"properties": {
+								"pid": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"pid"
+							],
+							"type": "object"
+						}
+					],
+					"description": "Description for instanceSettings"
+				},
+				"jsImportMapsEntry": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						},
+						{
+							"properties": {
+								"bareSpecifier": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					],
+					"description": "Description for jsImportMapsEntry"
+				},
+				"notificationType": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/webHook"
+						}
+					],
+					"description": "Description for notificationType"
+				},
+				"oAuthApplicationHeadlessServer": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/externalService"
+						}
+					],
+					"description": "Description for oAuthApplicationHeadlessServer"
+				},
+				"oAuthApplicationUserAgent": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/externalService"
+						}
+					],
+					"description": "Description for oAuthApplicationUserAgent"
+				},
+				"objectAction": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/webHook"
+						}
+					],
+					"description": "Description for objectAction"
+				},
+				"objectEntryManager": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/webHook"
+						}
+					],
+					"description": "Description for objectEntryManager"
+				},
+				"objectValidationRule": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/webHook"
+						},
+						{
+							"properties": {
+								"allowedObjectDefinitionNames": {
+									"$ref": "#/definitions/datatypes/properties/uniqueStringArray"
+								}
+							},
+							"type": "object"
+						}
+					],
+					"description": "Description for objectValidationRule"
+				},
+				"siteInitializer": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/batchJob"
+						},
+						{
+							"properties": {
+								"builtInTemplateKey": {
+									"type": "string"
+								},
+								"builtInTemplateType": {
+									"enum": [
+										"site-initializer",
+										"site-template"
+									]
+								},
+								"membershipType": {
+									"default": "open",
+									"enum": [
+										"open",
+										"private",
+										"restricted"
+									]
+								},
+								"parentSiteKey": {
+									"type": "string"
+								},
+								"siteExternalReferenceCode": {
+									"type": "string"
+								},
+								"siteName": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"siteName",
+								"siteExternalReferenceCode"
+							],
+							"type": "object"
+						}
+					],
+					"description": "Description for siteInitializer"
+				},
+				"staticContent": {
+					"description": "Description for staticContent"
+				},
+				"themeCSS": {
+					"allOf": [
+						{
+							"properties": {
+								"clayURL": {
+									"type": "string"
+								},
+								"mainURL": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					],
+					"description": "Description for themeCSS"
+				},
+				"themeFavicon": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						}
+					],
+					"description": "Description for themeFavicon"
+				},
+				"themeSpritemap": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/url"
+						}
+					],
+					"description": "Description for themeSpritemap"
+				},
+				"workflowAction": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/webHook"
+						}
+					],
+					"description": "Description for workflowAction"
+				}
+			}
+		}
+	},
+	"patternProperties": {
+		"^(?!assemble$)[a-z][a-z-\\d]+$": {
+			"description": "Kebab-case keys are treated as individual client extension definitions.",
+			"oneOf": [
+				{
+					"$ref": "#/definitions/types/properties/batch",
+					"properties": {
+						"type": {
+							"const": "batch"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/customElement",
+					"properties": {
+						"type": {
+							"const": "customElement"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/fdsCellRenderer",
+					"properties": {
+						"type": {
+							"const": "fdsCellRenderer"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/fdsFilter",
+					"properties": {
+						"type": {
+							"const": "fdsFilter"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/globalCSS",
+					"properties": {
+						"type": {
+							"const": "globalCSS"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/globalJS",
+					"properties": {
+						"type": {
+							"const": "globalJS"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/iframe",
+					"properties": {
+						"type": {
+							"const": "iframe"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/instanceSettings",
+					"properties": {
+						"type": {
+							"const": "instanceSettings"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/jsImportMapsEntry",
+					"properties": {
+						"type": {
+							"const": "jsImportMapsEntry"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/notificationType",
+					"properties": {
+						"type": {
+							"const": "notificationType"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/oAuthApplicationHeadlessServer",
+					"properties": {
+						"type": {
+							"const": "oAuthApplicationHeadlessServer"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/oAuthApplicationUserAgent",
+					"properties": {
+						"type": {
+							"const": "oAuthApplicationUserAgent"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/objectAction",
+					"properties": {
+						"type": {
+							"const": "objectAction"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/objectEntryManager",
+					"properties": {
+						"type": {
+							"const": "objectEntryManager"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/objectValidationRule",
+					"properties": {
+						"type": {
+							"const": "objectValidationRule"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/siteInitializer",
+					"properties": {
+						"type": {
+							"const": "siteInitializer"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/staticContent",
+					"properties": {
+						"type": {
+							"const": "staticContent"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/themeCSS",
+					"properties": {
+						"type": {
+							"const": "themeCSS"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/themeFavicon",
+					"properties": {
+						"type": {
+							"const": "themeFavicon"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/themeSpritemap",
+					"properties": {
+						"type": {
+							"const": "themeSpritemap"
+						}
+					}
+				},
+				{
+					"$ref": "#/definitions/types/properties/workflowAction",
+					"properties": {
+						"type": {
+							"const": "workflowAction"
+						}
+					}
+				}
+			],
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"type": {
+					"enum": [
+						"batch",
+						"customElement",
+						"fdsCellRenderer",
+						"fdsFilter",
+						"globalCSS",
+						"globalJS",
+						"iframe",
+						"instanceSettings",
+						"jsImportMapsEntry",
+						"notificationType",
+						"oAuthApplicationHeadlessServer",
+						"oAuthApplicationUserAgent",
+						"objectAction",
+						"objectEntryManager",
+						"objectValidationRule",
+						"siteInitializer",
+						"staticContent",
+						"themeCSS",
+						"themeFavicon",
+						"themeSpritemap",
+						"workflowAction"
+					]
+				}
+			},
+			"required": [
+				"type"
+			],
+			"type": "object"
+		}
+	},
+	"properties": {
+		"assemble": {
+			"description": "Declares one or more copy schema definitions for copying resources to the client extension payload. The keys are used to construct a Gradle Copy task. See https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Copy.html.",
+			"items": {
+				"$ref": "#/definitions/schemas/properties/gradleCopySchema"
+			},
+			"type": "array"
+		}
+	},
+	"type": "object"
+}

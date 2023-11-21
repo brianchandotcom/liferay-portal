@@ -27,31 +27,31 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 
 	const isDisabled = !fields || loading;
 
-	return (
-		<form
-			onSubmit={() => {
-				if (isDisabled) {
-					return;
-				}
+	const onClick = () => {
+		if (isDisabled) {
+			return;
+		}
 
-				getOpener().Liferay.fire(eventName, {
-					data: {
-						returnType,
-						value: {
-							html: fields.HTML,
-							title: fields.TITLE || fields.URL,
-						},
-					},
-				});
-			}}
-		>
+		getOpener().Liferay.fire(eventName, {
+			data: {
+				returnType,
+				value: {
+					html: fields.HTML,
+					title: fields.TITLE || fields.URL,
+				},
+			},
+		});
+	};
+
+	return (
+		<div>
 			<DLVideoExternalShortcutInput
 				labelTooltip={Liferay.Language.get('internal-video-tooltip')}
 				onChange={setUrl}
 				url={url}
 			/>
 
-			<ClayButton disabled={isDisabled} type="submit">
+			<ClayButton disabled={isDisabled} onClick={onClick}>
 				{Liferay.Language.get('add')}
 			</ClayButton>
 
@@ -60,7 +60,7 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 				loading={loading}
 				videoHTML={fields && fields.HTML}
 			/>
-		</form>
+		</div>
 	);
 };
 

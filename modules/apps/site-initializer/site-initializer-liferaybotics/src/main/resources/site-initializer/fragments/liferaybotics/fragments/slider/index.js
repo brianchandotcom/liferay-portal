@@ -16,8 +16,17 @@ const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
 
 const next = fragmentElement.querySelector('.carousel-control-next');
 const prev = fragmentElement.querySelector('.carousel-control-prev');
+const nextItemIndexKey = `${fragmentEntryLinkNamespace}-next-item-index`;
 
 let moving = false;
+
+function getNextItemIndex() {
+	return window[nextItemIndexKey] || 0;
+}
+
+function setNextItemIndex(index) {
+	window[nextItemIndexKey] = index;
+}
 
 function getActiveIndicator() {
 	return fragmentElement.querySelector('.carousel-navigation .active');
@@ -34,22 +43,23 @@ function move(movement, index = null) {
 	const indexActiveItem = items.indexOf(activeItem);
 	const activeIndicator = getActiveIndicator();
 
-	let nextItemIndex =
-		indexActiveItem < 1 ? items.length - 1 : indexActiveItem - 1;
+	setNextItemIndex(
+		indexActiveItem < 1 ? items.length - 1 : indexActiveItem - 1
+	);
 
 	if (index !== null) {
-		nextItemIndex = index;
+		setNextItemIndex(index);
 	}
 	else if (movement === MOVE_RIGHT) {
-		nextItemIndex = indexActiveItem >= 2 ? 0 : indexActiveItem + 1;
+		setNextItemIndex(indexActiveItem >= 2 ? 0 : indexActiveItem + 1);
 	}
 
-	const nextItem = items[nextItemIndex];
+	const nextItem = items[getNextItemIndex()];
 
 	activeItem.classList.add(movement);
 	nextItem.classList.add(movement);
 	activeIndicator.classList.remove('active');
-	indicators[nextItemIndex].classList.add('active');
+	indicators[getNextItemIndex()].classList.add('active');
 
 	setTimeout(() => {
 		activeItem.classList.remove('active', movement);

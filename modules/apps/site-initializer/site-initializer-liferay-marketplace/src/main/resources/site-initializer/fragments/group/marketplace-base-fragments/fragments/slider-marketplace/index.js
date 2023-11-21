@@ -16,8 +16,17 @@ const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
 
 const next = fragmentElement.querySelector('.carousel-control-next');
 const prev = fragmentElement.querySelector('.carousel-control-prev');
+const nextItemIndexKey = `${fragmentEntryLinkNamespace}-next-item-index`;
 
 let moving = false;
+
+function getNextItemIndex() {
+	return window[nextItemIndexKey] || 0;
+}
+
+function setNextItemIndex(index) {
+	window[nextItemIndexKey] = index;
+}
 
 function getActiveIndicator() {
 	return fragmentElement.querySelector('.carousel-navigation .active');
@@ -30,7 +39,7 @@ function activateIndicator(activeItem, nextItem, movement) {
 	}
 
 	getActiveIndicator().classList.remove('active');
-	indicators[this.nextItemIndex].classList.add('active');
+	indicators[getNextItemIndex()].classList.add('active');
 }
 
 function activateItem(activeItem, nextItem, movement) {
@@ -53,18 +62,20 @@ function move(movement, index = null) {
 	const activeItem = fragmentElement.querySelector('.carousel-item.active');
 	const indexActiveItem = items.indexOf(activeItem);
 
-	this.nextItemIndex =
-		indexActiveItem < 1 ? items.length - 1 : indexActiveItem - 1;
+	setNextItemIndex(
+		indexActiveItem < 1 ? items.length - 1 : indexActiveItem - 1
+	);
 
 	if (index !== null) {
-		this.nextItemIndex = index;
+		setNextItemIndex(index);
 	}
 	else if (movement === MOVE_RIGHT) {
-		this.nextItemIndex =
-			indexActiveItem >= items.length - 1 ? 0 : indexActiveItem + 1;
+		setNextItemIndex(
+			indexActiveItem >= items.length - 1 ? 0 : indexActiveItem + 1
+		);
 	}
 
-	const nextItem = items[this.nextItemIndex];
+	const nextItem = items[getNextItemIndex()];
 
 	activateIndicator(activeItem, nextItem, movement);
 
@@ -95,11 +106,11 @@ function createInterval() {
 (function main() {
 	let intervalId = createInterval();
 
-	if (this.nextItemIndex && this.nextItemIndex < items.length) {
+	if (getNextItemIndex() < items.length) {
 		const activeItem = fragmentElement.querySelector(
 			'.carousel-item.active'
 		);
-		const nextItem = items[this.nextItemIndex];
+		const nextItem = items[getNextItemIndex()];
 
 		activateIndicator(activeItem, nextItem);
 		activateItem(activeItem, nextItem);

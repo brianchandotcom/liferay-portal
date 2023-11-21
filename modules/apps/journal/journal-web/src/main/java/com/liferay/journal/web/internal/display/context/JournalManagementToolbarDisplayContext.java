@@ -593,7 +593,6 @@ public class JournalManagementToolbarDisplayContext
 				LanguageUtil.get(httpServletRequest, "structures") +
 					StringPool.TRIPLE_PERIOD
 			).build());
-
 		filterNavigationDropdownItems.add(
 			DropdownItemBuilder.putData(
 				"action", "openCategoriesSelector"
@@ -610,7 +609,6 @@ public class JournalManagementToolbarDisplayContext
 				LanguageUtil.get(httpServletRequest, "categories") +
 					StringPool.TRIPLE_PERIOD
 			).build());
-
 		filterNavigationDropdownItems.add(
 			DropdownItemBuilder.putData(
 				"action", "openTagsSelector"

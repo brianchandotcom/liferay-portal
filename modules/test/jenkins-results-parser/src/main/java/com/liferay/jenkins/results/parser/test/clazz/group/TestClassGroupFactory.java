@@ -45,6 +45,11 @@ public class TestClassGroupFactory {
 				(JUnitBatchTestClassGroup)batchTestClassGroup);
 		}
 
+		if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
+			return new PlaywrightAxisTestClassGroup(
+				(PlaywrightBatchTestClassGroup)batchTestClassGroup);
+		}
+
 		if (batchTestClassGroup instanceof PluginsGulpBatchTestClassGroup) {
 			return new PluginsGulpAxisTestClassGroup(
 				(PluginsGulpBatchTestClassGroup)batchTestClassGroup);
@@ -66,6 +71,11 @@ public class TestClassGroupFactory {
 
 		if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
 			return new JUnitAxisTestClassGroup(
+				jsonObject, segmentTestClassGroup);
+		}
+
+		if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
+			return new PlaywrightAxisTestClassGroup(
 				jsonObject, segmentTestClassGroup);
 		}
 
@@ -326,6 +336,16 @@ public class TestClassGroupFactory {
 				}
 				else {
 					batchTestClassGroup = new SemVerModulesBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("playwright-js-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup = new PlaywrightBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new PlaywrightBatchTestClassGroup(
 						batchName, portalTestClassJob);
 				}
 			}

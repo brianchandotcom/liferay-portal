@@ -662,24 +662,6 @@ public class AssetTagLocalServiceWrapper
 		return _assetTagLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public java.util.List<AssetTag> getSocialActivityCounterOffsetTags(
-		long groupId, String socialActivityCounterName, int startOffset,
-		int endOffset) {
-
-		return _assetTagLocalService.getSocialActivityCounterOffsetTags(
-			groupId, socialActivityCounterName, startOffset, endOffset);
-	}
-
-	@Override
-	public java.util.List<AssetTag> getSocialActivityCounterPeriodTags(
-		long groupId, String socialActivityCounterName, int startPeriod,
-		int endPeriod) {
-
-		return _assetTagLocalService.getSocialActivityCounterPeriodTags(
-			groupId, socialActivityCounterName, startPeriod, endPeriod);
-	}
-
 	/**
 	 * Returns the asset tag with the primary key.
 	 *

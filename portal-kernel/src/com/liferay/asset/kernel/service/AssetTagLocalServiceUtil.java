@@ -591,22 +591,6 @@ public class AssetTagLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static List<AssetTag> getSocialActivityCounterOffsetTags(
-		long groupId, String socialActivityCounterName, int startOffset,
-		int endOffset) {
-
-		return getService().getSocialActivityCounterOffsetTags(
-			groupId, socialActivityCounterName, startOffset, endOffset);
-	}
-
-	public static List<AssetTag> getSocialActivityCounterPeriodTags(
-		long groupId, String socialActivityCounterName, int startPeriod,
-		int endPeriod) {
-
-		return getService().getSocialActivityCounterPeriodTags(
-			groupId, socialActivityCounterName, startPeriod, endPeriod);
-	}
-
 	/**
 	 * Returns the asset tag with the primary key.
 	 *

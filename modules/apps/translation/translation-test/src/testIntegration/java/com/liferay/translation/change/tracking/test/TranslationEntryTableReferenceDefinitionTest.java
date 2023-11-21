@@ -8,6 +8,7 @@ package com.liferay.translation.change.tracking.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -51,7 +52,7 @@ public class TranslationEntryTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return _translationEntryLocalService.addOrUpdateTranslationEntry(
+		_translationEntryLocalService.addOrUpdateTranslationEntry(
 			group.getGroupId(), JournalArticle.class.getName(),
 			_journalArticle.getResourcePrimKey(),
 			StringUtil.replace(
@@ -61,9 +62,15 @@ public class TranslationEntryTableReferenceDefinitionTest
 				String.valueOf(_journalArticle.getResourcePrimKey())),
 			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
 			ServiceContextTestUtil.getServiceContext());
+
+		return _journalArticleLocalService.fetchLatestArticle(
+			_journalArticle.getResourcePrimKey());
 	}
 
 	private JournalArticle _journalArticle;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private TranslationEntryLocalService _translationEntryLocalService;

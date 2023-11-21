@@ -146,7 +146,7 @@ public class FileUtil {
 	public static byte[] getBytes(InputStream inputStream, int bufferSize)
 		throws IOException {
 
-		return _file.getBytes(inputStream);
+		return _file.getBytes(inputStream, bufferSize);
 	}
 
 	public static byte[] getBytes(

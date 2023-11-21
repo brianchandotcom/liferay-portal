@@ -51,11 +51,10 @@ export default function ReportParameters({namespace, parameters}) {
 	function addParameter(namespace) {
 		portletMessageContainer.style.display = 'none';
 
-		const parameterKey = document.getElementsByClassName(
-			'parameters-key'
-		)[0].value;
+		let parameterKey = document.getElementsByClassName('parameters-key')[0]
+			.value;
 
-		const parameterType = document.getElementsByClassName(
+		let parameterType = document.getElementsByClassName(
 			'parameters-input-type'
 		)[0].value;
 
@@ -112,6 +111,10 @@ export default function ReportParameters({namespace, parameters}) {
 			parameterValue = getDateValue(namespace);
 		}
 
+		parameterKey = encodeURIComponent(parameterKey);
+		parameterType = encodeURIComponent(parameterType);
+		parameterValue = encodeURIComponent(parameterValue);
+
 		addTag(parameterKey, parameterValue, parameterType);
 
 		addReportParameter(parameterKey, parameterValue, parameterType);
@@ -145,10 +148,6 @@ export default function ReportParameters({namespace, parameters}) {
 
 	function addTag(parameterKey, parameterValue, parameterType) {
 		const tagsContainer = document.getElementsByClassName('report-tags')[0];
-
-		parameterKey = encodeURIComponent(parameterKey);
-		parameterType = encodeURIComponent(parameterType);
-		parameterValue = encodeURIComponent(parameterValue);
 
 		const key = encodeURIComponent(
 			('report-tag-' + parameterKey).replace(/ /g, 'BLANK')

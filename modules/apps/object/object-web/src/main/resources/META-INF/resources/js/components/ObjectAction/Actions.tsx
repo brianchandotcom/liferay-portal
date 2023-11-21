@@ -18,6 +18,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import LabelRenderer from '../LabelRenderer';
 
 type Status = {
 	code: number;
@@ -93,18 +94,15 @@ export default function Actions({
 		openSidePanel,
 		value,
 	}: fdsItem<ItemData>) {
-		const handleEditAction = () => {
-			openSidePanel({
-				url: formatActionURL(url, itemData.id),
-			});
-		};
-
 		return (
-			<div className="table-list-title">
-				<a href="#" onClick={handleEditAction}>
-					{value}
-				</a>
-			</div>
+			<LabelRenderer
+				onClick={() => {
+					openSidePanel({
+						url: formatActionURL(url, itemData.id),
+					});
+				}}
+				value={value}
+			/>
 		);
 	}
 

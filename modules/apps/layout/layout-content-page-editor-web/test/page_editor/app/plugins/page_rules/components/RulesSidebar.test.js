@@ -14,14 +14,38 @@ import deleteRule from '../../../../../../src/main/resources/META-INF/resources/
 import RulesSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page_rules/components/RulesSidebar';
 
 jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
+	() => ({
+		config: {
+			availableSegmentsEntries: {},
+		},
+	})
+);
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve({}))
+);
+
+jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteRule',
 	() => jest.fn()
+);
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useActionValues',
+	() => jest.fn(() => [{id: 'action-id'}])
+);
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useConditionValues',
+	() => jest.fn(() => [{id: 'condition-id'}])
 );
 
 const renderComponent = ({rules = []} = {}) =>
 	render(
 		<StoreAPIContextProvider
-			dispatch={() => {}}
+			dispatch={() => Promise.resolve()}
 			getState={() => ({
 				fragmentEntryLinks: [],
 				layoutData: {
@@ -58,6 +82,8 @@ describe('RulesSidebar', () => {
 		renderComponent({
 			rules: [
 				{
+					actions: [],
+					conditions: [],
 					id: 'rule-1',
 					name: 'Rule 1',
 				},
@@ -71,10 +97,14 @@ describe('RulesSidebar', () => {
 		renderComponent({
 			rules: [
 				{
+					actions: [],
+					conditions: [],
 					id: 'rule',
 					name: 'rule',
 				},
 				{
+					actions: [],
+					conditions: [],
 					id: 'rule-1',
 					name: 'rule 1',
 				},
@@ -83,7 +113,9 @@ describe('RulesSidebar', () => {
 
 		const addRuleButton = screen.getByText('new-rule');
 
-		fireEvent.click(addRuleButton);
+		act(() => {
+			fireEvent.click(addRuleButton);
+		});
 
 		act(() => {
 			jest.runAllTimers();
@@ -100,6 +132,8 @@ describe('RulesSidebar', () => {
 		renderComponent({
 			rules: [
 				{
+					actions: [],
+					conditions: [],
 					id: 'rule-1',
 					name: 'rule 1',
 				},
@@ -131,6 +165,8 @@ describe('RulesSidebar', () => {
 		renderComponent({
 			rules: [
 				{
+					actions: [],
+					conditions: [],
 					id: 'rule-1',
 					name: 'rule 1',
 				},

@@ -18,6 +18,7 @@
 		<suppress checks="TryWithResourcesCheck" files="ant-gradle/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-mirrors-get/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-sync-dir/.*" />
+		<suppress checks="URLInputStreamCheck" files="gradle-plugins-poshi-runner/src/main/java/com/liferay/gradle/plugins/poshi/runner/PoshiRunnerPlugin\.java" />
 		<suppress checks="VariableDeclarationAsUsedCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayOSGiPlugin\.java" />
 	</checkstyle>
 	<source-check>

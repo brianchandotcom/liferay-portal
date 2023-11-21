@@ -728,11 +728,11 @@ definition {
 			for (var pageNumber : list "1,2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Site Name",
-					layoutName = "Widget Page Name ${pageNumber}");
+					layoutName = "Test Page Name ${pageNumber}");
 
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Site Name",
-					layoutName = "Widget Page Name ${pageNumber}",
+					layoutName = "Test Page Name ${pageNumber}",
 					widgetName = "Asset Publisher");
 			}
 		}
@@ -754,9 +754,9 @@ definition {
 			Publications.selectPublication(publicationName = "Publication Name");
 		}
 
-		task ("Go to Widget Page Name 1 and configure Asset Publisher") {
+		task ("Go to Test Page Name 1 and configure Asset Publisher") {
 			Navigator.openSitePage(
-				pageName = "Widget Page Name 1",
+				pageName = "Test Page Name 1",
 				siteName = "Site Name");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
@@ -764,9 +764,9 @@ definition {
 				assetType = "Basic Document");
 		}
 
-		task ("Go to Widget Page Name 2 and configure Asset Publisher") {
+		task ("Go to Test Page Name 2 and configure Asset Publisher") {
 			Navigator.openSitePage(
-				pageName = "Widget Page Name 2",
+				pageName = "Test Page Name 2",
 				siteName = "Site Name");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
@@ -782,14 +782,14 @@ definition {
 			PublicationsChanges.viewChanges(
 				changeCategory = "Page",
 				changeSite = "Site Name",
-				changeTitle = "Widget Page Name 1",
+				changeTitle = "Test Page Name 1",
 				changeType = "Modified",
 				changeUser = "Test Test");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Page",
 				changeSite = "Site Name",
-				changeTitle = "Widget Page Name 2",
+				changeTitle = "Test Page Name 2",
 				changeType = "Modified",
 				changeUser = "Test Test");
 		}
@@ -800,9 +800,9 @@ definition {
 				publicationName = "Publication Name");
 		}
 
-		task ("Go to Widget Page Name 1 and assert that Asset Publisher kept the changes") {
+		task ("Go to Test Page Name 1 and assert that Asset Publisher kept the changes") {
 			Navigator.openSitePage(
-				pageName = "Widget Page Name 1",
+				pageName = "Test Page Name 1",
 				siteName = "Site Name");
 
 			DMDocument.viewPGViaAP(
@@ -810,9 +810,9 @@ definition {
 				dmDocumentTitle = "Document_1.jpg");
 		}
 
-		task ("Go to Widget Page Name 2 and assert that Asset Publisher kept the changes") {
+		task ("Go to Test Page Name 2 and assert that Asset Publisher kept the changes") {
 			Navigator.openSitePage(
-				pageName = "Widget Page Name 2",
+				pageName = "Test Page Name 2",
 				siteName = "Site Name");
 
 			DMDocument.viewPGViaAP(

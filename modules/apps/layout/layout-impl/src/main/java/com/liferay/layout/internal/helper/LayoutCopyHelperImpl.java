@@ -127,7 +127,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private void _copyAssetCategoryIdsAndAssetTagNames(
-			Layout sourceLayout, Layout targetLayout)
+			Layout sourceLayout, Layout targetLayout, long userId)
 		throws Exception {
 
 		if (sourceLayout.isDraftLayout() || targetLayout.isDraftLayout()) {
@@ -135,7 +135,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		_layoutLocalService.updateAsset(
-			targetLayout.getUserId(), targetLayout,
+			userId, targetLayout,
 			_assetCategoryLocalService.getCategoryIds(
 				Layout.class.getName(), sourceLayout.getPlid()),
 			_assetTagLocalService.getTagNames(
@@ -235,7 +235,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				new CopyLayoutCallable(
 					copySegmentsExperience, sourceLayout,
 					sourceSegmentsExperiencesIds, targetLayout,
-					targetSegmentsExperiencesIds));
+					targetSegmentsExperiencesIds, user));
 		}
 		catch (Throwable throwable) {
 			throw new Exception(throwable);
@@ -249,7 +249,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	private void _copyLayoutPageTemplateStructure(
 			long[] segmentsExperiencesIds, Layout sourceLayout,
-			Layout targetLayout)
+			Layout targetLayout, User user)
 		throws Exception {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -282,7 +282,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		if (targetLayoutPageTemplateStructure == null) {
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
-					targetLayout.getUserId(), targetLayout.getGroupId(),
+					user.getUserId(), targetLayout.getGroupId(),
 					targetLayout.getPlid(),
 					_segmentsExperienceLocalService.
 						fetchDefaultSegmentsExperienceId(
@@ -291,7 +291,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		Map<Long, Long> segmentsExperienceIdsMap = _getSegmentsExperienceIds(
-			segmentsExperiencesIds, sourceLayout, targetLayout);
+			segmentsExperiencesIds, sourceLayout, targetLayout, user);
 
 		for (Map.Entry<Long, Long> entry :
 				segmentsExperienceIdsMap.entrySet()) {
@@ -307,7 +307,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			JSONObject dataJSONObject = _processDataJSONObject(
 				LayoutStructure.of(data), targetLayout, fragmentEntryLinksMap,
-				entry.getValue());
+				entry.getValue(), user);
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
@@ -318,7 +318,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	private void _copyLayoutPageTemplateStructureFromSegmentsExperience(
 			Layout sourceLayout, long sourceSegmentsExperienceId,
-			Layout targetLayout, long targetSegmentsExperienceId)
+			Layout targetLayout, long targetSegmentsExperienceId, User user)
 		throws Exception {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -356,7 +356,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		JSONObject dataJSONObject = _processDataJSONObject(
 			layoutStructure, targetLayout, fragmentEntryLinksMap,
-			targetSegmentsExperienceId);
+			targetSegmentsExperienceId, user);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -364,7 +364,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				targetSegmentsExperienceId, dataJSONObject.toString());
 	}
 
-	private void _copyLayoutSEOEntry(Layout sourceLayout, Layout targetLayout)
+	private void _copyLayoutSEOEntry(
+			Layout sourceLayout, Layout targetLayout, long userId)
 		throws Exception {
 
 		if (sourceLayout.isDraftLayout() || targetLayout.isDraftLayout()) {
@@ -398,9 +399,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		_layoutSEOEntryLocalService.copyLayoutSEOEntry(
-			targetLayout.getUserId(), targetLayout.getGroupId(),
-			targetLayout.isPrivateLayout(), targetLayout.getLayoutId(),
-			layoutSEOEntry.isCanonicalURLEnabled(),
+			userId, targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+			targetLayout.getLayoutId(), layoutSEOEntry.isCanonicalURLEnabled(),
 			layoutSEOEntry.getCanonicalURLMap(),
 			layoutSEOEntry.getDDMStorageId(),
 			layoutSEOEntry.isOpenGraphDescriptionEnabled(),
@@ -594,8 +594,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private Map<Long, Long> _getSegmentsExperienceIds(
-		long[] segmentsExperiencesIds, Layout sourceLayout,
-		Layout targetLayout) {
+		long[] segmentsExperiencesIds, Layout sourceLayout, Layout targetLayout,
+		User user) {
 
 		Map<Long, Long> segmentsExperienceIdsMap = new HashMap<>();
 
@@ -652,8 +652,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			newSegmentsExperience.setUuid(serviceContext.getUuid());
 			newSegmentsExperience.setSegmentsExperienceId(
 				_counterLocalService.increment());
-			newSegmentsExperience.setUserId(targetLayout.getUserId());
-			newSegmentsExperience.setUserName(targetLayout.getUserName());
+			newSegmentsExperience.setUserId(user.getUserId());
+			newSegmentsExperience.setUserName(user.getFullName());
 			newSegmentsExperience.setCreateDate(
 				serviceContext.getCreateDate(new Date()));
 			newSegmentsExperience.setModifiedDate(
@@ -781,7 +781,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private JSONObject _processDataJSONObject(
 			LayoutStructure layoutStructure, Layout targetLayout,
 			Map<Long, FragmentEntryLink> fragmentEntryLinksMap,
-			long targetSegmentsExperienceId)
+			long targetSegmentsExperienceId, User user)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -813,8 +813,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			newFragmentEntryLink.setUuid(serviceContext.getUuid());
 			newFragmentEntryLink.setFragmentEntryLinkId(
 				_counterLocalService.increment());
-			newFragmentEntryLink.setUserId(targetLayout.getUserId());
-			newFragmentEntryLink.setUserName(targetLayout.getUserName());
+			newFragmentEntryLink.setUserId(user.getUserId());
+			newFragmentEntryLink.setUserName(user.getFullName());
 			newFragmentEntryLink.setCreateDate(
 				serviceContext.getCreateDate(new Date()));
 			newFragmentEntryLink.setModifiedDate(
@@ -838,7 +838,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				newFragmentEntryLink.getFragmentEntryLinkId());
 
 			_commentManager.copyDiscussion(
-				targetLayout.getUserId(), targetLayout.getGroupId(),
+				user.getUserId(), targetLayout.getGroupId(),
 				FragmentEntryLink.class.getName(),
 				fragmentEntryLink.getFragmentEntryLinkId(),
 				newFragmentEntryLink.getFragmentEntryLinkId(),
@@ -936,12 +936,12 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				if (_copySegmentsExperience) {
 					_copyLayoutPageTemplateStructureFromSegmentsExperience(
 						_sourceLayout, _sourceSegmentsExperiencesIds[0],
-						_targetLayout, _targetSegmentsExperiencesIds[0]);
+						_targetLayout, _targetSegmentsExperiencesIds[0], _user);
 				}
 				else {
 					_copyLayoutPageTemplateStructure(
 						_sourceSegmentsExperiencesIds, _sourceLayout,
-						_targetLayout);
+						_targetLayout, _user);
 				}
 
 				List<String> portletIds = _getLayoutPortletIds(
@@ -961,11 +961,14 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
 
-			_copyAssetCategoryIdsAndAssetTagNames(_sourceLayout, _targetLayout);
+			_copyAssetCategoryIdsAndAssetTagNames(
+				_sourceLayout, _targetLayout, _user.getUserId());
 
-			_copyLayoutSEOEntry(_sourceLayout, _targetLayout);
+			_copyLayoutSEOEntry(
+				_sourceLayout, _targetLayout, _user.getUserId());
 
-			_copyLayoutClientExtensions(_sourceLayout, _targetLayout);
+			_copyLayoutClientExtensions(
+				_sourceLayout, _targetLayout, _user.getUserId());
 
 			Image image = _imageLocalService.getImage(
 				_sourceLayout.getIconImageId());
@@ -989,17 +992,18 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		private CopyLayoutCallable(
 			boolean copySegmentsExperience, Layout sourceLayout,
 			long[] sourceSegmentsExperiencesIds, Layout targetLayout,
-			long[] targetSegmentsExperiencesIds) {
+			long[] targetSegmentsExperiencesIds, User user) {
 
 			_copySegmentsExperience = copySegmentsExperience;
 			_sourceLayout = sourceLayout;
 			_sourceSegmentsExperiencesIds = sourceSegmentsExperiencesIds;
 			_targetLayout = targetLayout;
 			_targetSegmentsExperiencesIds = targetSegmentsExperiencesIds;
+			_user = user;
 		}
 
 		private void _copyLayoutClientExtensions(
-				Layout sourceLayout, Layout targetLayout)
+				Layout sourceLayout, Layout targetLayout, long userId)
 			throws Exception {
 
 			long classNameId = _portal.getClassNameId(Layout.class);
@@ -1016,8 +1020,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					clientExtensionEntryRels) {
 
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					targetLayout.getUserId(), targetLayout.getGroupId(),
-					classNameId, targetLayout.getPlid(),
+					userId, targetLayout.getGroupId(), classNameId,
+					targetLayout.getPlid(),
 					clientExtensionEntryRel.getCETExternalReferenceCode(),
 					clientExtensionEntryRel.getType(),
 					clientExtensionEntryRel.getTypeSettings(),
@@ -1030,6 +1034,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		private final long[] _sourceSegmentsExperiencesIds;
 		private final Layout _targetLayout;
 		private final long[] _targetSegmentsExperiencesIds;
+		private final User _user;
 
 	}
 

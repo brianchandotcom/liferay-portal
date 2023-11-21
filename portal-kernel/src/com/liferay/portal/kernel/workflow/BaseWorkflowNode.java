@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -26,15 +27,25 @@ public abstract class BaseWorkflowNode implements WorkflowNode {
 			return HtmlUtil.escape(label);
 		}
 
-		label = _labelMap.get(LocaleUtil.getSiteDefault());
+		Language language = LanguageUtil.getLanguage();
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		label = language.get(locale, _name);
+
+		if (!StringUtil.equalsIgnoreCase(
+				label, language.get(defaultLocale, _name))) {
+
+			return HtmlUtil.escape(label);
+		}
+
+		label = _labelMap.get(defaultLocale);
 
 		if (label != null) {
 			return HtmlUtil.escape(label);
 		}
 
-		Language language = LanguageUtil.getLanguage();
-
-		return HtmlUtil.escape(language.get(locale, _name));
+		return _name;
 	}
 
 	@Override

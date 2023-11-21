@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {
 	AriaAttributes,
 	useCallback,
@@ -25,28 +26,34 @@ const ScreenReaderAnnouncer = React.forwardRef<any, ScreenReaderAnnouncerProps>(
 		ref
 	) => {
 		const [textMap, setTextMap] = useState<Record<string, string>>({});
+		const isMounted = useIsMounted();
 
-		const sendMessage = useCallback((message: string) => {
-			const messageId = uuidv4();
+		const sendMessage = useCallback(
+			(message: string) => {
+				const messageId = uuidv4();
 
-			setTextMap((previousTextMap) => {
-				const nextTextMap = {...previousTextMap};
-
-				nextTextMap[messageId] = message;
-
-				return nextTextMap;
-			});
-
-			setTimeout(() => {
 				setTextMap((previousTextMap) => {
 					const nextTextMap = {...previousTextMap};
 
-					delete nextTextMap[messageId];
+					nextTextMap[messageId] = message;
 
 					return nextTextMap;
 				});
-			}, 10000);
-		}, []);
+
+				setTimeout(() => {
+					if (isMounted()) {
+						setTextMap((previousTextMap) => {
+							const nextTextMap = {...previousTextMap};
+
+							delete nextTextMap[messageId];
+
+							return nextTextMap;
+						});
+					}
+				}, 10000);
+			},
+			[isMounted]
+		);
 
 		useImperativeHandle(ref, () => ({sendMessage}));
 

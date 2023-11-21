@@ -518,11 +518,11 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 											source: `${objectDefinition.id}`,
 											sourceHandle: isSelfObjectRelationship
 												? 'fixedLeftHandle'
-												: `${objectDefinition.id}`,
+												: null,
 											target: `${objectRelationship.objectDefinitionId2}`,
 											targetHandle: isSelfObjectRelationship
 												? 'fixedRightHandle'
-												: `${objectRelationship.objectDefinitionId2}`,
+												: null,
 											type: isSelfObjectRelationship
 												? 'selfObjectRelationshipEdge'
 												: 'defaultObjectRelationshipEdge',

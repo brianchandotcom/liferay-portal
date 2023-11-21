@@ -224,9 +224,18 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 				</clay:sheet>
 
 				<aui:button-row>
-					<aui:button cssClass="c-mr-2" type="submit" />
+					<clay:button
+						cssClass="c-mr-2"
+						label="save"
+						type="submit"
+					/>
 
-					<aui:button href="<%= journalConfigurationDisplayContext.getBackURL() %>" type="cancel" />
+					<clay:link
+						displayType="secondary"
+						href="<%= journalConfigurationDisplayContext.getBackURL() %>"
+						label="cancel"
+						type="button"
+					/>
 				</aui:button-row>
 			</aui:form>
 		</clay:col>

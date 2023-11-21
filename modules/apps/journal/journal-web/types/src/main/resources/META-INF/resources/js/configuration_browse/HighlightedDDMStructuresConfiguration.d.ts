@@ -5,9 +5,10 @@
 
 /// <reference types="react" />
 
-interface DDMStructure {
+export interface DDMStructure {
 	ddmStructureId: string;
 	name: string;
+	scope: string;
 }
 interface Props {
 	ddmStructures?: DDMStructure[];

@@ -1019,6 +1019,26 @@ public class CommerceOrderLocalServiceImpl
 		return newCommerceOrder;
 	}
 
+	@Override
+	public CommerceOrder resetCommerceOrderAddresses(
+			long commerceOrderId, boolean billingAddress,
+			boolean shippingAddress)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		if (billingAddress) {
+			commerceOrder.setBillingAddressId(0);
+		}
+
+		if (shippingAddress) {
+			commerceOrder.setShippingAddressId(0);
+		}
+
+		return commerceOrderPersistence.update(commerceOrder);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)

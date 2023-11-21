@@ -11,7 +11,7 @@
 	}
 
 	&--left-open {
-		position: inherit;
+		top: 121px;
 		transform: translateX(0);
 		transition: transform 0.5s;
 	}
@@ -22,7 +22,7 @@
 	}
 
 	&--right-open {
-		position: inherit;
+		top: 121px;
 		transform: translateX(0);
 		transition: transform 0.5s;
 	}

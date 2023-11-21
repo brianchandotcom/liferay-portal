@@ -13,6 +13,7 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -139,6 +140,11 @@ public class TestrayFactory {
 
 		if (topLevelBuild instanceof SourceFormatBuild) {
 			return new SFBatchBuildTestrayCaseResult(
+				testrayBuild, topLevelBuild, axisTestClassGroup);
+		}
+
+		if (axisTestClassGroup instanceof PlaywrightAxisTestClassGroup) {
+			return new PlaywrightBatchBuildTestrayCaseResult(
 				testrayBuild, topLevelBuild, axisTestClassGroup);
 		}
 

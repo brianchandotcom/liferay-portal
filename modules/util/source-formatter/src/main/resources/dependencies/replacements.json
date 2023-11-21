@@ -1,5 +1,37 @@
 [
 	{
+		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
+		"issueKey": "LPS-159679",
+		"newImports": [
+			"com.liferay.portal.kernel.cookies.constants.CookiesConstants"
+		],
+		"to": "CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST"
+	},
+	{
+		"from": "CookieKeys.ID",
+		"issueKey": "LPS-159679",
+		"newImports": [
+			"com.liferay.portal.kernel.cookies.constants.CookiesConstants"
+		],
+		"to": "CookiesConstants.NAME_ID"
+	},
+	{
+		"from": "CookieKeys.getCookie(HttpServletRequest, String)",
+		"issueKey": "LPS-159679",
+		"newImports": [
+			"com.liferay.portal.kernel.cookies.CookiesManagerUtil"
+		],
+		"to": "CookiesManagerUtil.getCookieValue(param#1#, param#0#)"
+	},
+	{
+		"from": "CookieKeys.SCREEN_NAME",
+		"issueKey": "LPS-159679",
+		"newImports": [
+			"com.liferay.portal.kernel.cookies.constants.CookiesConstants"
+		],
+		"to": "CookiesConstants.NAME_USER_UUID"
+	},
+	{
 		"from": "CookieUtil.get(HttpServletRequest, String)",
 		"issueKey": "LPS-159681",
 		"newImports": [

@@ -7,6 +7,8 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
@@ -193,6 +195,22 @@ public class DuplicateItemMVCActionCommand
 					}
 				});
 
+		for (long duplicatedFragmentEntryLinkId :
+				duplicatedFragmentEntryLinkIds) {
+
+			FragmentEntryLink duplicatedFragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					duplicatedFragmentEntryLinkId);
+
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					_fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
+					duplicatedFragmentEntryLink);
+			}
+		}
+
 		return JSONUtil.put(
 			"duplicatedFragmentEntryLinks",
 			_getDuplicatedFragmentEntryLinksJSONArray(
@@ -368,6 +386,10 @@ public class DuplicateItemMVCActionCommand
 
 	@Reference
 	private ContentManager _contentManager;
+
+	@Reference
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

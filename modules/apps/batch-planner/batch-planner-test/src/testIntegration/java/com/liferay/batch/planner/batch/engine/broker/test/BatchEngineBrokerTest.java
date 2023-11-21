@@ -113,6 +113,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -126,6 +127,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
@@ -190,7 +192,6 @@ public class BatchEngineBrokerTest {
 
 		if (_company2 != null) {
 			_companyLocalService.deleteCompany(_company2);
-
 			_company2 = null;
 		}
 	}
@@ -211,13 +212,13 @@ public class BatchEngineBrokerTest {
 		_assertEqualsExportCSV(
 			_getExportFileString(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
+				_objectEntryExportCSVFieldNames, null,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				"C_TestObjectCSV"),
 			_getExpectedCSVString(
-				objectEntry.getCreateDate(), "object_entry.csv",
-				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate(),
-				false),
+				objectEntry.getCreateDate(), _OBJECT_ENTRY_ERC_1,
+				"object_entry.csv", null, objectEntry.getObjectEntryId(),
+				objectEntry.getModifiedDate()),
 			objectEntry.getExternalReferenceCode(),
 			_objectEntryExportCSVFieldNames);
 	}
@@ -249,12 +250,12 @@ public class BatchEngineBrokerTest {
 			_getExpectedJsonNode(
 				_objectDefinition1, objectEntry1.getObjectEntryId()),
 			_objectEntryExportFieldNames,
-			_getFirstJsonNode(
+			_getActualJsonNode(
 				_objectMapper.readTree(
 					_getExportFileString(
 						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-						_objectEntryExportFieldNames,
-						"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
+						_objectEntryExportFieldNames, null,
+						"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 						"C_TestObject"))));
 	}
 
@@ -265,13 +266,14 @@ public class BatchEngineBrokerTest {
 		_assertEqualsExportCSV(
 			_getExportFileString(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectDefinitionExportCSVFieldNames,
+				_objectDefinitionExportCSVFieldNames, null,
 				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-				false, null),
+				null),
 			_getExpectedCSVString(
-				_objectDefinition1.getCreateDate(), "object_definition.csv",
+				_objectDefinition1.getCreateDate(), null,
+				"object_definition.csv", null,
 				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition1.getModifiedDate(), false),
+				_objectDefinition1.getModifiedDate()),
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectDefinitionExportCSVFieldNames);
 	}
@@ -294,14 +296,14 @@ public class BatchEngineBrokerTest {
 		_assertEqualsExport(
 			_getExpectedJsonNode(_objectDefinition1),
 			_objectDefinitionExportFieldNames,
-			_getFirstJsonNode(
+			_getActualJsonNode(
 				_objectMapper.readTree(
 					_getExportFileString(
 						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-						_objectDefinitionExportFieldNames,
+						_objectDefinitionExportFieldNames, null,
 						"com.liferay.object.admin.rest.dto.v1_0." +
 							"ObjectDefinition",
-						false, null)),
+						null)),
 				_objectDefinition1.getShortName()));
 	}
 
@@ -324,13 +326,13 @@ public class BatchEngineBrokerTest {
 		_assertEqualsExportCSV(
 			_getExportFileString(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
+				_objectEntryExportCSVFieldNames, TestPropsValues.getGroupId(),
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				"C_TestObjectCSV"),
 			_getExpectedCSVString(
-				objectEntry.getCreateDate(), "object_entry.csv",
-				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate(),
-				true),
+				objectEntry.getCreateDate(), _OBJECT_ENTRY_ERC_1,
+				"object_entry.csv", TestPropsValues.getGroupId(),
+				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate()),
 			objectEntry.getExternalReferenceCode(),
 			_objectEntryExportCSVFieldNames);
 	}
@@ -365,13 +367,53 @@ public class BatchEngineBrokerTest {
 			_getExpectedJsonNode(
 				_objectDefinition1, objectEntry.getObjectEntryId()),
 			_objectEntryExportFieldNames,
-			_getFirstJsonNode(
+			_getActualJsonNode(
 				_objectMapper.readTree(
 					_getExportFileString(
 						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
 						_objectEntryExportFieldNames,
-						"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
+						TestPropsValues.getGroupId(),
+						"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 						"C_TestObject"))));
+	}
+
+	@Test
+	public void testImportCompanyScopeObjectEntryCSV() throws Exception {
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObjectCSV",
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+
+		try (FileInputStream fileInputStream = new FileInputStream(
+				_prepareCSVFile(
+					RandomTestUtil.nextDate(), _OBJECT_ENTRY_ERC_1,
+					"object_entry.csv", TestPropsValues.getGroupId(),
+					RandomTestUtil.randomLong(), RandomTestUtil.nextDate(),
+					false))) {
+
+			_executeImportTask(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectEntryExportCSVFieldNames, TestPropsValues.getGroupId(),
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
+				"C_TestObjectCSV", _getURIString(fileInputStream));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			_OBJECT_ENTRY_ERC_1, _objectDefinition1.getObjectDefinitionId());
+
+		Assert.assertNotNull(objectEntry);
+
+		_assertEqualsExportCSV(
+			_getExportFileString(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectEntryExportCSVFieldNames, null,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				"C_TestObjectCSV"),
+			_getExpectedCSVString(
+				objectEntry.getCreateDate(), _OBJECT_ENTRY_ERC_1,
+				"object_entry.csv", null, objectEntry.getObjectEntryId(),
+				objectEntry.getModifiedDate()),
+			objectEntry.getExternalReferenceCode(),
+			_objectEntryExportCSVFieldNames);
 	}
 
 	@Test
@@ -494,6 +536,34 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
+	public void testImportSiteScopeObjectEntryCSV() throws Exception {
+
+		// Default group
+
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObjectCSV",
+			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
+
+		_testImportSiteScopeObjectEntryCSV(
+			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
+
+		// Global group
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group globalGroup = company.getGroup();
+
+		_testImportSiteScopeObjectEntryCSV(
+			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
+
+		// New group
+
+		_testImportSiteScopeObjectEntryCSV(
+			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
+	}
+
+	@Test
 	public void testImportSiteScopeObjectEntryJSON() throws Exception {
 
 		// Default group
@@ -611,9 +681,10 @@ public class BatchEngineBrokerTest {
 					new BigDecimal(0.1234567891234567, MathContext.DECIMAL64)
 				).put(
 					"testRichTextField",
-					"<p>Test text</p><p><img alt=\"\" height=\"202\" " +
-						"src=\"http://localhost:8080/image/company_logo" +
-							"\"><br></p>"
+					StringBundler.concat(
+						"<p>Test text</p>\n<p>\n",
+						"  <img alt=\"\" height=\"202\" src=",
+						"http://localhost:8080/image/company_logo\">\n</p>")
 				).put(
 					"testTextField", "Lorem Ipsum"
 				).build(),
@@ -654,6 +725,7 @@ public class BatchEngineBrokerTest {
 		List<String> fieldNames) {
 
 		Assert.assertEquals(fieldNames, actualColumnNames);
+
 		Assert.assertEquals(expectedColumnNames, actualColumnNames);
 	}
 
@@ -694,6 +766,7 @@ public class BatchEngineBrokerTest {
 			new UnsyncBufferedReader(
 				new InputStreamReader(
 					new ByteArrayInputStream(actualCSVString.getBytes())));
+
 		UnsyncBufferedReader expectedUnsyncBufferedReader =
 			new UnsyncBufferedReader(
 				new InputStreamReader(
@@ -706,9 +779,9 @@ public class BatchEngineBrokerTest {
 
 		String actualLineString = actualUnsyncBufferedReader.readLine();
 
-		Assert.assertNotNull(actualLineString);
-
 		String expectedLineString = expectedUnsyncBufferedReader.readLine();
+
+		Assert.assertNotNull(actualLineString);
 
 		boolean found = false;
 
@@ -840,32 +913,97 @@ public class BatchEngineBrokerTest {
 		return objectViewSortColumn;
 	}
 
+	private void _executeImportTask(
+			String externalType, List<String> fieldNames, long groupId,
+			String internalClassName, boolean siteScope,
+			String taskItemDelegateName, String uriString)
+		throws Exception {
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), false, externalType, uriString,
+				internalClassName, RandomTestUtil.randomString(), 0,
+				taskItemDelegateName, false);
+
+		for (String fieldName : fieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
+		}
+
+		if (siteScope) {
+			_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), "siteId",
+				String.valueOf(groupId));
+		}
+
+		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			TestPropsValues.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), "onErrorFail", "true");
+
+		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			TestPropsValues.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), "delimiter",
+			StringPool.COMMA);
+
+		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			TestPropsValues.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), "enclosingCharacter",
+			StringPool.QUOTE);
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		_getFinishedBatchEngineImportTask(
+			batchPlannerPlan.getBatchPlannerPlanId());
+	}
+
+	private JsonNode _getActualJsonNode(JsonNode arrayJsonNode) {
+		Assert.assertTrue(arrayJsonNode.isArray());
+		Assert.assertEquals(1, arrayJsonNode.size());
+
+		return arrayJsonNode.get(0);
+	}
+
+	private JsonNode _getActualJsonNode(JsonNode arrayJsonNode, String name) {
+		for (JsonNode jsonNode : arrayJsonNode) {
+			JsonNode nameJsonNode = jsonNode.get("name");
+
+			if (Objects.equals(name, nameJsonNode.textValue())) {
+				return jsonNode;
+			}
+		}
+
+		return null;
+	}
+
 	private List<String> _getContentRow(String line) {
 		return Arrays.asList(line.split(StringPool.COMMA, -1));
 	}
 
 	private String _getExpectedCSVString(
-			Date createDate, String fileName, long id, Date modifiedDate,
-			boolean siteScope)
+			Date createDate, String externalReferenceCode, String fileName,
+			Long groupId, long id, Date modifiedDate)
 		throws Exception {
 
-		String scopeKey = null;
+		String groupNameString = null;
 
-		if (siteScope) {
-			Group group = GroupLocalServiceUtil.getGroup(
-				TestPropsValues.getGroupId());
+		if (Validator.isNotNull(groupId)) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			scopeKey = group.getGroupKey();
+			groupNameString = group.getGroupKey();
 		}
 
 		return StringUtil.replace(
 			StreamUtil.toString(_getInputStream(fileName)),
 			new String[] {
-				"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]", "$[SCOPE_KEY]"
+				"$[DATE_CREATED]", "$[DATE_MODIFIED]",
+				"$[EXTERNAL_REFERENCE_CODE]", "$[ID]", "$[SCOPE_KEY]"
 			},
 			new String[] {
 				_toDateString(createDate), _toDateString(modifiedDate),
-				String.valueOf(id), scopeKey
+				externalReferenceCode, String.valueOf(id), groupNameString
 			});
 	}
 
@@ -905,9 +1043,8 @@ public class BatchEngineBrokerTest {
 	}
 
 	private String _getExportFileString(
-			String externalType, List<String> fieldNames,
-			String internalClassName, boolean siteScope,
-			String taskItemDelegateName)
+			String externalType, List<String> fieldNames, Long groupId,
+			String internalClassName, String taskItemDelegateName)
 		throws Exception {
 
 		BatchPlannerPlan batchPlannerPlan =
@@ -923,11 +1060,11 @@ public class BatchEngineBrokerTest {
 				fieldName, "String", StringPool.BLANK);
 		}
 
-		if (siteScope) {
+		if (Validator.isNotNull(groupId)) {
 			_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), "siteId",
-				String.valueOf(TestPropsValues.getGroupId()));
+				String.valueOf(groupId));
 		}
 
 		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
@@ -992,25 +1129,6 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
-	private JsonNode _getFirstJsonNode(JsonNode arrayJsonNode) {
-		Assert.assertTrue(arrayJsonNode.isArray());
-		Assert.assertEquals(1, arrayJsonNode.size());
-
-		return arrayJsonNode.get(0);
-	}
-
-	private JsonNode _getFirstJsonNode(JsonNode arrayJsonNode, String name) {
-		for (JsonNode jsonNode : arrayJsonNode) {
-			JsonNode nameJsonNode = jsonNode.get("name");
-
-			if (Objects.equals(name, nameJsonNode.textValue())) {
-				return jsonNode;
-			}
-		}
-
-		return null;
-	}
-
 	private long _getGroupId(long groupId, ObjectDefinition objectDefinition) {
 		if (!Objects.equals(
 				objectDefinition.getScope(),
@@ -1029,6 +1147,16 @@ public class BatchEngineBrokerTest {
 				"/dependencies/", fileName));
 	}
 
+	private String _getURIString(InputStream inputStream) throws Exception {
+		File file = _file.createTempFile("csv");
+
+		Files.copy(inputStream, file.toPath());
+
+		URI uri = file.toURI();
+
+		return uri.toString();
+	}
+
 	private ZipInputStream _getZipInputStream(InputStream inputStream)
 		throws Exception {
 
@@ -1037,6 +1165,39 @@ public class BatchEngineBrokerTest {
 		zipInputStream.getNextEntry();
 
 		return zipInputStream;
+	}
+
+	private File _prepareCSVFile(
+			Date createDate, String externalReferenceCode, String fileName,
+			long groupId, long id, Date modifiedDate, boolean siteScope)
+		throws Exception {
+
+		File file = _file.createTempFile("csv");
+
+		String template = StreamUtil.toString(_getInputStream(fileName));
+
+		String groupNameString = null;
+
+		if (siteScope) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			groupNameString = group.getGroupKey();
+		}
+
+		template = StringUtil.replace(
+			template,
+			new String[] {
+				"$[DATE_CREATED]", "$[DATE_MODIFIED]",
+				"$[EXTERNAL_REFERENCE_CODE]", "$[ID]", "$[SCOPE_KEY]"
+			},
+			new String[] {
+				_toDateString(createDate), _toDateString(modifiedDate),
+				externalReferenceCode, String.valueOf(id), groupNameString
+			});
+
+		_file.write(file, template);
+
+		return file;
 	}
 
 	private ObjectDefinition _publishObjectDefinition(
@@ -1359,6 +1520,42 @@ public class BatchEngineBrokerTest {
 			_getExpectedJsonNode(
 				_objectDefinition1, objectEntry.getObjectEntryId()),
 			_objectEntryImportFieldNames, jsonNode.get(0));
+	}
+
+	private void _testImportSiteScopeObjectEntryCSV(
+			long groupId, String objectEntryERC)
+		throws Exception {
+
+		try (FileInputStream fileInputStream = new FileInputStream(
+				_prepareCSVFile(
+					RandomTestUtil.nextDate(), objectEntryERC,
+					"object_entry.csv", groupId, RandomTestUtil.randomLong(),
+					RandomTestUtil.nextDate(), true))) {
+
+			_executeImportTask(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectEntryExportCSVFieldNames, groupId,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
+				"C_TestObjectCSV", _getURIString(fileInputStream));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntryERC, _objectDefinition1.getObjectDefinitionId());
+
+		Assert.assertEquals(objectEntry.getGroupId(), groupId);
+
+		_assertEqualsExportCSV(
+			_getExportFileString(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectEntryExportCSVFieldNames, groupId,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				"C_TestObjectCSV"),
+			_getExpectedCSVString(
+				objectEntry.getCreateDate(), objectEntryERC, "object_entry.csv",
+				groupId, objectEntry.getObjectEntryId(),
+				objectEntry.getModifiedDate()),
+			objectEntry.getExternalReferenceCode(),
+			_objectEntryExportCSVFieldNames);
 	}
 
 	private String _toDateString(Date date) {

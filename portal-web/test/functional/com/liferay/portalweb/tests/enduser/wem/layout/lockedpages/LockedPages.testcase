@@ -49,8 +49,8 @@ definition {
 			Button.clickSave();
 
 			AssertVisible(
-					key_alertMessage = "The Time Without Autosave field is required.",
-					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+				key_alertMessage = "The Time Without Autosave field is required.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
 
 			Type(
 				key_fieldLabel = "Time Without Autosave",
@@ -60,8 +60,8 @@ definition {
 
 		task ("Then an error message is displayed") {
 			AssertVisible(
-					key_alertMessage = "The Time Without Autosave field is required.",
-					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+				key_alertMessage = "The Time Without Autosave field is required.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
 		}
 
 		task ("When trying to fill the Time Without Autosave field with 0") {
@@ -75,8 +75,8 @@ definition {
 
 		task ("Then an error message is displayed") {
 			AssertVisible(
-					key_alertMessage = "Please enter a value greater than or equal to 1.",
-					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+				key_alertMessage = "Please enter a value greater than or equal to 1.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
 		}
 
 		task ("When trying to fill in the Time Without Autosave field with a number greater than 99999") {
@@ -90,8 +90,8 @@ definition {
 
 		task ("Then an error message is displayed") {
 			AssertVisible(
-					key_alertMessage = "Please enter a value less than or equal to 99999.",
-					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+				key_alertMessage = "Please enter a value less than or equal to 99999.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
 		}
 	}
 

@@ -6,7 +6,6 @@
  */
 
 const baseURL = themeDisplay.getPortalURL();
-const scopeGroupId = themeDisplay.getScopeGroupId();
 const isLogged = themeDisplay.isSignedIn();
 
 const productID = fragmentElement
@@ -14,26 +13,21 @@ const productID = fragmentElement
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
 	.trim();
 
-const linkButton = fragmentElement.querySelector('.get-app-button');
-const tooltip = document.createElement('div');
-tooltip.className = 'tooltiptext';
-tooltip.style.visibility = 'hidden';
+const linkButton = fragmentElement.querySelector('button');
+const tooltipOver = document.querySelector(
+	'.get-app-container .clay-tooltip-bottom'
+);
 
-const getAppButton = document.querySelector('.get-app-button');
-getAppButton.parentNode.appendChild(tooltip);
-
-const fetcher = async (url, {method = 'GET', ...options} = {}) => {
+const fetcher = async (url) => {
 	const response = await fetch(`${baseURL}${url}`, {
 		headers: {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
-		method,
-		...options,
 	});
 
 	if (response.ok) {
-		if (method === 'DELETE' || response.status === 204) {
+		if (response.status === 204) {
 			return;
 		}
 
@@ -54,15 +48,13 @@ const redirectPage = () => {
 };
 
 const mouseOver = () =>
-	getAppButton.addEventListener('mouseover', () => {
-		tooltip.style.visibility = 'visible';
-		tooltip.style.opacity = '1';
+	linkButton.addEventListener('mouseover', () => {
+		tooltipOver.classList.replace('hide', 'show');
 	});
 
 const mouseOut = () =>
-	getAppButton.addEventListener('mouseout', () => {
-		tooltip.style.visibility = 'hidden';
-		tooltip.style.opacity = '0';
+	linkButton.addEventListener('mouseout', () => {
+		tooltipOver.classList.replace('show', 'hide');
 	});
 
 const getChannel = async (siteId) => {
@@ -237,8 +229,9 @@ const openContactPublisherModal = async () => {
 
 const unavailableApp = async () => {
 	linkButton.innerText = 'Contact Publisher';
-	tooltip.textContent =
+	tooltipOver.querySelector('.tooltip-inner').textContent =
 		'This app is not available for purchase in the Marketplace. It is either no longer available or supported. Please click to get further information on how to contact the publisher.';
+
 	mouseOver();
 	mouseOut();
 
@@ -262,18 +255,10 @@ const unavailableApp = async () => {
 };
 
 const main = async () => {
-	let channelId = '';
-	const channels = await getChannel(scopeGroupId);
+	const [channel] = await getChannel(themeDisplay.getScopeGroupId());
 
-	if (channels) {
-		for (const channel of channels) {
-			channelId = channel.id;
-			break;
-		}
-	}
-
-	if (channelId) {
-		const skus = await getSkus(channelId, productID);
+	if (channel?.id) {
+		const skus = await getSkus(channel?.id, productID);
 		const skuPublished = skus.some((sku) => sku.purchasable);
 
 		if (!skuPublished) {

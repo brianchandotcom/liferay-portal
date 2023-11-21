@@ -98,6 +98,12 @@ class ResultRankingsForm extends Component {
 		dataMap: {},
 
 		/**
+		 * Disable buttons, checkboxes and text inputs if the status is not applicable.
+		 * @type {boolean}
+		 */
+		disabled: this.props.initialStatus === STATUS_TYPES.NOT_APPLICABLE,
+
+		/**
 		 * Display an error message when a data fetch request fails.
 		 * @type {boolean}
 		 */
@@ -758,6 +764,7 @@ class ResultRankingsForm extends Component {
 			dataLoadingHidden,
 			dataLoadingVisible,
 			dataMap,
+			disabled,
 			displayError,
 			displayErrorHidden,
 			hiddenCur,
@@ -779,6 +786,7 @@ class ResultRankingsForm extends Component {
 					valueMap={{
 						addedHiddenIds: this._getHiddenAdded(),
 						aliases,
+						disabled,
 						groupExternalReferenceCode: initialGroupExternalReferenceCode,
 						pinnedIds: resultIdsPinned,
 						pinnedIdsEndIndex: dataLoadIndex.pinned.end,
@@ -850,9 +858,9 @@ class ResultRankingsForm extends Component {
 							toast
 						>
 							<Alias
+								disabled={disabled}
 								keywords={aliases}
 								onChange={this._handleUpdateAliases}
-								resultRankingStatus={status}
 							/>
 						</ErrorBoundary>
 					</ClayLayout.Sheet>
@@ -906,6 +914,7 @@ class ResultRankingsForm extends Component {
 										<List
 											dataLoading={dataLoadingVisible}
 											dataMap={dataMap}
+											disabled={this.state.disabled}
 											displayError={displayError}
 											fetchDocumentsSearchURL={
 												fetchDocumentsSearchURL
@@ -924,9 +933,6 @@ class ResultRankingsForm extends Component {
 											resultIdsPinned={
 												this.state.resultIdsPinned
 											}
-											resultRankingStatus={
-												this.state.status
-											}
 											showLoadMore={this._hasMoreData(
 												totalResultsVisibleCount,
 												visibleCur
@@ -938,6 +944,7 @@ class ResultRankingsForm extends Component {
 										<List
 											dataLoading={dataLoadingHidden}
 											dataMap={dataMap}
+											disabled={this.state.disabled}
 											displayError={displayErrorHidden}
 											onClickHide={this._handleClickHide}
 											onClickPin={this._handleClickPin}
@@ -946,9 +953,6 @@ class ResultRankingsForm extends Component {
 													._handleFetchResultsDataHidden
 											}
 											resultIds={resultIdsHidden}
-											resultRankingStatus={
-												this.state.status
-											}
 											showLoadMore={this._hasMoreData(
 												totalResultsHiddenCount,
 												hiddenCur

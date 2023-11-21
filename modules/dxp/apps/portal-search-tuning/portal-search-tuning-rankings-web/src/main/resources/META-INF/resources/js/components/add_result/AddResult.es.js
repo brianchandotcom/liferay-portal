@@ -8,18 +8,13 @@ import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {STATUS_TYPES} from '../../utils/constants.es';
 import ErrorBoundary from '../shared/ErrorBoundary.es';
 import AddResultModal from './AddResultModal.es';
 
 /**
  * A button that opens a modal to be able to search, select, and add results.
  */
-function AddResult({
-	fetchDocumentsSearchURL,
-	onAddResultSubmit,
-	resultRankingStatus,
-}) {
+function AddResult({disabled, fetchDocumentsSearchURL, onAddResultSubmit}) {
 	const [showModal, setShowModal] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -37,7 +32,7 @@ function AddResult({
 		<>
 			<ClayButton
 				aria-label={Liferay.Language.get('add-result')}
-				disabled={resultRankingStatus === STATUS_TYPES.NOT_APPLICABLE}
+				disabled={disabled}
 				key="ADD_RESULT_BUTTON"
 				onClick={_handleAddResultButton}
 			>
@@ -59,9 +54,13 @@ function AddResult({
 }
 
 AddResult.propTypes = {
+	disabled: PropTypes.bool,
 	fetchDocumentsSearchURL: PropTypes.string.isRequired,
 	onAddResultSubmit: PropTypes.func.isRequired,
-	resultRankingStatus: PropTypes.string.isRequired,
+};
+
+AddResult.defaultProps = {
+	disabled: false,
 };
 
 export default AddResult;

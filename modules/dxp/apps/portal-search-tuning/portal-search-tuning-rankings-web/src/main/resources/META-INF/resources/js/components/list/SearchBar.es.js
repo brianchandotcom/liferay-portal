@@ -11,7 +11,6 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
-import {STATUS_TYPES} from '../../utils/constants.es';
 import {getPluralMessage} from '../../utils/language.es';
 import AddResult from '../add_result/AddResult.es';
 import ItemDropdown from './ItemDropdown.es';
@@ -27,6 +26,7 @@ class SearchBar extends Component {
 		 */
 		dataMap: PropTypes.object.isRequired,
 		disableSearch: PropTypes.bool,
+		disabled: PropTypes.bool,
 		fetchDocumentsSearchURL: PropTypes.string,
 		onAddResultSubmit: PropTypes.func,
 		onClickHide: PropTypes.func,
@@ -37,12 +37,12 @@ class SearchBar extends Component {
 		onSelectClear: PropTypes.func.isRequired,
 		onUpdateSearchBarTerm: PropTypes.func,
 		resultIds: PropTypes.arrayOf(String),
-		resultRankingStatus: PropTypes.string,
 		searchBarTerm: PropTypes.string,
 		selectedIds: PropTypes.arrayOf(String),
 	};
 
 	static defaultProps = {
+		disabled: false,
 		resultIds: [],
 		selectedIds: [],
 	};
@@ -109,10 +109,10 @@ class SearchBar extends Component {
 
 	render() {
 		const {
+			disabled,
 			fetchDocumentsSearchURL,
 			onAddResultSubmit,
 			resultIds,
-			resultRankingStatus,
 			selectedIds,
 		} = this.props;
 
@@ -139,11 +139,7 @@ class SearchBar extends Component {
 										'select-all'
 									)}
 									checked={this._hasSelectedIds()}
-									disabled={
-										!resultIds.length ||
-										resultRankingStatus ===
-											STATUS_TYPES.NOT_APPLICABLE
-									}
+									disabled={!resultIds.length || disabled}
 									indeterminate={
 										!!selectedIds.length &&
 										selectedIds.length !== resultIds.length
@@ -270,31 +266,27 @@ class SearchBar extends Component {
 						{!this._hasSelectedIds() && (
 							<>
 								<ManagementToolbar.ItemList expand>
-									{!!resultIds.length &&
-										resultRankingStatus !==
-											STATUS_TYPES.NOT_APPLICABLE && (
-											<ManagementToolbar.Item>
-												<span className="component-text navbar-text">
-													{Liferay.Language.get(
-														'select-items'
-													)}
-												</span>
-											</ManagementToolbar.Item>
-										)}
+									{!!resultIds.length && !disabled && (
+										<ManagementToolbar.Item>
+											<span className="component-text navbar-text">
+												{Liferay.Language.get(
+													'select-items'
+												)}
+											</span>
+										</ManagementToolbar.Item>
+									)}
 								</ManagementToolbar.ItemList>
 
 								{onAddResultSubmit && (
 									<ManagementToolbar.ItemList>
 										<ManagementToolbar.Item>
 											<AddResult
+												disabled={disabled}
 												fetchDocumentsSearchURL={
 													fetchDocumentsSearchURL
 												}
 												onAddResultSubmit={
 													onAddResultSubmit
-												}
-												resultRankingStatus={
-													resultRankingStatus
 												}
 											/>
 										</ManagementToolbar.Item>

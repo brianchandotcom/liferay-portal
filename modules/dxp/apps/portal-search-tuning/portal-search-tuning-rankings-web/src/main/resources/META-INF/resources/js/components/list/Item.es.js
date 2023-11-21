@@ -16,7 +16,7 @@ import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 import {findDOMNode} from 'react-dom';
 
-import {KEY_CODES, STATUS_TYPES} from '../../utils/constants.es';
+import {KEY_CODES} from '../../utils/constants.es';
 import DRAG_TYPES from '../../utils/drag-types.es';
 import {sub} from '../../utils/language.es';
 import {isNil} from '../../utils/util.es';
@@ -237,6 +237,7 @@ class Item extends PureComponent {
 		date: PropTypes.string,
 		deleted: PropTypes.bool,
 		description: PropTypes.string,
+		disabled: PropTypes.bool,
 		focus: PropTypes.bool,
 		hidden: PropTypes.bool,
 		icon: PropTypes.string,
@@ -252,7 +253,6 @@ class Item extends PureComponent {
 		onSelect: PropTypes.func,
 		pinned: PropTypes.bool,
 		reorder: PropTypes.bool,
-		resultRankingStatus: PropTypes.string,
 		searchQuery: PropTypes.string,
 		selected: PropTypes.bool,
 		title: PropTypes.string,
@@ -266,6 +266,7 @@ class Item extends PureComponent {
 		connectDragSource: (val) => val,
 		connectDropTarget: (val) => val,
 		date: '',
+		disabled: false,
 		onBlur: () => {},
 		onFocus: () => {},
 		onMove: () => {},
@@ -385,6 +386,7 @@ class Item extends PureComponent {
 			date,
 			deleted,
 			description,
+			disabled,
 			dragging,
 			focus,
 			hidden,
@@ -395,7 +397,6 @@ class Item extends PureComponent {
 			over,
 			pinned,
 			reorder,
-			resultRankingStatus,
 			selected,
 			style,
 			title,
@@ -456,9 +457,7 @@ class Item extends PureComponent {
 					<ClayCheckbox
 						aria-label={Liferay.Language.get('select')}
 						checked={selected}
-						disabled={
-							resultRankingStatus === STATUS_TYPES.NOT_APPLICABLE
-						}
+						disabled={disabled}
 						onChange={this._handleSelect}
 					/>
 				</ClayLayout.ContentCol>
@@ -520,7 +519,7 @@ class Item extends PureComponent {
 					</ClayLayout.ContentSection>
 				</ClayLayout.ContentCol>
 
-				{resultRankingStatus !== STATUS_TYPES.NOT_APPLICABLE && (
+				{!disabled && (
 					<ClayLayout.ContentCol>
 						{pinned && <ResultPinIconDisplay />}
 

@@ -42,19 +42,34 @@ definition {
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "");
 
-			Button.clickSave();
-
-			AssertVisible(
-				key_alertMessage = "The Time Without Autosave field is required.",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
-
-			Type(
+			Click(
 				key_fieldLabel = "Time Without Autosave",
-				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-				value1 = "WebContentTitle@!&#-en_US-es_ES.xlf");
+				locator1 = "FormFields#LABEL");
 		}
 
 		task ("Then an error message is displayed") {
+			AssertVisible(
+				key_alertMessage = "The Time Without Autosave field is required.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+
+		task ("When type letters and special characters") {
+			Type.sendKeys(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = "WbContntTitl@!&#n_USs_Sxlf");
+
+			Click(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "FormFields#LABEL");
+		}
+
+		task ("Then the Time Without Autosave field should be empty") {
+			AssertTextEquals(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = "");
+
 			AssertVisible(
 				key_alertMessage = "The Time Without Autosave field is required.",
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
@@ -66,7 +81,9 @@ definition {
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = 0);
 
-			Button.clickSave();
+			Click(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "FormFields#LABEL");
 		}
 
 		task ("Then an error message is displayed") {
@@ -81,7 +98,9 @@ definition {
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = 200000);
 
-			Button.clickSave();
+			Click(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "FormFields#LABEL");
 		}
 
 		task ("Then an error message is displayed") {

@@ -22,6 +22,8 @@ import OrderDetailsHeader from '../components/OrderDetailsHeader';
 
 import './App.scss';
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+
 const AppNavbar = () => {
 	const location = useLocation();
 
@@ -70,7 +72,7 @@ const AppOutlet = () => {
 	const productCreatorAccount = useGetProductCreatorAccount(data?.product);
 
 	if (isLoading) {
-		return <p>Loading...</p>;
+		return <ClayLoadingIndicator />;
 	}
 
 	if (error) {
@@ -90,7 +92,7 @@ const AppOutlet = () => {
 
 			<OrderDetailsHeader
 				className="d-flex flex-row justify-content-between pb-3 pt-5"
-				hasOrderDetails={true}
+				hasOrderDetails
 				image={appImage}
 				name={data?.product?.name?.en_US}
 				order={data?.placedOrder}

@@ -42,7 +42,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 			columns={[
 				{
 					key: 'name',
-					render: (name, {thumbnail, version}) => (
+					render: (name, {thumbnail}) => (
 						<div className="dashboard-table-row-name-container">
 							<img
 								alt="App Image"
@@ -53,12 +53,6 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							<span className="dashboard-table-row-name-text">
 								{name}
 							</span>
-
-							{version && (
-								<span className="dashboard-table-row-name-version ml-2 mt-2">
-									{version}
-								</span>
-							)}
 						</div>
 					),
 					title: 'Name',
@@ -211,8 +205,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 														orderStatusIsNotCompleted
 													}
 													onClick={() => {
-														window.location.href =
-															virtualURL;
+														window.location.href = virtualURL;
 													}}
 													title={
 														orderStatusIsNotCompleted

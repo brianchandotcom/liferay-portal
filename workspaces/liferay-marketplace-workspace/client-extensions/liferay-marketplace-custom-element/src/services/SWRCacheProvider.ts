@@ -13,13 +13,13 @@ const STORAGE_KEY = '@liferay-markeptlace/swr';
 
 const SWRCacheProvider = (): Map<any, any> => {
 	const cacheMap = new Map(
-		JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+		JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '[]')
 	);
 
 	window.addEventListener('beforeunload', () => {
 		const appCache = JSON.stringify(Array.from(cacheMap.entries()));
 
-		localStorage.setItem(STORAGE_KEY, appCache);
+		sessionStorage.setItem(STORAGE_KEY, appCache);
 	});
 
 	return cacheMap;

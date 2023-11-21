@@ -16,6 +16,7 @@ import i18n from '../../../../i18n';
 
 import './Licenses.scss';
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
@@ -65,11 +66,7 @@ const Licenses = () => {
 			? 'On-Premise'
 			: 'Cloud';
 
-	const {
-		data: licenseKeysResponse,
-		isLoading,
-		mutate,
-	} = useSWR(
+	const {data: licenseKeysResponse, isLoading, mutate} = useSWR(
 		`/order-license-keys/${orderId}-${page}-${pageSize}`,
 		async () => {
 			try {
@@ -80,7 +77,8 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			} catch (error) {
+			}
+			catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -96,15 +94,18 @@ const Licenses = () => {
 	const orderStatusIsNotCompleted =
 		placedOrder?.orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
-	const {onDeativateLicenseKey, onDownload, onViewLicenseKey} =
-		useLicenseActions({
-			deactivateLicenseModal,
-			keyType,
-			licenseKeyModal,
-			mutate,
-			provisioningKoroneikiOAuth2,
-			setModal: setModalData,
-		});
+	const {
+		onDeativateLicenseKey,
+		onDownload,
+		onViewLicenseKey,
+	} = useLicenseActions({
+		deactivateLicenseModal,
+		keyType,
+		licenseKeyModal,
+		mutate,
+		provisioningKoroneikiOAuth2,
+		setModal: setModalData,
+	});
 
 	const buttonsInfo = useMemo(
 		() => ({
@@ -144,7 +145,7 @@ const Licenses = () => {
 	);
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <ClayLoadingIndicator />;
 	}
 
 	return (

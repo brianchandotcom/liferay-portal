@@ -3,20 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
+import useSWR from 'swr';
 
 import {getAccounts} from '../../../utils/api';
 
 const useGetProductCreatorAccount = (product?: Product) => {
-	const [productCreatorAccount, setProductCreatorAccount] = useState<
-		Account
-	>();
-
-	useEffect(() => {
-		(async () => {
+	const {data: productCreatorAccount} = useSWR(
+		`/publisher-account/${product?.catalogId}`,
+		async () => {
 			const {items: accountList} = await getAccounts();
 
-			const account = accountList.find((account) => {
+			return accountList.find((account) => {
 				const customField = account.customFields?.find(
 					(customField) => customField.name === 'CatalogId'
 				);
@@ -26,10 +23,8 @@ const useGetProductCreatorAccount = (product?: Product) => {
 					product?.catalogId.toString()
 				);
 			});
-
-			setProductCreatorAccount(account);
-		})();
-	}, [product]);
+		}
+	);
 
 	return productCreatorAccount;
 };

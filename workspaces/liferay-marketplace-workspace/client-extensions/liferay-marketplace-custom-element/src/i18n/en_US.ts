@@ -42,6 +42,7 @@ export default {
 		'In the future, you will be able to submit your app source code for additional support and partnership opportunities with Liferay.',
 	'instance-size': 'Instance Size',
 	'ip-addresses': 'IP Addresses',
+	'key-activations-available-x-of-x': 'Key activations available: {0} of {1}',
 	'key-deactivation-requested-succesfully':
 		'Key deactivation requested successfully',
 	'key-type': 'Key Type',

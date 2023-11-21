@@ -10,7 +10,6 @@ import {DashboardNavigation} from '../../components/DashboardNavigation/Dashboar
 import {
 	getAccountInfoFromCommerce,
 	getAccounts,
-	getCustomFieldExpandoValue,
 	getProductAttachments,
 } from '../../utils/api';
 import {
@@ -98,15 +97,6 @@ const PurchasedAppsDashboardOutlet = () => {
 				placedOrders.items.map(async (order) => {
 					const [placeOrderItem] = order.placedOrderItems;
 
-					const version = await getCustomFieldExpandoValue({
-						className:
-							'com.liferay.commerce.product.model.CPInstance',
-						classPK: placeOrderItem.skuId,
-						columnName: 'version',
-						companyId: Number(Liferay.ThemeDisplay.getCompanyId()),
-						tableName: 'CUSTOM_FIELDS',
-					});
-
 					const attachments = await getProductAttachments(
 						selectedAccount.id,
 						channel.id as number,
@@ -121,7 +111,6 @@ const PurchasedAppsDashboardOutlet = () => {
 						type: placeOrderItem.subscription
 							? 'Subscription'
 							: 'Perpetual',
-						version: Object.keys(version).length ? version : '',
 						virtualURL: placeOrderItem?.virtualItemURLs,
 					};
 				})

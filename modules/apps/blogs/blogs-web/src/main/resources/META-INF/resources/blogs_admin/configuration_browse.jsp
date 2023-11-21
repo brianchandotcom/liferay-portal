@@ -1,6 +1,6 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
@@ -12,6 +12,11 @@ BlogsConfigurationDisplayContext blogsConfigurationDisplayContext = new BlogsCon
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(blogsConfigurationDisplayContext.getBackURL());
+portletDisplay.setURLBackTitle("blogs");
+
+BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId, request.getParameterMap());
+
+BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME)));
 %>
 
 <clay:container-fluid
@@ -36,6 +41,133 @@ portletDisplay.setURLBack(blogsConfigurationDisplayContext.getBackURL());
 			<clay:vertical-nav
 				verticalNavItems="<%= blogsConfigurationDisplayContext.getNotificationsVerticalNavItemList() %>"
 			/>
+		</clay:col>
+
+		<clay:col
+			lg="9"
+		>
+			<h1>
+				<%= blogsConfigurationDisplayContext.getTitle() %>
+			</h1>
+
+			<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
+				<portlet:param name="navigation" value="<%= blogsConfigurationDisplayContext.getNavigation() %>" />
+				<portlet:param name="serviceName" value="<%= BlogsConstants.SERVICE_NAME %>" />
+				<portlet:param name="settingsScope" value="group" />
+			</liferay-portlet:actionURL>
+
+			<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+				<clay:sheet
+					cssClass="c-mb-4 c-mt-4 c-p-0"
+					size="full"
+				>
+					<h2 class="c-pl-4 c-pr-4 c-pt-4 sheet-title">
+						<clay:content-row
+							verticalAlign="center"
+						>
+							<clay:content-col>
+								<%= blogsConfigurationDisplayContext.getSubtitle() %>
+							</clay:content-col>
+						</clay:content-row>
+					</h2>
+
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+					<aui:input name="redirect" type="hidden" value="<%= blogsConfigurationDisplayContext.getRedirect() %>" />
+
+					<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+					<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+					<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
+
+					<%
+					Map<String, String> emailDefinitionTerms = BlogsUtil.getEmailDefinitionTerms(renderRequest, blogsGroupServiceSettings.getEmailFromAddress(), blogsGroupServiceSettings.getEmailFromName());
+					%>
+
+					<c:choose>
+						<c:when test='<%= Objects.equals(blogsConfigurationDisplayContext.getNavigation(), "entry-added-email") %>'>
+							<div class="c-px-4 panel-group-flush">
+								<liferay-frontend:email-notification-settings
+									emailBodyLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryAddedBody() %>"
+									emailDefinitionTerms="<%= emailDefinitionTerms %>"
+									emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryAddedEnabled() %>"
+									emailParam="emailEntryAdded"
+									emailSubjectLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryAddedSubject() %>"
+								/>
+							</div>
+						</c:when>
+						<c:when test='<%= Objects.equals(blogsConfigurationDisplayContext.getNavigation(), "entry-updated-email") %>'>
+							<div class="c-px-4 panel-group-flush">
+								<liferay-frontend:email-notification-settings
+									emailBodyLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryUpdatedBody() %>"
+									emailDefinitionTerms="<%= emailDefinitionTerms %>"
+									emailEnabled="<%= blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>"
+									emailParam="emailEntryUpdated"
+									emailSubjectLocalizedValuesMap="<%= blogsGroupServiceSettings.getEmailEntryUpdatedSubject() %>"
+								/>
+							</div>
+						</c:when>
+						<c:when test='<%= Objects.equals(blogsConfigurationDisplayContext.getNavigation(), "rss") && PortalUtil.isRSSFeedsEnabled() %>'>
+							<div class="c-px-4 panel-group-flush">
+								<liferay-rss:rss-settings
+									delta="<%= GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()) %>"
+									displayStyle="<%= blogsGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
+									enabled="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>"
+									feedType="<%= blogsGroupServiceOverriddenConfiguration.rssFeedType() %>"
+								/>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="c-px-4">
+								<liferay-frontend:fieldset>
+									<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= blogsGroupServiceSettings.getEmailFromName() %>">
+										<aui:validator errorMessage="please-enter-a-valid-name" name="required" />
+									</aui:input>
+
+									<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= blogsGroupServiceSettings.getEmailFromAddress() %>">
+										<aui:validator errorMessage="please-enter-a-valid-email-address" name="required" />
+										<aui:validator name="email" />
+									</aui:input>
+								</liferay-frontend:fieldset>
+
+								<liferay-frontend:fieldset
+									collapsed="<%= true %>"
+									collapsible="<%= true %>"
+									label="definition-of-terms"
+								>
+									<dl>
+
+										<%
+										Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, blogsGroupServiceSettings.getEmailFromAddress(), blogsGroupServiceSettings.getEmailFromName());
+
+										for (Map.Entry<String, String> entry : emailFromDefinitionTerms.entrySet()) {
+										%>
+
+											<dt>
+												<%= HtmlUtil.escape(entry.getKey()) %>
+											</dt>
+											<dd>
+												<%= HtmlUtil.escape(entry.getValue()) %>
+											</dd>
+
+										<%
+										}
+										%>
+
+									</dl>
+								</liferay-frontend:fieldset>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</clay:sheet>
+
+				<aui:button-row>
+					<aui:button cssClass="c-mr-2" type="submit" />
+
+					<aui:button href="<%= blogsConfigurationDisplayContext.getBackURL() %>" type="cancel" />
+				</aui:button-row>
+			</aui:form>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>

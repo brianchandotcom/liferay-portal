@@ -8,6 +8,8 @@ package com.liferay.object.action.engine;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.json.JSONObject;
 
+import java.util.function.Supplier;
+
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
@@ -19,10 +21,8 @@ public interface ObjectActionEngine {
 			long objectDefinitionId, JSONObject payloadJSONObject, long userId)
 		throws Exception;
 
-	public <E extends Exception> void executeObjectActions(
-			String className, long companyId, String objectActionTriggerKey,
-			UnsafeSupplier<JSONObject, E> payloadJSONObjectUnsafeSupplier,
-			long userId)
-		throws E;
+	public void executeObjectActions(
+		String className, long companyId, String objectActionTriggerKey,
+		Supplier<JSONObject> payloadJSONObjectSupplier, long userId);
 
 }

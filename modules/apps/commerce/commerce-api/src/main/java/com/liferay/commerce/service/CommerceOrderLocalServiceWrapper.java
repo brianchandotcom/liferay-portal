@@ -805,6 +805,16 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder resetCommerceOrderAddresses(
+			long commerceOrderId, boolean billingAddress,
+			boolean shippingAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.resetCommerceOrderAddresses(
+			commerceOrderId, billingAddress, shippingAddress);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder resetCommerceOrderShipping(
 			long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {

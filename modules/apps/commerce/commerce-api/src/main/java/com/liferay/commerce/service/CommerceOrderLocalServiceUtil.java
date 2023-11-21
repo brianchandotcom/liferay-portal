@@ -704,6 +704,15 @@ public class CommerceOrderLocalServiceUtil {
 			userId, commerceOrderId, commerceContext);
 	}
 
+	public static CommerceOrder resetCommerceOrderAddresses(
+			long commerceOrderId, boolean billingAddress,
+			boolean shippingAddress)
+		throws PortalException {
+
+		return getService().resetCommerceOrderAddresses(
+			commerceOrderId, billingAddress, shippingAddress);
+	}
+
 	public static CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
 		throws PortalException {
 

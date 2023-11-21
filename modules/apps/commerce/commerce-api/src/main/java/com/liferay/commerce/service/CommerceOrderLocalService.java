@@ -529,6 +529,11 @@ public interface CommerceOrderLocalService
 			long userId, long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException;
 
+	public CommerceOrder resetCommerceOrderAddresses(
+			long commerceOrderId, boolean billingAddress,
+			boolean shippingAddress)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
 		throws PortalException;

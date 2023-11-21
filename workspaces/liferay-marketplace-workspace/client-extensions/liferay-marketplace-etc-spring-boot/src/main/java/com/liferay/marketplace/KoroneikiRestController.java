@@ -256,7 +256,6 @@ public class KoroneikiRestController extends BaseRestController {
 				productSpecificationsMap.get("price-model"), "Free")) {
 
 			order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
-			order.setPaymentStatus(_COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED);
 
 			_orderResource.patchOrder(
 				commerceOrderJSONObject.getLong("id"), order);

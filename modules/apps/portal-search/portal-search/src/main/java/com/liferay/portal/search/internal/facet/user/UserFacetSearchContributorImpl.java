@@ -65,7 +65,8 @@ public class UserFacetSearchContributorImpl
 			Facet facet = _userFacetFactory.newInstance(_searchContext);
 
 			facet.setAggregationName(_aggregationName);
-			facet.setFacetConfiguration(buildFacetConfiguration(facet));
+			facet.setFacetConfiguration(
+				buildFacetConfiguration(facet.getFieldName()));
 
 			if (_selectedUserIds != null) {
 				facet.select(ArrayUtil.toStringArray(_selectedUserIds));
@@ -95,10 +96,10 @@ public class UserFacetSearchContributorImpl
 			return this;
 		}
 
-		protected FacetConfiguration buildFacetConfiguration(Facet facet) {
+		protected FacetConfiguration buildFacetConfiguration(String fieldName) {
 			FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-			facetConfiguration.setFieldName(facet.getFieldName());
+			facetConfiguration.setFieldName(fieldName);
 			facetConfiguration.setLabel("any-user");
 			facetConfiguration.setOrder("OrderHitsDesc");
 			facetConfiguration.setStatic(false);

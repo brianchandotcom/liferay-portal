@@ -72,7 +72,8 @@ public class CategoryFacetSearchContributorImpl
 			Facet facet = _categoryFacetFactory.newInstance(_searchContext);
 
 			facet.setAggregationName(_aggregationName);
-			facet.setFacetConfiguration(buildFacetConfiguration(facet));
+			facet.setFacetConfiguration(
+				buildFacetConfiguration(facet.getFieldName()));
 
 			if (_selectedCategoryIds != null) {
 				String fieldName = facet.getFieldName();
@@ -118,10 +119,10 @@ public class CategoryFacetSearchContributorImpl
 			return this;
 		}
 
-		protected FacetConfiguration buildFacetConfiguration(Facet facet) {
+		protected FacetConfiguration buildFacetConfiguration(String fieldName) {
 			FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-			facetConfiguration.setFieldName(facet.getFieldName());
+			facetConfiguration.setFieldName(fieldName);
 			facetConfiguration.setLabel("any-category");
 			facetConfiguration.setOrder("OrderHitsDesc");
 			facetConfiguration.setStatic(false);
@@ -132,7 +133,7 @@ public class CategoryFacetSearchContributorImpl
 			jsonObject.put(
 				"frequencyThreshold", _frequencyThreshold
 			).put(
-				"include", _getIncludeRegexString(facet.getFieldName())
+				"include", _getIncludeRegexString(fieldName)
 			).put(
 				"maxTerms", _maxTerms
 			);

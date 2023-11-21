@@ -77,7 +77,7 @@ public class RangeFacetSearchContributorImpl
 
 			rangeFacetImpl.setAggregationName(_aggregationName);
 			rangeFacetImpl.setFacetConfiguration(
-				_buildFacetConfiguration(rangeFacetImpl));
+				_buildFacetConfiguration(rangeFacetImpl.getFieldName()));
 			rangeFacetImpl.setFieldName(_field);
 			rangeFacetImpl.select(_getSelectedRanges());
 
@@ -126,10 +126,10 @@ public class RangeFacetSearchContributorImpl
 			return this;
 		}
 
-		private FacetConfiguration _buildFacetConfiguration(Facet facet) {
+		private FacetConfiguration _buildFacetConfiguration(String fieldName) {
 			FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-			facetConfiguration.setFieldName(facet.getFieldName());
+			facetConfiguration.setFieldName(fieldName);
 			facetConfiguration.setLabel("any-time");
 			facetConfiguration.setOrder(_order);
 			facetConfiguration.setStatic(false);

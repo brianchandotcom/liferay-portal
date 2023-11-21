@@ -64,7 +64,8 @@ public class TypeFacetSearchContributorImpl
 			Facet facet = _assetEntriesFacetFactory.newInstance(_searchContext);
 
 			facet.setAggregationName(_aggregationName);
-			facet.setFacetConfiguration(buildFacetConfiguration(facet));
+			facet.setFacetConfiguration(
+				buildFacetConfiguration(facet.getFieldName()));
 
 			facet.select(_selectedEntryClassNames);
 
@@ -87,10 +88,10 @@ public class TypeFacetSearchContributorImpl
 			return this;
 		}
 
-		protected FacetConfiguration buildFacetConfiguration(Facet facet) {
+		protected FacetConfiguration buildFacetConfiguration(String fieldName) {
 			FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-			facetConfiguration.setFieldName(facet.getFieldName());
+			facetConfiguration.setFieldName(fieldName);
 			facetConfiguration.setLabel("any-asset");
 			facetConfiguration.setOrder("OrderHitsDesc");
 			facetConfiguration.setStatic(false);

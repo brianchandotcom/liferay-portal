@@ -65,7 +65,8 @@ public class SiteFacetSearchContributorImpl
 			Facet facet = _siteFacetFactory.newInstance(_searchContext);
 
 			facet.setAggregationName(_aggregationName);
-			facet.setFacetConfiguration(buildFacetConfiguration(facet));
+			facet.setFacetConfiguration(
+				buildFacetConfiguration(facet.getFieldName()));
 
 			if (ArrayUtil.isNotEmpty(_selectedGroupIds)) {
 				facet.select(_selectedGroupIds);
@@ -95,10 +96,10 @@ public class SiteFacetSearchContributorImpl
 			return this;
 		}
 
-		protected FacetConfiguration buildFacetConfiguration(Facet facet) {
+		protected FacetConfiguration buildFacetConfiguration(String fieldName) {
 			FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-			facetConfiguration.setFieldName(facet.getFieldName());
+			facetConfiguration.setFieldName(fieldName);
 			facetConfiguration.setLabel("any-site");
 			facetConfiguration.setOrder("OrderHitsDesc");
 			facetConfiguration.setStatic(false);

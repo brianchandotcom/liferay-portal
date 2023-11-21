@@ -69,7 +69,8 @@ public class ModifiedFacetPortletSharedSearchContributor
 
 		facet.setFacetConfiguration(
 			_buildFacetConfiguration(
-				facet, modifiedFacetPortletPreferences, rangesJSONArray));
+				facet.getFieldName(), modifiedFacetPortletPreferences,
+				rangesJSONArray));
 
 		if (!selectedRangeStrings.isEmpty()) {
 			facet.select(selectedRangeStrings.toArray(new String[0]));
@@ -79,13 +80,13 @@ public class ModifiedFacetPortletSharedSearchContributor
 	}
 
 	private FacetConfiguration _buildFacetConfiguration(
-		Facet facet,
+		String fieldName,
 		ModifiedFacetPortletPreferences modifiedFacetPortletPreferences,
 		JSONArray rangesJSONArray) {
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setFieldName(facet.getFieldName());
+		facetConfiguration.setFieldName(fieldName);
 		facetConfiguration.setLabel("any-time");
 		facetConfiguration.setOrder(modifiedFacetPortletPreferences.getOrder());
 		facetConfiguration.setStatic(false);

@@ -65,7 +65,8 @@ public class FolderFacetSearchContributorImpl
 			Facet facet = _folderFacetFactory.newInstance(_searchContext);
 
 			facet.setAggregationName(_aggregationName);
-			facet.setFacetConfiguration(buildFacetConfiguration(facet));
+			facet.setFacetConfiguration(
+				buildFacetConfiguration(facet.getFieldName()));
 
 			if (_selectedFolderIds != null) {
 				facet.select(ArrayUtil.toStringArray(_selectedFolderIds));
@@ -95,10 +96,10 @@ public class FolderFacetSearchContributorImpl
 			return this;
 		}
 
-		protected FacetConfiguration buildFacetConfiguration(Facet facet) {
+		protected FacetConfiguration buildFacetConfiguration(String fieldName) {
 			FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-			facetConfiguration.setFieldName(facet.getFieldName());
+			facetConfiguration.setFieldName(fieldName);
 			facetConfiguration.setLabel("any-folder");
 			facetConfiguration.setStatic(false);
 			facetConfiguration.setWeight(1.4);

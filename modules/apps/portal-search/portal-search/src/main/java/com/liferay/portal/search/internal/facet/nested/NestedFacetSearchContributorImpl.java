@@ -91,7 +91,7 @@ public class NestedFacetSearchContributorImpl
 			nestedFacetImpl.setChildAggregationValuesFilter(
 				_childAggregationValuesFilter);
 			nestedFacetImpl.setFacetConfiguration(
-				buildFacetConfiguration(nestedFacetImpl));
+				buildFacetConfiguration(nestedFacetImpl.getFieldName()));
 			nestedFacetImpl.setFieldName(_fieldToAggregate);
 			nestedFacetImpl.setFilterField(_filterField);
 			nestedFacetImpl.setFilterValue(_filterValue);
@@ -169,10 +169,10 @@ public class NestedFacetSearchContributorImpl
 			return this;
 		}
 
-		protected FacetConfiguration buildFacetConfiguration(Facet facet) {
+		protected FacetConfiguration buildFacetConfiguration(String fieldName) {
 			FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-			facetConfiguration.setFieldName(facet.getFieldName());
+			facetConfiguration.setFieldName(fieldName);
 			facetConfiguration.setOrder("OrderHitsDesc");
 			facetConfiguration.setStatic(false);
 			facetConfiguration.setWeight(1.1);

@@ -6,6 +6,7 @@
 import {sub} from 'frontend-js-web';
 import React, {ComponentProps, useContext} from 'react';
 
+import useActionValues from '../../../app/utils/useActionValues';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
 import {ScreenReaderAnnouncerContext} from './ScreenReaderContext';
@@ -55,8 +56,14 @@ export default function Action({
 }: ActionProps) {
 	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
 
+	const [{description}] = useActionValues({
+		actions: [action],
+		items: layoutDataItems,
+	});
+
 	return (
 		<RuleBuilderItem
+			description={description}
 			onDeleteButtonClick={onDeleteAction}
 			showDeleteButton={showDeleteButton}
 			type="action"

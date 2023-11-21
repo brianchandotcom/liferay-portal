@@ -4,10 +4,12 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {sub} from 'frontend-js-web';
 import React, {KeyboardEventHandler, ReactNode, Ref} from 'react';
 
 interface RuleBuilderItemProps {
 	children: ReactNode;
+	description: string;
 	onDeleteButtonClick: () => void;
 	showDeleteButton: boolean;
 	type: 'action' | 'condition';
@@ -16,6 +18,7 @@ interface RuleBuilderItemProps {
 
 export default function RuleBuilderItem({
 	children,
+	description,
 	onDeleteButtonClick,
 	showDeleteButton,
 	type,
@@ -75,8 +78,14 @@ export default function RuleBuilderItem({
 				<ClayButtonWithIcon
 					aria-label={
 						type === 'action'
-							? Liferay.Language.get('delete-action')
-							: Liferay.Language.get('delete-condition')
+							? sub(
+									Liferay.Language.get('delete-action-x'),
+									description
+							  )
+							: sub(
+									Liferay.Language.get('delete-condition-x'),
+									description
+							  )
 					}
 					borderless
 					className="lfr-portal-tooltip page-editor__rule-builder-delete-button"

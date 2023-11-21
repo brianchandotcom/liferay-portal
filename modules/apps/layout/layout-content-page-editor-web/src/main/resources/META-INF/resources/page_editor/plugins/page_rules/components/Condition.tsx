@@ -10,6 +10,7 @@ import {config} from '../../../app/config/index';
 import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
+import useConditionValues from '../../../app/utils/useConditionValues';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
 import {ScreenReaderAnnouncerContext} from './ScreenReaderContext';
@@ -86,8 +87,11 @@ export default function Condition({
 		? VALUE_SELECTOR_COMPONENTS[condition.condition]
 		: null;
 
+	const [{description}] = useConditionValues({conditions: [condition]});
+
 	return (
 		<RuleBuilderItem
+			description={description}
 			onDeleteButtonClick={onDeleteCondition}
 			showDeleteButton={showDeleteButton}
 			type="condition"

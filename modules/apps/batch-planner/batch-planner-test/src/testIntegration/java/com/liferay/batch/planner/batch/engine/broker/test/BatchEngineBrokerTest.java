@@ -107,7 +107,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -869,8 +868,6 @@ public class BatchEngineBrokerTest {
 			boolean siteScope)
 		throws Exception {
 
-		String template = StreamUtil.toString(_getInputStream(fileName));
-
 		String groupNameString = null;
 
 		if (siteScope) {
@@ -880,8 +877,8 @@ public class BatchEngineBrokerTest {
 			groupNameString = group.getGroupKey();
 		}
 
-		template = StringUtil.replace(
-			template,
+		return StringUtil.replace(
+			StreamUtil.toString(_getInputStream(fileName)),
 			new String[] {
 				"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]", "$[SCOPE_KEY]"
 			},
@@ -889,12 +886,6 @@ public class BatchEngineBrokerTest {
 				_toDateString(createDate), _toDateString(modifiedDate),
 				String.valueOf(id), groupNameString
 			});
-
-		File file = _file.createTempFile("csv");
-
-		_file.write(file, template);
-
-		return FileUtil.read(file);
 	}
 
 	private JsonNode _getExpectedJsonNode(ObjectDefinition objectDefinition)

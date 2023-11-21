@@ -1269,7 +1269,13 @@ public class ContentDashboardAdminPortletTest {
 
 		try {
 			JournalArticle journalArticle = JournalTestUtil.addArticle(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0);
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+				true, RandomTestUtil.randomLocaleStringMap(LocaleUtil.US),
+				RandomTestUtil.randomLocaleStringMap(LocaleUtil.US),
+				RandomTestUtil.randomLocaleStringMap(LocaleUtil.US), null,
+				LocaleUtil.US, null, false, true, serviceContext);
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_company.getCompanyId(), _group.getGroupId(),
@@ -1280,7 +1286,7 @@ public class ContentDashboardAdminPortletTest {
 
 			JournalTestUtil.updateArticle(
 				journalArticle, RandomTestUtil.randomString(),
-				journalArticle.getContent(), true, false, serviceContext);
+				journalArticle.getContent(), false, false, serviceContext);
 
 			searchContainer = _getSearchContainer(
 				_getMockLiferayPortletRenderRequest());

@@ -1,0 +1,7 @@
+dependencies {
+	implementation group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
+	implementation group: "org.json", name: "json", version: "20231013"
+	implementation group: "org.springframework.boot", name: "spring-boot", version: "2.7.11"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.11"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.11"
+}

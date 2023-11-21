@@ -1,0 +1,3 @@
+Bundle-Name: Liferay OSB Client Extension Utilities Zendesk
+Bundle-SymbolicName: com.liferay.osb.client.extension.util.zendesk
+Bundle-Version: 1.0.0

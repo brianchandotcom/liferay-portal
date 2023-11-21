@@ -28,10 +28,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URL;
 
@@ -73,7 +70,7 @@ public class KoroneikiRestController extends BaseRestController {
 	@GetMapping("subscriptions/{orderId}")
 	public String getSubscriptions(
 			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("orderId") Long orderId)
+			@PathVariable("orderId") long orderId)
 		throws Exception {
 
 		_initResourceBuilders(jwt);
@@ -189,12 +186,7 @@ public class KoroneikiRestController extends BaseRestController {
 				_COMMERCE_ORDER_STATUS_PAYMENT_COMPLETED) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Skipping Order ",
-						commerceOrderJSONObject.getLong("id"),
-						" Current Payment Status: ",
-						commerceOrderJSONObject.getInt("paymentStatus")));
+				_log.info("Skipping Order " + commerceOrderJSONObject);
 			}
 
 			return;
@@ -209,7 +201,7 @@ public class KoroneikiRestController extends BaseRestController {
 			commerceOrderJSONObject.getLong("id"));
 
 		if ((orderItemsJSONArray == null) ||
-			!StringUtil.equals(
+			!Objects.equals(
 				order.getOrderTypeExternalReferenceCode(),
 				_ALLOWED_ORDER_TYPE)) {
 
@@ -220,7 +212,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 		_orderResource.patchOrder(commerceOrderJSONObject.getLong("id"), order);
 
-		long cpDefinitionId = GetterUtil.getLong(
+		long cpDefinitionId = Long.valueOf(
 			orderItemsJSONArray.getJSONObject(
 				0
 			).getString(
@@ -236,7 +228,7 @@ public class KoroneikiRestController extends BaseRestController {
 						product.getProductId(), Pagination.of(1, 20)
 					).getItems());
 
-		if (StringUtil.equals(
+		if (Objects.equals(
 				productSpecificationsMap.get("price-model"), "Free")) {
 
 			order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
@@ -251,8 +243,10 @@ public class KoroneikiRestController extends BaseRestController {
 		Account account = _accountResource.getAccount(
 			commerceOrderJSONObject.getLong("accountId"));
 
-		if (!StringUtil.startsWith(
-				account.getExternalReferenceCode(), "KOR-")) {
+		if (!account.getExternalReferenceCode(
+			).startsWith(
+				"KOR-"
+			)) {
 
 			account.setExternalReferenceCode(
 				_postKoroneikiAccount(
@@ -276,7 +270,7 @@ public class KoroneikiRestController extends BaseRestController {
 				dxpLicenseUsageTypePropertiesMap,
 				orderItemJSONObject.getString("options"));
 
-			if (StringUtil.equals(
+			if (Objects.equals(
 					productSpecificationsMap.get("license-type"),
 					"Subscription")) {
 
@@ -303,7 +297,7 @@ public class KoroneikiRestController extends BaseRestController {
 			productPurchase.setExternalLinks(new ExternalLink[] {externalLink});
 
 			productPurchase.setPerpetual(
-				StringUtil.equals(
+				Objects.equals(
 					productSpecificationsMap.get("license-type"), "Perpetual"));
 			productPurchase.setProductKey(
 				_getProductKey(
@@ -466,7 +460,7 @@ public class KoroneikiRestController extends BaseRestController {
 		for (int i = 0; i < optionsJSONArray.length(); i++) {
 			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
 
-			if (!StringUtil.equals(
+			if (!Objects.equals(
 					jsonObject.getString("key"), "dxp-license-usage-type")) {
 
 				continue;
@@ -481,7 +475,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 						map.put(
 							dxpLicenseUsageType,
-							StringUtil.equals(
+							Objects.equals(
 								jsonArray.getString(j), dxpLicenseUsageType));
 					}
 				}
@@ -554,7 +548,7 @@ public class KoroneikiRestController extends BaseRestController {
 			jwt.getClaim("username"), jwt.getClaim("sub"), koroneikiAccount);
 	}
 
-	private static final String _ALLOWED_ORDER_TYPE = "CLOUDAPP";
+	private static final String _ALLOWED_ORDER_TYPE = "DXPAPP";
 
 	private static final int _COMMERCE_ORDER_STATUS_COMPLETED = 0;
 

@@ -1827,6 +1827,7 @@ public class VerifyProperties {
 		"icq.login", "icq.password", "image.hook.impl",
 		"image.hook.file.system.root.dir", "index.dump.compression.enabled",
 		"index.filter.search.limit", "index.on.upgrade",
+		"index.permission.filter.search.amplification.factor",
 		"index.portal.field.analyzer.enabled", "index.search.engine.id",
 		"index.search.highlight.enabled", "index.search.writer.max.queue.size",
 		"index.read.only", "index.with.thread", "intraband.impl",

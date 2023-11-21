@@ -6978,7 +6978,10 @@ go</echo>
 			</if>
 
 			<if>
-				<matches pattern="\d{4}.q\d+.\d+" string="@{liferay.portal.bundle}" />
+				<or>
+					<contains string="${env.JOB_NAME}" substring="test-portal-release" />
+					<matches pattern="\d{4}.q\d+.\d+" string="@{liferay.portal.bundle}" />
+				</or>
 				<then>
 					<var name="app.server.tomcat.dir" value="${app.server.parent.dir}/tomcat" />
 					<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat/bin" />
@@ -13856,6 +13859,32 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<include name="**/*.sh" />
 					</fileset>
 				</chmod>
+
+				<if>
+					<or>
+						<matches pattern="\d{4}.q\d+.\d+" string="${bundle.file.name}" />
+						<contains string="${env.JOB_NAME}" substring="test-portal-release" />
+					</or>
+					<then>
+						<dirset
+							dir="${app.server.parent.dir}"
+							id="tomcat.directory"
+						>
+							<include name="tomcat*" />
+						</dirset>
+
+						<property name="bundles.tomcat.dir" refid="tomcat.directory" />
+
+						<move
+							todir="${app.server.parent.dir}/tomcat"
+						>
+							<fileset
+								dir="${app.server.parent.dir}/${bundles.tomcat.dir}"
+								includes="**"
+							/>
+						</move>
+					</then>
+				</if>
 
 				<delete dir="${app.server.parent.dir}/logs" />
 

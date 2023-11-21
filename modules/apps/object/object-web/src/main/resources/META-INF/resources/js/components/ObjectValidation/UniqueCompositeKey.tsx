@@ -391,7 +391,7 @@ export function UniqueCompositeKey({
 					emptyState={{
 						buttonText: Liferay.Language.get('add-fields'),
 						description: Liferay.Language.get(
-							'add-a-minimum-of-two-fields-to-create-unique-composite-keys'
+							'add-a-minimum-of-two-object-fields-to-create-unique-composite-keys'
 						),
 						title: Liferay.Language.get('no-fields-added-yet'),
 					}}

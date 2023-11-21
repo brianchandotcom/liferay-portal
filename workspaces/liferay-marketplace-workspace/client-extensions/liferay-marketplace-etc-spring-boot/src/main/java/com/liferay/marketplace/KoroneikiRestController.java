@@ -290,7 +290,7 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 
 		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
-		int successCount = 0;
+		int productPurchaseCount = 0;
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
 		for (int i = 0; i < orderItemsJSONArray.length(); i++) {
@@ -352,7 +352,7 @@ public class KoroneikiRestController extends BaseRestController {
 							account.getExternalReferenceCode(),
 							productPurchase);
 
-				successCount++;
+				productPurchaseCount++;
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -368,7 +368,7 @@ public class KoroneikiRestController extends BaseRestController {
 			}
 		}
 
-		if (successCount != orderItemsJSONArray.length()) {
+		if (productPurchaseCount != orderItemsJSONArray.length()) {
 			return;
 		}
 

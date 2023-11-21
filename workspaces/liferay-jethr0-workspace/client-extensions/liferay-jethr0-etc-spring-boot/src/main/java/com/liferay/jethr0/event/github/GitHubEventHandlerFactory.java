@@ -26,36 +26,43 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 
 		String action = messageJSONObject.optString("action");
 
-		if (StringUtil.isNullOrEmpty(action)) {
-			throw new IllegalArgumentException(
-				"Missing \"action\" from message JSON");
-		}
+		if (!StringUtil.isNullOrEmpty(action)) {
+			if (action.equals("created")) {
+				JSONObject commentJSONObject = messageJSONObject.optJSONObject(
+					"comment");
 
-		if (action.equals("created")) {
-			JSONObject commentJSONObject = messageJSONObject.optJSONObject(
-				"comment");
+				if (commentJSONObject != null) {
+					EventHandlerContext eventHandlerContext =
+						getEventHandlerContext();
 
-			if (commentJSONObject != null) {
-				EventHandlerContext eventHandlerContext =
-					getEventHandlerContext();
+					String body = commentJSONObject.getString("body");
 
-				String body = commentJSONObject.getString("body");
+					if (body.startsWith("ci:help")) {
+						return new CIHelpGitHubEventHandler(
+							eventHandlerContext, messageJSONObject);
+					}
+					else if (body.startsWith("ci:test")) {
+						return new CITestGitHubEventHandler(
+							eventHandlerContext, messageJSONObject);
+					}
 
-				if (body.startsWith("ci:help")) {
-					return new CIHelpGitHubEventHandler(
-						eventHandlerContext, messageJSONObject);
+					throw new IllegalArgumentException(
+						"Invalid \"body\" from comment JSON");
 				}
-				else if (body.startsWith("ci:test")) {
-					return new CITestGitHubEventHandler(
-						eventHandlerContext, messageJSONObject);
-				}
-
-				throw new IllegalArgumentException(
-					"Invalid \"body\" from comment JSON");
 			}
+
+			throw new IllegalArgumentException(
+				"Invalid \"action\" from message JSON");
 		}
 
-		throw new IllegalArgumentException("Invalid \"action\": " + action);
+		JSONObject pusherJSONObject = messageJSONObject.optJSONObject("pusher");
+
+		if (pusherJSONObject != null) {
+			return new PusherGitHubEventHandler(
+				getEventHandlerContext(), messageJSONObject);
+		}
+
+		throw new IllegalArgumentException("Invalid message JSON");
 	}
 
 }

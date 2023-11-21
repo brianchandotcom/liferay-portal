@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.event.github.commit;
 
+import com.liferay.jethr0.util.StringUtil;
+
 import org.json.JSONObject;
 
 /**
@@ -17,7 +19,13 @@ public class GitHubCommit {
 	}
 
 	public String getSHA() {
-		return _jsonObject.getString("sha");
+		String sha = _jsonObject.optString("sha");
+
+		if (StringUtil.isNullOrEmpty(sha)) {
+			sha = _jsonObject.optString("id");
+		}
+
+		return sha;
 	}
 
 	private final JSONObject _jsonObject;

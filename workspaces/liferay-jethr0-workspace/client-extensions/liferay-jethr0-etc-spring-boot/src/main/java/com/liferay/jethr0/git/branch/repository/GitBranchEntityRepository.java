@@ -59,6 +59,16 @@ public class GitBranchEntityRepository
 		return create(jsonObject);
 	}
 
+	public GitBranchEntity getByURL(URL url) {
+		for (GitBranchEntity gitBranchEntity : getAll()) {
+			if (Objects.equals(gitBranchEntity.getURL(), url)) {
+				return gitBranchEntity;
+			}
+		}
+
+		return null;
+	}
+
 	@Override
 	public GitBranchEntityDALO getEntityDALO() {
 		return _gitBranchEntityDALO;

@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.rss.util.RSSUtil;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.util.TrashWebKeys;
 
 import java.io.IOException;
 
@@ -69,6 +71,8 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		if (Validator.isNotNull(cmd) && cmd.equals("compareVersions")) {
 			_compareVersions(renderRequest);
 		}
+
+		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, trashHelper);
 
 		doRender(renderRequest, renderResponse);
 
@@ -224,6 +228,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 	@Reference
 	protected Portal portal;
+
+	@Reference
+	protected TrashHelper trashHelper;
 
 	private void _compareVersions(RenderRequest renderRequest)
 		throws PortletException {

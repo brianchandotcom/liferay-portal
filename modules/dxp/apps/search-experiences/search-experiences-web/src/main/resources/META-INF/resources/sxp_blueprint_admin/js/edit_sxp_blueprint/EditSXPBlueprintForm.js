@@ -32,6 +32,7 @@ import fetchPreviewSearch from '../utils/fetch/fetch_preview_search';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import getResultsError from '../utils/functions/get_results_error';
 import isDefined from '../utils/functions/is_defined';
+import traverseAndEncodeJSONStrings from '../utils/functions/traverse_and_encode_json_strings';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import renameKeys from '../utils/language/rename_keys';
 import {
@@ -543,19 +544,30 @@ function EditSXPBlueprintForm({
 				sxpElementId,
 				type,
 				uiConfigurationValues,
-			}) => ({
-				configurationEntry: replaceTemplateVariable({
-					sxpElement,
-					uiConfigurationValues,
-				}),
-				sxpElement: parseCustomSXPElement(
+			}) => {
+				const parsedSXPElement = parseCustomSXPElement(
 					sxpElement,
 					uiConfigurationValues
-				),
-				sxpElementId,
-				type,
-				uiConfigurationValues,
-			})
+				);
+
+				const encodedElementDefinition = traverseAndEncodeJSONStrings(
+					parsedSXPElement.elementDefinition || {}
+				);
+
+				return {
+					configurationEntry: replaceTemplateVariable({
+						sxpElement,
+						uiConfigurationValues,
+					}),
+					sxpElement: {
+						...parsedSXPElement,
+						elementDefinition: encodedElementDefinition,
+					},
+					sxpElementId,
+					type,
+					uiConfigurationValues,
+				};
+			}
 		);
 
 	const _handleAddSXPElement = (sxpElement) => {

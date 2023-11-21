@@ -4,7 +4,7 @@
 	<import file="build-test.xml" />
 
 	<target name="prepare-oauth2-osgi-configuration">
-		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies" />
+		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
 
 		<copy
 			file="${osgi.dependency.dir}/${osgi.config.file.name}"

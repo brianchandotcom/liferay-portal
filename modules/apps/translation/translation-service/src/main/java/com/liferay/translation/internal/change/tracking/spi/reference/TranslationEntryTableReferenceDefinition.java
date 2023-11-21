@@ -8,9 +8,6 @@ package com.liferay.translation.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleTable;
-import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.model.TranslationEntryTable;
@@ -33,24 +30,7 @@ public class TranslationEntryTableReferenceDefinition
 
 		childTableReferenceInfoBuilder.assetEntryReference(
 			TranslationEntryTable.INSTANCE.translationEntryId,
-			TranslationEntry.class
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				JournalArticleTable.INSTANCE
-			).innerJoinON(
-				TranslationEntryTable.INSTANCE,
-				TranslationEntryTable.INSTANCE.classPK.eq(
-					JournalArticleTable.INSTANCE.resourcePrimKey)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					JournalArticle.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						TranslationEntryTable.INSTANCE.classNameId)
-				)
-			)
-		);
+			TranslationEntry.class);
 	}
 
 	@Override

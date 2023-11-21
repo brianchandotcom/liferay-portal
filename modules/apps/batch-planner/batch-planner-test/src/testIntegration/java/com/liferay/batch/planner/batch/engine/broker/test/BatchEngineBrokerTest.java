@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -126,7 +127,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
@@ -208,21 +208,18 @@ public class BatchEngineBrokerTest {
 
 		_addObjectEntryInDifferentCompany("TestObjectCSV");
 
-		try (FileInputStream fileInputStream = new FileInputStream(
-				_prepareCSVFile(
-					objectEntry.getCreateDate(), "object_entry.csv",
-					objectEntry.getObjectEntryId(),
-					objectEntry.getModifiedDate(), false))) {
-
-			_assertEqualsExportCSV(
-				_getExportInputStream(
-					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-					_objectEntryExportCSVFieldNames,
-					"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
-					"C_TestObjectCSV"),
-				fileInputStream, objectEntry.getExternalReferenceCode(),
-				_objectEntryExportCSVFieldNames);
-		}
+		_assertEqualsExportCSV(
+			_getExportInputStream(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectEntryExportCSVFieldNames,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry", false,
+				"C_TestObjectCSV"),
+			_prepareCSVFile(
+				objectEntry.getCreateDate(), "object_entry.csv",
+				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate(),
+				false),
+			objectEntry.getExternalReferenceCode(),
+			_objectEntryExportCSVFieldNames);
 	}
 
 	@Test
@@ -266,21 +263,18 @@ public class BatchEngineBrokerTest {
 	public void testExportObjectDefinitionCSV() throws Exception {
 		_setUpObjectDefinition("TestObjectCSV");
 
-		try (FileInputStream fileInputStream = new FileInputStream(
-				_prepareCSVFile(
-					_objectDefinition1.getCreateDate(), "object_definition.csv",
-					_objectDefinition1.getObjectDefinitionId(),
-					_objectDefinition1.getModifiedDate(), false))) {
-
-			_assertEqualsExportCSV(
-				_getExportInputStream(
-					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-					_objectDefinitionExportCSVFieldNames,
-					"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-					false, null),
-				fileInputStream, _objectDefinition1.getExternalReferenceCode(),
-				_objectDefinitionExportCSVFieldNames);
-		}
+		_assertEqualsExportCSV(
+			_getExportInputStream(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectDefinitionExportCSVFieldNames,
+				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+				false, null),
+			_prepareCSVFile(
+				_objectDefinition1.getCreateDate(), "object_definition.csv",
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getModifiedDate(), false),
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectDefinitionExportCSVFieldNames);
 	}
 
 	@Test
@@ -329,21 +323,18 @@ public class BatchEngineBrokerTest {
 			_group.getGroupId(), _objectDefinition1,
 			TestPropsValues.getUserId());
 
-		try (FileInputStream fileInputStream = new FileInputStream(
-				_prepareCSVFile(
-					objectEntry.getCreateDate(), "object_entry.csv",
-					objectEntry.getObjectEntryId(),
-					objectEntry.getModifiedDate(), true))) {
-
-			_assertEqualsExportCSV(
-				_getExportInputStream(
-					BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-					_objectEntryExportCSVFieldNames,
-					"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
-					"C_TestObjectCSV"),
-				fileInputStream, objectEntry.getExternalReferenceCode(),
-				_objectEntryExportCSVFieldNames);
-		}
+		_assertEqualsExportCSV(
+			_getExportInputStream(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectEntryExportCSVFieldNames,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry", true,
+				"C_TestObjectCSV"),
+			_prepareCSVFile(
+				objectEntry.getCreateDate(), "object_entry.csv",
+				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate(),
+				true),
+			objectEntry.getExternalReferenceCode(),
+			_objectEntryExportCSVFieldNames);
 	}
 
 	@Test
@@ -699,7 +690,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	private void _assertEqualsExportCSV(
-			InputStream actualInputStream, InputStream expectedInputStream,
+			InputStream actualInputStream, String expectedCSVString,
 			String externalReferenceCode, List<String> fieldNames)
 		throws Exception {
 
@@ -709,7 +700,8 @@ public class BatchEngineBrokerTest {
 
 		UnsyncBufferedReader expectedUnsyncBufferedReader =
 			new UnsyncBufferedReader(
-				new InputStreamReader(expectedInputStream));
+				new InputStreamReader(
+					new ByteArrayInputStream(expectedCSVString.getBytes())));
 
 		_assertColumnNames(
 			_getContentRow(actualUnsyncBufferedReader.readLine()),
@@ -1023,7 +1015,7 @@ public class BatchEngineBrokerTest {
 		return zipInputStream;
 	}
 
-	private File _prepareCSVFile(
+	private String _prepareCSVFile(
 			Date createDate, String fileName, long id, Date modifiedDate,
 			boolean siteScope)
 		throws Exception {
@@ -1053,7 +1045,7 @@ public class BatchEngineBrokerTest {
 
 		_file.write(file, template);
 
-		return file;
+		return FileUtil.read(file);
 	}
 
 	private ObjectDefinition _publishObjectDefinition(

@@ -28,6 +28,10 @@ config = {
 	globals: {
 		...config.globals,
 		MODULE_PATH: true,
+		configuration: true,
+		fragmentElement: true,
+		fragmentNamespace: true,
+		layoutMode: true,
 	},
 	overrides: [
 		{

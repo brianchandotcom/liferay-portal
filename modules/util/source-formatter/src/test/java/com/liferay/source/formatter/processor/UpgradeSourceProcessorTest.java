@@ -99,11 +99,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaCookieKeysCheck() throws Exception {
-		test("upgrade/UpgradeJavaCookieKeysCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaFacetedSearcherCheck() throws Exception {
 		test("upgrade/UpgradeJavaFacetedSearcherCheck.testjava");
 	}

@@ -2063,6 +2063,31 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196842. When the “Recent” filter is applied, the possibility of changing the order must be disabled"
+	@priority = 4
+	test ViewOrderButtonDisabledWhenFilterByRecent {
+		task ("Given two web contents with different names") {
+			for (var i : list "A,B") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content",
+					groupName = "Test Site Name",
+					title = "${i} Web Content Title");
+			}
+		}
+
+		task ("When When the “Recent” filter is applied") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Web");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Recent");
+		}
+
+		task ("Then the possibility of changing the order must be disabled") {
+			AssertElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		}
+	}
+
 	@description = "This is a test for LPS-172129. reserved-article-id is missing from templates."
 	@priority = 4
 	test ViewReservedVariablesDisplayOnWebContent {

@@ -111,8 +111,6 @@ public class KBAdminNavigationDisplayContext {
 				"href",
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
-				).setMVCPath(
-					"/admin/view.jsp"
 				).buildString()
 			).put(
 				"id", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID

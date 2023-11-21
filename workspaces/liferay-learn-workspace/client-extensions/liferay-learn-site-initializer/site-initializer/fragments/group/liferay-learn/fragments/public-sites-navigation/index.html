@@ -328,8 +328,8 @@
 	</header>
 
 	<div class="search-wrapper">
-		<form class="mb-5 search" id="siteSearch" name="siteSearch">
-			<input class="search-input search-suggestions-input w-100" id="searchInput" placeholder="${languageUtil.get(locale, 'search')}" type="text" />
+		<form action="/search" class="mb-5 search" id="siteSearch" name="siteSearch">
+			<input class="search-input search-suggestions-input w-100" id="searchInput" name="q" placeholder="${languageUtil.get(locale, 'search')}" type="text" />
 
 			<a class="search-submit" href="/search" id="searchSubmitBtn" type="submit">
 				<span>[@clay["icon"] symbol="search"/]

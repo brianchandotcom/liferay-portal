@@ -100,6 +100,10 @@ const seeAllResultsLink = fragmentElement.querySelector(
 	'.search-suggestions-see-all-results-text'
 );
 
+const searchSubmitLink = fragmentElement.querySelector(
+	'.search-submit'
+);
+
 const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
 	'a'
 );
@@ -111,6 +115,7 @@ function updateSearch() {
 
 	if (searchSuggestionsInputValue) {
 		seeAllResultsLink.href = '/search?q=' + searchSuggestionsInputValue;
+		searchSubmitLink.href = '/search?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
 	}

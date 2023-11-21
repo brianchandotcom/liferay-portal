@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.commerce.admin.channel.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.AccountAddressChannel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -46,54 +46,34 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface ChannelResource {
+public interface AccountAddressChannelResource {
 
-	public Channel getAccountAddressChannelChannel(Long accountAddressChannelId)
+	public void deleteAccountAddressChannel(Long accountAddressChannelId)
 		throws Exception;
 
-	public Page<Channel> getChannelsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+	public Response deleteAccountAddressChannelBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
-	public Response postChannelsPageExportBatch(
-			String search, Filter filter, Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
+	public Page<AccountAddressChannel>
+			getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public Channel postChannel(Channel channel) throws Exception;
-
-	public Response postChannelBatch(String callbackURL, Object object)
+	public AccountAddressChannel
+			postAccountAddressByExternalReferenceCodeAccountAddressChannel(
+				String externalReferenceCode,
+				AccountAddressChannel accountAddressChannel)
 		throws Exception;
 
-	public void deleteChannelByExternalReferenceCode(
-			String externalReferenceCode)
+	public Page<AccountAddressChannel>
+			getAccountAddressIdAccountAddressChannelsPage(
+				Long addressId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Channel getChannelByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Channel patchChannelByExternalReferenceCode(
-			String externalReferenceCode, Channel channel)
-		throws Exception;
-
-	public Channel putChannelByExternalReferenceCode(
-			String externalReferenceCode, Channel channel)
-		throws Exception;
-
-	public void deleteChannel(Long channelId) throws Exception;
-
-	public Response deleteChannelBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Channel getChannel(Long channelId) throws Exception;
-
-	public Channel patchChannel(Long channelId, Channel channel)
-		throws Exception;
-
-	public Channel putChannel(Long channelId, Channel channel) throws Exception;
-
-	public Response putChannelBatch(String callbackURL, Object object)
+	public AccountAddressChannel postAccountAddressIdAccountAddressChannel(
+			Long addressId, AccountAddressChannel accountAddressChannel)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -161,7 +141,7 @@ public interface ChannelResource {
 	@ProviderType
 	public interface Builder {
 
-		public ChannelResource build();
+		public AccountAddressChannelResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

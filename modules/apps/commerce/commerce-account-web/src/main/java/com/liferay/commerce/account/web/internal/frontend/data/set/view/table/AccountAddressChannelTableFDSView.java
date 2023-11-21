@@ -32,9 +32,7 @@ public class AccountAddressChannelTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"channel.name", "name",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink")
+			"channel.name", "name"
 		).build();
 	}
 

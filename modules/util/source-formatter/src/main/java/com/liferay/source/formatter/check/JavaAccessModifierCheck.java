@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
@@ -33,7 +34,7 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 
 		String content = javaTerm.getContent();
 
-		if (!javaTerm.hasAnnotation("Component") || !_hasSubclass(javaTerm) ||
+		if (!javaTerm.hasAnnotation("Component") || !_hasSubclasses(javaTerm) ||
 			!_isAnnotationsInherit(absolutePath)) {
 
 			return content;
@@ -73,15 +74,53 @@ public class JavaAccessModifierCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private boolean _hasSubclass(JavaTerm javaTerm) {
+	private boolean _hasSubclasses(JavaTerm javaTerm) {
 		String className = javaTerm.getName();
 
+		String packageName = javaTerm.getPackageName();
+
 		List<String> lines = SourceFormatterUtil.matchFileContents(
-			getBaseDirName(), "extends " + className,
-			Arrays.asList("--", "*.java"));
+			getBaseDirName(),
+			Arrays.asList(
+				"-E", "-l",
+				StringBundler.concat(
+					"(extends ", className, ")|(extends ", packageName, ".",
+					className, ")"),
+				"--", "*.java"));
 
 		if (!lines.isEmpty()) {
-			return true;
+			for (String line : lines) {
+				if (line.contains("/src/test/java/") ||
+					line.contains("/test/unit/")) {
+
+					break;
+				}
+
+				Path baseDir = Paths.get(getBaseDirName());
+
+				Path filePath = baseDir.resolve(line);
+
+				if (Files.exists(filePath)) {
+					try {
+						List<String> fileLines = Files.readAllLines(filePath);
+
+						for (String fileLine : fileLines) {
+							if (fileLine.contains(
+									StringBundler.concat(
+										"package ", packageName, ";")) ||
+								fileLine.contains(
+									StringBundler.concat(
+										"import ", packageName, ".",
+										className))) {
+
+								return true;
+							}
+						}
+					}
+					catch (IOException ioException) {
+					}
+				}
+			}
 		}
 
 		return false;

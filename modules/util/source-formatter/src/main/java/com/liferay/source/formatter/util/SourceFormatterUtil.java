@@ -435,9 +435,9 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> matchFileContents(
-		String baseDirName, String searchContent, List<String> argList) {
+		String baseDirName, List<String> argList) {
 
-		return _matchFileContents(baseDirName, searchContent, argList);
+		return _matchFileContents(baseDirName, argList);
 	}
 
 	public static void printError(String fileName, File file) {
@@ -742,6 +742,28 @@ public class SourceFormatterUtil {
 		}
 
 		return pathMatchers;
+	}
+
+	private static List<String> _matchFileContents(
+		String baseDirName, String searchContent, List<String> argList) {
+
+		List<String> args = new ArrayList<>();
+
+		args.add("grep");
+		args.add(searchContent);
+
+		args.addAll(argList);
+
+		try {
+			return git(args, baseDirName, null, false);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
 	}
 
 	private static synchronized List<String> _getUntrackedFileNames() {

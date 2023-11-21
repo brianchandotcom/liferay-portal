@@ -15,7 +15,7 @@
 							</div>
 						</#if>
 
-						<@clay["a"]
+						<@clay["link"]
 							cssClass="language-entry-long-text"
 							href=entry.getURL()
 							label=entryLanguage

@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -76,9 +75,10 @@ public class JournalSearcherUtil {
 					JournalArticleLocalService journalArticleLocalService =
 						_journalArticleLocalServiceSnapshot.get();
 
-					return journalArticleLocalService.fetchLatestArticle(
-						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-						WorkflowConstants.STATUS_ANY, false);
+					return journalArticleLocalService.fetchArticle(
+						GetterUtil.getLong(document.get(Field.GROUP_ID)),
+						GetterUtil.getString(document.get(Field.ARTICLE_ID)),
+						GetterUtil.getDouble(document.get(Field.VERSION)));
 				}
 
 				JournalFolderLocalService journalFolderLocalService =
@@ -105,9 +105,10 @@ public class JournalSearcherUtil {
 						GetterUtil.getDouble(document.get(Field.VERSION)));
 				}
 
-				return journalArticleLocalService.fetchLatestArticle(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-					WorkflowConstants.STATUS_ANY, false);
+				return journalArticleLocalService.fetchArticle(
+					GetterUtil.getLong(document.get(Field.GROUP_ID)),
+					GetterUtil.getString(document.get(Field.ARTICLE_ID)),
+					GetterUtil.getDouble(document.get(Field.VERSION)));
 			});
 	}
 

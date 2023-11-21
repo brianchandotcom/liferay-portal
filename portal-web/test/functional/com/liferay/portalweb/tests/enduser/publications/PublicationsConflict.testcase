@@ -387,11 +387,11 @@ definition {
 	@description = "Assert explanation of duplicate conflict displays"
 	@priority = 4
 	test ExplainDuplicationConflict {
+		HeadlessSite.addSite(siteName = "Site Name");
+
 		JSONPublications.addPublication(publicationName = "Publication 1 Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
-
-		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",

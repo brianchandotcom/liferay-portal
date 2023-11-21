@@ -20,6 +20,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Iterator;
+
 /**
  * @author Gustavo Lima
  */
@@ -145,9 +147,13 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private Object _getFirstLocalizedValue(JSONObject i18nJSONObject) {
-		return i18nJSONObject.get(
-			i18nJSONObject.keys(
-			).next());
+		Iterator<String> keysIterator = i18nJSONObject.keys();
+
+		if (!keysIterator.hasNext()) {
+			return StringPool.BLANK;
+		}
+
+		return i18nJSONObject.get(keysIterator.next());
 	}
 
 	private void _upgradeSXPBlueprint() throws Exception {

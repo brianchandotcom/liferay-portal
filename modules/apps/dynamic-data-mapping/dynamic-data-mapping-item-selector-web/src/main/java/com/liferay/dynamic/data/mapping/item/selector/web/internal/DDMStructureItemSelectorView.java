@@ -11,6 +11,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.io.IOException;
 
@@ -63,13 +64,16 @@ public class DDMStructureItemSelectorView
 			servletRequest, servletResponse, ddmStructureItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new DDMStructureItemSelectorViewDescriptor(
-				ddmStructureItemSelectorCriterion,
+				ddmStructureItemSelectorCriterion, _groupLocalService,
 				(HttpServletRequest)servletRequest, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new DDMStructureItemSelectorReturnType());
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer

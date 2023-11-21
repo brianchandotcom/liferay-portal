@@ -1598,8 +1598,10 @@ definition {
 		}
 
 		task ("Then the fields Name, Type and Object can not be updated") {
+			AssertElementPresent(locator1 = "CreateObject#DISABLED_OBJECT_NAME");
+
 			AssertElementPresent(
-				key_relation = "relationship",
+				key_relation = "Relationship",
 				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE");
 
 			AssertElementPresent(

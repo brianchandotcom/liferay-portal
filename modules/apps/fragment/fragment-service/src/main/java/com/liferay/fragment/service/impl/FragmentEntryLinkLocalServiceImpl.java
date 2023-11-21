@@ -147,9 +147,6 @@ public class FragmentEntryLinkLocalServiceImpl
 						FragmentEntryLinkConstants.EDIT,
 						LocaleUtil.getMostRelevantLocale());
 
-			defaultFragmentEntryProcessorContext.setFragmentElementId(
-				StringPool.BLANK);
-
 			processedHTML =
 				_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 					fragmentEntryLink, defaultFragmentEntryProcessorContext);

@@ -125,19 +125,21 @@ definition {
 	@description = "This is a test for LPS-182060. The Locked Pages admin should comply with WCAG 2.1 AA standard."
 	@priority = 4
 	test ViewAccessibilityOfLockedPagesUnderInstanceSettings {
-		task ("Given the configuration of locked pages in instance settings") {
+		task ("Given a user accesses to the Instance Settings") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Instance Settings");
+		}
 
+		task ("When the user accesses to the Locked Pages settings") {
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Locked Pages",
 				configurationScope = "Virtual Instance Scope");
 		}
 
-		task ("Then it is possible to check accessibility") {
+		task ("Then the Locked Pages should have correct accessibility") {
 			AssertAccessible();
 		}
 	}

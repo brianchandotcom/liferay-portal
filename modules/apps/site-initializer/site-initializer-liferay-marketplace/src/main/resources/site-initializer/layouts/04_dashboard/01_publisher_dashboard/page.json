@@ -18,10 +18,17 @@
 			"actionIds": [
 				"VIEW"
 			],
-			"roleName": "User",
+			"roleName": "Supplier",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Site Member",
 			"scope": 4
 		}
 	],
+	"private": false,
 	"system": false,
 	"type": "content"
 }

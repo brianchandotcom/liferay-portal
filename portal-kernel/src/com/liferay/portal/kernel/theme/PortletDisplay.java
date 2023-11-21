@@ -86,7 +86,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_portletName = master.getPortletName();
 		_portletResource = master.getPortletResource();
 		_portletPreferences = master.getPortletPreferences();
-		_portletToolbar = master.getPortletToolbar();
 		_resourcePK = master.getResourcePK();
 		_restoreCurrentView = master.isRestoreCurrentView();
 		_rootPortletId = master.getRootPortletId();
@@ -157,7 +156,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		slave.setPortletName(_portletName);
 		slave.setPortletResource(_portletResource);
 		slave.setPortletPreferences(_portletPreferences);
-		slave.setPortletToolbar(_portletToolbar);
 		slave.setResourcePK(_resourcePK);
 		slave.setRestoreCurrentView(_restoreCurrentView);
 		slave.setRootPortletId(_rootPortletId);
@@ -267,7 +265,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	public PortletToolbar getPortletToolbar() {
-		return _portletToolbar;
+		return PortletToolbar.INSTANCE;
 	}
 
 	public String getResourcePK() {
@@ -728,10 +726,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_portletResource = portletResource;
 	}
 
-	public void setPortletToolbar(PortletToolbar portletToolbar) {
-		_portletToolbar = portletToolbar;
-	}
-
 	public void setResourcePK(String resourcePK) {
 		_resourcePK = resourcePK;
 	}
@@ -953,7 +947,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 	private String _portletName = StringPool.BLANK;
 	private PortletPreferences _portletPreferences;
 	private String _portletResource = StringPool.BLANK;
-	private PortletToolbar _portletToolbar;
 	private String _resourcePK = StringPool.BLANK;
 	private boolean _restoreCurrentView;
 	private String _rootPortletId = StringPool.BLANK;

@@ -36,6 +36,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PortletToolbar {
 
+	public static final PortletToolbar INSTANCE = new PortletToolbar();
+
 	public List<Menu> getPortletTitleMenus(
 		String portletId, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
@@ -88,6 +90,9 @@ public class PortletToolbar {
 		}
 
 		return portletTitleMenus;
+	}
+
+	private PortletToolbar() {
 	}
 
 	private static final ServiceTrackerList<PortletToolbarContributorLocator>

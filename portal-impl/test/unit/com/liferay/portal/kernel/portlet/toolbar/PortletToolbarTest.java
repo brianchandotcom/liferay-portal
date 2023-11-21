@@ -58,15 +58,13 @@ public class PortletToolbarTest {
 						Collections.singletonList(testMenu)),
 				null);
 
-		PortletToolbar portletToolbar = new PortletToolbar();
-
 		PortletRequest portletRequest = new MockPortletRequest();
 
 		portletRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST,
 			new MockHttpServletRequest());
 
-		List<Menu> menus = portletToolbar.getPortletTitleMenus(
+		List<Menu> menus = PortletToolbar.INSTANCE.getPortletTitleMenus(
 			RandomTestUtil.randomString(), portletRequest,
 			ProxyFactory.newDummyInstance(PortletResponse.class));
 

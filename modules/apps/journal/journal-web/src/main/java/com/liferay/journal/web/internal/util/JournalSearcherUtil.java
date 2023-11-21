@@ -90,20 +90,13 @@ public class JournalSearcherUtil {
 	}
 
 	public static List<JournalArticle> transformJournalArticles(
-		List<Document> documents, boolean showVersions) {
+		List<Document> documents) {
 
 		return TransformUtil.transform(
 			documents,
 			document -> {
 				JournalArticleLocalService journalArticleLocalService =
 					_journalArticleLocalServiceSnapshot.get();
-
-				if (showVersions) {
-					return journalArticleLocalService.fetchArticle(
-						GetterUtil.getLong(document.get(Field.GROUP_ID)),
-						document.get(Field.ARTICLE_ID),
-						GetterUtil.getDouble(document.get(Field.VERSION)));
-				}
 
 				return journalArticleLocalService.fetchArticle(
 					GetterUtil.getLong(document.get(Field.GROUP_ID)),

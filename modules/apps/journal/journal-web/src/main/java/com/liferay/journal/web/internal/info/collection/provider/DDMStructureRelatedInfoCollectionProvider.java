@@ -72,7 +72,7 @@ public class DDMStructureRelatedInfoCollectionProvider
 
 		return InfoPage.of(
 			JournalSearcherUtil.transformJournalArticles(
-				searchResponse.getDocuments71(), false),
+				searchResponse.getDocuments71()),
 			collectionQuery.getPagination(), searchResponse.getTotalHits());
 	}
 

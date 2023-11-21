@@ -21,6 +21,80 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182060. Time without autosave is a number between 1 and 99999."
+	@priority = 3
+	test ConfigureTimeWithoutAutosaveUnderInstanceSettings {
+		task ("Given the configuration of locked pages in instance settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Locked Pages",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("When trying to leave the field blank") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Allow Automatic Unlocking Process",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Type(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = "");
+
+			Button.clickSave();
+
+			AssertVisible(
+					key_alertMessage = "The Time Without Autosave field is required.",
+					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+
+			Type(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = "WebContentTitle@!&#-en_US-es_ES.xlf");
+		}
+
+		task ("Then an error message is displayed") {
+			AssertVisible(
+					key_alertMessage = "The Time Without Autosave field is required.",
+					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+
+		task ("When trying to fill the Time Without Autosave field with 0") {
+			Type(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = 0);
+
+			Button.clickSave();
+		}
+
+		task ("Then an error message is displayed") {
+			AssertVisible(
+					key_alertMessage = "Please enter a value greater than or equal to 1.",
+					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+
+		task ("When trying to fill in the Time Without Autosave field with a number greater than 99999") {
+			Type(
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = 200000);
+
+			Button.clickSave();
+		}
+
+		task ("Then an error message is displayed") {
+			AssertVisible(
+					key_alertMessage = "Please enter a value less than or equal to 99999.",
+					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+	}
+
 	@description = "This is a test for LPS-194499. In the list of locked pages, the name of the content page and collection page are clickable and the link opens the pages in a new tab."
 	@priority = 5
 	test NavigateToLockedPagesInList {

@@ -16,7 +16,6 @@ import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactor
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
@@ -41,29 +40,25 @@ public class JournalArticleContentDashboardItemFactory
 	public ContentDashboardItem<JournalArticle> create(long classPK)
 		throws PortalException {
 
-		JournalArticle journalArticle =
-			_journalArticleLocalService.getLatestArticle(
-				classPK, WorkflowConstants.STATUS_ANY, false);
-
-		AssetEntry assetEntry = null;
-
-		if (!journalArticle.isApproved() && !journalArticle.isExpired() &&
-			(journalArticle.getVersion() !=
-				JournalArticleConstants.VERSION_DEFAULT)) {
-
-			assetEntry = _assetEntryLocalService.fetchEntry(
-				JournalArticle.class.getName(), journalArticle.getPrimaryKey());
+		if (classPK == 0) {
+			return null;
 		}
-		else {
-			assetEntry = _assetEntryLocalService.fetchEntry(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey());
-		}
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), classPK);
 
 		if (assetEntry == null) {
 			throw new NoSuchModelException(
-				"Unable to find an asset entry for journal article " +
-					journalArticle.getPrimaryKey());
+				"Unable to find an asset entry for journal article classPK " +
+					classPK);
+		}
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.fetchJournalArticle(classPK);
+
+		if (journalArticle == null) {
+			journalArticle = _journalArticleLocalService.getLatestArticle(
+				classPK, WorkflowConstants.STATUS_ANY, false);
 		}
 
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =

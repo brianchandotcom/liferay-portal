@@ -21,6 +21,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.verify.VerifyProcessSuite;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -30,6 +31,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.impl.Log4jLogEvent;
+import org.apache.logging.log4j.message.SimpleMessage;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -62,17 +68,28 @@ public class UpgradeRecorderTest {
 
 		_originalStopWatch = ReflectionTestUtil.getFieldValue(
 			DBUpgrader.class, "_stopWatch");
+
+		_originalVerifyProcessError = ReflectionTestUtil.getFieldValue(
+			_upgradeRecorder, "_verifyProcessError");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		ReflectionTestUtil.setFieldValue(
 			DBUpgrader.class, "_stopWatch", _originalStopWatch);
+
+		ReflectionTestUtil.setFieldValue(
+			_upgradeRecorder, "_verifyProcessError",
+			_originalVerifyProcessError);
 	}
 
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
+
+		ReflectionTestUtil.setFieldValue(
+			_upgradeRecorder, "_verifyProcessError",
+			_originalVerifyProcessError);
 	}
 
 	@Test
@@ -130,6 +147,26 @@ public class UpgradeRecorderTest {
 		Assert.assertEquals("failure", _getResult());
 
 		Assert.assertEquals("micro", _getType());
+	}
+
+	@Test
+	public void testFailureResultByVerifyException() throws Exception {
+		StartupHelperUtil.setUpgrading(true);
+
+		VerifyExceptionProcess verifyExceptionProcess =
+			new VerifyExceptionProcess();
+
+		verifyExceptionProcess.doVerify();
+
+		StartupHelperUtil.setUpgrading(false);
+
+		Assert.assertEquals("failure", _getResult());
+
+		Assert.assertEquals("major", _getType());
+
+		ReflectionTestUtil.setFieldValue(
+			_upgradeRecorder, "_verifyProcessError",
+			_originalVerifyProcessError);
 	}
 
 	@Test
@@ -297,12 +334,16 @@ public class UpgradeRecorderTest {
 
 	private static Bundle _bundle;
 	private static StopWatch _originalStopWatch;
+	private static boolean _originalVerifyProcessError;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",
 		type = Inject.NoType.class
 	)
 	private static Object _upgradeRecorder;
+
+	@Inject(filter = "appender.name=UpgradeLogAppender")
+	private Appender _appender;
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
@@ -320,6 +361,28 @@ public class UpgradeRecorderTest {
 			errorMessages.put(
 				"UnrelatedErrorUpgradeProcess",
 				Collections.singletonMap("Error during upgrade", 0));
+		}
+
+	}
+
+	private class VerifyExceptionProcess extends VerifyProcessSuite {
+
+		@Override
+		protected void doVerify() {
+			_appender.start();
+
+			LogEvent logEvent = Log4jLogEvent.newBuilder(
+			).setLoggerName(
+				"Verify Exception Error"
+			).setLevel(
+				Level.ERROR
+			).setMessage(
+				new SimpleMessage("com.liferay.portal.verify.VerifyException")
+			).build();
+
+			_appender.append(logEvent);
+
+			_appender.stop();
 		}
 
 	}

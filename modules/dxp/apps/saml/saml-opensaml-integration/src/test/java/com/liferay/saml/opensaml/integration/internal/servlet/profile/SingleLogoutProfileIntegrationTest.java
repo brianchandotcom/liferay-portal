@@ -6,8 +6,10 @@
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
@@ -33,8 +35,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,6 +50,9 @@ import org.opensaml.messaging.context.MessageContext;
 import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.saml2.core.LogoutRequest;
 import org.opensaml.saml.saml2.core.NameID;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -60,6 +67,17 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		_cookiesManagerServiceRegistration = _bundleContext.registerService(
+			CookiesManager.class, Mockito.mock(CookiesManager.class), null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_cookiesManagerServiceRegistration.unregister();
+	}
 
 	@Before
 	@Override
@@ -338,6 +356,11 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		Assert.assertEquals(NameID.EMAIL, nameID.getFormat());
 		Assert.assertEquals("test@liferay.com", nameID.getValue());
 	}
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static ServiceRegistration<CookiesManager>
+		_cookiesManagerServiceRegistration;
 
 	private final RelayStateHelperImpl _relayStateHelperImpl =
 		new RelayStateHelperImpl();

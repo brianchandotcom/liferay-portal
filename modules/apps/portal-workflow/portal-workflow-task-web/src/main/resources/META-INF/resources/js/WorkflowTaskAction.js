@@ -45,7 +45,10 @@ export default function ({
 					`${portletNamespace}${randomId}${workflowTask}taskChangeStatusLink`
 				);
 
-				workflowTaskElement.removeEventListener('click', onTaskClickFn);
+				workflowTaskElement?.removeEventListener(
+					'click',
+					onTaskClickFn
+				);
 			});
 		},
 	};

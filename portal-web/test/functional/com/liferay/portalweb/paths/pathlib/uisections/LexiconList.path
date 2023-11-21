@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>LIST_ENTRY_X</td>
-	<td>//*[@data-qa-id='row'][${key_position}]</td>
+	<td>xpath=(//*[@data-qa-id='row'][contains(@class,'list')])[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>

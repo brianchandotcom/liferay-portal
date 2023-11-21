@@ -338,10 +338,17 @@ definition {
 
 			Click(locator1 = "Icon#BACK");
 
-			ContentPages.viewFragmentText(
-				fragmentName = "paragraph",
-				id = "element-text",
-				text = "Welcome to Liferay");
+			if (${menuItem} == "Account Settings") {
+				AssertTextEquals(
+					locator1 = "CommerceEntry#COMMERCE_OBJECT_NAME_ON_HEADER",
+					value1 = "Users and Organizations");
+			}
+			else {
+				ContentPages.viewFragmentText(
+					fragmentName = "paragraph",
+					id = "element-text",
+					text = "Welcome to Liferay");
+			}
 		}
 	}
 

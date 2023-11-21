@@ -9,8 +9,12 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -26,25 +30,68 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Paulo Albuquerque
  */
 public abstract class BaseObjectEntryManagerImplTestCase {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			BaseObjectEntryManagerImplTestCase.class);
+
+		bundleContext = bundle.getBundleContext();
+
+		_testObjectEntryModelListener = new TestObjectEntryModelListener();
+
+		_serviceRegistration = bundleContext.registerService(
+			ModelListener.class, _testObjectEntryModelListener, null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_serviceRegistration.unregister();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		dtoConverterContext = new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, adminUser);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (com.liferay.object.model.ObjectEntry objectEntry :
+				_testObjectEntryModelListener.getObjectEntries()) {
+
+			try {
+				objectEntryLocalService.deleteObjectEntry(
+					objectEntry.getObjectEntryId());
+			}
+			catch (Exception exception) {
+			}
+		}
+
+		_testObjectEntryModelListener.clear();
 	}
 
 	protected void assertEquals(
@@ -154,6 +201,7 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 	}
 
 	protected static User adminUser;
+	protected static BundleContext bundleContext;
 	protected static long companyId;
 	protected static DTOConverterContext dtoConverterContext;
 
@@ -169,6 +217,36 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	@Inject
+	protected ObjectEntryLocalService objectEntryLocalService;
+
+	@Inject
 	protected ObjectFieldLocalService objectFieldLocalService;
+
+	private static ServiceRegistration<?> _serviceRegistration;
+	private static TestObjectEntryModelListener _testObjectEntryModelListener;
+
+	private static class TestObjectEntryModelListener
+		extends BaseModelListener<com.liferay.object.model.ObjectEntry> {
+
+		public void clear() {
+			_objectEntries.clear();
+		}
+
+		public List<com.liferay.object.model.ObjectEntry> getObjectEntries() {
+			return _objectEntries;
+		}
+
+		@Override
+		public void onAfterCreate(
+				com.liferay.object.model.ObjectEntry objectEntry)
+			throws ModelListenerException {
+
+			_objectEntries.add(objectEntry);
+		}
+
+		private List<com.liferay.object.model.ObjectEntry> _objectEntries =
+			new ArrayList<>();
+
+	}
 
 }

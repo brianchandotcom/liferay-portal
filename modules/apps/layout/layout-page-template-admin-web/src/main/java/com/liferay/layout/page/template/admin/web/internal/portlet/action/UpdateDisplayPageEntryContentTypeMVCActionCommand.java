@@ -19,13 +19,16 @@ import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.RenderURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -74,6 +77,17 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				ParamUtil.getLong(actionRequest, "classNameId"),
 				ParamUtil.getLong(actionRequest, "classTypeId"));
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(
+				actionRequest, "displayPageContentTypeChanged",
+				_language.format(
+					themeDisplay.getLocale(),
+					"the-content-type-of-x-was-successfully-changed",
+					new String[] {
+						HtmlUtil.escape(layoutPageTemplateEntry.getName())
+					}));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
@@ -179,6 +193,9 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

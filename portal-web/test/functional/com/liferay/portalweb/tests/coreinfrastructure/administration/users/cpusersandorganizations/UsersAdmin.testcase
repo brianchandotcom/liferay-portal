@@ -958,6 +958,176 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.servlet.ServletException");
 	}
 
+	@description = "LPS-196309 | As an admin, I can assert that if the account the user is associated is deleted, the user will be listed again by using the filter type 'Not Associated Users'."
+	@priority = 4
+	test CanFilterByNotAssociatedUsersAfterDeletingTheAssociatedAccount {
+		property portal.acceptance = "false";
+
+		task ("Given an account with an account user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Test Account",
+				accountEntryType = "Business");
+
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Test Account",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("When the admin navigates to the Users and Organizations page") {
+			User.openUsersAdmin();
+		}
+
+		task ("When the admin sets the filter to view Not Associated Users") {
+			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+		}
+
+		task ("Then can assert that only the test user is listed") {
+			LexiconEntry.viewEntryName(rowEntry = "test");
+
+			LexiconEntry.viewNoEntry(rowEntry = "user1");
+		}
+
+		task ("When the account is deleted") {
+			Account.openAccountsAdmin();
+
+			Account.deleteAccount(accountName = "Test Account");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Account");
+		}
+
+		task ("Then the admin can assert that both users are listed") {
+			User.openUsersAdmin();
+
+			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+
+			for (var userName : list "test,user1") {
+				LexiconEntry.viewEntryName(rowEntry = ${userName});
+			}
+		}
+	}
+
+	@description = "LPS-196309 | As an admin, I can assert that if the user is removed from the organization, will be listed again by using the filter type 'Not Associated Users'."
+	@priority = 4
+	test CanFilterByNotAssociatedUsersAfterRemovingUserFromOrganization {
+		property portal.acceptance = "false";
+
+		task ("Given a user and an organization is created and the user is linked to the organization") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONOrganization.addOrganization(organizationName = "Org1");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Org1",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("When the admin navigates to the Users and Organizations page") {
+			User.openUsersAdmin();
+		}
+
+		task ("And the admin sets the filter to view Not Associated Users") {
+			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+		}
+
+		task ("Then can assert that only the test user is listed") {
+			LexiconEntry.viewEntryName(rowEntry = "test");
+
+			LexiconEntry.viewNoEntry(rowEntry = "user1");
+		}
+
+		task ("When the admin removes user from the organization") {
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "user1");
+
+			UserNavigator.gotoOrganizations();
+
+			Click(locator1 = "Icon#DELETE");
+
+			Click(locator1 = "Icon#BACK");
+		}
+
+		task ("Then can assert that both users are listed") {
+			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+
+			for (var userName : list "test,user1") {
+				LexiconEntry.viewEntryName(rowEntry = ${userName});
+			}
+		}
+	}
+
+	@description = "LPS-196309 | As an admin, I can filter users that do not belong to an account or organization by using the filter type 'Not Associated Users'."
+	@priority = 5
+	test CanFilterUsersByNotAssociatedUsers {
+		property portal.acceptance = "true";
+
+		task ("Given an account with an account user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Test Account",
+				accountEntryType = "Business");
+
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Test Account",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("And 2 users not associated to the account but one of them is associated to an organization") {
+			for (var newUsers : list "2,3") {
+				JSONUser.addUser(
+					userEmailAddress = "user${newUsers}@liferay.com",
+					userFirstName = "user${newUsers}",
+					userLastName = "user${newUsers}",
+					userScreenName = "user${newUsers}");
+			}
+
+			JSONOrganization.addOrganization(organizationName = "Org1");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Org1",
+				userEmailAddress = "user2@liferay.com");
+		}
+
+		task ("When the admin navigates to the Users and Organizations page") {
+			User.openUsersAdmin();
+		}
+
+		task ("Then can assert that all of the users are listed") {
+			for (var userName : list "test,user1,user2,user3") {
+				LexiconEntry.viewEntryName(rowEntry = ${userName});
+			}
+		}
+
+		task ("When the admin sets the filter to view Not Associated Users") {
+			ManagementBar.setFilterAndOrder(filterBy = "Not Associated Users");
+		}
+
+		task ("Then can assert that only the users that are not associated to the account and organization are listed") {
+			for (var userName : list "test,user3") {
+				LexiconEntry.viewEntryName(rowEntry = ${userName});
+			}
+
+			for (var userName : list "user1,user2") {
+				LexiconEntry.viewNoEntry(rowEntry = ${userName});
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-202027. As and admin i cannot create a new user with a date of birth in the future."
 	@priority = 4
 	test CannotAddUserWithDateOfBirthInTheFuture {

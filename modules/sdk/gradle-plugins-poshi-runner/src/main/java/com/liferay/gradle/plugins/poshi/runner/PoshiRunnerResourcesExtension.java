@@ -47,7 +47,7 @@ public class PoshiRunnerResourcesExtension {
 			public String call() throws Exception {
 				Date date = new Date();
 
-				DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+				DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
 
 				return dateFormat.format(date) + "-" +
 					_gitRepositoryBuildAdapter.getHeadHash(project);

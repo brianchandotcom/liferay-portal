@@ -3,10 +3,58 @@
 <project basedir="." name="portal-test-saml" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<target name="check-keystore-path">
+		<property name="keystoreDirectoryPattern" value="${liferay.home}/data/document_library" />
+
+		<dirset
+			dir="${keystoreDirectoryPattern}"
+			id="keystoreDirSet"
+			includes="*/0/saml/keystore.jks"
+		/>
+
+		<condition property="keystoreDirectoryExists">
+			<resourcecount count="0" refid="keystoreDirSet" when="greater" />
+		</condition>
+
+		<if>
+			<equals arg1="${keystoreDirectoryExists}" arg2="true" />
+			<then>
+				<echo file="${liferay.home}/result.txt">
+				The certificate file is saved to DL root folder.
+				</echo>
+			</then>
+			<else>
+				<echo file="${liferay.home}/result.txt">
+				The certificate file isn't saved to DL root folder.
+				</echo>
+			</else>
+		</if>
+	</target>
+
 	<target name="deploy-keystore-file">
 		<copy
 			file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies/keystore.jks"
 			todir="${liferay.home}/data"
+		/>
+	</target>
+
+	<target name="prepare-saml-keystore-osgi-configuration">
+		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies" />
+
+		<copy
+			file="${osgi.dependency.dir}/${osgi.config.file.name}"
+			todir="${liferay.home}"
+		/>
+
+		<replace
+			file="${liferay.home}/${osgi.config.file.name}"
+			token="FileSystemKeyStoreManagerImpl"
+			value="DLKeyStoreManagerImpl"
+		/>
+
+		<move
+			file="${liferay.home}/${osgi.config.file.name}"
+			todir="${liferay.home}/osgi/configs"
 		/>
 	</target>
 </project>

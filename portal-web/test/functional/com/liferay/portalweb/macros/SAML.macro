@@ -488,6 +488,11 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro deployConfigFile(osgiConfigFileName = null) {
+		AntCommands.runCommand("build-test-saml.xml", "prepare-saml-keystore-osgi-configuration -Dosgi.config.file.name=${osgiConfigFileName}");
+	}
+
+	@summary = "Default summary"
 	macro downloadCertificate(certificate = null) {
 		Click(
 			key_certificateUsage = ${certificate},
@@ -887,6 +892,19 @@ definition {
 		User.logoutPG(specificURL = ${spURL});
 
 		User.viewLoggedOutPG();
+	}
+
+	@summary = "Default summary"
+	macro validateFolderExist() {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		AntCommands.runCommand("build-test-saml.xml", "check-keystore-path");
+
+		var result = FileUtil.read("${liferayHome}/result.txt");
+
+		if (contains(${result}, "isn't saved")) {
+			fail("The certificate file isn't saved to DL root folder.");
+		}
 	}
 
 	@summary = "Default summary"

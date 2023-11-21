@@ -6,10 +6,14 @@
 package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
+import org.json.JSONObject;
 
 import java.net.URL;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,6 +34,8 @@ public interface GitBranchEntity extends Entity {
 	public boolean getRebased();
 
 	public String getRepositoryName();
+
+	public Type getType();
 
 	public String getUpstreamBranchName();
 
@@ -54,5 +60,41 @@ public interface GitBranchEntity extends Entity {
 	public void setUpstreamBranchSHA(String upstreamBranchSHA);
 
 	public void setURL(URL url);
+
+	public static enum Type {
+
+		DEFAULT("default"), UPSTREAM("upstream");
+
+		public static Type get(JSONObject jsonObject) {
+			return getByKey(jsonObject.getString("key"));
+		}
+
+		public static Type getByKey(String key) {
+			return _types.get(key);
+		}
+
+		public JSONObject getJSONObject() {
+			return new JSONObject("{\"key\": \"" + getKey() + "\"}");
+		}
+
+		public String getKey() {
+			return _key;
+		}
+
+		private Type(String key) {
+			_key = key;
+		}
+
+		private static final Map<String, Type> _types = new HashMap<>();
+
+		static {
+			for (Type type : values()) {
+				_types.put(type.getKey(), type);
+			}
+		}
+
+		private final String _key;
+
+	}
 
 }

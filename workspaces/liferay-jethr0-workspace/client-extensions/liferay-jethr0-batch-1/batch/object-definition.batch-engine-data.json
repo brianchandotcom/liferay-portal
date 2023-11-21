@@ -156,6 +156,18 @@
 					"type": "String"
 				},
 				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "gitHubBranchType",
+					"name": "type",
+					"required": true,
+					"state": false,
+					"type": "String"
+				},
+				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
 					"label": {

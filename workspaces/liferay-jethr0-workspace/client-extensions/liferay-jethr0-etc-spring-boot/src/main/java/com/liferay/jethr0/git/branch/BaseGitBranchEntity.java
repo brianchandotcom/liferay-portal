@@ -6,6 +6,7 @@
 package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -81,6 +82,11 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
+	public Type getType() {
+		return _type;
+	}
+
+	@Override
 	public String getUpstreamBranchName() {
 		return _upstreamBranchName;
 	}
@@ -147,6 +153,7 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 		_branchSHA = jsonObject.getString("branchSHA");
 		_rebased = jsonObject.getBoolean("rebased");
 		_repositoryName = jsonObject.getString("repositoryName");
+		_type = Type.get(jsonObject.getJSONObject("type"));
 		_upstreamBranchName = jsonObject.getString("upstreamBranchName");
 		_upstreamBranchSHA = jsonObject.getString("upstreamBranchSHA");
 		_url = StringUtil.toURL(jsonObject.getString("url"));
@@ -157,6 +164,7 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private boolean _rebased;
 	private String _repositoryName;
+	private Type _type;
 	private String _upstreamBranchName;
 	private String _upstreamBranchSHA;
 	private URL _url;

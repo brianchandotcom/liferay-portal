@@ -27,6 +27,31 @@
 	},
 	"items": [
 		{
+			"externalReferenceCode": "gitHubBranchType",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "default",
+					"key": "default",
+					"name": "Default",
+					"name_i18n": {
+						"en-US": "Default"
+					}
+				},
+				{
+					"externalReferenceCode": "upstream",
+					"key": "upstream",
+					"name": "Upstream",
+					"name_i18n": {
+						"en-US": "Upstream"
+					}
+				}
+			],
+			"name": "gitHubBranchType",
+			"name_i18n": {
+				"en-US": "GitHub Branch Type"
+			}
+		},
+		{
 			"externalReferenceCode": "jenkinsNodeType",
 			"listTypeEntries": [
 				{

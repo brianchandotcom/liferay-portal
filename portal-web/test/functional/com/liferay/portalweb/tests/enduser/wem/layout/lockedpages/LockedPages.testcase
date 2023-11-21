@@ -37,10 +37,6 @@ definition {
 		}
 
 		task ("When trying to leave the field blank") {
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Allow Automatic Unlocking Process",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 			Type(
 				key_fieldLabel = "Time Without Autosave",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",

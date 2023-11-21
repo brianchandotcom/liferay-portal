@@ -57,7 +57,10 @@ export function CreateAPIEndpointModalContent({
 	async function postData() {
 		let parameter: string | undefined = '';
 
-		if (localUIData.retrieveType?.key === 'singleElement') {
+		if (
+			localUIData.httpMethod?.key === 'get' &&
+			localUIData.retrieveType?.key === 'singleElement'
+		) {
 			parameter = localUIData.parameter;
 		}
 
@@ -65,6 +68,10 @@ export function CreateAPIEndpointModalContent({
 			body: JSON.stringify({
 				...localUIData,
 				applicationStatus: {key: 'unpublished'},
+				httpMethod: {
+					key: localUIData.httpMethod?.key!,
+					name: localUIData.httpMethod?.key!,
+				},
 				name: localUIData.path,
 				...(localUIData.path && {
 					path: beginStringWithForwardSlash(
@@ -114,9 +121,12 @@ export function CreateAPIEndpointModalContent({
 
 	function validateData() {
 		let isDataValid = true;
-		const mandatoryFields = ['httpMethod', 'scope', 'retrieveType', 'path'];
+		const mandatoryFields = ['httpMethod', 'path', 'retrieveType', 'scope'];
 
-		if (localUIData.retrieveType?.key === 'singleElement') {
+		if (
+			localUIData.httpMethod?.key === 'get' &&
+			localUIData.retrieveType?.key === 'singleElement'
+		) {
 			mandatoryFields.push('parameter');
 		}
 

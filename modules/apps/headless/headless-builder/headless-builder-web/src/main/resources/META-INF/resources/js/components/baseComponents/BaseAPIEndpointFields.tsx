@@ -178,12 +178,12 @@ export default function BaseAPIEndpointFields({
 			);
 		}
 
-		data.httpMethod?.key === 'post' && setData((previousValue) => ({
-			...previousValue,
-			retrieveType: {key: 'singleElement', value: ''},
-		}));
-		
-	}, [data.httpMethod, httpMethodOptions]);
+		data.httpMethod?.key === 'post' &&
+			setData((previousValue) => ({
+				...previousValue,
+				retrieveType: {key: 'singleElement', value: ''},
+			}));
+	}, [data.httpMethod, httpMethodOptions, setData]);
 
 	const handleDropdownChange = (
 		itemKey: string,

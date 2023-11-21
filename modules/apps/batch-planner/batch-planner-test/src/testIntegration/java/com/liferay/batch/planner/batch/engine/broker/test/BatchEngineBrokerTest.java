@@ -869,8 +869,6 @@ public class BatchEngineBrokerTest {
 			boolean siteScope)
 		throws Exception {
 
-		File file = _file.createTempFile("csv");
-
 		String template = StreamUtil.toString(_getInputStream(fileName));
 
 		String groupNameString = null;
@@ -891,6 +889,8 @@ public class BatchEngineBrokerTest {
 				_toDateString(createDate), _toDateString(modifiedDate),
 				String.valueOf(id), groupNameString
 			});
+
+		File file = _file.createTempFile("csv");
 
 		_file.write(file, template);
 

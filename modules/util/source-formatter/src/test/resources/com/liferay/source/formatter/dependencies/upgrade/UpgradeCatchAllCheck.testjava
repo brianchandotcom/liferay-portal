@@ -42,6 +42,10 @@ public class UpgradeCatchAllCheck {
 		HtmlUtil.extractText(null);
 
 		ListUtil.fromArray(LanguageUtil.getAvailableLocales());
+
+		CookieKeys.COMMERCE_CONTINUE_AS_GUEST;
+		CookieKeys.ID;
+		CookieKeys.SCREEN_NAME;
 	}
 
 	public void method(AssetCategory<?> assetCategory) {
@@ -74,6 +78,9 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(HttpServletRequest httpServletRequest, String name) {
+		CookieKeys.getCookie(httpServletRequest, "test123");
+		CookieKeys.getCookie(httpServletRequest, name);
+
 		CookieUtil.get(httpServletRequest, "test123");
 		CookieUtil.get(httpServletRequest, name);
 	}

@@ -1,10 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.captcha.rest.internal.security.service.access.policy;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,8 +67,11 @@ public class CaptchaSAPEntryPortalInstanceLifecycleListener
 
 	private static final String[] _SAP_ENTRY_OBJECT_ARRAY = {
 		"CAPTCHA_DEFAULT",
-		"com.liferay.captcha.rest.internal.resource.v1_0." +
-			"CaptchaResourceImpl#getSimpleCaptcha"
+		StringBundler.concat(
+			"com.liferay.captcha.rest.internal.resource.v1_0.",
+			"CaptchaResourceImpl#getSimpleCaptcha\n",
+			"com.liferay.captcha.rest.internal.resource.v1_0.",
+			"CaptchaResourceImpl#postSimpleCaptcha")
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

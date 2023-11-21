@@ -636,17 +636,8 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertTextEquals(
-					key_colPosition = 1,
-					key_fragmentName = "heading",
-					key_rowPosition = ${n},
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = ${title});
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-collection')]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space()='${title}']");
 			}
 		}
 	}

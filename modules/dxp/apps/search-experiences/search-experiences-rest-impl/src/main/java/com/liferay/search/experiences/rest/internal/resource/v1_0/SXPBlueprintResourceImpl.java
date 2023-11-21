@@ -31,6 +31,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 import com.liferay.search.experiences.rest.internal.odata.entity.v1_0.SXPBlueprintEntityModel;
+import com.liferay.search.experiences.rest.internal.resource.v1_0.util.DecodeSXPUtil;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.util.SearchUtil;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.util.TitleMapUtil;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
@@ -221,6 +222,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 		SXPBlueprintUtil.unpack(sxpBlueprint);
 
+		DecodeSXPUtil.decodeSXPBlueprint(sxpBlueprint);
+
 		return _sxpBlueprintDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
@@ -338,6 +341,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	private SXPBlueprint _updateSXPBlueprint(
 			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
 		throws Exception {
+
+		DecodeSXPUtil.decodeSXPBlueprint(sxpBlueprint);
 
 		return _sxpBlueprintDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

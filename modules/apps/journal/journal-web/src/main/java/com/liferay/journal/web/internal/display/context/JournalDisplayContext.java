@@ -64,7 +64,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1523,10 +1522,6 @@ public class JournalDisplayContext {
 	}
 
 	private long[] _getAssetCategoryIds() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-196766")) {
-			return null;
-		}
-
 		if (_assetCategoryIds != null) {
 			return _assetCategoryIds;
 		}
@@ -1550,10 +1545,6 @@ public class JournalDisplayContext {
 	}
 
 	private String[] _getAssetTagNames() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-196766")) {
-			return null;
-		}
-
 		if (_assetTagNames != null) {
 			return _assetTagNames;
 		}

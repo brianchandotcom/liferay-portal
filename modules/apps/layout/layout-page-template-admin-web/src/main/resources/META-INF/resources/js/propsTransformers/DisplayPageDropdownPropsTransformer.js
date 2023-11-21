@@ -39,7 +39,7 @@ const ACTIONS = {
 							'this-display-page-template-does-not-have-any-content-type-assigned-you-must-select-one-to-edit-it'
 					  )
 					: '',
-				disableWarning: Boolean(hasMissingType),
+				disableWarning: Boolean(hasMissingType) || !assetType,
 				formSubmitURL: changeContentTypeURL,
 				mappingTypes,
 				namespace,

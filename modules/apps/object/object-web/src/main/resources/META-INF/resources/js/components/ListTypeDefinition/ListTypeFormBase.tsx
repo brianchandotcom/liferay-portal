@@ -15,10 +15,10 @@ import {defaultLanguageId} from '../../utils/constants';
 export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 	const validate = (picklist: Partial<ListTypeDefinition>) => {
 		const errors: ObjectValidationErrors = {};
-		const label = picklist.name_i18n?.[defaultLanguageId];
+		const label = picklist.name_languageId?.[defaultLanguageId];
 
 		if (invalidateRequired(label)) {
-			errors.name_i18n = REQUIRED_MSG;
+			errors.name_languageId = REQUIRED_MSG;
 		}
 		if (invalidateRequired(picklist.externalReferenceCode)) {
 			errors.externalReferenceCode = REQUIRED_MSG;

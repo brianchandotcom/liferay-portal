@@ -20,7 +20,7 @@ interface ListTypeDefinition {
 	key: string;
 	listTypeEntries: ListTypeEntry[];
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	name_languageId: LocalizedValue<string>;
 	system: boolean;
 }
 interface ListTypeEntry {
@@ -29,7 +29,7 @@ interface ListTypeEntry {
 	key: string;
 	listTypeDefinitionId: number;
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	name_languageId: LocalizedValue<string>;
 }
 declare type NotificationTemplateType = 'email' | 'userNotification';
 declare type RecipientType = 'role' | 'term' | 'user';
@@ -169,7 +169,7 @@ export declare function patchObjectDefinitionById(
 export declare function postListTypeEntry({
 	key,
 	listTypeDefinitionId,
-	name_i18n,
+	name_languageId,
 }: Partial<ListTypeEntry>): Promise<unknown>;
 export declare function postObjectDefinition(
 	objectDefinition: Partial<ObjectDefinition>
@@ -187,12 +187,12 @@ export declare function putListTypeDefinition({
 	externalReferenceCode,
 	id,
 	listTypeEntries,
-	name_i18n,
+	name_languageId,
 }: Partial<ListTypeDefinition>): Promise<unknown>;
 export declare function putListTypeEntry({
 	externalReferenceCode,
 	id,
-	name_i18n,
+	name_languageId,
 }: Partial<ListTypeEntry>): Promise<unknown>;
 export declare function putObjectRelationship({
 	id,

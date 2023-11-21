@@ -31,7 +31,7 @@ interface ListTypeDefinition {
 	key: string;
 	listTypeEntries: ListTypeEntry[];
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	name_languageId: LocalizedValue<string>;
 	system: boolean;
 }
 
@@ -41,7 +41,7 @@ interface ListTypeEntry {
 	key: string;
 	listTypeDefinitionId: number;
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	name_languageId: LocalizedValue<string>;
 }
 
 type NotificationTemplateType = 'email' | 'userNotification';
@@ -335,10 +335,10 @@ export async function patchObjectDefinitionById(
 export async function postListTypeEntry({
 	key,
 	listTypeDefinitionId,
-	name_i18n,
+	name_languageId,
 }: Partial<ListTypeEntry>) {
 	return await save({
-		item: {key, name_i18n},
+		item: {key, name_languageId},
 		method: 'POST',
 		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}/list-type-entries`,
 	});
@@ -395,10 +395,10 @@ export async function putListTypeDefinition({
 	externalReferenceCode,
 	id,
 	listTypeEntries,
-	name_i18n,
+	name_languageId,
 }: Partial<ListTypeDefinition>) {
 	return await save({
-		item: {externalReferenceCode, listTypeEntries, name_i18n},
+		item: {externalReferenceCode, listTypeEntries, name_languageId},
 		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
 	});
 }
@@ -406,10 +406,10 @@ export async function putListTypeDefinition({
 export async function putListTypeEntry({
 	externalReferenceCode,
 	id,
-	name_i18n,
+	name_languageId,
 }: Partial<ListTypeEntry>) {
 	return await save({
-		item: {externalReferenceCode, name_i18n},
+		item: {externalReferenceCode, name_languageId},
 		url: `/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
 	});
 }

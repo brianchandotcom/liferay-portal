@@ -11,7 +11,7 @@ interface ListTypeEntry {
 	key: string;
 	listTypeDefinitionId: number;
 	name: string;
-	name_i18n: LocalizedValue<string>;
+	name_languageId: LocalizedValue<string>;
 }
 interface ListTypeEntryBaseFieldProps {
 	creationLanguageId?: Liferay.Language.Locale;

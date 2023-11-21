@@ -4,7 +4,7 @@
  */
 
 export declare function fixLocaleKeys(
-	name_i18n: LocalizedValue<string>
+	name_languageId: LocalizedValue<string>
 ): {
 	[key: string]: string;
 };

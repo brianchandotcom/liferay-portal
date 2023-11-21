@@ -1,6 +1,7 @@
 @ccomponent-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -272,7 +273,7 @@ definition {
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 				task ("Then all the available addresses will change based on the selected channel") {
-					for (var channelList : list "Test Channel,All Channels") {
+					for (var channelList : list "Test Channel,All Other Channels") {
 						Click(
 							key_fieldLabel = "Channel",
 							locator1 = "Select#GENERIC_SELECT_FIELD");
@@ -286,7 +287,7 @@ definition {
 							key_fieldLabel = "${typeList} Address",
 							locator1 = "Select#GENERIC_SELECT_FIELD");
 
-						if (${channelList} == "All Channels") {
+						if (${channelList} == "All Other Channels") {
 							AssertElementNotPresent(
 								key_fieldLabel = "${typeList} Address",
 								key_value = "${typeList} Test Address",
@@ -596,8 +597,8 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And three addresses one billing one shipping and the last one for shipping/billing") {
-			for (var addressList : list "Billing:1,Shipping:3,ValidShippingBilling:2") {
+		task ("And two addresses are created one billing and one shipping") {
+			for (var addressList : list "Billing:1,Shipping:3") {
 				var name = StringUtil.extractFirst(${addressList}, ":");
 				var type = StringUtil.extractLast(${addressList}, ":");
 

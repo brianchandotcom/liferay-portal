@@ -115,19 +115,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 
 										<script type="text/javascript">
 											function useVariable<%= keyJSId %>() {
-												let type = document.getElementById(
+												const type = document.getElementById(
 													'<%= liferayPortletResponse.getNamespace() %>useVariable<%= HtmlUtil.escapeJS(key) %>'
 												).value;
 
-												let day = document.getElementById(
+												const day = document.getElementById(
 													'<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Day'
 												);
 
-												let month = document.getElementById(
+												const month = document.getElementById(
 													'<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Month'
 												);
 
-												let year = document.getElementById(
+												const year = document.getElementById(
 													'<%= liferayPortletResponse.getNamespace() + HtmlUtil.escapeJS(key) %>Year'
 												);
 

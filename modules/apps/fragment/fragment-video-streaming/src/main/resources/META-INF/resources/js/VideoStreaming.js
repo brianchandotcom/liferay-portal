@@ -7,6 +7,7 @@ export default function VideoStreaming({
 	autoplay,
 	loop,
 	muted,
+	src,
 	subtitles,
 	videoHeight,
 	videoWidth,
@@ -42,6 +43,8 @@ export default function VideoStreaming({
 
 	// eslint-disable-next-line no-undef
 	const player = videojs('fragmentVideoJsURL', configuration);
+
+	player.src(src);
 
 	player.ready(() => {
 		window.addEventListener('resize', resizeVideoJs);

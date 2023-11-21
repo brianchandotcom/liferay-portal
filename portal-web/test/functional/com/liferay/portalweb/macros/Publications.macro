@@ -373,6 +373,14 @@ definition {
 
 		PublicationsNavigator.openPublicationsHistory();
 
+		if (!(IsElementPresent(locator1 = "Publications#PUBLISHED_STATUS", value1 = "Published"))) {
+			WaitForElementPresent(
+				locator1 = "Publications#PUBLISHED_STATUS",
+				value1 = "Published");
+
+			Refresh();
+		}
+
 		AssertTextEquals(
 			locator1 = "Publications#PUBLISHED_STATUS",
 			value1 = "Published");

@@ -176,7 +176,6 @@ public class ProvisioningRestController extends BaseRestController {
 		}
 
 		appLicenseKey.setLicenseType(licenseType);
-
 		appLicenseKey.setOwner((String)jwt.getClaim("username"));
 		appLicenseKey.setProductId(productPurchase.getProductKey());
 		appLicenseKey.setProductName(
@@ -191,7 +190,6 @@ public class ProvisioningRestController extends BaseRestController {
 		}
 
 		appLicenseKey.setStartDate(startDate);
-
 		appLicenseKey.setUserName((String)jwt.getClaim("username"));
 		appLicenseKey.setUserUuid((String)jwt.getClaim("sub"));
 

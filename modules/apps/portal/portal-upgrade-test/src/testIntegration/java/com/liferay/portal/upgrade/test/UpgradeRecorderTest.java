@@ -20,6 +20,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,6 +40,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Luis Ortiz
  */
@@ -52,6 +58,8 @@ public class UpgradeRecorderTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		_bundle = FrameworkUtil.getBundle(UpgradeRecorderTest.class);
+
 		_originalStopWatch = ReflectionTestUtil.getFieldValue(
 			DBUpgrader.class, "_stopWatch");
 	}
@@ -89,6 +97,39 @@ public class UpgradeRecorderTest {
 		Assert.assertEquals("failure", _getResult());
 
 		Assert.assertEquals("major", _getType());
+	}
+
+	@Test
+	public void testFailureResultByPendingModuleUpgrade() throws Exception {
+		BundleContext bundleContext = _bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			UpgradeStepRegistrator.class,
+			new UpgradeRecorderTest.TestUpgradeStepRegistrator(), null);
+
+		Release release = _releaseLocalService.fetchRelease(
+			_bundle.getSymbolicName());
+
+		try {
+			StartupHelperUtil.setUpgrading(true);
+
+			release.setSchemaVersion("0.0.0");
+
+			release = _releaseLocalService.updateRelease(release);
+
+			StartupHelperUtil.setUpgrading(false);
+		}
+		finally {
+			_releaseLocalService.deleteRelease(release);
+
+			if (_serviceRegistration != null) {
+				_serviceRegistration.unregister();
+			}
+		}
+
+		Assert.assertEquals("failure", _getResult());
+
+		Assert.assertEquals("micro", _getType());
 	}
 
 	@Test
@@ -160,6 +201,16 @@ public class UpgradeRecorderTest {
 		Assert.assertEquals("success", _getResult());
 
 		Assert.assertEquals("no upgrade", _getType());
+	}
+
+	public static class TestUpgradeStepRegistrator
+		implements UpgradeStepRegistrator {
+
+		@Override
+		public void register(Registry registry) {
+			registry.registerInitialization();
+		}
+
 	}
 
 	private String _getResult() {
@@ -244,6 +295,7 @@ public class UpgradeRecorderTest {
 		}
 	}
 
+	private static Bundle _bundle;
 	private static StopWatch _originalStopWatch;
 
 	@Inject(
@@ -254,6 +306,8 @@ public class UpgradeRecorderTest {
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
+
+	private ServiceRegistration<UpgradeStepRegistrator> _serviceRegistration;
 
 	private class UnrelatedErrorUpgradeProcess extends UpgradeProcess {
 

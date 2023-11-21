@@ -46,7 +46,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,9 +89,11 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	}
 
 	@Override
-	public void executeObjectActions(
-		String className, long companyId, String objectActionTriggerKey,
-		Supplier<JSONObject> payloadJSONObjectSupplier, long userId) {
+	public <E extends Exception> void executeObjectActions(
+			String className, long companyId, String objectActionTriggerKey,
+			UnsafeSupplier<JSONObject, E> payloadJSONObjectUnsafeSupplier,
+			long userId)
+		throws E {
 
 		if ((companyId == 0) || (userId == 0)) {
 			return;
@@ -134,7 +135,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
 
-			JSONObject payloadJSONObject = payloadJSONObjectSupplier.get();
+			JSONObject payloadJSONObject =
+				payloadJSONObjectUnsafeSupplier.get();
 
 			_updatePayloadJSONObject(objectDefinition, payloadJSONObject, user);
 

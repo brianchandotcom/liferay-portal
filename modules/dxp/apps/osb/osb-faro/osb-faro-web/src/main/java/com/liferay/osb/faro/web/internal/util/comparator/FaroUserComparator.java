@@ -8,6 +8,7 @@ package com.liferay.osb.faro.web.internal.util.comparator;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,7 +36,21 @@ public class FaroUserComparator extends OrderByComparator<FaroUser> {
 			TransformUtil.transform(
 				_orderByFields,
 				orderByField -> {
-					String format = null;
+					String format = StringPool.BLANK;
+
+					if (((orderByField.getOrderBy() ==
+							OrderByField.OrderBy.desc) &&
+						 StringUtil.equals(
+							 orderByField.getFieldName(), "firstName")) ||
+						StringUtil.equals(
+							orderByField.getFieldName(), "lastName")) {
+
+						format =
+							"CASE WHEN lower(%s) IS NULL THEN 1 ELSE 0 END, ";
+						format = String.format(
+							format,
+							_fieldNames.get(orderByField.getFieldName()));
+					}
 
 					if (StringUtil.equals(
 							orderByField.getFieldName(), "status")) {
@@ -43,13 +58,7 @@ public class FaroUserComparator extends OrderByComparator<FaroUser> {
 						format = "%s %s";
 					}
 					else {
-						format = "lower(%s) %s";
-					}
-
-					if (orderByField.getOrderBy() ==
-							OrderByField.OrderBy.desc) {
-
-						format += " nulls last";
+						format += "lower(%s) %s";
 					}
 
 					return String.format(

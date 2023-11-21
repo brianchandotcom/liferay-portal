@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.storage.RankingStorageAdapter;
 import com.liferay.search.experiences.model.SXPBlueprint;
@@ -29,7 +30,13 @@ public class SXPBlueprintModelListener extends BaseModelListener<SXPBlueprint> {
 	@Override
 	public void onBeforeRemove(SXPBlueprint sxpBlueprint) {
 		try {
-			List<Ranking> rankings = _rankingIndexReader.fetch(sxpBlueprint);
+			RankingIndexName rankingIndexName =
+				_rankingIndexNameBuilder.getRankingIndexName(
+					sxpBlueprint.getCompanyId());
+
+			List<Ranking> rankings =
+				_rankingIndexReader.fetchBySXPBlueprintExternalReferenceCode(
+					rankingIndexName, sxpBlueprint.getExternalReferenceCode());
 
 			if (rankings == null) {
 				return;
@@ -42,9 +49,7 @@ public class SXPBlueprintModelListener extends BaseModelListener<SXPBlueprint> {
 				rankingBuilder.status(ResultRankingsConstants.NOT_APPLICABLE);
 
 				_rankingStorageAdapter.update(
-					rankingBuilder.build(),
-					_rankingIndexNameBuilder.getRankingIndexName(
-						sxpBlueprint.getCompanyId()));
+					rankingBuilder.build(), rankingIndexName);
 			}
 		}
 		catch (PortalException portalException) {

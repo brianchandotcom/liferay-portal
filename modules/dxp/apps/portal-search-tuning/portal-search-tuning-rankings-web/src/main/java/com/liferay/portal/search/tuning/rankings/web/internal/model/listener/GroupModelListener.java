@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.storage.RankingStorageAdapter;
 
@@ -29,7 +30,13 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	@Override
 	public void onBeforeRemove(Group group) {
 		try {
-			List<Ranking> rankings = _rankingIndexReader.fetch(group);
+			RankingIndexName rankingIndexName =
+				_rankingIndexNameBuilder.getRankingIndexName(
+					group.getCompanyId());
+
+			List<Ranking> rankings =
+				_rankingIndexReader.fetchByGroupExternalReferenceCode(
+					group.getExternalReferenceCode(), rankingIndexName);
 
 			if (rankings == null) {
 				return;
@@ -42,9 +49,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				rankingBuilder.status(ResultRankingsConstants.NOT_APPLICABLE);
 
 				_rankingStorageAdapter.update(
-					rankingBuilder.build(),
-					_rankingIndexNameBuilder.getRankingIndexName(
-						group.getCompanyId()));
+					rankingBuilder.build(), rankingIndexName);
 			}
 		}
 		catch (PortalException portalException) {

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.util.RepositoryUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +47,11 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolver
 
 		String previewURL = null;
 
-		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
+		long repositoryId = fileEntry.getRepositoryId();
+
+		if (RepositoryUtil.isExternalRepository(repositoryId) ||
+			(fileEntry.getGroupId() == repositoryId)) {
+
 			previewURL = _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);

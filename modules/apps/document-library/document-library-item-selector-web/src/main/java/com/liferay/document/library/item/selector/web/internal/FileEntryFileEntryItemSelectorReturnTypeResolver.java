@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.RepositoryUtil;
 
 import java.util.Objects;
 
@@ -53,7 +54,11 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 
 		String previewURL = null;
 
-		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
+		long repositoryId = fileEntry.getRepositoryId();
+
+		if (RepositoryUtil.isExternalRepository(repositoryId) ||
+			(fileEntry.getGroupId() == repositoryId)) {
+
 			previewURL = _dlURLHelper.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);

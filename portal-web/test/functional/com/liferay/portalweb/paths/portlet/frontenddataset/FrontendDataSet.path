@@ -223,7 +223,7 @@
 
 <tr>
 	<td>SELECT_CUSTOM_VIEW</td>
-	<td>//div[contains(@class,'custom-views-selection')]</td>
+	<td>//span[contains(@class,'navbar-text-truncate') and contains(text(),'${key_name}')]</td>
 	<td></td>
 </tr>
 <tr>

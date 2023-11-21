@@ -1,0 +1,346 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 3
+	test CanCancelWithoutSavingChangesForSchema {
+		task ("Given create an published API application with related schema") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				description = "Description default",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedSchema = "true",
+				schemaERC = "true",
+				schemaName = "testSchema",
+				scopeKey = "site",
+				status = "published",
+				title = "My-app");
+
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "testSchema",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("And Given edit the schema in Edit API Application > Schemas") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			Type(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+		}
+
+		task ("When I click continue without saving the changes in cancel dialog") {
+			Button.clickCancel();
+
+			Click(locator1 = "APIBuilder#CONTINUE_WITHOUT_SAVING_BUTTON");
+		}
+
+		task ("Then I can see the original schema in list of Edit API Application > Schemas") {
+			AssertElementPresent(
+				key_name = "testSchema",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			AssertElementPresent(
+				key_tabName = "Description default",
+				locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
+		}
+	}
+
+	@priority = 4
+	test CanEditSchemaNameAndDescripindtionInUnpublishedAPIApplication {
+		property portal.acceptance = "true";
+
+		task ("Given create an unpublished API application with related schema") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				description = "Description default",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedSchema = "true",
+				schemaERC = "true",
+				schemaName = "testSchema",
+				scopeKey = "site",
+				status = "unpublished",
+				title = "My-app");
+
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "testSchema",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("And Given edit the schema in Edit API Application > Schemas") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			Type(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+		}
+
+		task ("When I save changed name and description") {
+			Button.clickSave();
+		}
+
+		task ("Then I can see success alert message about API schema changes were saved") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And Then I can see updated name and description in Info tab") {
+			AssertElementPresent(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			AssertElementPresent(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+		}
+	}
+
+	@priority = 4
+	test CanEditSchemaNameAndDescriptionInPublishedAPIApplication {
+		property portal.acceptance = "true";
+
+		task ("Given create an published API application with related schema") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				description = "Description default",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedSchema = "true",
+				schemaERC = "true",
+				schemaName = "testSchema",
+				scopeKey = "site",
+				status = "published",
+				title = "My-app");
+
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "testSchema",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("And Given edit the schema in Edit API Application > Schemas") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			Type(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+		}
+
+		task ("When I publish changed name and description") {
+			Click.pauseClickAt(locator1 = "APIBuilder#PUBLISH_BUTTON");
+		}
+
+		task ("Then I can see success alert message about API schema changes were published") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And Then I can see updated name and description in Info tab") {
+			AssertElementPresent(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			AssertElementPresent(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+		}
+	}
+
+	@priority = 3
+	test CanGoBackToSchemasListWithCancelEdit {
+		task ("Given create an API application with related schema") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				description = "Description default",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedSchema = "true",
+				schemaERC = "true",
+				schemaName = "testSchema",
+				scopeKey = "site",
+				status = "unpublished",
+				title = "My-app");
+
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "testSchema",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("And Given edit the schema in Edit API Application > Schemas") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			Type(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+		}
+
+		task ("When I click Cancel button without any changes") {
+			Button.clickCancel();
+
+			Click(locator1 = "APIBuilder#CONTINUE_WITHOUT_SAVING_BUTTON");
+		}
+
+		task ("Then I can see the schema under Edit API Application > Schemas") {
+			AssertElementPresent(
+				key_name = "testSchema",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			AssertElementPresent(
+				key_tabName = "Description default",
+				locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
+		}
+	}
+
+	@priority = 4
+	test CannotEditSchemaRelatedObject {
+		property portal.acceptance = "true";
+
+		task ("Given create an unpublished API application with related schema") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				description = "Description default",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedSchema = "true",
+				schemaERC = "true",
+				schemaName = "testSchema",
+				scopeKey = "site",
+				status = "unpublished",
+				title = "My-app");
+
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "testSchema",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("When I edit the schema in Edit API Application > Schemas") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			Type(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+
+			Click.pauseClickAt(locator1 = "APIBuilder#PUBLISH_BUTTON");
+		}
+
+		task ("Then I can see the value for Object is the correct one") {
+			AssertElementPresent(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+		}
+
+		task ("And Then the related object is not able to change") {
+			AssertElementPresent(
+				key_text = "APIApplication",
+				locator1 = "Button#ANY_DISABLED");
+		}
+	}
+
+	@priority = 4
+	test CanSeeUpdatedSchemaInAPIExplorer {
+		property portal.acceptance = "true";
+
+		task ("Given create an published API application with related schema") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				description = "Description default",
+				mainObjectDefinitionErc = "L_API_APPLICATION",
+				relatedSchema = "true",
+				schemaERC = "true",
+				schemaName = "testSchema",
+				scopeKey = "site",
+				status = "published",
+				title = "My-app");
+
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Schemas",
+				name = "testSchema",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("And Given I update the schema Name and description") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "testSchema edited");
+
+			Type(
+				key_fieldId = "Description",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "Description edited");
+
+			Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
+		}
+
+		task ("When I navigate to /o/c/{aPIApplication}") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+		}
+
+		task ("Then I can see the update schema name and description") {
+			AssertElementPresent(
+				key_schemaValue = "testSchema edited",
+				locator1 = "OpenAPI#SCHEMA_OPTIONS");
+
+			Click(
+				key_schemaValue = "testSchema edited",
+				locator1 = "OpenAPI#SCHEMA_OPTIONS");
+
+			AssertElementPresent(
+				key_fieldDescription = "Description edited",
+				locator1 = "OpenAPI#SCHEMA_FIELD_DESCRIPTION");
+		}
+
+		task ("And Then the original schmea is not present") {
+			AssertElementNotPresent(
+				key_schemaValue = "testSchema",
+				locator1 = "OpenAPI#SCHEMA_OPTIONS");
+
+			AssertElementNotPresent(
+				key_fieldDescription = "Description default",
+				locator1 = "OpenAPI#SCHEMA_FIELD_DESCRIPTION");
+		}
+	}
+
+}

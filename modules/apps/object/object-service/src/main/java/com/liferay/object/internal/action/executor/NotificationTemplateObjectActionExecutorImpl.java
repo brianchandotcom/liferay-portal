@@ -24,11 +24,16 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.sql.Timestamp;
+
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,22 +108,40 @@ public class NotificationTemplateObjectActionExecutorImpl
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {
 
-			if (!StringUtil.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) ||
-				(termValues.get(objectField.getName()) == null)) {
-
+			if (termValues.get(objectField.getName()) == null) {
 				continue;
 			}
 
-			ListTypeEntry listTypeEntry =
-				_listTypeEntryLocalService.fetchListTypeEntry(
-					objectField.getListTypeDefinitionId(),
-					(String)termValues.get(objectField.getName()));
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_DATE) &&
+				!Objects.equals(objectField.getName(), "createDate") &&
+				!Objects.equals(objectField.getName(), "modifiedDate")) {
 
-			if (listTypeEntry != null) {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd");
+
+				Timestamp timestamp = (Timestamp)termValues.get(
+					objectField.getName());
+
 				termValues.put(
-					objectField.getName(), listTypeEntry.getNameCurrentValue());
+					objectField.getName(),
+					simpleDateFormat.format(new Date(timestamp.getTime())));
+			}
+			else if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				ListTypeEntry listTypeEntry =
+					_listTypeEntryLocalService.fetchListTypeEntry(
+						objectField.getListTypeDefinitionId(),
+						(String)termValues.get(objectField.getName()));
+
+				if (listTypeEntry != null) {
+					termValues.put(
+						objectField.getName(),
+						listTypeEntry.getNameCurrentValue());
+				}
 			}
 		}
 

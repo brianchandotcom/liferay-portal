@@ -16,6 +16,14 @@ export default function VideoStreaming({
 
 	const configuration = {
 		autoplay,
+		html5: {
+			hls: {
+				overrideNative: true,
+			},
+			vhs: {
+				withCredentials: true,
+			},
+		},
 		loop,
 		muted,
 		playbackRates: [0.5, 1, 1.5, 2],
@@ -60,5 +68,10 @@ export default function VideoStreaming({
 				src: subtitles,
 			});
 		}
+
+		player.qualitySelectorHls({
+			displayCurrentQuality: true,
+			vjsIconClass: 'vjs-icon-cog',
+		});
 	});
 }

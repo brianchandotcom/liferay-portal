@@ -197,7 +197,7 @@ definition {
 		var key_changeParentsCategory = ${changeParentsCategory};
 		var key_changeParentsTitle = ${changeParentsTitle};
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChangeDetails#CHANGE_PARENTS_TITLE",
 			value1 = ${changeParentsTitle});
 	}

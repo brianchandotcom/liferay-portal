@@ -217,11 +217,11 @@ public class AutoBatchPreparedStatementUtil {
 					actionUnsafeConsumer)
 			throws SQLException {
 
-			PreparedStatement localPreparedStatement = getPreparedStatement();
-
 			NoticeableExecutorService noticeableExecutorService =
 				_portalExecutorManager.getPortalExecutor(
 					ConcurrentNoBatchInvocationHandler.class.getName());
+
+			PreparedStatement localPreparedStatement = getPreparedStatement();
 
 			NoticeableFuture<Void> noticeableFuture =
 				noticeableExecutorService.submit(

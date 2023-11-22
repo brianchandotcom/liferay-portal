@@ -460,7 +460,11 @@ public class ParallelExecutor<T> {
 					_parallelExecutor.toString(), " completed ",
 					String.valueOf(getCompletedTaskCount()), " tasks in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - _startTimeMillis)));
+						getDurationMillis()),
+					" averaging ",
+					JenkinsResultsParserUtil.toDurationString(
+						getAverageDurationMillis()),
+					" per task."));
 		}
 
 		private Task<T> _processCallable(

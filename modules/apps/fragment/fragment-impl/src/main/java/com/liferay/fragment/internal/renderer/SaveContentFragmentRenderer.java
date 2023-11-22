@@ -77,13 +77,13 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 
 		SavedContentTag savedContentTag = new SavedContentTag();
 
-		Tuple displayObject = getDisplayObject(
+		Tuple displayObjectTuple = getDisplayObjectTuple(
 			fragmentRendererContext, httpServletRequest);
 
 		savedContentTag.setClassName(
-			GetterUtil.getString(displayObject.getObject(0)));
+			GetterUtil.getString(displayObjectTuple.getObject(0)));
 		savedContentTag.setClassPK(
-			GetterUtil.getLong(displayObject.getObject(1)));
+			GetterUtil.getLong(displayObjectTuple.getObject(1)));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

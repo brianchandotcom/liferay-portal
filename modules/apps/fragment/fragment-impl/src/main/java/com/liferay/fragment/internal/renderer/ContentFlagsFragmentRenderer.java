@@ -91,14 +91,15 @@ public class ContentFlagsFragmentRenderer
 
 		FlagsTag flagsTag = new FlagsTag();
 
-		Tuple displayObject = getDisplayObject(
+		Tuple displayObjectTuple = getDisplayObjectTuple(
 			fragmentRendererContext, httpServletRequest);
 
-		String className = GetterUtil.getString(displayObject.getObject(0));
+		String className = GetterUtil.getString(
+			displayObjectTuple.getObject(0));
 
 		flagsTag.setClassName(className);
 
-		long classPK = GetterUtil.getLong(displayObject.getObject(1));
+		long classPK = GetterUtil.getLong(displayObjectTuple.getObject(1));
 
 		flagsTag.setClassPK(classPK);
 

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 
-	protected Tuple getDisplayObject(
+	protected Tuple getDisplayObjectTuple(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 

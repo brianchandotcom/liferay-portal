@@ -1075,19 +1075,27 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		<sequential>
 			<var name="java.jdk.home" unset="true" />
 
-			<propertycopy from="java.jdk.home[@{version}][@{architecture}][@{type}]" property="java.jdk.home" silent="true" />
-
-			<property name="java.jdk.home" value="${java.home}" />
-
 			<if>
-				<not>
-					<available file="${java.jdk.home}" />
-				</not>
+				<isset property="local.java.jdk.home" />
 				<then>
-					<var name="java.jdk.home" unset="true" />
+					<property name="java.jdk.home" value="${local.java.jdk.home}" />
+				</then>
+				<else>
+					<propertycopy from="java.jdk.home[@{version}][@{architecture}][@{type}]" property="java.jdk.home" silent="true" />
 
 					<property name="java.jdk.home" value="${java.home}" />
-				</then>
+
+					<if>
+						<not>
+							<available file="${java.jdk.home}" />
+						</not>
+						<then>
+							<var name="java.jdk.home" unset="true" />
+
+							<property name="java.jdk.home" value="${java.home}" />
+						</then>
+					</if>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

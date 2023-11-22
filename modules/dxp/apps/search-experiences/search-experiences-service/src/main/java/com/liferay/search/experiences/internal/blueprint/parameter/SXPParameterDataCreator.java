@@ -97,8 +97,7 @@ public class SXPParameterDataCreator
 				sxpParameters);
 		}
 
-		_contribute(
-			exceptionListener, searchContext, sxpBlueprint, sxpParameters);
+		_contribute(exceptionListener, searchContext, sxpParameters);
 
 		return new SXPParameterData(keywords, sxpParameters);
 	}
@@ -235,7 +234,7 @@ public class SXPParameterDataCreator
 
 	private void _contribute(
 		ExceptionListener exceptionListener, SearchContext searchContext,
-		SXPBlueprint sxpBlueprint, Map<String, SXPParameter> sxpParameters) {
+		Map<String, SXPParameter> sxpParameters) {
 
 		if (ArrayUtil.isEmpty(_sxpParameterContributors)) {
 			return;
@@ -247,7 +246,7 @@ public class SXPParameterDataCreator
 			Set<SXPParameter> set = new LinkedHashSet<>();
 
 			sxpParameterContributor.contribute(
-				exceptionListener, searchContext, sxpBlueprint, set);
+				exceptionListener, searchContext, set);
 
 			for (SXPParameter sxpParameter : set) {
 				_add(sxpParameter, sxpParameters);

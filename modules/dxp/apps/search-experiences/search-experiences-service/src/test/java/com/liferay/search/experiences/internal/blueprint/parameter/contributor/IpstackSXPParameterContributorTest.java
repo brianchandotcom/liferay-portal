@@ -66,7 +66,7 @@ public class IpstackSXPParameterContributorTest {
 		_setUpSearchContext("");
 
 		_ipstackSXPParameterContributor.contribute(
-			Mockito.mock(ExceptionListener.class), _searchContext, null,
+			Mockito.mock(ExceptionListener.class), _searchContext,
 			_sxpParameters);
 
 		Mockito.verify(
@@ -88,8 +88,7 @@ public class IpstackSXPParameterContributorTest {
 		RuntimeException runtimeException = new RuntimeException();
 
 		_ipstackSXPParameterContributor.contribute(
-			runtimeException::addSuppressed, _searchContext, null,
-			_sxpParameters);
+			runtimeException::addSuppressed, _searchContext, _sxpParameters);
 
 		Throwable[] throwables = runtimeException.getSuppressed();
 
@@ -114,7 +113,7 @@ public class IpstackSXPParameterContributorTest {
 		_setUpIPStackConfiguration(false);
 
 		_ipstackSXPParameterContributor.contribute(
-			Mockito.mock(ExceptionListener.class), _searchContext, null,
+			Mockito.mock(ExceptionListener.class), _searchContext,
 			_sxpParameters);
 
 		Mockito.verify(
@@ -141,7 +140,7 @@ public class IpstackSXPParameterContributorTest {
 		Set<SXPParameter> sxpParameters = new HashSet<>();
 
 		_ipstackSXPParameterContributor.contribute(
-			Mockito.mock(ExceptionListener.class), _searchContext, null,
+			Mockito.mock(ExceptionListener.class), _searchContext,
 			sxpParameters);
 
 		Assert.assertEquals(

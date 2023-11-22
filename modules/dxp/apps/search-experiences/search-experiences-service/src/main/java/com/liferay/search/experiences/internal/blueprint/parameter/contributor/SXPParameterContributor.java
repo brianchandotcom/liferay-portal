@@ -8,7 +8,6 @@ package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.beans.ExceptionListener;
 
@@ -23,7 +22,7 @@ public interface SXPParameterContributor {
 
 	public void contribute(
 		ExceptionListener exceptionListener, SearchContext searchContext,
-		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters);
+		Set<SXPParameter> sxpParameters);
 
 	public String getSXPParameterCategoryNameKey();
 

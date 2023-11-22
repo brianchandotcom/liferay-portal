@@ -59,7 +59,6 @@ import com.liferay.search.experiences.internal.blueprint.parameter.LongArraySXPP
 import com.liferay.search.experiences.internal.blueprint.parameter.LongSXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.StringArraySXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.StringSXPParameter;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.Context;
 
@@ -112,7 +111,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 	@Override
 	public void contribute(
 		ExceptionListener exceptionListener, SearchContext searchContext,
-		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		try {
 			_contribute(searchContext, sxpParameters);

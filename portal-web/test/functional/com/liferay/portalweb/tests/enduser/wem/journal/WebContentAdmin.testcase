@@ -138,6 +138,34 @@ definition {
 			webContentTitle = "WC WebContent Title 3");
 	}
 
+	@description = "This is a test for LPS-196842. When the “Recent” filter is applied, the possibility of changing the order must be disabled"
+	@priority = 4
+	test CannotReverseSortDirectionWhenFilterByRecent {
+		task ("Given two web contents with different names") {
+			JSONWebcontent.addWebContent(
+				content = "EMEA Guild",
+				groupName = "Test Site Name",
+				title = "EMEA Guild");
+
+			JSONWebcontent.addWebContent(
+				content = "APAC Guild",
+				groupName = "Test Site Name",
+				title = "APAC Guild");
+		}
+
+		task ("When filter by Recent") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Guild");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Recent");
+		}
+
+		task ("Then the possibility of changing the order must be disabled") {
+			AssertElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		}
+	}
+
 	@description = "Test that the UI for editing WC localization works."
 	@priority = 4
 	test EditWCAddLocalization {
@@ -223,6 +251,120 @@ definition {
 			Breadcrumb.viewActiveEntry(breadcrumbName = "WC Folder Name");
 
 			WebContentAdmin.viewEntryTitle(entry = "Web Content Title");
+		}
+	}
+
+	@description = "This is a test for LPS-196842. When varying filters or searching if order by is applied, the order by must be applied to the new search + filters."
+	@priority = 4
+	test OrderWebContentsInSearchResults {
+		task ("Given two web contents with different names") {
+			JSONWebcontent.addWebContent(
+				content = "EMEA Guild",
+				groupName = "Test Site Name",
+				title = "EMEA Guild");
+
+			JSONWebcontent.addWebContent(
+				content = "APAC Guild",
+				groupName = "Test Site Name",
+				title = "APAC Guild");
+		}
+
+		task ("When order web contents by Title in search results") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Guild");
+
+			ManagementBar.setFilterAndOrder(orderBy = "Title");
+		}
+
+		task ("Then web contents are ordered by Title") {
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "APAC Guild");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "EMEA Guild");
+		}
+
+		task ("When order web contents by Display Date in search results") {
+			ManagementBar.setFilterAndOrder(orderBy = "Display Date");
+		}
+
+		task ("Then web contents are ordered by Display Date") {
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "EMEA Guild");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "APAC Guild");
+		}
+	}
+
+	@description = "This is a test for LPS-196842. When searched and filtered content exists, the order must be applied to the displayed content."
+	@priority = 4
+	test RevertSortDirectionOfSearchResults {
+		task ("Given two web contents with different names") {
+			JSONWebcontent.addWebContent(
+				content = "EMEA Guild",
+				groupName = "Test Site Name",
+				title = "EMEA Guild");
+
+			JSONWebcontent.addWebContent(
+				content = "APAC Guild",
+				groupName = "Test Site Name",
+				title = "APAC Guild");
+		}
+
+		task ("When order web contents by Title in search results") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Guild");
+
+			ManagementBar.setFilterAndOrder(orderBy = "Title");
+		}
+
+		task ("Then web contents are ordered by Title") {
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "APAC Guild");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "EMEA Guild");
+		}
+
+		task ("When reverse sort direction") {
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		}
+
+		task ("Then the order of web content is reversed") {
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "EMEA Guild");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "APAC Guild");
+
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "2 Results for \"Guild\"");
+
+			Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+			AssertVisible(
+				key_menuItem = "Title",
+				locator1 = "WC#DROPDOWN_MENU_ITEM_ACTIVE");
 		}
 	}
 

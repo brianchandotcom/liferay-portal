@@ -29,7 +29,7 @@
 </c:choose>
 
 <c:if test="<%= iFramePortletInstanceConfiguration.dynamicUrlEnabled() %>">
-	<aui:script use="aui-base,querystring">
+	<aui:script>
 		function init() {
 			var hash = document.location.hash.replace('#', '');
 
@@ -91,11 +91,9 @@
 		}
 
 		function updateHash(url) {
-			var A = AUI();
+			let hash = document.location.hash.replace('#', '');
 
-			var hash = document.location.hash.replace('#', '');
-
-			var hashSearch = new URLSearchParams(hash);
+			const hashSearch = new URLSearchParams(hash);
 
 			hashSearch.set('<portlet:namespace />', url);
 
@@ -104,7 +102,7 @@
 			const restore = document.getElementsByClassName('portlet-icon-back')[0];
 
 			if (restore) {
-				var restoreHREF = restore.getAttribute('href');
+				const restoreHREF = restore.getAttribute('href');
 
 				restoreHREF = restoreHREF.split('#')[0];
 

@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCESS_TOKEN_FIELD_VALUE</td>
+	<td>//*[@id="_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_oAuth2AccessToken"]@value</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY_ACCESS_TOKEN_BUTTON</td>
 	<td>//button[contains(@id,'copyAccessToken')]</td>
 	<td></td>

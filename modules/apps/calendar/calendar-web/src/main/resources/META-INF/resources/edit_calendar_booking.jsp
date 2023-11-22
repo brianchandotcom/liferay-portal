@@ -505,13 +505,13 @@ while (manageableCalendarsIterator.hasNext()) {
 	}
 
 	function <portlet:namespace />resolver(data) {
-		var answers = data.answers;
+		const answers = data.answers;
 
 		if (!answers.cancel) {
-			var allFollowingNode = document.getElementById(
+			const allFollowingNode = document.getElementById(
 				'<portlet:namespace />allFollowing'
 			);
-			var updateCalendarBookingInstanceNode = document.getElementById(
+			const updateCalendarBookingInstanceNode = document.getElementById(
 				'<portlet:namespace />updateCalendarBookingInstance'
 			);
 
@@ -531,18 +531,16 @@ while (manageableCalendarsIterator.hasNext()) {
 		window,
 		'<portlet:namespace />updateCalendarBooking',
 		() => {
-			var A = AUI();
-
 			<c:if test="<%= invitable %>">
-				var calendarContainer = Liferay.component(
+				const calendarContainer = Liferay.component(
 					'<portlet:namespace />calendarContainer'
 				);
 
-				var childCalendarIds = Object.keys(
+				const childCalendarIds = Object.keys(
 					calendarContainer.get('availableCalendars')
 				);
 
-				var calendarIdNode = document.getElementById(
+				const calendarIdNode = document.getElementById(
 					'<portlet:namespace />calendarId'
 				);
 
@@ -550,11 +548,11 @@ while (manageableCalendarsIterator.hasNext()) {
 					return;
 				}
 
-				var calendarId = calendarIdNode.value;
+				const calendarId = calendarIdNode.value;
 
 				childCalendarIds.splice(childCalendarIds.indexOf(calendarId), 1);
 
-				var childCalendarIdsNode = document.getElementById(
+				const childCalendarIdsNode = document.getElementById(
 					'<portlet:namespace />childCalendarIds'
 				);
 

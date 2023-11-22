@@ -319,6 +319,19 @@ export async function getObjectValidationRuleById<T>(
 	);
 }
 
+export async function patchObjectDefinitionById(
+	objectDefinition: Partial<ObjectDefinition>
+) {
+	return await fetch(
+		`/o/object-admin/v1.0/object-definitions/${objectDefinition.id}`,
+		{
+			body: JSON.stringify(objectDefinition),
+			headers,
+			method: 'PATCH',
+		}
+	);
+}
+
 export async function postListTypeEntry({
 	key,
 	listTypeDefinitionId,

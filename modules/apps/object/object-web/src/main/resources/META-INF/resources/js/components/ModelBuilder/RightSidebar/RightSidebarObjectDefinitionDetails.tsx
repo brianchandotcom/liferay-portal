@@ -166,7 +166,7 @@ export function RightSidebarObjectDefinitionDetails({
 			}
 
 			try {
-				const updatedObjectDefinitionResponse = await API.putObjectDefinitionByExternalReferenceCode(
+				const updatedObjectDefinitionResponse = await API.patchObjectDefinitionById(
 					objectDefinition
 				);
 

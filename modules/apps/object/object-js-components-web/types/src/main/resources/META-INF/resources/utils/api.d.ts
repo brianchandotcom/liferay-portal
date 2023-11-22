@@ -163,6 +163,9 @@ export declare function getObjectRelationship<T>(
 export declare function getObjectValidationRuleById<T>(
 	objectValidationRuleId: number
 ): Promise<T>;
+export declare function patchObjectDefinitionById(
+	objectDefinition: Partial<ObjectDefinition>
+): Promise<Response>;
 export declare function postListTypeEntry({
 	key,
 	listTypeDefinitionId,

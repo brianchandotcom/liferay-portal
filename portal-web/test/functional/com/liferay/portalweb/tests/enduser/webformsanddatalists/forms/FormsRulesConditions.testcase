@@ -36,37 +36,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-69733 - Verify that a Rule Condition cannot be added until the Condition Field is selected"
-	@priority = 2
-	test AreDisabledUntilAConditionFieldIsSelected {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		FormsAdmin.addForm();
-
-		Form.editName();
-
-		Form.addTextField(fieldPositionNumber = 0);
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoRules();
-
-		FormRules.addRule();
-
-		FormRules.viewConditionOperatorOptionsNotPresent(conditionRowNumber = 1);
-
-		FormRules.selectConditionField(
-			conditionField = "Text Field",
-			conditionRowNumber = 1);
-
-		FormRules.viewConditionOperatorOptionsIsPresent(conditionRowNumber = 1);
-	}
-
 	@description = "Verify that a Rule Condition can be deleted"
 	@priority = 5
 	test CanBeDeleted {

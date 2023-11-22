@@ -2,7 +2,7 @@
 @summary = "Click on '${locator1}'"
 definition {
 
-	function click() {
+	function click(locator1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -18,7 +18,7 @@ definition {
 		selenium.clickAt(${locator1}, ${value1});
 	}
 
-	function clickAtNotVisible() {
+	function clickAtNotVisible(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -26,27 +26,27 @@ definition {
 		selenium.clickAt(${locator1}, ${value1});
 	}
 
-	function clickNoMouseOver() {
+	function clickNoMouseOver(locator1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.click(${locator1});
 	}
 
-	function clickNoMouseOverNoWaitForVisible() {
+	function clickNoMouseOverNoWaitForVisible(locator1) {
 		selenium.click(${locator1});
 	}
 
-	function clickNoWaitForVisible() {
+	function clickNoWaitForVisible(locator1) {
 		selenium.mouseOver(${locator1});
 
 		selenium.click(${locator1});
 	}
 
-	function javaScriptClick() {
+	function javaScriptClick(locator1) {
 		selenium.javaScriptClick(${locator1});
 	}
 
-	function mouseDownMouseUp() {
+	function mouseDownMouseUp(locator1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.waitForVisible(${locator1}, "true");
@@ -56,7 +56,7 @@ definition {
 		selenium.mouseUp(${locator1});
 	}
 
-	function mouseOverClick() {
+	function mouseOverClick(locator1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -66,7 +66,7 @@ definition {
 		selenium.click(${locator1});
 	}
 
-	function pauseClickAt() {
+	function pauseClickAt(locator1) {
 		selenium.pause(1000);
 
 		selenium.mouseOver(${locator1});

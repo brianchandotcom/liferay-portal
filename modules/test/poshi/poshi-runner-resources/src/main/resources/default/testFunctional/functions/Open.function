@@ -2,7 +2,7 @@
 @summary = "Open browser to '${locator1}'"
 definition {
 
-	function open() {
+	function open(value1) {
 		selenium.selectWindow("null");
 
 		selenium.selectFrame("relative=top");
@@ -18,7 +18,7 @@ window.open("${locator1}","_blank");
 		selenium.executeJavaScript(${value1}, ${value2}, ${value3});
 	}
 
-	function openNoError() {
+	function openNoError(value1) {
 		selenium.selectWindow("null");
 
 		selenium.selectFrame("relative=top");

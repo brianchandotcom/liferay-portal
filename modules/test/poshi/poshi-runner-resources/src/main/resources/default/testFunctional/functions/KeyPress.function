@@ -1,19 +1,19 @@
 @default = "keyPress"
 definition {
 
-	function keyDown() {
+	function keyDown(locator1, value1) {
 		selenium.mouseOver(${locator1});
 
 		selenium.keyDown(${locator1}, ${value1});
 	}
 
-	function keyPress() {
+	function keyPress(locator1, value1) {
 		selenium.mouseOver(${locator1});
 
 		selenium.keyPress(${locator1}, ${value1});
 	}
 
-	function keyPressCKEditorWaitForCKEditor() {
+	function keyPressCKEditorWaitForCKEditor(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.pause(1000);
@@ -25,13 +25,13 @@ definition {
 		selenium.keyPress(${locator1}, ${value1});
 	}
 
-	function keyPressNoError() {
+	function keyPressNoError(locator1, value1) {
 		selenium.mouseOver(${locator1});
 
 		selenium.keyPress(${locator1}, ${value1});
 	}
 
-	function keyUp() {
+	function keyUp(locator1, value1) {
 		selenium.mouseOver(${locator1});
 
 		selenium.keyUp(${locator1}, ${value1});

@@ -1,7 +1,7 @@
 @default = "dragAndDropToObject"
 definition {
 
-	function dragAndDrop() {
+	function dragAndDrop(locator1, value1) {
 		selenium.dragAndDrop(${locator1}, ${value1});
 	}
 

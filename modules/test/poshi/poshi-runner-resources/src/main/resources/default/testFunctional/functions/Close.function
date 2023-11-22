@@ -7,7 +7,7 @@ definition {
 		selenium.selectFrame("relative=top");
 	}
 
-	function closeAndSelectWindow() {
+	function closeAndSelectWindow(value1) {
 		selenium.pause(1000);
 
 		selenium.close();

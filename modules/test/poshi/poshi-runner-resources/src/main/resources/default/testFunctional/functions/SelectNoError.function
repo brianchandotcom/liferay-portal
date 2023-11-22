@@ -1,7 +1,7 @@
 @default = "select"
 definition {
 
-	function select() {
+	function select(locator1, value1) {
 		selenium.pause(5000);
 
 		selenium.waitForVisible(${locator1}, "true");

@@ -1,7 +1,7 @@
 @default = "mouseDown"
 definition {
 
-	function mouseDown() {
+	function mouseDown(locator1) {
 		selenium.mouseDown(${locator1});
 	}
 

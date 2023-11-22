@@ -1,7 +1,7 @@
 @default = "isNotEditable"
 definition {
 
-	function isNotEditable() {
+	function isNotEditable(locator1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.waitForVisible(${locator1}, "true");

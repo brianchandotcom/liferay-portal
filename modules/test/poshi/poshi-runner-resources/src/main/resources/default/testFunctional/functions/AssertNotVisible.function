@@ -1,7 +1,7 @@
 @default = "assertNotVisible"
 definition {
 
-	function assertNotVisible() {
+	function assertNotVisible(locator1, value1) {
 		selenium.waitForNotVisible(${locator1}, ${value1});
 
 		selenium.assertNotVisible(${locator1});

@@ -1,7 +1,7 @@
 @default = "mouseUp"
 definition {
 
-	function mouseUp() {
+	function mouseUp(locator1) {
 		selenium.mouseUp(${locator1});
 	}
 

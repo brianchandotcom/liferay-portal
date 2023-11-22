@@ -1,7 +1,7 @@
 @default = "clickAt"
 definition {
 
-	function clickAt() {
+	function clickAt(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -13,7 +13,7 @@ definition {
 		AssertNotChecked.assertNotChecked();
 	}
 
-	function uncheckNotVisible() {
+	function uncheckNotVisible(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -27,7 +27,7 @@ definition {
 		selenium.assertNotChecked(${locator1});
 	}
 
-	function uncheckToggleSwitch() {
+	function uncheckToggleSwitch(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -39,7 +39,7 @@ definition {
 		AssertNotChecked.assertNotCheckedNotVisible();
 	}
 
-	function uncheckToggleSwitchAndPause() {
+	function uncheckToggleSwitchAndPause(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -53,7 +53,7 @@ definition {
 		AssertNotChecked.assertNotCheckedNotVisible();
 	}
 
-	function uncheckToggleSwitchNoErrorNoAssert() {
+	function uncheckToggleSwitchNoErrorNoAssert(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});

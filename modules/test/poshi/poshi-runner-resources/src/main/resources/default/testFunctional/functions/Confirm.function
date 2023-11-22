@@ -6,7 +6,7 @@ definition {
 		selenium.acceptAlert();
 	}
 
-	function confirm() {
+	function confirm(value1) {
 		selenium.getConfirmation(${value1});
 	}
 
@@ -14,7 +14,7 @@ definition {
 		selenium.dismissAlert();
 	}
 
-	function typeAlert() {
+	function typeAlert(value1) {
 		selenium.typeAlert(${value1});
 	}
 

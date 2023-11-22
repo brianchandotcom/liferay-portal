@@ -1,7 +1,7 @@
 @default = "scrollBy"
 definition {
 
-	function scrollBy() {
+	function scrollBy(value1) {
 		selenium.scrollBy(${value1});
 	}
 

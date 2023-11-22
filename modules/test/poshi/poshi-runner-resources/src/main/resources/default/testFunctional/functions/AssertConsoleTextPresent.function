@@ -1,7 +1,7 @@
 @default = "assertConsoleTextPresent"
 definition {
 
-	function assertConsoleTextPresent() {
+	function assertConsoleTextPresent(value1) {
 		selenium.assertConsoleTextPresent(${value1});
 	}
 

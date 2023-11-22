@@ -2,7 +2,7 @@
 @summary = "Type to '${locator1}' the value '${value1}'"
 definition {
 
-	function clickAtType() {
+	function clickAtType(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -22,7 +22,7 @@ definition {
 		selenium.pause(1000);
 	}
 
-	function sendKeys() {
+	function sendKeys(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -32,7 +32,7 @@ definition {
 		selenium.sendKeys(${locator1}, ${value1});
 	}
 
-	function sendKeysAceEditor() {
+	function sendKeysAceEditor(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -42,7 +42,7 @@ definition {
 		selenium.sendKeysAceEditor(${locator1}, ${value1});
 	}
 
-	function type() {
+	function type(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -52,7 +52,7 @@ definition {
 		selenium.type(${locator1}, ${value1});
 	}
 
-	function typeAceEditor() {
+	function typeAceEditor(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -62,7 +62,7 @@ definition {
 		selenium.typeAceEditor(${locator1}, ${value1});
 	}
 
-	function typeAceEditorNoError() {
+	function typeAceEditorNoError(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -72,7 +72,7 @@ definition {
 		selenium.typeAceEditor(${locator1}, ${value1});
 	}
 
-	function typeAceEditorNoMouseOver() {
+	function typeAceEditorNoMouseOver(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -80,7 +80,7 @@ definition {
 		selenium.typeAceEditor(${locator1}, ${value1});
 	}
 
-	function typeClickAt() {
+	function typeClickAt(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -92,7 +92,7 @@ definition {
 		selenium.clickAt(${locator1}, ${value1});
 	}
 
-	function typeCodeMirrorEditorNoError() {
+	function typeCodeMirrorEditorNoError(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -100,7 +100,7 @@ definition {
 		selenium.typeCodeMirrorEditor(${locator1}, ${value1});
 	}
 
-	function typeEditor() {
+	function typeEditor(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -110,7 +110,7 @@ definition {
 		selenium.typeEditor(${locator1}, ${value1});
 	}
 
-	function typeNoMouseOver() {
+	function typeNoMouseOver(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
@@ -118,13 +118,13 @@ definition {
 		selenium.type(${locator1}, ${value1});
 	}
 
-	function typeNotVisibleNoMouseOver() {
+	function typeNotVisibleNoMouseOver(locator1, value1) {
 		selenium.waitForEditable(${locator1});
 
 		selenium.type(${locator1}, ${value1});
 	}
 
-	function typePause() {
+	function typePause(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});

@@ -384,6 +384,8 @@ public class ObjectEntryDTOConverter
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					listTypeEntry.getNameMap());
+				nameMap = LocalizedMapUtil.getLanguageIdMap(
+					listTypeEntry.getNameMap());
 			}
 		};
 	}

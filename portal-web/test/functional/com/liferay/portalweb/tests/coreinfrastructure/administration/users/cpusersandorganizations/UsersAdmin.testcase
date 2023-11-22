@@ -958,6 +958,48 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.servlet.ServletException");
 	}
 
+	@description = "This is a use case for LPS-202027. As and admin i cannot create a new user with a date of birth in the future."
+	@priority = 4
+	test CannotAddUserWithDateOfBirthInTheFuture {
+		task ("Given an User with a date of birth in the future") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.addCP(
+				userBirthday = "1/1/2099",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("When an error message appears") {
+			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid date.");
+		}
+
+		task ("And the date of birth is changed with the correct date") {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD",
+				value1 = "1/1/1970");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+		}
+
+		task ("Then the user is created correctly") {
+			AssertElementPresent(
+				key_rowEntry = "userfn userln",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+	}
+
 	@priority = 4
 	test CannotViewSiteSettingsInUserPersonalSite {
 		Navigator.gotoPersonalSite();

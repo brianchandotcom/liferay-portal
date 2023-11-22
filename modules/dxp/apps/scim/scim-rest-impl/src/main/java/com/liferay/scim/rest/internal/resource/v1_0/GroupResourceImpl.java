@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.scim.rest.dto.v1_0.Group;
+import com.liferay.scim.rest.internal.manager.GroupResourceManagerImpl;
 import com.liferay.scim.rest.internal.manager.UserManagerImpl;
 import com.liferay.scim.rest.resource.v1_0.GroupResource;
 
@@ -110,7 +111,7 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 	}
 
 	private static final GroupResourceManager _groupResourceManager =
-		new GroupResourceManager();
+		new GroupResourceManagerImpl();
 
 	static {
 		AbstractResourceManager.setEndpointURLMap(

@@ -23,20 +23,6 @@ import java.util.Map;
  */
 public class SXPDTOConverterUtil {
 
-	public static String translate(
-		String fallback, Language language, Map<Locale, String> localizedMap,
-		Locale userLocale) {
-
-		return language.get(
-			userLocale,
-			localizedMap.getOrDefault(
-				userLocale,
-				localizedMap.getOrDefault(
-					LocaleUtil.getSiteDefault(),
-					localizedMap.getOrDefault(
-						LocaleUtil.getDefault(), fallback))));
-	}
-
 	public static ElementDefinition translate(
 		ElementDefinition elementDefinition, Language language, Locale locale) {
 
@@ -79,6 +65,20 @@ public class SXPDTOConverterUtil {
 
 			return null;
 		}
+	}
+
+	public static String translate(
+		String fallback, Language language, Map<Locale, String> localizedMap,
+		Locale userLocale) {
+
+		return language.get(
+			userLocale,
+			localizedMap.getOrDefault(
+				userLocale,
+				localizedMap.getOrDefault(
+					LocaleUtil.getSiteDefault(),
+					localizedMap.getOrDefault(
+						LocaleUtil.getDefault(), fallback))));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

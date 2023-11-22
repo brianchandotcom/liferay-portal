@@ -180,6 +180,27 @@ public class AssetTagLocalServiceTest {
 		Assert.assertEquals("標籤名稱", assetTag.getName());
 	}
 
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testCheckTagsWithCaseSensitive() throws PortalException {
+		String[] tagNames = {"TAG1", "tAG1", "TAG1 duplicate"};
+
+		List<AssetTag> assetTags = _assetTagLocalService.checkTags(
+			TestPropsValues.getUserId(), _group, tagNames);
+
+		Assert.assertEquals(
+			assetTags.toString(), tagNames.length, assetTags.size());
+
+		for (int i = 0; i < assetTags.size(); i++) {
+			AssetTag assetTag = assetTags.get(i);
+
+			Assert.assertEquals(_group.getGroupId(), assetTag.getGroupId());
+			Assert.assertEquals(tagNames[i], assetTag.getName());
+			Assert.assertEquals(
+				TestPropsValues.getUserId(), assetTag.getUserId());
+		}
+	}
+
 	@Test
 	public void testDeleteTag() throws Exception {
 		AssetTag assetTag = _assetTagLocalService.addTag(

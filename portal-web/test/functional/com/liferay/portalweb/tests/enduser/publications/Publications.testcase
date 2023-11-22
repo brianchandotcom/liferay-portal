@@ -880,8 +880,8 @@ definition {
 			var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(publicationName = "Test Publication");
 
 			PublicationsChangeDetails.viewFragmentChangePreviewInDisplay(
-				fragmentPreviewInProduction = "previewCTCollectionId=0",
-				fragmentPreviewInPublication = "previewCTCollectionId=${ctCollectionId}");
+				fragmentPreviewInProduction = "previewCTCollectionId%3D0",
+				fragmentPreviewInPublication = "previewCTCollectionId%3D${ctCollectionId}");
 		}
 	}
 

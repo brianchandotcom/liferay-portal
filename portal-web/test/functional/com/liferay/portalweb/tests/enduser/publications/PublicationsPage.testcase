@@ -638,8 +638,8 @@ definition {
 			var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(publicationName = "Test Publication");
 
 			PublicationsChangeDetails.viewFragmentChangePreviewInDisplay(
-				fragmentPreviewInProduction = "previewCTCollectionId=0",
-				fragmentPreviewInPublication = "previewCTCollectionId=${ctCollectionId}");
+				fragmentPreviewInProduction = "previewCTCollectionId%3D0",
+				fragmentPreviewInPublication = "previewCTCollectionId%3D${ctCollectionId}");
 		}
 	}
 
@@ -1080,7 +1080,7 @@ definition {
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Display");
 
 		AssertVisible(
-			key_pageURL = "site-name/test-page?p_l_mode=preview&previewCTCollection",
+			key_pageURL = "previewCTCollectionId",
 			locator1 = "PublicationsChangeDetails#PAGE_VIEWPORT_PREVIEW");
 	}
 

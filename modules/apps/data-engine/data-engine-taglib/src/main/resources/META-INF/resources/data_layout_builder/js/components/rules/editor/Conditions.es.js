@@ -31,14 +31,15 @@ function getCheckboxOptions() {
 }
 
 function FieldOperator({
+	index,
 	left,
 	onChange,
 	operator,
-	operatorValue,
+	operatorValues,
 	operatorsByType,
 	readOnly,
 	right,
-	setOperatorValue,
+	setOperatorValues,
 }) {
 	const options = useMemo(() => {
 		if (!left.value) {
@@ -61,13 +62,6 @@ function FieldOperator({
 		return option?.parameterClassNames?.length === 2;
 	};
 
-	useEffect(() => {
-		if (operator !== '') {
-			setOperatorValue(operator);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [operator]);
-
 	return (
 		<>
 			<Timeline.FormGroupItem>
@@ -85,11 +79,11 @@ function FieldOperator({
 						});
 					}}
 					onSelectionChange={(itemKey) => {
-						setOperatorValue(itemKey);
+						setOperatorValues(itemKey, index);
 					}}
 					options={options}
 					readOnly={readOnly}
-					selectedKey={operatorValue}
+					selectedKey={operatorValues?.[index]}
 					showEmptyOption={false}
 					type="select"
 				/>
@@ -132,13 +126,13 @@ function FieldOperator({
 }
 
 function FieldLeft({
-	fieldLeftSelectedKey,
+	fieldLeftSelectedKeys,
 	fields,
+	index,
 	left,
 	onChange,
-	setFieldLeftSelectedKey,
-	setOperatorValue,
-	setReload,
+	setFieldLeftSelectedKeys,
+	setOperatorValues,
 }) {
 	return (
 		<Timeline.FormGroupItem>
@@ -154,15 +148,11 @@ function FieldLeft({
 				id="field-left-id-test"
 				onChange={onChange}
 				onSelectionChange={(itemKey) => {
-					setOperatorValue(undefined);
-					if (itemKey !== fieldLeftSelectedKey) {
-						setReload(true);
-					}
-					setFieldLeftSelectedKey(itemKey);
+					setFieldLeftSelectedKeys(itemKey, index);
 				}}
 				options={fields}
 				placeholder={Liferay.Language.get('choose-an-option')}
-				selectedKey={fieldLeftSelectedKey}
+				selectedKey={fieldLeftSelectedKeys?.[index]?.value}
 				showEmptyOption={false}
 				type="select"
 				value={[left.value]}
@@ -273,10 +263,27 @@ export function Conditions({
 	roles,
 	state: {logicalOperator},
 }) {
-	const [fieldLeftSelectedKey, setFieldLeftSelectedKey] = useState();
-	const [operatorValue, setOperatorValue] = useState();
+	const [fieldLeftSelectedKeys, setFieldLeftSelectedKeys] = useState([]);
+	const [operatorValues, setOperatorValues] = useState([]);
 	const [reload, setReload] = useState(false);
 	const [modal, openModal] = useContext(ModalContext);
+
+	useEffect(() => {
+		if (conditions[0].operator !== '') {
+			setFieldLeftSelectedKeys(
+				conditions.map((condition) => condition.operands[0].value)
+			);
+			setOperatorValues(
+				conditions.map((condition) => condition.operator)
+			);
+		}
+	}, []);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setReload(false);
+		}, 200);
+	}, [reload]);
 
 	const onChangeLogicalOperator = (value) =>
 		dispatch({
@@ -284,11 +291,27 @@ export function Conditions({
 			type: ACTIONS_TYPES.CHANGE_LOGICAL_OPERATOR,
 		});
 
-	useEffect(() => {
-		setTimeout(() => {
-			setReload(false);
-		}, 200);
-	}, [fieldLeftSelectedKey]);
+	const handleSetFieldLeftSelectedKeys = (itemKey, index) => {
+		if (
+			!!fieldLeftSelectedKeys.length &&
+			itemKey !== fieldLeftSelectedKeys?.[index]
+		) {
+			setReload(true);
+		}
+		const newFieldLeftSelectedKeys = fieldLeftSelectedKeys;
+		newFieldLeftSelectedKeys[index] = itemKey;
+		const newOperatorValues = operatorValues;
+		newOperatorValues[index] = undefined;
+
+		setOperatorValues(newOperatorValues);
+		setFieldLeftSelectedKeys(newFieldLeftSelectedKeys);
+	};
+
+	const handleSetOperatorValues = (itemKey, index) => {
+		const newOperatorValues = operatorValues;
+		newOperatorValues[index] = itemKey;
+		setOperatorValues(newOperatorValues);
+	};
 
 	return (
 		<Timeline.List className="timeline-first">
@@ -309,8 +332,9 @@ export function Conditions({
 				<Timeline.Item key={index}>
 					<Timeline.Panel expression={expression}>
 						<FieldLeft
-							fieldLeftSelectedKey={fieldLeftSelectedKey}
+							fieldLeftSelectedKeys={fieldLeftSelectedKeys}
 							fields={fields}
+							index={index}
 							left={left}
 							onChange={(event) =>
 								dispatch({
@@ -322,20 +346,25 @@ export function Conditions({
 									type: ACTIONS_TYPES.CHANGE_IDENTIFIER_LEFT,
 								})
 							}
-							setFieldLeftSelectedKey={setFieldLeftSelectedKey}
-							setOperatorValue={setOperatorValue}
+							setFieldLeftSelectedKeys={
+								handleSetFieldLeftSelectedKeys
+							}
+							setOperatorValues={setOperatorValues}
 							setReload={setReload}
 						/>
 
-						{reload ? (
+						{reload && !operatorValues[index] ? (
 							<ClayLoadingIndicator
 								displayType="secondary"
 								size="sm"
 							/>
 						) : (
-							fieldLeftSelectedKey && (
+							fieldLeftSelectedKeys.length !== 0 &&
+							fieldLeftSelectedKeys?.[index] &&
+							fieldLeftSelectedKeys?.[index] !== '' && (
 								<FieldOperator
 									fields={fields}
+									index={index}
 									left={left}
 									onChange={({payload, type}) =>
 										dispatch({
@@ -347,10 +376,10 @@ export function Conditions({
 										})
 									}
 									operator={operator}
-									operatorValue={operatorValue}
+									operatorValues={operatorValues}
 									operatorsByType={operatorsByType}
 									right={right}
-									setOperatorValue={setOperatorValue}
+									setOperatorValues={handleSetOperatorValues}
 								/>
 							)
 						)}

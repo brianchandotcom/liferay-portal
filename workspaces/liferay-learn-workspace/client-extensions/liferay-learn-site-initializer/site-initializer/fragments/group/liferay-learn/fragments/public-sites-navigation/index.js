@@ -100,9 +100,7 @@ const seeAllResultsLink = fragmentElement.querySelector(
 	'.search-suggestions-see-all-results-text'
 );
 
-const searchSubmitLink = fragmentElement.querySelector(
-	'.search-submit'
-);
+const searchSubmitLink = fragmentElement.querySelector('.search-submit');
 
 const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
 	'a'

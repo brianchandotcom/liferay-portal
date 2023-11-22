@@ -343,11 +343,11 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 		RedirectEntry redirectEntry1 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com",
-				null, false, "a", serviceContext);
+				null, false, "aaaa", serviceContext);
 		RedirectEntry redirectEntry2 =
 			_redirectEntryLocalService.addRedirectEntry(
 				serviceContext.getScopeGroupId(), "http://www.liferay.com",
-				null, false, "b", serviceContext);
+				null, false, "bbbb", serviceContext);
 
 		_assertSearchResults(
 			redirectEntry1, redirectEntry2,

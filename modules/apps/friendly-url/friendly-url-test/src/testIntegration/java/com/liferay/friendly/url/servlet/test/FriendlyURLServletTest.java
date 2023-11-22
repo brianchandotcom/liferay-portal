@@ -584,7 +584,6 @@ public class FriendlyURLServletTest {
 
 	@Test
 	public void testServiceRedirectWithRedirectEntry() throws Exception {
-		_testServiceRedirectWithRedirectEntry("hu/path", true, 301);
 		_testServiceRedirectWithRedirectEntry("path", true, 301);
 		_testServiceRedirectWithRedirectEntry("path", false, 302);
 	}

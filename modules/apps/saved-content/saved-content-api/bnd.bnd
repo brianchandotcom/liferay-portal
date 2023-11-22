@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.saved.content.exception,\
 	com.liferay.saved.content.model,\
+	com.liferay.saved.content.security.permission,\
 	com.liferay.saved.content.service,\
 	com.liferay.saved.content.service.persistence,\
 	com.liferay.saved.content.util.comparator

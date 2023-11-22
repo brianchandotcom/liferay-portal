@@ -11,6 +11,7 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>ADD_ENTRY</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
@@ -22,6 +23,7 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>ADD_ENTRY</action-key>
 			</guest-unsupported>
 		</permissions>

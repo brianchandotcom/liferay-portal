@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Validates that the records are correctly tied to their partitions using the portal-tools-db-partition-schema-validator tool."
 	macro validateSchemas(schemaNamePrefix = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

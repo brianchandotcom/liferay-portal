@@ -11,8 +11,8 @@ import com.liferay.asset.kernel.exception.AssetTagNameException;
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
@@ -73,11 +73,11 @@ public class AssetTagLocalServiceTest {
 
 	@Test(expected = DuplicateTagException.class)
 	public void testAddDuplicateTags() throws Exception {
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 	}
@@ -95,7 +95,7 @@ public class AssetTagLocalServiceTest {
 
 	@Test
 	public void testAddTag() throws PortalException {
-		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
+		AssetTag assetTag = _assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 
@@ -104,7 +104,7 @@ public class AssetTagLocalServiceTest {
 
 	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithEmptyName() throws Exception {
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.BLANK,
 			_serviceContext);
 	}
@@ -114,14 +114,14 @@ public class AssetTagLocalServiceTest {
 		String stringWithInvalidCharacters = String.valueOf(
 			AssetHelper.INVALID_CHARACTERS);
 
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			stringWithInvalidCharacters, _serviceContext);
 	}
 
 	@Test
 	public void testAddTagWithMultipleWords() throws PortalException {
-		AssetTag tag = AssetTagLocalServiceUtil.addTag(
+		AssetTag tag = _assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag name",
 			_serviceContext);
 
@@ -130,14 +130,14 @@ public class AssetTagLocalServiceTest {
 
 	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithNullName() throws Exception {
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), null,
 			_serviceContext);
 	}
 
 	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithOnlySpacesInName() throws Exception {
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.SPACE,
 			_serviceContext);
 	}
@@ -146,27 +146,27 @@ public class AssetTagLocalServiceTest {
 	public void testAddTagWithPermittedSpecialCharacter()
 		throws PortalException {
 
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "-_^()!$",
 			_serviceContext);
 	}
 
 	@Test
 	public void testAddTagWithSingleWord() throws PortalException {
-		int originalTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
+		int originalTagsCount = _assetTagLocalService.getAssetTagsCount();
 
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 
-		int actualTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
+		int actualTagsCount = _assetTagLocalService.getAssetTagsCount();
 
 		Assert.assertEquals(originalTagsCount + 1, actualTagsCount);
 	}
 
 	@Test
 	public void testAddUTF8FormattedTags() throws PortalException {
-		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
+		AssetTag assetTag = _assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "標籤名稱",
 			_serviceContext);
 
@@ -175,7 +175,7 @@ public class AssetTagLocalServiceTest {
 
 	@Test
 	public void testDeleteTag() throws Exception {
-		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
+		AssetTag assetTag = _assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "Tag",
 			_serviceContext);
 
@@ -208,10 +208,10 @@ public class AssetTagLocalServiceTest {
 					"service.ranking", Integer.MAX_VALUE));
 
 		try {
-			AssetTagLocalServiceUtil.deleteTag(assetTag);
+			_assetTagLocalService.deleteTag(assetTag);
 
 			Assert.assertNull(
-				AssetTagLocalServiceUtil.fetchAssetTag(assetTag.getTagId()));
+				_assetTagLocalService.fetchAssetTag(assetTag.getTagId()));
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -225,7 +225,7 @@ public class AssetTagLocalServiceTest {
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
 
-		assetEntry = AssetEntryLocalServiceUtil.updateEntry(
+		assetEntry = _assetEntryLocalService.updateEntry(
 			TestPropsValues.getUserId(), assetEntry.getGroupId(),
 			assetEntry.getClassName(), assetEntry.getClassPK(), null,
 			new String[] {"tag"});
@@ -241,7 +241,7 @@ public class AssetTagLocalServiceTest {
 	public void testIncrementAssetCountWithAssetTagNameGreaterThan75()
 		throws PortalException {
 
-		AssetTagLocalServiceUtil.addTag(
+		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(100), _serviceContext);
 	}
@@ -249,21 +249,27 @@ public class AssetTagLocalServiceTest {
 	private void _testAddMultipleTags(List<String> tagNames)
 		throws PortalException {
 
-		int originalTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
+		int originalTagsCount = _assetTagLocalService.getAssetTagsCount();
 
 		for (String tagName : tagNames) {
-			AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
+			AssetTag assetTag = _assetTagLocalService.addTag(
 				TestPropsValues.getUserId(), _group.getGroupId(), tagName,
 				_serviceContext);
 
 			Assert.assertEquals(tagName, assetTag.getName());
 		}
 
-		int actualTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
+		int actualTagsCount = _assetTagLocalService.getAssetTagsCount();
 
 		Assert.assertEquals(
 			originalTagsCount + tagNames.size(), actualTagsCount);
 	}
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

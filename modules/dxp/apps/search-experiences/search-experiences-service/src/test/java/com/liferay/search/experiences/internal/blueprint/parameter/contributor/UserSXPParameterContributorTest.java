@@ -98,7 +98,7 @@ public class UserSXPParameterContributorTest {
 			_mockUserLocalService());
 
 		_userSXPParameterContributor.contribute(
-			_exceptionListener, _searchContext, null, _sxpParameters);
+			_exceptionListener, _searchContext, _sxpParameters);
 
 		Assert.assertTrue(
 			_exists(
@@ -148,7 +148,7 @@ public class UserSXPParameterContributorTest {
 			_mockUserLocalService());
 
 		_userSXPParameterContributor.contribute(
-			_exceptionListener, _searchContext, null, _sxpParameters);
+			_exceptionListener, _searchContext, _sxpParameters);
 
 		Assert.assertTrue(
 			_exists(
@@ -192,7 +192,7 @@ public class UserSXPParameterContributorTest {
 			_mockUserLocalService());
 
 		_userSXPParameterContributor.contribute(
-			_exceptionListener, _searchContext, null, _sxpParameters);
+			_exceptionListener, _searchContext, _sxpParameters);
 
 		Assert.assertTrue(
 			_exists(
@@ -279,7 +279,7 @@ public class UserSXPParameterContributorTest {
 			_mockUserLocalService());
 
 		_userSXPParameterContributor.contribute(
-			_exceptionListener, _searchContext, null, _sxpParameters);
+			_exceptionListener, _searchContext, _sxpParameters);
 
 		Assert.assertTrue(
 			_exists(
@@ -660,7 +660,7 @@ public class UserSXPParameterContributorTest {
 			_mockUserLocalService());
 
 		_userSXPParameterContributor.contribute(
-			_exceptionListener, _searchContext, null, _sxpParameters);
+			_exceptionListener, _searchContext, _sxpParameters);
 
 		Assert.assertTrue(
 			_exists(
@@ -825,7 +825,7 @@ public class UserSXPParameterContributorTest {
 			_mockUserLocalService());
 
 		_userSXPParameterContributor.contribute(
-			_exceptionListener, _searchContext, null, _sxpParameters);
+			_exceptionListener, _searchContext, _sxpParameters);
 
 		Assert.assertTrue(
 			_exists(
@@ -1212,7 +1212,7 @@ public class UserSXPParameterContributorTest {
 			_mockUserLocalService());
 
 		_userSXPParameterContributor.contribute(
-			_exceptionListener, _searchContext, null, _sxpParameters);
+			_exceptionListener, _searchContext, _sxpParameters);
 
 		Assert.assertTrue(_exists(sxpParameterName, unsafePredicate));
 	}
@@ -1245,7 +1245,7 @@ public class UserSXPParameterContributorTest {
 			_mockUserLocalService());
 
 		_userSXPParameterContributor.contribute(
-			_exceptionListener, _searchContext, null, _sxpParameters);
+			_exceptionListener, _searchContext, _sxpParameters);
 
 		Assert.assertTrue(_exists(sxpParameterName, unsafePredicate));
 	}

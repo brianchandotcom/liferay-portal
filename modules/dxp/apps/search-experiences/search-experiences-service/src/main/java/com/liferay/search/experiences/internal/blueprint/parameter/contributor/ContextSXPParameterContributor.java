@@ -20,7 +20,6 @@ import com.liferay.search.experiences.internal.blueprint.parameter.BooleanSXPPar
 import com.liferay.search.experiences.internal.blueprint.parameter.LongArraySXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.LongSXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.StringSXPParameter;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.beans.ExceptionListener;
 
@@ -44,7 +43,7 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 	@Override
 	public void contribute(
 		ExceptionListener exceptionListener, SearchContext searchContext,
-		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		long[] commerceAccountGroupIds = (long[])searchContext.getAttribute(
 			"commerceAccountGroupIds");

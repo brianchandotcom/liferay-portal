@@ -21,7 +21,6 @@ import com.liferay.search.experiences.internal.configuration.IpstackConfiguratio
 import com.liferay.search.experiences.internal.configuration.OpenWeatherMapConfiguration;
 import com.liferay.search.experiences.internal.web.cache.IpstackWebCacheItem;
 import com.liferay.search.experiences.internal.web.cache.OpenWeatherMapWebCacheItem;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.beans.ExceptionListener;
 
@@ -46,7 +45,7 @@ public class OpenWeatherMapSXPParameterContributor
 	@Override
 	public void contribute(
 		ExceptionListener exceptionListener, SearchContext searchContext,
-		SXPBlueprint sxpBlueprint, Set<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		OpenWeatherMapConfiguration openWeatherMapConfiguration =
 			_getOpenWeatherMapConfiguration(searchContext.getCompanyId());

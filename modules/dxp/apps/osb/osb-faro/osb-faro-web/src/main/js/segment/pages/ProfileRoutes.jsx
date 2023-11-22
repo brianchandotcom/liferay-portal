@@ -137,6 +137,8 @@ export class SegmentProfileRoutes extends React.Component {
 
 		const {selectedChannel} = this.context;
 
+		const title = segment.name || Liferay.Language.get('unknown');
+
 		return (
 			<BasePage
 				className={getCN(
@@ -160,11 +162,7 @@ export class SegmentProfileRoutes extends React.Component {
 					groupId={groupId}
 				>
 					<BasePage.Row>
-						<BasePage.Header.TitleSection
-							title={
-								segment.name || Liferay.Language.get('unknown')
-							}
-						>
+						<BasePage.Header.TitleSection title={title}>
 							<Label display='secondary' size='lg' uppercase>
 								{this.getPageTitleLabel()}
 							</Label>
@@ -216,7 +214,7 @@ export class SegmentProfileRoutes extends React.Component {
 								disabled={false}
 								showDateRange={false}
 								subtitle={selectedChannel?.name}
-								title={Liferay.Language.get('segments')}
+								title={title}
 							/>
 						</div>
 					</BasePage.SubHeader>

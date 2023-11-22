@@ -108,7 +108,7 @@ const DocumentAndMedia: React.FC<{
 								Containers.DownloadsByTechnologyCard,
 								Containers.AssetAppearsOnCard
 							]}
-							disabled={false}
+							disabled={dataSourceStates.empty}
 							subtitle={selectedChannel?.name}
 							title={
 								sub(Liferay.Language.get('x-dashboard'), [

@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
+import {useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import cancelIcon from '../../assets/icons/cancel_icon.svg';
@@ -80,6 +83,7 @@ export function ProvideAppBuildPage({
 	useEffect(() => {
 		setSelectedCheckboxValue([]);
 	}, [appType.value]);
+	const [visible, setVisible] = useState(false);
 
 	const handleUpload = (files: File[]) => {
 		const newUploadedFiles: UploadedFile[] = files.map((file) => ({
@@ -379,7 +383,7 @@ export function ProvideAppBuildPage({
 
 					<RadioCard
 						description={i18n.translate(
-							'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
+							'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
 						)}
 						icon={uploadIcon}
 						onChange={() => {
@@ -389,7 +393,7 @@ export function ProvideAppBuildPage({
 							});
 						}}
 						selected={appBuild === ProductUploadType.ZIP_UPLOAD}
-						title={i18n.translate('via-zip-upload')}
+						title={i18n.translate('via-liferay-plugin-packages')}
 						tooltip={ReactDOMServer.renderToString(
 							<span>
 								{i18n.translate(
@@ -406,14 +410,20 @@ export function ProvideAppBuildPage({
 			</Section>
 
 			<Section
-				description={i18n.translate('select-a-local-file-to-upload')}
-				label={i18n.translate('upload-zip-files')}
+				description={i18n.translate('if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range')}
+				label={i18n.translate('upload-liferay-plugin-packages')}
 				required
 				tooltip={i18n.translate(
-					'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
+					'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
 				)}
 				tooltipText={i18n.translate('more-info')}
 			>
+				<ClayButton className="btn-block provide-app-build-page-add-package-button" displayType="secondary" onClick={() => setVisible(true)}>
+					<ClayIcon className="mr-1" symbol="plus" />
+					Add Package(s)
+				</ClayButton>
+				
+				{visible && "Shows the Modal"}
 				<FileList
 					onDelete={handleDelete}
 					type="document"
@@ -424,7 +434,7 @@ export function ProvideAppBuildPage({
 					acceptFileTypes={acceptFileTypes}
 					buttonText={i18n.translate('select-a-file')}
 					description={i18n.translate(
-						'only-zip-files-are-allowed-max-file-size-is-500-mb'
+						'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
 					)}
 					maxFiles={1}
 					maxSize={500000000}

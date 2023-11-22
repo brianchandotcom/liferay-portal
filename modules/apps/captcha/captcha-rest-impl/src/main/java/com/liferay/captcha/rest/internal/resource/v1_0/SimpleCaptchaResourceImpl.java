@@ -6,20 +6,20 @@
 package com.liferay.captcha.rest.internal.resource.v1_0;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
-import com.liferay.captcha.rest.dto.v1_0.Captcha;
-import com.liferay.captcha.rest.dto.v1_0.CaptchaForm;
+import com.liferay.captcha.rest.dto.v1_0.SimpleCaptcha;
+import com.liferay.captcha.rest.dto.v1_0.SimpleCaptchaForm;
 import com.liferay.captcha.rest.internal.util.CaptchaTokenUtil;
-import com.liferay.captcha.rest.resource.v1_0.CaptchaResource;
+import com.liferay.captcha.rest.resource.v1_0.SimpleCaptchaResource;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,19 +28,19 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Loc Pham
+ * @author Stian Sigvartsen
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/captcha.properties",
-	scope = ServiceScope.PROTOTYPE, service = CaptchaResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/simple-captcha.properties",
+	scope = ServiceScope.PROTOTYPE, service = SimpleCaptchaResource.class
 )
-public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
+public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 
 	@Override
-	public Captcha getSimpleCaptcha() throws Exception {
+	public SimpleCaptcha getSimpleCaptcha() throws Exception {
 		_checkSimpleCaptchaConfiguration();
 
-		com.liferay.portal.kernel.captcha.Captcha captcha =
-			CaptchaUtil.getCaptcha();
+		Captcha captcha = CaptchaUtil.getCaptcha();
 
 		ByteArrayOutputStream imageByteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -54,7 +54,7 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 
 		imageByteArrayOutputStream.close();
 
-		return new Captcha() {
+		return new SimpleCaptcha() {
 			{
 				captchaToken = CaptchaTokenUtil.generateCaptchaToken(
 					contextCompany, answer);
@@ -65,14 +65,14 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 	}
 
 	@Override
-	public void postSimpleCaptcha(CaptchaForm captchaForm)
+	public void postSimpleCaptcha(SimpleCaptchaForm simpleCaptchaForm)
 		throws Exception {
 
 		_checkSimpleCaptchaConfiguration();
 
 		CaptchaTokenUtil.checkAnswer(
-			contextCompany, captchaForm.getCaptchaToken(),
-			captchaForm.getAnswer());
+			contextCompany, simpleCaptchaForm.getCaptchaToken(),
+			simpleCaptchaForm.getAnswer());
 	}
 
 	private void _checkSimpleCaptchaConfiguration() throws Exception {

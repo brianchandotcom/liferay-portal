@@ -58,6 +58,7 @@ public class ReportController extends BaseFaroController {
 	@Path("/export/csv/{type}")
 	public Object getCsv(
 			@QueryParam("assetId") String assetId,
+			@QueryParam("assetTitle") String assetTitle,
 			@QueryParam("assetType") String assetType,
 			@QueryParam("channelId") String channelId,
 			@QueryParam("fromDate") String fromDateString,
@@ -191,10 +192,13 @@ public class ReportController extends BaseFaroController {
 		String fileName = null;
 
 		if (StringUtil.equals(type, "individual") &&
-			Validator.isNotNull(assetType)) {
+			Validator.isNotNull(assetTitle) && Validator.isNotNull(assetType)) {
 
 			fileName = String.format(
-				"analytics-cloud-%s-known-individuals-%s", assetType,
+				"analytics-cloud-%s-known-individuals-%s",
+				StringUtil.lowerCase(
+					assetTitle.replaceAll(
+						_ESCAPED_CHARACTERS_REGEX, StringPool.DASH)),
 				LocalDate.now());
 		}
 		else {
@@ -218,6 +222,8 @@ public class ReportController extends BaseFaroController {
 
 		return localDate.atTime(localTime);
 	}
+
+	private static final String _ESCAPED_CHARACTERS_REGEX = "[^a-zA-Z0-9\\.]+";
 
 	private static final String _ISO_8601_DATE_FORMAT = "yyyy-MM-dd";
 

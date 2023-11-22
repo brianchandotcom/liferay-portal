@@ -174,7 +174,7 @@ export function useDownloadCSV({
 	assetType?: string;
 	type: string;
 }) {
-	const {channelId, groupId} = useParams();
+	const {channelId, groupId, title} = useParams();
 
 	return {
 		onClick: dateRange => {
@@ -193,6 +193,10 @@ export function useDownloadCSV({
 
 			if (assetId) {
 				url += `&assetId=${encodeURIComponent(assetId)}`;
+			}
+
+			if (title) {
+				url += `&assetTitle=${title}`;
 			}
 
 			if (assetType) {

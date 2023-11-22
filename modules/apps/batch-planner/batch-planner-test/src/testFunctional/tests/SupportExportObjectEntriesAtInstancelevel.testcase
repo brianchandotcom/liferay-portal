@@ -132,8 +132,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
-
 			ImportExport.configureExport(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
 				exportFileFormat = "JSON");

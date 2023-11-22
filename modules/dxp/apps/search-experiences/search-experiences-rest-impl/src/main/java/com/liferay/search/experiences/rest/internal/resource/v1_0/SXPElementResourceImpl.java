@@ -289,16 +289,16 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			contextAcceptLanguage.getPreferredLanguageId());
 
 		sxpElement.setDescription(
-			SXPDTOConverterUtil.getLocalizedField(
+			SXPDTOConverterUtil.translate(
 				sxpElement.getFallbackDescription(), _language,
 				LocalizedMapUtil.getLocalizedMap(
 					sxpElement.getDescription_i18n()),
 				userLocale));
 		sxpElement.setElementDefinition(
-			SXPDTOConverterUtil.translateElementDefinition(
+			SXPDTOConverterUtil.translate(
 				sxpElement.getElementDefinition(), _language, userLocale));
 		sxpElement.setTitle(
-			SXPDTOConverterUtil.getLocalizedField(
+			SXPDTOConverterUtil.translate(
 				sxpElement.getFallbackTitle(), _language,
 				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()),
 				userLocale));

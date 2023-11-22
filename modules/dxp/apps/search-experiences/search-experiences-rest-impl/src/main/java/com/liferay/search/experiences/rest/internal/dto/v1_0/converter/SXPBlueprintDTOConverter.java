@@ -125,10 +125,10 @@ public class SXPBlueprintDTOConverter
 		Map<Locale, String> titleMap) {
 
 		sxpElement.setDescription(
-			SXPDTOConverterUtil.getLocalizedField(
+			SXPDTOConverterUtil.translate(
 				fallBackDescription, _language, descriptionMap, locale));
 		sxpElement.setTitle(
-			SXPDTOConverterUtil.getLocalizedField(
+			SXPDTOConverterUtil.translate(
 				fallbackTitle, _language, titleMap, locale));
 	}
 
@@ -169,7 +169,7 @@ public class SXPBlueprintDTOConverter
 			SXPElement sxpElement = elementInstance.getSxpElement();
 
 			sxpElement.setElementDefinition(
-				SXPDTOConverterUtil.translateElementDefinition(
+				SXPDTOConverterUtil.translate(
 					sxpElement.getElementDefinition(), _language, locale));
 
 			try {

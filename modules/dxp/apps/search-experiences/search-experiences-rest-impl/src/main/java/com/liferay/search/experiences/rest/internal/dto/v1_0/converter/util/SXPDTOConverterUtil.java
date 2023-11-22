@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class SXPDTOConverterUtil {
 
-	public static String getLocalizedField(
+	public static String translate(
 		String fallback, Language language, Map<Locale, String> localizedMap,
 		Locale userLocale) {
 
@@ -37,7 +37,7 @@ public class SXPDTOConverterUtil {
 						LocaleUtil.getDefault(), fallback))));
 	}
 
-	public static ElementDefinition translateElementDefinition(
+	public static ElementDefinition translate(
 		ElementDefinition elementDefinition, Language language, Locale locale) {
 
 		try {

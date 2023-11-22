@@ -53,14 +53,14 @@ public class SXPElementDTOConverter
 		return new SXPElement() {
 			{
 				createDate = sxpElement.getCreateDate();
-				description = SXPDTOConverterUtil.getLocalizedField(
+				description = SXPDTOConverterUtil.translate(
 					sxpElement.getFallbackDescription(), _language,
 					sxpElement.getDescriptionMap(),
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpElement.getDescriptionMap());
 				elementDefinition =
-					SXPDTOConverterUtil.translateElementDefinition(
+					SXPDTOConverterUtil.translate(
 						ElementDefinitionUtil.toElementDefinition(
 							sxpElement.getElementDefinitionJSON()),
 						_language, dtoConverterContext.getLocale());
@@ -69,7 +69,7 @@ public class SXPElementDTOConverter
 				modifiedDate = sxpElement.getModifiedDate();
 				readOnly = sxpElement.getReadOnly();
 				schemaVersion = sxpElement.getSchemaVersion();
-				title = SXPDTOConverterUtil.getLocalizedField(
+				title = SXPDTOConverterUtil.translate(
 					sxpElement.getFallbackTitle(), _language,
 					sxpElement.getTitleMap(), dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(

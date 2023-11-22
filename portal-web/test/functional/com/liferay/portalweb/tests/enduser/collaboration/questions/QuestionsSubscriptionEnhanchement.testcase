@@ -176,62 +176,48 @@ definition {
 	@description = "This is a test for LPS-159158. Verify if the user is notified when a followed topic has a new question."
 	@priority = 3
 	test CanBeNotifiedByQuestion {
-		task ("Create a Topic") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
-
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-topic");
-
-			Questions.addSubTopic(
-				subTopicDescription = "Topic Description",
-				subTopicName = "Questions Test Topic");
-		}
-
-		task ("Subcribe on a Topic") {
-			Questions.subscribeTopic();
-		}
-
 		task ("Create a new User with an Admin Role") {
 			JSONUser.addUser(
-				userEmailAddress = "test1@liferay.com",
-				userFirstName = "test1",
-				userLastName = "test",
-				userScreenName = "test1");
+				userEmailAddress = "user@liferay.com",
+				userFirstName = "user",
+				userLastName = "user",
+				userScreenName = "useruser");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "test1@liferay.com");
+				userEmailAddress = "user@liferay.com");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
-				userEmailAddress = "test1@liferay.com");
+				userEmailAddress = "user@liferay.com");
+		}
+
+		task ("Subcribe on a Topic") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Topic");
+
+			Questions.subscribeTopic();
 		}
 
 		task ("Login with a new User") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test1@liferay.com",
-				userLoginFullName = "test1 test");
+				userLoginEmailAddress = "user@liferay.com",
+				userLoginFullName = "user user");
 		}
 
 		task ("Enter on the Topic") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-topic");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Topic");
 		}
 
 		task ("Create a Question") {
-			JSONQuestions.addQuestion(
-				bodyField = "Content AddQuestion",
-				categoryName = "Questions Test Topic",
-				groupName = "Guest",
-				titleField = "Question1");
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Content AddQuestion",
+				titleField = "Question1",
+				topicName = "questions-test-topic");
 		}
 
 		task ("Login with Test test") {
@@ -248,22 +234,20 @@ definition {
 	@description = "This is a test for LPS-159138. Verify if the user is able to subscribe a tag if they want to."
 	@priority = 5
 	test CanSubscribeAQuestion {
-		task ("Create a Topic") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
-		}
-
 		task ("Create a Question") {
-			JSONQuestions.addQuestion(
-				bodyField = "Content AddQuestion",
-				categoryName = "Questions Test Topic",
-				groupName = "Guest",
-				titleField = "Question1");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Topic");
+
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Content AddQuestion",
+				titleField = "Question1",
+				topicName = "questions-test-topic");
 		}
 
 		task ("Go to Subscriptions") {
+			Questions.gotoDetails(questionTitle = "Question1");
+
 			Questions.gotoTab(questionTabField = "Subscriptions");
 		}
 

@@ -125,14 +125,16 @@ definition {
 				categoryDescription = "Description",
 				categoryName = "Questions Test Category",
 				userEmailAddress = "test@liferay.com");
+
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
 		}
 
 		task ("When a Question that contains JavaScirpt is added") {
 			Questions.askQuestionFillingTheMandatoryFields(
 				contentField = "Body AddQuestionWithMoreText",
 				invalidCharacters = "Tag",
-				layoutName = "questions-page",
-				siteURLKey = "guest",
 				tagLocatorList = '''<script>alert(123);</script>''',
 				titleField = "Title AddQuestion",
 				topicName = "questions-test-category");
@@ -527,7 +529,9 @@ definition {
 
 			Questions.viewNoTags(tagsList = "tag2,tag3");
 
-			Questions.clearSearchResults();
+			Click(
+				ariaLabel = "Clear",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			for (var tagName : list "tag1,tag2,tag3") {
 				Questions.viewTags(tagName = ${tagName});
@@ -543,7 +547,9 @@ definition {
 
 			Questions.viewNoTags(tagsList = "tag1,tag3");
 
-			Questions.clearSearchResults();
+			Click(
+				ariaLabel = "Clear",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			for (var tagName : list "tag1,tag2,tag3") {
 				Questions.viewTags(tagName = ${tagName});

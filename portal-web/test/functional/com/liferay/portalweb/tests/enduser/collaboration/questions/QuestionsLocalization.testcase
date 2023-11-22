@@ -126,10 +126,12 @@ definition {
 		}
 
 		task ("When the user adds a Question with multiple localized tags") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
 			Questions.askQuestionFillingTheMandatoryFields(
 				contentField = "私の好きな日本料理は寿司とすき焼きです",
-				layoutName = "questions-page",
-				siteURLKey = "guest",
 				tagLocatorList = "いち,に,さん,し,ご",
 				titleField = "あなたの好きな日本料理は何ですか",
 				topicName = "質問トピック");
@@ -530,10 +532,12 @@ definition {
 				categoryName = "質問トピック",
 				userEmailAddress = "test@liferay.com");
 
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
 			Questions.askQuestionFillingTheMandatoryFields(
 				contentField = "私の好きな日本料理は寿司とすき焼きです",
-				layoutName = "questions-page",
-				siteURLKey = "guest",
 				tagLocatorList = "おおさか,とうきょう",
 				titleField = "あなたの好きな日本料理は何ですか",
 				topicName = "質問トピック");

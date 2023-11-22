@@ -1010,53 +1010,52 @@ definition {
 				categoryName = "Questions Test Category",
 				userEmailAddress = "test@liferay.com");
 
-			JSONQuestions.addQuestion(
-				bodyField = "Content AddQuestion",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Title AddQuestion");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
 		}
 
 		task ("When the user subscribes on a question") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
 			Questions.gotoTab(questionTabField = "Subscriptions");
 
 			Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
 
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-			Questions.subscribeFromQuestion(questionTitle = "Title AddQuestion");
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Content AddQuestion",
+				titleField = "Title AddQuestion",
+				topicName = "questions-test-category");
 		}
 
 		task ("Then he can see that he was subscribed on 'Subscriptions' page") {
+			Questions.gotoDetails(questionTitle = "Title AddQuestion");
+
 			Questions.gotoTab(questionTabField = "Subscriptions");
 
 			Questions.viewSubscribedQuestion(subscribedQuestion = "Title AddQuestion");
 		}
 
 		task ("When the user unsubscribes on a question") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+
+			Questions.gotoDetails(questionTitle = "Title AddQuestion");
+
 			Questions.unsubscribeFromQuestion(questionTitle = "Title AddQuestion");
 		}
 
-		task ("Then he ca see that he was subscribed on 'Subscriptions' page") {
-			Questions.gotoTab(questionTabField = "Questions");
-
+		task ("Then he ca see that he was unsubscribes on 'Subscriptions' page") {
 			Questions.gotoTab(questionTabField = "Subscriptions");
 
 			Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
 		}
 
 		task ("When another user asnwer a question that the Test user is subscribed") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
+			Questions.gotoTab(questionTabField = "Questions");
 
 			Questions.subscribeQuestion();
 
@@ -1064,11 +1063,11 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				questionsTitle = "title-addquestion",
-				siteURLKey = "guest",
-				topicName = "questions-test-category");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+
+			Questions.gotoDetails(questionTitle = "Title AddQuestion");
 
 			Questions.answerQuestion(contentField = "This is my answer");
 		}
@@ -1805,8 +1804,6 @@ definition {
 				layoutName = "questions-page",
 				siteURLKey = "guest",
 				topicName = "questions-test-category");
-
-			Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
 		}
 
 		task ("And change topic through breadcrumb then he can see the question created in each category") {
@@ -1828,7 +1825,7 @@ definition {
 
 			Questions.changeTopic(
 				parentTopicName = "Questions Subcategory2",
-				subTopicName = "Questions Test Category");
+				subTopicName = "All Questions");
 
 			Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
 		}

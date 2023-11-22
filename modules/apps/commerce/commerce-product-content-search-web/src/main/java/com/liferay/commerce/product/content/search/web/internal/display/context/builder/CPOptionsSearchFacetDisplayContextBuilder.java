@@ -251,6 +251,10 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 					CPOptionFacetsUtil.getIndexFieldName(
 						termCollector.getTerm(), themeDisplay.getLanguageId()));
 
+				if (cpOptionFacet == null) {
+					continue;
+				}
+
 				filledFacets.add(cpOptionFacet);
 				_tuples = _getTuples(
 					cpOption, cpOptionFacet.getFacetCollector());

@@ -59,11 +59,10 @@ public class SXPElementDTOConverter
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					true, sxpElement.getDescriptionMap());
-				elementDefinition =
-					SXPDTOConverterUtil.translate(
-						ElementDefinitionUtil.toElementDefinition(
-							sxpElement.getElementDefinitionJSON()),
-						_language, dtoConverterContext.getLocale());
+				elementDefinition = SXPDTOConverterUtil.translate(
+					ElementDefinitionUtil.toElementDefinition(
+						sxpElement.getElementDefinitionJSON()),
+					_language, dtoConverterContext.getLocale());
 				externalReferenceCode = sxpElement.getExternalReferenceCode();
 				id = sxpElement.getSXPElementId();
 				modifiedDate = sxpElement.getModifiedDate();

@@ -130,14 +130,10 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public void deleteGroup(String groupId) throws CharonException {
 		try {
-			UserGroup userGroup = _getUserGroup(
-				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(groupId));
-
-			if (userGroup == null) {
-				return;
-			}
-
-			_userGroupLocalService.deleteUserGroup(userGroup);
+			_userGroupLocalService.deleteUserGroup(
+				_getUserGroup(
+					CompanyThreadLocal.getCompanyId(),
+					GetterUtil.getLong(groupId)));
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			ReflectionUtil.throwException(abstractCharonException);
@@ -179,15 +175,10 @@ public class UserManagerImpl implements UserManager {
 		String groupId, Map<String, Boolean> requiredAttributes) {
 
 		try {
-			UserGroup userGroup = _getUserGroup(
-				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(groupId));
-
-			if (userGroup == null) {
-				throw new NotFoundException(
-					"No group found with group ID " + groupId);
-			}
-
-			return ScimGroupUtil.toGroup(userGroup);
+			return ScimGroupUtil.toGroup(
+				_getUserGroup(
+					CompanyThreadLocal.getCompanyId(),
+					GetterUtil.getLong(groupId)));
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return ReflectionUtil.throwException(abstractCharonException);
@@ -380,7 +371,7 @@ public class UserManagerImpl implements UserManager {
 			Map<String, Boolean> requiredAttributes)
 		throws CharonException {
 
-		return _addOrUpdateGroup(newGroup);
+		return _updateGroup(newGroup);
 	}
 
 	@Override
@@ -405,7 +396,7 @@ public class UserManagerImpl implements UserManager {
 
 			UserGroup userGroup = TransactionInvokerUtil.invoke(
 				_transactionConfig,
-				() -> _addOrUpdateUserGroup(company, group));
+				() -> _addOrUpdateUserGroup(company.getCompanyId(), group));
 
 			return ScimGroupUtil.toGroup(userGroup);
 		}
@@ -478,19 +469,16 @@ public class UserManagerImpl implements UserManager {
 		}
 	}
 
-	private UserGroup _addOrUpdateUserGroup(Company company, Group group)
+	private UserGroup _addOrUpdateUserGroup(long companyId, Group group)
 		throws Exception {
 
 		ScimClientOAuth2ApplicationConfiguration
 			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(
-					company.getCompanyId());
+				_getScimClientOAuth2ApplicationConfiguration(companyId);
 
 		UserGroup userGroup = _getUserGroup(
-			company.getCompanyId(), group.getExternalId(),
+			companyId, group.getExternalId(),
 			GetterUtil.getLong(group.getId()));
-
-		long companyId = company.getCompanyId();
 
 		if (userGroup == null) {
 			userGroup = _userGroupLocalService.addUserGroup(
@@ -508,34 +496,7 @@ public class UserManagerImpl implements UserManager {
 				userGroup);
 		}
 		else {
-			String scimClientId = ScimClientUtil.generateScimClientId(
-				scimClientOAuth2ApplicationConfiguration.
-					oAuth2ApplicationName());
-			String userGroupScimClientId = _getScimClientId(userGroup);
-
-			if (Validator.isNotNull(userGroupScimClientId) &&
-				!Objects.equals(scimClientId, userGroupScimClientId)) {
-
-				throw new PortalException(
-					"Group was provisioned by another SCIM client");
-			}
-
-			userGroup = _userGroupLocalService.updateUserGroup(
-				companyId, userGroup.getPrimaryKey(), group.getDisplayName(),
-				userGroup.getDescription(), new ServiceContext());
-
-			if (!Objects.equals(
-					group.getExternalId(),
-					userGroup.getExternalReferenceCode())) {
-
-				userGroup.setExternalReferenceCode(group.getExternalId());
-
-				userGroup = _userGroupLocalService.updateUserGroup(userGroup);
-			}
-
-			if (Validator.isNull(userGroupScimClientId)) {
-				_saveScimClientId(scimClientId, userGroup);
-			}
+			userGroup = _updateUserGroup(companyId, group, userGroup);
 		}
 
 		return userGroup;
@@ -785,19 +746,17 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private UserGroup _getUserGroup(
-			long companyId, String externalReferenceCode, long groupId)
-		throws AbstractCharonException {
+		long companyId, String externalReferenceCode, long groupId) {
 
 		UserGroup userGroup =
 			_userGroupLocalService.fetchUserGroupByExternalReferenceCode(
 				externalReferenceCode, companyId);
 
 		if (userGroup != null) {
-			throw new NotFoundException(
-				"No group found with group ID " + groupId);
+			return userGroup;
 		}
 
-		return _getUserGroup(companyId, groupId);
+		return _userGroupLocalService.fetchUserGroup(groupId);
 	}
 
 	private void _saveScimClientId(
@@ -923,6 +882,28 @@ public class UserManagerImpl implements UserManager {
 		}
 	}
 
+	private Group _updateGroup(Group group) throws CharonException {
+		try {
+			Company company = _companyLocalService.fetchCompany(
+				CompanyThreadLocal.getCompanyId());
+
+			UserGroup userGroup = TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> _updateUserGroup(company.getCompanyId(), group));
+
+			return ScimGroupUtil.toGroup(userGroup);
+		}
+		catch (AbstractCharonException abstractCharonException) {
+			return ReflectionUtil.throwException(abstractCharonException);
+		}
+		catch (Throwable throwable) {
+			throw new CharonException(
+				"Unable to provision a portal group for " +
+					group.getDisplayName(),
+				throwable);
+		}
+	}
+
 	private com.liferay.portal.kernel.model.User _updatePortalUser(
 			int birthdayMonth, int birthdayDay, int birthdayYear,
 			com.liferay.portal.kernel.model.User portalUser, ScimUser scimUser,
@@ -981,6 +962,68 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		return portalUser;
+	}
+
+	private UserGroup _updateUserGroup(long companyId, Group group)
+		throws Exception {
+
+		long groupId = GetterUtil.getLong(group.getId());
+
+		UserGroup userGroup = _getUserGroup(
+			companyId, group.getExternalId(), groupId);
+
+		if (userGroup == null) {
+			throw new NotFoundException(
+				"No group found with group ID " + groupId);
+		}
+
+		String groupScimClientId = _getScimClientId(userGroup);
+
+		if (Validator.isNull(groupScimClientId)) {
+			throw new NotFoundException(
+				"No group found with group ID " + groupId);
+		}
+
+		return _updateUserGroup(companyId, group, userGroup);
+	}
+
+	private UserGroup _updateUserGroup(
+			long companyId, Group group, UserGroup userGroup)
+		throws Exception {
+
+		ScimClientOAuth2ApplicationConfiguration
+			scimClientOAuth2ApplicationConfiguration =
+				_getScimClientOAuth2ApplicationConfiguration(companyId);
+
+		String scimClientId = ScimClientUtil.generateScimClientId(
+			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
+
+		String userGroupScimClientId = _getScimClientId(userGroup);
+
+		if (Validator.isNotNull(userGroupScimClientId) &&
+			!Objects.equals(scimClientId, userGroupScimClientId)) {
+
+			throw new ConflictException(
+				"Group was provisioned by another SCIM client");
+		}
+
+		userGroup = _userGroupLocalService.updateUserGroup(
+			companyId, userGroup.getPrimaryKey(), group.getDisplayName(),
+			userGroup.getDescription(), new ServiceContext());
+
+		if (!Objects.equals(
+				group.getExternalId(), userGroup.getExternalReferenceCode())) {
+
+			userGroup.setExternalReferenceCode(group.getExternalId());
+
+			userGroup = _userGroupLocalService.updateUserGroup(userGroup);
+		}
+
+		if (Validator.isNull(userGroupScimClientId)) {
+			_saveScimClientId(scimClientId, userGroup);
+		}
+
+		return userGroup;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

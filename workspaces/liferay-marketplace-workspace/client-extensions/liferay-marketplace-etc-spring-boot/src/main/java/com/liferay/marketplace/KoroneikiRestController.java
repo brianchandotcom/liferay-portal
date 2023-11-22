@@ -517,6 +517,17 @@ public class KoroneikiRestController extends BaseRestController {
 			_postKoroneikiAccount(Account account, Jwt jwt)
 		throws Exception {
 
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+			koroneikiAccount =
+				new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+					Account();
+
+		koroneikiAccount.setCode(
+			account.getName(
+			).replaceAll(
+				StringPool.SPACE, StringPool.BLANK
+			).toUpperCase());
+
 		Map<String, String> customFieldsMap = new HashMap<>();
 
 		for (CustomField customField : account.getCustomFields()) {
@@ -526,6 +537,19 @@ public class KoroneikiRestController extends BaseRestController {
 				).getData(
 				).toString());
 		}
+
+		koroneikiAccount.setContactEmailAddress(
+			customFieldsMap.get("Contact Email"));
+		koroneikiAccount.setDateCreated(
+			Date.from(
+				ZonedDateTime.parse(
+					customFieldsMap.get("Create Date"),
+					DateTimeFormatter.ISO_DATE_TIME
+				).toInstant()));
+
+		koroneikiAccount.setDescription(account.getDescription());
+		koroneikiAccount.setName(account.getName());
+		koroneikiAccount.setPhoneNumber(customFieldsMap.get("Contact Phone"));
 
 		Page<PostalAddress> postalAddressPage =
 			_postalAddressResource.getAccountPostalAddressesPage(
@@ -544,31 +568,12 @@ public class KoroneikiRestController extends BaseRestController {
 					PostalAddress.toDTO(postalAddress.toString());
 
 			koroneikiPostalAddresses[i].setAddressType("");
+
 			i++;
 		}
 
-		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
-			koroneikiAccount =
-				new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
-					Account();
-
-		koroneikiAccount.setCode(
-			account.getName(
-			).replaceAll(
-				StringPool.SPACE, StringPool.BLANK
-			).toUpperCase());
-		koroneikiAccount.setContactEmailAddress(
-			customFieldsMap.get("Contact Email"));
-		koroneikiAccount.setDateCreated(
-			Date.from(
-				ZonedDateTime.parse(
-					customFieldsMap.get("Create Date"),
-					DateTimeFormatter.ISO_DATE_TIME
-				).toInstant()));
-		koroneikiAccount.setDescription(account.getDescription());
-		koroneikiAccount.setName(account.getName());
-		koroneikiAccount.setPhoneNumber(customFieldsMap.get("Contact Phone"));
 		koroneikiAccount.setPostalAddresses(koroneikiPostalAddresses);
+
 		koroneikiAccount.setStatus(
 			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account.
 				Status.ACTIVE);

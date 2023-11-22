@@ -142,7 +142,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [selectedObjectRelationship?.id]);
 
 	const onSubmit = async (
 		editedObjectRelationship?: Partial<ObjectRelationship>

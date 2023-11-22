@@ -277,26 +277,7 @@ public class ParallelExecutor<T> {
 				return null;
 			}
 
-			List<T> results = new ArrayList<>(_completedTasks.size());
-
-			for (Task<T> completedTask : _completedTasks) {
-				Future<T> future = completedTask.getFuture();
-
-				try {
-					T result = future.get();
-
-					if ((result == null) && _parallelExecutor._excludeNulls) {
-						continue;
-					}
-
-					results.add(future.get());
-				}
-				catch (ExecutionException | InterruptedException exception) {
-					throw new RuntimeException(exception);
-				}
-			}
-
-			return results;
+			return _results;
 		}
 
 		public int getRunningTaskCount() {

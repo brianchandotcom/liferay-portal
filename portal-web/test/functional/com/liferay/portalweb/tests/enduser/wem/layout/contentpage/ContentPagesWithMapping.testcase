@@ -35,8 +35,6 @@ definition {
 	@description = "This is a test for LPS-195827. Validation error on object action does not redirect to the Display Page Template."
 	@priority = 4
 	test CannotGoToEntryDisplayPageWhenStandaloneActionValidationFailure {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a page creator has a content page with a Button fragment mapped to a standalone action") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Student",
@@ -197,8 +195,6 @@ definition {
 	@description = "This is a test for LPS-195827. Success object action redirects to the Display Page Template."
 	@priority = 4
 	test GoToEntryDisplayPageViaStandaloneAction {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a page creator has a standalone action") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Student",

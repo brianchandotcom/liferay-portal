@@ -211,10 +211,6 @@ describe('EditableActionPanel', () => {
 	});
 
 	describe('EditableActionPanel with LPS-195263', () => {
-		beforeAll(() => {
-			Liferay.FeatureFlags['LPS-195263'] = true;
-		});
-
 		it('renders display page and does not allow to reload when selecting External URL', () => {
 			renderActionPanel({
 				state: getStateWithConfig({
@@ -227,10 +223,6 @@ describe('EditableActionPanel', () => {
 			expect(
 				screen.queryByText('reload-page-after-success')
 			).not.toBeInTheDocument();
-		});
-
-		afterAll(() => {
-			Liferay.FeatureFlags['LPS-195263'] = false;
 		});
 	});
 });

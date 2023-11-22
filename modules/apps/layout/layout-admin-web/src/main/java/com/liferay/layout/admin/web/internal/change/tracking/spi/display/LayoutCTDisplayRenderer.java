@@ -133,6 +133,10 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 			previewLayout = layout.fetchDraftLayout();
 		}
 
+		String url = HttpComponentsUtil.addParameter(
+			themeDisplay.getPathMain() + "/portal/update_language", "p_l_id",
+			previewLayout.getPlid());
+
 		String redirect = HttpComponentsUtil.addParameter(
 			_portal.getLayoutFriendlyURL(previewLayout, themeDisplay),
 			"p_l_mode", "preview");
@@ -148,17 +152,15 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 				redirect, "segmentsExperienceId", segmentsExperienceId);
 		}
 
-		String url = HttpComponentsUtil.addParameter(
-			themeDisplay.getPathMain() + "/portal/update_language", "p_l_id",
-			previewLayout.getPlid());
+		url = HttpComponentsUtil.addParameter(url, "redirect", redirect);
 
 		String languageId = LocaleUtil.toLanguageId(displayContext.getLocale());
 
 		url = HttpComponentsUtil.addParameter(url, "languageId", languageId);
+
 		url = HttpComponentsUtil.addParameter(url, "persistState", "false");
 		url = HttpComponentsUtil.addParameter(
 			url, "showUserLocaleOptionsMessage", "false");
-		url = HttpComponentsUtil.addParameter(url, "redirect", redirect);
 
 		return StringBundler.concat(
 			"<iframe frameborder=\"0\" onload=\"this.style.height = ",

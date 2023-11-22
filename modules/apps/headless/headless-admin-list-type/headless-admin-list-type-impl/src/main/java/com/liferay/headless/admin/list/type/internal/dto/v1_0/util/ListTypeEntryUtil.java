@@ -48,6 +48,8 @@ public class ListTypeEntryUtil {
 				name = serviceBuilderListTypeEntry.getName(locale);
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					serviceBuilderListTypeEntry.getNameMap());
+				name_languageId = LocalizedMapUtil.getLanguageIdMap(
+					serviceBuilderListTypeEntry.getNameMap());
 				type = serviceBuilderListTypeEntry.getType();
 			}
 		};

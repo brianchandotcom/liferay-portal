@@ -264,6 +264,8 @@ public class SalesforceObjectEntryManagerImpl
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					listTypeEntry.getNameMap());
+				name_languageId = LocalizedMapUtil.getLanguageIdMap(
+					listTypeEntry.getNameMap());
 			}
 		};
 	}

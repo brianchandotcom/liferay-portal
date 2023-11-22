@@ -1,7 +1,7 @@
 @default = "isNotVisible"
 definition {
 
-	function isNotVisible() {
+	function isNotVisible(locator1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.isNotVisible(${locator1});

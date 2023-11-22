@@ -1,7 +1,7 @@
 @default = "uploadCommonFile"
 definition {
 
-	function uploadCommonFile() {
+	function uploadCommonFile(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
@@ -9,13 +9,13 @@ definition {
 		selenium.uploadCommonFile(${locator1}, ${value1});
 	}
 
-	function uploadCommonFileHidden() {
+	function uploadCommonFileHidden(locator1, value1) {
 		selenium.mouseOver(${locator1});
 
 		selenium.uploadCommonFile(${locator1}, ${value1});
 	}
 
-	function uploadCommonFileHiddenNoMouseOver() {
+	function uploadCommonFileHiddenNoMouseOver(locator1, value1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.uploadCommonFile(${locator1}, ${value1});

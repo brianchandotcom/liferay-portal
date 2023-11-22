@@ -1,19 +1,19 @@
 @default = "selectWindow"
 definition {
 
-	function selectPopUp() {
+	function selectPopUp(value1) {
 		selenium.pause(3000);
 
 		selenium.selectPopUp(${value1});
 	}
 
-	function selectWindow() {
+	function selectWindow(value1) {
 		selenium.pause(3000);
 
 		selenium.selectWindow(${value1});
 	}
 
-	function selectWindowNoSPARefresh() {
+	function selectWindowNoSPARefresh(value1) {
 		selenium.pause(3000);
 
 		selenium.selectWindow(${value1});
@@ -25,7 +25,7 @@ definition {
 		selenium.selectWindow("null");
 	}
 
-	function waitForSelectPopUp() {
+	function waitForSelectPopUp(value1) {
 		selenium.waitForPopUp("", "");
 
 		selenium.selectPopUp(${value1});

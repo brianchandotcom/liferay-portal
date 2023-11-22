@@ -1,7 +1,7 @@
 @default = "isNotChecked"
 definition {
 
-	function isNotChecked() {
+	function isNotChecked(locator1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.waitForVisible(${locator1}, "true");
@@ -9,7 +9,7 @@ definition {
 		selenium.isNotChecked(${locator1});
 	}
 
-	function isNotCheckedNotVisible() {
+	function isNotCheckedNotVisible(locator1) {
 		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.isNotChecked(${locator1});

@@ -1,7 +1,7 @@
 @default = "tripleClick"
 definition {
 
-	function tripleClick() {
+	function tripleClick(locator1) {
 		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});

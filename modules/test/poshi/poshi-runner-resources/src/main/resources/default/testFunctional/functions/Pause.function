@@ -2,7 +2,7 @@
 definition {
 
 	@summary-ignore = "true"
-	function pause() {
+	function pause(value1) {
 		selenium.pause(${value1});
 	}
 

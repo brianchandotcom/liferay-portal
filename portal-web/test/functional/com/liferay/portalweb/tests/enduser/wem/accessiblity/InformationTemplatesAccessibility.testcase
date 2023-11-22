@@ -60,4 +60,71 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-177722. Via Keyboard navigation is possible to access the edit mode of Information Templates and Widget Templates and the tooltip of the back button is 'Go to Templates'"
+	@priority = 2
+	test ViewBackButtonTooltipInInformationTemplateAndWidgetTemplateViaKeyboard {
+		task ("Given you created an Information Template") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Templates");
+
+			InformationTemplates.addCP(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("When accesing the back button via keyboard navigation") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then you can check the tooltip message") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Go to Templates");
+		}
+
+		task ("Given you created a Widget Template") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Templates");
+
+			Navigator.gotoNavTab(navTab = "Widget Templates");
+
+			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Asset Publisher Template");
+
+			SiteAdmin.viewPortletTitle(portletTitle = "Add Asset Publisher Template");
+
+			PortletEntry.inputName(name = "Asset Publisher Test ADT");
+
+			Click(
+				key_fieldName = "Asset Entry",
+				locator1 = "DDMEditTemplate#SCRIPT_FIELD");
+		}
+
+		task ("When accessing the back button via keyboard navigation") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then you can check the tooltip message") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Go to Templates");
+		}
+	}
+
 }

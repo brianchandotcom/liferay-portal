@@ -1043,10 +1043,11 @@ definition {
 		}
 
 		task ("Add a dynamic collection with All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a content page") {
@@ -1105,19 +1106,13 @@ definition {
 		}
 
 		task ("View the Collection Filter doesn't appear at view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
 			AssertElementNotPresent(
 				index = 1,
 				locator1 = "PageEditor#COLLECTION_FILTER_SEARCH_FIELD");
 		}
 
 		task ("Select the Keywords type in Collection Filter") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
+			ContentPages.gotoPageEditor();
 
 			PageEditor.editCollectionFilter(
 				filter = "Keywords",
@@ -1127,14 +1122,10 @@ definition {
 		task ("Filter results of Collection Display by keywords at Preview mode") {
 			PageEditor.previewInANewTab();
 
-			var n = 1;
-
 			for (var content : list "AirPods,LeBron VIII,Levis 501") {
-				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = ${n},
-					text = ${content});
-
-				var n = ${n} + 1;
+				AssertVisible(
+					key_text = ${content},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			Page.searchInCollectionFilter(searchTerm = "Levis");
@@ -1147,18 +1138,10 @@ definition {
 		}
 
 		task ("Filter results of Collection Display by keywords at View mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			var n = 1;
-
 			for (var content : list "AirPods,LeBron VIII,Levis 501") {
-				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = ${n},
-					text = ${content});
-
-				var n = ${n} + 1;
+				AssertVisible(
+					key_text = ${content},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			Page.searchInCollectionFilter(searchTerm = "LeBron");

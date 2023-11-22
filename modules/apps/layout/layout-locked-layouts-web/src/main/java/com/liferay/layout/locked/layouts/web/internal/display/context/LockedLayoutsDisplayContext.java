@@ -10,6 +10,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
 import com.liferay.layout.model.LockedLayoutType;
+import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -34,6 +35,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Lourdes Fernández Besada
@@ -80,6 +83,20 @@ public class LockedLayoutsDisplayContext {
 
 	public String getLayoutURL(LockedLayout lockedLayout)
 		throws PortalException {
+
+		if (lockedLayout.getLockedLayoutType() ==
+				LockedLayoutType.DISPLAY_PAGE_TEMPLATE) {
+
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					_portal.getHttpServletRequest(_liferayPortletRequest),
+					_themeDisplay.getScopeGroup(),
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0,
+					0, PortletRequest.RENDER_PHASE)
+			).setTabs1(
+				"display-page-templates"
+			).buildString();
+		}
 
 		Layout layout = _layoutLocalService.fetchLayout(lockedLayout.getPlid());
 

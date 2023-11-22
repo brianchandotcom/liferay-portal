@@ -182,7 +182,7 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 			_configureB2CSite(commerceChannel.getGroup(), serviceContext);
 
-			_initialize(serviceContext);
+			_createLayouts(serviceContext);
 
 			_importAssetCategories(serviceContext);
 
@@ -353,6 +353,8 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 	private void _createLayouts(ServiceContext serviceContext)
 		throws Exception {
+
+		_cpFileImporter.cleanLayouts(serviceContext);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			SpeedwellDependencyResolverUtil.getJSON("layouts.json"));
@@ -855,12 +857,6 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 			SpeedwellDependencyResolverUtil.getDisplayTemplatesDependencyPath(),
 			serviceContext.getScopeGroupId(), company.getGroupId(),
 			serviceContext.getUserId());
-	}
-
-	private void _initialize(ServiceContext serviceContext) throws Exception {
-		_cpFileImporter.cleanLayouts(serviceContext);
-
-		_createLayouts(serviceContext);
 	}
 
 	private void _setCommerceShippingMethod(

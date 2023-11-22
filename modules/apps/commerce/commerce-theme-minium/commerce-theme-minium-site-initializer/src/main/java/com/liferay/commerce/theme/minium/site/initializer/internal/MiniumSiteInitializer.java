@@ -195,7 +195,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 			_configureB2BSite(commerceChannel.getGroup(), serviceContext);
 
-			_initialize(serviceContext);
+			_createLayouts(serviceContext);
 
 			_importAssetCategories(serviceContext);
 
@@ -364,6 +364,21 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 	private void _createLayouts(ServiceContext serviceContext)
 		throws Exception {
+
+		SiteInitializerDependencyResolver siteInitializerDependencyResolver =
+			SiteInitializerDependencyResolverThreadLocal.
+				getSiteInitializerDependencyResolver();
+
+		if (siteInitializerDependencyResolver != null) {
+			_siteInitializerDependencyResolver =
+				siteInitializerDependencyResolver;
+		}
+		else {
+			_siteInitializerDependencyResolver =
+				_defaultSiteInitializerDependencyResolver;
+		}
+
+		_cpFileImporter.cleanLayouts(serviceContext);
 
 		_cpFileImporter.createLayouts(
 			_jsonFactory.createJSONArray(
@@ -888,25 +903,6 @@ public class MiniumSiteInitializer implements SiteInitializer {
 				getDisplayTemplatesDependencyPath(),
 			serviceContext.getScopeGroupId(), company.getGroupId(),
 			serviceContext.getUserId());
-	}
-
-	private void _initialize(ServiceContext serviceContext) throws Exception {
-		SiteInitializerDependencyResolver siteInitializerDependencyResolver =
-			SiteInitializerDependencyResolverThreadLocal.
-				getSiteInitializerDependencyResolver();
-
-		if (siteInitializerDependencyResolver != null) {
-			_siteInitializerDependencyResolver =
-				siteInitializerDependencyResolver;
-		}
-		else {
-			_siteInitializerDependencyResolver =
-				_defaultSiteInitializerDependencyResolver;
-		}
-
-		_cpFileImporter.cleanLayouts(serviceContext);
-
-		_createLayouts(serviceContext);
 	}
 
 	private void _setCommerceShippingMethod(

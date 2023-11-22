@@ -78,6 +78,7 @@ export function Select({
 
 			if (selectedObjectLabel) {
 				setTriggerLabel(selectedObjectLabel);
+				setDisplayPlaceholder(false);
 			}
 		}
 	}, [options, selectedOption]);

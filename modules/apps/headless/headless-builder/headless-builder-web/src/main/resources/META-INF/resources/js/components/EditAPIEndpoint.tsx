@@ -24,7 +24,11 @@ import {hasEndpointDataChanged} from './utils/dataUtils';
 import {deleteData, fetchJSON, postData, updateData} from './utils/fetchUtil';
 
 import '../../css/main.scss';
-import {beginStringWithForwardSlash} from './utils/string';
+import {
+	beginStringWithForwardSlash,
+	getAllButLastParameterFromPath,
+	getLastParameterFromPath,
+} from './utils/string';
 
 interface EditAPIEndpointProps {
 	apiApplicationBaseURL: string;
@@ -61,7 +65,9 @@ export default function EditAPIEndpoint({
 		{}
 	);
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
+		parameter: false,
 		path: false,
+		retrieveType: false,
 		scope: false,
 	});
 
@@ -87,7 +93,11 @@ export default function EditAPIEndpoint({
 				...(response.description && {
 					description: response.description,
 				}),
-				path: response.path,
+				parameter: getLastParameterFromPath(response.path),
+				path: getAllButLastParameterFromPath(response.path),
+				pathParameter: response.pathParameter,
+				pathParameterDescription: response.pathParameterDescription,
+				retrieveType: response.retrieveType,
 				...(response.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId && {
 					r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
 						response.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
@@ -99,7 +109,12 @@ export default function EditAPIEndpoint({
 
 	function validateData() {
 		let isDataValid = true;
-		const mandatoryFields = ['path', 'scope'];
+
+		const mandatoryFields = ['path', 'retrieveType', 'scope'];
+
+		if (localUIData.retrieveType?.key === 'singleElement') {
+			mandatoryFields.push('parameter');
+		}
 
 		if (!Object.keys(localUIData!).length) {
 			const errors = mandatoryFields.reduce(
@@ -141,40 +156,55 @@ export default function EditAPIEndpoint({
 				Object.keys(localUIData).length &&
 				isDataValid
 			) {
-				handleModifyODataFields({
-					deleteSuccessMessage: Liferay.Language.get(
-						'the-filter-was-deleted'
-					),
-					fieldKey: 'Filter',
-					postSuccessMessage: Liferay.Language.get(
-						'the-filter-was-created'
-					),
-					updateSuccessMessage: Liferay.Language.get(
-						'the-filter-was-updated'
-					),
-				});
+				if (localUIData.retrieveType?.key !== 'singleElement') {
+					handleModifyODataFields({
+						deleteSuccessMessage: Liferay.Language.get(
+							'the-filter-was-deleted'
+						),
+						fieldKey: 'Filter',
+						postSuccessMessage: Liferay.Language.get(
+							'the-filter-was-created'
+						),
+						updateSuccessMessage: Liferay.Language.get(
+							'the-filter-was-updated'
+						),
+					});
 
-				handleModifyODataFields({
-					deleteSuccessMessage: Liferay.Language.get(
-						'the-sort-was-deleted'
-					),
-					fieldKey: 'Sort',
-					postSuccessMessage: Liferay.Language.get(
-						'the-sort-was-created'
-					),
-					updateSuccessMessage: Liferay.Language.get(
-						'the-sort-was-updated'
-					),
-				});
+					handleModifyODataFields({
+						deleteSuccessMessage: Liferay.Language.get(
+							'the-sort-was-deleted'
+						),
+						fieldKey: 'Sort',
+						postSuccessMessage: Liferay.Language.get(
+							'the-sort-was-created'
+						),
+						updateSuccessMessage: Liferay.Language.get(
+							'the-sort-was-updated'
+						),
+					});
+				}
+
+				let parameter: string | undefined = '';
+
+				if (localUIData.retrieveType?.key === 'singleElement') {
+					parameter = localUIData.parameter;
+				}
 
 				updateData<APIEndpointItem>({
 					dataToUpdate: {
 						description: localUIData.description,
 						...(localUIData.path && {
-							path: beginStringWithForwardSlash(localUIData.path),
+							path: beginStringWithForwardSlash(
+								localUIData.path +
+									beginStringWithForwardSlash(parameter)
+							),
 						}),
+						pathParameter: localUIData.pathParameter,
+						pathParameterDescription:
+							localUIData.pathParameterDescription,
 						r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
 							localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
+						retrieveType: localUIData.retrieveType,
 						scope: localUIData.scope,
 					},
 					method: 'PATCH',

@@ -190,6 +190,7 @@ public class BatchEngineBrokerTest {
 
 		if (_company2 != null) {
 			_companyLocalService.deleteCompany(_company2);
+
 			_company2 = null;
 		}
 	}

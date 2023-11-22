@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.creator.openai.web.internal.display.context.util;
+package com.liferay.ai.creator.openai.web.internal.display.context.factory;
 
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
-import com.liferay.ai.creator.openai.display.context.util.AICreatorOpenAIMenuItemFactory;
+import com.liferay.ai.creator.openai.display.context.factory.AICreatorOpenAIMenuItemFactory;
 import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.portal.kernel.language.Language;

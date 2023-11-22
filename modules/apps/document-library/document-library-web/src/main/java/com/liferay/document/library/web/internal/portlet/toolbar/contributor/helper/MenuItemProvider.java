@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper;
 
-import com.liferay.ai.creator.openai.display.context.util.AICreatorOpenAIMenuItemFactory;
+import com.liferay.ai.creator.openai.display.context.factory.AICreatorOpenAIMenuItemFactory;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;

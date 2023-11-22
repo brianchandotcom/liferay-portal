@@ -128,7 +128,8 @@ definition {
 		task ("Add the OSGI configuration file to www.able.com:9080 instance") {
 			OAuth2.deployInstanceConfigFile(
 				bundleId = 1,
-				osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+				osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config",
+				portalURL = "http://www.able.com:9080");
 		}
 
 		task ("Logout") {
@@ -251,7 +252,8 @@ definition {
 		task ("Add the OSGI configuration file to www.able.com:9080 instance") {
 			OAuth2.deployInstanceConfigFile(
 				bundleId = 1,
-				osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+				osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config",
+				portalURL = "http://www.able.com:9080");
 		}
 
 		task ("Logout") {

@@ -104,7 +104,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ":\n",
+							"Incorrect commit message in SHA ", parts[0], ": ",
 							"Each breaking change report should have one, and ",
 							"only one '# breaking', '## What', '## Why' and ",
 							"'## Alternatives'(Optional). Use '----' to split ",
@@ -125,7 +125,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ":\n",
+							"Incorrect commit message in SHA ", parts[0], ": ",
 							"The correct order of headers should be '## What' ",
 							"| '## Why' | '## Alternatives'"));
 
@@ -142,7 +142,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ":\n",
+							"Incorrect commit message in SHA ", parts[0], ": ",
 							"There should be one file path after '## What'"));
 
 					return;
@@ -167,7 +167,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ":\n",
+							"Incorrect commit message in SHA ", parts[0], ": ",
 							"'## What' should be followed by only one path, ",
 							"which is from ", portalDir.getAbsolutePath()));
 
@@ -184,8 +184,8 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Incorrect commit message in SHA ", parts[0], ":\n",
-					"The commit message contains '# breaking' should end with ",
+					"Incorrect commit message in SHA ", parts[0], ": The ",
+					"commit message contains '# breaking' should end with ",
 					"'\\n\\n----'"));
 
 			return;
@@ -209,7 +209,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Incorrect commit message in SHA ", parts[0], ":\n",
+						"Incorrect commit message in SHA ", parts[0], ": ",
 						"There should be an empty line after/before '----', ",
 						"'# breaking', '## What', '## Why' and '## ",
 						"Alternatives'"));

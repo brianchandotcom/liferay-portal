@@ -7,7 +7,7 @@ package com.liferay.document.library.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -15,11 +15,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -58,18 +57,15 @@ public class DLFileEntryTypePermissionCheckerTest
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
-		PrincipalThreadLocal.setName(_originalName);
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
 
 	@Test
 	public void testContains() throws Exception {
-		Company company = CompanyLocalServiceUtil.getCompany(
-			group.getCompanyId());
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
 
 		DLFileEntryType dlVideoExternalShortcutDLFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+			_dlFileEntryTypeLocalService.getFileEntryType(
 				company.getGroupId(), "DL_VIDEO_EXTERNAL_SHORTCUT");
 
 		Assert.assertTrue(
@@ -78,7 +74,7 @@ public class DLFileEntryTypePermissionCheckerTest
 				ActionKeys.VIEW));
 
 		DLFileEntryType googleDocsDLFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+			_dlFileEntryTypeLocalService.getFileEntryType(
 				company.getGroupId(), "GOOGLE_DOCS");
 
 		Assert.assertTrue(
@@ -98,13 +94,8 @@ public class DLFileEntryTypePermissionCheckerTest
 		_userGroupRoleLocalService.addUserGroupRole(
 			_user.getUserId(), _group.getGroupId(), role.getRoleId());
 
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
-
-		_originalName = PrincipalThreadLocal.getName();
+			_permissionCheckerFactory.create(_user));
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 	}
@@ -120,11 +111,17 @@ public class DLFileEntryTypePermissionCheckerTest
 	private static ModelResourcePermission<DLFileEntryType>
 		_dlFileEntryTypeModelResourcePermission;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private String _originalName;
-	private PermissionChecker _originalPermissionChecker;
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

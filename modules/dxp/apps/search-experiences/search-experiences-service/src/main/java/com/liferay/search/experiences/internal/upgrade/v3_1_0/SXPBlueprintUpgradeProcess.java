@@ -127,14 +127,14 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			return StringPool.BLANK;
 		}
 
-		String fallbackFieldCreationValue = StringBundler.concat(
+		String fallbackXML = StringBundler.concat(
 			"<", fieldName, " language-id=\"", _getDefaultLocale(xml),
 			"\">");
 
-		int start = xml.indexOf(fallbackFieldCreationValue);
+		int start = xml.indexOf(fallbackXML);
 
 		if (start != -1) {
-			start += fallbackFieldCreationValue.length();
+			start += fallbackXML.length();
 
 			int end = xml.indexOf("</" + fieldName + ">", start);
 
@@ -147,13 +147,13 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private Object _getFirstLocalizedValue(JSONObject i18nJSONObject) {
-		Iterator<String> keysIterator = i18nJSONObject.keys();
+		Iterator<String> iterator = i18nJSONObject.keys();
 
-		if (!keysIterator.hasNext()) {
+		if (!iterator.hasNext()) {
 			return StringPool.BLANK;
 		}
 
-		return i18nJSONObject.get(keysIterator.next());
+		return i18nJSONObject.get(iterator.next());
 	}
 
 	private void _upgradeSXPBlueprint() throws Exception {
@@ -172,7 +172,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						1,
 						_addFieldsToElementInstancesJSON(
 							resultSet1.getString("elementInstancesJSON")));
-
 					preparedStatement2.setLong(
 						2, resultSet1.getLong("sxpBlueprintId"));
 

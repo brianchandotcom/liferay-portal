@@ -663,6 +663,11 @@ definition {
 				experienceName = "test Experience",
 				segmentName = "liferay.com with English language");
 
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "EMEA Guild");
+
 			PageEditor.prioritizeExperience(experienceName = "test Experience");
 
 			PageEditor.publish();

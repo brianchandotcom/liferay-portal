@@ -1,12 +1,12 @@
 components:
     schemas:
-        Captcha:
+        SimpleCaptcha:
             properties:
                 captchaToken:
                     type: string
                 image:
                     type: string
-        CaptchaForm:
+        SimpleCaptchaForm:
             properties:
                 answer:
                     type: string
@@ -16,12 +16,12 @@ components:
                 - captchaToken
 info:
     description:
-        "CaptchaRest REST API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        "SimpleCaptchaRest REST API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
         'com.liferay.captcha.rest.client', and version '1.0.0'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-    title: "Liferay Captcha REST"
+    title: "Liferay SimpleCaptcha REST"
     version: v1.0
 openapi: 3.0.1
 paths:
@@ -33,23 +33,23 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Captcha"
+                                $ref: "#/components/schemas/SimpleCaptcha"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/Captcha"
+                                $ref: "#/components/schemas/SimpleCaptcha"
                     description:
                         Send a captcha token and image.
-            tags: ["Captcha"]
+            tags: ["SimpleCaptcha"]
         post:
             operationId: postSimpleCaptcha
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/CaptchaForm"
+                            $ref: "#/components/schemas/SimpleCaptchaForm"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/CaptchaForm"
+                            $ref: "#/components/schemas/SimpleCaptchaForm"
             responses:
                 204:
                     content:
@@ -61,4 +61,4 @@ paths:
                         application/xml: {}
                     description:
                         Invalid answer provided
-            tags: ["Captcha"]
+            tags: ["SimpleCaptcha"]

@@ -2,10 +2,10 @@
 @summary = "Assert that '${locator1}' is not available"
 definition {
 
-	function assertElementNotPresent {
-		selenium.waitForElementNotPresent();
+	function assertElementNotPresent() {
+		selenium.waitForElementNotPresent(${locator1}, ${value1});
 
-		selenium.assertElementNotPresent();
+		selenium.assertElementNotPresent(${locator1});
 	}
 
 }

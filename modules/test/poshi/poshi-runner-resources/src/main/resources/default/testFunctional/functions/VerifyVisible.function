@@ -2,10 +2,10 @@
 @summary = "Verify that '${locator1}' is visible"
 definition {
 
-	function verifyVisible {
+	function verifyVisible(locator1) {
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.verifyVisible();
+		selenium.verifyVisible(${locator1});
 	}
 
 }

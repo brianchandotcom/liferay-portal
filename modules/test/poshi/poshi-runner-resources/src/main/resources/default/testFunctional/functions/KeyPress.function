@@ -1,40 +1,40 @@
 @default = "keyPress"
 definition {
 
-	function keyDown {
-		selenium.mouseOver();
+	function keyDown() {
+		selenium.mouseOver(${locator1});
 
-		selenium.keyDown();
+		selenium.keyDown(${locator1}, ${value1});
 	}
 
-	function keyPress {
-		selenium.mouseOver();
+	function keyPress() {
+		selenium.mouseOver(${locator1});
 
-		selenium.keyPress();
+		selenium.keyPress(${locator1}, ${value1});
 	}
 
-	function keyPressCKEditorWaitForCKEditor {
-		selenium.waitForVisible("//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]");
+	function keyPressCKEditorWaitForCKEditor() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
-		selenium.waitForEditable();
+		selenium.waitForEditable(${locator1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.keyPress();
+		selenium.keyPress(${locator1}, ${value1});
 	}
 
-	function keyPressNoError {
-		selenium.mouseOver();
+	function keyPressNoError() {
+		selenium.mouseOver(${locator1});
 
-		selenium.keyPress();
+		selenium.keyPress(${locator1}, ${value1});
 	}
 
-	function keyUp {
-		selenium.mouseOver();
+	function keyUp() {
+		selenium.mouseOver(${locator1});
 
-		selenium.keyUp();
+		selenium.keyUp(${locator1}, ${value1});
 	}
 
 }

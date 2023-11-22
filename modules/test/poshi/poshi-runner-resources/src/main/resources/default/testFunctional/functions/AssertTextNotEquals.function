@@ -3,32 +3,32 @@
 definition {
 
 	@summary = "Assert that '${locator1}' does not contain the value '${value1}'"
-	function assertNotPartialText {
-		selenium.waitForVisible();
+	function assertNotPartialText() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForNotPartialText();
+		selenium.waitForNotPartialText(${locator1}, ${value1});
 
-		selenium.assertNotPartialText();
+		selenium.assertNotPartialText(${locator1}, ${value1});
 	}
 
-	function assertNotText {
-		selenium.waitForVisible();
+	function assertNotText() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForNotText();
+		selenium.waitForNotText(${locator1}, ${value1});
 
-		selenium.assertNotText();
+		selenium.assertNotText(${locator1}, ${value1});
 	}
 
-	function assertNotValue {
-		selenium.waitForVisible();
+	function assertNotValue() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForNotValue();
+		selenium.waitForNotValue(${locator1}, ${value1});
 
-		selenium.assertNotValue();
+		selenium.assertNotValue(${locator1}, ${value1});
 	}
 
-	function assertTextNotEquals {
-		if (contains("${locator1}", "/input")) {
+	function assertTextNotEquals(locator1) {
+		if (contains(${locator1}, "/input")) {
 			AssertTextNotEquals.assertNotValue();
 		}
 		else {

@@ -3,40 +3,40 @@
 definition {
 
 	@summary = "Assert that '${locator1}' contains the value '${value1}'"
-	function assertPartialText {
-		selenium.waitForVisible();
+	function assertPartialText() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForPartialTextCaseInsensitive();
+		selenium.waitForPartialTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.assertPartialTextCaseInsensitive();
+		selenium.assertPartialTextCaseInsensitive(${locator1}, ${value1});
 	}
 
-	function assertPartialTextAceEditor {
-		selenium.waitForVisible();
+	function assertPartialTextAceEditor() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForPartialTextAceEditor();
+		selenium.waitForPartialTextAceEditor(${locator1}, ${value1});
 
-		selenium.assertPartialTextAceEditor();
+		selenium.assertPartialTextAceEditor(${locator1}, ${value1});
 	}
 
-	function assertText {
-		selenium.waitForVisible();
+	function assertText() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForTextCaseInsensitive();
+		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.assertTextCaseInsensitive();
+		selenium.assertTextCaseInsensitive(${locator1}, ${value1});
 	}
 
-	function assertTextCaseSensitive {
-		selenium.waitForVisible();
+	function assertTextCaseSensitive() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForText();
+		selenium.waitForText(${locator1}, ${value1});
 
-		selenium.assertText();
+		selenium.assertText(${locator1}, ${value1});
 	}
 
-	function assertTextEquals {
-		if (contains("${locator1}", "/input")) {
+	function assertTextEquals(locator1) {
+		if (contains(${locator1}, "/input")) {
 			AssertTextEquals.assertValue();
 		}
 		else {
@@ -44,12 +44,12 @@ definition {
 		}
 	}
 
-	function assertValue {
-		selenium.waitForVisible();
+	function assertValue() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForValue();
+		selenium.waitForValue(${locator1}, ${value1});
 
-		selenium.assertValue();
+		selenium.assertValue(${locator1}, ${value1});
 	}
 
 }

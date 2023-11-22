@@ -1,8 +1,8 @@
 @default = "typeScreen"
 definition {
 
-	function typeScreen {
-		selenium.typeScreen();
+	function typeScreen() {
+		selenium.typeScreen(${value1});
 	}
 
 }

@@ -1,12 +1,12 @@
 @default = "assertLocation"
 definition {
 
-	function assertLocation {
-		selenium.assertLocation();
+	function assertLocation() {
+		selenium.assertLocation(${value1});
 	}
 
-	function assertPartialLocation {
-		selenium.assertPartialLocation();
+	function assertPartialLocation() {
+		selenium.assertPartialLocation(${value1});
 	}
 
 }

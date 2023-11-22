@@ -1,12 +1,12 @@
 @default = "tripleClick"
 definition {
 
-	function tripleClick {
-		selenium.waitForVisible();
+	function tripleClick() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.tripleClick();
+		selenium.tripleClick(${locator1});
 	}
 
 }

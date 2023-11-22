@@ -1,32 +1,15 @@
 @default = "selectFrame"
 definition {
 
-	function selectFrame {
-		if (contains("${locator1}", "/iframe")) {
-			selenium.waitForVisible();
+	function selectFrame(locator1) {
+		if (contains(${locator1}, "/iframe")) {
+			selenium.waitForVisible(${locator1}, ${value1});
 
-			selenium.mouseOver();
+			selenium.mouseOver(${locator1});
 
-			selenium.selectFrame();
+			selenium.selectFrame(${locator1});
 
-			selenium.assertJavaScriptErrors();
-
-			selenium.assertLiferayErrors();
-		}
-		else {
-			SelectFrame.selectFrameTop();
-		}
-	}
-
-	function selectFrameNoLoading {
-		if (contains("${locator1}", "/iframe")) {
-			selenium.waitForVisible();
-
-			selenium.mouseOver();
-
-			selenium.selectFrame();
-
-			selenium.assertJavaScriptErrors();
+			selenium.assertJavaScriptErrors(${value1});
 
 			selenium.assertLiferayErrors();
 		}
@@ -35,19 +18,36 @@ definition {
 		}
 	}
 
-	function selectFrameTop {
+	function selectFrameNoLoading(locator1) {
+		if (contains(${locator1}, "/iframe")) {
+			selenium.waitForVisible(${locator1}, ${value1});
+
+			selenium.mouseOver(${locator1});
+
+			selenium.selectFrame(${locator1});
+
+			selenium.assertJavaScriptErrors(${value1});
+
+			selenium.assertLiferayErrors();
+		}
+		else {
+			SelectFrame.selectFrameTop();
+		}
+	}
+
+	function selectFrameTop() {
 		selenium.selectFrame("relative=top");
 	}
 
-	function selectSecondFrame {
-		if (contains("${locator1}", "/iframe")) {
-			selenium.waitForVisible();
+	function selectSecondFrame(locator1) {
+		if (contains(${locator1}, "/iframe")) {
+			selenium.waitForVisible(${locator1}, ${value1});
 
-			selenium.mouseOver();
+			selenium.mouseOver(${locator1});
 
-			selenium.selectFrame();
+			selenium.selectFrame(${locator1});
 
-			selenium.assertJavaScriptErrors();
+			selenium.assertJavaScriptErrors(${value1});
 
 			selenium.assertLiferayErrors();
 		}

@@ -1,8 +1,8 @@
 @default = "assertHTMLSourceTextNotPresent"
 definition {
 
-	function assertHTMLSourceTextNotPresent {
-		selenium.assertHTMLSourceTextNotPresent();
+	function assertHTMLSourceTextNotPresent() {
+		selenium.assertHTMLSourceTextNotPresent(${value1});
 	}
 
 }

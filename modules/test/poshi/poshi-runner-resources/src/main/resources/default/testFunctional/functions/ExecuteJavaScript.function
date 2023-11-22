@@ -1,8 +1,8 @@
 @default = "executeJavaScript"
 definition {
 
-	function executeJavaScript {
-		selenium.executeJavaScript();
+	function executeJavaScript() {
+		selenium.executeJavaScript(${value1}, ${value2}, ${value3});
 	}
 
 }

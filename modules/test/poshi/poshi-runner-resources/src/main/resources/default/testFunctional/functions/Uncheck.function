@@ -1,65 +1,65 @@
 @default = "clickAt"
 definition {
 
-	function clickAt {
-		selenium.waitForVisible();
+	function clickAt() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isChecked()) {
-			selenium.clickAt();
+		if (selenium.isChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 		}
 
 		AssertNotChecked.assertNotChecked();
 	}
 
-	function uncheckNotVisible {
-		selenium.waitForElementPresent();
+	function uncheckNotVisible() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isChecked()) {
-			selenium.clickAt();
+		if (selenium.isChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 
-			selenium.pause("1000");
+			selenium.pause(1000);
 		}
 
-		selenium.assertNotChecked();
+		selenium.assertNotChecked(${locator1});
 	}
 
-	function uncheckToggleSwitch {
-		selenium.waitForElementPresent();
+	function uncheckToggleSwitch() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isChecked()) {
-			selenium.clickAt();
+		if (selenium.isChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 		}
 
 		AssertNotChecked.assertNotCheckedNotVisible();
 	}
 
-	function uncheckToggleSwitchAndPause {
-		selenium.waitForElementPresent();
+	function uncheckToggleSwitchAndPause() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isChecked()) {
-			selenium.clickAt();
+		if (selenium.isChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 		}
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		AssertNotChecked.assertNotCheckedNotVisible();
 	}
 
-	function uncheckToggleSwitchNoErrorNoAssert {
-		selenium.waitForElementPresent();
+	function uncheckToggleSwitchNoErrorNoAssert() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isChecked()) {
-			selenium.clickAt();
+		if (selenium.isChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 		}
 	}
 

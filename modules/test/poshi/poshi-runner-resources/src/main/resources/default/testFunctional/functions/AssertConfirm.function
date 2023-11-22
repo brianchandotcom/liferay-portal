@@ -2,30 +2,30 @@
 @summary = "Assert that the text within the confirmation window equals the value '${value1}' and execute the confirmation"
 definition {
 
-	function assertConfirmation {
-		selenium.assertAlertText();
+	function assertConfirmation() {
+		selenium.assertAlertText(${value1});
 
 		selenium.acceptAlert();
 	}
 
-	function assertConfirmationNoError {
-		selenium.assertAlertText();
+	function assertConfirmationNoError() {
+		selenium.assertAlertText(${value1});
 
 		selenium.acceptAlert();
 	}
 
-	function assertConfirmationNoWait {
-		selenium.assertAlertText();
+	function assertConfirmationNoWait() {
+		selenium.assertAlertText(${value1});
 
 		selenium.acceptAlert();
 	}
 
-	function assertPartialConfirmation {
-		selenium.assertPartialConfirmation();
+	function assertPartialConfirmation() {
+		selenium.assertPartialConfirmation(${value1});
 	}
 
-	function waitForConfirmation {
-		selenium.waitForConfirmation();
+	function waitForConfirmation() {
+		selenium.waitForConfirmation(${value1});
 	}
 
 }

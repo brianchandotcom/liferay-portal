@@ -1,14 +1,14 @@
 @default = "select"
 definition {
 
-	function select {
+	function select() {
 		selenium.pause(5000);
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.select();
+		selenium.select(${locator1}, ${value1});
 	}
 
 }

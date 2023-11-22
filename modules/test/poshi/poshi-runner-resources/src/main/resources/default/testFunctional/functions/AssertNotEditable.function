@@ -1,20 +1,20 @@
 @default = "assertNotEditable"
 definition {
 
-	function assertNotEditable {
-		selenium.waitForVisible();
+	function assertNotEditable() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.waitForNotEditable();
+		selenium.waitForNotEditable(${locator1});
 
-		selenium.assertNotEditable();
+		selenium.assertNotEditable(${locator1});
 	}
 
-	function assertNotEditableNotVisible {
-		selenium.waitForElementPresent();
+	function assertNotEditableNotVisible() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.waitForNotEditable();
+		selenium.waitForNotEditable(${locator1});
 
-		selenium.assertNotEditable();
+		selenium.assertNotEditable(${locator1});
 	}
 
 }

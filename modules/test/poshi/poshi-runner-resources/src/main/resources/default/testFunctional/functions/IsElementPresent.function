@@ -1,26 +1,26 @@
 @default = "isElementPresent"
 definition {
 
-	function isElementPresent {
-		selenium.isElementPresent();
+	function isElementPresent() {
+		selenium.isElementPresent(${locator1});
 	}
 
-	function isElementPresentAfterWait {
-		selenium.isElementPresentAfterWait();
+	function isElementPresentAfterWait() {
+		selenium.isElementPresentAfterWait(${locator1});
 	}
 
-	function isElementPresentNoSPARefresh {
-		selenium.isElementPresent();
+	function isElementPresentNoSPARefresh() {
+		selenium.isElementPresent(${locator1});
 	}
 
-	function isVisible {
-		selenium.isVisible();
+	function isVisible() {
+		selenium.isVisible(${locator1});
 	}
 
-	function pauseIsElementPresent {
-		selenium.pause("1000");
+	function pauseIsElementPresent() {
+		selenium.pause(1000);
 
-		selenium.isElementPresent();
+		selenium.isElementPresent(${locator1});
 	}
 
 }

@@ -1,7 +1,7 @@
 @default = "dragOver"
 definition {
 
-	function dragOver {
+	function dragOver(locator2, locator1) {
 		var javaScript = '''
 Simulate = {
 	dragOver: async function(source, target) {
@@ -34,7 +34,7 @@ Simulate = {
 Simulate.dragOver(arguments[0], arguments[1]);
 		''';
 
-		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
+		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
 	}
 
 }

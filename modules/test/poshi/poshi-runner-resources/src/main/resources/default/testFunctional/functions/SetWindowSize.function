@@ -1,7 +1,7 @@
 @default = "setWindowSize"
 definition {
 
-	function setWindowSize {
+	function setWindowSize(value1) {
 		selenium.setWindowSize(${value1});
 	}
 

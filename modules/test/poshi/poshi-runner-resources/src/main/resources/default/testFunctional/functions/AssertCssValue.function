@@ -1,10 +1,10 @@
 @default = "assertCssValue"
 definition {
 
-	function assertCssValue {
-		selenium.waitForElementPresent();
+	function assertCssValue(locator2, locator1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.assertCssValue("${locator1}", "${locator2}");
+		selenium.assertCssValue(${locator1}, ${value1}, ${locator2});
 	}
 
 }

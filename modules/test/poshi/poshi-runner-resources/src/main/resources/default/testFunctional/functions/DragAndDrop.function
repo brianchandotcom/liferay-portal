@@ -1,142 +1,142 @@
 @default = "dragAndDropToObject"
 definition {
 
-	function dragAndDrop {
-		selenium.dragAndDrop();
+	function dragAndDrop() {
+		selenium.dragAndDrop(${locator1}, ${value1});
 	}
 
-	function dragAndDropObjectMoveTwice {
-		selenium.waitForElementPresent("${locator1}");
+	function dragAndDropObjectMoveTwice(locator1, position1, position2) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver("${locator1}");
+		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible("${locator1}");
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseDown("${locator1}");
+		selenium.mouseDown(${locator1});
 
-		selenium.mouseMoveAt("${locator1}", "${position1}");
+		selenium.mouseMoveAt(${locator1}, ${position1});
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
-		selenium.mouseMoveAt("${locator1}", "${position2}");
+		selenium.mouseMoveAt(${locator1}, ${position2});
 
-		selenium.pause("3000");
-
-		selenium.mouseRelease("${locator1}");
-	}
-
-	function dragAndDropPortletToObject {
-		selenium.waitForElementPresent("${locator1}");
-
-		selenium.mouseOver("${locator1}");
-
-		selenium.waitForVisible("${locator1}");
-
-		selenium.waitForTextCaseInsensitive("${locator1}", "${value1}");
-
-		selenium.waitForVisible("${locator2}");
-
-		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = "${locator2}");
-
-		selenium.mouseOver("${locator2}");
-
-		selenium.mouseDown("${locator1}");
-
-		selenium.mouseMoveAt("${locator2}", "0,80");
-
-		selenium.mouseMoveAt("${locator2}", "0,-80");
-
-		selenium.mouseMoveAt("${locator2}", "0,80");
-
-		selenium.mouseMove("${locator2}");
-
-		selenium.pause("3000");
-
-		selenium.mouseRelease("${locator2}");
-	}
-
-	function dragAndDropPortletToPortlet {
-		selenium.waitForElementPresent("${locator1}");
-
-		selenium.mouseOver("${locator1}");
-
-		selenium.waitForVisible("${locator1}");
-
-		selenium.waitForTextCaseInsensitive("${locator1}", "${value1}");
-
-		selenium.waitForVisible("${locator2}");
-
-		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = "${locator2}");
-
-		selenium.mouseOver("${locator2}");
-
-		selenium.mouseDown("${locator1}");
-
-		selenium.mouseMove("${locator2}");
-
-		selenium.pause("3000");
+		selenium.pause(3000);
 
 		selenium.mouseRelease();
 	}
 
-	function dragAndDropReorganizeObjects {
-		selenium.waitForElementPresent("${locator1}");
+	function dragAndDropPortletToObject(locator2, locator1, value1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver("${locator1}");
+		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible("${locator1}");
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseDown("${locator1}");
+		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.pause("1000");
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseMove("${locator2}");
+		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 
-		selenium.mouseMoveAt("${locator2}", "${position}");
+		selenium.mouseOver(${locator2});
 
-		selenium.pause("3000");
+		selenium.mouseDown(${locator1});
 
-		selenium.mouseRelease();
-	}
+		selenium.mouseMoveAt(${locator2}, "0,80");
 
-	function dragAndDropToObject {
-		selenium.waitForVisible("${locator1}");
+		selenium.mouseMoveAt(${locator2}, "0,-80");
 
-		selenium.mouseOver("${locator1}");
+		selenium.mouseMoveAt(${locator2}, "0,80");
 
-		selenium.waitForPartialTextCaseInsensitive("${locator1}", "${value1}");
+		selenium.mouseMove(${locator2});
 
-		selenium.waitForVisible("${locator2}");
-
-		selenium.mouseOver("${locator2}");
-
-		selenium.dragAndDropToObject("${locator1}", "${locator2}");
-	}
-
-	function dragAndDropWithMouseMove {
-		selenium.waitForElementPresent("${locator1}");
-
-		selenium.mouseOver("${locator1}");
-
-		selenium.waitForVisible("${locator1}");
-
-		selenium.mouseDown("${locator1}");
-
-		selenium.mouseMove("${locator2}");
-
-		selenium.mouseMoveAt("${locator2}", "0,0");
+		selenium.pause(3000);
 
 		selenium.mouseRelease();
 	}
 
-	function dragAtAndDrop {
-		selenium.dragAtAndDrop("${locator1}", "${locator2}", "${value1}");
+	function dragAndDropPortletToPortlet(locator2, locator1, value1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
+
+		selenium.mouseOver(${locator1});
+
+		selenium.waitForVisible(${locator1}, ${value1});
+
+		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
+
+		selenium.waitForVisible(${locator1}, ${value1});
+
+		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
+
+		selenium.mouseOver(${locator2});
+
+		selenium.mouseDown(${locator1});
+
+		selenium.mouseMove(${locator2});
+
+		selenium.pause(3000);
+
+		selenium.mouseRelease();
 	}
 
-	function javaScriptDragAndDropObjectBelowShortNestedObject {
-		selenium.waitForElementPresent("${locator1}");
+	function dragAndDropReorganizeObjects(locator2, locator1, position) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.waitForElementPresent("${locator2}");
+		selenium.mouseOver(${locator1});
+
+		selenium.waitForVisible(${locator1}, ${value1});
+
+		selenium.mouseDown(${locator1});
+
+		selenium.pause(1000);
+
+		selenium.mouseMove(${locator2});
+
+		selenium.mouseMoveAt(${locator2}, ${position});
+
+		selenium.pause(3000);
+
+		selenium.mouseRelease();
+	}
+
+	function dragAndDropToObject(locator2, locator1, value1) {
+		selenium.waitForVisible(${locator1}, ${value1});
+
+		selenium.mouseOver(${locator1});
+
+		selenium.waitForPartialTextCaseInsensitive(${locator1}, ${value1});
+
+		selenium.waitForVisible(${locator1}, ${value1});
+
+		selenium.mouseOver(${locator2});
+
+		selenium.dragAndDropToObject(${locator1}, ${locator2});
+	}
+
+	function dragAndDropWithMouseMove(locator2, locator1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
+
+		selenium.mouseOver(${locator1});
+
+		selenium.waitForVisible(${locator1}, ${value1});
+
+		selenium.mouseDown(${locator1});
+
+		selenium.mouseMove(${locator2});
+
+		selenium.mouseMoveAt(${locator2}, "0,0");
+
+		selenium.mouseRelease();
+	}
+
+	function dragAtAndDrop(locator2, locator1, value1) {
+		selenium.dragAtAndDrop(${locator1}, ${locator2}, ${value1});
+	}
+
+	function javaScriptDragAndDropObjectBelowShortNestedObject(locator2, locator1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
+
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
 		var javaScript = '''
 Simulate = {
@@ -171,13 +171,13 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
+		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
 	}
 
-	function javaScriptDragAndDropObjectBelowTallNestedObject {
-		selenium.waitForElementPresent("${locator1}");
+	function javaScriptDragAndDropObjectBelowTallNestedObject(locator2, locator1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.waitForElementPresent("${locator2}");
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
 		var javaScript = '''
 Simulate = {
@@ -212,13 +212,13 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
+		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
 	}
 
-	function javaScriptDragAndDropToBottom {
-		selenium.waitForElementPresent("${locator1}");
+	function javaScriptDragAndDropToBottom(locator2, locator1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.waitForElementPresent("${locator2}");
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
 		var javaScript = '''
 Simulate = {
@@ -249,13 +249,13 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
+		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
 	}
 
-	function javaScriptDragAndDropToObject {
-		selenium.waitForElementPresent("${locator1}");
+	function javaScriptDragAndDropToObject(locator2, locator1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.waitForElementPresent("${locator2}");
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
 		var javaScript = '''
 Simulate = {
@@ -286,13 +286,13 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
+		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
 	}
 
-	function javaScriptDragAndDropToUp {
-		selenium.waitForElementPresent("${locator1}");
+	function javaScriptDragAndDropToUp(locator2, locator1) {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.waitForElementPresent("${locator2}");
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
 		var javaScript = '''
 Simulate = {
@@ -327,7 +327,7 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		selenium.executeJavaScript("${javaScript}", "${locator1}", "${locator2}");
+		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
 	}
 
 }

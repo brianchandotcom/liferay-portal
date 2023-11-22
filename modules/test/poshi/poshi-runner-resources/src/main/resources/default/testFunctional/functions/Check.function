@@ -1,63 +1,63 @@
 @default = "clickAt"
 definition {
 
-	function checkNotVisible {
-		selenium.waitForElementPresent();
+	function checkNotVisible() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isNotChecked()) {
-			selenium.clickAt();
+		if (selenium.isNotChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 
-			selenium.pause("1000");
+			selenium.pause(1000);
 		}
 
-		selenium.assertChecked();
+		selenium.assertChecked(${locator1});
 	}
 
-	function checkToggleSwitch {
-		selenium.waitForElementPresent();
+	function checkToggleSwitch() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isNotChecked()) {
-			selenium.clickAt();
+		if (selenium.isNotChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 		}
 	}
 
-	function checkToggleSwitchAndPause {
-		selenium.waitForElementPresent();
+	function checkToggleSwitchAndPause() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isNotChecked()) {
-			selenium.clickAt();
+		if (selenium.isNotChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 		}
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		AssertChecked.assertCheckedNotVisible();
 	}
 
-	function clickAt {
-		selenium.waitForVisible();
+	function clickAt() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isNotChecked()) {
-			selenium.clickAt();
+		if (selenium.isNotChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 		}
 
 		AssertChecked.assertChecked();
 	}
 
-	function toggleSwitch {
-		selenium.waitForElementPresent();
+	function toggleSwitch() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		if (selenium.isNotChecked()) {
-			selenium.clickAt();
+		if (selenium.isNotChecked(${locator1})) {
+			selenium.clickAt(${locator1}, ${value1});
 		}
 
 		AssertElementPresent();

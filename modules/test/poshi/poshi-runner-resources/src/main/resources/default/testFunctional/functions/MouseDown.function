@@ -1,14 +1,14 @@
 @default = "mouseDown"
 definition {
 
-	function mouseDown {
-		selenium.mouseDown();
+	function mouseDown() {
+		selenium.mouseDown(${locator1});
 	}
 
-	function mouseDownAt {
-		selenium.waitForVisible();
+	function mouseDownAt(locator1, value1) {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseDownAt("${locator1}", "${value1}");
+		selenium.mouseDownAt(${locator1}, ${value1});
 	}
 
 }

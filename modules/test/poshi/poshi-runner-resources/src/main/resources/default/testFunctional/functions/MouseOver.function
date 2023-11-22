@@ -2,28 +2,28 @@
 @summary = "Mouse over '${locator1}'"
 definition {
 
-	function javaScriptMouseOver {
-		selenium.javaScriptMouseOver();
+	function javaScriptMouseOver() {
+		selenium.javaScriptMouseOver(${locator1});
 	}
 
-	function mouseOver {
-		selenium.waitForVisible();
+	function mouseOver() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 	}
 
-	function mouseOverInvisible {
-		selenium.waitForElementPresent();
+	function mouseOverInvisible() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 	}
 
-	function mouseOverNotVisible {
-		selenium.waitForElementPresent();
+	function mouseOverNotVisible() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, ${value1});
 	}
 
 }

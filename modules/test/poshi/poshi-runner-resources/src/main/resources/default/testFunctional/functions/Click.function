@@ -2,74 +2,74 @@
 @summary = "Click on '${locator1}'"
 definition {
 
-	function click {
-		selenium.waitForVisible();
+	function click() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.click();
+		selenium.click(${locator1});
 	}
 
-	function clickAt {
-		selenium.waitForVisible();
+	function clickAt(locator1, value1) {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.clickAt("${locator1}", "${value1}");
+		selenium.clickAt(${locator1}, ${value1});
 	}
 
-	function clickAtNotVisible {
-		selenium.waitForElementPresent();
+	function clickAtNotVisible() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.clickAt();
+		selenium.clickAt(${locator1}, ${value1});
 	}
 
-	function clickNoMouseOver {
-		selenium.waitForVisible();
+	function clickNoMouseOver() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.click();
+		selenium.click(${locator1});
 	}
 
-	function clickNoMouseOverNoWaitForVisible {
-		selenium.click();
+	function clickNoMouseOverNoWaitForVisible() {
+		selenium.click(${locator1});
 	}
 
-	function clickNoWaitForVisible {
-		selenium.mouseOver();
+	function clickNoWaitForVisible() {
+		selenium.mouseOver(${locator1});
 
-		selenium.click();
+		selenium.click(${locator1});
 	}
 
-	function javaScriptClick {
-		selenium.javaScriptClick();
+	function javaScriptClick() {
+		selenium.javaScriptClick(${locator1});
 	}
 
-	function mouseDownMouseUp {
-		selenium.waitForElementPresent();
+	function mouseDownMouseUp() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseDown();
+		selenium.mouseDown(${locator1});
 
-		selenium.mouseUp();
+		selenium.mouseUp(${locator1});
 	}
 
-	function mouseOverClick {
-		selenium.waitForElementPresent();
+	function mouseOverClick() {
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.click();
+		selenium.click(${locator1});
 	}
 
-	function pauseClickAt {
-		selenium.pause("1000");
+	function pauseClickAt() {
+		selenium.pause(1000);
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
 		Click.clickAt();
 	}

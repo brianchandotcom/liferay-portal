@@ -1,34 +1,34 @@
 @default = "selectWindow"
 definition {
 
-	function selectPopUp {
-		selenium.pause("3000");
+	function selectPopUp() {
+		selenium.pause(3000);
 
-		selenium.selectPopUp();
+		selenium.selectPopUp(${value1});
 	}
 
-	function selectWindow {
-		selenium.pause("3000");
+	function selectWindow() {
+		selenium.pause(3000);
 
-		selenium.selectWindow();
+		selenium.selectWindow(${value1});
 	}
 
-	function selectWindowNoSPARefresh {
-		selenium.pause("3000");
+	function selectWindowNoSPARefresh() {
+		selenium.pause(3000);
 
-		selenium.selectWindow();
+		selenium.selectWindow(${value1});
 	}
 
-	function selectWindowTopNoSPARefresh {
-		selenium.pause("3000");
+	function selectWindowTopNoSPARefresh() {
+		selenium.pause(3000);
 
 		selenium.selectWindow("null");
 	}
 
-	function waitForSelectPopUp {
+	function waitForSelectPopUp() {
 		selenium.waitForPopUp("", "");
 
-		selenium.selectPopUp();
+		selenium.selectPopUp(${value1});
 	}
 
 }

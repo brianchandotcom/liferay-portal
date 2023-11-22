@@ -1,28 +1,28 @@
 @default = "doubleClick"
 definition {
 
-	function doubleClick {
-		selenium.waitForVisible();
+	function doubleClick() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.doubleClick();
+		selenium.doubleClick(${locator1});
 	}
 
-	function doubleClickAt {
-		selenium.waitForVisible();
+	function doubleClickAt() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.doubleClickAt();
+		selenium.doubleClickAt(${locator1}, ${value1});
 	}
 
-	function javaScriptDoubleClick {
-		selenium.waitForVisible();
+	function javaScriptDoubleClick() {
+		selenium.waitForVisible(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.javaScriptDoubleClick();
+		selenium.javaScriptDoubleClick(${locator1});
 	}
 
 }

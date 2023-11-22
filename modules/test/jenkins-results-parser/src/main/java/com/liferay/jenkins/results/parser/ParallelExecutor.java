@@ -395,6 +395,8 @@ public class ParallelExecutor<T> {
 								if (_parallelExecutor._failOnError) {
 									throw new RuntimeException(exception);
 								}
+
+								exception.printStackTrace();
 							}
 
 							Iterator<Callable<T>> iterator =
@@ -430,22 +432,25 @@ public class ParallelExecutor<T> {
 				}
 			}
 			catch (Exception exception) {
-				for (Task<T> processorTask : _runningTasks) {
-					Future<T> future = processorTask.getFuture();
+				if (_parallelExecutor._failOnError) {
+					for (Task<T> processorTask : _runningTasks) {
+						Future<T> future = processorTask.getFuture();
 
-					if ((future != null) && !future.isCancelled()) {
-						if (future.isDone()) {
+						if ((future != null) && !future.isCancelled()) {
+							if (!future.isDone()) {
+								future.cancel(true);
+							}
+
 							_completedTasks.add(processorTask);
 						}
-						else {
-							future.cancel(true);
-						}
 					}
+
+					_runningTasks.removeAll(_completedTasks);
+
+					throw exception;
 				}
 
-				throw exception;
-			}
-			finally {
+				exception.printStackTrace();
 			}
 
 			System.out.println(

@@ -597,8 +597,9 @@ const NotificationsInfo = ({
 								<RecipientTypeComponent
 									defaultScriptLanguage={
 										selectedItem.data.notifications
-											?.recipients?.[notificationIndex]
-											?.scriptLanguage
+											?.recipients?.[
+											notificationIndex
+										]?.[0]?.scriptLanguage
 									}
 									handleClickCapture={(scriptLanguage) =>
 										setSelectedItem((previousItem) => {
@@ -620,8 +621,9 @@ const NotificationsInfo = ({
 									index={index}
 									inputValue={
 										selectedItem.data.notifications
-											?.recipients?.[notificationIndex]
-											?.script?.[0]
+											?.recipients?.[
+											notificationIndex
+										]?.[0]?.script?.[0]
 									}
 									key={`section-${props.identifier}`}
 									notificationIndex={notificationIndex}

@@ -1082,7 +1082,12 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");
+		if (${entryValue} == "") {
+			var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'])]['id']");
+		}
+		else {
+			var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");
+		}
 
 		return ${entryId};
 	}

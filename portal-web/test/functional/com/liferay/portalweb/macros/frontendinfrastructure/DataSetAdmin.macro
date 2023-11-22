@@ -1037,4 +1037,56 @@ definition {
 		}
 	}
 
+	@summary = "Default summary"
+	macro selectPreSelectedValue {
+
+		Click(locator1 = "DataSet#PRESELECT_VALUE_INPUT");
+
+		Click(locator1 = "DataSet#PRESELECT_VALUE_ITEM",
+		key_value = "${preSelectedValue}");
+	}
+
+	@summary = "Default summary"
+	macro selectRadioButtonOption {
+		Click(locator1 = "DataSet#RADIO_BUTTON_OPTION",
+			key_optionName = "${optionName}");
+	}
+
+	@summary = "Default summary"
+	macro chooseFilterType {
+		DataSetAdmin.goToTab(tabName = "Filters");
+
+		LexiconEntry.gotoAdd();
+
+        Click(
+			key_fieldName = "${filterType}",
+            locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+	}
+
+	@summary = "Default summary"
+	macro selectFilterBy {
+		Click(
+			dropdownLabel = "Select",
+            locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+        DropdownMenuItem.click(menuItem = "${filterByField}");
+	}
+
+	macro editFragmentFilter {
+		Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
+
+		AssertVisible(locator1 = "FrontendDataSet#FILTER_OPTION",
+			key_filter = "${filterName}");
+		
+		Click(locator1 = "FrontendDataSet#FILTER_OPTION",
+			key_filter = "${filterName}");
+
+		Click(locator1 = "DataSet#RADIO_BUTTON_OPTION",
+				key_optionName = "${newFilterValue}");
+
+		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
+	}
+
+
+
 }

@@ -2,13 +2,13 @@
 definition {
 
 	function assertVisible() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.assertVisible(${locator1});
 	}
 
 	function assertVisibleNoSPAWait() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.assertVisible(${locator1});
 	}

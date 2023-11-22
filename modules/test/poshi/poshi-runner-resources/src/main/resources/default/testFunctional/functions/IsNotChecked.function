@@ -2,15 +2,15 @@
 definition {
 
 	function isNotChecked() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.isNotChecked(${locator1});
 	}
 
 	function isNotCheckedNotVisible() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.isNotChecked(${locator1});
 	}

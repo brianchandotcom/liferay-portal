@@ -2,7 +2,7 @@
 definition {
 
 	function waitForEditable() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForEditable(${locator1});
 	}

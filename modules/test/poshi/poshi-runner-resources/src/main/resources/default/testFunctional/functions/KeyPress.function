@@ -14,7 +14,7 @@ definition {
 	}
 
 	function keyPressCKEditorWaitForCKEditor() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.pause(1000);
 

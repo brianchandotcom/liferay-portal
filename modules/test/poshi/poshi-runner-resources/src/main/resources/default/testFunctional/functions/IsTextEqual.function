@@ -2,17 +2,17 @@
 definition {
 
 	function isPartialText() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.isPartialTextCaseInsensitive(${locator1}, ${value1});
 	}
 
 	function isText() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.isTextCaseInsensitive(${locator1}, ${value1});
 	}
@@ -27,9 +27,9 @@ definition {
 	}
 
 	function isValue() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.isValue(${locator1}, ${value1});
 	}

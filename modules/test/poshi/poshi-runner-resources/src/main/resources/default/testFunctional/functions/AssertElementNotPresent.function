@@ -3,7 +3,7 @@
 definition {
 
 	function assertElementNotPresent() {
-		selenium.waitForElementNotPresent(${locator1}, ${value1});
+		selenium.waitForElementNotPresent(${locator1}, "true");
 
 		selenium.assertElementNotPresent(${locator1});
 	}

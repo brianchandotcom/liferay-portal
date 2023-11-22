@@ -2,7 +2,7 @@
 definition {
 
 	function checkNotVisible() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
@@ -16,7 +16,7 @@ definition {
 	}
 
 	function checkToggleSwitch() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
@@ -26,7 +26,7 @@ definition {
 	}
 
 	function checkToggleSwitchAndPause() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
@@ -40,7 +40,7 @@ definition {
 	}
 
 	function clickAt() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
@@ -52,7 +52,7 @@ definition {
 	}
 
 	function toggleSwitch() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 

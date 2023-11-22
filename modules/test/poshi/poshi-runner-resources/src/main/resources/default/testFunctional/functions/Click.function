@@ -3,7 +3,7 @@
 definition {
 
 	function click() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
@@ -11,7 +11,7 @@ definition {
 	}
 
 	function clickAt(locator1, value1) {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
@@ -19,7 +19,7 @@ definition {
 	}
 
 	function clickAtNotVisible() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
@@ -27,7 +27,7 @@ definition {
 	}
 
 	function clickNoMouseOver() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.click(${locator1});
 	}
@@ -47,9 +47,9 @@ definition {
 	}
 
 	function mouseDownMouseUp() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseDown(${locator1});
 
@@ -57,11 +57,11 @@ definition {
 	}
 
 	function mouseOverClick() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.click(${locator1});
 	}

@@ -54,11 +54,11 @@ definition {
 	}
 
 	function assertTextClickAtWaitForLastScript() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		AssertClick.assertTextClickAt();
 
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 	}
 
 	function assertTextClickCaseSensitive() {

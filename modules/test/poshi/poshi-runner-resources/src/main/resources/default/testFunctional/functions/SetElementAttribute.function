@@ -2,7 +2,7 @@
 definition {
 
 	function setElementAttribute(locator1, value1, attribute) {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		var javaScript = '''
 var element = document.evaluate("${locator1}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;

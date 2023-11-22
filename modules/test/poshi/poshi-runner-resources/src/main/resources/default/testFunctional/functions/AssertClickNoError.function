@@ -20,7 +20,7 @@ definition {
 	}
 
 	function assertTextClick() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
@@ -32,7 +32,7 @@ definition {
 	}
 
 	function assertValueClick() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForValue(${locator1}, ${value1});
 

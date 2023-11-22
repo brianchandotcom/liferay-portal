@@ -4,7 +4,7 @@ definition {
 
 	@summary = "Assert that '${locator1}' contains the value '${value1}'"
 	function assertPartialText() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForPartialTextCaseInsensitive(${locator1}, ${value1});
 
@@ -12,7 +12,7 @@ definition {
 	}
 
 	function assertPartialTextAceEditor() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForPartialTextAceEditor(${locator1}, ${value1});
 
@@ -20,7 +20,7 @@ definition {
 	}
 
 	function assertText() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
@@ -28,7 +28,7 @@ definition {
 	}
 
 	function assertTextCaseSensitive() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForText(${locator1}, ${value1});
 
@@ -45,7 +45,7 @@ definition {
 	}
 
 	function assertValue() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.waitForValue(${locator1}, ${value1});
 

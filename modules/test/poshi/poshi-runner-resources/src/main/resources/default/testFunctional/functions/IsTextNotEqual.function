@@ -2,13 +2,13 @@
 definition {
 
 	function isNotText() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.isNotText(${locator1}, ${value1});
 	}
 
 	function isNotValue() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.isNotValue(${locator1}, ${value1});
 	}

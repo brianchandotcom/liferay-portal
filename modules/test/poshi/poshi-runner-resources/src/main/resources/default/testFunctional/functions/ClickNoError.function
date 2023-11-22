@@ -3,7 +3,7 @@
 definition {
 
 	function click() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseOver(${locator1});
 
@@ -11,7 +11,7 @@ definition {
 	}
 
 	function clickNoMouseOver() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.click(${locator1});
 	}

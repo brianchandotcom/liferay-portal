@@ -6,7 +6,7 @@ definition {
 	}
 
 	function mouseUpAt(locator1, value1) {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.mouseUpAt(${locator1}, ${value1});
 	}

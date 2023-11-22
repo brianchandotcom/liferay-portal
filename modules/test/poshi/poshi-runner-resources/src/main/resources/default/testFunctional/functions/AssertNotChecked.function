@@ -2,19 +2,19 @@
 definition {
 
 	function assertNotChecked() {
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible(${locator1}, "true");
 
 		selenium.assertNotChecked(${locator1});
 	}
 
 	function assertNotCheckedHiddenToggleSwitch(locator1) {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.assertNotChecked("xpath=(${locator1})/../../input");
 	}
 
 	function assertNotCheckedNotVisible() {
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent(${locator1}, "true");
 
 		selenium.assertNotChecked(${locator1});
 	}

@@ -11,7 +11,12 @@ definition {
 	var testSiteURL = "marketplace-site";
 
 	setUp {
-		MP2Configuration.marketplaceSetUp();
+
+		// This addition should be reverted when the issue ISSD-1572 is completed and the macro HeadlessSite.addSite() is usable.
+
+		MP2Configuration.marketplaceSetUp(
+			clientExtensionDeploy = "true",
+			viaFrontEnd = "true");
 	}
 
 	tearDown {

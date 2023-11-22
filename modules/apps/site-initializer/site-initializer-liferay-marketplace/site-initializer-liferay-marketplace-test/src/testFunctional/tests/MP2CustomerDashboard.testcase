@@ -14,7 +14,12 @@ definition {
 
 	setUp {
 		task ("Set up instance and create a new Marketplace Site") {
-			MP2Configuration.marketplaceSetUp(clientExtensionDeploy = "true");
+
+			// This addition should be reverted when the issue ISSD-1572 is completed and the macro HeadlessSite.addSite() is usable.
+
+			MP2Configuration.marketplaceSetUp(
+				clientExtensionDeploy = "true",
+				viaFrontEnd = "true");
 		}
 
 		task ("Create a New Account and assign a user") {

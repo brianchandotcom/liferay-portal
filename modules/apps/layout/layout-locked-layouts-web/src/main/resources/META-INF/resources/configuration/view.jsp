@@ -73,3 +73,19 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		</clay:content-col>
 	</clay:content-row>
 </clay:sheet-section>
+
+<script>
+	const numericInput = document.getElementById(
+		'<portlet:namespace />autosaveMinutes'
+	);
+
+	if (numericInput) {
+		const keysNotAllowed = new Set(['e', '-']);
+
+		numericInput.addEventListener('keydown', (event) => {
+			if (keysNotAllowed.has(event.key)) {
+				event.preventDefault();
+			}
+		});
+	}
+</script>

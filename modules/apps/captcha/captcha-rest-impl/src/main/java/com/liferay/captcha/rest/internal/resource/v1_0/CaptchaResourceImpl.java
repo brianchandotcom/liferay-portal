@@ -14,7 +14,6 @@ import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Base64;
 
@@ -22,8 +21,6 @@ import java.io.ByteArrayOutputStream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.NotAcceptableException;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,30 +65,14 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 	}
 
 	@Override
-	public CaptchaForm postSimpleCaptcha(CaptchaForm captchaForm)
+	public void postSimpleCaptcha(CaptchaForm captchaForm)
 		throws Exception {
 
 		_checkSimpleCaptchaConfiguration();
 
-		try {
-			CaptchaTokenUtil.checkAnswer(
-				contextCompany, captchaForm.getCaptchaToken(),
-				captchaForm.getAnswer());
-		}
-		catch (CaptchaTextException captchaTextException) {
-			throw new NotAcceptableException(
-				captchaTextException.getMessage(),
-				Response.status(
-					Response.Status.NOT_ACCEPTABLE
-				).entity(
-					getSimpleCaptcha()
-				).build());
-		}
-		catch (Exception exception) {
-			throw new BadRequestException(exception.getMessage());
-		}
-
-		return captchaForm;
+		CaptchaTokenUtil.checkAnswer(
+			contextCompany, captchaForm.getCaptchaToken(),
+			captchaForm.getAnswer());
 	}
 
 	private void _checkSimpleCaptchaConfiguration() throws Exception {

@@ -84,10 +84,6 @@ public class DisplayPageDisplayContext {
 	public boolean existsMappedContentType(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-195263")) {
-			return true;
-		}
-
 		return _isContentTypeInMap(
 			_getClassNameIdsMap(), layoutPageTemplateEntry);
 	}
@@ -401,10 +397,6 @@ public class DisplayPageDisplayContext {
 
 	public boolean isAllowedMappedContentType(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-195263")) {
-			return true;
-		}
 
 		return _isContentTypeInMap(
 			_getAllowedClassNameIdsMap(), layoutPageTemplateEntry);

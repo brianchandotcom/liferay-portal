@@ -106,8 +106,6 @@ definition {
 	@description = "This is a test for LPS-192724. Using Keyboard navigation it is possible to copy an existing Display Page Template from the ellipsis menu of the card."
 	@priority = 4
 	test CopyDisplayPageTemplateViaKeyboard {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a page creator has a published display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

@@ -63,17 +63,13 @@ const ERROR_INTERACTION_OPTIONS = [
 	},
 ];
 
-let SUCCESS_INTERACTION_OPTIONS = ERROR_INTERACTION_OPTIONS;
-
-if (Liferay.FeatureFlags['LPS-195263']) {
-	SUCCESS_INTERACTION_OPTIONS = [
-		...ERROR_INTERACTION_OPTIONS,
-		{
-			label: Liferay.Language.get('go-to-entry-display-page'),
-			value: INTERACTION_DISPLAY_PAGE,
-		},
-	];
-}
+const SUCCESS_INTERACTION_OPTIONS = [
+	...ERROR_INTERACTION_OPTIONS,
+	{
+		label: Liferay.Language.get('go-to-entry-display-page'),
+		value: INTERACTION_DISPLAY_PAGE,
+	},
+];
 
 const INTERACTION_DATA = {
 	error: {

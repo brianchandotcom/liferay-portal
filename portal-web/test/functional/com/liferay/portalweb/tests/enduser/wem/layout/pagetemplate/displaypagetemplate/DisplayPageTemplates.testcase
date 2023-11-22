@@ -151,8 +151,6 @@ definition {
 	@description = "This is a test for LPS-193213. It is possible to access the configuration of an existing Display Page Template from the ellipsis menu of the card."
 	@priority = 4
 	test ConfigureDisplayPageTemplateInPageTemplatesAdmin {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a user has a display page template") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -203,8 +201,6 @@ definition {
 	@description = "This is a test for LPS-191986. Can configure friendly URL for default display page template."
 	@priority = 3
 	test ConfigureFriendlyURLOfDefaultDisplayPageTemplate {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a user has a default display page template") {
 			PageEditor.publish();
 
@@ -281,8 +277,6 @@ definition {
 	@description = "This is a test for LPS-191986. Can configure friendly URL for non-default display page template."
 	@priority = 4
 	test ConfigureFriendlyURLOfDisplayPageTemplate {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("When the user accesses to the configuration page of display page template") {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 		}
@@ -484,7 +478,6 @@ definition {
 	@description = "This is a test for LPS-192724. It is possible to copy an existing Display Page Template from the ellipsis menu of the card."
 	@priority = 5
 	test CopyDisplayPageTemplate {
-		property custom.properties = "feature.flag.LPS-195263=true";
 		property portal.acceptance = "true";
 
 		task ("When the page creator navigates to the Display Page Templates admin") {
@@ -575,8 +568,6 @@ definition {
 	@description = "This is a test for LPS-192724. When copying a published DPT, the copy is the same as the published one. The copy of a DPT is the same as the last version."
 	@priority = 4
 	test CopyDisplayPageTemplateWithContent {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a page creator has a published display page template with content") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -632,8 +623,6 @@ definition {
 	@description = "This is a test for LPS-192724. The site administrator could copy a display page template with mapping."
 	@priority = 4
 	test CopyDisplayPageTemplateWithMapping {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a page creator has a published display page template with mapping") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -674,8 +663,6 @@ definition {
 	@description = "This is a test for LPS-192724. The site administrator could copy a display page template with permissions."
 	@priority = 4
 	test CopyDisplayPageTemplateWithPermissions {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a page creator has a published display page template with permissions") {
 			PageEditor.publish();
 
@@ -1056,8 +1043,6 @@ definition {
 	@description = "This is a test for LPS-192724. The copied pages are now separate entities."
 	@priority = 4
 	test ViewCopyOfDisplayPageTemplateAndOriginCannotAffectEachOther {
-		property custom.properties = "feature.flag.LPS-195263=true";
-
 		task ("Given a page creator has a copy of display page template") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

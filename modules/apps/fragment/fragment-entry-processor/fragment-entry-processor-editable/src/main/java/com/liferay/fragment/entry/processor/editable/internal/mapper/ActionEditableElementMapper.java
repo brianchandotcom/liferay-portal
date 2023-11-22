@@ -19,7 +19,6 @@ import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.info.type.WebURL;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -151,8 +150,7 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			return;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
-			interaction.equals(
+		if (interaction.equals(
 				ActionEditableElementConstants.INTERACTION_DISPLAY_PAGE)) {
 
 			if (!resultType.equals("success")) {

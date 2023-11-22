@@ -25,7 +25,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -113,7 +112,6 @@ public class DisplayPageActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() ->
-							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
 							(_allowedMappedContentType ||
 							 !_existsMappedContentType) &&
 							hasUpdatePermission,
@@ -149,9 +147,7 @@ public class DisplayPageActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.addContext(
-						() ->
-							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
-							hasUpdatePermission,
+						() -> hasUpdatePermission,
 						_getCopyDisplayPageWithPermissionsActionUnsafeConsumer()
 					).add(
 						() ->
@@ -165,9 +161,7 @@ public class DisplayPageActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() ->
-							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
-							hasUpdatePermission,
+						() -> hasUpdatePermission,
 						_getConfigureDisplayPageActionUnsafeConsumer()
 					).add(
 						() -> LayoutPageTemplateEntryPermission.contains(

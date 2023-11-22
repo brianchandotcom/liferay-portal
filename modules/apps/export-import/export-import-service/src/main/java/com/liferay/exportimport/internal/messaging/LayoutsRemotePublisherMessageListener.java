@@ -11,6 +11,9 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -26,7 +29,11 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -101,8 +108,29 @@ public class LayoutsRemotePublisherMessageListener
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		Destination destination = _destinationFactory.createDestination(
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				DestinationNames.LAYOUTS_REMOTE_PUBLISHER));
+
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination,
+			MapUtil.singletonDictionary(
+				"destination.name", destination.getName()));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsRemotePublisherMessageListener.class);
+
+	@Reference
+	private DestinationFactory _destinationFactory;
 
 	@Reference
 	private ExportImportConfigurationLocalService
@@ -112,6 +140,8 @@ public class LayoutsRemotePublisherMessageListener
 		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.2))"
 	)
 	private Release _release;
+
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 	@Reference
 	private Staging _staging;

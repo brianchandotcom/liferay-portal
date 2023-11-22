@@ -44,3 +44,13 @@ repositories {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
 }
+
+task fatJar(type: Jar) {
+        manifest {
+                attributes 'Main-Class': 'com.liferay.learn.Main'
+        }
+        baseName = project.name + '-all'
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+        with jar
+}

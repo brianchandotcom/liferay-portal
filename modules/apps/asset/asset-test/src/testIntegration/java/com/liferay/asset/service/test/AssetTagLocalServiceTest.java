@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.exception.AssetTagNameException;
 import com.liferay.asset.kernel.exception.DuplicateTagException;
+import com.liferay.asset.kernel.exception.NoSuchTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -51,6 +52,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
@@ -374,6 +376,36 @@ public class AssetTagLocalServiceTest {
 		_getTags("Tag1", Arrays.copyOfRange(tagNames, 0, 1), 0, 1);
 	}
 
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testGetTagWithCaseSensitive() throws PortalException {
+		AssetTag expectedAssetTag1 = _assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
+			_serviceContext);
+
+		AssetTag expectedAssetTag2 = _assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "TAG",
+			_serviceContext);
+
+		AssetTag actualAssetTag1 = _assetTagLocalService.getTag(
+			_group.getGroupId(), "tag");
+
+		Assert.assertNotNull(actualAssetTag1);
+		Assert.assertEquals(
+			expectedAssetTag1.getTagId(), actualAssetTag1.getTagId());
+
+		AssetTag actualAssetTag2 = _assetTagLocalService.getTag(
+			_group.getGroupId(), "TAG");
+
+		Assert.assertNotNull(actualAssetTag2);
+		Assert.assertEquals(
+			expectedAssetTag2.getTagId(), actualAssetTag2.getTagId());
+
+		expectedException.expect(NoSuchTagException.class);
+
+		_assetTagLocalService.getTag(_group.getGroupId(), "Tag");
+	}
+
 	@Test
 	public void testIncrementAssetCountWhenUpdatingAssetEntry()
 		throws PortalException {
@@ -446,6 +478,9 @@ public class AssetTagLocalServiceTest {
 
 		Assert.assertEquals(tagName, actualAssetTag.getName());
 	}
+
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	private void _getTags(String name, String[] expectedTagNames) {
 		_getTags(name, expectedTagNames, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

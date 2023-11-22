@@ -1,0 +1,69 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Comment";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Comments Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Comments Page",
+			widgetName = "Page Comments");
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PageComment.tearDownPG(pageName = "Page Comments Page");
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "This ensures that you can reply to loaded comments."
+	@priority = 4
+	test CanReplyToLoadedComment {
+		task ("Given the proprety is set to 1 and the comments widget is added to the comments page") {
+			property custom.properties = "discussion.comments.delta.value=1";
+
+			Navigator.gotoPage(pageName = "Page Comments Page");
+		}
+
+		task ("When adding a comment and replying to it after clicking more comments button ") {
+			Comments.addPG(entryComment = "This is a comment");
+
+			AssertClick(
+				key_text = "More Comments",
+				locator1 = "Button#ANY",
+				value1 = "More Comments");
+
+			Comments.replyToComment(commentReply = "This is a reply comment");
+		}
+
+		task ("Then assert that both the comment and the reply can be viewed") {
+			Click(
+				key_text = "More Comments",
+				locator1 = "Button#ANY");
+
+			AssertVisible(
+				key_entryComment = "This is a comment",
+				locator1 = "Comments#COMMENT_BODY_SPECIFIC");
+
+			AssertVisible(
+				key_entryComment = "This is a reply comment",
+				locator1 = "Comments#COMMENT_BODY_SPECIFIC");
+		}
+	}
+
+}

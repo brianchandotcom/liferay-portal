@@ -41,10 +41,6 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
-		if (!sourceFormatterArgs.isFormatCurrentBranch()) {
-			return content;
-		}
-
 		if (_hasMajorVersionBump(absolutePath, sourceFormatterArgs)) {
 			_checkCommitMessages(fileName, sourceFormatterArgs);
 		}

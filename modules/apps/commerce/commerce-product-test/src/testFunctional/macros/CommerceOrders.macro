@@ -934,7 +934,7 @@ definition {
 			for (var eligiblePaymentMethod : list ${eligiblePaymentMethods}) {
 				AssertElementPresent(
 					key_radioOption = ${eligiblePaymentMethod},
-					locator1 = "CommerceEntry#RADIO_BUTTON");
+					locator1 = "CommerceEntry#RADIO_BUTTON_SPECIFIC");
 			}
 		}
 
@@ -942,13 +942,13 @@ definition {
 			for (var notEligiblePaymentMethod : list ${notEligiblePaymentMethods}) {
 				AssertElementNotPresent(
 					key_radioOption = ${notEligiblePaymentMethod},
-					locator1 = "CommerceEntry#RADIO_BUTTON");
+					locator1 = "CommerceEntry#RADIO_BUTTON_SPECIFIC");
 			}
 		}
 
 		Click.clickAtNotVisible(
 			key_radioOption = ${paymentMethod},
-			locator1 = "CommerceEntry#RADIO_BUTTON");
+			locator1 = "CommerceEntry#RADIO_BUTTON_SPECIFIC");
 
 		Click(locator1 = "Button#MODAL_IFRAME_FOOTER_SUBMIT");
 

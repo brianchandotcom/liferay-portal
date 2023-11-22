@@ -142,7 +142,7 @@ export function RightSidebarObjectDefinitionDetails({
 
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [selectedObjectDefinitionNode?.id]);
 
 	const onSubmit = async (
 		editedObjectDefinition?: Partial<ObjectDefinition>

@@ -51,10 +51,10 @@ public interface CETFactory {
 		throws PortalException;
 
 	/**
-	 * Create a partial CET object from a {@link PortletRequest} object.
+	 * Create a CET object from a {@link PortletRequest} object.
 	 *
-	 * This method is used to create temporary CET objects to be used when
-	 * rendering the administration UI.
+	 * This method is used to createCET objects to be used when rendering the
+	 * administration UI.
 	 *
 	 * @review
 	 */

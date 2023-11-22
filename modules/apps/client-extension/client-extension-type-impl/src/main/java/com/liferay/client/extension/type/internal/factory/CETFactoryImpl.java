@@ -17,11 +17,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -190,11 +193,24 @@ public class CETFactoryImpl implements CETFactory {
 
 		CETImplFactory cetImplFactory = _getCETImplFactory(type);
 
-		return cetImplFactory.create(
-			StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.BLANK, null,
-			StringPool.BLANK, null, false, StringPool.BLANK,
-			WorkflowConstants.STATUS_APPROVED,
-			cetImplFactory.getUnicodeProperties(portletRequest));
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			return cetImplFactory.create(
+				StringPool.BLANK, themeDisplay.getCompanyId(), null,
+				ParamUtil.getString(portletRequest, "description"),
+				ParamUtil.getString(portletRequest, "externalReferenceCode"),
+				null, ParamUtil.getString(portletRequest, "name"),
+				PropertiesUtil.load(
+					ParamUtil.getString(portletRequest, "properties")),
+				false, ParamUtil.getString(portletRequest, "sourceCodeURL"),
+				WorkflowConstants.STATUS_APPROVED,
+				cetImplFactory.getUnicodeProperties(portletRequest));
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
 	}
 
 	@Override

@@ -5,11 +5,11 @@
 
 package com.liferay.client.extension.type.factory;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.portlet.PortletRequest;
@@ -23,45 +23,42 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CETImplFactory<T extends CET> {
 
 	/**
-	 * Create a CET object of type T from a {@link ClientExtensionEntry} object.
+	 * Construct a {@link CET} of the type designated by the factory
+	 * implementation.
 	 *
-	 * This method is used when a client extension is configured from the
-	 * {@link com.liferay.client.extension.service.ClientExtensionEntryService}.
-	 *
-	 * @review
-	 */
-	public T create(ClientExtensionEntry clientExtensionEntry)
-		throws PortalException;
-
-	/**
-	 * Create a partial CET object of type T from a {@link PortletRequest}
-	 * object.
-	 *
-	 * This method is used to create temporary CET objects of type T to be used
-	 * when rendering the administration UI.
-	 *
-	 * @review
-	 */
-	public T create(PortletRequest portletRequest) throws PortalException;
-
-	/**
-	 * Create a CET object of type T from given values.
-	 *
-	 * This method is used when a client extension is deployed from a Liferay
-	 * Workspace.
+	 * The implementation of this method for a given type T should simply
+	 * invoke T's constructor.
 	 *
 	 * @review
 	 */
 	public T create(
-			String baseURL, long buildTimestamp, long companyId,
-			String description, String externalReferenceCode, String name,
-			Properties properties, String sourceCodeURL,
-			UnicodeProperties typeSettingsUnicodeProperties)
-		throws PortalException;
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties);
 
-	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
-			UnicodeProperties oldTypeSettingsUnicodeProperties)
-		throws PortalException;
+	/**
+	 * Construct the typeSettingsUnicodeProperties field of the type designated
+	 * by the factory implementation.
+	 *
+	 * The implementation of this method should extract the relevant values from
+	 * the {@link PortletRequest}'s parameters and return them as a
+	 * {@link UnicodeProperties} object.
+	 *
+	 * @review
+	 */
+	public UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest);
+
+	/**
+	 * Validate if newCET has valid values and thus can be stored safely.
+	 *
+	 * @param newCET the CET object to validate
+	 * @param oldCET the previous state of the CET object or null on creation
+	 * @throws PortalException If any field has an invalid value
+	 *
+	 * @review
+	 */
+	public void validate(T newCET, T oldCET) throws PortalException;
 
 }

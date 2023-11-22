@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.CustomElementCET;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.CustomElementCETImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -30,10 +31,10 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class CustomElementCETImplFactoryImpl
-	extends BaseCETImplFactory<CustomElementCET> {
+	implements CETImplFactory<CustomElementCET> {
 
 	@Override
-	protected CustomElementCET create(
+	public CustomElementCET create(
 		String baseURL, long companyId, Date createDate, String description,
 		String externalReferenceCode, Date modifiedDate, String name,
 		Properties properties, boolean readOnly, String sourceCodeURL,
@@ -46,7 +47,7 @@ public class CustomElementCETImplFactoryImpl
 	}
 
 	@Override
-	protected UnicodeProperties getUnicodeProperties(
+	public UnicodeProperties getUnicodeProperties(
 		PortletRequest portletRequest) {
 
 		return UnicodePropertiesBuilder.create(
@@ -78,7 +79,7 @@ public class CustomElementCETImplFactoryImpl
 	}
 
 	@Override
-	protected void validate(
+	public void validate(
 			CustomElementCET newCustomElementCET,
 			CustomElementCET oldCustomElementCET)
 		throws PortalException {

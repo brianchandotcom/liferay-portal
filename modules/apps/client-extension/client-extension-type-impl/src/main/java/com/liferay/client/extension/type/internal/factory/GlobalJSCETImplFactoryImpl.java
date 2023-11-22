@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.GlobalJSCET;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.GlobalJSCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -22,11 +23,10 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class GlobalJSCETImplFactoryImpl
-	extends BaseCETImplFactory<GlobalJSCET> {
+public class GlobalJSCETImplFactoryImpl implements CETImplFactory<GlobalJSCET> {
 
 	@Override
-	protected GlobalJSCET create(
+	public GlobalJSCET create(
 		String baseURL, long companyId, Date createDate, String description,
 		String externalReferenceCode, Date modifiedDate, String name,
 		Properties properties, boolean readOnly, String sourceCodeURL,
@@ -39,7 +39,7 @@ public class GlobalJSCETImplFactoryImpl
 	}
 
 	@Override
-	protected UnicodeProperties getUnicodeProperties(
+	public UnicodeProperties getUnicodeProperties(
 		PortletRequest portletRequest) {
 
 		return UnicodePropertiesBuilder.create(
@@ -50,8 +50,7 @@ public class GlobalJSCETImplFactoryImpl
 	}
 
 	@Override
-	protected void validate(
-			GlobalJSCET newGlobalJSCET, GlobalJSCET oldGlobalJSCET)
+	public void validate(GlobalJSCET newGlobalJSCET, GlobalJSCET oldGlobalJSCET)
 		throws PortalException {
 
 		String url = newGlobalJSCET.getURL();

@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.FDSFilterCET;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.FDSFilterCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,10 +24,10 @@ import javax.portlet.PortletRequest;
  * @author Bryce Osterhaus
  */
 public class FDSFilterCETImplFactoryImpl
-	extends BaseCETImplFactory<FDSFilterCET> {
+	implements CETImplFactory<FDSFilterCET> {
 
 	@Override
-	protected FDSFilterCET create(
+	public FDSFilterCET create(
 		String baseURL, long companyId, Date createDate, String description,
 		String externalReferenceCode, Date modifiedDate, String name,
 		Properties properties, boolean readOnly, String sourceCodeURL,
@@ -39,7 +40,7 @@ public class FDSFilterCETImplFactoryImpl
 	}
 
 	@Override
-	protected UnicodeProperties getUnicodeProperties(
+	public UnicodeProperties getUnicodeProperties(
 		PortletRequest portletRequest) {
 
 		return UnicodePropertiesBuilder.create(
@@ -50,7 +51,7 @@ public class FDSFilterCETImplFactoryImpl
 	}
 
 	@Override
-	protected void validate(
+	public void validate(
 			FDSFilterCET newFDSFilterCET, FDSFilterCET oldFDSFilterCET)
 		throws PortalException {
 

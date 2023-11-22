@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.ThemeSpritemapCET;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.ThemeSpritemapCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,10 +24,10 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class ThemeSpritemapCETImplFactoryImpl
-	extends BaseCETImplFactory<ThemeSpritemapCET> {
+	implements CETImplFactory<ThemeSpritemapCET> {
 
 	@Override
-	protected ThemeSpritemapCET create(
+	public ThemeSpritemapCET create(
 		String baseURL, long companyId, Date createDate, String description,
 		String externalReferenceCode, Date modifiedDate, String name,
 		Properties properties, boolean readOnly, String sourceCodeURL,
@@ -39,7 +40,7 @@ public class ThemeSpritemapCETImplFactoryImpl
 	}
 
 	@Override
-	protected UnicodeProperties getUnicodeProperties(
+	public UnicodeProperties getUnicodeProperties(
 		PortletRequest portletRequest) {
 
 		return UnicodePropertiesBuilder.create(
@@ -53,7 +54,7 @@ public class ThemeSpritemapCETImplFactoryImpl
 	}
 
 	@Override
-	protected void validate(
+	public void validate(
 			ThemeSpritemapCET newThemeSpritemapCET,
 			ThemeSpritemapCET oldThemeSpritemapCET)
 		throws PortalException {

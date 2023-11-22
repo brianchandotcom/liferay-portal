@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.ThemeCSSCET;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.ThemeCSSCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -22,11 +23,10 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ThemeCSSCETImplFactoryImpl
-	extends BaseCETImplFactory<ThemeCSSCET> {
+public class ThemeCSSCETImplFactoryImpl implements CETImplFactory<ThemeCSSCET> {
 
 	@Override
-	protected ThemeCSSCET create(
+	public ThemeCSSCET create(
 		String baseURL, long companyId, Date createDate, String description,
 		String externalReferenceCode, Date modifiedDate, String name,
 		Properties properties, boolean readOnly, String sourceCodeURL,
@@ -39,7 +39,7 @@ public class ThemeCSSCETImplFactoryImpl
 	}
 
 	@Override
-	protected UnicodeProperties getUnicodeProperties(
+	public UnicodeProperties getUnicodeProperties(
 		PortletRequest portletRequest) {
 
 		return UnicodePropertiesBuilder.create(
@@ -52,8 +52,7 @@ public class ThemeCSSCETImplFactoryImpl
 	}
 
 	@Override
-	protected void validate(
-			ThemeCSSCET newThemeCSSCET, ThemeCSSCET oldThemeCSSCET)
+	public void validate(ThemeCSSCET newThemeCSSCET, ThemeCSSCET oldThemeCSSCET)
 		throws PortalException {
 
 		String baseURL = newThemeCSSCET.getBaseURL();

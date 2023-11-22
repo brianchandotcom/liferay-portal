@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.JSImportMapsEntryCET;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.JSImportMapsEntryCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,7 +24,34 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class JSImportMapsEntryCETImplFactoryImpl
-	extends BaseCETImplFactory<JSImportMapsEntryCET> {
+	implements CETImplFactory<JSImportMapsEntryCET> {
+
+	@Override
+	public JSImportMapsEntryCET create(
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
+
+		return new JSImportMapsEntryCETImpl(
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
+	}
+
+	@Override
+	public UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest) {
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"bareSpecifier",
+			ParamUtil.getString(portletRequest, "bareSpecifier")
+		).put(
+			"url", ParamUtil.getString(portletRequest, "url")
+		).build();
+	}
 
 	@Override
 	public void validate(
@@ -43,33 +71,6 @@ public class JSImportMapsEntryCETImplFactoryImpl
 				"Invalid JavaScript URL: " + url, "javascript-url-x-is-invalid",
 				url);
 		}
-	}
-
-	@Override
-	protected JSImportMapsEntryCET create(
-		String baseURL, long companyId, Date createDate, String description,
-		String externalReferenceCode, Date modifiedDate, String name,
-		Properties properties, boolean readOnly, String sourceCodeURL,
-		int status, UnicodeProperties typeSettingsUnicodeProperties) {
-
-		return new JSImportMapsEntryCETImpl(
-			baseURL, companyId, createDate, description, externalReferenceCode,
-			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
-			typeSettingsUnicodeProperties);
-	}
-
-	@Override
-	protected UnicodeProperties getUnicodeProperties(
-		PortletRequest portletRequest) {
-
-		return UnicodePropertiesBuilder.create(
-			true
-		).put(
-			"bareSpecifier",
-			ParamUtil.getString(portletRequest, "bareSpecifier")
-		).put(
-			"url", ParamUtil.getString(portletRequest, "url")
-		).build();
 	}
 
 }

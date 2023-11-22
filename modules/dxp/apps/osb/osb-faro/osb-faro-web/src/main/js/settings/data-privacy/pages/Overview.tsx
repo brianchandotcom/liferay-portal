@@ -2,7 +2,6 @@ import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import fetch from 'shared/util/fetch';
 import PreferenceMutation from '../queries/PreferenceMutation';
 import PreferenceQuery from '../queries/PreferenceQuery';
 import React from 'react';
@@ -36,9 +35,9 @@ const fetchDownload = ({fromDate, groupId, toDate, type}) =>
 	fetch(
 		`/o/proxy/download/${type}/logs?projectGroupId=${groupId}&fromDate=${fromDate}&toDate=${toDate}`,
 		{method: 'GET'}
-	).then(({response, status}) => {
-		if (status === 200) {
-			return response;
+	).then(response => {
+		if (response.status === 200) {
+			return response.json();
 		}
 
 		throw new Error('Request Error');

@@ -59,7 +59,7 @@ if (input.value) {
 	);
 
 	lastSearchQuery = selectedOption.label.toLowerCase();
-	valueInputElement.value = selectedOption.label;
+	valueInputElement.value = selectedOption.value;
 
 	const selectedOptionElement = optionListElement.querySelector(
 		'.active.dropdown-item'

@@ -54,7 +54,7 @@
 
 		<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-sample-button-row-message"><liferay-ui:message key="or" /></h4>
 
-		<aui:input disabled="<%= useSampleFileEntry %>" label="sample-file-url" name="sampleURL" />
+		<aui:input label="sample-file-url" name="sampleURL" />
 	</aui:fieldset>
 </div>
 

@@ -71,6 +71,10 @@ public class ProvisioningRestController extends BaseRestController {
 
 		_appLicenseKeyResource.putAppLicenseKeyDeactivate(
 			jwt.getClaim("username"), jwt.getClaim("sub"), new Long[] {id});
+
+		if (_log.isInfoEnabled()) {
+			_log.info("License key " + id + " deactivated");
+		}
 	}
 
 	@GetMapping("license-keys/{id}")
@@ -181,7 +185,7 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setProductName(
 			productPurchase.getProduct(
 			).getName());
-		appLicenseKey.setProductVersion(_getVersion(jsonObject, jwt));
+		appLicenseKey.setProductVersion(_getProductVersion(jsonObject, jwt));
 
 		Date startDate = productPurchase.getStartDate();
 
@@ -193,8 +197,14 @@ public class ProvisioningRestController extends BaseRestController {
 		appLicenseKey.setUserName((String)jwt.getClaim("username"));
 		appLicenseKey.setUserUuid((String)jwt.getClaim("sub"));
 
-		return _appLicenseKeyResource.postAppLicenseKey(
+		appLicenseKey = _appLicenseKeyResource.postAppLicenseKey(
 			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Created App License Key " + appLicenseKey);
+		}
+
+		return appLicenseKey;
 	}
 
 	private String _getOAuthAuthorization() throws Exception {
@@ -250,13 +260,13 @@ public class ProvisioningRestController extends BaseRestController {
 		}
 	}
 
-	private String _getVersion(JSONObject jsonObject, Jwt jwt) {
+	private String _getProductVersion(JSONObject jsonObject, Jwt jwt) {
 		String version = "1.0.0";
 
 		try {
 			SkuResource skuResource = SkuResource.builder(
 			).header(
-				HttpHeaders.AUTHORIZATION, jwt.getTokenValue()
+				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 			).endpoint(
 				new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 			).build();
@@ -274,7 +284,7 @@ public class ProvisioningRestController extends BaseRestController {
 			}
 		}
 		catch (Exception exception) {
-			_log.error("Unable to set SKU Version" + exception.getMessage());
+			_log.error("Unable to set SKU Version " + exception.getMessage());
 		}
 
 		return version;

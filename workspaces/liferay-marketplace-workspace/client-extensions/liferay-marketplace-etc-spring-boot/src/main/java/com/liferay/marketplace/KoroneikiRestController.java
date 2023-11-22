@@ -357,8 +357,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Successfully created Account created for product " +
-							"purchase " + productPurchase);
+						"Created Account product purchase " + productPurchase);
 				}
 			}
 
@@ -368,9 +367,7 @@ public class KoroneikiRestController extends BaseRestController {
 				commerceOrderJSONObject.getLong("id"), order);
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Unable to create account product purchase " + productPurchase,
-				exception);
+			_log.error("Unable to create account product purchase", exception);
 		}
 	}
 

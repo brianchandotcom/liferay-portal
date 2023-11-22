@@ -14,6 +14,7 @@ import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.captcha.Captcha;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -72,6 +73,10 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 	}
 
 	private void _checkSimpleCaptchaConfiguration() throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-185150")) {
+			throw new UnsupportedOperationException();
+		}
+
 		CaptchaConfiguration captchaConfiguration =
 			_configurationProvider.getSystemConfiguration(
 				CaptchaConfiguration.class);

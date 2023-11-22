@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Loc Pham
  */
+@FeatureFlags("LPS-185150")
 @RunWith(Arquillian.class)
 public class SimpleCaptchaResourceTest
 	extends BaseSimpleCaptchaResourceTestCase {

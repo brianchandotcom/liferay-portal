@@ -249,8 +249,8 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			}
 		}
 
-		if ((newArtifactVersion == null) || (oldArtifactVersion == null) ||
-			(newArtifactVersion.getMajorVersion() <=
+		if ((newArtifactVersion != null) && (oldArtifactVersion != null) &&
+			(newArtifactVersion.getMajorVersion() >
 				oldArtifactVersion.getMajorVersion())) {
 
 			return true;

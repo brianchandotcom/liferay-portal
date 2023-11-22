@@ -1311,12 +1311,11 @@ public class SourceFormatter {
 					throw new Exception(
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0], ":\n",
-							"The commit '", parts[1], "' contains the word '",
-							keyword, "', which could reveal potential ",
-							"security vulnerablities. Please see the ",
-							"vulnerability keywords that are specified in ",
-							"source-formatter.properties in the ",
-							"liferay-portal repository."));
+							"The commit message contains the word '", keyword,
+							"', which could reveal potential security ",
+							"vulnerablities. Please see the vulnerability ",
+							"keywords that are specified in source-formatter.",
+							"properties in the liferay-portal repository."));
 				}
 			}
 		}

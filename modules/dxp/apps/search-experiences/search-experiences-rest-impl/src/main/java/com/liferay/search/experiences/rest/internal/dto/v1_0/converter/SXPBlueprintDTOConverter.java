@@ -120,13 +120,13 @@ public class SXPBlueprintDTOConverter
 	}
 
 	private void _setLocalizedDescriptionAndTitle(
-		Map<Locale, String> descriptionMap, String fallBackDescription,
+		Map<Locale, String> descriptionMap, String fallbackDescription,
 		String fallbackTitle, Locale locale, SXPElement sxpElement,
 		Map<Locale, String> titleMap) {
 
 		sxpElement.setDescription(
 			SXPDTOConverterUtil.translate(
-				fallBackDescription, _language, descriptionMap, locale));
+				fallbackDescription, _language, descriptionMap, locale));
 		sxpElement.setTitle(
 			SXPDTOConverterUtil.translate(
 				fallbackTitle, _language, titleMap, locale));

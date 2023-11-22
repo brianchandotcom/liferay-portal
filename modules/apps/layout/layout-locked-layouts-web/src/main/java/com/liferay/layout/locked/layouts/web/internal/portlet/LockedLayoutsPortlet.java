@@ -53,7 +53,7 @@ public class LockedLayoutsPortlet extends MVCPortlet {
 			new LockedLayoutsDisplayContext(
 				_language, _layoutLocalService, _layoutLockManager,
 				_portal.getLiferayPortletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse)));
+				_portal.getLiferayPortletResponse(renderResponse), _portal));
 
 		super.render(renderRequest, renderResponse);
 	}

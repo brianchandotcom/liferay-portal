@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -44,13 +44,14 @@ public class LockedLayoutsDisplayContext {
 		Language language, LayoutLocalService layoutLocalService,
 		LayoutLockManager layoutLockManager,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, Portal portal) {
 
 		_language = language;
 		_layoutLocalService = layoutLocalService;
 		_layoutLockManager = layoutLockManager;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_portal = portal;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -82,7 +83,7 @@ public class LockedLayoutsDisplayContext {
 
 		Layout layout = _layoutLocalService.fetchLayout(lockedLayout.getPlid());
 
-		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
+		return _portal.getLayoutFullURL(layout, _themeDisplay);
 	}
 
 	public List<DropdownItem> getLockedLayoutDropdownItems(
@@ -367,6 +368,7 @@ public class LockedLayoutsDisplayContext {
 	private LockedLayoutType _lockedLayoutType;
 	private String _orderByCol;
 	private String _orderByType;
+	private final Portal _portal;
 	private SearchContainer<LockedLayout> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

@@ -11,11 +11,14 @@ import com.liferay.commerce.frontend.internal.application.context.provider.Theme
 import com.liferay.commerce.frontend.internal.cart.CommerceCartResource;
 import com.liferay.commerce.frontend.internal.search.CommerceSearchResource;
 import com.liferay.commerce.frontend.internal.wishlist.CommerceWishListResource;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.ws.rs.core.Application;
+
+import org.apache.cxf.jaxrs.ext.ContextProvider;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +46,7 @@ public class CommerceFrontEndApplication extends Application {
 		singletons.add(_commerceCartResource);
 		singletons.add(_commerceSearchResource);
 		singletons.add(_commerceWishListResource);
-		singletons.add(new ThemeDisplayContextProvider());
+		singletons.add(_themeDisplayContextProvider);
 
 		return singletons;
 	}
@@ -62,5 +65,8 @@ public class CommerceFrontEndApplication extends Application {
 
 	@Reference
 	private CommerceWishListResource _commerceWishListResource;
+
+	private final ContextProvider<ThemeDisplay> _themeDisplayContextProvider =
+		new ThemeDisplayContextProvider();
 
 }

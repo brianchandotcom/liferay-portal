@@ -1,16 +1,16 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Cleans the tool leftovers."
 	macro clean() {
 		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "clean-db-partition-migrator-tool");
 	}
 
-	@summary = "Default summary"
+	@summary = "Executes the db partition migrator tool."
 	macro execute(databaseSchemaSourcePassword = null,databaseSchemaSourceName = null,databaseSchemaTargetName = null,databaseSchemaTargetPassword = null) {
 		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "execute-db-partition-migrator-tool -Ddatabase.schema.source.name=${databaseSchemaSourceName} -Ddatabase.schema.source.password=${databaseSchemaSourcePassword} -Ddatabase.schema.target.name=${databaseSchemaTargetName} -Ddatabase.schema.target.password=${databaseSchemaTargetPassword}");
 	}
 
-	@summary = "Default summary"
+	@summary = "Sets a schema and updates its webId to use as target."
 	macro generateTargetDatabase() {
 		DBPartitionMigratorTool.prepareTargetSchema();
 
@@ -19,7 +19,7 @@ definition {
 		Portlet.startServer(keepOsGiState = "true");
 	}
 
-	@summary = "Default summary"
+	@summary = "Create and configure the target schema."
 	macro prepareTargetSchema() {
 		SQL.executeMySQLStatement(mysqlStatement = "CREATE DATABASE lportal_target character set utf8;");
 
@@ -28,7 +28,7 @@ definition {
 		FileUtil.replaceStringInFile("${liferayPortalWeb}/portal-ext.properties", "lportal", "lportal_target");
 	}
 
-	@summary = "Default summary"
+	@summary = "Validates the output after run the tool."
 	macro validateOutput(outputMessage = null) {
 		var projectDir = PropsUtil.get("project.dir");
 

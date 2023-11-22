@@ -75,6 +75,10 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 	}
 
 	private void _checkSimpleCaptchaConfiguration() throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-185150")) {
+			throw new UnsupportedOperationException();
+		}
+
 		CaptchaConfiguration captchaConfiguration =
 			_configurationProvider.getSystemConfiguration(
 				CaptchaConfiguration.class);

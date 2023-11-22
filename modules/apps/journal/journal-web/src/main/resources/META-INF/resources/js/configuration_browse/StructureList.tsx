@@ -71,7 +71,7 @@ export function StructureList({onRemoveStructure, structures}: Props) {
 			</ClayTable.Body>
 		</ClayTable>
 	) : (
-		<p className="c-py-3">
+		<p className="c-py-3 text-secondary">
 			{sub(
 				Liferay.Language.get('no-x-selected'),
 				Liferay.Language.get('structures')

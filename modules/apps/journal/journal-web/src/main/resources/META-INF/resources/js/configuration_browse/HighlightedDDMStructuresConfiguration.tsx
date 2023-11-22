@@ -54,7 +54,7 @@ export default function HighlightedDDMStructuresConfiguration({
 
 	return (
 		<div className="c-px-4">
-			<p>
+			<p className="text-secondary">
 				{Liferay.Language.get(
 					'select-the-structures-you-want-to-highlight-in-web-content-administration-to-quickly-access-and-manage-all-its-contents'
 				)}

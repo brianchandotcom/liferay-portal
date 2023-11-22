@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.captcha;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface Captcha {
 
 	public void check(HttpServletRequest httpServletRequest)

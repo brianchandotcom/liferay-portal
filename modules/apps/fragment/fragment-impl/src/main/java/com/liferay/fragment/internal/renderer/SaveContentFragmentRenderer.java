@@ -98,7 +98,7 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 			savedContentTag.doTag(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			_log.error("Unable to render content ratings fragment", exception);
+			_log.error("Unable to render saved content fragment", exception);
 		}
 	}
 

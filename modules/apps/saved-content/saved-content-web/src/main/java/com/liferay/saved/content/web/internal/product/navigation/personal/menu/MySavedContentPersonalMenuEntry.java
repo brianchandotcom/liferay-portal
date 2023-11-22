@@ -7,10 +7,14 @@ package com.liferay.saved.content.web.internal.product.navigation.personal.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.BasePersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.saved.content.constants.MySavedContentPortletKeys;
+import com.liferay.saved.content.security.permission.SavedContentPermission;
 
 import javax.portlet.PortletRequest;
 
@@ -52,10 +56,23 @@ public class MySavedContentPersonalMenuEntry extends BasePersonalMenuEntry {
 			return false;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (_savedContentPermission.contains(
+				permissionChecker, themeDisplay.getScopeGroupId(),
+				ActionKeys.ADD_ENTRY)) {
+
+			return true;
+		}
+
 		return super.isShow(portletRequest, permissionChecker);
 	}
 
 	@Reference
 	private FeatureFlagManager _featureFlagManager;
+
+	@Reference
+	private SavedContentPermission _savedContentPermission;
 
 }

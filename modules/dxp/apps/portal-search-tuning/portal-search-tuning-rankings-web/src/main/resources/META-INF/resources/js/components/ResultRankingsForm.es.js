@@ -41,7 +41,7 @@ class ResultRankingsForm extends Component {
 		initialAliases: PropTypes.arrayOf(String),
 		initialGroupExternalReferenceCode: PropTypes.string,
 		initialSXPBlueprintExternalReferenceCode: PropTypes.string,
-		initialStatus: PropTypes.string.isRequired,
+		initialStatus: PropTypes.string,
 		resultsRankingUid: PropTypes.string,
 		searchQuery: PropTypes.string.isRequired,
 		validateFormURL: PropTypes.string.isRequired,

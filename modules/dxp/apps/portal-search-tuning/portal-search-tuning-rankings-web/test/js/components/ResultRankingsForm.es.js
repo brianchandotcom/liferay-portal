@@ -7,6 +7,7 @@ import {act, fireEvent, render, waitFor, within} from '@testing-library/react';
 import React from 'react';
 
 import ResultRankingsForm from '../../../src/main/resources/META-INF/resources/js/components/ResultRankingsForm.es';
+import {STATUS_TYPES} from '../../../src/main/resources/META-INF/resources/js/utils/constants.es';
 import {
 	FETCH_HIDDEN_DOCUMENTS_URL,
 	FETCH_SEARCH_DOCUMENTS_URL,
@@ -30,7 +31,7 @@ function renderTestResultRankingsForm(props) {
 			fetchDocumentsSearchURL={FETCH_SEARCH_DOCUMENTS_URL}
 			fetchDocumentsVisibleURL={FETCH_VISIBLE_DOCUMENTS_URL}
 			formName={FORM_NAME}
-			initialInactive={false}
+			initialStatus={STATUS_TYPES.ACTIVE}
 			searchQuery=""
 			validateFormURL={VALIDATE_FORM_URL}
 			{...props}
@@ -245,17 +246,17 @@ describe('ResultRankingsForm', () => {
 
 	it.each`
 		state         | newState      | expected
-		${'active'}   | ${'inactive'} | ${true}
-		${'inactive'} | ${'active'}   | ${false}
+		${'active'}   | ${'inactive'} | ${STATUS_TYPES.INACTIVE}
+		${'inactive'} | ${'active'}   | ${STATUS_TYPES.ACTIVE}
 	`('updates the state to $newState', async ({expected, newState, state}) => {
 		const {container, getByLabelText} = renderTestResultRankingsForm({
-			initialInactive: !expected,
+			initialStatus: state,
 		});
 
 		fireEvent.click(getByLabelText(state));
 
 		expect(getByLabelText(newState)).toBeInTheDocument();
 
-		expect(container.querySelector('#inactive').value).toBe(`${expected}`);
+		expect(container.querySelector('#status').value).toBe(`${expected}`);
 	});
 });

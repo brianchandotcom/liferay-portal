@@ -7,16 +7,17 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import PageToolbar from '../../../src/main/resources/META-INF/resources/js/components/PageToolbar.es';
+import {STATUS_TYPES} from '../../../src/main/resources/META-INF/resources/js/utils/constants.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
 function renderTestPageToolbar(props) {
 	return render(
 		<PageToolbar
-			inactive={false}
 			onCancel="cancel"
 			onChangeActive={jest.fn()}
 			onPublish={jest.fn()}
+			status={STATUS_TYPES.ACTIVE}
 			submitDisabled={false}
 			{...props}
 		/>
@@ -43,7 +44,9 @@ describe('PageToolbar', () => {
 	});
 
 	it('shows the inactive state', () => {
-		const {getByLabelText} = renderTestPageToolbar({inactive: true});
+		const {getByLabelText} = renderTestPageToolbar({
+			status: STATUS_TYPES.INACTIVE,
+		});
 
 		expect(getByLabelText('inactive')).not.toHaveAttribute('checked');
 	});

@@ -125,7 +125,10 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 							"layoutPageTemplateCollectionId",
 							LayoutPageTemplateConstants.
 								PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
+						_assetDisplayPageSelectorCriterion.getClassNameId(),
+						_assetDisplayPageSelectorCriterion.getClassTypeId(),
 						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+						WorkflowConstants.STATUS_APPROVED,
 						assetDisplayPageSearchContainer.getStart(),
 						assetDisplayPageSearchContainer.getEnd(),
 						assetDisplayPageSearchContainer.getOrderByComparator()),
@@ -136,7 +139,10 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 						_httpServletRequest, "layoutPageTemplateCollectionId",
 						LayoutPageTemplateConstants.
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+					_assetDisplayPageSelectorCriterion.getClassNameId(),
+					_assetDisplayPageSelectorCriterion.getClassTypeId(),
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+					WorkflowConstants.STATUS_APPROVED));
 
 		_assetDisplayPageSearchContainer = assetDisplayPageSearchContainer;
 

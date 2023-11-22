@@ -299,20 +299,7 @@ public class DLAdminManagementToolbarDisplayContext
 			List<MenuItem> menuItems = menu.getMenuItems();
 
 			for (MenuItem menuItem : menuItems) {
-				if (menuItem instanceof URLMenuItem) {
-					URLMenuItem urlMenuItem = (URLMenuItem)menuItem;
-
-					creationMenu.addDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setData(urlMenuItem.getData());
-							dropdownItem.setHref(urlMenuItem.getURL());
-							dropdownItem.setIcon(urlMenuItem.getIcon());
-							dropdownItem.setLabel(urlMenuItem.getLabel());
-							dropdownItem.setSeparator(
-								urlMenuItem.hasSeparator());
-						});
-				}
-				else if (menuItem instanceof JavaScriptMenuItem) {
+				if (menuItem instanceof JavaScriptMenuItem) {
 					JavaScriptMenuItem javaScriptMenuItem =
 						(JavaScriptMenuItem)menuItem;
 
@@ -324,6 +311,19 @@ public class DLAdminManagementToolbarDisplayContext
 								javaScriptMenuItem.getLabel());
 							dropdownItem.setSeparator(
 								javaScriptMenuItem.hasSeparator());
+						});
+				}
+				else if (menuItem instanceof URLMenuItem) {
+					URLMenuItem urlMenuItem = (URLMenuItem)menuItem;
+
+					creationMenu.addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setData(urlMenuItem.getData());
+							dropdownItem.setHref(urlMenuItem.getURL());
+							dropdownItem.setIcon(urlMenuItem.getIcon());
+							dropdownItem.setLabel(urlMenuItem.getLabel());
+							dropdownItem.setSeparator(
+								urlMenuItem.hasSeparator());
 						});
 				}
 			}

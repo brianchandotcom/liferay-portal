@@ -6,6 +6,7 @@ AccessModifierCheck | .java | Checks for cases where visibility of methods can b
 [AnonymousClassCheck](check/anonymous_class_check.markdown#anonymousclasscheck) | .java | Checks for serialization issue when using anonymous class. |
 ArquillianCheck | .java | Checks for correct use of `com.liferay.arquillian.extension.junit.bridge.junit.Arquillian`. |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | .java | Checks that there are no import statements that use the * notation. |
+BNDBreakingChangeCommitMessageCheck | .bnd | Checks that commit message should contain the schematized breaking changes. |
 [BNDBundleActivatorCheck](check/bnd_bundle_activator_check.markdown#bndbundleactivatorcheck) | .bnd | Validates property value for `Bundle-Activator`. |
 [BNDBundleCheck](check/bnd_bundle_check.markdown#bndbundlecheck) | .bnd | Validates `Liferay-Releng-*` properties. |
 [BNDBundleInformationCheck](check/bnd_bundle_information_check.markdown#bndbundleinformationcheck) | .bnd | Validates property values for `Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName`. |

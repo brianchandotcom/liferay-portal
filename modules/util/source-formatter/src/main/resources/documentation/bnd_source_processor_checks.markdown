@@ -2,6 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
+BNDBreakingChangeCommitMessageCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that commit message should contain the schematized breaking changes. |
 [BNDBundleActivatorCheck](check/bnd_bundle_activator_check.markdown#bndbundleactivatorcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates property value for `Bundle-Activator`. |
 [BNDBundleCheck](check/bnd_bundle_check.markdown#bndbundlecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates `Liferay-Releng-*` properties. |
 [BNDBundleInformationCheck](check/bnd_bundle_information_check.markdown#bndbundleinformationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates property values for `Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName`. |

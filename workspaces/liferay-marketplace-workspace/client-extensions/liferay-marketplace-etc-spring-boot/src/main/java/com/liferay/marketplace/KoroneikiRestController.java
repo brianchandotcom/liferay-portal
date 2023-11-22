@@ -150,8 +150,8 @@ public class KoroneikiRestController extends BaseRestController {
 					productPurchaseView.getProductConsumptions()) {
 
 				if (Objects.equals(
-						productPurchase.getKey(),
-						productConsumption.getProductPurchaseKey()) &&
+						productConsumption.getProductPurchaseKey(),
+						productPurchase.getKey()) &&
 					productConsumption.getEndDate(
 					).after(
 						new Date()
@@ -211,7 +211,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Skipping postProductPurchase for order " +
+					"Skipping POST product purchase for order " +
 						commerceOrderJSONObject.getLong("id") +
 							" because payment status is not completed");
 			}
@@ -234,7 +234,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Skipping postProductPurchase for order " +
+					"Skipping POST product purchase for order " +
 						commerceOrderJSONObject.getLong("id") +
 							" because order type is not supported");
 			}
@@ -357,7 +357,7 @@ public class KoroneikiRestController extends BaseRestController {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Created Account product purchase " + productPurchase);
+						"Created account product purchase " + productPurchase);
 				}
 			}
 
@@ -411,6 +411,17 @@ public class KoroneikiRestController extends BaseRestController {
 			liferayDXPURL
 		).build();
 
+		URL liferayMarketplaceKoroneikiAuthURL = new URL(_koroneikiAuthURL);
+
+		_koroneikiAccountResource =
+			com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
+				AccountResource.builder(
+				).header(
+					"API_TOKEN", _koroneikiAuthToken
+				).endpoint(
+					liferayMarketplaceKoroneikiAuthURL
+				).build();
+
 		_orderItemResource = OrderItemResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
@@ -431,17 +442,6 @@ public class KoroneikiRestController extends BaseRestController {
 		).endpoint(
 			liferayDXPURL
 		).build();
-
-		URL liferayMarketplaceKoroneikiAuthURL = new URL(_koroneikiAuthURL);
-
-		_koroneikiAccountResource =
-			com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.
-				AccountResource.builder(
-				).header(
-					"API_TOKEN", _koroneikiAuthToken
-				).endpoint(
-					liferayMarketplaceKoroneikiAuthURL
-				).build();
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(

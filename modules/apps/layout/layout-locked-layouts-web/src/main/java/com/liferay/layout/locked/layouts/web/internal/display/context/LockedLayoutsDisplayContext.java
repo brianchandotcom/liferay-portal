@@ -37,6 +37,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Lourdes Fernández Besada
@@ -88,11 +89,7 @@ public class LockedLayoutsDisplayContext {
 				LockedLayoutType.CONTENT_PAGE_TEMPLATE) {
 
 			return PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					_portal.getHttpServletRequest(_liferayPortletRequest),
-					_themeDisplay.getScopeGroup(),
-					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0,
-					0, PortletRequest.RENDER_PHASE)
+				_getLayoutPageTemplatesPortletURL()
 			).setTabs1(
 				"page-templates"
 			).buildString();
@@ -102,11 +99,7 @@ public class LockedLayoutsDisplayContext {
 				LockedLayoutType.DISPLAY_PAGE_TEMPLATE) {
 
 			return PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					_portal.getHttpServletRequest(_liferayPortletRequest),
-					_themeDisplay.getScopeGroup(),
-					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0,
-					0, PortletRequest.RENDER_PHASE)
+				_getLayoutPageTemplatesPortletURL()
 			).setTabs1(
 				"display-page-templates"
 			).buildString();
@@ -116,11 +109,7 @@ public class LockedLayoutsDisplayContext {
 				LockedLayoutType.MASTER_PAGE) {
 
 			return PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					_portal.getHttpServletRequest(_liferayPortletRequest),
-					_themeDisplay.getScopeGroup(),
-					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0,
-					0, PortletRequest.RENDER_PHASE)
+				_getLayoutPageTemplatesPortletURL()
 			).setTabs1(
 				"master-layouts"
 			).buildString();
@@ -325,6 +314,20 @@ public class LockedLayoutsDisplayContext {
 		return _keywords;
 	}
 
+	private PortletURL _getLayoutPageTemplatesPortletURL() {
+		if (_layoutPageTemplatesPortletURL != null) {
+			return _layoutPageTemplatesPortletURL;
+		}
+
+		_layoutPageTemplatesPortletURL = _portal.getControlPanelPortletURL(
+			_portal.getHttpServletRequest(_liferayPortletRequest),
+			_themeDisplay.getScopeGroup(),
+			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0, 0,
+			PortletRequest.RENDER_PHASE);
+
+		return _layoutPageTemplatesPortletURL;
+	}
+
 	private List<LockedLayout> _getLockedLayouts() {
 		if (_lockedLayouts != null) {
 			return _lockedLayouts;
@@ -406,6 +409,7 @@ public class LockedLayoutsDisplayContext {
 	private final Language _language;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutLockManager _layoutLockManager;
+	private PortletURL _layoutPageTemplatesPortletURL;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private LockedLayoutOrder _lockedLayoutOrder;

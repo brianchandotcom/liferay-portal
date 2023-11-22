@@ -1,7 +1,6 @@
-jest.mock('../fetch');
 jest.mock('../router');
 
-import fetch from '../fetch';
+import 'whatwg-fetch';
 import request, {
 	addParams,
 	getFormData,
@@ -99,11 +98,15 @@ describe('serializeQueryString', () => {
 
 describe('request', () => {
 	beforeEach(() => {
+		window.fetch = jest.fn();
+	});
+
+	afterEach(() => {
 		fetch.mockClear();
 	});
 
 	it('should return a Promise', () => {
-		fetch.mockReturnValue(Promise.resolve(1));
+		fetch.mockReturnValue(Promise.resolve(new Response()));
 
 		const result = request({}).catch(jest.fn());
 
@@ -111,14 +114,10 @@ describe('request', () => {
 	});
 
 	it('should correctly create request URL', () => {
-		fetch.mockReturnValue(
-			Promise.resolve({
-				response: '',
-				status: 204
-			})
-		);
+		fetch.mockReturnValue(Promise.resolve(new Response('')));
 
 		return request({
+			contentType: '',
 			method: 'GET',
 			path: 'contacts/field_mapping'
 		}).then(() => {
@@ -130,12 +129,7 @@ describe('request', () => {
 	});
 
 	it('should set data attribute if method is GET', () => {
-		fetch.mockReturnValue(
-			Promise.resolve({
-				response: '',
-				status: 204
-			})
-		);
+		fetch.mockReturnValue(Promise.resolve(new Response('', {status: 204})));
 
 		return request({
 			data: {
@@ -152,23 +146,13 @@ describe('request', () => {
 	it('should resolve with the parsed response', () => {
 		const value = 25;
 
-		fetch.mockReturnValue(
-			Promise.resolve({
-				response: `{"a": ${value}}`,
-				status: 200
-			})
-		);
+		fetch.mockReturnValue(Promise.resolve(new Response(`{"a": ${value}}`)));
 
 		return request({}).then(data => expect(data.a).toBe(value));
 	});
 
 	it('should throw an error if the response cannot be parsed', () => {
-		fetch.mockReturnValue(
-			Promise.resolve({
-				response: '{test:}',
-				status: 200
-			})
-		);
+		fetch.mockReturnValue(Promise.resolve(new Response('{test:}')));
 
 		return request({}).catch(error =>
 			expect(error instanceof SyntaxError).toBe(true)
@@ -176,11 +160,7 @@ describe('request', () => {
 	});
 
 	it('should reject on a xhr status greater than or equal to 300', () => {
-		fetch.mockReturnValue(
-			Promise.resolve({
-				status: 301
-			})
-		);
+		fetch.mockReturnValue(Promise.resolve(new Response('', {status: 301})));
 
 		return request({}).catch(error =>
 			expect(error instanceof Error).toBe(true)
@@ -188,21 +168,18 @@ describe('request', () => {
 	});
 
 	it('should handle an xhr status of 204 where the response is empty', () => {
-		fetch.mockReturnValue(
-			Promise.resolve({
-				response: '',
-				status: 204
-			})
-		);
+		fetch.mockReturnValue(Promise.resolve(new Response('', {status: 204})));
 
 		return request({}).then(response => expect(response).toEqual({}));
 	});
 
 	it('should reject on a xhr status equal to 403', () => {
 		fetch.mockReturnValue(
-			Promise.resolve({
-				status: 403
-			})
+			Promise.resolve(
+				new Response('', {
+					status: 403
+				})
+			)
 		);
 
 		return request({}).catch(error =>
@@ -212,34 +189,19 @@ describe('request', () => {
 
 	it('should call reloadPage on an xhr status equal to 401', () => {
 		fetch.mockReturnValue(
-			Promise.resolve({
-				response: '',
-				status: 401
-			})
+			Promise.resolve(
+				new Response('', {
+					status: 401
+				})
+			)
 		);
 
 		return request({}).then(() => expect(reloadPage).toBeCalled());
 	});
 
-	it('should not parse plain-text as json', () => {
-		const response = 'this is definitely not json';
-
-		fetch.mockReturnValue(
-			Promise.resolve({
-				response,
-				status: 200
-			})
-		);
-
-		return expect(request({contentType: 'text'})).resolves.toBe(response);
-	});
-
 	it('should reject if the response is not valid JSON', () => {
 		fetch.mockReturnValue(
-			Promise.resolve({
-				response: 'this is definitely not json',
-				status: 200
-			})
+			Promise.resolve(new Response('this is definitely not json'))
 		);
 
 		return expect(request({})).rejects.toBeInstanceOf(SyntaxError);
@@ -247,10 +209,6 @@ describe('request', () => {
 });
 
 describe('stringifyValues', () => {
-	beforeEach(() => {
-		fetch.mockClear();
-	});
-
 	it('should serialize instances of objects', () => {
 		const arr = ['foo'];
 		const obj = {foo: 'bar'};

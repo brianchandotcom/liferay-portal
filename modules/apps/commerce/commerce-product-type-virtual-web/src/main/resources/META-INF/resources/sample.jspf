@@ -91,12 +91,12 @@
 						sampleFileEntryId.value = value.fileEntryId;
 					}
 
-					const sampleURL = document.getElementById(
+					const sampleURLInput = document.getElementById(
 						'<portlet:namespace />sampleURL'
 					);
 
-					if (sampleURL) {
-						sampleURL.setAttribute('disabled', true);
+					if (sampleURLInput) {
+						sampleURLInput.setAttribute('disabled', '');
 					}
 
 					const message = document.getElementById(
@@ -127,12 +127,12 @@
 			);
 
 			if (useSample.checked) {
-				const sampleURL = document.getElementById(
+				const sampleURLInput = document.getElementById(
 					'<portlet:namespace />sampleURL'
 				);
 
-				if (sampleURL) {
-					sampleURL.removeAttribute('disabled');
+				if (sampleURLInput) {
+					sampleURLInput.removeAttribute('disabled');
 				}
 			}
 

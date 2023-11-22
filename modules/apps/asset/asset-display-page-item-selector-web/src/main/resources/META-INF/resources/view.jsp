@@ -39,6 +39,14 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
+
+					<%
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"value", assetDisplayPagesItemSelectorCustomViewDisplayContext.getPayload((LayoutPageTemplateEntry)object)
+						).build());
+					%>
+
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
 							verticalCard="<%= new LayoutPageTemplateEntryVerticalCard((LayoutPageTemplateEntry)object, renderRequest) %>"
@@ -55,3 +63,39 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
+
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
+
+	var selectItemHandler = delegate(
+		document.querySelector('#<portlet:namespace />displayPages'),
+		'click',
+		'.layout-page-template-entry',
+		(event) => {
+			var domElement = event.delegateTarget.closest('dd');
+
+			var itemValue = '';
+
+			if (domElement != null) {
+				itemValue = domElement.dataset.value;
+			}
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getItemSelectedEventName() %>',
+				{
+					data: {
+						returnType:
+							'<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getReturnType() %>',
+						value: itemValue,
+					},
+				}
+			);
+		}
+	);
+
+	Liferay.on('destroyPortlet', function removeListener() {
+		selectItemHandler.dispose();
+
+		Liferay.detach('destroyPortlet', removeListener);
+	});
+</aui:script>

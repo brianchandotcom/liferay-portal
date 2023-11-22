@@ -6,6 +6,7 @@
 package com.liferay.asset.display.page.item.selector.web.internal.display.context;
 
 import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSelectorCriterion;
+import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -18,6 +19,7 @@ import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryC
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -45,11 +47,12 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 
 	public AssetDisplayPagesItemSelectorCustomViewDisplayContext(
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion,
 		PortletURL portletURL, boolean search) {
 
 		_httpServletRequest = httpServletRequest;
+		_itemSelectedEventName = itemSelectedEventName;
 		_assetDisplayPageSelectorCriterion = assetDisplayPageSelectorCriterion;
 		_portletURL = portletURL;
 		_search = search;
@@ -149,6 +152,10 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 		return _assetDisplayPageSearchContainer;
 	}
 
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
+	}
+
 	public List<BreadcrumbEntry> getLayoutPageTemplateBreadcrumbEntries() {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			LayoutPageTemplateCollectionLocalServiceUtil.
@@ -206,8 +213,24 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 		return _orderByType;
 	}
 
+	public String getPayload(LayoutPageTemplateEntry layoutPageTemplateEntry) {
+		return JSONUtil.put(
+			"id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).put(
+			"name", layoutPageTemplateEntry.getName()
+		).put(
+			"plid", layoutPageTemplateEntry.getPlid()
+		).put(
+			"type", "asset-display-page"
+		).toString();
+	}
+
 	public PortletURL getPortletURL() {
 		return _portletURL;
+	}
+
+	public String getReturnType() {
+		return AssetEntryItemSelectorReturnType.class.getName();
 	}
 
 	private long _getGroupId() {
@@ -310,6 +333,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 		_assetDisplayPageSelectorCriterion;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
+	private final String _itemSelectedEventName;
 	private String _keywords;
 	private Long _layoutPageTemplateCollectionId;
 	private String _orderByCol;

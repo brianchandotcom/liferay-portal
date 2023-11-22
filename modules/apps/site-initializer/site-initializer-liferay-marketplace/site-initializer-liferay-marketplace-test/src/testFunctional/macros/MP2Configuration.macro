@@ -2,6 +2,125 @@ definition {
 
 	static var clientExtension = "";
 	static var companyWebId = "";
+	static var siteMember = "User";
+	static var siteType = "Open";
+
+	// This macro should be removed when the issue ISSD-1572 be completed and the macro HeadlessSite.addSite() is usable.
+
+	@summary = "Add the Site manually on the site page"
+	macro addCP(membershipType = null, singleSiteTypePermission = null, siteTemplateTab = null, parentSiteName = null, uncheckPropagation = null, siteName = null, siteType = null) {
+		LexiconEntry.gotoAdd();
+
+		if (${singleSiteTypePermission} != "true") {
+			if (!(isSet(siteTemplateName))) {
+				var siteTemplateName = "${siteType} Site";
+			}
+
+			if (isSet(siteTemplateTab)) {
+				Site.selectSiteTemplateTab(siteTemplateTab = ${siteTemplateTab});
+			}
+
+			LexiconCard.clickCard(card = ${siteTemplateName});
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = ${siteName});
+
+			if (isSet(enablePrivatePage)) {
+				Check(
+					checkboxName = "Create default pages as private",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			Button.click(button = "Add");
+
+			SelectFrameTop();
+
+			Alert.viewSuccessMessage();
+		}
+
+		if (${siteType} == "Site Template") {
+			if (${uncheckPropagation} == "true") {
+				Click(
+					key_itemName = "Pages",
+					locator1 = "ListGroupItem#ITEM_TEXT");
+
+				Navigator.gotoNavTab(navTab = "Pages");
+
+				Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_PROPAGATION");
+
+				PortletEntry.save();
+
+				Navigator.gotoBack();
+			}
+		}
+
+		while (IsElementNotPresent(key_itemName = "Site Configuration", locator1 = "ListGroupItem#ITEM_TEXT")) {
+
+			// Pausing 5 seconds for each iteration due ISSD-1572
+
+			Pause(value1 = 5000);
+		}
+
+		WaitForElementPresent(
+			key_itemName = "Site Configuration",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		Click(
+			key_itemName = "Site Configuration",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		if (${membershipType} == "Private") {
+			Select(
+				locator1 = "SitesEditSite#MEMBERSHIP_TYPE",
+				value1 = "Private");
+		}
+		else if (${membershipType} == "Restricted") {
+			Select(
+				locator1 = "SitesEditSite#MEMBERSHIP_TYPE",
+				value1 = "Restricted");
+		}
+		else {
+			Select(
+				locator1 = "SitesEditSite#MEMBERSHIP_TYPE",
+				value1 = "Open");
+		}
+
+		if (isSet(parentSiteName)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(
+				key_fieldLabel = "Parent Site",
+				key_text = "Change",
+				locator1 = "Button#ANY_WITH_LABEL");
+
+			var key_parentSiteName = ${parentSiteName};
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Search.searchCP(searchTerm = ${parentSiteName});
+
+			var key_site = ${parentSiteName};
+
+			AssertTextEquals(
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
+				value1 = ${parentSiteName});
+
+			Click(locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK");
+
+			var key_parentSiteName = ${parentSiteName};
+
+			SelectFrameTop();
+		}
+
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			locator1 = "SitesEditSite#DETAILS_NAME",
+			value1 = ${siteName});
+	}
 
 	@summary = "Default summary"
 	macro commerceTearDown() {

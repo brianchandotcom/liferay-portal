@@ -229,12 +229,6 @@ public class GraphQLServletExtender {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_graphQLDTOContributorDataFetchingProcessor =
-			new GraphQLDTOContributorDataFetchingProcessor(
-				_dtoConverterRegistry, _expressionConvert,
-				_filterParserProvider, _language, _paginationProvider, _portal,
-				_sortParserProvider);
-
 		_graphQLFieldRetriever = new LiferayGraphQLFieldRetriever();
 
 		GraphQLInterfaceRetriever graphQLInterfaceRetriever =
@@ -540,6 +534,16 @@ public class GraphQLServletExtender {
 		_defaultTypeFunction.register(new MapTypeFunction());
 		_defaultTypeFunction.register(new ObjectTypeFunction());
 
+		_graphQLContributorServiceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, GraphQLContributor.class, null,
+			new GraphQLContributorServiceTrackerCustomizer());
+
+		_graphQLDTOContributorDataFetchingProcessor =
+			new GraphQLDTOContributorDataFetchingProcessor(
+				_dtoConverterRegistry, _expressionConvert,
+				_filterParserProvider, _language, _paginationProvider, _portal,
+				_sortParserProvider);
+
 		_graphQLDTOContributorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, GraphQLDTOContributor.class, "dto.name",
@@ -569,10 +573,6 @@ public class GraphQLServletExtender {
 					}
 
 				});
-
-		_graphQLContributorServiceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, GraphQLContributor.class, null,
-			new GraphQLContributorServiceTrackerCustomizer());
 
 		_graphQLRequestContextValidators = ServiceTrackerListFactory.open(
 			bundleContext, GraphQLRequestContextValidator.class);

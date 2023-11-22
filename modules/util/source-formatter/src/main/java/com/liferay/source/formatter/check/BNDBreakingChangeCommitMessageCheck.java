@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -16,6 +16,7 @@ import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.io.File;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.maven.artifact.versioning.ArtifactVersion;
@@ -48,8 +49,8 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			sourceFormatterArgs.getBaseDirName(),
 			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
 
-		String oldVersion = null;
-		String newVersion = null;
+		ArtifactVersion newArtifactVersion = null;
+		ArtifactVersion oldArtifactVersion = null;
 
 		for (String line : StringUtil.splitLines(currentBranchFileDiff)) {
 			if (!line.contains("Bundle-Version:")) {
@@ -61,45 +62,43 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			String version = StringUtil.trim(line.substring(pos + 1));
 
 			if (line.startsWith(StringPool.PLUS)) {
-				newVersion = version;
+				newArtifactVersion = new DefaultArtifactVersion(version);
 			}
 			else if (line.startsWith(StringPool.DASH)) {
-				oldVersion = version;
+				oldArtifactVersion = new DefaultArtifactVersion(version);
 			}
+		}
+
+		if ((newArtifactVersion == null) || (oldArtifactVersion == null) ||
+			(newArtifactVersion.getMajorVersion() <=
+				oldArtifactVersion.getMajorVersion())) {
+
+			return content;
 		}
 
 		List<String> commitMessages = GitUtil.getCurrentBranchCommitMessages(
 			sourceFormatterArgs.getBaseDirName(),
 			sourceFormatterArgs.getGitWorkingBranchName());
 
-		if ((newVersion != null) && (oldVersion != null)) {
-			ArtifactVersion newArtifactVersion = new DefaultArtifactVersion(
-				newVersion);
-			ArtifactVersion oldArtifactVersion = new DefaultArtifactVersion(
-				oldVersion);
+		Iterator<String> iterator = commitMessages.iterator();
 
-			if (newArtifactVersion.getMajorVersion() <=
-					oldArtifactVersion.getMajorVersion()) {
+		while (iterator.hasNext()) {
+			String commitMessage = iterator.next();
 
-				return content;
+			String[] parts = commitMessage.split(":", 2);
+
+			if (!parts[1].contains("# breaking_change_report")) {
+				iterator.remove();
 			}
+		}
 
-			for (String commitMessage : commitMessages) {
-				String[] parts = commitMessage.split(":", 2);
+		if (commitMessages.isEmpty()) {
+			addMessage(
+				fileName,
+				"Missing breaking change in commit messages when the major " +
+					"version bumps up");
 
-				if (parts[1].contains("# breaking_change_report")) {
-					return content;
-				}
-			}
-
-			int pos = fileName.lastIndexOf(StringPool.SLASH);
-
-			String shortFileName = fileName.substring(pos + 1);
-
-			throw new Exception(
-				StringBundler.concat(
-					"When ", shortFileName, " updated,\n",
-					"# breaking_change_report is necessary"));
+			return content;
 		}
 
 		for (String commitMessage : commitMessages) {
@@ -109,7 +108,8 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				continue;
 			}
 
-			_checkMissingEmptyLinesAroundHeaders(parts);
+			content = _checkMissingEmptyLinesAroundHeaders(
+				fileName, content, parts);
 
 			String[] breakingChangeReports = parts[1].split("\n----");
 
@@ -126,13 +126,16 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					(breakingChangeReportCount != 1) || (whatCount != 1) ||
 					(whyCount != 1)) {
 
-					throw new Exception(
+					addMessage(
+						fileName,
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0], ":\n",
 							"Each breaking change report should have one, and ",
 							"only one '# breaking_change_report', '## What', ",
 							"'## Why' and '## Alternatives'(Optional). Use ",
 							"'----' to split each breaking change."));
+
+					return content;
 				}
 
 				int alternativesPosition = breakingChangeReport.indexOf(
@@ -144,12 +147,15 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					((alternativesPosition != -1) &&
 					 (whyPosition > alternativesPosition))) {
 
-					throw new Exception(
+					addMessage(
+						fileName,
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0], ":\n",
 							"Incorrect order of headers: The correct order ",
 							"should be '## What' | '## Why' | '## ",
 							"Alternatives'"));
+
+					return content;
 				}
 
 				int lineNumber = SourceUtil.getLineNumber(
@@ -159,11 +165,14 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					SourceUtil.getLine(breakingChangeReport, lineNumber));
 
 				if (trimmedLine.length() == 7) {
-					throw new Exception(
+					addMessage(
+						fileName,
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0],
 							":\nThere should be one file path after '## ",
 							"What'"));
+
+					return content;
 				}
 
 				String filePath = StringUtil.trim(trimmedLine.substring(7));
@@ -182,12 +191,15 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 						sourceFormatterArgs.getGitWorkingBranchName());
 
 				if (!currentBranchDeletedFileNames.contains(filePath)) {
-					throw new Exception(
+					addMessage(
+						fileName,
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0], ":\n",
 							"'## What' should be followed by only one ",
 							"relative path, which is from ",
 							portalDir.getAbsolutePath()));
+
+					return content;
 				}
 			}
 		}
@@ -195,15 +207,19 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkMissingEmptyLinesAroundHeaders(String[] parts)
+	private String _checkMissingEmptyLinesAroundHeaders(
+			String fileName, String content, String[] parts)
 		throws Exception {
 
 		if (!parts[1].endsWith("\n\n----")) {
-			throw new Exception(
+			addMessage(
+				fileName,
 				StringBundler.concat(
 					"Found formatting issues in SHA ", parts[0], ":\n",
 					"The commit message contains '# breaking_change_report",
 					"' should end with '\\n\\n----'"));
+
+			return content;
 		}
 
 		for (String header : _BREAKING_CHANGE_REPORT_HEADER_NAMES) {
@@ -221,14 +237,19 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			if (Validator.isNotNull(nextLine) ||
 				Validator.isNotNull(previousLine)) {
 
-				throw new Exception(
+				addMessage(
+					fileName,
 					StringBundler.concat(
 						"Found formatting issues in SHA ", parts[0], ":\n",
 						"There should be an empty line after/before '----', ",
 						"'# breaking_change_report', '## What', '## Why' and ",
 						"'## Alternatives'"));
+
+				return content;
 			}
 		}
+
+		return content;
 	}
 
 	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {

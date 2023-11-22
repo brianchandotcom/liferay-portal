@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Retrieves and returns the content of 'liferay.log' file from the Liferay home directory."
 	macro getLogFileContent() {
 		AntCommands.runCommand("build-test.xml", "copy-log-file");
 
@@ -11,7 +11,7 @@ definition {
 		return ${fileContent};
 	}
 
-	@summary = "Default summary"
+	@summary = "Retrieves and returns the content of 'upgrade.log' file from the DB Upgrade tool."
 	macro getUpgradeLogFileContent() {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -20,7 +20,7 @@ definition {
 		return ${upgradeLogFileContent};
 	}
 
-	@summary = "Default summary"
+	@summary = "Validates that a specific sentence is not present in the 'liferay.log' content."
 	macro viewLogFileContentNotPresent(logContent = null) {
 		var fileContent = Log.getLogFileContent();
 
@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Validates that a specific sentence is present in the 'liferay.log' content."
 	macro viewLogFileContentPresent(logContent = null) {
 		var fileContent = Log.getLogFileContent();
 
@@ -38,7 +38,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Validates that a specific sentence is present in the 'upgrade.log' content."
 	macro viewUpgradeLogContentPresent(logContent = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

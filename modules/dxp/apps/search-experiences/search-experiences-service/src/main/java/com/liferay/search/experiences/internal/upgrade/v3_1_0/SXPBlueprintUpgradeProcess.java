@@ -131,15 +131,15 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			"<", fieldName, " language-id=\"", _getDefaultLocale(xml),
 			"\">");
 
-		int startIndex = xml.indexOf(fallbackFieldCreationValue);
+		int start = xml.indexOf(fallbackFieldCreationValue);
 
-		if (startIndex != -1) {
-			startIndex += fallbackFieldCreationValue.length();
+		if (start != -1) {
+			start += fallbackFieldCreationValue.length();
 
-			int endIndex = xml.indexOf("</" + fieldName + ">", startIndex);
+			int end = xml.indexOf("</" + fieldName + ">", start);
 
-			if (endIndex != -1) {
-				return xml.substring(startIndex, endIndex);
+			if (end != -1) {
+				return xml.substring(start, end);
 			}
 		}
 

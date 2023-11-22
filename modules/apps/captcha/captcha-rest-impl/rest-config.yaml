@@ -9,4 +9,5 @@ clientDir: "../captcha-rest-client/src/main/java"
 compatibilityVersion: 4
 forcePredictableOperationId: true
 generateBatch: false
+generateGraphQL: false
 testDir: "../captcha-rest-test/src/testIntegration/java"

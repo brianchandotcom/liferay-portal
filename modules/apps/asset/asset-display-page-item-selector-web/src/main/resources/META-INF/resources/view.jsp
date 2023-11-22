@@ -41,7 +41,7 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 				<c:otherwise>
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
-							verticalCard="<%= new DisplayPageTemplateEntryVerticalCard((LayoutPageTemplateEntry)object, renderRequest) %>"
+							verticalCard="<%= new LayoutPageTemplateEntryVerticalCard((LayoutPageTemplateEntry)object, renderRequest) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>

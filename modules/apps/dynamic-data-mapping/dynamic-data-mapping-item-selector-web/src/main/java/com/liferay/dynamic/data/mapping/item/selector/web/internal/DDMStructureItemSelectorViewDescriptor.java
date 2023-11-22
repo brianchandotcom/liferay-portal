@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.item.selector.TableItemView;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -162,6 +163,12 @@ public class DDMStructureItemSelectorViewDescriptor
 		}
 
 		return ddmStructureSearchContainer;
+	}
+
+	@Override
+	public TableItemView getTableItemView(DDMStructure ddmStructure) {
+		return new DDMStructureItemTableItemView(
+			ddmStructure, _groupLocalService, _themeDisplay);
 	}
 
 	@Override

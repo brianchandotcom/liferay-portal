@@ -250,6 +250,44 @@ public class AssetTagLocalServiceTest {
 
 	@FeatureFlags("LPS-194362")
 	@Test
+	public void testGetTagIdsFilterByGroupIdWithCaseSensitive()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			AssetTag expectedAssetTag1 = _assetTagLocalService.addTag(
+				TestPropsValues.getUserId(), _group.getGroupId(), "tAg1",
+				_serviceContext);
+
+			_assetTagLocalService.addTag(
+				TestPropsValues.getUserId(), group.getGroupId(), "tAg1",
+				_serviceContext);
+
+			AssetTag expectedAssetTag2 = _assetTagLocalService.addTag(
+				TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
+				_serviceContext);
+
+			Assert.assertArrayEquals(
+				new long[] {expectedAssetTag1.getTagId()},
+				_assetTagLocalService.getTagIds(
+					new long[] {_group.getGroupId()}, "tAg1"));
+			Assert.assertArrayEquals(
+				new long[] {expectedAssetTag2.getTagId()},
+				_assetTagLocalService.getTagIds(
+					new long[] {_group.getGroupId()}, "TAG1"));
+			Assert.assertArrayEquals(
+				new long[0],
+				_assetTagLocalService.getTagIds(
+					new long[] {group.getGroupId()}, "TAG1"));
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group);
+		}
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
 	public void testGetTagIdsWithCaseSensitive() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 

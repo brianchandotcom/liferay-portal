@@ -352,7 +352,7 @@
 </tr>
 <tr>
 	<td>SOURCE_OPTIONS_SELECT</td>
-	<td>//div[label[contains(.,'Source Options')]]/select</td>
+	<td>//div[label[contains(.,'Source Options')]]/select | //select[contains(@name, 'FDSViewsPortlet_SourceOption')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -377,12 +377,22 @@
 </tr>
 <tr>
 	<td>PRESELECT_VALUE_INPUT</td>
-	<td>//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_fieldName}')] | //input[contains(@aria-label, 'Preselected Values')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRESELECT_VALUE_ITEM</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(., '${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_SORT_OPTION</td>
 	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_sortOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_SET_FRAGMENT_FILTER</td>
+	<td>//button[contains(@class, 'filter-resume') and contains(., '${key_filterName}')]</td>
 	<td></td>
 </tr>
 
@@ -500,6 +510,10 @@
 	<td></td>
 </tr>
 
+	<td>RADIO_BUTTON_OPTION</td>
+	<td>//span[contains(., '${key_optionName}')]/preceding-sibling::input</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

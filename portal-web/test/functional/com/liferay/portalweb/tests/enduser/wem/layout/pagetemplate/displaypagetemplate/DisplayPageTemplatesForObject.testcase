@@ -1292,4 +1292,90 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-199013. View Select From List fragment display success in a Display Page when entry field is empty."
+	@priority = 5
+	test ViewSelectFromListWithEntryFieldEmptyOnAssociatedDisplayPageTemplate {
+		property custom.properties = "feature.flag.LPS-181663=true";
+
+		task ("Given a content page with a Select From List fragment mapped to an object") {
+			Picklist.addPicklistViaAPI(picklistName = "Fruits");
+
+			for (var fruit : list "Apple,Banana") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = ${fruit},
+					itemName = ${fruit},
+					picklistName = "Fruits");
+			}
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Favorite Fruit",
+				fieldName = "favoriteFruit",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder",
+				picklistName = "Fruits");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Purchase Order",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
+
+			PageEditor.publish();
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				displayPageName = "Display Page Name",
+				panel = "General",
+				successMessage = "Go to Entry Display Page");
+
+			PageEditor.publish();
+		}
+
+		task ("When a new submission is created with a entry field empty") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the Success Interaction will be completed") {
+			var objectEntryId = JSONObject.getObjectEntryId(
+				entryValue = "",
+				fieldName = "favoriteFruit",
+				objectName = "PurchaseOrder");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+
+			PageEditor.viewInputStyle(
+				placeholder = "Choose an Option",
+				type = "select-from-list");
+		}
+	}
+
 }

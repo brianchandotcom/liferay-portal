@@ -1722,7 +1722,7 @@
 		</check>
 		<check name="UpgradeSetResultsSetTotalMethodCheck">
 			<category name="Upgrade" />
-			<description name="Replaces methods setResults and setTotal from SearchContainer with only the method setResultsAndTotal" />
+			<description name="Replaces methods setResults and setTotal from SearchContainer with the method setResultsAndTotal only" />
 		</check>
 		<check name="UpgradeVelocityCommentMigrationCheck">
 			<category name="Upgrade" />

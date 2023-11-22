@@ -5,6 +5,7 @@
 
 package com.liferay.notification.internal.upgrade.v3_9_0;
 
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -23,9 +24,30 @@ public class NotificationRecipientSettingUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select notificationRecipientId, companyId, userId, userName " +
-					"from NotificationRecipient");
-			PreparedStatement preparedStatement2 =
+				StringBundler.concat(
+					"select NotificationRecipient.notificationRecipientId, ",
+					"NotificationRecipient.companyId, ",
+					"NotificationRecipient.userId, ",
+					"NotificationRecipient.userName from ",
+					"NotificationRecipient inner join NotificationQueueEntry ",
+					"on NotificationRecipient.classPK = ",
+					"NotificationQueueEntry.notificationQueueEntryId where ",
+					"NotificationQueueEntry.type_ = '",
+					NotificationConstants.TYPE_EMAIL, "'"));
+			ResultSet resultSet1 = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				StringBundler.concat(
+					"select NotificationRecipient.notificationRecipientId, ",
+					"NotificationRecipient.companyId, ",
+					"NotificationRecipient.userId, ",
+					"NotificationRecipient.userName from ",
+					"NotificationRecipient inner join NotificationTemplate on ",
+					"NotificationRecipient.classPK = ",
+					"NotificationTemplate.notificationTemplateId where ",
+					"NotificationTemplate.type_ = '",
+					NotificationConstants.TYPE_EMAIL, "'"));
+			ResultSet resultSet2 = preparedStatement2.executeQuery();
+			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					StringBundler.concat(
@@ -33,32 +55,43 @@ public class NotificationRecipientSettingUpgradeProcess extends UpgradeProcess {
 						"notificationRecipientSettingId, companyId, userId, ",
 						"userName, createDate, modifiedDate, ",
 						"notificationRecipientId, name, value) values (?, ?, ",
-						"?, ?, ?, ?, ?, ?, ?, ?)"));
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+						"?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
-			while (resultSet.next()) {
-				preparedStatement2.setString(1, PortalUUIDUtil.generate());
-				preparedStatement2.setLong(2, increment());
-				preparedStatement2.setLong(3, resultSet.getLong("companyId"));
-				preparedStatement2.setLong(4, resultSet.getLong("userId"));
-				preparedStatement2.setString(
-					5, resultSet.getString("userName"));
-
-				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-				preparedStatement2.setTimestamp(6, timestamp);
-				preparedStatement2.setTimestamp(7, timestamp);
-
-				preparedStatement2.setLong(
-					8, resultSet.getLong("notificationRecipientId"));
-				preparedStatement2.setString(9, "singleRecipient");
-				preparedStatement2.setString(10, StringPool.TRUE);
-
-				preparedStatement2.addBatch();
+			while (resultSet1.next()) {
+				_insertNotificationRecipientSetting(
+					preparedStatement3, resultSet1);
 			}
 
-			preparedStatement2.executeBatch();
+			while (resultSet2.next()) {
+				_insertNotificationRecipientSetting(
+					preparedStatement3, resultSet2);
+			}
+
+			preparedStatement3.executeBatch();
 		}
+	}
+
+	private void _insertNotificationRecipientSetting(
+			PreparedStatement preparedStatement, ResultSet resultSet)
+		throws Exception {
+
+		preparedStatement.setString(1, PortalUUIDUtil.generate());
+		preparedStatement.setLong(2, increment());
+		preparedStatement.setLong(3, resultSet.getLong("companyId"));
+		preparedStatement.setLong(4, resultSet.getLong("userId"));
+		preparedStatement.setString(5, resultSet.getString("userName"));
+
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+		preparedStatement.setTimestamp(6, timestamp);
+		preparedStatement.setTimestamp(7, timestamp);
+
+		preparedStatement.setLong(
+			8, resultSet.getLong("notificationRecipientId"));
+		preparedStatement.setString(9, "singleRecipient");
+		preparedStatement.setString(10, StringPool.TRUE);
+
+		preparedStatement.addBatch();
 	}
 
 }

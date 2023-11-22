@@ -69,7 +69,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 				<aui:validator name="max">99999</aui:validator>
 			</aui:input>
 
-			<p class="text-3 text-secondary" id="<portlet:namespace />autosaveMinutesHiddenDescription"><liferay-ui:message key="set-a-value-in-minutes-between-1-and-99.999" /></p>
+			<p class="text-3 text-secondary" id="<portlet:namespace />autosaveMinutesHiddenDescription"><liferay-ui:message key="set-a-value-in-minutes-between-1-and-99999" /></p>
 		</clay:content-col>
 	</clay:content-row>
 </clay:sheet-section>

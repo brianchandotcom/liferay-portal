@@ -302,6 +302,88 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
+	@summary = "Assert a payment method fields in the Details tab"
+	macro assertPaymentMethodDetails(description = null, active = null, paymentMethodName = null, priority = null) {
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = ${paymentMethodName},
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = ${paymentMethodName});
+
+		if (isSet(description)) {
+			AssertTextEquals(
+				locator1 = "TextInput#DESCRIPTION",
+				value1 = ${description});
+		}
+
+		if (isSet(priority)) {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#PRIORITY_FIELD",
+				value1 = ${priority});
+		}
+
+		if (isSet(active)) {
+			if (${active} == "true") {
+				AssertChecked.assertCheckedNotVisible(
+					key_toggleSwitchLabel = "Active",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+			else if (${active} == "false") {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					key_toggleSwitchLabel = "Active",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
+	@summary = "Assert 'PayPal' and 'PayPal Subscriptions' payment methods Configuration"
+	macro assertPayPalConfiguration(mode = null, clientId = null, merchantId = null) {
+		if (!(isSet(entryName))) {
+			var entryName = "PayPal";
+		}
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = ${entryName},
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
+
+		if (isSet(clientId)) {
+			AssertTextEquals(
+				key_text = "Client ID",
+				locator1 = "TextInput#ANY",
+				value1 = ${clientId});
+		}
+
+		if (isSet(merchantId)) {
+			AssertTextEquals(
+				key_text = "Merchant ID",
+				locator1 = "TextInput#ANY",
+				value1 = ${merchantId});
+		}
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Mode",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = ${mode});
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	@summary = "Default summary"
 	macro avalaraConnection() {
 		AssertTextEquals(

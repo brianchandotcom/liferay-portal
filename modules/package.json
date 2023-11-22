@@ -21,7 +21,7 @@
 		"@types/html-minifier-terser": "5.1.0",
 		"html-webpack-plugin": "5.5.0",
 		"ua-parser-js": "^0.7.30",
-		"webpack": "5.70.0"
+		"webpack": "5.89.0"
 	},
 	"scripts": {
 		"cacheClean": "liferay-npm-scripts cache --clean",

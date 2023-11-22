@@ -127,7 +127,7 @@ public class DLEditFileShortcutDisplayContext {
 	}
 
 	public boolean isPermissionConfigurable() {
-		if (_getFileShortcut() != null) {
+		if (_getFileShortcut() == null) {
 			return true;
 		}
 

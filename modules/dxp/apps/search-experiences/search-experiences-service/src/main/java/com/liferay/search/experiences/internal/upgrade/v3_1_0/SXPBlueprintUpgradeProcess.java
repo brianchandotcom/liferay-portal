@@ -70,13 +70,13 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					if (resultSet.next()) {
 						sxpElementJSONObject.put(
 							"fallbackDescription",
-							_getDefaultValueFromFieldXML(
-								resultSet.getString("description"),
-								"Description")
+							_getDefaultValue(
+								"Description",
+								resultSet.getString("description"))
 						).put(
 							"fallbackTitle",
-							_getDefaultValueFromFieldXML(
-								resultSet.getString("title"), "Title")
+							_getDefaultValue(
+								"Title", resultSet.getString("title"))
 						);
 					}
 					else {
@@ -120,26 +120,26 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return StringPool.BLANK;
 	}
 
-	private String _getDefaultValueFromFieldXML(
-		String fieldXML, String fieldName) {
+	private String _getDefaultValue(
+		String fieldName, String xml) {
 
-		if (Validator.isBlank(fieldXML)) {
+		if (Validator.isBlank(xml)) {
 			return StringPool.BLANK;
 		}
 
 		String fallbackFieldCreationValue = StringBundler.concat(
-			"<", fieldName, " language-id=\"", _getDefaultLocale(fieldXML),
+			"<", fieldName, " language-id=\"", _getDefaultLocale(xml),
 			"\">");
 
-		int startIndex = fieldXML.indexOf(fallbackFieldCreationValue);
+		int startIndex = xml.indexOf(fallbackFieldCreationValue);
 
 		if (startIndex != -1) {
 			startIndex += fallbackFieldCreationValue.length();
 
-			int endIndex = fieldXML.indexOf("</" + fieldName + ">", startIndex);
+			int endIndex = xml.indexOf("</" + fieldName + ">", startIndex);
 
 			if (endIndex != -1) {
-				return fieldXML.substring(startIndex, endIndex);
+				return xml.substring(startIndex, endIndex);
 			}
 		}
 
@@ -201,12 +201,12 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				while (resultSet.next()) {
 					preparedStatement2.setString(
 						1,
-						_getDefaultValueFromFieldXML(
-							resultSet.getString("description"), "Description"));
+						_getDefaultValue(
+							"Description", resultSet.getString("description")));
 					preparedStatement2.setString(
 						2,
-						_getDefaultValueFromFieldXML(
-							resultSet.getString("title"), "Title"));
+						_getDefaultValue(
+							"Title", resultSet.getString("title")));
 					preparedStatement2.setLong(
 						3, resultSet.getLong("sxpElementId"));
 

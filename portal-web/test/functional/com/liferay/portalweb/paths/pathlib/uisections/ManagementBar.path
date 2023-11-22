@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>FILTER_AND_ORDER</td>
-	<td>//nav[contains(@class,'management-bar')]//*[*[normalize-space(text())='Filter and Order']]</td>
+	<td>//nav[contains(@class,'management-bar')]//*[self::button or self::a][.//*[normalize-space(text())='Filter and Order']]</td>
 	<td></td>
 </tr>
 <tr>

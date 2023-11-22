@@ -61,6 +61,80 @@ definition {
 		return ${segmentId};
 	}
 
+	@summary = "Add a segment entry with properties"
+	macro addSegmentWithProperties(filterStringList = null, description = null, workflowAction = null, segmentName = null, groupName = null, site = null, contentTypeList = null, assetCategoryIds = null, assetTagNames = null) {
+		Variables.assertDefined(parameterList = "${contentTypeList},${filterStringList},${groupName},${segmentName}");
+
+		var descriptionMap = JSONSegmentsentrySetter.setDescriptionMap(description = ${description});
+		var list1 = ListUtil.newListFromString(${contentTypeList});
+		var list2 = ListUtil.newListFromString(${filterStringList}, ":");
+		var size = ListUtil.size(${list1});
+		var criteria = "";
+		var i = 0;
+
+		while (${i} != ${size}) {
+			var contentType = ListUtil.get(${list1}, ${i});
+
+			var type = JSONSegmentsentrySetter.setPropertyType(contentType = ${contentType});
+			var typeValue = JSONSegmentsentrySetter.setPropertyTypeValue(contentType = ${contentType});
+			var filterString = ListUtil.get(${list2}, ${i});
+
+			var filterString = StringUtil.replace(${filterString}, "'", "%27");
+
+			if (${i} != 0) {
+				var criteria = StringUtil.add(${criteria}, ",\"${type}\":{\"conjunction\":\"and\",", "");
+			}
+			else {
+				var criteria = StringUtil.add(${criteria}, "\"${type}\":{\"conjunction\":\"and\",", "");
+			}
+
+			var criteria = StringUtil.add(${criteria}, "\"filterString\":\"${filterString}\",", "");
+
+			var criteria = StringUtil.add(${criteria}, "\"typeValue\":\"${typeValue}\"}", "");
+			var i = ${i} + 1;
+		}
+
+		var filterStrings = "";
+		var i = 0;
+
+		while (${i} != ${size}) {
+			var contentType = ListUtil.get(${list1}, ${i});
+
+			var typeValue = JSONSegmentsentrySetter.setPropertyTypeValue(contentType = ${contentType});
+			var filterString = ListUtil.get(${list2}, ${i});
+
+			var filterString = StringUtil.replace(${filterString}, "'", "%27");
+
+			if (${i} != 0) {
+				var filterStrings = StringUtil.add(${filterStrings}, ",\"${typeValue}\":\"${filterString}\"", "");
+			}
+			else {
+				var filterStrings = StringUtil.add(${filterStrings}, "\"${typeValue}\":\"${filterString}\"", "");
+			}
+
+			var i = ${i} + 1;
+		}
+
+		var criteria = StringUtil.add("{\"criteria\":", "{${criteria}},", "");
+
+		var criteria = StringUtil.add(${criteria}, "\"filterStrings\":{${filterStrings}}}", "");
+		var nameMap = JSONSegmentsentrySetter.setNameMap(name = ${segmentName});
+		var serviceContext = JSONSegmentsentrySetter.setServiceContext(
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			groupName = ${groupName},
+			site = ${site},
+			workflowAction = ${workflowAction});
+
+		var segmentId = JSONSegmentsentryAPI._addSegment(
+			criteria = ${criteria},
+			descriptionMap = ${descriptionMap},
+			nameMap = ${nameMap},
+			serviceContext = ${serviceContext});
+
+		return ${segmentId};
+	}
+
 	@summary = "Default summary"
 	macro deleteSegment(groupName = null, segmentName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName}");

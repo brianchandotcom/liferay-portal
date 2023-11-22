@@ -214,6 +214,46 @@ definition {
 		return ${criteria};
 	}
 
+	@summary = "Set property type"
+	macro setPropertyType(contentType = null) {
+		Variables.assertDefined(parameterList = ${contentType});
+
+		if (${contentType} == "Session") {
+			var type = "context";
+		}
+		else if (${contentType} == "User") {
+			var type = "user";
+		}
+		else if (${contentType} == "Segments") {
+			var type = "segments";
+		}
+		else if (${contentType} == "Organization") {
+			var type = "user-organization";
+		}
+
+		return ${type};
+	}
+
+	@summary = "Set property type value"
+	macro setPropertyTypeValue(contentType = null) {
+		Variables.assertDefined(parameterList = ${contentType});
+
+		if (${contentType} == "Session") {
+			var typeValue = "context";
+		}
+		else if (${contentType} == "User") {
+			var typeValue = "model";
+		}
+		else if (${contentType} == "Segments") {
+			var typeValue = "referred";
+		}
+		else if (${contentType} == "Organization") {
+			var typeValue = "model";
+		}
+
+		return ${typeValue};
+	}
+
 	@summary = "Default summary"
 	macro setSegmentCriteria(firstSegmentId = null, secondSegmentId = null) {
 		Variables.assertDefined(parameterList = "${conjunctionOperator},${firstSegmentId},${secondSegmentId}");

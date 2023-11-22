@@ -8,7 +8,6 @@ package com.liferay.portal.db.partition.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.DefaultModelHintsImpl;
 import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
@@ -62,11 +60,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		createControlTable(TEST_CONTROL_TABLE_NAME);
 
-		_controlTableNames = ReflectionTestUtil.getFieldValue(
-			DBInspector.class, "_controlTableNames");
-
-		_controlTableNames.add(StringUtil.toLowerCase(TEST_CONTROL_TABLE_NAME));
-
 		addDBPartitions();
 
 		insertPartitionRequiredData();
@@ -78,7 +71,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		removeDBPartitions();
 
-		dropTable(TEST_CONTROL_TABLE_NAME);
+		dropControlTable(TEST_CONTROL_TABLE_NAME);
 	}
 
 	@After
@@ -455,8 +448,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	private static final String _CLASS_NAME_VALUE = "class.name.test";
-
-	private static Set<String> _controlTableNames;
 
 	@Inject
 	private static ResourceActionLocalService _resourceActionLocalService;

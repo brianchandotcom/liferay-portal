@@ -426,11 +426,15 @@ public class ParallelExecutor<T> {
 						}
 					}
 
-					_runningTasks.removeAll(latestCompletedProcessorTasks);
+					if (!latestCompletedProcessorTasks.isEmpty()) {
+						_completedTasks.addAll(latestCompletedProcessorTasks);
 
-					_runningTasks.addAll(newProcessorTasks);
+						_runningTasks.removeAll(latestCompletedProcessorTasks);
+					}
 
-					_completedTasks.addAll(latestCompletedProcessorTasks);
+					if (!newProcessorTasks.isEmpty()) {
+						_runningTasks.addAll(newProcessorTasks);
+					}
 
 					long millisSinceLastOutput =
 						System.currentTimeMillis() - lastOutputTimeMillis;

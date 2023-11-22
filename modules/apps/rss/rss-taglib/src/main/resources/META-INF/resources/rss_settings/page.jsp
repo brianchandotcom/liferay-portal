@@ -25,67 +25,53 @@ String feedType = (String)request.getAttribute("liferay-rss:rss-settings:feedTyp
 			</clay:row>
 		</c:if>
 
-		<clay:row>
-			<clay:col
-				md="4"
-			>
-				<aui:select label="maximum-items-to-display" name="preferences--rssDelta--" value='<%= GetterUtil.getInteger((String)request.getAttribute("liferay-rss:rss-settings:delta")) %>'>
-					<aui:option label="1" />
-					<aui:option label="2" />
-					<aui:option label="3" />
-					<aui:option label="4" />
-					<aui:option label="5" />
-					<aui:option label="10" />
-					<aui:option label="15" />
-					<aui:option label="20" />
-					<aui:option label="25" />
-					<aui:option label="30" />
-					<aui:option label="40" />
-					<aui:option label="50" />
-					<aui:option label="60" />
-					<aui:option label="70" />
-					<aui:option label="80" />
-					<aui:option label="90" />
-					<aui:option label="100" />
-				</aui:select>
-			</clay:col>
+		<aui:select label="maximum-items-to-display" name="preferences--rssDelta--" value='<%= GetterUtil.getInteger((String)request.getAttribute("liferay-rss:rss-settings:delta")) %>'>
+			<aui:option label="1" />
+			<aui:option label="2" />
+			<aui:option label="3" />
+			<aui:option label="4" />
+			<aui:option label="5" />
+			<aui:option label="10" />
+			<aui:option label="15" />
+			<aui:option label="20" />
+			<aui:option label="25" />
+			<aui:option label="30" />
+			<aui:option label="40" />
+			<aui:option label="50" />
+			<aui:option label="60" />
+			<aui:option label="70" />
+			<aui:option label="80" />
+			<aui:option label="90" />
+			<aui:option label="100" />
+		</aui:select>
 
-			<clay:col
-				md="4"
-			>
-				<aui:select label="display-style" name="preferences--rssDisplayStyle--">
+		<aui:select label="display-style" name="preferences--rssDisplayStyle--">
 
-					<%
-					for (String curDisplayStyle : displayStyles) {
-					%>
+			<%
+			for (String curDisplayStyle : displayStyles) {
+			%>
 
-						<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
+				<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
 
-					<%
-					}
-					%>
+			<%
+			}
+			%>
 
-				</aui:select>
-			</clay:col>
+		</aui:select>
 
-			<clay:col
-				md="4"
-			>
-				<aui:select label="format" name="preferences--rssFeedType--">
+		<aui:select label="format" name="preferences--rssFeedType--">
 
-					<%
-					for (String type : RSSUtil.FEED_TYPES) {
-					%>
+			<%
+			for (String type : RSSUtil.FEED_TYPES) {
+			%>
 
-						<aui:option label="<%= RSSUtil.getFeedTypeName(type) %>" selected="<%= feedType.equals(type) %>" value="<%= type %>" />
+				<aui:option label="<%= RSSUtil.getFeedTypeName(type) %>" selected="<%= feedType.equals(type) %>" value="<%= type %>" />
 
-					<%
-					}
-					%>
+			<%
+			}
+			%>
 
-				</aui:select>
-			</clay:col>
-		</clay:row>
+		</aui:select>
 	</div>
 </div>
 

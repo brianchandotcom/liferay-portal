@@ -127,14 +127,14 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			return StringPool.BLANK;
 		}
 
-		String fallBackFieldCreationValue = StringBundler.concat(
+		String fallbackFieldCreationValue = StringBundler.concat(
 			"<", fieldName, " language-id=\"", _getDefaultLocale(fieldXML),
 			"\">");
 
-		int startIndex = fieldXML.indexOf(fallBackFieldCreationValue);
+		int startIndex = fieldXML.indexOf(fallbackFieldCreationValue);
 
 		if (startIndex != -1) {
-			startIndex += fallBackFieldCreationValue.length();
+			startIndex += fallbackFieldCreationValue.length();
 
 			int endIndex = fieldXML.indexOf("</" + fieldName + ">", startIndex);
 

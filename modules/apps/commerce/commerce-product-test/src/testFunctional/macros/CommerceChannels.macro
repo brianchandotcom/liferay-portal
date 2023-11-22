@@ -414,10 +414,22 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Set configuration for 'PayPal' and 'PayPal Subscriptions' payment methods"
 	macro configurationPaypal(mode = null) {
+		if (!(isSet(entryName))) {
+			var entryName = "PayPal";
+		}
+
+		if (!(isSet(clientId))) {
+			var clientId = "PayPal Client ID";
+		}
+
+		if (!(isSet(clientSecret))) {
+			var clientSecret = "PayPal Client Secret";
+		}
+
 		CommerceEntry.clickTableEntryEditButton(
-			entryName = "PayPal",
+			entryName = ${entryName},
 			table = "Payment Methods");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -429,12 +441,19 @@ definition {
 		Type(
 			key_text = "Client ID",
 			locator1 = "TextInput#ANY",
-			value1 = "PayPal Client ID");
+			value1 = ${clientId});
 
 		Type(
 			key_text = "Client Secret",
 			locator1 = "TextInput#ANY",
-			value1 = "PayPal Client Secret");
+			value1 = ${clientSecret});
+
+		if (isSet(merchantId)) {
+			Type(
+				key_text = "Merchant ID",
+				locator1 = "TextInput#ANY",
+				value1 = ${merchantId});
+		}
 
 		Select(
 			key_fieldLabel = "Mode",

@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Validates that custom objects values and scopes are set as expected in multiple instances after an upgrade is executed."
 	macro viewCustomObjectsUpgrade() {
 		task ("Assert custom object on default instance") {
 			Navigator.openURL();
@@ -102,7 +102,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
+	@summary = "Validates data persistence and that the basic portal functionalities are working correctly across multiple instances after an upgrade is executed."
 	macro viewVirtualInstancesUpgrade() {
 		task ("Assert user on default instance") {
 			ApplicationsMenu.gotoPortlet(

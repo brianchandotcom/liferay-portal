@@ -172,11 +172,17 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 					themeDisplay.getCompanyId(), termCollector.getTerm());
 
 			if (cpSpecificationOption.isFacetable()) {
-				filledFacets.add(
+				Facet cpSpecificationOptionFacet =
 					_portletSharedSearchResponse.getFacet(
 						CPSpecificationOptionFacetsUtil.getIndexFieldName(
 							termCollector.getTerm(),
-							themeDisplay.getLanguageId())));
+							themeDisplay.getLanguageId()));
+
+				if (cpSpecificationOptionFacet == null) {
+					continue;
+				}
+
+				filledFacets.add(cpSpecificationOptionFacet);
 			}
 		}
 

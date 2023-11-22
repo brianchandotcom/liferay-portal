@@ -72,11 +72,18 @@ arguments[0].dispatchEvent(event);
 	}
 
 	function waitForMenuToggleJSMouseOver(locator1) {
-		WaitForSPARefresh();
+		if (selenium.isElementPresent("//html[contains(@class,'lfr-spa-loading')]")) {
+			WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1}, "false");
+			selenium.waitForElementPresent(${locator1});
 
-		selenium.pause(1000);
+			selenium.pause(2000);
+		}
+		else {
+			selenium.waitForElementPresent(${locator1});
+
+			selenium.pause(3000);
+		}
 
 		selenium.mouseOver(${locator1});
 

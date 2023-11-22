@@ -157,19 +157,32 @@ definition {
 	}
 
 	function waitForMenuToggleJSClick(locator1) {
-		WaitForSPARefresh();
+		if (selenium.isElementPresent("//html[contains(@class,'lfr-spa-loading')]")) {
+			WaitForSPARefresh();
 
-		selenium.selectFrame("relative=top");
+			selenium.selectFrame("relative=top");
 
-		if (selenium.isElementPresent("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]")) {
-			selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
+			if (selenium.isElementPresent("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]")) {
+				selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
+			}
+
+			selenium.waitForEditable(${locator1});
+
+			selenium.pause(2000);
+		}
+		else {
+			selenium.selectFrame("relative=top");
+
+			if (selenium.isElementPresent("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]")) {
+				selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
+			}
+
+			selenium.waitForEditable(${locator1});
+
+			selenium.pause(3000);
 		}
 
-		selenium.waitForEditable(${locator1});
-
-		selenium.pause(1000);
-
-		Click();
+		selenium.click(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 

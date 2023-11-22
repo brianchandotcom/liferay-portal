@@ -119,7 +119,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 			() ->
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-						_themeDisplay.getScopeGroupId(),
+						_getGroupId(),
 						ParamUtil.getLong(
 							_httpServletRequest,
 							"layoutPageTemplateCollectionId",

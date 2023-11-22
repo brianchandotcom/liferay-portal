@@ -173,9 +173,8 @@ public class AssetTagLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
 			_serviceContext);
 
-		int actualTagsCount = _assetTagLocalService.getAssetTagsCount();
-
-		Assert.assertEquals(originalTagsCount + 1, actualTagsCount);
+		Assert.assertEquals(
+			originalTagsCount + 1, _assetTagLocalService.getAssetTagsCount());
 	}
 
 	@Test

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 
 import java.util.Date;
 
+import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.protocol.endpoints.AbstractResourceManager;
 import org.wso2.charon3.core.schema.SCIMConstants;
@@ -20,31 +21,36 @@ import org.wso2.charon3.core.schema.SCIMConstants;
  */
 public class ScimGroupUtil {
 
-	public static Group toGroup(UserGroup userGroup) throws Exception {
-		Group group = new Group();
+	public static Group toGroup(UserGroup userGroup) throws CharonException {
+		try {
+			Group group = new Group();
 
-		group.replaceDisplayName(userGroup.getName());
+			group.replaceDisplayName(userGroup.getName());
 
-		Date createDate = userGroup.getCreateDate();
+			Date createDate = userGroup.getCreateDate();
 
-		group.setCreatedInstant(createDate.toInstant());
+			group.setCreatedInstant(createDate.toInstant());
 
-		group.setExternalId(userGroup.getExternalReferenceCode());
-		group.setId(String.valueOf(userGroup.getPrimaryKey()));
+			group.setExternalId(userGroup.getExternalReferenceCode());
+			group.setId(String.valueOf(userGroup.getPrimaryKey()));
 
-		Date modifiedDate = userGroup.getModifiedDate();
+			Date modifiedDate = userGroup.getModifiedDate();
 
-		group.setLastModifiedInstant(modifiedDate.toInstant());
+			group.setLastModifiedInstant(modifiedDate.toInstant());
 
-		group.setLocation(
-			StringBundler.concat(
-				AbstractResourceManager.getResourceEndpointURL(
-					SCIMConstants.GROUP_ENDPOINT),
-				CharPool.FORWARD_SLASH, userGroup.getPrimaryKey()));
-		group.setResourceType(SCIMConstants.GROUP);
-		group.setSchemas();
+			group.setLocation(
+				StringBundler.concat(
+					AbstractResourceManager.getResourceEndpointURL(
+						SCIMConstants.GROUP_ENDPOINT),
+					CharPool.FORWARD_SLASH, userGroup.getPrimaryKey()));
+			group.setResourceType(SCIMConstants.GROUP);
+			group.setSchemas();
 
-		return group;
+			return group;
+		}
+		catch (Exception exception) {
+			throw new CharonException(exception.getMessage(), exception);
+		}
 	}
 
 }

@@ -95,7 +95,7 @@ function Select({
 			<Picker
 				aria-labelledby={name}
 				aria-required={required}
-				data-testId={id}
+				data-testid={id}
 				disabled={readOnly}
 				items={[{items: options, label}]}
 				onSelectionChange={(itemKey: React.Key) => {

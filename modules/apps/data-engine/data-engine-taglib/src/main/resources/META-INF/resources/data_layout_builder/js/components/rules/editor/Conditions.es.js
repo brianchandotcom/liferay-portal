@@ -132,7 +132,6 @@ function FieldLeft({
 	left,
 	onChange,
 	setFieldLeftSelectedKeys,
-	setOperatorValues,
 }) {
 	return (
 		<Timeline.FormGroupItem>
@@ -277,6 +276,7 @@ export function Conditions({
 				conditions.map((condition) => condition.operator)
 			);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {

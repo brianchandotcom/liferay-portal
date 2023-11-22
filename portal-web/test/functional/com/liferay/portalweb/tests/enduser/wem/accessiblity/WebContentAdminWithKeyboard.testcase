@@ -89,4 +89,80 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196842. The user can select the Reverse Sort Direction button via the keyboard."
+	@priority = 4
+	test RevertSortDirectionOfSearchResultsViaKeyboard {
+		task ("Given two web contents with different names") {
+			JSONWebcontent.addWebContent(
+				content = "EMEA Guild",
+				groupName = "Test Site Name",
+				title = "EMEA Guild");
+
+			JSONWebcontent.addWebContent(
+				content = "APAC Guild",
+				groupName = "Test Site Name",
+				title = "APAC Guild");
+		}
+
+		task ("When searching for a term on the web content admin page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Guild");
+
+			ManagementBar.setFilterAndOrder(orderBy = "Title");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "APAC Guild");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "EMEA Guild");
+		}
+
+		task ("The user can reverse sort direction via the keyboard") {
+			KeyPress(
+				locator1 = "ManagementBar#FILTER_AND_ORDER",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+			KeyPress(
+				locator1 = "ManagementBar#ORDER_ICON_GENERIC",
+				value1 = "\ENTER");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "EMEA Guild");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "APAC Guild");
+
+			KeyPress(
+				locator1 = "ManagementBar#FILTER_AND_ORDER",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+			KeyPress(
+				locator1 = "ManagementBar#ORDER_ICON_GENERIC",
+				value1 = "\ENTER");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 1,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "APAC Guild");
+
+			AssertTextEquals.assertPartialText(
+				key_position = 2,
+				locator1 = "LexiconList#LIST_ENTRY_X",
+				value1 = "EMEA Guild");
+		}
+	}
+
 }

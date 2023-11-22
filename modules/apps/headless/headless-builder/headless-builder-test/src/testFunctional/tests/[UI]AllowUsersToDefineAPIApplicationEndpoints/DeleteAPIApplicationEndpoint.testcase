@@ -56,7 +56,7 @@ definition {
 	}
 
 	@priority = 3
-	test CanDeleteAPISchema {
+	test CanDeleteAPIEndpoint {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

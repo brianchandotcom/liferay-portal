@@ -180,6 +180,7 @@ public class ProvisioningRestController extends BaseRestController {
 		}
 
 		appLicenseKey.setLicenseType(licenseType);
+
 		appLicenseKey.setOwner((String)jwt.getClaim("username"));
 		appLicenseKey.setProductId(productPurchase.getProductKey());
 		appLicenseKey.setProductName(
@@ -201,7 +202,7 @@ public class ProvisioningRestController extends BaseRestController {
 			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Created App License Key " + appLicenseKey);
+			_log.info("Created app license key " + appLicenseKey);
 		}
 
 		return appLicenseKey;

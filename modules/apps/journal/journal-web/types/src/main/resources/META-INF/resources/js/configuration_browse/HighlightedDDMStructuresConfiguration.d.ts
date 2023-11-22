@@ -20,4 +20,11 @@ export default function HighlightedDDMStructuresConfiguration({
 	portletNamespace,
 	selectDDMStructureURL,
 }: Props): JSX.Element;
+export declare function itemSelectorValueToDDMStructure(item: {
+	value: string;
+}): DDMStructure;
+export declare function removeDuplicates<T>(
+	list: T[],
+	getElementId: (element: T) => string
+): T[];
 export {};

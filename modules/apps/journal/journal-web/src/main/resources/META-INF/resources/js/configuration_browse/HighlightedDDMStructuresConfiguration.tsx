@@ -95,7 +95,9 @@ export default function HighlightedDDMStructuresConfiguration({
 	);
 }
 
-function itemSelectorValueToDDMStructure(item: {value: string}): DDMStructure {
+export function itemSelectorValueToDDMStructure(item: {
+	value: string;
+}): DDMStructure {
 	const parsedValue = JSON.parse(item.value) as {
 		ddmstructureid: string;
 		name: string;
@@ -109,7 +111,7 @@ function itemSelectorValueToDDMStructure(item: {value: string}): DDMStructure {
 	};
 }
 
-function removeDuplicates<T>(
+export function removeDuplicates<T>(
 	list: T[],
 	getElementId: (element: T) => string
 ): T[] {

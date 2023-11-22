@@ -104,16 +104,16 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return elementInstancesJSONArray.toString();
 	}
 
-	private String _getDefaultLocale(String xmlInput) {
-		int start = xmlInput.indexOf("default-locale=\"");
+	private String _getDefaultLocale(String xml) {
+		int start = xml.indexOf("default-locale=\"");
 
 		if (start != -1) {
 			start += "default-locale=\"".length();
 
-			int end = xmlInput.indexOf("\"", start);
+			int end = xml.indexOf("\"", start);
 
 			if (end != -1) {
-				return xmlInput.substring(start, end);
+				return xml.substring(start, end);
 			}
 		}
 

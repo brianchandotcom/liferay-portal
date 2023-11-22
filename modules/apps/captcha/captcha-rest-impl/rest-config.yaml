@@ -8,4 +8,5 @@ author: "Loc Pham"
 clientDir: "../captcha-rest-client/src/main/java"
 compatibilityVersion: 2
 forcePredictableOperationId: true
+generateGraphQL: false
 testDir: "../captcha-rest-test/src/testIntegration/java"

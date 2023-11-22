@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -48,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -79,6 +82,13 @@ public class AssetTagLocalServiceTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test(expected = DuplicateTagException.class)
@@ -409,6 +419,32 @@ public class AssetTagLocalServiceTest {
 		_assetTagLocalService.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(100), _serviceContext);
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testSearchTagsWithCaseInsensitive() throws PortalException {
+		String[] tagNames = {"tag1", "Tag1", "TAG1"};
+
+		_addAssetTags(tagNames);
+
+		for (String tagName : tagNames) {
+			BaseModelSearchResult<AssetTag> baseModelSearchResult =
+				_assetTagLocalService.searchTags(
+					new long[] {_group.getGroupId()}, tagName,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertNotNull(baseModelSearchResult);
+
+			Assert.assertEquals(3, baseModelSearchResult.getLength());
+
+			Assert.assertTrue(
+				ArrayUtil.containsAll(
+					TransformUtil.transformToArray(
+						baseModelSearchResult.getBaseModels(),
+						AssetTag::getName, String.class),
+					tagNames));
+		}
 	}
 
 	@FeatureFlags("LPS-194362")

@@ -442,6 +442,20 @@ export function Conditions({
 															type:
 																ACTIONS_TYPES.DELETE_CONDITION,
 														});
+														operatorValues.splice(
+															index,
+															1
+														);
+														setOperatorValues(
+															operatorValues
+														);
+														fieldLeftSelectedKeys.splice(
+															index,
+															1
+														);
+														setFieldLeftSelectedKeys(
+															fieldLeftSelectedKeys
+														);
 														modal.onClose();
 													}}
 												>

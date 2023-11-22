@@ -146,12 +146,12 @@ export function ModalAddObjectLayoutTab({
 	const objectRelationshipItems = useMemo(() => {
 		const availableObjectRelationships: ObjectRelationshipItem[] = [];
 
-		objectRelationships.forEach(({inLayout, label, name, reverse}) => {
+		objectRelationships.forEach(({id, inLayout, label, name, reverse}) => {
 			if (!inLayout) {
 				availableObjectRelationships.push({
 					label: getLocalizableLabel(creationLanguageId, label, name),
 					reverse,
-					value: name,
+					value: id.toString(),
 				});
 			}
 		});
@@ -258,7 +258,7 @@ export function ModalAddObjectLayoutTab({
 							label={Liferay.Language.get('relationship')}
 							onSelectionChange={(value) => {
 								const selectedObjectRelationship = objectRelationships.find(
-									({name}) => name === value
+									({id}) => id.toString() === value
 								);
 
 								setSelectedRelationship(
@@ -270,7 +270,7 @@ export function ModalAddObjectLayoutTab({
 								});
 							}}
 							required
-							selectedKey={selectedRelationship?.name}
+							selectedKey={selectedRelationship?.id.toString()}
 						>
 							{({label, reverse, value}) => {
 								const relationshipInfo = getRelationshipInfo(

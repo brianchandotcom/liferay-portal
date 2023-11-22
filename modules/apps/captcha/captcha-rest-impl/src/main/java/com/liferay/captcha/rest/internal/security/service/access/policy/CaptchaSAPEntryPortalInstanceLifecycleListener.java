@@ -46,10 +46,8 @@ public class CaptchaSAPEntryPortalInstanceLifecycleListener
 	}
 
 	private void _addSAPEntry(long companyId) throws PortalException {
-		String name = _SAP_ENTRY_OBJECT_ARRAY[0];
-
 		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			companyId, name);
+			companyId, "CAPTCHA_DEFAULT");
 
 		if (sapEntry != null) {
 			return;
@@ -61,18 +59,13 @@ public class CaptchaSAPEntryPortalInstanceLifecycleListener
 
 		_sapEntryLocalService.addSAPEntry(
 			_userLocalService.getGuestUserId(companyId),
-			_SAP_ENTRY_OBJECT_ARRAY[1], true, true, name, map,
-			new ServiceContext());
+			StringBundler.concat(
+				"com.liferay.captcha.rest.internal.resource.v1_0.",
+				"SimpleCaptchaResourceImpl#getSimpleCaptcha\n",
+				"com.liferay.captcha.rest.internal.resource.v1_0.",
+				"SimpleCaptchaResourceImpl#postSimpleCaptcha"),
+			true, true, "CAPTCHA_DEFAULT", map, new ServiceContext());
 	}
-
-	private static final String[] _SAP_ENTRY_OBJECT_ARRAY = {
-		"CAPTCHA_DEFAULT",
-		StringBundler.concat(
-			"com.liferay.captcha.rest.internal.resource.v1_0.",
-			"CaptchaResourceImpl#getSimpleCaptcha\n",
-			"com.liferay.captcha.rest.internal.resource.v1_0.",
-			"CaptchaResourceImpl#postSimpleCaptcha")
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CaptchaSAPEntryPortalInstanceLifecycleListener.class);

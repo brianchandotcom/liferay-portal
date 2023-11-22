@@ -52,11 +52,11 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(fallbackDescription)) {
+		if (Validator.isNull(fallbackDescription)) {
 			fallbackDescription = descriptionMap.get(LocaleUtil.getDefault());
 		}
 
-		if (Validator.isBlank(fallbackTitle)) {
+		if (Validator.isNull(fallbackTitle)) {
 			fallbackTitle = titleMap.get(LocaleUtil.getDefault());
 		}
 

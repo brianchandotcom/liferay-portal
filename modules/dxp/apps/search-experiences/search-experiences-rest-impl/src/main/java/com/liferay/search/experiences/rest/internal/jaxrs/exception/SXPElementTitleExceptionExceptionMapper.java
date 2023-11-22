@@ -7,7 +7,7 @@ package com.liferay.search.experiences.rest.internal.jaxrs.exception;
 
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
+import com.liferay.search.experiences.exception.SXPElementTitleException;
 
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -22,21 +22,19 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Search.Experiences.REST)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Search.Experiences.REST.DuplicateSXPElementExternalReferenceCodeExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Search.Experiences.REST.SXPElementTitleExceptionExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class DuplicateSXPElementExternalReferenceCodeExceptionMapper
-	extends BaseExceptionMapper
-		<DuplicateSXPElementExternalReferenceCodeException> {
+public class SXPElementTitleExceptionExceptionMapper
+	extends BaseExceptionMapper<SXPElementTitleException> {
 
 	@Override
 	protected Problem getProblem(
-		DuplicateSXPElementExternalReferenceCodeException
-			duplicateSXPElementExternalReferenceCodeException) {
+		SXPElementTitleException sxpElementTitleException) {
 
-		return new Problem(duplicateSXPElementExternalReferenceCodeException);
+		return new Problem(sxpElementTitleException);
 	}
 
 }

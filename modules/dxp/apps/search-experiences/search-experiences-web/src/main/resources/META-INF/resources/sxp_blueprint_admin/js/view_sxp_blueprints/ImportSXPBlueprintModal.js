@@ -103,7 +103,7 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 						}
 						else if (
 							responseContent.type.includes(
-								'SXPElementNoDefaultLocaleTitleException'
+								'SXPElementTitleException'
 							)
 						) {
 							_handleFormError(

@@ -28,7 +28,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
-import com.liferay.search.experiences.exception.SXPElementNoDefaultLocaleTitleException;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
@@ -232,8 +231,6 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	@Override
 	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception {
-		_validateTitleMapDefaultLocale(sxpElement);
-
 		return _sxpElementDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
@@ -415,19 +412,6 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				sxpElement.getId())) {
 
 			throw new DuplicateSXPElementExternalReferenceCodeException();
-		}
-	}
-
-	private void _validateTitleMapDefaultLocale(SXPElement sxpElement)
-		throws Exception {
-
-		if (Validator.isBlank(
-				sxpElement.getTitle_i18n(
-				).get(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault())
-				))) {
-
-			throw new SXPElementNoDefaultLocaleTitleException();
 		}
 	}
 

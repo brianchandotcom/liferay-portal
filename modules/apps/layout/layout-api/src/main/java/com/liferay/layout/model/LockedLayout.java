@@ -15,14 +15,14 @@ import java.util.Date;
 public class LockedLayout implements Serializable {
 
 	public LockedLayout(
-		long classPK, Date lastAutoSaveDate, String name, long plid,
-		String type, String userName) {
+		long classPK, Date lastAutoSaveDate, LockedLayoutType lockedLayoutType,
+		String name, long plid, String userName) {
 
 		_classPK = classPK;
 		_lastAutoSaveDate = lastAutoSaveDate;
+		_lockedLayoutType = lockedLayoutType;
 		_name = name;
 		_plid = plid;
-		_type = type;
 		_userName = userName;
 	}
 
@@ -34,6 +34,10 @@ public class LockedLayout implements Serializable {
 		return _lastAutoSaveDate;
 	}
 
+	public LockedLayoutType getLockedLayoutType() {
+		return _lockedLayoutType;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -42,19 +46,15 @@ public class LockedLayout implements Serializable {
 		return _plid;
 	}
 
-	public String getType() {
-		return _type;
-	}
-
 	public String getUserName() {
 		return _userName;
 	}
 
 	private final long _classPK;
 	private final Date _lastAutoSaveDate;
+	private final LockedLayoutType _lockedLayoutType;
 	private final String _name;
 	private final long _plid;
-	private final String _type;
 	private final String _userName;
 
 }

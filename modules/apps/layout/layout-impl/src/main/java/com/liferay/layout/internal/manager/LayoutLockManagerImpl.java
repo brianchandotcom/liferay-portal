@@ -9,6 +9,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.configuration.LockedLayoutsGroupConfiguration;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
+import com.liferay.layout.model.LockedLayoutType;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -186,10 +187,10 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 			lockedLayouts.add(
 				new LockedLayout(
-					classPK, (Date)columns[1], layout.getName(locale),
-					GetterUtil.getLong(columns[2]),
-					_getLayoutType(
-						classPK, locale, GetterUtil.getString(columns[3])),
+					classPK, (Date)columns[1],
+					_getLockedLayoutType(
+						classPK, GetterUtil.getString(columns[3])),
+					layout.getName(locale), GetterUtil.getLong(columns[2]),
 					GetterUtil.getString(columns[4])));
 		}
 
@@ -395,64 +396,31 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		return lastAutosaveDate;
 	}
 
-	private String _getLayoutPageTemplateEntryTypeLabel(
-		LayoutPageTemplateEntry layoutPageTemplateEntry, Locale locale) {
+	private LockedLayoutType _getLayoutPageTemplateEntryTypeLabel(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.BASIC)) {
 
-			return _language.get(locale, "content-page-template");
+			return LockedLayoutType.CONTENT_PAGE_TEMPLATE;
 		}
 
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE)) {
 
-			return _language.get(locale, "display-page-template");
+			return LockedLayoutType.DISPLAY_PAGE_TEMPLATE;
 		}
 
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
-			return _language.get(locale, "master-page");
+			return LockedLayoutType.MASTER_PAGE;
 		}
 
-		return StringPool.BLANK;
-	}
-
-	private String _getLayoutType(long classPK, Locale locale, String type) {
-		if (Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY)) {
-			return _language.get(locale, "display-page-template");
-		}
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
-			return _language.get(locale, "collection-page");
-		}
-
-		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-			return StringPool.BLANK;
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(classPK);
-
-		if (layoutPageTemplateEntry != null) {
-			return _getLayoutPageTemplateEntryTypeLabel(
-				layoutPageTemplateEntry, locale);
-		}
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByPlid(classPK);
-
-		if (layoutUtilityPageEntry != null) {
-			return _language.get(locale, "utility-page");
-		}
-
-		return _language.get(locale, "content-page");
+		return null;
 	}
 
 	private String _getLockedLayoutsGroupConfigurationFilterString(
@@ -509,6 +477,39 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		}
 
 		return lockedLayoutsGroupConfigurations;
+	}
+
+	private LockedLayoutType _getLockedLayoutType(long classPK, String type) {
+		if (Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY)) {
+			return LockedLayoutType.DISPLAY_PAGE_TEMPLATE;
+		}
+
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
+			return LockedLayoutType.COLLECTION_PAGE;
+		}
+
+		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+			return null;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(classPK);
+
+		if (layoutPageTemplateEntry != null) {
+			return _getLayoutPageTemplateEntryTypeLabel(
+				layoutPageTemplateEntry);
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(classPK);
+
+		if (layoutUtilityPageEntry != null) {
+			return LockedLayoutType.UTILITY_PAGE;
+		}
+
+		return LockedLayoutType.CONTENT_PAGE;
 	}
 
 	@Reference

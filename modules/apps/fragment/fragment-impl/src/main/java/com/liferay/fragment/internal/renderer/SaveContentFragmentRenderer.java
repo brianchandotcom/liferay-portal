@@ -77,8 +77,6 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 
 		SavedContentTag savedContentTag = new SavedContentTag();
 
-		savedContentTag.isViewMode(fragmentRendererContext.isViewMode());
-
 		Tuple displayObject = getDisplayObject(
 			fragmentRendererContext, httpServletRequest);
 
@@ -94,6 +92,7 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 		savedContentTag.setGroupId(themeDisplay.getScopeGroupId());
 
 		savedContentTag.setInTrash(false);
+		savedContentTag.setViewMode(fragmentRendererContext.isViewMode());
 
 		try {
 			savedContentTag.doTag(httpServletRequest, httpServletResponse);

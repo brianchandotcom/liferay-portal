@@ -25,6 +25,121 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-190119 (TC-1 & TC-2 & TC-3). Admin User can Generate and Revoke SCIM Access Tokens."
+	@priority = 5
+	test AdminUserCanGenerateAndRevokeSCIMTokens {
+		property custom.properties = "feature.flag.LPS-96845=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Admin User can Generate SCIM a Access Token") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "SCIM",
+				configurationName = "SCIM",
+				configurationScope = "Virtual Instance Scope");
+
+			SCIM.configureSCIM(
+				applicationName = "Name",
+				generateAccessToken = "Yeah",
+				matcherField = "userName");
+		}
+
+		task ("When: It is verified that the Token exists") {
+			WaitForElementPresent(locator1 = "SCIM#ACCESS_TOKEN_FIELD");
+
+			var accessTokenFieldFilled = selenium.getAttribute("SCIM#ACCESS_TOKEN_FIELD_VALUE");
+
+			TestUtils.assertNotEquals(
+				actual = ${accessTokenFieldFilled},
+				expected = "");
+		}
+
+		task ("Then: Verify that Admin User can Revoke the Token (and log out after it)") {
+			Button.click(button = "Revoke");
+
+			AssertConfirm(value1 = "Are you sure you want to revoke all access tokens?");
+
+			WaitForElementPresent(locator1 = "SCIM#ACCESS_TOKEN_FIELD");
+
+			var accessTokenFieldEmpty = selenium.getAttribute("SCIM#ACCESS_TOKEN_FIELD_VALUE");
+
+			TestUtils.assertEquals(
+				actual = ${accessTokenFieldEmpty},
+				expected = "");
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a use case for LPS-190119 (TC-2 & TC-5). Admin User can Generate and Revoke SCIM Access Tokens on a new Virtual Instance."
+	@priority = 5
+	test AdminUserCanGenerateAndRevokeSCIMTokensOnVirtualInstance {
+		property custom.properties = "feature.flag.LPS-96845=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: A new virtual instance is created and Admin User Generates a SCIM Access Token") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.logoutPG();
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://www.able.com:8080",
+				configurationCategory = "SCIM",
+				configurationName = "SCIM",
+				configurationScope = "Virtual Instance Scope");
+
+			SCIM.configureSCIM(
+				applicationName = "Name",
+				generateAccessToken = "Yeah",
+				matcherField = "email");
+		}
+
+		task ("When: It is verified that the Token exists") {
+			WaitForElementPresent(locator1 = "SCIM#ACCESS_TOKEN_FIELD");
+
+			var accessTokenFieldFilled = selenium.getAttribute("SCIM#ACCESS_TOKEN_FIELD_VALUE");
+
+			TestUtils.assertNotEquals(
+				actual = ${accessTokenFieldFilled},
+				expected = "");
+		}
+
+		task ("Then: Verify that Admin User can Revoke the Token (and log out after it)") {
+			Button.click(button = "Revoke");
+
+			AssertConfirm(value1 = "Are you sure you want to revoke all access tokens?");
+
+			WaitForElementPresent(locator1 = "SCIM#ACCESS_TOKEN_FIELD");
+
+			var accessTokenFieldEmpty = selenium.getAttribute("SCIM#ACCESS_TOKEN_FIELD_VALUE");
+
+			TestUtils.assertEquals(
+				actual = ${accessTokenFieldEmpty},
+				expected = "");
+
+			User.logoutPG();
+		}
+	}
+
 	@description = "This is a use case for LPS-190327. TC1: Verify the grace period should work after generating a new access token."
 	@priority = 4
 	test GracePeriodShouldBeTriggerredWhenGenerateNewAccessToken {

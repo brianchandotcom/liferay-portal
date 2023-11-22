@@ -6,7 +6,6 @@
 package com.liferay.search.experiences.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -21,12 +20,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.NoSuchSXPElementException;
+import com.liferay.search.experiences.exception.SXPElementTitleException;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -89,6 +91,50 @@ public class SXPElementLocalServiceTest {
 
 		Assert.assertNotNull(sxpElement.getExternalReferenceCode());
 		Assert.assertEquals("1.0", sxpElement.getVersion());
+
+		// FallbackDescription and fallbackTitle are present
+
+		String fallbackDescription = RandomTestUtil.randomString();
+		String fallbackTitle = RandomTestUtil.randomString();
+
+		SXPElement fallbackFieldsSXPElement = _addSXPElement(
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			fallbackDescription, fallbackTitle,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()));
+
+		Assert.assertEquals(
+			fallbackDescription,
+			fallbackFieldsSXPElement.getFallbackDescription());
+		Assert.assertEquals(
+			fallbackTitle, fallbackFieldsSXPElement.getFallbackTitle());
+
+		// FallbackDescription and fallbackTitle are not present
+
+		String description = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
+
+		SXPElement noFallbackFieldsSXPElement = _addSXPElement(
+			Collections.singletonMap(LocaleUtil.US, description), null, null,
+			Collections.singletonMap(LocaleUtil.US, title));
+
+		Assert.assertEquals(
+			description, noFallbackFieldsSXPElement.getFallbackDescription());
+		Assert.assertEquals(
+			title, noFallbackFieldsSXPElement.getFallbackTitle());
+
+		// The title for the default locale is blank
+
+		try {
+			_addSXPElement(
+				Collections.singletonMap(LocaleUtil.SPAIN, description),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				Collections.singletonMap(LocaleUtil.SPAIN, title));
+		}
+		catch (SXPElementTitleException sxpElementTitleException) {
+			Assert.assertNotNull(sxpElementTitleException);
+		}
 	}
 
 	@Test
@@ -150,6 +196,33 @@ public class SXPElementLocalServiceTest {
 		_sxpElementLocalService.updateSXPElement(sxpElement2);
 	}
 
+	private SXPElement _addSXPElement(
+			Map<Locale, String> descriptionMap, String fallbackDescription,
+			String fallbackTitle, Map<Locale, String> titleMap)
+		throws Exception {
+
+		return _addSXPElement(
+			descriptionMap, RandomTestUtil.randomString(), fallbackDescription,
+			fallbackTitle, titleMap, TestPropsValues.getUserId());
+	}
+
+	private SXPElement _addSXPElement(
+			Map<Locale, String> descriptionMap, String externalReferenceCode,
+			String fallbackDescription, String fallbackTitle,
+			Map<Locale, String> titleMap, long userId)
+		throws Exception {
+
+		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
+			externalReferenceCode, userId, descriptionMap, "{}",
+			fallbackDescription, fallbackTitle, false,
+			RandomTestUtil.randomString(), titleMap, 0,
+			ServiceContextTestUtil.getServiceContext());
+
+		_sxpElements.add(sxpElement);
+
+		return sxpElement;
+	}
+
 	private SXPElement _addSXPElement(String externalReferenceCode)
 		throws Exception {
 
@@ -160,18 +233,14 @@ public class SXPElementLocalServiceTest {
 	private SXPElement _addSXPElement(String externalReferenceCode, long userId)
 		throws Exception {
 
-		String title = RandomTestUtil.randomString();
-
-		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
-			externalReferenceCode, userId,
-			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK), "{}",
-			StringPool.BLANK, title, false, RandomTestUtil.randomString(),
-			Collections.singletonMap(LocaleUtil.US, title), 0,
-			ServiceContextTestUtil.getServiceContext());
-
-		_sxpElements.add(sxpElement);
-
-		return sxpElement;
+		return _addSXPElement(
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			externalReferenceCode, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			userId);
 	}
 
 	@Inject

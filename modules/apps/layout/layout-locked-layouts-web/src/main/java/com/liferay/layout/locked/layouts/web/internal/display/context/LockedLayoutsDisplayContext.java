@@ -85,6 +85,20 @@ public class LockedLayoutsDisplayContext {
 		throws PortalException {
 
 		if (lockedLayout.getLockedLayoutType() ==
+				LockedLayoutType.CONTENT_PAGE_TEMPLATE) {
+
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					_portal.getHttpServletRequest(_liferayPortletRequest),
+					_themeDisplay.getScopeGroup(),
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0,
+					0, PortletRequest.RENDER_PHASE)
+			).setTabs1(
+				"page-templates"
+			).buildString();
+		}
+
+		if (lockedLayout.getLockedLayoutType() ==
 				LockedLayoutType.DISPLAY_PAGE_TEMPLATE) {
 
 			return PortletURLBuilder.create(
@@ -95,6 +109,20 @@ public class LockedLayoutsDisplayContext {
 					0, PortletRequest.RENDER_PHASE)
 			).setTabs1(
 				"display-page-templates"
+			).buildString();
+		}
+
+		if (lockedLayout.getLockedLayoutType() ==
+				LockedLayoutType.MASTER_PAGE) {
+
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					_portal.getHttpServletRequest(_liferayPortletRequest),
+					_themeDisplay.getScopeGroup(),
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0,
+					0, PortletRequest.RENDER_PHASE)
+			).setTabs1(
+				"master-layouts"
 			).buildString();
 		}
 

@@ -14,15 +14,11 @@ import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.captcha.Captcha;
-import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.NotAcceptableException;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,23 +66,9 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 
 		_checkSimpleCaptchaConfiguration();
 
-		try {
-			CaptchaTokenUtil.checkAnswer(
-				contextCompany, simpleCaptcha.getToken(),
-				simpleCaptcha.getAnswer());
-		}
-		catch (CaptchaTextException captchaTextException) {
-			throw new NotAcceptableException(
-				captchaTextException.getMessage(),
-				Response.status(
-					Response.Status.NOT_ACCEPTABLE
-				).entity(
-					getSimpleCaptchaChallenge()
-				).build());
-		}
-		catch (Exception exception) {
-			throw new BadRequestException(exception.getMessage());
-		}
+		CaptchaTokenUtil.checkAnswer(
+			contextCompany, simpleCaptcha.getToken(),
+			simpleCaptcha.getAnswer());
 	}
 
 	private void _checkSimpleCaptchaConfiguration() throws Exception {

@@ -6,15 +6,15 @@
 package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.JSImportMapsEntryCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.JSImportMapsEntryCETImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.portlet.PortletRequest;
@@ -23,59 +23,53 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class JSImportMapsEntryCETImplFactoryImpl
-	implements CETImplFactory<JSImportMapsEntryCET> {
-
-	@Override
-	public JSImportMapsEntryCET create(
-			ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
-
-		return new JSImportMapsEntryCETImpl(clientExtensionEntry);
-	}
-
-	@Override
-	public JSImportMapsEntryCET create(PortletRequest portletRequest)
-		throws PortalException {
-
-		return new JSImportMapsEntryCETImpl(portletRequest);
-	}
-
-	@Override
-	public JSImportMapsEntryCET create(
-			String baseURL, long buildTimestamp, long companyId,
-			String description, String externalReferenceCode, String name,
-			Properties properties, String sourceCodeURL,
-			UnicodeProperties unicodeProperties)
-		throws PortalException {
-
-		return new JSImportMapsEntryCETImpl(
-			baseURL, buildTimestamp, companyId, description,
-			externalReferenceCode, name, properties, sourceCodeURL,
-			unicodeProperties);
-	}
+	extends BaseCETImplFactory<JSImportMapsEntryCET> {
 
 	@Override
 	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
-			UnicodeProperties oldTypeSettingsUnicodeProperties)
+			JSImportMapsEntryCET newJSImportMapsEntryCET,
+			JSImportMapsEntryCET oldJSImportMapsEntryCET)
 		throws PortalException {
 
-		JSImportMapsEntryCET jsImportMapsEntryCET =
-			new JSImportMapsEntryCETImpl(
-				StringPool.BLANK, 0, newTypeSettingsUnicodeProperties);
-
-		if (Validator.isNull(jsImportMapsEntryCET.getBareSpecifier())) {
+		if (Validator.isNull(newJSImportMapsEntryCET.getBareSpecifier())) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"Bare specifier is null", "please-enter-a-bare-specifier");
 		}
 
-		String url = jsImportMapsEntryCET.getURL();
+		String url = newJSImportMapsEntryCET.getURL();
 
 		if (!Validator.isUrl(url, true)) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"Invalid JavaScript URL: " + url, "javascript-url-x-is-invalid",
 				url);
 		}
+	}
+
+	@Override
+	protected JSImportMapsEntryCET create(
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
+
+		return new JSImportMapsEntryCETImpl(
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
+	}
+
+	@Override
+	protected UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest) {
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"bareSpecifier",
+			ParamUtil.getString(portletRequest, "bareSpecifier")
+		).put(
+			"url", ParamUtil.getString(portletRequest, "url")
+		).build();
 	}
 
 }

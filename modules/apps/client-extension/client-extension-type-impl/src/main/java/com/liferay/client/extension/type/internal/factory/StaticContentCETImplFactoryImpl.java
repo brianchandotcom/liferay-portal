@@ -6,15 +6,15 @@
 package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.StaticContentCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.StaticContentCETImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.portlet.PortletRequest;
@@ -23,44 +23,13 @@ import javax.portlet.PortletRequest;
  * @author Gregory Amerson
  */
 public class StaticContentCETImplFactoryImpl
-	implements CETImplFactory<StaticContentCET> {
-
-	@Override
-	public StaticContentCET create(ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
-
-		return new StaticContentCETImpl(clientExtensionEntry);
-	}
-
-	@Override
-	public StaticContentCET create(PortletRequest portletRequest)
-		throws PortalException {
-
-		return new StaticContentCETImpl(portletRequest);
-	}
-
-	@Override
-	public StaticContentCET create(
-			String baseURL, long buildTimestamp, long companyId,
-			String description, String externalReferenceCode, String name,
-			Properties properties, String sourceCodeURL,
-			UnicodeProperties unicodeProperties)
-		throws PortalException {
-
-		return new StaticContentCETImpl(
-			baseURL, buildTimestamp, companyId, description,
-			externalReferenceCode, name, properties, sourceCodeURL,
-			unicodeProperties);
-	}
+	extends BaseCETImplFactory<StaticContentCET> {
 
 	@Override
 	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
-			UnicodeProperties oldTypeSettingsUnicodeProperties)
+			StaticContentCET newStaticContentCET,
+			StaticContentCET oldStaticContentCET)
 		throws PortalException {
-
-		StaticContentCET newStaticContentCET = new StaticContentCETImpl(
-			StringPool.NEW_LINE, 0, newTypeSettingsUnicodeProperties);
 
 		String url = newStaticContentCET.getURL();
 
@@ -68,6 +37,30 @@ public class StaticContentCETImplFactoryImpl
 			throw new ClientExtensionEntryTypeSettingsException(
 				"Invalid URL: " + url, "url-x-is-invalid", url);
 		}
+	}
+
+	@Override
+	protected StaticContentCET create(
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
+
+		return new StaticContentCETImpl(
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
+	}
+
+	@Override
+	protected UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest) {
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"url", ParamUtil.getString(portletRequest, "url")
+		).build();
 	}
 
 }

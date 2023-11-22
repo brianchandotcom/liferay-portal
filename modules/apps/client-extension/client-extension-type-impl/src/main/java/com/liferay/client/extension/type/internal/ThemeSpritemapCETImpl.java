@@ -6,17 +6,12 @@
 package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.ThemeSpritemapCET;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
+import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Iván Zaera Avellón
@@ -24,39 +19,16 @@ import javax.portlet.PortletRequest;
 public class ThemeSpritemapCETImpl
 	extends BaseCETImpl implements ThemeSpritemapCET {
 
-	public ThemeSpritemapCETImpl(ClientExtensionEntry clientExtensionEntry) {
-		super(clientExtensionEntry);
-	}
-
-	public ThemeSpritemapCETImpl(PortletRequest portletRequest) {
-		this(
-			StringPool.BLANK, 0,
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				"enableSVG4Everybody",
-				ParamUtil.getString(portletRequest, "enableSVG4Everybody")
-			).put(
-				"url", ParamUtil.getString(portletRequest, "url")
-			).build());
-	}
-
 	public ThemeSpritemapCETImpl(
-		String baseURL, long buildTimestamp, long companyId, String description,
-		String externalReferenceCode, String name, Properties properties,
-		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		super(
-			baseURL, buildTimestamp, companyId, description,
-			externalReferenceCode, name, properties, sourceCodeURL,
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
 			typeSettingsUnicodeProperties);
-	}
-
-	public ThemeSpritemapCETImpl(
-		String baseURL, long buildTimestamp,
-		UnicodeProperties typeSettingsUnicodeProperties) {
-
-		super(baseURL, buildTimestamp, typeSettingsUnicodeProperties);
 	}
 
 	@Override

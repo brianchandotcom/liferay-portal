@@ -22,16 +22,41 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CETImplFactory<T extends CET> {
 
+	/**
+	 * Create a CET object of type T from a {@link ClientExtensionEntry} object.
+	 *
+	 * This method is used when a client extension is configured from the
+	 * {@link com.liferay.client.extension.service.ClientExtensionEntryService}.
+	 *
+	 * @review
+	 */
 	public T create(ClientExtensionEntry clientExtensionEntry)
 		throws PortalException;
 
+	/**
+	 * Create a partial CET object of type T from a {@link PortletRequest}
+	 * object.
+	 *
+	 * This method is used to create temporary CET objects of type T to be used
+	 * when rendering the administration UI.
+	 *
+	 * @review
+	 */
 	public T create(PortletRequest portletRequest) throws PortalException;
 
+	/**
+	 * Create a CET object of type T from given values.
+	 *
+	 * This method is used when a client extension is deployed from a Liferay
+	 * Workspace.
+	 *
+	 * @review
+	 */
 	public T create(
 			String baseURL, long buildTimestamp, long companyId,
 			String description, String externalReferenceCode, String name,
 			Properties properties, String sourceCodeURL,
-			UnicodeProperties toTypeSettingsUnicodeProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
 
 	public void validate(

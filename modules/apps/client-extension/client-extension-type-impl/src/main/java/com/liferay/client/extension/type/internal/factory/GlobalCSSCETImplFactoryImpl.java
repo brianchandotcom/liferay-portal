@@ -6,15 +6,15 @@
 package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.GlobalCSSCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.GlobalCSSCETImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.portlet.PortletRequest;
@@ -23,44 +23,36 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class GlobalCSSCETImplFactoryImpl
-	implements CETImplFactory<GlobalCSSCET> {
+	extends BaseCETImplFactory<GlobalCSSCET> {
 
 	@Override
-	public GlobalCSSCET create(ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
-
-		return new GlobalCSSCETImpl(clientExtensionEntry);
-	}
-
-	@Override
-	public GlobalCSSCET create(PortletRequest portletRequest)
-		throws PortalException {
-
-		return new GlobalCSSCETImpl(portletRequest);
-	}
-
-	@Override
-	public GlobalCSSCET create(
-			String baseURL, long buildTimestamp, long companyId,
-			String description, String externalReferenceCode, String name,
-			Properties properties, String sourceCodeURL,
-			UnicodeProperties unicodeProperties)
-		throws PortalException {
+	protected GlobalCSSCET create(
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		return new GlobalCSSCETImpl(
-			baseURL, buildTimestamp, companyId, description,
-			externalReferenceCode, name, properties, sourceCodeURL,
-			unicodeProperties);
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
 	}
 
 	@Override
-	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
-			UnicodeProperties oldTypeSettingsUnicodeProperties)
-		throws PortalException {
+	protected UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest) {
 
-		GlobalCSSCET newGlobalCSSCET = new GlobalCSSCETImpl(
-			StringPool.NEW_LINE, 0, newTypeSettingsUnicodeProperties);
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"url", ParamUtil.getString(portletRequest, "url")
+		).build();
+	}
+
+	@Override
+	protected void validate(
+			GlobalCSSCET newGlobalCSSCET, GlobalCSSCET oldGlobalCSSCET)
+		throws PortalException {
 
 		String url = newGlobalCSSCET.getURL();
 

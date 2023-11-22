@@ -26,14 +26,38 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CETFactory {
 
+	/**
+	 * Create a CET object from an OSGi {@link CETConfiguration} object.
+	 *
+	 * This method is used when a client extension is deployed from a Liferay
+	 * Workspace.
+	 *
+	 * @review
+	 */
 	public CET create(
 			CETConfiguration cetConfiguration, long companyId,
 			String externalReferenceCode)
 		throws PortalException;
 
+	/**
+	 * Create a CET object from a {@link ClientExtensionEntry} object.
+	 *
+	 * This method is used when a client extension is configured from the
+	 * {@link com.liferay.client.extension.service.ClientExtensionEntryService}.
+	 *
+	 * @review
+	 */
 	public CET create(ClientExtensionEntry clientExtensionEntry)
 		throws PortalException;
 
+	/**
+	 * Create a partial CET object from a {@link PortletRequest} object.
+	 *
+	 * This method is used to create temporary CET objects to be used when
+	 * rendering the administration UI.
+	 *
+	 * @review
+	 */
 	public CET create(PortletRequest portletRequest, String type)
 		throws PortalException;
 

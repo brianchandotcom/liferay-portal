@@ -6,17 +6,19 @@
 package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CustomElementCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.CustomElementCETImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -28,44 +30,58 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class CustomElementCETImplFactoryImpl
-	implements CETImplFactory<CustomElementCET> {
+	extends BaseCETImplFactory<CustomElementCET> {
 
 	@Override
-	public CustomElementCET create(ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
-
-		return new CustomElementCETImpl(clientExtensionEntry);
-	}
-
-	@Override
-	public CustomElementCET create(PortletRequest portletRequest)
-		throws PortalException {
-
-		return new CustomElementCETImpl(portletRequest);
-	}
-
-	@Override
-	public CustomElementCET create(
-			String baseURL, long buildTimestamp, long companyId,
-			String description, String externalReferenceCode, String name,
-			Properties properties, String sourceCodeURL,
-			UnicodeProperties unicodeProperties)
-		throws PortalException {
+	protected CustomElementCET create(
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		return new CustomElementCETImpl(
-			baseURL, buildTimestamp, companyId, description,
-			externalReferenceCode, name, properties, sourceCodeURL,
-			unicodeProperties);
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
 	}
 
 	@Override
-	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
-			UnicodeProperties oldTypeSettingsUnicodeProperties)
-		throws PortalException {
+	protected UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest) {
 
-		CustomElementCET newCustomElementCET = new CustomElementCETImpl(
-			StringPool.NEW_LINE, 0, newTypeSettingsUnicodeProperties);
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"cssURLs",
+			StringUtil.merge(
+				ParamUtil.getStringValues(portletRequest, "cssURLs"),
+				StringPool.NEW_LINE)
+		).put(
+			"friendlyURLMapping",
+			ParamUtil.getString(portletRequest, "friendlyURLMapping")
+		).put(
+			"htmlElementName",
+			ParamUtil.getString(portletRequest, "htmlElementName")
+		).put(
+			"instanceable", ParamUtil.getBoolean(portletRequest, "instanceable")
+		).put(
+			"portletCategoryName",
+			ParamUtil.getString(portletRequest, "portletCategoryName")
+		).put(
+			"urls",
+			StringUtil.merge(
+				ParamUtil.getStringValues(portletRequest, "urls"),
+				StringPool.NEW_LINE)
+		).put(
+			"useESM", ParamUtil.getBoolean(portletRequest, "useESM")
+		).build();
+	}
+
+	@Override
+	protected void validate(
+			CustomElementCET newCustomElementCET,
+			CustomElementCET oldCustomElementCET)
+		throws PortalException {
 
 		String cssURLs = newCustomElementCET.getCSSURLs();
 
@@ -154,17 +170,13 @@ public class CustomElementCETImplFactoryImpl
 			}
 		}
 
-		if (oldTypeSettingsUnicodeProperties != null) {
-			CustomElementCET oldCustomElementCET = new CustomElementCETImpl(
-				StringPool.NEW_LINE, 0, oldTypeSettingsUnicodeProperties);
+		if ((oldCustomElementCET != null) &&
+			(newCustomElementCET.isInstanceable() !=
+				oldCustomElementCET.isInstanceable())) {
 
-			if (newCustomElementCET.isInstanceable() !=
-					oldCustomElementCET.isInstanceable()) {
-
-				throw new ClientExtensionEntryTypeSettingsException(
-					"The instanceable value cannot be changed",
-					"the-instanceable-value-cannot-be-changed");
-			}
+			throw new ClientExtensionEntryTypeSettingsException(
+				"The instanceable value cannot be changed",
+				"the-instanceable-value-cannot-be-changed");
 		}
 	}
 

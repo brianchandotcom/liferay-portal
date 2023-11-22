@@ -5,23 +5,16 @@
 
 package com.liferay.client.extension.type.internal;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.annotation.CETProperty;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.IOException;
 
 import java.lang.reflect.Method;
 
@@ -40,75 +33,29 @@ import java.util.regex.Pattern;
  */
 public abstract class BaseCETImpl implements CET, Cloneable {
 
-	public BaseCETImpl(ClientExtensionEntry clientExtensionEntry) {
-		long modifiedTimestamp;
-
-		if (clientExtensionEntry != null) {
-			_companyId = clientExtensionEntry.getCompanyId();
-			_description = clientExtensionEntry.getDescription();
-			_externalReferenceCode =
-				clientExtensionEntry.getExternalReferenceCode();
-			_modifiedDate = clientExtensionEntry.getModifiedDate();
-			_name = clientExtensionEntry.getName();
-
-			try {
-				_properties = PropertiesUtil.load(
-					clientExtensionEntry.getProperties());
-			}
-			catch (IOException ioException) {
-				ReflectionUtil.throwException(ioException);
-			}
-
-			_sourceCodeURL = clientExtensionEntry.getSourceCodeURL();
-			_status = clientExtensionEntry.getStatus();
-			_rawTypeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
-				true
-			).load(
-				clientExtensionEntry.getTypeSettings()
-			).build();
-
-			modifiedTimestamp = _modifiedDate.getTime();
-		}
-		else {
-			_rawTypeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
-				true
-			).build();
-
-			modifiedTimestamp = 0;
-		}
-
-		_typeSettingsUnicodeProperties = _replaceVariables(
-			modifiedTimestamp, _rawTypeSettingsUnicodeProperties);
-	}
-
 	public BaseCETImpl(
-		String baseURL, long buildTimestamp, long companyId, String description,
-		String externalReferenceCode, String name, Properties properties,
-		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
-
-		this(baseURL, buildTimestamp, typeSettingsUnicodeProperties);
-
-		_companyId = companyId;
-		_description = description;
-		_externalReferenceCode = externalReferenceCode;
-		_name = name;
-		_properties = properties;
-		_sourceCodeURL = sourceCodeURL;
-
-		_readOnly = true;
-	}
-
-	public BaseCETImpl(
-		String baseURL, long modifiedTimestamp,
-		UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		_baseURL = baseURL;
+		_companyId = companyId;
+		_createDate = createDate;
+		_description = description;
+		_externalReferenceCode = externalReferenceCode;
+		_modifiedDate = modifiedDate;
+		_name = name;
+		_properties = properties;
+		_readOnly = readOnly;
+		_sourceCodeURL = sourceCodeURL;
+		_status = status;
 
 		_rawTypeSettingsUnicodeProperties = _transform(
 			baseURL, typeSettingsUnicodeProperties);
 
 		_typeSettingsUnicodeProperties = _replaceVariables(
-			modifiedTimestamp, _rawTypeSettingsUnicodeProperties);
+			_modifiedDate, _rawTypeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -123,7 +70,7 @@ public abstract class BaseCETImpl implements CET, Cloneable {
 
 	@Override
 	public Date getCreateDate() {
-		return _modifiedDate;
+		return _createDate;
 	}
 
 	@Override
@@ -224,10 +171,13 @@ public abstract class BaseCETImpl implements CET, Cloneable {
 	protected abstract boolean isURLCETPropertyName(String name);
 
 	private UnicodeProperties _replaceVariables(
-		long modifiedTimestamp, UnicodeProperties unicodeProperties) {
+		Date modifiedDate, UnicodeProperties unicodeProperties) {
 
 		UnicodeProperties transformedUnicodeProperties = new UnicodeProperties(
 			true);
+
+		String modifiedTimestamp = String.valueOf(
+			(modifiedDate == null) ? 0 : modifiedDate.getTime());
 
 		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
 			String name = entry.getKey();
@@ -235,8 +185,7 @@ public abstract class BaseCETImpl implements CET, Cloneable {
 
 			if (isURLCETPropertyName(name)) {
 				value = value.replaceAll(
-					Pattern.quote("${modifiedTimestamp}"),
-					String.valueOf(modifiedTimestamp));
+					Pattern.quote("${modifiedTimestamp}"), modifiedTimestamp);
 			}
 
 			transformedUnicodeProperties.put(name, value);
@@ -287,17 +236,18 @@ public abstract class BaseCETImpl implements CET, Cloneable {
 		return transformedUnicodeProperties;
 	}
 
-	private String _baseURL = StringPool.BLANK;
-	private long _companyId;
-	private String _description = StringPool.BLANK;
-	private String _externalReferenceCode = StringPool.BLANK;
-	private Date _modifiedDate;
-	private String _name = StringPool.BLANK;
-	private Properties _properties;
+	private final String _baseURL;
+	private final long _companyId;
+	private final Date _createDate;
+	private final String _description;
+	private final String _externalReferenceCode;
+	private final Date _modifiedDate;
+	private final String _name;
+	private final Properties _properties;
 	private final UnicodeProperties _rawTypeSettingsUnicodeProperties;
-	private boolean _readOnly;
-	private String _sourceCodeURL = StringPool.BLANK;
-	private int _status = WorkflowConstants.STATUS_APPROVED;
+	private final boolean _readOnly;
+	private final String _sourceCodeURL;
+	private final int _status;
 	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

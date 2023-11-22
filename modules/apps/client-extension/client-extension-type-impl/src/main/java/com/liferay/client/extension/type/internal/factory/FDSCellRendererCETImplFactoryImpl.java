@@ -6,15 +6,15 @@
 package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.FDSCellRendererCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.FDSCellRendererCETImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.portlet.PortletRequest;
@@ -23,46 +23,39 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class FDSCellRendererCETImplFactoryImpl
-	implements CETImplFactory<FDSCellRendererCET> {
+	extends BaseCETImplFactory<FDSCellRendererCET> {
 
 	@Override
-	public FDSCellRendererCET create(ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
-
-		return new FDSCellRendererCETImpl(clientExtensionEntry);
-	}
-
-	@Override
-	public FDSCellRendererCET create(PortletRequest portletRequest)
-		throws PortalException {
-
-		return new FDSCellRendererCETImpl(portletRequest);
-	}
-
-	@Override
-	public FDSCellRendererCET create(
-			String baseURL, long buildTimestamp, long companyId,
-			String description, String externalReferenceCode, String name,
-			Properties properties, String sourceCodeURL,
-			UnicodeProperties unicodeProperties)
-		throws PortalException {
+	protected FDSCellRendererCET create(
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		return new FDSCellRendererCETImpl(
-			baseURL, buildTimestamp, companyId, description,
-			externalReferenceCode, name, properties, sourceCodeURL,
-			unicodeProperties);
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
 	}
 
 	@Override
-	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
-			UnicodeProperties oldTypeSettingsUnicodeProperties)
+	protected UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest) {
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"url", ParamUtil.getString(portletRequest, "url")
+		).build();
+	}
+
+	@Override
+	protected void validate(
+			FDSCellRendererCET newFDSCellRendererCET,
+			FDSCellRendererCET oldFDSCellRendererCET)
 		throws PortalException {
 
-		FDSCellRendererCET fdsCellRendererCET = new FDSCellRendererCETImpl(
-			StringPool.BLANK, 0, newTypeSettingsUnicodeProperties);
-
-		if (Validator.isNull(fdsCellRendererCET.getURL())) {
+		if (Validator.isNull(newFDSCellRendererCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"At least one JavaScript URL is required",
 				"please-enter-at-least-one-javascript-url");

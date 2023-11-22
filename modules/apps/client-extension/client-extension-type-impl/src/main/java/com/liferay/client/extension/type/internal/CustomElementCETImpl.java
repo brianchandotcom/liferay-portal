@@ -6,18 +6,12 @@
 package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CustomElementCET;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
+import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,58 +19,16 @@ import javax.portlet.PortletRequest;
 public class CustomElementCETImpl
 	extends BaseCETImpl implements CustomElementCET {
 
-	public CustomElementCETImpl(ClientExtensionEntry clientExtensionEntry) {
-		super(clientExtensionEntry);
-	}
-
-	public CustomElementCETImpl(PortletRequest portletRequest) {
-		this(
-			StringPool.BLANK, 0,
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				"cssURLs",
-				StringUtil.merge(
-					ParamUtil.getStringValues(portletRequest, "cssURLs"),
-					StringPool.NEW_LINE)
-			).put(
-				"friendlyURLMapping",
-				ParamUtil.getString(portletRequest, "friendlyURLMapping")
-			).put(
-				"htmlElementName",
-				ParamUtil.getString(portletRequest, "htmlElementName")
-			).put(
-				"instanceable",
-				ParamUtil.getBoolean(portletRequest, "instanceable")
-			).put(
-				"portletCategoryName",
-				ParamUtil.getString(portletRequest, "portletCategoryName")
-			).put(
-				"urls",
-				StringUtil.merge(
-					ParamUtil.getStringValues(portletRequest, "urls"),
-					StringPool.NEW_LINE)
-			).put(
-				"useESM", ParamUtil.getBoolean(portletRequest, "useESM")
-			).build());
-	}
-
 	public CustomElementCETImpl(
-		String baseURL, long buildTimestamp, long companyId, String description,
-		String externalReferenceCode, String name, Properties properties,
-		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		super(
-			baseURL, buildTimestamp, companyId, description,
-			externalReferenceCode, name, properties, sourceCodeURL,
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
 			typeSettingsUnicodeProperties);
-	}
-
-	public CustomElementCETImpl(
-		String baseURL, long buildTimestamp,
-		UnicodeProperties typeSettingsUnicodeProperties) {
-
-		super(baseURL, buildTimestamp, typeSettingsUnicodeProperties);
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -118,7 +119,7 @@ public class ParallelExecutor<T> {
 				if (_taskRunnable.getDurationMillis() >
 						(1000 * timeoutSeconds)) {
 
-					_thread.interrupt();
+					_taskRunnable.abort();
 
 					String durationString =
 						JenkinsResultsParserUtil.toDurationString(
@@ -200,6 +201,10 @@ public class ParallelExecutor<T> {
 			_callablesMap = _toCallablesMap(callables);
 
 			_executorService = _parallelExecutor._executorService;
+		}
+
+		public void abort() {
+			_aborted = true;
 		}
 
 		public String generateStatusMessage() {
@@ -368,14 +373,15 @@ public class ParallelExecutor<T> {
 				}
 			}
 
-			try {
-				while (!_runningTasks.isEmpty()) {
-					List<Task<T>> newProcessorTasks = new ArrayList<>();
-					List<Task<T>> latestCompletedProcessorTasks =
-						new ArrayList<>();
+			while (!_runningTasks.isEmpty()) {
+				List<Task<T>> newProcessorTasks = new ArrayList<>();
+				List<Task<T>> latestCompletedProcessorTasks = new ArrayList<>();
 
+				try {
 					for (Task<T> processorTask : _runningTasks) {
-						if (Thread.interrupted()) {
+						if (_aborted || Thread.interrupted()) {
+							abort();
+
 							throw new RuntimeException(
 								_parallelExecutor + " has been aborted");
 						}
@@ -383,28 +389,30 @@ public class ParallelExecutor<T> {
 						Future<T> future = processorTask.getFuture();
 
 						if (future.isDone()) {
+							T result;
+
 							try {
-								T result = future.get();
-
-								if ((result != null) ||
-									(_parallelExecutor._excludeNulls ==
-										false)) {
-
-									_results.add(future.get());
-								}
-
-								latestCompletedProcessorTasks.add(
-									processorTask);
+								result = future.get();
 							}
-							catch (ExecutionException | InterruptedException
-										exception) {
+							catch (CancellationException | ExecutionException |
+								   InterruptedException exception) {
 
 								if (_parallelExecutor._failOnError) {
 									throw new RuntimeException(exception);
 								}
 
+								result = null;
+
 								exception.printStackTrace();
 							}
+
+							if ((result != null) ||
+								(_parallelExecutor._excludeNulls == false)) {
+
+								_results.add(result);
+							}
+
+							latestCompletedProcessorTasks.add(processorTask);
 
 							Iterator<Callable<T>> iterator =
 								processorTask.getIterator();
@@ -437,27 +445,29 @@ public class ParallelExecutor<T> {
 						JenkinsResultsParserUtil.sleep(100);
 					}
 				}
-			}
-			catch (Exception exception) {
-				if (_parallelExecutor._failOnError) {
-					for (Task<T> processorTask : _runningTasks) {
-						Future<T> future = processorTask.getFuture();
+				catch (Exception exception) {
+					if (_parallelExecutor._failOnError || _aborted) {
+						for (Task<T> processorTask : _runningTasks) {
+							Future<T> future = processorTask.getFuture();
 
-						if ((future != null) && !future.isCancelled()) {
-							if (!future.isDone()) {
-								future.cancel(true);
+							if ((future != null) && !future.isCancelled()) {
+								if (!future.isDone()) {
+									future.cancel(true);
+								}
+
+								_completedTasks.add(processorTask);
 							}
-
-							_completedTasks.add(processorTask);
 						}
+
+						_runningTasks.removeAll(_completedTasks);
+
+						if (exception instanceof RuntimeException) {
+							throw (RuntimeException)exception;
+						}
+
+						throw new RuntimeException(exception);
 					}
-
-					_runningTasks.removeAll(_completedTasks);
-
-					throw exception;
 				}
-
-				exception.printStackTrace();
 			}
 
 			System.out.println(
@@ -515,6 +525,7 @@ public class ParallelExecutor<T> {
 			return callablesMap;
 		}
 
+		private boolean _aborted;
 		private final Map<String, Collection<Callable<T>>> _callablesMap;
 		private List<Task<T>> _completedTasks = new ArrayList<>();
 		private ExecutorService _executorService;

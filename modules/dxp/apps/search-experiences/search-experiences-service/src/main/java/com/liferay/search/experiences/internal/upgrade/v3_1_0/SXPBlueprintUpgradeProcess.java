@@ -120,16 +120,13 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return StringPool.BLANK;
 	}
 
-	private String _getDefaultValue(
-		String fieldName, String xml) {
-
+	private String _getDefaultValue(String fieldName, String xml) {
 		if (Validator.isBlank(xml)) {
 			return StringPool.BLANK;
 		}
 
 		String fallbackXML = StringBundler.concat(
-			"<", fieldName, " language-id=\"", _getDefaultLocale(xml),
-			"\">");
+			"<", fieldName, " language-id=\"", _getDefaultLocale(xml), "\">");
 
 		int start = xml.indexOf(fallbackXML);
 

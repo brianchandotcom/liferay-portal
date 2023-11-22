@@ -147,14 +147,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			2, false, ObjectDefinitionConstants.SCOPE_COMPANY);
 		_objectDefinition3 = _addObjectDefinition(
 			3, false, ObjectDefinitionConstants.SCOPE_COMPANY);
-		_objectDefinition4 = _addObjectDefinition(
-			4, false, ObjectDefinitionConstants.SCOPE_COMPANY);
-		_objectDefinition5 = _addObjectDefinition(
-			5, false, ObjectDefinitionConstants.SCOPE_COMPANY);
-		_objectDefinition6 = _addObjectDefinition(
-			6, false, ObjectDefinitionConstants.SCOPE_COMPANY);
-		_objectDefinition7 = _addObjectDefinition(
-			7, true, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_objectRelationship1 = _addObjectRelationship(
 			_objectDefinition1, _objectDefinition2,
@@ -162,12 +154,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_objectRelationship2 = _addObjectRelationship(
 			_objectDefinition2, _objectDefinition3,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-		_objectRelationship3 = _addObjectRelationship(
-			_objectDefinition5, _objectDefinition4,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-		_objectRelationship4 = _addObjectRelationship(
-			_objectDefinition5, _objectDefinition6,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_addAggregationObjectField(
 			_objectDefinition1, _objectRelationship1.getName());
@@ -1042,26 +1028,40 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@Test
 	public void testGetWithIndirectlyUnrelatedObjectEntries() throws Exception {
+		ObjectDefinition objectDefinition1 = _addObjectDefinition(
+			4, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectDefinition objectDefinition2 = _addObjectDefinition(
+			5, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectDefinition objectDefinition3 = _addObjectDefinition(
+			6, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationship objectRelationship1 = _addObjectRelationship(
+			objectDefinition2, objectDefinition1,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship2 = _addObjectRelationship(
+			objectDefinition2, objectDefinition3,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
-			_objectDefinition4.getExternalReferenceCode(),
-			_objectRelationship3.getName(), _objectRelationship4.getName(),
+			objectDefinition1.getExternalReferenceCode(),
+			objectRelationship1.getName(), objectRelationship2.getName(),
 			_API_APPLICATION_PATH_1);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		ObjectEntry objectEntry1 = _addCustomObjectEntry(
-			1, null, _objectDefinition4, "value1",
+			1, null, objectDefinition1, "value1",
 			RandomTestUtil.randomString());
 		ObjectEntry objectEntry2 = _addCustomObjectEntry(
-			1, null, _objectDefinition5, "value1",
+			1, null, objectDefinition2, "value1",
 			RandomTestUtil.randomString());
 		ObjectEntry objectEntry3 = _addCustomObjectEntry(
-			1, null, _objectDefinition6, "value1",
+			1, null, objectDefinition3, "value1",
 			RandomTestUtil.randomString());
 
-		_relateObjectEntries(objectEntry1, objectEntry2, _objectRelationship3);
-		_relateObjectEntries(objectEntry1, objectEntry3, _objectRelationship4);
+		_relateObjectEntries(objectEntry1, objectEntry2, objectRelationship1);
+		_relateObjectEntries(objectEntry1, objectEntry3, objectRelationship2);
 
 		assertSuccessfulHttpCode(
 			null,
@@ -1591,9 +1591,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@Test
 	public void testPostObjectEntry() throws Exception {
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			7, true, ObjectDefinitionConstants.SCOPE_COMPANY);
+
 		_addAPIApplicationWithPostEndpoint(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1, 7,
-			_objectDefinition7.getExternalReferenceCode(), "/test",
+			objectDefinition.getExternalReferenceCode(), "/test",
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -2721,18 +2724,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition3;
 
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition4;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition5;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition6;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition7;
-
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
@@ -2747,8 +2738,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private ObjectRelationship _objectRelationship1;
 	private ObjectRelationship _objectRelationship2;
-	private ObjectRelationship _objectRelationship3;
-	private ObjectRelationship _objectRelationship4;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _siteScopedObjectDefinition1;

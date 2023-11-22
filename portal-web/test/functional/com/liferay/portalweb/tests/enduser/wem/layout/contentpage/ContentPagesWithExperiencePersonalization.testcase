@@ -623,12 +623,8 @@ definition {
 	@description = "This is a test for LPS-127109. Segments with both context and model criteria are correctly evaluated with guest users."
 	@priority = 4
 	test ViewContentFromCorrectExperienceAsGuestUser {
-		var portalURL = PropsUtil.get("portal.url");
-
 		task ("Given create Segments with two properties") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-
-			Segmentation.openSegmentsAdmin(siteURLKey = "Test Site Name");
+			Segmentation.openSegmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconEntry.gotoAdd();
 
@@ -650,14 +646,9 @@ definition {
 
 			PortletEntry.save();
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page",
-				siteName = "Test Site Name");
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -680,7 +671,9 @@ definition {
 		task ("When the guest user accesses to the content page") {
 			User.logoutPG();
 
-			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then the guest user should view the content from Default experience") {

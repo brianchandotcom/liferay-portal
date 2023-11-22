@@ -87,7 +87,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 
 			String[] parts = commitMessage.split(":", 2);
 
-			if (!parts[1].contains("# breaking_change_report")) {
+			if (!parts[1].contains("# breaking")) {
 				iterator.remove();
 			}
 		}
@@ -104,7 +104,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 		for (String commitMessage : commitMessages) {
 			String[] parts = commitMessage.split(":", 2);
 
-			if (!parts[1].contains("# breaking_change_report")) {
+			if (!parts[1].contains("# breaking")) {
 				continue;
 			}
 
@@ -117,7 +117,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				int alternativesCount = StringUtil.count(
 					breakingChangeReport, "## Alternatives");
 				int breakingChangeReportCount = StringUtil.count(
-					breakingChangeReport, "# breaking_change_report");
+					breakingChangeReport, "# breaking");
 				int whatCount = StringUtil.count(
 					breakingChangeReport, "## What");
 				int whyCount = StringUtil.count(breakingChangeReport, "## Why");
@@ -131,7 +131,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 						StringBundler.concat(
 							"Found formatting issues in SHA ", parts[0], ":\n",
 							"Each breaking change report should have one, and ",
-							"only one '# breaking_change_report', '## What', ",
+							"only one '# breaking', '## What', ",
 							"'## Why' and '## Alternatives'(Optional). Use ",
 							"'----' to split each breaking change."));
 
@@ -216,7 +216,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				fileName,
 				StringBundler.concat(
 					"Found formatting issues in SHA ", parts[0], ":\n",
-					"The commit message contains '# breaking_change_report",
+					"The commit message contains '# breaking",
 					"' should end with '\\n\\n----'"));
 
 			return content;
@@ -242,7 +242,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					StringBundler.concat(
 						"Found formatting issues in SHA ", parts[0], ":\n",
 						"There should be an empty line after/before '----', ",
-						"'# breaking_change_report', '## What', '## Why' and ",
+						"'# breaking', '## What', '## Why' and ",
 						"'## Alternatives'"));
 
 				return content;
@@ -253,7 +253,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 	}
 
 	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {
-		"----", "## Alternatives", "# breaking_change_report", "## What",
+		"----", "## Alternatives", "# breaking", "## What",
 		"## Why"
 	};
 

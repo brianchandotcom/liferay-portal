@@ -165,7 +165,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-179485. The content creator could generate content via AI Creator."
+	@description = "This is a test for LPS-179485 and LPS-187651. The content creator could generate content via AI Creator. View "Learn more about OpenAI integration" link in web content AI Creator."
 	@priority = 4
 	test GenerateContent {
 		property test.liferay.virtual.instance = "false";
@@ -200,6 +200,13 @@ definition {
 			Click.javaScriptClick(locator1 = "CKEditor#TOOLBAR_AI_CREATOR_BUTTON");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then Learn more about OpenAI integration link is visible.") {
+			AssertElementPresent(
+				key_href = "https://learn.liferay.com/w/dxp/content-authoring-and-management/web-content/web-content-articles/generating-text-content-using-ai",
+				key_text = "Learn more about OpenAI integration.",
+				locator1 = "Link#ANY_HREF");
 		}
 
 		task ("Then the content creator sees the default values on modal") {

@@ -45,38 +45,9 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
-			sourceFormatterArgs.getBaseDirName(),
-			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
-
-		ArtifactVersion newArtifactVersion = null;
-		ArtifactVersion oldArtifactVersion = null;
-
-		for (String line : StringUtil.splitLines(currentBranchFileDiff)) {
-			if (!line.contains("Bundle-Version:")) {
-				continue;
-			}
-
-			int pos = line.indexOf(":");
-
-			String version = StringUtil.trim(line.substring(pos + 1));
-
-			if (line.startsWith(StringPool.PLUS)) {
-				newArtifactVersion = new DefaultArtifactVersion(version);
-			}
-			else if (line.startsWith(StringPool.DASH)) {
-				oldArtifactVersion = new DefaultArtifactVersion(version);
-			}
+		if (_hasMajorVersionBump(absolutePath, sourceFormatterArgs)) {
+			_checkCommitMessages(fileName, sourceFormatterArgs);
 		}
-
-		if ((newArtifactVersion == null) || (oldArtifactVersion == null) ||
-			(newArtifactVersion.getMajorVersion() <=
-				oldArtifactVersion.getMajorVersion())) {
-
-			return content;
-		}
-
-		_checkCommitMessages(fileName, sourceFormatterArgs);
 
 		return content;
 	}
@@ -250,6 +221,44 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				return;
 			}
 		}
+	}
+
+	private boolean _hasMajorVersionBump(
+			String absolutePath, SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		ArtifactVersion newArtifactVersion = null;
+		ArtifactVersion oldArtifactVersion = null;
+
+		String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
+
+		for (String line : StringUtil.splitLines(currentBranchFileDiff)) {
+			if (!line.contains("Bundle-Version:")) {
+				continue;
+			}
+
+			int pos = line.indexOf(":");
+
+			String version = StringUtil.trim(line.substring(pos + 1));
+
+			if (line.startsWith(StringPool.PLUS)) {
+				newArtifactVersion = new DefaultArtifactVersion(version);
+			}
+			else if (line.startsWith(StringPool.DASH)) {
+				oldArtifactVersion = new DefaultArtifactVersion(version);
+			}
+		}
+
+		if ((newArtifactVersion == null) || (oldArtifactVersion == null) ||
+			(newArtifactVersion.getMajorVersion() <=
+				oldArtifactVersion.getMajorVersion())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {

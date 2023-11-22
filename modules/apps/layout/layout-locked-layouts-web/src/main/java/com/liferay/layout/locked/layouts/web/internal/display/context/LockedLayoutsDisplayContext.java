@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
+import com.liferay.layout.model.LockedLayoutType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -239,39 +240,6 @@ public class LockedLayoutsDisplayContext {
 		private final boolean _ascending;
 		private final Locale _locale;
 		private final LockedLayoutOrderType _lockedLayoutOrderType;
-
-	}
-
-	public enum LockedLayoutType {
-
-		COLLECTION_PAGE("collection-page"), CONTENT_PAGE("content-page"),
-		CONTENT_PAGE_TEMPLATE("content-page-template"),
-		DISPLAY_PAGE_TEMPLATE("display-page-template"),
-		MASTER_PAGE("master-page"), UTILITY_PAGE("utility-page");
-
-		public static LockedLayoutType create(String value) {
-			if (Validator.isNull(value)) {
-				return null;
-			}
-
-			for (LockedLayoutType lockedLayoutType : values()) {
-				if (Objects.equals(lockedLayoutType.getValue(), value)) {
-					return lockedLayoutType;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		private LockedLayoutType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
 
 	}
 

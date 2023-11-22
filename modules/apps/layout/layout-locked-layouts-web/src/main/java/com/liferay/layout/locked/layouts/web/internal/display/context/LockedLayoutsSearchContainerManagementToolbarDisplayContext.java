@@ -12,6 +12,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.layout.model.LockedLayoutType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -101,7 +102,7 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		LockedLayoutsDisplayContext.LockedLayoutType lockedLayoutType =
+		LockedLayoutType lockedLayoutType =
 			_lockedLayoutsDisplayContext.getLockedLayoutType();
 
 		if (lockedLayoutType == null) {
@@ -167,9 +168,7 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 			}
 		).build();
 
-		for (LockedLayoutsDisplayContext.LockedLayoutType lockedLayoutType :
-				LockedLayoutsDisplayContext.LockedLayoutType.values()) {
-
+		for (LockedLayoutType lockedLayoutType : LockedLayoutType.values()) {
 			dropdownItems.add(
 				DropdownItemBuilder.setActive(
 					Objects.equals(

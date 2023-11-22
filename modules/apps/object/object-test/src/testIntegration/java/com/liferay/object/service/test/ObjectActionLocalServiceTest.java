@@ -698,13 +698,14 @@ public class ObjectActionLocalServiceTest {
 				TestPropsValues.getUserId(),
 				objectDefinitionA.getObjectDefinitionId());
 
-			objectEntry = _objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), 0,
-				objectDefinitionA.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", "John"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+			ObjectEntry rootObjectEntry =
+				_objectEntryLocalService.addObjectEntry(
+					TestPropsValues.getUserId(), 0,
+					objectDefinitionA.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"firstName", "John"
+					).build(),
+					ServiceContextTestUtil.getServiceContext());
 
 			// Hierarchy, add object entry in a child node
 
@@ -719,7 +720,7 @@ public class ObjectActionLocalServiceTest {
 					"able", RandomTestUtil.randomString()
 				).put(
 					relationshipObjectField.getName(),
-					objectEntry.getObjectEntryId()
+					rootObjectEntry.getObjectEntryId()
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
@@ -754,6 +755,9 @@ public class ObjectActionLocalServiceTest {
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
 				objectDefinitionA, null, null,
 				WorkflowConstants.STATUS_APPROVED);
+
+			_objectEntryLocalService.deleteObjectEntry(
+				rootObjectEntry.getObjectEntryId());
 
 			_objectDefinitionLocalService.unbindObjectDefinition(
 				objectDefinitionA.getObjectDefinitionId());

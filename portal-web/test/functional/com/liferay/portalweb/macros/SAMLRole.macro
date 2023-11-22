@@ -96,14 +96,6 @@ definition {
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD",
 			value1 = "Liferay QA");
 
-		Type(
-			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD",
-			value1 = "Liferay");
-
-		Type(
-			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD",
-			value1 = "USA");
-
 		if (${certificateUsage} == "SIGNING") {
 			Select(
 				locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",

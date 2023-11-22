@@ -718,6 +718,8 @@ public class GraphQLServletExtender {
 	protected void deactivate() {
 		_graphQLContributorServiceTrackerList.close();
 
+		_graphQLDTOContributorServiceTrackerMap.close();
+
 		_graphQLRequestContextValidators.close();
 
 		_servletContextHelperServiceRegistration.unregister();

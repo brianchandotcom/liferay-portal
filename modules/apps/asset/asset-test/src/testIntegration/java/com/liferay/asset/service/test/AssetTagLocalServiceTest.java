@@ -66,21 +66,20 @@ public class AssetTagLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 	}
 
 	@Test(expected = DuplicateTagException.class)
 	public void testAddDuplicateTags() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		AssetTagLocalServiceUtil.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
+			_serviceContext);
 
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
-			serviceContext);
-
-		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
-			serviceContext);
+			_serviceContext);
 	}
 
 	@Test
@@ -98,8 +97,7 @@ public class AssetTagLocalServiceTest {
 	public void testAddTag() throws PortalException {
 		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			_serviceContext);
 
 		Assert.assertEquals("tag", assetTag.getName());
 	}
@@ -108,30 +106,24 @@ public class AssetTagLocalServiceTest {
 	public void testAddTagWithEmptyName() throws Exception {
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			_serviceContext);
 	}
 
 	@Test(expected = AssetTagException.class)
 	public void testAddTagWithInvalidCharacters() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		String stringWithInvalidCharacters = String.valueOf(
 			AssetHelper.INVALID_CHARACTERS);
 
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			stringWithInvalidCharacters, serviceContext);
+			stringWithInvalidCharacters, _serviceContext);
 	}
 
 	@Test
 	public void testAddTagWithMultipleWords() throws PortalException {
 		AssetTag tag = AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag name",
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			_serviceContext);
 
 		Assert.assertEquals("tag name", tag.getName());
 	}
@@ -140,16 +132,14 @@ public class AssetTagLocalServiceTest {
 	public void testAddTagWithNullName() throws Exception {
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			_serviceContext);
 	}
 
 	@Test(expected = AssetTagNameException.class)
 	public void testAddTagWithOnlySpacesInName() throws Exception {
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.SPACE,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			_serviceContext);
 	}
 
 	@Test
@@ -158,21 +148,16 @@ public class AssetTagLocalServiceTest {
 
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "-_^()!$",
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			_serviceContext);
 	}
 
 	@Test
 	public void testAddTagWithSingleWord() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		int originalTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
 
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "tag",
-			serviceContext);
+			_serviceContext);
 
 		int actualTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
 
@@ -183,23 +168,18 @@ public class AssetTagLocalServiceTest {
 	public void testAddUTF8FormattedTags() throws PortalException {
 		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "標籤名稱",
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			_serviceContext);
 
 		Assert.assertEquals("標籤名稱", assetTag.getName());
 	}
 
 	@Test
 	public void testDeleteTag() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(), "Tag",
-			serviceContext);
+			_serviceContext);
 
-		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
+		_serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
 		_organization = OrganizationLocalServiceUtil.addOrganization(
 			null, TestPropsValues.getUserId(),
@@ -210,7 +190,7 @@ public class AssetTagLocalServiceTest {
 				assetTag.getCompanyId(),
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 				ListTypeConstants.ORGANIZATION_STATUS),
-			RandomTestUtil.randomString(), true, serviceContext);
+			RandomTestUtil.randomString(), true, _serviceContext);
 
 		TestAssetIndexer testAssetIndexer = new TestAssetIndexer();
 
@@ -263,24 +243,18 @@ public class AssetTagLocalServiceTest {
 
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(100),
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			RandomTestUtil.randomString(100), _serviceContext);
 	}
 
 	private void _testAddMultipleTags(List<String> tagNames)
 		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
 
 		int originalTagsCount = AssetTagLocalServiceUtil.getAssetTagsCount();
 
 		for (String tagName : tagNames) {
 			AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
 				TestPropsValues.getUserId(), _group.getGroupId(), tagName,
-				serviceContext);
+				_serviceContext);
 
 			Assert.assertEquals(tagName, assetTag.getName());
 		}
@@ -299,5 +273,7 @@ public class AssetTagLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Organization _organization;
+
+	private ServiceContext _serviceContext;
 
 }

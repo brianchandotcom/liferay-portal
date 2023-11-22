@@ -52,6 +52,8 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		_validate(titleMap, type, serviceContext);
+
 		if (Validator.isNull(fallbackDescription)) {
 			fallbackDescription = descriptionMap.get(LocaleUtil.getDefault());
 		}
@@ -59,8 +61,6 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		if (Validator.isNull(fallbackTitle)) {
 			fallbackTitle = titleMap.get(LocaleUtil.getDefault());
 		}
-
-		_validate(titleMap, type, serviceContext);
 
 		SXPElement sxpElement = createSXPElement(
 			counterLocalService.increment(SXPElement.class.getName()));

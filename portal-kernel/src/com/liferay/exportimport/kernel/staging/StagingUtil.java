@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -41,7 +42,7 @@ public class StagingUtil {
 			T model)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.addModelToChangesetCollection(model);
 	}
@@ -49,7 +50,7 @@ public class StagingUtil {
 	public static long copyFromLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.copyFromLive(portletRequest);
 	}
@@ -58,7 +59,7 @@ public class StagingUtil {
 			PortletRequest portletRequest, Portlet portlet)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.copyFromLive(portletRequest, portlet);
 	}
@@ -67,7 +68,7 @@ public class StagingUtil {
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.copyRemoteLayouts(exportImportConfiguration);
 	}
@@ -75,7 +76,7 @@ public class StagingUtil {
 	public static long copyRemoteLayouts(long exportImportConfigurationId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.copyRemoteLayouts(exportImportConfigurationId);
 	}
@@ -88,7 +89,7 @@ public class StagingUtil {
 			boolean remotePrivateLayout)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.copyRemoteLayouts(
 			sourceGroupId, privateLayout, layoutIdMap, parameterMap,
@@ -104,7 +105,7 @@ public class StagingUtil {
 			long remoteGroupId, boolean remotePrivateLayout)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.copyRemoteLayouts(
 			sourceGroupId, privateLayout, layoutIdMap, name, parameterMap,
@@ -116,7 +117,7 @@ public class StagingUtil {
 			Group liveGroup, boolean privateLayout)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.deleteLastImportSettings(liveGroup, privateLayout);
 	}
@@ -125,7 +126,7 @@ public class StagingUtil {
 		HttpServletRequest httpServletRequest, long layoutSetBranchId,
 		long plid) {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.deleteRecentLayoutRevisionId(
 			httpServletRequest, layoutSetBranchId, plid);
@@ -134,7 +135,7 @@ public class StagingUtil {
 	public static void deleteRecentLayoutRevisionId(
 		long userId, long layoutSetBranchId, long plid) {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.deleteRecentLayoutRevisionId(userId, layoutSetBranchId, plid);
 	}
@@ -142,7 +143,7 @@ public class StagingUtil {
 	public static JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences) {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getErrorMessagesJSONArray(locale, missingReferences);
 	}
@@ -151,32 +152,32 @@ public class StagingUtil {
 		Locale locale, Exception exception,
 		ExportImportConfiguration exportImportConfiguration) {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getExceptionMessagesJSONObject(
 			locale, exception, exportImportConfiguration);
 	}
 
 	public static Group getLiveGroup(Group group) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getLiveGroup(group);
 	}
 
 	public static Group getLiveGroup(long groupId) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getLiveGroup(groupId);
 	}
 
 	public static long getLiveGroupId(long groupId) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getLiveGroupId(groupId);
 	}
 
 	public static Group getPermissionStagingGroup(Group group) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getPermissionStagingGroup(group);
 	}
@@ -186,7 +187,7 @@ public class StagingUtil {
 			long plid)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getRecentLayoutRevisionId(
 			httpServletRequest, layoutSetBranchId, plid);
@@ -196,7 +197,7 @@ public class StagingUtil {
 			User user, long layoutSetBranchId, long plid)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getRecentLayoutRevisionId(user, layoutSetBranchId, plid);
 	}
@@ -204,14 +205,14 @@ public class StagingUtil {
 	public static long getRecentLayoutSetBranchId(
 		HttpServletRequest httpServletRequest, long layoutSetId) {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getRecentLayoutSetBranchId(
 			httpServletRequest, layoutSetId);
 	}
 
 	public static long getRecentLayoutSetBranchId(User user, long layoutSetId) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getRecentLayoutSetBranchId(user, layoutSetId);
 	}
@@ -220,7 +221,7 @@ public class StagingUtil {
 			long userId, long stagingGroupId, long plid)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getRemoteLayout(userId, stagingGroupId, plid);
 	}
@@ -229,7 +230,7 @@ public class StagingUtil {
 			long userId, long stagingGroupId, long plid)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getRemoteLayoutPlid(userId, stagingGroupId, plid);
 	}
@@ -238,7 +239,7 @@ public class StagingUtil {
 			Group stagingGroup, boolean privateLayout)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getRemoteSiteURL(stagingGroup, privateLayout);
 	}
@@ -246,13 +247,13 @@ public class StagingUtil {
 	public static String getSchedulerGroupName(
 		String destinationName, long groupId) {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getSchedulerGroupName(destinationName, groupId);
 	}
 
 	public static String getStagedPortletId(String portletId) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getStagedPortletId(portletId);
 	}
@@ -260,13 +261,13 @@ public class StagingUtil {
 	public static long[] getStagingAndLiveGroupIds(long groupId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getStagingAndLiveGroupIds(groupId);
 	}
 
 	public static Group getStagingGroup(long groupId) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getStagingGroup(groupId);
 	}
@@ -274,7 +275,7 @@ public class StagingUtil {
 	public static JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences) {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getWarningMessagesJSONArray(locale, missingReferences);
 	}
@@ -283,7 +284,7 @@ public class StagingUtil {
 			long userId, LayoutRevision layoutRevision)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.getWorkflowTask(userId, layoutRevision);
 	}
@@ -292,7 +293,7 @@ public class StagingUtil {
 			long userId, long stagingGroupId, long plid)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.hasRemoteLayout(userId, stagingGroupId, plid);
 	}
@@ -301,13 +302,13 @@ public class StagingUtil {
 			long userId, LayoutRevision layoutRevision)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.hasWorkflowTask(userId, layoutRevision);
 	}
 
 	public static boolean isGroupAccessible(Group group, Group fromGroup) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.isGroupAccessible(group, fromGroup);
 	}
@@ -315,19 +316,19 @@ public class StagingUtil {
 	public static boolean isGroupAccessible(long groupId, long fromGroupId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.isGroupAccessible(groupId, fromGroupId);
 	}
 
 	public static boolean isIncomplete(Layout layout) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.isIncomplete(layout);
 	}
 
 	public static boolean isIncomplete(Layout layout, long layoutSetBranchId) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.isIncomplete(layout, layoutSetBranchId);
 	}
@@ -335,7 +336,7 @@ public class StagingUtil {
 	public static boolean isRemoteLayoutHasPortletId(
 		long userId, long stagingGroupId, long plid, String portletId) {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.isRemoteLayoutHasPortletId(
 			userId, stagingGroupId, plid, portletId);
@@ -346,7 +347,7 @@ public class StagingUtil {
 			StagedModelType[] stagedModelTypes)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.populateLastPublishDateCounts(
 			portletDataContext, stagedModelTypes);
@@ -356,7 +357,7 @@ public class StagingUtil {
 			PortletDataContext portletDataContext, String[] classNames)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.populateLastPublishDateCounts(portletDataContext, classNames);
 	}
@@ -365,7 +366,7 @@ public class StagingUtil {
 			long userId, long plid, long liveGroupId, boolean includeChildren)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishLayout(
 			userId, plid, liveGroupId, includeChildren);
@@ -375,7 +376,7 @@ public class StagingUtil {
 			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishLayouts(userId, exportImportConfiguration);
 	}
@@ -384,7 +385,7 @@ public class StagingUtil {
 			long userId, long exportImportConfigurationId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishLayouts(userId, exportImportConfigurationId);
 	}
@@ -395,7 +396,7 @@ public class StagingUtil {
 			Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
@@ -408,7 +409,7 @@ public class StagingUtil {
 			Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
@@ -420,7 +421,7 @@ public class StagingUtil {
 			boolean privateLayout, Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, parameterMap);
@@ -430,7 +431,7 @@ public class StagingUtil {
 			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishPortlet(userId, exportImportConfiguration);
 	}
@@ -439,7 +440,7 @@ public class StagingUtil {
 			long userId, long exportImportConfigurationId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishPortlet(userId, exportImportConfigurationId);
 	}
@@ -450,7 +451,7 @@ public class StagingUtil {
 			Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishPortlet(
 			userId, sourceGroupId, targetGroupId, sourcePlid, targetPlid,
@@ -460,7 +461,7 @@ public class StagingUtil {
 	public static long publishToLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishToLive(portletRequest);
 	}
@@ -469,7 +470,7 @@ public class StagingUtil {
 			PortletRequest portletRequest, Portlet portlet)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishToLive(portletRequest, portlet);
 	}
@@ -477,7 +478,7 @@ public class StagingUtil {
 	public static long publishToRemote(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.publishToRemote(portletRequest);
 	}
@@ -486,7 +487,7 @@ public class StagingUtil {
 			T model)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.removeModelFromChangesetCollection(model);
 	}
@@ -494,7 +495,7 @@ public class StagingUtil {
 	public static void scheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.scheduleCopyFromLive(portletRequest);
 	}
@@ -502,7 +503,7 @@ public class StagingUtil {
 	public static void schedulePublishToLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.schedulePublishToLive(portletRequest);
 	}
@@ -510,7 +511,7 @@ public class StagingUtil {
 	public static void schedulePublishToRemote(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.schedulePublishToRemote(portletRequest);
 	}
@@ -520,7 +521,7 @@ public class StagingUtil {
 			long plid, long layoutBranchId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.setRecentLayoutBranchId(
 			httpServletRequest, layoutSetBranchId, plid, layoutBranchId);
@@ -530,7 +531,7 @@ public class StagingUtil {
 			User user, long layoutSetBranchId, long plid, long layoutBranchId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.setRecentLayoutBranchId(
 			user, layoutSetBranchId, plid, layoutBranchId);
@@ -541,7 +542,7 @@ public class StagingUtil {
 			long plid, long layoutRevisionId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.setRecentLayoutRevisionId(
 			httpServletRequest, layoutSetBranchId, plid, layoutRevisionId);
@@ -551,7 +552,7 @@ public class StagingUtil {
 			User user, long layoutSetBranchId, long plid, long layoutRevisionId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.setRecentLayoutRevisionId(
 			user, layoutSetBranchId, plid, layoutRevisionId);
@@ -562,7 +563,7 @@ public class StagingUtil {
 			long layoutSetBranchId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.setRecentLayoutSetBranchId(
 			httpServletRequest, layoutSetId, layoutSetBranchId);
@@ -572,7 +573,7 @@ public class StagingUtil {
 			User user, long layoutSetId, long layoutSetBranchId)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.setRecentLayoutSetBranchId(
 			user, layoutSetId, layoutSetBranchId);
@@ -583,14 +584,14 @@ public class StagingUtil {
 			String remoteSiteURL)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.setRemoteSiteURL(
 			stagingGroup, overrideRemoteSiteURL, remoteSiteURL);
 	}
 
 	public static String stripProtocolFromRemoteAddress(String remoteAddress) {
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		return staging.stripProtocolFromRemoteAddress(remoteAddress);
 	}
@@ -599,7 +600,7 @@ public class StagingUtil {
 			File file, long stagingRequestId, HttpPrincipal httpPrincipal)
 		throws Exception {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.transferFileToRemoteLive(file, stagingRequestId, httpPrincipal);
 	}
@@ -607,7 +608,7 @@ public class StagingUtil {
 	public static void unscheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.unscheduleCopyFromLive(portletRequest);
 	}
@@ -615,7 +616,7 @@ public class StagingUtil {
 	public static void unschedulePublishToLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.unschedulePublishToLive(portletRequest);
 	}
@@ -623,7 +624,7 @@ public class StagingUtil {
 	public static void unschedulePublishToRemote(PortletRequest portletRequest)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.unschedulePublishToRemote(portletRequest);
 	}
@@ -633,7 +634,7 @@ public class StagingUtil {
 			PortletDataContext portletDataContext)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.updateLastImportSettings(
 			layoutElement, layout, portletDataContext);
@@ -644,14 +645,31 @@ public class StagingUtil {
 			int remotePort, String remotePathContext, boolean secureConnection)
 		throws PortalException {
 
-		Staging staging = _stagingSnapshot.get();
+		Staging staging = _getStaging();
 
 		staging.validateRemoteGroupIsSame(
 			groupId, remoteGroupId, remoteAddress, remotePort,
 			remotePathContext, secureConnection);
 	}
 
+	private static Staging _getStaging() {
+		Staging staging = _stagingSnapshot.get();
+
+		if (staging == null) {
+			return DummyStagingHolder._dummyStaging;
+		}
+
+		return staging;
+	}
+
 	private static final Snapshot<Staging> _stagingSnapshot = new Snapshot<>(
 		StagingUtil.class, Staging.class);
+
+	private static class DummyStagingHolder {
+
+		private static final Staging _dummyStaging =
+			ProxyFactory.newDummyInstance(Staging.class);
+
+	}
 
 }

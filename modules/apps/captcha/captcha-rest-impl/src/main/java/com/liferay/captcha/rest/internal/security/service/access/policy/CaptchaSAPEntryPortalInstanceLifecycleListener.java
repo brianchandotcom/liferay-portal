@@ -69,9 +69,9 @@ public class CaptchaSAPEntryPortalInstanceLifecycleListener
 		"CAPTCHA_DEFAULT",
 		StringBundler.concat(
 			"com.liferay.captcha.rest.internal.resource.v1_0.",
-			"CaptchaResourceImpl#getSimpleCaptcha\n",
+			"SimpleCaptchaResourceImpl#getSimpleCaptcha\n",
 			"com.liferay.captcha.rest.internal.resource.v1_0.",
-			"CaptchaResourceImpl#postSimpleCaptcha")
+			"SimpleCaptchaResourceImpl#postSimpleCaptcha")
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

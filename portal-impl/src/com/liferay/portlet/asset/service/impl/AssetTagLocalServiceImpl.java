@@ -268,7 +268,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	@Override
 	public AssetTag fetchTag(long groupId, String name) {
 		List<AssetTag> assetTags = assetTagPersistence.findByG_LikeN(
-			groupId, _getName(name));
+			groupId, name);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
 			for (AssetTag assetTag : assetTags) {
@@ -475,7 +475,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	@Override
 	public long[] getTagIds(String name) {
 		return TransformUtil.transformToLongArray(
-			assetTagPersistence.findByName(_getName(name)),
+			assetTagPersistence.findByName(name),
 			assetTag -> {
 				if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
 					if (StringUtil.equals(assetTag.getName(), name)) {
@@ -679,7 +679,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		long[] groupIds, String name, int start, int end) {
 
 		return assetTagPersistence.findByG_LikeN(
-			groupIds, _getName(name), start, end, new AssetTagNameComparator());
+			groupIds, name, start, end, new AssetTagNameComparator());
 	}
 
 	@Override

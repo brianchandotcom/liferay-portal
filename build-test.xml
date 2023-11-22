@@ -6996,7 +6996,7 @@ go</echo>
 					<var name="app.server.tomcat.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT" />
 					<var name="app.server.tomcat.temp.dir" value="${app.server.parent.dir}/tomcat/temp" />
 					<var name="app.server.tomcat.work.dir" value="${app.server.parent.dir}/tomcat/work" />
-					<var name="app.server.tomcat.zip.name" value="apache-tomcat.zip" />
+					<var name="app.server.tomcat.zip.name" value="apache-tomcat-${app.server.tomcat.version}.zip" />
 				</then>
 				<else>
 					<var name="app.server.tomcat.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}" />

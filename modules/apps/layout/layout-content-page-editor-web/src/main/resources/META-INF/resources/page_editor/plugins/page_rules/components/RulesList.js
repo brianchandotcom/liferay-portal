@@ -92,7 +92,11 @@ function Rule({onDelete, onEdit, rule}) {
 	const actions = useActionValues({...rule, items});
 
 	return (
-		<ClayList.Item className="p-2 page-editor__rule" key={rule.id}>
+		<ClayList.Item
+			aria-label={getRuleAriaLabel(rule.name, conditions, actions)}
+			className="p-2 page-editor__rule"
+			key={rule.id}
+		>
 			<ClayList.ItemField expand>
 				<div className="align-items-center d-flex">
 					<span className="flex-grow-1 font-weight-semi-bold">
@@ -196,4 +200,16 @@ function Action({action}) {
 			</ClayLabel>
 		</>
 	);
+}
+
+function getRuleAriaLabel(name, conditions, actions) {
+	const conditionsDescription = conditions
+		.map((condition) => condition.description)
+		.join(' ');
+
+	const actionsDescription = actions
+		.map((action) => action.description)
+		.join(' ');
+
+	return `${name}: ${conditionsDescription} ${actionsDescription}`;
 }

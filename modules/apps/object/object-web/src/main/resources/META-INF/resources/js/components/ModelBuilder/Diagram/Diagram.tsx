@@ -171,6 +171,13 @@ function DiagramBuilder() {
 			},
 			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
 		});
+
+		dispatch({
+			payload: {
+				selectedObjectRelationshipId: newObjectRelationshipId,
+			},
+			type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
+		});
 	};
 
 	return (

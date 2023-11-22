@@ -36,18 +36,7 @@ public class CommercePunchOutThemeTemplateContextContributor
 			_commercePunchOutThemeHttpHelper);
 	}
 
-	@Activate
-	protected void activate() {
-		_commercePunchOutThemeHttpHelper =
-			new CommercePunchOutThemeHttpHelper();
-	}
-
-	private CommercePunchOutThemeHttpHelper _commercePunchOutThemeHttpHelper;
-
-	@Reference
-	private PunchOutSessionHelper _punchOutSessionHelper;
-
-	private class CommercePunchOutThemeHttpHelper {
+	public class CommercePunchOutThemeHttpHelper {
 
 		public boolean punchOutSession(HttpServletRequest httpServletRequest) {
 			if (_punchOutSessionHelper.punchOutEnabled(httpServletRequest) &&
@@ -60,5 +49,16 @@ public class CommercePunchOutThemeTemplateContextContributor
 		}
 
 	}
+
+	@Activate
+	protected void activate() {
+		_commercePunchOutThemeHttpHelper =
+			new CommercePunchOutThemeHttpHelper();
+	}
+
+	private CommercePunchOutThemeHttpHelper _commercePunchOutThemeHttpHelper;
+
+	@Reference
+	private PunchOutSessionHelper _punchOutSessionHelper;
 
 }

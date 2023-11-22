@@ -240,7 +240,31 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		Table<?> layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable =
 			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, type);
+				groupId, layoutPageTemplateCollectionId, 0, 0, type, -1);
+
+		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
+			DSLQueryFactoryUtil.select(
+				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
+			).from(
+				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
+			).orderBy(
+				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable,
+				orderByComparator
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
+		long groupId, long layoutPageTemplateCollectionId, long classNameId,
+		long classTypeId, int type, int status, int start, int end,
+		OrderByComparator<Object> orderByComparator) {
+
+		Table<?> layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable =
+			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
+				groupId, layoutPageTemplateCollectionId, classNameId,
+				classTypeId, type, status);
 
 		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
 			DSLQueryFactoryUtil.select(
@@ -261,7 +285,26 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		Table<?> layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable =
 			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, type);
+				groupId, layoutPageTemplateCollectionId, 0, 0, type, -1);
+
+		return layoutPageTemplateEntryPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable.
+					getColumn("layoutPageTemplateEntryId")
+			).from(
+				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
+			));
+	}
+
+	@Override
+	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
+		long groupId, long layoutPageTemplateCollectionId, long classNameId,
+		long classTypeId, int type, int status) {
+
+		Table<?> layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable =
+			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
+				groupId, layoutPageTemplateCollectionId, classNameId,
+				classTypeId, type, status);
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
@@ -884,7 +927,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	private Table<?>
 		_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-			long groupId, long layoutPageTemplateCollectionId, int type) {
+			long groupId, long layoutPageTemplateCollectionId, long classNameId,
+			long classTypeId, int type, int status) {
 
 		return DSLQueryFactoryUtil.select(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
@@ -907,6 +951,33 @@ public class LayoutPageTemplateEntryServiceImpl
 						return LayoutPageTemplateEntryTable.INSTANCE.
 							layoutPageTemplateCollectionId.eq(
 								layoutPageTemplateCollectionId);
+					}
+
+					return null;
+				}
+			).and(
+				() -> {
+					if (classNameId > 0) {
+						return LayoutPageTemplateEntryTable.INSTANCE.
+							classNameId.eq(classNameId);
+					}
+
+					return null;
+				}
+			).and(
+				() -> {
+					if (classTypeId > 0) {
+						return LayoutPageTemplateEntryTable.INSTANCE.
+							classTypeId.eq(classTypeId);
+					}
+
+					return null;
+				}
+			).and(
+				() -> {
+					if (status >= 0) {
+						return LayoutPageTemplateEntryTable.INSTANCE.status.eq(
+							status);
 					}
 
 					return null;

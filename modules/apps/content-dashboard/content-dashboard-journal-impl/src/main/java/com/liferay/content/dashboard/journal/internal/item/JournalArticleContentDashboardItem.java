@@ -156,7 +156,7 @@ public class JournalArticleContentDashboardItem
 						journalArticle.getStatus())),
 				themeDisplay.getLocale(),
 				WorkflowConstants.getStatusStyle(journalArticle.getStatus()),
-				journalArticle.getUserName(),
+				journalArticle.getStatusByUserName(),
 				String.valueOf(journalArticle.getVersion())));
 	}
 
@@ -397,19 +397,19 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public long getUserId() {
 		if (_latestApprovedJournalArticle != null) {
-			return _latestApprovedJournalArticle.getUserId();
+			return _latestApprovedJournalArticle.getStatusByUserId();
 		}
 
-		return _journalArticle.getUserId();
+		return _journalArticle.getStatusByUserId();
 	}
 
 	@Override
 	public String getUserName() {
 		if (_latestApprovedJournalArticle != null) {
-			return _latestApprovedJournalArticle.getUserName();
+			return _latestApprovedJournalArticle.getStatusByUserName();
 		}
 
-		return _journalArticle.getUserName();
+		return _journalArticle.getStatusByUserName();
 	}
 
 	@Override
@@ -588,7 +588,7 @@ public class JournalArticleContentDashboardItem
 				locale,
 				WorkflowConstants.getStatusLabel(journalArticle.getStatus())),
 			null, WorkflowConstants.getStatusStyle(journalArticle.getStatus()),
-			journalArticle.getUserName(),
+			journalArticle.getStatusByUserName(),
 			String.valueOf(journalArticle.getVersion()));
 	}
 

@@ -123,6 +123,34 @@ public class SXPElementSerDes {
 			sb.append("\"");
 		}
 
+		if (sxpElement.getFallbackDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fallbackDescription\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpElement.getFallbackDescription()));
+
+			sb.append("\"");
+		}
+
+		if (sxpElement.getFallbackTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fallbackTitle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sxpElement.getFallbackTitle()));
+
+			sb.append("\"");
+		}
+
 		if (sxpElement.getHidden() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -315,6 +343,23 @@ public class SXPElementSerDes {
 				String.valueOf(sxpElement.getExternalReferenceCode()));
 		}
 
+		if (sxpElement.getFallbackDescription() == null) {
+			map.put("fallbackDescription", null);
+		}
+		else {
+			map.put(
+				"fallbackDescription",
+				String.valueOf(sxpElement.getFallbackDescription()));
+		}
+
+		if (sxpElement.getFallbackTitle() == null) {
+			map.put("fallbackTitle", null);
+		}
+		else {
+			map.put(
+				"fallbackTitle", String.valueOf(sxpElement.getFallbackTitle()));
+		}
+
 		if (sxpElement.getHidden() == null) {
 			map.put("hidden", null);
 		}
@@ -447,6 +492,19 @@ public class SXPElementSerDes {
 				if (jsonParserFieldValue != null) {
 					sxpElement.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "fallbackDescription")) {
+
+				if (jsonParserFieldValue != null) {
+					sxpElement.setFallbackDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fallbackTitle")) {
+				if (jsonParserFieldValue != null) {
+					sxpElement.setFallbackTitle((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "hidden")) {

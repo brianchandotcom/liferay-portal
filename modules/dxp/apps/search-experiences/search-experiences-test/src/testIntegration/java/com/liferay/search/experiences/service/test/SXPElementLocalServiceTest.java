@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -159,13 +160,14 @@ public class SXPElementLocalServiceTest {
 	private SXPElement _addSXPElement(String externalReferenceCode, long userId)
 		throws Exception {
 
+		String title = RandomTestUtil.randomString();
+
 		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
 			externalReferenceCode, userId,
-			Collections.singletonMap(LocaleUtil.US, ""), "{}", false,
-			RandomTestUtil.randomString(),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			0, ServiceContextTestUtil.getServiceContext());
+			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK), "{}",
+			StringPool.BLANK, title, false, RandomTestUtil.randomString(),
+			Collections.singletonMap(LocaleUtil.US, title), 0,
+			ServiceContextTestUtil.getServiceContext());
 
 		_sxpElements.add(sxpElement);
 

@@ -50,6 +50,12 @@ public class SXPElementTable extends BaseTable<SXPElementTable> {
 		createColumn(
 			"elementDefinitionJSON", Clob.class, Types.CLOB,
 			Column.FLAG_DEFAULT);
+	public final Column<SXPElementTable, String> fallbackDescription =
+		createColumn(
+			"fallbackDescription", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<SXPElementTable, String> fallbackTitle = createColumn(
+		"fallbackTitle", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Boolean> hidden = createColumn(
 		"hidden_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Boolean> readOnly = createColumn(

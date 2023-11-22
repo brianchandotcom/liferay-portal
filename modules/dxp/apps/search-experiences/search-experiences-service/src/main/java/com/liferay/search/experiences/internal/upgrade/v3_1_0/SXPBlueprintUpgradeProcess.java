@@ -1,0 +1,224 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.search.experiences.internal.upgrade.v3_1_0;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import java.util.Iterator;
+
+/**
+ * @author Gustavo Lima
+ */
+public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		_upgradeSXPElement();
+
+		_upgradeSXPBlueprint();
+	}
+
+	private String _addFieldsToElementInstancesJSON(String elementInstancesJSON)
+		throws Exception {
+
+		if ((elementInstancesJSON == null) || elementInstancesJSON.isEmpty()) {
+			return elementInstancesJSON;
+		}
+
+		JSONArray elementInstancesJSONArray = JSONFactoryUtil.createJSONArray(
+			elementInstancesJSON);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select sxpElementId, title, description from SXPElement " +
+					"where sxpElementId = ?")) {
+
+			for (int i = 0; i < elementInstancesJSONArray.length(); i++) {
+				JSONObject elementInstanceJSONObject =
+					elementInstancesJSONArray.getJSONObject(i);
+
+				if (elementInstanceJSONObject == null) {
+					continue;
+				}
+
+				JSONObject sxpElementJSONObject =
+					elementInstanceJSONObject.getJSONObject("sxpElement");
+
+				if (sxpElementJSONObject == null) {
+					continue;
+				}
+
+				preparedStatement.setLong(
+					1, sxpElementJSONObject.getLong("id"));
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					if (resultSet.next()) {
+						sxpElementJSONObject.put(
+							"fallbackDescription",
+							_getDefaultValueFromFieldXML(
+								resultSet.getString("description"),
+								"Description")
+						).put(
+							"fallbackTitle",
+							_getDefaultValueFromFieldXML(
+								resultSet.getString("title"), "Title")
+						);
+					}
+					else {
+						sxpElementJSONObject.put(
+							"fallbackDescription",
+							_getFirstLocalizedValue(
+								sxpElementJSONObject.getJSONObject(
+									"title_i18n"))
+						).put(
+							"fallbackTitle",
+							_getFirstLocalizedValue(
+								sxpElementJSONObject.getJSONObject(
+									"description_i18n"))
+						);
+					}
+				}
+			}
+		}
+		catch (SQLException sqlException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sqlException);
+			}
+		}
+
+		return elementInstancesJSONArray.toString();
+	}
+
+	private String _getDefaultLocale(String xmlInput) {
+		int start = xmlInput.indexOf("default-locale=\"");
+
+		if (start != -1) {
+			start += "default-locale=\"".length();
+
+			int end = xmlInput.indexOf("\"", start);
+
+			if (end != -1) {
+				return xmlInput.substring(start, end);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getDefaultValueFromFieldXML(
+		String fieldXML, String fieldName) {
+
+		if (Validator.isBlank(fieldXML)) {
+			return StringPool.BLANK;
+		}
+
+		String fallBackFieldCreationValue = StringBundler.concat(
+			"<", fieldName, " language-id=\"", _getDefaultLocale(fieldXML),
+			"\">");
+
+		int startIndex = fieldXML.indexOf(fallBackFieldCreationValue);
+
+		if (startIndex != -1) {
+			startIndex += fallBackFieldCreationValue.length();
+
+			int endIndex = fieldXML.indexOf("</" + fieldName + ">", startIndex);
+
+			if (endIndex != -1) {
+				return fieldXML.substring(startIndex, endIndex);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private Object _getFirstLocalizedValue(JSONObject i18nJSONObject) {
+		Iterator<String> keysIterator = i18nJSONObject.keys();
+
+		if (!keysIterator.hasNext()) {
+			return StringPool.BLANK;
+		}
+
+		return i18nJSONObject.get(keysIterator.next());
+	}
+
+	private void _upgradeSXPBlueprint() throws Exception {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select sxpBlueprintId, elementInstancesJSON from " +
+					"SXPBlueprint");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update SXPBlueprint set elementInstancesJSON = ? where " +
+						"sxpBlueprintId = ?")) {
+
+			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+				while (resultSet1.next()) {
+					preparedStatement2.setString(
+						1,
+						_addFieldsToElementInstancesJSON(
+							resultSet1.getString("elementInstancesJSON")));
+
+					preparedStatement2.setLong(
+						2, resultSet1.getLong("sxpBlueprintId"));
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
+			}
+		}
+	}
+
+	private void _upgradeSXPElement() throws Exception {
+		alterTableAddColumn("SXPElement", "fallbackTitle", "VARCHAR(255) null");
+		alterTableAddColumn(
+			"SXPElement", "fallbackDescription", "VARCHAR(255) null");
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select sxpElementId, title, description from SXPElement");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update SXPElement set fallbackDescription = ?, " +
+						"fallbackTitle = ? where sxpElementId = ?")) {
+
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					preparedStatement2.setString(
+						1,
+						_getDefaultValueFromFieldXML(
+							resultSet.getString("description"), "Description"));
+					preparedStatement2.setString(
+						2,
+						_getDefaultValueFromFieldXML(
+							resultSet.getString("title"), "Title"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("sxpElementId"));
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SXPBlueprintUpgradeProcess.class);
+
+}

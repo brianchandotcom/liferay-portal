@@ -48,6 +48,8 @@
 		<field name="elementDefinitionJSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="fallbackDescription" type="String" />
+		<field name="fallbackTitle" type="String" />
 		<field name="hidden" type="boolean" />
 		<field name="readOnly" type="boolean" />
 		<field name="schemaVersion" type="String" />

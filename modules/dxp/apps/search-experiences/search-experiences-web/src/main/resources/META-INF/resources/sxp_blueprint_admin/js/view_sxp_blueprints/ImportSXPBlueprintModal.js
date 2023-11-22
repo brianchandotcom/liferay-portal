@@ -8,7 +8,7 @@ import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch, navigate} from 'frontend-js-web';
+import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
@@ -99,6 +99,20 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 									: Liferay.Language.get(
 											'unable-to-import-blueprint-with-the-same-external-reference-code-as-an-existing-blueprint'
 									  )
+							);
+						}
+						else if (
+							responseContent.type.includes(
+								'SXPElementNoDefaultLocaleTitleException'
+							)
+						) {
+							_handleFormError(
+								sub(
+									Liferay.Language.get(
+										'error.default-locale-x-title-empty'
+									),
+									Liferay.ThemeDisplay.getDefaultLanguageId()
+								)
 							);
 						}
 						else {

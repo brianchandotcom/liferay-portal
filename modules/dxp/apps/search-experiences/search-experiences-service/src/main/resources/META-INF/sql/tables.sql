@@ -32,6 +32,8 @@ create table SXPElement (
 	modifiedDate DATE null,
 	description STRING null,
 	elementDefinitionJSON TEXT null,
+	fallbackDescription VARCHAR(75) null,
+	fallbackTitle VARCHAR(75) null,
 	hidden_ BOOLEAN,
 	readOnly BOOLEAN,
 	schemaVersion VARCHAR(75) null,

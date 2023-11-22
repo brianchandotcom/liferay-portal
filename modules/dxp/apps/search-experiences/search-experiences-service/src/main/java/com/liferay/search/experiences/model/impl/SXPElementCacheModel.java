@@ -68,7 +68,7 @@ public class SXPElementCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,6 +92,10 @@ public class SXPElementCacheModel
 		sb.append(description);
 		sb.append(", elementDefinitionJSON=");
 		sb.append(elementDefinitionJSON);
+		sb.append(", fallbackDescription=");
+		sb.append(fallbackDescription);
+		sb.append(", fallbackTitle=");
+		sb.append(fallbackTitle);
 		sb.append(", hidden=");
 		sb.append(hidden);
 		sb.append(", readOnly=");
@@ -170,6 +174,20 @@ public class SXPElementCacheModel
 			sxpElementImpl.setElementDefinitionJSON(elementDefinitionJSON);
 		}
 
+		if (fallbackDescription == null) {
+			sxpElementImpl.setFallbackDescription("");
+		}
+		else {
+			sxpElementImpl.setFallbackDescription(fallbackDescription);
+		}
+
+		if (fallbackTitle == null) {
+			sxpElementImpl.setFallbackTitle("");
+		}
+		else {
+			sxpElementImpl.setFallbackTitle(fallbackTitle);
+		}
+
 		sxpElementImpl.setHidden(hidden);
 		sxpElementImpl.setReadOnly(readOnly);
 
@@ -221,6 +239,8 @@ public class SXPElementCacheModel
 		modifiedDate = objectInput.readLong();
 		description = objectInput.readUTF();
 		elementDefinitionJSON = (String)objectInput.readObject();
+		fallbackDescription = objectInput.readUTF();
+		fallbackTitle = objectInput.readUTF();
 
 		hidden = objectInput.readBoolean();
 
@@ -282,6 +302,20 @@ public class SXPElementCacheModel
 			objectOutput.writeObject(elementDefinitionJSON);
 		}
 
+		if (fallbackDescription == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(fallbackDescription);
+		}
+
+		if (fallbackTitle == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(fallbackTitle);
+		}
+
 		objectOutput.writeBoolean(hidden);
 
 		objectOutput.writeBoolean(readOnly);
@@ -323,6 +357,8 @@ public class SXPElementCacheModel
 	public long modifiedDate;
 	public String description;
 	public String elementDefinitionJSON;
+	public String fallbackDescription;
+	public String fallbackTitle;
 	public boolean hidden;
 	public boolean readOnly;
 	public String schemaVersion;

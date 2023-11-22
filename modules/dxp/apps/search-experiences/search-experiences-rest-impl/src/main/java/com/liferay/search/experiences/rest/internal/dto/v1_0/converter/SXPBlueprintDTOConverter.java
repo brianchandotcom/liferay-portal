@@ -8,8 +8,6 @@ package com.liferay.search.experiences.rest.internal.dto.v1_0.converter;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -19,10 +17,12 @@ import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
+import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.util.SXPDTOConverterUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -119,6 +119,19 @@ public class SXPBlueprintDTOConverter
 		};
 	}
 
+	private void _setLocalizedDescriptionAndTitle(
+		Map<Locale, String> descriptionMap, String fallBackDescription,
+		String fallbackTitle, Locale locale, SXPElement sxpElement,
+		Map<Locale, String> titleMap) {
+
+		sxpElement.setDescription(
+			SXPDTOConverterUtil.getLocalizedField(
+				fallBackDescription, _language, descriptionMap, locale));
+		sxpElement.setTitle(
+			SXPDTOConverterUtil.getLocalizedField(
+				fallbackTitle, _language, titleMap, locale));
+	}
+
 	private Configuration _toConfiguration(String json) {
 		try {
 			return ConfigurationUtil.toConfiguration(json);
@@ -148,58 +161,37 @@ public class SXPBlueprintDTOConverter
 	private ElementInstance[] _translateElementInstances(
 		ElementInstance[] elementInstances, Locale locale) {
 
-		try {
-			for (ElementInstance elementInstance : elementInstances) {
-				SXPElement sxpElement = elementInstance.getSxpElement();
-
-				Long sxpElementId = (Long)sxpElement.getId();
-
-				if (sxpElementId != null) {
-					com.liferay.search.experiences.model.SXPElement
-						serviceBuilderSXPElement =
-							_sxpElementLocalService.getSXPElement(sxpElementId);
-
-					sxpElement.setDescription(
-						_language.get(
-							locale,
-							serviceBuilderSXPElement.getDescription(locale)));
-					sxpElement.setTitle(
-						_language.get(
-							locale, serviceBuilderSXPElement.getTitle(locale)));
-				}
-				else {
-					String descriptionXml = _localization.getXml(
-						sxpElement.getDescription_i18n(),
-						LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-						"Description");
-					String titleXml = _localization.getXml(
-						sxpElement.getTitle_i18n(),
-						LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-						"Title");
-
-					sxpElement.setDescription(
-						_language.get(
-							locale,
-							_localization.getLocalization(
-								descriptionXml,
-								LocaleUtil.toLanguageId(locale))));
-					sxpElement.setTitle(
-						_language.get(
-							locale,
-							_localization.getLocalization(
-								titleXml, LocaleUtil.toLanguageId(locale))));
-				}
-			}
-
-			return elementInstances;
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-
+		if (elementInstances == null) {
 			return null;
 		}
+
+		for (ElementInstance elementInstance : elementInstances) {
+			SXPElement sxpElement = elementInstance.getSxpElement();
+
+			sxpElement.setElementDefinition(
+				SXPDTOConverterUtil.translateElementDefinition(
+					sxpElement.getElementDefinition(), _language, locale));
+
+			try {
+				com.liferay.search.experiences.model.SXPElement
+					serviceBuilderSXPElement =
+						_sxpElementLocalService.getSXPElement(
+							(Long)sxpElement.getId());
+
+				_setLocalizedDescriptionAndTitle(
+					serviceBuilderSXPElement.getDescriptionMap(),
+					serviceBuilderSXPElement.getFallbackDescription(),
+					serviceBuilderSXPElement.getFallbackTitle(), locale,
+					sxpElement, serviceBuilderSXPElement.getTitleMap());
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+			}
+		}
+
+		return elementInstances;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -207,9 +199,6 @@ public class SXPBlueprintDTOConverter
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Localization _localization;
 
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;

@@ -7,13 +7,14 @@ package com.liferay.object.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Rodrigo Paulino
  */
 @ExtendedObjectClassDefinition(
-	category = "object", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	category = "object", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.object.configuration.ObjectConfiguration",
@@ -28,6 +29,20 @@ public interface ObjectConfiguration {
 		required = false
 	)
 	public int maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
+
+	@Meta.AD(
+		deflt = "1",
+		name = "duration",
+		required = false
+	)
+	public int duration();
+
+	@Meta.AD(
+		deflt = "days", description = "time-scale-help",
+		name = "time-scale", optionLabels = {"days", "weeks"},
+		optionValues = {"days", "weeks"}, required = false
+	)
+	public String timeScale();
 
 	@Meta.AD(
 		deflt = "25", description = "maximum-file-size-for-guest-users-help",

@@ -99,7 +99,10 @@ function Rule({onDelete, onEdit, rule}) {
 		>
 			<ClayList.ItemField expand>
 				<div className="align-items-center d-flex">
-					<span className="flex-grow-1 font-weight-semi-bold">
+					<span
+						aria-hidden="true"
+						className="flex-grow-1 font-weight-semi-bold"
+					>
 						{rule.name}
 					</span>
 
@@ -140,7 +143,10 @@ function Rule({onDelete, onEdit, rule}) {
 			</ClayList.ItemField>
 
 			<ClayList.ItemField className="mt-3" expand>
-				<p className="align-items-center c-gap-2 d-flex flex-wrap">
+				<p
+					aria-hidden="true"
+					className="align-items-center c-gap-2 d-flex flex-wrap"
+				>
 					{conditions.map((condition, index) => (
 						<Condition
 							condition={condition}

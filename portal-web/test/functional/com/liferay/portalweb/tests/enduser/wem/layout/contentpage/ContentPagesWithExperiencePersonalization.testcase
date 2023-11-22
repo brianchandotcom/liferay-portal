@@ -682,9 +682,10 @@ definition {
 		}
 
 		task ("Then the guest user should view the content from Default experience") {
-			AssertTextEquals(
-				locator1 = "Experience#FRAGMENT_HEADING",
-				value1 = "Default");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Default");
 		}
 	}
 

@@ -3,6 +3,18 @@
 		width: 37.5rem;
 	}
 
+	&-add-package-button {
+		background-color: #FBFCFE;
+		border-color: #E7EFFF;
+		color: #0B5FFF;
+
+		&:active, &:hover {
+			background-color: #EDF3FE;
+			border-color: #0053F0;
+			color: #0B5FFF;
+		}
+	}
+
 	&-app-build {
 		&-container {
 			margin-bottom: 1.5rem;

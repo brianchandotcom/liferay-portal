@@ -290,75 +290,14 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 
 		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
-		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
 		try {
 			for (int i = 0; i < orderItemsJSONArray.length(); i++) {
-				ProductPurchase productPurchase = new ProductPurchase();
-
-				JSONObject orderItemJSONObject =
-					orderItemsJSONArray.getJSONObject(i);
-
-				_populateDXPLicenseUsageTypePropertiesMap(
-					dxpLicenseUsageTypePropertiesMap,
-					orderItemJSONObject.getString("options"));
-
-				if (Objects.equals(
-						productSpecificationsMap.get("license-type"),
-						"Subscription")) {
-
-					Instant instant = zonedDateTime.plusYears(
-						1
-					).toInstant();
-
-					if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
-						instant = zonedDateTime.plusMonths(
-							1
-						).toInstant();
-					}
-
-					productPurchase.setEndDate(Date.from(instant));
-				}
-
-				ExternalLink externalLink = new ExternalLink();
-
-				externalLink.setDomain("salesforce");
-				externalLink.setEntityId(
-					String.valueOf(commerceOrderJSONObject.getLong("id")));
-				externalLink.setEntityName("opportunity");
-
-				productPurchase.setExternalLinks(
-					new ExternalLink[] {externalLink});
-
-				productPurchase.setPerpetual(
-					Objects.equals(
-						productSpecificationsMap.get("license-type"),
-						"Perpetual"));
-				productPurchase.setProductKey(
-					_getProductKey(
-						orderItemJSONObject.getString("sku"),
-						_skuResource.getProductIdSkusPage(
-							product.getProductId(), Pagination.of(1, 10)
-						).getItems()));
-				productPurchase.setQuantity(
-					orderItemJSONObject.getInt("quantity"));
-				productPurchase.setStartDate(
-					Date.from(zonedDateTime.toInstant()));
-				productPurchase.setStatus(ProductPurchase.Status.APPROVED);
-
-				productPurchase =
-					_productPurchaseResource.
-						postAccountAccountKeyProductPurchase(
-							jsonObject.getString("userName"),
-							String.valueOf(
-								commerceOrderJSONObject.getInt("userId")),
-							account.getExternalReferenceCode(),
-							productPurchase);
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Created account product purchase " + productPurchase);
-				}
+				_postAccountAccountKeyProductPurchase(
+					account, commerceOrderJSONObject,
+					dxpLicenseUsageTypePropertiesMap, jsonObject,
+					orderItemsJSONArray.getJSONObject(i), product,
+					productSpecificationsMap);
 			}
 
 			order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
@@ -507,6 +446,70 @@ public class KoroneikiRestController extends BaseRestController {
 					}
 				}
 			}
+		}
+	}
+
+	private void _postAccountAccountKeyProductPurchase(
+			Account account, JSONObject commerceOrderJSONObject,
+			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap,
+			JSONObject jsonObject, JSONObject orderItemJSONObject,
+			Product product, Map<String, String> productSpecificationsMap)
+		throws Exception {
+
+		ProductPurchase productPurchase = new ProductPurchase();
+
+		_populateDXPLicenseUsageTypePropertiesMap(
+			dxpLicenseUsageTypePropertiesMap,
+			orderItemJSONObject.getString("options"));
+
+		ZonedDateTime zonedDateTime = ZonedDateTime.now();
+
+		if (Objects.equals(
+				productSpecificationsMap.get("license-type"), "Subscription")) {
+
+			Instant instant = zonedDateTime.plusYears(
+				1
+			).toInstant();
+
+			if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
+				instant = zonedDateTime.plusMonths(
+					1
+				).toInstant();
+			}
+
+			productPurchase.setEndDate(Date.from(instant));
+		}
+
+		ExternalLink externalLink = new ExternalLink();
+
+		externalLink.setDomain("salesforce");
+		externalLink.setEntityId(
+			String.valueOf(commerceOrderJSONObject.getLong("id")));
+		externalLink.setEntityName("opportunity");
+
+		productPurchase.setExternalLinks(new ExternalLink[] {externalLink});
+
+		productPurchase.setPerpetual(
+			Objects.equals(
+				productSpecificationsMap.get("license-type"), "Perpetual"));
+		productPurchase.setProductKey(
+			_getProductKey(
+				orderItemJSONObject.getString("sku"),
+				_skuResource.getProductIdSkusPage(
+					product.getProductId(), Pagination.of(1, 10)
+				).getItems()));
+		productPurchase.setQuantity(orderItemJSONObject.getInt("quantity"));
+		productPurchase.setStartDate(Date.from(zonedDateTime.toInstant()));
+		productPurchase.setStatus(ProductPurchase.Status.APPROVED);
+
+		productPurchase =
+			_productPurchaseResource.postAccountAccountKeyProductPurchase(
+				jsonObject.getString("userName"),
+				String.valueOf(commerceOrderJSONObject.getInt("userId")),
+				account.getExternalReferenceCode(), productPurchase);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Created account product purchase " + productPurchase);
 		}
 	}
 

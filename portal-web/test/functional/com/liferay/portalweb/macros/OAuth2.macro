@@ -324,6 +324,7 @@ definition {
 	@summary = "Default summary"
 	macro deployInstanceConfigFile(osgiConfigFileName = null) {
 		var companyId = JSONCompany.getCompanyId();
+		var bundleId = ${bundleId};
 
 		if (isSet(bundleId)) {
 			AntCommands.runCommand("build-test-oauth2.xml", "prepare-oauth2-osgi-configuration -Dbundle.id=${bundleId} -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");

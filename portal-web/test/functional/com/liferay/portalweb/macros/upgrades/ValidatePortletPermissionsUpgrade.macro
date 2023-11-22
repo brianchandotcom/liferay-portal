@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "Validates that the portlet permissions definitions across different users persisted and are working correctly after an upgrade is executed."
 	macro viewPortletsPermissions() {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea1@liferay.com",

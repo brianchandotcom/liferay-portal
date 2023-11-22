@@ -384,7 +384,14 @@ public class ParallelExecutor<T> {
 
 						if (future.isDone()) {
 							try {
-								_results.add(future.get());
+								T result = future.get();
+
+								if ((result != null) ||
+									(_parallelExecutor._excludeNulls ==
+										false)) {
+
+									_results.add(future.get());
+								}
 
 								latestCompletedProcessorTasks.add(
 									processorTask);

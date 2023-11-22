@@ -95,8 +95,8 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 		if (commitMessages.isEmpty()) {
 			addMessage(
 				fileName,
-				"Missing breaking change in commit messages when the major " +
-					"version bumps up");
+				"Incorrect commit message: Missing breaking change in commit " +
+					"messages when the major version bumps up");
 
 			return content;
 		}
@@ -129,11 +129,11 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0], ":\n",
+							"Incorrect commit message in SHA ", parts[0], ":\n",
 							"Each breaking change report should have one, and ",
-							"only one '# breaking', '## What', ",
-							"'## Why' and '## Alternatives'(Optional). Use ",
-							"'----' to split each breaking change."));
+							"only one '# breaking', '## What', '## Why' and ",
+							"'## Alternatives'(Optional). Use '----' to split ",
+							"each breaking change."));
 
 					return content;
 				}
@@ -150,10 +150,9 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0], ":\n",
-							"Incorrect order of headers: The correct order ",
-							"should be '## What' | '## Why' | '## ",
-							"Alternatives'"));
+							"Incorrect commit message in SHA ", parts[0], ":\n",
+							"The correct order of headers should be '## What' ",
+							"| '## Why' | '## Alternatives'"));
 
 					return content;
 				}
@@ -168,9 +167,8 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0],
-							":\nThere should be one file path after '## ",
-							"What'"));
+							"Incorrect commit message in SHA ", parts[0], ":\n",
+							"There should be one file path after '## What'"));
 
 					return content;
 				}
@@ -194,10 +192,9 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Found formatting issues in SHA ", parts[0], ":\n",
-							"'## What' should be followed by only one ",
-							"relative path, which is from ",
-							portalDir.getAbsolutePath()));
+							"Incorrect commit message in SHA ", parts[0], ":\n",
+							"'## What' should be followed by only one path, ",
+							"which is from ", portalDir.getAbsolutePath()));
 
 					return content;
 				}
@@ -215,9 +212,9 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Found formatting issues in SHA ", parts[0], ":\n",
-					"The commit message contains '# breaking",
-					"' should end with '\\n\\n----'"));
+					"Incorrect commit message in SHA ", parts[0], ":\n",
+					"The commit message contains '# breaking' should end with ",
+					"'\\n\\n----'"));
 
 			return content;
 		}
@@ -240,10 +237,10 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Found formatting issues in SHA ", parts[0], ":\n",
+						"Incorrect commit message in SHA ", parts[0], ":\n",
 						"There should be an empty line after/before '----', ",
-						"'# breaking', '## What', '## Why' and ",
-						"'## Alternatives'"));
+						"'# breaking', '## What', '## Why' and '## ",
+						"Alternatives'"));
 
 				return content;
 			}
@@ -253,8 +250,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 	}
 
 	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {
-		"----", "## Alternatives", "# breaking", "## What",
-		"## Why"
+		"----", "## Alternatives", "# breaking", "## What", "## Why"
 	};
 
 }

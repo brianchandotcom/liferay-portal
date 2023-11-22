@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
@@ -42,6 +43,17 @@ public abstract class BaseVirtualInstanceOperationTestCase
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseDBPartitionTestCase.setUpClass();
+
+		addDBPartitions();
+
+		insertPartitionRequiredData();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		deletePartitionRequiredData();
+
+		removeDBPartitions();
 	}
 
 	@After

@@ -16,8 +16,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.display.page.item.selector.web.internal.dao.search.LayoutPageTemplateResultRowSplitter" %><%@
 page import="com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorCustomViewDisplayContext" %><%@
-page import="com.liferay.asset.display.page.item.selector.web.internal.display.context.DisplayPageManagementToolbarDisplayContext" %><%@
-page import="com.liferay.asset.display.page.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.DisplayPageTemplateCollectionHorizontalCard" %><%@
+page import="com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext" %><%@
+page import="com.liferay.asset.display.page.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.LayoutPageTemplateCollectionHorizontalCard" %><%@
 page import="com.liferay.asset.display.page.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.LayoutPageTemplateEntryVerticalCard" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %>

@@ -13,10 +13,10 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 /**
  * @author Yurena Cabrera
  */
-public class DisplayPageTemplateCollectionHorizontalCard
+public class LayoutPageTemplateCollectionHorizontalCard
 	implements HorizontalCard {
 
-	public DisplayPageTemplateCollectionHorizontalCard(
+	public LayoutPageTemplateCollectionHorizontalCard(
 		AssetDisplayPagesItemSelectorCustomViewDisplayContext
 			assetDisplayPagesItemSelectorCustomViewDisplayContext,
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {

@@ -17,10 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Yurena Cabrera
  */
-public class DisplayPageManagementToolbarDisplayContext
-	extends SearchContainerManagementToolbarDisplayContext {
+public class
+	AssetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext
+		extends SearchContainerManagementToolbarDisplayContext {
 
-	public DisplayPageManagementToolbarDisplayContext(
+	public AssetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,

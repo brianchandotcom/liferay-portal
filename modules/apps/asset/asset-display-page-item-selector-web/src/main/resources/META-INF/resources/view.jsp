@@ -12,7 +12,7 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new DisplayPageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPagesItemSelectorCustomViewDisplayContext) %>"
+	managementToolbarDisplayContext="<%= new AssetDisplayPagesItemSelectorCustomViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPagesItemSelectorCustomViewDisplayContext) %>"
 />
 
 <clay:container-fluid>
@@ -34,7 +34,7 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 						colspan="<%= 2 %>"
 					>
 						<clay:horizontal-card
-							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard(assetDisplayPagesItemSelectorCustomViewDisplayContext, (LayoutPageTemplateCollection)object) %>"
+							horizontalCard="<%= new LayoutPageTemplateCollectionHorizontalCard(assetDisplayPagesItemSelectorCustomViewDisplayContext, (LayoutPageTemplateCollection)object) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

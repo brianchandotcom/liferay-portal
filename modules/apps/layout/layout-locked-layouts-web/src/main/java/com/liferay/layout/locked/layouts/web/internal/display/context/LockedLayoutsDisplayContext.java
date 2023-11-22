@@ -67,7 +67,14 @@ public class LockedLayoutsDisplayContext {
 	}
 
 	public String getLayoutType(LockedLayout lockedLayout) {
-		return lockedLayout.getType();
+		LockedLayoutType lockedLayoutType = lockedLayout.getLockedLayoutType();
+
+		if (lockedLayoutType == null) {
+			return StringPool.BLANK;
+		}
+
+		return _language.get(
+			_themeDisplay.getLocale(), lockedLayoutType.getValue());
 	}
 
 	public String getLayoutURL(LockedLayout lockedLayout)
@@ -290,12 +297,10 @@ public class LockedLayoutsDisplayContext {
 		LockedLayoutType lockedLayoutType = getLockedLayoutType();
 
 		if (lockedLayoutType != null) {
-			String type = _language.get(
-				_themeDisplay.getLocale(), lockedLayoutType.getValue());
-
 			lockedLayouts = ListUtil.filter(
 				lockedLayouts,
-				lockedLayout -> Objects.equals(lockedLayout.getType(), type));
+				lockedLayout ->
+					lockedLayout.getLockedLayoutType() == lockedLayoutType);
 		}
 
 		String orderByCol = getOrderByCol();

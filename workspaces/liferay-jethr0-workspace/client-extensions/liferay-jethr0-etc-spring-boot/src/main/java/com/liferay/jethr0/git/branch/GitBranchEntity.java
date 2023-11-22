@@ -8,10 +8,13 @@ package com.liferay.jethr0.git.branch;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.job.JobEntity;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -30,6 +33,9 @@ public interface GitBranchEntity extends Entity {
 	public String getBranchSHA();
 
 	public Set<JobEntity> getJobEntities();
+
+	public Properties getProperties(String propertiesFilePath)
+		throws IOException;
 
 	public boolean getRebased();
 

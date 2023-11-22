@@ -78,6 +78,14 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static String replace(String s, String oldSub, String newSub) {
+		if (s == null) {
+			return null;
+		}
+
+		return s.replace(oldSub, newSub);
+	}
+
 	public static Date toDate(String dateString) {
 		if ((dateString == null) || dateString.isEmpty()) {
 			return null;

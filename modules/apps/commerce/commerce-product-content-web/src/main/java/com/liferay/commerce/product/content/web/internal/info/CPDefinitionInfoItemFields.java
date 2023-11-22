@@ -9,6 +9,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -210,9 +211,9 @@ public class CPDefinitionInfoItemFields {
 			InfoLocalizedValue.localize(
 				CPDefinitionInfoItemFields.class, "depth")
 		).build();
-	public static final InfoField<TextInfoFieldType> descriptionInfoField =
+	public static final InfoField<HTMLInfoFieldType> descriptionInfoField =
 		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
+			HTMLInfoFieldType.INSTANCE
 		).name(
 			"description"
 		).labelInfoLocalizedValue(

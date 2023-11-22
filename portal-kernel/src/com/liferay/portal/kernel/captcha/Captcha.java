@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.captcha;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -16,6 +14,8 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,9 +39,7 @@ public interface Captcha {
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
-	public String serveImage(
-			HttpServletRequest httpServletRequest, OutputStream outputStream)
-		throws IOException;
+	public String serveImage(OutputStream outputStream) throws IOException;
 
 	public void serveImage(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)

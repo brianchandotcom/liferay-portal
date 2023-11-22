@@ -573,6 +573,56 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12919. Can Edit PayPal payment method in a channel's Details page"
+	@priority = 3
+	test CanEditPayPalPaymentMethod {
+		property portal.acceptance = "false";
+
+		task ("When the user navigates to Minium Channel details") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		}
+
+		task ("Then the user can edit PayPal details") {
+			CommerceChannels.editPaymentMethod(
+				active = "true",
+				description = "PayPal Description",
+				name = "PayPal New Name",
+				paymentMethod = "PayPal",
+				priority = "3.0");
+		}
+
+		task ("And can see PayPal is now enabled and changes are saved") {
+			AssertElementPresent(
+				key_entryName = "PayPal New Name",
+				locator1 = "CommerceEntry#CHANNELS_GENERAL_ACTIVE_STATUS");
+
+			CommerceChannels.assertPaymentMethodDetails(
+				active = "true",
+				description = "PayPal Description",
+				paymentMethodName = "PayPal New Name",
+				priority = "3.0");
+		}
+
+		task ("When the user edits PayPal configuration") {
+			CommerceChannels.configurationPaypal(
+				entryName = "PayPal New Name",
+				merchantId = "MerchantID",
+				mode = "Sandbox");
+
+			SelectFrame.selectFrameTop();
+		}
+
+		task ("Then the fields successfully updated") {
+			CommerceChannels.assertPayPalConfiguration(
+				clientId = "PayPal Client ID",
+				entryName = "PayPal New Name",
+				merchantId = "MerchantID",
+				mode = "Sandbox");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9459. CanEditShippingMethodTrackingURL"
 	@priority = 2
 	test CanEditShippingMethodTrackingURL {

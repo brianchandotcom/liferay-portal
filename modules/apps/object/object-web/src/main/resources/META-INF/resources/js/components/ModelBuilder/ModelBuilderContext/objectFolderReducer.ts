@@ -593,6 +593,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					...selectedObjectFolder,
 					objectFolderItems: updatedObjectFolderItems,
 				},
+				selectedObjectRelationship: null,
 			};
 
 			if (rightSidebarType) {

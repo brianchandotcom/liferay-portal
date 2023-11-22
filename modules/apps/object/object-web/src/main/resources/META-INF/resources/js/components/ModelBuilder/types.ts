@@ -203,7 +203,7 @@ export type TState = {
 	selectedObjectDefinitionNode: Node<ObjectDefinitionNodeData> | null;
 	selectedObjectField?: ObjectFieldNodeRow;
 	selectedObjectFolder: ObjectFolder;
-	selectedObjectRelationship?: Edge<ObjectRelationshipEdgeData>;
+	selectedObjectRelationship?: Edge<ObjectRelationshipEdgeData> | null;
 	showChangesSaved: boolean;
 	showSidebars: boolean;
 	workflowStatuses: LabelValueObject[];

@@ -624,27 +624,11 @@ definition {
 	@priority = 4
 	test ViewContentFromCorrectExperienceAsGuestUser {
 		task ("Given create Segments with two properties") {
-			Segmentation.openSegmentsAdmin(siteURLKey = ${siteURLKey});
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.fillTitle(titleField = "liferay.com with English language");
-
-			Segmentation.gotoSidebar(fieldType = "Session");
-
-			Segmentation.addProperties(propertyOption = "Language");
-
-			Segmentation.fillProperty(optionsValue = "English (United States)");
-
-			Segmentation.gotoSidebar(fieldType = "User");
-
-			Segmentation.addProperties(propertyOption = "Email Address");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-			Segmentation.fillProperty(criterionValue = "liferay.com");
-
-			PortletEntry.save();
+			JSONSegmentsentry.addSegmentWithProperties(
+				contentTypeList = "Session,User",
+				filterStringList = "(languageId eq 'en_US'):(contains(emailAddress, 'liferay.com'))",
+				groupName = ${randomSiteName},
+				segmentName = "Test Segment Name");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -660,15 +644,15 @@ definition {
 				text = "Default");
 
 			PageEditor.addExperience(
-				experienceName = "test Experience",
-				segmentName = "liferay.com with English language");
+				experienceName = "New Experience",
+				segmentName = "Test Segment Name");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "EMEA Guild");
 
-			PageEditor.prioritizeExperience(experienceName = "test Experience");
+			PageEditor.prioritizeExperience(experienceName = "New Experience");
 
 			PageEditor.publish();
 		}

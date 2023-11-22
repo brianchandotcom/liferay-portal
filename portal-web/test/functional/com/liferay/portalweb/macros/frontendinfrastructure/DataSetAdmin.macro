@@ -284,6 +284,17 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro chooseFilterType(filterType = null) {
+		DataSetAdmin.goToTab(tabName = "Filters");
+
+		LexiconEntry.gotoAdd();
+
+		Click(
+			key_fieldName = ${filterType},
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+	}
+
+	@summary = "Default summary"
 	macro createAndConfigureDataSetEntry(restSchema = null, defaultItemsPerPage = null, key_fieldList = null, restApplication = null, listOfItemsPerPage = null, dataSetViewName = null, dataSetName = null, restEndpoint = null, dataSetViewDescription = null) {
 		DataSetAdmin.goToDataSetAdminPage();
 
@@ -813,6 +824,25 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro editFragmentFilter(newFilterValue = null, filterName = null) {
+		Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
+
+		AssertVisible(
+			key_filter = ${filterName},
+			locator1 = "FrontendDataSet#FILTER_OPTION");
+
+		Click(
+			key_filter = ${filterName},
+			locator1 = "FrontendDataSet#FILTER_OPTION");
+
+		Click(
+			key_optionName = ${newFilterValue},
+			locator1 = "DataSet#RADIO_BUTTON_OPTION");
+
+		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
+	}
+
+	@summary = "Default summary"
 	macro editSorting() {
 		var key_entryPosition = ${key_entryPosition};
 		var key_sortingOption = ${key_sortingOption};
@@ -982,6 +1012,15 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro selectFilterBy(filterByField = null) {
+		Click(
+			dropdownLabel = "Select",
+			locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+		DropdownMenuItem.click(menuItem = ${filterByField});
+	}
+
+	@summary = "Default summary"
 	macro selectFilters(filterType = null) {
 		Select(
 			locator1 = "DataSet#FILTER_BY_SELECT",
@@ -1003,6 +1042,15 @@ definition {
 			value1 = ${preselectedValue});
 
 		DropdownMenuItem.click(menuItem = ${preselectedValue});
+	}
+
+	@summary = "Default summary"
+	macro selectPreSelectedValue(preSelectedValue = null) {
+		Click(locator1 = "DataSet#PRESELECT_VALUE_INPUT");
+
+		Click(
+			key_value = ${preSelectedValue},
+			locator1 = "DataSet#PRESELECT_VALUE_ITEM");
 	}
 
 	@summary = "Default summary"
@@ -1029,6 +1077,13 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro selectRadioButtonOption(optionName = null) {
+		Click(
+			key_optionName = ${optionName},
+			locator1 = "DataSet#RADIO_BUTTON_OPTION");
+	}
+
+	@summary = "Default summary"
 	macro uncheckFields(key_fieldList = null) {
 		for (var key_fieldItem : list ${key_fieldList}) {
 			Uncheck.uncheckNotVisible(
@@ -1036,57 +1091,5 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 	}
-
-	@summary = "Default summary"
-	macro selectPreSelectedValue {
-
-		Click(locator1 = "DataSet#PRESELECT_VALUE_INPUT");
-
-		Click(locator1 = "DataSet#PRESELECT_VALUE_ITEM",
-		key_value = "${preSelectedValue}");
-	}
-
-	@summary = "Default summary"
-	macro selectRadioButtonOption {
-		Click(locator1 = "DataSet#RADIO_BUTTON_OPTION",
-			key_optionName = "${optionName}");
-	}
-
-	@summary = "Default summary"
-	macro chooseFilterType {
-		DataSetAdmin.goToTab(tabName = "Filters");
-
-		LexiconEntry.gotoAdd();
-
-        Click(
-			key_fieldName = "${filterType}",
-            locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
-	}
-
-	@summary = "Default summary"
-	macro selectFilterBy {
-		Click(
-			dropdownLabel = "Select",
-            locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
-
-        DropdownMenuItem.click(menuItem = "${filterByField}");
-	}
-
-	macro editFragmentFilter {
-		Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
-
-		AssertVisible(locator1 = "FrontendDataSet#FILTER_OPTION",
-			key_filter = "${filterName}");
-		
-		Click(locator1 = "FrontendDataSet#FILTER_OPTION",
-			key_filter = "${filterName}");
-
-		Click(locator1 = "DataSet#RADIO_BUTTON_OPTION",
-				key_optionName = "${newFilterValue}");
-
-		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
-	}
-
-
 
 }

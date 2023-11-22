@@ -551,6 +551,147 @@ definition {
 	}
 
 
+	@description = "LPS-185995 Verify it's possible to create a selection filter without pre populated values."
+	@priority = 5 
+	test AssertSingleSelectionFilterIsDisplayed {
+		task ("Given a picklist") {
+            Picklist.addPicklistViaAPI(picklistName = "Transport");
+        }
+
+        task ("And adding items to the created picklist") {
+            Picklist.addPicklistItemViaAPI(
+                itemKey = "bike",
+                itemName = "bike",
+                picklistName = "Transport");
+
+            Picklist.addPicklistItemViaAPI(
+                itemKey = "car",
+                itemName = "car",
+                picklistName = "Transport");
+
+            Picklist.addPicklistItemViaAPI(
+                itemKey = "bus",
+                itemName = "bus",
+                picklistName = "Transport");
+        }
+
+        task ("And a new Objects entity using the new picklist in a field") {
+            ObjectAdmin.openObjectAdmin();
+
+            ObjectAdmin.addObjectViaAPI(
+                labelName = "Filter Transport",
+                objectName = "FilterTransport",
+                pluralLabelName = "Filters Transport");
+
+            Refresh();
+
+            Click(
+                key_labelName = "Filter Transport",
+                locator1 = "CreateObject#OBJECT_NAME");
+
+            ObjectAdmin.goToFieldsTab();
+
+            ObjectAdmin.addObjectFieldViaUI(
+                fieldLabel = "Field Picklist",
+                fieldPicklist = "Transport",
+                fieldType = "Picklist");
+
+            ObjectAdmin.goToDetailsTab();
+
+			
+			ObjectAdmin.selectDropdownItem(
+			labelName = "Panel Link",
+			optionName = "Object");
+
+            ObjectAdmin.publishObjectViaUI();
+		}
+
+		task("And add new entries to the new Object entity") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+                panel = "Control Panel",
+                portlet = "Filters Transport");
+
+            ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+            picklistOption = "car", 
+			labelName = "Field Picklist");
+
+            Click(
+                key_text = "angle-left",
+                locator1 = "Icon#ANY");
+
+            ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+            picklistOption = "bike",
+			labelName = "Field Picklist");
+
+		}
+
+
+        task ("When the user creates a new data set ") {
+            DataSetAdmin.goToDataSetAdminPage();
+
+            DataSetAdmin.createDataSet(
+                key_name = "Data Set Test",
+                key_type = "/c/filtertransports");
+        }
+
+        task ("And a new view") {
+
+            DataSetAdmin.goToViews(dataSetName = "Data Set Test");
+
+            DataSetAdmin.createDataSetView(
+                description = "Description",
+                key_name = "View Test");
+            
+            DataSetAdmin.goToSpecificViewPage(
+                dataSetName = "Data Set Test",
+                key_viewName = "View Test");
+        }	
+
+		task ("When the user creates a single selection filter without pre selected value") {
+			DataSetAdmin.chooseFilterType(filterType = "Selection");
+
+            PortletEntry.inputName(name = "Filter Transport");
+
+			DataSetAdmin.selectFilterBy(filterByField = "creator");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			DataSetAdmin.selectRadioButtonOption(optionName = "Single");
+
+			Click(
+				locator1 = "Button#SAVE",
+				value1 = "Save");     
+        }
+
+		task("And adds the new data set view to a new content page") {
+			DataSetFragment.setUpDataSetPage(
+				dataSetViewName = "View Test",
+				pageName = "Data Set Page");
+		}
+
+		task("Then the filter appears in the filter menu") {
+
+			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
+
+			AssertVisible(locator1 = "FrontendDataSet#FILTER_OPTION",
+			key_filter = "Filter Transport");
+
+			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
+
+		}
+
+		task("When the user adds a new value in the filter"){
+			DataSetAdmin.editFragmentFilter(filterName = "Filter Transport", newFilterValue = "bike");
+		}
+
+		task("Then the filter is edited") {
+			AssertVisible(locator1 = "DataSet#DATA_SET_FRAGMENT_FILTER",
+			key_filterName = "Filter Transport: bike");
+		}
+    }
 
 	@description = "LPS-191295. An empty filter list is displayed when we cancel the creation of a filter"
 	@priority = 4

@@ -230,11 +230,13 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 		ArtifactVersion newArtifactVersion = null;
 		ArtifactVersion oldArtifactVersion = null;
 
-		String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
-			sourceFormatterArgs.getBaseDirName(),
-			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
+		for (String line :
+				StringUtil.splitLines(
+					GitUtil.getCurrentBranchFileDiff(
+						sourceFormatterArgs.getBaseDirName(),
+						sourceFormatterArgs.getGitWorkingBranchName(),
+						absolutePath))) {
 
-		for (String line : StringUtil.splitLines(currentBranchFileDiff)) {
 			if (!line.contains("Bundle-Version:")) {
 				continue;
 			}

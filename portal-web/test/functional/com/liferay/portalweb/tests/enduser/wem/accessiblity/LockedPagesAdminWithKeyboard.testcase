@@ -39,11 +39,17 @@ definition {
 
 		task ("When focusing on the Allow Automatic Unlocking Process toggle via keyboard") {
 			KeyPress(
-				locator1 = "//label[contains(@class,'toggle-switch')]",
+				key_configurationName = "Locked Pages",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME",
 				value1 = "\TAB");
+
+			AssertElementFocused(
+				key_toggleSwitchLabel = "Allow Automatic Unlocking Process",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
-		task ("Then it is possible to disable the toggle via keyboard") {
+		task ("Then it is possible to switch the toggle via keyboard") {
 			KeyPress(
 				key_toggleSwitchLabel = "Allow Automatic Unlocking Process",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
@@ -52,15 +58,7 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Allow Automatic Unlocking Process",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
 
-		task ("When focusing on the Allow Automatic Unlocking Process toggle via keyboard") {
-			KeyPress(
-				locator1 = "//label[contains(@class,'toggle-switch')]",
-				value1 = "\TAB");
-		}
-
-		task ("Then it is possible to enable the toggle via keyboard") {
 			KeyPress(
 				key_toggleSwitchLabel = "Allow Automatic Unlocking Process",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
@@ -80,8 +78,13 @@ definition {
 
 		task ("Then it is possible to save changes via keyboard") {
 			KeyPress(
-				locator1 = "//button[@type='submit']",
+				key_fieldLabel = "Time Without Autosave",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "\TAB");
+
+			AssertElementFocused(
+				key_text = "Save",
+				locator1 = "Button#ANY");
 
 			KeyPress(
 				key_text = "Save",
@@ -93,8 +96,13 @@ definition {
 
 		task ("When focusing on the Cancel button via keyboard") {
 			KeyPress(
-				locator1 = "//button[contains(@class,'cancel')]",
+				key_text = "Save",
+				locator1 = "Button#ANY",
 				value1 = "\TAB");
+
+			AssertElementFocused(
+				key_text = "Cancel",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Then it is possible to return to the Instance Settings page via keyboard") {

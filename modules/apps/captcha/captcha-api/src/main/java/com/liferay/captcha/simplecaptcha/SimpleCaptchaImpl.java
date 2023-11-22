@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.servlet.AuthVerifierServletRequest;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -33,7 +32,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -134,34 +132,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	@Override
-	public String serveImage(
-			HttpServletRequest httpServletRequest, OutputStream outputStream)
-		throws IOException {
-
-		HttpServletRequest orginalhttpServletRequest =
-			portal.getOriginalServletRequest(httpServletRequest);
-
-		if (orginalhttpServletRequest instanceof AuthVerifierServletRequest) {
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)orginalhttpServletRequest;
-
-			orginalhttpServletRequest =
-				(HttpServletRequest)httpServletRequestWrapper.getRequest();
-		}
-
-		HttpSession httpSession = orginalhttpServletRequest.getSession();
-
-		String key = WebKeys.CAPTCHA_TEXT;
-
-		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
-
-		if (Validator.isNotNull(portletId)) {
-			key = portal.getPortletNamespace(portletId) + key;
-		}
-
+	public String serveImage(OutputStream outputStream) throws IOException {
 		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
-
-		httpSession.setAttribute(key, simpleCaptcha.getAnswer());
 
 		CaptchaServletUtil.writeImage(outputStream, simpleCaptcha.getImage());
 

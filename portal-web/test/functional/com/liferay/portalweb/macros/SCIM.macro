@@ -14,6 +14,8 @@ definition {
 				value1 = ${matcherField});
 		}
 
+		PortletEntry.save();
+
 		if (isSet(generateAccessToken)) {
 			Button.click(button = "Generate");
 

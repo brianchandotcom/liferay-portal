@@ -620,6 +620,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-127109. Segments with both context and model criteria are correctly evaluated with guest users."
+	@priority = 4
+	test ViewContentFromCorrectExperienceAsGuestUser {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given create Segments with two properties") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+
+			Segmentation.openSegmentsAdmin(siteURLKey = "Test Site Name");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "liferay.com with English language");
+
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			Segmentation.addProperties(propertyOption = "Language");
+
+			Segmentation.fillProperty(optionsValue = "English (United States)");
+
+			Segmentation.gotoSidebar(fieldType = "User");
+
+			Segmentation.addProperties(propertyOption = "Email Address");
+
+			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+			Segmentation.fillProperty(criterionValue = "liferay.com");
+
+			PortletEntry.save();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Default");
+
+			PageEditor.addExperience(
+				experienceName = "test Experience",
+				segmentName = "liferay.com with English language");
+
+			PageEditor.prioritizeExperience(experienceName = "test Experience");
+
+			PageEditor.publish();
+		}
+
+		task ("When the guest user accesses to the content page") {
+			User.logoutPG();
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page");
+		}
+
+		task ("Then the guest user should view the content from Default experience") {
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Default");
+		}
+	}
+
 	@description = "This is a test for LPS-187444. Deleted experience resets widget configuration on default experience"
 	@priority = 4
 	test ViewDisplayedWebContentPersistedInAssetPublisherAfterDeleteExperience {

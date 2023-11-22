@@ -107,7 +107,7 @@ const WebContent: React.FC<{
 								Containers.ViewsByTechnologyCard,
 								Containers.AssetAppearsOnCard
 							]}
-							disabled={false}
+							disabled={dataSourceStates.empty}
 							subtitle={selectedChannel?.name}
 							title={
 								sub(Liferay.Language.get('x-dashboard'), [

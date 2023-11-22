@@ -106,7 +106,7 @@ const Form: React.FC<{
 								Containers.SubmissionsByTechnologyCard,
 								Containers.AssetAppearsOnCard
 							]}
-							disabled={false}
+							disabled={dataSourceStates.empty}
 							subtitle={selectedChannel?.name}
 							title={
 								sub(Liferay.Language.get('x-dashboard'), [

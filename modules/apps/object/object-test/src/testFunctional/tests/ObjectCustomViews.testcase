@@ -389,8 +389,9 @@ definition {
 			ObjectPortlet.viewEntry(entry = "Entry Approved");
 
 			AssertElementPresent(
+				key_entry = "Entry Approved",
 				key_status = "Approved",
-				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+				locator1 = "ObjectPortlet#ENTRY_STATUS");
 		}
 	}
 

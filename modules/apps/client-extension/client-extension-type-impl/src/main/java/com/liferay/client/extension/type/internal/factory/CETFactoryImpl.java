@@ -12,6 +12,7 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.type.factory.CETImplFactory;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,11 +22,13 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -110,12 +113,15 @@ public class CETFactoryImpl implements CETFactory {
 			baseURL = baseURL.substring(0, baseURL.length() - 1);
 		}
 
+		Date date = new Date(cetConfiguration.buildTimestamp());
+
 		try {
 			return cetImplFactory.create(
-				baseURL, cetConfiguration.buildTimestamp(), companyId,
-				cetConfiguration.description(), externalReferenceCode,
-				cetConfiguration.name(), _loadProperties(cetConfiguration),
+				baseURL, companyId, date, cetConfiguration.description(),
+				externalReferenceCode, date, cetConfiguration.name(),
+				_loadProperties(cetConfiguration), true,
 				cetConfiguration.sourceCodeURL(),
+				WorkflowConstants.STATUS_APPROVED,
 				_toTypeSettingsUnicodeProperties(cetConfiguration));
 		}
 		catch (IOException ioException) {
@@ -127,10 +133,55 @@ public class CETFactoryImpl implements CETFactory {
 	public CET create(ClientExtensionEntry clientExtensionEntry)
 		throws PortalException {
 
+		long companyId = 0;
+		Date createDate = null;
+		String description = StringPool.BLANK;
+		String externalReferenceCode = StringPool.BLANK;
+		Date modifiedDate = null;
+		String name = StringPool.BLANK;
+		Properties properties = null;
+		String sourceCodeURL = StringPool.BLANK;
+		int status = WorkflowConstants.STATUS_APPROVED;
+		UnicodeProperties unicodeProperties;
+
+		if (clientExtensionEntry != null) {
+			companyId = clientExtensionEntry.getCompanyId();
+			createDate = clientExtensionEntry.getCreateDate();
+			description = clientExtensionEntry.getDescription();
+			externalReferenceCode =
+				clientExtensionEntry.getExternalReferenceCode();
+			modifiedDate = clientExtensionEntry.getModifiedDate();
+			name = clientExtensionEntry.getName();
+
+			try {
+				properties = PropertiesUtil.load(
+					clientExtensionEntry.getProperties());
+			}
+			catch (IOException ioException) {
+				ReflectionUtil.throwException(ioException);
+			}
+
+			sourceCodeURL = clientExtensionEntry.getSourceCodeURL();
+			status = clientExtensionEntry.getStatus();
+			unicodeProperties = UnicodePropertiesBuilder.create(
+				true
+			).load(
+				clientExtensionEntry.getTypeSettings()
+			).build();
+		}
+		else {
+			unicodeProperties = UnicodePropertiesBuilder.create(
+				true
+			).build();
+		}
+
 		CETImplFactory cetImplFactory = _getCETImplFactory(
 			clientExtensionEntry.getType());
 
-		return cetImplFactory.create(clientExtensionEntry);
+		return cetImplFactory.create(
+			StringPool.BLANK, companyId, createDate, description,
+			externalReferenceCode, modifiedDate, name, properties, false,
+			sourceCodeURL, status, unicodeProperties);
 	}
 
 	@Override
@@ -139,7 +190,11 @@ public class CETFactoryImpl implements CETFactory {
 
 		CETImplFactory cetImplFactory = _getCETImplFactory(type);
 
-		return cetImplFactory.create(portletRequest);
+		return cetImplFactory.create(
+			StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.BLANK, null,
+			StringPool.BLANK, null, false, StringPool.BLANK,
+			WorkflowConstants.STATUS_APPROVED,
+			cetImplFactory.getUnicodeProperties(portletRequest));
 	}
 
 	@Override
@@ -155,8 +210,23 @@ public class CETFactoryImpl implements CETFactory {
 
 		CETImplFactory cetImplFactory = _getCETImplFactory(type);
 
+		CET oldCET = null;
+
+		if (oldTypeSettingsUnicodeProperties != null) {
+			oldCET = cetImplFactory.create(
+				StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.BLANK,
+				null, StringPool.BLANK, null, false, StringPool.BLANK,
+				WorkflowConstants.STATUS_APPROVED,
+				oldTypeSettingsUnicodeProperties);
+		}
+
 		cetImplFactory.validate(
-			newTypeSettingsUnicodeProperties, oldTypeSettingsUnicodeProperties);
+			cetImplFactory.create(
+				StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.BLANK,
+				null, StringPool.BLANK, null, false, StringPool.BLANK,
+				WorkflowConstants.STATUS_APPROVED,
+				newTypeSettingsUnicodeProperties),
+			oldCET);
 	}
 
 	private CETImplFactory _getCETImplFactory(String type)

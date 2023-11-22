@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.StaticContentCET;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.StaticContentCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,7 +24,31 @@ import javax.portlet.PortletRequest;
  * @author Gregory Amerson
  */
 public class StaticContentCETImplFactoryImpl
-	extends BaseCETImplFactory<StaticContentCET> {
+	implements CETImplFactory<StaticContentCET> {
+
+	@Override
+	public StaticContentCET create(
+		String baseURL, long companyId, Date createDate, String description,
+		String externalReferenceCode, Date modifiedDate, String name,
+		Properties properties, boolean readOnly, String sourceCodeURL,
+		int status, UnicodeProperties typeSettingsUnicodeProperties) {
+
+		return new StaticContentCETImpl(
+			baseURL, companyId, createDate, description, externalReferenceCode,
+			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
+			typeSettingsUnicodeProperties);
+	}
+
+	@Override
+	public UnicodeProperties getUnicodeProperties(
+		PortletRequest portletRequest) {
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"url", ParamUtil.getString(portletRequest, "url")
+		).build();
+	}
 
 	@Override
 	public void validate(
@@ -37,30 +62,6 @@ public class StaticContentCETImplFactoryImpl
 			throw new ClientExtensionEntryTypeSettingsException(
 				"Invalid URL: " + url, "url-x-is-invalid", url);
 		}
-	}
-
-	@Override
-	protected StaticContentCET create(
-		String baseURL, long companyId, Date createDate, String description,
-		String externalReferenceCode, Date modifiedDate, String name,
-		Properties properties, boolean readOnly, String sourceCodeURL,
-		int status, UnicodeProperties typeSettingsUnicodeProperties) {
-
-		return new StaticContentCETImpl(
-			baseURL, companyId, createDate, description, externalReferenceCode,
-			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
-			typeSettingsUnicodeProperties);
-	}
-
-	@Override
-	protected UnicodeProperties getUnicodeProperties(
-		PortletRequest portletRequest) {
-
-		return UnicodePropertiesBuilder.create(
-			true
-		).put(
-			"url", ParamUtil.getString(portletRequest, "url")
-		).build();
 	}
 
 }

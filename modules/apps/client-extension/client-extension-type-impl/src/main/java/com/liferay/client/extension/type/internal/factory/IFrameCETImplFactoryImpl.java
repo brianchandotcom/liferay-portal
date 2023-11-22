@@ -7,6 +7,7 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.IFrameCET;
+import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.IFrameCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,10 +25,10 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class IFrameCETImplFactoryImpl extends BaseCETImplFactory<IFrameCET> {
+public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
 
 	@Override
-	protected IFrameCET create(
+	public IFrameCET create(
 		String baseURL, long companyId, Date createDate, String description,
 		String externalReferenceCode, Date modifiedDate, String name,
 		Properties properties, boolean readOnly, String sourceCodeURL,
@@ -40,7 +41,7 @@ public class IFrameCETImplFactoryImpl extends BaseCETImplFactory<IFrameCET> {
 	}
 
 	@Override
-	protected UnicodeProperties getUnicodeProperties(
+	public UnicodeProperties getUnicodeProperties(
 		PortletRequest portletRequest) {
 
 		return UnicodePropertiesBuilder.create(
@@ -59,7 +60,7 @@ public class IFrameCETImplFactoryImpl extends BaseCETImplFactory<IFrameCET> {
 	}
 
 	@Override
-	protected void validate(IFrameCET newIFrameCET, IFrameCET oldIFrameCET)
+	public void validate(IFrameCET newIFrameCET, IFrameCET oldIFrameCET)
 		throws PortalException {
 
 		String friendlyURLMapping = newIFrameCET.getFriendlyURLMapping();

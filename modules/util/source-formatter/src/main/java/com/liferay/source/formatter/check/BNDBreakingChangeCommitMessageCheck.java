@@ -76,6 +76,15 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			return content;
 		}
 
+		_checkCommitMessages(fileName, sourceFormatterArgs);
+
+		return content;
+	}
+
+	private void _checkCommitMessages(
+			String fileName, SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
 		List<String> commitMessages = GitUtil.getCurrentBranchCommitMessages(
 			sourceFormatterArgs.getBaseDirName(),
 			sourceFormatterArgs.getGitWorkingBranchName());
@@ -98,7 +107,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				"Incorrect commit message: Missing breaking change in commit " +
 					"messages when the major version bumps up");
 
-			return content;
+			return;
 		}
 
 		for (String commitMessage : commitMessages) {
@@ -108,8 +117,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				continue;
 			}
 
-			content = _checkMissingEmptyLinesAroundHeaders(
-				fileName, content, parts);
+			_checkMissingEmptyLinesAroundHeaders(fileName, parts);
 
 			String[] breakingChangeReports = parts[1].split("\n----");
 
@@ -135,7 +143,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 							"'## Alternatives'(Optional). Use '----' to split ",
 							"each breaking change."));
 
-					return content;
+					return;
 				}
 
 				int alternativesPosition = breakingChangeReport.indexOf(
@@ -154,7 +162,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 							"The correct order of headers should be '## What' ",
 							"| '## Why' | '## Alternatives'"));
 
-					return content;
+					return;
 				}
 
 				int lineNumber = SourceUtil.getLineNumber(
@@ -170,7 +178,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 							"Incorrect commit message in SHA ", parts[0], ":\n",
 							"There should be one file path after '## What'"));
 
-					return content;
+					return;
 				}
 
 				String filePath = StringUtil.trim(trimmedLine.substring(7));
@@ -196,17 +204,14 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 							"'## What' should be followed by only one path, ",
 							"which is from ", portalDir.getAbsolutePath()));
 
-					return content;
+					return;
 				}
 			}
 		}
-
-		return content;
 	}
 
-	private String _checkMissingEmptyLinesAroundHeaders(
-			String fileName, String content, String[] parts)
-		throws Exception {
+	private void _checkMissingEmptyLinesAroundHeaders(
+		String fileName, String[] parts) {
 
 		if (!parts[1].endsWith("\n\n----")) {
 			addMessage(
@@ -216,7 +221,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					"The commit message contains '# breaking' should end with ",
 					"'\\n\\n----'"));
 
-			return content;
+			return;
 		}
 
 		for (String header : _BREAKING_CHANGE_REPORT_HEADER_NAMES) {
@@ -242,11 +247,9 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 						"'# breaking', '## What', '## Why' and '## ",
 						"Alternatives'"));
 
-				return content;
+				return;
 			}
 		}
-
-		return content;
 	}
 
 	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {

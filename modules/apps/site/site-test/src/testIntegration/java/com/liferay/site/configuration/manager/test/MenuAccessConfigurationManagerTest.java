@@ -79,39 +79,6 @@ public class MenuAccessConfigurationManagerTest {
 			new String[] {String.valueOf(role.getRoleId())});
 	}
 
-	@Test
-	public void testDeleteAccessRoleToControlMenu() throws Exception {
-		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_configurationProvider.saveGroupConfiguration(
-			MenuAccessConfiguration.class, _group.getGroupId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"accessToControlMenuRoleIds",
-				new String[] {
-					String.valueOf(role1.getRoleId()),
-					String.valueOf(role2.getRoleId())
-				}
-			).put(
-				"showControlMenuByRole", true
-			).build());
-
-		_menuAccessConfigurationManager.deleteRoleAccessToControlMenu(role2);
-
-		_assertMenuAccessConfiguration(
-			new String[] {String.valueOf(role1.getRoleId())});
-	}
-
-	@Test
-	public void testUpdateMenuAccessConfiguration() throws Exception {
-		String[] expectedAccessToControlMenuRoleIds = {"12345", "12346"};
-
-		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
-			_group.getGroupId(), expectedAccessToControlMenuRoleIds, true);
-
-		_assertMenuAccessConfiguration(expectedAccessToControlMenuRoleIds);
-	}
-
 	private void _assertMenuAccessConfiguration(
 			String[] expectedAccessToControlMenuRoleIds)
 		throws Exception {

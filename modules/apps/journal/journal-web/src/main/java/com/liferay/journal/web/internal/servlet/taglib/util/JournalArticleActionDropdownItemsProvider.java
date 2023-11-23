@@ -572,9 +572,12 @@ public class JournalArticleActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getEditArticleActionUnsafeConsumer() {
 
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(), "mvcPath",
+				_liferayPortletResponse.createRenderURL(), "backURLTitle",
+				portletDisplay.getPortletDisplayName(), "mvcPath",
 				"/edit_article.jsp", "redirect", _getRedirect(),
 				"referringPortletResource", _getReferringPortletResource(),
 				"groupId", _article.getGroupId(), "folderId",

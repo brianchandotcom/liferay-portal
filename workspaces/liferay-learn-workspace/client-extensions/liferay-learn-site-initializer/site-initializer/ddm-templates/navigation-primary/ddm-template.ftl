@@ -15,16 +15,17 @@
 
 </style>
 
-<#assign responseItems = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies").items />
-<#if responseItems?has_content>
-	<#list responseItems as vocabulary>
-		<#if stringUtil.equals(vocabulary.name, "Capability")>
-			<#if vocabulary.id?has_content>
-				<#assign capabilityId = vocabulary.id />
+<#assign taxonomyVocabularies = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies").items />
+<#if taxonomyVocabularies?has_content>
+	<#list taxonomyVocabularies as taxonomyVocabulary>
+		<#if stringUtil.equals(taxonomyVocabulary.externalReferenceCode, "CAPABILITY")>
+			<#if taxonomyVocabulary.id?has_content>
+				<#assign capabilityId = taxonomyVocabulary.id />
 	  		</#if>
 		</#if>
 	</#list>
 </#if>
+
 <#if capabilityId?has_content>
 	<#assign capabilitiesFieldsMap = {} />
 	<#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${capabilityId}/taxonomy-categories").items as capability>
@@ -32,8 +33,8 @@
 			{
 				capability.name:
 				{
-					"id": capability.id,
-					"description": capability.description
+					"description": capability.description,
+					"id": capability.id
 		  		}
 	  		}
 		/>

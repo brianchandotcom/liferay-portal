@@ -227,6 +227,10 @@ public class DropZoneFragmentEntryLinkListener
 		List<FragmentDropZoneLayoutStructureItem>
 			noIdFragmentDropZoneLayoutStructureItems = new LinkedList<>();
 
+		List<String> originalElementDropZoneIds = _getElementDropZoneIds(
+			originalFragmentEntryLink, httpServletRequest, httpServletResponse,
+			serviceContext);
+
 		for (String childrenItemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(childrenItemId);
@@ -249,6 +253,10 @@ public class DropZoneFragmentEntryLinkListener
 					fragmentDropZoneLayoutStructureItem);
 			}
 			else if (elementDropZoneIds.contains(fragmentDropZoneId)) {
+				fragmentDropZoneLayoutStructureItemsMap.put(
+					fragmentDropZoneId, fragmentDropZoneLayoutStructureItem);
+			}
+			else if (originalElementDropZoneIds.contains(fragmentDropZoneId)) {
 				fragmentDropZoneLayoutStructureItemsMap.put(
 					fragmentDropZoneId, fragmentDropZoneLayoutStructureItem);
 			}
@@ -452,6 +460,48 @@ public class DropZoneFragmentEntryLinkListener
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private List<String> _getElementDropZoneIds(
+			FragmentEntryLink fragmentEntryLink,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (fragmentEntryLink == null) {
+			return Collections.emptyList();
+		}
+
+		String processedHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				new DefaultFragmentEntryProcessorContext(
+					httpServletRequest, httpServletResponse,
+					FragmentEntryLinkConstants.EDIT,
+					serviceContext.getLocale()));
+
+		Document document = _getDocument(processedHTML);
+
+		Elements elements = document.select("lfr-drop-zone");
+
+		if (elements.size() <= 0) {
+			return Collections.emptyList();
+		}
+
+		List<String> elementDropZoneIds = new LinkedList<>();
+
+		for (Element element : elements) {
+			String dropZoneId = element.attr("data-lfr-drop-zone-id");
+
+			if (Validator.isBlank(dropZoneId)) {
+				break;
+			}
+
+			elementDropZoneIds.add(dropZoneId);
+		}
+
+		return elementDropZoneIds;
 	}
 
 	private LayoutStructure _getLayoutStructure(

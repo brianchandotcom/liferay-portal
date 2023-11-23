@@ -807,6 +807,10 @@ components:
                         type: string
                     readOnly: true
                     type: array
+                virtualItems:
+                    items:
+                        $ref: "#/components/schemas/VirtualItem"
+                    type: array
             type: object
         OrderNote:
             properties:
@@ -1350,6 +1354,15 @@ components:
             required:
                 - orderTypeId
                 - termId
+            type: object
+        VirtualItem:
+            properties:
+                url:
+                    example: http://www.liferay.com
+                    type: string
+                version:
+                    example: v1.0.0
+                    type: string
             type: object
     securitySchemes:
         BasicAuth:

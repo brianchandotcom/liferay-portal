@@ -1618,6 +1618,10 @@ components:
                     description:
                         Number of downloads available for attachment
                     type: integer
+                productVirtualSettingsFileEntries:
+                    items:
+                        $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                    type: array
                 sampleAttachment:
                     description:
                         Base64 encoded sample file
@@ -1663,6 +1667,26 @@ components:
                     description:
                         Enable sample file
                     type: boolean
+            type: object
+        ProductVirtualSettingsFileEntry:
+            properties:
+                attachment:
+                    description:
+                        Base64 encoded file
+                    type: string
+                src:
+                    description:
+                        URL to download the file
+                    readOnly: true
+                    type: string
+                url:
+                    description:
+                        URL of the file
+                    type: string
+                version:
+                    description:
+                        The version of the file
+                    type: string
             type: object
         RelatedProduct:
             properties:
@@ -2021,6 +2045,10 @@ components:
                     description:
                         URL of the sample file
                     type: string
+                skuVirtualSettingsFileEntries:
+                    items:
+                        $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                    type: array
                 src:
                     description:
                         URL to download the file
@@ -2053,6 +2081,26 @@ components:
                     description:
                         Enable sample file
                     type: boolean
+            type: object
+        SkuVirtualSettingsFileEntry:
+            properties:
+                attachment:
+                    description:
+                        Base64 encoded file
+                    type: string
+                src:
+                    description:
+                        URL to download the file
+                    readOnly: true
+                    type: string
+                url:
+                    description:
+                        URL of the file
+                    type: string
+                version:
+                    description:
+                        The version of the file
+                    type: string
             type: object
         Specification:
             properties:

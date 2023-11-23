@@ -1718,8 +1718,7 @@ public class ObjectEntryLocalServiceImpl
 		long objectDefinitionId, Map<String, Serializable> values) {
 
 		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					objectDefinitionId, false)) {
+				_objectFieldLocalService.getObjectFields(objectDefinitionId)) {
 
 			if (!Objects.equals(
 					objectField.getRelationshipType(),

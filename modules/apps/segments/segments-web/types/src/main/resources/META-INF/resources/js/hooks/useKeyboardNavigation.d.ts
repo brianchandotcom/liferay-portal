@@ -12,8 +12,6 @@ interface Props {
 	type: ItemTypeValues;
 }
 export default function useKeyboardNavigation({
-	handleOpen,
-	key,
 	type,
 }: Props): {
 	isTarget: boolean;

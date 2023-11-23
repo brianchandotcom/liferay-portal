@@ -380,6 +380,8 @@ definition {
 
 			Button.click(button = "Submit");
 
+			OpenIDConnect.acceptConditions();
+
 			AssertElementNotPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD");
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");

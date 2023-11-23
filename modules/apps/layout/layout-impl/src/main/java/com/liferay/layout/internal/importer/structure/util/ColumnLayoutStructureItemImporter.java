@@ -10,6 +10,7 @@ import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -38,7 +39,7 @@ public class ColumnLayoutStructureItemImporter
 		ColumnLayoutStructureItem columnLayoutStructureItem =
 			(ColumnLayoutStructureItem)
 				layoutStructure.addColumnLayoutStructureItem(
-					pageElement.getId(),
+					_getId(layoutStructureItemImporterContext, pageElement),
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 
@@ -82,6 +83,17 @@ public class ColumnLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.COLUMN;
+	}
+
+	private String _getId(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		PageElement pageElement) {
+
+		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
+			return pageElement.getId();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private void _processColumnViewportDefinition(

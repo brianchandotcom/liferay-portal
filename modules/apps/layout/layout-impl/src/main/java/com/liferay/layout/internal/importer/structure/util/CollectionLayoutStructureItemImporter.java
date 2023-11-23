@@ -63,7 +63,9 @@ public class CollectionLayoutStructureItemImporter
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)
 					layoutStructure.addCollectionStyledLayoutStructureItem(
-						_getCollectionItemId(pageElement), pageElement.getId(),
+						_getCollectionItemId(
+							layoutStructureItemImporterContext, pageElement),
+						_getId(layoutStructureItemImporterContext, pageElement),
 						layoutStructureItemImporterContext.getParentItemId(),
 						layoutStructureItemImporterContext.getPosition());
 
@@ -242,16 +244,17 @@ public class CollectionLayoutStructureItemImporter
 		return null;
 	}
 
-	private String _getCollectionItemId(PageElement pageElement) {
+	private String _getCollectionItemId(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		PageElement pageElement) {
+
 		PageElement[] pageElements = pageElement.getPageElements();
 
 		if (ArrayUtil.isEmpty(pageElements)) {
 			return PortalUUIDUtil.generate();
 		}
 
-		PageElement childPageElement = pageElements[0];
-
-		return childPageElement.getId();
+		return _getId(layoutStructureItemImporterContext, pageElements[0]);
 	}
 
 	private JSONObject _getCollectionJSONObject(
@@ -345,6 +348,17 @@ public class CollectionLayoutStructureItemImporter
 						"message_i18n"));
 			}
 		};
+	}
+
+	private String _getId(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		PageElement pageElement) {
+
+		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
+			return pageElement.getId();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getItemSubtype(

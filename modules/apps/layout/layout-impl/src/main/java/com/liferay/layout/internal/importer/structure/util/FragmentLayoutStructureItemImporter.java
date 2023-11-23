@@ -110,7 +110,7 @@ public class FragmentLayoutStructureItemImporter
 			(FragmentStyledLayoutStructureItem)
 				layoutStructure.addFragmentStyledLayoutStructureItem(
 					fragmentEntryLink.getFragmentEntryLinkId(),
-					pageElement.getId(),
+					_getId(layoutStructureItemImporterContext, pageElement),
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 
@@ -779,6 +779,17 @@ public class FragmentLayoutStructureItemImporter
 
 		return _fragmentCollectionContributorRegistry.getFragmentEntry(
 			fragmentKey);
+	}
+
+	private String _getId(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		PageElement pageElement) {
+
+		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
+			return pageElement.getId();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getProcessedHTML(

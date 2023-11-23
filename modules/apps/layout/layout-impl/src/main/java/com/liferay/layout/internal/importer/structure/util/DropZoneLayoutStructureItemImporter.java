@@ -58,7 +58,7 @@ public class DropZoneLayoutStructureItemImporter
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
 			(DropZoneLayoutStructureItem)
 				layoutStructure.addDropZoneLayoutStructureItem(
-					pageElement.getId(),
+					_getId(layoutStructureItemImporterContext, pageElement),
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 
@@ -175,6 +175,17 @@ public class DropZoneLayoutStructureItemImporter
 		}
 
 		return null;
+	}
+
+	private String _getId(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		PageElement pageElement) {
+
+		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
+			return pageElement.getId();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final String _KEY_ALLOWED_FRAGMENTS = "allowedFragments";

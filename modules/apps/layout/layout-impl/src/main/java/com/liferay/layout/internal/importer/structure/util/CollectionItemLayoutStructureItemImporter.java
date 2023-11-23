@@ -10,6 +10,7 @@ import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Objects;
 import java.util.Set;
@@ -48,7 +49,7 @@ public class CollectionItemLayoutStructureItemImporter
 		}
 
 		return layoutStructure.addCollectionItemLayoutStructureItem(
-			pageElement.getId(),
+			_getId(layoutStructureItemImporterContext, pageElement),
 			layoutStructureItemImporterContext.getParentItemId(),
 			layoutStructureItemImporterContext.getPosition());
 	}
@@ -56,6 +57,17 @@ public class CollectionItemLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.COLLECTION_ITEM;
+	}
+
+	private String _getId(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		PageElement pageElement) {
+
+		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
+			return pageElement.getId();
+		}
+
+		return StringPool.BLANK;
 	}
 
 }

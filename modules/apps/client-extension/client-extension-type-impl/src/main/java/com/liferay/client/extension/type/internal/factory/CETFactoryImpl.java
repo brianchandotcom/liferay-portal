@@ -188,10 +188,9 @@ public class CETFactoryImpl implements CETFactory {
 	}
 
 	@Override
-	public CET create(PortletRequest portletRequest, String type)
-		throws PortalException {
-
-		CETImplFactory cetImplFactory = _getCETImplFactory(type);
+	public CET create(PortletRequest portletRequest) throws PortalException {
+		CETImplFactory cetImplFactory = _getCETImplFactory(
+			ParamUtil.getString(portletRequest, "type"));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

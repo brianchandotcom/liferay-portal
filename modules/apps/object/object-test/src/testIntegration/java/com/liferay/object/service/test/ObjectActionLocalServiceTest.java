@@ -19,6 +19,7 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
+import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -53,6 +54,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -76,7 +78,6 @@ import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -176,7 +177,7 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws PortalException {
 		ReflectionTestUtil.setFieldValue(
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				0, ObjectActionExecutorConstants.KEY_WEBHOOK),
@@ -185,6 +186,8 @@ public class ObjectActionLocalServiceTest {
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				0, ObjectActionExecutorConstants.KEY_GROOVY),
 			"_objectScriptingExecutor", _originalObjectScriptingExecutor);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 	}
 
 	@Test
@@ -776,6 +779,81 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction4);
 		_objectActionLocalService.deleteObjectAction(objectAction5);
 		_objectActionLocalService.deleteObjectAction(systemObjectAction);
+	}
+
+	@Test
+	public void testAddObjectActionWithCircularReference() throws Exception {
+		_publishCustomObjectDefinition();
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
+			"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
+		).put(
+			"predefinedValues",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"inputAsValue", true
+				).put(
+					"name", "firstName"
+				).put(
+					"value", RandomTestUtil.randomString()
+				)
+			).toString()
+		).build();
+
+		// When you add a new object entry that belongs to an object definition,
+		// update the newly added object entry
+
+		_addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, unicodeProperties,
+			false);
+
+		// When you update an object entry that belongs to an object definition,
+		// add a new object entry to the object definition
+
+		_addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, unicodeProperties,
+			false);
+
+		// Each call to the method _testAddObjectActionWithCircularReference
+		// should increase the expected objects entries count by 2. The only
+		// exception is for the 4th call when we inject with a broken thread
+		// local.
+
+		_testAddObjectActionWithCircularReference(2);
+		_testAddObjectActionWithCircularReference(4);
+		_testAddObjectActionWithCircularReference(6);
+
+		Object clearObjectEntryIdsMapThreadLocal =
+			ReflectionTestUtil.getAndSetFieldValue(
+				ObjectActionThreadLocal.class,
+				"_clearObjectEntryIdsMapThreadLocal",
+				new ThreadLocal<Boolean>() {
+
+					@Override
+					public Boolean get() {
+						return true;
+					}
+
+				});
+
+		try {
+			_testAddObjectActionWithCircularReference(8);
+
+			Assert.fail();
+		}
+		catch (StackOverflowError stackOverflowError) {
+			Assert.assertNotNull(stackOverflowError);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				ObjectActionThreadLocal.class,
+				"_clearObjectEntryIdsMapThreadLocal",
+				clearObjectEntryIdsMapThreadLocal);
+		}
 	}
 
 	@Test
@@ -1969,6 +2047,38 @@ public class ObjectActionLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId());
 	}
 
+	private void _testAddObjectActionWithCircularReference(
+			int expectedObjectEntriesCount)
+		throws Exception {
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user));
+			PrincipalThreadLocal.setName(_user.getUserId());
+
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				_objectDefinition.getObjectDefinitionId(),
+				Collections.singletonMap(
+					"firstName", RandomTestUtil.randomString()),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				expectedObjectEntriesCount,
+				_objectEntryLocalService.getObjectEntriesCount(
+					0, _objectDefinition.getObjectDefinitionId()));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+	}
+
 	private final Queue<Object[]> _argumentsList = new LinkedList<>();
 
 	@Inject
@@ -1995,7 +2105,6 @@ public class ObjectActionLocalServiceTest {
 	@Inject
 	private ObjectActionTriggerRegistry _objectActionTriggerRegistry;
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
 	@Inject

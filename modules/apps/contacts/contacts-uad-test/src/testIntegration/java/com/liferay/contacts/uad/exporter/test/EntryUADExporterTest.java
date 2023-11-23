@@ -47,11 +47,6 @@ public class EntryUADExporterTest extends BaseUADExporterTestCase<Entry> {
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "entryId";
-	}
-
-	@Override
 	protected UADExporter<Entry> getUADExporter() {
 		return _uadExporter;
 	}

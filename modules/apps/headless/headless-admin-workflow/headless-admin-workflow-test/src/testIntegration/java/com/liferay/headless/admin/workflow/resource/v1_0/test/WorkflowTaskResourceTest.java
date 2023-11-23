@@ -273,8 +273,7 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 
 		Page<WorkflowTask> page3 =
 			workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-				workflowInstanceId, null,
-				Pagination.of(1, (int)totalCount + 3));
+				workflowInstanceId, null, Pagination.of(1, totalCount));
 
 		assertContains(workflowTask1, (List<WorkflowTask>)page3.getItems());
 		assertContains(workflowTask2, (List<WorkflowTask>)page3.getItems());

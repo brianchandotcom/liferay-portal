@@ -27,6 +27,11 @@ type Categories = {
 	vocabulary: string;
 };
 
+interface CheckboxVersion {
+	isChecked: boolean;
+	versionName: string;
+}
+
 type CustomField = {
 	customValue: {
 		data: string | string[];

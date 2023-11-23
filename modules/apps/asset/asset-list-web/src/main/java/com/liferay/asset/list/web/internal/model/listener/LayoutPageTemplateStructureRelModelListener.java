@@ -164,13 +164,7 @@ public class LayoutPageTemplateStructureRelModelListener
 			layoutPageTemplateStructureRel.getData());
 
 		for (LayoutStructureItem layoutStructureItem :
-				layoutStructure.getLayoutStructureItems()) {
-
-			if (!(layoutStructureItem instanceof
-					CollectionStyledLayoutStructureItem)) {
-
-				continue;
-			}
+				layoutStructure.getCollectionStyledLayoutStructureItems()) {
 
 			CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem =

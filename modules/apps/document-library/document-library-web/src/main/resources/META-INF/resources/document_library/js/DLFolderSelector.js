@@ -188,6 +188,7 @@ const DLFolderSelector = ({
 					disabled
 					id={`${portletNamespace}copyFromInput`}
 					placeholder={dlObjectName}
+					readOnly
 					type="text"
 				/>
 

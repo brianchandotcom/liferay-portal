@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
@@ -79,21 +81,14 @@ public class PortalDelegatorServlet extends HttpServlet {
 			return;
 		}
 
-		Thread currentThread = Thread.currentThread();
+		Class<?> clazz = delegate.getClass();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader delegateClassLoader = clazz.getClassLoader();
 
-		try {
-			Class<?> clazz = delegate.getClass();
-
-			ClassLoader delegateClassLoader = clazz.getClassLoader();
-
-			currentThread.setContextClassLoader(delegateClassLoader);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				delegateClassLoader)) {
 
 			delegate.service(httpServletRequest, httpServletResponse);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

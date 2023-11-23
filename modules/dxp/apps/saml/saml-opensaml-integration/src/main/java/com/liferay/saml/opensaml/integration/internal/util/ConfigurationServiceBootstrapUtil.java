@@ -6,6 +6,8 @@
 package com.liferay.saml.opensaml.integration.internal.util;
 
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.lang.reflect.Method;
@@ -86,14 +88,10 @@ public class ConfigurationServiceBootstrapUtil {
 	private static final DefaultNoticeableFuture<Void>
 		_initializationDefaultNoticeableFuture = new DefaultNoticeableFuture<>(
 			() -> {
-				Thread currentThread = Thread.currentThread();
-
-				ClassLoader classLoader = currentThread.getContextClassLoader();
-
-				try {
-					currentThread.setContextClassLoader(
-						ConfigurationServiceBootstrapUtil.class.
-							getClassLoader());
+				try (SafeCloseable safeCloseable =
+						ThreadContextClassLoaderUtil.swap(
+							ConfigurationServiceBootstrapUtil.class.
+								getClassLoader())) {
 
 					InitializationService.initialize();
 
@@ -118,9 +116,6 @@ public class ConfigurationServiceBootstrapUtil {
 					}
 
 					return null;
-				}
-				finally {
-					currentThread.setContextClassLoader(classLoader);
 				}
 			});
 

@@ -5,6 +5,8 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -137,23 +139,20 @@ public class InvokerPortletImpl
 			return;
 		}
 
-		Thread currentThread = Thread.currentThread();
+		ClassLoader classLoader = _portletClassLoader;
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
 
-		try {
-			if (_portletClassLoader != null) {
-				currentThread.setContextClassLoader(_portletClassLoader);
-			}
+			classLoader = currentThread.getContextClassLoader();
+		}
+
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				classLoader)) {
 
 			cleanUp();
 
 			_portlet.destroy();
-		}
-		finally {
-			if (_portletClassLoader != null) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 
@@ -232,16 +231,18 @@ public class InvokerPortletImpl
 	public void init(PortletConfig portletConfig) throws PortletException {
 		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		_portletClassLoader = getPortletClassLoader();
 
-		try {
-			if (_portletClassLoader != null) {
-				currentThread.setContextClassLoader(_portletClassLoader);
-			}
+		ClassLoader classLoader = _portletClassLoader;
+
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
+		}
+
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				classLoader)) {
 
 			_portlet.init(portletConfig);
 		}
@@ -249,11 +250,6 @@ public class InvokerPortletImpl
 			cleanUp();
 
 			throw throwable;
-		}
-		finally {
-			if (_portletClassLoader != null) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

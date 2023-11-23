@@ -8,6 +8,8 @@ package com.liferay.portal.cache.io;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.test.log.LogCapture;
@@ -107,30 +109,25 @@ public class SerializableObjectWrapperTest {
 	public void testWithBrokenClassLoader() throws Exception {
 		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		ClassNotFoundException classNotFoundException =
 			new ClassNotFoundException();
 
-		currentThread.setContextClassLoader(
-			new ClassLoader() {
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				new ClassLoader() {
 
-				@Override
-				public Class<?> loadClass(String name)
-					throws ClassNotFoundException {
+					@Override
+					public Class<?> loadClass(String name)
+						throws ClassNotFoundException {
 
-					if (name.equals(TestSerializable.class.getName())) {
-						throw classNotFoundException;
+						if (name.equals(TestSerializable.class.getName())) {
+							throw classNotFoundException;
+						}
+
+						return super.loadClass(name);
 					}
 
-					return super.loadClass(name);
-				}
-
-			});
-
-		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				});
+			LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
 				SerializableObjectWrapper.class.getName(), Level.ALL)) {
 
 			// Test unwrap
@@ -148,9 +145,6 @@ public class SerializableObjectWrapperTest {
 			Assert.assertEquals(
 				"Unable to deserialize object", logEntry.getMessage());
 			Assert.assertSame(classNotFoundException, logEntry.getThrowable());
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

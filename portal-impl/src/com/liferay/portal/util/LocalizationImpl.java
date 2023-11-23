@@ -8,6 +8,8 @@ package com.liferay.portal.util;
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -243,16 +245,8 @@ public class LocalizationImpl implements Localization {
 
 		XMLStreamReader xmlStreamReader = null;
 
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(portalClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			XMLInputFactory xmlInputFactory =
 				SecureXMLFactoryProviderUtil.newXMLInputFactory();
@@ -340,10 +334,6 @@ public class LocalizationImpl implements Localization {
 			}
 		}
 		finally {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-
 			if (xmlStreamReader != null) {
 				try {
 					xmlStreamReader.close();
@@ -843,16 +833,8 @@ public class LocalizationImpl implements Localization {
 
 		XMLStreamWriter xmlStreamWriter = null;
 
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(portalClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
 
@@ -906,10 +888,6 @@ public class LocalizationImpl implements Localization {
 			_log.error(exception);
 		}
 		finally {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-
 			if (xmlStreamWriter != null) {
 				try {
 					xmlStreamWriter.close();
@@ -976,16 +954,8 @@ public class LocalizationImpl implements Localization {
 		XMLStreamReader xmlStreamReader = null;
 		XMLStreamWriter xmlStreamWriter = null;
 
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(portalClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			XMLInputFactory xmlInputFactory =
 				SecureXMLFactoryProviderUtil.newXMLInputFactory();
@@ -1059,10 +1029,6 @@ public class LocalizationImpl implements Localization {
 			}
 		}
 		finally {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-
 			if (xmlStreamReader != null) {
 				try {
 					xmlStreamReader.close();
@@ -1217,16 +1183,8 @@ public class LocalizationImpl implements Localization {
 		XMLStreamReader xmlStreamReader = null;
 		XMLStreamWriter xmlStreamWriter = null;
 
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(portalClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			XMLInputFactory xmlInputFactory =
 				SecureXMLFactoryProviderUtil.newXMLInputFactory();
@@ -1308,10 +1266,6 @@ public class LocalizationImpl implements Localization {
 			}
 		}
 		finally {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-
 			if (xmlStreamReader != null) {
 				try {
 					xmlStreamReader.close();
@@ -1466,16 +1420,8 @@ public class LocalizationImpl implements Localization {
 
 		XMLStreamReader xmlStreamReader = null;
 
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(portalClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			XMLInputFactory xmlInputFactory =
 				SecureXMLFactoryProviderUtil.newXMLInputFactory();
@@ -1495,10 +1441,6 @@ public class LocalizationImpl implements Localization {
 			}
 		}
 		finally {
-			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-
 			if (xmlStreamReader != null) {
 				try {
 					xmlStreamReader.close();

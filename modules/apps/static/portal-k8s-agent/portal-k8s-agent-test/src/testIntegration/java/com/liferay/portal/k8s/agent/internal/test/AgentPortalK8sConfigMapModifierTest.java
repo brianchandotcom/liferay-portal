@@ -8,6 +8,8 @@ package com.liferay.portal.k8s.agent.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -109,22 +111,15 @@ public class AgentPortalK8sConfigMapModifierTest {
 				public MockResponse dispatch(RecordedRequest request)
 					throws InterruptedException {
 
-					Thread thread = Thread.currentThread();
+					try (SafeCloseable safeCloseable =
+							ThreadContextClassLoaderUtil.swap(
+								DefaultKubernetesClient.class.
+									getClassLoader())) {
 
-					ClassLoader contextClassLoader =
-						thread.getContextClassLoader();
-
-					thread.setContextClassLoader(
-						DefaultKubernetesClient.class.getClassLoader());
-
-					try {
 						return super.dispatch(request);
 					}
 					catch (Exception exception) {
 						_log.error(exception);
-					}
-					finally {
-						thread.setContextClassLoader(contextClassLoader);
 					}
 
 					return null;

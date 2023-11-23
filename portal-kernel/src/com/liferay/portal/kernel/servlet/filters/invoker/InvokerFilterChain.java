@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.DirectCallFilter;
@@ -196,17 +198,10 @@ public class InvokerFilterChain implements FilterChain {
 			ServletResponse servletResponse)
 		throws IOException, ServletException {
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_contextClassLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(_contextClassLoader);
-
-		try {
 			filter.doFilter(servletRequest, servletResponse, this);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

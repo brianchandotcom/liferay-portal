@@ -6,6 +6,8 @@
 package com.liferay.portal.bootstrap;
 
 import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -195,18 +197,11 @@ public class FrameworkRestartTest {
 		Class<?> clazz = classLoader.loadClass(
 			FrameworkRestartTest.class.getName());
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				classLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(classLoader);
-
-		try {
 			ReflectionTestUtil.invoke(
 				clazz, "doTestFrameworkRestart", new Class<?>[0]);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

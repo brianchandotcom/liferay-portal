@@ -8,6 +8,8 @@ package com.liferay.staging.internal;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -96,11 +98,9 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 		group = _getParentGroupForScopeGroup(group);
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
@@ -116,9 +116,6 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 			long remoteGroupId = GetterUtil.getLong(
 				_getTypeSettingsProperty(group, "remoteGroupId"));
 
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
-
 			return GroupServiceHttp.getGroup(httpPrincipal, remoteGroupId);
 		}
 		catch (PortalException portalException) {
@@ -129,9 +126,6 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 			}
 
 			return null;
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

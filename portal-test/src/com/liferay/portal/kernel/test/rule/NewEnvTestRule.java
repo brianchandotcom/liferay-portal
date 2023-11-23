@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.test.rule;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
@@ -436,20 +438,15 @@ public class NewEnvTestRule implements TestRule {
 		public void evaluate() throws Throwable {
 			MethodKey.resetCache();
 
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader contextClassLoader =
-				currentThread.getContextClassLoader();
-
-			currentThread.setContextClassLoader(_newClassLoader);
-
 			String quiet = System.getProperty(
 				SystemProperties.SYSTEM_PROPERTIES_QUIET);
 
 			System.setProperty(
 				SystemProperties.SYSTEM_PROPERTIES_QUIET, StringPool.TRUE);
 
-			try {
+			try (SafeCloseable safeCloseable =
+					ThreadContextClassLoaderUtil.swap(_newClassLoader)) {
+
 				Class<?> clazz = _newClassLoader.loadClass(_testClassName);
 
 				Object object = clazz.newInstance();
@@ -476,8 +473,6 @@ public class NewEnvTestRule implements TestRule {
 					System.setProperty(
 						SystemProperties.SYSTEM_PROPERTIES_QUIET, quiet);
 				}
-
-				currentThread.setContextClassLoader(contextClassLoader);
 
 				MethodKey.resetCache();
 			}

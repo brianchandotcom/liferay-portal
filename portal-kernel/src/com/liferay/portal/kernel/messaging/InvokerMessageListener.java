@@ -5,6 +5,9 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+
 /**
  * @author Michael C. Han
  */
@@ -53,21 +56,10 @@ public class InvokerMessageListener implements MessageListener {
 
 	@Override
 	public void receive(Message message) throws MessageListenerException {
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (_classLoader != null) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
 			_messageListener.receive(message);
-		}
-		finally {
-			if (_classLoader != null) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

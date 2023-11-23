@@ -52,6 +52,8 @@ import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -1853,20 +1855,12 @@ public class StagingImpl implements Staging {
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
-		Thread thread = Thread.currentThread();
-
-		ClassLoader threadClassLoader = thread.getContextClassLoader();
-
-		try {
-			thread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			return LayoutServiceHttp.getLayoutByUuidAndGroupId(
 				httpPrincipal, layout.getUuid(),
 				stagingGroup.getRemoteLiveGroupId(), layout.isPrivateLayout());
-		}
-		finally {
-			thread.setContextClassLoader(threadClassLoader);
 		}
 	}
 
@@ -3352,10 +3346,6 @@ public class StagingImpl implements Staging {
 			throw remoteOptionsException;
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -3368,9 +3358,8 @@ public class StagingImpl implements Staging {
 			remoteURL, user.getLogin(), user.getPassword(),
 			user.isPasswordEncrypted());
 
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			// Ping the remote host and verify that the remote group exists in
 			// the same company as the remote user
@@ -3474,8 +3463,6 @@ public class StagingImpl implements Staging {
 		}
 		finally {
 			_setGroupTypeSetting(groupId, "validationTimestamp", null);
-
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

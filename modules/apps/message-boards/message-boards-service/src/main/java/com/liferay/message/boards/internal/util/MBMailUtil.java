@@ -8,6 +8,8 @@ package com.liferay.message.boards.internal.util;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -276,17 +278,10 @@ public class MBMailUtil {
 
 		// See LPS-56173
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(Part.class.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				Part.class.getClassLoader())) {
 
 			return part.getContent();
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

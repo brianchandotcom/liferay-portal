@@ -5,6 +5,9 @@
 
 package com.liferay.portal.kernel.events;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -23,17 +26,10 @@ public class InvokerSimpleAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(_classLoader);
-
-		try {
 			_simpleAction.run(ids);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

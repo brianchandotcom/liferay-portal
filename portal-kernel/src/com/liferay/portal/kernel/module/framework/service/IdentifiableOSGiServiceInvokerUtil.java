@@ -6,6 +6,8 @@
 package com.liferay.portal.kernel.module.framework.service;
 
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
@@ -49,18 +51,10 @@ public class IdentifiableOSGiServiceInvokerUtil {
 				"Unable to load OSGi service " + osgiServiceIdentifier);
 		}
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				ClassLoaderPool.getClassLoader(contextName))) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			ClassLoaderPool.getClassLoader(contextName));
-
-		try {
 			return methodHandler.invoke(osgiService);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

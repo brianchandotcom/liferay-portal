@@ -6,6 +6,8 @@
 package com.liferay.portal.remote.json.web.service.extender.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
@@ -90,21 +92,11 @@ public class JSONWebServiceTracker
 			"json.web.service.context.path");
 		Object service = _getService(serviceReference);
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_getBundleClassLoader(serviceReference.getBundle()))) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		ClassLoader classLoader = _getBundleClassLoader(
-			serviceReference.getBundle());
-
-		currentThread.setContextClassLoader(classLoader);
-
-		try {
 			_jsonWebServiceActionsManager.registerService(
 				contextName, contextPath, service);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		return service;

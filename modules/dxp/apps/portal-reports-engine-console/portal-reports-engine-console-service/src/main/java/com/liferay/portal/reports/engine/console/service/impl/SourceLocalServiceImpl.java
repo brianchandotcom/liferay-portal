@@ -6,6 +6,8 @@
 package com.liferay.portal.reports.engine.console.service.impl;
 
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -184,18 +186,11 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 			throw new SourceDriverClassNameException(classNotFoundException);
 		}
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				portalClassLoader)) {
 
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(portalClassLoader);
-
-		try {
 			ReportsEngineConsoleUtil.validateJDBCConnection(
 				driverClassName, driverUrl, driverUserName, driverPassword);
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

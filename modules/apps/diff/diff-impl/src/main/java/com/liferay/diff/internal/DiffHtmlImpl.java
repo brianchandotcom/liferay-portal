@@ -7,6 +7,8 @@ package com.liferay.diff.internal;
 
 import com.liferay.diff.DiffHtml;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -67,14 +69,9 @@ public class DiffHtmlImpl implements DiffHtml {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				DiffHtmlImpl.class.getClassLoader())) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			DiffHtmlImpl.class.getClassLoader());
-
-		try {
 			SAXTransformerFactory saxTransformerFactory =
 				(SAXTransformerFactory)
 					SecureXMLFactoryProviderUtil.newTransformerFactory();
@@ -142,9 +139,6 @@ public class DiffHtmlImpl implements DiffHtml {
 			}
 
 			return string;
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

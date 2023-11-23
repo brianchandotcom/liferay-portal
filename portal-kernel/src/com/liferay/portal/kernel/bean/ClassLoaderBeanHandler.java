@@ -5,6 +5,9 @@
 
 package com.liferay.portal.kernel.bean;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,16 +34,16 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		Thread currentThread = Thread.currentThread();
+		ClassLoader classLoader = _classLoader;
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
 
-		try {
-			if ((_classLoader != null) &&
-				(contextClassLoader != _classLoader)) {
+			classLoader = currentThread.getContextClassLoader();
+		}
 
-				currentThread.setContextClassLoader(_classLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				classLoader)) {
 
 			if (method.getDeclaringClass() == Object.class) {
 				String methodName = method.getName();
@@ -58,13 +61,6 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
-		}
-		finally {
-			if ((_classLoader != null) &&
-				(contextClassLoader != _classLoader)) {
-
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

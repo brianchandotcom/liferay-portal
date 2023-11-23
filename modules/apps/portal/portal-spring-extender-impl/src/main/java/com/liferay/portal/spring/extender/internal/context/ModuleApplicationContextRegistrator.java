@@ -5,6 +5,8 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
@@ -104,11 +106,11 @@ public class ModuleApplicationContextRegistrator {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		currentThread.setContextClassLoader(
-			AggregateClassLoader.getAggregateClassLoader(
-				PortalClassLoaderUtil.getClassLoader(), contextClassLoader));
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				AggregateClassLoader.getAggregateClassLoader(
+					PortalClassLoaderUtil.getClassLoader(),
+					contextClassLoader))) {
 
-		try {
 			_moduleApplicationContext.refresh();
 
 			_registerDataSource();
@@ -145,8 +147,6 @@ public class ModuleApplicationContextRegistrator {
 				extenderBundleWiring.getClassLoader());
 
 			Introspector.flushCaches();
-
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

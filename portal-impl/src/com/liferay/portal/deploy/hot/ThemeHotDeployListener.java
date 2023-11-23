@@ -6,6 +6,8 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
@@ -140,21 +142,13 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 
 		// LEP-2057
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			TemplateResourceLoaderUtil.clearCache(
 				TemplateConstants.LANG_TYPE_FTL);
 			TemplateResourceLoaderUtil.clearCache(
 				TemplateConstants.LANG_TYPE_VM);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		if (_log.isInfoEnabled()) {

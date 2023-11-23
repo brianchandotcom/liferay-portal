@@ -5,6 +5,8 @@
 
 package com.liferay.saml.internal.servlet.filter;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 
 import javax.servlet.FilterChain;
@@ -27,19 +29,11 @@ public abstract class BaseSamlPortalFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				BaseSamlPortalFilter.class.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				BaseSamlPortalFilter.class.getClassLoader())) {
 
 			doProcessFilter(
 				httpServletRequest, httpServletResponse, filterChain);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

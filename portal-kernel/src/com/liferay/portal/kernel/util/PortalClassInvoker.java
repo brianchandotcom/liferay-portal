@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,13 +20,8 @@ public class PortalClassInvoker {
 	public static Object invoke(MethodKey methodKey, Object... arguments)
 		throws Exception {
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, arguments);
@@ -39,9 +36,6 @@ public class PortalClassInvoker {
 			}
 
 			throw (Exception)throwable;
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

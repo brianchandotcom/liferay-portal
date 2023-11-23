@@ -6,6 +6,8 @@
 package com.liferay.portal.layoutconfiguration.util;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -127,27 +129,12 @@ public class RuntimePageUtil {
 			}
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if ((pluginClassLoader != null) &&
-				(pluginClassLoader != contextClassLoader)) {
-
-				currentThread.setContextClassLoader(pluginClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				pluginClassLoader)) {
 
 			return doProcessTemplate(
 				httpServletRequest, httpServletResponse, portletId, templateId,
 				content, langType, false);
-		}
-		finally {
-			if ((pluginClassLoader != null) &&
-				(pluginClassLoader != contextClassLoader)) {
-
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

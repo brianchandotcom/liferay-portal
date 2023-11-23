@@ -55,15 +55,6 @@ public abstract class BaseUserNotificationDeliveryUADExporter
 		sb.append("com.liferay.portal.kernel.model.UserNotificationDelivery");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>userNotificationDeliveryId</column-name><column-value><![CDATA[");
-		sb.append(userNotificationDelivery.getUserNotificationDeliveryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(userNotificationDelivery.getUserId());
-		sb.append("]]></column-value></column>");
-
 		sb.append("</model>");
 
 		return sb.toString();

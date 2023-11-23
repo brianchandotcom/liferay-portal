@@ -261,12 +261,6 @@ public class PortletContainerImpl implements PortletContainer {
 			});
 	}
 
-	public void setPortletConfigurationIconMenu(
-		PortletConfigurationIconMenu portletConfigurationIconMenu) {
-
-		_portletConfigurationIconMenu = portletConfigurationIconMenu;
-	}
-
 	protected long getScopeGroupId(
 			HttpServletRequest httpServletRequest, Layout layout,
 			String portletId)
@@ -818,11 +812,8 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		_portletConfigurationIconMenu.setComparator(
+		PortletConfigurationIconMenu.INSTANCE.setComparator(
 			PortletConfigurationIconComparator.INSTANCE);
-
-		portletDisplay.setPortletConfigurationIconMenu(
-			_portletConfigurationIconMenu);
 
 		PortletDisplay portletDisplayClone = PortletDisplayFactory.create();
 
@@ -1135,7 +1126,5 @@ public class PortletContainerImpl implements PortletContainer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletContainerImpl.class);
-
-	private PortletConfigurationIconMenu _portletConfigurationIconMenu;
 
 }

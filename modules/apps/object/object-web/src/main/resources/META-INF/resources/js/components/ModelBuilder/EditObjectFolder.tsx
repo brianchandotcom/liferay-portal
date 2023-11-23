@@ -5,11 +5,12 @@
 
 import React, {useEffect, useState} from 'react';
 import {
+	Edge,
 	Elements,
 	FlowElement,
 	Node,
+	isEdge,
 	isNode,
-	useStore,
 } from 'react-flow-renderer';
 
 import {Scope} from '../ObjectDetails/EditObjectDetails';
@@ -39,6 +40,7 @@ import {ModalAddObjectField} from '../ObjectField/ModalAddObjectField';
 import {ModalAddObjectRelationship} from '../ObjectRelationship/ModalAddObjectRelationship';
 import {ModalDeleteObjectDefinition} from '../ViewObjectDefinitions/ModalDeleteObjectDefinition';
 import {RedirectToEditObjectDetailsModal} from './ObjectDefinitionNode/RedirectToEditObjectDetailsModal';
+import {ObjectRelationshipEdgeData} from './types';
 
 interface EditObjectFolder {
 	companies: Scope[];
@@ -74,9 +76,13 @@ export default function EditObjectFolder({
 		setObjectRelationshipParameterRequired,
 	] = useState(false);
 
-	const store = useStore();
+	const edges = elements.filter((element) => isEdge(element)) as Edge<
+		ObjectRelationshipEdgeData
+	>[];
 
-	const {nodes} = store.getState();
+	const nodes = elements.filter((element) => isNode(element)) as Node<
+		ObjectDefinitionNodeData
+	>[];
 
 	const handleDeleteObjectDefinition = (
 		deleteObjectDefinition: DeletedObjectDefinition
@@ -228,7 +234,6 @@ export default function EditObjectFolder({
 							selectedObjectDefinitionNode.data.name
 						}
 						onAfterSubmit={(newObjectField) => {
-							const {edges, nodes} = store.getState();
 							dispatch({
 								payload: {
 									newObjectField,
@@ -247,6 +252,7 @@ export default function EditObjectFolder({
 								),
 								type: 'success',
 							});
+
 							dispatch({
 								payload: {
 									modelBuilderModals: {
@@ -257,6 +263,7 @@ export default function EditObjectFolder({
 								type:
 									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 							});
+
 							dispatch({
 								payload: {
 									objectDefinitionExternalReferenceCode: selectedObjectDefinitionNode

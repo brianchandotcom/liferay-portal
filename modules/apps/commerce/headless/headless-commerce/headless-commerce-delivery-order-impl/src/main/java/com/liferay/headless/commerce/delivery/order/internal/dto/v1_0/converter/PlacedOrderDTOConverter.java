@@ -19,7 +19,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Status;
@@ -204,7 +204,7 @@ public class PlacedOrderDTOConverter
 		throws Exception {
 
 		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.fetchCommerceOrderType(
+			_commerceOrderTypeLocalService.fetchCommerceOrderType(
 				commerceOrderTypeId);
 
 		if (commerceOrderType == null) {
@@ -511,7 +511,7 @@ public class PlacedOrderDTOConverter
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommerceOrderTypeService _commerceOrderTypeService;
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;

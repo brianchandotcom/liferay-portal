@@ -36,7 +36,9 @@ public class LayoutStructureProviderImpl implements LayoutStructureProvider {
 		try {
 			Layout layout = _getLayout(plid);
 
-			if (layout.isTypePortlet()) {
+			if (!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
+				!layout.isTypeCollection()) {
+
 				String masterLayoutData = _getMasterLayoutData(
 					layout.getMasterLayoutPlid());
 

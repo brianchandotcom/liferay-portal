@@ -138,9 +138,9 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			layout = _layoutLocalService.fetchLayout(plid);
 		}
 
-		if ((layout == null) ||
-			(!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
-			 !layout.isTypePortlet())) {
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
+			!layout.isTypeCollection() &&
+			(!layout.isTypePortlet() || (layout.getMasterLayoutPlid() == 0))) {
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 

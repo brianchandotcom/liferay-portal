@@ -26,13 +26,15 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 		<clay:col
 			lg="3"
 		>
-			<p class="c-mb-1 sheet-tertiary-title text-2 text-secondary">
-				<liferay-ui:message key="settings" />
-			</p>
+			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+				<p class="c-mb-1 sheet-tertiary-title text-2 text-secondary">
+					<liferay-ui:message key="settings" />
+				</p>
 
-			<clay:vertical-nav
-				verticalNavItems="<%= blogsConfigurationDisplayContext.getSettingsVerticalNavItemList() %>"
-			/>
+				<clay:vertical-nav
+					verticalNavItems="<%= blogsConfigurationDisplayContext.getSettingsVerticalNavItemList() %>"
+				/>
+			</c:if>
 
 			<p class="c-mb-1 sheet-tertiary-title text-2 text-secondary">
 				<liferay-ui:message key="notifications" />

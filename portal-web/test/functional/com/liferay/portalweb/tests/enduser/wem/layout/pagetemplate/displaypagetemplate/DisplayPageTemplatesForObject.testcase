@@ -1358,7 +1358,7 @@ definition {
 
 		task ("Then the Success Interaction will be completed") {
 			var objectEntryId = JSONObject.getObjectEntryId(
-				entryValue = "",
+				entryValue = "null",
 				fieldName = "favoriteFruit",
 				objectName = "PurchaseOrder");
 

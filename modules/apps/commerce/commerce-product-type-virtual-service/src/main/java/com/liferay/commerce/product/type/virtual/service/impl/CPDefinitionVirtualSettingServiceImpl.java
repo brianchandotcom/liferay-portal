@@ -65,27 +65,6 @@ public class CPDefinitionVirtualSettingServiceImpl
 	}
 
 	@Override
-	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-			String className, long classPK, long fileEntryId, String url,
-			int activationStatus, long duration, int maxUsages,
-			boolean useSample, long sampleFileEntryId, String sampleURL,
-			boolean termsOfUseRequired,
-			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleResourcePrimKey,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_checkPermission(className, classPK, ActionKeys.UPDATE);
-
-		return cpDefinitionVirtualSettingLocalService.
-			addCPDefinitionVirtualSetting(
-				className, classPK, fileEntryId, url, activationStatus,
-				duration, maxUsages, useSample, sampleFileEntryId, sampleURL,
-				termsOfUseRequired, termsOfUseContentMap,
-				termsOfUseJournalArticleResourcePrimKey, serviceContext);
-	}
-
-	@Override
 	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
 			String className, long classPK)
 		throws PortalException {

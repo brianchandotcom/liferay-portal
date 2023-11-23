@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -64,13 +63,5 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 	public boolean isInstanceable() {
 		return getBoolean("instanceable");
 	}
-
-	@Override
-	protected boolean isURLCETPropertyName(String name) {
-		return _urlCETPropertyNames.contains(name);
-	}
-
-	private static final Set<String> _urlCETPropertyNames =
-		getURLCETPropertyNames(IFrameCET.class);
 
 }

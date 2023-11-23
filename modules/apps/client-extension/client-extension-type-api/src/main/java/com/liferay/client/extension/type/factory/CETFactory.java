@@ -32,11 +32,14 @@ public interface CETFactory {
 	 * This method is used when a client extension is deployed from a Liferay
 	 * Workspace.
 	 *
+	 * @param replaceVariables
+	 * Whether to replace ${} type variables (eg: ${modifiedTimestamp}) in the
+	 * URL fields.
 	 * @review
 	 */
 	public CET create(
 			CETConfiguration cetConfiguration, long companyId,
-			String externalReferenceCode)
+			String externalReferenceCode, boolean replaceVariables)
 		throws PortalException;
 
 	/**
@@ -45,9 +48,14 @@ public interface CETFactory {
 	 * This method is used when a client extension is configured from the
 	 * {@link com.liferay.client.extension.service.ClientExtensionEntryService}.
 	 *
+	 * @param replaceVariables
+	 * Whether to replace ${} type variables (eg: ${modifiedTimestamp}) in the
+	 * URL fields.
+	 *
 	 * @review
 	 */
-	public CET create(ClientExtensionEntry clientExtensionEntry)
+	public CET create(
+			ClientExtensionEntry clientExtensionEntry, boolean replaceVariables)
 		throws PortalException;
 
 	/**

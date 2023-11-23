@@ -7,7 +7,6 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.GlobalCSSCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.GlobalCSSCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,7 +23,11 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class GlobalCSSCETImplFactoryImpl
-	implements CETImplFactory<GlobalCSSCET> {
+	extends BaseCETImplFactory<GlobalCSSCET> {
+
+	public GlobalCSSCETImplFactoryImpl() {
+		super(GlobalCSSCET.class);
+	}
 
 	@Override
 	public GlobalCSSCET create(

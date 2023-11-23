@@ -7,7 +7,6 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.IFrameCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.IFrameCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,7 +24,11 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
+public class IFrameCETImplFactoryImpl extends BaseCETImplFactory<IFrameCET> {
+
+	public IFrameCETImplFactoryImpl() {
+		super(IFrameCET.class);
+	}
 
 	@Override
 	public IFrameCET create(

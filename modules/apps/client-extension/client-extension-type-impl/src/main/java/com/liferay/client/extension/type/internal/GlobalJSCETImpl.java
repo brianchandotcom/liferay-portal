@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -49,13 +48,5 @@ public class GlobalJSCETImpl extends BaseCETImpl implements GlobalJSCET {
 	public boolean hasProperties() {
 		return false;
 	}
-
-	@Override
-	protected boolean isURLCETPropertyName(String name) {
-		return _urlCETPropertyNames.contains(name);
-	}
-
-	private static final Set<String> _urlCETPropertyNames =
-		getURLCETPropertyNames(GlobalJSCET.class);
 
 }

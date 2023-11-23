@@ -7,7 +7,6 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.FDSFilterCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.FDSFilterCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,7 +23,11 @@ import javax.portlet.PortletRequest;
  * @author Bryce Osterhaus
  */
 public class FDSFilterCETImplFactoryImpl
-	implements CETImplFactory<FDSFilterCET> {
+	extends BaseCETImplFactory<FDSFilterCET> {
+
+	public FDSFilterCETImplFactoryImpl() {
+		super(FDSFilterCET.class);
+	}
 
 	@Override
 	public FDSFilterCET create(

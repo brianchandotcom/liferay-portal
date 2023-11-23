@@ -119,30 +119,19 @@ public class CommerceVirtualOrderItemEditDisplayContext {
 		return _commerceVirtualOrderItem;
 	}
 
-	public String getDownloadFileEntryURL() throws PortalException {
+	public String getDownloadFileEntryURL(long fileEntryId)
+		throws PortalException {
+
 		if (_commerceVirtualOrderItem == null) {
 			return null;
 		}
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(
-			_commerceVirtualOrderItem.getFileEntryId());
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 		return DLURLHelperUtil.getDownloadURL(
 			fileEntry, fileEntry.getLatestFileVersion(),
 			_cpDefinitionVirtualSettingRequestHelper.getThemeDisplay(),
 			StringPool.BLANK, true, true);
-	}
-
-	public FileEntry getFileEntry() throws PortalException {
-		if (_commerceVirtualOrderItem != null) {
-			long fileEntryId = _commerceVirtualOrderItem.getFileEntryId();
-
-			if (fileEntryId > 0) {
-				return _dlAppService.getFileEntry(fileEntryId);
-			}
-		}
-
-		return null;
 	}
 
 	public String getFileEntryItemSelectorURL() {

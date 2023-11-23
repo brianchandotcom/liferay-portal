@@ -26,7 +26,7 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 	<aui:input name="classPK" type="hidden" value="<%= cpInstanceId %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpInstance.getCPDefinitionId() %>" />
 	<aui:input name="cpDefinitionVirtualSettingId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId() %>" />
-	<aui:input name="fileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getFileEntryId() %>" />
+	<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstanceId %>" />
 	<aui:input name="sampleFileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getSampleFileEntryId() %>" />
 	<aui:input name="termsOfUseJournalArticleResourcePrimKey" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey() %>" />
 
@@ -38,24 +38,34 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 
 			<div class="<%= !override ? "hide" : "" %>" id="<portlet:namespace />cpDefinitionVirtualSettingContainer">
 				<aui:fieldset collapsible="<%= true %>" label="details">
+					<c:if test="<%= cpDefinitionVirtualSetting != null %>">
 
-					<%
-					FileEntry fileEntry = cpDefinitionVirtualSettingDisplayContext.getFileEntry();
+						<%
+						String className = StringPool.BLANK;
+						long classPK = -1;
 
-					long fileEntryId = BeanParamUtil.getLong(cpDefinitionVirtualSetting, request, "fileEntryId");
+						if (cpDefinitionVirtualSetting != null) {
+							className = cpDefinitionVirtualSetting.getClassName();
+							classPK = cpDefinitionVirtualSetting.getClassPK();
+						}
 
-					String textCssClass = "text-default ";
+						Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+							"className", className
+						).put(
+							"classPK", String.valueOf(classPK)
+						).build();
+						%>
 
-					boolean useFileEntry = false;
-
-					if (fileEntryId > 0) {
-						textCssClass += "hide";
-
-						useFileEntry = true;
-					}
-					%>
-
-					<%@ include file="/details.jspf" %>
+						<frontend-data-set:classic-display
+							contextParams="<%= contextParams %>"
+							creationMenu="<%= cpDefinitionVirtualSettingDisplayContext.getCreationMenu() %>"
+							dataProviderKey="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
+							formName="fm"
+							id="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
+							itemsPerPage="<%= 10 %>"
+							selectedItemsKey="cpDefinitionVirtualSettingFileId"
+						/>
+					</c:if>
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="base-information">

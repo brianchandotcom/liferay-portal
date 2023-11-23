@@ -13,4 +13,7 @@ public class CPDefinitionVirtualSettingWebKeys {
 	public static final String CP_DEFINITION_VIRTUAL_SETTING =
 		"CP_DEFINITION_VIRTUAL_SETTING";
 
+	public static final String CPD_VIRTUAL_SETTING_FILE_ENTRY =
+		"CPD_VIRTUAL_SETTING_FILE_ENTRY";
+
 }

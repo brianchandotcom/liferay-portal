@@ -96,8 +96,8 @@ public class EditCommerceVirtualOrderItemMVCActionCommand
 		long duration = TimeUnit.DAYS.toMillis(durationDays);
 
 		_commerceVirtualOrderItemService.updateCommerceVirtualOrderItem(
-			commerceVirtualOrderItemId, fileEntryId, url, activationStatus,
-			duration, usages, maxUsages, active);
+			commerceVirtualOrderItemId, activationStatus, duration, usages,
+			maxUsages, active);
 	}
 
 	@Reference

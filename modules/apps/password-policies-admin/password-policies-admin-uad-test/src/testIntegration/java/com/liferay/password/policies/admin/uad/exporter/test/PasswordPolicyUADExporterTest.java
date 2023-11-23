@@ -45,11 +45,6 @@ public class PasswordPolicyUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "passwordPolicyId";
-	}
-
-	@Override
 	protected UADExporter<PasswordPolicy> getUADExporter() {
 		return _uadExporter;
 	}

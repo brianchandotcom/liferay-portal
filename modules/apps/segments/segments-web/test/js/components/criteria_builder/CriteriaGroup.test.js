@@ -9,17 +9,13 @@ import {wrapInTestContext} from 'react-dnd-test-utils';
 
 import {default as Component} from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaGroup';
 
-const connectDnd = jest.fn((element) => element);
-
 const CriteriaGroup = wrapInTestContext(Component);
 
 describe('CriteriaGroup', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		const {asFragment} = render(
-			<CriteriaGroup connectDragPreview={connectDnd} propertyKey="user" />
-		);
+		const {asFragment} = render(<CriteriaGroup propertyKey="user" />);
 
 		expect(asFragment()).toMatchSnapshot();
 	});

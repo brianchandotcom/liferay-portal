@@ -10,6 +10,8 @@ import CriteriaRow from '../../../../src/main/resources/META-INF/resources/js/co
 import {PROPERTY_TYPES} from '../../../../src/main/resources/META-INF/resources/js/utils/constants';
 
 import '@testing-library/jest-dom/extend-expect';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 const connectDnd = jest.fn((element) => element);
 
@@ -18,30 +20,31 @@ describe('CriteriaRow', () => {
 		const OriginalCriteriaRow = CriteriaRow.DecoratedComponent;
 
 		const {asFragment} = render(
-			<OriginalCriteriaRow
-				connectDragPreview={connectDnd}
-				connectDragSource={connectDnd}
-				connectDropTarget={connectDnd}
-				criterion={{
-					operatorName: PROPERTY_TYPES.STRING,
-					propertyName: 'test_prop',
-					value: 'test_val',
-				}}
-				groupId="group_01"
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				onMove={jest.fn()}
-				propertyKey="user"
-				supportedProperties={[
-					{
-						label: 'Test Property',
-						name: 'test_prop',
-						type: PROPERTY_TYPES.STRING,
-					},
-				]}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<OriginalCriteriaRow
+					connectDragPreview={connectDnd}
+					connectDropTarget={connectDnd}
+					criterion={{
+						operatorName: PROPERTY_TYPES.STRING,
+						propertyName: 'test_prop',
+						value: 'test_val',
+					}}
+					groupId="group_01"
+					index={0}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					onMove={jest.fn()}
+					propertyKey="user"
+					supportedProperties={[
+						{
+							label: 'Test Property',
+							name: 'test_prop',
+							type: PROPERTY_TYPES.STRING,
+						},
+					]}
+				/>
+			</DndProvider>
 		);
 
 		expect(asFragment()).toMatchSnapshot();
@@ -51,30 +54,31 @@ describe('CriteriaRow', () => {
 		const OriginalCriteriaRow = CriteriaRow.DecoratedComponent;
 
 		const {asFragment} = render(
-			<OriginalCriteriaRow
-				connectDragPreview={connectDnd}
-				connectDragSource={connectDnd}
-				connectDropTarget={connectDnd}
-				criterion={{
-					operatorName: PROPERTY_TYPES.STRING,
-					propertyName: 'unknown_prop',
-					value: 'test_val',
-				}}
-				groupId="group_01"
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				onMove={jest.fn()}
-				propertyKey="user"
-				supportedProperties={[
-					{
-						label: 'Test Property',
-						name: 'test_prop',
-						type: PROPERTY_TYPES.STRING,
-					},
-				]}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<OriginalCriteriaRow
+					connectDragPreview={connectDnd}
+					connectDropTarget={connectDnd}
+					criterion={{
+						operatorName: PROPERTY_TYPES.STRING,
+						propertyName: 'unknown_prop',
+						value: 'test_val',
+					}}
+					groupId="group_01"
+					index={0}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					onMove={jest.fn()}
+					propertyKey="user"
+					supportedProperties={[
+						{
+							label: 'Test Property',
+							name: 'test_prop',
+							type: PROPERTY_TYPES.STRING,
+						},
+					]}
+				/>
+			</DndProvider>
 		);
 
 		expect(asFragment()).toMatchSnapshot();
@@ -90,31 +94,32 @@ describe('CriteriaRow', () => {
 		);
 
 		const {getByDisplayValue, getByText} = render(
-			<OriginalCriteriaRow
-				connectDragPreview={connectDnd}
-				connectDragSource={connectDnd}
-				connectDropTarget={connectDnd}
-				criterion={{
-					operatorName: PROPERTY_TYPES.ID,
-					propertyName: 'test_prop',
-					unknownEntity: true,
-					value: '1234',
-				}}
-				groupId="group_01"
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				onMove={jest.fn()}
-				propertyKey="user"
-				supportedProperties={[
-					{
-						label: 'Test Property',
-						name: 'test_prop',
-						type: PROPERTY_TYPES.ID,
-					},
-				]}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<OriginalCriteriaRow
+					connectDragPreview={connectDnd}
+					connectDropTarget={connectDnd}
+					criterion={{
+						operatorName: PROPERTY_TYPES.ID,
+						propertyName: 'test_prop',
+						unknownEntity: true,
+						value: '1234',
+					}}
+					groupId="group_01"
+					index={0}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					onMove={jest.fn()}
+					propertyKey="user"
+					supportedProperties={[
+						{
+							label: 'Test Property',
+							name: 'test_prop',
+							type: PROPERTY_TYPES.ID,
+						},
+					]}
+				/>
+			</DndProvider>
 		);
 
 		await waitFor(() =>
@@ -136,32 +141,33 @@ describe('CriteriaRow', () => {
 		);
 
 		const {getByText} = render(
-			<OriginalCriteriaRow
-				connectDragPreview={connectDnd}
-				connectDragSource={connectDnd}
-				connectDropTarget={connectDnd}
-				criterion={{
-					operatorName: PROPERTY_TYPES.ID,
-					propertyName: 'test_prop',
-					unknownEntity: true,
-					value: '1234',
-				}}
-				editing={false}
-				groupId="group_01"
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				onMove={jest.fn()}
-				propertyKey="user"
-				supportedProperties={[
-					{
-						label: 'Test Property',
-						name: 'test_prop',
-						type: PROPERTY_TYPES.ID,
-					},
-				]}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<OriginalCriteriaRow
+					connectDragPreview={connectDnd}
+					connectDropTarget={connectDnd}
+					criterion={{
+						operatorName: PROPERTY_TYPES.ID,
+						propertyName: 'test_prop',
+						unknownEntity: true,
+						value: '1234',
+					}}
+					editing={false}
+					groupId="group_01"
+					index={0}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					onMove={jest.fn()}
+					propertyKey="user"
+					supportedProperties={[
+						{
+							label: 'Test Property',
+							name: 'test_prop',
+							type: PROPERTY_TYPES.ID,
+						},
+					]}
+				/>
+			</DndProvider>
 		);
 
 		await waitFor(() =>
@@ -183,35 +189,40 @@ describe('CriteriaRow', () => {
 		);
 
 		const {getByText} = render(
-			<OriginalCriteriaRow
-				connectDragPreview={connectDnd}
-				connectDragSource={connectDnd}
-				connectDropTarget={connectDnd}
-				criterion={{
-					operatorName: PROPERTY_TYPES.STRING,
-					propertyName: 'warning_prop',
-					value: 'value1',
-				}}
-				editing={false}
-				groupId="group_01"
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				onMove={jest.fn()}
-				propertyKey="context"
-				supportedProperties={[
-					{
-						label: 'Test Property',
-						name: 'warning_prop',
-						options: [
-							{disabled: true, label: 'value1', value: 'value1'},
-							{label: 'value2', value: 'value2'},
-						],
-						type: PROPERTY_TYPES.STRING,
-					},
-				]}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<OriginalCriteriaRow
+					connectDragPreview={connectDnd}
+					connectDropTarget={connectDnd}
+					criterion={{
+						operatorName: PROPERTY_TYPES.STRING,
+						propertyName: 'warning_prop',
+						value: 'value1',
+					}}
+					editing={false}
+					groupId="group_01"
+					index={0}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					onMove={jest.fn()}
+					propertyKey="context"
+					supportedProperties={[
+						{
+							label: 'Test Property',
+							name: 'warning_prop',
+							options: [
+								{
+									disabled: true,
+									label: 'value1',
+									value: 'value1',
+								},
+								{label: 'value2', value: 'value2'},
+							],
+							type: PROPERTY_TYPES.STRING,
+						},
+					]}
+				/>
+			</DndProvider>
 		);
 
 		await waitFor(() =>
@@ -233,35 +244,40 @@ describe('CriteriaRow', () => {
 		);
 
 		const {getByText} = render(
-			<OriginalCriteriaRow
-				connectDragPreview={connectDnd}
-				connectDragSource={connectDnd}
-				connectDropTarget={connectDnd}
-				criterion={{
-					operatorName: PROPERTY_TYPES.STRING,
-					propertyName: 'warning_prop',
-					value: 'value1',
-				}}
-				editing={true}
-				groupId="group_01"
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				onMove={jest.fn()}
-				propertyKey="context"
-				supportedProperties={[
-					{
-						label: 'Test Property',
-						name: 'warning_prop',
-						options: [
-							{disabled: true, label: 'value1', value: 'value1'},
-							{label: 'value2', value: 'value2'},
-						],
-						type: PROPERTY_TYPES.STRING,
-					},
-				]}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<OriginalCriteriaRow
+					connectDragPreview={connectDnd}
+					connectDropTarget={connectDnd}
+					criterion={{
+						operatorName: PROPERTY_TYPES.STRING,
+						propertyName: 'warning_prop',
+						value: 'value1',
+					}}
+					editing={true}
+					groupId="group_01"
+					index={0}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					onMove={jest.fn()}
+					propertyKey="context"
+					supportedProperties={[
+						{
+							label: 'Test Property',
+							name: 'warning_prop',
+							options: [
+								{
+									disabled: true,
+									label: 'value1',
+									value: 'value1',
+								},
+								{label: 'value2', value: 'value2'},
+							],
+							type: PROPERTY_TYPES.STRING,
+						},
+					]}
+				/>
+			</DndProvider>
 		);
 
 		await waitFor(() =>
@@ -288,31 +304,32 @@ describe('CriteriaRow', () => {
 		const onChangeMock = jest.fn(() => {});
 
 		render(
-			<OriginalCriteriaRow
-				connectDragPreview={connectDnd}
-				connectDragSource={connectDnd}
-				connectDropTarget={connectDnd}
-				criterion={{
-					operatorName: PROPERTY_TYPES.ID,
-					propertyName: 'test_prop',
-					value: '1234',
-				}}
-				editing={false}
-				groupId="group_01"
-				index={0}
-				onAdd={jest.fn()}
-				onChange={onChangeMock}
-				onDelete={jest.fn()}
-				onMove={jest.fn()}
-				propertyKey="user"
-				supportedProperties={[
-					{
-						label: 'Test Property',
-						name: 'test_prop',
-						type: PROPERTY_TYPES.ID,
-					},
-				]}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<OriginalCriteriaRow
+					connectDragPreview={connectDnd}
+					connectDropTarget={connectDnd}
+					criterion={{
+						operatorName: PROPERTY_TYPES.ID,
+						propertyName: 'test_prop',
+						value: '1234',
+					}}
+					editing={false}
+					groupId="group_01"
+					index={0}
+					onAdd={jest.fn()}
+					onChange={onChangeMock}
+					onDelete={jest.fn()}
+					onMove={jest.fn()}
+					propertyKey="user"
+					supportedProperties={[
+						{
+							label: 'Test Property',
+							name: 'test_prop',
+							type: PROPERTY_TYPES.ID,
+						},
+					]}
+				/>
+			</DndProvider>
 		);
 
 		await waitFor(() => expect(onChangeMock).toHaveBeenCalled());
@@ -336,31 +353,32 @@ describe('CriteriaRow', () => {
 		const onChangeMock = jest.fn(() => {});
 
 		render(
-			<OriginalCriteriaRow
-				connectDragPreview={connectDnd}
-				connectDragSource={connectDnd}
-				connectDropTarget={connectDnd}
-				criterion={{
-					operatorName: PROPERTY_TYPES.ID,
-					propertyName: 'test_prop',
-					value: '1234',
-				}}
-				editing={false}
-				groupId="group_01"
-				index={0}
-				onAdd={jest.fn()}
-				onChange={onChangeMock}
-				onDelete={jest.fn()}
-				onMove={jest.fn()}
-				propertyKey="user"
-				supportedProperties={[
-					{
-						label: 'Test Property',
-						name: 'test_prop',
-						type: PROPERTY_TYPES.ID,
-					},
-				]}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<OriginalCriteriaRow
+					connectDragPreview={connectDnd}
+					connectDropTarget={connectDnd}
+					criterion={{
+						operatorName: PROPERTY_TYPES.ID,
+						propertyName: 'test_prop',
+						value: '1234',
+					}}
+					editing={false}
+					groupId="group_01"
+					index={0}
+					onAdd={jest.fn()}
+					onChange={onChangeMock}
+					onDelete={jest.fn()}
+					onMove={jest.fn()}
+					propertyKey="user"
+					supportedProperties={[
+						{
+							label: 'Test Property',
+							name: 'test_prop',
+							type: PROPERTY_TYPES.ID,
+						},
+					]}
+				/>
+			</DndProvider>
 		);
 
 		await waitFor(() => expect(onChangeMock).toHaveBeenCalled());

@@ -10,6 +10,8 @@ import CriteriaRowEditable from '../../../../src/main/resources/META-INF/resourc
 
 import '@testing-library/jest-dom/extend-expect';
 import {format, parse} from 'date-fns';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {
 	booleanCriterion,
@@ -28,21 +30,21 @@ import {
 
 const equalsOperator = {label: 'Equals', name: 'eq'};
 
-const connectDnd = jest.fn((element) => element);
-
 describe('CriteriaRowEditable', () => {
 	it('renders string criterion', () => {
 		const {getByTestId, getByText} = render(
-			<CriteriaRowEditable
-				connectDragSource={connectDnd}
-				criterion={stringCriterion}
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				selectedOperator={equalsOperator}
-				selectedProperty={stringProperty}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaRowEditable
+					criterion={stringCriterion}
+					index={0}
+					item={{}}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					selectedOperator={equalsOperator}
+					selectedProperty={stringProperty}
+				/>
+			</DndProvider>
 		);
 
 		expect(getByText(stringProperty.label)).toBeInTheDocument();
@@ -55,16 +57,18 @@ describe('CriteriaRowEditable', () => {
 
 	it('renders boolean criterion', () => {
 		const {getByText} = render(
-			<CriteriaRowEditable
-				connectDragSource={connectDnd}
-				criterion={booleanCriterion}
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				selectedOperator={equalsOperator}
-				selectedProperty={booleanProperty}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaRowEditable
+					criterion={booleanCriterion}
+					index={0}
+					item={{}}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					selectedOperator={equalsOperator}
+					selectedProperty={booleanProperty}
+				/>
+			</DndProvider>
 		);
 
 		expect(getByText(booleanProperty.label)).toBeInTheDocument();
@@ -76,16 +80,18 @@ describe('CriteriaRowEditable', () => {
 
 	it('renders date criterion', () => {
 		const {getByTestId, getByText} = render(
-			<CriteriaRowEditable
-				connectDragSource={connectDnd}
-				criterion={dateCriterion}
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				selectedOperator={equalsOperator}
-				selectedProperty={dateProperty}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaRowEditable
+					criterion={dateCriterion}
+					index={0}
+					item={{}}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					selectedOperator={equalsOperator}
+					selectedProperty={dateProperty}
+				/>
+			</DndProvider>
 		);
 
 		expect(getByText(dateProperty.label)).toBeInTheDocument();
@@ -106,16 +112,18 @@ describe('CriteriaRowEditable', () => {
 
 	it('renders entity criterion', () => {
 		const {getByTestId, getByText} = render(
-			<CriteriaRowEditable
-				connectDragSource={connectDnd}
-				criterion={entityCriterion}
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				selectedOperator={equalsOperator}
-				selectedProperty={entityProperty}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaRowEditable
+					criterion={entityCriterion}
+					index={0}
+					item={{}}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					selectedOperator={equalsOperator}
+					selectedProperty={entityProperty}
+				/>
+			</DndProvider>
 		);
 
 		expect(getByText(entityProperty.label)).toBeInTheDocument();
@@ -129,16 +137,18 @@ describe('CriteriaRowEditable', () => {
 
 	it('renders collection criterion', () => {
 		const {getByTestId, getByText} = render(
-			<CriteriaRowEditable
-				connectDragSource={connectDnd}
-				criterion={collectionCriterion}
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				selectedOperator={equalsOperator}
-				selectedProperty={collectionProperty}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaRowEditable
+					criterion={collectionCriterion}
+					index={0}
+					item={{}}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					selectedOperator={equalsOperator}
+					selectedProperty={collectionProperty}
+				/>
+			</DndProvider>
 		);
 
 		expect(getByText(collectionProperty.label)).toBeInTheDocument();
@@ -152,16 +162,18 @@ describe('CriteriaRowEditable', () => {
 
 	it('renders double criterion', () => {
 		const {getByTestId, getByText} = render(
-			<CriteriaRowEditable
-				connectDragSource={connectDnd}
-				criterion={doubleCriterion}
-				index={0}
-				onAdd={jest.fn()}
-				onChange={jest.fn()}
-				onDelete={jest.fn()}
-				selectedOperator={equalsOperator}
-				selectedProperty={doubleProperty}
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaRowEditable
+					criterion={doubleCriterion}
+					index={0}
+					item={{}}
+					onAdd={jest.fn()}
+					onChange={jest.fn()}
+					onDelete={jest.fn()}
+					selectedOperator={equalsOperator}
+					selectedProperty={doubleProperty}
+				/>
+			</DndProvider>
 		);
 
 		expect(getByText(doubleProperty.label)).toBeInTheDocument();

@@ -128,31 +128,28 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   </p>
                   <ul
                     class="c-pl-0"
+                    role="menu"
                   >
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -163,33 +160,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Ancestor Organization IDs
+                        Ancestor Organization IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -200,33 +193,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Class PK
+                        Class PK
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -237,33 +226,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Company ID
+                        Company ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-date"
@@ -274,33 +259,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Date Modified
+                        Date Modified
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -311,33 +292,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Email Address
+                        Email Address
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -348,33 +325,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      First Name
+                        First Name
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -385,33 +358,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Group ID
+                        Group ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -422,33 +391,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Group IDs
+                        Group IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -459,33 +424,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Job Title
+                        Job Title
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -496,33 +457,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Last Name
+                        Last Name
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -533,33 +490,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Organization IDs
+                        Organization IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -570,33 +523,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Role IDs
+                        Role IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -607,33 +556,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Scope Group ID
+                        Scope Group ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -644,33 +589,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Screen Name
+                        Screen Name
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -681,33 +622,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Team IDs
+                        Team IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -718,33 +655,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      User Group IDs
+                        User Group IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -755,33 +688,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      User ID
+                        User ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -792,8 +721,8 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      User Name
+                        User Name
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -860,31 +789,28 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   </p>
                   <ul
                     class="c-pl-0"
+                    role="menu"
                   >
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -895,33 +821,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Class PK
+                        Class PK
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -932,33 +854,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Company ID
+                        Company ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-date"
@@ -969,33 +887,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Date Modified
+                        Date Modified
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1006,33 +920,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Name
+                        Name
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1043,33 +953,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Name Tree Path
+                        Name Tree Path
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1080,33 +986,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Organization ID
+                        Organization ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1117,33 +1019,29 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Parent Organization ID
+                        Parent Organization ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1154,8 +1052,8 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             />
                           </svg>
                         </span>
-                      </span>
-                      Type
+                        Type
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -1354,31 +1252,28 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   </p>
                   <ul
                     class="c-pl-0"
+                    role="menu"
                   >
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1389,33 +1284,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Ancestor Organization IDs
+                        Ancestor Organization IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1426,33 +1317,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Class PK
+                        Class PK
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1463,33 +1350,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Company ID
+                        Company ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-date"
@@ -1500,33 +1383,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Date Modified
+                        Date Modified
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1537,33 +1416,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Email Address
+                        Email Address
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1574,33 +1449,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      First Name
+                        First Name
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1611,33 +1482,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Group ID
+                        Group ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1648,33 +1515,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Group IDs
+                        Group IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1685,33 +1548,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Job Title
+                        Job Title
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1722,33 +1581,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Last Name
+                        Last Name
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1759,33 +1614,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Organization IDs
+                        Organization IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1796,33 +1647,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Role IDs
+                        Role IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1833,33 +1680,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Scope Group ID
+                        Scope Group ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1870,33 +1713,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Screen Name
+                        Screen Name
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1907,33 +1746,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Team IDs
+                        Team IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1944,33 +1779,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      User Group IDs
+                        User Group IDs
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -1981,33 +1812,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      User ID
+                        User ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -2018,8 +1845,8 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      User Name
+                        User Name
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -2086,31 +1913,28 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   </p>
                   <ul
                     class="c-pl-0"
+                    role="menu"
                   >
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -2121,33 +1945,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Class PK
+                        Class PK
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -2158,33 +1978,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Company ID
+                        Company ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-date"
@@ -2195,33 +2011,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Date Modified
+                        Date Modified
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -2232,33 +2044,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Name
+                        Name
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -2269,33 +2077,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Name Tree Path
+                        Name Tree Path
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -2306,33 +2110,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Organization ID
+                        Organization ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -2343,33 +2143,29 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Parent Organization ID
+                        Parent Organization ID
+                      </div>
                     </li>
                     <li
-                      class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--user-organization"
-                      draggable="true"
+                      aria-label="drag-x"
+                      class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--user-organization"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      <span
-                        class="c-p-2 inline-item"
-                        tabindex="-1"
+                      <div
+                        class="h-100 w-100"
+                        draggable="true"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-drag"
+                          class="lexicon-icon lexicon-icon-drag mt-0"
                           role="presentation"
                         >
                           <use
                             href="#drag"
                           />
                         </svg>
-                      </span>
-                      <span
-                        class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                      >
                         <span
-                          class="inline-item"
+                          class="sticker"
                         >
                           <svg
                             class="lexicon-icon lexicon-icon-text"
@@ -2380,8 +2176,8 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             />
                           </svg>
                         </span>
-                      </span>
-                      Type
+                        Type
+                      </div>
                     </li>
                   </ul>
                 </div>

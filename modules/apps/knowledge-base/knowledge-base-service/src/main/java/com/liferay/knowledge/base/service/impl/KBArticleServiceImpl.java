@@ -403,8 +403,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				orderByComparator);
 		}
 		else if (status == WorkflowConstants.STATUS_APPROVED) {
-			return kbArticlePersistence.filterFindByG_P_M(
-				groupId, parentResourcePrimKey, true, start, end,
+			return kbArticlePersistence.filterFindByG_P_M_NotS(
+				groupId, parentResourcePrimKey, true,
+				WorkflowConstants.STATUS_IN_TRASH, start, end,
 				orderByComparator);
 		}
 

@@ -84,7 +84,7 @@ const RequiredInformation = ({
 		return !!fieldValues.length;
 	});
 
-	const isComplementaryKey =
+	const isComplimentaryKey =
 		infoSelectedKey?.selectedSubscription.complimentary;
 
 	const newUsedKeys = usedKeysCount + values?.keys?.length;
@@ -236,13 +236,13 @@ const RequiredInformation = ({
 					)
 				);
 
-				if (checkedBoxSubscription && isComplementaryKey) {
+				if (checkedBoxSubscription && isComplimentaryKey) {
 					await saveSubscriptionKey(results[0]?.items[0]?.id);
 				}
 
 				setIsLoadingGenerateKey(false);
 
-				if (!isComplementaryKey) {
+				if (!isComplimentaryKey) {
 					await client.mutate({
 						context: {
 							displaySuccess: false,
@@ -292,7 +292,7 @@ const RequiredInformation = ({
 		hasFilledAtLeastOneField,
 		infoSelectedKey.hasNotPermanentLicence,
 		infoSelectedKey.selectedSubscription.provisionedCount,
-		isComplementaryKey,
+		isComplimentaryKey,
 		licenseKey,
 		navigate,
 		provisioningServerAPI,
@@ -307,7 +307,7 @@ const RequiredInformation = ({
 	const CheckboxSubscriptionNotification = () => {
 		if (
 			featureFlags.includes('LPS-180001') &&
-			(infoSelectedKey?.hasNotPermanentLicence || isComplementaryKey)
+			(infoSelectedKey?.hasNotPermanentLicence || isComplimentaryKey)
 		) {
 			return (
 				<>
@@ -366,7 +366,7 @@ const RequiredInformation = ({
 								className="btn btn-secondary mr-3"
 								displayType="secundary"
 								onClick={() =>
-									setStep(isComplementaryKey ? 1 : 0)
+									setStep(isComplimentaryKey ? 1 : 0)
 								}
 							>
 								{i18n.translate('previous')}

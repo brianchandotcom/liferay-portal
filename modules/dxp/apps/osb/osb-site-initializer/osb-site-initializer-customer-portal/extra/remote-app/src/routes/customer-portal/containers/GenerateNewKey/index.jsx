@@ -113,7 +113,7 @@ const GenerateNewKey = ({
 				urlPreviousPage={urlPreviousPage}
 			/>
 		),
-		[STEP_TYPES.selectInfoComplementaryKey]: (
+		[STEP_TYPES.selectInfoComplimentaryKey]: (
 			<ComplimentaryDate
 				accountKey={project?.accountKey}
 				deactivateKeysConfirm={deactivateKeysConfirm}

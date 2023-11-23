@@ -1,0 +1,77 @@
+@component-name = "portal-util-misc"
+definition {
+
+	property testray.component.names = "Widget Pages";
+	property testray.main.component.name = "Widget Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an IFrame widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "IFrame");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "Verifying JS Polution Vulnerability"
+	@priority = 4
+	test NavigateToSourceURLWithXSS {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given Configuration to the IFrame widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.gotoPortletOptions(
+				portletName = "IFrame",
+				portletOption = "Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			InputField.editText(
+				fieldLabel = "Source URL",
+				text = "https://www.liferay.com");
+
+			IFrame.saveConfiguration();
+
+			IFrame.closeFrame();
+		}
+
+		task ("When Navigating to the IFrame location with url parameters in a new Tab") {
+			Open.openInTheNewTab(value1 = "${portalURL}/web/test-site-name#constructor[prototype][comboBase]=data%3A%2Calert%281%29");
+		}
+
+		task ("Then alert popup should not appear") {
+			AssertAlertNotPresent();
+		}
+	}
+
+}

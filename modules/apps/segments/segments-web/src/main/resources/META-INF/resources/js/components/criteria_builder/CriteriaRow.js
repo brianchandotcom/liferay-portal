@@ -131,6 +131,27 @@ function beginDrag({criterion, groupId, index, propertyKey}) {
 	return {criterion, groupId, index, propertyKey};
 }
 
+/**
+ * Gets the selected item object with a `name` and `label` property for a
+ * selection input. If one isn't found, a new object is returned using the
+ * idSelected for name and label.
+ * @param {Array} list The list of objects to search through.
+ * @param {string} idSelected The name to match in each object in the list.
+ * @return {object} An object with a `name`, `label` and `type` property.
+ */
+function getSelectedItem(list, idSelected) {
+	const selectedItem = list.find((item) => item.name === idSelected);
+
+	return selectedItem
+		? selectedItem
+		: {
+				label: idSelected,
+				name: idSelected,
+				notFound: true,
+				type: PROPERTY_TYPES.STRING,
+		  };
+}
+
 function CriteriaRow({
 	canDrop,
 	connectDragPreview,
@@ -186,7 +207,7 @@ function CriteriaRow({
 	}, [criterion, onChange, themeContext, entityName]);
 
 	useEffect(() => {
-		const _selectedProperty = _getSelectedItem(
+		const _selectedProperty = getSelectedItem(
 			supportedProperties,
 			criterion.propertyName
 		);
@@ -199,27 +220,6 @@ function CriteriaRow({
 			_fetchEntityName();
 		}
 	}, [criterion, supportedProperties, _fetchEntityName]);
-
-	/**
-	 * Gets the selected item object with a `name` and `label` property for a
-	 * selection input. If one isn't found, a new object is returned using the
-	 * idSelected for name and label.
-	 * @param {Array} list The list of objects to search through.
-	 * @param {string} idSelected The name to match in each object in the list.
-	 * @return {object} An object with a `name`, `label` and `type` property.
-	 */
-	const _getSelectedItem = (list, idSelected) => {
-		const selectedItem = list.find((item) => item.name === idSelected);
-
-		return selectedItem
-			? selectedItem
-			: {
-					label: idSelected,
-					name: idSelected,
-					notFound: true,
-					type: PROPERTY_TYPES.STRING,
-			  };
-	};
 
 	const _renderErrorMessages = ({errorOnProperty, unknownEntityError}) => {
 		const errors = [];
@@ -283,12 +283,12 @@ function CriteriaRow({
 
 	const {unknownEntity} = criterion;
 
-	const selectedOperator = _getSelectedItem(
+	const selectedOperator = getSelectedItem(
 		SUPPORTED_OPERATORS,
 		criterion.operatorName
 	);
 
-	const selectedProperty = _getSelectedItem(
+	const selectedProperty = getSelectedItem(
 		supportedProperties,
 		criterion.propertyName
 	);

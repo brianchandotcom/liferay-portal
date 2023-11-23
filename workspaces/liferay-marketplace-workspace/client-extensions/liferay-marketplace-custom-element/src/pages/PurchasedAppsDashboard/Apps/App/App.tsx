@@ -6,9 +6,6 @@
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import './App.scss';
-import shoppingCartIcon from '../../../../assets/icons/lexicon_shopping_cart_icon.svg';
-import locationIcon from '../../../../assets/icons/location_icon.svg';
-import orderFormIcon from '../../../../assets/icons/order_form_icon.svg';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import {formatDate} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
@@ -26,9 +23,9 @@ const App = () => {
 		<div className="app-details-page-container mt-6">
 			<div className="app-details-body-container">
 				<DetailedCard
-					cardIcon={orderFormIcon}
 					cardIconAltText="Details Icon"
 					cardTitle="Details"
+					clayIcon="order-form-tag"
 				>
 					<div className="mb-2 mt-4 row">
 						<h5 className="col-6">Order ID</h5>
@@ -62,9 +59,9 @@ const App = () => {
 					</div>
 				</DetailedCard>
 				<DetailedCard
-					cardIcon={shoppingCartIcon}
 					cardIconAltText="Summary Icon"
 					cardTitle="Summary"
+					clayIcon="shopping-cart"
 				>
 					<div className="justify-content-center mb-2 mt-4 row">
 						<h5 className="col-3">Type</h5>
@@ -123,9 +120,9 @@ const App = () => {
 					</div>
 				</DetailedCard>
 				<DetailedCard
-					cardIcon={locationIcon}
 					cardIconAltText="Location Icon"
 					cardTitle="Address"
+					clayIcon="geolocation"
 				>
 					<div className="mb-2 mt-4 row">
 						<h5 className="col-6">Billing Address</h5>

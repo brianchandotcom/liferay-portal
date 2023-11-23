@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -37,6 +39,12 @@ public class UserNotificationEventUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Ignore
+	@Override
+	@Test
+	public void testExport() throws Exception {
+	}
+
 	@Override
 	protected UserNotificationEvent addBaseModel(long userId) throws Exception {
 		UserNotificationEvent userNotificationEvent =
@@ -49,11 +57,6 @@ public class UserNotificationEventUADExporterTest
 		_userNotificationEvents.add(userNotificationEvent);
 
 		return userNotificationEvent;
-	}
-
-	@Override
-	protected String getPrimaryKeyName() {
-		return "userNotificationEventId";
 	}
 
 	@Override

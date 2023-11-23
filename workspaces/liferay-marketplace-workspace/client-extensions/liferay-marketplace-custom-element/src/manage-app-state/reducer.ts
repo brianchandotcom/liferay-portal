@@ -3,12 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {InitialStateProps} from './AppManageState';
+import {LicenseTier} from '../enums/licenseTier';
+import {InitialStateProps, LicensePrice} from './AppManageState';
 import {TYPES} from './actionTypes';
 
 export type TAction = {
 	payload?: any;
 	type: TYPES;
+};
+
+const sortLicenses = (
+	firstPriceTier: LicensePrice,
+	secondPriceTier: LicensePrice
+) => {
+	return firstPriceTier.key - secondPriceTier.key;
 };
 
 export function appReducer(state: InitialStateProps, action: TAction) {
@@ -74,10 +82,71 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 				},
 			};
 		}
-		case TYPES.UPDATE_APP_LICENSE_PRICE: {
-			const appLicensePrice = action.payload.value;
+		case TYPES.ADD_APP_LICENSE_PRICE: {
+			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const sortedOldLicensePrice = {
+				developer: state.appLicensePrice.developer.sort(sortLicenses),
+				standard: state.appLicensePrice.standard.sort(sortLicenses),
+			};
 
-			return {...state, appLicensePrice};
+			if (!sortedOldLicensePrice[licenseTier].length) {
+				return {
+					...state,
+					appLicensePrice: {
+						...sortedOldLicensePrice,
+						[licenseTier]: [{key: 1, value: 0}],
+					},
+				};
+			}
+
+			const newKey =
+				sortedOldLicensePrice[licenseTier].slice(-1)[0].key + 1;
+			const newPriceTier = {key: newKey, value: 0};
+
+			return {
+				...state,
+				appLicensePrice: {
+					...sortedOldLicensePrice,
+					[licenseTier]: [
+						...sortedOldLicensePrice[licenseTier],
+						newPriceTier,
+					],
+				},
+			};
+		}
+		case TYPES.DELETE_APP_LICENSE_PRICE: {
+			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const sortedOldLicensePrice = {
+				developer: state.appLicensePrice.developer.sort(sortLicenses),
+				standard: state.appLicensePrice.standard.sort(sortLicenses),
+			};
+
+			const filteredLicensePriceTier = sortedOldLicensePrice[
+				licenseTier
+			].filter((priceTier) => priceTier.key !== action.payload.key);
+
+			return {
+				...state,
+				appLicensePrice: {
+					...sortedOldLicensePrice,
+					[licenseTier]: filteredLicensePriceTier,
+				},
+			};
+		}
+		case TYPES.UPDATE_APP_LICENSE_PRICES: {
+			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const oldLicensePrice = state.appLicensePrice;
+
+			const newLicensePrices = [...oldLicensePrice[licenseTier]];
+			newLicensePrices[action.payload.index] = action.payload.price;
+
+			return {
+				...state,
+				appLicensePrice: {
+					...oldLicensePrice,
+					[licenseTier]: newLicensePrices,
+				},
+			};
 		}
 		case TYPES.UPDATE_APP_LOGO: {
 			const appLogo = action.payload.file;

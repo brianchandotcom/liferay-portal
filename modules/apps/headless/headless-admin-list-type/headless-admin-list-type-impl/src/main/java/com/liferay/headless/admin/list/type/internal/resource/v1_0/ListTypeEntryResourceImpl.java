@@ -167,8 +167,7 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 			_listTypeEntryService.addListTypeEntry(
 				listTypeEntry.getExternalReferenceCode(), listTypeDefinitionId,
 				listTypeEntry.getKey(),
-				LocalizedMapUtil.getLocalizedMap(
-					listTypeEntry.getName_i18n())));
+				LocalizedMapUtil.getLocalizedMap(listTypeEntry.getNameMap())));
 	}
 
 	@Override
@@ -180,8 +179,7 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryService.updateListTypeEntry(
 				listTypeEntry.getExternalReferenceCode(), listTypeEntryId,
-				LocalizedMapUtil.getLocalizedMap(
-					listTypeEntry.getName_i18n())));
+				LocalizedMapUtil.getLocalizedMap(listTypeEntry.getNameMap())));
 	}
 
 	private Map<String, Map<String, String>> _getActions(

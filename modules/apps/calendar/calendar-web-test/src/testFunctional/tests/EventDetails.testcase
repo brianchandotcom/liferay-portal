@@ -991,15 +991,20 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Calendar Page",
+			type = "content");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Calendar Page",
+			layoutTemplate = "1 Column");
 
-		PagesAdmin.addPage(
-			pageName = "Calendar Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Calendar Page",
+			widgetName = "Calendar");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1007,17 +1012,11 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(
-			pageName = "Calendar Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(
-			pageName = "Calendar Page",
-			portletName = "Calendar");
+		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.addRegularInCustomSite(
+		CalendarEvent.addRegular(
 			eventTitle = "Calendar Event Title",
 			optionSet = "true",
 			optionSetValue = "inviteResource",
@@ -1026,10 +1025,31 @@ definition {
 			specificOptionSetValue = "userfn userln",
 			user = "userfn userln");
 
-		MockMock.openCalendarBodyLink(
-			asset = '''Calendar: Event Notification for "Calendar Event Title"''',
-			content = "You have been invited to event",
-			subject = '''Calendar: Event Notification for "Calendar Event Title"''');
+		var bodyContent = MockMock.getCalendarMailBody(asset = '''Calendar: Event Notification for "Calendar Event Title"''');
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Email Body Page",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Email Body Page",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "HTML");
+
+		PageEditor.editFragmentHTML(
+			content = ${bodyContent},
+			fragmentName = "HTML",
+			id = "element-html");
+
+		PageEditor.publish();
+
+		Click(
+			key_text = "Calendar Event Title",
+			locator1 = "Link#ANY");
 
 		CalendarEvent.viewDetailsViaMailLink(eventTitle = "Calendar Event Title");
 	}

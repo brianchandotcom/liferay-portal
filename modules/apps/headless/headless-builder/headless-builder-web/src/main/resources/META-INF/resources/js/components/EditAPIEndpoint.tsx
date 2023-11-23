@@ -69,6 +69,7 @@ export default function EditAPIEndpoint({
 		parameter: false,
 		path: false,
 		pathParameter: false,
+		r_requestAPISchemaToAPIEndpoints_c_apiSchemaId: false,
 		retrieveType: false,
 		scope: false,
 	});
@@ -121,17 +122,23 @@ export default function EditAPIEndpoint({
 	function validateData() {
 		let isDataValid = true;
 
-		const mandatoryFields = ['httpMethod', 'parameter', 'path', 'scope'];
+		const mandatoryFields = ['httpMethod', 'path', 'retrieveType', 'scope'];
 
 		if (
-			localUIData.retrieveType?.key === 'singleElement' &&
-			localUIData.httpMethod?.key === 'get'
+			localUIData.httpMethod?.key === 'get' &&
+			localUIData.retrieveType?.key === 'singleElement'
 		) {
 			mandatoryFields.push('parameter');
-			
+
 			if (localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId) {
 				mandatoryFields.push('pathParameter');
 			}
+		}
+
+		if (localUIData.httpMethod?.key === 'post') {
+			mandatoryFields.push(
+				'r_requestAPISchemaToAPIEndpoints_c_apiSchemaId'
+			);
 		}
 
 		if (!Object.keys(localUIData!).length) {

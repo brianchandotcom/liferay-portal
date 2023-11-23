@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {Text} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import FiltersAndSorting from './endpointComponents/FiltersAndSorting';
@@ -84,7 +86,6 @@ export default function EditEndpointConfiguration({
 		property: string,
 		value: string
 	) => {
-
 		setData((previousValue) => ({
 			...previousValue,
 			[property]: Number(value),
@@ -96,7 +97,12 @@ export default function EditEndpointConfiguration({
 	return (
 		<ClayForm>
 			{data.httpMethod?.key === 'post' && (
-				<ClayForm.Group className="mb-4">
+				<ClayForm.Group
+					className={classNames('mb-4', {
+						'has-error':
+							displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId,
+					})}
+				>
 					<>
 						<label htmlFor="selectTrigger">
 							{Liferay.Language.get('request-body-schema')}
@@ -125,6 +131,17 @@ export default function EditEndpointConfiguration({
 							searchable
 							selectedOption={selectedRequestBodySchema}
 						/>
+
+						{displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId && (
+							<ClayAlert
+								className="mt-2"
+								displayType="danger"
+								title={Liferay.Language.get(
+									'please-select-a-request-body-schema'
+								)}
+								variant="feedback"
+							></ClayAlert>
+						)}
 					</>
 					<Text
 						as="p"

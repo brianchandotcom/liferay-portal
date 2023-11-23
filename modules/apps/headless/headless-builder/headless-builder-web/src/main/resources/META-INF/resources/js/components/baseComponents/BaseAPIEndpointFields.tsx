@@ -8,7 +8,7 @@ import {Text} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {Select} from '../fieldComponents/Select';
@@ -140,6 +140,16 @@ export default function BaseAPIEndpointFields({
 			}
 		});
 	}, []);
+
+	useEffect(() => {
+		displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId &&
+			openToast({
+				message: Liferay.Language.get(
+					'there-are-errors-on-the-form-please-check-if-any-mandatory-fields-have-not-been-completed'
+				),
+				type: 'danger',
+			});
+	}, [displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId]);
 
 	useEffect(() => {
 		if (data.retrieveType?.key && retrieveTypeOptions.length) {
@@ -509,8 +519,9 @@ export default function BaseAPIEndpointFields({
 
 			<div aria-live="assertive" className="sr-only">
 				{(displayError.httpMethod ||
-					displayError.scope ||
+					displayError.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId ||
 					displayError.retrieveType ||
+					displayError.scope ||
 					pathHasErrors) && (
 					<span>
 						{Liferay.Language.get(

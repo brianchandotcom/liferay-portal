@@ -39,6 +39,7 @@ export function CreateAPIEndpointModalContent({
 		parameter: false,
 		path: false,
 		pathParameter: false,
+		r_requestAPISchemaToAPIEndpoints_c_apiSchemaId: false,
 		retrieveType: false,
 		scope: false,
 	});

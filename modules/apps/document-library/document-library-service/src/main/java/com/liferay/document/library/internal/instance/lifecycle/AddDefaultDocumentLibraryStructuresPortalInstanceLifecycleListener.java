@@ -7,7 +7,7 @@ package com.liferay.document.library.internal.instance.lifecycle;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.internal.util.DDMFormUtil;
-import com.liferay.document.library.kernel.util.RawMetadataProcessor;
+import com.liferay.document.library.kernel.processor.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;

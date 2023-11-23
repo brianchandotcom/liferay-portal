@@ -685,7 +685,8 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				"com.liferay.document.library.kernel.model.DLFileEntryMetadata",
 				_CLASS_NAME_DDM_STRUCTURE)
 		).put(
-			"com.liferay.document.library.kernel.util.RawMetadataProcessor",
+			"com.liferay.document.library.kernel.processor." +
+				"RawMetadataProcessor",
 			_CLASS_NAME_DDM_STRUCTURE
 		).put(
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet",

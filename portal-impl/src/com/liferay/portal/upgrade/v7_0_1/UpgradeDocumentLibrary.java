@@ -6,7 +6,7 @@
 package com.liferay.portal.upgrade.v7_0_1;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.util.RawMetadataProcessor;
+import com.liferay.document.library.kernel.processor.RawMetadataProcessor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

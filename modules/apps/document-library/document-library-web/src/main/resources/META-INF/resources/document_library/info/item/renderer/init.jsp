@@ -9,9 +9,9 @@
 
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.document.library.kernel.util.ImageProcessorUtil" %><%@
-page import="com.liferay.document.library.kernel.util.PDFProcessorUtil" %><%@
-page import="com.liferay.document.library.kernel.util.VideoProcessorUtil" %><%@
+<%@ page import="com.liferay.document.library.kernel.processor.ImageProcessorUtil" %><%@
+page import="com.liferay.document.library.kernel.processor.PDFProcessorUtil" %><%@
+page import="com.liferay.document.library.kernel.processor.VideoProcessorUtil" %><%@
 page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@

@@ -5,7 +5,7 @@
 
 package com.liferay.item.selector.taglib.internal.display.context;
 
-import com.liferay.document.library.kernel.util.ImageProcessorUtil;
+import com.liferay.document.library.kernel.processor.ImageProcessorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;

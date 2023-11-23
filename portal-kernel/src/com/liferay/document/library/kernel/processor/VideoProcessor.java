@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.document.library.kernel.util;
+package com.liferay.document.library.kernel.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -17,29 +17,26 @@ import java.util.Set;
 /**
  * @author Sergio González
  */
-public interface ImageProcessor {
+public interface VideoProcessor {
 
-	public void cleanUp(FileEntry fileEntry);
-
-	public void cleanUp(FileVersion fileVersion);
+	public static final String THUMBNAIL_TYPE = "jpg";
 
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
 		throws Exception;
 
-	public void generateImages(
+	public void generatePreviews();
+
+	public void generateVideo(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception;
 
-	public Set<String> getImageMimeTypes();
-
-	public InputStream getPreviewAsStream(FileVersion fileVersion)
+	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
 		throws Exception;
 
-	public long getPreviewFileSize(FileVersion fileVersion) throws Exception;
-
-	public String getPreviewType(FileVersion fileVersion);
+	public long getPreviewFileSize(FileVersion fileVersion, String type)
+		throws Exception;
 
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception;
@@ -47,26 +44,24 @@ public interface ImageProcessor {
 	public long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception;
 
-	public String getThumbnailType(FileVersion fileVersion);
+	public Set<String> getVideoMimeTypes();
 
-	public boolean hasImages(FileVersion fileVersion);
+	public boolean hasVideo(FileVersion fileVersion);
 
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
 		throws Exception;
 
-	public boolean isImageSupported(FileVersion fileVersion);
-
-	public boolean isImageSupported(String mimeType);
+	public default boolean isAvailable() {
+		return true;
+	}
 
 	public boolean isSupported(String mimeType);
 
-	public void storeThumbnail(
-			long companyId, long groupId, long fileEntryId, long fileVersionId,
-			long custom1ImageId, long custom2ImageId, InputStream inputStream,
-			String type)
-		throws Exception;
+	public boolean isVideoSupported(FileVersion fileVersion);
+
+	public boolean isVideoSupported(String mimeType);
 
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion);

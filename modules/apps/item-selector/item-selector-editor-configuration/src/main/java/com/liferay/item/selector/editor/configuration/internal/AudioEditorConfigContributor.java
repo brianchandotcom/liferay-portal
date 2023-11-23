@@ -5,7 +5,7 @@
 
 package com.liferay.item.selector.editor.configuration.internal;
 
-import com.liferay.document.library.kernel.util.AudioProcessorUtil;
+import com.liferay.document.library.kernel.processor.AudioProcessorUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;

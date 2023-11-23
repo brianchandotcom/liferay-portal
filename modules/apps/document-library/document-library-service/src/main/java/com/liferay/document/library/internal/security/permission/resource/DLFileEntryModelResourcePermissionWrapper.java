@@ -130,10 +130,21 @@ public class DLFileEntryModelResourcePermissionWrapper
 					});
 
 				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+					DynamicInheritancePermissionLogic<DLFileEntry, DLFolder>
+						permissionLogic =
+							new DynamicInheritancePermissionLogic<>(
+								_dlFolderModelResourcePermission,
+								_getFetchParentFunction(), true);
+
 					consumer.accept(
-						new DynamicInheritancePermissionLogic<>(
-							_dlFolderModelResourcePermission,
-							_getFetchParentFunction(), true));
+						(permissionChecker, name, model, actionId) -> {
+							if (actionId.equals(ActionKeys.DOWNLOAD)) {
+								actionId = ActionKeys.VIEW;
+							}
+
+							return permissionLogic.contains(
+								permissionChecker, name, model, actionId);
+						});
 				}
 			});
 	}

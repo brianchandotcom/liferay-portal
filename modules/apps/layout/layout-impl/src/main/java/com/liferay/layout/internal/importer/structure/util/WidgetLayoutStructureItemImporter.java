@@ -68,7 +68,7 @@ public class WidgetLayoutStructureItemImporter
 			(FragmentStyledLayoutStructureItem)
 				layoutStructure.addFragmentStyledLayoutStructureItem(
 					fragmentEntryLink.getFragmentEntryLinkId(),
-					pageElement.getId(),
+					_getId(layoutStructureItemImporterContext, pageElement),
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 
@@ -219,6 +219,17 @@ public class WidgetLayoutStructureItemImporter
 			editableValueJSONObject.toString(), widgetInstanceId, 0, null,
 			FragmentConstants.TYPE_PORTLET,
 			ServiceContextThreadLocal.getServiceContext());
+	}
+
+	private String _getId(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		PageElement pageElement) {
+
+		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
+			return pageElement.getId();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getPortletInstanceId(

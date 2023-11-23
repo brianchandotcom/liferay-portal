@@ -58,7 +58,7 @@ public class ContainerLayoutStructureItemImporter
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
 			(ContainerStyledLayoutStructureItem)
 				layoutStructure.addContainerStyledLayoutStructureItem(
-					pageElement.getId(),
+					_getId(layoutStructureItemImporterContext, pageElement),
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 
@@ -396,6 +396,17 @@ public class ContainerLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.SECTION;
+	}
+
+	private String _getId(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		PageElement pageElement) {
+
+		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
+			return pageElement.getId();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Reference

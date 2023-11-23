@@ -14,12 +14,13 @@ public class LayoutStructureItemImporterContext {
 
 	public LayoutStructureItemImporterContext(
 		Layout layout, double pageDefinitionVersion, String parentItemId,
-		int position, long segmentsExperienceId) {
+		int position, boolean preserveItemIds, long segmentsExperienceId) {
 
 		_layout = layout;
 		_pageDefinitionVersion = pageDefinitionVersion;
 		_parentItemId = parentItemId;
 		_position = position;
+		_preserveItemIds = preserveItemIds;
 		_segmentsExperienceId = segmentsExperienceId;
 	}
 
@@ -43,10 +44,15 @@ public class LayoutStructureItemImporterContext {
 		return _segmentsExperienceId;
 	}
 
+	public boolean isPreserveItemIds() {
+		return _preserveItemIds;
+	}
+
 	private final Layout _layout;
 	private final double _pageDefinitionVersion;
 	private final String _parentItemId;
 	private final int _position;
+	private final boolean _preserveItemIds;
 	private final long _segmentsExperienceId;
 
 }

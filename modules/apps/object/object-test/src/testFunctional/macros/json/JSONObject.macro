@@ -606,8 +606,8 @@ definition {
 		return ${objectEntryId};
 	}
 
-	@summary = "Default summary"
-	macro addObjectValidation(validationType, objectName, labelName, fieldName = null) {
+	@summary = "Add partial or full object validations"
+	macro addObjectValidation(validationType, objectName, labelName, fieldName = null, isActive = null) {
 		Variables.assertDefined(parameterList = "${objectName},${labelName},${script},${validationType}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -629,6 +629,10 @@ definition {
 			var errorMessage = "Please enter a valid entry.";
 		}
 
+		if (!(isSet(isActive))) {
+			var isActive = "true";
+		}
+
 		var single_quote = "'";
 		var escape_quotes = "'\''";
 
@@ -644,7 +648,7 @@ definition {
 					-u ${userLoginInfo} \
 					-H Content-Type: application/json \
 					-d '{
-						"active": "true",
+						"active": "${isActive}",
 						"engine": "${validationType}",
 						"errorLabel": {
 							"en_US": "${errorMessage}"
@@ -670,7 +674,7 @@ definition {
 					-u ${userLoginInfo} \
 					-H Content-Type: application/json \
 					-d '{
-						"active": "true",
+						"active": "${isActive}",
 						"engine": "${validationType}",
 						"errorLabel": {
 							"en_US": "${errorMessage}"

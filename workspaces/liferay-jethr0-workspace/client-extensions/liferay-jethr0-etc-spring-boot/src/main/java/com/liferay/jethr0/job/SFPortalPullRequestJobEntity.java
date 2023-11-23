@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.job;
 
+import com.liferay.jethr0.util.StringUtil;
+
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -17,7 +19,15 @@ public class SFPortalPullRequestJobEntity
 
 	@Override
 	public String getTestSuiteName() {
-		return "sf";
+		String testSuiteName = super.getTestSuiteName();
+
+		if (StringUtil.isNullOrEmpty(testSuiteName)) {
+			testSuiteName = "sf";
+
+			setTestSuiteName(testSuiteName);
+		}
+
+		return testSuiteName;
 	}
 
 	protected SFPortalPullRequestJobEntity(JSONObject jsonObject) {

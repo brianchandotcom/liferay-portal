@@ -33,7 +33,8 @@ public class DefaultPortalPullRequestJobEntity
 	protected DefaultPortalPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_portalPullRequestURL = jsonObject.optString("portalPullRequestURL");
+		setPortalPullRequestURL(
+			StringUtil.toURL(jsonObject.optString("portalPullRequestURL")));
 
 		_testSuiteName = jsonObject.optString("testSuiteName");
 	}
@@ -44,11 +45,23 @@ public class DefaultPortalPullRequestJobEntity
 			super.getInitialBuildParameters();
 
 		initialBuildParamaters.put("CI_TEST_SUITE", getTestSuiteName());
+		initialBuildParamaters.put("GITHUB_ORIGIN_NAME", getOriginName());
 		initialBuildParamaters.put(
 			"GITHUB_PULL_REQUEST_NUMBER",
 			String.valueOf(_getPullRequestNumber()));
 		initialBuildParamaters.put(
 			"GITHUB_RECEIVER_USERNAME", _getPullRequestReceiverUserName());
+		initialBuildParamaters.put(
+			"GITHUB_SENDER_BRANCH_NAME", getSenderBranchName());
+		initialBuildParamaters.put(
+			"GITHUB_SENDER_BRANCH_SHA", getSenderBranchSHA());
+		initialBuildParamaters.put(
+			"GITHUB_SENDER_USERNAME", getSenderUserName());
+		initialBuildParamaters.put(
+			"GITHUB_UPSTREAM_BRANCH_NAME", getUpstreamBranchName());
+		initialBuildParamaters.put(
+			"GITHUB_UPSTREAM_BRANCH_SHA", getUpstreamBranchSHA());
+
 		initialBuildParamaters.put("TEST_PORTAL_BUILD_PROFILE", "dxp");
 
 		return initialBuildParamaters;
@@ -64,7 +77,8 @@ public class DefaultPortalPullRequestJobEntity
 			return _pullRequestNumber;
 		}
 
-		Matcher matcher = _pullRequestURLPattern.matcher(_portalPullRequestURL);
+		Matcher matcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getPortalPullRequestURL()));
 
 		if (matcher.find()) {
 			_pullRequestNumber = Long.valueOf(matcher.group("number"));
@@ -80,7 +94,8 @@ public class DefaultPortalPullRequestJobEntity
 			return _receiverUserName;
 		}
 
-		Matcher matcher = _pullRequestURLPattern.matcher(_portalPullRequestURL);
+		Matcher matcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getPortalPullRequestURL()));
 
 		if (matcher.find()) {
 			_receiverUserName = matcher.group("receiverUserName");
@@ -96,7 +111,6 @@ public class DefaultPortalPullRequestJobEntity
 			"https://github.com/(?<receiverUserName>[^/]+)/liferay-portal",
 			"/pull/(?<number>\\d+)"));
 
-	private final String _portalPullRequestURL;
 	private long _pullRequestNumber;
 	private String _receiverUserName;
 	private String _testSuiteName;

@@ -266,13 +266,6 @@
 				</li>
 			[/#if]
 
-			[#if hasApproveAction]
-				[#assign count = count + 1]
-				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callMDFClaimModal('approved')">
-					Approved
-				</li>
-			[/#if]
-
 			[#if hasClaimPaidAction]
 				[#assign count = count + 1]
 				<li class="dropdown-item" id="dropdownMDFClaimStatusItem" onclick="callClaimPaidModal('claimPaid')">

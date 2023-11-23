@@ -220,6 +220,8 @@ public class DropZoneFragmentEntryLinkListener
 		Map<String, FragmentDropZoneLayoutStructureItem>
 			fragmentDropZoneLayoutStructureItemsMap = new LinkedHashMap<>();
 
+		Map<String, String> dropZoneIdsReplaceValuesMap = new LinkedHashMap<>();
+
 		List<FragmentDropZoneLayoutStructureItem>
 			noExistingIdFragmentDropZoneLayoutStructureItems =
 				new LinkedList<>();
@@ -257,6 +259,20 @@ public class DropZoneFragmentEntryLinkListener
 					fragmentDropZoneId, fragmentDropZoneLayoutStructureItem);
 			}
 			else if (originalElementDropZoneIds.contains(fragmentDropZoneId)) {
+				int index = originalElementDropZoneIds.indexOf(
+					fragmentDropZoneId);
+
+				String dropZoneId = null;
+
+				if ((index >= 0) && (elementDropZoneIds.size() > index)) {
+					dropZoneId = elementDropZoneIds.get(index);
+				}
+
+				if (Validator.isNotNull(dropZoneId)) {
+					dropZoneIdsReplaceValuesMap.put(
+						dropZoneId, fragmentDropZoneId);
+				}
+
 				fragmentDropZoneLayoutStructureItemsMap.put(
 					fragmentDropZoneId, fragmentDropZoneLayoutStructureItem);
 			}
@@ -274,6 +290,17 @@ public class DropZoneFragmentEntryLinkListener
 			FragmentDropZoneLayoutStructureItem
 				fragmentDropZoneLayoutStructureItem =
 					fragmentDropZoneLayoutStructureItemsMap.remove(dropZoneId);
+
+			String dropZoneIdsReplaceValue = dropZoneIdsReplaceValuesMap.get(
+				dropZoneId);
+
+			if ((fragmentDropZoneLayoutStructureItem == null) &&
+				Validator.isNotNull(dropZoneIdsReplaceValue)) {
+
+				fragmentDropZoneLayoutStructureItem =
+					fragmentDropZoneLayoutStructureItemsMap.remove(
+						dropZoneIdsReplaceValue);
+			}
 
 			if (fragmentDropZoneLayoutStructureItem != null) {
 				String itemId = fragmentDropZoneLayoutStructureItem.getItemId();

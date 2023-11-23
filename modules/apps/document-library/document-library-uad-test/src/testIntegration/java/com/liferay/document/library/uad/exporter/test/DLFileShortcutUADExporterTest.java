@@ -65,11 +65,6 @@ public class DLFileShortcutUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "fileShortcutId";
-	}
-
-	@Override
 	protected UADExporter<DLFileShortcut> getUADExporter() {
 		return _uadExporter;
 	}

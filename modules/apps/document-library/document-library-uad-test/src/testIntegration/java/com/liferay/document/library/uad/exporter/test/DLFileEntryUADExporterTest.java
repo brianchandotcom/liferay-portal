@@ -106,11 +106,6 @@ public class DLFileEntryUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "fileEntryId";
-	}
-
-	@Override
 	protected UADExporter<DLFileEntry> getUADExporter() {
 		return _uadExporter;
 	}

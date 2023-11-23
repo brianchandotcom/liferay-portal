@@ -51,8 +51,7 @@
 							}
 						},
 						{
-							"defaultValue": {
-							},
+							"defaultValue": "",
 							"label": "query",
 							"name": "query",
 							"type": "json"

@@ -33,7 +33,7 @@
 				{
 					"fields": [
 						{
-							"defaultValue": [
+							"fieldMappings": [
 								{
 									"boost": 2.0,
 									"field": "localized_title",

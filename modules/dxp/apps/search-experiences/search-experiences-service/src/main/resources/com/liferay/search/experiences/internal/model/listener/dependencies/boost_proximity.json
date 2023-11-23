@@ -40,7 +40,7 @@
 				{
 					"fields": [
 						{
-							"defaultValue": [
+							"fieldMappings": [
 								{
 									"field": "expando__keyword__custom_fields__location_geolocation",
 									"locale": ""

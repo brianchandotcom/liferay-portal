@@ -45,11 +45,6 @@ public class LayoutUADExporterTest extends BaseUADExporterTestCase<Layout> {
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "plid";
-	}
-
-	@Override
 	protected UADExporter<Layout> getUADExporter() {
 		return _uadExporter;
 	}

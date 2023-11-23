@@ -55,11 +55,6 @@ public class LayoutFriendlyURLUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "layoutFriendlyURLId";
-	}
-
-	@Override
 	protected UADExporter<LayoutFriendlyURL> getUADExporter() {
 		return _uadExporter;
 	}

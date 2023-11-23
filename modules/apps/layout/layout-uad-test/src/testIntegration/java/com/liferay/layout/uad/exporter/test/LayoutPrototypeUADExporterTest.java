@@ -52,11 +52,6 @@ public class LayoutPrototypeUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "layoutPrototypeId";
-	}
-
-	@Override
 	protected UADExporter<LayoutPrototype> getUADExporter() {
 		return _uadExporter;
 	}

@@ -55,11 +55,6 @@ public class LayoutSetBranchUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "layoutSetBranchId";
-	}
-
-	@Override
 	protected UADExporter<LayoutSetBranch> getUADExporter() {
 		return _uadExporter;
 	}

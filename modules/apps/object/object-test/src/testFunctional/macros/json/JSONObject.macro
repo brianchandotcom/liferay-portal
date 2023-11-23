@@ -1083,7 +1083,7 @@ definition {
 		''';
 
 		if (${entryValue} == "") {
-			var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'])]['id']");
+			var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'] empty true)]['id']");
 		}
 		else {
 			var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");

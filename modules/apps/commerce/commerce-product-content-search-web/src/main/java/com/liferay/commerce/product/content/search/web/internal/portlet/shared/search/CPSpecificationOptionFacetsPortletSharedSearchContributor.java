@@ -108,7 +108,8 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 			portletSharedSearchSettings.addFacet(serializableFacet);
 
 			for (Facet facet :
-					getFacets(frequencyThreshold, maxTerms, renderRequest)) {
+					getFacets(
+						frequencyThreshold, maxSpecifications, renderRequest)) {
 
 				String cpSpecificationOptionKey =
 					CPSpecificationOptionFacetsUtil.

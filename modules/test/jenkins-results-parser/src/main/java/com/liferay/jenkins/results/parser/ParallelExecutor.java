@@ -511,7 +511,7 @@ public class ParallelExecutor<T> {
 			if (failedTaskCount > 0) {
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
-						String.valueOf(failedTaskCount), " task(s) failed."));
+						String.valueOf(failedTaskCount), " tasks failed."));
 			}
 		}
 

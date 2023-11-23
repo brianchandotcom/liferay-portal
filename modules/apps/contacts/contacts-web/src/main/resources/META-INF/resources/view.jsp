@@ -59,6 +59,7 @@ else {
 }
 %>
 
+<div class="container-fluid contacts-container">
 <c:choose>
 	<c:when test="<%= userPublicPage && (contactsCount <= 0) %>">
 		<clay:row>
@@ -764,3 +765,4 @@ else {
 		</aui:script>
 	</c:otherwise>
 </c:choose>
+</div>

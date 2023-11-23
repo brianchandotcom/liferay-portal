@@ -5,6 +5,9 @@
 			"externalReferenceCode": "ac1421ef-f4ab-f990-e162-57f80aadbee4",
 			"key": "newitem",
 			"name": "newitem",
+			"nameMap": {
+				"en-US": "newitem"
+			},
 			"name_i18n": {
 				"en-US": "newitem"
 			},
@@ -12,6 +15,9 @@
 		}
 	],
 	"name": "New Picklist",
+	"nameMap": {
+		"en-US": "New Picklist"
+	},
 	"name_i18n": {
 		"en-US": "New Picklist"
 	}

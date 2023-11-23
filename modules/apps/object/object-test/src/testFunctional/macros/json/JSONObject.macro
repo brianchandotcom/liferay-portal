@@ -717,6 +717,9 @@ definition {
 				-d '{
 					"externalReferenceCode": "${externalReferenceCode}",
 					"name": "${picklistName}",
+					"nameMap": {
+						"en_US": "${picklistName}"
+					},
 					"name_i18n": {
 						"en_US": "${picklistName}"
 					}
@@ -750,6 +753,9 @@ definition {
 				-d '{
 					"key": "${itemKey}",
 					"name": "${itemName}",
+					"nameMap": {
+						"en_US": "${itemName}"
+					},
 					"name_i18n": {
 						"en_US": "${itemName}"
 					}

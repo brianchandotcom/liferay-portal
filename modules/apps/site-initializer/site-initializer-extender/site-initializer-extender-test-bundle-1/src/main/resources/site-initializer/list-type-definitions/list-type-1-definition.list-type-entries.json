@@ -2,6 +2,9 @@
 	{
 		"key": "testlisttypeentry1",
 		"name": "Test List Type Entry 1",
+		"nameMap": {
+			"en-US": "Test List Type Entry 1"
+		},
 		"name_i18n": {
 			"en-US": "Test List Type Entry 1"
 		},
@@ -10,6 +13,9 @@
 	{
 		"key": "testlisttypeentry2",
 		"name": "Test List Type Entry 2",
+		"nameMap": {
+			"en-US": "Test List Type Entry 2"
+		},
 		"name_i18n": {
 			"en-US": "Test List Type Entry 2"
 		},

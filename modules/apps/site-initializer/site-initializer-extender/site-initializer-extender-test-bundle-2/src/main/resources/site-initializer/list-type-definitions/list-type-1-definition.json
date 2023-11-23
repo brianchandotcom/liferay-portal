@@ -1,6 +1,9 @@
 {
 	"externalReferenceCode": "TESTLISTTYPEDEFINITION1",
 	"name": "Test List Type Definition 1 Update",
+	"nameMap": {
+		"en-US": "Test List Type Definition 1 Update"
+	},
 	"name_i18n": {
 		"en-US": "Test List Type Definition 1 Update"
 	}

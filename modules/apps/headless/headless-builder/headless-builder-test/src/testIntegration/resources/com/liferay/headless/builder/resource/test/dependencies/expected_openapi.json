@@ -82,6 +82,13 @@
 					"name": {
 						"type": "string"
 					},
+					"nameMap": {
+						"additionalProperties": {
+							"type": "string"
+						},
+						"readOnly": true,
+						"type": "object"
+					},
 					"name_i18n": {
 						"additionalProperties": {
 							"type": "string"

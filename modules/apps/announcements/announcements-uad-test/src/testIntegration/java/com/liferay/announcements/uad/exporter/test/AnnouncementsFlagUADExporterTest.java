@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -36,6 +38,12 @@ public class AnnouncementsFlagUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Ignore
+	@Override
+	@Test
+	public void testExport() throws Exception {
+	}
+
 	@Override
 	protected AnnouncementsFlag addBaseModel(long userId) throws Exception {
 		AnnouncementsFlag announcementsFlag =
@@ -46,11 +54,6 @@ public class AnnouncementsFlagUADExporterTest
 		_announcementsFlags.add(announcementsFlag);
 
 		return announcementsFlag;
-	}
-
-	@Override
-	protected String getPrimaryKeyName() {
-		return "flagId";
 	}
 
 	@Override

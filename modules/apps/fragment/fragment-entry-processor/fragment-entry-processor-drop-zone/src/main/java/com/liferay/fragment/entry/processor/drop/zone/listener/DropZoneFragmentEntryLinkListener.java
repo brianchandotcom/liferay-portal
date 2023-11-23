@@ -303,6 +303,17 @@ public class DropZoneFragmentEntryLinkListener
 			}
 
 			if (fragmentDropZoneLayoutStructureItem != null) {
+				if (!Objects.equals(
+						dropZoneId,
+						fragmentDropZoneLayoutStructureItem.
+							getFragmentDropZoneId())) {
+
+					fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(
+						dropZoneId);
+
+					update = true;
+				}
+
 				String itemId = fragmentDropZoneLayoutStructureItem.getItemId();
 
 				if (index != childrenItemIds.indexOf(itemId)) {

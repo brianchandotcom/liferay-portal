@@ -66,7 +66,7 @@ function FieldOperator({
 		<>
 			<Timeline.FormGroupItem>
 				<FieldStateless
-					id="field-operator-id-test"
+					id="field-operator-id"
 					onChange={(event) => {
 						const operator = event.value[0];
 
@@ -91,7 +91,7 @@ function FieldOperator({
 			{isBinaryOperator(operator) && left.type !== 'user' && (
 				<Timeline.FormGroupItem>
 					<FieldStateless
-						id="field-binary-operator-id-test"
+						id="field-binary-operator-id"
 						onChange={(event) =>
 							onChange({
 								payload: event.value[0],
@@ -144,7 +144,7 @@ function FieldLeft({
 						value: 'user',
 					},
 				]}
-				id="field-left-id-test"
+				id="field-left-id"
 				onChange={onChange}
 				onSelectionChange={(itemKey) => {
 					setFieldLeftSelectedKeys(itemKey, index);
@@ -238,7 +238,7 @@ function FieldRight({fields, left, right, roles, ...otherProps}) {
 				{...otherProps}
 				{...props}
 				dataType={left.field?.dataType}
-				id="field-right-id-test"
+				id="field-right-id"
 				showEmptyOption={false}
 				type={
 					left.type === 'user'

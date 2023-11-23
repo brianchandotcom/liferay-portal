@@ -1933,7 +1933,7 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"search", "en_US"
 			).build(),
-			childObjectEntry1,childObjectEntry2);
+			childObjectEntry1, childObjectEntry2);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"search", "pt_BR"

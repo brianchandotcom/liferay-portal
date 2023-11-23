@@ -8,6 +8,8 @@ package com.liferay.document.library.repository.cmis.internal;
 import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
 import com.liferay.document.library.repository.cmis.Session;
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -62,23 +64,14 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 			SessionParameter.USER, login
 		).build();
 
-		Thread thread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				CMISAtomPubRepository.class.getClassLoader())) {
 
-		ClassLoader contextClassLoader = thread.getContextClassLoader();
-
-		Class<?> clazz = getClass();
-
-		thread.setContextClassLoader(clazz.getClassLoader());
-
-		try {
 			CMISRepositoryUtil.checkRepository(
 				getRepositoryId(), parameters, getTypeSettingsProperties(),
 				CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER);
 
 			return CMISRepositoryUtil.createSession(parameters);
-		}
-		finally {
-			thread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

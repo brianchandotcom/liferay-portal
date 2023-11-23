@@ -5,6 +5,8 @@
 
 package com.liferay.saml.web.internal.struts;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
@@ -36,14 +38,10 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 			WebKeys.RESOURCE_BUNDLE_LOADER,
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
-		Thread currentThread = Thread.currentThread();
+		Class<? extends BaseSamlStrutsAction> clazz = getClass();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			Class<? extends BaseSamlStrutsAction> clazz = getClass();
-
-			currentThread.setContextClassLoader(clazz.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				clazz.getClassLoader())) {
 
 			return doExecute(httpServletRequest, httpServletResponse);
 		}
@@ -55,9 +53,9 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 				_log.error(exception);
 			}
 
-			Class<?> clazz = exception.getClass();
+			Class<?> exceptionClass = exception.getClass();
 
-			SessionErrors.add(httpServletRequest, clazz.getName());
+			SessionErrors.add(httpServletRequest, exceptionClass.getName());
 
 			if (exception instanceof StatusException) {
 				StatusException statusException = (StatusException)exception;
@@ -70,9 +68,6 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 			JspUtil.dispatch(
 				httpServletRequest, httpServletResponse,
 				JspUtil.PATH_PORTAL_SAML_ERROR, "status");
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		return null;

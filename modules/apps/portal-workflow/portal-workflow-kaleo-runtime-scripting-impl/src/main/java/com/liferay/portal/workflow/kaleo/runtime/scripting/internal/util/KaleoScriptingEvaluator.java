@@ -5,6 +5,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -33,24 +35,13 @@ public class KaleoScriptingEvaluator {
 		Map<String, Object> inputObjects =
 			_scriptingContextBuilder.buildScriptingContext(executionContext);
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		Map<String, Object> results = null;
 
-		try {
-			currentThread.setContextClassLoader(classLoader);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				KaleoScriptingEvaluator.class.getClassLoader())) {
 
 			results = _scripting.eval(
 				null, inputObjects, outputObjects, scriptLanguage, script);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		Map<String, Serializable> resultsWorkflowContext =

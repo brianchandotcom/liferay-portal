@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.bean;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -30,23 +32,10 @@ public class PortalBeanLocatorUtil {
 			throw new BeanLocatorException("BeanLocator is not set");
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		ClassLoader beanClassLoader = beanLocator.getClassLoader();
-
-		try {
-			if (contextClassLoader != beanClassLoader) {
-				currentThread.setContextClassLoader(beanClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				beanLocator.getClassLoader())) {
 
 			return beanLocator.locate(clazz);
-		}
-		finally {
-			if (contextClassLoader != beanClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 
@@ -59,23 +48,10 @@ public class PortalBeanLocatorUtil {
 			throw new BeanLocatorException("BeanLocator is not set");
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		ClassLoader beanClassLoader = beanLocator.getClassLoader();
-
-		try {
-			if (contextClassLoader != beanClassLoader) {
-				currentThread.setContextClassLoader(beanClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				beanLocator.getClassLoader())) {
 
 			return beanLocator.locate(name);
-		}
-		finally {
-			if (contextClassLoader != beanClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

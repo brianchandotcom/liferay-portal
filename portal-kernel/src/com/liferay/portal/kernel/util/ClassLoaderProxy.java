@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -46,8 +48,8 @@ public class ClassLoaderProxy {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		try {
-			currentThread.setContextClassLoader(_classLoader);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
 
 			return _invoke(methodHandler);
 		}
@@ -59,9 +61,6 @@ public class ClassLoaderProxy {
 			_log.error(throwable, throwable);
 
 			throw throwable;
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

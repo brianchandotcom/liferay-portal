@@ -5,6 +5,8 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -102,12 +104,8 @@ public class WabBundleProcessor {
 	}
 
 	public void destroy() throws Exception {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(_bundleClassLoader);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_bundleClassLoader)) {
 
 			_destroyServlets();
 
@@ -118,18 +116,11 @@ public class WabBundleProcessor {
 			_bundleContext.ungetService(
 				_servletContextHelperRegistrationServiceReference);
 		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
 	}
 
 	public void init(Dictionary<String, Object> properties) throws Exception {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(_bundleClassLoader);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_bundleClassLoader)) {
 
 			ServletContextHelperRegistration servletContextHelperRegistration =
 				_initContext();
@@ -244,9 +235,6 @@ public class WabBundleProcessor {
 			destroy();
 
 			throw exception;
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

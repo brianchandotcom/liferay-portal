@@ -5,6 +5,8 @@
 
 package com.liferay.saml.opensaml.integration.internal.velocity;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringPool;
 
 import org.apache.velocity.app.VelocityEngine;
@@ -24,13 +26,8 @@ public class VelocityEngineFactory {
 	private static final VelocityEngine _velocityEngine;
 
 	static {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				VelocityEngineFactory.class.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				VelocityEngineFactory.class.getClassLoader())) {
 
 			VelocityEngine velocityEngine = new VelocityEngine();
 
@@ -59,9 +56,6 @@ public class VelocityEngineFactory {
 		}
 		catch (Exception exception) {
 			throw new ExceptionInInitializerError(exception);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

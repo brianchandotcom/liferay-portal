@@ -15,6 +15,8 @@ import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycle
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -73,18 +75,13 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 		clearBackgroundTaskStatus(backgroundTask);
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		File file = null;
 		HttpPrincipal httpPrincipal = null;
 		MissingReferences missingReferences = null;
 		long stagingRequestId = 0L;
 
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
@@ -177,8 +174,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			throw new SystemException(throwable);
 		}
 		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-
 			if ((stagingRequestId > 0) && (httpPrincipal != null)) {
 				try {
 					StagingServiceHttp.cleanUpStagingRequest(

@@ -7,6 +7,8 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
@@ -193,20 +195,19 @@ public class AspectJNewEnvTestRule extends NewEnvTestRule {
 						ClassPathUtil.getJVMClassPath(true)),
 					aspectClasses, _dumpDir);
 
-				currentThread.setContextClassLoader(weavingClassLoader);
+				try (SafeCloseable safeCloseable =
+						ThreadContextClassLoaderUtil.swap(weavingClassLoader)) {
 
-				Deserializer deserializer = new Deserializer(
-					ByteBuffer.wrap(_encodedProcessCallable));
+					Deserializer deserializer = new Deserializer(
+						ByteBuffer.wrap(_encodedProcessCallable));
 
-				return ReflectionTestUtil.invoke(
-					(ProcessCallable)deserializer.readObject(), "call",
-					new Class<?>[0]);
+					return ReflectionTestUtil.invoke(
+						(ProcessCallable)deserializer.readObject(), "call",
+						new Class<?>[0]);
+				}
 			}
 			catch (Exception exception) {
 				throw new ProcessException(exception);
-			}
-			finally {
-				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 

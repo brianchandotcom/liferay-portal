@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.antisamy.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -105,14 +107,9 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 			return content;
 		}
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				AntiSamySanitizerImpl.class.getClassLoader())) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			AntiSamySanitizerImpl.class.getClassLoader());
-
-		try {
 			CleanResults cleanResults = null;
 
 			AntiSamy antiSamy = new AntiSamy();
@@ -138,9 +135,6 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 			_log.error("Unable to sanitize input", exception);
 
 			throw new SanitizerException(exception);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

@@ -5,6 +5,9 @@
 
 package com.liferay.portal.kernel.events;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+
 import javax.servlet.http.HttpSession;
 
 /**
@@ -25,17 +28,10 @@ public class InvokerSessionAction extends SessionAction {
 
 	@Override
 	public void run(HttpSession httpSession) throws ActionException {
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(_classLoader);
-
-		try {
 			_sessionAction.run(httpSession);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

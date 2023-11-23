@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -285,12 +287,10 @@ public class InvokerFilterHelper {
 			(ClassLoader)servletContext.getAttribute(
 				PluginContextListener.PLUGIN_CLASS_LOADER);
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		if (pluginClassLoader == null) {
-			pluginClassLoader = contextClassLoader;
+			Thread currentThread = Thread.currentThread();
+
+			pluginClassLoader = currentThread.getContextClassLoader();
 		}
 
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
@@ -300,11 +300,9 @@ public class InvokerFilterHelper {
 				portalClassLoader, pluginClassLoader);
 		}
 
-		if (contextClassLoader != pluginClassLoader) {
-			currentThread.setContextClassLoader(pluginClassLoader);
-		}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				pluginClassLoader)) {
 
-		try {
 			Filter filter = (Filter)InstanceFactory.newInstance(
 				pluginClassLoader, filterClassName);
 
@@ -317,11 +315,6 @@ public class InvokerFilterHelper {
 				"Unable to initialize filter " + filterClassName, exception);
 
 			return null;
-		}
-		finally {
-			if (contextClassLoader != pluginClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

@@ -13,6 +13,8 @@ import com.liferay.document.library.repository.cmis.configuration.CMISRepository
 import com.liferay.document.library.repository.cmis.search.BaseCmisSearchQueryBuilder;
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockManager;
@@ -38,20 +40,12 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 	public LocalRepository createLocalRepository(long repositoryId)
 		throws PortalException {
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				BaseCMISRepositoryFactory.class.getClassLoader())) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			BaseCMISRepositoryFactory.class.getClassLoader());
-
-		try {
 			BaseRepository baseRepository = createBaseRepository(repositoryId);
 
 			return baseRepository.getLocalRepository();
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

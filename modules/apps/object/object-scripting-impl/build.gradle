@@ -4,4 +4,5 @@ dependencies {
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-scripting-api")
 	compileOnly project(":apps:portal-scripting:portal-scripting-api")
+	compileOnly project(":core:petra:petra-lang")
 }

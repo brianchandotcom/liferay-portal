@@ -5,6 +5,8 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -144,19 +146,12 @@ public class JspServlet extends HttpServlet {
 			throw new IllegalStateException();
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(classLoader);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				classLoader)) {
 
 			JspFactory.setDefaultFactory(new JspFactoryImpl());
 
 			JspFactorySwapper.swap();
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		List<Bundle> bundles = new ArrayList<>();
@@ -282,12 +277,8 @@ public class JspServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(_jspBundleClassloader);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_jspBundleClassloader)) {
 
 			if (_logVerbosityLevelDebug) {
 				String path = (String)httpServletRequest.getAttribute(
@@ -317,9 +308,6 @@ public class JspServlet extends HttpServlet {
 			}
 
 			_jspServlet.service(httpServletRequest, httpServletResponse);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

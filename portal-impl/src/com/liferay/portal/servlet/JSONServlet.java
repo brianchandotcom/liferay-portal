@@ -5,6 +5,8 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.action.JSONServiceAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,19 +57,11 @@ public class JSONServlet extends HttpServlet {
 					null, httpServletRequest, httpServletResponse);
 			}
 			else {
-				Thread currentThread = Thread.currentThread();
-
-				ClassLoader contextClassLoader =
-					currentThread.getContextClassLoader();
-
-				try {
-					currentThread.setContextClassLoader(_pluginClassLoader);
+				try (SafeCloseable safeCloseable =
+						ThreadContextClassLoaderUtil.swap(_pluginClassLoader)) {
 
 					_jsonAction.execute(
 						null, httpServletRequest, httpServletResponse);
-				}
-				finally {
-					currentThread.setContextClassLoader(contextClassLoader);
 				}
 			}
 		}

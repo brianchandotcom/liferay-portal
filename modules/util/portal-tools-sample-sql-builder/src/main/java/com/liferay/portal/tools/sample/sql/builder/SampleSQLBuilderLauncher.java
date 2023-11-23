@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -44,15 +46,13 @@ public class SampleSQLBuilderLauncher {
 		ClassLoader classLoader = new URLClassLoader(
 			_getURLs(contextClassLoader, tempDir.toPath()), null);
 
-		currentThread.setContextClassLoader(classLoader);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				classLoader)) {
 
-		try {
 			InstanceFactory.newInstance(
 				classLoader, SampleSQLBuilder.class.getName());
 		}
 		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-
 			FileUtil.deltree(tempDir);
 		}
 	}

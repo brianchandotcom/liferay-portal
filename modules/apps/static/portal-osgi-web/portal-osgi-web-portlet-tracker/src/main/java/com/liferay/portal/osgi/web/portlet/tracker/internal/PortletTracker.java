@@ -7,6 +7,8 @@ package com.liferay.portal.osgi.web.portlet.tracker.internal;
 
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -386,16 +388,12 @@ public class PortletTracker
 
 		ClassLoader bundleClassLoader = bundleWiring.getClassLoader();
 
-		Thread thread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = thread.getContextClassLoader();
-
-		thread.setContextClassLoader(bundleWiring.getClassLoader());
-
 		ServiceRegistrations serviceRegistrations = _getServiceRegistrations(
 			bundle);
 
-		try {
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				bundleWiring.getClassLoader())) {
+
 			PortletApp portletApp = _createBundlePortletApp(
 				bundle, bundleClassLoader, serviceRegistrations);
 
@@ -485,9 +483,6 @@ public class PortletTracker
 				exception);
 
 			return null;
-		}
-		finally {
-			thread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

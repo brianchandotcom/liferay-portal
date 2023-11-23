@@ -7,6 +7,8 @@ package com.liferay.saml.internal.scheduler;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -106,13 +108,8 @@ public class SamlMetadataSchedulerJobConfiguration
 	}
 
 	private void _updateMetadata(long companyId) {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				SamlMetadataSchedulerJobConfiguration.class.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				SamlMetadataSchedulerJobConfiguration.class.getClassLoader())) {
 
 			if (!_samlProviderConfigurationHelper.isEnabled()) {
 				return;
@@ -138,9 +135,6 @@ public class SamlMetadataSchedulerJobConfiguration
 					_log.warn(msg);
 				}
 			}
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

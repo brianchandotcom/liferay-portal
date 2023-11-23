@@ -5,6 +5,8 @@
 
 package com.liferay.portal.remote.soap.extender.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.remote.soap.extender.SoapDescriptorBuilder;
 
 import java.util.ArrayList;
@@ -42,17 +44,10 @@ public class CXFJaxWsServiceRegistrator {
 
 		Class<?> clazz = service.getClass();
 
-		Thread thread = Thread.currentThread();
-
-		ClassLoader classLoader = thread.getContextClassLoader();
-
-		try {
-			thread.setContextClassLoader(clazz.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				clazz.getClassLoader())) {
 
 			_addService(properties, service);
-		}
-		finally {
-			thread.setContextClassLoader(classLoader);
 		}
 	}
 
@@ -214,17 +209,10 @@ public class CXFJaxWsServiceRegistrator {
 	private <T> void _swapClassLoader(T t, Consumer<T> consumer) {
 		Class<?> clazz = t.getClass();
 
-		Thread thread = Thread.currentThread();
-
-		ClassLoader classLoader = thread.getContextClassLoader();
-
-		try {
-			thread.setContextClassLoader(clazz.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				clazz.getClassLoader())) {
 
 			consumer.accept(t);
-		}
-		finally {
-			thread.setContextClassLoader(classLoader);
 		}
 	}
 

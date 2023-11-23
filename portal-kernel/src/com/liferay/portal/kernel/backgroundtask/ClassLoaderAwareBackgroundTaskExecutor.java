@@ -5,6 +5,9 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+
 /**
  * @author Michael C. Han
  */
@@ -30,24 +33,13 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (_classLoader != contextClassLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
 			BackgroundTaskExecutor backgroundTaskExecutor =
 				getBackgroundTaskExecutor();
 
 			return backgroundTaskExecutor.execute(backgroundTask);
-		}
-		finally {
-			if (_classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

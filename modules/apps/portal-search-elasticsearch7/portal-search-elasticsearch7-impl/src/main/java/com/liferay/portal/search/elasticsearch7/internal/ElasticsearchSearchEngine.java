@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch7.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -247,14 +249,9 @@ public class ElasticsearchSearchEngine
 	protected void activate(Map<String, Object> properties) {
 		_elasticsearchConfigurationWrapper.register(this);
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				ElasticsearchSearchEngine.class.getClassLoader())) {
 
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			ElasticsearchSearchEngine.class.getClassLoader());
-
-		try {
 			_checkNodeVersions();
 
 			if (StartupHelperUtil.isDBNew()) {
@@ -266,9 +263,6 @@ public class ElasticsearchSearchEngine
 			_putTimestampPipeline();
 
 			initialize(CompanyConstants.SYSTEM);
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

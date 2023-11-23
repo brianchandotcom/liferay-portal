@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.io.IOException;
@@ -48,22 +50,15 @@ public class ClassLoaderRequestDispatcherWrapper implements RequestDispatcher {
 			boolean include)
 		throws IOException, ServletException {
 
-		Thread currentThread = Thread.currentThread();
+		ClassLoader classLoader = (ClassLoader)_servletContext.getAttribute(
+			PluginContextListener.PLUGIN_CLASS_LOADER);
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		if (classLoader == null) {
+			classLoader = PortalClassLoaderUtil.getClassLoader();
+		}
 
-		ClassLoader pluginClassLoader =
-			(ClassLoader)_servletContext.getAttribute(
-				PluginContextListener.PLUGIN_CLASS_LOADER);
-
-		try {
-			if (pluginClassLoader == null) {
-				currentThread.setContextClassLoader(
-					PortalClassLoaderUtil.getClassLoader());
-			}
-			else {
-				currentThread.setContextClassLoader(pluginClassLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				classLoader)) {
 
 			if (include) {
 				_requestDispatcher.include(servletRequest, servletResponse);
@@ -71,9 +66,6 @@ public class ClassLoaderRequestDispatcherWrapper implements RequestDispatcher {
 			else {
 				_requestDispatcher.forward(servletRequest, servletResponse);
 			}
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

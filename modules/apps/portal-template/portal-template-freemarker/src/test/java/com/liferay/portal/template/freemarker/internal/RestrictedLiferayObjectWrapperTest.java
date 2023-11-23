@@ -6,6 +6,7 @@
 package com.liferay.portal.template.freemarker.internal;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -183,22 +184,15 @@ public class RestrictedLiferayObjectWrapperTest
 
 	@Test
 	public void testIsRestrictedWithNoContextClassloader() {
-		Thread thread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				null)) {
 
-		ClassLoader contextClassLoader = thread.getContextClassLoader();
-
-		thread.setContextClassLoader(null);
-
-		try {
 			Assert.assertFalse(
 				_isRestricted(
 					new RestrictedLiferayObjectWrapper(
 						new String[] {TestLiferayObject.class.getName()},
 						new String[] {TestLiferayObject.class.getName()}, null),
 					TestLiferayObject.class));
-		}
-		finally {
-			thread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

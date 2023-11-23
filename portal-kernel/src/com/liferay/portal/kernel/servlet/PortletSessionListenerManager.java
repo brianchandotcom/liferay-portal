@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 
@@ -144,23 +146,14 @@ public class PortletSessionListenerManager
 
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
-		Thread currentThread = Thread.currentThread();
+		for (HttpSessionListener httpSessionListener : _httpSessionListeners) {
+			Class<?> clazz = httpSessionListener.getClass();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			for (HttpSessionListener httpSessionListener :
-					_httpSessionListeners) {
-
-				Class<?> clazz = httpSessionListener.getClass();
-
-				currentThread.setContextClassLoader(clazz.getClassLoader());
+			try (SafeCloseable safeCloseable =
+					ThreadContextClassLoaderUtil.swap(clazz.getClassLoader())) {
 
 				httpSessionListener.sessionCreated(httpSessionEvent);
 			}
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

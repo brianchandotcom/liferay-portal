@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.util;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+
 import java.util.function.Supplier;
 
 /**
@@ -15,17 +18,10 @@ public class ClassLoaderUtil {
 	public static <T> T getWithContextClassLoader(
 		Supplier<T> supplier, Class<?> clazz) {
 
-		Thread thread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				clazz.getClassLoader())) {
 
-		ClassLoader contextClassLoader = thread.getContextClassLoader();
-
-		thread.setContextClassLoader(clazz.getClassLoader());
-
-		try {
 			return supplier.get();
-		}
-		finally {
-			thread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

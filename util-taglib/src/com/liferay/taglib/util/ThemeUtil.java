@@ -8,6 +8,8 @@ package com.liferay.taglib.util;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
@@ -91,27 +93,12 @@ public class ThemeUtil {
 				PluginContextListener.PLUGIN_CLASS_LOADER);
 		}
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				pluginClassLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if ((pluginClassLoader != null) &&
-			(pluginClassLoader != contextClassLoader)) {
-
-			currentThread.setContextClassLoader(pluginClassLoader);
-		}
-
-		try {
 			return doIncludeFTL(
 				servletContext, httpServletRequest, httpServletResponse, path,
 				theme, false, write);
-		}
-		finally {
-			if ((pluginClassLoader != null) &&
-				(pluginClassLoader != contextClassLoader)) {
-
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

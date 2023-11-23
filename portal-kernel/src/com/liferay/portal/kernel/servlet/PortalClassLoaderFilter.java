@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterChain;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
@@ -49,9 +51,8 @@ public class PortalClassLoaderFilter
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			FilterChain contextClassLoaderFilterChain =
 				_filterChainProxyProviderFunction.apply(
@@ -66,9 +67,6 @@ public class PortalClassLoaderFilter
 			invokerFilterChain.addFilter(_filter);
 
 			invokerFilterChain.doFilter(servletRequest, servletResponse);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -110,18 +108,10 @@ public class PortalClassLoaderFilter
 
 	@Override
 	protected void doPortalDestroy() {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			_filter.destroy();
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

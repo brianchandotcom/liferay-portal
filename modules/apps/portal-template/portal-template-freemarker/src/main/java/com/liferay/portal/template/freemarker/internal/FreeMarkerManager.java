@@ -11,6 +11,8 @@ import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.executor.PortalExecutorConfig;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -379,9 +381,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				(Callable<Void>)() -> {
 					Thread thread = Thread.currentThread();
 
-					thread.setContextClassLoader(contextClassLoader);
+					try (SafeCloseable safeCloseable =
+							ThreadContextClassLoaderUtil.swap(
+								contextClassLoader)) {
 
-					try {
 						ThreadLocalUtil._setThreadLocals(thread, threadLocals);
 
 						callable.call();
@@ -932,19 +935,11 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			TemplateModel templateModel = _templateModels.get(uri);
 
 			if (templateModel == null) {
-				Thread currentThread = Thread.currentThread();
-
-				ClassLoader contextClassLoader =
-					currentThread.getContextClassLoader();
-
-				try {
-					currentThread.setContextClassLoader(
-						_freeMarkerBundleClassloader);
+				try (SafeCloseable safeCloseable =
+						ThreadContextClassLoaderUtil.swap(
+							_freeMarkerBundleClassloader)) {
 
 					templateModel = _taglibFactory.get(uri);
-				}
-				finally {
-					currentThread.setContextClassLoader(contextClassLoader);
 				}
 
 				_templateModels.put(uri, templateModel);

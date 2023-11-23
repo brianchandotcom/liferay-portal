@@ -6,6 +6,8 @@
 package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -210,15 +212,9 @@ public class VelocityManager extends BaseTemplateManager {
 			return;
 		}
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				VelocityManager.class.getClassLoader())) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?> clazz = getClass();
-
-		currentThread.setContextClassLoader(clazz.getClassLoader());
-
-		try {
 			_velocityEngine = new VelocityEngine();
 
 			ExtendedProperties extendedProperties =
@@ -297,7 +293,8 @@ public class VelocityManager extends BaseTemplateManager {
 				RuntimeConstants.UBERSPECT_CLASSNAME,
 				LiferaySecureUberspector.class.getName());
 			extendedProperties.setProperty(
-				VelocityEngine.VM_LIBRARY, _getVelocimacroLibrary(clazz));
+				VelocityEngine.VM_LIBRARY,
+				_getVelocimacroLibrary(VelocityManager.class));
 			extendedProperties.setProperty(
 				VelocityEngine.VM_LIBRARY_AUTORELOAD,
 				String.valueOf(!cacheEnabled));
@@ -311,9 +308,6 @@ public class VelocityManager extends BaseTemplateManager {
 		}
 		catch (Exception exception) {
 			throw new TemplateException(exception);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

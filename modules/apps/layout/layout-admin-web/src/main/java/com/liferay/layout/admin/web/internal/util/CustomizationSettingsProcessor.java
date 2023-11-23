@@ -5,6 +5,8 @@
 
 package com.liferay.layout.admin.web.internal.util;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.CustomizedPages;
@@ -44,20 +46,12 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			_pageContext = jspFactory.getPageContext(
 				new JSPSupportServlet(httpServletRequest.getServletContext()),
 				httpServletRequest, httpServletResponse, null, false, 0, false);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		_writer = _pageContext.getOut();

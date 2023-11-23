@@ -6,6 +6,8 @@
 package com.liferay.saml.internal.scheduler;
 
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
@@ -32,20 +34,13 @@ public class SamlSpAuthRequestSchedulerJobConfiguration
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> {
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader classLoader = currentThread.getContextClassLoader();
-
-			try {
-				currentThread.setContextClassLoader(
-					SamlSpAuthRequestSchedulerJobConfiguration.class.
-						getClassLoader());
+			try (SafeCloseable safeCloseable =
+					ThreadContextClassLoaderUtil.swap(
+						SamlSpAuthRequestSchedulerJobConfiguration.class.
+							getClassLoader())) {
 
 				_samlSpAuthRequestLocalService.
 					deleteExpiredSamlSpAuthRequests();
-			}
-			finally {
-				currentThread.setContextClassLoader(classLoader);
 			}
 		};
 	}

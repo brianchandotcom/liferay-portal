@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -136,21 +138,13 @@ public class PluginContextListener
 	protected void doPortalDestroy() throws Exception {
 		PluginContextLifecycleThreadLocal.setDestroying(true);
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				pluginClassLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != pluginClassLoader) {
-			currentThread.setContextClassLoader(pluginClassLoader);
-		}
-
-		try {
 			fireUndeployEvent();
 		}
 		finally {
 			PluginContextLifecycleThreadLocal.setDestroying(false);
-
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -158,21 +152,13 @@ public class PluginContextListener
 	protected void doPortalInit() throws Exception {
 		PluginContextLifecycleThreadLocal.setInitializing(true);
 
-		Thread currentThread = Thread.currentThread();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				pluginClassLoader)) {
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != pluginClassLoader) {
-			currentThread.setContextClassLoader(pluginClassLoader);
-		}
-
-		try {
 			fireDeployEvent();
 		}
 		finally {
 			PluginContextLifecycleThreadLocal.setInitializing(false);
-
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

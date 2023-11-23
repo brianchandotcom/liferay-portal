@@ -5,6 +5,8 @@
 
 package com.liferay.portal.xml;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -304,18 +306,8 @@ public class SAXReaderImpl implements SAXReader {
 
 	@Override
 	public Document read(File file, boolean validate) throws DocumentException {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(classLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				SAXReaderImpl.class.getClassLoader())) {
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
 
@@ -324,11 +316,6 @@ public class SAXReaderImpl implements SAXReader {
 		catch (org.dom4j.DocumentException documentException) {
 			throw new DocumentException(
 				documentException.getMessage(), documentException);
-		}
-		finally {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 
@@ -341,18 +328,8 @@ public class SAXReaderImpl implements SAXReader {
 	public Document read(InputStream inputStream, boolean validate)
 		throws DocumentException {
 
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(classLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				SAXReaderImpl.class.getClassLoader())) {
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
 
@@ -361,11 +338,6 @@ public class SAXReaderImpl implements SAXReader {
 		catch (org.dom4j.DocumentException documentException) {
 			throw new DocumentException(
 				documentException.getMessage(), documentException);
-		}
-		finally {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 
@@ -378,18 +350,8 @@ public class SAXReaderImpl implements SAXReader {
 	public Document read(Reader reader, boolean validate)
 		throws DocumentException {
 
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(classLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				SAXReaderImpl.class.getClassLoader())) {
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
 
@@ -398,11 +360,6 @@ public class SAXReaderImpl implements SAXReader {
 		catch (org.dom4j.DocumentException documentException) {
 			throw new DocumentException(
 				documentException.getMessage(), documentException);
-		}
-		finally {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 
@@ -422,18 +379,8 @@ public class SAXReaderImpl implements SAXReader {
 	public Document read(String xml, XMLSchema xmlSchema)
 		throws DocumentException {
 
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(classLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				SAXReaderImpl.class.getClassLoader())) {
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(xmlSchema);
 
@@ -445,11 +392,6 @@ public class SAXReaderImpl implements SAXReader {
 			throw new DocumentException(
 				documentException.getMessage(), documentException);
 		}
-		finally {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
 	}
 
 	@Override
@@ -459,18 +401,8 @@ public class SAXReaderImpl implements SAXReader {
 
 	@Override
 	public Document read(URL url, boolean validate) throws DocumentException {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(classLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				SAXReaderImpl.class.getClassLoader())) {
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
 
@@ -479,11 +411,6 @@ public class SAXReaderImpl implements SAXReader {
 		catch (org.dom4j.DocumentException documentException) {
 			throw new DocumentException(
 				documentException.getMessage(), documentException);
-		}
-		finally {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

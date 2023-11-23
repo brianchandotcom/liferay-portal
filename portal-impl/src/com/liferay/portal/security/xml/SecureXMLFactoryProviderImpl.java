@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.xml;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -111,30 +113,15 @@ public class SecureXMLFactoryProviderImpl implements SecureXMLFactoryProvider {
 
 	@Override
 	public XMLReader newXMLReader() {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		XMLReader xmlReader = null;
 
-		try {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(classLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				SecureXMLFactoryProviderImpl.class.getClassLoader())) {
 
 			xmlReader = new SAXParser();
 		}
 		catch (RuntimeException runtimeException) {
 			throw new SystemException(runtimeException);
-		}
-		finally {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 
 		if (!PropsValues.XML_SECURITY_ENABLED) {

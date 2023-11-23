@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.deploy.hot;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -178,27 +180,27 @@ public class HotDeployUtil {
 
 			_dependentHotDeployEvents.remove(hotDeployEvent);
 
-			ClassLoader contextClassLoader = _getContextClassLoader();
-
-			try {
-				_setContextClassLoader(PortalClassLoaderUtil.getClassLoader());
+			try (SafeCloseable safeCloseable1 =
+					ThreadContextClassLoaderUtil.swap(
+						PortalClassLoaderUtil.getClassLoader())) {
 
 				List<HotDeployEvent> dependentEvents = new ArrayList<>(
 					_dependentHotDeployEvents);
 
 				for (HotDeployEvent dependentEvent : dependentEvents) {
-					_setContextClassLoader(
-						dependentEvent.getContextClassLoader());
+					try (SafeCloseable safeCloseable2 =
+							ThreadContextClassLoaderUtil.swap(
+								dependentEvent.getContextClassLoader())) {
 
-					_fireDeployEvent(dependentEvent);
+						_fireDeployEvent(dependentEvent);
 
-					if (!_dependentHotDeployEvents.contains(dependentEvent)) {
-						dependentEvent.flushInits();
+						if (!_dependentHotDeployEvents.contains(
+								dependentEvent)) {
+
+							dependentEvent.flushInits();
+						}
 					}
 				}
-			}
-			finally {
-				_setContextClassLoader(contextClassLoader);
 			}
 		}
 		else {
@@ -230,12 +232,6 @@ public class HotDeployUtil {
 		}
 	}
 
-	private static ClassLoader _getContextClassLoader() {
-		Thread currentThread = Thread.currentThread();
-
-		return currentThread.getContextClassLoader();
-	}
-
 	private static String _getRequiredServletContextNames(
 		HotDeployEvent hotDeployEvent) {
 
@@ -254,12 +250,6 @@ public class HotDeployUtil {
 		Collections.sort(requiredServletContextNames);
 
 		return StringUtil.merge(requiredServletContextNames, ", ");
-	}
-
-	private static void _setContextClassLoader(ClassLoader contextClassLoader) {
-		Thread currentThread = Thread.currentThread();
-
-		currentThread.setContextClassLoader(contextClassLoader);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(HotDeployUtil.class);

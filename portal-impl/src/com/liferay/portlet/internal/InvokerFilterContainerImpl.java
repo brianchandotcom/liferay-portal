@@ -7,6 +7,8 @@ package com.liferay.portlet.internal;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -226,13 +228,8 @@ public class InvokerFilterContainerImpl
 			_serviceRegistrationTuples.add(serviceRegistrationTuple);
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
 
 			for (String portletFilterClassName :
 					PropsValues.PORTLET_FILTERS_SYSTEM) {
@@ -255,9 +252,6 @@ public class InvokerFilterContainerImpl
 					new ServiceRegistrationTuple(
 						portletFilterModel, serviceRegistration));
 			}
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

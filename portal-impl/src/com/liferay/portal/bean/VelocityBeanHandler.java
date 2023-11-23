@@ -5,6 +5,8 @@
 
 package com.liferay.portal.bean;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -26,16 +28,8 @@ public class VelocityBeanHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			if ((_classLoader != null) &&
-				(_classLoader != contextClassLoader)) {
-
-				currentThread.setContextClassLoader(_classLoader);
-			}
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoader)) {
 
 			return method.invoke(_bean, arguments);
 		}
@@ -45,13 +39,6 @@ public class VelocityBeanHandler implements InvocationHandler {
 			}
 
 			return null;
-		}
-		finally {
-			if ((_classLoader != null) &&
-				(_classLoader != contextClassLoader)) {
-
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
 		}
 	}
 

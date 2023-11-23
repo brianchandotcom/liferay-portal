@@ -5,6 +5,8 @@
 
 package com.liferay.portal.scripting.executor.internal.messaging;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -32,7 +34,7 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		String scriptingLanguage = message.getString(
 			ScriptingExecutorMessagingConstants.MESSAGE_KEY_SCRIPTING_LANGUAGE);
@@ -40,30 +42,31 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 		List<URL> urls = (List<URL>)message.get(
 			ScriptingExecutorMessagingConstants.MESSAGE_KEY_URLS);
 
-		for (URL url : urls) {
-			try {
-				ClassLoader bundleClassLoader = (ClassLoader)message.get(
-					ScriptingExecutorMessagingConstants.
-						MESSAGE_KEY_BUNDLE_CLASS_LOADER);
+		ClassLoader bundleClassLoader = (ClassLoader)message.get(
+			ScriptingExecutorMessagingConstants.
+				MESSAGE_KEY_BUNDLE_CLASS_LOADER);
 
-				if (bundleClassLoader != null) {
-					currentThread.setContextClassLoader(
-						AggregateClassLoader.getAggregateClassLoader(
-							contextClassLoader, bundleClassLoader));
-				}
+		if (bundleClassLoader != null) {
+			classLoader = AggregateClassLoader.getAggregateClassLoader(
+				classLoader, bundleClassLoader);
+		}
 
-				_scripting.exec(
-					null, new HashMap<String, Object>(), scriptingLanguage,
-					URLUtil.toString(url));
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to execute script " + url.getFile(), exception);
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				classLoader)) {
+
+			for (URL url : urls) {
+				try {
+					_scripting.exec(
+						null, new HashMap<String, Object>(), scriptingLanguage,
+						URLUtil.toString(url));
 				}
-			}
-			finally {
-				currentThread.setContextClassLoader(contextClassLoader);
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to execute script " + url.getFile(),
+							exception);
+					}
+				}
 			}
 		}
 	}

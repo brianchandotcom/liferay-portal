@@ -5,6 +5,8 @@
 
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.cluster.multiple.internal.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.io.Deserializer;
@@ -60,14 +62,14 @@ public class JGroupsReceiver extends ReceiverAdapter {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoader aggregatedClassLoader = _classLoaders.computeIfAbsent(
-			contextClassLoader,
-			keyClassLoader -> AggregateClassLoader.getAggregateClassLoader(
-				keyClassLoader, JGroupsReceiver.class.getClassLoader()));
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				_classLoaders.computeIfAbsent(
+					contextClassLoader,
+					keyClassLoader ->
+						AggregateClassLoader.getAggregateClassLoader(
+							keyClassLoader,
+							JGroupsReceiver.class.getClassLoader())))) {
 
-		currentThread.setContextClassLoader(aggregatedClassLoader);
-
-		try {
 			_clusterReceiver.receive(
 				deserializer.readObject(), new AddressImpl(message.getSrc()));
 		}
@@ -77,9 +79,6 @@ public class JGroupsReceiver extends ReceiverAdapter {
 					"Unable to deserialize message payload",
 					classNotFoundException);
 			}
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

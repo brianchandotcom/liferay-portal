@@ -19,6 +19,8 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
@@ -212,20 +214,12 @@ public class ExportImportChangesetMVCActionCommand
 					user.getLogin(), user.getPassword(),
 					user.isPasswordEncrypted());
 
-				Thread currentThread = Thread.currentThread();
-
-				ClassLoader contextClassLoader =
-					currentThread.getContextClassLoader();
-
-				try {
-					currentThread.setContextClassLoader(
-						PortalClassLoaderUtil.getClassLoader());
+				try (SafeCloseable safeCloseable =
+						ThreadContextClassLoaderUtil.swap(
+							PortalClassLoaderUtil.getClassLoader())) {
 
 					targetPlid = LayoutServiceHttp.getControlPanelLayoutPlid(
 						httpPrincipal);
-				}
-				finally {
-					currentThread.setContextClassLoader(contextClassLoader);
 				}
 			}
 

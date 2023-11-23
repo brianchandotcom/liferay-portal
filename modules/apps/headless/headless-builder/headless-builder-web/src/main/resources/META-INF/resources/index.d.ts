@@ -24,6 +24,7 @@ interface APIEndpointItem extends BaseItem {
 	pathParameter: string;
 	pathParameterDescription: string;
 	r_apiApplicationToAPIEndpoints_c_apiApplicationId: string;
+	r_requestAPISchemaToAPIEndpoints_c_apiSchemaId?: number;
 	r_responseAPISchemaToAPIEndpoints_c_apiSchemaId?: number;
 	retrieveType: APIListType;
 	scope: APIListType;
@@ -282,6 +283,7 @@ type APIEndpointUIData = {
 	pathParameter: string;
 	pathParameterDescription: string;
 	r_apiApplicationToAPIEndpoints_c_apiApplicationId: string;
+	r_requestAPISchemaToAPIEndpoints_c_apiSchemaId: number;
 	r_responseAPISchemaToAPIEndpoints_c_apiSchemaId: number;
 	retrieveType: APIListType;
 	scope: APIListType;
@@ -301,6 +303,7 @@ type EndpointDataError = {
 	parameter: boolean;
 	path: boolean;
 	pathParameter: boolean;
+	r_requestAPISchemaToAPIEndpoints_c_apiSchemaId: boolean;
 	retrieveType: boolean;
 	scope: boolean;
 };

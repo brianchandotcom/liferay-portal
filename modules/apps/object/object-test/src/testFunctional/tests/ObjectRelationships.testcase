@@ -1549,9 +1549,6 @@ definition {
 	@description = "LPS-163655 - Verify that the user is not allowed to update the Name, Type or Object from the parent Relationship"
 	@priority = 4
 	test CannotUpdateNameTypeObjectFromParentRelationship {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given an object related to itself, in a Many-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object LPS163655",

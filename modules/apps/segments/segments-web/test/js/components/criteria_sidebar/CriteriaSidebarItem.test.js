@@ -5,23 +5,19 @@
 
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import CriteriaSidebarItem from '../../../../src/main/resources/META-INF/resources/js/components/criteria_sidebar/CriteriaSidebarItem';
-
-const connectDnd = jest.fn((element) => element);
 
 describe('CriteriaSidebarItem', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		const OriginalCriteriaSidebarItem =
-			CriteriaSidebarItem.DecoratedComponent;
-
 		const {asFragment} = render(
-			<OriginalCriteriaSidebarItem
-				connectDragSource={connectDnd}
-				propertyKey="user"
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaSidebarItem propertyKey="user" />
+			</DndProvider>
 		);
 
 		expect(asFragment()).toMatchSnapshot();

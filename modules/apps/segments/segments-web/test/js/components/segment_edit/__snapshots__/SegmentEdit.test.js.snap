@@ -549,31 +549,28 @@ exports[`SegmentEdit renders with given values 1`] = `
                       </p>
                       <ul
                         class="c-pl-0"
+                        role="menu"
                       >
                         <li
-                          class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex  color--first-test-values-group"
-                          draggable="true"
+                          aria-label="drag-x"
+                          class="align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex color--first-test-values-group"
                           role="menuitem"
                           tabindex="-1"
                         >
-                          <span
-                            class="c-p-2 inline-item"
-                            tabindex="-1"
+                          <div
+                            class="h-100 w-100"
+                            draggable="true"
                           >
                             <svg
-                              class="lexicon-icon lexicon-icon-drag"
+                              class="lexicon-icon lexicon-icon-drag mt-0"
                               role="presentation"
                             >
                               <use
                                 href="#drag"
                               />
                             </svg>
-                          </span>
-                          <span
-                            class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
-                          >
                             <span
-                              class="inline-item"
+                              class="sticker"
                             >
                               <svg
                                 class="lexicon-icon lexicon-icon-text"
@@ -584,8 +581,8 @@ exports[`SegmentEdit renders with given values 1`] = `
                                 />
                               </svg>
                             </span>
-                          </span>
-                          Value
+                            Value
+                          </div>
                         </li>
                       </ul>
                     </div>

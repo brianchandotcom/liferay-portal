@@ -25,7 +25,9 @@ definition {
 			labelName = "Object Field",
 			optionName = ${fieldLabelName});
 
-		WaitForPageLoad();
+		WaitForElementPresent(
+			key_labelName = ${fieldLabelName},
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@summary = "Default summary"

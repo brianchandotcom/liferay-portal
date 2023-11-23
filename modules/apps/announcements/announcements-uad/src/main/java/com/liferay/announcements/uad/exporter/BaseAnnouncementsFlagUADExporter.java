@@ -52,15 +52,6 @@ public abstract class BaseAnnouncementsFlagUADExporter
 		sb.append("com.liferay.announcements.kernel.model.AnnouncementsFlag");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>flagId</column-name><column-value><![CDATA[");
-		sb.append(announcementsFlag.getFlagId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(announcementsFlag.getUserId());
-		sb.append("]]></column-value></column>");
-
 		sb.append("</model>");
 
 		return sb.toString();

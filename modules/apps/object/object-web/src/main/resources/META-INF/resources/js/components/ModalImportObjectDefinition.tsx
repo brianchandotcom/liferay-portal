@@ -264,7 +264,7 @@ export default function ModalImportObjectDefinition({
 									catch (error) {
 										setError(
 											Liferay.Language.get(
-												'the-structure-failed-to-import'
+												'import-failed-file-is-not-supported-or-json-format-is-invalid'
 											)
 										);
 										setExternalReferenceCode('');

@@ -21,6 +21,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
@@ -460,7 +461,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 			SkuVirtualSettingsUtil.addOrUpdateSkuVirtualSettings(
 				cpInstance, skuVirtualSettings,
-				_cpDefinitionVirtualSettingService, _uniqueFileNameProvider,
+				_cpDefinitionVirtualSettingService,
+				_cpdVirtualSettingFileEntryService, _uniqueFileNameProvider,
 				serviceContext);
 		}
 
@@ -713,6 +715,10 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 	@Reference
 	private CPDefinitionVirtualSettingService
 		_cpDefinitionVirtualSettingService;
+
+	@Reference
+	private CPDVirtualSettingFileEntryService
+		_cpdVirtualSettingFileEntryService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

@@ -43,6 +43,7 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
@@ -1275,7 +1276,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			if (VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
 				ProductVirtualSettingsUtil.addOrUpdateProductVirtualSettings(
 					cpDefinition, productVirtualSettings,
-					_cpDefinitionVirtualSettingService, _uniqueFileNameProvider,
+					_cpDefinitionVirtualSettingService,
+					_cpdVirtualSettingFileEntryService, _uniqueFileNameProvider,
 					serviceContext);
 			}
 			else {
@@ -1519,6 +1521,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	@Reference
 	private CPDefinitionVirtualSettingService
 		_cpDefinitionVirtualSettingService;
+
+	@Reference
+	private CPDVirtualSettingFileEntryService
+		_cpdVirtualSettingFileEntryService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

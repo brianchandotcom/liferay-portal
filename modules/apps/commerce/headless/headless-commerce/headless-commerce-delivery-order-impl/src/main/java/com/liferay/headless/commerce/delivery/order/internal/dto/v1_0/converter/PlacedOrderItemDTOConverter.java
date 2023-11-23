@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
@@ -29,6 +30,8 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Settings;
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.VirtualItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -41,6 +44,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -124,17 +128,54 @@ public class PlacedOrderItemDTOConverter
 								return null;
 							}
 
-							String url = commerceVirtualOrderItem.getUrl();
+							List<CommerceVirtualOrderItemFileEntry>
+								commerceVirtualOrderItemFileEntries =
+									commerceVirtualOrderItem.
+										getCommerceVirtualOrderItemFileEntries();
+							CommerceVirtualOrderItemFileEntry
+								commerceVirtualOrderItemFileEntry =
+									commerceVirtualOrderItemFileEntries.get(0);
+
+							String url =
+								commerceVirtualOrderItemFileEntry.getUrl();
 
 							if (Validator.isBlank(url)) {
 								url =
 									_commerceMediaResolver.
 										getDownloadVirtualOrderItemURL(
 											commerceVirtualOrderItem.
-												getCommerceVirtualOrderItemId());
+												getCommerceVirtualOrderItemId(),
+											commerceVirtualOrderItemFileEntry.
+												getFileEntryId());
 							}
 
 							return new String[] {url};
+						}
+						catch (PortalException portalException) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(portalException);
+							}
+
+							return null;
+						}
+					});
+				setVirtualItems(
+					() -> {
+						try {
+							CommerceVirtualOrderItem commerceVirtualOrderItem =
+								_commerceVirtualOrderItemService.
+									fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+										commerceOrderItem.
+											getCommerceOrderItemId());
+
+							if (commerceVirtualOrderItem == null) {
+								return null;
+							}
+
+							return _toVirtualItems(
+								commerceVirtualOrderItem.
+									getCommerceVirtualOrderItemFileEntries(),
+								commerceVirtualOrderItem);
 						}
 						catch (PortalException portalException) {
 							if (_log.isDebugEnabled()) {
@@ -305,6 +346,48 @@ public class PlacedOrderItemDTOConverter
 		}
 
 		return settings;
+	}
+
+	private VirtualItem[] _toVirtualItems(
+		List<CommerceVirtualOrderItemFileEntry>
+			commerceVirtualOrderItemFileEntries,
+		CommerceVirtualOrderItem commerceVirtualOrderItem) {
+
+		return TransformUtil.transformToArray(
+			commerceVirtualOrderItemFileEntries,
+			commerceVirtualOrderItemFileEntry -> new VirtualItem() {
+				{
+					setUrl(
+						() -> {
+							if (Validator.isNull(
+									commerceVirtualOrderItemFileEntry.
+										getUrl())) {
+
+								_commerceMediaResolver.
+									getDownloadVirtualOrderItemURL(
+										commerceVirtualOrderItem.
+											getCommerceVirtualOrderItemId(),
+										commerceVirtualOrderItemFileEntry.
+											getFileEntryId());
+							}
+
+							return commerceVirtualOrderItemFileEntry.getUrl();
+						});
+					setVersion(
+						() -> {
+							if (Validator.isNull(
+									commerceVirtualOrderItemFileEntry.
+										getVersion())) {
+
+								return null;
+							}
+
+							return commerceVirtualOrderItemFileEntry.
+								getVersion();
+						});
+				}
+			},
+			VirtualItem.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

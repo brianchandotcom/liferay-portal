@@ -71,6 +71,8 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					).setParameter(
 						"articleId", curArticle.getArticleId()
 					).setParameter(
+						"backURLTitle", portletDisplay.getPortletDisplayName()
+					).setParameter(
 						"folderId", curArticle.getFolderId()
 					).setParameter(
 						"groupId", curArticle.getGroupId()

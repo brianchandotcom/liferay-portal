@@ -1,0 +1,136 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.commerce.product.type.virtual.order.service.impl;
+
+import com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemFileEntryIdException;
+import com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemUrlException;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
+import com.liferay.commerce.product.type.virtual.order.service.base.CommerceVirtualOrderItemFileEntryLocalServiceBaseImpl;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Andrea Sbarra
+ */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry",
+	service = AopService.class
+)
+public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
+	extends CommerceVirtualOrderItemFileEntryLocalServiceBaseImpl {
+
+	@Override
+	public CommerceVirtualOrderItemFileEntry
+			addCommerceVirtualOrderItemFileEntry(
+				long userId, long groupId, long commerceOrderItemId,
+				long fileEntryId, String Url, String version)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		long commerceVirtualOrderItemFileEntryId =
+			counterLocalService.increment();
+
+		if (Validator.isNotNull(Url)) {
+			fileEntryId = 0;
+		}
+
+		_validate(fileEntryId, Url);
+
+		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
+			commerceVirtualOrderItemFileEntryPersistence.create(
+				commerceVirtualOrderItemFileEntryId);
+
+		commerceVirtualOrderItemFileEntry.setGroupId(groupId);
+		commerceVirtualOrderItemFileEntry.setCompanyId(user.getCompanyId());
+		commerceVirtualOrderItemFileEntry.setUserId(user.getUserId());
+		commerceVirtualOrderItemFileEntry.setUserName(user.getFullName());
+		commerceVirtualOrderItemFileEntry.setCommerceVirtualOrderItemId(
+			commerceOrderItemId);
+		commerceVirtualOrderItemFileEntry.setFileEntryId(fileEntryId);
+		commerceVirtualOrderItemFileEntry.setUrl(Url);
+		commerceVirtualOrderItemFileEntry.setVersion(version);
+
+		return commerceVirtualOrderItemFileEntryPersistence.update(
+			commerceVirtualOrderItemFileEntry);
+	}
+
+	@Override
+	public List<CommerceVirtualOrderItemFileEntry>
+		getCommerceVirtualOrderItemFileEntries(
+			long commerceVirtualOrderItemId) {
+
+		return commerceVirtualOrderItemFileEntryPersistence.
+			findByCommerceVirtualOrderItemId(commerceVirtualOrderItemId);
+	}
+
+	@Override
+	public int getCommerceVirtualOrderItemFileEntriesCount(
+		long commerceVirtualOrderItemId) {
+
+		return commerceVirtualOrderItemFileEntryPersistence.
+			countByCommerceVirtualOrderItemId(commerceVirtualOrderItemId);
+	}
+
+	@Override
+	public CommerceVirtualOrderItemFileEntry
+			updateCommerceVirtualOrderItemFileEntry(
+				long commerceVirtualOrderItemFileEntryId, long fileEntryId,
+				String url, String version)
+		throws PortalException {
+
+		if (Validator.isNotNull(url)) {
+			fileEntryId = 0;
+		}
+
+		_validate(fileEntryId, url);
+
+		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
+			commerceVirtualOrderItemFileEntryPersistence.fetchByPrimaryKey(
+				commerceVirtualOrderItemFileEntryId);
+
+		commerceVirtualOrderItemFileEntry.setFileEntryId(fileEntryId);
+		commerceVirtualOrderItemFileEntry.setUrl(url);
+		commerceVirtualOrderItemFileEntry.setVersion(version);
+
+		return commerceVirtualOrderItemFileEntryPersistence.update(
+			commerceVirtualOrderItemFileEntry);
+	}
+
+	private void _validate(long fileEntryId, String url)
+		throws PortalException {
+
+		if (fileEntryId > 0) {
+			try {
+				_dlAppLocalService.getFileEntry(fileEntryId);
+			}
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
+				throw new CommerceVirtualOrderItemFileEntryIdException(
+					noSuchFileEntryException);
+			}
+		}
+		else if ((fileEntryId < 0) && Validator.isNull(url)) {
+			throw new CommerceVirtualOrderItemUrlException();
+		}
+	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+}

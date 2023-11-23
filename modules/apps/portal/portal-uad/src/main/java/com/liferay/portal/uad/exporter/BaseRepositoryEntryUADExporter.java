@@ -53,14 +53,6 @@ public abstract class BaseRepositoryEntryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>repositoryEntryId</column-name><column-value><![CDATA[");
-		sb.append(repositoryEntry.getRepositoryEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(repositoryEntry.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(repositoryEntry.getUserName());
 		sb.append("]]></column-value></column>");

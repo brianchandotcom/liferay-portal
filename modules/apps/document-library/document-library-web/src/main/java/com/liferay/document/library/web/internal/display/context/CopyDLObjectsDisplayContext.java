@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -72,17 +73,30 @@ public class CopyDLObjectsDisplayContext {
 
 		long[] dlObjectIds = getDLObjectIds();
 
-		if (ArrayUtil.isEmpty(dlObjectIds) || (dlObjectIds.length > 1)) {
+		if (ArrayUtil.isEmpty(dlObjectIds)) {
 			_dlObjectName = StringPool.BLANK;
 
 			return _dlObjectName;
+		}
+
+		boolean useParentFolderName = false;
+
+		if (dlObjectIds.length > 1) {
+			useParentFolderName = true;
 		}
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(
 			dlObjectIds[0]);
 
 		if (dlFileEntry != null) {
-			_dlObjectName = dlFileEntry.getTitle();
+			if (useParentFolderName) {
+				DLFolder folder = dlFileEntry.getFolder();
+
+				_dlObjectName = folder.getName();
+			}
+			else {
+				_dlObjectName = dlFileEntry.getTitle();
+			}
 
 			return _dlObjectName;
 		}
@@ -91,7 +105,14 @@ public class CopyDLObjectsDisplayContext {
 			dlObjectIds[0]);
 
 		if (dlFolder != null) {
-			_dlObjectName = dlFolder.getName();
+			if (useParentFolderName) {
+				DLFolder parentFolder = dlFolder.getParentFolder();
+
+				_dlObjectName = parentFolder.getName();
+			}
+			else {
+				_dlObjectName = dlFolder.getName();
+			}
 
 			return _dlObjectName;
 		}
@@ -99,7 +120,14 @@ public class CopyDLObjectsDisplayContext {
 		DLFileShortcut dlFileShortcut =
 			DLFileShortcutLocalServiceUtil.getDLFileShortcut(dlObjectIds[0]);
 
-		_dlObjectName = dlFileShortcut.getToTitle();
+		if (useParentFolderName) {
+			Folder folder = dlFileShortcut.getFolder();
+
+			_dlObjectName = folder.getName();
+		}
+		else {
+			_dlObjectName = dlFileShortcut.getToTitle();
+		}
 
 		return _dlObjectName;
 	}

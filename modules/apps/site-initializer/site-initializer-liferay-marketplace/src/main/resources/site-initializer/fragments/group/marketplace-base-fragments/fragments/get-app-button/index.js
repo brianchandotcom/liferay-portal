@@ -6,6 +6,7 @@
  */
 
 const baseURL = themeDisplay.getPortalURL();
+const channelId = Liferay.CommerceContext.commerceChannelId;
 
 const productId = fragmentElement
 	.querySelector('.product-id')
@@ -44,20 +45,19 @@ const redirectPage = () => {
 	}
 };
 
-const getChannel = async (siteId) => {
-	const channel = await fetcher(
-		`/o/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${siteId}'`
-	);
+const getProductSkus = async (channelId) => {
+	try {
+		const response = await fetch(
+			`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?nestedFields=skus&accountId=-1`
+		);
 
-	return channel?.items ?? [];
-};
+		const product = await response.json();
 
-const getSkus = async (channelId) => {
-	const skus = await fetcher(
-		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}/skus?accountId=-1`
-	);
-
-	return skus?.items ?? [];
+		return product?.skus ?? [];
+	}
+	catch {
+		return [];
+	}
 };
 
 const getAccounts = async () => {
@@ -258,18 +258,18 @@ const customizeUnavailableButton = async () => {
 };
 
 const main = async () => {
-	const [channel] = await getChannel(themeDisplay.getScopeGroupId());
+	const skus = await getProductSkus(channelId);
+	const skuPublished = skus.some((sku) => sku.purchasable);
 
-	if (channel?.id) {
-		const skus = await getSkus(channel?.id);
-		const skuPublished = skus.some((sku) => sku.purchasable);
+	buttonElement.classList.remove('d-none');
 
-		if (skuPublished) {
-			return redirectPage();
-		}
-
-		customizeUnavailableButton();
+	if (skuPublished) {
+		return redirectPage();
 	}
+
+	customizeUnavailableButton();
 };
 
-main();
+if (channelId) {
+	main();
+}

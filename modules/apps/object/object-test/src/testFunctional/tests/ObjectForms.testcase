@@ -142,8 +142,8 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "RichText",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
+			fieldLabelName = "Rich Text Field",
+			fieldName = "richTextField",
 			fieldType = "Clob",
 			isRequired = "false",
 			objectName = "CustomObject151597");
@@ -168,7 +168,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Rich Text");
 
-		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Rich Text Field");
 
 		Form.save();
 

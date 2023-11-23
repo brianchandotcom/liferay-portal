@@ -128,33 +128,6 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 										<aui:validator name="email" />
 									</aui:input>
 								</liferay-frontend:fieldset>
-
-								<liferay-frontend:fieldset
-									collapsed="<%= true %>"
-									collapsible="<%= true %>"
-									label="definition-of-terms"
-								>
-									<dl>
-
-										<%
-										Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, blogsGroupServiceSettings.getEmailFromAddress(), blogsGroupServiceSettings.getEmailFromName());
-
-										for (Map.Entry<String, String> entry : emailFromDefinitionTerms.entrySet()) {
-										%>
-
-											<dt>
-												<%= HtmlUtil.escape(entry.getKey()) %>
-											</dt>
-											<dd>
-												<%= HtmlUtil.escape(entry.getValue()) %>
-											</dd>
-
-										<%
-										}
-										%>
-
-									</dl>
-								</liferay-frontend:fieldset>
 							</div>
 						</c:otherwise>
 					</c:choose>

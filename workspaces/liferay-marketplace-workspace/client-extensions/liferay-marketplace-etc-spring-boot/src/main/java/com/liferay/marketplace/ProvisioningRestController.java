@@ -24,6 +24,7 @@ import java.nio.charset.Charset;
 import java.time.ZonedDateTime;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 
@@ -111,6 +112,8 @@ public class ProvisioningRestController extends BaseRestController {
 		sb.append(appLicenseKey.getHostName());
 		sb.append(".xml");
 
+		httpHeaders.setAccessControlExposeHeaders(
+			Collections.singletonList("Content-Disposition"));
 		httpHeaders.setCacheControl(
 			"must-revalidate, post-check=0, pre-check=0");
 		httpHeaders.setContentDispositionFormData(

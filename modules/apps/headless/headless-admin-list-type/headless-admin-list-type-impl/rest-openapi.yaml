@@ -29,6 +29,10 @@ components:
                     type: array
                 name:
                     type: string
+                nameMap:
+                    additionalProperties:
+                        type: string
+                    type: object
                 name_i18n:
                     additionalProperties:
                         type: string
@@ -63,6 +67,10 @@ components:
                     type: string
                 name:
                     type: string
+                nameMap:
+                    additionalProperties:
+                        type: string
+                    type: object
                 name_i18n:
                     additionalProperties:
                         type: string

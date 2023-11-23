@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0;
 
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Category;
+import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.LinkedProduct;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.ProductOption;
@@ -77,6 +78,20 @@ public class ProductSerDes {
 			sb.append("]");
 		}
 
+		if (product.getCatalogName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"catalogName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(product.getCatalogName()));
+
+			sb.append("\"");
+		}
+
 		if (product.getCategories() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -109,6 +124,26 @@ public class ProductSerDes {
 			sb.append(liferayToJSONDateFormat.format(product.getCreateDate()));
 
 			sb.append("\"");
+		}
+
+		if (product.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < product.getCustomFields().length; i++) {
+				sb.append(String.valueOf(product.getCustomFields()[i]));
+
+				if ((i + 1) < product.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (product.getDescription() != null) {
@@ -501,6 +536,13 @@ public class ProductSerDes {
 			map.put("attachments", String.valueOf(product.getAttachments()));
 		}
 
+		if (product.getCatalogName() == null) {
+			map.put("catalogName", null);
+		}
+		else {
+			map.put("catalogName", String.valueOf(product.getCatalogName()));
+		}
+
 		if (product.getCategories() == null) {
 			map.put("categories", null);
 		}
@@ -515,6 +557,13 @@ public class ProductSerDes {
 			map.put(
 				"createDate",
 				liferayToJSONDateFormat.format(product.getCreateDate()));
+		}
+
+		if (product.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put("customFields", String.valueOf(product.getCustomFields()));
 		}
 
 		if (product.getDescription() == null) {
@@ -739,6 +788,11 @@ public class ProductSerDes {
 					product.setAttachments(attachmentsArray);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "catalogName")) {
+				if (jsonParserFieldValue != null) {
+					product.setCatalogName((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "categories")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
@@ -758,6 +812,22 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "createDate")) {
 				if (jsonParserFieldValue != null) {
 					product.setCreateDate(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					CustomField[] customFieldsArray =
+						new CustomField[jsonParserFieldValues.length];
+
+					for (int i = 0; i < customFieldsArray.length; i++) {
+						customFieldsArray[i] = CustomFieldSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					product.setCustomFields(customFieldsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {

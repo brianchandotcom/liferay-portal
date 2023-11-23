@@ -469,11 +469,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (kbArticle.isInTrash()) {
 			TrashEntry trashEntry = _trashEntryLocalService.deleteEntry(
-				KBArticle.class.getName(), kbArticle.getKbArticleId());
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
 
 			if (trashEntry == null) {
 				_trashVersionLocalService.deleteTrashVersion(
-					KBArticle.class.getName(), kbArticle.getKbArticleId());
+					KBArticle.class.getName(), kbArticle.getResourcePrimKey());
 			}
 		}
 
@@ -1057,12 +1057,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Override
 	public void moveDependentKBArticlesToTrash(
-			KBArticle parentKBArticle, long trashEntryId)
+			long parentResourcePrimKey, long trashEntryId)
 		throws PortalException {
 
 		List<KBArticle> allDescendantKBArticles = getAllDescendantKBArticles(
-			parentKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
-			null);
+			parentResourcePrimKey, WorkflowConstants.STATUS_ANY, null);
 
 		for (KBArticle descendantKBArticle : allDescendantKBArticles) {
 			_moveDependentKBArticleToTrash(descendantKBArticle, trashEntryId);
@@ -1076,7 +1075,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_moveDependentKBArticleToTrash(kbArticle, trashEntryId);
 
-		moveDependentKBArticlesToTrash(kbArticle, trashEntryId);
+		moveDependentKBArticlesToTrash(
+			kbArticle.getResourcePrimKey(), trashEntryId);
 	}
 
 	@Override
@@ -1172,11 +1172,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Override
 	public void moveKBArticleFromTrash(
-			long userId, long kbArticleId, long parentResourceClassNameId,
+			long userId, long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey)
 		throws PortalException {
 
-		KBArticle kbArticle = getKBArticle(kbArticleId);
+		KBArticle kbArticle = getLatestKBArticle(resourcePrimKey);
 
 		if (!kbArticle.isInTrash()) {
 			throw new RestoreEntryException(
@@ -1184,7 +1184,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		if (_trashHelper.isInTrashExplicitly(kbArticle)) {
-			restoreKBArticleFromTrash(userId, kbArticleId);
+			restoreKBArticleFromTrash(userId, resourcePrimKey);
 		}
 		else {
 			restoreDependentKBArticleFromTrash(kbArticle);
@@ -1196,11 +1196,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
-	public KBArticle moveKBArticleToTrash(long userId, long kbArticleId)
+	public KBArticle moveKBArticleToTrash(long userId, long resourcePrimKey)
 		throws PortalException {
 
-		KBArticle kbArticle = kbArticlePersistence.findByPrimaryKey(
-			kbArticleId);
+		KBArticle kbArticle = getLatestKBArticle(resourcePrimKey);
 
 		if (kbArticle.isInTrash()) {
 			throw new TrashEntryException();
@@ -1209,27 +1208,25 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		int oldStatus = kbArticle.getStatus();
 
 		kbArticle = _updateStatus(
-			userId, kbArticle.getResourcePrimKey(),
-			WorkflowConstants.STATUS_IN_TRASH);
+			userId, kbArticle, WorkflowConstants.STATUS_IN_TRASH);
 
 		_assetEntryLocalService.updateVisible(
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey(), false);
+			KBArticle.class.getName(), resourcePrimKey, false);
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", kbArticle.getTitle());
 
 		_socialActivityLocalService.addActivity(
 			userId, kbArticle.getGroupId(), KBArticle.class.getName(),
-			kbArticle.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			resourcePrimKey, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
 			userId, kbArticle.getGroupId(), KBArticle.class.getName(),
-			kbArticle.getKbArticleId(), kbArticle.getUuid(), null, oldStatus,
-			null, null);
+			resourcePrimKey, kbArticle.getUuid(), null, oldStatus, null, null);
 
-		moveDependentKBArticlesToTrash(kbArticle, trashEntry.getEntryId());
+		moveDependentKBArticlesToTrash(
+			resourcePrimKey, trashEntry.getEntryId());
 
 		return kbArticle;
 	}
@@ -1238,15 +1235,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		throws PortalException {
 
 		_restoreDependentKBArticleFromTrash(kbArticle);
-		restoreDependentKBArticlesFromTrash(kbArticle);
+		restoreDependentKBArticlesFromTrash(kbArticle.getResourcePrimKey());
 	}
 
-	public void restoreDependentKBArticlesFromTrash(KBArticle parentKBArticle)
+	public void restoreDependentKBArticlesFromTrash(long parentResourcePrimKey)
 		throws PortalException {
 
 		List<KBArticle> allDescendantKBArticles = getAllDescendantKBArticles(
-			parentKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
-			null);
+			parentResourcePrimKey, WorkflowConstants.STATUS_ANY, null);
 
 		for (KBArticle descendantKBArticle : allDescendantKBArticles) {
 			_restoreDependentKBArticleFromTrash(descendantKBArticle);
@@ -1254,11 +1250,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void restoreKBArticleFromTrash(long userId, long kbArticleId)
+	public void restoreKBArticleFromTrash(long userId, long resourcePrimKey)
 		throws PortalException {
 
-		KBArticle kbArticle = kbArticlePersistence.findByPrimaryKey(
-			kbArticleId);
+		KBArticle kbArticle = getLatestKBArticle(resourcePrimKey);
 
 		if (!kbArticle.isInTrash()) {
 			throw new RestoreEntryException(
@@ -1266,15 +1261,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
-			KBArticle.class.getName(), kbArticleId);
+			KBArticle.class.getName(), resourcePrimKey);
 
-		kbArticle = _updateStatus(
-			userId, kbArticle.getResourcePrimKey(), trashEntry.getStatus());
+		kbArticle = _updateStatus(userId, kbArticle, trashEntry.getStatus());
 
 		if (kbArticle.isApproved()) {
 			_assetEntryLocalService.updateVisible(
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
-				true);
+				KBArticle.class.getName(), resourcePrimKey, true);
 		}
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
@@ -1282,14 +1275,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_socialActivityLocalService.addActivity(
 			userId, kbArticle.getGroupId(), KBArticle.class.getName(),
-			kbArticle.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			resourcePrimKey, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		_trashEntryLocalService.deleteEntry(
-			KBArticle.class.getName(), kbArticleId);
+			KBArticle.class.getName(), resourcePrimKey);
 
-		restoreDependentKBArticlesFromTrash(kbArticle);
+		restoreDependentKBArticlesFromTrash(resourcePrimKey);
 	}
 
 	@Override
@@ -2352,7 +2344,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (status != WorkflowConstants.STATUS_APPROVED) {
 			_trashVersionLocalService.addTrashVersion(
 				trashEntryId, KBArticle.class.getName(),
-				kbArticle.getKbArticleId(), status, null);
+				kbArticle.getResourcePrimKey(), status, null);
 		}
 
 		// Asset
@@ -2526,7 +2518,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		TrashVersion trashVersion = _trashVersionLocalService.fetchVersion(
-			KBArticle.class.getName(), kbArticle.getKbArticleId());
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
 
 		int oldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -2647,13 +2639,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	private KBArticle _updateStatus(
-			long userId, long resourcePrimKey, int status)
+			long userId, KBArticle kbArticle, int status)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
-
-		KBArticle kbArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
 		kbArticle.setStatus(status);
 		kbArticle.setStatusByUserId(user.getUserId());

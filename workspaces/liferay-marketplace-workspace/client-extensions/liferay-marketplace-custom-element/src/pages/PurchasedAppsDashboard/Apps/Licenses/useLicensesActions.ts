@@ -52,19 +52,23 @@ const useLicenseActions = ({
 	};
 
 	const onDownload = useCallback(
-		(licenseKey: LicenseKey) => {
-			if (licenseKey?.id) {
-				return provisioningKoroneikiOAuth2.downloadLicenseKey(
-					licenseKey?.id as number
-				);
+		async (licenseKey: LicenseKey) => {
+			if (!licenseKey?.id) {
+				return;
 			}
 
-			Liferay.Util.openToast({
-				message: i18n.translate(
-					'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'
-				),
-				type: 'danger',
-			});
+			try {
+				await provisioningKoroneikiOAuth2.downloadLicenseKey(
+					licenseKey?.id as number
+				);
+			} catch {
+				Liferay.Util.openToast({
+					message: i18n.translate(
+						'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'
+					),
+					type: 'danger',
+				});
+			}
 		},
 		[provisioningKoroneikiOAuth2]
 	);

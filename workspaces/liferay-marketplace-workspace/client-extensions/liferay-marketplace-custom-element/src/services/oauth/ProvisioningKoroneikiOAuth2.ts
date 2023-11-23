@@ -94,18 +94,38 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 			method: 'POST',
 
 			// Necessary due the response comes resolved already, not necessary to parse to .json()
-
 		}) as unknown) as Promise<LicenseKey>;
 	}
 
-	downloadLicenseKey(id: number) {
+	async downloadLicenseKey(id: number) {
+		const response = await this.oAuth2Client.fetch(
+			`/provisioning/license-keys/${id}/download`
+		);
+
+		const blob = await response.blob();
+
+		let filename = 'license.xml';
+
+		const contentDisposition = response.headers.get('content-disposition');
+
+		if (contentDisposition) {
+			filename = (
+				contentDisposition
+					.split(';')
+					.find((n) => n.includes('filename=')) ?? ''
+			)
+				.replace('filename=', '')
+				.replaceAll('"', '')
+				.trim();
+		}
+
 		const anchor = document.createElement('a');
 
-		anchor.href =
-			this.oAuth2Client.homePageURL +
-			`/provisioning/license-keys/${id}/download`;
+		anchor.download = filename;
+		anchor.href = URL.createObjectURL(blob);
 
 		document.body.appendChild(anchor);
+
 		anchor.click();
 		anchor.remove();
 	}

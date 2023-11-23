@@ -32,7 +32,7 @@ import com.liferay.saved.content.constants.MySavedContentPortletKeys;
 import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.security.permission.SavedContentPermission;
 import com.liferay.saved.content.service.SavedContentEntryLocalServiceUtil;
-import com.liferay.saved.content.taglib.internal.servlet.SavedContentPermissionUtil;
+import com.liferay.saved.content.taglib.internal.permission.util.SavedContentPermissionUtil;
 import com.liferay.saved.content.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 

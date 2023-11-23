@@ -161,6 +161,11 @@ public class AssetHelperImpl implements AssetHelper {
 			addPortletURL.setParameter("redirect", redirect);
 		}
 
+		Layout layout = themeDisplay.getLayout();
+
+		addPortletURL.setParameter(
+			"backURLTitle", layout.getName(themeDisplay.getLocale()));
+
 		String referringPortletResource = ParamUtil.getString(
 			liferayPortletRequest, "portletResource");
 

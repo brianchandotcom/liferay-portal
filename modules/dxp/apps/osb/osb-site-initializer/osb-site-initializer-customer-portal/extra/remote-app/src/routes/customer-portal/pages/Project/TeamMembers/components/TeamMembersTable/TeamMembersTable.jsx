@@ -270,10 +270,12 @@ const TeamMembersTable = ({
 					modalTitle={i18n.translate('remove-user')}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onRemove={() => {
+					onRemove={async () => {
 						if (checkedBoxSubscription) {
-							saveSubscriptionKey(singleSubscribedKeys);
-							remove(currentUserRemoving);
+							await saveSubscriptionKey(singleSubscribedKeys);
+							await remove(currentUserRemoving);
+
+							return;
 						}
 
 						remove(currentUserRemoving);

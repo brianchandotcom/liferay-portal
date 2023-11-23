@@ -93,10 +93,8 @@ export function RuleBuilderActionSection({
 	return (
 		<ClayPanel
 			className="page-editor__rule-builder-section"
-			collapsable
-			defaultExpanded
 			displayTitle={
-				<ClayPanel.Title className="py-2">
+				<ClayPanel.Title className="p-3 page-editor__rule-builder-section-title text-3">
 					<div className="align-items-center d-flex">
 						<ClayIcon
 							className="mr-3 text-purple"
@@ -112,9 +110,8 @@ export function RuleBuilderActionSection({
 				</ClayPanel.Title>
 			}
 			displayType="secondary"
-			showCollapseIcon
 		>
-			<ClayPanel.Body role="menu">
+			<ClayPanel.Body className="px-3" role="menu">
 				{actions.map((action, index) => (
 					<ActionComponent
 						action={action}
@@ -138,7 +135,7 @@ export function RuleBuilderActionSection({
 				))}
 
 				<ClayButton
-					className="mt-4"
+					className="mt-2"
 					displayType="secondary"
 					onClick={onAddAction}
 					size="sm"
@@ -238,7 +235,7 @@ export function RuleBuilderConditionSection({
 							{Liferay.Language.get('if')}
 						</span>
 
-						<div>
+						<div className="align-items-center d-flex">
 							<Picker
 								as={TriggerLabel}
 								items={[
@@ -275,7 +272,7 @@ export function RuleBuilderConditionSection({
 			displayType="secondary"
 			showCollapseIcon
 		>
-			<ClayPanel.Body role="menu">
+			<ClayPanel.Body className="px-3" role="menu">
 				{conditions.map((condition, index, conditions) => (
 					<ConditionComponent
 						condition={condition}
@@ -302,7 +299,7 @@ export function RuleBuilderConditionSection({
 				))}
 
 				<ClayButton
-					className="mt-4"
+					className="mt-2"
 					displayType="secondary"
 					onClick={onAddCondition}
 					size="sm"

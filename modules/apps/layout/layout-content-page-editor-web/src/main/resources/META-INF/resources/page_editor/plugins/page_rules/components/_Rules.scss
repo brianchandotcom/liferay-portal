@@ -20,7 +20,8 @@ html#{$cadmin-selector} .cadmin {
 		}
 
 		&:hover .page-editor__rule-builder-delete-button,
-		&:focus-within .page-editor__rule-builder-delete-button,
+		&:focus-within:not(:focus) .page-editor__rule-builder-delete-button,
+		&:focus-visible .page-editor__rule-builder-delete-button,
 		.page-editor__rule-builder-delete-button:focus-visible {
 			opacity: 1;
 		}
@@ -39,20 +40,20 @@ html#{$cadmin-selector} .cadmin {
 	}
 
 	.page-editor__rule-builder-section {
+		.lexicon-icon {
+			margin-top: 0;
+		}
+
 		.panel-header {
 			background-color: $cadmin-gray-100;
 			border-bottom: none;
 		}
 
-		.panel-header:not(.collapsed) {
-			border-bottom: 1px solid $cadmin-gray-300;
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 0;
-		}
-
 		.page-editor__rule-builder-section-title {
 			background-color: $cadmin-gray-100;
 			border-bottom: 1px solid $cadmin-gray-300;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
 
 			.arrow-icon {
 				color: $cadmin-warning-l1;

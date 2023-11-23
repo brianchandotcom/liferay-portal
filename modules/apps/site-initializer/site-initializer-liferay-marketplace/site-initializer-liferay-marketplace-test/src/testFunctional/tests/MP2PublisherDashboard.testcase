@@ -136,7 +136,7 @@ definition {
 
 		task ("Then I should be able to assert that the user has been invited") {
 			var table = '''
-				| Name    | QA Test             |
+				| Name    | Test QA             |
 				| Email   | test.mp@liferay.com |
 				| Role    | Invited Member      |
 			''';

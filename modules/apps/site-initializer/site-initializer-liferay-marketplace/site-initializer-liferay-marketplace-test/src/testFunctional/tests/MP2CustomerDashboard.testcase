@@ -178,7 +178,7 @@ definition {
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
 			var table = '''
-				| Name    | QA Test             |
+				| Name    | Test QA             |
 				| Email   | test.mp@liferay.com |
 				| Role    | App Editor          |
 			''';
@@ -383,7 +383,7 @@ definition {
 
 		task ("Then I should be able to assert that the invited user's status is now Active") {
 			var table = '''
-				| Name    | QA Test             |
+				| Name    | Test QA             |
 				| Email   | test.mp@liferay.com |
 				| Role    | Account Buyer       |
 			''';

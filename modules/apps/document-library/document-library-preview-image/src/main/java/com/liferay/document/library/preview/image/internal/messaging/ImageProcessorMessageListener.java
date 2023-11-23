@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.preview.image.internal.messaging;
 
-import com.liferay.document.library.kernel.util.ImageProcessorUtil;
+import com.liferay.document.library.kernel.processor.ImageProcessorUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;

@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"default.model.resource.name=true",
-		"model.class.name=com.liferay.document.library.kernel.util.RawMetadataProcessor"
+		"model.class.name=com.liferay.document.library.kernel.processor.RawMetadataProcessor"
 	},
 	service = DDMStructurePermissionSupport.class
 )

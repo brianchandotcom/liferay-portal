@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.internal.messaging;
 
-import com.liferay.document.library.kernel.util.RawMetadataProcessorUtil;
+import com.liferay.document.library.kernel.processor.RawMetadataProcessorUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

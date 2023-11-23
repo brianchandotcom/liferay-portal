@@ -7,7 +7,7 @@ package com.liferay.document.library.internal.exportimport.data.handler;
 
 import com.liferay.document.library.constants.DLPortletDataHandlerConstants;
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
-import com.liferay.document.library.kernel.util.DLProcessorHelper;
+import com.liferay.document.library.kernel.processor.DLProcessorHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.xml.Element;

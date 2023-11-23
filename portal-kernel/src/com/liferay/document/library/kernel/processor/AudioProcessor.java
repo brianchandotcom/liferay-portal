@@ -3,60 +3,60 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.document.library.kernel.util;
+package com.liferay.document.library.kernel.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.model.ImageConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.io.InputStream;
 
+import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Sergio González
  */
-public interface PDFProcessor {
+@ProviderType
+public interface AudioProcessor {
 
-	public static final String PREVIEW_TYPE = ImageConstants.TYPE_PNG;
-
-	public static final String THUMBNAIL_TYPE = ImageConstants.TYPE_PNG;
+	public static final String PREVIEW_TYPE = "mp3";
 
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
 		throws Exception;
 
-	public void generateImages(
+	public void generateAudio(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception;
 
 	public void generatePreviews();
 
-	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
+	public Set<String> getAudioMimeTypes();
+
+	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
 		throws Exception;
 
-	public int getPreviewFileCount(FileVersion fileVersion);
-
-	public long getPreviewFileSize(FileVersion fileVersion, int index)
+	public long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception;
 
-	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
-		throws Exception;
-
-	public long getThumbnailFileSize(FileVersion fileVersion, int index)
-		throws Exception;
-
-	public boolean hasImages(FileVersion fileVersion);
+	public boolean hasAudio(FileVersion fileVersion);
 
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
 		throws Exception;
 
-	public boolean isDocumentSupported(FileVersion fileVersion);
+	public boolean isAudioSupported(FileVersion fileVersion);
 
-	public boolean isDocumentSupported(String mimeType);
+	public boolean isAudioSupported(String mimeType);
+
+	public default boolean isEnabled() {
+		return false;
+	}
 
 	public boolean isSupported(String mimeType);
 

@@ -7,8 +7,8 @@ package com.liferay.layout.seo.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.processor.RawMetadataProcessor;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
-import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.model.DDMField;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;

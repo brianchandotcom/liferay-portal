@@ -13,7 +13,7 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.library.kernel.util.PDFProcessorUtil" %><%@
+<%@ page import="com.liferay.document.library.kernel.processor.PDFProcessorUtil" %><%@
 page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@

@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.preview.pdf.internal.messaging;
 
-import com.liferay.document.library.kernel.util.PDFProcessorUtil;
+import com.liferay.document.library.kernel.processor.PDFProcessorUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.messaging.Destination;

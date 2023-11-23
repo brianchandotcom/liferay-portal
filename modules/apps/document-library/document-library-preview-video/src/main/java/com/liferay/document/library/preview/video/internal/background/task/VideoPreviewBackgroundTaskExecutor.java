@@ -6,8 +6,8 @@
 package com.liferay.document.library.preview.video.internal.background.task;
 
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
-import com.liferay.document.library.kernel.util.DLProcessor;
-import com.liferay.document.library.kernel.util.VideoProcessor;
+import com.liferay.document.library.kernel.processor.DLProcessor;
+import com.liferay.document.library.kernel.processor.VideoProcessor;
 import com.liferay.document.library.preview.background.task.BasePreviewBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;

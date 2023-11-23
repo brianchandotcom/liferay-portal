@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.preview.video.internal.messaging;
 
-import com.liferay.document.library.kernel.util.VideoProcessorUtil;
+import com.liferay.document.library.kernel.processor.VideoProcessorUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;

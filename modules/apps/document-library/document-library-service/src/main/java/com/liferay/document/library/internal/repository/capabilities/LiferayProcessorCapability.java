@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.internal.repository.capabilities;
 
-import com.liferay.document.library.kernel.util.DLProcessorHelperUtil;
+import com.liferay.document.library.kernel.processor.DLProcessorHelperUtil;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;

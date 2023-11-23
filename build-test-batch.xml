@@ -7217,10 +7217,10 @@ ${output.content}</echo>
 							<try>
 								<start-docker-playwright />
 
-								<gradle-execute dir="${project.dir}/modules/test/playwright" task="npmInstall" />
+								<gradle-execute dir="${playwright.dir}" task="npmInstall" />
 
 								<docker-execute container="${playwright.docker.host}">
-									cd /opt/dev/projects/github/liferay-portal/modules/test/playwright
+									cd ${playwright.dir}
 
 									npx playwright test
 								</docker-execute>
@@ -7230,55 +7230,7 @@ ${output.content}</echo>
 
 								<antcall target="stop-app-server" />
 
-								<beanshell>
-									<![CDATA[
-										import com.liferay.jenkins.results.parser.Dom4JUtil;
-										import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
-										import org.dom4j.Document;
-										import org.dom4j.Element;
-										import org.dom4j.Node;
-
-										String projectDir = project.getProperty("project.dir");
-
-										File testResultsFile = new File(projectDir + "/modules/test/playwright/test-results/TEST-playwright.xml");
-
-										if (!testResultsFile.exists()) {
-											return;
-										}
-
-										String content = JenkinsResultsParserUtil.read(testResultsFile);
-
-										try {
-											Document document = Dom4JUtil.parse(content);
-
-											List nodes = Dom4JUtil.getNodesByXPath(document, "//testsuite");
-
-											if ((nodes != null) && !nodes.isEmpty()) {
-												int i = 1;
-
-												for (Node node : nodes) {
-													if (!(node instanceof Element)) {
-														continue;
-													}
-
-													Element element = (Element)node;
-
-													File partitionedTestResultsFile = new File(projectDir + "/modules/test/playwright/test-results/TEST-playwright" + i + ".xml");
-
-													JenkinsResultsParserUtil.write(partitionedTestResultsFile, Dom4JUtil.format(element));
-
-													i++;
-												}
-											}
-
-											testResultsFile.delete();
-										}
-										catch (Exception exception) {
-											exception.printStackTrace();
-										}
-									]]>
-								</beanshell>
+								<split-testsuites-junit-report test.suites.report.filepath="${playwright.dir}/test-results/TEST-playwright.xml" />
 							</finally>
 						</trycatch>
 					</test-action>

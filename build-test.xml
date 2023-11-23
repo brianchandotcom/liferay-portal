@@ -7283,6 +7283,62 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="split-testsuites-junit-report">
+		<attribute name="test.suites.report.filepath" />
+
+		<sequential>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.Dom4JUtil;
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					import org.dom4j.Document;
+					import org.dom4j.Element;
+					import org.dom4j.Node;
+
+					String testSuitesReportFilePath = "@{test.suites.report.filepath}";
+
+					File testSuitesReportFile = new File(testSuitesReportFilePath);
+
+					if (!testSuitesReportFile.exists()) {
+						return;
+					}
+
+					String content = JenkinsResultsParserUtil.read(testSuitesReportFile);
+
+					try {
+						Document document = Dom4JUtil.parse(content);
+
+						List nodes = Dom4JUtil.getNodesByXPath(document, "//testsuite");
+
+						if ((nodes != null) && !nodes.isEmpty()) {
+							int i = 1;
+
+							for (Node node : nodes) {
+								if (!(node instanceof Element)) {
+									continue;
+								}
+
+								Element element = (Element)node;
+
+								File partitionedTestResultsFile = new File(testSuitesReportFilePath.replace(".xml", i + ".xml"));
+
+								JenkinsResultsParserUtil.write(partitionedTestResultsFile, Dom4JUtil.format(element));
+
+								i++;
+							}
+						}
+
+						testSuitesReportFile.delete();
+					}
+					catch (Exception exception) {
+						exception.printStackTrace();
+					}
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="true" name="delete.liferay.home" />

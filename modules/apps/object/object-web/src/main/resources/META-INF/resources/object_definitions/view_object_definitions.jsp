@@ -22,7 +22,11 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 			).put(
 				"editObjectDefinitionURL", viewObjectDefinitionsDisplayContext.getEditObjectDefinitionURL()
 			).put(
+				"importObjectDefinitionURL", viewObjectDefinitionsDisplayContext.getImportObjectDefinitionURL()
+			).put(
 				"modelBuilderURL", viewObjectDefinitionsDisplayContext.getModelBuilderURL()
+			).put(
+				"nameMaxLength", ModelHintsConstants.TEXT_MAX_LENGTH
 			).put(
 				"objectDefinitionsAPIURL", viewObjectDefinitionsDisplayContext.getAPIURL()
 			).put(
@@ -35,6 +39,8 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 				"objectDefinitionsStorageTypes", viewObjectDefinitionsDisplayContext.getStorageTypesJSONArray()
 			).put(
 				"objectFolderPermissionsURL", viewObjectDefinitionsDisplayContext.getPermissionsURL(ObjectFolder.class.getName())
+			).put(
+				"portletNamespace", liferayPortletResponse.getNamespace()
 			).build()
 		%>'
 	/>

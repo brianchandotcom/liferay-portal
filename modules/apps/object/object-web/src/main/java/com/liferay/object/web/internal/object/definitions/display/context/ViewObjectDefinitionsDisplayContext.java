@@ -147,6 +147,16 @@ public class ViewObjectDefinitionsDisplayContext {
 		return fdsActionDropdownItems;
 	}
 
+	public String getImportObjectDefinitionURL() throws Exception {
+		return PortletURLBuilder.createActionURL(
+			_objectRequestHelper.getLiferayPortletResponse()
+		).setActionName(
+			"/object_definitions/import_object_definition"
+		).setRedirect(
+			_objectRequestHelper.getCurrentURL()
+		).buildString();
+	}
+
 	public String getModelBuilderURL() throws Exception {
 		return PortletURLBuilder.create(
 			getPortletURL()

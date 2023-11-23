@@ -6,10 +6,12 @@
 package com.liferay.commerce.product.type.virtual.order.model.impl;
 
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -23,9 +25,29 @@ public class CommerceVirtualOrderItemImpl
 			getCommerceOrderItemId());
 	}
 
+	public List<CommerceVirtualOrderItemFileEntry>
+		getCommerceVirtualOrderItemFileEntries() {
+
+		return CommerceVirtualOrderItemFileEntryLocalServiceUtil.
+			getCommerceVirtualOrderItemFileEntries(
+				getCommerceVirtualOrderItemId());
+	}
+
+	public int getCommerceVirtualOrderItemFileEntriesCount() {
+		return CommerceVirtualOrderItemFileEntryLocalServiceUtil.
+			getCommerceVirtualOrderItemFileEntriesCount(
+				getCommerceVirtualOrderItemId());
+	}
+
 	@Override
-	public FileEntry getFileEntry() throws PortalException {
-		return DLAppLocalServiceUtil.getFileEntry(getFileEntryId());
+	public CommerceVirtualOrderItemFileEntry
+			getCommerceVirtualOrderItemFileEntry(
+				long commerceVirtualOrderItemFileEntryId)
+		throws PortalException {
+
+		return CommerceVirtualOrderItemFileEntryLocalServiceUtil.
+			getCommerceVirtualOrderItemFileEntry(
+				commerceVirtualOrderItemFileEntryId);
 	}
 
 }

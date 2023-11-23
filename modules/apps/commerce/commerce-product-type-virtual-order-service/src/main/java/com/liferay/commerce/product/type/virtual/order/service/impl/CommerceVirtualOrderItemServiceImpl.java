@@ -75,7 +75,11 @@ public class CommerceVirtualOrderItemServiceImpl
 	}
 
 	@Override
-	public File getFile(long commerceVirtualOrderItemId) throws Exception {
+	public File getFile(
+			long commerceVirtualOrderItemId,
+			long commerceVirtualOrderItemFileEntryId)
+		throws Exception {
+
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -88,7 +92,7 @@ public class CommerceVirtualOrderItemServiceImpl
 				DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM);
 
 		File file = commerceVirtualOrderItemLocalService.getFile(
-			commerceVirtualOrderItemId);
+			commerceVirtualOrderItemId, commerceVirtualOrderItemFileEntryId);
 
 		if (!permissionChecker.isCompanyAdmin() ||
 			!permissionChecker.isGroupAdmin(
@@ -104,9 +108,8 @@ public class CommerceVirtualOrderItemServiceImpl
 
 	@Override
 	public CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
-			long commerceVirtualOrderItemId, long fileEntryId, String url,
-			int activationStatus, long duration, int usages, int maxUsages,
-			boolean active)
+			long commerceVirtualOrderItemId, int activationStatus,
+			long duration, int usages, int maxUsages, boolean active)
 		throws PortalException {
 
 		CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -122,8 +125,8 @@ public class CommerceVirtualOrderItemServiceImpl
 
 		return commerceVirtualOrderItemLocalService.
 			updateCommerceVirtualOrderItem(
-				commerceVirtualOrderItemId, fileEntryId, url, activationStatus,
-				duration, usages, maxUsages, active);
+				commerceVirtualOrderItemId, activationStatus, duration, usages,
+				maxUsages, active);
 	}
 
 	@Reference(

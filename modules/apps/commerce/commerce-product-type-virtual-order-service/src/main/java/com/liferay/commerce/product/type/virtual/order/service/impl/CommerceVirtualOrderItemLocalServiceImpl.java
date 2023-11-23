@@ -11,16 +11,15 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
-import com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemFileEntryIdException;
-import com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemUrlException;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalService;
 import com.liferay.commerce.product.type.virtual.order.service.base.CommerceVirtualOrderItemLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +60,8 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 
 	@Override
 	public CommerceVirtualOrderItem addCommerceVirtualOrderItem(
-			long commerceOrderItemId, long fileEntryId, String url,
+			long commerceOrderItemId,
+			List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries,
 			int activationStatus, long duration, int usages, int maxUsages,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -76,12 +75,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-		if (Validator.isNotNull(url)) {
-			fileEntryId = 0;
-		}
-
-		_validate(fileEntryId, url);
-
 		long commerceVirtualOrderItemId = counterLocalService.increment();
 
 		CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -93,8 +86,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		commerceVirtualOrderItem.setUserId(user.getUserId());
 		commerceVirtualOrderItem.setUserName(user.getFullName());
 		commerceVirtualOrderItem.setCommerceOrderItemId(commerceOrderItemId);
-		commerceVirtualOrderItem.setFileEntryId(fileEntryId);
-		commerceVirtualOrderItem.setUrl(url);
 		commerceVirtualOrderItem.setActivationStatus(activationStatus);
 		commerceVirtualOrderItem.setDuration(duration);
 		commerceVirtualOrderItem.setUsages(usages);
@@ -110,8 +101,22 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 				commerceVirtualOrderItem);
 		}
 
-		return commerceVirtualOrderItemPersistence.update(
+		commerceVirtualOrderItem = commerceVirtualOrderItemPersistence.update(
 			commerceVirtualOrderItem);
+
+		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
+				cpdVirtualSettingFileEntries) {
+
+			_commerceVirtualOrderItemFileEntryLocalService.
+				addCommerceVirtualOrderItemFileEntry(
+					user.getUserId(), groupId,
+					commerceVirtualOrderItem.getCommerceVirtualOrderItemId(),
+					cpdVirtualSettingFileEntry.getFileEntryId(),
+					cpdVirtualSettingFileEntry.getUrl(),
+					cpdVirtualSettingFileEntry.getVersion());
+		}
+
+		return commerceVirtualOrderItem;
 	}
 
 	@Override
@@ -142,14 +147,14 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		if (cpDefinitionVirtualSetting == null) {
 			return commerceVirtualOrderItemLocalService.
 				addCommerceVirtualOrderItem(
-					commerceOrderItemId, 0, null,
+					commerceOrderItemId, null,
 					CommerceOrderConstants.ORDER_STATUS_COMPLETED, 0, 0, 0,
 					serviceContext);
 		}
 
 		return commerceVirtualOrderItemLocalService.addCommerceVirtualOrderItem(
-			commerceOrderItemId, cpDefinitionVirtualSetting.getFileEntryId(),
-			cpDefinitionVirtualSetting.getUrl(),
+			commerceOrderItemId,
+			cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries(),
 			cpDefinitionVirtualSetting.getActivationStatus(),
 			cpDefinitionVirtualSetting.getDuration(), 0,
 			cpDefinitionVirtualSetting.getMaxUsages(), serviceContext);
@@ -219,26 +224,32 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 	}
 
 	@Override
-	public File getFile(long commerceVirtualOrderItemId) throws Exception {
+	public File getFile(
+			long commerceVirtualOrderItemId,
+			long commerceVirtualOrderItemFileEntryId)
+		throws Exception {
+
 		CommerceVirtualOrderItem commerceVirtualOrderItem =
 			commerceVirtualOrderItemPersistence.findByPrimaryKey(
 				commerceVirtualOrderItemId);
 
-		CommerceOrderItem commerceOrderItem =
-			commerceVirtualOrderItem.getCommerceOrderItem();
+		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
+			commerceVirtualOrderItem.getCommerceVirtualOrderItemFileEntry(
+				commerceVirtualOrderItemFileEntryId);
 
 		InputStream contentInputStream;
 		String extension = StringPool.BLANK;
 
-		if (commerceVirtualOrderItem.getFileEntryId() > 0) {
-			FileEntry fileEntry = commerceVirtualOrderItem.getFileEntry();
+		if (commerceVirtualOrderItemFileEntry.getFileEntryId() > 0) {
+			FileEntry fileEntry =
+				commerceVirtualOrderItemFileEntry.getFileEntry();
 
 			contentInputStream = fileEntry.getContentStream();
 
 			extension = fileEntry.getExtension();
 		}
 		else {
-			URL url = new URL(commerceVirtualOrderItem.getUrl());
+			URL url = new URL(commerceVirtualOrderItemFileEntry.getUrl());
 
 			contentInputStream = url.openStream();
 
@@ -253,6 +264,9 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 				extension = iterator.next();
 			}
 		}
+
+		CommerceOrderItem commerceOrderItem =
+			commerceVirtualOrderItem.getCommerceOrderItem();
 
 		File tempFile = _file.createTempFile(contentInputStream);
 
@@ -303,9 +317,8 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 
 	@Override
 	public CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
-			long commerceVirtualOrderItemId, long fileEntryId, String url,
-			int activationStatus, long duration, int usages, int maxUsages,
-			boolean active)
+			long commerceVirtualOrderItemId, int activationStatus,
+			long duration, int usages, int maxUsages, boolean active)
 		throws PortalException {
 
 		CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -318,14 +331,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-		if (Validator.isNotNull(url)) {
-			fileEntryId = 0;
-		}
-
-		_validate(fileEntryId, url);
-
-		commerceVirtualOrderItem.setFileEntryId(fileEntryId);
-		commerceVirtualOrderItem.setUrl(url);
 		commerceVirtualOrderItem.setActivationStatus(activationStatus);
 
 		if (duration > commerceVirtualOrderItem.getDuration()) {
@@ -433,23 +438,6 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		return commerceVirtualOrderItem;
 	}
 
-	private void _validate(long fileEntryId, String url)
-		throws PortalException {
-
-		if (fileEntryId > 0) {
-			try {
-				_dlAppLocalService.getFileEntry(fileEntryId);
-			}
-			catch (NoSuchFileEntryException noSuchFileEntryException) {
-				throw new CommerceVirtualOrderItemFileEntryIdException(
-					noSuchFileEntryException);
-			}
-		}
-		else if ((fileEntryId < 0) && Validator.isNull(url)) {
-			throw new CommerceVirtualOrderItemUrlException();
-		}
-	}
-
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
@@ -458,11 +446,12 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		_commerceSubscriptionEntryLocalService;
 
 	@Reference
-	private CPDefinitionVirtualSettingLocalService
-		_cpDefinitionVirtualSettingLocalService;
+	private CommerceVirtualOrderItemFileEntryLocalService
+		_commerceVirtualOrderItemFileEntryLocalService;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private CPDefinitionVirtualSettingLocalService
+		_cpDefinitionVirtualSettingLocalService;
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;

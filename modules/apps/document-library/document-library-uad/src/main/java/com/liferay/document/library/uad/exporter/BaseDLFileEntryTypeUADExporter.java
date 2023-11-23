@@ -53,14 +53,6 @@ public abstract class BaseDLFileEntryTypeUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>fileEntryTypeId</column-name><column-value><![CDATA[");
-		sb.append(dlFileEntryType.getFileEntryTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(dlFileEntryType.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(dlFileEntryType.getUserName());
 		sb.append("]]></column-value></column>");

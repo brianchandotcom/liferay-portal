@@ -10,7 +10,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		...otherProps,
 		onCreationMenuItemClick: (event, {item}) => {
 			if (item?.data?.action === 'openAICreateImage') {
-				if (!item?.data?.aiCreatorDALLEEnabled) {
+				if (!item?.data?.isAICreatorOpenAIAPIKey) {
 					Liferay.componentReady(
 						`${portletNamespace}ItemSelectorRepositoryEntryBrowserConfigureAIModal`
 					).then((configureAIModal) => {

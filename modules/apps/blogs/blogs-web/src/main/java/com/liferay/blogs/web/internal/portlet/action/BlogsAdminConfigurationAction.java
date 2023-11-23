@@ -51,7 +51,10 @@ public class BlogsAdminConfigurationAction
 		if (Validator.isNotNull(cmd)) {
 			validateEmail(actionRequest, "emailEntryAdded");
 			validateEmail(actionRequest, "emailEntryUpdated");
-			validateEmailFrom(actionRequest);
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
+				validateEmailFrom(actionRequest);
+			}
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);

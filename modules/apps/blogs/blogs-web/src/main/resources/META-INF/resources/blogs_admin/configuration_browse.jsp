@@ -74,12 +74,10 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="redirect" type="hidden" value="<%= blogsConfigurationDisplayContext.getRedirect() %>" />
 
-					<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-					<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-					<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
-					<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
-					<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
-					<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailEntryAddedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error embed="<%= false %>" key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error embed="<%= false %>" key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
 
 					<%
 					Map<String, String> emailDefinitionTerms = BlogsUtil.getEmailDefinitionTerms(renderRequest, blogsGroupServiceSettings.getEmailFromAddress(), blogsGroupServiceSettings.getEmailFromName());

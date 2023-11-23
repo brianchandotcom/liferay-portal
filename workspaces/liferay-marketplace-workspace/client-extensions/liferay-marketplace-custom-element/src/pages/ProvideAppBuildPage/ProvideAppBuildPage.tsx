@@ -19,6 +19,7 @@ import {DropzoneUpload} from '../../components/DropzoneUpload/DropzoneUpload';
 import {FileList, UploadedFile} from '../../components/FileList/FileList';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
+import {PackageVersionModal} from '../../components/PackageVersionModal/PackageVersionModal';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
@@ -57,7 +58,8 @@ interface ProvideAppBuildPageProps {
 }
 
 const acceptFileTypes = {
-	'application/zip': ['.zip'],
+	'application/jar': ['.jar'],
+	'application/war': ['.war'],
 };
 
 export function ProvideAppBuildPage({
@@ -71,6 +73,8 @@ export function ProvideAppBuildPage({
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		Array<string>
 	>([]);
+	const [selectedVersions, setSelectedVersions] = useState<string[]>([]);
+	const [visibleModal, setVisibleModal] = useState(false);
 
 	const handleSelectCheckbox = (offeringTypelabel: string) => {
 		setSelectedCheckboxValue((prevValue) =>
@@ -83,7 +87,6 @@ export function ProvideAppBuildPage({
 	useEffect(() => {
 		setSelectedCheckboxValue([]);
 	}, [appType.value]);
-	const [visible, setVisible] = useState(false);
 
 	const handleUpload = (files: File[]) => {
 		const newUploadedFiles: UploadedFile[] = files.map((file) => ({
@@ -418,12 +421,19 @@ export function ProvideAppBuildPage({
 				)}
 				tooltipText={i18n.translate('more-info')}
 			>
-				<ClayButton className="btn-block provide-app-build-page-add-package-button" displayType="secondary" onClick={() => setVisible(true)}>
+				<ClayButton className="btn-block provide-app-build-page-add-package-button" displayType="secondary" onClick={() => setVisibleModal(true)}>
 					<ClayIcon className="mr-1" symbol="plus" />
 					Add Package(s)
 				</ClayButton>
 				
-				{visible && "Shows the Modal"}
+				{visibleModal && 
+					<PackageVersionModal 
+						appERC={appERC}
+						currentVersions={selectedVersions}
+						handleClose={() => setVisibleModal(false)}
+						handleConfirm={setSelectedVersions}
+					/>
+				}
 				<FileList
 					onDelete={handleDelete}
 					type="document"

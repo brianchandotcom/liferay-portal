@@ -17,6 +17,7 @@ import {
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
 import {DragTypes} from '../../utils/drag-types';
+import {TYPE_ICONS} from '../../utils/typeIcons';
 import {
 	createNewGroup,
 	getSupportedOperatorsFromType,
@@ -127,8 +128,23 @@ function drop(props, monitor) {
  * @param {Object} props Component's current props
  * @returns {Object} The props to be passed to the drop target.
  */
-function beginDrag({criterion, groupId, index, propertyKey}) {
-	return {criterion, groupId, index, propertyKey};
+function beginDrag({
+	criterion,
+	groupId,
+	index,
+	propertyKey,
+	supportedProperties,
+}) {
+	const item = getSelectedItem(supportedProperties, criterion.propertyName);
+
+	return {
+		criterion,
+		groupId,
+		icon: item.icon || TYPE_ICONS[item.type] || 'text',
+		index,
+		name: item.label,
+		propertyKey,
+	};
 }
 
 /**
@@ -326,39 +342,37 @@ function CriteriaRow({
 	return (
 		<>
 			{connectDropTarget(
-				connectDragPreview(
-					<div
-						className={classNames('criterion-row-root', {
-							'criterion-row-root-error': error,
-							'criterion-row-root-warning': warning,
-							'dnd-drag': dragging,
-							'dnd-hover': hover && canDrop,
-						})}
-					>
-						{editing ? (
-							<CriteriaRowEditable
-								connectDragSource={connectDragSource}
-								criterion={criterion}
-								error={error}
-								index={index}
-								onAdd={onAdd}
-								onChange={onChange}
-								onDelete={onDelete}
-								renderEmptyValuesErrors={
-									renderEmptyValuesErrors
-								}
-								selectedOperator={selectedOperator}
-								selectedProperty={selectedProperty}
-							/>
-						) : (
-							<CriteriaRowReadable
-								criterion={criterion}
-								selectedOperator={selectedOperator}
-								selectedProperty={selectedProperty}
-							/>
-						)}
-					</div>
-				)
+				<div
+					className={classNames('criterion-row-root', {
+						'criterion-row-root-error': error,
+						'criterion-row-root-warning': warning,
+						'dnd-drag': dragging,
+						'dnd-hover': hover && canDrop,
+					})}
+				>
+					{editing ? (
+						<CriteriaRowEditable
+							connectDragSource={connectDragSource}
+							criterion={criterion}
+							error={error}
+							index={index}
+							onAdd={onAdd}
+							onChange={onChange}
+							onDelete={onDelete}
+							renderEmptyValuesErrors={renderEmptyValuesErrors}
+							selectedOperator={selectedOperator}
+							selectedProperty={selectedProperty}
+						/>
+					) : (
+						<CriteriaRowReadable
+							criterion={criterion}
+							selectedOperator={selectedOperator}
+							selectedProperty={selectedProperty}
+						/>
+					)}
+
+					{connectDragPreview(<div />)}
+				</div>
 			)}
 			{error &&
 				_renderErrorMessages({

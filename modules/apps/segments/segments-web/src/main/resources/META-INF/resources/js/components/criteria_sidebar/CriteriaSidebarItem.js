@@ -17,6 +17,7 @@ import {TYPE_ICONS} from '../../utils/typeIcons';
 
 function CriteriaSidebarItem({
 	className,
+	connectDragPreview,
 	connectDragSource,
 	dragging,
 	icon,
@@ -50,6 +51,8 @@ function CriteriaSidebarItem({
 			</span>
 
 			{label}
+
+			{connectDragPreview(<div />)}
 		</li>
 	);
 }
@@ -72,13 +75,15 @@ CriteriaSidebarItem.propTypes = {
  * @param {Object} props Component's current props
  * @returns {Object} The props to be passed to the drop target.
  */
-function beginDrag({defaultValue, name, propertyKey, type}) {
+function beginDrag({defaultValue, icon, label, name, propertyKey, type}) {
 	return {
 		criterion: {
 			defaultValue,
 			propertyName: name,
 			type,
 		},
+		icon: icon || TYPE_ICONS[type] || 'text',
+		name: label,
 		propertyKey,
 	};
 }
@@ -89,6 +94,7 @@ export default dragSource(
 		beginDrag,
 	},
 	(connect, monitor) => ({
+		connectDragPreview: connect.dragPreview(),
 		connectDragSource: connect.dragSource(),
 		dragging: monitor.isDragging(),
 	})

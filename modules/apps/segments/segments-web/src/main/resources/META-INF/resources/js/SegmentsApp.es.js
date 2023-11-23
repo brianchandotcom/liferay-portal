@@ -3,17 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {DragPreview} from '@liferay/layout-js-components-web';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import ThemeContext from './ThemeContext.es';
 import SegmentEdit from './components/segment_edit/SegmentEdit';
 
 export default function ({context, props}) {
 	return (
-		<ThemeContext.Provider value={context}>
-			<div className="segments-root">
-				<SegmentEdit {...props} />
-			</div>
-		</ThemeContext.Provider>
+		<DndProvider backend={HTML5Backend}>
+			<ThemeContext.Provider value={context}>
+				<div className="segments-root">
+					<DragPreview />
+
+					<SegmentEdit {...props} />
+				</div>
+			</ThemeContext.Provider>
+		</DndProvider>
 	);
 }

@@ -244,7 +244,7 @@ function CriteriaGroup({
 		isDragging ||
 		(draggingItem && draggingItem.propertyKey !== propertyKey);
 
-	return connectDragPreview(
+	return (
 		<div
 			className={classNames(
 				{
@@ -256,6 +256,8 @@ function CriteriaGroup({
 				}`
 			)}
 		>
+			{connectDragPreview(<div />)}
+
 			{_isCriteriaEmpty() ? (
 				<EmptyDropZone
 					emptyContributors={emptyContributors}

@@ -7,8 +7,8 @@ package com.liferay.customer;
 
 import com.liferay.customer.object.model.TicketAttachment;
 import com.liferay.customer.object.service.TicketAttachmentWebService;
-import com.liferay.customer.zendesk.model.ZendeskUser;
-import com.liferay.customer.zendesk.service.ZendeskWebService;
+import com.liferay.osb.client.extension.util.zendesk.model.ZendeskUser;
+import com.liferay.osb.client.extension.util.zendesk.service.ZendeskWebService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Amos Fong
  */
+@ComponentScan(basePackages = "com.liferay.osb")
 @RequestMapping("/ticket-attachments/{ticketAttachmentId}/complete-upload")
 @RestController
 public class TicketAttachmentsCompleteUploadRestController

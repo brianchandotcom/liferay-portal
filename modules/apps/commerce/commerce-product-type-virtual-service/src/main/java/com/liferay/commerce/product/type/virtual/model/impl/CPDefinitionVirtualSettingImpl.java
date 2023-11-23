@@ -5,11 +5,15 @@
 
 package com.liferay.commerce.product.type.virtual.model.impl;
 
+import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
+import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -18,13 +22,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 public class CPDefinitionVirtualSettingImpl
 	extends CPDefinitionVirtualSettingBaseImpl {
 
-	@Override
-	public FileEntry getFileEntry() throws PortalException {
-		if (isUseUrl()) {
-			return null;
-		}
-
-		return DLAppLocalServiceUtil.getFileEntry(getFileEntryId());
+	public List<CPDVirtualSettingFileEntry> getCPDVirtualSettingFileEntries() {
+		return CPDVirtualSettingFileEntryLocalServiceUtil.
+			getCPDVirtualSettingFileEntries(getCPDefinitionVirtualSettingId());
 	}
 
 	@Override
@@ -62,15 +62,6 @@ public class CPDefinitionVirtualSettingImpl
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isUseUrl() {
-		if (getFileEntryId() > 0) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

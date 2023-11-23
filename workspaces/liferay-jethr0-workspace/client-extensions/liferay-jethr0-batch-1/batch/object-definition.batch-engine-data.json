@@ -126,18 +126,19 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Branch Name"
+						"en_US": "Branch SHA"
 					},
-					"name": "branchName",
+					"name": "branchSHA",
 					"type": "String"
 				},
 				{
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Branch SHA"
+						"en_US": "Branch URL"
 					},
-					"name": "branchSHA",
+					"name": "branchURL",
+					"required": true,
 					"type": "String"
 				},
 				{
@@ -165,24 +166,6 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Repository Name"
-					},
-					"name": "repositoryName",
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Upstream Branch Name"
-					},
-					"name": "upstreamBranchName",
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
 						"en_US": "Upstream Branch SHA"
 					},
 					"name": "upstreamBranchSHA",
@@ -192,9 +175,9 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "URL"
+						"en_US": "Upstream Branch URL"
 					},
-					"name": "url",
+					"name": "upstreamBranchURL",
 					"required": true,
 					"type": "String"
 				}

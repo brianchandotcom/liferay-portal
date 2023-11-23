@@ -828,6 +828,97 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectActionWithInfiniteLoop() throws Exception {
+
+		// Create related object actions to test infinite loop handling
+
+		_publishCustomObjectDefinition();
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
+			"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
+		).put(
+			"predefinedValues",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"inputAsValue", true
+				).put(
+					"name", "firstName"
+				).put(
+					"value", "Peter"
+				),
+				JSONUtil.put(
+					"inputAsValue", true
+				).put(
+					"name", "lastName"
+				).put(
+					"value", "White"
+				),
+				JSONUtil.put(
+					"inputAsValue", true
+				).put(
+					"name", "time"
+				).put(
+					"value", "2023-06-01 06:42:08.0"
+				)
+			).toString()
+		).build();
+
+		ObjectAction objectAction6 = _addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, unicodeProperties,
+			false);
+		ObjectAction objectAction7 = _addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, unicodeProperties,
+			false);
+
+		// Add object entry
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user));
+			PrincipalThreadLocal.setName(_user.getUserId());
+
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				_objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "John"
+				).put(
+					"lastName", "Smith"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+
+		// Related object actions must be executed correctly
+		// to avoid infinite loop
+
+		objectAction6 = _objectActionLocalService.getObjectAction(
+			objectAction6.getObjectActionId());
+		objectAction7 = _objectActionLocalService.getObjectAction(
+			objectAction7.getObjectActionId());
+
+		Assert.assertEquals(
+			objectAction6.getStatus(), ObjectActionConstants.STATUS_SUCCESS);
+		Assert.assertEquals(
+			objectAction7.getStatus(), ObjectActionConstants.STATUS_SUCCESS);
+
+		_objectActionLocalService.deleteObjectAction(objectAction6);
+		_objectActionLocalService.deleteObjectAction(objectAction7);
+	}
+
+	@Test
 	public void testAddObjectActionWithMoreThanOneObjectEntry()
 		throws Exception {
 

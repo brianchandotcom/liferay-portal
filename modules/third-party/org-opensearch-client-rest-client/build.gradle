@@ -81,6 +81,9 @@ patch {
 	ext {
 		autoClean = false
 	}
+	fileNames "org/opensearch/client/RestClient.java"
+
+	originalLibModuleName = "opensearch-rest-client"
 }
 
 unzip {

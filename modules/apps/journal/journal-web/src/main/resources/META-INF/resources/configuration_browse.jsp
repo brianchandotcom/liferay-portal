@@ -14,6 +14,7 @@ Map<String, String> emailDefinitionTerms = journalConfigurationDisplayContext.ge
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
+portletDisplay.setURLBackTitle("web-content");
 %>
 
 <clay:container-fluid

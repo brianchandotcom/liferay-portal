@@ -9,6 +9,8 @@ definition {
 
 	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
 		task ("Set up virtual instance") {
 			TestCase.setUpPortalInstance();
@@ -746,6 +748,189 @@ definition {
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Image",
 				position = 4);
+		}
+	}
+
+	@description = "This is a test for LPS-195827. Via keyboard navigation, it is possible to select redirect to Display Page Template as a successful object action."
+	@priority = 3
+	test SelectGoToEntryDisplayPageAsSuccessInteractionViaKeyboard {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a page creator has a standalone action") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Students");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Student");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Student");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Teacher",
+				objectName = "Teacher",
+				pluralLabelName = "Teachers");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Subject",
+				fieldName = "subject",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Teacher");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Teacher");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Student");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Vote",
+				active = "true",
+				errorMessage = "You don't have permissions.",
+				fieldName = "Subject",
+				inputExpressionValue = "name",
+				inputMethod = "false",
+				objectLabel = "Teacher",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = "Student",
+				value = "Jack");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Student",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Student (Default)");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator maps the standalone action to Button fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorAction.gotoEditableFieldAction(
+				className = "btn",
+				fragmentName = "Button",
+				id = "action");
+		}
+
+		task ("Then the page creator could select the Go to Entry Display Page as success interaction via keyboard") {
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = ${objectEntryId},
+				navItem = "Students",
+				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId}')]");
+
+			PageEditor.configureFragment(action = "Vote");
+
+			KeyPress(
+				key_fieldLabel = "Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_fieldLabel = "Success Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_fieldLabel = "Success Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_fieldLabel = "Success Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_fieldLabel = "Success Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_fieldLabel = "Success Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_fieldLabel = "Success Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\ENTER");
+
+			PageEditor.waitForAutoSave();
+
+			KeyPress(
+				key_fieldLabel = "Success Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_fieldLabel = "Display Page",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_fieldLabel = "Display Page",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_fieldLabel = "Display Page",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_fieldLabel = "Display Page",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\ENTER");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator triggers the standalone action") {
+			Button.click(button = "Go Somewhere");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page creator should be redirected to entry display page") {
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+
+			InputField.viewText(
+				fieldLabel = "Name",
+				text = "Jack");
 		}
 	}
 

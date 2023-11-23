@@ -417,6 +417,11 @@
 		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#7#, param#8#, null, null, param#9#)"
 	},
 	{
+		"from": "ServiceTrackerList<Class<T>, Class<E>>",
+		"issueKey": "LPS-195079",
+		"to": "ServiceTrackerList<typeParam#1#>"
+	},
+	{
 		"classNames": [
 			"PortletDisplay"
 		],

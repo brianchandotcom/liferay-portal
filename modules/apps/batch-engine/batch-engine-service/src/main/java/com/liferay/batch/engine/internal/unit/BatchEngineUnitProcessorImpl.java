@@ -68,6 +68,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		Collection<BatchEngineUnit> batchEngineUnits) {
 
 		List<CompletableFuture<Void>> completableFutures = new ArrayList<>();
+		CompletableFuture<Void> previousCompletableFuture = null;
 
 		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
@@ -80,16 +81,20 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 					_featureFlagBatchEngineUnitProcessor.
 						registerBatchEngineUnit(
 							batchEngineUnitMetaInfo.getCompanyId(), featureFlag,
-							() -> _processBatchEngineUnit(batchEngineUnit));
+							() -> _processBatchEngineUnit(
+								batchEngineUnit, null));
 
 					continue;
 				}
 
 				CompletableFuture<Void> completableFuture =
-					_processBatchEngineUnit(batchEngineUnit);
+					_processBatchEngineUnit(
+						batchEngineUnit, previousCompletableFuture);
 
 				if (completableFuture != null) {
 					completableFutures.add(completableFuture);
+
+					previousCompletableFuture = completableFuture;
 				}
 
 				if (_log.isInfoEnabled()) {
@@ -119,7 +124,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	private CompletableFuture<Void> _execute(
 			BatchEngineUnit batchEngineUnit,
 			BatchEngineUnitConfiguration batchEngineUnitConfiguration,
-			byte[] content, String contentType)
+			byte[] content, String contentType,
+			CompletableFuture<Void> previousCompletableFuture)
 		throws Exception {
 
 		CompletableFuture<Void> completableFuture = new CompletableFuture<>();
@@ -171,7 +177,13 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 			};
 
-		serviceTracker.open();
+		if (previousCompletableFuture != null) {
+			previousCompletableFuture.thenAccept(
+				result -> serviceTracker.open());
+		}
+		else {
+			serviceTracker.open();
+		}
 
 		return completableFuture;
 	}
@@ -203,6 +215,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchEngineTaskItemDelegate);
 
 		try {
+			BatchEngineUnitThreadLocal.setDataFileName(
+				batchEngineUnit.getDataFileName());
 			BatchEngineUnitThreadLocal.setFileName(
 				batchEngineUnit.getFileName());
 
@@ -211,6 +225,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchEngineUnitConfiguration.isCheckPermissions());
 		}
 		finally {
+			BatchEngineUnitThreadLocal.setDataFileName(StringPool.BLANK);
 			BatchEngineUnitThreadLocal.setFileName(StringPool.BLANK);
 		}
 
@@ -312,7 +327,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	}
 
 	private CompletableFuture<Void> _processBatchEngineUnit(
-			BatchEngineUnit batchEngineUnit)
+			BatchEngineUnit batchEngineUnit,
+			CompletableFuture<Void> previousCompletableFuture)
 		throws Exception {
 
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration = null;
@@ -355,8 +371,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 
 		return _execute(
-			batchEngineUnit, batchEngineUnitConfiguration, content,
-			contentType);
+			batchEngineUnit, batchEngineUnitConfiguration, content, contentType,
+			previousCompletableFuture);
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(

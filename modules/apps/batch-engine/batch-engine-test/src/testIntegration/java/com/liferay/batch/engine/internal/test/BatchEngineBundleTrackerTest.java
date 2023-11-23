@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -27,7 +28,10 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,24 +68,48 @@ public class BatchEngineBundleTrackerTest {
 
 	@Test
 	public void testProcessBatchEngineBundle() throws Exception {
-		_testProcessBatchEngineBundle("batch1", 1);
-		_testProcessBatchEngineBundle("batch2", 0);
-		_testProcessBatchEngineBundle("batch3", 2);
-		_testProcessBatchEngineBundle("batch4", 3);
-		_testProcessBatchEngineBundle("batch5", 1);
-		_testProcessBatchEngineBundle("batch6", 2);
-		_testProcessBatchEngineBundle("batch7", 1);
-		_testProcessBatchEngineBundle("batch8", 3);
+		_testProcessBatchEngineBundle(
+			"batch1", 1, Arrays.asList("/batch1/export.json"));
+		_testProcessBatchEngineBundle("batch2", 0, Arrays.asList());
+		_testProcessBatchEngineBundle(
+			"batch3", 2,
+			Arrays.asList(
+				"/batch3/batch1/export.json", "/batch3/batch2/export.json"));
+		_testProcessBatchEngineBundle(
+			"batch4", 3,
+			Arrays.asList(
+				"/batch4/batch1/export.json", "/batch4/batch2/export.json",
+				"/batch4/batch2/batch3/export.json"));
+		_testProcessBatchEngineBundle(
+			"batch5", 1, Arrays.asList("/batch5/data.batch-engine-data.json"));
+		_testProcessBatchEngineBundle(
+			"batch6", 2,
+			Arrays.asList(
+				"/batch6/data1.batch-engine-data.json",
+				"/batch6/data2.batch-engine-data.json"));
+		_testProcessBatchEngineBundle(
+			"batch7", 1, Arrays.asList("/batch7/export.json"));
+		_testProcessBatchEngineBundle(
+			"batch8", 3,
+			Arrays.asList(
+				"/batch8/data1.batch-engine-data.json",
+				"/batch8/data2.batch-engine-data.json",
+				"/batch8/data3.batch-engine-data.json"));
 
-		_testProcessBatchEngineBundle("batch9", 1);
+		_testProcessBatchEngineBundle(
+			"batch9", 1, Arrays.asList("/batch9/data.batch-engine-data.json"));
 
 		_company = CompanyTestUtil.addCompany();
 
-		_testProcessBatchEngineBundle("batch9", 2);
+		_testProcessBatchEngineBundle(
+			"batch9", 2,
+			Arrays.asList(
+				"/batch9/data.batch-engine-data.json",
+				"/batch9/data.batch-engine-data.json"));
 	}
 
 	private void _testProcessBatchEngineBundle(
-			String dirName, int expectedCount)
+			String dirName, int expectedCount, List<String> dataFilesExpected)
 		throws Exception {
 
 		Class<?> clazz = _batchEngineImportTaskExecutor.getClass();
@@ -96,6 +124,7 @@ public class BatchEngineBundleTrackerTest {
 		promise.getValue();
 
 		IntegerWrapper actualCount = new IntegerWrapper();
+		List<String> dataFilesProcessed = new CopyOnWriteArrayList<>();
 
 		ServiceRegistration<BatchEngineImportTaskExecutor> serviceRegistration =
 			_bundleContext.registerService(
@@ -107,6 +136,8 @@ public class BatchEngineBundleTrackerTest {
 						BatchEngineImportTask batchEngineImportTask) {
 
 						actualCount.increment();
+						dataFilesProcessed.add(
+							BatchEngineUnitThreadLocal.getDataFileName());
 					}
 
 					@Override
@@ -117,6 +148,8 @@ public class BatchEngineBundleTrackerTest {
 						boolean checkPermissions) {
 
 						actualCount.increment();
+						dataFilesProcessed.add(
+							BatchEngineUnitThreadLocal.getDataFileName());
 					}
 
 				},
@@ -131,6 +164,17 @@ public class BatchEngineBundleTrackerTest {
 			Thread.sleep(2000);
 
 			Assert.assertEquals(expectedCount, actualCount.getValue());
+
+			Assert.assertTrue(
+				StringBundler.concat(
+					"Expected ", dataFilesExpected.size(), " was ",
+					dataFilesProcessed.size()),
+				dataFilesExpected.size() == dataFilesProcessed.size());
+			Assert.assertTrue(
+				StringBundler.concat(
+					"Expected ", dataFilesExpected, " was ",
+					dataFilesProcessed),
+				dataFilesExpected.containsAll(dataFilesProcessed));
 
 			bundle.stop();
 

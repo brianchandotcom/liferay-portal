@@ -56,18 +56,6 @@ public abstract class BaseKaleoTaskInstanceTokenUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>kaleoTaskInstanceTokenId</column-name><column-value><![CDATA[");
-		sb.append(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>completionUserId</column-name><column-value><![CDATA[");
-		sb.append(kaleoTaskInstanceToken.getCompletionUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(kaleoTaskInstanceToken.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(kaleoTaskInstanceToken.getUserName());
 		sb.append("]]></column-value></column>");

@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -871,6 +872,15 @@ public class JournalManagementToolbarDisplayContext
 								"/edit_article.jsp"
 							).setRedirect(
 								PortalUtil.getCurrentURL(httpServletRequest)
+							).setParameter(
+								"backURLTitle",
+								() -> {
+									PortletDisplay portletDisplay =
+										_themeDisplay.getPortletDisplay();
+
+									return portletDisplay.
+										getPortletDisplayName();
+								}
 							).setParameter(
 								"ddmStructureId", ddmStructure.getStructureId()
 							).setParameter(

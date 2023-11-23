@@ -31,6 +31,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -58,6 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscountRel",
 	service = AopService.class
 )
+@CTAware
 public class CommerceDiscountRelLocalServiceImpl
 	extends CommerceDiscountRelLocalServiceBaseImpl {
 

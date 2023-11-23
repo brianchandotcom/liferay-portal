@@ -1,0 +1,16 @@
+.license-card {
+	&-container {
+		border: 1px solid #e2e2e4;
+		border-radius: 10px;
+	}
+
+	&-input {
+		border-radius: 8px !important;
+		border: 1px solid var(--neutral-07, #6c6c75);
+
+		&.disabled {
+			border: 1px solid var(--neutral-03, #c9c9cf);
+			background: var(--neutral-01, #f7f7f8);
+		}
+	}
+}

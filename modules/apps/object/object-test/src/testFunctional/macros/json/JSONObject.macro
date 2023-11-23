@@ -1085,6 +1085,9 @@ definition {
 		if (${entryValue} == "") {
 			var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'] empty true)]['id']");
 		}
+		else if (${entryValue} == "null") {
+			var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'] == null)]['id']");
+		}
 		else {
 			var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");
 		}

@@ -219,41 +219,64 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 		}
 	}
 
+	private synchronized List<String> _getCurrentBranchFileNames(
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		if (_currentBranchFileNames != null) {
+			return _currentBranchFileNames;
+		}
+
+		_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName());
+
+		return _currentBranchFileNames;
+	}
+
 	private boolean _hasMajorVersionBump(
 			String absolutePath, SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
-		ArtifactVersion newArtifactVersion = null;
-		ArtifactVersion oldArtifactVersion = null;
+		for (String currentBranchFileName :
+				_getCurrentBranchFileNames(sourceFormatterArgs)) {
 
-		for (String line :
-				StringUtil.splitLines(
-					GitUtil.getCurrentBranchFileDiff(
-						sourceFormatterArgs.getBaseDirName(),
-						sourceFormatterArgs.getGitWorkingBranchName(),
-						absolutePath))) {
-
-			if (!line.contains("Bundle-Version:")) {
+			if (!absolutePath.endsWith(currentBranchFileName)) {
 				continue;
 			}
 
-			int pos = line.indexOf(":");
+			ArtifactVersion newArtifactVersion = null;
+			ArtifactVersion oldArtifactVersion = null;
 
-			String version = StringUtil.trim(line.substring(pos + 1));
+			for (String line :
+					StringUtil.splitLines(
+						GitUtil.getCurrentBranchFileDiff(
+							sourceFormatterArgs.getBaseDirName(),
+							sourceFormatterArgs.getGitWorkingBranchName(),
+							absolutePath))) {
 
-			if (line.startsWith(StringPool.PLUS)) {
-				newArtifactVersion = new DefaultArtifactVersion(version);
+				if (!line.contains("Bundle-Version:")) {
+					continue;
+				}
+
+				int pos = line.indexOf(":");
+
+				String version = StringUtil.trim(line.substring(pos + 1));
+
+				if (line.startsWith(StringPool.PLUS)) {
+					newArtifactVersion = new DefaultArtifactVersion(version);
+				}
+				else if (line.startsWith(StringPool.DASH)) {
+					oldArtifactVersion = new DefaultArtifactVersion(version);
+				}
 			}
-			else if (line.startsWith(StringPool.DASH)) {
-				oldArtifactVersion = new DefaultArtifactVersion(version);
+
+			if ((newArtifactVersion != null) && (oldArtifactVersion != null) &&
+				(newArtifactVersion.getMajorVersion() >
+					oldArtifactVersion.getMajorVersion())) {
+
+				return true;
 			}
-		}
-
-		if ((newArtifactVersion != null) && (oldArtifactVersion != null) &&
-			(newArtifactVersion.getMajorVersion() >
-				oldArtifactVersion.getMajorVersion())) {
-
-			return true;
 		}
 
 		return false;
@@ -262,5 +285,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {
 		"----", "## Alternatives", "# breaking", "## What", "## Why"
 	};
+
+	private static List<String> _currentBranchFileNames;
 
 }

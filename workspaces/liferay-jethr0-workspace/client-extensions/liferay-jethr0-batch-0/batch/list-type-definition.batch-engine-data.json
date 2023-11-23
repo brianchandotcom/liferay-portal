@@ -23,6 +23,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "sender",
+					"key": "sender",
+					"name": "Sender",
+					"name_i18n": {
+						"en-US": "Sender"
+					}
+				},
+				{
 					"externalReferenceCode": "upstream",
 					"key": "upstream",
 					"name": "Upstream",

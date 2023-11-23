@@ -352,6 +352,13 @@ definition {
 				locator1 = "Button#BUTTON_ID");
 		}
 
+		if (isSet(quoteRequestEmail)) {
+			Type(
+				key_placeHolder = "Enter an email address.",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${quoteRequestEmail});
+		}
+
 		if (isSet(quoteRequestValue)) {
 			Type(
 				key_value = "requestQuote",

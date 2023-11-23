@@ -6,6 +6,7 @@
 package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
@@ -20,6 +21,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -40,12 +43,22 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 	@Override
 	public String getBranchName() {
-		return _branchName;
+		return _getURLGroupValue(getBranchURL(), "branchName");
 	}
 
 	@Override
 	public String getBranchSHA() {
 		return _branchSHA;
+	}
+
+	@Override
+	public URL getBranchURL() {
+		return _branchURL;
+	}
+
+	@Override
+	public String getBranchUserName() {
+		return _getURLGroupValue(getBranchURL(), "userName");
 	}
 
 	@Override
@@ -58,19 +71,15 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
-			"branchName", getBranchName()
-		).put(
 			"branchSHA", getBranchSHA()
+		).put(
+			"branchURL", getBranchURL()
 		).put(
 			"rebased", getRebased()
 		).put(
-			"repositoryName", getRepositoryName()
-		).put(
-			"upstreamBranchName", getUpstreamBranchName()
-		).put(
 			"upstreamBranchSHA", getUpstreamBranchSHA()
 		).put(
-			"url", getURL()
+			"upstreamBranchURL", getUpstreamBranchURL()
 		);
 
 		return jsonObject;
@@ -84,7 +93,8 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 			Properties properties = _propertiesFiles.get(propertiesFilePath);
 
 			if (properties == null) {
-				properties = PropertiesUtil.getProperties(propertiesFilePath);
+				properties = PropertiesUtil.getProperties(
+					_gitHubClient.readFile(this, propertiesFilePath));
 
 				_propertiesFiles.put(propertiesFilePath, properties);
 			}
@@ -100,7 +110,7 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 	@Override
 	public String getRepositoryName() {
-		return _repositoryName;
+		return _getURLGroupValue(getBranchURL(), "repositoryName");
 	}
 
 	@Override
@@ -110,7 +120,7 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 	@Override
 	public String getUpstreamBranchName() {
-		return _upstreamBranchName;
+		return _getURLGroupValue(getUpstreamBranchURL(), "branchName");
 	}
 
 	@Override
@@ -119,8 +129,13 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
-	public URL getURL() {
-		return _url;
+	public URL getUpstreamBranchURL() {
+		return _upstreamBranchURL;
+	}
+
+	@Override
+	public String getUpstreamBranchUserName() {
+		return _getURLGroupValue(getUpstreamBranchURL(), "userName");
 	}
 
 	@Override
@@ -134,11 +149,6 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
-	public void setBranchName(String branchName) {
-		_branchName = branchName;
-	}
-
-	@Override
 	public void setBranchSHA(String branchSHA) {
 		synchronized (_propertiesFiles) {
 			_branchSHA = branchSHA;
@@ -148,18 +158,18 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
+	public void setBranchURL(URL branchURL) {
+		_branchURL = branchURL;
+	}
+
+	@Override
+	public void setGitHubClient(GitHubClient gitHubClient) {
+		_gitHubClient = gitHubClient;
+	}
+
+	@Override
 	public void setRebased(boolean rebased) {
 		_rebased = rebased;
-	}
-
-	@Override
-	public void setRepositoryName(String repositoryName) {
-		_repositoryName = repositoryName;
-	}
-
-	@Override
-	public void setUpstreamBranchName(String upstreamBranchName) {
-		_upstreamBranchName = upstreamBranchName;
 	}
 
 	@Override
@@ -172,32 +182,48 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
-	public void setURL(URL url) {
-		_url = url;
+	public void setUpstreamBranchURL(URL upstreamBranchURL) {
+		_upstreamBranchURL = upstreamBranchURL;
 	}
 
 	protected BaseGitBranchEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_branchName = jsonObject.getString("branchName");
 		_branchSHA = jsonObject.getString("branchSHA");
+		_branchURL = StringUtil.toURL(jsonObject.getString("branchURL"));
 		_rebased = jsonObject.getBoolean("rebased");
-		_repositoryName = jsonObject.getString("repositoryName");
 		_type = Type.get(jsonObject.getJSONObject("type"));
-		_upstreamBranchName = jsonObject.getString("upstreamBranchName");
 		_upstreamBranchSHA = jsonObject.getString("upstreamBranchSHA");
-		_url = StringUtil.toURL(jsonObject.getString("url"));
+		_upstreamBranchURL = StringUtil.toURL(
+			jsonObject.getString("upstreamBranchURL"));
 	}
 
-	private String _branchName;
+	private String _getURLGroupValue(URL url, String groupName) {
+		if (url == null) {
+			return null;
+		}
+
+		Matcher matcher = _urlPattern.matcher(String.valueOf(url));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group(groupName);
+	}
+
+	private static final Pattern _urlPattern = Pattern.compile(
+		"https://github.com/(?<userName>[^/]+)/(?<repositoryName>[^/]+)/" +
+			"(commits|tree)/(?<branchName>[^/]+)");
+
 	private String _branchSHA;
+	private URL _branchURL;
+	private GitHubClient _gitHubClient;
 	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private final Map<String, Properties> _propertiesFiles = new HashMap<>();
 	private boolean _rebased;
-	private String _repositoryName;
 	private final Type _type;
-	private String _upstreamBranchName;
 	private String _upstreamBranchSHA;
-	private URL _url;
+	private URL _upstreamBranchURL;
 
 }

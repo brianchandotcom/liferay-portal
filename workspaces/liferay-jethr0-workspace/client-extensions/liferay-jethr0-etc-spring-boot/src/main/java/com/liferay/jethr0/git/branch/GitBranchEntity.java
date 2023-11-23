@@ -6,6 +6,7 @@
 package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.job.JobEntity;
 
 import java.io.IOException;
@@ -32,6 +33,10 @@ public interface GitBranchEntity extends Entity {
 
 	public String getBranchSHA();
 
+	public URL getBranchURL();
+
+	public String getBranchUserName();
+
 	public Set<JobEntity> getJobEntities();
 
 	public Properties getProperties(String propertiesFilePath)
@@ -47,29 +52,29 @@ public interface GitBranchEntity extends Entity {
 
 	public String getUpstreamBranchSHA();
 
-	public URL getURL();
+	public URL getUpstreamBranchURL();
+
+	public String getUpstreamBranchUserName();
 
 	public void removeJobEntities(Set<JobEntity> jobEntities);
 
 	public void removeJobEntity(JobEntity jobEntity);
 
-	public void setBranchName(String branchName);
-
 	public void setBranchSHA(String branchSHA);
+
+	public void setBranchURL(URL branchURL);
+
+	public void setGitHubClient(GitHubClient gitHubClient);
 
 	public void setRebased(boolean rebased);
 
-	public void setRepositoryName(String repositoryName);
-
-	public void setUpstreamBranchName(String upstreamBranchName);
-
 	public void setUpstreamBranchSHA(String upstreamBranchSHA);
 
-	public void setURL(URL url);
+	public void setUpstreamBranchURL(URL upstreamBranchURL);
 
 	public static enum Type {
 
-		DEFAULT("default"), UPSTREAM("upstream");
+		DEFAULT("default"), SENDER("sender"), UPSTREAM("upstream");
 
 		public static Type get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));

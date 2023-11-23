@@ -6,9 +6,11 @@
 package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.event.github.client.GitHubClient;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -24,18 +26,31 @@ public class GitBranchEntityFactory extends BaseEntityFactory<GitBranchEntity> {
 
 	@Override
 	public GitBranchEntity newEntity(JSONObject jsonObject) {
+		GitBranchEntity gitBranchEntity = null;
+
 		GitBranchEntity.Type type = GitBranchEntity.Type.get(
 			jsonObject.getJSONObject("type"));
 
-		if (type == GitBranchEntity.Type.UPSTREAM) {
-			return new UpstreamGitBranchEntity(jsonObject);
+		if (type == GitBranchEntity.Type.SENDER) {
+			gitBranchEntity = new SenderGitBranchEntity(jsonObject);
+		}
+		else if (type == GitBranchEntity.Type.UPSTREAM) {
+			gitBranchEntity = new UpstreamGitBranchEntity(jsonObject);
+		}
+		else {
+			gitBranchEntity = new DefaultGitBranchEntity(jsonObject);
 		}
 
-		return new DefaultGitBranchEntity(jsonObject);
+		gitBranchEntity.setGitHubClient(_gitHubClient);
+
+		return gitBranchEntity;
 	}
 
 	protected GitBranchEntityFactory() {
 		super(GitBranchEntity.class);
 	}
+
+	@Autowired
+	private GitHubClient _gitHubClient;
 
 }

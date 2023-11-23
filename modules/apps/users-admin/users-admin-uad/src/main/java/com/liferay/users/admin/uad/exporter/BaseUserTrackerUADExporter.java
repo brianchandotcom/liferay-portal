@@ -52,15 +52,6 @@ public abstract class BaseUserTrackerUADExporter
 		sb.append("com.liferay.portal.kernel.model.UserTracker");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>userTrackerId</column-name><column-value><![CDATA[");
-		sb.append(userTracker.getUserTrackerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(userTracker.getUserId());
-		sb.append("]]></column-value></column>");
-
 		sb.append("</model>");
 
 		return sb.toString();

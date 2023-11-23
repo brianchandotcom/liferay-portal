@@ -157,18 +157,16 @@ else {
 					width="4"
 				>
 					<div class="toggle-user">
-						<liferay-ui:icon
-							icon="angle-left"
-							markupView="lexicon"
+						<clay:icon
+							symbol="angle-left"
 						/>
 					</div>
 
 					<div class="contacts-search lfr-search-column search-bar">
 						<aui:input cssClass="search-input" id="name" label="" name="name" size="30" type="text" value="<%= HtmlUtil.escape(name) %>" />
 
-						<liferay-ui:icon
-							icon="search"
-							markupView="lexicon"
+						<clay:icon
+							symbol="search"
 						/>
 					</div>
 

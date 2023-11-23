@@ -233,6 +233,10 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class.getName(),
 			objectDefinition.getObjectDefinitionId(), false, true, true);
 
+		_objectFolderItemLocalService.addObjectFolderItem(
+			userId, objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectFolderId(), 0, 0);
+
 		_addSystemObjectFields(
 			ObjectEntryTable.INSTANCE.getTableName(), objectDefinition,
 			ObjectEntryTable.INSTANCE.objectEntryId.getName(), userId);

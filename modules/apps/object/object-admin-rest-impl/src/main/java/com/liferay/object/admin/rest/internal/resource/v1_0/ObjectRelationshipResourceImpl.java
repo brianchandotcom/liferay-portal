@@ -13,10 +13,12 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectRelationshipEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -153,8 +155,7 @@ public class ObjectRelationshipResourceImpl
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		com.liferay.object.model.ObjectDefinition objectDefinition2 =
-			_getObjectDefinition2(
-				objectDefinition1.getObjectFolderId(), objectRelationship);
+			_getObjectDefinition2(objectRelationship);
 
 		objectRelationship.setParameterObjectFieldId(
 			() -> {
@@ -197,13 +198,8 @@ public class ObjectRelationshipResourceImpl
 			(objectRelationship.getObjectDefinitionExternalReferenceCode2() !=
 				null)) {
 
-			com.liferay.object.model.ObjectDefinition objectDefinition1 =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-
 			com.liferay.object.model.ObjectDefinition objectDefinition2 =
-				_getObjectDefinition2(
-					objectDefinition1.getObjectFolderId(), objectRelationship);
+				_getObjectDefinition2(objectRelationship);
 
 			objectDefinitionId2 = objectDefinition2.getObjectDefinitionId();
 		}
@@ -299,7 +295,7 @@ public class ObjectRelationshipResourceImpl
 	}
 
 	private com.liferay.object.model.ObjectDefinition _getObjectDefinition2(
-			long objectFolderId, ObjectRelationship objectRelationship)
+			ObjectRelationship objectRelationship)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition objectDefinition =
@@ -313,9 +309,14 @@ public class ObjectRelationshipResourceImpl
 			return objectDefinition;
 		}
 
+		ObjectFolder uncategorizedObjectFolder =
+			_objectFolderLocalService.getOrAddUncategorizedObjectFolder(
+				contextCompany.getCompanyId());
+
 		return _objectDefinitionLocalService.addObjectDefinition(
 			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
-			contextUser.getUserId(), objectFolderId,
+			contextUser.getUserId(),
+			uncategorizedObjectFolder.getObjectFolderId(),
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionModifiable2(), true),
 			GetterUtil.get(
@@ -365,6 +366,9 @@ public class ObjectRelationshipResourceImpl
 
 	@Reference
 	private ObjectFilterLocalService _objectFilterLocalService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference(target = DTOConverterConstants.OBJECT_RELATIONSHIP_DTO_CONVERTER)
 	private DTOConverter

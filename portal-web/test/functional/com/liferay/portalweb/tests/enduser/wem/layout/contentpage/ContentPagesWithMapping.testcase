@@ -32,6 +32,121 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-195827. Validation error on object action does not redirect to the Display Page Template."
+	@priority = 4
+	test CannotGoToEntryDisplayPageWhenStandaloneActionValidationFailure {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a page creator has a content page with a Button fragment mapped to a standalone action") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Students");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Student");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Student");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Teacher",
+				objectName = "Teacher",
+				pluralLabelName = "Teachers");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Age",
+				fieldName = "age",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "Teacher");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Teacher");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Student");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Vote",
+				active = "true",
+				errorMessage = "The Age should be an integer.",
+				fieldName = "Age",
+				inputExpressionValue = "name",
+				inputMethod = "false",
+				objectLabel = "Teacher",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = "Student",
+				value = "Jack");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Student",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Student (Default)");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator selects the Go to Entry Display Page as success interaction") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorAction.gotoEditableFieldAction(
+				className = "btn",
+				fragmentName = "Button",
+				id = "action");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = ${objectEntryId},
+				navItem = "Students",
+				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId}')]");
+
+			PageEditor.configureFragment(
+				action = "Vote",
+				displayPage = "Display Page Name",
+				successInteraction = "Go to Entry Display Page");
+		}
+
+		task ("Then the page creator could select the Show Notification as error interaction") {
+			PageEditor.configureFragment(errorInteraction = "Show Notification");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator triggers the standalone action") {
+			Button.click(button = "Go Somewhere");
+		}
+
+		task ("Then the page creator should not be redirected but see a validation error message") {
+			Alert.viewErrorMessage(errorMessage = "The Age should be an integer.");
+
+			Page.viewCurrentPage(pageName = "Content Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-191986. View draft display page template is not shown in fragment display page mapping."
 	@priority = 3
 	test CannotMapDraftDisplayPageTemplateToFragment {

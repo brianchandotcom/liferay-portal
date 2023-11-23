@@ -624,6 +624,152 @@ definition {
 			expected = "buyer@liferay.com");
 	}
 
+	@description = "COMMERCE-12938. As a guest user, I want to be able to create a quote request order that must work with email populated and submit the quote request without notes on Minium site"
+	@priority = 5
+	test CanGuestUserCreateQuoteRequestOnMinium {
+		property custom.properties = "feature.flag.COMMERCE-11028=true";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And the admin marks the U-Joint's SKU as 'Price on Application'") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("And 'Guest Checkout' is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Guest Checkout",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And a SAP is created to view the pending order for Guest") {
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
+
+			ServiceAccessPolicy.addServiceAccessPolicy(
+				defaultSwitch = "true",
+				enabled = "true",
+				methodName = "getFDSData",
+				policyName = "FDSApplication_getFDSData",
+				serviceClass = "com.liferay.frontend.data.set.taglib.internal.jaxrs.application.FDSApplication",
+				title = "FDSApplication_getFDSData");
+		}
+
+		task ("And the View permission of Catalog and Pending Orders pages for Guest are checked") {
+			for (var pageName : list "Catalog,Pending Orders") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "minium");
+
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Permissions",
+					pageName = ${pageName});
+
+				Role.definePermissionPG(
+					permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+					roleTitle = "guest");
+			}
+		}
+
+		task ("And the guest user adds the 'Price on Application' product to Cart") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("When clicking the 'Request a Quote' button in the Open Order Details Page") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Request a Quote");
+
+			Click(
+				buttonId = "requestQuote",
+				locator1 = "Button#BUTTON_ID");
+		}
+
+		task ("Then can view a new empty field related to 'Enter an email address.' present in the Request a Quote popup") {
+			AssertElementPresent(
+				key_title = "Request a Quote",
+				locator1 = "CommerceFrontStore#MODAL_TITLE");
+
+			AssertTextEquals(
+				key_placeHolder = "Enter an email address.",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "");
+		}
+
+		task ("And the guest cannot submit the request without filling in email info") {
+			Button.click(button = "Submit");
+
+			AssertElementPresent(
+				key_alertMessage = "The  field is required.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+
+		task ("When the guest user submits the request by filling in the email format for the email field") {
+			Type(
+				key_placeHolder = "Enter an email address.",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "guestuser@liferay.com");
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then admin can view the order with the status 'Quote Requested' in the Orders admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_orderStatus = "Quote Requested",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+			CommerceJSONOrdersAPI._deleteAllCommerceOrders();
+		}
+
+		task ("But if the guest user submits the request by filling in non-email format for the email field") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceNavigator.gotoMiniCart();
+
+			CommerceOrders.createQuoteRequest(
+				quoteRequestEmail = "guestuser",
+				requestAQuoteInMiniCart = "true",
+				requestAQuoteInOpenOrdersPage = "true");
+		}
+
+		task ("Then it's not allowed to submit a request with invalid email address") {
+			AssertElementPresent(
+				key_alertMessage = "Please enter a valid email address.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+	}
+
 	@description = "COMMERCE-11277. As a Guest User, I can create a Quote Request in the Cart Summary by entering a personal message."
 	@priority = 5
 	test CanGuestUserCreateQuoteRequestOnSpeedwell {
@@ -679,7 +825,9 @@ definition {
 		}
 
 		task ("When the Guest submits the request after writing a message in the note area") {
-			CommerceOrders.createQuoteRequest(quoteRequestValue = "I kindly request a quote for this product.");
+			CommerceOrders.createQuoteRequest(
+				quoteRequestEmail = "guestuser@liferay.com",
+				quoteRequestValue = "I kindly request a quote for this product.");
 		}
 
 		task ("Then the quote request is placed with the status 'Quote Requested' in the Orders Page") {

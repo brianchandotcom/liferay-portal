@@ -20,6 +20,10 @@ public class GitHubIssue {
 		_jsonObject = jsonObject;
 	}
 
+	public URL getApiURL() {
+		return StringUtil.toURL(_jsonObject.getString("url"));
+	}
+
 	public URL getCommentsURL() {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}

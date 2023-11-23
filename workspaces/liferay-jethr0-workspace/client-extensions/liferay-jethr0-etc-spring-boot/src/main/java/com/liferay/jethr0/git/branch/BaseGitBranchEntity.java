@@ -94,7 +94,7 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 			if (properties == null) {
 				properties = PropertiesUtil.getProperties(
-					_gitHubClient.readFile(this, propertiesFilePath));
+					_gitHubClient.getFileContent(this, propertiesFilePath));
 
 				_propertiesFiles.put(propertiesFilePath, properties);
 			}

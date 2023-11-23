@@ -38,7 +38,8 @@ interface FieldBaseProps {
 	helpMessage?: string;
 	hideFeedback?: boolean;
 	id?: string;
-	label?: string;
+	label?: ReactNode;
+	labelClassName?: string;
 	localized?: boolean;
 	localizedTooltipText?: string;
 	required?: boolean;
@@ -57,6 +58,7 @@ export function FieldBase({
 	hideFeedback,
 	id,
 	label,
+	labelClassName,
 	localized,
 	localizedTooltipText,
 	required,
@@ -73,16 +75,21 @@ export function FieldBase({
 		>
 			<div className="field-base-container">
 				<div className="field-base-container_label">
-					{label && (
-						<label className={classNames({disabled})} htmlFor={id}>
+					{typeof label === 'string' ? (
+						<label
+							className={classNames(labelClassName, {disabled})}
+							htmlFor={id}
+						>
 							{label}
 
 							{required && <RequiredMask />}
 						</label>
+					) : (
+						label
 					)}
 
 					{tooltip && (
-						<div className="field-base-tooltip">
+						<div className="field-base-tooltip ml-3">
 							<Tooltip
 								tooltip={tooltip}
 								tooltipText={tooltipText}

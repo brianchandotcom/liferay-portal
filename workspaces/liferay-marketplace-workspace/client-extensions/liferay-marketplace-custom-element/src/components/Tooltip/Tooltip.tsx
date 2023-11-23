@@ -19,13 +19,10 @@ export function Tooltip({tooltip, tooltipText}: TooltipProps) {
 	return (
 		<ClayTooltipProvider>
 			<div
-				className={
-					'tooltip-base ' +
-					classNames({
-						'tooltip-base-auto': tooltipText,
-						'tooltip-base-container': !tooltipText,
-					})
-				}
+				className={classNames('tooltip-base', {
+					'tooltip-base-auto': tooltipText,
+					'tooltip-base-container': !tooltipText,
+				})}
 			>
 				<div
 					className="tooltip-container"
@@ -33,7 +30,11 @@ export function Tooltip({tooltip, tooltipText}: TooltipProps) {
 					data-tooltip-align="top"
 					title={tooltip}
 				>
-					<span className="tooltip-optional-text">{tooltipText}</span>
+					{tooltipText && (
+						<span className="tooltip-optional-text">
+							{tooltipText}
+						</span>
+					)}
 
 					<img className="tooltip-icon" src={helpFillIcon} />
 				</div>

@@ -60,7 +60,7 @@ export function InformLicensingTermsPage({
 		<div className="informing-licensing-terms-page-container">
 			<Header
 				description="Define the licensing approach for your app. This will impact users' licensing renewal experience."
-				title="Inform licensing terms"
+				title="Select licensing terms"
 			/>
 
 			<Section

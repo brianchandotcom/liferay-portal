@@ -205,12 +205,16 @@ public class DuplicateItemMVCActionCommand
 				_fragmentEntryLinkLocalService.getFragmentEntryLink(
 					entry.getKey());
 
+			FragmentEntryLink originalFragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					entry.getValue());
+
 			for (FragmentEntryLinkListener fragmentEntryLinkListener :
 					_fragmentEntryLinkListenerRegistry.
 						getFragmentEntryLinkListeners()) {
 
-				fragmentEntryLinkListener.onAddFragmentEntryLink(
-					duplicatedFragmentEntryLink);
+				fragmentEntryLinkListener.onDuplicateFragmentEntryLink(
+					duplicatedFragmentEntryLink, originalFragmentEntryLink);
 			}
 		}
 

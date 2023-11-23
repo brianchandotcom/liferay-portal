@@ -5,12 +5,14 @@
 
 package com.liferay.jethr0.event;
 
+import java.io.IOException;
+
 /**
  * @author Michael Hashimoto
  */
 public interface EventHandler {
 
-	public String process() throws InvalidJSONException;
+	public String process() throws InvalidJSONException, IOException;
 
 	public class InvalidJSONException extends Exception {
 

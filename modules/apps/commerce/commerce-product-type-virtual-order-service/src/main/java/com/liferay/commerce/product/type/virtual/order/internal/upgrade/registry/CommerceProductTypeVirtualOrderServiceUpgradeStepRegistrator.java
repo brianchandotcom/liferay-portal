@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.type.virtual.order.internal.upgrade.registry;
 
+import com.liferay.commerce.product.type.virtual.order.internal.upgrade.v2_0_0.CommerceVirtualOrderItemFileEntryUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -29,6 +30,10 @@ public class CommerceProductTypeVirtualOrderServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "2.0.0",
+			new CommerceVirtualOrderItemFileEntryUpgradeProcess());
 	}
 
 }

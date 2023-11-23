@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
@@ -6253,6 +6254,55 @@ public class ObjectEntryResourceTest {
 
 		// File with a nonexistent name
 
+		DLFolder dlFolder1 = DLTestUtil.addDLFolder(
+			TestPropsValues.getGroupId());
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						dlFolder1,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				dlFolder1.getExternalReferenceCode(), dlFolder1.getGroupId()),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
+		DLFolder dlFolder2 = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						dlFolder2,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				dlFolder2.getExternalReferenceCode(), dlFolder2.getGroupId()),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE,
@@ -6482,6 +6532,53 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE);
 
 		// File with a nonexistent name
+
+		DLFolder dlFolder1 = DLTestUtil.addDLFolder(
+			TestPropsValues.getGroupId());
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						dlFolder1,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				dlFolder1.getExternalReferenceCode(), dlFolder1.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		DLFolder dlFolder2 = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						dlFolder2,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				dlFolder2.getExternalReferenceCode(), dlFolder2.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(

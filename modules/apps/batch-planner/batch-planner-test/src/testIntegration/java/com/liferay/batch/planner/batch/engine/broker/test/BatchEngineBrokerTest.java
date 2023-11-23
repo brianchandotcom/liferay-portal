@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
@@ -147,7 +146,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
 
@@ -217,35 +215,6 @@ public class BatchEngineBrokerTest {
 				_objectDefinition1.getModifiedDate()),
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectDefinitionExportCSVFieldNames);
-	}
-
-	@Test
-	public void testExportObjectDefinitionJSON() throws Exception {
-		_setUpObjectDefinition("TestObjectJSON1");
-
-		_objectMapper.setFilterProvider(
-			new SimpleFilterProvider() {
-				{
-					addFilter(
-						"Liferay.Vulcan",
-						VulcanPropertyFilter.of(
-							new HashSet<>(_objectDefinitionExportFieldNames),
-							null));
-				}
-			});
-
-		_assertEqualsExport(
-			_getExpectedJsonNode(_objectDefinition1),
-			_objectDefinitionExportFieldNames,
-			_getFirstJsonNode(
-				_objectMapper.readTree(
-					_getExportFileString(
-						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-						_objectDefinitionExportFieldNames, null,
-						"com.liferay.object.admin.rest.dto.v1_0." +
-							"ObjectDefinition",
-						null)),
-				_objectDefinition1.getShortName()));
 	}
 
 	@Test
@@ -339,6 +308,60 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
+	public void testImportExportObjectDefinitionJSON() throws Exception {
+		File file = _createImportFile("json", "object_definition_import.json");
+
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
+			_objectDefinition2 = _publishObjectDefinition(
+				TestPropsValues.getCompanyId(), "TestObject2",
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				TestPropsValues.getUser());
+
+			_objectDefinition2 =
+				_objectDefinitionLocalService.updateExternalReferenceCode(
+					_objectDefinition2.getObjectDefinitionId(),
+					_OBJECT_DEFINITION_2_ERC);
+
+			_executeImportTask(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+				_objectDefinitionImportFieldNames, null,
+				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+				"DEFAULT", _getURIString("json", fileInputStream));
+
+			_objectDefinition1 =
+				_objectDefinitionLocalService.
+					getObjectDefinitionByExternalReferenceCode(
+						_OBJECT_DEFINITION_1_ERC,
+						TestPropsValues.getCompanyId());
+
+			_objectMapper.setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							VulcanPropertyFilter.of(
+								new HashSet<>(
+									_objectDefinitionExportFieldNames),
+								null));
+					}
+				});
+
+			_assertEqualsExport(
+				_getExpectedJsonNode(_objectDefinition1),
+				_objectDefinitionExportFieldNames,
+				_getFirstJsonNode(
+					_objectMapper.readTree(
+						_getExportFileString(
+							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+							_objectDefinitionExportFieldNames, null,
+							"com.liferay.object.admin.rest.dto.v1_0." +
+								"ObjectDefinition",
+							null)),
+					_objectDefinition1.getShortName()));
+		}
+	}
+
+	@Test
 	public void testImportExportSiteScopeObjectEntryCSV() throws Exception {
 
 		// Default group
@@ -392,53 +415,6 @@ public class BatchEngineBrokerTest {
 
 		_testImportExportSiteScopeObjectEntryJSON(
 			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
-	}
-
-	@Test
-	public void testImportObjectDefinitionJSON() throws Exception {
-		File file = _createImportFile("json", "object_definition_import.json");
-
-		try (FileInputStream fileInputStream = new FileInputStream(file)) {
-			_objectDefinition2 = _publishObjectDefinition(
-				TestPropsValues.getCompanyId(), "TestObject2",
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				TestPropsValues.getUser());
-
-			_objectDefinition2 =
-				_objectDefinitionLocalService.updateExternalReferenceCode(
-					_objectDefinition2.getObjectDefinitionId(),
-					_OBJECT_DEFINITION_2_ERC);
-
-			_executeImportTask(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-				_objectDefinitionImportFieldNames, null,
-				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-				"DEFAULT", _getURIString("json", fileInputStream));
-
-			_objectMapper.setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							VulcanPropertyFilter.of(
-								new HashSet<>(
-									_objectDefinitionImportFieldNames),
-								null));
-					}
-				});
-
-			JsonNode jsonNode = _objectMapper.readTree(file);
-
-			_objectDefinition1 =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						_OBJECT_DEFINITION_1_ERC,
-						TestPropsValues.getCompanyId());
-
-			_assertEqualsImport(
-				_getExpectedJsonNode(_objectDefinition1),
-				_objectDefinitionImportFieldNames, jsonNode.get(0));
-		}
 	}
 
 	private Company _addCompany(String webId) throws Exception {
@@ -653,26 +629,6 @@ public class BatchEngineBrokerTest {
 			"There is no CSV line for externalReferenceCode: " +
 				externalReferenceCode,
 			found);
-	}
-
-	private void _assertEqualsImport(
-		JsonNode expectedJsonNode, List<String> fieldNames, JsonNode jsonNode) {
-
-		for (String fieldName : fieldNames) {
-			JsonNode expectedFieldJsonNode = _removeBackendGeneratedFields(
-				fieldName, expectedJsonNode.get(fieldName));
-
-			JsonNode fieldJsonNode = _removeBackendGeneratedFields(
-				fieldName, jsonNode.get(fieldName));
-
-			if ((expectedFieldJsonNode == null) && (fieldJsonNode == null)) {
-				continue;
-			}
-
-			Assert.assertEquals(
-				fieldName + " value mismatch", expectedFieldJsonNode.toString(),
-				fieldJsonNode.toString());
-		}
 	}
 
 	private File _createImportFile(
@@ -1205,30 +1161,6 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
-	private JsonNode _removeBackendGeneratedFields(
-		String fieldName, JsonNode jsonNode) {
-
-		if (jsonNode == null) {
-			return null;
-		}
-
-		if (!jsonNode.isArray()) {
-			return jsonNode;
-		}
-
-		for (JsonNode itemJsonNode : jsonNode) {
-			if (itemJsonNode.isObject() &&
-				_ignoredImportFields.containsKey(fieldName)) {
-
-				ObjectNode objectNode = (ObjectNode)itemJsonNode;
-
-				objectNode.remove(_ignoredImportFields.get(fieldName));
-			}
-		}
-
-		return jsonNode;
-	}
-
 	private CSVFormat _setCSVFormat() {
 		CSVFormat.Builder builder = CSVFormat.Builder.create(
 		).setDelimiter(
@@ -1420,30 +1352,6 @@ public class BatchEngineBrokerTest {
 
 	private static final String _OBJECT_ENTRY_ERC_3 = "TEST-OBJECT-ENTRY-3";
 
-	private static final Map<String, List<String>> _ignoredImportFields =
-		HashMapBuilder.<String, List<String>>put(
-			"objectActions", Arrays.asList("dateCreated", "dateModified", "id")
-		).put(
-			"objectFields",
-			Arrays.asList(
-				"dateCreated", "dateModified", "externalReferenceCode", "id",
-				"localized")
-		).put(
-			"objectLayouts",
-			Arrays.asList(
-				"dateCreated", "dateModified", "id", "objectDefinitionId")
-		).put(
-			"objectRelationships",
-			Arrays.asList("id", "objectDefinitionId1", "objectDefinitionId2")
-		).put(
-			"objectValidationRules",
-			Arrays.asList(
-				"dateCreated", "dateModified", "id", "objectDefinitionId")
-		).put(
-			"objectViews",
-			Arrays.asList(
-				"dateCreated", "dateModified", "id", "objectDefinitionId")
-		).build();
 	private static final List<String> _objectDefinitionExportCSVFieldNames =
 		Arrays.asList(
 			"accountEntryRestrictedObjectFieldName", "dateCreated",

@@ -25,8 +25,6 @@
 		<!-- Other fields -->
 
 		<column name="commerceOrderItemId" type="long" />
-		<column name="fileEntryId" type="long" />
-		<column name="url" type="String" />
 		<column name="activationStatus" type="int" />
 		<column name="duration" type="long" />
 		<column name="usages" type="int" />
@@ -45,6 +43,43 @@
 
 		<finder name="CommerceOrderItemId" return-type="CommerceVirtualOrderItem" unique="true">
 			<finder-column name="commerceOrderItemId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceVirtualOrderItemFileEntry" remote-service="true" table="CVirtualOrderItemFileEntry" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceVirtualOrderItemFileEntryId" db-name="cVirtualOrderItemFileEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceVirtualOrderItemId" type="long" />
+		<column name="fileEntryId" type="long" />
+		<column name="url" type="String" />
+		<column name="version" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceVirtualOrderItemId" return-type="Collection" >
+			<finder-column name="commerceVirtualOrderItemId" />
 		</finder>
 	</entity>
 	<exceptions>

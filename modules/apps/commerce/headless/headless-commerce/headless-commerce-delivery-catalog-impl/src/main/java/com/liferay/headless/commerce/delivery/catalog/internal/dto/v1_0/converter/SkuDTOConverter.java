@@ -54,6 +54,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.TierPrice;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
+import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuOptionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -136,6 +137,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					cpInstance.getSku(),
 					skuDTOConverterContext.getUnitOfMeasureKey(),
 					skuDTOConverterContext.getLocale());
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CPInstance.class.getName(), cpInstance.getCPInstanceId(),
+					cpInstance.getCompanyId(), dtoConverterContext.getLocale());
 				depth = cpInstance.getDepth();
 				discontinued = cpInstance.isDiscontinued();
 				discontinuedDate = cpInstance.getDiscontinuedDate();

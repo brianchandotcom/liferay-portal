@@ -11,6 +11,7 @@ import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Attachment;
+import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -69,6 +70,12 @@ public class AttachmentDTOConverter
 
 		return new Attachment() {
 			{
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CPAttachmentFileEntry.class.getName(),
+					cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
+					cpAttachmentFileEntry.getCompanyId(),
+					dtoConverterContext.getLocale());
 				displayDate = cpAttachmentFileEntry.getDisplayDate();
 				expirationDate = cpAttachmentFileEntry.getExpirationDate();
 				galleryEnabled = cpAttachmentFileEntry.isGalleryEnabled();

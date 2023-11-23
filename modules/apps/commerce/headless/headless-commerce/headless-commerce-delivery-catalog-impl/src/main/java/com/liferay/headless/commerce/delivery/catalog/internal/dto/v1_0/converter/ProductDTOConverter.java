@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceUtil;
@@ -17,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductConfiguration;
+import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -62,6 +64,12 @@ public class ProductDTOConverter
 		return new Product() {
 			{
 				createDate = cpDefinition.getCreateDate();
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId(),
+					cpDefinition.getCompanyId(),
+					dtoConverterContext.getLocale());
 				description = cpDefinition.getDescription(languageId);
 				expando = expandoBridge.getAttributes();
 				id = cpDefinition.getCPDefinitionId();
@@ -83,6 +91,13 @@ public class ProductDTOConverter
 					_cpDefinitionLocalService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));
 
+				setCatalogName(
+					() -> {
+						CommerceCatalog commerceCatalog =
+							cpDefinition.getCommerceCatalog();
+
+						return commerceCatalog.getName();
+					});
 				setExternalReferenceCode(
 					() -> {
 						CProduct cProduct = cpDefinition.getCProduct();

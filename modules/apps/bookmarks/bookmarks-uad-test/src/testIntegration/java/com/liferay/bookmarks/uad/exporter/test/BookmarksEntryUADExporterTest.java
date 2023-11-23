@@ -63,11 +63,6 @@ public class BookmarksEntryUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "entryId";
-	}
-
-	@Override
 	protected UADExporter<BookmarksEntry> getUADExporter() {
 		return _uadExporter;
 	}

@@ -16,6 +16,13 @@ public interface FragmentEntryLinkListener {
 
 	public void onDeleteFragmentEntryLink(FragmentEntryLink fragmentEntryLink);
 
+	public default void onDuplicateFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink,
+		FragmentEntryLink originalFragmentEntryLink) {
+
+		onAddFragmentEntryLink(fragmentEntryLink);
+	}
+
 	public void onUpdateFragmentEntryLink(FragmentEntryLink fragmentEntryLink);
 
 	public void onUpdateFragmentEntryLinkConfigurationValues(

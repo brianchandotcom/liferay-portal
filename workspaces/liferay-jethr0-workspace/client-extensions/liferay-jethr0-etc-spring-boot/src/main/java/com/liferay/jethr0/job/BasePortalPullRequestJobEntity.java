@@ -68,6 +68,11 @@ public abstract class BasePortalPullRequestJobEntity
 	}
 
 	@Override
+	public String getOriginName() {
+		return _originName;
+	}
+
+	@Override
 	public URL getPortalPullRequestURL() {
 		if (_portalPullRequestURL != null) {
 			return _portalPullRequestURL;
@@ -85,6 +90,76 @@ public abstract class BasePortalPullRequestJobEntity
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getSenderBranchName() {
+		return _senderBranchName;
+	}
+
+	@Override
+	public String getSenderBranchSHA() {
+		return _senderBranchSHA;
+	}
+
+	public String getSenderUserName() {
+		return _senderUserName;
+	}
+
+	@Override
+	public String getTestSuiteName() {
+		return _testSuiteName;
+	}
+
+	@Override
+	public String getUpstreamBranchName() {
+		return _upstreamBranchName;
+	}
+
+	@Override
+	public String getUpstreamBranchSHA() {
+		return _upstreamBranchSHA;
+	}
+
+	@Override
+	public void setJenkinsGitHubURL(URL jenkinsGitHubURL) {
+		_jenkinsGitHubURL = jenkinsGitHubURL;
+	}
+
+	@Override
+	public void setOriginName(String originName) {
+		_originName = originName;
+	}
+
+	@Override
+	public void setPortalPullRequestURL(URL portalPullRequestURL) {
+		_portalPullRequestURL = portalPullRequestURL;
+	}
+
+	@Override
+	public void setSenderBranchName(String senderBranchName) {
+		_senderBranchName = senderBranchName;
+	}
+
+	public void setSenderBranchSHA(String senderBranchSHA) {
+		_senderBranchSHA = senderBranchSHA;
+	}
+
+	public void setSenderUserName(String senderUserName) {
+		_senderUserName = senderUserName;
+	}
+
+	@Override
+	public void setTestSuiteName(String testSuiteName) {
+		_testSuiteName = testSuiteName;
+	}
+
+	public void setUpstreamBranchName(String upstreamBranchName) {
+		_upstreamBranchName = upstreamBranchName;
+	}
+
+	public void setUpstreamBranchSHA(String upstreamBranchSHA) {
+		_upstreamBranchSHA = upstreamBranchSHA;
 	}
 
 	protected BasePortalPullRequestJobEntity(JSONObject jsonObject) {
@@ -247,6 +322,13 @@ public abstract class BasePortalPullRequestJobEntity
 	private String _jenkinsGitHubBranchName;
 	private String _jenkinsGitHubBranchUserName;
 	private URL _jenkinsGitHubURL;
+	private String _originName;
 	private URL _portalPullRequestURL;
+	private String _senderBranchName;
+	private String _senderBranchSHA;
+	private String _senderUserName;
+	private String _testSuiteName;
+	private String _upstreamBranchName;
+	private String _upstreamBranchSHA;
 
 }

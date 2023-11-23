@@ -101,6 +101,7 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 												),
 												properties,
 												submitButtonId,
+												viewMode,
 											})
 										)
 									}

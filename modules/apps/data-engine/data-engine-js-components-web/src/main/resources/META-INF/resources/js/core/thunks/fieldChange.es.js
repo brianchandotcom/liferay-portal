@@ -10,6 +10,20 @@ import {disableSubmitButton} from '../utils/submitButtonController.es';
 
 let REVALIDATE_UPDATES = [];
 
+const requireUpdatePageFieldNames = [
+	'autocomplete',
+	'inputMask',
+	'numericInputMask',
+	'options',
+	'requireConfirmation',
+	'required',
+	'validation',
+];
+
+const needsPageUpdate = (fieldName) => {
+	return requireUpdatePageFieldNames.includes(fieldName);
+};
+
 const getEditedPages = ({
 	editingLanguageId,
 	key = 'value',
@@ -83,7 +97,7 @@ export default function fieldChange({
 
 		dispatch({payload: editedPages, type: EVENT_TYPES.PAGE.UPDATE});
 
-		if (evaluable) {
+		if (evaluable && (viewMode || needsPageUpdate(fieldName))) {
 			try {
 				disableSubmitButton(submitButtonId);
 

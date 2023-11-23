@@ -14,7 +14,7 @@ import {useFormState} from './useForm.es';
  * the `evaluate` function.
  */
 export function useEvaluate(thunk) {
-	const {groupId, portletNamespace, viewMode} = useConfig();
+	const {groupId, portletNamespace} = useConfig();
 	const {
 		defaultLanguageId,
 		editingLanguageId,
@@ -35,7 +35,6 @@ export function useEvaluate(thunk) {
 				portletNamespace,
 				rules,
 				title,
-				viewMode,
 				...args,
 			}),
 		[
@@ -48,7 +47,6 @@ export function useEvaluate(thunk) {
 			rules,
 			thunk,
 			title,
-			viewMode,
 		]
 	);
 }

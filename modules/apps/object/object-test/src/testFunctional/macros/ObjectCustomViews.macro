@@ -46,8 +46,8 @@ definition {
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
 		Click(
-			key_picklistOption = ${filterBy},
-			locator1 = "ObjectCustomViews#FIELD_VIEW_FILTER_DROPDOWN_OPTION");
+			key_optionName = ${filterBy},
+			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 
 		ObjectAdmin.selectDropdownItem(
 			labelName = "Filter Type",

@@ -617,6 +617,16 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	@Override
+	public KBArticle getLatestKBArticle(long resourcePrimKey)
+		throws PortalException {
+
+		_kbArticleModelResourcePermission.check(
+			getPermissionChecker(), resourcePrimKey, KBActionKeys.VIEW);
+
+		return kbArticleLocalService.getLatestKBArticle(resourcePrimKey);
+	}
+
+	@Override
 	public KBArticle getLatestKBArticle(long resourcePrimKey, int status)
 		throws PortalException {
 

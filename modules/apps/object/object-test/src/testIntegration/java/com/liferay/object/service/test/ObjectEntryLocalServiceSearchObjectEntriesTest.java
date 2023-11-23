@@ -110,7 +110,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"alpha", new BigDecimal("45")
+				"alpha", new BigDecimal("45.25")
 			).build());
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -118,14 +118,15 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 			).build());
 
 		_assertKeywords("[44 TO 46]", 1);
-		_assertKeywords("[44.9999 TO 45.1111]", 1);
+		_assertKeywords("[44.9999 TO 45.3333]", 1);
 		_assertKeywords("4", 0);
-		_assertKeywords("45", 1);
-		_assertKeywords("45.0000", 1);
-		_assertKeywords("45.0001", 0);
+		_assertKeywords("45", 0);
+		_assertKeywords("45.25", 1);
+		_assertKeywords("45.2500", 1);
+		_assertKeywords("45.2501", 0);
 		_assertKeywords("bravo 4 charlie", 0);
-		_assertKeywords("bravo 45 charlie", 1);
-		_assertKeywords("bravo 45.0 charlie", 1);
+		_assertKeywords("bravo 45 charlie", 0);
+		_assertKeywords("bravo 45.25 charlie", 1);
 		_assertKeywords("search from [ 44 TO 46 ]", 1);
 	}
 
@@ -139,7 +140,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"alpha", new BigDecimal("45")
+				"alpha", new BigDecimal("45.25")
 			).build());
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -150,11 +151,12 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		_assertKeywords("[44.9999 TO 45.1111]", 0);
 		_assertKeywords("4", 1);
 		_assertKeywords("45", 1);
-		_assertKeywords("45.0000", 1);
-		_assertKeywords("45.0001", 0);
+		_assertKeywords("45.25", 1);
+		_assertKeywords("45.2500", 0);
+		_assertKeywords("45.2501", 0);
 		_assertKeywords("bravo 4 charlie", 1);
 		_assertKeywords("bravo 45 charlie", 1);
-		_assertKeywords("bravo 45.0 charlie", 1);
+		_assertKeywords("bravo 45.25 charlie", 1);
 		_assertKeywords("search from [ 44 TO 46 ]", 0);
 	}
 

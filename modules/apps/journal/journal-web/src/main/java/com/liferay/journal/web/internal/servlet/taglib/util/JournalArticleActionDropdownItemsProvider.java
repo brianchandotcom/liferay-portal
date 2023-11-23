@@ -930,6 +930,7 @@ public class JournalArticleActionDropdownItemsProvider {
 					_article.getResourcePrimKey(),
 					RequestBackedPortletURLFactoryUtil.create(
 						_httpServletRequest)),
+				"backURLTitle", portletDisplay.getPortletDisplayName(),
 				"redirect", _getRedirect(), "portletResource",
 				portletDisplay.getId());
 

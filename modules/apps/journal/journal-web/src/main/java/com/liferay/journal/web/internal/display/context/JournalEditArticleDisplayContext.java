@@ -1524,7 +1524,8 @@ public class JournalEditArticleDisplayContext {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
+		portletDisplay.setURLBackTitle(
+			ParamUtil.getString(_httpServletRequest, "backURLTitle"));
 
 		if (Validator.isNotNull(getRedirect())) {
 			portletDisplay.setURLBack(getRedirect());

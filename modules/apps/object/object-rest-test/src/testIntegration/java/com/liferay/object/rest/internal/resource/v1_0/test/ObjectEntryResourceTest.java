@@ -38,6 +38,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.rest.test.util.ObjectDefinitionTestUtil;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -86,6 +88,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -199,6 +202,8 @@ public class ObjectEntryResourceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
@@ -5933,11 +5938,9 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONObject _getLinkJSONObject(
-			long fileEntryId, String fileName,
+			DLFolder dlFolder, long fileEntryId, String fileName,
 			ObjectDefinition objectDefinition)
 		throws Exception {
-
-		DLFolder dlFolder = _getDLFolder(objectDefinition);
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
@@ -6148,7 +6151,7 @@ public class ObjectEntryResourceTest {
 				Base64::encode,
 				RandomTestUtil.randomString(
 					(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
-				RandomTestUtil.randomString() + ".txt"),
+				RandomTestUtil.randomString() + ".txt", null, null),
 			httpMethod, null, objectDefinition, useExternalReferenceCode);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6156,7 +6159,9 @@ public class ObjectEntryResourceTest {
 			).put(
 				"title", "File name is null"
 			),
-			_toFileEntry(Base64::encode, RandomTestUtil.randomString(), null),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(), null, null,
+				null),
 			httpMethod, null, objectDefinition, useExternalReferenceCode);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6166,7 +6171,7 @@ public class ObjectEntryResourceTest {
 			),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".err"),
+				RandomTestUtil.randomString() + ".err", null, null),
 			httpMethod, null, objectDefinition, useExternalReferenceCode);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6189,6 +6194,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					"link",
 					_getLinkJSONObject(
+						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
 						fileEntry.getName(), objectDefinition)
 				).put(
@@ -6196,7 +6202,7 @@ public class ObjectEntryResourceTest {
 				)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".txt"),
+				RandomTestUtil.randomString() + ".txt", null, null),
 			httpMethod, null, objectDefinition, useExternalReferenceCode);
 
 		// File with a nonexistent name and the Base64 content as a nested field
@@ -6211,6 +6217,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					"link",
 					_getLinkJSONObject(
+						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
 						fileEntry.getName(), objectDefinition)
 				).put(
@@ -6218,7 +6225,7 @@ public class ObjectEntryResourceTest {
 				)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".txt"),
+				RandomTestUtil.randomString() + ".txt", null, null),
 			httpMethod, "fileBase64", objectDefinition,
 			useExternalReferenceCode);
 
@@ -6226,7 +6233,7 @@ public class ObjectEntryResourceTest {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry testFileEntry = _toFileEntry(
 			Base64::encode, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + ".txt");
+			RandomTestUtil.randomString() + ".txt", null, null);
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6236,6 +6243,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					"link",
 					_getLinkJSONObject(
+						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
 						fileEntry.getName(), objectDefinition)
 				).put(
@@ -6255,6 +6263,7 @@ public class ObjectEntryResourceTest {
 					).put(
 						"link",
 						_getLinkJSONObject(
+							_getDLFolder(objectDefinition),
 							_testDLFileEntryModelListener.getLastFileEntryId(),
 							newName, objectDefinition)
 					).put(
@@ -6341,7 +6350,7 @@ public class ObjectEntryResourceTest {
 				Base64::encode,
 				RandomTestUtil.randomString(
 					(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
-				RandomTestUtil.randomString() + ".txt"),
+				RandomTestUtil.randomString() + ".txt", null, null),
 			null, objectDefinition);
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6349,7 +6358,9 @@ public class ObjectEntryResourceTest {
 			).put(
 				"title", "File name is null"
 			),
-			_toFileEntry(Base64::encode, RandomTestUtil.randomString(), null),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(), null, null,
+				null),
 			null, objectDefinition);
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6359,7 +6370,7 @@ public class ObjectEntryResourceTest {
 			),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".err"),
+				RandomTestUtil.randomString() + ".err", null, null),
 			null, objectDefinition);
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6382,6 +6393,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					"link",
 					_getLinkJSONObject(
+						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
 						fileEntry.getName(), objectDefinition)
 				).put(
@@ -6389,7 +6401,7 @@ public class ObjectEntryResourceTest {
 				)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".txt"),
+				RandomTestUtil.randomString() + ".txt", null, null),
 			null, objectDefinition);
 
 		// File with a nonexistent name and the Base64 content as a nested field
@@ -6404,6 +6416,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					"link",
 					_getLinkJSONObject(
+						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
 						fileEntry.getName(), objectDefinition)
 				).put(
@@ -6411,14 +6424,14 @@ public class ObjectEntryResourceTest {
 				)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".txt"),
+				RandomTestUtil.randomString() + ".txt", null, null),
 			"fileBase64", objectDefinition);
 
 		// File with an existing name
 
 		com.liferay.object.rest.dto.v1_0.FileEntry testFileEntry = _toFileEntry(
 			Base64::encode, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + ".txt");
+			RandomTestUtil.randomString() + ".txt", null, null);
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6428,6 +6441,7 @@ public class ObjectEntryResourceTest {
 				).put(
 					"link",
 					_getLinkJSONObject(
+						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
 						fileEntry.getName(), objectDefinition)
 				).put(
@@ -6446,6 +6460,7 @@ public class ObjectEntryResourceTest {
 					).put(
 						"link",
 						_getLinkJSONObject(
+							_getDLFolder(objectDefinition),
 							_testDLFileEntryModelListener.getLastFileEntryId(),
 							newName, objectDefinition)
 					).put(
@@ -6839,13 +6854,23 @@ public class ObjectEntryResourceTest {
 
 	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
 		Function<byte[], String> encodeFunction, String fileContent,
-		String fileName) {
+		String fileName, String folderExternalReferenceCode,
+		Long folderSiteId) {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
 		fileEntry.setFileBase64(encodeFunction.apply(fileContent.getBytes()));
 		fileEntry.setName(fileName);
+
+		if ((folderExternalReferenceCode != null) || (folderSiteId != null)) {
+			Folder folder = new Folder();
+
+			folder.setExternalReferenceCode(folderExternalReferenceCode);
+			folder.setSiteId(folderSiteId);
+
+			fileEntry.setFolder(folder);
+		}
 
 		return fileEntry;
 	}
@@ -6930,6 +6955,7 @@ public class ObjectEntryResourceTest {
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
 
+	private Group _group;
 	private ListTypeDefinition _listTypeDefinition;
 
 	@Inject

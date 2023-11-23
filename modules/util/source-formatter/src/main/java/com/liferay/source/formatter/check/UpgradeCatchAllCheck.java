@@ -40,6 +40,15 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			String[] validExtensions = JSONUtil.toStringArray(
+				jsonObject.getJSONArray("validExtensions"));
+
+			if ((validExtensions.length > 0) &&
+				!ArrayUtil.contains(validExtensions, "java")) {
+
+				continue;
+			}
+
 			String from = jsonObject.getString("from");
 
 			if (from.contains(StringPool.OPEN_PARENTHESIS) &&

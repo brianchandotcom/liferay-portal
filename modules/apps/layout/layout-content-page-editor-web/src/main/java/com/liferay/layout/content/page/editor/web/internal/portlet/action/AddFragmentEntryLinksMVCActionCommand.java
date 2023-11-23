@@ -124,7 +124,8 @@ public class AddFragmentEntryLinksMVCActionCommand
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_layoutsImporter.importPageElement(
 				themeDisplay.getLayout(), layoutStructure, parentItemId,
-				fragmentComposition.getData(), position, segmentsExperienceId);
+				fragmentComposition.getData(), position, false,
+				segmentsExperienceId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			for (FragmentEntryLinkListener fragmentEntryLinkListener :

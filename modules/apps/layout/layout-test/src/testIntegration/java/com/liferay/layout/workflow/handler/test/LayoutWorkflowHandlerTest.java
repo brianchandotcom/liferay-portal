@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -133,9 +134,10 @@ public class LayoutWorkflowHandlerTest {
 
 	@Test
 	public void testWorkflowHandlerContentLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
 
-		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, layout1.getStatus());
 
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
@@ -144,23 +146,24 @@ public class LayoutWorkflowHandlerTest {
 		Assert.assertNotNull(
 			workflowHandler.getWorkflowDefinitionLink(
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				layout.getPlid()));
+				layout1.getPlid()));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			TestPropsValues.getCompanyId(), _group.getGroupId(),
 			TestPropsValues.getUserId(), Layout.class.getName(),
-			layout.getPlid(), layout, _serviceContext, Collections.emptyMap());
+			layout1.getPlid(), layout1, _serviceContext,
+			Collections.emptyMap());
 
-		layout = _layoutLocalService.getLayout(layout.getPlid());
+		layout1 = _layoutLocalService.getLayout(layout1.getPlid());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_PENDING, layout.getStatus());
+			WorkflowConstants.STATUS_PENDING, layout1.getStatus());
 
 		LayoutLocalization layoutLocalization =
 			_layoutLocalizationLocalService.fetchLayoutLocalization(
-				layout.getGroupId(),
+				layout1.getGroupId(),
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				layout.getPlid());
+				layout1.getPlid());
 
 		Assert.assertNull(layoutLocalization);
 
@@ -168,7 +171,7 @@ public class LayoutWorkflowHandlerTest {
 			WorkflowConstants.STATUS_APPROVED,
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
-				String.valueOf(layout.getPlid())
+				String.valueOf(layout1.getPlid())
 			).put(
 				WorkflowConstants.CONTEXT_USER_ID,
 				String.valueOf(TestPropsValues.getUserId())
@@ -176,18 +179,48 @@ public class LayoutWorkflowHandlerTest {
 				"serviceContext", _serviceContext
 			).build());
 
-		layout = _layoutLocalService.getLayout(layout.getPlid());
+		layout1 = _layoutLocalService.getLayout(layout1.getPlid());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, layout.getStatus());
+			WorkflowConstants.STATUS_APPROVED, layout1.getStatus());
 
 		layoutLocalization =
 			_layoutLocalizationLocalService.fetchLayoutLocalization(
-				layout.getGroupId(),
+				layout1.getGroupId(),
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				layout.getPlid());
+				layout1.getPlid());
 
 		Assert.assertNotNull(layoutLocalization);
+
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, layout2.getStatus());
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), Layout.class.getName(),
+			layout2.getPlid(), layout2, _serviceContext,
+			Collections.emptyMap());
+
+		layout2 = _layoutLocalService.getLayout(layout2.getPlid());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, layout2.getStatus());
+
+		Assert.assertNotNull(
+			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+				layout2.getCompanyId(), layout2.getGroupId(),
+				Layout.class.getName(), layout2.getPlid()));
+
+		_layoutLocalService.deleteLayout(layout2.getPlid());
+
+		Assert.assertNull(
+			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+				layout2.getCompanyId(), layout2.getGroupId(),
+				Layout.class.getName(), layout2.getPlid()));
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout2.getPlid()));
 	}
 
 	@Test

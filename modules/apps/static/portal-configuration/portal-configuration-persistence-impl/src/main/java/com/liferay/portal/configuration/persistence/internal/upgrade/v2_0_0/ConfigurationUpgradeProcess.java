@@ -115,7 +115,7 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 							scopeConfiguration.getConfigurationId(),
 							" has been removed because the company ID ",
 							scopeConfiguration.getScopePK(),
-							"does not exists"));
+							" does not exists"));
 				}
 
 				if (Objects.equals(
@@ -128,7 +128,7 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 							scopeConfiguration.getConfigurationId(),
 							" has been removed because the group ID ",
 							scopeConfiguration.getScopePK(),
-							"does not exists"));
+							" does not exists"));
 				}
 			}
 		}
@@ -151,7 +151,7 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 			new UnsyncByteArrayInputStream(
 				dictionary.getBytes(StringPool.UTF8)));
 
-		String value = dictionaryMap.get(
+		Object value = dictionaryMap.get(
 			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
 
 		if (value != null) {
@@ -175,7 +175,7 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 
 		if (value != null) {
 			return new ScopeConfiguration(
-				configurationId, dictionary, value,
+				configurationId, dictionary, GetterUtil.getString(value),
 				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE);
 		}
 

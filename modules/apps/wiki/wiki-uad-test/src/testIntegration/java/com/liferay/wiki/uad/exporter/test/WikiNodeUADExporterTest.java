@@ -66,11 +66,6 @@ public class WikiNodeUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "nodeId";
-	}
-
-	@Override
 	protected UADExporter<WikiNode> getUADExporter() {
 		return _uadExporter;
 	}

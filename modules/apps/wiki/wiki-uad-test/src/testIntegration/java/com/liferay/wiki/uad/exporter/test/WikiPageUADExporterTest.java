@@ -66,11 +66,6 @@ public class WikiPageUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "pageId";
-	}
-
-	@Override
 	protected UADExporter<WikiPage> getUADExporter() {
 		return _uadExporter;
 	}

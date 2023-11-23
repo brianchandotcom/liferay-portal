@@ -16,6 +16,9 @@ import javax.portlet.PortletResponse;
  */
 public class PortletConfigurationIconMenu {
 
+	public static final PortletConfigurationIconMenu INSTANCE =
+		new PortletConfigurationIconMenu();
+
 	public List<PortletConfigurationIcon> getPortletConfigurationIcons(
 		String portletId, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
@@ -26,6 +29,9 @@ public class PortletConfigurationIconMenu {
 
 	public void setComparator(Comparator<?> comparator) {
 		_comparator = comparator;
+	}
+
+	private PortletConfigurationIconMenu() {
 	}
 
 	private Comparator<?> _comparator;

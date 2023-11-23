@@ -232,7 +232,7 @@ public class ParallelExecutor<T> {
 			sb.append(" / Running: ");
 			sb.append(getRunningTaskCount());
 			sb.append(" / Succeeded: ");
-			sb.append(getSuccessfulTaskCount());
+			sb.append(getSucceededTaskCount());
 			sb.append(" / Submitted: ");
 			sb.append(getSubmittedTaskCount());
 			sb.append(" / Total: ");
@@ -284,7 +284,7 @@ public class ParallelExecutor<T> {
 		public int getRemainingTaskCount() {
 			return getTotalTaskCount() - getFailedTaskCount() -
 				getRunningTaskCount() - getSubmittedTaskCount() -
-					getSuccessfulTaskCount();
+					getSucceededTaskCount();
 		}
 
 		public List<T> getResults() {
@@ -323,7 +323,7 @@ public class ParallelExecutor<T> {
 			return submittedTaskCount;
 		}
 
-		public int getSuccessfulTaskCount() {
+		public int getSucceededTaskCount() {
 			int successfulTaskCount = 0;
 
 			for (Task<T> completedTask : _completedTasks) {
@@ -340,7 +340,7 @@ public class ParallelExecutor<T> {
 		}
 
 		public boolean isComplete() {
-			if ((getSuccessfulTaskCount() + getFailedTaskCount()) ==
+			if ((getSucceededTaskCount() + getFailedTaskCount()) ==
 					getTotalTaskCount()) {
 
 				return true;
@@ -498,7 +498,7 @@ public class ParallelExecutor<T> {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					_parallelExecutor.toString(), " completed ",
-					String.valueOf(getSuccessfulTaskCount()), " tasks in ",
+					String.valueOf(getSucceededTaskCount()), " tasks in ",
 					JenkinsResultsParserUtil.toDurationString(
 						getDurationMillis()),
 					" averaging ",

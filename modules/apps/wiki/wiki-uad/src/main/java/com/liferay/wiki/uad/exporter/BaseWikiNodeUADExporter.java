@@ -53,20 +53,8 @@ public abstract class BaseWikiNodeUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>nodeId</column-name><column-value><![CDATA[");
-		sb.append(wikiNode.getNodeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(wikiNode.getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
 		sb.append(wikiNode.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(wikiNode.getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");

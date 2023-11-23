@@ -53,20 +53,8 @@ public abstract class BaseWikiPageUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>pageId</column-name><column-value><![CDATA[");
-		sb.append(wikiPage.getPageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(wikiPage.getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
 		sb.append(wikiPage.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(wikiPage.getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");

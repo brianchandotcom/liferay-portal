@@ -418,7 +418,7 @@ export default function ObjectFieldFormBase({
 				)}
 			</SingleSelect>
 
-			{values.businessType === 'Attachment' && (
+			{values.businessType === 'Attachment' && objectDefinition && (
 				<AttachmentFormBase
 					disabled={disabled}
 					error={errors.fileSource}

@@ -177,7 +177,11 @@ export function ModalAddObjectField({
 							objectDefinitionExternalReferenceCode={
 								objectDefinitionExternalReferenceCode
 							}
-							objectDefinitionName={objectDefinitionName ?? ''}
+							objectDefinitionName={
+								objectDefinitionName ?? objectDefinition
+									? objectDefinition?.name ?? ''
+									: ''
+							}
 							objectField={values}
 							objectFieldTypes={objectFieldTypes}
 							setValues={setValues}

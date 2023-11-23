@@ -26,8 +26,6 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="fileEntryId" type="long" />
-		<column name="url" type="String" />
 		<column name="activationStatus" type="int" />
 		<column name="duration" type="long" />
 		<column name="maxUsages" type="int" />
@@ -45,6 +43,37 @@
 		<finder name="C_C" return-type="CPDefinitionVirtualSetting" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CPDVirtualSettingFileEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="CPDVirtualSettingFileEntryId" name="CPDefinitionVirtualSettingFileEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionVirtualSettingId" type="long" />
+		<column name="fileEntryId" type="long" />
+		<column name="url" type="String" />
+		<column name="version" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="CPDefinitionVirtualSettingId" return-type="Collection">
+			<finder-column name="CPDefinitionVirtualSettingId" />
 		</finder>
 	</entity>
 	<exceptions>

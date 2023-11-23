@@ -2419,4 +2419,106 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12939. As a buyer user, I want to be able to view a quote request order with email prepopulate and submit the quote request without notes"
+	@priority = 5
+	test CanViewQuoteRequestEmailPrepopulateForLoggedUser {
+		property portal.acceptance = "true";
+
+		task ("Given the admin marks the U-Joint's SKU as 'Price on Application'") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("And the buyer adds the 'Price on Application' product to Cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("When clicking the 'Request a Quote' button in the Mini Cart") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Request a Quote");
+		}
+
+		task ("And clicks again the 'Request a Quote' button in the Open Order Details Page") {
+			Click(
+				buttonId = "requestQuote",
+				locator1 = "Button#BUTTON_ID");
+		}
+
+		task ("Then can view the buyer's email prepopulated in the Request a Quote popup") {
+			AssertElementPresent(
+				key_title = "Request a Quote",
+				locator1 = "CommerceFrontStore#MODAL_TITLE");
+
+			AssertTextEquals(
+				key_placeHolder = "Enter an email address.",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "buyer@liferay.com");
+
+			AssertTextEquals(
+				key_value = "requestQuote",
+				locator1 = "CommerceFrontStore#TEXTAREA_FIELD",
+				value1 = "");
+		}
+
+		task ("And can submit the request without filling in note info") {
+			Button.click(button = "Submit");
+		}
+
+		task ("And admin can view the order with the status 'Quote Requested' in the Orders admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_orderStatus = "Quote Requested",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+			CommerceJSONOrdersAPI._deleteAllCommerceOrders();
+		}
+
+		task ("But if the buyer submits the request by filling in non-email format for the email field") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceNavigator.gotoMiniCart();
+
+			CommerceOrders.createQuoteRequest(
+				quoteRequestEmail = "guestuser",
+				requestAQuoteInMiniCart = "true",
+				requestAQuoteInOpenOrdersPage = "true");
+		}
+
+		task ("Then it's not allowed to submit a request with invalid email address") {
+			AssertElementPresent(
+				key_alertMessage = "Please enter a valid email address.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
+	}
+
 }

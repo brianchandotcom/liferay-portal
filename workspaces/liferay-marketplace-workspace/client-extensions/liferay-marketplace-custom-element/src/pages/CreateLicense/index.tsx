@@ -155,7 +155,7 @@ const CreateLicense = () => {
 					type: 'success',
 				});
 
-				navigate('/');
+				navigate(`/order/${orderId}/licenses`);
 
 				provisioningKoroneikiOAuth2.downloadLicenseKey(licenseKey.id);
 			}

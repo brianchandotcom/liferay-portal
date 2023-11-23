@@ -8,9 +8,9 @@ package com.liferay.customer;
 import com.liferay.customer.google.service.GoogleCloudStorageWebService;
 import com.liferay.customer.object.model.TicketAttachment;
 import com.liferay.customer.object.service.TicketAttachmentWebService;
-import com.liferay.customer.zendesk.model.ZendeskOrganization;
-import com.liferay.customer.zendesk.model.ZendeskTicket;
-import com.liferay.customer.zendesk.service.ZendeskWebService;
+import com.liferay.osb.client.extension.util.zendesk.model.ZendeskOrganization;
+import com.liferay.osb.client.extension.util.zendesk.model.ZendeskTicket;
+import com.liferay.osb.client.extension.util.zendesk.service.ZendeskWebService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Amos Fong
  */
+@ComponentScan(basePackages = "com.liferay.osb")
 @RequestMapping("/ticket-attachments/initiate-upload")
 @RestController
 public class TicketAttachmentsInitiateUploadRestController

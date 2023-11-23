@@ -1551,28 +1551,24 @@ definition {
 	test CannotUpdateNameTypeObjectFromParentRelationship {
 		task ("Given an object related to itself, in a Many-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object LPS163655",
-				objectName = "CustomObjectLPS163655",
-				pluralLabelName = "Custom Objects LPS163655");
+				labelName = "Custom Object 163655",
+				objectName = "CustomObject163655",
+				pluralLabelName = "Custom Objects 163655");
 
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field",
-				fieldName = "customObjectField",
+				fieldLabelName = "Text Field",
+				fieldName = "textField",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "CustomObjectLPS163655");
+				objectName = "CustomObject163655");
 
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object LPS163655");
-
-			ObjectAdmin.gotoRelationshipsTab();
-
-			ObjectAdmin.addObjectRelationshipViaUI(
-				label = "Relationship",
-				object = "Custom Object LPS163655",
-				type = "Many to Many");
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject163655",
+				objectName_2 = "CustomObject163655",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163655");
 		}
@@ -1580,18 +1576,11 @@ definition {
 		task ("When the user edits the Parent relationships on the Relationship tab") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "Custom Object LPS163655");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 163655");
 
 			ObjectAdmin.gotoRelationshipsTab();
 
-			Click(
-				key_index = 1,
-				key_labelName = "Relationship",
-				locator1 = "CreateObject#OBJECT_NAME_INDEX");
-
-			SelectFrame(
-				key_title = "",
-				locator1 = "IFrame#MODAL_ANY");
+			ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship");
 		}
 
 		task ("Then the fields Name, Type and Object can not be updated") {
@@ -1602,12 +1591,12 @@ definition {
 				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE");
 
 			AssertElementPresent(
-				key_relation = "Many to Many",
-				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE");
+				key_valueName = "Custom Object 163655",
+				locator1 = "ObjectRelationships#VIEW_VALUE_DISABLED");
 
 			AssertElementPresent(
-				key_relationObject = "Custom Object LPS163655",
-				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_DISABLED_OBJECT");
+				key_relation = "Many to Many",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE");
 		}
 	}
 

@@ -70,6 +70,11 @@
 		<td>//div[@class='form-group']//label[contains(.,'${key_relationType}')]/../input[contains(@value,'${key_relationObject}')] | //div[@class='form-group']//label[contains(.,'${key_relationType}')]/../div[contains(.,'${key_relationObject}')] </td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_VALUE_DISABLED</td>
+		<td>//input[@disabled and contains(@value,'${key_valueName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

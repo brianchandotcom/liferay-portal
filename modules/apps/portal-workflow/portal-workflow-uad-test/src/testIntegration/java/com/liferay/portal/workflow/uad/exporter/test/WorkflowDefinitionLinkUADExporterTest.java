@@ -52,11 +52,6 @@ public class WorkflowDefinitionLinkUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "workflowDefinitionLinkId";
-	}
-
-	@Override
 	protected UADExporter<WorkflowDefinitionLink> getUADExporter() {
 		return _uadExporter;
 	}

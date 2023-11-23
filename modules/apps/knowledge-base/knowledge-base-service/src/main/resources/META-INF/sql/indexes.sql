@@ -13,6 +13,7 @@ create index IX_471614B0 on KBArticle (groupId, main, ctCollectionId);
 create index IX_42AE23A5 on KBArticle (groupId, parentResourcePrimKey, latest, ctCollectionId);
 create index IX_ECAB9F8B on KBArticle (groupId, parentResourcePrimKey, latest, status, ctCollectionId);
 create index IX_3F81ECD7 on KBArticle (groupId, parentResourcePrimKey, main, ctCollectionId);
+create index IX_170416BD on KBArticle (groupId, parentResourcePrimKey, main, status, ctCollectionId);
 create index IX_6B0A3F50 on KBArticle (groupId, parentResourcePrimKey, status, ctCollectionId);
 create index IX_DE33D4E9 on KBArticle (groupId, status, ctCollectionId);
 create index IX_F49D9AA5 on KBArticle (parentResourcePrimKey, latest, ctCollectionId);

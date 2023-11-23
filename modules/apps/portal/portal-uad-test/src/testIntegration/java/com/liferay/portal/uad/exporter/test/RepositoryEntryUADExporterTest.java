@@ -51,10 +51,7 @@ public class RepositoryEntryUADExporterTest extends BaseUADExporterTestCase<Repo
 		return repositoryEntry;
 	}
 
-	@Override
-	protected String getPrimaryKeyName() {
-		return "repositoryEntryId";
-	}
+
 
 	@Override
 	protected UADExporter getUADExporter() {

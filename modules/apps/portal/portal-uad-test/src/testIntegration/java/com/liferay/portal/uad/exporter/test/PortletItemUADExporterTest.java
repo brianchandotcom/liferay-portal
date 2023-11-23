@@ -48,11 +48,6 @@ public class PortletItemUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "portletItemId";
-	}
-
-	@Override
 	protected UADExporter<PortletItem> getUADExporter() {
 		return _uadExporter;
 	}

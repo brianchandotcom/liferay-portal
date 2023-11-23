@@ -54,11 +54,6 @@ public class SystemEventUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "systemEventId";
-	}
-
-	@Override
 	protected UADExporter<SystemEvent> getUADExporter() {
 		return _uadExporter;
 	}

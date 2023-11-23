@@ -50,10 +50,7 @@ public class RepositoryUADExporterTest extends BaseUADExporterTestCase<Repositor
 		return repository;
 	}
 
-	@Override
-	protected String getPrimaryKeyName() {
-		return "repositoryId";
-	}
+
 
 	@Override
 	protected UADExporter getUADExporter() {

@@ -46,10 +46,13 @@ public class DownloadCommerceVirtualOrderItemMVCResourceCommand
 
 		long commerceVirtualOrderItemId = ParamUtil.getLong(
 			resourceRequest, "commerceVirtualOrderItemId");
+		long commerceVirtualOrderItemFileEntryId = ParamUtil.getLong(
+			resourceRequest, "commerceVirtualOrderItemFileEntryId");
 
 		try {
 			File file = _commerceVirtualOrderItemService.getFile(
-				commerceVirtualOrderItemId);
+				commerceVirtualOrderItemId,
+				commerceVirtualOrderItemFileEntryId);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse, file.getName(),

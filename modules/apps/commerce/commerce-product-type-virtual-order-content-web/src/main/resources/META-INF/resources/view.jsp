@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry" %>
+
 <%--
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
@@ -79,8 +81,6 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 							>
 
 								<%
-								String downloadURL = commerceVirtualOrderItemContentDisplayContext.getDownloadURL(commerceVirtualOrderItem);
-
 								CPDefinitionVirtualSetting cpDefinitionVirtualSetting = commerceVirtualOrderItemContentDisplayContext.getCPDefinitionVirtualSetting(commerceOrderItem);
 
 								Map<String, Object> data = new HashMap<>();
@@ -95,16 +95,24 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 								}
 								%>
 
-								<c:if test="<%= commerceVirtualOrderItemContentDisplayContext.hasPermission(permissionChecker, commerceVirtualOrderItem, CommerceVirtualOrderActionKeys.DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM) && (cpDefinitionVirtualSetting != null) && ((cpDefinitionVirtualSetting.getFileEntryId() > 0) || Validator.isNotNull(cpDefinitionVirtualSetting.getUrl())) %>">
-									<aui:form action="<%= String.valueOf(commerceVirtualOrderItemContentDisplayContext.getDownloadResourceURL(commerceVirtualOrderItem.getCommerceVirtualOrderItemId())) %>" method="post" name='<%= commerceVirtualOrderItem.getCommerceVirtualOrderItemId() + "Fm" %>' />
+								<c:if test="<%= commerceVirtualOrderItemContentDisplayContext.hasPermission(permissionChecker, commerceVirtualOrderItem, CommerceVirtualOrderActionKeys.DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM) && (cpDefinitionVirtualSetting != null) %>">
+									<% for(CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry: commerceVirtualOrderItem.getCommerceVirtualOrderItemFileEntries()) {
+									String downloadURL = commerceVirtualOrderItemContentDisplayContext.getDownloadURL(commerceVirtualOrderItem, commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId());
+									String downloadLabel = "download - " + commerceVirtualOrderItemFileEntry.getVersion(); %>
+									<aui:form action="<%= String.valueOf(commerceVirtualOrderItemContentDisplayContext.getDownloadResourceURL(commerceVirtualOrderItem.getCommerceVirtualOrderItemId(), commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId())) %>" method="post" name='<%= commerceVirtualOrderItem.getCommerceVirtualOrderItemId() + "-" + commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId() + "Fm" %>' />
 
 									<liferay-ui:icon
 										data="<%= data %>"
 										label="<%= true %>"
-										message="download"
+										message="<%= downloadLabel %>"
 										url="<%= downloadURL %>"
 										useDialog="<%= useDialog %>"
 									/>
+
+									<%
+									}
+									%>
+
 								</c:if>
 							</liferay-ui:search-container-column-text>
 						</liferay-ui:search-container-row>

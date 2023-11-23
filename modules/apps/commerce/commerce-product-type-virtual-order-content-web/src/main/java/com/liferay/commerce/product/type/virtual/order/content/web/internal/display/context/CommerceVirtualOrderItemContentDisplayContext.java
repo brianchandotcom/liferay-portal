@@ -186,7 +186,10 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		return _displayStyleGroupId;
 	}
 
-	public ResourceURL getDownloadResourceURL(long commerceVirtualOrderItemId) {
+	public ResourceURL getDownloadResourceURL(
+		long commerceVirtualOrderItemId,
+		long commerceVirtualOrderItemFileEntryId) {
+
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceVirtualOrderItemContentRequestHelper.
 				getLiferayPortletResponse();
@@ -196,6 +199,9 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		resourceURL.setParameter(
 			"commerceVirtualOrderItemId",
 			String.valueOf(commerceVirtualOrderItemId));
+		resourceURL.setParameter(
+			"commerceVirtualOrderItemFileEntryId",
+			String.valueOf(commerceVirtualOrderItemFileEntryId));
 		resourceURL.setResourceID(
 			"/commerce_virtual_order_item_content" +
 				"/download_commerce_virtual_order_item");
@@ -204,7 +210,8 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 	}
 
 	public String getDownloadURL(
-			CommerceVirtualOrderItem commerceVirtualOrderItem)
+			CommerceVirtualOrderItem commerceVirtualOrderItem,
+			long commerceVirtualOrderItemFileEntryId)
 		throws Exception {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
@@ -216,7 +223,8 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 
 			return String.valueOf(
 				getDownloadResourceURL(
-					commerceVirtualOrderItem.getCommerceVirtualOrderItemId()));
+					commerceVirtualOrderItem.getCommerceVirtualOrderItemId(),
+					commerceVirtualOrderItemFileEntryId));
 		}
 
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(

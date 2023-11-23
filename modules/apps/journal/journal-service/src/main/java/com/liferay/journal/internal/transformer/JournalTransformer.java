@@ -23,6 +23,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -75,11 +76,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -107,269 +110,30 @@ public class JournalTransformer {
 			String script, ThemeDisplay themeDisplay, String viewMode)
 		throws Exception {
 
-		// Setup listeners
+		Set<String> renderedArticleIds = _renderedArticleIdsThreadLocal.get();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Language " + languageId);
-		}
+		String articleId = article.getArticleId();
 
-		if (Validator.isNull(viewMode)) {
-			viewMode = Constants.VIEW;
-		}
-
-		Map<String, String> tokens = JournalUtil.getTokens(
-			article, ddmTemplate, portletRequestModel, themeDisplay);
-
-		List<TemplateNode> templateNodes = new ArrayList<>();
-
-		_addAllReservedEls(
-			article, languageId, templateNodes, themeDisplay, tokens);
-
-		if (_logTokens.isDebugEnabled()) {
-			String tokensString = PropertiesUtil.list(tokens);
-
-			_logTokens.debug(tokensString);
-		}
-
-		Document document = article.getDocumentByLocale(languageId);
-
-		document = document.clone();
-
-		if (_logTransformBefore.isDebugEnabled()) {
-			_logTransformBefore.debug(document);
-		}
-
-		for (TransformerListener transformerListener : transformerListeners) {
-
-			// Modify XML
-
-			if (_logXmlBeforeListener.isDebugEnabled()) {
-				_logXmlBeforeListener.debug(document);
+		if (renderedArticleIds.contains(articleId)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("The article cannot include itself: " + articleId);
 			}
 
-			if (transformerListener != null) {
-				document = transformerListener.onXml(
-					document, languageId, tokens);
-
-				if (_logXmlAfterListener.isDebugEnabled()) {
-					_logXmlAfterListener.debug(document);
-				}
-			}
-
-			// Modify script
-
-			if (_logScriptBeforeListener.isDebugEnabled()) {
-				_logScriptBeforeListener.debug(script);
-			}
-
-			if (transformerListener != null) {
-				script = transformerListener.onScript(
-					script, document, languageId, tokens);
-
-				if (_logScriptAfterListener.isDebugEnabled()) {
-					_logScriptAfterListener.debug(script);
-				}
-			}
+			return StringPool.BLANK;
 		}
 
-		// Transform
-
-		String templateKey = "DEFAULT_TEMPLATE";
-
-		if (ddmTemplate != null) {
-			templateKey = ddmTemplate.getTemplateKey();
-		}
-
-		long companyId = article.getCompanyId();
-		long companyGroupId = 0;
-		long articleGroupId = article.getGroupId();
-		long classNameId = 0;
-
-		if (tokens != null) {
-			companyGroupId = GetterUtil.getLong(tokens.get("company_group_id"));
-			classNameId = GetterUtil.getLong(
-				tokens.get(TemplateConstants.CLASS_NAME_ID));
-		}
-
-		long scopeGroupId = 0;
-		long siteGroupId = 0;
-
-		if (themeDisplay != null) {
-			companyId = themeDisplay.getCompanyId();
-			companyGroupId = themeDisplay.getCompanyGroupId();
-			scopeGroupId = themeDisplay.getScopeGroupId();
-			siteGroupId = themeDisplay.getSiteGroupId();
-		}
-
-		Template template = _getTemplate(
-			_getTemplateId(
-				templateKey, companyId, companyGroupId, articleGroupId),
-			script);
-
-		PortletRequest originalPortletRequest = null;
-		PortletResponse originalPortletResponse = null;
-		String originalLifecyclePhase = null;
-
-		HttpServletRequest httpServletRequest = null;
-
-		if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
-			httpServletRequest = themeDisplay.getRequest();
-
-			if (portletRequestModel != null) {
-				originalPortletRequest =
-					(PortletRequest)httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_REQUEST);
-				originalPortletResponse =
-					(PortletResponse)httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE);
-				originalLifecyclePhase =
-					(String)httpServletRequest.getAttribute(
-						PortletRequest.LIFECYCLE_PHASE);
-
-				httpServletRequest.setAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST,
-					portletRequestModel.getPortletRequest());
-				httpServletRequest.setAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE,
-					portletRequestModel.getPortletResponse());
-				httpServletRequest.setAttribute(
-					PortletRequest.LIFECYCLE_PHASE,
-					portletRequestModel.getLifecycle());
-			}
-
-			template.prepare(httpServletRequest);
-		}
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+		renderedArticleIds.add(articleId);
 
 		try {
-			Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-			templateNodes.addAll(
-				_getTemplateNodes(
-					themeDisplay, document.getRootElement(),
-					article.getDDMStructure(), locale));
-
-			templateNodes.addAll(
-				includeBackwardsCompatibilityTemplateNodes(templateNodes, -1));
-
-			for (TemplateNode templateNode : templateNodes) {
-				template.put(templateNode.getName(), templateNode);
-			}
-
-			if (portletRequestModel != null) {
-				template.put("requestMap", portletRequestModel.toMap());
-			}
-
-			template.put("articleGroupId", articleGroupId);
-			template.put("articleLocale", locale);
-			template.put("company", _getCompany(themeDisplay, companyId));
-			template.put("companyId", companyId);
-			template.put("device", _getDevice(themeDisplay));
-
-			Map<String, String> friendlyURLMap = _getFriendlyURLMap(
-				article, journalHelper, layoutDisplayPageProviderRegistry,
-				themeDisplay);
-
-			template.put(
-				"friendlyURL", _getFriendlyURL(friendlyURLMap, languageId));
-			template.put("friendlyURLs", friendlyURLMap);
-
-			template.put("locale", _getLocale(themeDisplay, locale));
-			template.put(
-				"permissionChecker",
-				PermissionThreadLocal.getPermissionChecker());
-			template.put(
-				"randomNamespace",
-				StringUtil.randomId() + StringPool.UNDERLINE);
-			template.put("scopeGroupId", scopeGroupId);
-			template.put("siteGroupId", siteGroupId);
-
-			String templatesPath = _getTemplatesPath(
-				companyId, articleGroupId, classNameId);
-
-			template.put("templatesPath", templatesPath);
-
-			template.put("viewMode", viewMode);
-
-			TemplateHandler templateHandler =
-				TemplateHandlerRegistryUtil.getTemplateHandler(
-					JournalArticle.class.getName());
-
-			template.putAll(templateHandler.getCustomContextObjects());
-
-			if (themeDisplay != null) {
-				template.prepareTaglib(
-					themeDisplay.getRequest(),
-					new PipingServletResponse(
-						themeDisplay.getResponse(), unsyncStringWriter));
-			}
-
-			// Deprecated variables
-
-			template.put("groupId", articleGroupId);
-			template.put("journalTemplatesPath", templatesPath);
-
-			if (propagateException) {
-				template.processTemplate(unsyncStringWriter);
-			}
-			else {
-				template.processTemplate(
-					unsyncStringWriter, this::_getErrorTemplateResource);
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof DocumentException) {
-				throw new TransformException(
-					"Unable to read XML document", exception);
-			}
-			else if (exception instanceof IOException) {
-				throw new TransformException(
-					"Error reading template", exception);
-			}
-			else if (exception instanceof TransformException) {
-				throw (TransformException)exception;
-			}
-
-			throw new TransformException("Unhandled exception", exception);
+			return _transform(
+				article, ddmTemplate, journalHelper, languageId,
+				layoutDisplayPageProviderRegistry, transformerListeners,
+				portletRequestModel, propagateException, script, themeDisplay,
+				viewMode);
 		}
 		finally {
-			if ((httpServletRequest != null) && (portletRequestModel != null)) {
-				httpServletRequest.setAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST,
-					originalPortletRequest);
-				httpServletRequest.setAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE,
-					originalPortletResponse);
-				httpServletRequest.setAttribute(
-					PortletRequest.LIFECYCLE_PHASE, originalLifecyclePhase);
-			}
+			renderedArticleIds.remove(articleId);
 		}
-
-		String output = unsyncStringWriter.toString();
-
-		// Postprocess output
-
-		for (TransformerListener transformerListener : transformerListeners) {
-
-			// Modify output
-
-			if (_logOutputBeforeListener.isDebugEnabled()) {
-				_logOutputBeforeListener.debug(output);
-			}
-
-			output = transformerListener.onOutput(output, languageId, tokens);
-
-			if (_logOutputAfterListener.isDebugEnabled()) {
-				_logOutputAfterListener.debug(output);
-			}
-		}
-
-		if (_logTransfromAfter.isDebugEnabled()) {
-			_logTransfromAfter.debug(output);
-		}
-
-		return output;
 	}
 
 	protected List<TemplateNode> includeBackwardsCompatibilityTemplateNodes(
@@ -985,6 +749,280 @@ public class JournalTransformer {
 			StringPool.SLASH, groupId, StringPool.SLASH, classNameId);
 	}
 
+	private String _transform(
+			JournalArticle article, DDMTemplate ddmTemplate,
+			JournalHelper journalHelper, String languageId,
+			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
+			List<TransformerListener> transformerListeners,
+			PortletRequestModel portletRequestModel, boolean propagateException,
+			String script, ThemeDisplay themeDisplay, String viewMode)
+		throws Exception {
+
+		// Setup listeners
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Language " + languageId);
+		}
+
+		if (Validator.isNull(viewMode)) {
+			viewMode = Constants.VIEW;
+		}
+
+		Map<String, String> tokens = JournalUtil.getTokens(
+			article, ddmTemplate, portletRequestModel, themeDisplay);
+
+		List<TemplateNode> templateNodes = new ArrayList<>();
+
+		_addAllReservedEls(
+			article, languageId, templateNodes, themeDisplay, tokens);
+
+		if (_logTokens.isDebugEnabled()) {
+			String tokensString = PropertiesUtil.list(tokens);
+
+			_logTokens.debug(tokensString);
+		}
+
+		Document document = article.getDocumentByLocale(languageId);
+
+		document = document.clone();
+
+		if (_logTransformBefore.isDebugEnabled()) {
+			_logTransformBefore.debug(document);
+		}
+
+		for (TransformerListener transformerListener : transformerListeners) {
+
+			// Modify XML
+
+			if (_logXmlBeforeListener.isDebugEnabled()) {
+				_logXmlBeforeListener.debug(document);
+			}
+
+			if (transformerListener != null) {
+				document = transformerListener.onXml(
+					document, languageId, tokens);
+
+				if (_logXmlAfterListener.isDebugEnabled()) {
+					_logXmlAfterListener.debug(document);
+				}
+			}
+
+			// Modify script
+
+			if (_logScriptBeforeListener.isDebugEnabled()) {
+				_logScriptBeforeListener.debug(script);
+			}
+
+			if (transformerListener != null) {
+				script = transformerListener.onScript(
+					script, document, languageId, tokens);
+
+				if (_logScriptAfterListener.isDebugEnabled()) {
+					_logScriptAfterListener.debug(script);
+				}
+			}
+		}
+
+		// Transform
+
+		String templateKey = "DEFAULT_TEMPLATE";
+
+		if (ddmTemplate != null) {
+			templateKey = ddmTemplate.getTemplateKey();
+		}
+
+		long companyId = article.getCompanyId();
+		long companyGroupId = 0;
+		long articleGroupId = article.getGroupId();
+		long classNameId = 0;
+
+		if (tokens != null) {
+			companyGroupId = GetterUtil.getLong(tokens.get("company_group_id"));
+			classNameId = GetterUtil.getLong(
+				tokens.get(TemplateConstants.CLASS_NAME_ID));
+		}
+
+		long scopeGroupId = 0;
+		long siteGroupId = 0;
+
+		if (themeDisplay != null) {
+			companyId = themeDisplay.getCompanyId();
+			companyGroupId = themeDisplay.getCompanyGroupId();
+			scopeGroupId = themeDisplay.getScopeGroupId();
+			siteGroupId = themeDisplay.getSiteGroupId();
+		}
+
+		Template template = _getTemplate(
+			_getTemplateId(
+				templateKey, companyId, companyGroupId, articleGroupId),
+			script);
+
+		PortletRequest originalPortletRequest = null;
+		PortletResponse originalPortletResponse = null;
+		String originalLifecyclePhase = null;
+
+		HttpServletRequest httpServletRequest = null;
+
+		if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
+			httpServletRequest = themeDisplay.getRequest();
+
+			if (portletRequestModel != null) {
+				originalPortletRequest =
+					(PortletRequest)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST);
+				originalPortletResponse =
+					(PortletResponse)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
+				originalLifecyclePhase =
+					(String)httpServletRequest.getAttribute(
+						PortletRequest.LIFECYCLE_PHASE);
+
+				httpServletRequest.setAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST,
+					portletRequestModel.getPortletRequest());
+				httpServletRequest.setAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE,
+					portletRequestModel.getPortletResponse());
+				httpServletRequest.setAttribute(
+					PortletRequest.LIFECYCLE_PHASE,
+					portletRequestModel.getLifecycle());
+			}
+
+			template.prepare(httpServletRequest);
+		}
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		try {
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+			templateNodes.addAll(
+				_getTemplateNodes(
+					themeDisplay, document.getRootElement(),
+					article.getDDMStructure(), locale));
+
+			templateNodes.addAll(
+				includeBackwardsCompatibilityTemplateNodes(templateNodes, -1));
+
+			for (TemplateNode templateNode : templateNodes) {
+				template.put(templateNode.getName(), templateNode);
+			}
+
+			if (portletRequestModel != null) {
+				template.put("requestMap", portletRequestModel.toMap());
+			}
+
+			template.put("articleGroupId", articleGroupId);
+			template.put("articleLocale", locale);
+			template.put("company", _getCompany(themeDisplay, companyId));
+			template.put("companyId", companyId);
+			template.put("device", _getDevice(themeDisplay));
+
+			Map<String, String> friendlyURLMap = _getFriendlyURLMap(
+				article, journalHelper, layoutDisplayPageProviderRegistry,
+				themeDisplay);
+
+			template.put(
+				"friendlyURL", _getFriendlyURL(friendlyURLMap, languageId));
+			template.put("friendlyURLs", friendlyURLMap);
+
+			template.put("locale", _getLocale(themeDisplay, locale));
+			template.put(
+				"permissionChecker",
+				PermissionThreadLocal.getPermissionChecker());
+			template.put(
+				"randomNamespace",
+				StringUtil.randomId() + StringPool.UNDERLINE);
+			template.put("scopeGroupId", scopeGroupId);
+			template.put("siteGroupId", siteGroupId);
+
+			String templatesPath = _getTemplatesPath(
+				companyId, articleGroupId, classNameId);
+
+			template.put("templatesPath", templatesPath);
+
+			template.put("viewMode", viewMode);
+
+			TemplateHandler templateHandler =
+				TemplateHandlerRegistryUtil.getTemplateHandler(
+					JournalArticle.class.getName());
+
+			template.putAll(templateHandler.getCustomContextObjects());
+
+			if (themeDisplay != null) {
+				template.prepareTaglib(
+					themeDisplay.getRequest(),
+					new PipingServletResponse(
+						themeDisplay.getResponse(), unsyncStringWriter));
+			}
+
+			// Deprecated variables
+
+			template.put("groupId", articleGroupId);
+			template.put("journalTemplatesPath", templatesPath);
+
+			if (propagateException) {
+				template.processTemplate(unsyncStringWriter);
+			}
+			else {
+				template.processTemplate(
+					unsyncStringWriter, this::_getErrorTemplateResource);
+			}
+		}
+		catch (Exception exception) {
+			if (exception instanceof DocumentException) {
+				throw new TransformException(
+					"Unable to read XML document", exception);
+			}
+			else if (exception instanceof IOException) {
+				throw new TransformException(
+					"Error reading template", exception);
+			}
+			else if (exception instanceof TransformException) {
+				throw (TransformException)exception;
+			}
+
+			throw new TransformException("Unhandled exception", exception);
+		}
+		finally {
+			if ((httpServletRequest != null) && (portletRequestModel != null)) {
+				httpServletRequest.setAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST,
+					originalPortletRequest);
+				httpServletRequest.setAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE,
+					originalPortletResponse);
+				httpServletRequest.setAttribute(
+					PortletRequest.LIFECYCLE_PHASE, originalLifecyclePhase);
+			}
+		}
+
+		String output = unsyncStringWriter.toString();
+
+		// Postprocess output
+
+		for (TransformerListener transformerListener : transformerListeners) {
+
+			// Modify output
+
+			if (_logOutputBeforeListener.isDebugEnabled()) {
+				_logOutputBeforeListener.debug(output);
+			}
+
+			output = transformerListener.onOutput(output, languageId, tokens);
+
+			if (_logOutputAfterListener.isDebugEnabled()) {
+				_logOutputAfterListener.debug(output);
+			}
+		}
+
+		if (_logTransfromAfter.isDebugEnabled()) {
+			_logTransfromAfter.debug(output);
+		}
+
+		return output;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalTransformer.class);
 
@@ -1006,5 +1044,10 @@ public class JournalTransformer {
 		JournalTransformer.class.getName() + ".XmlAfterListener");
 	private static final Log _logXmlBeforeListener = LogFactoryUtil.getLog(
 		JournalTransformer.class.getName() + ".XmlBeforeListener");
+	private static final ThreadLocal<Set<String>>
+		_renderedArticleIdsThreadLocal = new CentralizedThreadLocal<>(
+			JournalTransformer.class.getName() +
+				"._renderedArticleIdsThreadLocal",
+			HashSet::new);
 
 }

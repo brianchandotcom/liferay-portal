@@ -669,6 +669,14 @@ public class JournalArticleActionDropdownItemsProvider {
 
 						return portletDisplay.getId();
 					}
+				).setParameter(
+					"backURLTitle",
+					() -> {
+						PortletDisplay portletDisplay =
+							_themeDisplay.getPortletDisplay();
+
+						return portletDisplay.getPortletDisplayName();
+					}
 				).buildPortletURL());
 			dropdownItem.setIcon("download");
 			dropdownItem.setLabel(

@@ -12,6 +12,7 @@ ImportTranslationDisplayContext importTranslationDisplayContext = (ImportTransla
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(importTranslationDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 %>

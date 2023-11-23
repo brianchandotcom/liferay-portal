@@ -15,7 +15,7 @@ const getSiteURL = () => {
 	return '';
 };
 
-const productSignIn = localStorage.getItem('productName');
+const productSignIn = sessionStorage.getItem('@marketplace/product-name');
 
 if (productSignIn && isLogged) {
 	const productURL = `${getSiteURL()}/p/${productSignIn}`;

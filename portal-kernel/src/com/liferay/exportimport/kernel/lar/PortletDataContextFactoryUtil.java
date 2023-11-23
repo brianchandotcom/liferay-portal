@@ -5,8 +5,8 @@
 
 package com.liferay.exportimport.kernel.lar;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
@@ -21,7 +21,10 @@ public class PortletDataContextFactoryUtil {
 	public static PortletDataContext clonePortletDataContext(
 		PortletDataContext portletDataContext) {
 
-		return _portletDataContextFactory.clonePortletDataContext(
+		PortletDataContextFactory portletDataContextFactory =
+			_portletDataContextFactorySnapshot.get();
+
+		return portletDataContextFactory.clonePortletDataContext(
 			portletDataContext);
 	}
 
@@ -30,7 +33,10 @@ public class PortletDataContextFactoryUtil {
 			Date startDate, Date endDate, ZipWriter zipWriter)
 		throws PortletDataException {
 
-		return _portletDataContextFactory.createExportPortletDataContext(
+		PortletDataContextFactory portletDataContextFactory =
+			_portletDataContextFactorySnapshot.get();
+
+		return portletDataContextFactory.createExportPortletDataContext(
 			companyId, groupId, parameterMap, startDate, endDate, zipWriter);
 	}
 
@@ -39,7 +45,10 @@ public class PortletDataContextFactoryUtil {
 			UserIdStrategy userIdStrategy, ZipReader zipReader)
 		throws PortletDataException {
 
-		return _portletDataContextFactory.createImportPortletDataContext(
+		PortletDataContextFactory portletDataContextFactory =
+			_portletDataContextFactorySnapshot.get();
+
+		return portletDataContextFactory.createImportPortletDataContext(
 			companyId, groupId, parameterMap, userIdStrategy, zipReader);
 	}
 
@@ -47,7 +56,10 @@ public class PortletDataContextFactoryUtil {
 			long companyId, long groupId, Date startDate, Date endDate)
 		throws PortletDataException {
 
-		return _portletDataContextFactory.createPreparePortletDataContext(
+		PortletDataContextFactory portletDataContextFactory =
+			_portletDataContextFactorySnapshot.get();
+
+		return portletDataContextFactory.createPreparePortletDataContext(
 			companyId, groupId, startDate, endDate);
 	}
 
@@ -56,7 +68,10 @@ public class PortletDataContextFactoryUtil {
 			Date endDate)
 		throws PortletDataException {
 
-		return _portletDataContextFactory.createPreparePortletDataContext(
+		PortletDataContextFactory portletDataContextFactory =
+			_portletDataContextFactorySnapshot.get();
+
+		return portletDataContextFactory.createPreparePortletDataContext(
 			companyId, groupId, range, startDate, endDate);
 	}
 
@@ -64,15 +79,16 @@ public class PortletDataContextFactoryUtil {
 			ThemeDisplay themeDisplay, Date startDate, Date endDate)
 		throws PortletDataException {
 
-		return _portletDataContextFactory.createPreparePortletDataContext(
+		PortletDataContextFactory portletDataContextFactory =
+			_portletDataContextFactorySnapshot.get();
+
+		return portletDataContextFactory.createPreparePortletDataContext(
 			themeDisplay, startDate, endDate);
 	}
 
-	private static volatile PortletDataContextFactory
-		_portletDataContextFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				PortletDataContextFactory.class,
-				PortletDataContextFactoryUtil.class,
-				"_portletDataContextFactory", false);
+	private static final Snapshot<PortletDataContextFactory>
+		_portletDataContextFactorySnapshot = new Snapshot<>(
+			PortletDataContextFactoryUtil.class,
+			PortletDataContextFactory.class);
 
 }

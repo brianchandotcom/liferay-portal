@@ -1753,6 +1753,13 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${successInteraction});
 
+			if (isSet(displayPage)) {
+				Select(
+					key_fieldLabel = "Display Page",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${displayPage});
+			}
+
 			if (isSet(successText)) {
 				Type(
 					key_text = "Success Text",

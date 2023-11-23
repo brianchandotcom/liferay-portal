@@ -28,7 +28,8 @@ public class ListTypeEntryUtil {
 			listTypeEntry.getExternalReferenceCode());
 		serviceBuilderListTypeEntry.setKey(listTypeEntry.getKey());
 		serviceBuilderListTypeEntry.setNameMap(
-			LocalizedMapUtil.getLocalizedMap(listTypeEntry.getName_i18n()));
+			LocalizedMapUtil.getLocalizedMap(
+				listTypeEntry.getName_languageId()));
 
 		return serviceBuilderListTypeEntry;
 	}

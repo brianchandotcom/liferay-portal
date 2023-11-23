@@ -102,9 +102,9 @@ public class ImportListTypeDefinitionMVCActionCommand
 		ListTypeDefinition listTypeDefinition = ListTypeDefinition.toDTO(
 			listTypeDefinitionJSONObject.toString());
 
-		listTypeDefinition.setName_i18n(
-			LocalizedMapUtil.mergeI18nMap(
-				listTypeDefinition.getName_i18n(),
+		listTypeDefinition.setName_languageId(
+			LocalizedMapUtil.mergeLanguageIdMap(
+				listTypeDefinition.getName_languageId(),
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 				ParamUtil.getString(actionRequest, "name")));
 

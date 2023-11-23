@@ -65,7 +65,8 @@ public class CollectionLayoutStructureItemImporter
 					layoutStructure.addCollectionStyledLayoutStructureItem(
 						_getCollectionItemId(
 							layoutStructureItemImporterContext, pageElement),
-						_getId(layoutStructureItemImporterContext, pageElement),
+						layoutStructureItemImporterContext.getItemId(
+							pageElement),
 						layoutStructureItemImporterContext.getParentItemId(),
 						layoutStructureItemImporterContext.getPosition());
 
@@ -254,7 +255,7 @@ public class CollectionLayoutStructureItemImporter
 			return PortalUUIDUtil.generate();
 		}
 
-		return _getId(layoutStructureItemImporterContext, pageElements[0]);
+		return layoutStructureItemImporterContext.getItemId(pageElements[0]);
 	}
 
 	private JSONObject _getCollectionJSONObject(
@@ -348,17 +349,6 @@ public class CollectionLayoutStructureItemImporter
 						"message_i18n"));
 			}
 		};
-	}
-
-	private String _getId(
-		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
-		PageElement pageElement) {
-
-		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
-			return pageElement.getId();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private String _getItemSubtype(

@@ -53,20 +53,8 @@ public abstract class BaseBlogsEntryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(blogsEntry.getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(blogsEntry.getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
 		sb.append(blogsEntry.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(blogsEntry.getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");

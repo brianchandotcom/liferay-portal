@@ -21,8 +21,18 @@ import {
 import RulesModal from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page_rules/components/RulesModal';
 
 jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve())
+);
+
+jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/addRule',
 	() => jest.fn()
+);
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useConditionValues',
+	() => jest.fn(() => [{id: 'condition-id'}])
 );
 
 jest.mock('frontend-js-web', () => ({
@@ -33,7 +43,7 @@ jest.mock('frontend-js-web', () => ({
 const renderComponent = ({rules = []} = {}) => {
 	render(
 		<StoreAPIContextProvider
-			dispatch={() => {}}
+			dispatch={() => Promise.resolve()}
 			getState={() => ({
 				fragmentEntryLinks: [],
 				layoutData: {
@@ -193,7 +203,7 @@ describe('RulesSidebar', () => {
 		selectPickerOption('select-user', 'user1');
 
 		act(() => {
-			fireEvent.click(screen.getByLabelText('delete-condition'));
+			fireEvent.click(screen.getByTitle('delete-condition'));
 		});
 
 		expect(screen.queryByText('select-condition')).not.toBeInTheDocument();
@@ -208,7 +218,7 @@ describe('RulesSidebar', () => {
 		selectPickerOption('select-fragment', 'containercillo');
 
 		act(() => {
-			fireEvent.click(screen.getByLabelText('delete-action'));
+			fireEvent.click(screen.getByTitle('delete-action'));
 		});
 
 		expect(

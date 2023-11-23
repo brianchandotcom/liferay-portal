@@ -53,14 +53,6 @@ public abstract class BaseLayoutSetBranchUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>layoutSetBranchId</column-name><column-value><![CDATA[");
-		sb.append(layoutSetBranch.getLayoutSetBranchId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(layoutSetBranch.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(layoutSetBranch.getUserName());
 		sb.append("]]></column-value></column>");

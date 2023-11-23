@@ -20,12 +20,12 @@ public class GitHubRepository {
 		_jsonObject = jsonObject;
 	}
 
-	public String getName() {
-		return _jsonObject.getString("name");
+	public URL getHtmlURL() {
+		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 
-	public URL getURL() {
-		return StringUtil.toURL(_jsonObject.getString("html_url"));
+	public String getName() {
+		return _jsonObject.getString("name");
 	}
 
 	private final JSONObject _jsonObject;

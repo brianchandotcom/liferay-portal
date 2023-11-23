@@ -175,7 +175,7 @@ public class CommerceMediaResolverTest {
 					fileEntry.getFileEntryId(), null,
 					CommerceOrderConstants.ORDER_STATUS_PENDING, 0,
 					RandomTestUtil.randomInt(), true, 0, "https://liferay.com",
-					false, null, 0, _serviceContext);
+					false, null, 0, false, _serviceContext);
 
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
@@ -204,7 +204,7 @@ public class CommerceMediaResolverTest {
 
 		String downloadVirtualOrderItemURL =
 			_commerceMediaResolver.getDownloadVirtualOrderItemURL(
-				commerceVirtualOrderItem.getCommerceVirtualOrderItemId());
+				commerceVirtualOrderItem.getCommerceVirtualOrderItemId(), 0);
 
 		String expectedVirtualOrderItemURL = StringBundler.concat(
 			_portal.getPathModule(), StringPool.SLASH,

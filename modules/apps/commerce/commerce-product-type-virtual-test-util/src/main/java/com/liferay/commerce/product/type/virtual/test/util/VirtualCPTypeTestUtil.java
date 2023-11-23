@@ -64,7 +64,7 @@ public class VirtualCPTypeTestUtil {
 				className, classPK, fileEntryId, url, activationStatus,
 				duration, RandomTestUtil.randomInt(), true, sampleFileEntryId,
 				sampleURL, true, termsOfUseContentMap,
-				termsOfUseJournalArticleResourcePrimKey, serviceContext);
+				termsOfUseJournalArticleResourcePrimKey, false, serviceContext);
 	}
 
 	public static JournalArticle addJournalArticle(long groupId)

@@ -24,6 +24,7 @@ import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOr
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -301,7 +303,19 @@ public class CommerceMediaServlet extends HttpServlet {
 					return;
 				}
 
-				if (commerceVirtualOrderItem.getFileEntryId() != fileEntryId) {
+				if (!ArrayUtil.contains(
+						TransformUtil.transformToLongArray(
+							commerceVirtualOrderItem.
+								getCommerceVirtualOrderItemFileEntries(),
+							commerceVirtualOrderItemFileEntry ->
+								commerceVirtualOrderItemFileEntry.
+									getCommerceVirtualOrderItemFileEntryId()),
+						fileEntryId)) {
+
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						"The file entry " + fileEntryId + " does not exist");
+
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
 						StringBundler.concat(
@@ -335,8 +349,6 @@ public class CommerceMediaServlet extends HttpServlet {
 					updateCommerceVirtualOrderItem(
 						commerceVirtualOrderItem.
 							getCommerceVirtualOrderItemId(),
-						commerceVirtualOrderItem.getFileEntryId(),
-						commerceVirtualOrderItem.getUrl(),
 						commerceVirtualOrderItem.getActivationStatus(),
 						commerceVirtualOrderItem.getDuration(), usages,
 						commerceVirtualOrderItem.getMaxUsages(),
@@ -549,19 +561,35 @@ public class CommerceMediaServlet extends HttpServlet {
 
 			if (sample) {
 				fileEntry = cpDefinitionVirtualSetting.getSampleFileEntry();
+
+				if ((fileEntry == null) ||
+					(fileEntry.getFileEntryId() != fileEntryId)) {
+
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						"The file entry " + fileEntryId + " does not exist");
+
+					return;
+				}
 			}
 			else {
-				fileEntry = cpDefinitionVirtualSetting.getFileEntry();
-			}
+				if (!ArrayUtil.contains(
+						TransformUtil.transformToLongArray(
+							cpDefinitionVirtualSetting.
+								getCPDVirtualSettingFileEntries(),
+							cpdVirtualSettingFileEntry ->
+								cpdVirtualSettingFileEntry.
+									getCPDefinitionVirtualSettingFileEntryId()),
+						fileEntryId)) {
 
-			if ((fileEntry == null) ||
-				(fileEntry.getFileEntryId() != fileEntryId)) {
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						"The file entry " + fileEntryId + " does not exist");
 
-				_sendError(
-					httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-					"The file entry " + fileEntryId + " does not exist");
+					return;
+				}
 
-				return;
+				fileEntry = _getFileEntry(fileEntryId);
 			}
 
 			ServletResponseUtil.sendFile(

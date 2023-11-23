@@ -28,6 +28,7 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
 import com.liferay.commerce.product.type.virtual.order.util.CommerceVirtualOrderItemChecker;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
@@ -205,7 +206,7 @@ public class PlacedOrderItemResourceTest
 					cpDefinition.getCPDefinitionId(), fileEntryId, url,
 					CommerceOrderConstants.ORDER_STATUS_PENDING, 0,
 					RandomTestUtil.randomInt(), true, 0, "https://liferay.com",
-					false, null, 0, _serviceContext);
+					false, null, 0, false, _serviceContext);
 
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
@@ -252,7 +253,17 @@ public class PlacedOrderItemResourceTest
 							return null;
 						}
 
-						return new String[] {commerceVirtualOrderItem.getUrl()};
+						List<CommerceVirtualOrderItemFileEntry>
+							commerceVirtualOrderItemFileEntries =
+								commerceVirtualOrderItem.
+									getCommerceVirtualOrderItemFileEntries();
+						CommerceVirtualOrderItemFileEntry
+							commerceVirtualOrderItemFileEntry =
+								commerceVirtualOrderItemFileEntries.get(0);
+
+						return new String[] {
+							commerceVirtualOrderItemFileEntry.getUrl()
+						};
 					});
 			}
 		};

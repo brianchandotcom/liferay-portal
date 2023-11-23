@@ -237,7 +237,9 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 		String redirect = HttpComponentsUtil.addParameters(
 			fullLayoutURL, "p_l_back_url",
-			_portal.getLayoutFullURL(layout, themeDisplay),
+			_addSegmentsExperienceId(
+				httpServletRequest, layout,
+				_portal.getLayoutFullURL(layout, themeDisplay)),
 			"p_l_back_url_title", layout.getName(themeDisplay.getLocale()),
 			"p_l_mode", Constants.EDIT);
 

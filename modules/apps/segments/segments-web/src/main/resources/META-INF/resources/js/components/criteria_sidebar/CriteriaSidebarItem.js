@@ -5,8 +5,9 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 import {DragSource as dragSource} from 'react-dnd';
 
 import useKeyboardNavigation from '../../hooks/useKeyboardNavigation';
@@ -33,17 +34,16 @@ function CriteriaSidebarItem({
 	label,
 	type,
 }) {
-	const [isActive, setIsActive] = useState(false);
 	const {isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
 
 	return connectDragSource(
 		<li
+			aria-label={sub(Liferay.Language.get('drag-x'), label)}
 			className={classNames(
 				'align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex ',
 				{
-					'criteria-sidebar-item-root--active': isActive,
 					dragging,
 				},
 				className
@@ -52,14 +52,7 @@ function CriteriaSidebarItem({
 			role="menuitem"
 			tabIndex={isTarget ? 0 : -1}
 		>
-			<span
-				className="c-p-2 inline-item"
-				onBlur={() => setIsActive(false)}
-				onFocus={() => setIsActive(true)}
-				tabIndex={isTarget ? 0 : -1}
-			>
-				<ClayIcon symbol="drag" />
-			</span>
+			<ClayIcon symbol="drag" />
 
 			<span className="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark">
 				<span className="inline-item">

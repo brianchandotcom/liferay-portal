@@ -189,7 +189,7 @@ describe('Editor', () => {
 						});
 
 						const fieldLeft = await waitFor(() => {
-							return getByTestId('field-left-id-test');
+							return getByTestId('field-left-id');
 						});
 
 						userEvent.click(fieldLeft);
@@ -198,17 +198,13 @@ describe('Editor', () => {
 
 						fireEvent.click(selectedItem);
 
-						await waitFor(() =>
-							getByTestId('field-operator-id-test')
-						);
+						await waitFor(() => getByTestId('field-operator-id'));
 
 						act(() => {
 							jest.runAllTimers();
 						});
 
-						const fieldOperator = getByTestId(
-							'field-operator-id-test'
-						);
+						const fieldOperator = getByTestId('field-operator-id');
 
 						fireEvent.click(fieldOperator);
 
@@ -237,7 +233,7 @@ describe('Editor', () => {
 						});
 
 						const fieldLeft = await waitFor(() => {
-							return getByTestId('field-left-id-test');
+							return getByTestId('field-left-id');
 						});
 
 						userEvent.click(fieldLeft);
@@ -246,17 +242,13 @@ describe('Editor', () => {
 
 						fireEvent.click(selectedItem);
 
-						await waitFor(() =>
-							getByTestId('field-operator-id-test')
-						);
+						await waitFor(() => getByTestId('field-operator-id'));
 
 						act(() => {
 							jest.runAllTimers();
 						});
 
-						const fieldOperator = getByTestId(
-							'field-operator-id-test'
-						);
+						const fieldOperator = getByTestId('field-operator-id');
 
 						fireEvent.click(fieldOperator);
 
@@ -283,7 +275,7 @@ describe('Editor', () => {
 					});
 
 					const fieldLeft = await waitFor(() => {
-						return getByTestId('field-left-id-test');
+						return getByTestId('field-left-id');
 					});
 
 					userEvent.click(fieldLeft);
@@ -292,13 +284,13 @@ describe('Editor', () => {
 
 					fireEvent.click(selectedItem);
 
-					await waitFor(() => getByTestId('field-operator-id-test'));
+					await waitFor(() => getByTestId('field-operator-id'));
 
 					act(() => {
 						jest.runAllTimers();
 					});
 
-					const fieldOperator = getByTestId('field-operator-id-test');
+					const fieldOperator = getByTestId('field-operator-id');
 
 					fireEvent.click(fieldOperator);
 
@@ -336,7 +328,7 @@ describe('Editor', () => {
 						});
 
 						const fieldLeft = await waitFor(() => {
-							return getByTestId('field-left-id-test');
+							return getByTestId('field-left-id');
 						});
 
 						userEvent.click(fieldLeft);
@@ -344,17 +336,13 @@ describe('Editor', () => {
 						const selectedItem = getByText(type);
 						fireEvent.click(selectedItem);
 
-						await waitFor(() =>
-							getByTestId('field-operator-id-test')
-						);
+						await waitFor(() => getByTestId('field-operator-id'));
 
 						act(() => {
 							jest.runAllTimers();
 						});
 
-						const fieldOperator = getByTestId(
-							'field-operator-id-test'
-						);
+						const fieldOperator = getByTestId('field-operator-id');
 
 						fireEvent.click(fieldOperator);
 
@@ -367,7 +355,7 @@ describe('Editor', () => {
 						});
 
 						const binaryOperator = await waitFor(() => {
-							return getByTestId('field-binary-operator-id-test');
+							return getByTestId('field-binary-operator-id');
 						});
 
 						fireEvent.click(binaryOperator);
@@ -412,7 +400,7 @@ describe('Editor', () => {
 					});
 
 					const fieldLeft = await waitFor(() => {
-						return getByTestId('field-left-id-test');
+						return getByTestId('field-left-id');
 					});
 
 					userEvent.click(fieldLeft);
@@ -421,13 +409,13 @@ describe('Editor', () => {
 
 					fireEvent.click(selectedItem);
 
-					await waitFor(() => getByTestId('field-operator-id-test'));
+					await waitFor(() => getByTestId('field-operator-id'));
 
 					act(() => {
 						jest.runAllTimers();
 					});
 
-					const fieldOperator = getByTestId('field-operator-id-test');
+					const fieldOperator = getByTestId('field-operator-id');
 
 					fireEvent.click(fieldOperator);
 
@@ -440,7 +428,7 @@ describe('Editor', () => {
 					});
 
 					const binaryOperator = await waitFor(() => {
-						return getByTestId('field-binary-operator-id-test');
+						return getByTestId('field-binary-operator-id');
 					});
 
 					fireEvent.click(binaryOperator);
@@ -454,7 +442,7 @@ describe('Editor', () => {
 					).concat(UPLOAD_TYPE_FIELD);
 
 					const otherValueButton = await waitFor(() => {
-						return getByTestId('field-right-id-test');
+						return getByTestId('field-right-id');
 					});
 
 					fireEvent.click(otherValueButton);

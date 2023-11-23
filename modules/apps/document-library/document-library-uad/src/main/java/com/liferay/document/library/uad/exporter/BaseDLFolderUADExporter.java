@@ -53,20 +53,8 @@ public abstract class BaseDLFolderUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>folderId</column-name><column-value><![CDATA[");
-		sb.append(dlFolder.getFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(dlFolder.getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
 		sb.append(dlFolder.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(dlFolder.getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");

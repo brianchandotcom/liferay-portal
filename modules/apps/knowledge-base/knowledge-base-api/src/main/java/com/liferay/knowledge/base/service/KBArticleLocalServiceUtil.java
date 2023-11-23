@@ -691,11 +691,11 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static void moveDependentKBArticlesToTrash(
-			KBArticle parentKBArticle, long trashEntryId)
+			long parentResourcePrimKey, long trashEntryId)
 		throws PortalException {
 
 		getService().moveDependentKBArticlesToTrash(
-			parentKBArticle, trashEntryId);
+			parentResourcePrimKey, trashEntryId);
 	}
 
 	public static void moveDependentKBArticleToTrash(
@@ -716,19 +716,20 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static void moveKBArticleFromTrash(
-			long userId, long kbArticleId, long parentResourceClassNameId,
+			long userId, long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey)
 		throws PortalException {
 
 		getService().moveKBArticleFromTrash(
-			userId, kbArticleId, parentResourceClassNameId,
+			userId, resourcePrimKey, parentResourceClassNameId,
 			parentResourcePrimKey);
 	}
 
-	public static KBArticle moveKBArticleToTrash(long userId, long kbArticleId)
+	public static KBArticle moveKBArticleToTrash(
+			long userId, long resourcePrimKey)
 		throws PortalException {
 
-		return getService().moveKBArticleToTrash(userId, kbArticleId);
+		return getService().moveKBArticleToTrash(userId, resourcePrimKey);
 	}
 
 	public static void restoreDependentKBArticleFromTrash(KBArticle kbArticle)
@@ -738,16 +739,17 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static void restoreDependentKBArticlesFromTrash(
-			KBArticle parentKBArticle)
+			long parentResourcePrimKey)
 		throws PortalException {
 
-		getService().restoreDependentKBArticlesFromTrash(parentKBArticle);
+		getService().restoreDependentKBArticlesFromTrash(parentResourcePrimKey);
 	}
 
-	public static void restoreKBArticleFromTrash(long userId, long kbArticleId)
+	public static void restoreKBArticleFromTrash(
+			long userId, long resourcePrimKey)
 		throws PortalException {
 
-		getService().restoreKBArticleFromTrash(userId, kbArticleId);
+		getService().restoreKBArticleFromTrash(userId, resourcePrimKey);
 	}
 
 	public static KBArticle revertKBArticle(

@@ -521,7 +521,7 @@ public interface KBArticleLocalService
 		throws PortalException;
 
 	public void moveDependentKBArticlesToTrash(
-			KBArticle parentKBArticle, long trashEntryId)
+			long parentResourcePrimKey, long trashEntryId)
 		throws PortalException;
 
 	public void moveDependentKBArticleToTrash(
@@ -534,20 +534,20 @@ public interface KBArticleLocalService
 		throws PortalException;
 
 	public void moveKBArticleFromTrash(
-			long userId, long kbArticleId, long parentResourceClassNameId,
+			long userId, long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey)
 		throws PortalException;
 
-	public KBArticle moveKBArticleToTrash(long userId, long kbArticleId)
+	public KBArticle moveKBArticleToTrash(long userId, long resourcePrimKey)
 		throws PortalException;
 
 	public void restoreDependentKBArticleFromTrash(KBArticle kbArticle)
 		throws PortalException;
 
-	public void restoreDependentKBArticlesFromTrash(KBArticle parentKBArticle)
+	public void restoreDependentKBArticlesFromTrash(long parentResourcePrimKey)
 		throws PortalException;
 
-	public void restoreKBArticleFromTrash(long userId, long kbArticleId)
+	public void restoreKBArticleFromTrash(long userId, long resourcePrimKey)
 		throws PortalException;
 
 	public KBArticle revertKBArticle(

@@ -151,6 +151,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -653,7 +657,7 @@ public class BatchEngineBrokerTest {
 					"testRichTextField",
 					StringBundler.concat(
 						"<p>Test text</p>\n<p>\n",
-						"  <img alt=\"\" height=\"202\" src=",
+						"  <img alt=\"\" height=\"202\" src=\"",
 						"http://localhost:8080/image/company_logo\">\n</p>")
 				).put(
 					"testTextField", "Lorem Ipsum"
@@ -732,37 +736,41 @@ public class BatchEngineBrokerTest {
 			String externalReferenceCode, List<String> fieldNames)
 		throws Exception {
 
-		UnsyncBufferedReader actualUnsyncBufferedReader =
+		CSVParser actualCSVParser = CSVParser.parse(
 			new UnsyncBufferedReader(
 				new InputStreamReader(
-					new ByteArrayInputStream(actualCSVString.getBytes())));
+					new ByteArrayInputStream(actualCSVString.getBytes()))),
+			_setCSVFormat());
 
-		UnsyncBufferedReader expectedUnsyncBufferedReader =
+		CSVParser expectedCSVParser = CSVParser.parse(
 			new UnsyncBufferedReader(
 				new InputStreamReader(
-					new ByteArrayInputStream(expectedCSVString.getBytes())));
+					new ByteArrayInputStream(expectedCSVString.getBytes()))),
+			_setCSVFormat());
+
+		List<CSVRecord> actualCSVParserRecords = actualCSVParser.getRecords();
+
+		List<CSVRecord> expectedCSVParserRecords =
+			expectedCSVParser.getRecords();
 
 		_assertColumnNames(
-			_getContentRow(actualUnsyncBufferedReader.readLine()),
-			_getContentRow(expectedUnsyncBufferedReader.readLine()),
-			fieldNames);
+			_toList(actualCSVParserRecords.get(0)),
+			_toList(expectedCSVParserRecords.get(0)), fieldNames);
 
-		String actualLineString = actualUnsyncBufferedReader.readLine();
-
-		String expectedLineString = expectedUnsyncBufferedReader.readLine();
-
-		Assert.assertNotNull(actualLineString);
+		List<String> expectedCSVRecordList = _toList(
+			expectedCSVParserRecords.get(1));
 
 		boolean found = false;
 
-		while (actualLineString != null) {
-			if (actualLineString.contains(externalReferenceCode)) {
-				Assert.assertEquals(expectedLineString, actualLineString);
+		for (int i = 1; i < actualCSVParserRecords.size(); i++) {
+			List<String> actualCSVRecordList = _toList(
+				actualCSVParserRecords.get(i));
+
+			if (actualCSVRecordList.contains(externalReferenceCode)) {
+				Assert.assertEquals(expectedCSVRecordList, actualCSVRecordList);
 
 				found = true;
 			}
-
-			actualLineString = actualUnsyncBufferedReader.readLine();
 		}
 
 		Assert.assertTrue(
@@ -923,12 +931,12 @@ public class BatchEngineBrokerTest {
 			_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), "delimiter",
-				StringPool.COMMA);
+				_DELIMITER_VALUE);
 
 			_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), "enclosingCharacter",
-				StringPool.QUOTE);
+				_ENCLOSING_CHARACTER_VALUE);
 		}
 
 		if (Validator.isNotNull(groupId)) {
@@ -946,10 +954,6 @@ public class BatchEngineBrokerTest {
 
 		_getFinishedBatchEngineImportTask(
 			batchPlannerPlan.getBatchPlannerPlanId());
-	}
-
-	private List<String> _getContentRow(String line) {
-		return Arrays.asList(line.split(StringPool.COMMA, -1));
 	}
 
 	private String _getCSVString(
@@ -1349,6 +1353,19 @@ public class BatchEngineBrokerTest {
 		return jsonNode;
 	}
 
+	private CSVFormat _setCSVFormat() {
+		CSVFormat.Builder builder = CSVFormat.Builder.create(
+		).setDelimiter(
+			_DELIMITER_VALUE
+		).setIgnoreEmptyLines(
+			true
+		).setQuote(
+			_ENCLOSING_CHARACTER_VALUE.charAt(0)
+		);
+
+		return builder.build();
+	}
+
 	private void _setUpObjectDefinition(String name) throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), name,
@@ -1501,6 +1518,14 @@ public class BatchEngineBrokerTest {
 
 		return String.valueOf(instant.truncatedTo(ChronoUnit.SECONDS));
 	}
+
+	private List<String> _toList(CSVRecord csvRecord) {
+		return csvRecord.toList();
+	}
+
+	private static final String _DELIMITER_VALUE = StringPool.COMMA;
+
+	private static final String _ENCLOSING_CHARACTER_VALUE = StringPool.QUOTE;
 
 	private static final String _OBJECT_DEFINITION_1_ERC =
 		"TEST-OBJECT-DEFINITION-1";

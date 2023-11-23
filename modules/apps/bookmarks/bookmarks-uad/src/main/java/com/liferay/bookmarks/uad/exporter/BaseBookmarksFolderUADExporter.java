@@ -53,20 +53,8 @@ public abstract class BaseBookmarksFolderUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>folderId</column-name><column-value><![CDATA[");
-		sb.append(bookmarksFolder.getFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(bookmarksFolder.getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
 		sb.append(bookmarksFolder.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(bookmarksFolder.getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");

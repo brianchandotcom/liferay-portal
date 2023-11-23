@@ -69,6 +69,11 @@ components:
                         type: string
                     readOnly: true
                     type: object
+                name_languageId:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
         ObjectEntry:
             properties:
                 actions:

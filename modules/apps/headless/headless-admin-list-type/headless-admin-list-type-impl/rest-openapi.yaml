@@ -33,6 +33,10 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                name_languageId:
+                    additionalProperties:
+                        type: string
+                    type: object
                 system:
                     type: boolean
             type: object
@@ -64,6 +68,10 @@ components:
                 name:
                     type: string
                 name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                name_languageId:
                     additionalProperties:
                         type: string
                     type: object

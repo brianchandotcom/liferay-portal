@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.spacer {
+    flex: 1 1 auto;
+}
+.actions
+{
+    padding: 1rem;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: lightgray;
+    display: flex;
+}
+.actions .actions-end
+{
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    min-width: 250px;
+    justify-content: end;
+}
+.actions .actions-start
+{
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    min-width: 250px;
+}
+
+.actions button
+{
+    margin-right: 5px;
+    margin-left: 5px;
+}
+.item-action .actions-end
+{
+    display: flex;
+    justify-content: end;
+    margin-top: auto;
+    margin-bottom: auto;
+    min-width: 200px!important;
+}

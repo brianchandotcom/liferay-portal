@@ -1,0 +1,24 @@
+<mat-card class="edit-folder">
+    <mat-card-header>
+        <mat-card-title>Edit Folder</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div *ngIf="folder">
+            <form [formGroup]="folder" class="form-container">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" [value]="node.name">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" rows="4" [value]="node.description"></textarea>
+            </mat-form-field>
+            </form>
+        </div>
+
+    </mat-card-content>
+    <mat-card-actions align="end" class="actions">
+        <button mat-stroked-button color="accent" (click)="cancel()">Cancel</button>
+        <button mat-stroked-button color="primary" (click)="save()">Save</button>
+    </mat-card-actions>
+</mat-card>

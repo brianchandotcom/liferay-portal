@@ -1,0 +1,21 @@
+assemble:
+    - from: dist/liferay-dlfoldertemplate-custom-element
+      into: static
+liferay-dlfoldertemplate-template-custom-element:
+    cssURLs:
+        - styles.*.css
+    friendlyURLMapping: liferay-folder-templates-list
+    htmlElementName: liferay-folder-templates
+    instanceable: true
+    name: Liferay DL Folder Template List
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - main.*.js
+        - polyfills.*.js
+        - runtime.*.js
+        - MaterialIcons-Regular.*.eot
+        - MaterialIcons-Regular.*.woff2
+        - MaterialIcons-Regular.*.ttf
+        - MaterialIcons-Regular.*.woff
+    useESM: true

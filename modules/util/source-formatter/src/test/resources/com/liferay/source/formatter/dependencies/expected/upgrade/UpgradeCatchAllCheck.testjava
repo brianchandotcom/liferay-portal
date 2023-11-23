@@ -72,6 +72,8 @@ public class UpgradeCatchAllCheck {
 
 		PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX;
 		PortletDisplayTemplateConstants.ENTRIES;
+
+		ServiceTrackerList<Class<E>> serviceTrackerList = ServiceTrackerListFactory.open(null, null);
 	}
 
 	public void method(
@@ -646,6 +648,8 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	private ServiceTrackerList<Class<E>> _serviceTrackerList;
 
 	@Reference
 	private UserLocalService _userLocalService;

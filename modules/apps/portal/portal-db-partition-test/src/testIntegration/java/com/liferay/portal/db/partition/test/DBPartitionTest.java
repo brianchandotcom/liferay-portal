@@ -361,8 +361,9 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		CompanyLocalServiceImpl companyLocalServiceImpl =
 			(CompanyLocalServiceImpl)aopInvocationHandler.getTarget();
 
-		ReflectionTestUtil.setFieldValue(
-			companyLocalServiceImpl, "_dlFileEntryTypeLocalService", null);
+		Object dlFileEntryTypeLocalService =
+			ReflectionTestUtil.getAndSetFieldValue(
+				companyLocalServiceImpl, "_dlFileEntryTypeLocalService", null);
 
 		long companyId = RandomTestUtil.randomLong();
 		boolean orphanedDBPartition = false;
@@ -391,6 +392,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 			}
 		}
 		finally {
+			ReflectionTestUtil.setFieldValue(
+				companyLocalServiceImpl, "_dlFileEntryTypeLocalService",
+				dlFileEntryTypeLocalService);
+
 			if (orphanedDBPartition) {
 				removeDBPartitions(new long[] {companyId});
 			}

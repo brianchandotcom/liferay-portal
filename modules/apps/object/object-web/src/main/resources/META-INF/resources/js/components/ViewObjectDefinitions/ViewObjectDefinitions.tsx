@@ -349,12 +349,15 @@ export default function ViewObjectDefinitions({
 											selectedObjectFolder.externalReferenceCode
 										}
 										items={
-											getObjectFolderActions(
-												selectedObjectFolder.id ?? 0,
+											getObjectFolderActions({
+												actions:
+													selectedObjectFolder.actions,
+												id:
+													selectedObjectFolder.id ??
+													0,
 												objectFolderPermissionsURL,
 												setShowModal,
-												selectedObjectFolder.actions
-											) as IItem[]
+											}) as IItem[]
 										}
 										label={selectedObjectFolder.label}
 										modelBuilderURL={modelBuilderURL}

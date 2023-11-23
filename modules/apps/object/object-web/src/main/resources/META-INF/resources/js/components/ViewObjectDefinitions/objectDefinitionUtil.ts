@@ -244,12 +244,19 @@ export function getObjectDefinitionNodeActions({
 	return kebabOptions;
 }
 
-export function getObjectFolderActions(
-	id: number,
-	objectFolderPermissionsURL: string,
-	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void,
-	actions?: ObjectFolderActions
-) {
+interface GetObjectFolderActionsProps {
+	actions?: ObjectFolderActions;
+	id: number;
+	objectFolderPermissionsURL: string;
+	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
+}
+
+export function getObjectFolderActions({
+	actions,
+	id,
+	objectFolderPermissionsURL,
+	setShowModal,
+}: GetObjectFolderActionsProps) {
 	const url = formatActionURL(objectFolderPermissionsURL, id);
 	const kebabOptions = [];
 

@@ -152,6 +152,21 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
+													"federatedSearchKey": "",
+													"sxpBlueprintExternalReferenceCode": "blueprint"
+												},
+												"widgetName": "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
 													"allowEmptySearches": "true",
 													"basicFacetSelection": "false"
 												},
@@ -203,6 +218,10 @@
 							},
 							{
 								"definition": {
+									"fragmentStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
 									"widgetInstance": {
 										"widgetConfig": {
 											"displayInDocumentForm": "false",

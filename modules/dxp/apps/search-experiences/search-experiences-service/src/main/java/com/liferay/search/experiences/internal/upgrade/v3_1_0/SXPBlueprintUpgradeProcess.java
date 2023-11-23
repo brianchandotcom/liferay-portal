@@ -181,9 +181,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSXPElement() throws Exception {
-		alterTableAddColumn("SXPElement", "fallbackTitle", "VARCHAR(255) null");
-		alterTableAddColumn(
-			"SXPElement", "fallbackDescription", "VARCHAR(255) null");
+		alterTableAddColumn("SXPElement", "fallbackTitle", "VARCHAR(500) null");
+		alterTableAddColumn("SXPElement", "fallbackDescription", "STRING null");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select sxpElementId, title, description from SXPElement");

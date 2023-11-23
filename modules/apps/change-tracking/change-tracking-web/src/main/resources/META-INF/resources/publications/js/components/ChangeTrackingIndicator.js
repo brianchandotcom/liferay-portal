@@ -64,7 +64,7 @@ export default function ChangeTrackingIndicator({
 		});
 
 		if (action) {
-			submitForm(document.hrefFm, portletURL);
+			submitForm(document.hrefFm, portletURL.toString());
 
 			return;
 		}

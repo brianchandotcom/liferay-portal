@@ -430,7 +430,7 @@ definition {
 			MP2Utils.firstLoginMKT(
 				asset = "Liferay Marketplace - Invitation from Dashboard ADM",
 				bodyLink = "Accept invitation",
-				recipient = "da@administrator.com",
+				recipient = "dashboard@adm.com",
 				route = "loading",
 				userEmailAddress = "test.mp@liferay.com");
 
@@ -468,7 +468,7 @@ definition {
 			MP2Utils.firstLoginMKT(
 				asset = "Liferay Marketplace - Invitation from Dashboard ADM",
 				bodyLink = "Accept invitation",
-				recipient = "da@administrator.com",
+				recipient = "dashboard@adm.com",
 				route = "customer-gate",
 				userEmailAddress = "test.mp@liferay.com");
 		}

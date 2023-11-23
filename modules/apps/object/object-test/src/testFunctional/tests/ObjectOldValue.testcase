@@ -876,6 +876,7 @@ definition {
 
 		task ("And given a custom validation with expression builder is created and the object is published (via API)") {
 			JSONObject.addObjectValidation(
+				isActive = "false",
 				labelName = "Custom validation",
 				objectName = "CustomObject175196",
 				script = "oldValue('customPicklistField') == 'open'",

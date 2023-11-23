@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import cancelIcon from '../../assets/icons/cancel_icon.svg';
@@ -22,6 +22,14 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {PackageVersionModal} from '../../components/PackageVersionModal/PackageVersionModal';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
+import {ProductEditionOption} from '../../enums/ProductEditionOption';
+import {ProductSpecification} from '../../enums/ProductSpecification';
+import {ProductType} from '../../enums/ProductType';
+import {ProductUploadType} from '../../enums/ProductUploadType';
+import {ProductVersionOption} from '../../enums/ProductVersionOption';
+import {ProductVocabulary} from '../../enums/ProductVocabulary';
+import i18n from '../../i18n';
+import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
@@ -36,21 +44,10 @@ import {
 	updateProductSpecification,
 } from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
-
-import './ProvideAppBuildPage.scss';
-
-import {useEffect, useState} from 'react';
-
-import {ProductEditionOption} from '../../enums/ProductEditionOption';
-import {ProductSpecification} from '../../enums/ProductSpecification';
-import {ProductType} from '../../enums/ProductType';
-import {ProductUploadType} from '../../enums/ProductUploadType';
-import {ProductVersionOption} from '../../enums/ProductVersionOption';
-import {ProductVocabulary} from '../../enums/ProductVocabulary';
-import i18n from '../../i18n';
-import {getCompanyId} from '../../liferay/constants';
 import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
 import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
+
+import './ProvideAppBuildPage.scss';
 
 interface ProvideAppBuildPageProps {
 	onClickBack: () => void;

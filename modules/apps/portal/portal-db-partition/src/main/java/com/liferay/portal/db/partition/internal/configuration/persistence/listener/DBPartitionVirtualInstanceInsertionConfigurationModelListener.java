@@ -7,10 +7,15 @@ package com.liferay.portal.db.partition.internal.configuration.persistence.liste
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceInsertionConfiguration;
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Dictionary;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -30,12 +35,27 @@ public class DBPartitionVirtualInstanceInsertionConfigurationModelListener
 	}
 
 	@Override
-	public void doOnAfterSave(Dictionary<String, Object> properties) {
+	public void doOnAfterSave(Dictionary<String, Object> properties)
+		throws PortalException {
+
+		_companyLocalService.addDBPartitionCompany(
+			GetterUtil.getLong(properties.get("companyId")),
+			(String)properties.get("newName"),
+			(String)properties.get("newVirtualHostName"),
+			(String)properties.get("newWebId"));
+
+		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	@Override
 	public Class<?> getConfigurationClass() {
 		return DBPartitionVirtualInstanceInsertionConfiguration.class;
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

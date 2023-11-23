@@ -858,7 +858,7 @@ definition {
 				picklistName = "Status");
 		}
 
-		task ("And given an object with a field is created") {
+		task ("and Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 175196",
 				objectName = "CustomObject175196",
@@ -874,7 +874,7 @@ definition {
 				picklistName = "Status");
 		}
 
-		task ("And given a custom validation with expression builder is created and the object is published (via API)") {
+		task ("and Given a custom validation with expression builder is created and the object is published (via API)") {
 			JSONObject.addObjectValidation(
 				isActive = "false",
 				labelName = "Custom validation",

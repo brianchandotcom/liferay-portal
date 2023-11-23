@@ -1270,10 +1270,6 @@ definition {
 		}
 
 		task ("When a new submission is created with a entry field empty") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
 			Button.clickSubmitButton();
 		}
 
@@ -1357,10 +1353,6 @@ definition {
 		}
 
 		task ("When a new submission is created with a entry field empty") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
 			Button.clickSubmitButton();
 		}
 

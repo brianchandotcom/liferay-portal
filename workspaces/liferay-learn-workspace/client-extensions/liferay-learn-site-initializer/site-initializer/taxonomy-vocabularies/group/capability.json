@@ -3,6 +3,7 @@
 	"description_i18n": {
 		"en_US": "Capability"
 	},
+	"externalReferenceCode": "CAPABILITY",
 	"name": "Capability",
 	"name_i18n": {
 		"en_US": "Capability"

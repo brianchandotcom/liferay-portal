@@ -198,6 +198,10 @@ public interface KBArticleService extends BaseService {
 		long groupId, long resourcePrimKey, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle getLatestKBArticle(long resourcePrimKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getLatestKBArticle(long resourcePrimKey, int status)
 		throws PortalException;
 

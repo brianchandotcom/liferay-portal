@@ -283,6 +283,12 @@ public class KBArticleServiceUtil {
 			groupId, resourcePrimKey, status);
 	}
 
+	public static KBArticle getLatestKBArticle(long resourcePrimKey)
+		throws PortalException {
+
+		return getService().getLatestKBArticle(resourcePrimKey);
+	}
+
 	public static KBArticle getLatestKBArticle(long resourcePrimKey, int status)
 		throws PortalException {
 

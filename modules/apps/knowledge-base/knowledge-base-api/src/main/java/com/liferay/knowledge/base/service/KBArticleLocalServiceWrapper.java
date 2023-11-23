@@ -679,6 +679,13 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
+	public KBArticle getLatestKBArticle(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleLocalService.getLatestKBArticle(resourcePrimKey);
+	}
+
+	@Override
 	public KBArticle getLatestKBArticle(long resourcePrimKey, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

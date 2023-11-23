@@ -459,6 +459,10 @@ public interface KBArticleLocalService
 		long groupId, long kbFolderId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle getLatestKBArticle(long resourcePrimKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getLatestKBArticle(long resourcePrimKey, int status)
 		throws PortalException;
 

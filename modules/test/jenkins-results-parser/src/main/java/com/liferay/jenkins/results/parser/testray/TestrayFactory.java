@@ -138,13 +138,13 @@ public class TestrayFactory {
 			}
 		}
 
-		if (topLevelBuild instanceof SourceFormatBuild) {
-			return new SFBatchBuildTestrayCaseResult(
+		if (axisTestClassGroup instanceof PlaywrightAxisTestClassGroup) {
+			return new PlaywrightBatchBuildTestrayCaseResult(
 				testrayBuild, topLevelBuild, axisTestClassGroup);
 		}
 
-		if (axisTestClassGroup instanceof PlaywrightAxisTestClassGroup) {
-			return new PlaywrightBatchBuildTestrayCaseResult(
+		if (topLevelBuild instanceof SourceFormatBuild) {
+			return new SFBatchBuildTestrayCaseResult(
 				testrayBuild, topLevelBuild, axisTestClassGroup);
 		}
 

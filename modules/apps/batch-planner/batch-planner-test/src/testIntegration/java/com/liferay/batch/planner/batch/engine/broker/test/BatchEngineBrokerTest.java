@@ -201,42 +201,6 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testExportCompanyScopeObjectEntryJSON() throws Exception {
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
-
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
-			TestPropsValues.getGroupId(), _objectDefinition1,
-			TestPropsValues.getUserId());
-
-		_addObjectEntryInDifferentCompany("TestObject");
-
-		_objectMapper.setFilterProvider(
-			new SimpleFilterProvider() {
-				{
-					addFilter(
-						"Liferay.Vulcan",
-						VulcanPropertyFilter.of(
-							new HashSet<>(_objectEntryExportFieldNames), null));
-				}
-			});
-
-		_assertEqualsExport(
-			_getExpectedJsonNode(
-				_objectDefinition1, objectEntry1.getObjectEntryId()),
-			_objectEntryExportFieldNames,
-			_getFirstJsonNode(
-				_objectMapper.readTree(
-					_getExportFileString(
-						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-						_objectEntryExportFieldNames, null,
-						"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-						"C_TestObject"))));
-	}
-
-	@Test
 	public void testExportObjectDefinitionCSV() throws Exception {
 		_setUpObjectDefinition("TestObjectCSV");
 
@@ -285,89 +249,6 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testExportSiteScopeObjectEntryJSON() throws Exception {
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject",
-			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
-			TestPropsValues.getGroupId(), _objectDefinition1,
-			TestPropsValues.getUserId());
-
-		_addObjectEntry(
-			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
-			_group.getGroupId(), _objectDefinition1,
-			TestPropsValues.getUserId());
-
-		_objectMapper.setFilterProvider(
-			new SimpleFilterProvider() {
-				{
-					addFilter(
-						"Liferay.Vulcan",
-						VulcanPropertyFilter.of(
-							new HashSet<>(_objectEntryExportFieldNames), null));
-				}
-			});
-
-		_assertEqualsExport(
-			_getExpectedJsonNode(
-				_objectDefinition1, objectEntry.getObjectEntryId()),
-			_objectEntryExportFieldNames,
-			_getFirstJsonNode(
-				_objectMapper.readTree(
-					_getExportFileString(
-						BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-						_objectEntryExportFieldNames,
-						TestPropsValues.getGroupId(),
-						"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-						"C_TestObject"))));
-	}
-
-	@Test
-	public void testImportCompanyScopeObjectEntryJSON() throws Exception {
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
-
-		File file = _createImportFile(
-			_addDLFileEntry(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
-			_objectDefinition1.getExternalReferenceCode(), _OBJECT_ENTRY_ERC_1,
-			"object_entry_import_template.txt");
-
-		try (FileInputStream fileInputStream = new FileInputStream(file)) {
-			_executeImportTask(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-				_objectEntryImportFieldNames, null,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry", "C_TestObject",
-				_getURIString("json", fileInputStream));
-
-			_objectMapper.setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							VulcanPropertyFilter.of(
-								new HashSet<>(_objectEntryImportFieldNames),
-								null));
-					}
-				});
-
-			JsonNode jsonNode = _objectMapper.readTree(file);
-
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				_OBJECT_ENTRY_ERC_1,
-				_objectDefinition1.getObjectDefinitionId());
-
-			_assertEqualsImport(
-				_getExpectedJsonNode(
-					_objectDefinition1, objectEntry.getObjectEntryId()),
-				_objectEntryImportFieldNames, jsonNode.get(0));
-		}
-	}
-
-	@Test
 	public void testImportExportCompanyScopeObjectEntryCSV() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObjectCSV",
@@ -408,6 +289,56 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
+	public void testImportExportCompanyScopeObjectEntryJSON() throws Exception {
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject",
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+
+		File file = _createImportFile(
+			_addDLFileEntry(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
+			_objectDefinition1.getExternalReferenceCode(), _OBJECT_ENTRY_ERC_1,
+			"object_entry_import_template.txt");
+
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
+			_executeImportTask(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+				_objectEntryImportFieldNames, null,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry", "C_TestObject",
+				_getURIString("json", fileInputStream));
+
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				_OBJECT_ENTRY_ERC_1,
+				_objectDefinition1.getObjectDefinitionId());
+
+			_addObjectEntryInDifferentCompany("TestObject");
+
+			_objectMapper.setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							VulcanPropertyFilter.of(
+								new HashSet<>(_objectEntryExportFieldNames),
+								null));
+					}
+				});
+
+			_assertEqualsExport(
+				_getExpectedJsonNode(
+					_objectDefinition1, objectEntry.getObjectEntryId()),
+				_objectEntryExportFieldNames,
+				_getFirstJsonNode(
+					_objectMapper.readTree(
+						_getExportFileString(
+							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+							_objectEntryExportFieldNames, null,
+							"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+							"C_TestObject"))));
+		}
+	}
+
+	@Test
 	public void testImportExportSiteScopeObjectEntryCSV() throws Exception {
 
 		// Default group
@@ -432,6 +363,34 @@ public class BatchEngineBrokerTest {
 		// New group
 
 		_testImportExportSiteScopeObjectEntryCSV(
+			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
+	}
+
+	@Test
+	public void testImportExportSiteScopeObjectEntryJSON() throws Exception {
+
+		// Default group
+
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject",
+			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
+
+		_testImportExportSiteScopeObjectEntryJSON(
+			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
+
+		// Global group
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group globalGroup = company.getGroup();
+
+		_testImportExportSiteScopeObjectEntryJSON(
+			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
+
+		// New group
+
+		_testImportExportSiteScopeObjectEntryJSON(
 			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
 	}
 
@@ -480,34 +439,6 @@ public class BatchEngineBrokerTest {
 				_getExpectedJsonNode(_objectDefinition1),
 				_objectDefinitionImportFieldNames, jsonNode.get(0));
 		}
-	}
-
-	@Test
-	public void testImportSiteScopeObjectEntryJSON() throws Exception {
-
-		// Default group
-
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject",
-			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
-
-		_testImportSiteScopeObjectEntryJSON(
-			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
-
-		// Global group
-
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		Group globalGroup = company.getGroup();
-
-		_testImportSiteScopeObjectEntryJSON(
-			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
-
-		// New group
-
-		_testImportSiteScopeObjectEntryJSON(
-			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
 	}
 
 	private Company _addCompany(String webId) throws Exception {
@@ -1417,7 +1348,7 @@ public class BatchEngineBrokerTest {
 			_objectEntryExportCSVFieldNames);
 	}
 
-	private void _testImportSiteScopeObjectEntryJSON(
+	private void _testImportExportSiteScopeObjectEntryJSON(
 			long groupId, String objectEntryERC)
 		throws Exception {
 
@@ -1434,28 +1365,33 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry", "C_TestObject",
 				_getURIString("json", fileInputStream));
 
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				objectEntryERC, _objectDefinition1.getObjectDefinitionId());
+
+			Assert.assertEquals(objectEntry.getGroupId(), groupId);
+
 			_objectMapper.setFilterProvider(
 				new SimpleFilterProvider() {
 					{
 						addFilter(
 							"Liferay.Vulcan",
 							VulcanPropertyFilter.of(
-								new HashSet<>(_objectEntryImportFieldNames),
+								new HashSet<>(_objectEntryExportFieldNames),
 								null));
 					}
 				});
 
-			JsonNode jsonNode = _objectMapper.readTree(file);
-
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				objectEntryERC, _objectDefinition1.getObjectDefinitionId());
-
-			Assert.assertEquals(objectEntry.getGroupId(), groupId);
-
-			_assertEqualsImport(
+			_assertEqualsExport(
 				_getExpectedJsonNode(
 					_objectDefinition1, objectEntry.getObjectEntryId()),
-				_objectEntryImportFieldNames, jsonNode.get(0));
+				_objectEntryExportFieldNames,
+				_getFirstJsonNode(
+					_objectMapper.readTree(
+						_getExportFileString(
+							BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+							_objectEntryExportFieldNames, groupId,
+							"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+							"C_TestObject"))));
 		}
 	}
 

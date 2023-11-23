@@ -109,7 +109,7 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 							_handleFormError(
 								sub(
 									Liferay.Language.get(
-										'error.default-locale-x-title-empty'
+										'error.default-locale-x-title-blank'
 									),
 									Liferay.ThemeDisplay.getDefaultLanguageId()
 								)

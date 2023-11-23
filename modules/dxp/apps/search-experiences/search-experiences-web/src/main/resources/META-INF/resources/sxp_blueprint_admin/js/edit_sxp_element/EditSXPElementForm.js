@@ -395,7 +395,7 @@ function EditSXPElementForm({
 			}
 
 			if (!sxpElementJSONObjectNew.title_i18n[defaultLocale]) {
-				throw Liferay.Language.get('error.default-locale-title-empty');
+				throw Liferay.Language.get('error.default-locale-title-blank');
 			}
 		}
 		catch (error) {

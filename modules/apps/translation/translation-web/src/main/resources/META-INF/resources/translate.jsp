@@ -14,6 +14,7 @@ TranslateDisplayContext translateDisplayContext = (TranslateDisplayContext)reque
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 
 renderResponse.setTitle(translateDisplayContext.getTitle());
 %>

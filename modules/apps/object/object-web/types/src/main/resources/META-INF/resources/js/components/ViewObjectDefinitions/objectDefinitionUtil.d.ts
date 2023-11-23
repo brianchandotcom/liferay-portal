@@ -70,12 +70,18 @@ export declare function getObjectDefinitionNodeActions({
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,
 }: ObjectDefinitionNodeActionsProps): DropDownItems[];
-export declare function getObjectFolderActions(
-	id: number,
-	objectFolderPermissionsURL: string,
-	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void,
-	actions?: ObjectFolderActions
-): (
+interface GetObjectFolderActionsProps {
+	actions?: ObjectFolderActions;
+	id: number;
+	objectFolderPermissionsURL: string;
+	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
+}
+export declare function getObjectFolderActions({
+	actions,
+	id,
+	objectFolderPermissionsURL,
+	setShowModal,
+}: GetObjectFolderActionsProps): (
 	| {
 			label: string;
 			onClick: () => void;

@@ -7,7 +7,9 @@ package com.liferay.jethr0.event.github.client;
 
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
+import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.util.BaseRetryable;
 import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
@@ -38,6 +40,23 @@ public class GitHubClient {
 		return new GitHubComment(
 			new JSONObject(
 				_requestPost(gitHubIssue.getCommentsURL(), requestJSONObject)));
+	}
+
+	public String getFileContent(
+		GitBranchEntity gitBranchEntity, String filePath) {
+
+		return _requestGet(
+			StringUtil.toURL(
+				StringUtil.combine(
+					"https://raw.githubusercontent.com/",
+					gitBranchEntity.getBranchName(), "/",
+					gitBranchEntity.getRepositoryName(), "/",
+					gitBranchEntity.getBranchName(), "/", filePath)));
+	}
+
+	public GitHubPullRequest getGitHubPullRequest(GitHubIssue gitHubIssue) {
+		return new GitHubPullRequest(
+			new JSONObject(_requestGet(gitHubIssue.getApiURL())));
 	}
 
 	public GitHubRef getGitHubRef(URL gitHubRefURL) {

@@ -207,6 +207,10 @@ public class ParallelExecutor<T> {
 			_aborted = true;
 		}
 
+		public boolean aborted() {
+			return _aborted;
+		}
+
 		public String generateStatusMessage() {
 			StringBuilder sb = new StringBuilder();
 
@@ -284,7 +288,7 @@ public class ParallelExecutor<T> {
 		}
 
 		public List<T> getResults() {
-			if (!isComplete()) {
+			if (!isComplete() && !aborted()) {
 				return null;
 			}
 
@@ -385,7 +389,7 @@ public class ParallelExecutor<T> {
 
 				try {
 					for (Task<T> processorTask : _runningTasks) {
-						if (_aborted || Thread.interrupted()) {
+						if (aborted() || Thread.interrupted()) {
 							abort();
 
 							throw new RuntimeException(
@@ -404,13 +408,21 @@ public class ParallelExecutor<T> {
 								   InterruptedException exception) {
 
 								processorTask.fail();
+
+								RuntimeException runtimeException =
+									new RuntimeException(
+										"Parallel task threw an exception",
+										exception);
+
 								if (_parallelExecutor._failOnError) {
-									throw new RuntimeException(exception);
+									abort();
+
+									throw runtimeException;
 								}
 
 								result = null;
 
-								exception.printStackTrace();
+								runtimeException.printStackTrace();
 							}
 
 							if ((result != null) ||

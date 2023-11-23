@@ -1,12 +1,24 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "totalMDFRequestAmount > 15000",
-		"externalReferenceCode": "MDF-REQUEST-AMOUNT-NOTIFICATION",
+		"conditionExpression": "totalMDFRequestAmount >= 15000 AND oldValue('submitted') == false AND submitted == true",
+		"externalReferenceCode": "MDF-REQUEST-AMOUNT-NOTIFICATION-1",
 		"label": {
-			"en_US": "Notification Request Template Action"
+			"en_US": "Notification MDF Request Total Amount On Update"
 		},
-		"name": "NotificationRequestTemplateAction",
+		"name": "notificationMDFRequestTotalAmountOnUpdate",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"
+	},
+	{
+		"active": true,
+		"conditionExpression": "totalMDFRequestAmount >= 15000 AND submitted == true",
+		"externalReferenceCode": "MDF-REQUEST-AMOUNT-NOTIFICATION-2",
+		"label": {
+			"en_US": "Notification MDF Request Total Amount On Submit"
+		},
+		"name": "notificationMDFRequestTotalAmountOnSubmit",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterAdd",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"

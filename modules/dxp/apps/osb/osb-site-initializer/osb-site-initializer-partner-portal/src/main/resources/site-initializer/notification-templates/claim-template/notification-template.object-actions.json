@@ -1,13 +1,26 @@
 [
 	{
 		"active": true,
-		"externalReferenceCode": "MDF-CLAIM-NOTIFICATION",
+		"conditionExpression": "submitted == true",
+		"externalReferenceCode": "MDF-CLAIM-NOTIFICATION-1",
 		"label": {
-			"en_US": "Notification Template Action"
+			"en_US": "Notification MDF Claim On Submit"
 		},
-		"name": "NotificationTemplateAction",
+		"name": "notificationMDFClaimOnSubmit",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"
+	},
+	{
+		"active": true,
+		"conditionExpression": "oldValue('submitted') == false AND submitted == true",
+		"externalReferenceCode": "MDF-CLAIM-NOTIFICATION-2",
+		"label": {
+			"en_US": "Notification MDF Claim On Update"
+		},
+		"name": "notificationMDFClaimOnUpdate",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"
 	}
 ]

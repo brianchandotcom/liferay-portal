@@ -7,6 +7,7 @@
 		background-color: #FBFCFE;
 		border-color: #E7EFFF;
 		color: #0B5FFF;
+		margin-top: 1.5rem;
 
 		&:active, &:hover {
 			background-color: #EDF3FE;
@@ -33,5 +34,25 @@
 		display: flex;
 		gap: 1.5rem;
 		justify-content: flex-start;
+	}
+
+	&-dropzone-container {
+		border-radius: 0.5rem;
+		border: 1px solid #E2E2E4;
+
+		&-header {
+			background-color: #F7F7F8;
+		}
+
+		.dropzone-upload-container {
+			height: unset;
+			margin: 0.5rem;
+			padding: 1.5rem;
+			width: unset;
+		}
+	
+		.file-list-container {
+			margin-bottom: 0;
+		}
 	}
 }

@@ -58,8 +58,8 @@ interface ProvideAppBuildPageProps {
 }
 
 const acceptFileTypes = {
-	'application/jar': ['.jar'],
-	'application/war': ['.war'],
+	'application/java-archive': ['.jar'],
+	'application/octet-stream': ['.war'],
 };
 
 export function ProvideAppBuildPage({
@@ -421,6 +421,37 @@ export function ProvideAppBuildPage({
 				)}
 				tooltipText={i18n.translate('more-info')}
 			>
+				{selectedVersions?.map((versionName, index) => (
+					<div className="mt-4 provide-app-build-page-dropzone-container" key={`container-${index}`}>
+						<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
+							<div>{versionName}</div>
+							<a href="/">Select a File</a>
+						</div>
+
+						<FileList
+							key={`files-${index}`}
+							onDelete={handleDelete}
+							type="document"
+							uploadedFiles={buildZIPFiles ? buildZIPFiles : []}
+						/>
+		
+						<DropzoneUpload
+							acceptFileTypes={acceptFileTypes}
+							buttonText="Select a file"
+							description={i18n.translate(
+								'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
+							)}
+							key={`dropzone-${index}`}
+							maxFiles={1}
+							maxSize={500000000}
+							multiple={false}
+							onHandleUpload={handleUpload}
+							showDocumentIcon={false}
+							title="Drag and drop to upload or"
+						/>
+					</div>
+				))}
+
 				<ClayButton className="btn-block provide-app-build-page-add-package-button" displayType="secondary" onClick={() => setVisibleModal(true)}>
 					<ClayIcon className="mr-1" symbol="plus" />
 					Add Package(s)
@@ -434,24 +465,6 @@ export function ProvideAppBuildPage({
 						handleConfirm={setSelectedVersions}
 					/>
 				}
-				<FileList
-					onDelete={handleDelete}
-					type="document"
-					uploadedFiles={buildZIPFiles ? buildZIPFiles : []}
-				/>
-
-				<DropzoneUpload
-					acceptFileTypes={acceptFileTypes}
-					buttonText={i18n.translate('select-a-file')}
-					description={i18n.translate(
-						'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
-					)}
-					maxFiles={1}
-					maxSize={500000000}
-					multiple={false}
-					onHandleUpload={handleUpload}
-					title={i18n.translate('drag-and-drop-to-upload-or')}
-				/>
 			</Section>
 
 			<NewAppPageFooterButtons

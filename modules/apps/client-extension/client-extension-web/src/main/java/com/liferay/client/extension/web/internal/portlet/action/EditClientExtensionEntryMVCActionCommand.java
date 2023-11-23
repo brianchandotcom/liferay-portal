@@ -78,7 +78,7 @@ public class EditClientExtensionEntryMVCActionCommand
 				_fetchClientExtensionEntry(actionRequest);
 
 			if (clientExtensionEntry != null) {
-				cet = _cetFactory.create(clientExtensionEntry);
+				cet = _cetFactory.create(clientExtensionEntry, false);
 			}
 			else {
 				cet = _cetFactory.create(actionRequest);
@@ -88,8 +88,7 @@ public class EditClientExtensionEntryMVCActionCommand
 				ClientExtensionAdminWebKeys.
 					EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
 				new EditClientExtensionEntryDisplayContext(
-					clientExtensionEntry == null, cet.getRawCET(),
-					actionRequest));
+					clientExtensionEntry == null, cet, actionRequest));
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/admin/edit_client_extension_entry.jsp");
@@ -98,8 +97,6 @@ public class EditClientExtensionEntryMVCActionCommand
 
 	private void _add(ActionRequest actionRequest) throws PortalException {
 		CET cet = _cetFactory.create(actionRequest);
-
-		cet = cet.getRawCET();
 
 		_clientExtensionEntryService.addClientExtensionEntry(
 			cet.getExternalReferenceCode(), cet.getDescription(),
@@ -129,8 +126,6 @@ public class EditClientExtensionEntryMVCActionCommand
 			actionRequest);
 
 		CET cet = _cetFactory.create(actionRequest);
-
-		cet = cet.getRawCET();
 
 		_clientExtensionEntryService.updateClientExtensionEntry(
 			clientExtensionEntry.getClientExtensionEntryId(),

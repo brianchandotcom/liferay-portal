@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -80,13 +79,5 @@ public class CustomElementCETImpl
 	public boolean isUseESM() {
 		return getBoolean("useESM");
 	}
-
-	@Override
-	protected boolean isURLCETPropertyName(String name) {
-		return _urlCETPropertyNames.contains(name);
-	}
-
-	private static final Set<String> _urlCETPropertyNames =
-		getURLCETPropertyNames(CustomElementCET.class);
 
 }

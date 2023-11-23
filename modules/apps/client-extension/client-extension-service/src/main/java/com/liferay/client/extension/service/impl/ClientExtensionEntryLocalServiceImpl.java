@@ -182,7 +182,8 @@ public class ClientExtensionEntryLocalServiceImpl
 
 		_serviceRegistrationsMap.put(
 			clientExtensionEntry.getClientExtensionEntryId(),
-			_cetDeployer.deploy(_cetFactory.create(clientExtensionEntry)));
+			_cetDeployer.deploy(
+				_cetFactory.create(clientExtensionEntry, true)));
 	}
 
 	@Override

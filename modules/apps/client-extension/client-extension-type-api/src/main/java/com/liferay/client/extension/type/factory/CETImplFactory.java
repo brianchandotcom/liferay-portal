@@ -50,6 +50,8 @@ public interface CETImplFactory<T extends CET> {
 	public UnicodeProperties getUnicodeProperties(
 		PortletRequest portletRequest);
 
+	public boolean isURLCETPropertyName(String name);
+
 	/**
 	 * Validate if newCET has valid values and thus can be stored safely.
 	 *

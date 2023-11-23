@@ -7,7 +7,6 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.ThemeJSCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.ThemeJSCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,7 +22,11 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ThemeJSCETImplFactoryImpl implements CETImplFactory<ThemeJSCET> {
+public class ThemeJSCETImplFactoryImpl extends BaseCETImplFactory<ThemeJSCET> {
+
+	public ThemeJSCETImplFactoryImpl() {
+		super(ThemeJSCET.class);
+	}
 
 	@Override
 	public ThemeJSCET create(

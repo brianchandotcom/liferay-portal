@@ -7,7 +7,6 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.ThemeFaviconCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.ThemeFaviconCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,7 +23,11 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class ThemeFaviconCETImplFactoryImpl
-	implements CETImplFactory<ThemeFaviconCET> {
+	extends BaseCETImplFactory<ThemeFaviconCET> {
+
+	public ThemeFaviconCETImplFactoryImpl() {
+		super(ThemeFaviconCET.class);
+	}
 
 	@Override
 	public ThemeFaviconCET create(

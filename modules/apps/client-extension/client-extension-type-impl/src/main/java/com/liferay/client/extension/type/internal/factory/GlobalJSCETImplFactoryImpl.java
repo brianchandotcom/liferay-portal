@@ -7,7 +7,6 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.GlobalJSCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.GlobalJSCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,7 +22,12 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class GlobalJSCETImplFactoryImpl implements CETImplFactory<GlobalJSCET> {
+public class GlobalJSCETImplFactoryImpl
+	extends BaseCETImplFactory<GlobalJSCET> {
+
+	public GlobalJSCETImplFactoryImpl() {
+		super(GlobalJSCET.class);
+	}
 
 	@Override
 	public GlobalJSCET create(

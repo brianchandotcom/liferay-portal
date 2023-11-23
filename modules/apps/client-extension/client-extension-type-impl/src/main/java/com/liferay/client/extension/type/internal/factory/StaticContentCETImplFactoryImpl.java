@@ -7,7 +7,6 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.StaticContentCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.StaticContentCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,7 +23,11 @@ import javax.portlet.PortletRequest;
  * @author Gregory Amerson
  */
 public class StaticContentCETImplFactoryImpl
-	implements CETImplFactory<StaticContentCET> {
+	extends BaseCETImplFactory<StaticContentCET> {
+
+	public StaticContentCETImplFactoryImpl() {
+		super(StaticContentCET.class);
+	}
 
 	@Override
 	public StaticContentCET create(

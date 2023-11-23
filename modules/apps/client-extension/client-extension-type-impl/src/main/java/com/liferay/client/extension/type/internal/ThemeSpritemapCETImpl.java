@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Iván Zaera Avellón
@@ -55,13 +54,5 @@ public class ThemeSpritemapCETImpl
 	public boolean isEnableSVG4Everybody() {
 		return getBoolean("enableSVG4Everybody");
 	}
-
-	@Override
-	protected boolean isURLCETPropertyName(String name) {
-		return _urlCETPropertyNames.contains(name);
-	}
-
-	private static final Set<String> _urlCETPropertyNames =
-		getURLCETPropertyNames(ThemeSpritemapCET.class);
 
 }

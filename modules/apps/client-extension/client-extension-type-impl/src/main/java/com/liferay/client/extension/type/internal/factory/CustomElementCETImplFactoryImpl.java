@@ -7,7 +7,6 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.type.CustomElementCET;
-import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.CustomElementCETImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -31,7 +30,11 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class CustomElementCETImplFactoryImpl
-	implements CETImplFactory<CustomElementCET> {
+	extends BaseCETImplFactory<CustomElementCET> {
+
+	public CustomElementCETImplFactoryImpl() {
+		super(CustomElementCET.class);
+	}
 
 	@Override
 	public CustomElementCET create(

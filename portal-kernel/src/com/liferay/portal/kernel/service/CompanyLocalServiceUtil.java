@@ -469,6 +469,14 @@ public class CompanyLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static Company insertCompany(
+			long companyId, String name, String virtualHostName, String webId)
+		throws PortalException {
+
+		return getService().insertCompany(
+			companyId, name, virtualHostName, webId);
+	}
+
 	/**
 	 * Removes the values that match the keys of the company's preferences.
 	 *

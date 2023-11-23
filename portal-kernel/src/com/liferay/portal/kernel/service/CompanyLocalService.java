@@ -408,6 +408,10 @@ public interface CompanyLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public Company insertCompany(
+			long companyId, String name, String virtualHostName, String webId)
+		throws PortalException;
+
 	/**
 	 * Removes the values that match the keys of the company's preferences.
 	 *

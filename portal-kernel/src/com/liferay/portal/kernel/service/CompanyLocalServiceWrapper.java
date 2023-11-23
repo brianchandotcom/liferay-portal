@@ -537,6 +537,15 @@ public class CompanyLocalServiceWrapper
 		return _companyLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Company insertCompany(
+			long companyId, String name, String virtualHostName, String webId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyLocalService.insertCompany(
+			companyId, name, virtualHostName, webId);
+	}
+
 	/**
 	 * Removes the values that match the keys of the company's preferences.
 	 *

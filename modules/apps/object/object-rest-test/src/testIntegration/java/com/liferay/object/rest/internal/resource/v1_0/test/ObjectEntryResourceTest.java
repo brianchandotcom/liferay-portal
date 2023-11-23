@@ -16,6 +16,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
@@ -5998,13 +5999,32 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONObject _getLinkJSONObject(
-			DLFolder dlFolder, long fileEntryId, String fileName,
+			DLFolder dlFolder, long fileEntryId, String fileName, Folder folder,
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		long repositoryId = 0;
+
+		if (dlFolder == null) {
+			if (folder == null) {
+				Company company = _companyLocalService.getCompany(
+					objectDefinition.getCompanyId());
+
+				repositoryId = company.getGroupId();
+			}
+			else {
+				repositoryId = folder.getSiteId();
+			}
+		}
+		else {
+			folderId = dlFolder.getFolderId();
+			repositoryId = dlFolder.getRepositoryId();
+		}
 
 		Date modifiedDate = fileVersion.getModifiedDate();
 
@@ -6015,8 +6035,8 @@ public class ObjectEntryResourceTest {
 
 		link.setHref(
 			StringBundler.concat(
-				"/documents/", dlFolder.getRepositoryId(), "/",
-				dlFolder.getFolderId(), "/", URLCodec.encodeURL(fileName), "/",
+				"/documents/", repositoryId, "/", folderId, "/",
+				URLCodec.encodeURL(fileName), "/",
 				fileEntry.getExternalReferenceCode(), "?version=",
 				fileVersion.getVersion(), "&t=", modifiedDate.getTime(),
 				"&download=true&objectDefinitionExternalReferenceCode=",
@@ -6267,7 +6287,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						dlFolder1,
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6291,7 +6312,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						dlFolder2,
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6299,6 +6321,52 @@ public class ObjectEntryResourceTest {
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder2.getExternalReferenceCode(), dlFolder2.getGroupId()),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						null,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt", null,
+				TestPropsValues.getGroupId()),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						null,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt", null,
+				_group.getGroupId()),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -6313,7 +6381,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6333,7 +6402,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6359,7 +6429,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6386,7 +6457,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6407,7 +6479,7 @@ public class ObjectEntryResourceTest {
 						_getLinkJSONObject(
 							_getDLFolder(objectDefinition),
 							_testDLFileEntryModelListener.getLastFileEntryId(),
-							newName, objectDefinition)
+							newName, fileEntry.getFolder(), objectDefinition)
 					).put(
 						"name", newName
 					));
@@ -6546,7 +6618,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						dlFolder1,
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6569,7 +6642,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						dlFolder2,
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6577,6 +6651,50 @@ public class ObjectEntryResourceTest {
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder2.getExternalReferenceCode(), dlFolder2.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						null,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt", null,
+				TestPropsValues.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						null,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt", null,
+				_group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
@@ -6590,7 +6708,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6609,7 +6728,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6634,7 +6754,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6660,7 +6781,8 @@ public class ObjectEntryResourceTest {
 					_getLinkJSONObject(
 						_getDLFolder(objectDefinition),
 						_testDLFileEntryModelListener.getLastFileEntryId(),
-						fileEntry.getName(), objectDefinition)
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
 				).put(
 					"name", fileEntry.getName()
 				)),
@@ -6680,7 +6802,7 @@ public class ObjectEntryResourceTest {
 						_getLinkJSONObject(
 							_getDLFolder(objectDefinition),
 							_testDLFileEntryModelListener.getLastFileEntryId(),
-							newName, objectDefinition)
+							newName, fileEntry.getFolder(), objectDefinition)
 					).put(
 						"name", newName
 					));

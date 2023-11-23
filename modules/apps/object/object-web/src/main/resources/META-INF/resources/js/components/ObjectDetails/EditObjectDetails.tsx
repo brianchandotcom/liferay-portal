@@ -33,7 +33,6 @@ interface EditObjectDetailsProps {
 	backURL: string;
 	companies: Scope[];
 	dbTableName: string;
-	externalReferenceCode: string;
 	hasPublishObjectPermission: boolean;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
@@ -43,6 +42,7 @@ interface EditObjectDetailsProps {
 		label: LocalizedValue<string>;
 		name: string;
 	}[];
+	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	pluralLabel: LocalizedValue<string>;
 	portletNamespace: string;
@@ -77,13 +77,13 @@ export default function EditObjectDetails({
 	backURL,
 	companies,
 	dbTableName,
-	externalReferenceCode,
 	hasPublishObjectPermission,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
 	isRootDescendantNode,
 	label,
 	nonRelationshipObjectFieldsInfo,
+	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	pluralLabel,
 	portletNamespace,
@@ -102,7 +102,7 @@ export default function EditObjectDetails({
 	} = useObjectDetailsForm({
 		initialValues: {
 			defaultLanguageId: 'en_US',
-			externalReferenceCode,
+			externalReferenceCode: objectDefinitionExternalReferenceCode,
 			id: objectDefinitionId,
 			label,
 			name: shortName,
@@ -184,10 +184,10 @@ export default function EditObjectDetails({
 	useEffect(() => {
 		const makeFetch = async () => {
 			const objectFieldsResponse = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-				externalReferenceCode
+				objectDefinitionExternalReferenceCode
 			);
 			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-				externalReferenceCode
+				objectDefinitionExternalReferenceCode
 			);
 
 			setValues(objectDefinitionResponse);
@@ -203,7 +203,6 @@ export default function EditObjectDetails({
 			<div className="lfr-objects__object-definition-details-management-toolbar">
 				<ObjectManagementToolbar
 					backURL={backURL}
-					externalReferenceCode={externalReferenceCode}
 					hasPublishObjectPermission={hasPublishObjectPermission}
 					hasUpdateObjectDefinitionPermission={
 						hasUpdateObjectDefinitionPermission
@@ -215,6 +214,9 @@ export default function EditObjectDetails({
 						values.label,
 						values.name
 					)}
+					objectDefinitionExternalReferenceCode={
+						objectDefinitionExternalReferenceCode
+					}
 					objectDefinitionId={objectDefinitionId}
 					onSubmit={onSubmit}
 					portletNamespace={portletNamespace}

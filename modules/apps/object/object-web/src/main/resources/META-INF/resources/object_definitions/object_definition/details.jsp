@@ -30,8 +30,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			).put(
 				"dbTableName", objectDefinition.getDBTableName()
 			).put(
-				"externalReferenceCode", objectDefinition.getExternalReferenceCode()
-			).put(
 				"hasPublishObjectPermission", objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission()
 			).put(
 				"hasUpdateObjectDefinitionPermission", objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission()
@@ -43,6 +41,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 				"label", LocalizationUtil.getLocalizationMap(objectDefinition.getLabel())
 			).put(
 				"nonRelationshipObjectFieldsInfo", objectDefinitionsDetailsDisplayContext.getNonrelationshipObjectFieldsInfo()
+			).put(
+				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
 				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 			).put(

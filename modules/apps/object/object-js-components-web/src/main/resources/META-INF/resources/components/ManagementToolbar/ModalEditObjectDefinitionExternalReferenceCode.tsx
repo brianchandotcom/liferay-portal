@@ -16,32 +16,32 @@ import {Input} from '../Input';
 import {openToast} from '../SidePanelContent';
 import {Entity} from './index';
 
-interface ModalEditExternalReferenceCodeProps {
-	externalReferenceCode: string;
+interface ModalEditObjectDefinitionExternalReferenceCodeProps {
 	handleOnClose: () => void;
 	helpMessage: string;
-	onExternalReferenceCodeChange?: (value: string) => void;
+	objectDefinitionExternalReferenceCode: string;
 	onGetEntity: () => Promise<Entity>;
+	onObjectDefinitionExternalReferenceCodeChange?: (value: string) => void;
 	saveURL: string;
-	setExternalReferenceCode?: (value: string) => void;
+	setObjectDefinitionExternalReferenceCode?: (value: string) => void;
 }
 
 type TInitialValues = {
 	externalReferenceCode: string;
 };
 
-export function ModalEditExternalReferenceCode({
-	externalReferenceCode,
+export function ModalEditObjectDefinitionExternalReferenceCode({
 	handleOnClose,
 	helpMessage,
-	onExternalReferenceCodeChange,
+	objectDefinitionExternalReferenceCode,
 	onGetEntity,
+	onObjectDefinitionExternalReferenceCodeChange,
 	saveURL,
-	setExternalReferenceCode,
-}: ModalEditExternalReferenceCodeProps) {
+	setObjectDefinitionExternalReferenceCode,
+}: ModalEditObjectDefinitionExternalReferenceCodeProps) {
 	const [error, setError] = useState<string>('');
 	const initialValues: TInitialValues = {
-		externalReferenceCode,
+		externalReferenceCode: objectDefinitionExternalReferenceCode,
 	};
 
 	const {observer, onClose} = useModal({
@@ -62,12 +62,14 @@ export function ModalEditExternalReferenceCode({
 				url: `${saveURL}`,
 			});
 
-			if (setExternalReferenceCode) {
-				setExternalReferenceCode(externalReferenceCode);
+			if (setObjectDefinitionExternalReferenceCode) {
+				setObjectDefinitionExternalReferenceCode(externalReferenceCode);
 			}
 
-			if (onExternalReferenceCodeChange) {
-				onExternalReferenceCodeChange(externalReferenceCode);
+			if (onObjectDefinitionExternalReferenceCodeChange) {
+				onObjectDefinitionExternalReferenceCodeChange(
+					externalReferenceCode
+				);
 			}
 
 			onClose();

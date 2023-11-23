@@ -12,7 +12,7 @@ import React, {useState} from 'react';
 
 import './index.scss';
 import {NotificationTemplate} from '../../utils/api';
-import {ModalEditExternalReferenceCode} from './ModalEditExternalReferenceCode';
+import {ModalEditObjectDefinitionExternalReferenceCode} from './ModalEditObjectDefinitionExternalReferenceCode';
 
 export type Entity = NotificationTemplate | ObjectDefinition;
 
@@ -23,14 +23,14 @@ interface ManagementToolbarProps {
 	className?: string;
 	enableBoxShadow?: boolean;
 	entityId: number;
-	externalReferenceCode: string;
-	externalReferenceCodeSaveURL: string;
 	hasPublishPermission: boolean;
 	hasUpdatePermission: boolean;
 	helpMessage: string;
 	isApproved?: boolean;
 	isRootDescendantNode?: boolean;
 	label: string;
+	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionExternalReferenceCodeSaveURL: string;
 	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
 	onSubmit: (props: boolean) => void;
@@ -46,14 +46,14 @@ export function ManagementToolbar({
 	className,
 	enableBoxShadow = true,
 	entityId,
-	externalReferenceCode: initialExternalReferenceCode,
-	externalReferenceCodeSaveURL,
 	hasPublishPermission,
 	hasUpdatePermission,
 	helpMessage,
 	isApproved,
 	isRootDescendantNode,
 	label,
+	objectDefinitionExternalReferenceCode: initialObjectDefinitionExternalReferenceCode,
+	objectDefinitionExternalReferenceCodeSaveURL,
 	onExternalReferenceCodeChange,
 	onGetEntity,
 	onSubmit,
@@ -61,9 +61,10 @@ export function ManagementToolbar({
 	screenNavigationCategoryKey,
 	showEntityDetails = true,
 }: ManagementToolbarProps) {
-	const [externalReferenceCode, setExternalReferenceCode] = useState(
-		initialExternalReferenceCode
-	);
+	const [
+		objectDefinitionExternalReferenceCode,
+		setObjectDefinitionExternalReferenceCode,
+	] = useState(initialObjectDefinitionExternalReferenceCode);
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 
 	const [disabled, setDisabled] = useState(!hasPublishPermission);
@@ -113,7 +114,7 @@ export function ManagementToolbar({
 								</span>
 
 								<strong className="ml-2">
-									{externalReferenceCode}
+									{objectDefinitionExternalReferenceCode}
 								</strong>
 
 								<span
@@ -190,16 +191,20 @@ export function ManagementToolbar({
 			</ClayManagementToolbar>
 
 			{visibleModal && (
-				<ModalEditExternalReferenceCode
-					externalReferenceCode={externalReferenceCode}
+				<ModalEditObjectDefinitionExternalReferenceCode
 					handleOnClose={() => setVisibleModal(false)}
 					helpMessage={helpMessage}
-					onExternalReferenceCodeChange={
-						onExternalReferenceCodeChange
+					objectDefinitionExternalReferenceCode={
+						objectDefinitionExternalReferenceCode
 					}
 					onGetEntity={onGetEntity}
-					saveURL={externalReferenceCodeSaveURL}
-					setExternalReferenceCode={setExternalReferenceCode}
+					onObjectDefinitionExternalReferenceCodeChange={
+						onExternalReferenceCodeChange
+					}
+					saveURL={objectDefinitionExternalReferenceCodeSaveURL}
+					setObjectDefinitionExternalReferenceCode={
+						setObjectDefinitionExternalReferenceCode
+					}
 				/>
 			)}
 		</>

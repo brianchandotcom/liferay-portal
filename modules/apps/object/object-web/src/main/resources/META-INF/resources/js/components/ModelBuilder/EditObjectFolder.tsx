@@ -29,7 +29,7 @@ import './EditObjectFolder.scss';
 
 import {
 	API,
-	ModalEditExternalReferenceCode,
+	ModalEditObjectDefinitionExternalReferenceCode,
 	openToast,
 } from '@liferay/object-js-components-web';
 import {createResourceURL} from 'frontend-js-web';
@@ -336,11 +336,7 @@ export default function EditObjectFolder({
 
 			{modelBuilderModals.editObjectDefinitionExternalReferenceCode &&
 				selectedObjectDefinitionNode?.data && (
-					<ModalEditExternalReferenceCode
-						externalReferenceCode={
-							selectedObjectDefinitionNode.data
-								.externalReferenceCode
-						}
+					<ModalEditObjectDefinitionExternalReferenceCode
 						handleOnClose={() => {
 							dispatch({
 								payload: {
@@ -356,7 +352,16 @@ export default function EditObjectFolder({
 						helpMessage={Liferay.Language.get(
 							'unique-key-for-referencing-the-object-definition'
 						)}
-						onExternalReferenceCodeChange={(
+						objectDefinitionExternalReferenceCode={
+							selectedObjectDefinitionNode.data
+								.externalReferenceCode
+						}
+						onGetEntity={() =>
+							API.getObjectDefinitionById(
+								selectedObjectDefinitionNode.data?.id as number
+							)
+						}
+						onObjectDefinitionExternalReferenceCodeChange={(
 							externalReferenceCode: string
 						) => {
 							const updatedElements = elements.map((element) => {
@@ -385,11 +390,6 @@ export default function EditObjectFolder({
 								type: TYPES.SET_ELEMENTS,
 							});
 						}}
-						onGetEntity={() =>
-							API.getObjectDefinitionById(
-								selectedObjectDefinitionNode.data?.id as number
-							)
-						}
 						saveURL={`/o/object-admin/v1.0/object-definitions/${selectedObjectDefinitionNode.data.id}`}
 					/>
 				)}

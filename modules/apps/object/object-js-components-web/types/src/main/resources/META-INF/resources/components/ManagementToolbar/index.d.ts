@@ -15,14 +15,14 @@ interface ManagementToolbarProps {
 	className?: string;
 	enableBoxShadow?: boolean;
 	entityId: number;
-	externalReferenceCode: string;
-	externalReferenceCodeSaveURL: string;
 	hasPublishPermission: boolean;
 	hasUpdatePermission: boolean;
 	helpMessage: string;
 	isApproved?: boolean;
 	isRootDescendantNode?: boolean;
 	label: string;
+	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionExternalReferenceCodeSaveURL: string;
 	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
 	onSubmit: (props: boolean) => void;
@@ -37,14 +37,14 @@ export declare function ManagementToolbar({
 	className,
 	enableBoxShadow,
 	entityId,
-	externalReferenceCode: initialExternalReferenceCode,
-	externalReferenceCodeSaveURL,
 	hasPublishPermission,
 	hasUpdatePermission,
 	helpMessage,
 	isApproved,
 	isRootDescendantNode,
 	label,
+	objectDefinitionExternalReferenceCode: initialObjectDefinitionExternalReferenceCode,
+	objectDefinitionExternalReferenceCodeSaveURL,
 	onExternalReferenceCodeChange,
 	onGetEntity,
 	onSubmit,

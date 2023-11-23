@@ -7,12 +7,12 @@
 
 interface ObjectManagementToolbarProps {
 	backURL: string;
-	externalReferenceCode: string;
 	hasPublishObjectPermission: boolean;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
 	isRootDescendantNode: boolean;
 	label: string;
+	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	onSubmit: (draft: boolean) => void;
 	portletNamespace: string;
@@ -21,12 +21,12 @@ interface ObjectManagementToolbarProps {
 }
 export default function ObjectManagementToolbar({
 	backURL,
-	externalReferenceCode,
 	hasPublishObjectPermission,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
 	isRootDescendantNode,
 	label,
+	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	onSubmit,
 	portletNamespace,

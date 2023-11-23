@@ -19,7 +19,7 @@ export * from './components/ExpressionBuilder';
 export {Input} from './components/Input';
 export {ManagementToolbar} from './components/ManagementToolbar/index';
 export {ManagementToolbarSearch} from './components/ManagementToolbar/ManagementToolbarSearch';
-export {ModalEditExternalReferenceCode} from './components/ManagementToolbar/ModalEditExternalReferenceCode';
+export {ModalEditObjectDefinitionExternalReferenceCode} from './components/ManagementToolbar/ModalEditObjectDefinitionExternalReferenceCode';
 export {CustomVerticalBar} from './components/VerticalBar/CustomVerticalBar';
 export {ListTypeEntryBaseField} from './components/BaseEntryFields/ListTypeEntryBaseField';
 export {RadioField} from './components/RadioField/RadioField';

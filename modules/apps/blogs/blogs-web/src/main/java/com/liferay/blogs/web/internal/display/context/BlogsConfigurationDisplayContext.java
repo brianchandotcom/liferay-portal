@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryCons
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -61,7 +62,13 @@ public class BlogsConfigurationDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_renderRequest, "navigation", "rss");
+		_navigation = ParamUtil.getString(
+			_renderRequest, "navigation", "email-from");
+
+		if (PortalUtil.isRSSFeedsEnabled()) {
+			_navigation = ParamUtil.getString(
+				_renderRequest, "navigation", "rss");
+		}
 
 		return _navigation;
 	}

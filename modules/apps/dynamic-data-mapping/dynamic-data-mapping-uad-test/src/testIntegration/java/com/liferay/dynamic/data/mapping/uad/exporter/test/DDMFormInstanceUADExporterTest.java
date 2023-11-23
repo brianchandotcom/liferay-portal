@@ -52,9 +52,7 @@ public class DDMFormInstanceUADExporterTest
 
 		Document document = getExportDocument(ddmFormInstance);
 
-		assertColumnValue(
-			document, getPrimaryKeyName(),
-			String.valueOf(ddmFormInstance.getPrimaryKeyObj()));
+		assertColumnValue(document, "userName", user.getFullName());
 	}
 
 	@Override
@@ -64,11 +62,6 @@ public class DDMFormInstanceUADExporterTest
 				_group, userId);
 
 		return ddmFormInstanceRecord.getFormInstance();
-	}
-
-	@Override
-	protected String getPrimaryKeyName() {
-		return "formInstanceId";
 	}
 
 	@Override

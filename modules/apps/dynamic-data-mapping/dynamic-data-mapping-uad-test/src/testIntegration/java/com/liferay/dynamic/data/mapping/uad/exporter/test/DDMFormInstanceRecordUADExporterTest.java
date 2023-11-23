@@ -49,11 +49,6 @@ public class DDMFormInstanceRecordUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "formInstanceRecordId";
-	}
-
-	@Override
 	protected UADExporter<DDMFormInstanceRecord> getUADExporter() {
 		return _uadExporter;
 	}

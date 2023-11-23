@@ -4038,6 +4038,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewSourceEditor();
 
+		while (IsElementPresent(locator1 = "Home#LOADING_ANIMATION")) {
+
+			// We need this pause to wait for the diagram to fully load. See LPS-201066
+
+			Pause(value1 = 10);
+		}
+
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
 		ProcessBuilderKaleoDesignerReact.viewDiagramEditor(

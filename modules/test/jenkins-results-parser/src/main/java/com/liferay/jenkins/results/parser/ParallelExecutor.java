@@ -221,8 +221,10 @@ public class ParallelExecutor<T> {
 
 			sb.append(
 				JenkinsResultsParserUtil.toDurationString(getDurationMillis()));
-			sb.append("\n Completed: ");
-			sb.append(getCompletedTaskCount());
+			sb.append("\n Failed: ");
+			sb.append(getFailedTaskCount());
+			sb.append(" / Succeeded: ");
+			sb.append(getSuccessfulTaskCount());
 			sb.append(" / Running: ");
 			sb.append(getRunningTaskCount());
 			sb.append(" / Submitted: ");
@@ -255,10 +257,6 @@ public class ParallelExecutor<T> {
 			return totalDuration / _completedTasks.size();
 		}
 
-		public int getCompletedTaskCount() {
-			return _completedTasks.size();
-		}
-
 		public long getDurationMillis() {
 			if (_startTimeMillis == null) {
 				return 0L;
@@ -267,9 +265,22 @@ public class ParallelExecutor<T> {
 			return System.currentTimeMillis() - _startTimeMillis;
 		}
 
+		public int getFailedTaskCount() {
+			int failedTaskCount = 0;
+
+			for (Task<T> completedTask : _completedTasks) {
+				if (completedTask.failed()) {
+					failedTaskCount++;
+				}
+			}
+
+			return failedTaskCount;
+		}
+
 		public int getRemainingTaskCount() {
-			return getTotalTaskCount() - getRunningTaskCount() -
-				getSubmittedTaskCount() - getCompletedTaskCount();
+			return getTotalTaskCount() - getFailedTaskCount() -
+				getRunningTaskCount() - getSubmittedTaskCount() -
+					getSuccessfulTaskCount();
 		}
 
 		public List<T> getResults() {
@@ -308,12 +319,26 @@ public class ParallelExecutor<T> {
 			return submittedTaskCount;
 		}
 
+		public int getSuccessfulTaskCount() {
+			int successfulTaskCount = 0;
+
+			for (Task<T> completedTask : _completedTasks) {
+				if (!completedTask.failed()) {
+					successfulTaskCount++;
+				}
+			}
+
+			return successfulTaskCount;
+		}
+
 		public int getTotalTaskCount() {
 			return _totalTaskCount;
 		}
 
 		public boolean isComplete() {
-			if (getCompletedTaskCount() == getTotalTaskCount()) {
+			if ((getSuccessfulTaskCount() + getFailedTaskCount()) ==
+					getTotalTaskCount()) {
+
 				return true;
 			}
 
@@ -378,6 +403,7 @@ public class ParallelExecutor<T> {
 							catch (CancellationException | ExecutionException |
 								   InterruptedException exception) {
 
+								processorTask.fail();
 								if (_parallelExecutor._failOnError) {
 									throw new RuntimeException(exception);
 								}
@@ -438,6 +464,8 @@ public class ParallelExecutor<T> {
 							if ((future != null) && !future.isCancelled()) {
 								if (!future.isDone()) {
 									future.cancel(true);
+
+									processorTask.fail();
 								}
 
 								_completedTasks.add(processorTask);
@@ -458,13 +486,21 @@ public class ParallelExecutor<T> {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					_parallelExecutor.toString(), " completed ",
-					String.valueOf(getCompletedTaskCount()), " tasks in ",
+					String.valueOf(getSuccessfulTaskCount()), " tasks in ",
 					JenkinsResultsParserUtil.toDurationString(
 						getDurationMillis()),
 					" averaging ",
 					JenkinsResultsParserUtil.toDurationString(
 						getAverageDurationMillis()),
-					" per task."));
+					" per task. "));
+
+			int failedTaskCount = getFailedTaskCount();
+
+			if (failedTaskCount > 0) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						String.valueOf(failedTaskCount), " task(s) failed."));
+			}
 		}
 
 		private Task<T> _processCallable(
@@ -533,6 +569,16 @@ public class ParallelExecutor<T> {
 				_iterator = iterator;
 				_processorCallable = processorCallable;
 				_future = future;
+
+				_failed = false;
+			}
+
+			public void fail() {
+				_failed = true;
+			}
+
+			public boolean failed() {
+				return _failed;
 			}
 
 			public TaskCallable<T> getCallable() {
@@ -547,6 +593,7 @@ public class ParallelExecutor<T> {
 				return _iterator;
 			}
 
+			private boolean _failed;
 			private final Future<T> _future;
 			private final Iterator<Callable<T>> _iterator;
 			private final TaskCallable<T> _processorCallable;

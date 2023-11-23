@@ -55,7 +55,7 @@ public class DropZoneFragmentEntryLinkListener
 	@Override
 	public void onAddFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
 		try {
-			updateLayoutPageTemplateStructure(fragmentEntryLink);
+			updateLayoutPageTemplateStructure(fragmentEntryLink, null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -71,6 +71,24 @@ public class DropZoneFragmentEntryLinkListener
 	}
 
 	@Override
+	public void onDuplicateFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink,
+		FragmentEntryLink originalFragmentEntryLink) {
+
+		try {
+			updateLayoutPageTemplateStructure(
+				fragmentEntryLink, originalFragmentEntryLink);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to update layout page template structure",
+					exception);
+			}
+		}
+	}
+
+	@Override
 	public void onUpdateFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
 	}
 
@@ -79,7 +97,7 @@ public class DropZoneFragmentEntryLinkListener
 		FragmentEntryLink fragmentEntryLink) {
 
 		try {
-			updateLayoutPageTemplateStructure(fragmentEntryLink);
+			updateLayoutPageTemplateStructure(fragmentEntryLink, null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -91,7 +109,8 @@ public class DropZoneFragmentEntryLinkListener
 	}
 
 	protected void updateLayoutPageTemplateStructure(
-			FragmentEntryLink fragmentEntryLink)
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryLink originalFragmentEntryLink)
 		throws PortalException {
 
 		ServiceContext serviceContext =

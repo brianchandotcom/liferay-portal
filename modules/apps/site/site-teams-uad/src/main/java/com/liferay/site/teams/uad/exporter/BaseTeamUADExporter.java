@@ -53,14 +53,6 @@ public abstract class BaseTeamUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>teamId</column-name><column-value><![CDATA[");
-		sb.append(team.getTeamId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(team.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(team.getUserName());
 		sb.append("]]></column-value></column>");

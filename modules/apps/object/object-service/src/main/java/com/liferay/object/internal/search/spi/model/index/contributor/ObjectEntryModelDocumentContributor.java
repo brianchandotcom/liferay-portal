@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -183,6 +184,12 @@ public class ObjectEntryModelDocumentContributor
 				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 			value = ObjectEntryValuesUtil.getValueString(objectField, values);
+		}
+		else if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
+
+			value = BigDecimalUtil.stripTrailingZeros((BigDecimal)value);
 		}
 
 		String valueString = String.valueOf(value);

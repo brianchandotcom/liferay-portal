@@ -44,17 +44,9 @@ const getItemStyles = (
 	};
 };
 
-function getDefaultLabel(item: DragItem) {
-	if (item?.name) {
-		return item.name;
-	}
-
-	return Liferay.Language.get('element');
-}
-
 export default function DragPreview<T extends DragItem>({
 	getIcon = (item) => item?.icon || '',
-	getLabel = getDefaultLabel,
+	getLabel = (item) => item?.name || Liferay.Language.get('element'),
 }: Props<T>) {
 	const ref = useRef<HTMLDivElement>(null);
 

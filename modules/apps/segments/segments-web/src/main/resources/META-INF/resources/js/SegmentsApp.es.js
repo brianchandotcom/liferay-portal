@@ -10,17 +10,20 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import ThemeContext from './ThemeContext.es';
 import SegmentEdit from './components/segment_edit/SegmentEdit';
+import {KeyboardMovementContextProvider} from './contexts/KeyboardMovementContext';
 
 export default function ({context, props}) {
 	return (
 		<DndProvider backend={HTML5Backend}>
-			<ThemeContext.Provider value={context}>
-				<div className="segments-root">
-					<DragPreview />
+			<KeyboardMovementContextProvider>
+				<ThemeContext.Provider value={context}>
+					<div className="segments-root">
+						<DragPreview />
 
-					<SegmentEdit {...props} />
-				</div>
-			</ThemeContext.Provider>
+						<SegmentEdit {...props} />
+					</div>
+				</ThemeContext.Provider>
+			</KeyboardMovementContextProvider>
 		</DndProvider>
 	);
 }

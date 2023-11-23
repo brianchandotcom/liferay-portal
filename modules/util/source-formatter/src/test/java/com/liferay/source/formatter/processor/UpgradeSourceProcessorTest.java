@@ -185,11 +185,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaServiceTrackerListCheck() throws Exception {
-		test("upgrade/UpgradeJavaServiceTrackerListCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaStorageTypeAwareCheck() throws Exception {
 		test("upgrade/UpgradeJavaStorageTypeAwareCheck.testjava");
 	}

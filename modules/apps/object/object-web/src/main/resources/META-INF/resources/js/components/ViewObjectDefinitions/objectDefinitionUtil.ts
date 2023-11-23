@@ -13,6 +13,7 @@ import {
 	removeAllSpecialCharacters,
 } from '../../utils/string';
 import {DropDownItems} from '../ModelBuilder/types';
+import {ModalImportObjectDefinitionInfo} from './ViewObjectDefinitions';
 
 type DeleteObjectDefinitionProps = {
 	baseResourceURL: string;
@@ -239,6 +240,9 @@ interface GetObjectFolderActionsProps {
 	};
 	id: number;
 	objectFolderPermissionsURL: string;
+	setModalImportObjectDefinitionInfo: (
+		value: ModalImportObjectDefinitionInfo
+	) => void;
 	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
 }
 
@@ -246,6 +250,7 @@ export function getObjectFolderActions({
 	actions,
 	id,
 	objectFolderPermissionsURL,
+	setModalImportObjectDefinitionInfo,
 	setShowModal,
 }: GetObjectFolderActionsProps) {
 	const url = formatActionURL(objectFolderPermissionsURL, id);
@@ -282,7 +287,15 @@ export function getObjectFolderActions({
 				Liferay.Language.get('import-x'),
 				Liferay.Language.get('object-definition')
 			),
-			onClick: () => {},
+			onClick: () => {
+				setModalImportObjectDefinitionInfo({
+					title: sub(
+						Liferay.Language.get('import-x'),
+						Liferay.Language.get('object-definition')
+					),
+					visible: true,
+				});
+			},
 			symbolLeft: 'import',
 			value: 'importObjectDefinition',
 		});

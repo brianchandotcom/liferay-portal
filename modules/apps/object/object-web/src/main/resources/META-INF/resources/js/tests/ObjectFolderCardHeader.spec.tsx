@@ -31,6 +31,7 @@ describe('The ObjectFolderCardHeader component should', () => {
 						},
 						id: 1,
 						objectFolderPermissionsURL: '',
+						setModalImportObjectDefinitionInfo: () => {},
 						setShowModal: () => {},
 					}) as IItem[]
 				}
@@ -62,6 +63,7 @@ describe('The ObjectFolderCardHeader component should', () => {
 						},
 						id: 2,
 						objectFolderPermissionsURL: '',
+						setModalImportObjectDefinitionInfo: () => {},
 						setShowModal: () => {},
 					}) as IItem[]
 				}

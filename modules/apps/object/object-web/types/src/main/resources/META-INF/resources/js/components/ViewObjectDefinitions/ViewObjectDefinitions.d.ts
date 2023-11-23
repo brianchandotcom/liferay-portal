@@ -7,10 +7,16 @@
 
 import {IFDSTableProps} from '../../utils/fds';
 import './ViewObjectDefinitions.scss';
+export interface ModalImportObjectDefinitionInfo {
+	title: string;
+	visible: boolean;
+}
 interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	baseResourceURL: string;
 	editObjectDefinitionURL: string;
+	importObjectDefinitionURL: string;
 	modelBuilderURL: string;
+	nameMaxLength: string;
 	objectDefinitionsAPIURL: any;
 	objectDefinitionsCreationMenu: {
 		primaryItems?: any[];
@@ -20,16 +26,20 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	objectDefinitionsFDSName: any;
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolderPermissionsURL: string;
+	portletNamespace: string;
 }
 export default function ViewObjectDefinitions({
 	baseResourceURL,
 	editObjectDefinitionURL,
+	importObjectDefinitionURL,
 	modelBuilderURL,
+	nameMaxLength,
 	objectDefinitionsAPIURL,
 	objectDefinitionsCreationMenu,
 	objectDefinitionsFDSActionDropdownItems,
 	objectDefinitionsFDSName,
 	objectDefinitionsStorageTypes,
 	objectFolderPermissionsURL,
+	portletNamespace,
 }: ViewObjectDefinitionsProps): JSX.Element;
 export {};

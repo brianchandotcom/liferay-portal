@@ -53,8 +53,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -153,7 +154,7 @@ public class DuplicateItemMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 
-		Set<Long> duplicatedFragmentEntryLinkIds = new HashSet<>();
+		Map<Long, Long> duplicatedFragmentEntryLinkIdsMap = new HashMap<>();
 		List<String> duplicatedLayoutStructureItemIds = new ArrayList<>();
 
 		LayoutStructureUtil.updateLayoutPageTemplateData(
@@ -180,26 +181,29 @@ public class DuplicateItemMVCActionCommand
 							(FragmentStyledLayoutStructureItem)
 								duplicatedLayoutStructureItem;
 
-					long fragmentEntryLinkId = _duplicateFragmentEntryLink(
-						actionRequest,
+					long originalFragmentEntryLinkId =
 						fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkId());
+							getFragmentEntryLinkId();
+
+					long fragmentEntryLinkId = _duplicateFragmentEntryLink(
+						actionRequest, originalFragmentEntryLinkId);
 
 					layoutStructure.updateItemConfig(
 						JSONUtil.put(
 							"fragmentEntryLinkId", fragmentEntryLinkId),
 						duplicatedLayoutStructureItem.getItemId());
 
-					duplicatedFragmentEntryLinkIds.add(fragmentEntryLinkId);
+					duplicatedFragmentEntryLinkIdsMap.put(
+						fragmentEntryLinkId, originalFragmentEntryLinkId);
 				}
 			});
 
-		for (long duplicatedFragmentEntryLinkId :
-				duplicatedFragmentEntryLinkIds) {
+		for (Map.Entry<Long, Long> entry :
+				duplicatedFragmentEntryLinkIdsMap.entrySet()) {
 
 			FragmentEntryLink duplicatedFragmentEntryLink =
 				_fragmentEntryLinkLocalService.getFragmentEntryLink(
-					duplicatedFragmentEntryLinkId);
+					entry.getKey());
 
 			for (FragmentEntryLinkListener fragmentEntryLinkListener :
 					_fragmentEntryLinkListenerRegistry.
@@ -220,7 +224,8 @@ public class DuplicateItemMVCActionCommand
 		return JSONUtil.put(
 			"duplicatedFragmentEntryLinks",
 			_getDuplicatedFragmentEntryLinksJSONArray(
-				actionRequest, actionResponse, duplicatedFragmentEntryLinkIds,
+				actionRequest, actionResponse,
+				duplicatedFragmentEntryLinkIdsMap.keySet(),
 				segmentsExperienceId, themeDisplay)
 		).put(
 			"duplicatedItemId",

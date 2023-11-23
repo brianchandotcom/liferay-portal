@@ -20,6 +20,7 @@ interface DropzoneUploadProps {
 	maxSize?: number;
 	multiple: boolean;
 	onHandleUpload: (files: File[]) => void;
+	showDocumentIcon?: boolean;
 	title: string;
 }
 
@@ -31,6 +32,7 @@ export function DropzoneUpload({
 	maxSize,
 	multiple,
 	onHandleUpload,
+	showDocumentIcon = true,
 	title,
 }: DropzoneUploadProps) {
 	return (
@@ -49,13 +51,15 @@ export function DropzoneUpload({
 					})}
 					{...getRootProps()}
 				>
-					<div className="dropzone-upload-document-container">
-						<img
-							alt="Document icon"
-							className="dropzone-upload-document-icon"
-							src={documentIcon}
-						/>
-					</div>
+					{showDocumentIcon && 
+						<div className="dropzone-upload-document-container">
+							<img
+								alt="Document icon"
+								className="dropzone-upload-document-icon"
+								src={documentIcon}
+							/>
+						</div>
+					}
 
 					<div className="dropzone-upload-text-container">
 						<span className="dropzone-upload-text">{title}</span>

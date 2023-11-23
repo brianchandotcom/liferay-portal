@@ -53,14 +53,6 @@ public abstract class BaseEntryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(entry.getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(entry.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(entry.getUserName());
 		sb.append("]]></column-value></column>");

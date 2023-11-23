@@ -201,33 +201,6 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testExportCompanyScopeObjectEntryCSV() throws Exception {
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			TestPropsValues.getCompanyId(), _OBJECT_ENTRY_ERC_1,
-			TestPropsValues.getGroupId(), _objectDefinition1,
-			TestPropsValues.getUserId());
-
-		_addObjectEntryInDifferentCompany("TestObjectCSV");
-
-		_assertEqualsExportCSV(
-			_getExportFileString(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames, null,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				"C_TestObjectCSV"),
-			_getCSVString(
-				objectEntry.getCreateDate(), _OBJECT_ENTRY_ERC_1,
-				"object_entry.csv", null, objectEntry.getObjectEntryId(),
-				objectEntry.getModifiedDate()),
-			objectEntry.getExternalReferenceCode(),
-			_objectEntryExportCSVFieldNames);
-	}
-
-	@Test
 	public void testExportCompanyScopeObjectEntryJSON() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
@@ -312,36 +285,6 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
-	public void testExportSiteScopeObjectEntryCSV() throws Exception {
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			TestPropsValues.getCompanyId(), _OBJECT_ENTRY_ERC_1,
-			TestPropsValues.getGroupId(), _objectDefinition1,
-			TestPropsValues.getUserId());
-
-		_addObjectEntry(
-			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
-			_group.getGroupId(), _objectDefinition1,
-			TestPropsValues.getUserId());
-
-		_assertEqualsExportCSV(
-			_getExportFileString(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames, TestPropsValues.getGroupId(),
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				"C_TestObjectCSV"),
-			_getCSVString(
-				objectEntry.getCreateDate(), _OBJECT_ENTRY_ERC_1,
-				"object_entry.csv", TestPropsValues.getGroupId(),
-				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate()),
-			objectEntry.getExternalReferenceCode(),
-			_objectEntryExportCSVFieldNames);
-	}
-
-	@Test
 	public void testExportSiteScopeObjectEntryJSON() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
@@ -379,44 +322,6 @@ public class BatchEngineBrokerTest {
 						TestPropsValues.getGroupId(),
 						"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 						"C_TestObject"))));
-	}
-
-	@Test
-	public void testImportCompanyScopeObjectEntryCSV() throws Exception {
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
-
-		try (FileInputStream fileInputStream = new FileInputStream(
-				_createImportFile(
-					RandomTestUtil.nextDate(), _OBJECT_ENTRY_ERC_1,
-					"object_entry.csv", null, RandomTestUtil.randomLong(),
-					RandomTestUtil.nextDate()))) {
-
-			_executeImportTask(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames, null,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				"C_TestObjectCSV", _getURIString("csv", fileInputStream));
-		}
-
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			_OBJECT_ENTRY_ERC_1, _objectDefinition1.getObjectDefinitionId());
-
-		Assert.assertNotNull(objectEntry);
-
-		_assertEqualsExportCSV(
-			_getExportFileString(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames, null,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				"C_TestObjectCSV"),
-			_getCSVString(
-				objectEntry.getCreateDate(), _OBJECT_ENTRY_ERC_1,
-				"object_entry.csv", null, objectEntry.getObjectEntryId(),
-				objectEntry.getModifiedDate()),
-			objectEntry.getExternalReferenceCode(),
-			_objectEntryExportCSVFieldNames);
 	}
 
 	@Test
@@ -460,6 +365,74 @@ public class BatchEngineBrokerTest {
 					_objectDefinition1, objectEntry.getObjectEntryId()),
 				_objectEntryImportFieldNames, jsonNode.get(0));
 		}
+	}
+
+	@Test
+	public void testImportExportCompanyScopeObjectEntryCSV() throws Exception {
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObjectCSV",
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+
+		_addObjectEntryInDifferentCompany("TestObjectCSV");
+
+		try (FileInputStream fileInputStream = new FileInputStream(
+				_createImportFile(
+					RandomTestUtil.nextDate(), _OBJECT_ENTRY_ERC_1,
+					"object_entry.csv", null, RandomTestUtil.randomLong(),
+					RandomTestUtil.nextDate()))) {
+
+			_executeImportTask(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectEntryExportCSVFieldNames, null,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				"C_TestObjectCSV", _getURIString("csv", fileInputStream));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			_OBJECT_ENTRY_ERC_1, _objectDefinition1.getObjectDefinitionId());
+
+		Assert.assertNotNull(objectEntry);
+
+		_assertEqualsExportCSV(
+			_getExportFileString(
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				_objectEntryExportCSVFieldNames, null,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				"C_TestObjectCSV"),
+			_getCSVString(
+				objectEntry.getCreateDate(), _OBJECT_ENTRY_ERC_1,
+				"object_entry.csv", null, objectEntry.getObjectEntryId(),
+				objectEntry.getModifiedDate()),
+			objectEntry.getExternalReferenceCode(),
+			_objectEntryExportCSVFieldNames);
+	}
+
+	@Test
+	public void testImportExportSiteScopeObjectEntryCSV() throws Exception {
+
+		// Default group
+
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObjectCSV",
+			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
+
+		_testImportExportSiteScopeObjectEntryCSV(
+			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
+
+		// Global group
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group globalGroup = company.getGroup();
+
+		_testImportExportSiteScopeObjectEntryCSV(
+			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
+
+		// New group
+
+		_testImportExportSiteScopeObjectEntryCSV(
+			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
 	}
 
 	@Test
@@ -507,34 +480,6 @@ public class BatchEngineBrokerTest {
 				_getExpectedJsonNode(_objectDefinition1),
 				_objectDefinitionImportFieldNames, jsonNode.get(0));
 		}
-	}
-
-	@Test
-	public void testImportSiteScopeObjectEntryCSV() throws Exception {
-
-		// Default group
-
-		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
-
-		_testImportSiteScopeObjectEntryCSV(
-			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
-
-		// Global group
-
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		Group globalGroup = company.getGroup();
-
-		_testImportSiteScopeObjectEntryCSV(
-			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
-
-		// New group
-
-		_testImportSiteScopeObjectEntryCSV(
-			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
 	}
 
 	@Test
@@ -1435,7 +1380,7 @@ public class BatchEngineBrokerTest {
 			Arrays.asList(_createObjectViewSortColumn("createDate", "asc")));
 	}
 
-	private void _testImportSiteScopeObjectEntryCSV(
+	private void _testImportExportSiteScopeObjectEntryCSV(
 			long groupId, String objectEntryERC)
 		throws Exception {
 

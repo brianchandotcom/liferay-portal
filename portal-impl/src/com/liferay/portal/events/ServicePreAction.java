@@ -105,6 +105,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -274,11 +275,15 @@ public class ServicePreAction extends Action {
 			long userId, long groupId)
 		throws Exception {
 
-		Map<Locale, String> nameMap = Collections.singletonMap(
-			LocaleUtil.getSiteDefault(),
-			LanguageUtil.get(
-				LocaleUtil.getSiteDefault(),
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_NAME));
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			nameMap.put(
+				locale,
+				LanguageUtil.get(
+					locale, PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_NAME));
+		}
+
 		Map<Locale, String> friendlyURLMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(),
 			_getFriendlyURL(
@@ -356,11 +361,15 @@ public class ServicePreAction extends Action {
 			long userId, long groupId)
 		throws Exception {
 
-		Map<Locale, String> nameMap = Collections.singletonMap(
-			LocaleUtil.getSiteDefault(),
-			LanguageUtil.get(
-				LocaleUtil.getSiteDefault(),
-				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_NAME));
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			nameMap.put(
+				locale,
+				LanguageUtil.get(
+					locale, PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_NAME));
+		}
+
 		Map<Locale, String> friendlyURLMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(),
 			_getFriendlyURL(

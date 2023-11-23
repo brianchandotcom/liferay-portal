@@ -1,19 +1,6 @@
 {
 	"object-fields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "AccountID__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Account ID"
-			},
-			"name": "accountId",
-			"required": false,
-			"type": "String"
-		},
-		{
 			"DBType": "Boolean",
 			"externalReferenceCode": "Active__c",
 			"indexed": true,

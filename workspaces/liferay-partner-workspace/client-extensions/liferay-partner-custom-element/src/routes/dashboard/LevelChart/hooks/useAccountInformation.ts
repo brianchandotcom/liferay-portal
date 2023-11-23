@@ -5,13 +5,10 @@
 
 import {useEffect, useState} from 'react';
 
-import {PartnerRoles} from '../../../../common/components/dashboard/enums/partnerRoles';
-import {PartnershipLevels} from '../../../../common/components/dashboard/enums/partnershipLevels';
 import {partnerLevelProperties} from '../../../../common/components/dashboard/mock';
 import AccountEntry from '../../../../common/interfaces/accountEntry';
 import Opportunity from '../../../../common/interfaces/opportunity';
 import PartnerLevel from '../../../../common/interfaces/partnerLevel';
-import Role from '../../../../common/interfaces/role';
 import UserAccount from '../../../../common/interfaces/userAccount';
 import {LiferayAPIs} from '../../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../../common/services/liferay/common/interfaces/liferayItems';
@@ -170,56 +167,7 @@ export default function useAccountInformation() {
 					properties.arr = true;
 				}
 
-				// accountUserAccounts?.items.forEach((user: UserAccount) => {
-				// 	if (
-				// 		user.accountBriefs
-				// 			?.find(
-				// 				(entry) =>
-				// 					entry.externalReferenceCode ===
-				// 					accountData.externalReferenceCode
-				// 			)
-				// 			?.roleBriefs?.find(
-				// 				(role: Role) =>
-				// 					role.name === PartnerRoles.MARKETING_USER
-				// 			)
-				// 	) {
-				// 		headcount.partnerMarketingUser += 1;
-				// 	}
-
-				// 	if (
-				// 		user.accountBriefs
-				// 			.find(
-				// 				(entry) =>
-				// 					entry.externalReferenceCode ===
-				// 					accountData.externalReferenceCode
-				// 			)
-				// 			?.roleBriefs?.find(
-				// 				(role: Role) =>
-				// 					role.name === PartnerRoles.SALES_USER
-				// 			)
-				// 	) {
-				// 		headcount.partnerSalesUser += 1;
-				// 	}
-				// });
-
-				const hasEnoughPartnerMarketingUser =
-					headcount.partnerMarketingUser >=
-					partnerLevelProperties[
-						partnerLevel?.partnerLevelType.key as PartnershipLevels
-					].partnerMarketingUser;
-
-				const hasEnoughPartnerSalesUser =
-					headcount.partnerSalesUser >=
-					partnerLevelProperties[
-						partnerLevel?.partnerLevelType.key as PartnershipLevels
-					].partnerSalesUser;
-
-				// if (
-				// 	hasEnoughPartnerMarketingUser &&
-				// 	hasEnoughPartnerSalesUser
-				// ) {
-				// 	properties.headcount = true;
-				// }
+				properties.headcount = true;
 			}
 
 			return {

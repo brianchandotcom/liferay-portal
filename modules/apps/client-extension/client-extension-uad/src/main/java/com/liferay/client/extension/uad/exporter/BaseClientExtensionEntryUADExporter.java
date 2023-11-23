@@ -54,20 +54,8 @@ public abstract class BaseClientExtensionEntryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>clientExtensionEntryId</column-name><column-value><![CDATA[");
-		sb.append(clientExtensionEntry.getClientExtensionEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(clientExtensionEntry.getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
 		sb.append(clientExtensionEntry.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(clientExtensionEntry.getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");

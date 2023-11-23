@@ -53,14 +53,6 @@ public abstract class BaseMBSuspiciousActivityUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>suspiciousActivityId</column-name><column-value><![CDATA[");
-		sb.append(mbSuspiciousActivity.getSuspiciousActivityId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(mbSuspiciousActivity.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(mbSuspiciousActivity.getUserName());
 		sb.append("]]></column-value></column>");

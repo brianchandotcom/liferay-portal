@@ -893,6 +893,20 @@ definition {
 				picklistOption = "Open");
 		}
 
+		task ("and When the validation toggle is active") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175196");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			PortletEntry.save();
+		}
+
 		task ("Then the validation condition is met and the entry can be updated") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175196");
 

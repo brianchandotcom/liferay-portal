@@ -12,6 +12,7 @@ import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletMode;
 
@@ -39,28 +41,26 @@ public class AICreatorOpenAIMenuItemFactoryImpl
 		long repositoryId, long folderId, long fileEntryTypeId,
 		ThemeDisplay themeDisplay) {
 
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
-
-		boolean aiCreatorDALLEEnabled = false;
-
 		try {
-			aiCreatorDALLEEnabled =
-				_aiCreatorOpenAIConfigurationManager.
+			if (!_aiCreatorOpenAIConfigurationManager.
 					isAICreatorDALLEGroupEnabled(
 						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+						themeDisplay.getScopeGroupId())) {
+
+				return null;
 			}
 		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
+
+		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
 		javaScriptMenuItem.setData(
 			HashMapBuilder.<String, Object>put(
 				"action", "openAICreateImage"
-			).put(
-				"aiCreatorDALLEEnabled", aiCreatorDALLEEnabled
 			).put(
 				"aiCreatorURL",
 				() -> {
@@ -90,6 +90,27 @@ public class AICreatorOpenAIMenuItemFactoryImpl
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString();
+				}
+			).put(
+				"isAICreatorOpenAIAPIKey",
+				() -> {
+					try {
+						if (Validator.isNotNull(
+								_aiCreatorOpenAIConfigurationManager.
+									getAICreatorOpenAIGroupAPIKey(
+										themeDisplay.getCompanyId(),
+										themeDisplay.getScopeGroupId()))) {
+
+							return true;
+						}
+					}
+					catch (ConfigurationException configurationException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(configurationException);
+						}
+					}
+
+					return false;
 				}
 			).build());
 

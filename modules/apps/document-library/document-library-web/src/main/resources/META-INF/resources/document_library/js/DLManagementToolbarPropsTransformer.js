@@ -301,8 +301,8 @@ export default function propsTransformer({
 		});
 	};
 
-	const openCreateAIImage = (aiCreatorDALLEEnabled, aiImageCreatorURL) => {
-		if (!aiCreatorDALLEEnabled) {
+	const openCreateAIImage = (aiImageCreatorURL, isAICreatorOpenAIAPIKey) => {
+		if (!isAICreatorOpenAIAPIKey) {
 			Liferay.componentReady(`${portletNamespace}ConfigueAIModal`).then(
 				(configureAIModal) => {
 					configureAIModal.open();
@@ -407,8 +407,8 @@ export default function propsTransformer({
 		onCreationMenuItemClick: (event, {item}) => {
 			if (item?.data?.action === 'openAICreateImage') {
 				openCreateAIImage(
-					item?.data?.aiCreatorDALLEEnabled,
-					item?.data?.aiCreatorURL
+					item?.data?.aiCreatorURL,
+					item?.data?.isAICreatorOpenAIAPIKey
 				);
 			}
 		},

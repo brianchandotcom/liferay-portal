@@ -7,6 +7,7 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.BaseEventHandler;
 import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 
@@ -21,6 +22,20 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
+	}
+
+	protected GitHubComment getGitHubComment() throws InvalidJSONException {
+		JSONObject messageJSONObject = getMessageJSONObject();
+
+		JSONObject commentJSONObject = messageJSONObject.optJSONObject(
+			"comment");
+
+		if (commentJSONObject == null) {
+			throw new InvalidJSONException(
+				"Missing \"comment\" from message JSON");
+		}
+
+		return new GitHubComment(commentJSONObject);
 	}
 
 	protected GitHubIssue getGitHubIssue() throws InvalidJSONException {

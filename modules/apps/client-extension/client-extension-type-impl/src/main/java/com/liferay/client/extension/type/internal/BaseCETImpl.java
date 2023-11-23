@@ -89,6 +89,11 @@ public abstract class BaseCETImpl implements CET, Cloneable {
 	}
 
 	@Override
+	public String getName() {
+		return _name;
+	}
+
+	@Override
 	public String getName(Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 

@@ -34,6 +34,8 @@ public interface CET {
 
 	public Date getModifiedDate();
 
+	public String getName();
+
 	@CETProperty(name = "name", type = CETProperty.Type.String)
 	public String getName(Locale locale);
 

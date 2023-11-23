@@ -53,13 +53,12 @@ public interface CETFactory {
 	/**
 	 * Create a CET object from a {@link PortletRequest} object.
 	 *
-	 * This method is used to createCET objects to be used when rendering the
+	 * This method is used to create CET objects to be used when rendering the
 	 * administration UI.
 	 *
 	 * @review
 	 */
-	public CET create(PortletRequest portletRequest, String type)
-		throws PortalException;
+	public CET create(PortletRequest portletRequest) throws PortalException;
 
 	public Collection<String> getTypes();
 

@@ -5,7 +5,6 @@
 
 package com.liferay.client.extension.web.internal.display.context;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.web.internal.display.context.util.CETLabelUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
@@ -19,6 +18,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,11 +39,10 @@ import javax.servlet.http.HttpServletRequest;
 public class EditClientExtensionEntryDisplayContext<T extends CET> {
 
 	public EditClientExtensionEntryDisplayContext(
-		T cet, ClientExtensionEntry clientExtensionEntry,
-		PortletRequest portletRequest) {
+		boolean adding, T cet, PortletRequest portletRequest) {
 
+		_adding = adding;
 		_cet = cet;
-		_clientExtensionEntry = clientExtensionEntry;
 		_portletRequest = portletRequest;
 	}
 
@@ -52,7 +51,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getCmd() {
-		if (_clientExtensionEntry == null) {
+		if (_adding) {
 			return Constants.ADD;
 		}
 
@@ -60,8 +59,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getDescription() {
-		return BeanParamUtil.getString(
-			_clientExtensionEntry, _portletRequest, "description");
+		return BeanParamUtil.getString(_cet, _portletRequest, "description");
 	}
 
 	public String getEditJSP() {
@@ -70,7 +68,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 
 	public String getExternalReferenceCode() {
 		return BeanParamUtil.getString(
-			_clientExtensionEntry, _portletRequest, "externalReferenceCode");
+			_cet, _portletRequest, "externalReferenceCode");
 	}
 
 	public String getHelpLabel() {
@@ -84,8 +82,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getName() {
-		return BeanParamUtil.getString(
-			_clientExtensionEntry, _portletRequest, "name");
+		return BeanParamUtil.getString(_cet, _portletRequest, "name");
 	}
 
 	public List<SelectOption> getPortletCategoryNameSelectOptions(
@@ -152,8 +149,9 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getProperties() {
-		return BeanParamUtil.getString(
-			_clientExtensionEntry, _portletRequest, "properties");
+		return ParamUtil.getString(
+			_portletRequest, "properties",
+			PropertiesUtil.toString(_cet.getProperties()));
 	}
 
 	public String getRedirect() {
@@ -161,8 +159,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getSourceCodeURL() {
-		return BeanParamUtil.getString(
-			_clientExtensionEntry, _portletRequest, "sourceCodeURL");
+		return BeanParamUtil.getString(_cet, _portletRequest, "sourceCodeURL");
 	}
 
 	public String[] getStrings(String urls) {
@@ -178,7 +175,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	public String getTitle() {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		if (_clientExtensionEntry == null) {
+		if (_adding) {
 			return CETLabelUtil.getNewLabel(
 				themeDisplay.getLocale(), _cet.getType());
 		}
@@ -187,8 +184,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getType() {
-		return BeanParamUtil.getString(
-			_clientExtensionEntry, _portletRequest, "type");
+		return BeanParamUtil.getString(_cet, _portletRequest, "type");
 	}
 
 	public String getTypeLabel() {
@@ -198,11 +194,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public boolean isNew() {
-		if (_clientExtensionEntry == null) {
-			return true;
-		}
-
-		return false;
+		return _adding;
 	}
 
 	public boolean isPropertiesVisible() {
@@ -222,8 +214,8 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 
 	private static final String[] _EMPTY_STRINGS = {StringPool.BLANK};
 
+	private final boolean _adding;
 	private final T _cet;
-	private final ClientExtensionEntry _clientExtensionEntry;
 	private final PortletRequest _portletRequest;
 
 }

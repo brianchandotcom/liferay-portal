@@ -1491,7 +1491,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), groupId, 0, file,
-				layoutsImportStrategy);
+				layoutsImportStrategy, true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

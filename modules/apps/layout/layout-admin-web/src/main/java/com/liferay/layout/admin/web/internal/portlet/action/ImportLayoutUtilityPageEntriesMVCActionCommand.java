@@ -86,7 +86,7 @@ public class ImportLayoutUtilityPageEntriesMVCActionCommand
 					_layoutsImporter.importFile(
 						themeDisplay.getUserId(),
 						themeDisplay.getScopeGroupId(), 0L, file,
-						layoutsImportStrategy);
+						layoutsImportStrategy, true);
 
 			if (ListUtil.isEmpty(layoutUtilityPageImporterResultEntries)) {
 				return;

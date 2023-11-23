@@ -289,7 +289,7 @@ public class FragmentFileInstaller implements FileInstaller {
 
 			_layoutsImporter.importFile(
 				user.getUserId(), groupId, 0L, file,
-				LayoutsImportStrategy.OVERWRITE);
+				LayoutsImportStrategy.OVERWRITE, true);
 		}
 	}
 

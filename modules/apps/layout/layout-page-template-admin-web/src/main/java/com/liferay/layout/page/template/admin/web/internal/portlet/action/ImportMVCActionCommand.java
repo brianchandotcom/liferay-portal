@@ -95,8 +95,8 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 				layoutsImporterResultEntries = _layoutsImporter.importFile(
 					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					layoutPageTemplateCollectionId, file,
-					layoutsImportStrategy);
+					layoutPageTemplateCollectionId, file, layoutsImportStrategy,
+					true);
 			}
 
 			if (ListUtil.isEmpty(layoutsImporterResultEntries)) {

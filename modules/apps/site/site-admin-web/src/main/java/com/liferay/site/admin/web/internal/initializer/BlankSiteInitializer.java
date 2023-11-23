@@ -127,7 +127,7 @@ public class BlankSiteInitializer implements SiteInitializer {
 
 		_layoutsImporter.importPageElement(
 			layout, layoutStructure, layoutStructure.getMainItemId(),
-			pageElementJSON, 0);
+			pageElementJSON, 0, true);
 	}
 
 	private void _updateLayoutUtilityPageEntryLayouts(

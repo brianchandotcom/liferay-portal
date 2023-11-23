@@ -435,7 +435,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 				_layoutsImporter.importPageElement(
 					layout, layoutStructure, layoutStructure.getMainItemId(),
-					_read("test-page-element.json"), 0);
+					_read("test-page-element.json"), 0, true);
 			}
 			finally {
 				PrincipalThreadLocal.setName(name);

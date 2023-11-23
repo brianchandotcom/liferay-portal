@@ -147,7 +147,7 @@ public class ExportImportLayoutUtilityPageTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), otherGroup.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -234,7 +234,7 @@ public class ExportImportLayoutUtilityPageTest {
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 			_layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 
 		Assert.assertNotNull(layoutsImporterResultEntries);
 		Assert.assertEquals(
@@ -250,7 +250,7 @@ public class ExportImportLayoutUtilityPageTest {
 
 		layoutsImporterResultEntries = _layoutsImporter.importFile(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
-			LayoutsImportStrategy.OVERWRITE);
+			LayoutsImportStrategy.OVERWRITE, true);
 
 		Assert.assertNotNull(layoutsImporterResultEntries);
 		Assert.assertEquals(

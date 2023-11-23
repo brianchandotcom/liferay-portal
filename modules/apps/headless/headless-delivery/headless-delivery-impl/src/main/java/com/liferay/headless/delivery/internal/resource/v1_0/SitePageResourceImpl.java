@@ -755,7 +755,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		try {
 			_layoutsImporter.importPageElement(
 				layout, layoutStructure, layoutStructure.getMainItemId(),
-				pageElement.toString(), 0);
+				pageElement.toString(), 0, true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

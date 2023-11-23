@@ -34,11 +34,13 @@ definition {
 			}
 
 			task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
-				JSONAssetlist.addDynamicAssetListEntryWithItemType(
-					groupName = "Test Site Name",
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+				AssetListsAdmin.configureItemTypeInDynamicCollection(
 					itemSubtype = "Basic Web Content",
-					itemType = "Web Content Article",
-					title = "Dynamic Collection");
+					itemType = "Web Content Article");
 			}
 
 			task ("Add a collection page based on the dynamic collection") {
@@ -64,18 +66,16 @@ definition {
 				layout = 2,
 				position = 1);
 
-			var n = 1;
-
-			for (var text : list "Web Content Title 5,Web Content Title 4,Web Content Title 3,Web Content Title 2,Web Content Title 1,") {
-				AssertTextEquals(
-					key_columnNumber = ${n},
-					key_position = 1,
-					key_rowNumber = 1,
-					locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
-					value1 = ${text});
-
-				var n = ${n} + 1;
+			for (var text : list "Web Content Title 5,Web Content Title 4,Web Content Title 3,Web Content Title 2,Web Content Title 1") {
+				AssertVisible(locator1 = "//div[@aria-label='Collection Display']//div[contains(@class,'col-')][normalize-space()='${text}']");
 			}
+
+			AssertTextEquals(
+				key_columnNumber = 6,
+				key_position = 1,
+				key_rowNumber = 1,
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
+				value1 = "");
 		}
 	}
 

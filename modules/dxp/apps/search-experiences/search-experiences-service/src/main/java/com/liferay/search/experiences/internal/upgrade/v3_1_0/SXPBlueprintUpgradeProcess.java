@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -32,6 +34,15 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPElement();
 
 		_upgradeSXPBlueprint();
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"SXPElement", "fallbackDescription STRING null",
+				"fallbackTitle VARCHAR(500) null")
+		};
 	}
 
 	private String _addFieldsToElementInstancesJSON(String elementInstancesJSON)
@@ -181,9 +192,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSXPElement() throws Exception {
-		alterTableAddColumn("SXPElement", "fallbackTitle", "VARCHAR(500) null");
-		alterTableAddColumn("SXPElement", "fallbackDescription", "STRING null");
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select sxpElementId, title, description from SXPElement");
 			PreparedStatement preparedStatement2 =

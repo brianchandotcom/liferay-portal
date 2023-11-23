@@ -9,22 +9,40 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -35,11 +53,17 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -60,6 +84,9 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Marcellus Tavares
@@ -238,6 +265,124 @@ public class JournalTransformerTest {
 	}
 
 	@Test
+	public void testRandomNamespaceAssetPublisherTemplate() throws Exception {
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		String pid =
+			"com.liferay.asset.publisher.web.internal.configuration." +
+				"AssetPublisherSelectionStyleConfiguration";
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.journal.internal.transformer.JournalTransformer",
+				LoggerTestUtil.WARN)) {
+
+			ConfigurationTestUtil.saveConfiguration(
+				pid,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"defaultSelectionStyle", "dynamic"
+				).build());
+
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			Layout layout = LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId());
+
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+				_group.getGroupId(), false);
+
+			themeDisplay.setCompany(
+				_companyLocalService.getCompany(_group.getCompanyId()));
+			themeDisplay.setLayout(layout);
+			themeDisplay.setLayoutSet(layoutSet);
+			themeDisplay.setLayoutTypePortlet(
+				(LayoutTypePortlet)layout.getLayoutType());
+			themeDisplay.setLocale(LocaleUtil.US);
+			themeDisplay.setLookAndFeel(
+				_themeLocalService.getTheme(
+					_group.getCompanyId(), layoutSet.getThemeId()),
+				null);
+			themeDisplay.setPermissionChecker(permissionChecker);
+			themeDisplay.setRealUser(TestPropsValues.getUser());
+			themeDisplay.setScopeGroupId(_group.getGroupId());
+			themeDisplay.setSiteGroupId(_group.getGroupId());
+			themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
+			themeDisplay.setUser(TestPropsValues.getUser());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest();
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.CTX, mockHttpServletRequest.getServletContext());
+			mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+			mockHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+			mockHttpServletRequest.setMethod(HttpMethods.GET);
+			mockHttpServletRequest.setParameter(
+				"currentURL", "http://localhost:8080/currentURL");
+
+			themeDisplay.setRequest(mockHttpServletRequest);
+
+			themeDisplay.setResponse(new MockHttpServletResponse());
+
+			DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+				_group.getGroupId(), JournalArticle.class.getName());
+
+			DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+				_group.getGroupId(), ddmStructure.getStructureId(),
+				_portal.getClassNameId(JournalArticle.class),
+				TemplateConstants.LANG_TYPE_FTL,
+				new String(
+					FileUtil.getBytes(
+						getClass(),
+						"dependencies" +
+							"/random_namespace_asset_publisher_template.ftl")),
+				LocaleUtil.US);
+
+			JournalArticle journalArticle =
+				JournalTestUtil.addArticleWithXMLContent(
+					_group.getGroupId(),
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+					DDMStructureTestUtil.getSampleStructuredContent(),
+					ddmStructure.getStructureKey(),
+					ddmTemplate.getTemplateKey(), LocaleUtil.US);
+
+			_transformMethod.invoke(
+				_journalTransformer, journalArticle, ddmTemplate,
+				_journalHelper, LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry,
+				ListUtil.filter(
+					_serviceTrackerList.toList(),
+					TransformerListener::isEnabled),
+				null, false, ddmTemplate.getScript(), themeDisplay,
+				Constants.VIEW);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"The article cannot include itself: " +
+					journalArticle.getArticleId(),
+				logEntry.getMessage());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
+			ConfigurationTestUtil.deleteConfiguration(pid);
+		}
+	}
+
+	@Test
 	public void testRegexTransformerListener() throws Exception {
 		initRegexTransformerListener();
 
@@ -387,6 +532,9 @@ public class JournalTransformerTest {
 	private static Method _transformMethod;
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
@@ -411,7 +559,13 @@ public class JournalTransformerTest {
 		_layoutDisplayPageProviderRegistry;
 
 	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ThemeLocalService _themeLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.journal.internal.transformer.RegexTransformerListener"

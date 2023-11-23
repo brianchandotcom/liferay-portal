@@ -49,11 +49,6 @@ public class RoleUADExporterTest extends BaseUADExporterTestCase<Role> {
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "roleId";
-	}
-
-	@Override
 	protected UADExporter<Role> getUADExporter() {
 		return _uadExporter;
 	}

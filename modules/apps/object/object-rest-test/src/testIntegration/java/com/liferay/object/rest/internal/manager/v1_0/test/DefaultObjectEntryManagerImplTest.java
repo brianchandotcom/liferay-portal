@@ -970,6 +970,8 @@ public class DefaultObjectEntryManagerImplTest
 			{
 				key = listTypeEntry.getKey();
 				name = listTypeEntry.getName(LocaleUtil.US);
+				name_languageId = LocalizedMapUtil.getLanguageIdMap(
+					listTypeEntry.getNameMap());
 			}
 		};
 

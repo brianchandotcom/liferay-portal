@@ -3,5 +3,8 @@
 	"name": "Test List Type Definition 1 Update",
 	"name_i18n": {
 		"en-US": "Test List Type Definition 1 Update"
+	},
+	"name_languageId": {
+		"en-US": "Test List Type Definition 1 Update"
 	}
 }

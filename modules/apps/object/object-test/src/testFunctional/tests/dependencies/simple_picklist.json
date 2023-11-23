@@ -8,6 +8,9 @@
 			"name_i18n": {
 				"en-US": "Picklist Item 1"
 			},
+			"name_languageId": {
+				"en-US": "Picklist Item 1"
+			},
 			"type": ""
 		},
 		{
@@ -17,11 +20,17 @@
 			"name_i18n": {
 				"en-US": "Picklist Item 2"
 			},
+			"name_languageId": {
+				"en-US": "Picklist Item 2"
+			},
 			"type": ""
 		}
 	],
 	"name": "Simple Picklist",
 	"name_i18n": {
+		"en-US": "Simple Picklist"
+	},
+	"name_languageId": {
 		"en-US": "Simple Picklist"
 	}
 }

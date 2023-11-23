@@ -112,6 +112,13 @@
 						"readOnly": true,
 						"type": "object"
 					},
+					"name_languageId": {
+						"additionalProperties": {
+							"type": "string"
+						},
+						"readOnly": true,
+						"type": "object"
+					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.ListEntry",
 						"readOnly": true,

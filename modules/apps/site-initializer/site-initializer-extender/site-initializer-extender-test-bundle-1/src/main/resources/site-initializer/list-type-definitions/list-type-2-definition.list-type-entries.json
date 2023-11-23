@@ -5,12 +5,18 @@
 		"name_i18n": {
 			"en-US": "Test List Type Entry 3"
 		},
+		"name_languageId": {
+			"en-US": "Test List Type Entry 3"
+		},
 		"type": "string"
 	},
 	{
 		"key": "testlisttypeentry4",
 		"name": "Test List Type Entry 4",
 		"name_i18n": {
+			"en-US": "Test List Type Entry 4"
+		},
+		"name_languageId": {
 			"en-US": "Test List Type Entry 4"
 		},
 		"type": "string"

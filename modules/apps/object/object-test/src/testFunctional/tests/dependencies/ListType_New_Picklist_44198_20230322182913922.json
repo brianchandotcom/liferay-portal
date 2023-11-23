@@ -8,11 +8,17 @@
 			"name_i18n": {
 				"en-US": "newitem"
 			},
+			"name_languageId": {
+				"en-US": "newitem"
+			},
 			"type": ""
 		}
 	],
 	"name": "New Picklist",
 	"name_i18n": {
+		"en-US": "New Picklist"
+	},
+	"name_languageId": {
 		"en-US": "New Picklist"
 	}
 }

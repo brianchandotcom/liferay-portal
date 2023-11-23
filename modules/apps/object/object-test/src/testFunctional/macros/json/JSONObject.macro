@@ -756,6 +756,9 @@ definition {
 					"name": "${picklistName}",
 					"name_i18n": {
 						"en_US": "${picklistName}"
+					},
+					"name_languageId": {
+						"en_US": "${picklistName}"
 					}
 				}'
 		''';
@@ -788,6 +791,9 @@ definition {
 					"key": "${itemKey}",
 					"name": "${itemName}",
 					"name_i18n": {
+						"en_US": "${itemName}"
+					},
+					"name_languageId": {
 						"en_US": "${itemName}"
 					}
 				}'

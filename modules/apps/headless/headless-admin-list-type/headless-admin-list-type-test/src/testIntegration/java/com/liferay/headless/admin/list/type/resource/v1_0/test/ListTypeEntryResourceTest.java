@@ -107,6 +107,8 @@ public class ListTypeEntryResourceTest
 
 		listTypeEntry.setName_i18n(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		listTypeEntry.setName_languageId(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 
 		return listTypeEntry;
 	}

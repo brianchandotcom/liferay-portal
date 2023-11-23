@@ -11,20 +11,9 @@ import React from 'react';
 import {DragSource as dragSource} from 'react-dnd';
 
 import useKeyboardNavigation from '../../hooks/useKeyboardNavigation';
-import {PROPERTY_TYPES} from '../../utils/constants';
 import {DragTypes} from '../../utils/drag-types';
 import {LIST_ITEM_TYPES} from '../../utils/listItemTypes';
-
-const TYPE_ICON_MAP = {
-	[PROPERTY_TYPES.BOOLEAN]: 'check-circle',
-	[PROPERTY_TYPES.COLLECTION]: 'table',
-	[PROPERTY_TYPES.DATE]: 'date',
-	[PROPERTY_TYPES.DATE_TIME]: 'date',
-	[PROPERTY_TYPES.DOUBLE]: 'decimal',
-	[PROPERTY_TYPES.ID]: 'diagram',
-	[PROPERTY_TYPES.INTEGER]: 'integer',
-	[PROPERTY_TYPES.STRING]: 'text',
-};
+import {TYPE_ICONS} from '../../utils/typeIcons';
 
 function CriteriaSidebarItem({
 	className,
@@ -56,7 +45,7 @@ function CriteriaSidebarItem({
 
 			<span className="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark">
 				<span className="inline-item">
-					<ClayIcon symbol={icon || TYPE_ICON_MAP[type] || 'text'} />
+					<ClayIcon symbol={icon || TYPE_ICONS[type] || 'text'} />
 				</span>
 			</span>
 

@@ -62,11 +62,6 @@ public class MBCategoryUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "categoryId";
-	}
-
-	@Override
 	protected UADExporter<MBCategory> getUADExporter() {
 		return _uadExporter;
 	}

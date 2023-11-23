@@ -71,11 +71,6 @@ public class MBMessageUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "messageId";
-	}
-
-	@Override
 	protected UADExporter<MBMessage> getUADExporter() {
 		return _uadExporter;
 	}

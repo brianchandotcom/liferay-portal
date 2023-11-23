@@ -285,7 +285,7 @@ public class DropZoneFragmentEntryLinkListenerTest {
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 
 		_dropZoneFragmentEntryLinkListener.updateLayoutPageTemplateStructure(
-			fragmentEntryLink);
+			fragmentEntryLink, null);
 
 		if (never) {
 			Mockito.verify(

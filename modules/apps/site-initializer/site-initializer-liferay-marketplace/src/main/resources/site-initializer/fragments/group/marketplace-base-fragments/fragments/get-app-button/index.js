@@ -6,17 +6,14 @@
  */
 
 const baseURL = themeDisplay.getPortalURL();
-const isLogged = themeDisplay.isSignedIn();
 
-const productID = fragmentElement
+const productId = fragmentElement
 	.querySelector('.product-id')
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
 	.trim();
 
-const linkButton = fragmentElement.querySelector('button');
-const tooltipOver = document.querySelector(
-	'.get-app-container .clay-tooltip-bottom'
-);
+const buttonElement = fragmentElement.querySelector('button');
+const tooltipElement = fragmentElement.querySelector('.clay-tooltip-bottom');
 
 const fetcher = async (url) => {
 	const response = await fetch(`${baseURL}${url}`, {
@@ -41,21 +38,11 @@ const fetcher = async (url) => {
 
 const redirectPage = () => {
 	if (layoutMode !== 'edit') {
-		linkButton.onclick = () => {
-			window.location.href = `${getSiteURL()}/get-app?productId=${productID}`;
+		buttonElement.onclick = () => {
+			window.location.href = `${getSiteURL()}/get-app?productId=${productId}`;
 		};
 	}
 };
-
-const mouseOver = () =>
-	linkButton.addEventListener('mouseover', () => {
-		tooltipOver.classList.replace('hide', 'show');
-	});
-
-const mouseOut = () =>
-	linkButton.addEventListener('mouseout', () => {
-		tooltipOver.classList.replace('show', 'hide');
-	});
 
 const getChannel = async (siteId) => {
 	const channel = await fetcher(
@@ -65,9 +52,9 @@ const getChannel = async (siteId) => {
 	return channel?.items ?? [];
 };
 
-const getSkus = async (chanelId, productId) => {
+const getSkus = async (channelId) => {
 	const skus = await fetcher(
-		`/o/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}/skus?accountId=-1`
+		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}/skus?accountId=-1`
 	);
 
 	return skus?.items ?? [];
@@ -81,14 +68,14 @@ const getAccounts = async () => {
 	return (await response.items) ?? [];
 };
 
-const getCatalogPerProduct = async (productId) => {
-	return await fetcher(
+const getCatalogPerProduct = async () => {
+	return fetcher(
 		`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/catalog`
 	);
 };
 
-const getaccountAddress = async (accountId) => {
-	return await fetcher(
+const getAccountAddress = async (accountId) => {
+	return fetcher(
 		`/o/headless-commerce-admin-account/v1.0/accounts/${accountId}/accountAddresses`
 	);
 };
@@ -180,6 +167,7 @@ const setItemsInModal = (accountData, accountAdress) => {
 		'.body-modal-container .body-content .body-modal-header .body-modal-logo'
 	);
 	const image = document.createElement('img');
+
 	image.setAttribute('alt', '');
 	image.setAttribute('src', accountImage);
 	image.setAttribute('class', 'logo');
@@ -187,6 +175,7 @@ const setItemsInModal = (accountData, accountAdress) => {
 	image.style.height = '24px';
 	image.style.borderRadius = '72px';
 	image.style.objectFit = 'cover';
+
 	containerImage.appendChild(image);
 
 	const account = document.querySelector(
@@ -212,13 +201,17 @@ const setItemsInModal = (accountData, accountAdress) => {
 const openContactPublisherModal = async () => {
 	openModal();
 
-	const productCatalog = await getCatalogPerProduct(productID);
-	const accounts = await getAccounts();
+	const [productCatalog, accounts] = await Promise.all([
+		getCatalogPerProduct(),
+		getAccounts(),
+	]);
+
 	const accountData = accounts.find(
 		(account) =>
 			account?.customFields?.CatalogId === productCatalog.id.toString()
 	);
-	const accountAddress = await getaccountAddress(accountData?.id);
+
+	const accountAddress = await getAccountAddress(accountData?.id);
 
 	if (accountData) {
 		setTimeout(() => {
@@ -227,46 +220,55 @@ const openContactPublisherModal = async () => {
 	}
 };
 
-const unavailableApp = async () => {
-	linkButton.innerText = 'Contact Publisher';
-	tooltipOver.querySelector('.tooltip-inner').textContent =
+const customizeUnavailableButton = async () => {
+	tooltipElement.querySelector('.tooltip-inner').textContent =
 		'This app is not available for purchase in the Marketplace. It is either no longer available or supported. Please click to get further information on how to contact the publisher.';
 
-	mouseOver();
-	mouseOut();
+	buttonElement.innerText = 'Contact Publisher';
 
-	if (!isLogged) {
+	buttonElement.onmouseover = () =>
+		tooltipElement.classList.replace('hide', 'show');
+
+	buttonElement.onmouseout = () =>
+		tooltipElement.classList.replace('show', 'hide');
+
+	if (!themeDisplay.isSignedIn()) {
 		const url = Liferay.ThemeDisplay.getLayoutRelativeURL();
 		const path = url.split('/').pop();
-		localStorage.setItem('productName', path);
-		linkButton.onclick = async () => {
+
+		buttonElement.onclick = () => {
+			sessionStorage.setItem('@marketplace/product-name', path);
 			location.href = `${getSiteURL()}/sign-in`;
 		};
+
+		return;
 	}
-	else if (localStorage.getItem('productName') && isLogged) {
+
+	if (sessionStorage.getItem('@marketplace/product-name')) {
 		openContactPublisherModal();
-		localStorage.removeItem('productName');
+
+		sessionStorage.removeItem('@marketplace/product-name');
+
+		return;
 	}
-	else {
-		linkButton.onclick = async () => {
-			openContactPublisherModal();
-		};
-	}
+
+	buttonElement.onclick = () => {
+		openContactPublisherModal();
+	};
 };
 
 const main = async () => {
 	const [channel] = await getChannel(themeDisplay.getScopeGroupId());
 
 	if (channel?.id) {
-		const skus = await getSkus(channel?.id, productID);
+		const skus = await getSkus(channel?.id);
 		const skuPublished = skus.some((sku) => sku.purchasable);
 
-		if (!skuPublished) {
-			unavailableApp();
+		if (skuPublished) {
+			return redirectPage();
 		}
-		else {
-			redirectPage();
-		}
+
+		customizeUnavailableButton();
 	}
 };
 

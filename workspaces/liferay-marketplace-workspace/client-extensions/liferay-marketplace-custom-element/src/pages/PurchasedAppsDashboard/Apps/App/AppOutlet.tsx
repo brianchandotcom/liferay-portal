@@ -101,7 +101,7 @@ const AppOutlet = () => {
 
 			<AppNavbar />
 
-			<Outlet context={data} />
+			<Outlet context={{data}} />
 		</div>
 	);
 };

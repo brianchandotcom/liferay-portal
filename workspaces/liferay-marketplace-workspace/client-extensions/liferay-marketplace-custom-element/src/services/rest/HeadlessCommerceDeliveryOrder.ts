@@ -14,7 +14,7 @@ class HeadlessCommerceDeliveryOrder {
 
 	async getPlacedOrder(orderId: string) {
 		return fetcher(
-			`o/headless-commerce-delivery-order/v1.0/placed-orders/${orderId}?nestedFields=placedOrderItems`
+			`o/headless-commerce-delivery-order/v1.0/placed-orders/${orderId}?nestedFields=placedOrderItems,placedOrderBillingAddress`
 		);
 	}
 }

@@ -262,7 +262,12 @@ interface PlacedOrder {
 interface PlacedOrderItems {
 	id: number;
 	name: string;
+	price: {
+		priceFormatted: string;
+	};
 	productId: number;
+	quantity: number;
+	sku: string;
 	skuId: number;
 	subscription: boolean;
 	thumbnail: string;

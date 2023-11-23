@@ -3,29 +3,170 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useParams} from 'react-router-dom';
-
-import {ReviewAndSubmitAppPage} from '../../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import './App.scss';
-import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
+import shoppingCartIcon from '../../../../assets/icons/lexicon_shopping_cart_icon.svg';
+import locationIcon from '../../../../assets/icons/location_icon.svg';
+import orderFormIcon from '../../../../assets/icons/order_form_icon.svg';
+import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
+import {formatDate} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
 const App = () => {
 	const {orderId} = useParams();
+	const {data} = useOutletContext<any>();
 
-	const {data} = useGetProductByOrderId(orderId);
-	const product = data?.product;
+	const placedOrder = data.placedOrder;
+
+	const projectNameField = data.product.customFields.find(
+		(field: {name: string}) => field.name === 'Project Name'
+	);
 
 	return (
-		<div className="app-details-page-container">
-			<div>
-				<ReviewAndSubmitAppPage
-					onClickBack={() => {}}
-					onClickContinue={() => {}}
-					productERC={product?.externalReferenceCode}
-					productId={product?.productId}
-					readonly
-				/>
+		<div className="app-details-page-container mt-6">
+			<div className="app-details-body-container">
+				<DetailedCard
+					cardIcon={orderFormIcon}
+					cardIconAltText="Details Icon"
+					cardTitle="Details"
+				>
+					<div className="mb-2 mt-4 row">
+						<h5 className="col-6">Order ID</h5>
+						<p className="col">{orderId}</p>
+					</div>
+					<div className="mb-2 row">
+						<h5 className="col-6">Order Date</h5>
+						<p className="col">
+							{formatDate(placedOrder.createDate)}
+						</p>
+					</div>
+					<div className="mb-2 row">
+						<h5 className="col-6">Customer Account</h5>
+						<p className="col">{placedOrder.account}</p>
+					</div>
+					<div className="mb-2 row">
+						<h5 className="col-6">Customer Project</h5>
+						<p className="col">
+							{projectNameField.customValue.data || '-'}
+						</p>
+					</div>
+					<div className="mb-2 row">
+						<h5 className="col-6">Purchased by</h5>
+						<p className="col">{placedOrder.author}</p>
+					</div>
+					<div className="row">
+						<h5 className="col-6">Purchase Number</h5>
+						<p className="col">
+							{placedOrder.purchaseOrderNumber || '-'}
+						</p>
+					</div>
+				</DetailedCard>
+				<DetailedCard
+					cardIcon={shoppingCartIcon}
+					cardIconAltText="Summary Icon"
+					cardTitle="Summary"
+				>
+					<div className="justify-content-center mb-2 mt-4 row">
+						<h5 className="col-3">Type</h5>
+						<h5 className="col-1">Qty</h5>
+					</div>
+					<div className="mb-2 row">
+						<h5 className="col">License Price</h5>
+						<div className="col-8">
+							{placedOrder.placedOrderItems.map(
+								(order: PlacedOrderItems) => {
+									return (
+										<div className="row" key={order.id}>
+											<p className="col text-capitalize">
+												{order.sku.toLowerCase() || ''}
+											</p>
+											<p className="col">
+												{order.quantity}
+											</p>
+											<p className="col-3">
+												{order.price.priceFormatted}
+											</p>
+										</div>
+									);
+								}
+							)}
+						</div>
+					</div>
+					<div className="justify-content-between mb-2 row">
+						<h5 className="col-2">Subtotal</h5>
+						<p className="col-2">
+							{placedOrder.summary.subtotalFormatted || ''}
+						</p>
+					</div>
+					<div className="justify-content-between mb-2 row">
+						<h6 className="col">Subtotal Discount</h6>
+						<p className="col-2">
+							{placedOrder.summary.totalDiscountValueFormatted ||
+								''}
+						</p>
+					</div>
+					<div className="justify-content-between mb-2 row">
+						<h6 className="col">Coupon Code</h6>
+						<p className="col-2">{placedOrder.couponCode || '-'}</p>
+					</div>
+					<div className="justify-content-between mb-2 row">
+						<h5 className="col">Tax/VAT</h5>
+						<p className="col-2">
+							{placedOrder.summary.taxValueFormatted || ''}
+						</p>
+					</div>
+					<div className="justify-content-between row">
+						<h5 className="col">Total</h5>
+						<p className="col-2">
+							{placedOrder.summary.totalFormatted || ''}
+						</p>
+					</div>
+				</DetailedCard>
+				<DetailedCard
+					cardIcon={locationIcon}
+					cardIconAltText="Location Icon"
+					cardTitle="Address"
+				>
+					<div className="mb-2 mt-4 row">
+						<h5 className="col-6">Billing Address</h5>
+						<div className="col-6">
+							<p>
+								{placedOrder.placedOrderBillingAddress
+									.street1 || ''}
+								,
+							</p>
+							{placedOrder.placedOrderBillingAddress.street2 && (
+								<p>
+									{
+										placedOrder.placedOrderBillingAddress
+											.street2
+									}
+								</p>
+							)}
+							{placedOrder.placedOrderBillingAddress.street3 && (
+								<p>
+									{
+										placedOrder.placedOrderBillingAddress
+											.street3
+									}
+								</p>
+							)}
+							<p>{placedOrder.placedOrderBillingAddress.city},</p>
+							<p>
+								{placedOrder.placedOrderBillingAddress
+									.regionISOCode || ''}
+								,{' '}
+								{placedOrder.placedOrderBillingAddress.zip ||
+									''}
+								,
+							</p>
+							<p>
+								{placedOrder.placedOrderBillingAddress
+									.countryISOCode || ''}
+							</p>
+						</div>
+					</div>
+				</DetailedCard>
 			</div>
 		</div>
 	);

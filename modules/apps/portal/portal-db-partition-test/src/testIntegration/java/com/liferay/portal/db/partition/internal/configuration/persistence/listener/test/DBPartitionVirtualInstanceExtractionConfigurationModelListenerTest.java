@@ -6,9 +6,7 @@
 package com.liferay.portal.db.partition.internal.configuration.persistence.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.test.rule.Inject;
 
 import java.util.Objects;
 
@@ -56,8 +54,5 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 			"DBPartitionVirtualInstanceExtractionConfiguration";
 
 	private boolean _calledExtractCompany;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 }

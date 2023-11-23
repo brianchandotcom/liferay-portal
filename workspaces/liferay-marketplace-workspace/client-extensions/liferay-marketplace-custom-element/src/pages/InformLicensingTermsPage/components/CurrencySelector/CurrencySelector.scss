@@ -1,0 +1,17 @@
+.currency-selector {
+	span {
+		color: var(--neutral-10, #282934);
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	svg {
+		color: #999aa3;
+	}
+
+	&-icon {
+		width: 20px;
+		height: 20px;
+		flex-shrink: 0;
+	}
+}

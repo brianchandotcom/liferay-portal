@@ -5,6 +5,8 @@
 
 package com.liferay.layout.internal.importer;
 
+import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 
 /**
@@ -22,6 +24,14 @@ public class LayoutStructureItemImporterContext {
 		_position = position;
 		_preserveItemIds = preserveItemIds;
 		_segmentsExperienceId = segmentsExperienceId;
+	}
+
+	public String getItemId(PageElement pageElement) {
+		if (isPreserveItemIds()) {
+			return pageElement.getId();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public Layout getLayout() {

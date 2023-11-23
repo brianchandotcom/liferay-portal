@@ -11,7 +11,6 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,7 +41,7 @@ public class RowLayoutStructureItemImporter
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
 			(RowStyledLayoutStructureItem)
 				layoutStructure.addLayoutStructureItem(
-					_getId(layoutStructureItemImporterContext, pageElement),
+					layoutStructureItemImporterContext.getItemId(pageElement),
 					LayoutDataItemTypeConstants.TYPE_ROW,
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
@@ -164,17 +163,6 @@ public class RowLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.ROW;
-	}
-
-	private String _getId(
-		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
-		PageElement pageElement) {
-
-		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
-			return pageElement.getId();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private void _processRowViewportDefinition(

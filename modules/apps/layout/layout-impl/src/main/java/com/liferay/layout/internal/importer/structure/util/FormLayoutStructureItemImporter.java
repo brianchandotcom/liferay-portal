@@ -53,7 +53,7 @@ public class FormLayoutStructureItemImporter
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
 				layoutStructure.addFormStyledLayoutStructureItem(
-					_getId(layoutStructureItemImporterContext, pageElement),
+					layoutStructureItemImporterContext.getItemId(pageElement),
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 
@@ -215,17 +215,6 @@ public class FormLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.FORM;
-	}
-
-	private String _getId(
-		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
-		PageElement pageElement) {
-
-		if (layoutStructureItemImporterContext.isPreserveItemIds()) {
-			return pageElement.getId();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private JSONObject _getLocalizedValuesJSONObject(

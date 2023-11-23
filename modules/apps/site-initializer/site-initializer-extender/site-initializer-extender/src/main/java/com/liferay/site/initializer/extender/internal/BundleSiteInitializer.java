@@ -1022,7 +1022,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_layoutsImporter.importFile(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			zipWriter.getFile(), LayoutsImportStrategy.OVERWRITE);
+			zipWriter.getFile(), LayoutsImportStrategy.OVERWRITE, true);
 	}
 
 	private void _addLayoutUtilityPageEntries(
@@ -1095,7 +1095,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_layoutsImporter.importFile(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			zipWriter.getFile(), LayoutsImportStrategy.OVERWRITE);
+			zipWriter.getFile(), LayoutsImportStrategy.OVERWRITE, true);
 
 		_setDefaultLayoutUtilityPageEntries(serviceContext);
 	}
@@ -2531,7 +2531,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						_layoutsImporter.importPageElement(
 							draftLayout, layoutStructure,
 							layoutStructure.getMainItemId(),
-							jsonArray.getString(i), i, segmentsExperienceId);
+							jsonArray.getString(i), i, true,
+							segmentsExperienceId);
 					}
 				}
 			}

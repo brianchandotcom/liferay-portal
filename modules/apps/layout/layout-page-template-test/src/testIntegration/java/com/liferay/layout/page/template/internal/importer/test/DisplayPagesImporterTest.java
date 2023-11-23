@@ -294,7 +294,7 @@ public class DisplayPagesImporterTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				_user.getUserId(), _group.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

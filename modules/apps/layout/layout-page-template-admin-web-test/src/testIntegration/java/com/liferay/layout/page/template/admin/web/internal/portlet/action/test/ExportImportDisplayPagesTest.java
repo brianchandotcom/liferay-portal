@@ -159,7 +159,7 @@ public class ExportImportDisplayPagesTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

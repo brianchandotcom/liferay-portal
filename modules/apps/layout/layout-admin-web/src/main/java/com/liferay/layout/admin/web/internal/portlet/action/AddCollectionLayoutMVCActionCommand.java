@@ -250,7 +250,7 @@ public class AddCollectionLayoutMVCActionCommand
 
 			_layoutsImporter.importPageElement(
 				layout, layoutStructure, layoutStructure.getMainItemId(),
-				pageElementJSON, 0);
+				pageElementJSON, 0, true);
 		}
 	}
 

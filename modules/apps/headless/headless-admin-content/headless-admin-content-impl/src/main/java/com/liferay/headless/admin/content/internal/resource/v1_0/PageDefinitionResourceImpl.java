@@ -142,7 +142,7 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 				layout, layoutStructure, layoutStructure.getMainItemId(),
 				objectWriter.writeValueAsString(
 					pageDefinition.getPageElement()),
-				0);
+				0, true);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

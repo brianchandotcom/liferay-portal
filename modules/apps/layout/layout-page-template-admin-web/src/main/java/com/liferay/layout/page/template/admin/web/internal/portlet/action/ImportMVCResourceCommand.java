@@ -137,7 +137,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 				_layoutsImporter.importFile(
 					userId, groupId, layoutPageTemplateCollectionId, file,
-					layoutsImportStrategy);
+					layoutsImportStrategy, true);
 
 			JSONObject importResultsJSONObject =
 				_jsonFactory.createJSONObject();

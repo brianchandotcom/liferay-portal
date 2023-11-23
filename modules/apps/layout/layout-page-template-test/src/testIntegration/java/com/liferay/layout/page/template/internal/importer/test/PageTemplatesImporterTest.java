@@ -198,7 +198,7 @@ public class PageTemplatesImporterTest {
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 				_layoutsImporter.importFile(
 					TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
-					LayoutsImportStrategy.DO_NOT_OVERWRITE);
+					LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 
 			Assert.assertEquals(
 				layoutsImporterResultEntries.toString(), 1,
@@ -225,7 +225,7 @@ public class PageTemplatesImporterTest {
 
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 
 			Assert.assertEquals(
 				layoutsImporterResultEntries.toString(), 1,
@@ -600,7 +600,7 @@ public class PageTemplatesImporterTest {
 
 			_layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group.getGroupId(), file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
 				new String[] {StringPool.BLANK, StringPool.BLANK},
@@ -687,7 +687,7 @@ public class PageTemplatesImporterTest {
 
 			_layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group.getGroupId(), file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
 				new String[] {dropZoneId1, dropZoneId2}, fragmentEntry,
@@ -788,7 +788,7 @@ public class PageTemplatesImporterTest {
 
 			_layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group.getGroupId(), file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
 				new String[] {dropZoneId1, dropZoneId3, dropZoneId2},
@@ -881,7 +881,7 @@ public class PageTemplatesImporterTest {
 
 			_layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group.getGroupId(), file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
 				new String[] {
@@ -1320,7 +1320,7 @@ public class PageTemplatesImporterTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				_user.getUserId(), _group.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -1394,7 +1394,7 @@ public class PageTemplatesImporterTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				_user.getUserId(), _group.getGroupId(), 0, file,
-				LayoutsImportStrategy.DO_NOT_OVERWRITE);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

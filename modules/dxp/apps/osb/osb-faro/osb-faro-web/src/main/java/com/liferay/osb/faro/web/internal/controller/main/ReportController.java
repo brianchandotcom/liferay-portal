@@ -197,6 +197,10 @@ public class ReportController extends BaseFaroController {
 				"analytics-cloud-%s-known-individuals-%s", assetType,
 				LocalDate.now());
 		}
+		else if (StringUtil.equals(type, "journal")) {
+			fileName = String.format(
+				"analytics-cloud-web-contents-list-%s", type, LocalDate.now());
+		}
 		else {
 			fileName = String.format(
 				"analytics-cloud-%ss-list-%s", type, LocalDate.now());

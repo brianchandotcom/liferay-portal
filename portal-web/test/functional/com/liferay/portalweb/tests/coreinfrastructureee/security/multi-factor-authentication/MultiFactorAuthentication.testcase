@@ -1268,6 +1268,7 @@ definition {
 	@priority = 4
 	test UseCustomMFAVerifier {
 		property osgi.modules.includes = "multi-factor-authentication-sample";
+		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

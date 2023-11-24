@@ -21,7 +21,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -151,21 +151,12 @@ public class
 		_testCopyFileShouldCopyAssetTagsToRelatedGroup(StringUtil::toLowerCase);
 	}
 
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
-			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
-			_groupParentFolder.getGroupId(),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(
-					_groupParentFolder.getGroupId()),
-			ServiceContextTestUtil.getServiceContext(
-				_groupParentFolder.getGroupId()));
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testCopyFileShouldCopyAssetTagsToRelatedGroupWithCaseSensitiveTags()
+		throws Exception {
 
-		Assert.assertArrayEquals(
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()),
-			_assetTagLocalService.getTagNames(
-				className, fileEntry2.getFileEntryId()));
+		_testCopyFileShouldCopyAssetTagsToRelatedGroup(s -> s);
 	}
 
 	@Test
@@ -216,20 +207,12 @@ public class
 			StringUtil::toLowerCase);
 	}
 
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
-			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
-			_groupParentFolder.getGroupId(),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(
-					_groupParentFolder.getGroupId()),
-			ServiceContextTestUtil.getServiceContext(
-				_groupParentFolder.getGroupId()));
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testCopyFileShouldNotCopyAssetTagsToUnrelatedGroupWithCaseSensitiveTags()
+		throws Exception {
 
-		Assert.assertTrue(
-			ArrayUtil.isEmpty(
-				_assetTagLocalService.getTagNames(
-					className, fileEntry2.getFileEntryId())));
+		_testCopyFileShouldNotCopyAssetTagsToUnrelatedGroup(s -> s);
 	}
 
 	@Test
@@ -487,9 +470,6 @@ public class
 	private Group _depotGroup;
 
 	private Folder _depotParentFolder;
-
-	@Inject
-	private FeatureFlagManager _featureFlagManager;
 
 	@DeleteAfterTestRun
 	private Group _group;

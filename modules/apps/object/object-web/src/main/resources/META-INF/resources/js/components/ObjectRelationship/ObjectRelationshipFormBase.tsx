@@ -289,7 +289,7 @@ export function ObjectRelationshipFormBase({
 
 	useEffect(() => {
 		const fetchObjectDefinitions = async () => {
-			const items = await API.getAllObjectDefinitions();
+			const {items} = await API.getAllObjectDefinitions();
 
 			const objectDefinition = items.find(
 				({externalReferenceCode}) =>

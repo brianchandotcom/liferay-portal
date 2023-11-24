@@ -94,6 +94,11 @@ export default function ViewObjectDefinitions({
 	const [selectedObjectFolder, setSelectedObjectFolder] = useState<
 		Partial<ObjectFolder>
 	>(initialValues);
+
+	const [objectDefinitionsActions, setObjectDefinitionActions] = useState<
+		Actions
+	>();
+
 	const [ObjectFoldersRequestInfo, setObjectFoldersRequestInfo] = useState<
 		ObjectFoldersRequestInfo
 	>(initialValues);
@@ -296,10 +301,15 @@ export default function ViewObjectDefinitions({
 					setSelectedObjectFolder(response.items[0]);
 					setLoading(false);
 				});
+
+				const objectDefinitions = await API.getAllObjectDefinitions();
+
+				setObjectDefinitionActions(objectDefinitions.actions);
 			};
 
 			makeFetch();
 		}
+
 		Liferay.on('addObjectDefinition', () =>
 			setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 				...previousState,
@@ -330,6 +340,9 @@ export default function ViewObjectDefinitions({
 					) : (
 						<>
 							<ObjectFoldersSideBar
+								objectDefinitionsActions={
+									objectDefinitionsActions as Actions
+								}
 								objectFoldersRequestInfo={
 									ObjectFoldersRequestInfo
 								}
@@ -350,8 +363,10 @@ export default function ViewObjectDefinitions({
 										}
 										items={
 											getObjectFolderActions({
-												actions:
-													selectedObjectFolder.actions,
+												actions: {
+													objectDefinitionActions: objectDefinitionsActions as Actions,
+													objectFolderActions: selectedObjectFolder.actions as Actions,
+												},
 												id:
 													selectedObjectFolder.id ??
 													0,

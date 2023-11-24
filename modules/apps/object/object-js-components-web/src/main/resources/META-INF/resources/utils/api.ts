@@ -78,6 +78,11 @@ export interface NotificationTemplate {
 	type: NotificationTemplateType;
 }
 
+interface ObjectDefinitions {
+	actions: Actions;
+	items: ObjectDefinition[];
+}
+
 interface ObjectFolderItem {
 	linkedObjectDefinition: boolean;
 	objectDefinitionExternalReferenceCode: string;
@@ -178,9 +183,11 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 }
 
 export async function getAllObjectDefinitions() {
-	return await getList<ObjectDefinition>(
+	const fetchData = fetchJSON<ObjectDefinitions>(
 		'/o/object-admin/v1.0/object-definitions?page=-1'
 	);
+
+	return await fetchData;
 }
 
 export async function getAllObjectFolders() {

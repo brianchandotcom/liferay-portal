@@ -11,9 +11,9 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.marketplace.app.manager.web.internal.constants.MarketplaceAppManagerPortletKeys;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleUtil;
-import com.liferay.marketplace.bundle.BundleManager;
 import com.liferay.marketplace.exception.FileExtensionException;
 import com.liferay.marketplace.service.AppService;
+import com.liferay.marketplace.util.BundleManagerUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -120,7 +120,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		long[] bundleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "bundleIds"), 0L);
 
-		List<Bundle> bundles = _bundleManager.getInstalledBundles();
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
 		for (Bundle bundle : bundles) {
 			if (BundleUtil.isFragment(bundle)) {
@@ -140,7 +140,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		long[] bundleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "bundleIds"), 0L);
 
-		List<Bundle> bundles = _bundleManager.getInstalledBundles();
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
 		for (Bundle bundle : bundles) {
 			if (BundleUtil.isFragment(bundle)) {
@@ -259,7 +259,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		long[] bundleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "bundleIds"), 0L);
 
-		List<Bundle> bundles = _bundleManager.getInstalledBundles();
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
 		List<String> symbolicNames = new ArrayList<>(bundleIds.length);
 
@@ -503,9 +503,6 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
 	private final BundleBlacklistManager _bundleBlacklistManager =
 		new BundleBlacklistManager();
-
-	@Reference
-	private BundleManager _bundleManager;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

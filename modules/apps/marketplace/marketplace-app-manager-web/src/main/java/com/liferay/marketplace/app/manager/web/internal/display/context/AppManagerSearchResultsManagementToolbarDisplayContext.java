@@ -5,9 +5,9 @@
 
 package com.liferay.marketplace.app.manager.web.internal.display.context;
 
-import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.MarketplaceAppManagerSearchUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.comparator.MarketplaceAppManagerComparator;
+import com.liferay.marketplace.util.BundleManagerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

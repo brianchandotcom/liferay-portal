@@ -8,4 +8,5 @@ Export-Package:\
 	com.liferay.marketplace.model,\
 	com.liferay.marketplace.service,\
 	com.liferay.marketplace.service.persistence,\
+	com.liferay.marketplace.util,\
 	com.liferay.marketplace.util.comparator

@@ -5,10 +5,10 @@
 
 package com.liferay.marketplace.model.impl;
 
-import com.liferay.marketplace.internal.bundle.BundleManagerUtil;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
+import com.liferay.marketplace.util.BundleManagerUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;

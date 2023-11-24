@@ -4,7 +4,7 @@
  */
 
 import {sub} from 'frontend-js-web';
-import React, {ComponentProps, FC, useContext} from 'react';
+import React, {ComponentProps, FC, useContext, useRef} from 'react';
 
 import {config} from '../../../app/config/index';
 import RulesService from '../../../app/services/RulesService';
@@ -89,10 +89,22 @@ export default function Condition({
 
 	const [{description}] = useConditionValues({conditions: [condition]});
 
+	const selectRef = useRef<HTMLButtonElement | undefined>();
+
+	const completeConditon = !!condition.value;
+
 	return (
 		<RuleBuilderItem
+			aria-label={
+				completeConditon
+					? description
+					: Liferay.Language.get('incomplete-condition')
+			}
 			description={description}
 			onDeleteButtonClick={onDeleteCondition}
+			onItemSelected={() => {
+				selectRef.current?.focus();
+			}}
 			showDeleteButton={showDeleteButton}
 			type="condition"
 			wrapperRef={wrapperRef}
@@ -106,6 +118,7 @@ export default function Condition({
 					onConditionChange({...condition, type})
 				}
 				selectedKey={condition.type}
+				triggerRef={selectRef}
 			/>
 
 			{condition.type && CONDITION_ITEMS[condition.type] ? (

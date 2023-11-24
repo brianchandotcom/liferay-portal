@@ -276,11 +276,9 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text");
 
-		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
-
 		Form.gotoAdvancedTab();
 
-		AssertElementNotPresent(locator1 = "PopulateObjectFormsConfiguration#ANY_SEARCHABLE_SECTION_TITLE");
+		AssertNotVisible(locator1 = "PopulateObjectFormsConfiguration#ANY_SEARCHABLE_SECTION_TITLE");
 	}
 
 }

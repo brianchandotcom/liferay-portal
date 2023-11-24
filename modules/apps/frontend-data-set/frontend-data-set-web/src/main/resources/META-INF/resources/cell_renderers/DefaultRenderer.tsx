@@ -92,6 +92,10 @@ const DefaultRenderer: React.FC<{
 		return <Wrapper options={options}>{value.label}</Wrapper>;
 	}
 
+	if (typeof value === 'object') {
+		return <Wrapper options={options}>{JSON.stringify(value)}</Wrapper>;
+	}
+
 	return null;
 };
 

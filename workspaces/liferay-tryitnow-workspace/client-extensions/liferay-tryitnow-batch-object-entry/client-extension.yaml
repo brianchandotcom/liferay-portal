@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-tryitnow-batch-object-entry:
+    name: Liferay Try It Now Batch Object Entry
+    oAuthApplicationHeadlessServer: liferay-tryitnow-batch-object-entry-oauth-application-headless-server
+    type: batch
+liferay-tryitnow-batch-object-entry-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Try It Now Batch Object Entry OAuth Application Headless Server
+    scopes:
+        - C_M2H8ProgressTracker.everything
+        - Liferay.Headless.Batch.Engine.everything
+    type: oAuthApplicationHeadlessServer

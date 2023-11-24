@@ -65,6 +65,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -325,7 +326,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageFailurePagePermissionsActionKeyNonexisting();
 		_testPostSiteSitePageSuccessCustomFields();
 		_testPostSiteSitePageSuccessInvalidParentSitePage();
-		_testPostSiteSitePageSuccessKeywords();
+		_testPostSiteSitePageSuccessKeywords(StringUtil::toLowerCase);
 		_testPostSiteSitePageSuccessPageDefinition();
 		_testPostSiteSitePageSuccessPageDefinitionSettingsClientExtensionEntries();
 		_testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtensionEntry();
@@ -858,7 +859,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
-	private void _testPostSiteSitePageSuccessKeywords() throws Exception {
+	private void _testPostSiteSitePageSuccessKeywords(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
+		throws Exception {
+
 		SitePage randomSitePage = randomSitePage();
 
 		String[] keywords = {
@@ -881,16 +885,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Assert.assertEquals(Arrays.toString(tags), 2, tags.length);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
-			for (String keyword : keywords) {
-				Assert.assertTrue(ArrayUtil.contains(tags, keyword));
-			}
-		}
-		else {
-			for (String keyword : keywords) {
-				Assert.assertTrue(
-					ArrayUtil.contains(tags, StringUtil.toLowerCase(keyword)));
-			}
+		for (String keyword : keywords) {
+			Assert.assertTrue(
+				ArrayUtil.contains(tags, unsafeFunction.apply(keyword)));
 		}
 	}
 

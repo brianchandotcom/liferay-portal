@@ -7,12 +7,14 @@ import ClayButton from '@clayui/button';
 import {TreeView} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {FDSViewType} from '../../../FDSViews';
 import {getFields} from '../../../api';
+import Search from '../../../components/Search';
 import {IField} from '../../../types';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
@@ -87,6 +89,7 @@ const AddFieldsModalContent = ({
 	const [selectedKeys, setSelectedKeys] = useState<Set<React.Key>>(
 		new Set<React.Key>()
 	);
+	const [query, setQuery] = useState<string>('');
 
 	const saveFDSFields = async () => {
 		setSaveButtonDisabled(true);
@@ -163,44 +166,64 @@ const AddFieldsModalContent = ({
 		});
 	}, [savedFDSFields, fdsView]);
 
+	const onSearch = (query: string) => {
+		setQuery(query);
+	};
+
 	return (
 		<>
 			<ClayModal.Header>
 				{Liferay.Language.get('add-fields')}
 			</ClayModal.Header>
 
-			<ClayModal.Body className="bg-light m-4 p-0">
+			<ClayModal.Body className="pt-0 px-0">
 				{fields === null ? (
 					<ClayLoadingIndicator />
 				) : (
-					<div className="pb-2 pt-2">
-						<TreeView
-							defaultItems={fields}
-							nestedKey="children"
-							onSelectionChange={setSelectedKeys}
-							selectedKeys={selectedKeys}
-							selectionMode="multiple"
-						>
-							{({children, label}: IFieldTreeItem) => (
-								<TreeView.Item>
-									<TreeView.ItemStack>
-										<ClayCheckbox checked label={label} />
-									</TreeView.ItemStack>
+					<>
+						<ClayManagementToolbar>
+							<ClayManagementToolbar.Search>
+								<Search onSearch={onSearch} query={query} />
+							</ClayManagementToolbar.Search>
+						</ClayManagementToolbar>
 
-									<TreeView.Group items={children}>
-										{({label}: IFieldTreeItem) => (
-											<TreeView.Item>
-												<ClayCheckbox
-													checked
-													label={label}
-												/>
-											</TreeView.Item>
-										)}
-									</TreeView.Group>
-								</TreeView.Item>
-							)}
-						</TreeView>
-					</div>
+						<div className="container-fluid container-fluid-max-xl px-4 py-2">
+							<TreeView
+								className="bg-light"
+								items={fields}
+								nestedKey="children"
+								onItemsChange={(items) =>
+									setFields(items as Array<IFieldTreeItem>)
+								}
+								onSelectionChange={setSelectedKeys}
+								selectedKeys={selectedKeys}
+								selectionMode="multiple"
+								showExpanderOnHover={false}
+							>
+								{({children, label}: IFieldTreeItem) => (
+									<TreeView.Item>
+										<TreeView.ItemStack>
+											<ClayCheckbox
+												checked
+												label={label}
+											/>
+										</TreeView.ItemStack>
+
+										<TreeView.Group items={children}>
+											{({label}: IFieldTreeItem) => (
+												<TreeView.Item>
+													<ClayCheckbox
+														checked
+														label={label}
+													/>
+												</TreeView.Item>
+											)}
+										</TreeView.Group>
+									</TreeView.Item>
+								)}
+							</TreeView>
+						</div>
+					</>
 				)}
 			</ClayModal.Body>
 

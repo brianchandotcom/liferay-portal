@@ -1,0 +1,21 @@
+definition {
+
+	@summary = "Default summary"
+	macro addSCIMUser(userPassword = null, grandParentGroupName = null, description = null, userEmailAddress = null, title = null, parentGroupName = null, content = null, groupName = null, assetCategoryIds = null, viewableBy = null, coverImageId = null, subtitle = null, assetTagNames = null) {
+		Variables.assertDefined(parameterList = "${userFirstName},${userLastName},${scimUserEmailAddress},${userScreenName}");
+
+		if (!(isSet(type))) {
+			var type = "work";
+		}
+
+		var scimUserId = HeadlessSCIMAPI._addSCIMUser(
+			scimUserEmailAddress = ${scimUserEmailAddress},
+			type = ${type},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
+
+		return ${scimUserId};
+	}
+
+}

@@ -85,8 +85,7 @@ public class FileEntryContentDashboardItemTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0);
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test

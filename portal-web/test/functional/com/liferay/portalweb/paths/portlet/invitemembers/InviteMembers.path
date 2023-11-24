@@ -11,8 +11,8 @@
 
 <tbody>
 <tr>
-	<td>INVITE_USER_FULL_NAME</td>
-	<td>//div[contains(@id,'InviteMembersPortlet')]//span[contains(.,'${key_inviteUserFullName}')]</td>
+	<td>INVITE_USER_ADD_BUTTON</td>
+	<td>//div[contains(.,'${key_inviteUserFullName}')]//button[@aria-label='Add User']</td>
 	<td></td>
 </tr>
 </tbody>

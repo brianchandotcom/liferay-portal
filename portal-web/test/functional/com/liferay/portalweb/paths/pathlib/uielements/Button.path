@@ -497,7 +497,7 @@
 </tr>
 <tr>
 	<td>INVITE_MEMBERS</td>
-	<td>//a[contains(@id,'InviteMembersPortlet') and contains(@class,'btn')]</td>
+	<td>//button[contains(.,'Invite Members')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -862,7 +862,7 @@
 </tr>
 <tr>
 	<td>SEND_INVITATIONS</td>
-	<td>//button[contains(@id,'InviteMembersPortlet')]//span[contains(.,'Send Invitations')]</td>
+	<td>//button[contains(.,'Send Invitations')]</td>
 	<td></td>
 </tr>
 <tr>

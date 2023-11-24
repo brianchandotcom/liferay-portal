@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Default summary"
+	@summary = "API to add a Widget Template through JSON"
 	macro _addWidgetTemplate(nameMap = null, groupId = null, descriptionMap = null, classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${nameMap}");
 

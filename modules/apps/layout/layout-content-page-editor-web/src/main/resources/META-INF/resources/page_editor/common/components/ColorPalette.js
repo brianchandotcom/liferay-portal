@@ -46,15 +46,13 @@ export default function ColorPalette({
 						>
 							<ClayButton
 								block
-								className={classNames(
-									`bg-${color.cssClass}`,
-									'palette-item-inner',
-									'p-1',
-									'rounded-circle'
-								)}
+								className="p-1 palette-item-inner rounded-circle"
 								displayType="unstyled"
 								onClick={() => onColorSelect(color)}
 								size="sm"
+								style={{
+									backgroundColor: color.rgbValue,
+								}}
 								title={color.cssClass}
 							/>
 						</li>

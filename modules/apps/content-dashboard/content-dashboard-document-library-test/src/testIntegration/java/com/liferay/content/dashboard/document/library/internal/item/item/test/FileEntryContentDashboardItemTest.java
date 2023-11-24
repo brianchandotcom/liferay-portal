@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -632,16 +633,8 @@ public class FileEntryContentDashboardItemTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"example.jpg",
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			"example.jpg", StringPool.BLANK, "description", StringPool.BLANK,
 			new byte[0], null, null, _serviceContext);
-
-		fileEntry = _dlAppLocalService.updateFileEntry(
-			fileEntry.getUserId(), fileEntry.getFileEntryId(),
-			fileEntry.getFileName(), fileEntry.getMimeType(),
-			fileEntry.getTitle(), StringUtil.randomString(), "description",
-			RandomTestUtil.randomString(), DLVersionNumberIncrease.NONE,
-			fileEntry.getContentStream(), fileEntry.getSize(),
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			_serviceContext);
 
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,

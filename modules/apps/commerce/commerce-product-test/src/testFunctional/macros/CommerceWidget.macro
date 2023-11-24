@@ -122,6 +122,18 @@ definition {
 		echo("THE NUMBER OF FACETED LABELS IS ${count}");
 
 		if (${count} != ${expectedLabels}) {
+			CommerceProducts.openProductsAdmin();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			var count = selenium.getEval(${javaScriptCountElement});
+
+			return ${count};
+
+			echo("AFTER THE REFRESH THE NUMBER OF FACETED LABELS IS ${count}");
+		}
+
+		if (${count} != ${expectedLabels}) {
 			fail("Labels number is not correct");
 		}
 	}

@@ -201,15 +201,19 @@ export async function createProductSpecification({
 	return await response.json();
 }
 
-export async function getSpecification(specificationKey: string): Promise<Specification> {
+export async function getSpecification(
+	specificationKey: string
+): Promise<Specification> {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/specifications?search=%7Bkey=${specificationKey}%7D`,
 		{headers, method: 'GET'}
 	);
 
-	const {items} : {items: Specification[]} = await response.json() || [];
+	const {items}: {items: Specification[]} = (await response.json()) || [];
 
-	return items.find((item) => {return item.key === specificationKey}) as Specification;
+	return items.find((item) => {
+		return item.key === specificationKey;
+	}) as Specification;
 }
 
 export async function deleteTrialSKU(skuTrialId: number) {
@@ -300,7 +304,7 @@ export async function createCart({
 			body: JSON.stringify({
 				accountId,
 				currencyCode,
-				orderTypeExternalReferenceCode
+				orderTypeExternalReferenceCode,
 			}),
 			headers,
 			method: 'POST',
@@ -579,7 +583,7 @@ export async function getDeliveryProductById(
 	accountId: number | string,
 	channelId: number,
 	productId: number | string,
-	nestedFields?: string,
+	nestedFields?: string
 ) {
 	let url = `${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?accountId=${accountId}&skus.accountId=${accountId}&attachments.accountId=${accountId}`;
 
@@ -972,8 +976,7 @@ export async function postTrialProductOption(
 			body: JSON.stringify([
 				{
 					description: {
-						en_US:
-							'Specifies if a trial exists for a given app or solution submission.',
+						en_US: 'Specifies if a trial exists for a given app or solution submission.',
 					},
 					facetable: true,
 					fieldType: 'radio',

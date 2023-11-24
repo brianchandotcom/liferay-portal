@@ -42,6 +42,7 @@ class HeadlessCommerceDeliveryCatalog {
 	}
 }
 
-const HeadlessCommerceDeliveryCatalogImpl = new HeadlessCommerceDeliveryCatalog();
+const HeadlessCommerceDeliveryCatalogImpl =
+	new HeadlessCommerceDeliveryCatalog();
 
 export default HeadlessCommerceDeliveryCatalogImpl;

@@ -31,9 +31,8 @@ type SetAppFlowListStateProps = {
 
 export function AppCreationFlow() {
 	const [{appERC, appProductId, priceModel}] = useAppContext();
-	const [appFlowListItems, setAppFlowListItems] = useState(
-		initialFLowListItems
-	);
+	const [appFlowListItems, setAppFlowListItems] =
+		useState(initialFLowListItems);
 	const [currentFlow, setCurrentFlow] = useState('create');
 	const {accountId} = Liferay.CommerceContext.account || {};
 	const account = useAccountCached([], accountId as string);

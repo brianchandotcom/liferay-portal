@@ -10,7 +10,7 @@ import useCart from '../../../../../../hooks/useCart';
 import {Liferay} from '../../../../../../liferay/liferay';
 import {getLicenseDescription, getTierPrice} from '../../../../../../utils/api';
 import LicenseCard from '../../LicenseCard';
-import { SkuOptions } from '../../../../enums/skuOptions';
+import {SkuOptions} from '../../../../enums/skuOptions';
 
 interface PaidTimelineProps {
 	cartUtil: ReturnType<typeof useCart>;
@@ -39,10 +39,12 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 
 	const purchasebleSkus = skus?.filter((sku) =>
 		sku?.skuOptions.find(
-			(skuOption) => skuOption.skuOptionKey.toLocaleLowerCase() !== SkuOptions.TRIAL || (
-				skuOption.skuOptionKey.toLocaleLowerCase() === SkuOptions.TRIAL &&
-				skuOption.skuOptionValueKey === 'no'
-			)
+			(skuOption) =>
+				skuOption.skuOptionKey.toLocaleLowerCase() !==
+					SkuOptions.TRIAL ||
+				(skuOption.skuOptionKey.toLocaleLowerCase() ===
+					SkuOptions.TRIAL &&
+					skuOption.skuOptionValueKey === 'no')
 		)
 	);
 
@@ -60,7 +62,8 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 
 						const skuOption = sku.skuOptions.find(
 							(skuOption) =>
-								skuOption.skuOptionKey === 'dxp-license-usage-type'
+								skuOption.skuOptionKey ===
+								'dxp-license-usage-type'
 						);
 
 						return (
@@ -73,7 +76,9 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 										]
 									}
 									licensetiers={tierPricesFiltered}
-									lisenceType={skuOption?.skuOptionValueKey ?? sku.sku}
+									lisenceType={
+										skuOption?.skuOptionValueKey ?? sku.sku
+									}
 									productId={productId}
 									sku={sku}
 								/>

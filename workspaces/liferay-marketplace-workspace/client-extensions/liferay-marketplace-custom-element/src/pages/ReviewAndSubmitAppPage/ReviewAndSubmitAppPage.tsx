@@ -97,9 +97,8 @@ export function ReviewAndSubmitAppPage({
 					specificationKey === 'appdocumentationurl' ||
 					specificationKey === 'appinstallationguideurl'
 				) {
-					const supportAndHelItem = supportAndHelpMap.get(
-						specificationKey
-					);
+					const supportAndHelItem =
+						supportAndHelpMap.get(specificationKey);
 					supportAndHelpCardInfos.push({
 						...(supportAndHelItem as {icon: string; title: string}),
 						link: localizedValue,

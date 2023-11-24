@@ -45,12 +45,14 @@ export function LicenseSelector({
 
 		const [trialSkuOption] =
 			skus?.filter((sku) =>
-				sku?.skuOptions.find(
-					(skuOption) => {
-						return skuOption.skuOptionKey.toLocaleLowerCase() === 'trial' &&
-							skuOption.skuOptionValueKey.toLocaleLowerCase() === 'yes'
-					}
-				)
+				sku?.skuOptions.find((skuOption) => {
+					return (
+						skuOption.skuOptionKey.toLocaleLowerCase() ===
+							'trial' &&
+						skuOption.skuOptionValueKey.toLocaleLowerCase() ===
+							'yes'
+					);
+				})
 			) || [];
 
 		if (trialSkuOption) {

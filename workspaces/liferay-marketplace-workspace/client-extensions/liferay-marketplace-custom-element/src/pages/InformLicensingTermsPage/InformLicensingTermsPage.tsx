@@ -163,7 +163,9 @@ export function InformLicensingTermsPage({
 							});
 						}
 						else {
-							const dataSpecification = await getSpecification('license-type');
+							const dataSpecification = await getSpecification(
+								'license-type'
+							);
 
 							const {id} = await createProductSpecification({
 								appId,
@@ -255,8 +257,7 @@ export function InformLicensingTermsPage({
 										skuOptions: [
 											{
 												key: productOptionId,
-												value:
-													optionValuesId.yesOptionId,
+												value: optionValuesId.yesOptionId,
 											},
 										],
 

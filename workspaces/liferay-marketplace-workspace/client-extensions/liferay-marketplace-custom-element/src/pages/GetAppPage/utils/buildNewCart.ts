@@ -34,7 +34,7 @@ export default function buildNewCart({
 			{
 				price: {
 					currency: channel.currencyCode,
-					discount: 0
+					discount: 0,
 				},
 				productId: product?.productId,
 				quantity: 1,
@@ -45,7 +45,7 @@ export default function buildNewCart({
 			},
 		],
 		currencyCode: channel.currencyCode,
-		orderTypeExternalReferenceCode: orderType.externalReferenceCode
+		orderTypeExternalReferenceCode: orderType.externalReferenceCode,
 	};
 
 	if (isFreeApp) {

@@ -5,7 +5,10 @@
 
 export function getProductOrderTypes(productSpecificationValue: any) {
 	return {
-		externalReferenceCode : (productSpecificationValue.toLowerCase() === 'cloud') ? 'CLOUDAPP': 'DXPAPP',
-		name: {}
-	} as OrderType
+		externalReferenceCode:
+			productSpecificationValue.toLowerCase() === 'cloud'
+				? 'CLOUDAPP'
+				: 'DXPAPP',
+		name: {},
+	} as OrderType;
 }

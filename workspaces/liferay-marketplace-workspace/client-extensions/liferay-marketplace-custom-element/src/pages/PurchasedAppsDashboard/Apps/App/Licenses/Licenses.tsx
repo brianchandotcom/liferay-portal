@@ -69,7 +69,11 @@ const Licenses = () => {
 			? 'On-Premise'
 			: 'Cloud';
 
-	const {data: licenseKeysResponse, isLoading, mutate} = useSWR(
+	const {
+		data: licenseKeysResponse,
+		isLoading,
+		mutate,
+	} = useSWR(
 		`/order-license-keys/${orderId}-${page}-${pageSize}`,
 		async () => {
 			try {
@@ -94,18 +98,15 @@ const Licenses = () => {
 	const orderStatusIsNotCompleted =
 		placedOrder?.orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
-	const {
-		onDeativateLicenseKey,
-		onDownload,
-		onViewLicenseKey,
-	} = useLicenseActions({
-		deactivateLicenseModal,
-		keyType,
-		licenseKeyModal,
-		mutate,
-		provisioningKoroneikiOAuth2,
-		setModal: setModalData,
-	});
+	const {onDeativateLicenseKey, onDownload, onViewLicenseKey} =
+		useLicenseActions({
+			deactivateLicenseModal,
+			keyType,
+			licenseKeyModal,
+			mutate,
+			provisioningKoroneikiOAuth2,
+			setModal: setModalData,
+		});
 
 	const buttonsInfo = useMemo(
 		() => ({

@@ -28,11 +28,9 @@ const SelectSubscription = ({
 
 	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
 
-	const {
-		data: subscriptions = [],
-		isLoading,
-	} = useSWR(`/subcriptions/${orderId}`, () =>
-		provisioningKoroneikiOAuth2.getSubscriptions(orderId)
+	const {data: subscriptions = [], isLoading} = useSWR(
+		`/subcriptions/${orderId}`,
+		() => provisioningKoroneikiOAuth2.getSubscriptions(orderId)
 	);
 
 	return (

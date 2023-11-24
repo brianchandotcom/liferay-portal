@@ -72,9 +72,11 @@ export function MembersPage({
 
 	const marketplaceContext = useMarketplaceContext();
 
-	const currentUserAccountBriefs = marketplaceContext.myUserAccount?.accountBriefs?.find(
-		(accountBrief: {id: number}) => accountBrief.id === selectedAccount?.id
-	);
+	const currentUserAccountBriefs =
+		marketplaceContext.myUserAccount?.accountBriefs?.find(
+			(accountBrief: {id: number}) =>
+				accountBrief.id === selectedAccount?.id
+		);
 
 	const myUserAccount = useMemo(
 		() => ({
@@ -95,7 +97,7 @@ export function MembersPage({
 	);
 
 	const {members, mutate: mutateMembers} = useMembers({
-		accountId: accountId ?? ((selectedAccount?.id as unknown) as string),
+		accountId: accountId ?? (selectedAccount?.id as unknown as string),
 		isCustomerDashboard,
 		isPublisherDashboard,
 		selectedAccount,

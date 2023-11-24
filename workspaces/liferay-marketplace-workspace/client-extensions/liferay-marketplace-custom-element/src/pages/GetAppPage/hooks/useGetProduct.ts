@@ -7,8 +7,8 @@ import {useCallback, useEffect, useState} from 'react';
 
 import {getDeliveryProductById} from '../../../utils/api';
 import {getUrlParam} from '../../../utils/getUrlParam';
-import { useMarketplaceContext } from '../../../context/MarketplaceContext';
-import { Liferay } from '../../../liferay/liferay';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import {Liferay} from '../../../liferay/liferay';
 
 const useGetProduct = (
 	selectedProduct: DeliveryProduct | undefined,

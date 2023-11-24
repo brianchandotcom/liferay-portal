@@ -79,14 +79,14 @@ export async function userAccountChecker(verifiedAccounts: string[]) {
 }
 
 export function getThumbnailByProductAttachment(
-	attachments?: Partial<ProductAttachment|DeliveryProductAttachment>[]
+	attachments?: Partial<ProductAttachment | DeliveryProductAttachment>[]
 ): string | undefined {
 	if (!Array.isArray(attachments)) {
 		return undefined;
 	}
 
 	const findThumbnailWithAppIcon = (
-		attachment: Partial<ProductAttachment|DeliveryProductAttachment>
+		attachment: Partial<ProductAttachment | DeliveryProductAttachment>
 	): boolean => {
 		if (attachment.customFields === undefined) {
 			return false;

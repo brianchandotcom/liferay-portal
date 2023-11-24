@@ -102,13 +102,8 @@ const CreateLicense = () => {
 		},
 	});
 
-	const {
-		description,
-		hostname,
-		ipAddress,
-		macAddress,
-		subscription,
-	} = watch();
+	const {description, hostname, ipAddress, macAddress, subscription} =
+		watch();
 
 	useEffect(() => {
 		if (product) {
@@ -135,8 +130,8 @@ const CreateLicense = () => {
 			setLoading(true);
 
 			try {
-				const licenseKey = await provisioningKoroneikiOAuth2.createLicenseKey(
-					{
+				const licenseKey =
+					await provisioningKoroneikiOAuth2.createLicenseKey({
 						licenseEntry: {
 							description: form.description,
 							hostName: form.hostname,
@@ -148,8 +143,7 @@ const CreateLicense = () => {
 						},
 						skuId: form.subscription?.skuId as number,
 						type: form.subscription?.name as string,
-					}
-				);
+					});
 
 				Liferay.Util.openToast({
 					message: 'License Key created successfully',

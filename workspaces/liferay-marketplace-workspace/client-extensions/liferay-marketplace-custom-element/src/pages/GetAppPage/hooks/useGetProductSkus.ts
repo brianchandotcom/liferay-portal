@@ -14,7 +14,7 @@ const useGetProductSkus = (
 		id: 0,
 		price: {
 			price: 0,
-			priceFormatted: ''
+			priceFormatted: '',
 		},
 		sku: '',
 		skuOptions: [],
@@ -26,14 +26,13 @@ const useGetProductSkus = (
 		if (product && product?.skus?.length > 1) {
 			const isTrial = !!product?.skus?.find(
 				({skuOptions: [skuOption]}) =>
-					skuOption?.skuOptionKey === 'trial' && skuOption.skuOptionValueKey === 'yes'
+					skuOption?.skuOptionKey === 'trial' &&
+					skuOption.skuOptionValueKey === 'yes'
 			);
 
 			setEnableTrialMethod(isTrial);
 
-			newSku = product?.skus?.find(
-				(sku) => sku.price?.price === 0
-			);
+			newSku = product?.skus?.find((sku) => sku.price?.price === 0);
 		}
 		else {
 			newSku = product?.skus[0];

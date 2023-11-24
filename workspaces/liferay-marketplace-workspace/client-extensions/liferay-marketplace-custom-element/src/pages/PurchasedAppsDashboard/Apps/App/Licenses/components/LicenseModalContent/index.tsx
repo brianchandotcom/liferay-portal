@@ -103,8 +103,10 @@ const LicenceKeyModalContent = ({Header, modalData}: LicenseKeyModalProps) => {
 						className={classNames(
 							'align-items-center d-flex px-3 py-2 rounded font-weight-bold mt-1',
 							{
-								'text-danger license-paragraph-danger': !isActive,
-								'text-success license-paragraph-success': isActive,
+								'text-danger license-paragraph-danger':
+									!isActive,
+								'text-success license-paragraph-success':
+									isActive,
 							}
 						)}
 					>

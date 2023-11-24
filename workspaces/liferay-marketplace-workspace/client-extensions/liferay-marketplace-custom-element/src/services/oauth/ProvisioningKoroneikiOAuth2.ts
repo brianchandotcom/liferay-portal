@@ -89,13 +89,13 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 	}
 
 	async createLicenseKey(payload: LicenseTypePayload): Promise<LicenseKey> {
-		return (this.oAuth2Client.fetch('/provisioning/license-keys', {
+		return this.oAuth2Client.fetch('/provisioning/license-keys', {
 			body: JSON.stringify(payload),
 			method: 'POST',
 
 			// Necessary due the response comes resolved already, not necessary to parse to .json()
 
-		}) as unknown) as Promise<LicenseKey>;
+		}) as unknown as Promise<LicenseKey>;
 	}
 
 	async downloadLicenseKey(id: number) {

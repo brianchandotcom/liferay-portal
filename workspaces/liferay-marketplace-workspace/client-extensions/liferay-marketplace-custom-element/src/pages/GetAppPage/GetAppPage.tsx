@@ -51,9 +51,8 @@ const GetAppFlow = () => {
 		initialBillingAddress
 	);
 	const [email, setEmail] = useState<string>('');
-	const [enablePurchaseButton, setEnablePurchaseButton] = useState<boolean>(
-		false
-	);
+	const [enablePurchaseButton, setEnablePurchaseButton] =
+		useState<boolean>(false);
 	const [enableTrialMethod, setEnableTrialMethod] = useState<boolean>(false);
 	const [licenseSelected, setLicenseSelected] = useState<boolean>(false);
 	const [orderType, setOrderType] = useState<OrderType>();
@@ -76,7 +75,10 @@ const GetAppFlow = () => {
 
 	const {productId} = useGetProduct(
 		product,
-		useCallback((value: DeliveryProduct) => setValue('product', value), [setValue])
+		useCallback(
+			(value: DeliveryProduct) => setValue('product', value),
+			[setValue]
+		)
 	);
 	const {sku} = useGetProductSkus(setEnableTrialMethod, product);
 
@@ -104,18 +106,20 @@ const GetAppFlow = () => {
 
 	useEffect(() => {
 		if (product) {
-			const productSpecificationValues = getProductSpecificationValues(product?.productSpecifications || []);
-
-			const orderType = getProductOrderTypes(
-				productSpecificationValues
+			const productSpecificationValues = getProductSpecificationValues(
+				product?.productSpecifications || []
 			);
+
+			const orderType = getProductOrderTypes(productSpecificationValues);
 
 			setOrderType(orderType);
 		}
 	}, [product]);
 
 	async function handleGetApp(orderId?: number) {
-		const productSpecificationValues = getProductSpecificationValues(product?.productSpecifications || []);
+		const productSpecificationValues = getProductSpecificationValues(
+			product?.productSpecifications || []
+		);
 
 		const productType = productSpecificationValues;
 
@@ -263,7 +267,8 @@ const GetAppFlow = () => {
 		skus?.forEach((sku) => {
 			const licenseUsageTypes = sku?.skuOptions?.filter(
 				(skuOption) =>
-					skuOption?.skuOptionKey === SkuOptions.STANDARD.toLowerCase() ||
+					skuOption?.skuOptionKey ===
+						SkuOptions.STANDARD.toLowerCase() ||
 					skuOption?.skuOptionKey === SkuOptions.TRIAL.toLowerCase()
 			);
 
@@ -273,10 +278,14 @@ const GetAppFlow = () => {
 						setBasePrice(sku.price.price);
 						break;
 					case SkuOptions.TRIAL.toLowerCase():
-						if (licenseUsageType?.skuOptionValueKey.toLowerCase() === 'no') {
+						if (
+							licenseUsageType?.skuOptionValueKey.toLowerCase() ===
+							'no'
+						) {
 							setBasePrice(sku.price.price);
-							setHasTrial((prev) => prev || false);	
-						} else {
+							setHasTrial((prev) => prev || false);
+						}
+						else {
 							setHasTrial(true);
 						}
 						break;

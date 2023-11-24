@@ -1,18 +1,32 @@
 <style>
+	.br-13 {
+		border-radius: 13px;
+	}
+	
+	.color-black {
+		color: black!important;
+	}
+	
 	.dropdown-item:active{
 		background-color:#f8f9fa;
 	}
+	
 	.product-icon {
 		width: 1.5rem;
 		height: 1.5rem;
 	}
+	
+	.pt-05 {
+		padding-top: 0.5rem;
+	}
+	
 	.t-56 {
 		top: 55.5px!important;
 	}
+	
 	.t-109 {
 		top: 109.5px!important;
 	}
-
 </style>
 
 <#assign taxonomyVocabularies = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies").items />
@@ -28,18 +42,19 @@
 
 <#if capabilityId?has_content>
 	<#assign capabilitiesFieldsMap = {} />
-	<#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${capabilityId}/taxonomy-categories").items as capability>
+	<#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${capabilityId}/taxonomy-categories").items as taxonomyCategories>
 		<#assign capabilitiesFieldsMap = capabilitiesFieldsMap +
 			{
-				capability.name:
+				taxonomyCategories.name:
 				{
-					"description": capability.description,
-					"id": capability.id
+					"description": taxonomyCategories.description,
+					"id": taxonomyCategories.id
 		  		}
 	  		}
 		/>
 	</#list>
 </#if>
+
 <div class="adt-navigation">
 	<#list entries as navPrimaryItem>
 		<#if navPrimaryItem.hasChildren()>
@@ -81,23 +96,22 @@
 
 				<div
 					aria-labelledby=${navPrimaryItem.getName()}
-					class="dropdown-menu ${menuType} ${topPosition}"
-					style="position: absolute; will-change: transform; border-radius:13px; ${menuWidth}"
+					class="br-13 dropdown-menu ${menuType} ${topPosition}"
+					style="position: absolute; will-change: transform; ${menuWidth}"
 				>
 					<div class="row">
 						<#list navPrimaryItem.getChildren() as navSecondaryItem>
-							<div class="dropdown-item col-sm-${columns}" style="border-radius:13px;">
+							<div class="br-13 dropdown-item col-sm-${columns}">
 								<#if capabilitiesFieldsMap?has_content && navPrimaryItem.getName() == "Capabilities">
 									<#assign categoryFields = capabilitiesFieldsMap[navSecondaryItem.getName()] />
 
-									<a class="adt-submenu-item-link text-decoration-none" href="/search?category=${categoryFields['id']}" style="color: black;" tabindex="4">
+									<a class="adt-submenu-item-link text-decoration-none color-black" href="/search?category=${categoryFields['id']}" tabindex="4">
 										<h5 class="pl-3 pt-2">
 											${navSecondaryItem.getName()}
 										</h5>
 										<#if categoryFields["description"]?has_content>
 											<div
-												class="pl-3"
-												style="padding-top: 0.5rem;"
+												class="pl-3 pt-05"
 											>
 												${categoryFields["description"]}
 											</div>
@@ -109,7 +123,7 @@
 										navItemIconId = customFields["Svg Sprite Map Id"]!""
 									/>
 
-									<a class="adt-submenu-item-link text-decoration-none" href="${navSecondaryItem.getRegularURL()}" style="color: black;" tabindex="4">
+									<a class="adt-submenu-item-link text-decoration-none color-black" href="${navSecondaryItem.getRegularURL()}" tabindex="4">
 										<div class="pl-2 pt-3">
 											<img
 												alt="${navSecondaryItem.getName()} Logo"

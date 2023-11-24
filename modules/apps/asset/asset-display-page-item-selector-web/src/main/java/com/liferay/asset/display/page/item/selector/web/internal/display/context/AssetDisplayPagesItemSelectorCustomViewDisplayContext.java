@@ -15,8 +15,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator;
-import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryCreateDateComparator;
-import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -69,8 +67,8 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 		}
 
 		if (_search) {
-			SearchContainer<LayoutPageTemplateEntry>
-				assetDisplayPageSearchContainer = new SearchContainer<>(
+			SearchContainer<Object> assetDisplayPageSearchContainer =
+				new SearchContainer<>(
 					_portletRequest, _portletURL, null,
 					"there-are-no-display-page-templates");
 
@@ -82,8 +80,13 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 			assetDisplayPageSearchContainer.setResultsAndTotal(
 				() ->
 					LayoutPageTemplateEntryServiceUtil.
-						getLayoutPageTemplateEntries(
+						getLayoutPageCollectionsAndLayoutPageTemplateEntries(
 							_getGroupId(),
+							ParamUtil.getLong(
+								_httpServletRequest,
+								"layoutPageTemplateCollectionId",
+								LayoutPageTemplateConstants.
+									PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
 							_assetDisplayPageSelectorCriterion.getClassNameId(),
 							_assetDisplayPageSelectorCriterion.getClassTypeId(),
 							_getKeywords(),
@@ -94,8 +97,13 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 							assetDisplayPageSearchContainer.
 								getOrderByComparator()),
 				LayoutPageTemplateEntryServiceUtil.
-					getLayoutPageTemplateEntriesCount(
+					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 						_getGroupId(),
+						ParamUtil.getLong(
+							_httpServletRequest,
+							"layoutPageTemplateCollectionId",
+							LayoutPageTemplateConstants.
+								PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
 						_assetDisplayPageSelectorCriterion.getClassNameId(),
 						_assetDisplayPageSelectorCriterion.getClassTypeId(),
 						_getKeywords(),
@@ -293,7 +301,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 		return orderByComparator;
 	}
 
-	private OrderByComparator<LayoutPageTemplateEntry>
+	private OrderByComparator<Object>
 		_getLayoutPageTemplateEntryOrderByComparatorWithKeywords(
 			String orderByCol, String orderByType) {
 
@@ -303,15 +311,16 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator = null;
+		OrderByComparator<Object> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new LayoutPageTemplateEntryCreateDateComparator(
-				orderByAsc);
+			orderByComparator =
+				new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator();
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new LayoutPageTemplateEntryNameComparator(
-				orderByAsc);
+			orderByComparator =
+				new LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(
+					orderByAsc);
 		}
 
 		return orderByComparator;

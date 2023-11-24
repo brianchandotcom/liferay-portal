@@ -4,7 +4,7 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Widget Page Templates";
+	property testray.main.component.name = "Templates";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -23,17 +23,6 @@ definition {
 			Staging.activateStagingCP(
 				pageVersioningEnabled = "true",
 				siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

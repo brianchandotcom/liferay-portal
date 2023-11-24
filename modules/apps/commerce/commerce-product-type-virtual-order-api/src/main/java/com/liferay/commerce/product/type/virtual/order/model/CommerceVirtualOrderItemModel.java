@@ -227,35 +227,6 @@ public interface CommerceVirtualOrderItemModel
 	public void setCommerceOrderItemId(long commerceOrderItemId);
 
 	/**
-	 * Returns the file entry ID of this commerce virtual order item.
-	 *
-	 * @return the file entry ID of this commerce virtual order item
-	 */
-	public long getFileEntryId();
-
-	/**
-	 * Sets the file entry ID of this commerce virtual order item.
-	 *
-	 * @param fileEntryId the file entry ID of this commerce virtual order item
-	 */
-	public void setFileEntryId(long fileEntryId);
-
-	/**
-	 * Returns the url of this commerce virtual order item.
-	 *
-	 * @return the url of this commerce virtual order item
-	 */
-	@AutoEscape
-	public String getUrl();
-
-	/**
-	 * Sets the url of this commerce virtual order item.
-	 *
-	 * @param url the url of this commerce virtual order item
-	 */
-	public void setUrl(String url);
-
-	/**
 	 * Returns the activation status of this commerce virtual order item.
 	 *
 	 * @return the activation status of this commerce virtual order item
@@ -282,20 +253,6 @@ public interface CommerceVirtualOrderItemModel
 	 * @param duration the duration of this commerce virtual order item
 	 */
 	public void setDuration(long duration);
-
-	/**
-	 * Returns the usages of this commerce virtual order item.
-	 *
-	 * @return the usages of this commerce virtual order item
-	 */
-	public int getUsages();
-
-	/**
-	 * Sets the usages of this commerce virtual order item.
-	 *
-	 * @param usages the usages of this commerce virtual order item
-	 */
-	public void setUsages(int usages);
 
 	/**
 	 * Returns the max usages of this commerce virtual order item.

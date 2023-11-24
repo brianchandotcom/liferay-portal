@@ -44,10 +44,13 @@ public class CommerceVirtualOrderItemServiceUtil {
 			commerceOrderItemId);
 	}
 
-	public static java.io.File getFile(long commerceVirtualOrderItemId)
+	public static java.io.File getFile(
+			long commerceVirtualOrderItemId,
+			long commerceVirtualOrderItemFileEntryId)
 		throws Exception {
 
-		return getService().getFile(commerceVirtualOrderItemId);
+		return getService().getFile(
+			commerceVirtualOrderItemId, commerceVirtualOrderItemFileEntryId);
 	}
 
 	/**
@@ -60,14 +63,13 @@ public class CommerceVirtualOrderItemServiceUtil {
 	}
 
 	public static CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
-			long commerceVirtualOrderItemId, long fileEntryId, String url,
-			int activationStatus, long duration, int usages, int maxUsages,
-			boolean active)
+			long commerceVirtualOrderItemId, int activationStatus,
+			long duration, int maxUsages, boolean active)
 		throws PortalException {
 
 		return getService().updateCommerceVirtualOrderItem(
-			commerceVirtualOrderItemId, fileEntryId, url, activationStatus,
-			duration, usages, maxUsages, active);
+			commerceVirtualOrderItemId, activationStatus, duration, maxUsages,
+			active);
 	}
 
 	public static CommerceVirtualOrderItemService getService() {

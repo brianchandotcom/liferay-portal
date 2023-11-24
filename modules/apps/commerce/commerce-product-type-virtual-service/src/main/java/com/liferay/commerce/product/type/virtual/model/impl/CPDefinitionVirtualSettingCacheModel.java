@@ -72,7 +72,7 @@ public class CPDefinitionVirtualSettingCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,10 +96,6 @@ public class CPDefinitionVirtualSettingCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", fileEntryId=");
-		sb.append(fileEntryId);
-		sb.append(", url=");
-		sb.append(url);
 		sb.append(", activationStatus=");
 		sb.append(activationStatus);
 		sb.append(", duration=");
@@ -171,15 +167,6 @@ public class CPDefinitionVirtualSettingCacheModel
 
 		cpDefinitionVirtualSettingImpl.setClassNameId(classNameId);
 		cpDefinitionVirtualSettingImpl.setClassPK(classPK);
-		cpDefinitionVirtualSettingImpl.setFileEntryId(fileEntryId);
-
-		if (url == null) {
-			cpDefinitionVirtualSettingImpl.setUrl("");
-		}
-		else {
-			cpDefinitionVirtualSettingImpl.setUrl(url);
-		}
-
 		cpDefinitionVirtualSettingImpl.setActivationStatus(activationStatus);
 		cpDefinitionVirtualSettingImpl.setDuration(duration);
 		cpDefinitionVirtualSettingImpl.setMaxUsages(maxUsages);
@@ -242,9 +229,6 @@ public class CPDefinitionVirtualSettingCacheModel
 
 		classPK = objectInput.readLong();
 
-		fileEntryId = objectInput.readLong();
-		url = objectInput.readUTF();
-
 		activationStatus = objectInput.readInt();
 
 		duration = objectInput.readLong();
@@ -298,15 +282,6 @@ public class CPDefinitionVirtualSettingCacheModel
 
 		objectOutput.writeLong(classPK);
 
-		objectOutput.writeLong(fileEntryId);
-
-		if (url == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(url);
-		}
-
 		objectOutput.writeInt(activationStatus);
 
 		objectOutput.writeLong(duration);
@@ -350,8 +325,6 @@ public class CPDefinitionVirtualSettingCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public long fileEntryId;
-	public String url;
 	public int activationStatus;
 	public long duration;
 	public int maxUsages;

@@ -54,20 +54,12 @@ public class CommerceVirtualOrderItemTable
 		commerceOrderItemId = createColumn(
 			"commerceOrderItemId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceVirtualOrderItemTable, Long> fileEntryId =
-		createColumn(
-			"fileEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceVirtualOrderItemTable, String> url =
-		createColumn("url", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceVirtualOrderItemTable, Integer>
 		activationStatus = createColumn(
 			"activationStatus", Integer.class, Types.INTEGER,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceVirtualOrderItemTable, Long> duration =
 		createColumn("duration", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceVirtualOrderItemTable, Integer> usages =
-		createColumn(
-			"usages", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<CommerceVirtualOrderItemTable, Integer> maxUsages =
 		createColumn(
 			"maxUsages", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);

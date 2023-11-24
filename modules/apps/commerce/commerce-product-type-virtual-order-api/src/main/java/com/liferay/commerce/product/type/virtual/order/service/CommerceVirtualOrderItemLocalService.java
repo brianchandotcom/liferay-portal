@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.type.virtual.order.service;
 
+import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -72,8 +73,9 @@ public interface CommerceVirtualOrderItemLocalService
 		CommerceVirtualOrderItem commerceVirtualOrderItem);
 
 	public CommerceVirtualOrderItem addCommerceVirtualOrderItem(
-			long commerceOrderItemId, long fileEntryId, String url,
-			int activationStatus, long duration, int usages, int maxUsages,
+			long commerceOrderItemId,
+			List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries,
+			int activationStatus, long duration, int maxUsages,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -330,7 +332,10 @@ public interface CommerceVirtualOrderItemLocalService
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public File getFile(long commerceVirtualOrderItemId) throws Exception;
+	public File getFile(
+			long commerceVirtualOrderItemId,
+			long commerceVirtualOrderItemFileEntryId)
+		throws Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -348,10 +353,6 @@ public interface CommerceVirtualOrderItemLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	public CommerceVirtualOrderItem incrementCommerceVirtualOrderItemUsages(
-			long commerceVirtualOrderItemId)
 		throws PortalException;
 
 	public void setActive(long commerceVirtualOrderItemId, boolean active)
@@ -372,9 +373,8 @@ public interface CommerceVirtualOrderItemLocalService
 		CommerceVirtualOrderItem commerceVirtualOrderItem);
 
 	public CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
-			long commerceVirtualOrderItemId, long fileEntryId, String url,
-			int activationStatus, long duration, int usages, int maxUsages,
-			boolean active)
+			long commerceVirtualOrderItemId, int activationStatus,
+			long duration, int maxUsages, boolean active)
 		throws PortalException;
 
 	public CommerceVirtualOrderItem updateCommerceVirtualOrderItemDates(

@@ -70,7 +70,7 @@ public class CommerceVirtualOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,16 +92,10 @@ public class CommerceVirtualOrderItemCacheModel
 		sb.append(modifiedDate);
 		sb.append(", commerceOrderItemId=");
 		sb.append(commerceOrderItemId);
-		sb.append(", fileEntryId=");
-		sb.append(fileEntryId);
-		sb.append(", url=");
-		sb.append(url);
 		sb.append(", activationStatus=");
 		sb.append(activationStatus);
 		sb.append(", duration=");
 		sb.append(duration);
-		sb.append(", usages=");
-		sb.append(usages);
 		sb.append(", maxUsages=");
 		sb.append(maxUsages);
 		sb.append(", active=");
@@ -159,18 +153,8 @@ public class CommerceVirtualOrderItemCacheModel
 
 		commerceVirtualOrderItemImpl.setCommerceOrderItemId(
 			commerceOrderItemId);
-		commerceVirtualOrderItemImpl.setFileEntryId(fileEntryId);
-
-		if (url == null) {
-			commerceVirtualOrderItemImpl.setUrl("");
-		}
-		else {
-			commerceVirtualOrderItemImpl.setUrl(url);
-		}
-
 		commerceVirtualOrderItemImpl.setActivationStatus(activationStatus);
 		commerceVirtualOrderItemImpl.setDuration(duration);
-		commerceVirtualOrderItemImpl.setUsages(usages);
 		commerceVirtualOrderItemImpl.setMaxUsages(maxUsages);
 		commerceVirtualOrderItemImpl.setActive(active);
 
@@ -211,14 +195,9 @@ public class CommerceVirtualOrderItemCacheModel
 
 		commerceOrderItemId = objectInput.readLong();
 
-		fileEntryId = objectInput.readLong();
-		url = objectInput.readUTF();
-
 		activationStatus = objectInput.readInt();
 
 		duration = objectInput.readLong();
-
-		usages = objectInput.readInt();
 
 		maxUsages = objectInput.readInt();
 
@@ -258,20 +237,9 @@ public class CommerceVirtualOrderItemCacheModel
 
 		objectOutput.writeLong(commerceOrderItemId);
 
-		objectOutput.writeLong(fileEntryId);
-
-		if (url == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(url);
-		}
-
 		objectOutput.writeInt(activationStatus);
 
 		objectOutput.writeLong(duration);
-
-		objectOutput.writeInt(usages);
 
 		objectOutput.writeInt(maxUsages);
 
@@ -290,11 +258,8 @@ public class CommerceVirtualOrderItemCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long commerceOrderItemId;
-	public long fileEntryId;
-	public String url;
 	public int activationStatus;
 	public long duration;
-	public int usages;
 	public int maxUsages;
 	public boolean active;
 	public long startDate;

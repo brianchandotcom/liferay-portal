@@ -48,11 +48,8 @@ public class CommerceVirtualOrderItemWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceOrderItemId", getCommerceOrderItemId());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("url", getUrl());
 		attributes.put("activationStatus", getActivationStatus());
 		attributes.put("duration", getDuration());
-		attributes.put("usages", getUsages());
 		attributes.put("maxUsages", getMaxUsages());
 		attributes.put("active", isActive());
 		attributes.put("startDate", getStartDate());
@@ -124,18 +121,6 @@ public class CommerceVirtualOrderItemWrapper
 			setCommerceOrderItemId(commerceOrderItemId);
 		}
 
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
-
-		String url = (String)attributes.get("url");
-
-		if (url != null) {
-			setUrl(url);
-		}
-
 		Integer activationStatus = (Integer)attributes.get("activationStatus");
 
 		if (activationStatus != null) {
@@ -146,12 +131,6 @@ public class CommerceVirtualOrderItemWrapper
 
 		if (duration != null) {
 			setDuration(duration);
-		}
-
-		Integer usages = (Integer)attributes.get("usages");
-
-		if (usages != null) {
-			setUsages(usages);
 		}
 
 		Integer maxUsages = (Integer)attributes.get("maxUsages");
@@ -221,6 +200,28 @@ public class CommerceVirtualOrderItemWrapper
 		return model.getCommerceOrderItemId();
 	}
 
+	@Override
+	public java.util.List<CommerceVirtualOrderItemFileEntry>
+		getCommerceVirtualOrderItemFileEntries() {
+
+		return model.getCommerceVirtualOrderItemFileEntries();
+	}
+
+	@Override
+	public int getCommerceVirtualOrderItemFileEntriesCount() {
+		return model.getCommerceVirtualOrderItemFileEntriesCount();
+	}
+
+	@Override
+	public CommerceVirtualOrderItemFileEntry
+			getCommerceVirtualOrderItemFileEntry(
+				long commerceVirtualOrderItemFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCommerceVirtualOrderItemFileEntry(
+			commerceVirtualOrderItemFileEntryId);
+	}
+
 	/**
 	 * Returns the commerce virtual order item ID of this commerce virtual order item.
 	 *
@@ -269,23 +270,6 @@ public class CommerceVirtualOrderItemWrapper
 	@Override
 	public Date getEndDate() {
 		return model.getEndDate();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getFileEntry();
-	}
-
-	/**
-	 * Returns the file entry ID of this commerce virtual order item.
-	 *
-	 * @return the file entry ID of this commerce virtual order item
-	 */
-	@Override
-	public long getFileEntryId() {
-		return model.getFileEntryId();
 	}
 
 	/**
@@ -346,26 +330,6 @@ public class CommerceVirtualOrderItemWrapper
 	@Override
 	public Date getStartDate() {
 		return model.getStartDate();
-	}
-
-	/**
-	 * Returns the url of this commerce virtual order item.
-	 *
-	 * @return the url of this commerce virtual order item
-	 */
-	@Override
-	public String getUrl() {
-		return model.getUrl();
-	}
-
-	/**
-	 * Returns the usages of this commerce virtual order item.
-	 *
-	 * @return the usages of this commerce virtual order item
-	 */
-	@Override
-	public int getUsages() {
-		return model.getUsages();
 	}
 
 	/**
@@ -504,16 +468,6 @@ public class CommerceVirtualOrderItemWrapper
 	}
 
 	/**
-	 * Sets the file entry ID of this commerce virtual order item.
-	 *
-	 * @param fileEntryId the file entry ID of this commerce virtual order item
-	 */
-	@Override
-	public void setFileEntryId(long fileEntryId) {
-		model.setFileEntryId(fileEntryId);
-	}
-
-	/**
 	 * Sets the group ID of this commerce virtual order item.
 	 *
 	 * @param groupId the group ID of this commerce virtual order item
@@ -571,26 +525,6 @@ public class CommerceVirtualOrderItemWrapper
 	@Override
 	public void setStartDate(Date startDate) {
 		model.setStartDate(startDate);
-	}
-
-	/**
-	 * Sets the url of this commerce virtual order item.
-	 *
-	 * @param url the url of this commerce virtual order item
-	 */
-	@Override
-	public void setUrl(String url) {
-		model.setUrl(url);
-	}
-
-	/**
-	 * Sets the usages of this commerce virtual order item.
-	 *
-	 * @param usages the usages of this commerce virtual order item
-	 */
-	@Override
-	public void setUsages(int usages) {
-		model.setUsages(usages);
 	}
 
 	/**

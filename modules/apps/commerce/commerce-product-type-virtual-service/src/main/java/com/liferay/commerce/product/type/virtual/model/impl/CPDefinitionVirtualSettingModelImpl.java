@@ -78,7 +78,6 @@ public class CPDefinitionVirtualSettingModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"fileEntryId", Types.BIGINT}, {"url", Types.VARCHAR},
 		{"activationStatus", Types.INTEGER}, {"duration", Types.BIGINT},
 		{"maxUsages", Types.INTEGER}, {"useSample", Types.BOOLEAN},
 		{"sampleFileEntryId", Types.BIGINT}, {"sampleURL", Types.VARCHAR},
@@ -103,8 +102,6 @@ public class CPDefinitionVirtualSettingModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("activationStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("maxUsages", Types.INTEGER);
@@ -119,7 +116,7 @@ public class CPDefinitionVirtualSettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionVirtualSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,url VARCHAR(255) null,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleURL VARCHAR(255) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,override BOOLEAN,lastPublishDate DATE null)";
+		"create table CPDefinitionVirtualSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleURL VARCHAR(255) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,override BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionVirtualSetting";
@@ -311,10 +308,6 @@ public class CPDefinitionVirtualSettingModelImpl
 			attributeGetterFunctions.put(
 				"classPK", CPDefinitionVirtualSetting::getClassPK);
 			attributeGetterFunctions.put(
-				"fileEntryId", CPDefinitionVirtualSetting::getFileEntryId);
-			attributeGetterFunctions.put(
-				"url", CPDefinitionVirtualSetting::getUrl);
-			attributeGetterFunctions.put(
 				"activationStatus",
 				CPDefinitionVirtualSetting::getActivationStatus);
 			attributeGetterFunctions.put(
@@ -407,14 +400,6 @@ public class CPDefinitionVirtualSettingModelImpl
 				"classPK",
 				(BiConsumer<CPDefinitionVirtualSetting, Long>)
 					CPDefinitionVirtualSetting::setClassPK);
-			attributeSetterBiConsumers.put(
-				"fileEntryId",
-				(BiConsumer<CPDefinitionVirtualSetting, Long>)
-					CPDefinitionVirtualSetting::setFileEntryId);
-			attributeSetterBiConsumers.put(
-				"url",
-				(BiConsumer<CPDefinitionVirtualSetting, String>)
-					CPDefinitionVirtualSetting::setUrl);
 			attributeSetterBiConsumers.put(
 				"activationStatus",
 				(BiConsumer<CPDefinitionVirtualSetting, Integer>)
@@ -731,41 +716,6 @@ public class CPDefinitionVirtualSettingModelImpl
 	@Deprecated
 	public long getOriginalClassPK() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
-	}
-
-	@JSON
-	@Override
-	public long getFileEntryId() {
-		return _fileEntryId;
-	}
-
-	@Override
-	public void setFileEntryId(long fileEntryId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_fileEntryId = fileEntryId;
-	}
-
-	@JSON
-	@Override
-	public String getUrl() {
-		if (_url == null) {
-			return "";
-		}
-		else {
-			return _url;
-		}
-	}
-
-	@Override
-	public void setUrl(String url) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_url = url;
 	}
 
 	@JSON
@@ -1210,8 +1160,6 @@ public class CPDefinitionVirtualSettingModelImpl
 		cpDefinitionVirtualSettingImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionVirtualSettingImpl.setClassNameId(getClassNameId());
 		cpDefinitionVirtualSettingImpl.setClassPK(getClassPK());
-		cpDefinitionVirtualSettingImpl.setFileEntryId(getFileEntryId());
-		cpDefinitionVirtualSettingImpl.setUrl(getUrl());
 		cpDefinitionVirtualSettingImpl.setActivationStatus(
 			getActivationStatus());
 		cpDefinitionVirtualSettingImpl.setDuration(getDuration());
@@ -1262,10 +1210,6 @@ public class CPDefinitionVirtualSettingModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 		cpDefinitionVirtualSettingImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
-		cpDefinitionVirtualSettingImpl.setFileEntryId(
-			this.<Long>getColumnOriginalValue("fileEntryId"));
-		cpDefinitionVirtualSettingImpl.setUrl(
-			this.<String>getColumnOriginalValue("url"));
 		cpDefinitionVirtualSettingImpl.setActivationStatus(
 			this.<Integer>getColumnOriginalValue("activationStatus"));
 		cpDefinitionVirtualSettingImpl.setDuration(
@@ -1423,16 +1367,6 @@ public class CPDefinitionVirtualSettingModelImpl
 
 		cpDefinitionVirtualSettingCacheModel.classPK = getClassPK();
 
-		cpDefinitionVirtualSettingCacheModel.fileEntryId = getFileEntryId();
-
-		cpDefinitionVirtualSettingCacheModel.url = getUrl();
-
-		String url = cpDefinitionVirtualSettingCacheModel.url;
-
-		if ((url != null) && (url.length() == 0)) {
-			cpDefinitionVirtualSettingCacheModel.url = null;
-		}
-
 		cpDefinitionVirtualSettingCacheModel.activationStatus =
 			getActivationStatus();
 
@@ -1558,8 +1492,6 @@ public class CPDefinitionVirtualSettingModelImpl
 	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _fileEntryId;
-	private String _url;
 	private int _activationStatus;
 	private long _duration;
 	private int _maxUsages;
@@ -1615,8 +1547,6 @@ public class CPDefinitionVirtualSettingModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
-		_columnOriginalValues.put("fileEntryId", _fileEntryId);
-		_columnOriginalValues.put("url", _url);
 		_columnOriginalValues.put("activationStatus", _activationStatus);
 		_columnOriginalValues.put("duration", _duration);
 		_columnOriginalValues.put("maxUsages", _maxUsages);
@@ -1678,31 +1608,27 @@ public class CPDefinitionVirtualSettingModelImpl
 
 		columnBitmasks.put("classPK", 1024L);
 
-		columnBitmasks.put("fileEntryId", 2048L);
+		columnBitmasks.put("activationStatus", 2048L);
 
-		columnBitmasks.put("url", 4096L);
+		columnBitmasks.put("duration", 4096L);
 
-		columnBitmasks.put("activationStatus", 8192L);
+		columnBitmasks.put("maxUsages", 8192L);
 
-		columnBitmasks.put("duration", 16384L);
+		columnBitmasks.put("useSample", 16384L);
 
-		columnBitmasks.put("maxUsages", 32768L);
+		columnBitmasks.put("sampleFileEntryId", 32768L);
 
-		columnBitmasks.put("useSample", 65536L);
+		columnBitmasks.put("sampleURL", 65536L);
 
-		columnBitmasks.put("sampleFileEntryId", 131072L);
+		columnBitmasks.put("termsOfUseRequired", 131072L);
 
-		columnBitmasks.put("sampleURL", 262144L);
+		columnBitmasks.put("termsOfUseContent", 262144L);
 
-		columnBitmasks.put("termsOfUseRequired", 524288L);
+		columnBitmasks.put("termsOfUseArticleResourcePK", 524288L);
 
-		columnBitmasks.put("termsOfUseContent", 1048576L);
+		columnBitmasks.put("override", 1048576L);
 
-		columnBitmasks.put("termsOfUseArticleResourcePK", 2097152L);
-
-		columnBitmasks.put("override", 4194304L);
-
-		columnBitmasks.put("lastPublishDate", 8388608L);
+		columnBitmasks.put("lastPublishDate", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

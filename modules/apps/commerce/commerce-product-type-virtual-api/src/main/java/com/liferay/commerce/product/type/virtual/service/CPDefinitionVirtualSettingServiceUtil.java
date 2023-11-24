@@ -46,23 +46,6 @@ public class CPDefinitionVirtualSettingServiceUtil {
 			termsOfUseJournalArticleResourcePrimKey, override, serviceContext);
 	}
 
-	public static CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-			String className, long classPK, long fileEntryId, String url,
-			int activationStatus, long duration, int maxUsages,
-			boolean useSample, long sampleFileEntryId, String sampleURL,
-			boolean termsOfUseRequired,
-			Map<java.util.Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleResourcePrimKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addCPDefinitionVirtualSetting(
-			className, classPK, fileEntryId, url, activationStatus, duration,
-			maxUsages, useSample, sampleFileEntryId, sampleURL,
-			termsOfUseRequired, termsOfUseContentMap,
-			termsOfUseJournalArticleResourcePrimKey, serviceContext);
-	}
-
 	public static CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
 			String className, long classPK)
 		throws PortalException {

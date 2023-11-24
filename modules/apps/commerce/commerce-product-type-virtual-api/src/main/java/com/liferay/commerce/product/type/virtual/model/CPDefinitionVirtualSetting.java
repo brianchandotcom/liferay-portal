@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -54,8 +54,10 @@ public interface CPDefinitionVirtualSetting
 
 			};
 
-	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public java.util.List<CPDVirtualSettingFileEntry>
+		getCPDVirtualSettingFileEntries();
+
+	public int getCPDVirtualSettingFileEntriesCount();
 
 	public com.liferay.portal.kernel.repository.model.FileEntry
 			getSampleFileEntry()
@@ -68,7 +70,5 @@ public interface CPDefinitionVirtualSetting
 	public boolean isUseSampleURL();
 
 	public boolean isUseTermsOfUseJournal();
-
-	public boolean isUseUrl();
 
 }

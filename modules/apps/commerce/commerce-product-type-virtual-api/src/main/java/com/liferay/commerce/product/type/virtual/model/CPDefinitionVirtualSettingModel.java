@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -258,35 +258,6 @@ public interface CPDefinitionVirtualSettingModel
 	 */
 	@Override
 	public void setClassPK(long classPK);
-
-	/**
-	 * Returns the file entry ID of this cp definition virtual setting.
-	 *
-	 * @return the file entry ID of this cp definition virtual setting
-	 */
-	public long getFileEntryId();
-
-	/**
-	 * Sets the file entry ID of this cp definition virtual setting.
-	 *
-	 * @param fileEntryId the file entry ID of this cp definition virtual setting
-	 */
-	public void setFileEntryId(long fileEntryId);
-
-	/**
-	 * Returns the url of this cp definition virtual setting.
-	 *
-	 * @return the url of this cp definition virtual setting
-	 */
-	@AutoEscape
-	public String getUrl();
-
-	/**
-	 * Sets the url of this cp definition virtual setting.
-	 *
-	 * @param url the url of this cp definition virtual setting
-	 */
-	public void setUrl(String url);
 
 	/**
 	 * Returns the activation status of this cp definition virtual setting.

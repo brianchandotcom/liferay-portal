@@ -512,25 +512,19 @@ definition {
 		}
 
 		task ("and Given that Form added on the home page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page");
 
-			PagesAdmin.addPage(
-				pageName = "Form Page",
-				sitePageType = "Widget Page");
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Form Page",
+				widgetName = "Form");
 
-			Navigator.gotoPage(pageName = "Form Page");
-
-			Portlet.addPG(portletName = "Form");
-
-			FormPortletNavigator.gotoSelectForm();
-
-			FormPortletConfiguration.selectForm(formTitle = "Form Name");
-
-			PortletEntry.save();
-
-			IFrame.closeFrame();
+			FormPortletConfiguration.selectFormOnAPage(
+				formName = "Form Name",
+				pageName = "Form Page");
 		}
 
 		task ("When the user changes the value of the "Guest Upload Maximum File Size" setting to 5 in the Instance Settings") {

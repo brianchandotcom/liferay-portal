@@ -7,13 +7,19 @@ package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Cristina González
@@ -24,6 +30,20 @@ public class AccessTokenStoreUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		Mockito.when(
+			ClusterExecutorUtil.isEnabled()
+		).thenReturn(
+			false
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_clusterExecutorUtilMockedStatic.close();
+	}
 
 	@Test
 	public void testAdd() {
@@ -65,5 +85,9 @@ public class AccessTokenStoreUtilTest {
 			AccessTokenStoreUtil.getAccessToken(
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt()));
 	}
+
+	private static final MockedStatic<ClusterExecutorUtil>
+		_clusterExecutorUtilMockedStatic = Mockito.mockStatic(
+			ClusterExecutorUtil.class);
 
 }

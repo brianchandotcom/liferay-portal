@@ -494,16 +494,6 @@ definition {
 	@priority = 4
 	test NotPossibleSubmitLargeImage {
 		task ("Given a Form with an upload field created in a virtual instance") {
-			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.able.com",
-				portalInstanceId = "www.able.com",
-				virtualHost = "www.able.com");
-
-			User.firstLoginPG(
-				password = "test",
-				userEmailAddress = "test@www.able.com",
-				virtualHostsURL = "http://www.able.com:8080");
-
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
 				portlet = "Forms");
@@ -522,8 +512,6 @@ definition {
 		}
 
 		task ("and Given that Form added on the home page") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
 				portlet = "Pages");
@@ -532,9 +520,7 @@ definition {
 				pageName = "Form Page",
 				sitePageType = "Widget Page");
 
-			Navigator.gotoPage(
-				baseURL = "http://www.able.com:8080",
-				pageName = "Form Page");
+			Navigator.gotoPage(pageName = "Form Page");
 
 			Portlet.addPG(portletName = "Form");
 
@@ -566,11 +552,9 @@ definition {
 		}
 
 		task ("and When the Guest user uploads a file larger than 5 MB") {
-			User.logoutPG(specificURL = "http://www.able.com:8080");
+			User.logoutPG();
 
-			Navigator.gotoPage(
-				baseURL = "http://www.able.com:8080",
-				pageName = "Form Page");
+			Navigator.gotoPage(pageName = "Form Page");
 
 			UploadDependencyFile.uploadFile(fileName = "image_larger_than_5_MB.jpg");
 		}

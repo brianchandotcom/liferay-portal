@@ -79,7 +79,7 @@ definition {
 			locator1 = "Button#ANY_WITH_CLASS_AND_INDEX",
 			value1 = "Search Bar Test ADT");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+		WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
 		AssertElementPresent(
 			key_tableEntry = "Search Bar Test ADT",

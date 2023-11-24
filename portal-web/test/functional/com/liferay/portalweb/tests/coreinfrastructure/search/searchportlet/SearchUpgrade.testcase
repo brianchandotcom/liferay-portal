@@ -430,7 +430,7 @@ definition {
 		property portal.version = "7.4.13.u43";
 		property test.assert.warning.exceptions = "true";
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+		WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
 		for (var facetType : list "Category,Custom,Folder,Modified,Site,Tag,Type,User") {
 			AssertVisible(

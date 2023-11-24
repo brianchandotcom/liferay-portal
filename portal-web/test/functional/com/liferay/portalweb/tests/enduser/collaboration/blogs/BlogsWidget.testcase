@@ -127,7 +127,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanEditEntryInCardViewViaADT {
-		ApplicationDisplayTemplates.selectPortletADT(
+		WidgetTemplates.selectPortletADT(
 			portletName = "Blogs",
 			templateName = "Card");
 

@@ -273,7 +273,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widget Templates");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtFile = "adt_blogs_basic.ftl",
 				adtType = "Blogs");
 		}
@@ -292,7 +292,7 @@ definition {
 				pageName = "Test Widget Page Name",
 				siteName = "Test Site Name");
 
-			ApplicationDisplayTemplates.selectPortletADT(
+			WidgetTemplates.selectPortletADT(
 				portletName = "Blogs",
 				templateName = "Blogs Test ADT");
 		}

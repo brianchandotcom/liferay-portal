@@ -89,9 +89,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpeg");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+		WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
-		ApplicationDisplayTemplates.addCP(
+		WidgetTemplates.addCP(
 			adtFile = "adt_media_gallery_carousel.ftl",
 			adtType = "Media Gallery");
 
@@ -99,7 +99,7 @@ definition {
 
 		MGPortlet.viewFolderItemsPG(mgFolderName = "DM Folder Name");
 
-		ApplicationDisplayTemplates.selectPortletADT(templateName = "Media Gallery Test ADT");
+		WidgetTemplates.selectPortletADT(templateName = "Media Gallery Test ADT");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

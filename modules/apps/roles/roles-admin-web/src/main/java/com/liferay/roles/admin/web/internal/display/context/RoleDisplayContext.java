@@ -43,6 +43,7 @@ import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeC
 import com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -186,22 +187,30 @@ public class RoleDisplayContext {
 			PortletURL portletURL)
 		throws Exception {
 
+		Role role = _getSelectedRole();
+
+		if (role == null) {
+			return Collections.emptyList();
+		}
+
 		String tabs2 = ParamUtil.getString(
 			_httpServletRequest, "tabs2", "users");
 
 		return new NavigationItemList() {
 			{
 				for (String assigneeTypeName : _ASSIGNEE_TYPE_NAMES) {
-					add(
-						navigationItem -> {
-							navigationItem.setActive(
-								assigneeTypeName.equals(tabs2));
-							navigationItem.setHref(
-								portletURL, "tabs2", assigneeTypeName);
-							navigationItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, assigneeTypeName));
-						});
+					if (_isAssigneeTypeVisible(role, assigneeTypeName)) {
+						add(
+							navigationItem -> {
+								navigationItem.setActive(
+									assigneeTypeName.equals(tabs2));
+								navigationItem.setHref(
+									portletURL, "tabs2", assigneeTypeName);
+								navigationItem.setLabel(
+									LanguageUtil.get(
+										_httpServletRequest, assigneeTypeName));
+							});
+					}
 				}
 			}
 		};
@@ -494,6 +503,16 @@ public class RoleDisplayContext {
 				"roleId", role.getRoleId()
 			).buildString()
 		).build();
+	}
+
+	private boolean _isAssigneeTypeVisible(Role role, String assigneeTypeName) {
+		if (StringUtil.equals("segments", assigneeTypeName) &&
+			StringUtil.equals(RoleConstants.ADMINISTRATOR, role.getName())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String[] _ASSIGNEE_TYPE_NAMES = {

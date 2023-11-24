@@ -445,6 +445,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191827. Check the accessibility when warning message displays in a Collection Display with configuration can cause performance issues in page edit mode."
+	@priority = 3
+	test ViewAccessibilityOfCollectionDisplayPagePerformanceWarningMessageInPageEditor {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
+		task ("Given a user has a Collection Display with None pagination on a content page") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display",
+				pagination = "None");
+		}
+
+		task ("When the user enables the Display All Collection Items") {
+			PageEditor.editCollectionDisplay(
+				displayAllCollectionItems = "true",
+				fragmentName = "Collection Display",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Then the warning message should have correct accessibility") {
+			AssertElementAccessible(
+				fieldLabel = "Display All Collection Items",
+				locator1 = "Message#WARNING_WITH_LABEL");
+		}
+	}
+
 	@description = "This is a test for LPS-165288. The Comments panel should have correct accessibility."
 	@priority = 3
 	test ViewAccessibilityOfCommentsPanel {

@@ -89,9 +89,9 @@ public class ExportObjectDefinitionMVCResourceCommand
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse,
 			StringBundler.concat(
-				"Object_", objectDefinition.getName(), StringPool.UNDERLINE,
-				objectDefinitionId, StringPool.UNDERLINE, Time.getTimestamp(),
-				".json"),
+				"Object_Definition_", objectDefinition.getName(),
+				StringPool.UNDERLINE, objectDefinitionId, StringPool.UNDERLINE,
+				Time.getTimestamp(), ".json"),
 			objectDefinitionJSON.getBytes(), ContentTypes.APPLICATION_JSON);
 	}
 

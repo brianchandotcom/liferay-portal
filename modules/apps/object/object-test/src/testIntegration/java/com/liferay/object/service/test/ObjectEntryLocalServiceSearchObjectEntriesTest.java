@@ -244,7 +244,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 				ObjectFieldConstants.DB_TYPE_DATE, true, false, null, "Alpha",
 				"alpha", false));
 
-		long date = 1632335654272L;
+		long date = 1632268800000L;
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(

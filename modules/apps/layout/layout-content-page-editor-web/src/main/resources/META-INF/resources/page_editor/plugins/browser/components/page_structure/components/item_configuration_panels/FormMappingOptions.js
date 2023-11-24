@@ -21,7 +21,14 @@ export default function FormMappingOptions({
 			label: Liferay.Language.get('none'),
 			value: '0',
 		},
-		...config.formTypes.filter((formType) => !formType?.isRestricted),
+		...config.formTypes
+			.filter((formType) => !formType.isRestricted)
+			.map((formType) => ({
+				...formType,
+				subtypes: formType.subtypes.filter(
+					(subtype) => !subtype.isRestricted
+				),
+			})),
 	];
 
 	if (config.layoutType === LAYOUT_TYPES.display) {

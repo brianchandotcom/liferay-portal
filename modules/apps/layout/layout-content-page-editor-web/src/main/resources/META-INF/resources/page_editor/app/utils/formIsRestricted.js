@@ -7,16 +7,22 @@ import {config} from '../config/index';
 import {formIsMapped} from './formIsMapped';
 
 export function formIsRestricted(item) {
-	const {classNameId} = item.config;
+	const {classNameId, classTypeId} = item.config;
 	const {formTypes} = config;
 
-	if (classNameId === '0') {
+	if (classNameId === '0' || !formIsMapped(item)) {
 		return false;
 	}
 
-	return (
-		formIsMapped(item) &&
-		formTypes.find((formType) => formType.value === classNameId)
-			?.isRestricted
+	const type = formTypes.find((formType) => formType.value === classNameId);
+
+	if (!type) {
+		return false;
+	}
+
+	const subtype = type.subtypes?.find(
+		(formSubtype) => formSubtype.value === classTypeId
 	);
+
+	return Boolean(type.isRestricted || subtype?.isRestricted);
 }

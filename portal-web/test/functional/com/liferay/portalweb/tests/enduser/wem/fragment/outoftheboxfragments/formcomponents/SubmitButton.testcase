@@ -757,6 +757,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191474. Using Keyboard navigation the toggle button Allow Users to Save Entries as Draft can be enabled and disabled."
+	@priority = 3
+	test EnableAndDisableAllowUsersToSaveEntriesAsDraftViaKeyboard {
+		property custom.properties = "feature.flag.LPS-181663=true";
+
+		task ("When go to object admin and edit the object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Purchase Order");
+		}
+
+		task ("Then it is able to enable and disbale Allow Users to Save Entries as Draft by keyboard") {
+			KeyPress(
+				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				value1 = "\SPACE");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			KeyPress(
+				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				value1 = "\SPACE");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
+
 	@description = "This is a test for LPS-191474. An option is added to the Submit Fragment that allows users to save entries as draft."
 	@priority = 5
 	test EnableSaveAsDraftOptionAndViewTheEntryIsSavedAsDraft {

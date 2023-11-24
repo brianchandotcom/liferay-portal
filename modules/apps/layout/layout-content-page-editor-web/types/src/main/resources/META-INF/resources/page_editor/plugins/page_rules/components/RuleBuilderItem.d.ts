@@ -5,19 +5,23 @@
 
 import {ReactNode, Ref} from 'react';
 interface RuleBuilderItemProps {
-	children: ReactNode;
-	description: string;
-	onDeleteButtonClick: () => void;
-	showDeleteButton: boolean;
-	type: 'action' | 'condition';
-	wrapperRef?: Ref<HTMLDivElement>;
+	'aria-label': string;
+	'children': ReactNode;
+	'description': string;
+	'onDeleteButtonClick': () => void;
+	'onItemSelected': () => void;
+	'showDeleteButton': boolean;
+	'type': 'action' | 'condition';
+	'wrapperRef'?: Ref<HTMLDivElement>;
 }
 export default function RuleBuilderItem({
 	children,
 	description,
 	onDeleteButtonClick,
+	onItemSelected,
 	showDeleteButton,
 	type,
 	wrapperRef,
+	...otherProps
 }: RuleBuilderItemProps): JSX.Element;
 export {};

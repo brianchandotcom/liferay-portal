@@ -6,6 +6,13 @@
 /* eslint-disable no-undef */
 
 window.addEventListener('load', () => {
+	
+	let searchInput = fragmentElement.querySelector(
+		'.search-input'
+	);
+	  
+	  searchInput.value='';
+
 	new navigation.default.DropdownProvider(
 		'.account-info',
 		'.account-info',

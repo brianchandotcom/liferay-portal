@@ -6204,6 +6204,25 @@ public class ObjectEntryResourceTest {
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt", null, null),
 			httpMethod, null, objectDefinition, useExternalReferenceCode);
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						_getDLFolder(objectDefinition),
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				RandomTestUtil.randomString(), RandomTestUtil.randomLong()),
+			httpMethod, null, objectDefinition, useExternalReferenceCode);
 
 		// File with a nonexistent name and the Base64 content as a nested field
 
@@ -6402,6 +6421,25 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt", null, null),
+			null, objectDefinition);
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						_getDLFolder(objectDefinition),
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				RandomTestUtil.randomString(), RandomTestUtil.randomLong()),
 			null, objectDefinition);
 
 		// File with a nonexistent name and the Base64 content as a nested field

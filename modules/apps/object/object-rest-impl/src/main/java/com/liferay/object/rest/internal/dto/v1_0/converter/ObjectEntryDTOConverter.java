@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -29,6 +30,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.AuditEvent;
 import com.liferay.object.rest.dto.v1_0.AuditFieldChange;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
+import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
@@ -661,6 +663,41 @@ public class ObjectEntryDTOConverter
 								fieldName -> Base64.encode(
 									_file.getBytes(
 										dlFileEntry.getContentStream()))));
+						fileEntry.setFolder(
+							(Folder)NestedFieldsSupplier.supply(
+								objectFieldName + ".folder",
+								fieldName -> {
+									if (!Objects.equals(
+											ObjectFieldSettingConstants.
+												VALUE_DOCS_AND_MEDIA,
+											ObjectFieldSettingUtil.getValue(
+												ObjectFieldSettingConstants.
+													NAME_FILE_SOURCE,
+												objectField))) {
+
+										return null;
+									}
+
+									Folder folder = new Folder();
+
+									folder.setExternalReferenceCode(
+										() -> {
+											if (dlFileEntry.getFolderId() ==
+													0) {
+
+												return null;
+											}
+
+											DLFolder dlFolder =
+												dlFileEntry.getFolder();
+
+											return dlFolder.
+												getExternalReferenceCode();
+										});
+									folder.setSiteId(dlFileEntry.getGroupId());
+
+									return folder;
+								}));
 					}
 
 					fileEntry.setId(dlFileEntry.getFileEntryId());

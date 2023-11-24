@@ -15,8 +15,6 @@ definition {
 			locator1 = "Button#INVITE_MEMBERS",
 			value1 = "Invite Members");
 
-		SelectFrame(locator1 = "IFrame#INVITE_MEMBERS");
-
 		InviteMembers._selectUser(inviteUserFullName = ${inviteUserFullName});
 
 		AssertClick(

@@ -86,6 +86,9 @@ public class FileEntryContentDashboardItemTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
 	}
 
 	@Test
@@ -94,10 +97,7 @@ public class FileEntryContentDashboardItemTest {
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		List<ContentDashboardItemVersion> contentDashboardItemVersionList =
 			versionableContentDashboardItem.getAllContentDashboardItemVersions(
@@ -123,10 +123,7 @@ public class FileEntryContentDashboardItemTest {
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					2,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(2);
 
 		List<ContentDashboardItemVersion> contentDashboardItemVersionList =
 			versionableContentDashboardItem.getAllContentDashboardItemVersions(
@@ -148,25 +145,22 @@ public class FileEntryContentDashboardItemTest {
 
 	@Test
 	public void testGetAssetCategories() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
+				RandomTestUtil.randomString(), _serviceContext);
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
-			serviceContext);
+			_serviceContext);
 
-		serviceContext.setAssetCategoryIds(
+		_serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory1.getCategoryId()});
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(2, serviceContext);
+				_getVersionableContentDashboardItem(2);
 
 		List<AssetCategory> assetCategoryList =
 			versionableContentDashboardItem.getAssetCategories();
@@ -182,35 +176,32 @@ public class FileEntryContentDashboardItemTest {
 
 	@Test
 	public void testGetAssetCategoriesByVocabulary() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
 		AssetVocabulary assetVocabulary1 =
 			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
+				RandomTestUtil.randomString(), _serviceContext);
 
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(), "assetCategory1",
-			assetVocabulary1.getVocabularyId(), serviceContext);
+			assetVocabulary1.getVocabularyId(), _serviceContext);
 
 		AssetVocabulary assetVocabulary2 =
 			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
+				RandomTestUtil.randomString(), _serviceContext);
 
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(), "assetCategory2",
-			assetVocabulary2.getVocabularyId(), serviceContext);
+			assetVocabulary2.getVocabularyId(), _serviceContext);
 
-		serviceContext.setAssetCategoryIds(
+		_serviceContext.setAssetCategoryIds(
 			new long[] {
 				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
 			});
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(2, serviceContext);
+				_getVersionableContentDashboardItem(2);
 
 		List<AssetCategory> assetCategories =
 			versionableContentDashboardItem.getAssetCategories(
@@ -227,17 +218,14 @@ public class FileEntryContentDashboardItemTest {
 
 	@Test
 	public void testGetAssetTags() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setAssetTagNames(new String[] {"tag1", "tag2", "tag3"});
+		_serviceContext.setAssetTagNames(new String[] {"tag1", "tag2", "tag3"});
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg",
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null, serviceContext);
+			new byte[0], null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
@@ -259,10 +247,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetContentDashboardItemActions() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		List<ContentDashboardItemAction> contentDashboardItemActions =
 			versionableContentDashboardItem.getContentDashboardItemActions(
@@ -278,10 +263,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetContentDashboardItemSubtype() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		ContentDashboardItemSubtype contentDashboardItemSubtype =
 			versionableContentDashboardItem.getContentDashboardItemSubtype();
@@ -297,10 +279,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetCreateDate() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertNotNull(versionableContentDashboardItem.getCreateDate());
 	}
@@ -309,10 +288,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetDefaultContentDashboardItemAction() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		ContentDashboardItemAction contentDashboardItemAction =
 			versionableContentDashboardItem.
@@ -328,10 +304,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetDefaultLocale() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertEquals(
 			LocaleUtil.getDefault(),
@@ -342,10 +315,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetDescription() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertEquals(
 			"description",
@@ -357,10 +327,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetInfoItemReference() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertNotNull(
 			versionableContentDashboardItem.getInfoItemReference());
@@ -370,10 +337,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetLatestContentDashboardItemVersions() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					2,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(2);
 
 		List<ContentDashboardItemVersion> contentDashboardItemVersionList =
 			versionableContentDashboardItem.
@@ -397,10 +361,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetModifiedDate() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertNotNull(versionableContentDashboardItem.getModifiedDate());
 	}
@@ -409,10 +370,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetScopeName() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertNotNull(
 			versionableContentDashboardItem.getScopeName(
@@ -421,9 +379,6 @@ public class FileEntryContentDashboardItemTest {
 
 	@Test
 	public void testGetSpecificInformationList() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -437,16 +392,13 @@ public class FileEntryContentDashboardItemTest {
 			JavaConstants.JAVAX_PORTLET_REQUEST,
 			mockLiferayPortletRenderRequest);
 
-		serviceContext.setRequest(mockHttpServletRequest);
+		_serviceContext.setRequest(mockHttpServletRequest);
 
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		List<ContentDashboardItem.SpecificInformation<?>>
 			specificInformationList =
@@ -523,10 +475,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetTitle() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertEquals(
 			"example.jpg",
@@ -537,10 +486,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetTypeLabel() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertEquals(
 			LanguageUtil.get(LocaleUtil.getDefault(), "document"),
@@ -552,10 +498,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetUserId() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertEquals(
 			TestPropsValues.getUserId(),
@@ -566,10 +509,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testGetUserName() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertEquals(
 			"Test Test", versionableContentDashboardItem.getUserName());
@@ -582,8 +522,7 @@ public class FileEntryContentDashboardItemTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"example.jpg",
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			new byte[0], null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
@@ -613,10 +552,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testIsShowContentDashboardItemVersions() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertTrue(
 			versionableContentDashboardItem.isShowContentDashboardItemVersions(
@@ -627,10 +563,7 @@ public class FileEntryContentDashboardItemTest {
 	public void testIsViewableWithLayoutPageTemplateEntry() throws Exception {
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(
-					1,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+				_getVersionableContentDashboardItem(1);
 
 		Assert.assertTrue(
 			versionableContentDashboardItem.isViewable(
@@ -646,8 +579,7 @@ public class FileEntryContentDashboardItemTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"example.jpg",
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			new byte[0], null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
@@ -694,8 +626,7 @@ public class FileEntryContentDashboardItemTest {
 	}
 
 	private VersionableContentDashboardItem<FileEntry>
-			_getVersionableContentDashboardItem(
-				int numVersions, ServiceContext serviceContext)
+			_getVersionableContentDashboardItem(int numVersions)
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
@@ -703,7 +634,7 @@ public class FileEntryContentDashboardItemTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"example.jpg",
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null, serviceContext);
+			new byte[0], null, null, _serviceContext);
 
 		fileEntry = _dlAppLocalService.updateFileEntry(
 			fileEntry.getUserId(), fileEntry.getFileEntryId(),
@@ -712,7 +643,7 @@ public class FileEntryContentDashboardItemTest {
 			RandomTestUtil.randomString(), DLVersionNumberIncrease.NONE,
 			fileEntry.getContentStream(), fileEntry.getSize(),
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			serviceContext);
+			_serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -720,14 +651,14 @@ public class FileEntryContentDashboardItemTest {
 				_portal.getClassNameId(FileEntry.class.getName()), 0,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
-				0, 0, 0, serviceContext);
+				0, 0, 0, _serviceContext);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			fileEntry.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(FileEntry.class.getName()),
 			fileEntry.getFileEntryId(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
+			AssetDisplayPageConstants.TYPE_DEFAULT, _serviceContext);
 
 		if (numVersions > 1) {
 			for (int i = 1; i < numVersions; i++) {
@@ -738,7 +669,7 @@ public class FileEntryContentDashboardItemTest {
 					fileEntry.getDescription(), RandomTestUtil.randomString(),
 					DLVersionNumberIncrease.MINOR, fileEntry.getContentStream(),
 					fileEntry.getSize(), fileEntry.getExpirationDate(),
-					fileEntry.getReviewDate(), serviceContext);
+					fileEntry.getReviewDate(), _serviceContext);
 			}
 		}
 
@@ -773,5 +704,7 @@ public class FileEntryContentDashboardItemTest {
 
 	@Inject
 	private Portal _portal;
+
+	private ServiceContext _serviceContext;
 
 }

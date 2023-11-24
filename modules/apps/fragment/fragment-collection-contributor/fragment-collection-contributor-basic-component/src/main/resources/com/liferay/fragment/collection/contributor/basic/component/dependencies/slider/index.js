@@ -1,30 +1,17 @@
+const INTERVAL = 5000;
 const MOVE_LEFT = 'move-left';
 const MOVE_RIGHT = 'move-right';
-const INTERVAL = 5000;
 
 const editMode = layoutMode === 'edit';
 const indicators = [].slice.call(
 	fragmentElement.querySelectorAll('.carousel-navigation button')
 );
 const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
-
 const next = fragmentElement.querySelector('.carousel-control-next');
-const prev = fragmentElement.querySelector('.carousel-control-prev');
 const nextItemIndexKey = `${fragmentEntryLinkNamespace}-next-item-index`;
+const prev = fragmentElement.querySelector('.carousel-control-prev');
 
 let moving = false;
-
-function getNextItemIndex() {
-	return window[nextItemIndexKey] || 0;
-}
-
-function setNextItemIndex(index) {
-	window[nextItemIndexKey] = index;
-}
-
-function getActiveIndicator() {
-	return fragmentElement.querySelector('.carousel-navigation .active');
-}
 
 function activateIndicator(activeItem, nextItem, movement) {
 	if (movement) {
@@ -44,6 +31,14 @@ function activateItem(activeItem, nextItem, movement) {
 		activeItem.classList.remove(movement);
 		nextItem.classList.remove(movement);
 	}
+}
+
+function getActiveIndicator() {
+	return fragmentElement.querySelector('.carousel-navigation .active');
+}
+
+function getNextItemIndex() {
+	return window[nextItemIndexKey] || 0;
 }
 
 function move(movement, index = null) {
@@ -97,7 +92,11 @@ function createInterval() {
 	return intervalId;
 }
 
-(function main() {
+function setNextItemIndex(index) {
+	window[nextItemIndexKey] = index;
+}
+
+(function () {
 	let intervalId = createInterval();
 
 	if (getNextItemIndex() < items.length) {

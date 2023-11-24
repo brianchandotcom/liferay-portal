@@ -4,32 +4,44 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+const INTERVAL = 5000;
 const MOVE_LEFT = 'move-left';
 const MOVE_RIGHT = 'move-right';
-const INTERVAL = 5000;
 
 const editMode = layoutMode === 'edit';
 const indicators = [].slice.call(
 	fragmentElement.querySelectorAll('.carousel-navigation button')
 );
 const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
-
 const next = fragmentElement.querySelector('.carousel-control-next');
-const prev = fragmentElement.querySelector('.carousel-control-prev');
 const nextItemIndexKey = `${fragmentEntryLinkNamespace}-next-item-index`;
+const prev = fragmentElement.querySelector('.carousel-control-prev');
 
 let moving = false;
 
-function getNextItemIndex() {
-	return window[nextItemIndexKey] || 0;
-}
+function createInterval() {
+	let intervalId = null;
 
-function setNextItemIndex(index) {
-	window[nextItemIndexKey] = index;
+	if (!editMode) {
+		intervalId = setInterval(() => {
+			if (document.contains(items[0])) {
+				move(MOVE_RIGHT);
+			}
+			else {
+				clearInterval(intervalId);
+			}
+		}, INTERVAL);
+	}
+
+	return intervalId;
 }
 
 function getActiveIndicator() {
 	return fragmentElement.querySelector('.carousel-navigation .active');
+}
+
+function getNextItemIndex() {
+	return window[nextItemIndexKey] || 0;
 }
 
 function move(movement, index = null) {
@@ -70,24 +82,11 @@ function move(movement, index = null) {
 	}, 600);
 }
 
-function createInterval() {
-	let intervalId = null;
-
-	if (!editMode) {
-		intervalId = setInterval(() => {
-			if (document.contains(items[0])) {
-				move(MOVE_RIGHT);
-			}
-			else {
-				clearInterval(intervalId);
-			}
-		}, INTERVAL);
-	}
-
-	return intervalId;
+function setNextItemIndex(index) {
+	window[nextItemIndexKey] = index;
 }
 
-(function main() {
+(function () {
 	let intervalId = createInterval();
 
 	prev.addEventListener('click', () => {

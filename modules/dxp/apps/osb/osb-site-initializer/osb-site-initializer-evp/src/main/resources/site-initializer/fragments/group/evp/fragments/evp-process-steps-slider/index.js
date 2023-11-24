@@ -4,42 +4,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const defaultColor = configuration.textColor;
-const stepsNumber = fragmentElement.querySelectorAll('h1');
-const stepsTitle = fragmentElement.querySelectorAll('h5');
-
-stepsNumber.forEach((stepNumber) => {
-	stepNumber.style.color = defaultColor;
-});
-
-stepsTitle.forEach((stepTitle) => {
-	stepTitle.style.color = defaultColor;
-});
-
+const INTERVAL = 5000;
 const MOVE_LEFT = 'move-left';
 const MOVE_RIGHT = 'move-right';
-const INTERVAL = 5000;
 
+const defaultColor = configuration.textColor;
 const editMode = layoutMode === 'edit';
 const indicators = [].slice.call(
 	fragmentElement.querySelectorAll('.carousel-navigation button')
 );
 const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
 const nextItemIndexKey = `${fragmentEntryLinkNamespace}-next-item-index`;
+const stepsNumber = fragmentElement.querySelectorAll('h1');
+const stepsTitle = fragmentElement.querySelectorAll('h5');
 
 let moving = false;
-
-function getNextItemIndex() {
-	return window[nextItemIndexKey] || 0;
-}
-
-function setNextItemIndex(index) {
-	window[nextItemIndexKey] = index;
-}
-
-function getActiveIndicator() {
-	return fragmentElement.querySelector('.carousel-navigation .active');
-}
 
 function activateIndicator(activeItem, nextItem, movement) {
 	if (movement) {
@@ -59,6 +38,31 @@ function activateItem(activeItem, nextItem, movement) {
 		activeItem.classList.remove(movement);
 		nextItem.classList.remove(movement);
 	}
+}
+
+function createInterval() {
+	let intervalId = null;
+
+	if (!editMode) {
+		intervalId = setInterval(() => {
+			if (document.contains(items[0])) {
+				move(MOVE_RIGHT);
+			}
+			else {
+				clearInterval(intervalId);
+			}
+		}, INTERVAL);
+	}
+
+	return intervalId;
+}
+
+function getNextItemIndex() {
+	return window[nextItemIndexKey] || 0;
+}
+
+function getActiveIndicator() {
+	return fragmentElement.querySelector('.carousel-navigation .active');
 }
 
 function move(movement, index = null) {
@@ -95,24 +99,19 @@ function move(movement, index = null) {
 	}, 600);
 }
 
-function createInterval() {
-	let intervalId = null;
-
-	if (!editMode) {
-		intervalId = setInterval(() => {
-			if (document.contains(items[0])) {
-				move(MOVE_RIGHT);
-			}
-			else {
-				clearInterval(intervalId);
-			}
-		}, INTERVAL);
-	}
-
-	return intervalId;
+function setNextItemIndex(index) {
+	window[nextItemIndexKey] = index;
 }
 
-function main() {
+(function () {
+	stepsNumber.forEach((stepNumber) => {
+		stepNumber.style.color = defaultColor;
+	});
+
+	stepsTitle.forEach((stepTitle) => {
+		stepTitle.style.color = defaultColor;
+	});
+
 	let intervalId = createInterval();
 
 	if (getNextItemIndex() < items.length) {
@@ -144,6 +143,4 @@ function main() {
 			intervalId = createInterval();
 		});
 	});
-}
-
-main();
+})();

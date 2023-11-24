@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+const INTERVAL = 5000;
 const MOVE_LEFT = 'move-left';
 const MOVE_RIGHT = 'move-right';
-const INTERVAL = 5000;
 
 const editMode = layoutMode === 'edit';
 const indicators = [].slice.call(
@@ -16,18 +16,6 @@ const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
 const nextItemIndexKey = `${fragmentEntryLinkNamespace}-next-item-index`;
 
 let moving = false;
-
-function getNextItemIndex() {
-	return window[nextItemIndexKey] || 0;
-}
-
-function setNextItemIndex(index) {
-	window[nextItemIndexKey] = index;
-}
-
-function getActiveIndicator() {
-	return fragmentElement.querySelector('.carousel-navigation .active');
-}
 
 function activateIndicator(activeItem, nextItem, movement) {
 	if (movement) {
@@ -47,6 +35,31 @@ function activateItem(activeItem, nextItem, movement) {
 		activeItem.classList.remove(movement);
 		nextItem.classList.remove(movement);
 	}
+}
+
+function createInterval() {
+	let intervalId = null;
+
+	if (!editMode) {
+		intervalId = setInterval(() => {
+			if (document.contains(items[0])) {
+				move(MOVE_RIGHT);
+			}
+			else {
+				clearInterval(intervalId);
+			}
+		}, INTERVAL);
+	}
+
+	return intervalId;
+}
+
+function getActiveIndicator() {
+	return fragmentElement.querySelector('.carousel-navigation .active');
+}
+
+function getNextItemIndex() {
+	return window[nextItemIndexKey] || 0;
 }
 
 function move(movement, index = null) {
@@ -83,24 +96,11 @@ function move(movement, index = null) {
 	}, 600);
 }
 
-function createInterval() {
-	let intervalId = null;
-
-	if (!editMode) {
-		intervalId = setInterval(() => {
-			if (document.contains(items[0])) {
-				move(MOVE_RIGHT);
-			}
-			else {
-				clearInterval(intervalId);
-			}
-		}, INTERVAL);
-	}
-
-	return intervalId;
+function setNextItemIndex(index) {
+	window[nextItemIndexKey] = index;
 }
 
-function main() {
+(function () {
 	let intervalId = createInterval();
 
 	if (nextItemIndex && nextItemIndex < items.length) {
@@ -132,6 +132,4 @@ function main() {
 			intervalId = createInterval();
 		});
 	});
-}
-
-main();
+})();

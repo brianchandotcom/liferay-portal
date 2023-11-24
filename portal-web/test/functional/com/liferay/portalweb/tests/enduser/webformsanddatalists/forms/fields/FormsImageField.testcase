@@ -572,9 +572,7 @@ definition {
 				baseURL = "http://www.able.com:8080",
 				pageName = "Form Page");
 
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "image_larger_than_5_MB.jpg");
+			UploadDependencyFile.uploadFile(fileName = "image_larger_than_5_MB.jpg");
 		}
 
 		task ("Then the Guest user should not be able to submit the form with a file larger than 5.0 MB") {

@@ -19,7 +19,6 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.liveusers.messaging.LiveUsersMessageListener" id="messageListener.live_users" />
-	<bean class="com.liferay.portlet.documentlibrary.messaging.PDFProcessorMessageListener" id="messageListener.document_library_pdf_processor" />
 
 	<!-- Configurator -->
 
@@ -34,12 +33,6 @@
 				</bean>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
 					<constructor-arg name="destinationName" value="liferay/convert_process" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_SERIAL" />
-					</constructor-arg>
-				</bean>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/document_library_pdf_processor" />
 					<constructor-arg name="destinationType">
 						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_SERIAL" />
 					</constructor-arg>
@@ -68,11 +61,6 @@
 				<entry key="liferay/convert_process">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.convert_process" />
-					</list>
-				</entry>
-				<entry key="liferay/document_library_pdf_processor">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.document_library_pdf_processor" />
 					</list>
 				</entry>
 				<entry key="liferay/live_users">

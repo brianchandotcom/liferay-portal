@@ -246,9 +246,9 @@ definition {
 					columnName = "name",
 					tableEntry = ${pageTemplateName});
 
-				SelectWindow(value1 = "title=${pageTemplateName} - Test Site Name - ${siteName}");
+				SelectWindow(value1 = "title=Page Templates - Test Site Name - ${siteName}");
 
-				ControlMenu.viewHeaderDraftTitle(headerTitle = ${pageTemplateName});
+				PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
 
 				Close.closeAndSelectWindow(value1 = "title=Locked Pages - Test Site Name - ${siteName}");
 			}

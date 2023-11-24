@@ -68,7 +68,6 @@ export default function VideoStreaming({
 			}
 
 			player.qualitySelectorHls({
-				displayCurrentQuality: true,
 				vjsIconClass: 'vjs-icon-cog',
 			});
 		}

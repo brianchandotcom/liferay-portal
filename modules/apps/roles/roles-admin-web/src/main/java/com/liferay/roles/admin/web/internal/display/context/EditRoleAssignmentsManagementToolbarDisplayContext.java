@@ -114,7 +114,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			).build());
 	}
 
-	public String getClearResultsURL() {
+	public String getClearResultsURL() throws PortalException {
 		return PortletURLBuilder.create(
 			getPortletURL()
 		).setKeywords(
@@ -122,7 +122,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		).buildString();
 	}
 
-	public CreationMenu getCreationMenu() {
+	public CreationMenu getCreationMenu() throws PortalException {
 		if (!_tabs2.equals("segments")) {
 			return null;
 		}
@@ -176,7 +176,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		).build();
 	}
 
-	public SearchContainer<Group> getGroupSearchContainer() {
+	public SearchContainer<Group> getGroupSearchContainer()
+		throws PortalException {
+
 		GroupSearch groupSearch = new GroupSearch(
 			_renderRequest, getPortletURL());
 
@@ -231,7 +233,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return _orderByCol;
 	}
 
-	public List<DropdownItem> getOrderByDropDownItems() {
+	public List<DropdownItem> getOrderByDropDownItems() throws PortalException {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(Objects.equals(getOrderByCol(), "name"));
@@ -323,7 +325,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return organizationSearch;
 	}
 
-	public PortletURL getPortletURL() {
+	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		if (_tabs3.equals("current")) {
@@ -362,7 +364,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return portletURL;
 	}
 
-	public String getSearchActionURL() {
+	public String getSearchActionURL() throws PortalException {
 		return PortletURLBuilder.create(
 			getPortletURL()
 		).setRedirect(
@@ -400,7 +402,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSortingURL() {
+	public String getSortingURL() throws PortalException {
 		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
@@ -426,7 +428,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return _tabs2;
 	}
 
-	public SearchContainer<UserGroup> getUserGroupSearchContainer() {
+	public SearchContainer<UserGroup> getUserGroupSearchContainer()
+		throws PortalException {
+
 		SearchContainer<UserGroup> userGroupSearchContainer =
 			new SearchContainer<>(
 				_renderRequest, getPortletURL(), null,
@@ -477,7 +481,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return userGroupSearchContainer;
 	}
 
-	public SearchContainer<User> getUserSearchContainer() {
+	public SearchContainer<User> getUserSearchContainer()
+		throws PortalException {
+
 		UserSearch userSearch = new UserSearch(_renderRequest, getPortletURL());
 
 		ThemeDisplay themeDisplay =
@@ -514,7 +520,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return userSearch;
 	}
 
-	public List<ViewTypeItem> getViewTypeItems() {
+	public List<ViewTypeItem> getViewTypeItems() throws PortalException {
 		if (_tabs2.equals("segments")) {
 			return null;
 		}

@@ -61,8 +61,6 @@ page import="com.liferay.portal.kernel.util.Time" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.Map" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

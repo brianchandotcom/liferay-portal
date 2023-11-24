@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.product.type.virtual.internal.upgrade.v3_0_0;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -19,9 +18,9 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String updateCPDefinitionVirtualSettingGroupId = StringBundler.concat(
-			"update CPDefinitionVirtualSetting set groupId = ?",
-			" where classPK = ?");
+		String updateCPDefinitionVirtualSettingGroupId =
+			"update CPDefinitionVirtualSetting set groupId = ? where classPK " +
+				"= ?";
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select groupId, cpDefinitionId from CPDefinition");

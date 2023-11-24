@@ -31,10 +31,6 @@ long durationDays = 0;
 if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration() > 0)) {
 	durationDays = commerceVirtualOrderItem.getDuration() / Time.DAY;
 }
-
-Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-	"commerceVirtualOrderItemId", String.valueOf(commerceVirtualOrderItem.getCommerceVirtualOrderItemId())
-).build();
 %>
 
 <portlet:actionURL name="/commerce_order/edit_commerce_virtual_order_item" var="editCommerceVirtualOrderItemActionURL" />
@@ -56,7 +52,11 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		title='<%= LanguageUtil.get(request, "details") %>'
 	>
 		<frontend-data-set:classic-display
-			contextParams="<%= contextParams %>"
+			contextParams='<%=
+				HashMapBuilder.<String, String>put(
+					"commerceVirtualOrderItemId", String.valueOf(commerceVirtualOrderItem.getCommerceVirtualOrderItemId())
+				).build()
+			%>'
 			dataProviderKey="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_ORDER_FILES %>"
 			formName="fm"
 			id="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_ORDER_FILES %>"
@@ -66,7 +66,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	</commerce-ui:panel>
 
 	<commerce-ui:panel
-		title='<%= LanguageUtil.get(request, "activationStatus") %>'
+		title='<%= LanguageUtil.get(request, "activation-status") %>'
 	>
 		<aui:select name="activationStatus">
 

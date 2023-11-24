@@ -1,5 +1,3 @@
-<%@ page import="com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry" %>
-
 <%--
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
@@ -96,18 +94,20 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 								%>
 
 								<c:if test="<%= commerceVirtualOrderItemContentDisplayContext.hasPermission(permissionChecker, commerceVirtualOrderItem, CommerceVirtualOrderActionKeys.DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM) && (cpDefinitionVirtualSetting != null) %>">
-									<% for(CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry: commerceVirtualOrderItem.getCommerceVirtualOrderItemFileEntries()) {
-									String downloadURL = commerceVirtualOrderItemContentDisplayContext.getDownloadURL(commerceVirtualOrderItem, commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId());
-									String downloadLabel = "download - " + commerceVirtualOrderItemFileEntry.getVersion(); %>
-									<aui:form action="<%= String.valueOf(commerceVirtualOrderItemContentDisplayContext.getDownloadResourceURL(commerceVirtualOrderItem.getCommerceVirtualOrderItemId(), commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId())) %>" method="post" name='<%= commerceVirtualOrderItem.getCommerceVirtualOrderItemId() + "-" + commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId() + "Fm" %>' />
 
-									<liferay-ui:icon
-										data="<%= data %>"
-										label="<%= true %>"
-										message="<%= downloadLabel %>"
-										url="<%= downloadURL %>"
-										useDialog="<%= useDialog %>"
-									/>
+									<%
+									for (CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry : commerceVirtualOrderItem.getCommerceVirtualOrderItemFileEntries()) {
+									%>
+
+										<aui:form action="<%= String.valueOf(commerceVirtualOrderItemContentDisplayContext.getDownloadResourceURL(commerceVirtualOrderItem.getCommerceVirtualOrderItemId(), commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId())) %>" method="post" name='<%= commerceVirtualOrderItem.getCommerceVirtualOrderItemId() + "-" + commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId() + "Fm" %>' />
+
+										<clay:icon
+											data="<%= data %>"
+											label="<%= true %>"
+											message='<%= "download - " + commerceVirtualOrderItemFileEntry.getVersion() %>'
+											url="<%= commerceVirtualOrderItemContentDisplayContext.getDownloadURL(commerceVirtualOrderItem, commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId()) %>"
+											useDialog="<%= useDialog %>"
+										/>
 
 									<%
 									}

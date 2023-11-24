@@ -257,6 +257,7 @@ public class PlacedOrderItemResourceTest
 							commerceVirtualOrderItemFileEntries =
 								commerceVirtualOrderItem.
 									getCommerceVirtualOrderItemFileEntries();
+
 						CommerceVirtualOrderItemFileEntry
 							commerceVirtualOrderItemFileEntry =
 								commerceVirtualOrderItemFileEntries.get(0);

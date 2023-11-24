@@ -31,10 +31,10 @@ FileEntry fileEntry = cpDefinitionVirtualSettingDisplayContext.getFileEntry(file
 	title='<%= LanguageUtil.get(request, "insert-the-url-or-select-a-file-of-your-virtual-product") %>'
 >
 	<aui:form action="<%= editCPDVirtualSettingFileEntryActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cpdVirtualSettingFileEntry == null ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpdVirtualSettingFileEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="className" type="hidden" value="<%= cpDefinitionVirtualSetting != null ? cpDefinitionVirtualSetting.getClassName() : StringPool.BLANK %>" />
-		<aui:input name="classPK" type="hidden" value="<%= cpDefinitionVirtualSetting != null ? cpDefinitionVirtualSetting.getClassPK() : 0 %>" />
+		<aui:input name="className" type="hidden" value="<%= (cpDefinitionVirtualSetting != null) ? cpDefinitionVirtualSetting.getClassName() : StringPool.BLANK %>" />
+		<aui:input name="classPK" type="hidden" value="<%= (cpDefinitionVirtualSetting != null) ? cpDefinitionVirtualSetting.getClassPK() : 0 %>" />
 		<aui:input name="cpDefinitionVirtualSettingId" type="hidden" value="<%= cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId() %>" />
 		<aui:input name="cpdVirtualSettingFileEntryId" type="hidden" value="<%= cpdVirtualSettingFileEntryId %>" />
 		<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />

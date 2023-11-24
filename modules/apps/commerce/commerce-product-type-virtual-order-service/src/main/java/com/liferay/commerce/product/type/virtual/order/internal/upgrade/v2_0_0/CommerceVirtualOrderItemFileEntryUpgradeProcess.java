@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.commerce.product.type.virtual.order.internal.upgrade.v2_0_0;
 
 import com.liferay.commerce.product.type.virtual.order.internal.upgrade.v2_0_0.util.CommerceVirtualOrderItemFileEntryTable;
@@ -12,6 +17,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * @author Andrea Sbarra
+ */
 public class CommerceVirtualOrderItemFileEntryUpgradeProcess
 	extends UpgradeProcess {
 

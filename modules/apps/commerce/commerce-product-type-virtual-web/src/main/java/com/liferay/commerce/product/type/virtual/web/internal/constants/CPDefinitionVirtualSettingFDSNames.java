@@ -5,8 +5,7 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.constants;
 
-import static com.liferay.commerce.constants.CommercePortletKeys.COMMERCE_ORDER;
-
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 
 /**
@@ -15,7 +14,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 public class CPDefinitionVirtualSettingFDSNames {
 
 	public static final String VIRTUAL_ORDER_FILES =
-		COMMERCE_ORDER + "-virtualOrderFiles";
+		CommercePortletKeys.COMMERCE_ORDER + "-virtualOrderFiles";
 
 	public static final String VIRTUAL_SETTING_FILES =
 		CPPortletKeys.CP_DEFINITIONS + "-virtualSettingFiles";

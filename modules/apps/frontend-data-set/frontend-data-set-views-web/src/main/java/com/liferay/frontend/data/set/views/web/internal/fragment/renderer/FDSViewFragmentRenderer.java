@@ -23,6 +23,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -259,10 +260,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			fragmentEntryLink.getCompanyId(), fdsEntryObjectEntryERC,
 			fdsEntryObjectDefinition);
 
+		JSONArray fdsFieldsJSONArray = _getFieldsJSONArray(
+			fragmentEntryLink, fdsViewObjectDefinition, fdsViewObjectEntry);
+
 		_reactRenderer.renderReact(
 			componentDescriptor,
 			HashMapBuilder.<String, Object>put(
-				"apiURL", _getAPIURL(fdsEntryObjectEntry, httpServletRequest)
+				"apiURL",
+				_getAPIURL(
+					fdsEntryObjectEntry, fdsFieldsJSONArray, httpServletRequest)
 			).put(
 				"creationMenu",
 				_getCreationMenuJSONObject(
@@ -295,12 +301,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					).put(
 						"name", "table"
 					).put(
-						"schema",
-						JSONUtil.put(
-							"fields",
-							_getFieldsJSONArray(
-								fragmentEntryLink, fdsViewObjectDefinition,
-								fdsViewObjectEntry))
+						"schema", JSONUtil.put("fields", fdsFieldsJSONArray)
 					))
 			).build(),
 			httpServletRequest, writer);
@@ -313,7 +314,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getAPIURL(
-		ObjectEntry fdsEntryObjectEntry,
+		ObjectEntry fdsEntryObjectEntry, JSONArray fdsFieldsJSONArray,
 		HttpServletRequest httpServletRequest) {
 
 		Map<String, Object> properties = fdsEntryObjectEntry.getProperties();
@@ -327,7 +328,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				StringPool.BLANK));
 		sb.append(String.valueOf(properties.get("restEndpoint")));
 
-		return _interpolateURL(sb.toString(), httpServletRequest);
+		String apiURL = _getNestedFields(sb.toString(), fdsFieldsJSONArray);
+
+		return _interpolateURL(apiURL, httpServletRequest);
 	}
 
 	private JSONObject _getCreationMenuJSONObject(
@@ -397,6 +400,25 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"year", calendar.get(Calendar.YEAR)
 		);
+	}
+
+	private JSONArray _getFieldNameJSONArray(String fieldName) {
+		JSONArray jsonArray = null;
+
+		try {
+			jsonArray = _jsonFactory.createJSONArray(
+				StringUtil.split(fieldName, CharPool.PERIOD));
+		}
+		catch (Exception exception) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Unable to build JSONArray from '", fieldName, "'"),
+					exception);
+			}
+		}
+
+		return jsonArray;
 	}
 
 	private JSONArray _getFieldsJSONArray(
@@ -687,6 +709,53 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					"target", properties.get("type")
 				);
 			});
+	}
+
+	private String _getNestedFields(
+		String apiUrl, JSONArray fdsFieldsJSONArray) {
+
+		if (fdsFieldsJSONArray == null) {
+			return apiUrl;
+		}
+
+		String nestedFields = StringPool.BLANK;
+		int nestedFieldsDepth = 1;
+
+		for (int i = 0; i < fdsFieldsJSONArray.length(); i++) {
+			JSONObject fdsFieldJSONObject = fdsFieldsJSONArray.getJSONObject(i);
+
+			String fdsFieldValue = fdsFieldJSONObject.getString("fieldName");
+
+			JSONArray jsonArray = _getFieldNameJSONArray(fdsFieldValue);
+
+			if (jsonArray.length() > 1) {
+				nestedFields = StringUtil.add(
+					nestedFields, jsonArray.getString(0));
+
+				if (jsonArray.length() > nestedFieldsDepth) {
+					nestedFieldsDepth = jsonArray.length() - 1;
+				}
+			}
+		}
+
+		if (nestedFields.equals(StringPool.BLANK)) {
+			return apiUrl;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(apiUrl);
+		sb.append("?nestedFields=");
+		sb.append(
+			StringUtil.replaceLast(
+				nestedFields, CharPool.COMMA, StringPool.BLANK));
+
+		if (nestedFieldsDepth > 1) {
+			sb.append("&nestedFieldsDepth=");
+			sb.append(nestedFieldsDepth);
+		}
+
+		return sb.toString();
 	}
 
 	private ObjectEntry _getObjectEntry(

@@ -136,8 +136,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_AUDIT_CARD</td>
-	<td>//div[contains(@class,'page-audit')]//button[contains(@aria-label,'${cardName}')]</td>
+	<td>PAGE_AUDIT_ELEMENT</td>
+	<td>//div[contains(@class,'page-audit')]//button[@aria-label='${ariaLabel}']</td>
 	<td></td>
 </tr>
 <tr>

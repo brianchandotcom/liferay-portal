@@ -1,0 +1,125 @@
+[
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/home",
+				"name": "Home",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/view-tickets",
+				"menuItems": [
+					{
+						"friendlyURL": "/admin-tickets",
+						"name": "Admin View",
+						"type": "layout"
+					},
+					{
+						"friendlyURL": "/tickets-dashboard",
+						"name": "Tickets Dashboard",
+						"type": "layout"
+					}
+				],
+				"name": "View Tickets",
+				"type": "layout"
+			},
+			{
+				"menuItems": [
+					{
+						"friendlyURL": "/trialguide",
+						"name": "Trial Guide",
+						"type": "layout",
+						"useCustomName": true
+					},
+					{
+						"friendlyURL": "/attachments",
+						"name": "Attachments",
+						"type": "layout"
+					},
+					{
+						"friendlyURL": "/faq",
+						"name": "FAQ",
+						"type": "layout"
+					}
+				],
+				"name": "Learning",
+				"type": "node"
+			}
+		],
+		"name": "Main Menu",
+		"navigationType": "Primary",
+		"type": "node"
+	},
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/home",
+				"name": "Home",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/view-tickets",
+				"name": "View Tickets",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/tickets-dashboard",
+				"name": "Tickets Dashboard",
+				"type": "layout"
+			}
+		],
+		"name": "Footer Clarity Menu",
+		"type": "node"
+	},
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/welcome",
+				"name": "Trial Guide",
+				"type": "layout"
+			},
+			{
+				"name": "Documentation",
+				"type": "url",
+				"url": "https://learn.liferay.com",
+				"useNewTab": "true"
+			},
+			{
+				"friendlyURL": "/faq",
+				"name": "FAQ",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/attachments",
+				"name": "Attachments",
+				"type": "layout"
+			}
+		],
+		"name": "Footer Trial Menu",
+		"type": "node"
+	},
+	{
+		"menuItems": [
+			{
+				"name": "About Liferay",
+				"type": "url",
+				"url": "https://www.liferay.com/company/our-story",
+				"useNewTab": "true"
+			},
+			{
+				"name": "Liferay Experience Cloud",
+				"type": "url",
+				"url": "https://www.liferay.com/products/liferay-cloud-capabilities",
+				"useNewTab": "true"
+			},
+			{
+				"name": "Liferay.com",
+				"type": "url",
+				"url": "https://www.liferay.com",
+				"useNewTab": "true"
+			}
+		],
+		"name": "Footer Liferay Menu",
+		"type": "node"
+	}
+]

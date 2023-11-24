@@ -1,0 +1,10 @@
+{
+	"friendlyURL": "/view-tickets",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "View Tickets"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

@@ -1,0 +1,291 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "DIALECT-dialect-text",
+						"siteKey": "[$GROUP_KEY$]"
+					},
+					"fragmentConfig": {
+						"textType": "h1"
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "https://loremnotipsum.com/help-and-faq/"
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"hidden": true
+					},
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] {\n    background-position: 0 -64px !important;\n    background-repeat: no-repeat;\n}\n",
+					"fragmentStyle": {
+						"backgroundColor": "colorBrandSecondaryLighten6",
+						"backgroundFragmentImage": {
+							"title": {
+								"value": "background_header_2"
+							},
+							"url": {
+								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/M2H8/Look and Feel/Public and Private Master Pages/background_header_2.svg$]"
+							}
+						},
+						"borderWidth": "0"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-text",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"textType": "h1"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Frequently Asked Questions"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontSize": "1.125rem",
+										"fontWeight": "fontWeightNormal",
+										"marginBottom": "2",
+										"paddingBottom": "4",
+										"paddingTop": "4",
+										"textAlign": "center",
+										"textColor": "colorBrandPrimaryLighten6"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "5",
+						"marginLeft": "3",
+						"marginRight": "3",
+						"marginTop": "5",
+						"paddingBottom": "5",
+						"paddingLeft": "6",
+						"paddingRight": "6",
+						"paddingTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 4,
+						"marginLeft": 1,
+						"marginRight": 1,
+						"marginTop": 4,
+						"opacity": 100,
+						"paddingBottom": 4,
+						"paddingLeft": 6,
+						"paddingRight": 6,
+						"paddingTop": 4,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionConfig": {
+								"collectionReference": {
+									"className": "com.liferay.asset.list.model.AssetListEntry",
+									"classPK": "[$ASSET_LIST_ENTRY_ID:FAQS$]"
+								},
+								"collectionType": "Collection"
+							},
+							"collectionViewports": [
+								{
+									"collectionViewportDefinition": {
+										"numberOfColumns": 1
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"collectionViewportDefinition": {
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"collectionViewportDefinition": {
+									},
+									"id": "tablet"
+								}
+							],
+							"displayAllItems": false,
+							"displayAllPages": true,
+							"listItemStyle": "",
+							"listStyle": "",
+							"numberOfColumns": 1,
+							"numberOfItems": 5,
+							"numberOfItemsPerPage": 20,
+							"numberOfPages": 5,
+							"paginationType": "Numeric",
+							"showAllItems": false,
+							"templateKey": ""
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"collectionItemConfig": {
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "tryitnow-faq",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"panelId": "1"
+											},
+											"fragmentFields": [
+												{
+													"id": "txt-header",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"mapping": {
+																"fieldKey": "question",
+																"itemReference": {
+																	"contextSource": "CollectionItem"
+																}
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "answer",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "CollectionItem"
+							}
+						],
+						"type": "Collection"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "main"
+		},
+		"themeName": "Dialect"
+	},
+	"version": 1.1
+}

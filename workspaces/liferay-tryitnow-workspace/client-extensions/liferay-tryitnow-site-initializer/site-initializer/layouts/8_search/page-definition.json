@@ -1,0 +1,344 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "3",
+								"marginTop": "3",
+								"paddingBottom": "4",
+								"paddingTop": "4"
+							},
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 12
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"destination": "",
+													"displayStyle": "ddmTemplate_51273",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"invisible": "false",
+													"keywordsParameterName": "q",
+													"scopeParameterName": "scope",
+													"searchScope": "this-site",
+													"showStagedResults": "false",
+													"useAdvancedSearchSyntax": "false"
+												},
+												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyleGroupId": "[$GROUP_ID$]"
+												},
+												"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyle": "default",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"frequenciesVisible": "true",
+													"frequencyThreshold": "1",
+													"maxTerms": "10",
+													"parameterName": "user"
+												},
+												"widgetName": "com_liferay_portal_search_web_user_facet_portlet_UserFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyleGroupId": "[$GROUP_ID$]"
+												},
+												"widgetName": "com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 9
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayInDocumentForm": "false",
+													"displayStyle": "ddmTemplate_60008",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"fieldsToDisplay": "",
+													"highlightEnabled": "true",
+													"paginationDelta": "20",
+													"paginationDeltaParameterName": "delta",
+													"paginationStartParameterName": "start",
+													"viewInContext": "true"
+												},
+												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 9
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyleGroupId": "[$GROUP_ID$]"
+												},
+												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main"
+		}
+	},
+	"version": 1.1
+}

@@ -1,0 +1,10 @@
+{
+	"friendlyURL": "/admin-tickets",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Admin View"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

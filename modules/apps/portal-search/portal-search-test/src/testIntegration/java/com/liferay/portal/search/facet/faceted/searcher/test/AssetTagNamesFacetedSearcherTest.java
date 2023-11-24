@@ -24,6 +24,7 @@ import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.FacetsAssert;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -55,10 +56,10 @@ public class AssetTagNamesFacetedSearcherTest
 		_testAggregation(StringUtil::toLowerCase);
 	}
 
-		Map<String, Integer> frequencies = Collections.singletonMap(tagName, 1);
-
-		FacetsAssert.assertFrequencies(
-			facet.getFieldName(), searchContext, hits, frequencies);
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testAggregationWithCaseSensitiveTags() throws Exception {
+		_testAggregation(s -> s);
 	}
 
 	@Test
@@ -86,14 +87,10 @@ public class AssetTagNamesFacetedSearcherTest
 		_testAggregation(StringUtil::toLowerCase);
 	}
 
-		Map<String, String> expected = userSearchFixture.toMap(
-			user, assetTagNames);
-
-		assertTags("\"Enterprise\"", expected);
-		assertTags("\"Open\"", expected);
-		assertTags("\"Source\"", expected);
-		assertTags("\"Open Source\"", expected);
-		assertTags("\"For   Life\"", expected);
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testSearchQuotedWithCaseSensitiveTags() throws Exception {
+		_testSearchQuoted(s -> s);
 	}
 
 	@Test
@@ -101,19 +98,10 @@ public class AssetTagNamesFacetedSearcherTest
 		_testSelection(StringUtil::toLowerCase);
 	}
 
-		facet.select(tagName);
-
-		searchContext.addFacet(facet);
-
-		Hits hits = search(searchContext);
-
-		assertEntryClassNames(
-			Arrays.asList(User.class.getName()), hits, searchContext);
-
-		Map<String, Integer> frequencies = Collections.singletonMap(tagName, 1);
-
-		FacetsAssert.assertFrequencies(
-			facet.getFieldName(), searchContext, hits, frequencies);
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testSelectionWithCaseSensitiveTags() throws Exception {
+		_testSelection(s -> s);
 	}
 
 	protected void addJournalArticle(Group group, String title)

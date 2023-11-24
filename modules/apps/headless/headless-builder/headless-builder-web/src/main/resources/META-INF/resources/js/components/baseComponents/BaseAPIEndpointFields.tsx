@@ -188,11 +188,32 @@ export default function BaseAPIEndpointFields({
 			);
 		}
 
-		data.httpMethod?.key === 'post' &&
-			setData((previousValue) => ({
-				...previousValue,
-				retrieveType: {key: 'singleElement', value: ''},
-			}));
+		if (data.httpMethod?.key === 'post') {
+			setData((previousValue) => {
+				delete previousValue.parameter;
+				delete previousValue.pathParameter;
+				delete previousValue.pathParameterDescription;
+
+				return {
+					...previousValue,
+					retrieveType: {key: 'singleElement', value: ''},
+				};
+			});
+		}
+		else if (data.httpMethod?.key === 'get') {
+			setData((previousValue) => {
+				delete previousValue.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId;
+
+				return {
+					...previousValue,
+					...(!previousValue.parameter && {parameter: ''}),
+					...(!previousValue.pathParameter && {pathParameter: ''}),
+					...(!previousValue.pathParameterDescription && {
+						pathParameterDescription: '',
+					}),
+				};
+			});
+		}
 	}, [data.httpMethod, httpMethodOptions, setData]);
 
 	const handleDropdownChange = (

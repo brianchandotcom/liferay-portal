@@ -231,13 +231,20 @@ export default function EditAPIEndpoint({
 							key: localUIData.httpMethod?.key!,
 							name: localUIData.httpMethod?.name!,
 						},
-						pathParameter: localUIData.pathParameter,
-						pathParameterDescription:
-							localUIData.pathParameterDescription,
-						r_requestAPISchemaToAPIEndpoints_c_apiSchemaId:
-							localUIData.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId,
-						r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
-							localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
+						pathParameter: localUIData.pathParameter
+							? localUIData.pathParameter
+							: '',
+						pathParameterDescription: localUIData.pathParameterDescription
+							? localUIData.pathParameterDescription
+							: '',
+						...(localUIData.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId && {
+							r_requestAPISchemaToAPIEndpoints_c_apiSchemaId:
+								localUIData.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId,
+						}),
+						...(localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId && {
+							r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
+								localUIData.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
+						}),
 						retrieveType: localUIData.retrieveType,
 						scope: localUIData.scope,
 					},

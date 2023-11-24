@@ -32,12 +32,12 @@ definition {
 		}
 	}
 
-	@description = "Verifying JS Polution Vulnerability"
+	@description = "This is a test for LPS-171989. Verifying JS prototype polution vulnerability in IFrame portlet."
 	@priority = 4
 	test NavigateToSourceURLWithXSS {
 		var portalURL = PropsUtil.get("portal.url");
 
-		task ("Given Configuration to the IFrame widget") {
+		task ("Given a user has a IFrame widget on page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -57,8 +57,8 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("When Navigating to the IFrame location with url parameters in a new Tab") {
-			Open.openInTheNewTab(value1 = "${portalURL}/web/test-site-name#constructor[prototype][comboBase]=data%3A%2Calert%281%29");
+		task ("When the user navigates to the IFrame location with xss in a new Tab") {
+			Open.openInTheNewTab(value1 = "${portalURL}/web/test-site-name/test-page-name#constructor[prototype][comboBase]=data%3A%2Calert%281%29");
 		}
 
 		task ("Then alert popup should not appear") {

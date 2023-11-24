@@ -89,6 +89,8 @@ public class FileEntryContentDashboardItemTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+
+		_serviceContext.setRequest(_getMockHttpServletRequest());
 	}
 
 	@Test
@@ -379,21 +381,6 @@ public class FileEntryContentDashboardItemTest {
 
 	@Test
 	public void testGetSpecificInformationList() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			new MockLiferayPortletRenderRequest();
-
-		mockLiferayPortletRenderRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, new ThemeDisplay());
-
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST,
-			mockLiferayPortletRenderRequest);
-
-		_serviceContext.setRequest(mockHttpServletRequest);
-
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
@@ -598,11 +585,23 @@ public class FileEntryContentDashboardItemTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new MockLiferayPortletRenderRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(mockHttpServletRequest);
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST,
+			mockLiferayPortletRenderRequest);
+
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletActionResponse());
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return mockHttpServletRequest;
 	}

@@ -718,6 +718,8 @@ public class PayPalCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePaymentEntry.getCompanyId(),
@@ -736,8 +738,6 @@ public class PayPalCommercePaymentIntegration
 			_getPayPalGroupServiceConfiguration(commercePaymentEntry);
 
 		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
-
-		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
 		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
 

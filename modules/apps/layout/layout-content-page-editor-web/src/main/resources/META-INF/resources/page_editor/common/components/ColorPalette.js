@@ -33,8 +33,8 @@ export default function ColorPalette({
 		<div className="page-editor__color-palette">
 			{label && <label htmlFor={colorPaletteId}>{label}</label>}
 
-			<div className="palette-container" id={colorPaletteId}>
-				<ul className="list-unstyled palette-items-container">
+			<div className="mb-1" id={colorPaletteId}>
+				<ul className="d-flex flex-wrap list-unstyled">
 					{themeColors.map((color) => (
 						<li
 							className={classNames('palette-item', {
@@ -46,7 +46,7 @@ export default function ColorPalette({
 						>
 							<ClayButton
 								block
-								className="p-1 palette-item-inner rounded-circle"
+								className="border-0 overflow-hidden p-1 palette-item-inner rounded-circle"
 								displayType="unstyled"
 								onClick={() => onColorSelect(color)}
 								size="sm"

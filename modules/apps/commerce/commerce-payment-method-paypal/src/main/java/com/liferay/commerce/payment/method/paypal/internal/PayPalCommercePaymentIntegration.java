@@ -718,14 +718,10 @@ public class PayPalCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
-
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePaymentEntry.getCompanyId(),
 				commercePaymentEntry.getCurrencyCode());
-
-		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
 		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
 
@@ -734,11 +730,6 @@ public class PayPalCommercePaymentIntegration
 			_getAmountValue(
 				commercePaymentEntry.getAmount(), commerceCurrency));
 
-		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
-
-		purchaseUnitRequest.description(
-			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
-
 		Payee payee = new Payee();
 
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
@@ -746,14 +737,23 @@ public class PayPalCommercePaymentIntegration
 
 		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
 
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+
+		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
+
+		purchaseUnitRequest.description(
+			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
+
 		purchaseUnitRequest.payee(payee);
 
 		purchaseUnitRequest.referenceId(
 			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()));
 
-		purchaseUnitRequests.add(purchaseUnitRequest);
-
-		return purchaseUnitRequests;
+		return new ArrayList<PurchaseUnitRequest>() {
+			{
+				add(purchaseUnitRequest);
+			}
+		};
 	}
 
 	private RefundRequest _buildRefundRequestBody(

@@ -1451,7 +1451,7 @@ definition {
 				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 
-		Click(
+		Click.mouseOverClick(
 			key_menuItem = "Copy Link",
 			locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
 

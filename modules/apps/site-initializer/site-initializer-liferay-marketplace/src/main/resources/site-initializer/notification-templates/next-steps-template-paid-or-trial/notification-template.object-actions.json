@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "priceModel == \"Paid\" || priceModel == \"Trial\"",
+		"conditionExpression": "priceModel == \"paid\" AND productType == \"dxp\"",
 		"externalReferenceCode": "MKT-DXP-PAID-OR-TRIAL-EMAIL",
 		"label": {
 			"en_US": "DXP Paid or Trial Email Template"

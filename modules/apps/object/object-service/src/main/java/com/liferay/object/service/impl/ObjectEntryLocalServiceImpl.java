@@ -255,7 +255,7 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_fillDefaultValue(
-			_objectFieldLocalService.getObjectFields(objectDefinitionId),
+			true, _objectFieldLocalService.getObjectFields(objectDefinitionId),
 			values);
 
 		_validateValues(
@@ -1452,6 +1452,12 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
+		_fillDefaultValue(
+			false,
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			values);
+
 		_validateValues(
 			user.isGuestUser(), objectEntry.getObjectDefinitionId(),
 			objectEntry, serviceContext, userId, values);
@@ -1885,10 +1891,22 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _fillDefaultValue(
-		List<ObjectField> objectFields, Map<String, Serializable> values) {
+		boolean addObjectEntry, List<ObjectField> objectFields,
+		Map<String, Serializable> values) {
 
 		for (ObjectField objectField : objectFields) {
-			if (values.get(objectField.getName()) != null) {
+			if (Validator.isNotNull(objectField.getRelationshipType()) &&
+				Validator.isNull(values.get(objectField.getName())) &&
+				(addObjectEntry || values.containsKey(objectField.getName()))) {
+
+				values.put(objectField.getName(), 0L);
+
+				continue;
+			}
+
+			if (!addObjectEntry ||
+				(values.get(objectField.getName()) != null)) {
+
 				continue;
 			}
 

@@ -639,6 +639,113 @@ public class ObjectFieldLocalServiceImpl
 		return objectFieldPersistence.update(objectField);
 	}
 
+	@Override
+	public void validateExternalReferenceCode(
+			String externalReferenceCode, long objectFieldId, long companyId,
+			long objectDefinitionId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		ObjectField objectField = objectFieldPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+
+		if ((objectField != null) &&
+			(objectField.getObjectFieldId() != objectFieldId)) {
+
+			throw new DuplicateObjectFieldExternalReferenceCodeException();
+		}
+	}
+
+	@Override
+	public void validateReadOnlyAndReadOnlyConditionExpression(
+			String businessType, String readOnly,
+			String readOnlyConditionExpression)
+		throws PortalException {
+
+		if (Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+			Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
+			Validator.isNull(readOnly)) {
+
+			return;
+		}
+
+		if (Objects.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT) &&
+			!Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE)) {
+
+			throw new ObjectFieldReadOnlyException();
+		}
+
+		if (!(Objects.equals(
+				readOnly, ObjectFieldConstants.READ_ONLY_CONDITIONAL) ||
+			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE) ||
+			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_TRUE))) {
+
+			throw new ObjectFieldReadOnlyException(
+				"Unknown read only: " + readOnly);
+		}
+
+		if (Objects.equals(
+				readOnly, ObjectFieldConstants.READ_ONLY_CONDITIONAL)) {
+
+			if (Validator.isNull(readOnlyConditionExpression)) {
+				throw new ObjectFieldReadOnlyConditionExpressionException(
+					"Read only condition expression is required");
+			}
+
+			try {
+				_ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						readOnlyConditionExpression
+					).build());
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
+				throw new ObjectFieldReadOnlyConditionExpressionException(
+					"Syntax error in: " + readOnlyConditionExpression);
+			}
+		}
+	}
+
+	@Override
+	public void validateRequired(
+			long objectFieldId, String businessType, boolean required)
+		throws PortalException {
+
+		if (Objects.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT) &&
+			required) {
+
+			throw new ObjectFieldRequiredException();
+		}
+
+		if (!StringUtil.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			return;
+		}
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipPersistence.fetchByObjectFieldId2(objectFieldId);
+
+		if ((objectRelationship != null) && objectRelationship.isEdge() &&
+			!required) {
+
+			throw new ObjectFieldRequiredException();
+		}
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
@@ -681,7 +788,7 @@ public class ObjectFieldLocalServiceImpl
 			}
 		}
 
-		_validateExternalReferenceCode(
+		validateExternalReferenceCode(
 			externalReferenceCode, 0, objectDefinition.getCompanyId(),
 			objectDefinitionId);
 
@@ -692,9 +799,9 @@ public class ObjectFieldLocalServiceImpl
 		_validateLabel(labelMap, null);
 		_validateLocalized(businessType, localized, objectDefinition, required);
 		_validateName(0, objectDefinition, name, system);
-		_validateReadOnlyAndReadOnlyConditionExpression(
+		validateReadOnlyAndReadOnlyConditionExpression(
 			businessType, readOnly, readOnlyConditionExpression);
-		_validateRequired(0, businessType, required);
+		validateRequired(0, businessType, required);
 		_validateState(required, state);
 
 		ObjectField objectField = objectFieldPersistence.create(
@@ -1176,7 +1283,7 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField newObjectField = (ObjectField)oldObjectField.clone();
 
-		_validateExternalReferenceCode(
+		validateExternalReferenceCode(
 			externalReferenceCode, newObjectField.getObjectFieldId(),
 			newObjectField.getCompanyId(),
 			newObjectField.getObjectDefinitionId());
@@ -1190,7 +1297,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateLocalized(
 			businessType, localized, oldObjectField.getObjectDefinition(),
 			required);
-		_validateRequired(objectFieldId, businessType, required);
+		validateRequired(objectFieldId, businessType, required);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
@@ -1213,7 +1320,7 @@ public class ObjectFieldLocalServiceImpl
 			_validateName(objectFieldId, objectDefinition, name, false);
 		}
 
-		_validateReadOnlyAndReadOnlyConditionExpression(
+		validateReadOnlyAndReadOnlyConditionExpression(
 			businessType, readOnly, readOnlyConditionExpression);
 
 		_validateState(required, state);
@@ -1327,25 +1434,6 @@ public class ObjectFieldLocalServiceImpl
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long objectFieldId, long companyId,
-			long objectDefinitionId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		ObjectField objectField = objectFieldPersistence.fetchByERC_C_ODI(
-			externalReferenceCode, companyId, objectDefinitionId);
-
-		if ((objectField != null) &&
-			(objectField.getObjectFieldId() != objectFieldId)) {
-
-			throw new DuplicateObjectFieldExternalReferenceCodeException();
 		}
 	}
 
@@ -1549,91 +1637,6 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldRelationshipTypeException(
 				"Object field cannot be required because the relationship " +
 					"deletion type is disassociate");
-		}
-	}
-
-	private void _validateReadOnlyAndReadOnlyConditionExpression(
-			String businessType, String readOnly,
-			String readOnlyConditionExpression)
-		throws PortalException {
-
-		if (Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-			Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
-			Validator.isNull(readOnly)) {
-
-			return;
-		}
-
-		if (Objects.equals(
-				businessType,
-				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT) &&
-			!Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE)) {
-
-			throw new ObjectFieldReadOnlyException();
-		}
-
-		if (!(Objects.equals(
-				readOnly, ObjectFieldConstants.READ_ONLY_CONDITIONAL) ||
-			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE) ||
-			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_TRUE))) {
-
-			throw new ObjectFieldReadOnlyException(
-				"Unknown read only: " + readOnly);
-		}
-
-		if (Objects.equals(
-				readOnly, ObjectFieldConstants.READ_ONLY_CONDITIONAL)) {
-
-			if (Validator.isNull(readOnlyConditionExpression)) {
-				throw new ObjectFieldReadOnlyConditionExpressionException(
-					"Read only condition expression is required");
-			}
-
-			try {
-				_ddmExpressionFactory.createExpression(
-					CreateExpressionRequest.Builder.newBuilder(
-						readOnlyConditionExpression
-					).build());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				throw new ObjectFieldReadOnlyConditionExpressionException(
-					"Syntax error in: " + readOnlyConditionExpression);
-			}
-		}
-	}
-
-	private void _validateRequired(
-			long objectFieldId, String businessType, boolean required)
-		throws PortalException {
-
-		if (Objects.equals(
-				businessType,
-				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT) &&
-			required) {
-
-			throw new ObjectFieldRequiredException();
-		}
-
-		if (!StringUtil.equals(
-				businessType,
-				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
-
-			return;
-		}
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.fetchByObjectFieldId2(objectFieldId);
-
-		if ((objectRelationship != null) && objectRelationship.isEdge() &&
-			!required) {
-
-			throw new ObjectFieldRequiredException();
 		}
 	}
 

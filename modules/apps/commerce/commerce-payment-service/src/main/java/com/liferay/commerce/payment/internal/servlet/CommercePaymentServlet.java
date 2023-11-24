@@ -134,8 +134,6 @@ public class CommercePaymentServlet extends HttpServlet {
 		catch (Exception exception) {
 			_log.error(exception);
 
-			// Payment Failed
-
 			try {
 				PermissionThreadLocal.setPermissionChecker(
 					PermissionCheckerFactoryUtil.create(

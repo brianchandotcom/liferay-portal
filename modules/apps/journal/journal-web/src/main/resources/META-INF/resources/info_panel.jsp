@@ -16,12 +16,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 
 	folders = new ArrayList<JournalFolder>();
 
-	JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
-
-	if (folder != null) {
-		folders.add(folder);
-	}
-	else if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		folders.add(JournalFolderLocalServiceUtil.fetchFolder(folderId));
 	}
 	else {

@@ -16,12 +16,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 
 	folders = new ArrayList<BookmarksFolder>();
 
-	BookmarksFolder folder = (BookmarksFolder)request.getAttribute("view.jsp-folder");
-
-	if (folder != null) {
-		folders.add(folder);
-	}
-	else if (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	if (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		folders.add(BookmarksFolderLocalServiceUtil.getFolder(folderId));
 	}
 	else {

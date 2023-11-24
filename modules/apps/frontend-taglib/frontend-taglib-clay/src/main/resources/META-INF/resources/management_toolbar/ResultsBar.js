@@ -10,37 +10,58 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 
+/**
+ * @see {ManagementToolbarTag._getResultsLanguageKey} It should have the exact
+ * 	same logic than the corresponding Java method.
+ */
 function getResultText(searchValue, itemTotal, filterTotal) {
-	if (searchValue) {
+	if (Liferay.FeatureFlags['LPS-198573']) {
+		if (!searchValue) {
+			if (filterTotal) {
+				if (itemTotal === 1) {
+					return Liferay.Language.get('x-result-found-with-filters');
+				}
+
+				return Liferay.Language.get('x-results-found-with-filters');
+			}
+
+			if (itemTotal === 1) {
+				return Liferay.Language.get('x-result-found');
+			}
+
+			return Liferay.Language.get('x-results-found');
+		}
+
+		if (filterTotal) {
+			if (itemTotal === 1) {
+				return Liferay.Language.get(
+					'x-result-found-for-x-with-filters'
+				);
+			}
+
+			return Liferay.Language.get('x-results-found-for-x-with-filters');
+		}
+
 		if (itemTotal === 1) {
-			if (Liferay.FeatureFlags['LPS-198573'] && filterTotal) {
-				return Liferay.Language.get('x-result-for-x-with-filters');
-			}
-
-			return Liferay.Language.get('x-result-for-x');
+			return Liferay.Language.get('x-result-found-for-x');
 		}
-		else {
-			if (Liferay.FeatureFlags['LPS-198573'] && filterTotal) {
-				return Liferay.Language.get('x-results-for-x-with-filters');
-			}
 
-			return Liferay.Language.get('x-results-for-x');
+		return Liferay.Language.get('x-results-found-for-x');
+	}
+
+	if (!searchValue) {
+		if (itemTotal === 1) {
+			return Liferay.Language.get('x-result');
 		}
+
+		return Liferay.Language.get('x-results');
 	}
 
 	if (itemTotal === 1) {
-		if (Liferay.FeatureFlags['LPS-198573'] && filterTotal) {
-			return Liferay.Language.get('x-result-with-filters');
-		}
-
-		return Liferay.Language.get('x-result');
+		return Liferay.Language.get('x-result-for-x');
 	}
 
-	if (Liferay.FeatureFlags['LPS-198573'] && filterTotal) {
-		return Liferay.Language.get('x-results-with-filters');
-	}
-
-	return Liferay.Language.get('x-results');
+	return Liferay.Language.get('x-results-for-x');
 }
 
 const ResultsBar = ({

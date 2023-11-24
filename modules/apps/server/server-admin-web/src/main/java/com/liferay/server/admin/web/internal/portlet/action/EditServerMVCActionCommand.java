@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershi
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
-import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -103,6 +102,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
@@ -915,7 +915,7 @@ public class EditServerMVCActionCommand
 		SiteMembershipPolicyUtil.verifyPolicy();
 
 		UserGroupMembershipPolicy userGroupMembershipPolicy =
-			_userGroupMembershipPolicyFactory.getUserGroupMembershipPolicy();
+			UserGroupMembershipPolicyFactoryUtil.getUserGroupMembershipPolicy();
 
 		userGroupMembershipPolicy.verifyPolicy();
 	}
@@ -999,9 +999,6 @@ public class EditServerMVCActionCommand
 
 	@Reference(target = "(default=true)")
 	private Store _store;
-
-	@Reference
-	private UserGroupMembershipPolicyFactory _userGroupMembershipPolicyFactory;
 
 	@Reference(target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")")
 	private DLProcessor _videoDLProcessor;

@@ -67,7 +67,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -346,6 +345,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNull();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNonnull();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonsitePage();
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testPostSiteSitePageSuccessKeywordsWithCaseSensitiveTags()
+		throws Exception {
+
+		_testPostSiteSitePageSuccessKeywords(s -> s);
 	}
 
 	@Override

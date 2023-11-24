@@ -13,7 +13,7 @@ pageContext.setAttribute(WebKeys.THEME_DEFINE_OBJECTS, Boolean.FALSE);
 
 <%@ include file="/html/common/referer_common.jsp" %>
 
-<aui:script type="text/javascript">
+<aui:script position="inline" type="text/javascript">
 
 	<%
 	Boolean logout = (Boolean)request.getAttribute(WebKeys.LOGOUT);

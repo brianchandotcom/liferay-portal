@@ -1687,6 +1687,8 @@ definition {
 
 		CommerceNavigator.gotoMiniCart();
 
+		Button.click(button = "Review Order");
+
 		Button.click(button = "Submit");
 
 		Navigator.openURL();

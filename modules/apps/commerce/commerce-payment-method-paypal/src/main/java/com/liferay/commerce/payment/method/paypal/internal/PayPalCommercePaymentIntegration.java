@@ -134,14 +134,14 @@ public class PayPalCommercePaymentIntegration
 					ordersAuthorizeRequest.headers()
 				);
 
-				_log.debug("AUTHORIZE - HEADERS: " + headers);
+				_log.debug("Authorize headers: " + headers);
 
 				String requestBody = new Gson(
 				).toJson(
 					ordersAuthorizeRequest.requestBody()
 				);
 
-				_log.debug("AUTHORIZE - REQUEST BODY: " + requestBody);
+				_log.debug("Authorize request body: " + requestBody);
 			}
 
 			HttpResponse<Order> authorizeHttpResponse =
@@ -233,14 +233,14 @@ public class PayPalCommercePaymentIntegration
 					authorizationsVoidRequest.headers()
 				);
 
-				_log.debug("CANCEL - HEADERS: " + headers);
+				_log.debug("Cancel headers: " + headers);
 
 				String requestBody = new Gson(
 				).toJson(
 					authorizationsVoidRequest.requestBody()
 				);
 
-				_log.debug("CANCEL - REQUEST BODY: " + requestBody);
+				_log.debug("Cancel request body: " + requestBody);
 			}
 
 			HttpResponse<Void> cancelHttpResponse = payPalHttpClient.execute(
@@ -301,14 +301,14 @@ public class PayPalCommercePaymentIntegration
 					authorizationsCaptureRequest.headers()
 				);
 
-				_log.debug("CAPTURE - HEADERS: " + headers);
+				_log.debug("Capture headers: " + headers);
 
 				String requestBody = new Gson(
 				).toJson(
 					authorizationsCaptureRequest.requestBody()
 				);
 
-				_log.debug("CAPTURE - REQUEST BODY: " + requestBody);
+				_log.debug("Capture request body: " + requestBody);
 			}
 
 			HttpResponse<Capture> captureHttpResponse =
@@ -397,14 +397,14 @@ public class PayPalCommercePaymentIntegration
 					capturesRefundRequest.headers()
 				);
 
-				_log.debug("REFUND - HEADERS: " + headers);
+				_log.debug("Refund headers: " + headers);
 
 				String requestBody = new Gson(
 				).toJson(
 					capturesRefundRequest.requestBody()
 				);
 
-				_log.debug("REFUND - REQUEST BODY: " + requestBody);
+				_log.debug("Refund request body: " + requestBody);
 			}
 
 			HttpResponse<Refund> refundHttpResponse = payPalHttpClient.execute(
@@ -504,14 +504,14 @@ public class PayPalCommercePaymentIntegration
 					ordersCreateRequest.headers()
 				);
 
-				_log.debug("SET UP PAYMENT - HEADERS: " + headers);
+				_log.debug("Set up payment headers: " + headers);
 
 				String requestBody = new Gson(
 				).toJson(
 					ordersCreateRequest.requestBody()
 				);
 
-				_log.debug("SET UP PAYMENT - REQUEST BODY: " + requestBody);
+				_log.debug("Set up payment request body: " + requestBody);
 			}
 
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(

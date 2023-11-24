@@ -156,6 +156,13 @@ definition {
 		Click(locator1 = "PageAudit#FAILING_CHECK_NAME");
 	}
 
+	@summary = "Go to element details on Performance panel"
+	macro goToElementDetails(elementName = null) {
+		Click(
+			ariaLabel = "Select ${elementName}",
+			locator1 = "PageAudit#PAGE_AUDIT_ELEMENT");
+	}
+
 	@summary = "Default summary"
 	macro openPageAuditSidebar() {
 		if (IsElementNotPresent(locator1 = "PageAudit#SIDEBAR")) {

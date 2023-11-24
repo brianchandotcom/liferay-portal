@@ -388,9 +388,7 @@ public class RoleDisplayContext {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long roleId = ParamUtil.getLong(_httpServletRequest, "roleId");
-
-		Role role = RoleServiceUtil.fetchRole(roleId);
+		Role role = _getSelectedRole();
 
 		if (RolePermissionUtil.contains(
 				permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
@@ -427,9 +425,7 @@ public class RoleDisplayContext {
 		String backURL = ParamUtil.getString(
 			_httpServletRequest, "backURL", redirect);
 
-		long roleId = ParamUtil.getLong(_httpServletRequest, "roleId");
-
-		Role role = RoleServiceUtil.fetchRole(roleId);
+		Role role = _getSelectedRole();
 
 		return HashMapBuilder.put(
 			"assignees",

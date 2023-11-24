@@ -5,8 +5,7 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
 <%@ page import="com.liferay.fragment.video.streaming.constants.VideoStreamingWebKeys" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %>

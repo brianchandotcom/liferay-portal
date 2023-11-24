@@ -501,6 +501,37 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro createSelectionFilter(filterName = null, filterBy = null, picklistName = null, selection = null, preselectedValue = null) {
+		DataSetAdmin.selectFilterType(key_filterType = "Selection");
+
+		PortletEntry.inputText(
+			fieldLabel = "Name",
+			text = ${filterName});
+
+		Click(
+			dropdownLabel = "Select",
+			locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
+
+		DropdownMenuItem.click(menuItem = ${filterBy});
+
+		Select(
+			locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+			value1 = ${picklistName});
+
+		if (isSet(selection)) {
+			Click(
+				locator1 = "Radio#ANY",
+				radioLabel = ${selection});
+		}
+
+		for (var preselectedValue : list ${preselectedValueList}) {
+			DataSetAdmin.selectPreselectedValue(preselectedValue = ${preselectedValue});
+		}
+
+		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
+	}
+
+	@summary = "Default summary"
 	macro deleteAllDataSetEntries() {
 		DataSetAdmin.goToDataSetAdminPage();
 
@@ -632,6 +663,15 @@ definition {
 		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 
 		Alert.viewSuccessMessage();
+	}
+
+	@summary = "Default summary"
+	macro editItem(itemName = null) {
+		Click(
+			key_fieldName = ${itemName},
+			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+		MenuItem.click(menuItem = "Edit");
 	}
 
 	@summary = "Default summary"
@@ -803,59 +843,9 @@ definition {
 		Type(
 			ariaLabel = "Preselected Values",
 			locator1 = "TextInput#ANY_WITH_ARIA_LABEL",
-			value1 = "${preselectedValue}");
+			value1 = ${preselectedValue});
 
-		DropdownMenuItem.click(menuItem = "${preselectedValue}");
-	}
-
-	@summary = "Default summary"
-	macro createSelectionFilter(filterName = null, filterBy = null, picklistName = null, selection = null, preselectedValue = null) {
-		DataSetAdmin.selectFilterType(key_filterType = "Selection");
-
-		PortletEntry.inputText(
-			fieldLabel = "Name",
-			text = "${filterName}");
-
-		Click(
-			dropdownLabel = "Select",
-			locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
-
-		DropdownMenuItem.click(menuItem = "${filterBy}");
-
-		Select(
-			locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
-			value1 = "${picklistName}");
-
-		if (isSet(selection)) {
-			Click(
-				locator1 = "Radio#ANY",
-				radioLabel = "${selection}");
-		}
-
-		for (var preselectedValue : list ${preselectedValueList}) {
-			DataSetAdmin.selectPreselectedValue(preselectedValue = "${preselectedValue}");
-		}
-
-		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
-	}
-
-	macro setUpPicklistforDataSet(picklistItemList = null) {
-		Picklist.addPicklistViaAPI(picklistName = "${picklistName}");
-
-		for (var picklistItem : list ${picklistItemList}) {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "${picklistItem}",
-				itemName = "${picklistItem}",
-				picklistName = "${picklistName}");
-		}
-	}
-
-	macro editItem(itemName = null) {
-		Click(
-				key_fieldName = "${itemName}",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-		MenuItem.click(menuItem = "Edit");
+		DropdownMenuItem.click(menuItem = ${preselectedValue});
 	}
 
 	@summary = "Default summary"
@@ -867,6 +857,18 @@ definition {
 		Click(
 			locator1 = "FrontendDataSet#SELECT_TYPE_PROVIDER",
 			value1 = ${key_type});
+	}
+
+	@summary = "Default summary"
+	macro setUpPicklistforDataSet(picklistItemList = null) {
+		Picklist.addPicklistViaAPI(picklistName = ${picklistName});
+
+		for (var picklistItem : list ${picklistItemList}) {
+			Picklist.addPicklistItemViaAPI(
+				itemKey = ${picklistItem},
+				itemName = ${picklistItem},
+				picklistName = ${picklistName});
+		}
 	}
 
 	@summary = "Default summary"

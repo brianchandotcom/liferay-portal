@@ -36,7 +36,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -65,6 +64,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -646,23 +646,12 @@ public class TemplateInfoItemFieldSetProviderTest {
 			StringUtil::toLowerCase);
 	}
 
-		Assert.assertEquals(
-			infoField.toString(),
-			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				journalArticleTemplateEntry.getTemplateEntryId(),
-			infoField.getName());
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testGetInfoFieldValuesRenderingOtherListInfoFieldTypeWithCaseSensitiveTags()
+		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
-			_assertExpectedNames(
-				(String)infoFieldValue.getValue(LocaleUtil.US),
-				StringUtil.toLowerCase(tagName1),
-				StringUtil.toLowerCase(tagName2));
-		}
-		else {
-			_assertExpectedNames(
-				(String)infoFieldValue.getValue(LocaleUtil.US), tagName1,
-				tagName2);
-		}
+		_testGetInfoFieldValuesRenderingOtherListInfoFieldType(s -> s);
 	}
 
 	@Test

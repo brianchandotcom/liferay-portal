@@ -42,9 +42,9 @@ definition {
 		}
 
 		task ("Add a widget template for Breadcrumb widget") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtType = "Breadcrumb",
 				fieldNameList = "Breadcrumb Entry");
 		}
@@ -54,7 +54,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			ApplicationDisplayTemplates.selectPortletADT(
+			WidgetTemplates.selectPortletADT(
 				portletName = "Breadcrumb",
 				templateName = "Breadcrumb Test ADT");
 		}

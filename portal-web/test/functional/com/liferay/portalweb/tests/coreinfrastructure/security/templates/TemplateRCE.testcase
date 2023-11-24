@@ -45,7 +45,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Widget Templates");
 
-		ApplicationDisplayTemplates.addCP(
+		WidgetTemplates.addCP(
 			adtFile = "adt_breadcrumb.ftl",
 			adtType = "Breadcrumb");
 
@@ -60,7 +60,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Breadcrumb Page");
 
-		ApplicationDisplayTemplates.selectPortletADT(
+		WidgetTemplates.selectPortletADT(
 			portletName = "Breadcrumb",
 			templateName = "Breadcrumb Test ADT");
 

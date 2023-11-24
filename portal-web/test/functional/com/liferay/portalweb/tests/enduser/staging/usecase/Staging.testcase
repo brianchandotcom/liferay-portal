@@ -1035,7 +1035,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
+		WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
 
 		AssertVisible(locator1 = "Button#PLUS");
 
@@ -1049,9 +1049,9 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name-staging");
+		WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name-staging");
 
-		ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+		WidgetTemplates.addADTWithFieldEntryCP(
 			fieldName = "Asset Entry",
 			portletName = "Asset Publisher");
 
@@ -1059,9 +1059,9 @@ definition {
 			key_tableEntry = "Asset Publisher Test ADT",
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
+		WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
 
-		ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+		WidgetTemplates.addADTWithFieldEntryCP(
 			fieldName = "Blog Entries",
 			portletName = "Blogs");
 

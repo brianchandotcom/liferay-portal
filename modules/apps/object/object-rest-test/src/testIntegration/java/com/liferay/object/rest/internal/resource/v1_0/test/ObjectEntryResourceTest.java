@@ -6012,10 +6012,18 @@ public class ObjectEntryResourceTest {
 
 		if (dlFolder == null) {
 			if (folder == null) {
-				Company company = _companyLocalService.getCompany(
-					objectDefinition.getCompanyId());
+				if (StringUtil.equals(
+						objectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_SITE)) {
 
-				repositoryId = company.getGroupId();
+					repositoryId = TestPropsValues.getGroupId();
+				}
+				else {
+					Company company = _companyLocalService.getCompany(
+						objectDefinition.getCompanyId());
+
+					repositoryId = company.getGroupId();
+				}
 			}
 			else {
 				repositoryId = folder.getSiteId();
@@ -6373,6 +6381,28 @@ public class ObjectEntryResourceTest {
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						null,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt", null, null),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE,
 				JSONUtil.put(
 					"id", _testDLFileEntryModelListener.getLastFileEntryId()
@@ -6675,7 +6705,6 @@ public class ObjectEntryResourceTest {
 				TestPropsValues.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
-
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
@@ -6695,6 +6724,26 @@ public class ObjectEntryResourceTest {
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt", null,
 				_group.getGroupId()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONUtil.put(
+					"id", _testDLFileEntryModelListener.getLastFileEntryId()
+				).put(
+					"link",
+					_getLinkJSONObject(
+						null,
+						_testDLFileEntryModelListener.getLastFileEntryId(),
+						fileEntry.getName(), fileEntry.getFolder(),
+						objectDefinition)
+				).put(
+					"name", fileEntry.getName()
+				)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt", null, null),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 

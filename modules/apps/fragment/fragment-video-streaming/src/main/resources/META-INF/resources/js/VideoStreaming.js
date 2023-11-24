@@ -49,26 +49,28 @@ export default function VideoStreaming({
 	// eslint-disable-next-line no-undef
 	const player = videojs('fragmentVideoJsURL', configuration);
 
-	player.src(src);
-
 	player.ready(() => {
 		window.addEventListener('resize', resizeVideoJs);
 
 		resizeVideoJs();
 
-		if (subtitles) {
-			player.addRemoteTextTrack({
-				default: true,
-				kind: 'subtitles',
-				label: 'English',
-				language: 'en',
-				src: subtitles,
+		if (src) {
+			player.src(src);
+
+			if (subtitles) {
+				player.addRemoteTextTrack({
+					default: true,
+					kind: 'subtitles',
+					label: 'English',
+					language: 'en',
+					src: subtitles,
+				});
+			}
+
+			player.qualitySelectorHls({
+				displayCurrentQuality: true,
+				vjsIconClass: 'vjs-icon-cog',
 			});
 		}
-
-		player.qualitySelectorHls({
-			displayCurrentQuality: true,
-			vjsIconClass: 'vjs-icon-cog',
-		});
 	});
 }

@@ -2842,7 +2842,7 @@ definition {
 
 		Button.click(button = "Submit");
 
-		Refresh();
+		SelectFrameTop();
 
 		for (var address : list "${billingAddressStreet},${billingAddressCity}") {
 			AssertTextEquals.assertPartialText(
@@ -2867,7 +2867,7 @@ definition {
 
 		Button.click(button = "Submit");
 
-		Refresh();
+		SelectFrameTop();
 
 		for (var address : list "${shippingAddressStreet},${billingAddressCity}") {
 			AssertTextEquals.assertPartialText(

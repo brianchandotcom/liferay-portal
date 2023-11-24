@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.search.test.util.SearchMapUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -79,11 +80,27 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			StringUtil::toLowerCase);
 	}
 
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testSearchFromSearchPortletWithScopeEverythingWithCaseSensitiveTags()
+		throws Exception {
+
+		_testSearchFromSearchPortletWithScopeEverything(s -> s);
+	}
+
 	@Test
 	public void testSearchFromSearchPortletWithScopeThisSite()
 		throws Exception {
 
 		_testSearchFromSearchPortletWithScopeThisSite(StringUtil::toLowerCase);
+	}
+
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testSearchFromSearchPortletWithScopeThisSiteWithCaseSensitiveTags()
+		throws Exception {
+
+		_testSearchFromSearchPortletWithScopeThisSite(s -> s);
 	}
 
 	protected static Map<String, Integer> toMap(Group group, Integer count) {

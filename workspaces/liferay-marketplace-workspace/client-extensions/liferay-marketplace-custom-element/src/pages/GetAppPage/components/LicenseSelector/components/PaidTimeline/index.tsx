@@ -10,10 +10,11 @@ import useCart from '../../../../../../hooks/useCart';
 import {Liferay} from '../../../../../../liferay/liferay';
 import {getLicenseDescription, getTierPrice} from '../../../../../../utils/api';
 import LicenseCard from '../../LicenseCard';
+import { SkuOptions } from '../../../../enums/skuOptions';
 
 interface PaidTimelineProps {
 	cartUtil: ReturnType<typeof useCart>;
-	product?: Product;
+	product?: DeliveryProduct;
 }
 
 export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
@@ -32,13 +33,16 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 			]);
 
 			setTierPrices(tierpriceData);
-			setSkuInfo(skuDescription?.items[0]);
+			setSkuInfo(skuDescription?.items[0] || {});
 		})();
 	}, [accountId, channel.id, product?.productId]);
 
 	const purchasebleSkus = skus?.filter((sku) =>
 		sku?.skuOptions.find(
-			(skuOption) => skuOption?.value.toLocaleLowerCase() !== 'trial'
+			(skuOption) => skuOption.skuOptionKey.toLocaleLowerCase() !== SkuOptions.TRIAL || (
+				skuOption.skuOptionKey.toLocaleLowerCase() === SkuOptions.TRIAL &&
+				skuOption.skuOptionValueKey === 'no'
+			)
 		)
 	);
 
@@ -56,7 +60,7 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 
 						const skuOption = sku.skuOptions.find(
 							(skuOption) =>
-								skuOption.key === 'dxp-license-usage-type'
+								skuOption.skuOptionKey === 'dxp-license-usage-type'
 						);
 
 						return (
@@ -65,11 +69,11 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 									cartUtil={cartUtil}
 									licenseDescription={
 										skuInfo[
-											skuOption?.value?.toLocaleLowerCase() as keyof typeof skuInfo
+											skuOption?.skuOptionValueKey?.toLocaleLowerCase() as keyof typeof skuInfo
 										]
 									}
 									licensetiers={tierPricesFiltered}
-									lisenceType={skuOption?.value ?? sku.sku}
+									lisenceType={skuOption?.skuOptionValueKey ?? sku.sku}
 									productId={productId}
 									sku={sku}
 								/>

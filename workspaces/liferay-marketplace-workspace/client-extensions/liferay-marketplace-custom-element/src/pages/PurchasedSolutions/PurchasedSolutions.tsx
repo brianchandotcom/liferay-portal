@@ -186,7 +186,6 @@ const PurchasedSolutions: React.FC = () => {
 			],
 			orderStatus: 1,
 			orderTypeExternalReferenceCode: orderType?.externalReferenceCode,
-			orderTypeId: Number(orderType?.id),
 			shippingAmount: 0,
 			shippingWithTaxAmount: 0,
 		});

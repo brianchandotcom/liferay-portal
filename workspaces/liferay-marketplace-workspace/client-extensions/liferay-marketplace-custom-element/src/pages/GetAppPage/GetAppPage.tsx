@@ -13,7 +13,7 @@ import {
 	postCheckoutCart,
 	postEmailAppInformation,
 } from '../../utils/api';
-import {getValueFromSpecifications} from '../../utils/util';
+import {getValueFromDeliverySpecifications} from '../../utils/util';
 import AccountEmailInfo from '../CreateLicense/AccountInfo';
 import AccountSelection from './components/AccountSelection';
 import ProductFooter from './components/Footer';
@@ -28,7 +28,6 @@ import {SkuOptions} from './enums/skuOptions';
 import {StepType} from './enums/stepType';
 import useGetAddresses from './hooks/useGetAddresses';
 import useGetProduct from './hooks/useGetProduct';
-import useGetProductCreatorAccount from './hooks/useGetProductCreatorAccount';
 import useGetProductSkus from './hooks/useGetProductSkus';
 import buildNewCart from './utils/buildNewCart';
 import {getProductOrderTypes} from './utils/getProductOrderTypes';
@@ -39,9 +38,9 @@ import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
 export type GetAppForm = {
 	account?: Account;
-	product?: Product;
+	product?: DeliveryProduct;
 	selectedPaymentMethod: PaymentMethod;
-	selectedSKU?: SKU;
+	selectedSKU?: DeliverySKU;
 	selectedTimeline?: string;
 	userAccount?: UserAccount;
 };
@@ -77,7 +76,7 @@ const GetAppFlow = () => {
 
 	const {productId} = useGetProduct(
 		product,
-		useCallback((value: Product) => setValue('product', value), [setValue])
+		useCallback((value: DeliveryProduct) => setValue('product', value), [setValue])
 	);
 	const {sku} = useGetProductSkus(setEnableTrialMethod, product);
 
@@ -90,7 +89,7 @@ const GetAppFlow = () => {
 		orderType,
 	});
 
-	const productCreatorAccount = useGetProductCreatorAccount(product);
+	const productCreatorAccountName = product?.catalogName || '';
 
 	useEffect(() => {
 		if (cartUtil?.cartItems?.length) {
@@ -104,27 +103,21 @@ const GetAppFlow = () => {
 	}, [cartUtil?.cartItems?.length]);
 
 	useEffect(() => {
-		(async () => {
-			if (productId) {
-				const productSpecificationValues = await getProductSpecificationValues(
-					Number(productId)
-				);
+		if (product) {
+			const productSpecificationValues = getProductSpecificationValues(product?.productSpecifications || []);
 
-				const orderType = await getProductOrderTypes(
-					productSpecificationValues
-				);
+			const orderType = getProductOrderTypes(
+				productSpecificationValues
+			);
 
-				setOrderType(orderType);
-			}
-		})();
-	}, [productId]);
+			setOrderType(orderType);
+		}
+	}, [product]);
 
 	async function handleGetApp(orderId?: number) {
-		const productSpecificationValues = await getProductSpecificationValues(
-			Number(productId)
-		);
+		const productSpecificationValues = getProductSpecificationValues(product?.productSpecifications || []);
 
-		const productType = productSpecificationValues?.en_US;
+		const productType = productSpecificationValues;
 
 		const orderType = await getProductOrderTypes(
 			productSpecificationValues
@@ -160,7 +153,7 @@ const GetAppFlow = () => {
 			),
 			orderID: cartResponse.id,
 			priceModel,
-			productName: product?.name.en_US,
+			productName: product?.name,
 			productType,
 		});
 
@@ -210,7 +203,7 @@ const GetAppFlow = () => {
 							setValue,
 							watch,
 						}}
-						onSelectLicense={(sku?: SKU) =>
+						onSelectLicense={(sku?: DeliverySKU) =>
 							setValue('selectedSKU', sku)
 						}
 						selectedProduct={product}
@@ -266,21 +259,26 @@ const GetAppFlow = () => {
 		]
 	);
 
-	const getProductBasePriceAndTrial = (skus: SKU[]) => {
+	const getProductBasePriceAndTrial = (skus: DeliverySKU[]) => {
 		skus?.forEach((sku) => {
 			const licenseUsageTypes = sku?.skuOptions?.filter(
 				(skuOption) =>
-					skuOption?.value === SkuOptions.STANDARD.toLowerCase() ||
-					skuOption?.value === SkuOptions.TRIAL.toLowerCase()
+					skuOption?.skuOptionKey === SkuOptions.STANDARD.toLowerCase() ||
+					skuOption?.skuOptionKey === SkuOptions.TRIAL.toLowerCase()
 			);
 
 			licenseUsageTypes?.forEach((licenseUsageType) => {
-				switch (licenseUsageType?.value.toLowerCase()) {
+				switch (licenseUsageType?.skuOptionKey.toLowerCase()) {
 					case SkuOptions.STANDARD.toLowerCase():
-						setBasePrice(sku.price);
+						setBasePrice(sku.price.price);
 						break;
 					case SkuOptions.TRIAL.toLowerCase():
-						setHasTrial(true);
+						if (licenseUsageType?.skuOptionValueKey.toLowerCase() === 'no') {
+							setBasePrice(sku.price.price);
+							setHasTrial((prev) => prev || false);	
+						} else {
+							setHasTrial(true);
+						}
 						break;
 					default:
 						break;
@@ -311,8 +309,8 @@ const GetAppFlow = () => {
 		return <span className="price-text-value">Free</span>;
 	};
 
-	const getLicenseTagText = (product: Product) => {
-		const licenseTypeSpecification = getValueFromSpecifications(
+	const getLicenseTagText = (product: DeliveryProduct) => {
+		const licenseTypeSpecification = getValueFromDeliverySpecifications(
 			product.productSpecifications,
 			'license-type'
 		).toLowerCase();
@@ -365,7 +363,7 @@ const GetAppFlow = () => {
 			<ProductCard
 				ExtendBanner={ExtendBanner}
 				RightSideBanner={PriceTypeInfo}
-				creatorAccount={productCreatorAccount}
+				creatorAccountName={productCreatorAccountName}
 				product={product}
 				showExtendBanner={!!account}
 			/>

@@ -31,8 +31,7 @@ const useCart = ({
 			const response = await createCart({
 				accountId,
 				channelId: Number(channelId),
-				orderTypeExternalReferenceCode: orderType?.externalReferenceCode as string,
-				orderTypeId: Number(orderType?.id),
+				orderTypeExternalReferenceCode: orderType?.externalReferenceCode as string
 			});
 
 			setCart(response);

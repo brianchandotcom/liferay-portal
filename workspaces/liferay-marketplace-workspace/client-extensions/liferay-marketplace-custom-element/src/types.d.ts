@@ -143,6 +143,7 @@ type CartItem = {
 };
 
 type Catalog = {
+	accountId: number | null;
 	currencyCode: string;
 	defaultLanguageId: string;
 	externalReferenceCode: string;
@@ -232,17 +233,13 @@ interface Order {
 	];
 	orderStatus: number;
 	orderTypeExternalReferenceCode?: string;
-	orderTypeId: number;
+	orderTypeId?: number;
 	shippingAmount?: number;
 	shippingWithTaxAmount?: number;
 }
 
 interface OrderType {
-	active: boolean;
-	displayDate: string;
-	displayOrder: number;
 	externalReferenceCode: string;
-	id: number;
 	name: {[key: string]: string};
 }
 
@@ -329,6 +326,7 @@ interface Product {
 	attachments: ProductAttachment[];
 	catalog: Catalog;
 	catalogId: number;
+	catalogName?: string;
 	categories: ProductCategories[];
 	customFields?: CustomField[];
 	description: {[key: string]: string};
@@ -339,6 +337,7 @@ interface Product {
 	modifiedDate: string;
 	name: {[key: string]: string};
 	price?: number;
+	productChannelFilter?: boolean;
 	productChannels: Channel[];
 	productId: number;
 	productSpecifications: ProductSpecification[];
@@ -352,6 +351,56 @@ interface Product {
 		label: string;
 		label_i18n: string;
 	};
+}
+
+interface DeliveryProductAttachment {
+	customFields: CustomField[];
+	galleryEnabled: boolean;
+	id: number;
+	priority: number;
+	src: string;
+	tags: any;
+	title: string;
+	type: number;
+}
+
+interface DeliveryProductSpecification {
+	id : number;
+	optionCategoryId: number;
+	priority: number;
+	specificationGroupKey: string;
+	specificationGroupTitle: string;
+	specificationId: number;
+	specificationKey: string;
+	specificationTitle: string;
+	value: string;
+}
+
+interface DeliverySKU {
+	customFields?: CustomField[];
+	externalReferenceCode: string;
+	id: number;
+	price: {price: number;priceFormatted: string;};
+	sku: string;
+	skuOptions: {skuOptionKey: string; skuOptionValueKey: string;}[];
+}
+
+interface DeliveryProduct {
+	attachments: DeliveryProductAttachment[];
+	catalogName?: string;
+	categories: ProductCategories[];
+	customFields?: CustomField[];
+	description: string;
+	externalReferenceCode: string;
+	id?: number;
+	images: ProductImages[];
+	modifiedDate: string;
+	name:string;
+	productId: number;
+	productSpecifications: DeliveryProductSpecification[];
+	productType: string;
+	skus: DeliverySKU[];
+	urlImage: string;
 }
 
 interface ProductAttachment {
@@ -398,6 +447,22 @@ type SKU = {
 	price: number;
 	sku: string;
 	skuOptions: {key: string; value: string}[];
+};
+
+type OptionCategory = {
+	description?: {[key: string]: string};
+	id?: number;
+	key?: string;
+	priority?: number;
+	title?: {[key: string]: string};
+}
+
+type Specification = {
+	description?: {[key: string]: string};
+	id?: number;
+	key?: string;
+	optionCategory?: OptionCategory;
+	title?: {[key: string]: string};
 };
 
 type ProductSpecification = {

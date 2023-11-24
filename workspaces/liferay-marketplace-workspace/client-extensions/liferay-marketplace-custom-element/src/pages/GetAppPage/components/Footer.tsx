@@ -22,7 +22,7 @@ interface ProductFooterProps {
 	licenseSelected: boolean;
 	selectedAccount?: Account;
 	selectedPaymentMethod: PaymentMethodSelector;
-	selectedSKU?: SKU;
+	selectedSKU?: DeliverySKU;
 	setStep: (nextStep: StepType) => void;
 	step: StepType;
 	stepsNavigation: StepsNavigation;

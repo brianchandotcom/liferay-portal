@@ -36,9 +36,9 @@ import {
 	addExpandoValue,
 	createAttachment,
 	createProductSpecification,
-	createSpecification,
 	getCategories,
 	getProductIdCategories,
+	getSpecification,
 	getVocabularies,
 	patchProductIdCategory,
 	updateProductSpecification,
@@ -278,8 +278,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -335,8 +334,7 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -361,14 +359,7 @@ export function ProvideAppBuildPage({
 			});
 		}
 
-		const dataSpecification = await createSpecification({
-			body: {
-				key: ProductSpecification.TYPE.toLowerCase(),
-				title: {
-					en_US: ProductSpecification.TYPE,
-				},
-			},
-		});
+		const dataSpecification = await getSpecification('type');
 
 		const {id} = await createProductSpecification({
 			appId,
@@ -647,8 +638,7 @@ export function ProvideAppBuildPage({
 						await submitAppBuildCategories();
 						await submitAppBuildTypeSpecification();
 						await submitAppBuildPackages();
-					}
-					catch (error) {
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages'
 						);

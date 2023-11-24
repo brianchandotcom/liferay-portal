@@ -18,7 +18,11 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import SearchBuilder from '../../core/SearchBuilder';
 import {Liferay} from '../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
-import {getAccountInfoFromCommerce, getAccounts} from '../../utils/api';
+import {
+	getAccountInfoFromCommerce,
+	getAccounts,
+	getCatalogs,
+} from '../../utils/api';
 import {getAccountImage} from '../../utils/util';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
 
@@ -60,24 +64,26 @@ const PublishedAppsDashboardOutlet = () => {
 		return accounts.items ?? [];
 	});
 
+	const {data: catalogs = []} = useSWR('/my-catalogs', async () => {
+		const catalogs = await getCatalogs();
+
+		return catalogs || [];
+	});
+
 	const selectedAccount = useAccountCached(
 		accounts ?? [],
 		accountId as string
 	);
 
 	const catalogId = useMemo(() => {
-		const accountCustomField = selectedAccount?.customFields?.find(
-			(customField: any) => customField.name === 'CatalogId'
-		);
+		const currentCatalog = catalogs.find((catalog) => {
+			return catalog.accountId === accountId;
+		});
 
-		if (accountCustomField) {
-			const accountCatalogId = Number(
-				accountCustomField.customValue.data
-			);
-
-			return accountCatalogId;
+		if (currentCatalog) {
+			return currentCatalog.id;
 		}
-	}, [selectedAccount?.customFields]);
+	}, [accountId, catalogs]);
 
 	useEffect(() => {
 		const getAccountCommerce = async () => {
@@ -115,7 +121,11 @@ const PublishedAppsDashboardOutlet = () => {
 			<DashboardNavigation
 				accountAppsNumber={publishedProductTable.totalCount}
 				accountIcon={getAccountImage(commerceAccount?.logoURL)}
-				accounts={accounts ?? []}
+				accounts={(accounts || []).filter((account) => {
+					return !!catalogs.find((catalog) => {
+						return catalog.accountId === account.id;
+					});
+				})}
 				currentAccount={selectedAccount}
 				dashboardNavigationItems={initialDashboardNavigationItems}
 			/>

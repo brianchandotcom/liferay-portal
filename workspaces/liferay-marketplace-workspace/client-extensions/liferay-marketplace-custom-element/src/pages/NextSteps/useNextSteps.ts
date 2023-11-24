@@ -9,10 +9,14 @@ import {
 	getAccountInfoFromCommerce,
 	getCart,
 	getCartItems,
+	getDeliveryProductById,
 	getProductById,
 } from '../../utils/api';
+import { useAppContext } from '../../manage-app-state/AppManageState';
+import { useMarketplaceContext } from '../../context/MarketplaceContext';
 
 const useNextSteps = (orderId: string) => {
+	const {channel} = useMarketplaceContext();
 	const {data = [], isLoading: cartLoading} = useSWR(
 		`/next-steps/cart/${orderId}`,
 		() => {
@@ -30,12 +34,9 @@ const useNextSteps = (orderId: string) => {
 	const {productId} = firstCartItem ?? {};
 
 	const {data: product, isLoading: productLoading} = useSWR(
-		productId ? `/next-steps/product/${productId}` : null,
+		productId ? `/next-steps/product/${productId}_${firstCartItem.id}` : null,
 		() => {
-			return getProductById({
-				nestedFields: 'attachments,productSpecifications',
-				productId,
-			});
+			return getDeliveryProductById(accountId, channel.id, productId, 'attachments,productSpecifications');
 		}
 	);
 

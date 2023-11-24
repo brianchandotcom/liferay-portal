@@ -5,13 +5,16 @@
 
 import {useCallback, useEffect, useState} from 'react';
 
-import {getProductById} from '../../../utils/api';
+import {getDeliveryProductById} from '../../../utils/api';
 import {getUrlParam} from '../../../utils/getUrlParam';
+import { useMarketplaceContext } from '../../../context/MarketplaceContext';
+import { Liferay } from '../../../liferay/liferay';
 
 const useGetProduct = (
-	selectedProduct: Product | undefined,
-	setProduct: (value: Product) => void
+	selectedProduct: DeliveryProduct | undefined,
+	setProduct: (value: DeliveryProduct) => void
 ) => {
+	const {channel} = useMarketplaceContext();
 	const [productId, setProductId] = useState<number | string | null>();
 
 	const getProductInformation = useCallback(async () => {
@@ -19,10 +22,12 @@ const useGetProduct = (
 		setProductId(selectedProduct?.productId || urlProductId);
 
 		if (productId) {
-			const fetchProduct = await getProductById({
-				nestedFields: 'attachments,productSpecifications,skus,catalog',
+			const fetchProduct = await getDeliveryProductById(
+				Liferay.CommerceContext?.account?.accountId || 0,
+				channel.id,
 				productId,
-			});
+				'attachments,productSpecifications,skus'
+			);
 
 			setProduct(fetchProduct);
 		}

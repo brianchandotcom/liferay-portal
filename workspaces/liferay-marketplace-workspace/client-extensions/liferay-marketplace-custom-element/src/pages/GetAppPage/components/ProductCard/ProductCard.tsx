@@ -6,21 +6,22 @@
 import './ProductCard.scss';
 import {
 	getThumbnailByProductAttachment,
+	getValueFromDeliverySpecifications,
 	getValueFromSpecifications,
 } from '../../../../utils/util';
 
 interface ProductCardProps {
 	ExtendBanner: React.FC;
 	RightSideBanner: React.FC;
-	creatorAccount?: Account;
-	product?: Product;
+	creatorAccountName?: string;
+	product?: DeliveryProduct;
 	showExtendBanner?: boolean;
 }
 
 const ProductCard = ({
 	ExtendBanner,
 	RightSideBanner,
-	creatorAccount,
+	creatorAccountName,
 	product,
 	showExtendBanner = false,
 }: ProductCardProps) => {
@@ -50,15 +51,15 @@ const ProductCard = ({
 
 					<div className="align-items-center ml-4">
 						<h1 className="text-weight-bold">
-							{product.name?.en_US}
+							{product?.name}
 						</h1>
 
 						<div className="sub-text">
-							{getValueFromSpecifications(
+							{getValueFromDeliverySpecifications(
 								product?.productSpecifications,
 								'latest-version'
 							)}{' '}
-							by {creatorAccount?.name}
+							by {creatorAccountName}
 						</div>
 					</div>
 				</div>

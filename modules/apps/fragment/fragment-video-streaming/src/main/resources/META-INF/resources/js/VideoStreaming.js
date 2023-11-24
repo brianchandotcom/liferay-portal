@@ -20,6 +20,7 @@ export default function VideoStreaming({
 			hls: {
 				overrideNative: true,
 			},
+			vhs: { overrideNative: true }
 		},
 		loop,
 		muted,

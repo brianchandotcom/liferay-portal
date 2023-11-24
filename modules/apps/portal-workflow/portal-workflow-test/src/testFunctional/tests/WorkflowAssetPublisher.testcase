@@ -182,8 +182,6 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Notifications.viewBadgeCount(notificationCount = 1);
-
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewNoDuplicateTaskAssignedToMyRoles(

@@ -1450,9 +1450,7 @@ definition {
 			task ("Click into the Image card") {
 				WaitForPageLoad();
 
-				Click(
-					cardName = "Image",
-					locator1 = "PageAudit#PAGE_AUDIT_CARD");
+				PageAudit.goToElementDetails(elementName = "Image");
 			}
 
 			task ("View the first sentence of the warning indicator is semi-bold. And the rest is regular.") {
@@ -1492,9 +1490,7 @@ definition {
 					key_text = "angle-left",
 					locator1 = "Icon#ANY");
 
-				Click(
-					cardName = "Button",
-					locator1 = "PageAudit#PAGE_AUDIT_CARD");
+				PageAudit.goToElementDetails(elementName = "Button");
 			}
 
 			task ("View the distance between feedback indicator and “Basic information” accordion is 24 px") {

@@ -883,7 +883,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-191474. It is possible to navigate the warning pop up message via the keyboard."
+	@description = "This is a test for LPS-191474. It is possible to navigate the warning pop up message via the keyboard. The warning pop up message should comply with WCAG 2.1 AA standard."
 	@priority = 3
 	test NavigateWarningPopUpMessageAndPublishContentPageViaKeyboard {
 		property custom.properties = "feature.flag.LPS-181663=true";
@@ -927,6 +927,8 @@ definition {
 				index = 1,
 				locator1 = "Modal#BODY_MESSAGE",
 				value1 = "Purchase Order form does not allow creating entries as draft. Review the button configuration and set it to approved to generate valid entries.");
+
+			AssertElementAccessible(locator1 = "//div[contains(@class,'modal-content')]");
 
 			KeyPress(
 				key_modalTitle = "Save as Draft Not Available",

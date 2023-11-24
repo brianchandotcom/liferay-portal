@@ -65,7 +65,11 @@ const applySavedFDSFields = ({
 	return [selectedKeys, fields];
 };
 
-function filterFields(fields: Array<IFieldTreeItem>, query: string) {
+function filterFields(
+	fields: Array<IFieldTreeItem>,
+	query: string,
+	onFilter?: Function
+) {
 	const filteredItems: Array<IFieldTreeItem> = [];
 	const regexp = new RegExp(query, 'i');
 
@@ -73,7 +77,7 @@ function filterFields(fields: Array<IFieldTreeItem>, query: string) {
 		const match = field.label ? regexp.test(field.label) : false;
 
 		const filteredChildren = field.children?.length
-			? filterFields(field.children, query)
+			? filterFields(field.children, query, onFilter)
 			: [];
 
 		if (match || (field.children?.length && filteredChildren.length)) {
@@ -81,10 +85,38 @@ function filterFields(fields: Array<IFieldTreeItem>, query: string) {
 				...field,
 				children: filteredChildren,
 			});
+
+			if (onFilter) {
+				onFilter(field);
+			}
 		}
 	});
 
 	return filteredItems;
+}
+
+function applyFilter({
+	fields,
+	query,
+}: {fields?: Array<IFieldTreeItem>; query?: string} = {}) {
+	if (!query || !fields) {
+		return {
+			filteredItems: fields ?? [],
+			filteredKeys: [],
+		};
+	}
+
+	const filteredKeys: Array<React.Key> = [];
+	const filteredItems = filterFields(fields, query, ({id}: IField) => {
+		if (id) {
+			filteredKeys.push(id);
+		}
+	});
+
+	return {
+		filteredItems,
+		filteredKeys,
+	};
 }
 
 const AddFieldsModalContent = ({
@@ -117,6 +149,7 @@ const AddFieldsModalContent = ({
 	);
 	const [fields, setFields] = useState<Array<IField> | null>(initialFields);
 	const [query, setQuery] = useState<string>('');
+	const [expandedKeys, setExpandedKeys] = useState<Array<React.Key>>([]);
 
 	const saveFDSFields = async () => {
 		setSaveButtonDisabled(true);
@@ -197,7 +230,13 @@ const AddFieldsModalContent = ({
 	const onSearch = (query: string) => {
 		setQuery(query);
 
-		setFields(filterFields(initialFields ?? [], query));
+		const {filteredItems, filteredKeys} = applyFilter({
+			fields: initialFields ?? [],
+			query,
+		});
+
+		setFields(filteredItems);
+		setExpandedKeys(filteredKeys);
 	};
 
 	return (
@@ -255,8 +294,12 @@ const AddFieldsModalContent = ({
 						<div className="container-fluid container-fluid-max-xl px-4 py-2">
 							<TreeView
 								className="bg-light"
+								expandedKeys={new Set(expandedKeys)}
 								items={fields}
 								nestedKey="children"
+								onExpandedChange={(keys) => {
+									setExpandedKeys(Array.from(keys));
+								}}
 								onItemsChange={(items) =>
 									setInitialFields(
 										items as Array<IFieldTreeItem>

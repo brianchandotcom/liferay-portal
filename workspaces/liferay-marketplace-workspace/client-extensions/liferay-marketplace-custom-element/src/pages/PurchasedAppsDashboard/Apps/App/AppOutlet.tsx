@@ -17,7 +17,6 @@ import {
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import {getThumbnailByProductAttachment} from '../../../../utils/util';
-import useGetProductCreatorAccount from '../../../GetAppPage/hooks/useGetProductCreatorAccount';
 import OrderDetailsHeader from '../components/OrderDetailsHeader';
 
 import './App.scss';
@@ -69,7 +68,7 @@ const AppOutlet = () => {
 		data?.product?.attachments
 	);
 
-	const productCreatorAccount = useGetProductCreatorAccount(data?.product);
+	const productCreatorAccountName = data?.product?.catalogName || '';
 
 	if (isLoading) {
 		return <ClayLoadingIndicator />;
@@ -94,9 +93,9 @@ const AppOutlet = () => {
 				className="d-flex flex-row justify-content-between pb-3 pt-5"
 				hasOrderDetails
 				image={appImage}
-				name={data?.product?.name?.en_US}
+				name={data?.product?.name}
 				order={data?.placedOrder}
-				productOwner={productCreatorAccount?.name}
+				productOwner={productCreatorAccountName}
 			/>
 
 			<AppNavbar />

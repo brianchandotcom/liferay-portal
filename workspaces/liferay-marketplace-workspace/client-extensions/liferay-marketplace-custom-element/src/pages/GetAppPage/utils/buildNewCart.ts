@@ -21,12 +21,12 @@ export default function buildNewCart({
 	email: string;
 	isFreeApp: boolean;
 	orderType: OrderType;
-	product?: Product;
+	product?: DeliveryProduct;
 	purchaseOrderNumber: string;
 	selectedAccount?: Account;
 	selectedPaymentMethod: PaymentMethodSelector;
-	selectedSKU?: SKU;
-	sku: SKU;
+	selectedSKU?: DeliverySKU;
+	sku: DeliverySKU;
 }) {
 	const cart: Partial<Cart> = {
 		accountId: selectedAccount?.id as number,
@@ -34,9 +34,7 @@ export default function buildNewCart({
 			{
 				price: {
 					currency: channel.currencyCode,
-					discount: 0,
-					finalPrice: product?.finalPrice,
-					price: product?.price as number,
+					discount: 0
 				},
 				productId: product?.productId,
 				quantity: 1,
@@ -47,8 +45,7 @@ export default function buildNewCart({
 			},
 		],
 		currencyCode: channel.currencyCode,
-		orderTypeExternalReferenceCode: orderType.externalReferenceCode,
-		orderTypeId: orderType.id as number,
+		orderTypeExternalReferenceCode: orderType.externalReferenceCode
 	};
 
 	if (isFreeApp) {

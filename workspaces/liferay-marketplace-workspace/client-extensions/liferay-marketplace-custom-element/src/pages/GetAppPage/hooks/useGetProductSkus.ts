@@ -7,13 +7,15 @@ import {useEffect, useState} from 'react';
 
 const useGetProductSkus = (
 	setEnableTrialMethod: (value: boolean) => void,
-	product?: Product
+	product?: DeliveryProduct
 ) => {
-	const [sku, setSku] = useState<SKU>({
-		cost: 0,
+	const [sku, setSku] = useState<DeliverySKU>({
 		externalReferenceCode: '',
 		id: 0,
-		price: 0,
+		price: {
+			price: 0,
+			priceFormatted: ''
+		},
 		sku: '',
 		skuOptions: [],
 	});
@@ -24,20 +26,20 @@ const useGetProductSkus = (
 		if (product && product?.skus?.length > 1) {
 			const isTrial = !!product?.skus?.find(
 				({skuOptions: [skuOption]}) =>
-					skuOption?.key === 'trial' && skuOption.value === 'yes'
+					skuOption?.skuOptionKey === 'trial' && skuOption.skuOptionValueKey === 'yes'
 			);
 
 			setEnableTrialMethod(isTrial);
 
 			newSku = product?.skus?.find(
-				(sku: {price: number}) => sku.price === 0
+				(sku) => sku.price?.price === 0
 			);
 		}
 		else {
 			newSku = product?.skus[0];
 		}
 
-		setSku(newSku as SKU);
+		setSku(newSku as DeliverySKU);
 	}, [product, setEnableTrialMethod]);
 
 	return {

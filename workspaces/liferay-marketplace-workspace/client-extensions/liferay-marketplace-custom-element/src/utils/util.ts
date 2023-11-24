@@ -79,14 +79,14 @@ export async function userAccountChecker(verifiedAccounts: string[]) {
 }
 
 export function getThumbnailByProductAttachment(
-	attachments?: Partial<ProductAttachment>[]
+	attachments?: Partial<ProductAttachment|DeliveryProductAttachment>[]
 ): string | undefined {
 	if (!Array.isArray(attachments)) {
 		return undefined;
 	}
 
 	const findThumbnailWithAppIcon = (
-		attachment: Partial<ProductAttachment>
+		attachment: Partial<ProductAttachment|DeliveryProductAttachment>
 	): boolean => {
 		if (attachment.customFields === undefined) {
 			return false;
@@ -128,6 +128,20 @@ export function getValueFromSpecifications(
 	specifications?.forEach((specification) => {
 		if (specification?.specificationKey === valueKey) {
 			value = specification?.value?.en_US;
+		}
+	});
+
+	return value;
+}
+
+export function getValueFromDeliverySpecifications(
+	specifications: DeliveryProductSpecification[],
+	valueKey: string
+) {
+	let value = '';
+	specifications?.forEach((specification) => {
+		if (specification?.specificationKey === valueKey) {
+			value = specification?.value;
 		}
 	});
 

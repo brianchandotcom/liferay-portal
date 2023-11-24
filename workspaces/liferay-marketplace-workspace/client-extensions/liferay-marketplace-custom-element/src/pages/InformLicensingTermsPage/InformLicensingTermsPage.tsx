@@ -18,10 +18,10 @@ import {
 	addExpandoValue,
 	createAppSKU,
 	createProductSpecification,
-	createSpecification,
 	deleteTrialSKU,
 	getProductSKU,
 	getSKUById,
+	getSpecification,
 	patchSKUById,
 	updateProductSpecification,
 } from '../../utils/api';
@@ -163,14 +163,7 @@ export function InformLicensingTermsPage({
 							});
 						}
 						else {
-							const dataSpecification = await createSpecification(
-								{
-									body: {
-										key: 'license-type',
-										title: {en_US: 'License Type'},
-									},
-								}
-							);
+							const dataSpecification = await getSpecification('license-type');
 
 							const {id} = await createProductSpecification({
 								appId,

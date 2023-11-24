@@ -5,8 +5,9 @@
 
 import useSWR from 'swr';
 
+import {Liferay} from '../liferay/liferay';
+import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
 import HeadlessCommerceDeliveryOrderImpl from '../services/rest/HeadlessCommerceDeliveryOrder';
-import {getProductById} from '../utils/api';
 
 const useGetProductByOrderId = (orderId: string) => {
 	return useSWR(`/placed-order/${orderId}`, async () => {
@@ -20,10 +21,14 @@ const useGetProductByOrderId = (orderId: string) => {
 			);
 		}
 
-		const product = await getProductById({
-			nestedFields: 'attachments,productSpecifications',
-			productId: placedOrder.placedOrderItems[0].productId,
-		});
+		const product = await HeadlessCommerceDeliveryCatalogImpl.getProduct(
+			Liferay.CommerceContext.commerceChannelId,
+			placedOrder.placedOrderItems[0].productId,
+			new URLSearchParams({
+				accountId: '-1',
+				nestedFields: 'attachments,productSpecifications',
+			})
+		);
 
 		return {
 			placedOrder,

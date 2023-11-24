@@ -24,10 +24,10 @@ interface LicenseSelectorProps {
 		setValue: UseFormSetValue<GetAppForm>;
 		watch: UseFormWatch<GetAppForm>;
 	};
-	onSelectLicense: (sku?: SKU) => void;
-	selectedProduct?: Product;
+	onSelectLicense: (sku?: DeliverySKU) => void;
+	selectedProduct?: DeliveryProduct;
 	setLicenseSelected: (licenseSelected: boolean) => void;
-	sku: SKU;
+	sku: DeliverySKU;
 }
 
 export function LicenseSelector({
@@ -37,7 +37,7 @@ export function LicenseSelector({
 	selectedProduct,
 	setLicenseSelected,
 }: LicenseSelectorProps) {
-	const [trialSKU, setTrialSKU] = useState<SKU>();
+	const [trialSKU, setTrialSKU] = useState<DeliverySKU>();
 	const [disabledButton, setDisabledButton] = useState<boolean>(true);
 
 	const hasTrialSkuVerification = useCallback(() => {
@@ -46,8 +46,10 @@ export function LicenseSelector({
 		const [trialSkuOption] =
 			skus?.filter((sku) =>
 				sku?.skuOptions.find(
-					(skuOption) =>
-						skuOption?.value.toLocaleLowerCase() === 'trial'
+					(skuOption) => {
+						return skuOption.skuOptionKey.toLocaleLowerCase() === 'trial' &&
+							skuOption.skuOptionValueKey.toLocaleLowerCase() === 'yes'
+					}
 				)
 			) || [];
 

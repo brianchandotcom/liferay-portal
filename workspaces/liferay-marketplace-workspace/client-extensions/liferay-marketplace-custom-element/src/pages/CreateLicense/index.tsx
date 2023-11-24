@@ -18,7 +18,6 @@ import {Liferay} from '../../liferay/liferay';
 import zodSchema from '../../schema/zod';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
-import useGetProductCreatorAccount from '../GetAppPage/hooks/useGetProductCreatorAccount';
 import useProvisioningKoroneikiOAuth2 from '../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
 import {formatDate} from '../PublishedAppsDashboard/PublishedDashboardPageUtil';
 import AccountEmailInfo from './AccountInfo';
@@ -84,7 +83,7 @@ const CreateLicense = () => {
 	const navigate = useNavigate();
 	const product = data?.product;
 
-	const productCreatorAccount = useGetProductCreatorAccount(product);
+	const productCreatorAccountName: string = product?.catalogName || '';
 	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
 
 	const {
@@ -117,7 +116,7 @@ const CreateLicense = () => {
 
 			setValue(
 				'description',
-				`${givenName} ${familyName} - ${product.name?.en_US} - ${subscription?.name}`
+				`${givenName} ${familyName} - ${product.name} - ${subscription?.name}`
 			);
 		}
 	}, [myUserAccount, product, setValue, subscription?.name]);
@@ -227,8 +226,8 @@ const CreateLicense = () => {
 					RightSideBanner={() => (
 						<AccountEmailInfo userAccount={myUserAccount} />
 					)}
-					creatorAccount={productCreatorAccount as Account}
-					product={product as Product}
+					creatorAccountName={productCreatorAccountName}
+					product={product as DeliveryProduct}
 					showExtendBanner={
 						step === StepCreateLicense.LICENSE_KEY_DETAILS
 					}

@@ -326,7 +326,7 @@ const Licenses = () => {
 							<LicenseDetailsModalHeader
 								modalData={modalData}
 								myUserAccount={myUserAccount}
-								product={product as Product}
+								product={product as DeliveryProduct}
 							/>
 						}
 						modalData={modalData as LicenseKey}

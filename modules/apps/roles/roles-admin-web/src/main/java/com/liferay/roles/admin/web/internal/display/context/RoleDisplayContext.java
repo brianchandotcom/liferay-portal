@@ -367,6 +367,17 @@ public class RoleDisplayContext {
 		return false;
 	}
 
+	private Role _getSelectedRole() throws Exception {
+		if (_role != null) {
+			return _role;
+		}
+
+		_role = RoleServiceUtil.fetchRole(
+			ParamUtil.getLong(_httpServletRequest, "roleId"));
+
+		return _role;
+	}
+
 	private List<String> _getTabsNames() throws Exception {
 		List<String> tabsNames = new ArrayList<>();
 
@@ -498,6 +509,7 @@ public class RoleDisplayContext {
 	private final RoleTypeContributor _currentRoleTypeContributor;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;
+	private Role _role;
 	private final ThemeDisplay _themeDisplay;
 
 }

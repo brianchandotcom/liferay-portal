@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.model.Definition;
@@ -103,40 +102,14 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 			JSONObject definitionReportParameterJSONObject =
 				reportParametersJSONArray.getJSONObject(i);
 
-			String key = definitionReportParameterJSONObject.getString("key");
-
-			JSONObject entryReportParameterJSONObject = JSONUtil.put(
-				"key", key);
-
-			String value = StringPool.BLANK;
-
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"yyyy-MM-dd");
-
-			String type = definitionReportParameterJSONObject.getString("type");
-
-			if (type.equals("startDate")) {
-				value = dateFormat.format(startCalendar.getTime());
-			}
-			else if (type.equals("endDate")) {
-				if (schedulerEndDate != null) {
-					value = dateFormat.format(schedulerEndDate.getTime());
-				}
-				else {
-					value = StringPool.NULL;
-				}
-			}
-			else {
-				value = definitionReportParameterJSONObject.getString("value");
-
-				if (Validator.isNull(value)) {
-					value = StringPool.BLANK;
-				}
-			}
-
-			entryReportParameterJSONObject.put("value", value);
-
-			entryReportParametersJSONArray.put(entryReportParameterJSONObject);
+			entryReportParametersJSONArray.put(
+				JSONUtil.put(
+					"key", definitionReportParameterJSONObject.getString("key")
+				).put(
+					"value",
+					_getEntryReportParameterValue(
+						actionRequest, definitionReportParameterJSONObject)
+				));
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -150,6 +123,50 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 			reportName, entryReportParametersJSONArray.toString(),
 			serviceContext);
 	}
+
+	private String _getEntryReportParameterValue(
+		ActionRequest actionRequest,
+		JSONObject definitionReportParameterJSONObject) {
+
+		String key = definitionReportParameterJSONObject.getString("key");
+		String type = definitionReportParameterJSONObject.getString("type");
+
+		if (!type.equals("date")) {
+			return ParamUtil.getString(actionRequest, "parameterValue" + key);
+		}
+
+		String variable = ParamUtil.getString(
+			actionRequest, "useVariable" + key);
+
+		if (variable.equals("endDate")) {
+			if (ParamUtil.getInteger(actionRequest, "endDateType") ==
+					_END_DATE_TYPE_NO_END_DATE) {
+
+				return StringPool.NULL;
+			}
+
+			Calendar calendar = ReportsEngineConsoleUtil.getDate(
+				actionRequest, "schedulerEndDate", true);
+
+			return _dateFormat.format(calendar.getTime());
+		}
+		else if (variable.equals("startDate")) {
+			Calendar calendar = ReportsEngineConsoleUtil.getDate(
+				actionRequest, "schedulerStartDate", true);
+
+			return _dateFormat.format(calendar.getTime());
+		}
+
+		Calendar calendar = ReportsEngineConsoleUtil.getDate(
+			actionRequest, key, false);
+
+		return _dateFormat.format(calendar.getTime());
+	}
+
+	private static final int _END_DATE_TYPE_NO_END_DATE = 0;
+
+	private final DateFormat _dateFormat =
+		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 
 	@Reference
 	private DefinitionService _definitionService;

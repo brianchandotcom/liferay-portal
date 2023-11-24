@@ -17,6 +17,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -642,11 +644,12 @@ public class FileEntryContentDashboardItemTest {
 			_serviceContext);
 
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			_group.getCreatorUserId(), _group.getGroupId(), 0,
-			_portal.getClassNameId(FileEntry.class.getName()), 0,
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			_portal.getClassNameId(FileEntry.class.getName()),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
-			0, _serviceContext);
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		if (numVersions > 1) {
 			for (int i = 1; i < numVersions; i++) {

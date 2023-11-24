@@ -257,22 +257,22 @@ public class ProductVirtualSettingsUtil {
 			}
 		}
 
-		 cpDefinitionVirtualSetting = cpDefinitionVirtualSettingService.
-				updateCPDefinitionVirtualSetting(
-						cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
-						attachmentFileEntryId, attachmentURL,
-						_getActivationStatus(
-								GetterUtil.getInteger(
-										productVirtualSettings.getActivationStatus(),
-										cpDefinitionVirtualSetting.getActivationStatus())),
-						GetterUtil.getLong(
-								duration, cpDefinitionVirtualSetting.getDuration()),
-						GetterUtil.getInteger(
-								productVirtualSettings.getMaxUsages(),
-								cpDefinitionVirtualSetting.getMaxUsages()),
-						useSample, sampleFileEntryId, sampleAttachmentURL,
-						termsOfUseRequired, termsOfUseContentMap,
-						termsOfUseJournalArticleId, serviceContext);
+		cpDefinitionVirtualSetting =
+			cpDefinitionVirtualSettingService.updateCPDefinitionVirtualSetting(
+				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
+				attachmentFileEntryId, attachmentURL,
+				_getActivationStatus(
+					GetterUtil.getInteger(
+						productVirtualSettings.getActivationStatus(),
+						cpDefinitionVirtualSetting.getActivationStatus())),
+				GetterUtil.getLong(
+					duration, cpDefinitionVirtualSetting.getDuration()),
+				GetterUtil.getInteger(
+					productVirtualSettings.getMaxUsages(),
+					cpDefinitionVirtualSetting.getMaxUsages()),
+				useSample, sampleFileEntryId, sampleAttachmentURL,
+				termsOfUseRequired, termsOfUseContentMap,
+				termsOfUseJournalArticleId, serviceContext);
 
 		if (productVirtualSettings.getProductVirtualSettingsFileEntries() ==
 				null) {
@@ -280,8 +280,14 @@ public class ProductVirtualSettingsUtil {
 			return cpDefinitionVirtualSetting;
 		}
 
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry : cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries()) {
-			cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(CPDefinition.class.getName(), cpDefinitionVirtualSetting.getClassPK(), cpdVirtualSettingFileEntry.getCPDefinitionVirtualSettingFileEntryId());
+		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
+				cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries()) {
+
+			cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(
+				CPDefinition.class.getName(),
+				cpDefinitionVirtualSetting.getClassPK(),
+				cpdVirtualSettingFileEntry.
+					getCPDefinitionVirtualSettingFileEntryId());
 		}
 
 		for (ProductVirtualSettingsFileEntry productVirtualSettingsFileEntry :
@@ -289,7 +295,8 @@ public class ProductVirtualSettingsUtil {
 
 			cpdVirtualSettingFileEntryService.addCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSetting.getGroupId(),
-				CPDefinition.class.getName(), cpDefinitionVirtualSetting.getClassPK(),
+				CPDefinition.class.getName(),
+				cpDefinitionVirtualSetting.getClassPK(),
 				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
 				FileEntryUtil.getFileEntryId(
 					productVirtualSettingsFileEntry.getAttachment(),

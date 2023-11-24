@@ -163,6 +163,32 @@ public class OrderItemDTOConverter
 
 						return cpMeasurementUnit.getKey();
 					});
+				setVirtualItems(
+					() -> {
+						try {
+							CommerceVirtualOrderItem commerceVirtualOrderItem =
+								_commerceVirtualOrderItemService.
+									fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+										commerceOrderItem.
+											getCommerceOrderItemId());
+
+							if (commerceVirtualOrderItem == null) {
+								return null;
+							}
+
+							return _toVirtualItems(
+								commerceVirtualOrderItem.
+									getCommerceVirtualOrderItemFileEntries(),
+								commerceVirtualOrderItem);
+						}
+						catch (PortalException portalException) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(portalException);
+							}
+
+							return null;
+						}
+					});
 				setVirtualItemURLs(
 					() -> {
 						try {
@@ -180,6 +206,7 @@ public class OrderItemDTOConverter
 								commerceVirtualOrderItemFileEntries =
 									commerceVirtualOrderItem.
 										getCommerceVirtualOrderItemFileEntries();
+
 							CommerceVirtualOrderItemFileEntry
 								commerceVirtualOrderItemFileEntry =
 									commerceVirtualOrderItemFileEntries.get(0);
@@ -198,33 +225,6 @@ public class OrderItemDTOConverter
 							}
 
 							return new String[] {url};
-						}
-						catch (PortalException portalException) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(portalException);
-							}
-
-							return null;
-						}
-					});
-
-				setVirtualItems(
-					() -> {
-						try {
-							CommerceVirtualOrderItem commerceVirtualOrderItem =
-								_commerceVirtualOrderItemService.
-									fetchCommerceVirtualOrderItemByCommerceOrderItemId(
-										commerceOrderItem.
-											getCommerceOrderItemId());
-
-							if (commerceVirtualOrderItem == null) {
-								return null;
-							}
-
-							return _toVirtualItems(
-								commerceVirtualOrderItem.
-									getCommerceVirtualOrderItemFileEntries(),
-								commerceVirtualOrderItem);
 						}
 						catch (PortalException portalException) {
 							if (_log.isDebugEnabled()) {

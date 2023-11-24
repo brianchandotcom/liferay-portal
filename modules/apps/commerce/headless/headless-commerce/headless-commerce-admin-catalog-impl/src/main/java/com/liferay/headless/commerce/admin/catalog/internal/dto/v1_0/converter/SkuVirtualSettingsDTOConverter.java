@@ -86,6 +86,9 @@ public class SkuVirtualSettingsDTOConverter
 				maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
 				override = cpDefinitionVirtualSetting.isOverride();
 				sampleURL = cpDefinitionVirtualSetting.getSampleURL();
+				skuVirtualSettingsFileEntries =
+					_toSkuVirtualSettingsFileEntries(
+						cpdVirtualSettingFileEntries, cpInstance);
 				termsOfUseContent = LanguageUtils.getLanguageIdMap(
 					cpDefinitionVirtualSetting.getTermsOfUseContentMap());
 				termsOfUseRequired =
@@ -156,10 +159,6 @@ public class SkuVirtualSettingsDTOConverter
 
 						return journalArticle.getResourcePrimKey();
 					});
-
-				setSkuVirtualSettingsFileEntries(
-					_toSkuVirtualSettingsFileEntries(
-						cpdVirtualSettingFileEntries, cpInstance));
 				setUrl(
 					() -> {
 						if (Validator.isNull(
@@ -182,6 +181,22 @@ public class SkuVirtualSettingsDTOConverter
 			cpdVirtualSettingFileEntries,
 			cpdVirtualSettingFileEntry -> new SkuVirtualSettingsFileEntry() {
 				{
+					setSrc(
+						() -> {
+							long fileEntryId =
+								cpdVirtualSettingFileEntry.getFileEntryId();
+
+							if (fileEntryId == 0) {
+								return null;
+							}
+
+							return _commerceMediaResolver.
+								getDownloadVirtualProductURL(
+									CPInstance.class.getName(),
+									cpInstance.getCPInstanceId(),
+									AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
+									fileEntryId);
+						});
 					setUrl(
 						() -> {
 							if (Validator.isNull(
@@ -201,23 +216,6 @@ public class SkuVirtualSettingsDTOConverter
 							}
 
 							return cpdVirtualSettingFileEntry.getVersion();
-						});
-
-					setSrc(
-						() -> {
-							long fileEntryId =
-								cpdVirtualSettingFileEntry.getFileEntryId();
-
-							if (fileEntryId == 0) {
-								return null;
-							}
-
-							return _commerceMediaResolver.
-								getDownloadVirtualProductURL(
-									CPInstance.class.getName(),
-									cpInstance.getCPInstanceId(),
-									AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
-									fileEntryId);
 						});
 				}
 			},

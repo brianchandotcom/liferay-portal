@@ -260,7 +260,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 	@Override
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
-			String className, long classPK) {
+		String className, long classPK) {
 
 		return cpDefinitionVirtualSettingPersistence.fetchByC_C(
 			_classNameLocalService.getClassNameId(className), classPK);
@@ -369,7 +369,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setOverride(override);
 		cpDefinitionVirtualSetting.setExpandoBridgeAttributes(serviceContext);
 
-		cpDefinitionVirtualSetting = cpDefinitionVirtualSettingPersistence.update(
+		cpDefinitionVirtualSetting =
+			cpDefinitionVirtualSettingPersistence.update(
 				cpDefinitionVirtualSetting);
 
 		if ((fileEntryId > 0) || Validator.isNotNull(url)) {

@@ -81,6 +81,9 @@ public class ProductVirtualSettingsDTOConverter
 				duration = TimeUnit.MILLISECONDS.toDays(
 					cpDefinitionVirtualSetting.getDuration());
 				maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
+				productVirtualSettingsFileEntries =
+					_toProductVirtualSettingsFileEntries(
+						cpdVirtualSettingFileEntries, cpDefinition);
 				sampleURL = cpDefinitionVirtualSetting.getSampleURL();
 				termsOfUseContent = LanguageUtils.getLanguageIdMap(
 					cpDefinitionVirtualSetting.getTermsOfUseContentMap());
@@ -152,9 +155,6 @@ public class ProductVirtualSettingsDTOConverter
 
 						return journalArticle.getResourcePrimKey();
 					});
-				setProductVirtualSettingsFileEntries(
-					_toProductVirtualSettingsFileEntries(
-						cpdVirtualSettingFileEntries, cpDefinition));
 				setUrl(
 					() -> {
 						if (Validator.isNull(
@@ -179,6 +179,22 @@ public class ProductVirtualSettingsDTOConverter
 			cpdVirtualSettingFileEntry ->
 				new ProductVirtualSettingsFileEntry() {
 					{
+						setSrc(
+							() -> {
+								long fileEntryId =
+									cpdVirtualSettingFileEntry.getFileEntryId();
+
+								if (fileEntryId == 0) {
+									return null;
+								}
+
+								return _commerceMediaResolver.
+									getDownloadVirtualProductURL(
+										CPDefinition.class.getName(),
+										cpDefinition.getCPDefinitionId(),
+										AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
+										fileEntryId);
+							});
 						setUrl(
 							() -> {
 								if (Validator.isNull(
@@ -199,23 +215,6 @@ public class ProductVirtualSettingsDTOConverter
 								}
 
 								return cpdVirtualSettingFileEntry.getVersion();
-							});
-
-						setSrc(
-							() -> {
-								long fileEntryId =
-									cpdVirtualSettingFileEntry.getFileEntryId();
-
-								if (fileEntryId == 0) {
-									return null;
-								}
-
-								return _commerceMediaResolver.
-									getDownloadVirtualProductURL(
-										CPDefinition.class.getName(),
-										cpDefinition.getCPDefinitionId(),
-										AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
-										fileEntryId);
 							});
 					}
 				},

@@ -48,16 +48,16 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 							className = cpDefinitionVirtualSetting.getClassName();
 							classPK = cpDefinitionVirtualSetting.getClassPK();
 						}
-
-						Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-							"className", className
-						).put(
-							"classPK", String.valueOf(classPK)
-						).build();
 						%>
 
 						<frontend-data-set:classic-display
-							contextParams="<%= contextParams %>"
+							contextParams='<%=
+								HashMapBuilder.<String, String>put(
+									"className", className
+								).put(
+									"classPK", String.valueOf(classPK)
+								).build()
+							%>'
 							creationMenu="<%= cpDefinitionVirtualSettingDisplayContext.getCreationMenu() %>"
 							dataProviderKey="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
 							formName="fm"

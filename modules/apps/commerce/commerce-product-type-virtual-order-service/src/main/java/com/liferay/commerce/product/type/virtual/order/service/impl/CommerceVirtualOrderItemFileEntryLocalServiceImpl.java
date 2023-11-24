@@ -36,7 +36,7 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 	public CommerceVirtualOrderItemFileEntry
 			addCommerceVirtualOrderItemFileEntry(
 				long userId, long groupId, long commerceOrderItemId,
-				long fileEntryId, String Url, String version)
+				long fileEntryId, String url, String version)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -44,11 +44,11 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 		long commerceVirtualOrderItemFileEntryId =
 			counterLocalService.increment();
 
-		if (Validator.isNotNull(Url)) {
+		if (Validator.isNotNull(url)) {
 			fileEntryId = 0;
 		}
 
-		_validate(fileEntryId, Url);
+		_validate(fileEntryId, url);
 
 		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
 			commerceVirtualOrderItemFileEntryPersistence.create(
@@ -61,7 +61,7 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 		commerceVirtualOrderItemFileEntry.setCommerceVirtualOrderItemId(
 			commerceOrderItemId);
 		commerceVirtualOrderItemFileEntry.setFileEntryId(fileEntryId);
-		commerceVirtualOrderItemFileEntry.setUrl(Url);
+		commerceVirtualOrderItemFileEntry.setUrl(url);
 		commerceVirtualOrderItemFileEntry.setVersion(version);
 
 		return commerceVirtualOrderItemFileEntryPersistence.update(

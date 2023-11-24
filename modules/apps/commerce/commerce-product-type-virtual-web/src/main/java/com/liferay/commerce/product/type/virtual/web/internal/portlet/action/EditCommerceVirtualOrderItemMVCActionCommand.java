@@ -84,8 +84,6 @@ public class EditCommerceVirtualOrderItemMVCActionCommand
 		long commerceVirtualOrderItemId = ParamUtil.getLong(
 			actionRequest, "commerceVirtualOrderItemId");
 
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-		String url = ParamUtil.getString(actionRequest, "url");
 		int activationStatus = ParamUtil.getInteger(
 			actionRequest, "activationStatus");
 		long durationDays = ParamUtil.getLong(actionRequest, "durationDays");

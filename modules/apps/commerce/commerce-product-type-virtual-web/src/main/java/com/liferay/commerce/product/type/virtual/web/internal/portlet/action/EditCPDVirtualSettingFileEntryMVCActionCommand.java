@@ -45,26 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDVirtualSettingFileEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void _deleteCPDVirtualSettingFileEntry(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		long cpdVirtualSettingFileEntryId = ParamUtil.getLong(
-			actionRequest, "cpdVirtualSettingFileEntryId");
-
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			_cpdVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry(
-				cpdVirtualSettingFileEntryId);
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			cpdVirtualSettingFileEntry.getCPDefinitionVirtualSetting();
-
-		_cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(
-			cpDefinitionVirtualSetting.getClassName(),
-			cpDefinitionVirtualSetting.getClassPK(),
-			cpdVirtualSettingFileEntryId);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -127,6 +107,25 @@ public class EditCPDVirtualSettingFileEntryMVCActionCommand
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
+	}
+
+	private void _deleteCPDVirtualSettingFileEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		long cpdVirtualSettingFileEntryId = ParamUtil.getLong(
+			actionRequest, "cpdVirtualSettingFileEntryId");
+
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+			_cpdVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry(
+				cpdVirtualSettingFileEntryId);
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			cpdVirtualSettingFileEntry.getCPDefinitionVirtualSetting();
+
+		_cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(
+			cpDefinitionVirtualSetting.getClassName(),
+			cpDefinitionVirtualSetting.getClassPK(),
+			cpdVirtualSettingFileEntryId);
 	}
 
 	private CPDVirtualSettingFileEntry _updateCPDVirtualSettingFileEntry(

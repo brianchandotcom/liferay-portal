@@ -166,7 +166,8 @@ public class CPDefinitionVirtualSettingDisplayContext
 						PortletURLBuilder.createRenderURL(
 							liferayPortletResponse
 						).setMVCRenderCommandName(
-							"/cp_definitions/edit_cpd_virtual_setting_file_entry"
+							"/cp_definitions" +
+								"/edit_cpd_virtual_setting_file_entry"
 						).setParameter(
 							"cpDefinitionId", getCPDefinitionId()
 						).setParameter(

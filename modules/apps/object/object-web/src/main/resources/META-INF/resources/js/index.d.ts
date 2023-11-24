@@ -35,19 +35,19 @@ type DefinitionAction = {
 	method: string;
 };
 
-interface DeletedObjectDefinition {
-	hasObjectRelationship: boolean;
-	id: number;
-	name: string;
-	objectEntriesCount: number;
-}
-
 type DefinitionActions = {
 	delete: DefinitionAction;
 	get: DefinitionAction;
 	permissions: DefinitionAction;
 	update: DefinitionAction;
 };
+
+interface DeletedObjectDefinition {
+	hasObjectRelationship: boolean;
+	id: number;
+	name: string;
+	objectEntriesCount: number;
+}
 
 type ObjectFieldDeleteInfoProps = {
 	deleteLastPublishedObjectDefinitionObjectField: boolean;
@@ -184,7 +184,7 @@ interface ObjectDefinition {
 	accountEntryRestricted: boolean;
 	accountEntryRestrictedObjectFieldId: string;
 	accountEntryRestrictedObjectFieldName: string;
-	actions: DefinitionActions;
+	actions: Actions;
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;
@@ -222,6 +222,11 @@ interface ObjectDefinition {
 	system: boolean;
 	titleObjectFieldId: number | string;
 	titleObjectFieldName: string;
+}
+
+interface ObjectDefinitions {
+	actions: Actions;
+	items: ObjectDefinition[];
 }
 
 interface ObjectDefinitionNodeData

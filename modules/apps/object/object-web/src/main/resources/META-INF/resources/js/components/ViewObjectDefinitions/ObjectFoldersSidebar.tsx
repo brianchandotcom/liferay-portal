@@ -15,6 +15,7 @@ import React, {SetStateAction} from 'react';
 import {defaultLanguageId} from '../../utils/constants';
 
 interface ObjectFoldersSidebarProps {
+	objectDefinitionsActions: Actions;
 	objectFoldersRequestInfo: ObjectFoldersRequestInfo;
 	selectedObjectFolder: ObjectFolder;
 	setSelectedObjectFolder: (
@@ -24,6 +25,7 @@ interface ObjectFoldersSidebarProps {
 }
 
 export default function ObjectFoldersSideBar({
+	objectDefinitionsActions,
 	objectFoldersRequestInfo,
 	selectedObjectFolder,
 	setSelectedObjectFolder,
@@ -31,19 +33,20 @@ export default function ObjectFoldersSideBar({
 }: ObjectFoldersSidebarProps) {
 	const objectFoldersKebabOptions = [];
 
-	if (selectedObjectFolder.actions.get) {
-		objectFoldersKebabOptions.push({
-			label: sub(
-				Liferay.Language.get('export-x'),
-				Liferay.Language.get('object-folder')
-			),
-			onClick: () => {},
-			symbolLeft: 'export',
-			value: 'exportObjectFolder',
-		});
-	}
+	objectFoldersKebabOptions.push({
+		label: sub(
+			Liferay.Language.get('export-x'),
+			Liferay.Language.get('object-folder')
+		),
+		onClick: () => {},
+		symbolLeft: 'export',
+		value: 'exportObjectFolder',
+	});
 
-	if (objectFoldersRequestInfo.actions.create) {
+	if (
+		objectDefinitionsActions.create &&
+		objectFoldersRequestInfo.actions.create
+	) {
 		objectFoldersKebabOptions.push({
 			label: sub(
 				Liferay.Language.get('import-x'),

@@ -61,6 +61,10 @@ export interface NotificationTemplate {
 	to: LocalizedValue<string>;
 	type: NotificationTemplateType;
 }
+interface ObjectDefinitions {
+	actions: Actions;
+	items: ObjectDefinition[];
+}
 interface ObjectFolderItem {
 	linkedObjectDefinition: boolean;
 	objectDefinitionExternalReferenceCode: string;
@@ -118,7 +122,7 @@ export declare function fetchJSON<T>(
 	input: RequestInfo,
 	init?: RequestInit
 ): Promise<T>;
-export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
+export declare function getAllObjectDefinitions(): Promise<ObjectDefinitions>;
 export declare function getAllObjectFolders(): Promise<ObjectFolderRequestInfo>;
 export declare function getList<T>(url: string): Promise<T[]>;
 export declare function getListTypeDefinition(

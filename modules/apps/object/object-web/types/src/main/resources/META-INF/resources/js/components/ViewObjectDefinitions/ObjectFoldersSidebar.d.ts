@@ -5,6 +5,7 @@
 
 import {SetStateAction} from 'react';
 interface ObjectFoldersSidebarProps {
+	objectDefinitionsActions: Actions;
 	objectFoldersRequestInfo: ObjectFoldersRequestInfo;
 	selectedObjectFolder: ObjectFolder;
 	setSelectedObjectFolder: (
@@ -13,6 +14,7 @@ interface ObjectFoldersSidebarProps {
 	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
 }
 export default function ObjectFoldersSideBar({
+	objectDefinitionsActions,
 	objectFoldersRequestInfo,
 	selectedObjectFolder,
 	setSelectedObjectFolder,

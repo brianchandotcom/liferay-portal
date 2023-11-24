@@ -5,9 +5,9 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Sergio González
@@ -19,17 +19,15 @@ public class OrganizationMembershipPolicyFactoryImpl
 
 	@Override
 	public OrganizationMembershipPolicy getOrganizationMembershipPolicy() {
-		return _organizationMembershipPolicy;
+		return _organizationMembershipPolicySnapshot.get();
 	}
 
 	private OrganizationMembershipPolicyFactoryImpl() {
 	}
 
-	private static volatile OrganizationMembershipPolicy
-		_organizationMembershipPolicy =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				OrganizationMembershipPolicy.class,
-				OrganizationMembershipPolicyFactoryImpl.class,
-				"_organizationMembershipPolicy", false, true);
+	private static final Snapshot<OrganizationMembershipPolicy>
+		_organizationMembershipPolicySnapshot = new Snapshot<>(
+			OrganizationMembershipPolicyFactoryImpl.class,
+			OrganizationMembershipPolicy.class, null, true);
 
 }

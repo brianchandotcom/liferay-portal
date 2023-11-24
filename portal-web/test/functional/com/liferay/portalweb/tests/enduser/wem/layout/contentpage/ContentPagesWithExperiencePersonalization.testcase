@@ -222,8 +222,8 @@ definition {
 				portletOption = "Configuration");
 
 			AssertTextEquals(
-				locator1 = "Portlet#HEADER",
-				value1 = "Category Navigation - Configuration");
+				locator1 = "Modal#HEADER",
+				value1 = "Category Filter - Configuration");
 		}
 	}
 

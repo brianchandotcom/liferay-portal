@@ -1564,7 +1564,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Portlet Preference Value",
-				changeSite = "Site Name",
+				changeSite = "",
 				changeTitle = "Preferences for Web Content Display on Test Content Page",
 				changeType = "Modified",
 				changeUser = "Test Test");
@@ -1635,7 +1635,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Portlet Preference Value",
-				changeSite = "Site Name",
+				changeSite = "",
 				changeTitle = "Preferences for Web Content Display on Test Widget Page",
 				changeType = "Modified",
 				changeUser = "Test Test");

@@ -10,7 +10,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
@@ -52,34 +52,8 @@ public class AssetTagNamesFacetedSearcherTest
 
 	@Test
 	public void testAggregation() throws Exception {
-		String keyword = RandomTestUtil.randomString();
-
-		Group group = userSearchFixture.addGroup();
-		String title = keyword;
-
-		addJournalArticle(group, title);
-
-		String tag = keyword;
-
-		addUser(group, tag);
-
-		SearchContext searchContext = getSearchContext(keyword);
-
-		Facet facet = _assetTagNamesFacetFactory.newInstance(searchContext);
-
-		searchContext.addFacet(facet);
-
-		Hits hits = search(searchContext);
-
-		assertEntryClassNames(
-			Arrays.asList(JournalArticle.class.getName(), User.class.getName()),
-			hits, searchContext);
-
-		String tagName = tag;
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
-			tagName = StringUtil.toLowerCase(tag);
-		}
+		_testAggregation(StringUtil::toLowerCase);
+	}
 
 		Map<String, Integer> frequencies = Collections.singletonMap(tagName, 1);
 
@@ -109,9 +83,8 @@ public class AssetTagNamesFacetedSearcherTest
 
 	@Test
 	public void testSearchQuoted() throws Exception {
-		String[] assetTagNames = {"Enterprise", "Open Source", "For   Life"};
-
-		User user = addUser(assetTagNames);
+		_testAggregation(StringUtil::toLowerCase);
+	}
 
 		Map<String, String> expected = userSearchFixture.toMap(
 			user, assetTagNames);
@@ -125,26 +98,8 @@ public class AssetTagNamesFacetedSearcherTest
 
 	@Test
 	public void testSelection() throws Exception {
-		String keyword = RandomTestUtil.randomString();
-
-		Group group = userSearchFixture.addGroup();
-		String title = keyword;
-
-		addJournalArticle(group, title);
-
-		String tag = keyword;
-
-		addUser(group, tag);
-
-		SearchContext searchContext = getSearchContext(keyword);
-
-		Facet facet = _assetTagNamesFacetFactory.newInstance(searchContext);
-
-		String tagName = tag;
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
-			tagName = StringUtil.toLowerCase(tag);
-		}
+		_testSelection(StringUtil::toLowerCase);
+	}
 
 		facet.select(tagName);
 
@@ -211,6 +166,94 @@ public class AssetTagNamesFacetedSearcherTest
 		Hits hits = search(searchContext);
 
 		assertTags(keywords, hits, expected, searchContext);
+	}
+
+	private void _testAggregation(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		Group group = userSearchFixture.addGroup();
+		String title = keyword;
+
+		addJournalArticle(group, title);
+
+		String tag = keyword;
+
+		addUser(group, tag);
+
+		SearchContext searchContext = getSearchContext(keyword);
+
+		Facet facet = _assetTagNamesFacetFactory.newInstance(searchContext);
+
+		searchContext.addFacet(facet);
+
+		Hits hits = search(searchContext);
+
+		assertEntryClassNames(
+			Arrays.asList(JournalArticle.class.getName(), User.class.getName()),
+			hits, searchContext);
+
+		Map<String, Integer> frequencies = Collections.singletonMap(
+			unsafeFunction.apply(tag), 1);
+
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
+	}
+
+	private void _testSearchQuoted(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
+		throws Exception {
+
+		String[] assetTagNames = {"Enterprise", "Open Source", "For   Life"};
+
+		User user = addUser(assetTagNames);
+
+		Map<String, String> expected = userSearchFixture.toMap(
+			user, unsafeFunction, assetTagNames);
+
+		assertTags("\"Enterprise\"", expected);
+		assertTags("\"Open\"", expected);
+		assertTags("\"Source\"", expected);
+		assertTags("\"Open Source\"", expected);
+		assertTags("\"For   Life\"", expected);
+	}
+
+	private void _testSelection(
+			UnsafeFunction<String, String, Exception> unsafeFunction)
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		Group group = userSearchFixture.addGroup();
+		String title = keyword;
+
+		addJournalArticle(group, title);
+
+		String tag = keyword;
+
+		addUser(group, tag);
+
+		SearchContext searchContext = getSearchContext(keyword);
+
+		Facet facet = _assetTagNamesFacetFactory.newInstance(searchContext);
+
+		String tagName = unsafeFunction.apply(tag);
+
+		facet.select(tagName);
+
+		searchContext.addFacet(facet);
+
+		Hits hits = search(searchContext);
+
+		assertEntryClassNames(
+			Arrays.asList(User.class.getName()), hits, searchContext);
+
+		Map<String, Integer> frequencies = Collections.singletonMap(tagName, 1);
+
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 
 	@Inject

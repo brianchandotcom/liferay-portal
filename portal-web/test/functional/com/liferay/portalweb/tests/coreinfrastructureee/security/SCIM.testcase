@@ -181,6 +181,51 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-190327. TC2: Verify Matcher field should work after changing email to username."
+	@priority = 4
+	test MatcherFieldShouldWorkAfterChangeToUserName {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Add a SCIM client") {
+			PortalSettings.openToConfigInInstanceSettings(portletKey = "scim-name");
+
+			SCIM.configureSCIM(
+				applicationName = "SCIM Application",
+				matcherField = "email");
+
+			SCIM.configureSCIM(generateAccessToken = "true");
+		}
+
+		task ("And: Change matcher field to userName") {
+			SCIM.configureSCIM(matcherField = "userName");
+		}
+
+		task ("And: Add a regular user") {
+			JSONUser.addUser(
+				userEmailAddress = "test1@liferay.com",
+				userFirstName = "Test",
+				userLastName = "One",
+				userScreenName = "test1");
+
+			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test1@liferay.com");
+		}
+
+		task ("When: Provision portal user to SCIM user with matched username") {
+			var scimUserId = HeadlessSCIM.addSCIMUser(
+				scimUserEmailAddress = "test1@liferay.com",
+				userFirstName = "Test",
+				userLastName = "One",
+				userScreenName = "test1");
+		}
+
+		task ("Then: The provision is successful") {
+			if (${scimUserId} == ${userId}) {
+				echo("The provision is successful");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-191052. TC-1 and TC-2 and TC-3: Verify that the system administrator can configure a SCIM client by deploying a config file and then register the SCIM client in the OAuth2 application."
 	@ignore = "true"
 	@priority = 5

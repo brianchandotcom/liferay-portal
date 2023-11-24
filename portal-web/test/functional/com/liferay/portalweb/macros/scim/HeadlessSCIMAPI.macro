@@ -1,0 +1,45 @@
+definition {
+
+	@summary = "Default summary"
+	macro _addSCIMUser(groupId = null, contentMap = null, structureId = null, descriptionMap = null, title = null, titleMap = null, folderId = null) {
+		Variables.assertDefined(parameterList = "${type},${userFirstName},${userLastName},${scimUserEmailAddress},${userScreenName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/scim/v1.0/v2/Users \
+				-u ${userEmailAddress}:${userPassword} \
+				-H accept: application/scim+json \
+				-H Content-Type: application/scim+json \
+				-d {
+					"active": true,
+					"emails": [
+						{
+							"display": "${scimUserEmailAddress}",
+							"primary": true,
+							"type": "${type}",
+							"value": "${scimUserEmailAddress}"
+						}
+					],
+					"name": {
+						"familyName": "${userLastName}",
+						"givenName": "${userFirstName}"
+					},
+					"userName": "${userScreenName}"
+				}
+		''';
+
+		var scimUserId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${scimUserId};
+	}
+
+}

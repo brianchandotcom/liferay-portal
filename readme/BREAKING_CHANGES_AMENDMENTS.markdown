@@ -90,3 +90,28 @@ ThreadLocalDistributorRegistry is being removed.
 ThreadLocalDistributor has no current usage.
 ----
 ```
+----
+
+# 0bfc1206ac4a93ec401be491f9553ac94ecea0ed
+
+Missing breaking change
+
+Correct message should be:
+```
+LPS-200453 Make PortletToolbar not a spring bean and provide the instance through filed INSTANCE.
+    
+# breaking_change_report
+
+## What portal-kernel/src/com/liferay/portal/kernel/portlet/toolbar/PortletToolbar.java
+
+PortletToolbar constructor changed to private.
+
+## Why
+
+PortletToolbar is being removed from util-spring, it needs a static INSTANCE field inside to replace existing usages.
+
+## Alternatives
+
+Directly use PortletToolbar.INSTANCE to get the instance of PortletToolbar.
+----
+```

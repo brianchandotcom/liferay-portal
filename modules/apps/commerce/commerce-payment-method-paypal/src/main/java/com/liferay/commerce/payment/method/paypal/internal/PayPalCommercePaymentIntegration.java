@@ -720,17 +720,22 @@ public class PayPalCommercePaymentIntegration
 
 		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
+		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
+
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePaymentEntry.getCompanyId(),
 				commercePaymentEntry.getCurrencyCode());
 
-		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
-
 		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
 		amountWithBreakdown.value(
 			_getAmountValue(
 				commercePaymentEntry.getAmount(), commerceCurrency));
+
+		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
+
+		purchaseUnitRequest.description(
+			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
 
 		Payee payee = new Payee();
 
@@ -738,11 +743,6 @@ public class PayPalCommercePaymentIntegration
 			_getPayPalGroupServiceConfiguration(commercePaymentEntry);
 
 		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
-
-		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
-
-		purchaseUnitRequest.description(
-			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
 
 		purchaseUnitRequest.payee(payee);
 

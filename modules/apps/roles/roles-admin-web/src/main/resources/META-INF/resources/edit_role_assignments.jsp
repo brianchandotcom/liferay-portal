@@ -8,8 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "users");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -34,6 +32,8 @@ EditRoleAssignmentsManagementToolbarDisplayContext editRoleAssignmentsManagement
 SearchContainer<?> searchContainer = editRoleAssignmentsManagementToolbarDisplayContext.getSearchContainer();
 
 PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPortletURL();
+
+String tabs2 = editRoleAssignmentsManagementToolbarDisplayContext.getTabs2();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);

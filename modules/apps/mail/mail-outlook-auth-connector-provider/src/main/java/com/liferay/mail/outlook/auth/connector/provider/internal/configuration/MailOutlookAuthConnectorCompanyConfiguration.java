@@ -33,7 +33,7 @@ public interface MailOutlookAuthConnectorCompanyConfiguration {
 	@ExtendedAttributeDefinition(requiredInput = true)
 	@Meta.AD(
 		description = "outlook-auth-connector-client-secret-description",
-		name = "client-secret", required = false
+		name = "client-secret", required = false, type = Meta.Type.Password
 	)
 	public String clientSecret();
 

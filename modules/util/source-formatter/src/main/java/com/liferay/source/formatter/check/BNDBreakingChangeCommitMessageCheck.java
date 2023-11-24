@@ -91,15 +91,14 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			for (String breakingChangeReport : breakingChangeReports) {
 				int alternativesCount = StringUtil.count(
 					breakingChangeReport, "## Alternatives");
-				int breakingChangeReportCount = StringUtil.count(
-					breakingChangeReport, "# breaking");
+				int breakingCount = StringUtil.count(
+					breakingChangeReport, "# breaking\n");
 				int whatCount = StringUtil.count(
 					breakingChangeReport, "## What");
 				int whyCount = StringUtil.count(breakingChangeReport, "## Why");
 
-				if ((alternativesCount > 1) ||
-					(breakingChangeReportCount != 1) || (whatCount != 1) ||
-					(whyCount != 1)) {
+				if ((alternativesCount > 1) || (breakingCount != 1) ||
+					(whatCount != 1) || (whyCount != 1)) {
 
 					addMessage(
 						fileName,

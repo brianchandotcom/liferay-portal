@@ -184,7 +184,12 @@ definition {
 	macro createAPIEndpoint(path = null, method = null, scope = null, name = null, retrieveType = null, applicationId = null) {
 		Variables.assertDefined(parameterList = ${path});
 
-		Click(locator1 = "Button#PLUS");
+		if (isSet(addByPlus)) {
+			Click(locator1 = "Button#PLUS");
+		}
+		else {
+			Click(locator1 = "APIBuilder#ADD_API_ENDPOINT");
+		}
 
 		if (isSet(name)) {
 			Type(
@@ -220,6 +225,13 @@ definition {
 			Click(
 				key_optionName = ${scope},
 				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
+
+		if (isSet(description)) {
+			Type(
+				key_value = "endpoint",
+				locator1 = "APIBuilder#DESCRIPTION",
+				value1 = ${description});
 		}
 
 		Type(

@@ -115,6 +115,10 @@ public class ObjectFieldSettingUtil {
 	public static boolean isUnique(
 		List<ObjectFieldSetting> objectFieldSetting) {
 
+		if (ListUtil.isNull(objectFieldSetting)) {
+			return false;
+		}
+
 		return GetterUtil.getBoolean(
 			getValue(
 				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,

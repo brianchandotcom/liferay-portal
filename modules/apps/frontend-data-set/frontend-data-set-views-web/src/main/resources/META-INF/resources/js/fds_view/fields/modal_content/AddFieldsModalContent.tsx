@@ -7,9 +7,11 @@ import ClayButton from '@clayui/button';
 import {TreeView} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import ClayManagementToolbar, {
+	ClayResultsBar,
+} from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {FDSViewType} from '../../../FDSViews';
@@ -63,6 +65,28 @@ const applySavedFDSFields = ({
 	return [selectedKeys, fields];
 };
 
+function filterFields(fields: Array<IFieldTreeItem>, query: string) {
+	const filteredItems: Array<IFieldTreeItem> = [];
+	const regexp = new RegExp(query, 'i');
+
+	fields.forEach((field) => {
+		const match = field.label ? regexp.test(field.label) : false;
+
+		const filteredChildren = field.children?.length
+			? filterFields(field.children, query)
+			: [];
+
+		if (match || (field.children?.length && filteredChildren.length)) {
+			filteredItems.push({
+				...field,
+				children: filteredChildren,
+			});
+		}
+	});
+
+	return filteredItems;
+}
+
 const AddFieldsModalContent = ({
 	closeModal,
 	fdsView,
@@ -84,11 +108,14 @@ const AddFieldsModalContent = ({
 	saveFDSFieldsURL: string;
 	savedFDSFields: Array<IFDSField>;
 }) => {
-	const [fields, setFields] = useState<Array<IFieldTreeItem> | null>(null);
+	const [initialFields, setInitialFields] = useState<Array<
+		IFieldTreeItem
+	> | null>(null);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 	const [selectedKeys, setSelectedKeys] = useState<Set<React.Key>>(
 		new Set<React.Key>()
 	);
+	const [fields, setFields] = useState<Array<IField> | null>(initialFields);
 	const [query, setQuery] = useState<string>('');
 
 	const saveFDSFields = async () => {
@@ -97,7 +124,7 @@ const AddFieldsModalContent = ({
 		const creationData: Array<{name: string; type: string}> = [];
 		const deletionIds: Array<number> = [];
 
-		visit(fields || [], (field: IFieldTreeItem) => {
+		visit(initialFields || [], (field: IFieldTreeItem) => {
 			if (selectedKeys.has(field.name) && !field.savedId) {
 				creationData.push({name: field.name, type: field.type});
 			}
@@ -161,6 +188,7 @@ const AddFieldsModalContent = ({
 
 				setSelectedKeys(initialSelectedKeys);
 
+				setInitialFields(updatedFields);
 				setFields(updatedFields);
 			}
 		});
@@ -168,6 +196,8 @@ const AddFieldsModalContent = ({
 
 	const onSearch = (query: string) => {
 		setQuery(query);
+
+		setFields(filterFields(initialFields ?? [], query));
 	};
 
 	return (
@@ -187,13 +217,50 @@ const AddFieldsModalContent = ({
 							</ClayManagementToolbar.Search>
 						</ClayManagementToolbar>
 
+						{query && (
+							<ClayResultsBar>
+								<ClayResultsBar.Item expand>
+									<span className="component-text text-truncate-inline">
+										<span className="text-truncate">
+											{sub(
+												fields.length === 1
+													? Liferay.Language.get(
+															'x-result-for-x'
+													  )
+													: Liferay.Language.get(
+															'x-results-for-x'
+													  ),
+												fields.length,
+												query
+											)}
+										</span>
+									</span>
+								</ClayResultsBar.Item>
+
+								<ClayResultsBar.Item>
+									<ClayButton
+										className="component-link tbar-link"
+										displayType="unstyled"
+										onClick={() => {
+											setQuery('');
+											setFields(initialFields);
+										}}
+									>
+										{Liferay.Language.get('clear')}
+									</ClayButton>
+								</ClayResultsBar.Item>
+							</ClayResultsBar>
+						)}
+
 						<div className="container-fluid container-fluid-max-xl px-4 py-2">
 							<TreeView
 								className="bg-light"
 								items={fields}
 								nestedKey="children"
 								onItemsChange={(items) =>
-									setFields(items as Array<IFieldTreeItem>)
+									setInitialFields(
+										items as Array<IFieldTreeItem>
+									)
 								}
 								onSelectionChange={setSelectedKeys}
 								selectedKeys={selectedKeys}

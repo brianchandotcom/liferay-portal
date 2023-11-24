@@ -59,6 +59,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.util.CheckUnlockedLayoutThreadLocal;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -71,6 +72,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;
@@ -1243,7 +1245,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				groupId, name, layoutPageTemplateEntryType);
 
-		try {
+		try (SafeCloseable safeCloseable =
+				CheckUnlockedLayoutThreadLocal.setWithSafeCloseable(false)) {
+
 			if ((layoutPageTemplateEntry != null) &&
 				Objects.equals(
 					LayoutsImportStrategy.DO_NOT_IMPORT,

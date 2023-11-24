@@ -6,8 +6,6 @@
 package com.liferay.content.dashboard.document.library.internal.item.item.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -23,7 +21,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -644,20 +641,12 @@ public class FileEntryContentDashboardItemTest {
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_group.getCreatorUserId(), _group.getGroupId(), 0,
-				_portal.getClassNameId(FileEntry.class.getName()), 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
-				0, 0, 0, _serviceContext);
-
-		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-			fileEntry.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(FileEntry.class.getName()),
-			fileEntry.getFileEntryId(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_DEFAULT, _serviceContext);
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			_group.getCreatorUserId(), _group.getGroupId(), 0,
+			_portal.getClassNameId(FileEntry.class.getName()), 0,
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
+			0, _serviceContext);
 
 		if (numVersions > 1) {
 			for (int i = 1; i < numVersions; i++) {
@@ -678,10 +667,6 @@ public class FileEntryContentDashboardItemTest {
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Inject
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

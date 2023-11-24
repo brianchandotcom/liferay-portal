@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
@@ -408,9 +409,18 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		).buildString();
 	}
 
-	public String getTabs2() {
+	public String getTabs2() throws PortalException {
 		if (Validator.isNull(_tabs2)) {
 			_tabs2 = ParamUtil.getString(_httpServletRequest, "tabs2", "users");
+		}
+
+		Role role = RoleServiceUtil.fetchRole(
+			ParamUtil.getLong(_httpServletRequest, "roleId"));
+
+		if (StringUtil.equals(_tabs2, "segments") &&
+			Objects.equals(RoleConstants.ADMINISTRATOR, role.getName())) {
+
+			_tabs2 = "users";
 		}
 
 		return _tabs2;

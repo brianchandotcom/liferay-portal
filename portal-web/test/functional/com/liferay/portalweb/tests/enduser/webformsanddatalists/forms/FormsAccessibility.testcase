@@ -1,0 +1,104 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "LPS-198705 - Verify that the user can navigate to the Select from List and select an option using the Tab key"
+	@priority = 4
+	test CanNavigateByTabKeyToSelectFromListField {
+		task ("Given a Form with an Select from List field") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Select from List",
+				formPageNumber = 0);
+		}
+
+		task ("and Given three options in the Select from list field") {
+			var row = 1;
+
+			for (var optionNumbers : list "1,2,3") {
+				FormFields.editOptionsRow(
+					optionName = "Option${optionNumbers}",
+					optionValue = "Option ${optionNumbers}",
+					rowNumber = ${row});
+
+				var row = ${row} + 1;
+			}
+		}
+
+		task ("and Given the form preview") {
+			FormsAdminNavigator.gotoPreviewForm();
+
+			Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+		}
+
+		task ("When the user presses the Tab key") {
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\TAB");
+		}
+
+		task ("Then the Select from List field is focused") {
+			AssertElementFocused(
+				key_fieldName = "Select from List",
+				locator1 = "FormFields#SELECT_FIELD");
+		}
+
+		task ("and When the user presses the Enter key") {
+			KeyPress(
+				key_fieldName = "Select from List",
+				locator1 = "FormFields#SELECT_FIELD",
+				value1 = "\ENTER");
+		}
+
+		task ("Then user can select options with arrow keys") {
+			KeyPress(
+				key_fieldName = "Select from List",
+				locator1 = "FormFields#SELECT_FIELD",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_fieldName = "Select from List",
+				locator1 = "FormFields#SELECT_FIELD",
+				value1 = "\ENTER");
+
+			AssertElementFocused(
+				key_fieldLabel = "Select from List",
+				key_index = 1,
+				locator1 = "FormFields#SELECT_SELECT_LIST_INDEX",
+				value1 = "Option 1");
+		}
+	}
+
+}

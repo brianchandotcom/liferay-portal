@@ -7,7 +7,7 @@
 
 window.addEventListener('load', () => {
 	
-	let searchInput = fragmentElement.querySelector(
+	const searchInput = fragmentElement.querySelector(
 		'.search-input'
 	);
 	  

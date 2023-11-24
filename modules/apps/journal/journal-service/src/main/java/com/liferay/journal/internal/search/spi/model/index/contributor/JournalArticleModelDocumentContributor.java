@@ -122,18 +122,6 @@ public class JournalArticleModelDocumentContributor
 		document.addKeyword(Field.FOLDER_ID, journalArticle.getFolderId());
 		document.addKeyword(Field.LAYOUT_UUID, journalArticle.getLayoutUuid());
 
-		if (!document.hasField("localized_title")) {
-			document.addLocalizedKeyword(
-				"localized_title",
-				_localization.populateLocalizationMap(
-					HashMapBuilder.putAll(
-						journalArticle.getTitleMap()
-					).build(),
-					journalArticle.getDefaultLanguageId(),
-					journalArticle.getGroupId()),
-				true, true);
-		}
-
 		if (!document.hasField(Field.MODIFIED_DATE)) {
 			document.addDate(
 				Field.MODIFIED_DATE, journalArticle.getModifiedDate());
@@ -188,6 +176,18 @@ public class JournalArticleModelDocumentContributor
 
 		document.addKeyword(
 			"latest", JournalUtil.isLatestArticle(journalArticle));
+
+		if (!document.hasField("localized_title")) {
+			document.addLocalizedKeyword(
+				"localized_title",
+				_localization.populateLocalizationMap(
+					HashMapBuilder.putAll(
+						journalArticle.getTitleMap()
+					).build(),
+					journalArticle.getDefaultLanguageId(),
+					journalArticle.getGroupId()),
+				true, true);
+		}
 
 		document.addDate("reviewDate", journalArticle.getReviewDate());
 

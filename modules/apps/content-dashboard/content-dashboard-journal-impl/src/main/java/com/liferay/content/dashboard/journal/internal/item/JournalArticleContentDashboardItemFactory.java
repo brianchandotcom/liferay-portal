@@ -49,7 +49,7 @@ public class JournalArticleContentDashboardItemFactory
 
 		if (assetEntry == null) {
 			throw new NoSuchModelException(
-				"Unable to find an asset entry for journal article classPK " +
+				"Unable to find an asset entry for journal article class PK " +
 					classPK);
 		}
 

@@ -759,7 +759,7 @@ definition {
 
 	@description = "This is a test for LPS-191474. Using Keyboard navigation the toggle button Allow Users to Save Entries as Draft can be enabled and disabled. The Allow Users to Save Entries as Draft toggle button should comply with WCAG 2.1 AA standard."
 	@priority = 3
-	test EnableAndDisableAllowUsersToSaveEntriesAsDraftViaKeyboard {
+	test EnableAndDisableAllowUsersToSaveEntriesAsDraftViaKeyboardAndViewAccessibility {
 		property custom.properties = "feature.flag.LPS-181663=true";
 
 		task ("When go to object admin and edit the object") {
@@ -885,7 +885,7 @@ definition {
 
 	@description = "This is a test for LPS-191474. It is possible to navigate the warning pop up message via the keyboard. The warning pop up message should comply with WCAG 2.1 AA standard."
 	@priority = 3
-	test NavigateWarningPopUpMessageAndPublishContentPageViaKeyboard {
+	test NavigateWarningPopUpMessageAndPublishContentPageViaKeyboardAndViewAccessibility {
 		property custom.properties = "feature.flag.LPS-181663=true";
 
 		task ("When adding a form container and change the submit button to draft") {

@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.util.TrashWebKeys;
 
 import java.io.IOException;
 
@@ -102,6 +104,8 @@ public class AdminPortlet extends BaseKBPortlet {
 				resourceRequest.setAttribute(
 					KBWebKeys.KNOWLEDGE_BASE_KB_FOLDERS,
 					_getKBFolders(httpServletRequest));
+				resourceRequest.setAttribute(
+					TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 				PortletSession portletSession =
 					resourceRequest.getPortletSession();
@@ -284,5 +288,8 @@ public class AdminPortlet extends BaseKBPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

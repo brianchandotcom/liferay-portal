@@ -7,15 +7,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:html-top
-	outputKey="vide_sctreaming_css"
->
-	<link href="https://vjs.zencdn.net/8.6.1/video-js.min.css" rel="stylesheet" type="text/css" />
-	<link href="https://unpkg.com/videojs-quality-selector-hls@1.1.1/dist/videojs-quality-selector-hls.css" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <div style="display: flex; justify-content: flex-start; overflow: hidden;">
 	<div class="videojs-container">
+		<link href="https://vjs.zencdn.net/8.6.1/video-js.min.css" rel="stylesheet" type="text/css" />
+		<link href="https://unpkg.com/videojs-quality-selector-hls@1.1.1/dist/videojs-quality-selector-hls.css" rel="stylesheet"
+			type="text/css" />
+
 		<video class="video-js" controls id="fragmentVideoJsURL" preload="auto">
 		</video>
 

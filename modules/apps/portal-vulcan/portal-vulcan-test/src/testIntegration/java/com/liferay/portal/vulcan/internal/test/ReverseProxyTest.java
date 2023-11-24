@@ -36,6 +36,28 @@ public class ReverseProxyTest {
 
 	@Test
 	public void testActionsHrefValues() throws Exception {
+		_testActionsHrefValues("http://[0:0:0:0:0:0:0:1]/", 80, "http");
+		_testActionsHrefValues("http://[0:0:0:0:0:0:0:1]:12345", 12345, "http");
+		_testActionsHrefValues("https://[0:0:0:0:0:0:0:1]/", 443, "https");
+		_testActionsHrefValues(
+			"https://[0:0:0:0:0:0:0:1]:12345", 12345, "https");
+	}
+
+	private String _getHref(URLConnection urlConnection) throws Exception {
+		urlConnection.connect();
+
+		JsonNode jsonNode = _objectMapper.readTree(
+			urlConnection.getInputStream());
+
+		jsonNode = jsonNode.at("/actions/create/href");
+
+		return jsonNode.asText();
+	}
+
+	private void _testActionsHrefValues(
+			String expectedPrefix, int port, String protocol)
+		throws Exception {
+
 		URLConnection urlConnection = URLConnectionUtil.createURLConnection(
 			String.format(
 				"http://localhost:8080/o/headless-delivery/v1.0/sites/%s" +
@@ -54,25 +76,14 @@ public class ReverseProxyTest {
 
 			urlConnection.addRequestProperty(
 				"X-Forwarded-Host", "[0:0:0:0:0:0:0:1]");
-			urlConnection.addRequestProperty("X-Forwarded-Port", "12345");
-			urlConnection.addRequestProperty("X-Forwarded-Proto", "https");
+			urlConnection.addRequestProperty(
+				"X-Forwarded-Port", String.valueOf(port));
+			urlConnection.addRequestProperty("X-Forwarded-Proto", protocol);
 
 			String href = _getHref(urlConnection);
 
-			Assert.assertTrue(
-				href, href.startsWith("https://[0:0:0:0:0:0:0:1]:12345"));
+			Assert.assertTrue(href, href.startsWith(expectedPrefix));
 		}
-	}
-
-	private String _getHref(URLConnection urlConnection) throws Exception {
-		urlConnection.connect();
-
-		JsonNode jsonNode = _objectMapper.readTree(
-			urlConnection.getInputStream());
-
-		jsonNode = jsonNode.at("/actions/create/href");
-
-		return jsonNode.asText();
 	}
 
 	private final ObjectMapper _objectMapper = new ObjectMapper();

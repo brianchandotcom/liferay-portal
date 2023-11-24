@@ -828,7 +828,23 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
-	public void testAddObjectActionWithInfiniteLoop() throws Exception {
+	public void testAddObjectActionWithCircularReference() throws Exception {
+		_testAddObjectActionWithCircularReference(false);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition);
+
+		ReflectionTestUtil.setFieldValue(ObjectActionThreadLocal.class, "_clearObjectEntryIdsMapThreadLocal", alwaysFalseThreadLocal)
+
+		try {
+			_testAddObjectActionWithCircularReference(true);
+		}
+		finally {
+			// Undo the ReflectionTestUtil
+		}
+	}
+
+	private void _testAddObjectActionWithCircularReference(boolean expectStackOverflow) throws Exception {
 		_publishCustomObjectDefinition();
 
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
@@ -846,25 +862,38 @@ public class ObjectActionLocalServiceTest {
 			).toString()
 		).build();
 
+		// When you update an object entry that belongs to "_objectDefinition",
+		// add a new object entry to "_objectDefinition"
+
 		ObjectAction objectAction1 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, unicodeProperties,
 			false);
+
+		Assert.assertEquals(
+			objectAction1.getStatus(), ObjectActionConstants.STATUS_NEVER_RAN);
+
+		// When you add a new object entry that belongs to "_objectDefinition",
+		// update the newly added object entry
+
 		ObjectAction objectAction2 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, unicodeProperties,
 			false);
 
-		String originalName = PrincipalThreadLocal.getName();
+		Assert.assertEquals(
+			objectAction2.getStatus(), ObjectActionConstants.STATUS_NEVER_RAN);
+
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
 
 		try {
-			PrincipalThreadLocal.setName(_user.getUserId());
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(_user));
+			PrincipalThreadLocal.setName(_user.getUserId());
 
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
@@ -873,14 +902,17 @@ public class ObjectActionLocalServiceTest {
 					"firstName", RandomTestUtil.randomString()),
 				ServiceContextTestUtil.getServiceContext());
 		}
+		catch (StackOverflowError stackOverflowError) {
+			Assert.assertFailure();
+		}
 		finally {
-			PrincipalThreadLocal.setName(originalName);
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
 		}
 
 		objectAction1 = _objectActionLocalService.getObjectAction(
-			objectAction1.getObjectActionId());
+			objectAction1.getObjectActioReflectionTestUtilnId());
 		objectAction2 = _objectActionLocalService.getObjectAction(
 			objectAction2.getObjectActionId());
 

@@ -80,80 +80,42 @@
 		"typeSite": 1
 	},
 	{
+		"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM11",
 		"menuItems": [
 			{
-				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM2",
-				"name": "Liferay.com",
-				"privateLayout": false,
-				"type": "url",
-				"url": "https://www.liferay.com",
-				"useNewTab": true
-			},
-			{
-				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM3",
-				"name": "Videos",
-				"privateLayout": false,
-				"type": "url",
-				"url": "https://www.youtube.com/@liferaylearn222",
-				"useNewTab": true
-			},
-			{
-				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM4",
-				"name": "Community",
-				"privateLayout": false,
-				"type": "url",
-				"url": "https://liferay.dev/",
-				"useNewTab": true
-			},
-			{
-				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM5",
-				"name": "Help Center",
-				"privateLayout": false,
-				"type": "url",
-				"url": "https://help.liferay.com/hc",
-				"useNewTab": true
-			}
-		],
-		"name": "More Resources",
-		"typeSite": 1
-	},
-	{
-		"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM19",
-		"menuItems": [
-			{
-				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM16",
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM12",
 				"name": "Capabilities",
 				"type": "node"
 			},
 			{
-				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM17",
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM13",
 				"menuItems": [
 					{
-						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM11",
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM14",
 						"name": "Analytics Cloud",
 						"type": "url",
 						"url": "/w/analytics-cloud/index"
 					},
 					{
-						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM12",
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM15",
 						"name": "Commerce",
 						"type": "url",
 						"url": "/w/commerce/index"
 					},
 					{
-						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM13",
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM16",
 						"name": "DXP / Portal",
 						"type": "url",
 						"url": "/w/dxp-portal/index"
 					},
 					{
-						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM14",
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM17",
 						"name": "DXP Cloud",
 						"type": "url",
 						"url": "/w/dxp-cloud/index"
 					},
 					{
-						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM15",
+						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM18",
 						"name": "Reference",
 						"type": "url",
 						"url": "/w/reference/index"
@@ -163,7 +125,7 @@
 				"type": "node"
 			},
 			{
-				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM18",
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM19",
 				"name": "Courses",
 				"type": "url",
 				"url": "/w/courses/index"

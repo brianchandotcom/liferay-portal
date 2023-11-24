@@ -55,32 +55,38 @@
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
-		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM11#]",
-		"columnName": "Svg Sprite Map Id",
-		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/other-products-logo.svg"
-	},
-	{
-		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM12#]",
-		"columnName": "Svg Sprite Map Id",
-		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/dxp-cloud-logo.svg"
-	},
-	{
-		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
-		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM13#]",
-		"columnName": "Svg Sprite Map Id",
-		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/dxp-logo.svg"
+		"columnName": "Primary Nav Item Type",
+		"data": "CAPABILITIES"
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM14#]",
 		"columnName": "Svg Sprite Map Id",
-		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/commerce-logo.svg"
+		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/ac-logo.svg"
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM15#]",
 		"columnName": "Svg Sprite Map Id",
-		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/ac-logo.svg"
+		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/commerce-logo.svg"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM16#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/dxp-logo.svg"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM17#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/dxp-cloud-logo.svg"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM18#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "https://liferaylearnstaticcontent-exte5a2learn-extdev.lfr.cloud/images/site/other-products-logo.svg"
 	}
 ]

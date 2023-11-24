@@ -2,28 +2,28 @@
 	.br-13 {
 		border-radius: 13px;
 	}
-	
+
 	.color-black {
 		color: black!important;
 	}
-	
+
 	.dropdown-item:active{
 		background-color:#f8f9fa;
 	}
-	
+
 	.product-icon {
 		width: 1.5rem;
 		height: 1.5rem;
 	}
-	
+
 	.pt-05 {
 		padding-top: 0.5rem;
 	}
-	
+
 	.t-56 {
 		top: 55.5px!important;
 	}
-	
+
 	.t-109 {
 		top: 109.5px!important;
 	}
@@ -57,6 +57,12 @@
 
 <div class="adt-navigation">
 	<#list entries as navPrimaryItem>
+
+		<#assign
+			customFields = navPrimaryItem.getExpandoAttributes()!{}
+			navItemType = customFields["Primary Nav Item Type"]!""
+		/>
+
 		<#if navPrimaryItem.hasChildren()>
 			<#assign
 				columns = "12"
@@ -65,7 +71,8 @@
 				menuWidth = "width:200px; overflow-x:hidden;"
 				topPosition = "t-56"
 			/>
-			<#if navPrimaryItem.getName() == "Capabilities">
+
+			<#if stringUtil.equals(navItemType, "CAPABILITIES")>
 				<#assign
 					columns = "3"
 					dropdownType = "dropdown-wide dropdown-wide-container"
@@ -102,10 +109,10 @@
 					<div class="row">
 						<#list navPrimaryItem.getChildren() as navSecondaryItem>
 							<div class="br-13 dropdown-item col-sm-${columns}">
-								<#if capabilitiesFieldsMap?has_content && navPrimaryItem.getName() == "Capabilities">
+								<#if capabilitiesFieldsMap?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
 									<#assign categoryFields = capabilitiesFieldsMap[navSecondaryItem.getName()] />
 
-									<a class="adt-submenu-item-link text-decoration-none color-black" href="/search?category=${categoryFields['id']}" tabindex="4">
+									<a class="adt-submenu-item-link color-black text-decoration-none" href="/search?category=${categoryFields['id']}" tabindex="4">
 										<h5 class="pl-3 pt-2">
 											${navSecondaryItem.getName()}
 										</h5>
@@ -123,7 +130,7 @@
 										navItemIconId = customFields["Svg Sprite Map Id"]!""
 									/>
 
-									<a class="adt-submenu-item-link text-decoration-none color-black" href="${navSecondaryItem.getRegularURL()}" tabindex="4">
+									<a class="adt-submenu-item-link color-black text-decoration-none" href="${navSecondaryItem.getRegularURL()}" tabindex="4">
 										<div class="pl-2 pt-3">
 											<img
 												alt="${navSecondaryItem.getName()} Logo"

@@ -98,9 +98,9 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			long companyId, long imageId, String type)
 		throws PortalException {
 
-		String fileName = _getFileName(imageId, type);
-
 		Store store = _storeSnapshot.get();
+
+		String fileName = _getFileName(imageId, type);
 
 		if (store.hasFile(
 				companyId, _REPOSITORY_ID, fileName, Store.VERSION_DEFAULT)) {

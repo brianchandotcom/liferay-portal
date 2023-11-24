@@ -757,7 +757,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-191474. Using Keyboard navigation the toggle button Allow Users to Save Entries as Draft can be enabled and disabled."
+	@description = "This is a test for LPS-191474. Using Keyboard navigation the toggle button Allow Users to Save Entries as Draft can be enabled and disabled. The Allow Users to Save Entries as Draft toggle button should comply with WCAG 2.1 AA standard."
 	@priority = 3
 	test EnableAndDisableAllowUsersToSaveEntriesAsDraftViaKeyboard {
 		property custom.properties = "feature.flag.LPS-181663=true";
@@ -778,6 +778,10 @@ definition {
 				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
+			// Comment out for LPS-202564
+
+			//AssertAccessible();
+
 			KeyPress(
 				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
@@ -786,6 +790,11 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Allow Users to Save Entries as Draft",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			// Comment out for LPS-202564
+
+			//AssertAccessible();
+
 		}
 	}
 

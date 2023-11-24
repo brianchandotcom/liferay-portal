@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -175,19 +176,12 @@ public class
 		_testCopyFileShouldCopyAssetTagsParentGroup(StringUtil::toLowerCase);
 	}
 
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
-			fileEntry1.getFileEntryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_childGroup.getGroupId(),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			new long[] {group.getGroupId()},
-			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testCopyFileShouldCopyAssetTagsParentGroupWithCaseSensitiveTags()
+		throws Exception {
 
-		Assert.assertArrayEquals(
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()),
-			_assetTagLocalService.getTagNames(
-				className, fileEntry2.getFileEntryId()));
+		_testCopyFileShouldCopyAssetTagsParentGroup(s -> s);
 	}
 
 	@Test
@@ -195,19 +189,12 @@ public class
 		_testCopyFileShouldCopyAssetTagsSameGroup(StringUtil::toLowerCase);
 	}
 
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
-			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
-			_newParentFolder.getGroupId(),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			new long[] {group.getGroupId()},
-			ServiceContextTestUtil.getServiceContext(
-				_newParentFolder.getGroupId()));
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testCopyFileShouldCopyAssetTagsSameGroupWithCaseSensitiveTags()
+		throws Exception {
 
-		Assert.assertArrayEquals(
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()),
-			_assetTagLocalService.getTagNames(
-				className, fileEntry2.getFileEntryId()));
+		_testCopyFileShouldCopyAssetTagsSameGroup(s -> s);
 	}
 
 	@Test
@@ -308,18 +295,12 @@ public class
 			StringUtil::toLowerCase);
 	}
 
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
-			fileEntry1.getFileEntryId(), _targetParentFolder.getFolderId(),
-			_targetParentFolder.getGroupId(),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			new long[] {_targetParentFolder.getGroupId()},
-			ServiceContextTestUtil.getServiceContext(
-				_targetParentFolder.getGroupId()));
+	@FeatureFlags("LPS-194362")
+	@Test
+	public void testCopyFileShouldNotCopyAssetTagsDifferentGroupWithCaseSensitiveTags()
+		throws Exception {
 
-		Assert.assertTrue(
-			ArrayUtil.isEmpty(
-				_assetTagLocalService.getTagNames(
-					className, fileEntry2.getFileEntryId())));
+		_testCopyFileShouldNotCopyAssetTagsDifferentGroup(s -> s);
 	}
 
 	@Test

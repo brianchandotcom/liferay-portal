@@ -98,7 +98,7 @@ definition {
 
 	@summary = "Default summary"
 	macro deleteCP(widgetTemplateName = null) {
-		ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
+		WidgetTemplates.gotoWidgetTemplatesEllipsisItem(
 			item = "Delete",
 			widgetTemplateName = ${widgetTemplateName});
 

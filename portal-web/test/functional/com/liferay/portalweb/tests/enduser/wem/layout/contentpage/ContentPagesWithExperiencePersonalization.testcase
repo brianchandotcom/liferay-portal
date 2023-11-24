@@ -195,10 +195,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110227 Categories Navigation portlet can be seen within the Section where it was placed and can be opened/configured."
+	@description = "This is a test for LPS-110227. Categories Navigation portlet can be seen within the Section where it was placed and can be opened/configured."
 	@priority = 4
-	test ConfigureCategoryNavigationInNewExperience {
-		task ("Given that the user has created a content page") {
+	test ConfigureCategoryFilterInNewExperience {
+		task ("Given a user has a content page with Category Filter") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
@@ -210,13 +210,13 @@ definition {
 				targetFragmentName = "Asset Publisher");
 		}
 
-		task ("When adding a new experience.") {
+		task ("When the user adds a new experience") {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 		}
 
-		task ("Then the category navigation configuration modal can be opened") {
+		task ("Then the category filter configuration modal can be opened in new experience") {
 			Portlet.gotoPortletOptions(
 				portletName = "Category Filter",
 				portletOption = "Configuration");

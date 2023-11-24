@@ -898,9 +898,9 @@ definition {
 	@priority = 3
 	test ExportImportPortletWithADT {
 		task ("Given: User adds a Blog ADT template then a new page") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtFile = "adt_blogs_basic.ftl",
 				adtType = "Blogs");
 
@@ -923,7 +923,7 @@ definition {
 		task ("And: Configure the ADT template for the blog portlet") {
 			Navigator.gotoPage(pageName = "Test Page Name");
 
-			ApplicationDisplayTemplates.selectPortletADT(
+			WidgetTemplates.selectPortletADT(
 				portletName = "Blogs",
 				templateName = "Blogs Test ADT");
 

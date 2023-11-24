@@ -207,7 +207,7 @@ definition {
 		}
 
 		task ("Select the Split Button Dropdowns display template in Navigation Menu widget") {
-			ApplicationDisplayTemplates.selectPortletADT(
+			WidgetTemplates.selectPortletADT(
 				portletName = "Menu Display",
 				templateName = "Split Button Dropdowns");
 		}
@@ -271,7 +271,7 @@ definition {
 		}
 
 		task ("Select Bar minimally styled display template in Navigation Menu widget") {
-			ApplicationDisplayTemplates.selectPortletADT(
+			WidgetTemplates.selectPortletADT(
 				portletName = "Menu Display",
 				templateName = "Bar minimally styled");
 		}
@@ -946,9 +946,9 @@ definition {
 		${customFields["subtitle"]}
 			''';
 
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtType = "Menu Display",
 				templateScript = ${templateScript});
 		}

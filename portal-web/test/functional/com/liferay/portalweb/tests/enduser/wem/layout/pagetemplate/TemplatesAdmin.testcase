@@ -63,9 +63,9 @@ definition {
 		}
 
 		task ("Given a Template creator has a Widget Template") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtType = "Breadcrumb",
 				fieldNameList = "Breadcrumb Entry");
 		}

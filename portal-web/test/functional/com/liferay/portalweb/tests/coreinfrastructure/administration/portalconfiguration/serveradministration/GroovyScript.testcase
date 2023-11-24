@@ -43,7 +43,7 @@ definition {
 			entryTitle = "Test Title",
 			groupName = "Test Site Name");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+		WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
 		var templateScript = '''
 <#if entries?has_content>
@@ -58,7 +58,7 @@ definition {
 		/>
 		''';
 
-		ApplicationDisplayTemplates.addCP(
+		WidgetTemplates.addCP(
 			adtType = "Asset Publisher",
 			templateScript = ${templateScript});
 

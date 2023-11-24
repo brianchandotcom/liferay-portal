@@ -164,7 +164,40 @@ else {
 
 						<%
 						try {
-							for (DDMStructure ddmStructure : DLFileEntryTypeUtil.getDDMStructures(fileEntryType)) {
+							List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(fileEntryType);
+
+							boolean showLanguageSelector = false;
+
+							for (DDMStructure ddmStructure : ddmStructures) {
+								if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
+									showLanguageSelector = true;
+
+									break;
+								}
+							}
+						%>
+
+							<c:if test="<%= showLanguageSelector %>">
+								<div class="mb-3">
+									<react:component
+										module="document_library/js/LanguageSelector"
+										props='<%=
+											HashMapBuilder.<String, Object>put(
+												"ddmStructureIds", DDMStructureUtil.getDDMStructureIds(ddmStructures)
+											).put(
+												"languageIds", DDMStructureUtil.getAvailableLanguageIds(themeDisplay)
+											).put(
+												"selectedLanguageId", LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault())
+											).put(
+												"translatedLanguageIds", DDMStructureUtil.getTranslatedLanguageIds(ddmStructures, dlEditFileEntryDisplayContext, fileVersionId)
+											).build()
+										%>'
+									/>
+								</div>
+							</c:if>
+
+							<%
+							for (DDMStructure ddmStructure : ddmStructures) {
 								DDMFormValues ddmFormValues = null;
 
 								try {
@@ -178,7 +211,7 @@ else {
 								if (groupId <= 0) {
 									groupId = ddmStructure.getGroupId();
 								}
-						%>
+							%>
 
 								<div class="document-type-fields" data-ddm-fieldset>
 									<liferay-data-engine:data-layout-renderer

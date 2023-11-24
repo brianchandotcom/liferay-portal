@@ -134,10 +134,9 @@ public class LayoutWorkflowHandlerTest {
 
 	@Test
 	public void testWorkflowHandlerContentLayout() throws Exception {
-		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, layout1.getStatus());
+		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
 
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
@@ -146,24 +145,23 @@ public class LayoutWorkflowHandlerTest {
 		Assert.assertNotNull(
 			workflowHandler.getWorkflowDefinitionLink(
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				layout1.getPlid()));
+				layout.getPlid()));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			TestPropsValues.getCompanyId(), _group.getGroupId(),
 			TestPropsValues.getUserId(), Layout.class.getName(),
-			layout1.getPlid(), layout1, _serviceContext,
-			Collections.emptyMap());
+			layout.getPlid(), layout, _serviceContext, Collections.emptyMap());
 
-		layout1 = _layoutLocalService.getLayout(layout1.getPlid());
+		layout = _layoutLocalService.getLayout(layout.getPlid());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_PENDING, layout1.getStatus());
+			WorkflowConstants.STATUS_PENDING, layout.getStatus());
 
 		LayoutLocalization layoutLocalization =
 			_layoutLocalizationLocalService.fetchLayoutLocalization(
-				layout1.getGroupId(),
+				layout.getGroupId(),
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				layout1.getPlid());
+				layout.getPlid());
 
 		Assert.assertNull(layoutLocalization);
 
@@ -171,7 +169,7 @@ public class LayoutWorkflowHandlerTest {
 			WorkflowConstants.STATUS_APPROVED,
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
-				String.valueOf(layout1.getPlid())
+				String.valueOf(layout.getPlid())
 			).put(
 				WorkflowConstants.CONTEXT_USER_ID,
 				String.valueOf(TestPropsValues.getUserId())
@@ -179,48 +177,18 @@ public class LayoutWorkflowHandlerTest {
 				"serviceContext", _serviceContext
 			).build());
 
-		layout1 = _layoutLocalService.getLayout(layout1.getPlid());
+		layout = _layoutLocalService.getLayout(layout.getPlid());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, layout1.getStatus());
+			WorkflowConstants.STATUS_APPROVED, layout.getStatus());
 
 		layoutLocalization =
 			_layoutLocalizationLocalService.fetchLayoutLocalization(
-				layout1.getGroupId(),
+				layout.getGroupId(),
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				layout1.getPlid());
+				layout.getPlid());
 
 		Assert.assertNotNull(layoutLocalization);
-
-		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, layout2.getStatus());
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			TestPropsValues.getUserId(), Layout.class.getName(),
-			layout2.getPlid(), layout2, _serviceContext,
-			Collections.emptyMap());
-
-		layout2 = _layoutLocalService.getLayout(layout2.getPlid());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_PENDING, layout2.getStatus());
-
-		Assert.assertNotNull(
-			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
-				layout2.getCompanyId(), layout2.getGroupId(),
-				Layout.class.getName(), layout2.getPlid()));
-
-		_layoutLocalService.deleteLayout(layout2.getPlid());
-
-		Assert.assertNull(
-			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
-				layout2.getCompanyId(), layout2.getGroupId(),
-				Layout.class.getName(), layout2.getPlid()));
-
-		Assert.assertNull(_layoutLocalService.fetchLayout(layout2.getPlid()));
 	}
 
 	@Test
@@ -388,6 +356,46 @@ public class LayoutWorkflowHandlerTest {
 		_assertSegmentExperienceFragmentEntryLink(
 			languageId, segmentsExperience2.getSegmentsExperienceId(),
 			experience2HeadingText, layoutPageTemplateStructure);
+	}
+
+	@Test
+	public void testWorkflowHandlerDeleteContentLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
+
+		WorkflowHandler<?> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				Layout.class.getName());
+
+		Assert.assertNotNull(
+			workflowHandler.getWorkflowDefinitionLink(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				layout.getPlid()));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), Layout.class.getName(),
+			layout.getPlid(), layout, _serviceContext, Collections.emptyMap());
+
+		layout = _layoutLocalService.getLayout(layout.getPlid());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, layout.getStatus());
+
+		Assert.assertNotNull(
+			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+				layout.getCompanyId(), layout.getGroupId(),
+				Layout.class.getName(), layout.getPlid()));
+
+		_layoutLocalService.deleteLayout(layout.getPlid());
+
+		Assert.assertNull(
+			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+				layout.getCompanyId(), layout.getGroupId(),
+				Layout.class.getName(), layout.getPlid()));
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
 	}
 
 	@Test

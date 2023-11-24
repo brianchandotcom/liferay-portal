@@ -101,8 +101,6 @@ definition {
 	@description = "This is a test for LPS-159235. Add folders to fragment resource and check hints."
 	@priority = 4
 	test AddFoldersToResourceAndCheckHints {
-		property custom.properties = "feature.flag.LPS-158675=true";
-
 		task ("When user is in resources tab") {
 			task ("Add a fragment collection") {
 				JSONFragment.addFragmentCollection(

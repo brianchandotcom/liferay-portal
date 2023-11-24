@@ -42,9 +42,21 @@ public class UriInfoUtil {
 		UriBuilder uriBuilder = getBaseUriBuilder(uriInfo);
 
 		uriBuilder.host(PortalUtil.getForwardedHost(httpServletRequest));
-		uriBuilder.port(PortalUtil.getForwardedPort(httpServletRequest));
 
-		if (PortalUtil.isSecure(httpServletRequest)) {
+		int port = PortalUtil.getForwardedPort(httpServletRequest);
+
+		boolean secure = PortalUtil.isSecure(httpServletRequest);
+
+		if ((!secure && (port != Http.HTTP_PORT)) ||
+			(secure && (port != Http.HTTPS_PORT))) {
+
+			uriBuilder.port(port);
+		}
+		else {
+			uriBuilder.port(-1);
+		}
+
+		if (secure) {
 			uriBuilder.scheme(Http.HTTPS);
 		}
 

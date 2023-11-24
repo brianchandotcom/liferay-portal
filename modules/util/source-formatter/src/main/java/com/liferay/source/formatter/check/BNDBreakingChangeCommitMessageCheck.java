@@ -86,16 +86,15 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 
 			_checkMissingEmptyLinesAroundHeaders(fileName, parts);
 
-			String[] breakingChangeReports = parts[1].split("\n----");
+			String[] breakingChanges = parts[1].split("\n----");
 
-			for (String breakingChangeReport : breakingChangeReports) {
+			for (String breakingChange : breakingChanges) {
 				int alternativesCount = StringUtil.count(
-					breakingChangeReport, "## Alternatives");
+					breakingChange, "## Alternatives");
 				int breakingCount = StringUtil.count(
-					breakingChangeReport, "# breaking\n");
-				int whatCount = StringUtil.count(
-					breakingChangeReport, "## What");
-				int whyCount = StringUtil.count(breakingChangeReport, "## Why");
+					breakingChange, "# breaking\n");
+				int whatCount = StringUtil.count(breakingChange, "## What");
+				int whyCount = StringUtil.count(breakingChange, "## Why");
 
 				if ((alternativesCount > 1) || (breakingCount != 1) ||
 					(whatCount != 1) || (whyCount != 1)) {
@@ -112,10 +111,10 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 					return;
 				}
 
-				int alternativesPosition = breakingChangeReport.indexOf(
+				int alternativesPosition = breakingChange.indexOf(
 					"## Alternatives");
-				int whatPosition = breakingChangeReport.indexOf("## What");
-				int whyPosition = breakingChangeReport.indexOf("## Why");
+				int whatPosition = breakingChange.indexOf("## What");
+				int whyPosition = breakingChange.indexOf("## Why");
 
 				if ((whatPosition > whyPosition) ||
 					((alternativesPosition != -1) &&
@@ -132,10 +131,10 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 				}
 
 				int lineNumber = SourceUtil.getLineNumber(
-					breakingChangeReport, whatPosition);
+					breakingChange, whatPosition);
 
 				String trimmedLine = StringUtil.trimLeading(
-					SourceUtil.getLine(breakingChangeReport, lineNumber));
+					SourceUtil.getLine(breakingChange, lineNumber));
 
 				if (trimmedLine.length() == 7) {
 					addMessage(
@@ -190,7 +189,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			return;
 		}
 
-		for (String header : _BREAKING_CHANGE_REPORT_HEADER_NAMES) {
+		for (String header : _BREAKING_CHANGE_HEADER_NAMES) {
 			int x = parts[1].indexOf(header);
 
 			if (x == -1) {
@@ -281,7 +280,7 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private static final String[] _BREAKING_CHANGE_REPORT_HEADER_NAMES = {
+	private static final String[] _BREAKING_CHANGE_HEADER_NAMES = {
 		"----", "## Alternatives", "# breaking", "## What", "## Why"
 	};
 

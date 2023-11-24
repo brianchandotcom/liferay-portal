@@ -23,9 +23,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Add a widget template for Asset Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtFile = "adt_asset_publisher_rich_summary.ftl",
 				adtType = "Asset Publisher");
 		}
@@ -49,7 +49,7 @@ definition {
 		}
 
 		task ("Assert the New button doesn't present") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
 			WaitForPageLoad();
 
@@ -57,15 +57,15 @@ definition {
 		}
 
 		task ("Assert can save changes in existing template") {
-			ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
+			WidgetTemplates.gotoWidgetTemplatesEllipsisItem(
 				item = "Edit",
 				widgetTemplateName = "Asset Publisher Test ADT");
 
-			ApplicationDisplayTemplates.editWidgetTemplate(
+			WidgetTemplates.editWidgetTemplate(
 				newWidgetTemplateName = "New Asset Publisher Test ADT",
 				oldWidgetTemplateName = "Asset Publisher Test ADT");
 
-			ApplicationDisplayTemplates.viewTemplate(adtType = "New Asset Publisher");
+			WidgetTemplates.viewTemplate(adtType = "New Asset Publisher");
 		}
 
 		task ("Enable Template Creation") {
@@ -95,9 +95,9 @@ definition {
 					title = "Blogs Entry Title ${i}");
 			}
 
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtFile = "adt_blogs_sort.ftl",
 				adtType = "Blogs");
 		}
@@ -116,7 +116,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			ApplicationDisplayTemplates.selectPortletADT(
+			WidgetTemplates.selectPortletADT(
 				portletName = "Blogs",
 				templateName = "Blogs Test ADT");
 		}
@@ -133,13 +133,13 @@ definition {
 	@priority = 3
 	test ViewAlertMessageWhenDeletingAssetDisplayTemplates {
 		task ("Given add 2 widget template for Asset Publisher and Blogs") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+			WidgetTemplates.addADTWithFieldEntryCP(
 				fieldName = "Asset Entry",
 				portletName = "Asset Publisher");
 
-			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+			WidgetTemplates.addADTWithFieldEntryCP(
 				fieldName = "Blog Entries",
 				portletName = "Blogs");
 		}
@@ -161,7 +161,7 @@ definition {
 			}
 
 			task ("Configure its display template to the created one") {
-				ApplicationDisplayTemplates.selectPortletADT(
+				WidgetTemplates.selectPortletADT(
 					portletName = "Asset Publisher",
 					templateName = "Asset Publisher Test ADT");
 			}
@@ -177,14 +177,14 @@ definition {
 			}
 
 			task ("Configure its display template to the created one") {
-				ApplicationDisplayTemplates.selectPortletADT(
+				WidgetTemplates.selectPortletADT(
 					portletName = "Blogs",
 					templateName = "Blogs Test ADT");
 			}
 		}
 
 		task ("Then view alert when deleting widget template for Asset Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
 			LexiconTable.checkTableCheckbox(tableEntry = "Asset Publisher Test ADT");
 
@@ -239,15 +239,15 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widget Templates");
 
-			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+			WidgetTemplates.addADTWithFieldEntryCP(
 				fieldName = "Asset Entry",
 				portletName = "Asset Publisher");
 
-			ApplicationDisplayTemplates.viewTemplate(adtType = "Asset Publisher");
+			WidgetTemplates.viewTemplate(adtType = "Asset Publisher");
 		}
 
 		task ("View sidebar panels in template editor") {
-			ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
+			WidgetTemplates.gotoWidgetTemplatesEllipsisItem(
 				item = "Edit",
 				widgetTemplateName = "Asset Publisher Test ADT");
 		}
@@ -284,15 +284,15 @@ definition {
 	@priority = 4
 	test ViewUsagesOfTwoAssetDisplayTemplates {
 		task ("Given add a widget template for Asset Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+			WidgetTemplates.addADTWithFieldEntryCP(
 				fieldName = "Asset Entry",
 				portletName = "Asset Publisher");
 		}
 
 		task ("Then view 0 displays under Usages column") {
-			ApplicationDisplayTemplates.viewUsage(
+			WidgetTemplates.viewUsage(
 				tableEntry = "Asset Publisher Test ADT",
 				usageAmount = 0);
 		}
@@ -308,9 +308,9 @@ definition {
 		}
 
 		task ("Given add a widget template for Blogs") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+			WidgetTemplates.addADTWithFieldEntryCP(
 				fieldName = "Blog Entries",
 				portletName = "Blogs");
 		}
@@ -332,7 +332,7 @@ definition {
 			}
 
 			task ("Configure its display template to the created one and publish") {
-				ApplicationDisplayTemplates.selectPortletADT(
+				WidgetTemplates.selectPortletADT(
 					portletName = "Asset Publisher",
 					templateName = "Asset Publisher Test ADT");
 
@@ -359,20 +359,20 @@ definition {
 			}
 
 			task ("Configure its display template to the created one") {
-				ApplicationDisplayTemplates.selectPortletADT(
+				WidgetTemplates.selectPortletADT(
 					portletName = "Blogs",
 					templateName = "Blogs Test ADT");
 			}
 		}
 
 		task ("Then view Usages column of the two asset display templates") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.viewUsage(
+			WidgetTemplates.viewUsage(
 				tableEntry = "Asset Publisher Test ADT",
 				usageAmount = 2);
 
-			ApplicationDisplayTemplates.viewUsage(
+			WidgetTemplates.viewUsage(
 				tableEntry = "Blogs Test ADT",
 				usageAmount = 1);
 

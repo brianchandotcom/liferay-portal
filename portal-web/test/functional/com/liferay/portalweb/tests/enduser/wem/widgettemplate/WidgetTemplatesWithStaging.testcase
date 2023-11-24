@@ -18,25 +18,14 @@ definition {
 		Staging.activateStagingCP(siteName = "Test Site Name");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "Add a widget template in staging site."
 	@priority = 4
 	@uitest
 	test AddWidgetTemplateInStagingSite {
 		task ("Add a widget templates in staging site") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtFile = "adt_asset_publisher_rich_summary.ftl",
 				adtType = "Asset Publisher");
 		}
@@ -62,9 +51,9 @@ definition {
 		}
 
 		task ("View the widget template in live site") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.viewTemplate(adtType = "Asset Publisher");
+			WidgetTemplates.viewTemplate(adtType = "Asset Publisher");
 		}
 	}
 
@@ -75,17 +64,17 @@ definition {
 		property timeout.explicit.wait = "20";
 
 		task ("Add a widget template for Asset Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
-			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+			WidgetTemplates.addADTWithFieldEntryCP(
 				fieldName = "Asset Entry",
 				portletName = "Asset Publisher");
 
-			ApplicationDisplayTemplates.viewTemplate(adtType = "Asset Publisher");
+			WidgetTemplates.viewTemplate(adtType = "Asset Publisher");
 		}
 
 		task ("View sidebar panels in template editor") {
-			ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
+			WidgetTemplates.gotoWidgetTemplatesEllipsisItem(
 				item = "Edit",
 				widgetTemplateName = "Asset Publisher Test ADT");
 		}
@@ -180,9 +169,9 @@ definition {
 		}
 
 		task ("Add a widget template for Categories Navigation") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
+			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
-			ApplicationDisplayTemplates.addCP(
+			WidgetTemplates.addCP(
 				adtFile = "adt_categories_navigation_multi_column.ftl",
 				adtType = "Category Filter");
 		}
@@ -192,7 +181,7 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			ApplicationDisplayTemplates.selectPortletADT(templateName = "Category Filter Test ADT");
+			WidgetTemplates.selectPortletADT(templateName = "Category Filter Test ADT");
 		}
 
 		task ("View the widget template applied to Categories Navigation in staging site") {

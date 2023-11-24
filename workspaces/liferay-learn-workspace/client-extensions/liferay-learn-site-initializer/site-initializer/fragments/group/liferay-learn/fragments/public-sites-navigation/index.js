@@ -5,18 +5,6 @@
 
 /* eslint-disable no-undef */
 
-adtSpatialNavigationProvider = new navigation.default.SpatialNavigationProvider(
-	'.adt-submenu-item-link'
-);
-
-spatialNavigationProvider = new navigation.default.SpatialNavigationProvider(
-	'.adt-nav-text'
-);
-
-const primaryNav = fragmentElement.querySelector('.primary-nav');
-
-spatialNavigationProvider.addFocusableClasses(primaryNav);
-
 window.addEventListener('load', () => {
 	new navigation.default.DropdownProvider(
 		'.account-info',

@@ -6,9 +6,9 @@
 package com.liferay.portal.security.membership.policy.usergroup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.membership.policy.usergroup.BaseUserGroupMembershipPolicyTestCase;
+import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;

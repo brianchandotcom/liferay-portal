@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyUtil;
 
 import javax.portlet.RenderResponse;
 

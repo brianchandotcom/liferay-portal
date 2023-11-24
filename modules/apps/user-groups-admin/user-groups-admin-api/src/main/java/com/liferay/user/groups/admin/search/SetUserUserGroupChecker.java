@@ -9,8 +9,8 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyUtil;
 
 import javax.portlet.RenderResponse;
 

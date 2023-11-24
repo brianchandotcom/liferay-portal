@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -111,7 +112,9 @@ public class FileEntryContentDashboardItemTest {
 		ContentDashboardItemVersion contentDashboardItemVersion =
 			contentDashboardItemVersionList.get(0);
 
-		Assert.assertEquals("Approved", contentDashboardItemVersion.getLabel());
+		Assert.assertEquals(
+			LanguageUtil.get(LocaleUtil.getDefault(), "approved"),
+			contentDashboardItemVersion.getLabel());
 		Assert.assertEquals("1.0", contentDashboardItemVersion.getVersion());
 		Assert.assertEquals("success", contentDashboardItemVersion.getStyle());
 	}
@@ -138,7 +141,9 @@ public class FileEntryContentDashboardItemTest {
 		ContentDashboardItemVersion contentDashboardItemVersion =
 			contentDashboardItemVersionList.get(0);
 
-		Assert.assertEquals("Approved", contentDashboardItemVersion.getLabel());
+		Assert.assertEquals(
+			LanguageUtil.get(LocaleUtil.getDefault(), "approved"),
+			contentDashboardItemVersion.getLabel());
 		Assert.assertEquals("1.1", contentDashboardItemVersion.getVersion());
 		Assert.assertEquals("success", contentDashboardItemVersion.getStyle());
 	}
@@ -383,7 +388,9 @@ public class FileEntryContentDashboardItemTest {
 		ContentDashboardItemVersion contentDashboardItemVersion =
 			contentDashboardItemVersionList.get(0);
 
-		Assert.assertEquals("Approved", contentDashboardItemVersion.getLabel());
+		Assert.assertEquals(
+			LanguageUtil.get(LocaleUtil.getDefault(), "approved"),
+			contentDashboardItemVersion.getLabel());
 		Assert.assertEquals("1.1", contentDashboardItemVersion.getVersion());
 		Assert.assertEquals("success", contentDashboardItemVersion.getStyle());
 	}
@@ -538,7 +545,7 @@ public class FileEntryContentDashboardItemTest {
 						_group.getGroupId()));
 
 		Assert.assertEquals(
-			"Document",
+			LanguageUtil.get(LocaleUtil.getDefault(), "document"),
 			versionableContentDashboardItem.getTypeLabel(
 				LocaleUtil.getDefault()));
 	}

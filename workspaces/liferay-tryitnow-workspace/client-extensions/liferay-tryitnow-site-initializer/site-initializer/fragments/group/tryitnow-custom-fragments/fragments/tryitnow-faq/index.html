@@ -6,12 +6,14 @@
 					<lfr-editable id="txt-header" type="text">Customer of Clarity</lfr-editable>
 				</h5>
 			</div>
+
 			<div class="panel-header-right">
 				<div class="panel-toggle">
 					<span id="arrow" class="arrow arrow-collapse">^</span>
 				</div>
 			</div>
 		</div>
+
 		<div class="panel-body" id="panel-body">
 			<lfr-drop-zone></lfr-drop-zone>
 		</div>
@@ -30,7 +32,8 @@
 			panelBody.classList.add('panel-body-collapse');
 			panel.classList.remove('panel-expand');
 			panel.classList.add('panel-collapse');
-		} else if (arrow.classList.contains('arrow-collapse')) {
+		}
+		else if (arrow.classList.contains('arrow-collapse')) {
 			arrow.classList.remove('arrow-collapse');
 			arrow.classList.add('arrow-expand');
 			panelBody.classList.remove('panel-body-collapse');

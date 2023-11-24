@@ -1,26 +1,26 @@
 .fragment_1025 .panel {
-	padding: 5px;
-	border-radius: 10px;
-	border: 1px solid var(--neutral-02, #dcdfdf);
 	background: var(--neutral-00, #fff);
+	border: 1px solid var(--neutral-02, #dcdfdf);
+	border-radius: 10px;
 	margin-bottom: 2rem !important;
 	max-height: 65px;
+	padding: 5px;
 }
 
 .fragment_1025 .panel-header {
+	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
-	cursor: pointer;
 }
 
 .fragment_1025 .panel-header-left {
-	display: flex;
 	align-items: center;
+	display: flex;
 }
 
 .fragment_1025 .panel-header-right {
-	display: flex;
 	align-items: center;
+	display: flex;
 }
 
 .fragment_1025 .panel-header-right p {
@@ -30,27 +30,27 @@
 
 .fragment_1025 .panel-step {
 	align-items: center;
-	color: white;
-	width: 20px;
-	height: 20px;
 	border-radius: 72px;
-	text-align: center;
+	color: white;
 	display: flex;
-	justify-content: center;
 	font-size: 18px;
+	height: 20px;
+	justify-content: center;
 	margin-right: 16px;
+	text-align: center;
+	width: 20px;
 }
 
 .fragment_1025 .panel-toggle {
-	box-shadow: 0 2px 7px 0 rgba(29, 140, 140, 0.24);
-	height: 30px;
-	width: 30px;
-	border-radius: 32px;
-	margin-left: 16px;
-	display: flex;
-	justify-content: center;
 	align-items: center;
+	border-radius: 32px;
+	box-shadow: 0 2px 7px 0 rgba(29, 140, 140, 0.24);
+	display: flex;
 	font-size: 25px !important;
+	height: 30px;
+	justify-content: center;
+	margin-left: 16px;
+	width: 30px;
 }
 
 .fragment_1025 .arrow {
@@ -58,15 +58,15 @@
 }
 
 .fragment_1025 .arrow-expand {
-	transform: rotate(0);
-	animation-name: arrow-expand;
 	animation-duration: 500ms;
+	animation-name: arrow-expand;
+	transform: rotate(0);
 }
 
 .fragment_1025 .arrow-collapse {
-	transform: rotate(180deg);
-	animation-name: arrow-collapse;
 	animation-duration: 500ms;
+	animation-name: arrow-collapse;
+	transform: rotate(180deg);
 }
 
 @keyframes arrow-expand {

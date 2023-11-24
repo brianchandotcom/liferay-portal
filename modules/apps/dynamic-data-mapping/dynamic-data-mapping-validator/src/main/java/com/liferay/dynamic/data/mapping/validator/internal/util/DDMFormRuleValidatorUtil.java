@@ -10,6 +10,8 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -55,6 +57,11 @@ public class DDMFormRuleValidatorUtil {
 	private static void _validateDDMFormRule(
 			DDMExpressionFactory ddmExpressionFactory, DDMFormRule ddmFormRule)
 		throws DDMFormValidationException {
+
+		if (ListUtil.isEmpty(ddmFormRule.getActions())) {
+			throw new DDMFormValidationException.MustSetValidFormRuleExpression(
+				"action", StringPool.BLANK, new DDMExpressionException());
+		}
 
 		for (String action : ddmFormRule.getActions()) {
 			_validateDDMExpression(ddmExpressionFactory, action, "action");

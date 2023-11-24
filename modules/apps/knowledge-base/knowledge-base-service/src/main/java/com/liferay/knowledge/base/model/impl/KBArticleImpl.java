@@ -206,6 +206,11 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 	}
 
 	@Override
+	public long getTrashEntryClassPK() {
+		return getResourcePrimKey();
+	}
+
+	@Override
 	public long getViewCount() {
 		return ViewCountManagerUtil.getViewCount(
 			getCompanyId(),

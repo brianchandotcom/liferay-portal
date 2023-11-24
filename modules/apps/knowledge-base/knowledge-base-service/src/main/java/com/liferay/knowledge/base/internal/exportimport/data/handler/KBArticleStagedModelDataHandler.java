@@ -291,10 +291,10 @@ public class KBArticleStagedModelDataHandler
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			KBArticle.class.getName());
 
-		if (trashHandler.isRestorable(existingKBArticle.getKbArticleId())) {
+		if (trashHandler.isRestorable(existingKBArticle.getResourcePrimKey())) {
 			trashHandler.restoreTrashEntry(
 				portletDataContext.getUserId(kbArticle.getUserUuid()),
-				existingKBArticle.getKbArticleId());
+				existingKBArticle.getResourcePrimKey());
 		}
 	}
 

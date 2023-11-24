@@ -58,11 +58,11 @@ import javax.portlet.PortletURL;
 public class KnowledgeBaseUtil {
 
 	public static String getKBArticleAbsolutePath(
-			PortletRequest portletRequest, long kbArticleId)
+			PortletRequest portletRequest, long resourcePrimKey)
 		throws PortalException {
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
-			kbArticleId);
+		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+			resourcePrimKey);
 
 		String kbFolderAbsolutePath = getKBFolderAbsolutePath(
 			portletRequest, kbArticle.getKbFolderId());

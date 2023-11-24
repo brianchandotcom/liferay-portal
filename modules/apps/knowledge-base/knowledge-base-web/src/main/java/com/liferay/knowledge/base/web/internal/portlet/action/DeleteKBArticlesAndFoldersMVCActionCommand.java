@@ -6,7 +6,6 @@
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,12 +80,9 @@ public class DeleteKBArticlesAndFoldersMVCActionCommand
 		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		for (long kbArticleResourcePrimKey : kbArticleResourcePrimKeys) {
-			KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
-				kbArticleResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
 			trashedModels.add(
 				_kbArticleService.moveKBArticleToTrash(
-					kbArticle.getKbArticleId()));
+					kbArticleResourcePrimKey));
 		}
 
 		for (long kbFolderId : kbFolderIds) {

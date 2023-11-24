@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
 
@@ -58,9 +57,6 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
 		if (cmd.equals(Constants.MOVE_TO_TRASH) &&
 			FeatureFlagManagerUtil.isEnabled("LPS-188058")) {
 
@@ -70,7 +66,7 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 					"trashedModels",
 					ListUtil.toList(
 						(TrashedModel)_kbArticleService.moveKBArticleToTrash(
-							kbArticle.getKbArticleId()))
+							resourcePrimKey))
 				).build());
 		}
 		else {
@@ -83,6 +79,9 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+				resourcePrimKey);
 
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 				actionRequest, _portal.getPortletId(actionRequest),

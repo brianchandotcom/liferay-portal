@@ -21,6 +21,7 @@ Import-Package:\
 	\
 	!org.apache.avalon.framework.logger.*,\
 	!org.apache.log.*,\
+	!org.apache.log4j.*,\
 	\
 	!org.bouncycastle.asn1.x500.*,\
 	!org.bouncycastle.cert.*,\

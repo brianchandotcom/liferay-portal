@@ -1405,28 +1405,44 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	private String _getResultsLanguageKey(
 		boolean hasFilters, int itemsTotal, String searchValue) {
 
-		if (Validator.isNull(searchValue)) {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-198573") && hasFilters) {
-				if (itemsTotal == 1) {
-					return "x-result-with-filters";
+		if (FeatureFlagManagerUtil.isEnabled("LPS-198573")) {
+			if (Validator.isNull(searchValue)) {
+				if (hasFilters) {
+					if (itemsTotal == 1) {
+						return "x-result-found-with-filters";
+					}
+
+					return "x-results-found-with-filters";
 				}
 
-				return "x-results-with-filters";
+				if (itemsTotal == 1) {
+					return "x-result-found";
+				}
+
+				return "x-results-found";
 			}
 
+			if (hasFilters) {
+				if (itemsTotal == 1) {
+					return "x-result-found-for-x-with-filters";
+				}
+
+				return "x-results-found-for-x-with-filters";
+			}
+
+			if (itemsTotal == 1) {
+				return "x-result-found-for-x";
+			}
+
+			return "x-results-found-for-x";
+		}
+
+		if (Validator.isNull(searchValue)) {
 			if (itemsTotal == 1) {
 				return "x-result";
 			}
 
 			return "x-results";
-		}
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-198573") && hasFilters) {
-			if (itemsTotal == 1) {
-				return "x-result-for-x-with-filters";
-			}
-
-			return "x-results-for-x-with-filters";
 		}
 
 		if (itemsTotal == 1) {

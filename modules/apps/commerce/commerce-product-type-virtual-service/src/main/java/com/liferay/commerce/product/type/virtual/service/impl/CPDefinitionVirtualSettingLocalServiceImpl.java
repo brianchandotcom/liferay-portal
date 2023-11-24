@@ -260,8 +260,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 	@Override
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
-			String className, long classPK)
-		throws PortalException {
+			String className, long classPK) {
 
 		return cpDefinitionVirtualSettingPersistence.fetchByC_C(
 			_classNameLocalService.getClassNameId(className), classPK);

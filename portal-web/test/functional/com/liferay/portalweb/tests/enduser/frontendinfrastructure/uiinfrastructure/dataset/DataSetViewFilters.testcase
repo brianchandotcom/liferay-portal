@@ -112,155 +112,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-183621. Confirm that the Selection and Preselect value options are present."
-	@ignore = "true"
-	@priority = 2
-	test AssertSelectedAndPreselected {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-		}
-
-		task ("And Add items to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "car",
-				itemName = "car",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bus",
-				itemName = "bus",
-				picklistName = "Transport");
-		}
-
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And selects the Transport option in the Source Option drop-down") {
-			Select(
-				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
-				value1 = "Transport");
-		}
-
-		task ("Then the Selection and Preselected Values option are displayed") {
-			AssertElementPresent(
-				key_type = "Selection",
-				locator1 = "DataSet#FILTER_SELECTION");
-
-			AssertElementPresent(
-				key_type = "Preselected Values",
-				locator1 = "DataSet#FILTER_SELECTION");
-		}
-	}
-
-	@description = "LPS-183621. When there are two items, and we check the single radio button, an error message is displayed, the filter cannot be saved."
-	@ignore = "true"
-	@priority = 5
-	test AssertTheErrorMessageInPreselect {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-		}
-
-		task ("And Add items to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "car",
-				itemName = "car",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bus",
-				itemName = "bus",
-				picklistName = "Transport");
-		}
-
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And selects the Transport option in the Source Option drop-down") {
-			Select(
-				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
-				value1 = "Transport");
-		}
-
-		task ("And Preselected Values: car and bike") {
-			Type(
-				key_fieldName = "Select a default value for your filter.",
-				locator1 = "ObjectCustomViews#FROM_DATE_INPUT",
-				value1 = "car");
-
-			Click(
-				key_sortOption = "car",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
-
-			Type(
-				key_label = "Preselected Values",
-				locator1 = "DataSet#SELECT_VALUE",
-				value1 = "bike");
-
-			Click(
-				key_sortOption = "bike",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("When the user try to edit filter") {
-			Click(
-				key_fieldName = "Test Filter",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And checks the Single option in Selection field ") {
-			Click.clickAtNotVisible(
-				key_radioOption = "Single",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-		}
-
-		task ("Then an error message is displayed") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "Only one value is allowed");
-		}
-
-		task ("And the user cant save the change") {
-			AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
-		}
-	}
+	
 
 	@description = "LPS-186878 Confirm that the translated option appears when selecting pt_BR in the translation modal"
 	@ignore = "true"
@@ -1693,199 +1545,61 @@ definition {
 		}
 	}
 
-	@description = "LPS-183621. Confirm error when selecting Single, having two items selected in Preselected values."
-	@ignore = "true"
-	@priority = 5
-	test CantAddMoreThanOneItemInSingle {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-		}
-
-		task ("And Add items to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "car",
-				itemName = "car",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bus",
-				itemName = "bus",
+	@description = "LPS-183621. Confirm that Single works when there is only one item left in Preselected values."
+	@priority = 4
+	test SelectionTypeAfterEditFilterChangeSelectionToSingle {
+		task ("And creating a picklist And Add items to the created picklist") {
+			DataSetAdmin.setUpPicklistforDataSet(
+				picklistItemList = "bike,car,bus",
 				picklistName = "Transport");
 		}
 
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
+		task ("And create a new filter ") {
+			DataSetAdmin.createSelectionFilter(
+				filterName = "Custom Filter",
+				filterBy = "creator",
+				picklistName = "Transport",
+				preselectedValueList = "bike,car");
 		}
 
-		task ("And selects the Transport option in the Source Option drop-down") {
-			Select(
-				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
-				value1 = "Transport");
+		task ("When the user clicks on the filter ellipsis button And chooses the Edit option ") {
+			DataSetAdmin.editItem(itemName = "Custom Filter");
 		}
 
-		task ("And Preselected Values: car") {
-			Type(
-				key_fieldName = "Select a default value for your filter.",
-				locator1 = "ObjectCustomViews#FROM_DATE_INPUT",
-				value1 = "car");
-
+		task ("And checks the Single option in Selection field ") {
 			Click(
-				key_sortOption = "car",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+				locator1 = "Radio#ANY",
+				radioLabel = "Single");
 		}
 
-		task ("When the user try to edit filter") {
-			Click(
-				key_fieldName = "Test Filter",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		task ("Then an error message is displayed ") {
+			var warningMessage = '''Only one value is allowed in "Single" selection mode.''';
 
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And checks the Single option in Selection field") {
-			Click.clickAtNotVisible(
-				key_radioOption = "Single",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-		}
-
-		task ("And Preselected Values: bike") {
-			Type(
-				key_label = "Preselected Values",
-				locator1 = "DataSet#SELECT_VALUE",
-				value1 = "bike");
-
-			Click(
-				key_sortOption = "bike",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
-		}
-
-		task ("Then an error message is displayed") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "Only one value is allowed");
+				value1 = ${warningMessage});
 		}
 
 		task ("And the user cant save the change") {
-			AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
-		}
-	}
-
-	@description = "LPS-183621. Confirm that Single works when there is only one item left in Preselected values."
-	@ignore = "true"
-	@priority = 4
-	test CanUseOnlyOneItemInSingle {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-		}
-
-		task ("And Add items to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "car",
-				itemName = "car",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bus",
-				itemName = "bus",
-				picklistName = "Transport");
-		}
-
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And selects the Transport option in the Source Option drop-down") {
-			Select(
-				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
-				value1 = "Transport");
-		}
-
-		task ("And Preselected Values: car and bike") {
-			Type(
-				key_fieldName = "Select a default value for your filter.",
-				locator1 = "ObjectCustomViews#FROM_DATE_INPUT",
-				value1 = "car");
-
-			Click(
-				key_sortOption = "car",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
-
-			Type(
-				key_label = "Preselected Values",
-				locator1 = "DataSet#SELECT_VALUE",
-				value1 = "bike");
-
-			Click(
-				key_sortOption = "bike",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
-
-			Click(
+			AssertElementPresent(
 				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+				locator1 = "DataSet#ANY_BUTTON_DISABLED");
 		}
 
-		task ("When the user try to edit filter") {
-			Click(
-				key_fieldName = "Test Filter",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And checks the Single option in Selection field") {
-			Click.clickAtNotVisible(
-				key_radioOption = "Single",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-		}
-
-		task ("And remove one of the Preselected Values items") {
+		task ("When remove one of the Preselected Values items") {
 			Click(
 				ariaLabel = "Remove bike",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 		}
 
-		task ("And the user can save the new filter") {
+		task ("Then the user can save the new filter") {
 			Click(
 				key_text = "Save",
 				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#SUCCESS",
-				value1 = "Your request completed successfully.");
+			DataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "Custom Filter");
 		}
 	}
 
@@ -1999,80 +1713,53 @@ definition {
 	}
 
 	@description = "LPS-183621. Confirm that by selecting the radio button Multiple and selecting more than one item, the filter can be saved ."
-	@ignore = "true"
 	@priority = 5
-	test MultipleAllowMoreThanOneItem {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-		}
-
-		task ("And Add items to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "car",
-				itemName = "car",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bus",
-				itemName = "bus",
+	test SelectionTypeWithSelectionMultipleField {
+		task ("And creating a picklist And Add items to the created picklist") {
+			DataSetAdmin.setUpPicklistforDataSet(
+				picklistItemList = "bike,car,bus",
 				picklistName = "Transport");
 		}
 
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
+		task ("And create a new filter ") {
+			DataSetAdmin.selectFilterType(key_filterType = "Selection");
 
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
+			PortletEntry.inputText(
+				fieldLabel = "Name",
+				text = "Custom Filter");
 
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
+			Click(
+				dropdownLabel = "Select",
+				locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
 
-		task ("And selects the Transport option in the Source Option drop-down") {
+			DropdownMenuItem.click(menuItem = "creator");
+
 			Select(
 				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
 				value1 = "Transport");
+
+			DataSetAdmin.selectPreselectedValue(preselectedValue = "car");
+
 		}
 
-		task ("And Preselected Values: car") {
-			Type(
-				key_fieldName = "Select a default value for your filter.",
-				locator1 = "ObjectCustomViews#FROM_DATE_INPUT",
-				value1 = "car");
-
+		task ("When the user checks the Multiple option in the Selection field ") {
 			Click(
-				key_sortOption = "car",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
+				locator1 = "Radio#ANY",
+				radioLabel = "Multiple");
 		}
 
-		task ("And Select the option Multiple radio button") {
-			Click.clickAtNotVisible(
-				key_radioOption = "Multiple",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			Click.clickAtNotVisible(
-				key_radioOption = "Multiple",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
+		task ("And add another item to Preselected Values ") {
+			DataSetAdmin.selectPreselectedValue(preselectedValue = "bus");
 		}
 
-		task ("And add another item to Preselected Values") {
-			Type(
-				key_label = "Preselected Values",
-				locator1 = "DataSet#SELECT_VALUE",
-				value1 = "bike");
-
-			Click(
-				key_sortOption = "bike",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
+		task ("Then the item is added to Preselected Values ") {
+			AssertElementPresent(
+				ariaLabel = "Remove car",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+			
+			AssertElementPresent(
+				ariaLabel = "Remove bus",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 		}
 
 		task ("And the user can save the new filter") {
@@ -2080,12 +1767,12 @@ definition {
 				key_text = "Save",
 				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#SUCCESS",
-				value1 = "Your request completed successfully.");
+			DataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "Custom Filter");
 		}
 	}
-
+	
 	@description = "LPS-186878 When canceling filter creation on the cancel button, confirm that it is not possible to translate a page with translation filters"
 	@ignore = "true"
 	@priority = 3
@@ -2333,238 +2020,142 @@ definition {
 	}
 
 	@description = "LPS-183621. Confirm that by editing the filter and selecting Multiple, other items can be added and saved."
-	@ignore = "true"
 	@priority = 5
-	test SelectMoreOneItemWithMultiple {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-		}
-
-		task ("And Add items to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "car",
-				itemName = "car",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bus",
-				itemName = "bus",
+	test SelectionTypeAfterEditFilterChangeSelectionToMultiple {
+		task ("And creating a picklist And Add items to the created picklist") {
+			DataSetAdmin.setUpPicklistforDataSet(
+				picklistItemList = "bike,car,bus",
 				picklistName = "Transport");
 		}
 
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
+		task ("And create a new filter ") {
+			DataSetAdmin.createSelectionFilter(
+				filterName = "Custom Filter",
+				filterBy = "creator",
+				picklistName = "Transport",
+				selection = "Single",
+				preselectedValueList = "bike");
 		}
 
-		task ("And selects the Transport option in the Source Option drop-down") {
-			Select(
-				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
-				value1 = "Transport");
-
-			Click.clickAtNotVisible(
-				key_radioOption = "Single",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-		}
-
-		task ("And Preselected Values: bus") {
-			Type(
-				key_fieldName = "Select a default value for your filter.",
-				locator1 = "ObjectCustomViews#FROM_DATE_INPUT",
-				value1 = "bus");
-
-			Click(
-				key_sortOption = "bus",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("When the user try to edit filter") {
-			Click(
-				key_fieldName = "Test Filter",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
+		task ("When the user clicks on the filter ellipsis button And chooses the Edit option ") {
+			DataSetAdmin.editItem(itemName = "Custom Filter");
 		}
 
 		task ("And checks the Multiple option in Selection field") {
-			Click.clickAtNotVisible(
-				key_radioOption = "Multiple",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
+			Click(
+				locator1 = "Radio#ANY",
+				radioLabel = "Multiple");
 		}
 
 		task ("And Preselected Values: bike") {
-			Type(
-				key_label = "Preselected Values",
-				locator1 = "DataSet#SELECT_VALUE",
-				value1 = "bike");
-
-			Click(
-				key_sortOption = "bike",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
+			DataSetAdmin.selectPreselectedValue(preselectedValue = "car");
 		}
 
-		task ("And the user can save the new filter") {
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		task ("And the filter can be saved") {
+			Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
+		}
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#SUCCESS",
-				value1 = "Your request completed successfully.");
+		task ("And the changes are saved as well") {
+			DataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "Custom Filter");
 		}
 	}
 
 	@description = "LPS-183621. Confirm that when you select the Single radio button and select more than one item, an error message is displayed."
-	@ignore = "true"
 	@priority = 5
-	test SinglePreventsMoreThanOneItem {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-		}
-
-		task ("And Add items to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "car",
-				itemName = "car",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bus",
-				itemName = "bus",
+	test SelectionTypeWithSelectionSingleFieldAndMultipleItem {
+		task ("And creating a picklist And Add items to the created picklist") {
+			DataSetAdmin.setUpPicklistforDataSet(
+				picklistItemList = "bike,car,bus",
 				picklistName = "Transport");
 		}
 
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
+		task ("And create a new filter") {
+			DataSetAdmin.selectFilterType(key_filterType = "Selection");
 
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
+			PortletEntry.inputText(
+				fieldLabel = "Name",
+				text = "Custom Filter");
 
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
+			Click(
+				dropdownLabel = "Select",
+				locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
 
-		task ("And selects the Transport option in the Source Option drop-down") {
+			DropdownMenuItem.click(menuItem = "creator");
+
 			Select(
 				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
 				value1 = "Transport");
 		}
 
-		task ("And Preselected Values: car") {
-			Type(
-				key_fieldName = "Select a default value for your filter.",
-				locator1 = "ObjectCustomViews#FROM_DATE_INPUT",
-				value1 = "car");
-
+		task ("When the user checks the Single option in the Selection field ") {
 			Click(
-				key_sortOption = "car",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
+				locator1 = "Radio#ANY",
+				radioLabel = "Single");
 		}
 
-		task ("And Select the option single radio button") {
-			Click.clickAtNotVisible(
-				key_radioOption = "Single",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
+		task ("And Preselected Values: car") {
+			DataSetAdmin.selectPreselectedValue(preselectedValue = "car");
+
 		}
 
 		task ("And add another item to Preselected Values") {
-			Type(
-				key_label = "Preselected Values",
-				locator1 = "DataSet#SELECT_VALUE",
-				value1 = "bike");
-
-			Click(
-				key_sortOption = "bike",
-				locator1 = "ObjectCustomViews#SORT_OPTION");
+			DataSetAdmin.selectPreselectedValue(preselectedValue = "bus");
 		}
 
 		task ("Then an error message is displayed") {
+			var warningMessage = '''Only one value is allowed in "Single" selection mode.''';
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "Only one value is allowed");
+				value1 = ${warningMessage});
 		}
 
 		task ("And the user cant save the change") {
-			AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
+			AssertElementPresent(
+				key_text = "Save",
+				locator1 = "DataSet#ANY_BUTTON_DISABLED");
 		}
 	}
 
 	@description = "LPS-183621. Confirm that it is possible to create the filter without filling out the Preselected field."
-	@ignore = "true"
 	@priority = 3
-	test TheFilterWithoutPreselection {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-		}
-
-		task ("And Add items to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "car",
-				itemName = "car",
-				picklistName = "Transport");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bus",
-				itemName = "bus",
+	test SelectionTypeWithoutPreselectionValues {
+		task ("And creating a picklist And Add items to the created picklist") {
+			DataSetAdmin.setUpPicklistforDataSet(
+				picklistItemList = "bike,car,bus",
 				picklistName = "Transport");
 		}
 
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
+		task ("And create a new Selection filter ") {
+			DataSetAdmin.selectFilterType(key_filterType = "Selection");
 
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
+			PortletEntry.inputText(
+				fieldLabel = "Name",
+				text = "Custom Filter");
 
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
+			Click(
+				dropdownLabel = "Select",
+				locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
+
+			DropdownMenuItem.click(menuItem = "creator");
 		}
 
-		task ("And selects the Transport option in the Source Option drop-down") {
+		task ("And the user selects the created picklist in the Source Options field") {
 			Select(
 				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
 				value1 = "Transport");
 		}
 
 		task ("When the user clicks on Save button ") {
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+			Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
+		}
+
+		task ("Then is possible to save the filter without selecting an option in the Preselected Values") {
+			DataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "Custom Filter");
 		}
 	}
 

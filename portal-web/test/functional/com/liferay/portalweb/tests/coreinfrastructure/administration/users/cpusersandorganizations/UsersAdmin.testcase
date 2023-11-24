@@ -1049,6 +1049,100 @@ definition {
 		}
 	}
 
+	@description = "LPS-201007. As an admin, I can share documents with users of the same user group that has a site membership."
+	@priority = 5
+	test CanShareDocumentWithSiteMemberUserGroupUser {
+		property portal.acceptance = "true";
+
+		task ("Given a user group with two new users is created") {
+			for (var newUser : list "abc,user1") {
+				JSONUser.addUser(
+					userEmailAddress = "${newUser}@liferay.com",
+					userFirstName = ${newUser},
+					userLastName = ${newUser},
+					userScreenName = ${newUser});
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${newUser}@liferay.com");
+			}
+
+			JSONUserGroup.addUserGroup(
+				userGroupDescription = "UG1 Name Description",
+				userGroupName = "UG1");
+
+			UserGroup.openUserGroupsAdmin();
+
+			for (var userName : list "abc,user1") {
+				UserGroup.assignMemberCP(
+					userGroupName = "UG1",
+					userScreenName = ${userName});
+
+				Navigator.gotoBack();
+			}
+		}
+
+		task ("And the user group is assigned to the site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(
+				allowManualMembershipManagement = "true",
+				membershipType = "Open",
+				selectMembershipType = "true");
+
+			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+
+			Site.assignUserGroupAsMemberCP(userGroupName = "UG1");
+		}
+
+		task ("And Site Administrator role is given to the user1") {
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Guest",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("When the user1 uploads a document in Documents and Media page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "File Upload");
+
+			UploadDependencyFile.uploadFile(fileName = "Document_1.pdf");
+
+			PortletEntry.inputTitle(title = "Document1");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then can share the document with user 'abc'") {
+			DMNavigator.gotoShareInfoPanel(dmDocumentTitle = "Document1");
+
+			DMDocument.shareWithNoSharingPermissionsUser(userEmailAddress = "abc@liferay.com");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the user 'abc' can view the notification and the shared document when logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "abc@liferay.com",
+				userLoginFullName = "abc abc");
+
+			Notifications.viewBadgeCount(notificationCount = 1);
+
+			Notifications.gotoNotifications();
+
+			Notifications.viewNewSharedContent(
+				contentSharingPermission = "viewing",
+				contentTitle = "Document1",
+				ownerName = "user1 user1");
+		}
+	}
+
 	@priority = 4
 	test ChangeUserPassword {
 		property portal.acceptance = "true";

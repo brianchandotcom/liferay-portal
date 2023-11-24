@@ -1259,7 +1259,7 @@ definition {
 		}
 
 		task ("When the page creator selects the element-text of Heading fragment") {
-			PageEditor.gotoEditableFieldEdit(
+			PageEditor.clickEditableField(
 				fragmentName = "Heading",
 				id = "element-text");
 		}

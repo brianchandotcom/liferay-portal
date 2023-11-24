@@ -109,7 +109,7 @@ export function ChoosePricingModelPage({
 
 								dispatch({
 									payload: {value: 0},
-									type: TYPES.UPDATE_APP_LICENSE_PRICE,
+									type: TYPES.UPDATE_APP_LICENSE_PRICES,
 								});
 							}
 						}

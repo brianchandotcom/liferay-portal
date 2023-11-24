@@ -4,9 +4,7 @@ definition {
 	macro _selectUser(inviteUserFullName = null) {
 		var key_inviteUserFullName = ${inviteUserFullName};
 
-		AssertClick(
-			locator1 = "InviteMembers#INVITE_USER_FULL_NAME",
-			value1 = ${inviteUserFullName});
+		Click(locator1 = "InviteMembers#INVITE_USER_ADD_BUTTON");
 	}
 
 	@summary = "Default summary"

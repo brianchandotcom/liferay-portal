@@ -157,7 +157,7 @@ export function DefineAppProfilePage({
 				className:
 					'com.liferay.commerce.product.model.CPAttachmentFileEntry',
 				classPK: attachmentId as number,
-				companyId: Number(getCompanyId()),
+				companyId: getCompanyId(),
 				tableName: 'CUSTOM_FIELDS',
 			});
 		}

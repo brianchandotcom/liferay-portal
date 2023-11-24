@@ -16,7 +16,7 @@ class LiferayJsonWS {
 		attributeValues: Object;
 		className: string;
 		classPK: number;
-		companyId: number;
+		companyId: string;
 		tableName: string;
 	}) {
 		await Liferay.Service('/expandovalue/add-values', {

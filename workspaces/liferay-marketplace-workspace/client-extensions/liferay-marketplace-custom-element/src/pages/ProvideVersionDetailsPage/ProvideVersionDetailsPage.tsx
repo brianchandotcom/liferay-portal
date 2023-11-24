@@ -196,7 +196,7 @@ export function ProvideVersionDetailsPage({
 						className:
 							'com.liferay.commerce.product.model.CPInstance',
 						classPK: skuId,
-						companyId: Number(getCompanyId()),
+						companyId: getCompanyId(),
 						tableName: 'CUSTOM_FIELDS',
 					});
 

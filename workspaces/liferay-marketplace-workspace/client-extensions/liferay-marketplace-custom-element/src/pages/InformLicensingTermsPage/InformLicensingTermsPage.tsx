@@ -288,7 +288,7 @@ export function InformLicensingTermsPage({
 								className:
 									'com.liferay.commerce.product.model.CPInstance',
 								classPK: skuTrialId,
-								companyId: Number(getCompanyId()),
+								companyId: getCompanyId(),
 								tableName: 'CUSTOM_FIELDS',
 							});
 						}

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -758,35 +757,6 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
-	private void _addFragmentCollectionResources(
-			FragmentEntry fragmentEntry, ServiceContext serviceContext,
-			Map<String, FileEntry> fileEntries,
-			FragmentCollection targetFragmentCollection)
-		throws PortalException {
-
-		for (Map.Entry<String, FileEntry> entry : fileEntries.entrySet()) {
-			FileEntry fileEntry = entry.getValue();
-
-			FileEntry existingFileEntry =
-				PortletFileRepositoryUtil.fetchPortletFileEntry(
-					fragmentEntry.getGroupId(),
-					targetFragmentCollection.getResourcesFolderId(),
-					fileEntry.getFileName());
-
-			if (existingFileEntry == null) {
-				PortletFileRepositoryUtil.addPortletFileEntry(
-					null, serviceContext.getScopeGroupId(),
-					serviceContext.getUserId(),
-					FragmentCollection.class.getName(),
-					targetFragmentCollection.getFragmentCollectionId(),
-					FragmentPortletKeys.FRAGMENT,
-					targetFragmentCollection.getResourcesFolderId(),
-					fileEntry.getContentStream(), fileEntry.getFileName(),
-					fileEntry.getMimeType(), false);
-			}
-		}
-	}
-
 	private void _addFragmentCollectionResourcesWithFolders(
 			FragmentEntry fragmentEntry, ServiceContext serviceContext,
 			Map<String, FileEntry> fileEntries,
@@ -899,16 +869,9 @@ public class FragmentEntryLocalServiceImpl
 				targetFragmentCollectionId);
 
 		try {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-158675")) {
-				_addFragmentCollectionResourcesWithFolders(
-					fragmentEntry, serviceContext, fileEntries,
-					targetFragmentCollection);
-			}
-			else {
-				_addFragmentCollectionResources(
-					fragmentEntry, serviceContext, fileEntries,
-					targetFragmentCollection);
-			}
+			_addFragmentCollectionResourcesWithFolders(
+				fragmentEntry, serviceContext, fileEntries,
+				targetFragmentCollection);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

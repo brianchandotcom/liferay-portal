@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -59,7 +58,6 @@ public class FragmentCollectionStagingTest {
 		_liveGroup = GroupTestUtil.addGroup();
 	}
 
-	@FeatureFlags("LPS-158675")
 	@Test
 	public void testFragmentResourcesWithFoldersCopiedWhenLocalStagingActivated()
 		throws Exception {

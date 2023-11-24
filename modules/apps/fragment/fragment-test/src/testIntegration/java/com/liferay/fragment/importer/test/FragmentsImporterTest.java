@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -213,7 +212,6 @@ public class FragmentsImporterTest {
 		Assert.assertFalse(fragmentEntries.isEmpty());
 	}
 
-	@FeatureFlags("LPS-158675")
 	@Test
 	public void testImportFragmentsWithFolderResources() throws Exception {
 		File fileWithFolderResources = _generateZipFileWithFolderResources();

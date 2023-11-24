@@ -11,7 +11,6 @@ import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -37,7 +36,6 @@ public class FragmentCollectionResourcesDisplayContext {
 		RenderResponse renderResponse,
 		FragmentDisplayContext fragmentDisplayContext) {
 
-		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_fragmentDisplayContext = fragmentDisplayContext;
@@ -125,17 +123,8 @@ public class FragmentCollectionResourcesDisplayContext {
 		return _searchContainer;
 	}
 
-	public boolean isShowRepositoryBrowser() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-158675")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private Long _folderId;
 	private final FragmentDisplayContext _fragmentDisplayContext;
-	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Long _repositoryId;

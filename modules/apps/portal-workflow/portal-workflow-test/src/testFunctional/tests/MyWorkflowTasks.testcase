@@ -1615,7 +1615,9 @@ definition {
 	@description = "LPS-135888 - Verify that when the user delete the order, the task is not displayed under My Workflow Tasks"
 	@priority = 3
 	test TaskIsNotDisplayedAfterOrderIsDeleted {
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(
+			siteName = "Minium135888",
+			siteTemplateName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -1642,7 +1644,7 @@ definition {
 			category = "Store Management",
 			portlet = "Channels");
 
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		CommerceNavigator.gotoEntry(entryName = "Minium135888 Portal");
 
 		Select(
 			key_title = "Buyer Order Approval Workflow",
@@ -1651,7 +1653,7 @@ definition {
 
 		Button.clickSave();
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		ApplicationsMenu.gotoSite(site = "Minium135888");
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
@@ -1670,7 +1672,7 @@ definition {
 			workflowAssetType = "Order",
 			workflowTask = "Review");
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		ApplicationsMenu.gotoSite(site = "Minium135888");
 
 		CommerceJSONOrdersAPI._deleteAllCommerceOrders();
 

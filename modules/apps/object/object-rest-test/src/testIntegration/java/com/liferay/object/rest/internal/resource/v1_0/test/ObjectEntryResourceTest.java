@@ -6280,7 +6280,7 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE,
 			useExternalReferenceCode);
 
-		// File with a nonexistent name
+		// File with a nonexistent name (documents and media source)
 
 		DLFolder dlFolder1 = DLTestUtil.addDLFolder(
 			TestPropsValues.getGroupId());
@@ -6355,7 +6355,6 @@ public class ObjectEntryResourceTest {
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
-
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
@@ -6378,7 +6377,6 @@ public class ObjectEntryResourceTest {
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
-
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
@@ -6400,6 +6398,8 @@ public class ObjectEntryResourceTest {
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
+
+		// File with a nonexistent name (user computer source)
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -6633,7 +6633,7 @@ public class ObjectEntryResourceTest {
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE);
 
-		// File with a nonexistent name
+		// File with a nonexistent name (documents and media source)
 
 		DLFolder dlFolder1 = DLTestUtil.addDLFolder(
 			TestPropsValues.getGroupId());
@@ -6746,6 +6746,8 @@ public class ObjectEntryResourceTest {
 				RandomTestUtil.randomString() + ".txt", null, null),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		// File with a nonexistent name (user computer source)
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(

@@ -19,17 +19,6 @@ definition {
 			type = "content");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a test for LPS-111657. Can add the Container to a column of Row or another Container."
 	@priority = 4
 	test AddContainerToLayoutElements {

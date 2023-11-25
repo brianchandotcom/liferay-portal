@@ -22,6 +22,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196044. Check the accessibility in page audit improvement when adding a Button fragment."
+	@priority = 3
+	test ViewAccessibilityOfButtonFragment {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
+		task ("Given a user has a Button fragment on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user opens the Page Audit sidebar") {
+			PageAudit.openPageAuditSidebar();
+		}
+
+		task ("Then the Button fragment on sidebar should have correct accessibility") {
+			AssertAccessible();
+		}
+
+		task ("When the user navigates to the details of Button fragment") {
+			PageAudit.goToElementDetails(elementName = "Button");
+		}
+
+		// Failed for "Certain ARIA roles must contain particular children", comment out until LPS-193447 implemented
+
+		//task ("Then the details panel should have correct accessibility") {
+		//	AssertAccessible();
+		//}
+
+	}
+
 	@description = "This is a test for LPS-191827. Check the accessibility when warning message displays in a Collection Display with configuration can cause performance issues in page audit."
 	@priority = 3
 	test ViewAccessibilityOfCollectionDisplayPagePerformanceWarningMessageOnPageAudit {
@@ -65,6 +107,54 @@ definition {
 		task ("Then the warning message should have correct accessibility") {
 			AssertElementAccessible(locator1 = "//div[contains(@class,'panel-unstyled')][.//div[contains(@class,'panel-title')][normalize-space()='Warnings']]//ul");
 		}
+	}
+
+	@description = "This is a test for LPS-196044. Check the accessibility in page audit improvement when adding an Image fragment."
+	@priority = 3
+	test ViewAccessibilityOfImageFragment {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
+		task ("Given a user has a Button fragment on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+
+			PageEditor.editFragmentImage(
+				fragmentName = "Image",
+				id = "image-square",
+				imageFileName = "high_resolution_photo.jpg",
+				uploadFileName = "high_resolution_photo.jpg");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user opens the Page Audit sidebar") {
+			PageAudit.openPageAuditSidebar();
+		}
+
+		task ("Then the Image fragment on sidebar should have correct accessibility") {
+			AssertAccessible();
+		}
+
+		task ("When the user navigates to the details of Image fragment") {
+			PageAudit.goToElementDetails(elementName = "Image");
+		}
+
+		// Failed for "Certain ARIA roles must contain particular children", comment out until LPS-193447 implemented
+
+		//task ("Then the details panel should have correct accessibility") {
+		//	AssertAccessible();
+		//}
+
 	}
 
 }

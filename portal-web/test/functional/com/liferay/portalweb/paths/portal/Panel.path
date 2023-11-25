@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_ALERT_FEEDBACK</td>
+	<td>//div[contains(@class,'panel')][.//div[contains(@class,'panel-title')][normalize-space()='${key_panel}']]//div[contains(@class,'alert-feedback')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PANEL_HELP_TEXT</td>
 	<td>//div[contains(@class,'panel')][.//*[normalize-space()='${key_panel}'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]]//p</td>
 	<td></td>

@@ -5,23 +5,30 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.processor.PropertiesSourceProcessor;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.net.URL;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.commons.io.IOUtils;
 
@@ -89,6 +96,32 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _generateProperties(Map<String, List<String>> properties) {
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append(StringPool.EQUAL);
+
+			List<String> values = entry.getValue();
+
+			if (values.size() <= 1) {
+				sb.append(values.get(0));
+				sb.append("\n");
+
+				continue;
+			}
+
+			sb.append("\\\n");
+			sb.append(_merge(entry.getValue()));
+			sb.append("\n");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
 	private synchronized String _getPortalPropertiesContent(String absolutePath)
 		throws IOException {
 
@@ -122,96 +155,24 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		return _portalPortalPropertiesContent;
 	}
 
-	private String _getPropertyCluster(String content, int lineNumber) {
-		StringBundler sb = new StringBundler();
+	private String _merge(List<String> list) {
+		StringBundler sb = new StringBundler(3 * list.size());
 
-		while (true) {
-			String line = getLine(content, lineNumber);
+		for (String s : list) {
+			sb.append(StringPool.FOUR_SPACES);
+			sb.append(s);
 
-			if (Validator.isNull(line)) {
-				sb.setIndex(sb.index() - 1);
-
-				return sb.toString();
+			if (StringUtil.equals(s, StringPool.BACK_SLASH)) {
+				sb.append("\n");
 			}
-
-			sb.append(line);
-			sb.append("\n");
-
-			lineNumber++;
-		}
-	}
-
-	private String _sortPortalProperties(
-		String content, int lineNumber, Collection<Integer> positions,
-		Map<Integer, Collection<Integer>> propertyClusterPositionsMap) {
-
-		if (propertyClusterPositionsMap.isEmpty()) {
-			return content;
-		}
-
-		outerLoop:
-		for (Map.Entry<Integer, Collection<Integer>> entry :
-				propertyClusterPositionsMap.entrySet()) {
-
-			for (int curPosition : entry.getValue()) {
-				for (int position : positions) {
-					if (curPosition <= position) {
-						continue outerLoop;
-					}
-				}
-
-				int previousLineNumber = entry.getKey();
-
-				String previousPropertyCluster = _getPropertyCluster(
-					content, previousLineNumber);
-
-				String propertyCluster = _getPropertyCluster(
-					content, lineNumber);
-
-				content = StringUtil.replaceFirst(
-					content, propertyCluster, previousPropertyCluster,
-					getLineStartPos(content, lineNumber) - 1);
-				content = StringUtil.replaceFirst(
-					content, previousPropertyCluster, propertyCluster,
-					getLineStartPos(content, previousLineNumber) - 1);
-
-				return content;
+			else {
+				sb.append(",\\\n");
 			}
 		}
 
-		return content;
-	}
+		sb.setIndex(sb.index() - 1);
 
-	private String _sortPortalProperties(
-		String content, int lineNumber, int pos,
-		Map<Integer, Integer> propertyPositionsMap) {
-
-		for (Map.Entry<Integer, Integer> entry :
-				propertyPositionsMap.entrySet()) {
-
-			int curPos = entry.getValue();
-
-			if (curPos <= pos) {
-				continue;
-			}
-
-			int curLineNumber = entry.getKey();
-
-			String curProperty = getLine(content, curLineNumber);
-
-			String property = getLine(content, lineNumber);
-
-			content = StringUtil.replaceFirst(
-				content, property, curProperty,
-				getLineStartPos(content, lineNumber) - 1);
-			content = StringUtil.replaceFirst(
-				content, curProperty, property,
-				getLineStartPos(content, curLineNumber) - 1);
-
-			return content;
-		}
-
-		return content;
+		return sb.toString();
 	}
 
 	private String _sortPortalProperties(String absolutePath, String content)
@@ -221,91 +182,170 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String portalPortalPropertiesContent = _getPortalPropertiesContent(
-			absolutePath);
+		Map<String, List<String>> propertiesMap = new TreeMap<>(
+			new NaturalOrderStringComparator());
 
-		Map<Integer, Integer> propertyPositionsMap = new HashMap<>();
-		Map<Integer, Collection<Integer>> propertyClusterPositionsMap =
-			new HashMap<>();
+		try (FileReader fileReader = new FileReader(new File(absolutePath));
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(fileReader)) {
 
-		int startLineNumber = 1;
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			int lineNumber = 0;
-
+			String key = null;
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineNumber++;
+				line = line.trim();
 
-				if (Validator.isNull(line)) {
-					if (!propertyPositionsMap.isEmpty()) {
-						Collection<Integer> positions =
-							propertyPositionsMap.values();
+				if (Validator.isNull(line) ||
+					line.startsWith(StringPool.POUND)) {
 
-						String newContent = _sortPortalProperties(
-							content, startLineNumber, positions,
-							propertyClusterPositionsMap);
+					continue;
+				}
 
-						if (!newContent.equals(content)) {
-							return newContent;
+				if (line.indexOf('=') >= 0) {
+					key = line.substring(0, line.indexOf('='));
+
+					String value = line.substring(line.indexOf('=') + 1);
+
+					if (!Objects.isNull(value) && !value.equals("\\")) {
+						List<String> list = propertiesMap.get(key);
+
+						if (list == null) {
+							list = new ArrayList<>();
 						}
 
-						propertyClusterPositionsMap.put(
-							startLineNumber, positions);
+						list.add(value);
 
-						propertyPositionsMap = new HashMap<>();
+						propertiesMap.put(key, list);
+					}
+				}
+				else {
+					String value = line;
+
+					if (value.endsWith(",\\")) {
+						value = value.substring(0, value.length() - 2);
 					}
 
-					startLineNumber = lineNumber + 1;
+					if (key == null) {
+						return content;
+					}
 
-					continue;
+					List<String> list = propertiesMap.get(key);
+
+					if (list == null) {
+						list = new ArrayList<>();
+					}
+
+					list.add(value);
+
+					propertiesMap.put(key, list);
 				}
-
-				if (line.matches(" *#.*")) {
-					continue;
-				}
-
-				int pos = line.indexOf(CharPool.EQUAL);
-
-				if (pos == -1) {
-					continue;
-				}
-
-				String property = StringUtil.trim(line.substring(0, pos + 1));
-
-				pos = portalPortalPropertiesContent.indexOf(
-					StringPool.FOUR_SPACES + property);
-
-				if (pos == -1) {
-					continue;
-				}
-
-				String newContent = _sortPortalProperties(
-					content, lineNumber, pos, propertyPositionsMap);
-
-				if (!newContent.equals(content)) {
-					return newContent;
-				}
-
-				propertyPositionsMap.put(lineNumber, pos);
 			}
 		}
 
-		if (!propertyPositionsMap.isEmpty()) {
-			return _sortPortalProperties(
-				content, startLineNumber, propertyPositionsMap.values(),
-				propertyClusterPositionsMap);
+		Properties portalProperties = new Properties();
+
+		portalProperties.load(
+			new StringReader(_getPortalPropertiesContent(absolutePath)));
+
+		Map<String, List<String>> portalOSGiEnvironmentPropertiesMap =
+			new TreeMap<>(new NaturalOrderStringComparator());
+		Map<String, List<String>> portalPropertiesMap = new TreeMap<>(
+			new PortalPropertiesComparator());
+
+		Set<Map.Entry<String, List<String>>> entrySet =
+			propertiesMap.entrySet();
+
+		Iterator<Map.Entry<String, List<String>>> iterator =
+			entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, List<String>> properties = iterator.next();
+
+			String propertyKey = properties.getKey();
+
+			if (portalProperties.containsKey(propertyKey) ||
+				propertyKey.startsWith("module.framework.")) {
+
+				portalPropertiesMap.put(
+					propertyKey, propertiesMap.get(propertyKey));
+				iterator.remove();
+			}
+			else if (propertyKey.startsWith(
+						"configuration.override.com.liferay.")) {
+
+				portalOSGiEnvironmentPropertiesMap.put(
+					propertyKey, propertiesMap.get(propertyKey));
+				iterator.remove();
+			}
 		}
 
-		return content;
+		return StringBundler.concat(
+			_generateProperties(portalPropertiesMap), "\n\n",
+			_generateProperties(propertiesMap), "\n\n",
+			_generateProperties(portalOSGiEnvironmentPropertiesMap));
 	}
 
 	private static final String _ALLOWED_SINGLE_LINE_PROPERTY_KEYS =
 		"allowedSingleLinePropertyKeys";
 
 	private String _portalPortalPropertiesContent;
+
+	private class PortalPropertiesComparator
+		extends NaturalOrderStringComparator {
+
+		public PortalPropertiesComparator() {
+			_lastModuleFrameworkPosiston =
+				_portalPortalPropertiesContent.lastIndexOf(
+					"    module.framework.");
+
+			if (_lastModuleFrameworkPosiston == -1) {
+				_lastModuleFrameworkPosiston =
+					_portalPortalPropertiesContent.lastIndexOf(
+						"    #module.framework.");
+			}
+		}
+
+		@Override
+		public int compare(String propertyKey1, String propertyKey2) {
+			int propertyKey1Posiston = _getPortalPropertiesPosition(
+				_portalPortalPropertiesContent, propertyKey1);
+			int propertyKey2Posiston = _getPortalPropertiesPosition(
+				_portalPortalPropertiesContent, propertyKey2);
+
+			if (propertyKey1Posiston == -1) {
+				if (propertyKey2Posiston <= _lastModuleFrameworkPosiston) {
+					return 1;
+				}
+
+				return -1;
+			}
+
+			if (propertyKey2Posiston == -1) {
+				if (propertyKey1Posiston <= _lastModuleFrameworkPosiston) {
+					return -1;
+				}
+
+				return 1;
+			}
+
+			return propertyKey1Posiston - propertyKey2Posiston;
+		}
+
+		private int _getPortalPropertiesPosition(
+			String content, String propertyKey) {
+
+			int pos = content.indexOf(StringPool.FOUR_SPACES + propertyKey);
+
+			if (pos == -1) {
+				pos = content.indexOf(
+					StringPool.FOUR_SPACES + StringPool.POUND + propertyKey);
+			}
+
+			return pos;
+		}
+
+		private int _lastModuleFrameworkPosiston = -1;
+
+	}
 
 }

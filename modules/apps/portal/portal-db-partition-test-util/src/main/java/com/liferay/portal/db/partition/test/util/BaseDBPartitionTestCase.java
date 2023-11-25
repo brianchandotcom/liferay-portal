@@ -150,14 +150,10 @@ public abstract class BaseDBPartitionTestCase {
 
 		_disableComponents(
 			"com.liferay.portal.db.partition",
-			StringBundler.concat(
-				"com.liferay.portal.db.partition.internal.configuration.",
-				"persistence.listener.DBPartitionVirtualInstanceExtraction",
-				"ConfigurationModelListener"),
-			StringBundler.concat(
-				"com.liferay.portal.db.partition.internal.configuration.",
-				"persistence.listener.DBPartitionVirtualInstanceInsertion",
-				"ConfigurationModelListener"));
+			"com.liferay.portal.db.partition.internal.configuration." +
+				"DBPartitionVirtualInstanceExtraction",
+			"com.liferay.portal.db.partition.internal.configuration." +
+				"DBPartitionVirtualInstanceInsertion");
 
 		PropsUtil.set(
 			"database.partition.enabled", _originalDatabasePartitionEnabled);

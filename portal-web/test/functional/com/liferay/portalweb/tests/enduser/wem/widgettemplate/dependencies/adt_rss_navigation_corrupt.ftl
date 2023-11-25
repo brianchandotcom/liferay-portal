@@ -31,7 +31,7 @@
 
 								<div class="feed-entry-content">
 									<div class="feed-title">
-										<@liferay_aui["a"] href="${htmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink())}">${htmlUtil.escape(syndEntry.getTitle())}</@>
+										<@clay["link"] href="${htmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink())}">${htmlUtil.escape(syndEntry.getTitle())}</@>
 									</div>
 
 									<#if getterUtil.getBoolean(showFeedItemAuthor) && syndEntry.getAuthor()??>

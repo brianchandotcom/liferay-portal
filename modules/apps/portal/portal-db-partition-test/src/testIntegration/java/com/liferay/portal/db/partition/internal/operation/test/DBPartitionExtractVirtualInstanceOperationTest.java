@@ -24,7 +24,7 @@ public class DBPartitionExtractVirtualInstanceOperationTest
 
 	@Test
 	public void testDeployConfiguration() throws Exception {
-		deployConfiguration(_PID, "companyId=L\"" + COMPANY_IDS[0] + "\"\n");
+		deployConfiguration(_PID, "companyId=L\"0\"\n");
 
 		verifyConfigurationIsDeletedAfterDeploy(_PID);
 	}

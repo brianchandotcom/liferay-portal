@@ -11,7 +11,6 @@
 
 	<!-- Listeners -->
 
-	<bean class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" id="messageListener.convert_process" />
 	<bean class="com.liferay.portal.internal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
 	<bean class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener" id="messageListener.live_users_cluster">
 		<property name="priority">
@@ -29,12 +28,6 @@
 					<constructor-arg name="destinationName" value="liferay/async_service" />
 					<constructor-arg name="destinationType">
 						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
-					</constructor-arg>
-				</bean>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/convert_process" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_SERIAL" />
 					</constructor-arg>
 				</bean>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
@@ -56,11 +49,6 @@
 				<entry key="liferay/async_service">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.async_service" />
-					</list>
-				</entry>
-				<entry key="liferay/convert_process">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.convert_process" />
 					</list>
 				</entry>
 				<entry key="liferay/live_users">

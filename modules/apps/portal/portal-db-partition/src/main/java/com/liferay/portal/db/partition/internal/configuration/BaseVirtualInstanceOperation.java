@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.internal.configuration.persistence.listener;
+package com.liferay.portal.db.partition.internal.configuration;
 
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -16,7 +15,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import java.util.Dictionary;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -25,33 +25,22 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public abstract class BaseConfigurationModelListener
-	implements ConfigurationModelListener {
+public abstract class BaseVirtualInstanceOperation {
 
-	public BaseConfigurationModelListener(String pid) {
-		_pid = pid;
-	}
-
-	@Override
-	public void onAfterSave(String pid, Dictionary<String, Object> properties)
-		throws ConfigurationModelListenerException {
+	public void onVirtualInstance(
+		Callable<Company> callable, Map<String, Object> properties) {
 
 		try {
-			doOnAfterSave(properties);
+			callable.call();
 		}
 		catch (Exception exception) {
-			throw new ConfigurationModelListenerException(
-				exception, getConfigurationClass(), getClass(), properties);
+			_log.error(
+				"Unable to perform operation over virtual instance", exception);
 		}
 		finally {
-			_deleteConfiguration(pid);
+			_deleteConfiguration((String)properties.get("service.pid"));
 		}
 	}
-
-	protected abstract void doOnAfterSave(Dictionary<String, Object> properties)
-		throws Exception;
-
-	protected abstract Class<?> getConfigurationClass();
 
 	@Reference
 	protected ConfigurationAdmin configurationAdmin;
@@ -65,7 +54,7 @@ public abstract class BaseConfigurationModelListener
 				Files.deleteIfExists(
 					Paths.get(
 						PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-						_pid.concat(".config")));
+						pid.concat(".config")));
 			}
 		}
 		catch (IOException ioException) {
@@ -74,8 +63,6 @@ public abstract class BaseConfigurationModelListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseConfigurationModelListener.class);
-
-	private final String _pid;
+		BaseVirtualInstanceOperation.class);
 
 }

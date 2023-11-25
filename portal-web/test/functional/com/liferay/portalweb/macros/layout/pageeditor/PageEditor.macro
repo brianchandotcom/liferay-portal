@@ -4549,7 +4549,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		else {
 			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
-			if (IsElementNotPresent(key_sidebarButton = ${tabName}, locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE")) {
+			if ((IsElementPresent.isElementPresentAfterWait(locator1 = "//div[contains(@class,'content--open')]//*[contains(@class,'page-editor__sidebar__panel-header')]")) && (IsElementNotPresent(key_sidebarButton = ${tabName}, locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE"))) {
 				Click(
 					key_tabName = ${tabName},
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");

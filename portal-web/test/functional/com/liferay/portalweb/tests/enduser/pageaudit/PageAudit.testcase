@@ -795,6 +795,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192049. The page creator could access to details view of item on Performance list."
+	@priority = 4
+	test GoToDetailsOfItemOnPerformancePanel {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
+		task ("Given a page creator has a Heading fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator opens the Page Audit sidebar") {
+			PageAudit.openPageAuditSidebar();
+		}
+
+		task ("Then the page creator could go to the details of Heading fragment") {
+			PageAudit.goToElementDetails(elementName = "Heading");
+
+			AssertTextEquals(
+				key_panel = "Warnings",
+				locator1 = "Panel#PANEL_ALERT_FEEDBACK",
+				value1 = "No issues found in this component.");
+
+			for (var itemName : list "Server Render Time,Component Type,Origin,Cache Status") {
+				AssertVisible(
+					key_itemName = ${itemName},
+					key_panel = "Basic Information",
+					locator1 = "Panel#PANEL_INFO_ITEM");
+			}
+		}
+	}
+
 	@description = "LPS-135681 Given the Page Audit panel when the invalid API Key error is retrieved When the user clicks on the Set API Key button Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
 	@priority = 3
 	test InvalidAPIKeyErrorIsRecovered {

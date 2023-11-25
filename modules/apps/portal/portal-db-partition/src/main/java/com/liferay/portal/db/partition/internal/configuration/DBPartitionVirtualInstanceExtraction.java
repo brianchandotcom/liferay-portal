@@ -6,6 +6,7 @@
 package com.liferay.portal.db.partition.internal.configuration;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
@@ -28,8 +29,16 @@ public class DBPartitionVirtualInstanceExtraction
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		onVirtualInstance(
-			() -> _companyLocalService.extractCompany(
-				(long)properties.get("companyId")),
+			() -> {
+				long companyId = GetterUtil.getLong(
+					properties.get("companyId"));
+
+				if (_companyLocalService.fetchCompany(companyId) != null) {
+					return _companyLocalService.extractCompany(companyId);
+				}
+
+				return null;
+			},
 			properties);
 	}
 

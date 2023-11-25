@@ -18,10 +18,6 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Mariano Álvaro Sáiz
  */
@@ -42,20 +38,12 @@ public abstract class BaseVirtualInstanceOperation {
 		}
 	}
 
-	@Reference
-	protected ConfigurationAdmin configurationAdmin;
-
 	private void _deleteConfiguration(String pid) {
 		try {
-			Configuration configuration = configurationAdmin.getConfiguration(
-				pid, "?");
-
-			if (configuration != null) {
-				Files.deleteIfExists(
-					Paths.get(
-						PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-						pid.concat(".config")));
-			}
+			Files.deleteIfExists(
+				Paths.get(
+					PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+					pid.concat(".config")));
 		}
 		catch (IOException ioException) {
 			_log.error(ioException);

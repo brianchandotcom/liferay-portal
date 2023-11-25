@@ -89,8 +89,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private synchronized String _getPortalPortalPropertiesContent(
-			String absolutePath)
+	private synchronized String _getPortalPropertiesContent(String absolutePath)
 		throws IOException {
 
 		if (_portalPortalPropertiesContent != null) {
@@ -222,8 +221,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String portalPortalPropertiesContent =
-			_getPortalPortalPropertiesContent(absolutePath);
+		String portalPortalPropertiesContent = _getPortalPropertiesContent(
+			absolutePath);
 
 		Map<Integer, Integer> propertyPositionsMap = new HashMap<>();
 		Map<Integer, Collection<Integer>> propertyClusterPositionsMap =

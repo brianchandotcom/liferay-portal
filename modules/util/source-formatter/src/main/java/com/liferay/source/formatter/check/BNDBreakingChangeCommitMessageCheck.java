@@ -14,8 +14,6 @@ import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
 
-import java.io.File;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,14 +40,15 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			sourceProcessor.getSourceFormatterArgs();
 
 		if (_hasMajorVersionBump(absolutePath, sourceFormatterArgs)) {
-			_checkCommitMessages(fileName, sourceFormatterArgs);
+			_checkCommitMessages(fileName, absolutePath, sourceFormatterArgs);
 		}
 
 		return content;
 	}
 
 	private void _checkCommitMessages(
-			String fileName, SourceFormatterArgs sourceFormatterArgs)
+			String fileName, String absolutePath,
+			SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
 		List<String> commitMessages = GitUtil.getCurrentBranchCommitMessages(
@@ -148,26 +147,14 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 
 				String filePath = StringUtil.trim(trimmedLine.substring(7));
 
-				File portalDir = getPortalDir();
-
-				File file = new File(portalDir, filePath);
-
-				if (file.exists()) {
-					continue;
-				}
-
-				List<String> currentBranchDeletedFileNames =
-					GitUtil.getCurrentBranchDeletedFileNames(
-						sourceFormatterArgs.getBaseDirName(),
-						sourceFormatterArgs.getGitWorkingBranchName());
-
-				if (!currentBranchDeletedFileNames.contains(filePath)) {
+				if (getPortalContent(filePath, absolutePath, true) == null) {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ": ",
-							"'## What' should be followed by only one path, ",
-							"which is from ", portalDir.getAbsolutePath()));
+							"Incorrect commit message in SHA ", parts[0], ": '",
+							filePath, "' points to nonexistent file. '## ",
+							"What' should be followed by only one path, which ",
+							"is from ", _LIFERAY_PROTAL_MASTER_URL, "."));
 
 					return;
 				}
@@ -283,6 +270,9 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 	private static final String[] _BREAKING_CHANGE_HEADER_NAMES = {
 		"----", "## Alternatives", "# breaking", "## What", "## Why"
 	};
+
+	private static final String _LIFERAY_PROTAL_MASTER_URL =
+		"https://github.com/liferay/liferay-portal/blob/master/";
 
 	private static List<String> _currentBranchFileNames;
 

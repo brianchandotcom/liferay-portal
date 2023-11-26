@@ -100,24 +100,29 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		StringBundler sb = new StringBundler();
 
 		for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+			List<String> values = entry.getValue();
+
+			if (values.size() > 1) {
+				sb.append("\n");
+			}
+
 			sb.append(entry.getKey());
 			sb.append(StringPool.EQUAL);
 
-			List<String> values = entry.getValue();
-
-			if (values.size() <= 1) {
+			if (values.size() > 1) {
+				sb.append("\\\n");
+				sb.append(_mergeValues(entry.getValue()));
+				sb.append("\n\n");
+			}
+			else {
 				sb.append(values.get(0));
 				sb.append("\n");
-
-				continue;
 			}
-
-			sb.append("\\\n");
-			sb.append(_merge(entry.getValue()));
-			sb.append("\n");
 		}
 
-		sb.setIndex(sb.index() - 1);
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		return sb.toString();
 	}
@@ -155,7 +160,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		return _portalPortalPropertiesContent;
 	}
 
-	private String _merge(List<String> list) {
+	private String _mergeValues(List<String> list) {
 		StringBundler sb = new StringBundler(3 * list.size());
 
 		for (String s : list) {
@@ -207,15 +212,15 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 					String value = line.substring(line.indexOf('=') + 1);
 
 					if (!Objects.isNull(value) && !value.equals("\\")) {
-						List<String> list = propertiesMap.get(key);
+						List<String> set = propertiesMap.get(key);
 
-						if (list == null) {
-							list = new ArrayList<>();
+						if (set == null) {
+							set = new ArrayList<>();
 						}
 
-						list.add(value);
+						set.add(value);
 
-						propertiesMap.put(key, list);
+						propertiesMap.put(key, set);
 					}
 				}
 				else {
@@ -229,15 +234,15 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 						return content;
 					}
 
-					List<String> list = propertiesMap.get(key);
+					List<String> set = propertiesMap.get(key);
 
-					if (list == null) {
-						list = new ArrayList<>();
+					if (set == null) {
+						set = new ArrayList<>();
 					}
 
-					list.add(value);
+					set.add(value);
 
-					propertiesMap.put(key, list);
+					propertiesMap.put(key, set);
 				}
 			}
 		}
@@ -279,10 +284,20 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			}
 		}
 
-		return StringBundler.concat(
+		String newContent = StringBundler.concat(
 			_generateProperties(portalPropertiesMap), "\n\n",
 			_generateProperties(propertiesMap), "\n\n",
 			_generateProperties(portalOSGiEnvironmentPropertiesMap));
+
+		newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
+
+		newContent = newContent.trim();
+
+		if (!StringUtil.equals(content, newContent)) {
+			return newContent;
+		}
+
+		return content;
 	}
 
 	private static final String _ALLOWED_SINGLE_LINE_PROPERTY_KEYS =

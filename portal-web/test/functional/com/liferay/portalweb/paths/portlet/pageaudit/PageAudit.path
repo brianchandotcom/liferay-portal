@@ -167,7 +167,7 @@
 </tr>
 <tr>
 	<td>PANEL_TITLE</td>
-	<td>//div[contains(@class, 'panel-title')]</td>
+	<td>//div[contains(@class,'layout-reports-panel') and contains(@class,'open')]//div[contains(@class, 'sidebar-header')]</td>
 	<td></td>
 </tr>
 <tr>

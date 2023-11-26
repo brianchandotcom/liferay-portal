@@ -6,6 +6,7 @@
 package com.liferay.layout.list.retriever;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -29,6 +30,17 @@ public class KeyListObjectReference implements ListObjectReference {
 
 	public String getTitle() {
 		return _title;
+	}
+
+	@Override
+	public String toJSONString() {
+		return JSONUtil.put(
+			"itemType", _itemType
+		).put(
+			"key", _key
+		).put(
+			"title", _title
+		).toString();
 	}
 
 	private final String _itemType;

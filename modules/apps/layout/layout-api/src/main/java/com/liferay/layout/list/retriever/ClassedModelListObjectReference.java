@@ -6,6 +6,7 @@
 package com.liferay.layout.list.retriever;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -34,6 +35,19 @@ public class ClassedModelListObjectReference implements ListObjectReference {
 
 	public String getTitle() {
 		return _title;
+	}
+
+	@Override
+	public String toJSONString() {
+		return JSONUtil.put(
+			"className", _className
+		).put(
+			"classPK", _classPK
+		).put(
+			"itemType", _itemType
+		).put(
+			"title", _title
+		).toString();
 	}
 
 	private final String _className;

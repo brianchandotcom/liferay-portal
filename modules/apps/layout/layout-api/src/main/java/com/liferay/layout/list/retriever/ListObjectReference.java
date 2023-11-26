@@ -5,6 +5,8 @@
 
 package com.liferay.layout.list.retriever;
 
+import com.liferay.portal.kernel.json.JSONUtil;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -14,5 +16,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ListObjectReference {
 
 	public String getItemType();
+
+	public default String toJSONString() {
+		return JSONUtil.put(
+			"itemType", this::getItemType
+		).toString();
+	}
 
 }

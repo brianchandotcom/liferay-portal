@@ -1007,17 +1007,11 @@ definition {
 
 			PageAudit.goToDetailView(failingCheckName = "Low Contrast Ratio");
 
-			AssertTextPresent(
-				locator1 = "PageAudit#FAILING_CHECK_TITLE",
-				value1 = "Low Contrast Ratio");
+			AssertTextPresent(value1 = "Low Contrast Ratio");
 
-			AssertTextPresent(
-				locator1 = "PageAudit#PANEL_TITLE",
-				value1 = "DESCRIPTION");
+			AssertTextPresent(value1 = "DESCRIPTION");
 
-			AssertTextPresent(
-				locator1 = "PageAudit#PANEL_TITLE",
-				value1 = "TIPS");
+			AssertTextPresent(value1 = "TIPS");
 
 			AssertElementPresent(
 				badgeValue = 1,

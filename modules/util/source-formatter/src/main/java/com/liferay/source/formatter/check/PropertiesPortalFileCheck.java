@@ -325,11 +325,11 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		extends NaturalOrderStringComparator {
 
 		public PortalPropertiesComparator() {
-			_lastModuleFrameworkPosiston = _portalPropertiesContent.lastIndexOf(
+			_lastModuleFrameworkPosition = _portalPropertiesContent.lastIndexOf(
 				"    module.framework.");
 
-			if (_lastModuleFrameworkPosiston == -1) {
-				_lastModuleFrameworkPosiston =
+			if (_lastModuleFrameworkPosition == -1) {
+				_lastModuleFrameworkPosition =
 					_portalPropertiesContent.lastIndexOf(
 						"    #module.framework.");
 			}
@@ -337,28 +337,28 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 		@Override
 		public int compare(String propertyKey1, String propertyKey2) {
-			int propertyKey1Posiston = _getPortalPropertiesPosition(
+			int propertyKey1Position = _getPortalPropertiesPosition(
 				_portalPropertiesContent, propertyKey1);
-			int propertyKey2Posiston = _getPortalPropertiesPosition(
+			int propertyKey2Position = _getPortalPropertiesPosition(
 				_portalPropertiesContent, propertyKey2);
 
-			if (propertyKey1Posiston == -1) {
-				if (propertyKey2Posiston <= _lastModuleFrameworkPosiston) {
+			if (propertyKey1Position == -1) {
+				if (propertyKey2Position <= _lastModuleFrameworkPosition) {
 					return 1;
 				}
 
 				return -1;
 			}
 
-			if (propertyKey2Posiston == -1) {
-				if (propertyKey1Posiston <= _lastModuleFrameworkPosiston) {
+			if (propertyKey2Position == -1) {
+				if (propertyKey1Position <= _lastModuleFrameworkPosition) {
 					return -1;
 				}
 
 				return 1;
 			}
 
-			return propertyKey1Posiston - propertyKey2Posiston;
+			return propertyKey1Position - propertyKey2Position;
 		}
 
 		private int _getPortalPropertiesPosition(
@@ -374,7 +374,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			return pos;
 		}
 
-		private int _lastModuleFrameworkPosiston = -1;
+		private int _lastModuleFrameworkPosition = -1;
 
 	}
 

@@ -17,7 +17,6 @@ import com.liferay.source.formatter.processor.PropertiesSourceProcessor;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
 
 import java.net.URL;
 
@@ -26,7 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -265,10 +263,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			}
 		}
 
-		Properties portalProperties = new Properties();
-
-		portalProperties.load(
-			new StringReader(_getPortalPropertiesContent(absolutePath)));
+		String portalPropertiesContent = _getPortalPropertiesContent(
+			absolutePath);
 
 		Map<String, List<String>> portalOSGiEnvironmentPropertiesMap =
 			new TreeMap<>(new NaturalOrderStringComparator());
@@ -286,7 +282,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 			String propertyKey = properties.getKey();
 
-			if (portalProperties.containsKey(propertyKey) ||
+			if (portalPropertiesContent.contains(propertyKey) ||
+				portalPropertiesContent.contains("#" + propertyKey) ||
 				propertyKey.startsWith("module.framework.")) {
 
 				portalPropertiesMap.put(

@@ -110,8 +110,13 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			sb.append(StringPool.EQUAL);
 
 			if (values.size() > 1) {
-				sb.append("\\\n");
-				sb.append(_mergeValues(entry.getValue()));
+				String mergedValues = _mergeValues(entry.getValue());
+
+				if (!mergedValues.startsWith(StringPool.OPEN_BRACKET)) {
+					sb.append("\\\n");
+				}
+
+				sb.append(mergedValues);
 				sb.append("\n\n");
 			}
 			else {
@@ -164,11 +169,19 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		StringBundler sb = new StringBundler(3 * list.size());
 
 		for (String s : list) {
-			sb.append(StringPool.FOUR_SPACES);
+			if (!StringUtil.equals(s, StringPool.CLOSE_BRACKET) &&
+				!StringUtil.equals(s, StringPool.OPEN_BRACKET)) {
+
+				sb.append(StringPool.FOUR_SPACES);
+			}
+
 			sb.append(s);
 
 			if (StringUtil.equals(s, StringPool.BACK_SLASH)) {
 				sb.append("\n");
+			}
+			else if (StringUtil.equals(s, StringPool.OPEN_BRACKET)) {
+				sb.append("\\\n");
 			}
 			else {
 				sb.append(",\\\n");
@@ -216,6 +229,10 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 						if (set == null) {
 							set = new ArrayList<>();
+						}
+
+						if (value.equals("[\\")) {
+							value = StringUtil.removeLast(value, "\\");
 						}
 
 						set.add(value);

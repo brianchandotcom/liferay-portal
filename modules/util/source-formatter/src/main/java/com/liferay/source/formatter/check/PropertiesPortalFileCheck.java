@@ -134,19 +134,19 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 	private synchronized String _getPortalPropertiesContent(String absolutePath)
 		throws IOException {
 
-		if (_portalPortalPropertiesContent != null) {
-			return _portalPortalPropertiesContent;
+		if (_portalPropertiesContent != null) {
+			return _portalPropertiesContent;
 		}
 
 		if (isPortalSource() || isSubrepository()) {
-			_portalPortalPropertiesContent = getPortalContent(
+			_portalPropertiesContent = getPortalContent(
 				"portal-impl/src/portal.properties", absolutePath);
 
-			if (_portalPortalPropertiesContent == null) {
-				_portalPortalPropertiesContent = StringPool.BLANK;
+			if (_portalPropertiesContent == null) {
+				_portalPropertiesContent = StringPool.BLANK;
 			}
 
-			return _portalPortalPropertiesContent;
+			return _portalPropertiesContent;
 		}
 
 		ClassLoader classLoader =
@@ -155,13 +155,13 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		URL url = classLoader.getResource("portal.properties");
 
 		if (url != null) {
-			_portalPortalPropertiesContent = IOUtils.toString(url);
+			_portalPropertiesContent = IOUtils.toString(url);
 		}
 		else {
-			_portalPortalPropertiesContent = StringPool.BLANK;
+			_portalPropertiesContent = StringPool.BLANK;
 		}
 
-		return _portalPortalPropertiesContent;
+		return _portalPropertiesContent;
 	}
 
 	private String _mergeValues(List<String> list) {
@@ -318,19 +318,18 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 	private static final String _ALLOWED_SINGLE_LINE_PROPERTY_KEYS =
 		"allowedSingleLinePropertyKeys";
 
-	private String _portalPortalPropertiesContent;
+	private String _portalPropertiesContent;
 
 	private class PortalPropertiesComparator
 		extends NaturalOrderStringComparator {
 
 		public PortalPropertiesComparator() {
-			_lastModuleFrameworkPosiston =
-				_portalPortalPropertiesContent.lastIndexOf(
-					"    module.framework.");
+			_lastModuleFrameworkPosiston = _portalPropertiesContent.lastIndexOf(
+				"    module.framework.");
 
 			if (_lastModuleFrameworkPosiston == -1) {
 				_lastModuleFrameworkPosiston =
-					_portalPortalPropertiesContent.lastIndexOf(
+					_portalPropertiesContent.lastIndexOf(
 						"    #module.framework.");
 			}
 		}
@@ -338,9 +337,9 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		@Override
 		public int compare(String propertyKey1, String propertyKey2) {
 			int propertyKey1Posiston = _getPortalPropertiesPosition(
-				_portalPortalPropertiesContent, propertyKey1);
+				_portalPropertiesContent, propertyKey1);
 			int propertyKey2Posiston = _getPortalPropertiesPosition(
-				_portalPortalPropertiesContent, propertyKey2);
+				_portalPropertiesContent, propertyKey2);
 
 			if (propertyKey1Posiston == -1) {
 				if (propertyKey2Posiston <= _lastModuleFrameworkPosiston) {

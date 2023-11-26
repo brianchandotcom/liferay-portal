@@ -27,7 +27,13 @@ public abstract class BaseVirtualInstanceOperation {
 		Callable<Company> callable, Map<String, Object> properties) {
 
 		try {
-			callable.call();
+			Company company = callable.call();
+
+			if (company != null) {
+				_deleteConfiguration(
+					_PORTAL_INSTANCES_CONFIGURATION_PID + "~" +
+						company.getWebId());
+			}
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -49,6 +55,10 @@ public abstract class BaseVirtualInstanceOperation {
 			_log.error(ioException);
 		}
 	}
+
+	private static final String _PORTAL_INSTANCES_CONFIGURATION_PID =
+		"com.liferay.portal.instances.internal.configuration." +
+			"PortalInstancesConfiguration";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseVirtualInstanceOperation.class);

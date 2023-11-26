@@ -148,7 +148,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return null;
 		}
 
-		ListObjectReference listObjectReference = _getListObjectReference();
+		ListObjectReference listObjectReference = getListObjectReference();
 
 		if (listObjectReference == null) {
 			return null;
@@ -175,6 +175,49 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		return infoListRendererRegistry.getInfoListRenderer(
 			_collectionStyledLayoutStructureItem.getListStyle());
+	}
+
+	public ListObjectReference getListObjectReference() {
+		if (_listObjectReference != null) {
+			return _listObjectReference;
+		}
+
+		JSONObject collectionJSONObject =
+			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		if ((collectionJSONObject == null) ||
+			(collectionJSONObject.length() <= 0)) {
+
+			return null;
+		}
+
+		LayoutListRetrieverRegistry layoutListRetrieverRegistry =
+			ServletContextUtil.getLayoutListRetrieverRegistry();
+
+		String type = collectionJSONObject.getString("type");
+
+		LayoutListRetriever<?, ?> layoutListRetriever =
+			layoutListRetrieverRegistry.getLayoutListRetriever(type);
+
+		if (layoutListRetriever == null) {
+			return null;
+		}
+
+		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry =
+			ServletContextUtil.getListObjectReferenceFactoryRegistry();
+
+		ListObjectReferenceFactory<?> listObjectReferenceFactory =
+			listObjectReferenceFactoryRegistry.getListObjectReference(type);
+
+		if (listObjectReferenceFactory == null) {
+			return null;
+		}
+
+		_listObjectReference =
+			listObjectReferenceFactory.getListObjectReference(
+				collectionJSONObject);
+
+		return _listObjectReference;
 	}
 
 	public int getMaxNumberOfItemsPerPage() {
@@ -276,7 +319,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public boolean hasViewPermission() {
-		ListObjectReference listObjectReference = _getListObjectReference();
+		ListObjectReference listObjectReference = getListObjectReference();
 
 		if (listObjectReference == null) {
 			return true;
@@ -525,7 +568,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
 			_getLayoutListRetriever();
-		ListObjectReference listObjectReference = _getListObjectReference();
+		ListObjectReference listObjectReference = getListObjectReference();
 
 		if ((layoutListRetriever == null) || (listObjectReference == null) ||
 			!_hasViewPermission(listObjectReference)) {
@@ -577,42 +620,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return (LayoutListRetriever<?, ListObjectReference>)
 			layoutListRetrieverRegistry.getLayoutListRetriever(
 				collectionJSONObject.getString("type"));
-	}
-
-	private ListObjectReference _getListObjectReference() {
-		JSONObject collectionJSONObject =
-			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
-
-		if ((collectionJSONObject == null) ||
-			(collectionJSONObject.length() <= 0)) {
-
-			return null;
-		}
-
-		LayoutListRetrieverRegistry layoutListRetrieverRegistry =
-			ServletContextUtil.getLayoutListRetrieverRegistry();
-
-		String type = collectionJSONObject.getString("type");
-
-		LayoutListRetriever<?, ?> layoutListRetriever =
-			layoutListRetrieverRegistry.getLayoutListRetriever(type);
-
-		if (layoutListRetriever == null) {
-			return null;
-		}
-
-		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry =
-			ServletContextUtil.getListObjectReferenceFactoryRegistry();
-
-		ListObjectReferenceFactory<?> listObjectReferenceFactory =
-			listObjectReferenceFactoryRegistry.getListObjectReference(type);
-
-		if (listObjectReferenceFactory == null) {
-			return null;
-		}
-
-		return listObjectReferenceFactory.getListObjectReference(
-			collectionJSONObject);
 	}
 
 	private int _getNumberOfItemsPerPage() {
@@ -706,6 +713,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private Map<String, InfoFilter> _infoFilters;
 	private InfoPage<?> _infoPage;
+	private ListObjectReference _listObjectReference;
 	private Integer _maxNumberOfItemsPerPage;
 	private Integer _numberOfItemsPerPage;
 	private Integer _numberOfItemsToDisplay;

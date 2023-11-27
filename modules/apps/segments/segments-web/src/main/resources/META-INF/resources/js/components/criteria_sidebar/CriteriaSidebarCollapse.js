@@ -87,8 +87,6 @@ const PanelWrapper = ({
 		: properties;
 
 	const {isTarget, setElement} = useKeyboardNavigation({
-		handleOpen: onCollapseClick,
-		key,
 		type: LIST_ITEM_TYPES.header,
 	});
 

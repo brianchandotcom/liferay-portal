@@ -88,6 +88,12 @@ public class RoleServiceUtil {
 		return getService().fetchRole(roleId);
 	}
 
+	public static Role fetchRole(long companyId, String name)
+		throws PortalException {
+
+		return getService().fetchRole(companyId, name);
+	}
+
 	/**
 	 * Returns all the roles associated with the group.
 	 *

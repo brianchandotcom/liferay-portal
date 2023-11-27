@@ -89,6 +89,13 @@ public class RoleServiceWrapper
 		return _roleService.fetchRole(roleId);
 	}
 
+	@Override
+	public Role fetchRole(long companyId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _roleService.fetchRole(companyId, name);
+	}
+
 	/**
 	 * Returns all the roles associated with the group.
 	 *

@@ -41,7 +41,7 @@ export const BOOST_ALL_KEYWORDS_MATCH = {
 				{
 					fields: [
 						{
-							defaultValue: [
+							fieldMappings: [
 								{
 									boost: 2.0,
 									field: 'localized_title',
@@ -228,7 +228,7 @@ export const TEXT_MATCH_OVER_MULTIPLE_FIELDS = {
 				{
 					fields: [
 						{
-							defaultValue: [
+							fieldMappings: [
 								{
 									boost: '2',
 									field: 'localized_title',

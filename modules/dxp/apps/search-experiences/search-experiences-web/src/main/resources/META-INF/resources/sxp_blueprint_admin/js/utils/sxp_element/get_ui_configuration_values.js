@@ -101,8 +101,8 @@ export function getDefaultValue(item) {
 						locale: '',
 				  };
 		case INPUT_TYPES.FIELD_MAPPING_LIST:
-			return Array.isArray(itemValue)
-				? itemValue.filter(({field}) => !!field) // Remove empty fields
+			return Array.isArray(item.fieldMappings)
+				? item.fieldMappings.filter(({field}) => !!field) // Remove empty fields
 				: [];
 		case INPUT_TYPES.ITEM_SELECTOR:
 			return Array.isArray(itemValue)

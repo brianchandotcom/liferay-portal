@@ -131,7 +131,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 
 			var mergeText = Liferay.Util.sub(
 				'<liferay-ui:message key="are-you-sure-you-want-to-merge-x-into-x" />',
-				mergeTagNames,
+				mergeTagNames.join(', '),
 				targetTagNameSelect.value
 			);
 

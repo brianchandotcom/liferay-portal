@@ -178,7 +178,7 @@ else {
 						%>
 
 							<c:if test="<%= showLanguageSelector %>">
-								<div class="mb-3">
+								<div class="mt-2">
 									<react:component
 										module="document_library/js/LanguageSelector"
 										props='<%=

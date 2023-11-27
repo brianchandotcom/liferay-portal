@@ -5,14 +5,10 @@
 
 package com.liferay.ai.creator.openai.web.internal.portlet.action;
 
-import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
-import com.liferay.ai.creator.openai.web.internal.client.AICreatorOpenAIClient;
 import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -24,9 +20,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Lourdes Fernández Besada
@@ -38,7 +31,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	},
 	service = MVCResourceCommand.class
 )
-public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
+public class GetCompletionMVCResourceCommand
+	extends BaseAICreatorOpenAIResouceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -48,47 +42,21 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!_aiCreatorOpenAIConfigurationManager.
-				isAICreatorChatGPTGroupEnabled(
-					themeDisplay.getCompanyId(),
-					themeDisplay.getScopeGroupId())) {
+		if (!aiCreatorOpenAIConfigurationManager.isAICreatorChatGPTGroupEnabled(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"error",
-					JSONUtil.put(
-						"message",
-						_language.get(
-							themeDisplay.getLocale(),
-							"openai-is-disabled.-enable-openai-from-the-" +
-								"settings-page-or-contact-your-administrator")
-					).put(
-						"retry", false
-					)));
+			addDisabledConfigurationErrorMessage(
+				resourceRequest, resourceResponse);
 
 			return;
 		}
 
 		String apiKey =
-			_aiCreatorOpenAIConfigurationManager.getAICreatorOpenAIGroupAPIKey(
+			aiCreatorOpenAIConfigurationManager.getAICreatorOpenAIGroupAPIKey(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
 
 		if (Validator.isNull(apiKey)) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"error",
-					JSONUtil.put(
-						"message",
-						_language.get(
-							themeDisplay.getLocale(),
-							"authentication-is-needed-to-use-this-feature.-" +
-								"contact-your-administrator-to-add-an-api-" +
-									"key-in-instance-or-site-settings")
-					).put(
-						"retry", false
-					)));
+			addInvalidAPIKeyErrorMessage(resourceRequest, resourceResponse);
 
 			return;
 		}
@@ -96,18 +64,8 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 		String content = ParamUtil.getString(resourceRequest, "content");
 
 		if (Validator.isNull(content)) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"error",
-					JSONUtil.put(
-						"message",
-						_language.format(
-							themeDisplay.getLocale(), "the-x-is-required",
-							"content")
-					).put(
-						"retry", false
-					)));
+			addRequiredFieldErrorMessage(
+				resourceRequest, resourceResponse, "content");
 
 			return;
 		}
@@ -130,29 +88,11 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 							ParamUtil.getInteger(resourceRequest, "words")))));
 		}
 		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
-			JSONPortletResponseUtil.writeJSON(
+			handleAICreatorOpenAIClientExceptionMessages(
 				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"error",
-					JSONUtil.put(
-						"message",
-						aiCreatorOpenAIClientException.
-							getCompletionLocalizedMessage(
-								themeDisplay.getLocale()))));
+				aiCreatorOpenAIClientException.getCompletionLocalizedMessage(
+					themeDisplay.getLocale()));
 		}
 	}
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile AICreatorOpenAIClient aiCreatorOpenAIClient;
-
-	@Reference
-	private AICreatorOpenAIConfigurationManager
-		_aiCreatorOpenAIConfigurationManager;
-
-	@Reference
-	private Language _language;
 
 }

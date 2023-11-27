@@ -61,14 +61,8 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 		if (Objects.equals(apiKey, "VALID_API_KEY") &&
 			Objects.equals(prompt, "USER_IMAGES")) {
 
-			String[] generations = new String[numberOfImages];
-
-			for (int i = 0; i < numberOfImages; i++) {
-				_getSampleGenerations(
-					"http/localhost:8080/mock/url", numberOfImages);
-			}
-
-			return generations;
+			return _getSampleGenerations(
+				"http/localhost:8080/mock/url", numberOfImages);
 		}
 
 		if (Validator.isNotNull(prompt) &&
@@ -76,8 +70,7 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 
 			return _getSampleGenerations(
 				GetterUtil.getString(
-					prompt.substring(
-						_USER_CONTENT_SLEEP_MILLIS_PREFIX.length())),
+					prompt.substring(_USER_IMAGES_URL_.length())),
 				numberOfImages);
 		}
 

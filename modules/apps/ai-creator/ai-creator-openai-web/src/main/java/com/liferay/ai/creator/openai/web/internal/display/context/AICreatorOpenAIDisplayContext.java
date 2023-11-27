@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Map;
 
@@ -30,6 +31,29 @@ public class AICreatorOpenAIDisplayContext {
 	}
 
 	public Map<String, Object> getProps() {
+		if (isGetGenerations()) {
+			return HashMapBuilder.<String, Object>put(
+				"getGenerationsURL",
+				() -> {
+					RequestBackedPortletURLFactory
+						requestBackedPortletURLFactory =
+							RequestBackedPortletURLFactoryUtil.create(
+								_httpServletRequest);
+
+					return ResourceURLBuilder.createResourceURL(
+						(ResourceURL)
+							requestBackedPortletURLFactory.createResourceURL(
+								AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI)
+					).setResourceID(
+						"/ai_creator_openai/get_generations"
+					).buildString();
+				}
+			).put(
+				"learnResources",
+				LearnMessageUtil.getReactDataJSONObject("ai-creator-openai-web")
+			).build();
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"getCompletionURL",
 			() -> {
@@ -51,6 +75,18 @@ public class AICreatorOpenAIDisplayContext {
 		).build();
 	}
 
+	public boolean isGetGenerations() {
+		if (_getGenerations != null) {
+			return _getGenerations;
+		}
+
+		_getGenerations = ParamUtil.getBoolean(
+			_httpServletRequest, "getGenerations");
+
+		return _getGenerations;
+	}
+
+	private Boolean _getGenerations;
 	private final HttpServletRequest _httpServletRequest;
 
 }

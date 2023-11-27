@@ -14,6 +14,185 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-12895. Verify that is possible to use the Max Specification field to decide how many Specifications need to be displayed"
+	@priority = 5
+	test CanUseMaxSpecificationsField {
+		property portal.acceptance = "true";
+
+		task ("Given the admin creates 10 Specifications") {
+			for (var index : list "1,2,3,4,5,6,7,8,9,Final") {
+				CommerceJSONSpecificationsAPI._addCommerceSpecification(
+					specificationLabelFacetable = "true",
+					specificationLabelKey = "spec${index}",
+					specificationLabelTitle = "Spec${index}");
+			}
+		}
+
+		task ("And the Specifications are linked to ABS Sensor") {
+			for (var specificationKeyAndPriority : list "spec1:1,spec2:2,spec3:3,spec4:4,spec5:5,spec6:6,spec7:7,spec8:8,spec9:9,specFinal:10") {
+				var specificationKey = StringUtil.extractFirst(${specificationKeyAndPriority}, ":");
+				var priority = StringUtil.extractLast(${specificationKeyAndPriority}, ":");
+
+				CommerceJSONProductsAPI._addCommerceProductSpecifications(
+					priority = ${priority},
+					productName = "ABS Sensor",
+					specificationKey = ${specificationKey},
+					value = "Value${priority}");
+			}
+		}
+
+		task ("And the admin opens Minium catalog") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
+
+		task ("When the admin configure 15 as the number of the specifications that is possible to show") {
+			CommerceWidget.updateFacetConfiguration(
+				maxSpecifications = 15,
+				portletName = "Specification Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then all the 12 specification are present") {
+			for (var specificationTitle : list "Warranty,Material,Spec1,Spec2,Spec3,Spec4,Spec5,Spec6,Spec7,Spec8,Spec9,SpecFinal") {
+				AssertElementPresent(
+					key_entry = ${specificationTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		task ("But if the admin changes the configuration again by setting 1 as the number of the specifications that is possible to show") {
+			CommerceWidget.updateFacetConfiguration(
+				maxSpecifications = 1,
+				portletName = "Specification Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then only 1 specification is present") {
+			AssertElementPresent(
+				key_entry = "Warranty",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			for (var specificationTitle : list "Material,Spec1,Spec2,Spec3,Spec4,Spec5,Spec6,Spec7,Spec8,Spec9,SpecFinal") {
+				AssertElementNotPresent(
+					key_entry = ${specificationTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		task ("And the values present into the Specification is untouched") {
+			CommerceWidget.assertSpecificationPanel2FacetsCount(
+				expectedLabels = 3,
+				specificationGroup = "Warranty");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12895. Verify that is possible to use the Max Terms field to decide how many Specification terms need to be displayed"
+	@priority = 5
+	test CanUseMaxTermsFieldForSpecifications {
+		property portal.acceptance = "true";
+
+		task ("Given the admin opens Minium catalog") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
+
+		task ("When the admin configure 15 as the number of the max terms that is possible to show for specifications") {
+			CommerceWidget.updateFacetConfiguration(
+				maxTerms = 15,
+				portletName = "Specification Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then all the specification values are present") {
+			for (var specificationNameAndValues : list "Warranty:3,Material:7") {
+				var specificationName = StringUtil.extractFirst(${specificationNameAndValues}, ":");
+				var specificationValueNumber = StringUtil.extractLast(${specificationNameAndValues}, ":");
+
+				CommerceWidget.assertSpecificationPanel2FacetsCount(
+					expectedLabels = ${specificationValueNumber},
+					specificationGroup = ${specificationName});
+			}
+		}
+
+		task ("But if the admin changes the configuration again by setting 1 as the number of the specifications terms that is possible to show") {
+			CommerceWidget.updateFacetConfiguration(
+				maxTerms = 1,
+				portletName = "Specification Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then only 1 specification term for each specification is present") {
+			for (var specificationNameAndValues : list "Warranty:1,Material:1") {
+				var specificationName = StringUtil.extractFirst(${specificationNameAndValues}, ":");
+				var specificationValueNumber = StringUtil.extractLast(${specificationNameAndValues}, ":");
+
+				CommerceWidget.assertSpecificationPanel2FacetsCount(
+					expectedLabels = ${specificationValueNumber},
+					specificationGroup = ${specificationName});
+			}
+		}
+
+		task ("And the Specification entries present are untouched") {
+			for (var specificationTitle : list "Warranty,Material") {
+				AssertElementPresent(
+					key_entry = ${specificationTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		task ("But if the admin try changes again the max terms by setting 2 as the number of the specification terms that is possible to show") {
+			CommerceWidget.updateFacetConfiguration(
+				maxTerms = 2,
+				portletName = "Specification Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("And 2 terms for 2 specifications are present") {
+			for (var specificationNameAndValues : list "Warranty:2,Material:2") {
+				var specificationName = StringUtil.extractFirst(${specificationNameAndValues}, ":");
+				var specificationValueNumber = StringUtil.extractLast(${specificationNameAndValues}, ":");
+
+				CommerceWidget.assertSpecificationPanel2FacetsCount(
+					expectedLabels = ${specificationValueNumber},
+					specificationGroup = ${specificationName});
+			}
+
+			for (var specificationTitle : list "Warranty,Material") {
+				AssertElementPresent(
+					key_entry = ${specificationTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		task ("When the admin uses the frequency threshold") {
+			CommerceWidget.updateFacetConfiguration(
+				frequencyThreshold = 30,
+				portletName = "Specification Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then only 1 specification with 1 term is present") {
+			AssertElementPresent(
+				key_entry = "Warranty",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			AssertElementPresent(
+				key_entry = "Material",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			// We need to remove this check after an issue is fixed
+
+			CommerceWidget.assertOptionFacetsCount(
+				expectedLabels = 1,
+				optionName = "Warranty");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-8403"
 	@priority = 5
 	test VerifyDisplayFrequencies {

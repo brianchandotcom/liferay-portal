@@ -18,6 +18,21 @@ so the correct message on **What** section should be
 
 modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld
 
+```
+LPS-198114 Removes unused taglib and sample since those are not used in portal and have dependencies with soy
+
+# breaking
+
+## What modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld
+
+We are deleting all taglibs under liferay chart module
+
+## Why
+
+The DXP support from soy was removed as part of https://liferay.atlassian.net/browse/LPS-122954 and the following classes; TemplateRendererTag and ComponentRendererTag, were deprecated as part of https://liferay.atlassian.net/browse/LPS-122966
+
+```
+
 ----
 
 # 87a3c8bf38374f1987debdcedaed7f9e7a0dfdbc
@@ -27,6 +42,21 @@ On the message of the commit 87a3c8bf38374f1987debdcedaed7f9e7a0dfdbc the file p
 so the correct message on **What** section should be
 
 modules/apps/frontend-taglib/frontend-taglib-clay/src/main/java/com/liferay/frontend/taglib/clay/servlet/taglib/base/BaseClayTag.java
+
+```
+LPS-198462 Removes unused BaseClayTag
+   
+# breaking
+   
+## What modules/apps/frontend-taglib/frontend-taglib-clay/src/main/java/com/liferay/frontend/taglib/clay/servlet/taglib/base/BaseClayTag.java
+    
+We are deleting BaseClayTag.java
+    
+## Why
+    
+It is an internal class and it doesn't have any usage in portal
+
+```
 
 ----
 

@@ -141,10 +141,11 @@ public abstract class KBFolderLocalServiceBaseImpl
 	 *
 	 * @param kbFolder the kb folder
 	 * @return the kb folder that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public KBFolder deleteKBFolder(KBFolder kbFolder) {
+	public KBFolder deleteKBFolder(KBFolder kbFolder) throws PortalException {
 		return kbFolderPersistence.remove(kbFolder);
 	}
 

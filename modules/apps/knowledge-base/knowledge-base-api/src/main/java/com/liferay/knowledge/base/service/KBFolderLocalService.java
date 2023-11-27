@@ -104,9 +104,14 @@ public interface KBFolderLocalService
 	 *
 	 * @param kbFolder the kb folder
 	 * @return the kb folder that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public KBFolder deleteKBFolder(KBFolder kbFolder);
+	public KBFolder deleteKBFolder(KBFolder kbFolder) throws PortalException;
+
+	public KBFolder deleteKBFolder(
+			KBFolder kbFolder, boolean includeTrashedEntries)
+		throws PortalException;
 
 	/**
 	 * Deletes the kb folder with the primary key from the database. Also notifies the appropriate model listeners.

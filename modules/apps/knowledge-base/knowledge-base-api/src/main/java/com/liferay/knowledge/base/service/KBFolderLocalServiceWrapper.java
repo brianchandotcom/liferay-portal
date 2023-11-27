@@ -90,10 +90,22 @@ public class KBFolderLocalServiceWrapper
 	 *
 	 * @param kbFolder the kb folder
 	 * @return the kb folder that was removed
+	 * @throws PortalException
 	 */
 	@Override
-	public KBFolder deleteKBFolder(KBFolder kbFolder) {
+	public KBFolder deleteKBFolder(KBFolder kbFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _kbFolderLocalService.deleteKBFolder(kbFolder);
+	}
+
+	@Override
+	public KBFolder deleteKBFolder(
+			KBFolder kbFolder, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbFolderLocalService.deleteKBFolder(
+			kbFolder, includeTrashedEntries);
 	}
 
 	/**

@@ -599,7 +599,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateFacetConfiguration(displayTemplate = null, maxTerms = null, displayFrequencies = null, frequencyThreshold = null, parameterName = null, rangesArray = null, portletName = null) {
+	macro updateFacetConfiguration(displayTemplate = null, maxOptions = null, maxSpecifications = null, maxTerms = null, displayFrequencies = null, frequencyThreshold = null, parameterName = null, rangesArray = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -632,6 +632,18 @@ definition {
 			FormFields.editText(
 				fieldName = "parameterName",
 				fieldValue = ${parameterName});
+		}
+
+		if (isSet(maxOptions)) {
+			FormFields.editText(
+				fieldName = "maxOptions",
+				fieldValue = ${maxOptions});
+		}
+
+		if (isSet(maxSpecifications)) {
+			FormFields.editText(
+				fieldName = "maxSpecifications",
+				fieldValue = ${maxSpecifications});
 		}
 
 		if (isSet(maxTerms)) {

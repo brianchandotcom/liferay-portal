@@ -6,27 +6,39 @@
 import {format} from 'date-fns';
 import {delegate, openConfirmModal, unescapeHTML} from 'frontend-js-web';
 
-export default function ReportParameters({namespace, parameters}) {
-	const TPL_TAG_FORM =
-		'<div class="form-inline {key} c-mb-4" >' +
-		'<input class="form-control c-mr-4" type="text" disabled="disabled" value="{parameterKey}" /> ' +
-		'<input class="form-control c-mr-4" type="text" disabled="disabled" value="{parameterValue}" /> ' +
-		'<button class="btn btn-secondary remove-{key}-parameter"' +
-		' data-parameterKey="{parameterKey}"' +
-		' data-parameterValue="{parameterValue}"' +
-		' data-parameterType="{parameterType}"' +
-		' type="button">' +
-		Liferay.Util.getLexiconIconTpl('times') +
-		'</button>' +
-		'</div>';
+const TPL_TAG_FORM =
+	'<div class="form-inline {key} c-mb-4" >' +
+	'<input class="form-control c-mr-4" type="text" disabled="disabled" value="{parameterKey}" /> ' +
+	'<input class="form-control c-mr-4" type="text" disabled="disabled" value="{parameterValue}" /> ' +
+	'<button class="btn btn-secondary remove-{key}-parameter"' +
+	' data-parameterKey="{parameterKey}"' +
+	' data-parameterValue="{parameterValue}"' +
+	' data-parameterType="{parameterType}"' +
+	' type="button">' +
+	Liferay.Util.getLexiconIconTpl('times') +
+	'</button>' +
+	'</div>';
 
+export default function ReportParameters({namespace, parameters}) {
 	const portletMessageContainer = document.querySelector('.report-message');
 
-	let delegateHandler;
+	const parametersKeyElement = document.querySelector('.parameters-key');
+	const parametersValueElement = document.querySelector('.parameters-value');
+	const parametersTypeElement = document.querySelector(
+		'.parameters-input-type'
+	);
+
+	const reportParametersElement = document.querySelector(
+		'.report-parameters'
+	);
+
+	const addParameterElement = document.querySelector('.add-parameter');
 
 	portletMessageContainer.style.display = 'none';
 
-	document.querySelector('.report-parameters').value = parameters;
+	reportParametersElement.value = parameters;
+
+	let delegateHandler;
 
 	if (parameters) {
 		const reportParameters = JSON.parse(parameters);
@@ -49,22 +61,19 @@ export default function ReportParameters({namespace, parameters}) {
 	function addParameter() {
 		portletMessageContainer.style.display = 'none';
 
-		let parameterKey = document.querySelector('.parameters-key').value;
-
-		let parameterType = document.querySelector('.parameters-input-type')
-			.value;
-
-		let parameterValue = document.querySelector('.parameters-value').value;
+		let parametersKey = parametersKeyElement.value;
+		let parametersType = parametersTypeElement.value;
+		let parametersValue = parametersValueElement.value;
 
 		let message = '';
 
 		if (
-			parameterKey === ',' ||
-			parameterKey.indexOf(',') > 0 ||
-			parameterKey === '=' ||
-			parameterKey.indexOf('=') > 0 ||
-			parameterValue === '=' ||
-			parameterValue.indexOf('=') > 0
+			parametersKey === ',' ||
+			parametersKey.indexOf(',') > 0 ||
+			parametersKey === '=' ||
+			parametersKey.indexOf('=') > 0 ||
+			parametersValue === '=' ||
+			parametersValue.indexOf('=') > 0
 		) {
 			message = Liferay.Language.get(
 				'one-of-your-fields-contains-invalid-characters'
@@ -77,8 +86,7 @@ export default function ReportParameters({namespace, parameters}) {
 			return;
 		}
 
-		const reportParameters = document.querySelector('.report-parameters')
-			.value;
+		const reportParameters = reportParametersElement.value;
 
 		if (reportParameters) {
 			const reportParametersJSON = JSON.parse(reportParameters);
@@ -86,7 +94,7 @@ export default function ReportParameters({namespace, parameters}) {
 			for (const i in reportParametersJSON) {
 				const reportParameter = reportParametersJSON[i];
 
-				if (reportParameter.key === parameterKey) {
+				if (reportParameter.key === parametersKey) {
 					message = Liferay.Language.get(
 						'that-vocabulary-already-exists'
 					);
@@ -100,42 +108,44 @@ export default function ReportParameters({namespace, parameters}) {
 			}
 		}
 
-		if (parameterType === 'date') {
-			parameterValue = getDateValue();
+		if (parametersType === 'date') {
+			parametersValue = getDateValue();
 		}
 
-		parameterKey = encodeURIComponent(parameterKey);
-		parameterType = encodeURIComponent(parameterType);
-		parameterValue = encodeURIComponent(parameterValue);
+		parametersKey = encodeURIComponent(parametersKey);
+		parametersType = encodeURIComponent(parametersType);
+		parametersValue = encodeURIComponent(parametersValue);
 
-		addTag(parameterKey, parameterValue, parameterType);
+		addTag(parametersKey, parametersValue, parametersType);
 
-		addReportParameter(parameterKey, parameterValue, parameterType);
+		addReportParameter(parametersKey, parametersValue, parametersType);
 
-		document.querySelector('.parameters-key').value = '';
-		document.querySelector('.parameters-value').value = '';
+		parametersKeyElement.value = '';
+		parametersValueElement.value = '';
 
 		disableAddParameterButton();
 	}
 
-	function addReportParameter(parameterKey, parameterValue, parameterType) {
+	function addReportParameter(
+		parametersKey,
+		parametersValue,
+		parametersType
+	) {
 		let reportParameters = [];
 
-		const parametersInput = document.querySelector('.report-parameters');
-
-		if (parametersInput.value) {
-			reportParameters = JSON.parse(parametersInput.value);
+		if (reportParametersElement.value) {
+			reportParameters = JSON.parse(reportParametersElement.value);
 		}
 
 		const reportParameter = {
-			key: parameterKey,
-			type: parameterType,
-			value: parameterValue,
+			key: parametersKey,
+			type: parametersType,
+			value: parametersValue,
 		};
 
 		reportParameters.push(reportParameter);
 
-		parametersInput.value = JSON.stringify(reportParameters);
+		reportParametersElement.value = JSON.stringify(reportParameters);
 	}
 
 	function addTag(parameterKey, parameterValue, parameterType) {
@@ -195,11 +205,9 @@ export default function ReportParameters({namespace, parameters}) {
 			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
-					const parametersInput = document.querySelector(
-						'.report-parameters'
+					const reportParameters = JSON.parse(
+						reportParametersElement.value
 					);
-
-					const reportParameters = JSON.parse(parametersInput.value);
 
 					for (const i in reportParameters) {
 						const reportParameter = reportParameters[i];
@@ -211,7 +219,9 @@ export default function ReportParameters({namespace, parameters}) {
 						}
 					}
 
-					parametersInput.value = JSON.stringify(reportParameters);
+					reportParametersElement.value = JSON.stringify(
+						reportParameters
+					);
 
 					const key = ('.report-tag-' + parameterKey).replace(
 						/ /g,
@@ -225,11 +235,11 @@ export default function ReportParameters({namespace, parameters}) {
 	}
 
 	function disableAddParameterButton() {
-		document.querySelector('.add-parameter').classList.add('disabled');
+		addParameterElement.classList.add('disabled');
 	}
 
 	function enableAddParameterButton() {
-		document.querySelector('.add-parameter').classList.remove('disabled');
+		addParameterElement.classList.remove('disabled');
 	}
 
 	function getDateValue() {
@@ -263,18 +273,16 @@ export default function ReportParameters({namespace, parameters}) {
 	}
 
 	function toggleAddParameterButton() {
-		const parameterKey = document.querySelector('.parameters-key').value;
+		const parametersKey = parametersKeyElement.value;
+		const parametersType = parametersTypeElement.value;
 
-		const parameterType = document.querySelector('.parameters-input-type')
-			.value;
+		let parametersValue = parametersValueElement.value;
 
-		let parameterValue = document.querySelector('.parameters-value').value;
-
-		if (parameterType === 'date') {
-			parameterValue = getDateValue();
+		if (parametersType === 'date') {
+			parametersValue = getDateValue();
 		}
 
-		if (parameterKey && parameterValue) {
+		if (parametersKey && parametersValue) {
 			enableAddParameterButton();
 		}
 		else {
@@ -282,46 +290,40 @@ export default function ReportParameters({namespace, parameters}) {
 		}
 	}
 
-	document
-		.querySelector('.parameters-key')
-		.addEventListener('change', () => toggleAddParameterButton());
+	parametersKeyElement.addEventListener('change', () =>
+		toggleAddParameterButton()
+	);
 
-	document
-		.querySelector('.parameters-value')
-		.addEventListener('change', () => toggleAddParameterButton());
+	parametersValueElement.addEventListener('change', () =>
+		toggleAddParameterButton()
+	);
 
-	document
-		.querySelector('.add-parameter')
-		.addEventListener('click', () => addParameter());
+	addParameterElement.addEventListener('click', addParameter);
 
-	document
-		.querySelector('.parameters-input-type')
-		.addEventListener('change', (event) => {
-			const currentTarget = event.currentTarget;
+	parametersTypeElement.addEventListener('change', (event) => {
+		const currentTarget = event.currentTarget;
 
-			const parametersInputDate = document.querySelector(
-				'.parameters-input-date'
-			);
+		const parametersInputDate = document.querySelector(
+			'.parameters-input-date'
+		);
 
-			const parametersValue = document.querySelector('.parameters-value');
+		const keyInput = document.getElementById(namespace + 'key');
 
-			const keyInput = document.getElementById(namespace + 'key');
+		if (currentTarget.value === 'text') {
+			parametersValueElement.value = '';
+			disableAddParameterButton();
+			parametersValueElement.style.display = 'block';
+			parametersInputDate.style.display = 'none';
+		}
 
-			if (currentTarget.value === 'text') {
-				parametersValue.value = '';
-				disableAddParameterButton();
-				parametersValue.style.display = 'block';
-				parametersInputDate.style.display = 'none';
+		if (currentTarget.value === 'date') {
+			if (keyInput.value !== '') {
+				enableAddParameterButton();
 			}
-
-			if (currentTarget.value === 'date') {
-				if (keyInput.value !== '') {
-					enableAddParameterButton();
-				}
-				parametersValue.style.display = 'none';
-				parametersInputDate.style.display = 'block';
-			}
-		});
+			parametersValueElement.style.display = 'none';
+			parametersInputDate.style.display = 'block';
+		}
+	});
 
 	return {
 		dispose() {

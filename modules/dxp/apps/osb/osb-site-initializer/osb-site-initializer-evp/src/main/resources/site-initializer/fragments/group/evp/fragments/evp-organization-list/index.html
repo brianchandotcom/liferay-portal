@@ -19,7 +19,7 @@
 				<svg class="lexicon-icon lexicon-icon-caret-double" role="presentation" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 					<use xlink:href="/o/dialect-theme/images/clay/icons.svg#caret-double"></use>
 				</svg>
-	   		</button>
+			</button>
 		</div>
 
 		<div class="content-listed">
@@ -27,7 +27,8 @@
 			<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 					<path d="M10.5 18a7.5 7.5 0 1 1 5.304-2.196l4.05 4.05-1.5 1.5-4.05-4.05A7.453 7.453 0 0 1 10.5 18zm0-13.5a6 6 0 1 0 0 12 6 6 0 0 0 0-12z" />
 					<path d="M0 0h24v24H0z" fill="none" />
-				</svg>
+			</svg>
+
 			<input placeholder="Search for an Organization" type="text" />
 			</div>
 
@@ -37,7 +38,6 @@
 
 			<ul class="options-organizations your-organizations">
 				[#list organizations as	organization]
-
 					[#if organization.creator.id == user.userId ]
 						<li class="" value="${organization.id}">${organization.id} - ${organization.organizationName} - ${organization.taxId}</li>
 					[/#if]

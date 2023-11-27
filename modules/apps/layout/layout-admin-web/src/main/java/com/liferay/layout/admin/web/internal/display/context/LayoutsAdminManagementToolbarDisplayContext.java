@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -93,6 +94,14 @@ public class LayoutsAdminManagementToolbarDisplayContext
 								httpServletRequest))
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"backURLTitle",
+						() -> {
+							PortletDisplay portletDisplay =
+								_themeDisplay.getPortletDisplay();
+
+							return portletDisplay.getPortletDisplayName();
+						}
 					).buildString());
 				dropdownItem.setDisabled(false);
 				dropdownItem.setIcon("upload");

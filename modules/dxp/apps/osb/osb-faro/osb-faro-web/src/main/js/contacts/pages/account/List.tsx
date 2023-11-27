@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import BaseListPage from 'contacts/components/BaseListPage';
 import ClayLink from '@clayui/link';
-import React, {FC} from 'react';
+import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {
 	ACCOUNT_TYPE,
@@ -19,14 +19,14 @@ import {useQueryPagination} from 'shared/hooks';
 import {User} from 'shared/util/records';
 import {withCurrentUser} from 'shared/hoc';
 
-const getAccountsDataSource: FC<FetchSegmentsParams> = ({
+const getAccountsDataSource = ({
 	channelId,
 	delta,
 	groupId,
 	orderIOMap,
 	page,
 	query
-}) =>
+}: FetchSegmentsParams) =>
 	API.accounts.search({
 		channelId,
 		delta,

@@ -187,7 +187,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setTokenRefreshOffset(expirationTime = null) {
+	macro setTokenRefreshOffset(expirationTime = null,expectedTime = null) {
 		AssertElementPresent(locator1 = "OpenIDConnect#TOKEN_REFRESH_OFFSET");
 
 		AssertTextEquals(
@@ -204,7 +204,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "OpenIDConnect#TOKEN_REFRESH_OFFSET",
-			value1 = ${expirationTime});
+			value1 = ${expectedTime});
 	}
 
 	@summary = "Default summary"

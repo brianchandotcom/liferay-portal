@@ -51,7 +51,7 @@ public class LinkedProductResourceImpl extends BaseLinkedProductResourceImpl {
 
 		return Page.of(
 			ListUtil.concat(
-				transform(
+				unsafeTransform(
 					_cpDefinitionGroupedEntryService.
 						getEntryCProductCPDefinitionGroupedEntries(
 							productId, pagination.getStartPosition(),
@@ -66,7 +66,7 @@ public class LinkedProductResourceImpl extends BaseLinkedProductResourceImpl {
 								contextAcceptLanguage.getPreferredLocale(),
 								GroupedCPTypeConstants.NAME, contextUriInfo,
 								contextUser))),
-				transform(
+				unsafeTransform(
 					_csDiagramEntryService.getCProductCSDiagramEntries(
 						productId, pagination.getStartPosition(),
 						pagination.getEndPosition(), null),

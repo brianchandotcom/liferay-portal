@@ -297,8 +297,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 			String propertyKey = properties.getKey();
 
-			if (portalPropertiesContent.contains(propertyKey) ||
-				portalPropertiesContent.contains("#" + propertyKey) ||
+			if (portalPropertiesContent.contains(propertyKey + "=") ||
+				portalPropertiesContent.contains("#" + propertyKey + "=") ||
 				_hasPortalPropertiesCommonPrefixes(propertyKey)) {
 
 				portalPropertiesMap.put(
@@ -416,11 +416,10 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		private int _getPortalPropertiesPosition(
 			String content, String propertyKey) {
 
-			int x = content.indexOf(StringPool.FOUR_SPACES + propertyKey);
+			int x = content.indexOf("    " + propertyKey + "=");
 
 			if (x == -1) {
-				x = content.indexOf(
-					StringPool.FOUR_SPACES + StringPool.POUND + propertyKey);
+				x = content.indexOf("    #" + propertyKey + "=");
 			}
 
 			return x;

@@ -140,7 +140,7 @@ const PanelWrapper = ({
 					)}
 				</p>
 
-				<ul className="c-pl-0">
+				<ul className="c-pl-0" role="menu">
 					{!filteredProperties.length && (
 						<li className="align-items-center d-flex empty-message h-100 justify-content-center position-relative">
 							{Liferay.Language.get('no-results-were-found')}

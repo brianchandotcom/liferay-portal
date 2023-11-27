@@ -8,6 +8,7 @@ package com.liferay.commerce.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -67,6 +68,9 @@ public class CommerceShippingMethodTable
 	public final Column<CommerceShippingMethodTable, String> trackingURL =
 		createColumn(
 			"trackingURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingMethodTable, Clob> typeSettings =
+		createColumn(
+			"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CommerceShippingMethodTable() {
 		super("CommerceShippingMethod", CommerceShippingMethodTable::new);

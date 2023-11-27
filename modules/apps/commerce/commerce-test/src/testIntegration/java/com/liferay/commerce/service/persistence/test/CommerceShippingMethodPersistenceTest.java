@@ -148,6 +148,9 @@ public class CommerceShippingMethodPersistenceTest {
 
 		newCommerceShippingMethod.setTrackingURL(RandomTestUtil.randomString());
 
+		newCommerceShippingMethod.setTypeSettings(
+			RandomTestUtil.randomString());
+
 		_commerceShippingMethods.add(
 			_persistence.update(newCommerceShippingMethod));
 
@@ -203,6 +206,9 @@ public class CommerceShippingMethodPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceShippingMethod.getTrackingURL(),
 			newCommerceShippingMethod.getTrackingURL());
+		Assert.assertEquals(
+			existingCommerceShippingMethod.getTypeSettings(),
+			newCommerceShippingMethod.getTypeSettings());
 	}
 
 	@Test
@@ -604,6 +610,8 @@ public class CommerceShippingMethodPersistenceTest {
 		commerceShippingMethod.setPriority(RandomTestUtil.nextDouble());
 
 		commerceShippingMethod.setTrackingURL(RandomTestUtil.randomString());
+
+		commerceShippingMethod.setTypeSettings(RandomTestUtil.randomString());
 
 		_commerceShippingMethods.add(
 			_persistence.update(commerceShippingMethod));

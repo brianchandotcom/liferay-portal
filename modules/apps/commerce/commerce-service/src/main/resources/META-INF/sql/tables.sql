@@ -355,7 +355,8 @@ create table CommerceShippingMethod (
 	engineKey VARCHAR(75) null,
 	imageId LONG,
 	priority DOUBLE,
-	trackingURL STRING null
+	trackingURL STRING null,
+	typeSettings TEXT null
 );
 
 create table CommerceSubscriptionEntry (

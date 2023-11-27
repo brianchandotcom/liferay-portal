@@ -77,7 +77,8 @@ public class CommerceShippingMethodModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"active_", Types.BOOLEAN},
 		{"engineKey", Types.VARCHAR}, {"imageId", Types.BIGINT},
-		{"priority", Types.DOUBLE}, {"trackingURL", Types.VARCHAR}
+		{"priority", Types.DOUBLE}, {"trackingURL", Types.VARCHAR},
+		{"typeSettings", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,10 +100,11 @@ public class CommerceShippingMethodModelImpl
 		TABLE_COLUMNS_MAP.put("imageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("trackingURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShippingMethod (mvccVersion LONG default 0 not null,commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,engineKey VARCHAR(75) null,imageId LONG,priority DOUBLE,trackingURL STRING null)";
+		"create table CommerceShippingMethod (mvccVersion LONG default 0 not null,commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,engineKey VARCHAR(75) null,imageId LONG,priority DOUBLE,trackingURL STRING null,typeSettings TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShippingMethod";
@@ -287,6 +289,8 @@ public class CommerceShippingMethodModelImpl
 				"priority", CommerceShippingMethod::getPriority);
 			attributeGetterFunctions.put(
 				"trackingURL", CommerceShippingMethod::getTrackingURL);
+			attributeGetterFunctions.put(
+				"typeSettings", CommerceShippingMethod::getTypeSettings);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -366,6 +370,10 @@ public class CommerceShippingMethodModelImpl
 				"trackingURL",
 				(BiConsumer<CommerceShippingMethod, String>)
 					CommerceShippingMethod::setTrackingURL);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<CommerceShippingMethod, String>)
+					CommerceShippingMethod::setTypeSettings);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -858,6 +866,26 @@ public class CommerceShippingMethodModelImpl
 		_trackingURL = trackingURL;
 	}
 
+	@JSON
+	@Override
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
+			return "";
+		}
+		else {
+			return _typeSettings;
+		}
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_typeSettings = typeSettings;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -1020,6 +1048,7 @@ public class CommerceShippingMethodModelImpl
 		commerceShippingMethodImpl.setImageId(getImageId());
 		commerceShippingMethodImpl.setPriority(getPriority());
 		commerceShippingMethodImpl.setTrackingURL(getTrackingURL());
+		commerceShippingMethodImpl.setTypeSettings(getTypeSettings());
 
 		commerceShippingMethodImpl.resetOriginalValues();
 
@@ -1061,6 +1090,8 @@ public class CommerceShippingMethodModelImpl
 			this.<Double>getColumnOriginalValue("priority"));
 		commerceShippingMethodImpl.setTrackingURL(
 			this.<String>getColumnOriginalValue("trackingURL"));
+		commerceShippingMethodImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
 
 		return commerceShippingMethodImpl;
 	}
@@ -1222,6 +1253,14 @@ public class CommerceShippingMethodModelImpl
 			commerceShippingMethodCacheModel.trackingURL = null;
 		}
 
+		commerceShippingMethodCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = commerceShippingMethodCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			commerceShippingMethodCacheModel.typeSettings = null;
+		}
+
 		return commerceShippingMethodCacheModel;
 	}
 
@@ -1302,6 +1341,7 @@ public class CommerceShippingMethodModelImpl
 	private long _imageId;
 	private double _priority;
 	private String _trackingURL;
+	private String _typeSettings;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1349,6 +1389,7 @@ public class CommerceShippingMethodModelImpl
 		_columnOriginalValues.put("imageId", _imageId);
 		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("trackingURL", _trackingURL);
+		_columnOriginalValues.put("typeSettings", _typeSettings);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1401,6 +1442,8 @@ public class CommerceShippingMethodModelImpl
 		columnBitmasks.put("priority", 8192L);
 
 		columnBitmasks.put("trackingURL", 16384L);
+
+		columnBitmasks.put("typeSettings", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

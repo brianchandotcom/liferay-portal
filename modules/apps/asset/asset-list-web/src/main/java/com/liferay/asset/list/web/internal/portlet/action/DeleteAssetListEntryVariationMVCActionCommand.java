@@ -7,11 +7,14 @@ package com.liferay.asset.list.web.internal.portlet.action;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.service.AssetListEntryService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,11 +66,23 @@ public class DeleteAssetListEntryVariationMVCActionCommand
 			ParamUtil.getString(actionRequest, "backURL")
 		).setParameter(
 			"assetListEntryId", assetListEntryId
+		).setParameter(
+			"backURLTitle",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return _language.get(themeDisplay.getLocale(), "collections");
+			}
 		).buildString();
 	}
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

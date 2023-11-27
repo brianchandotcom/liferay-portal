@@ -14,7 +14,16 @@ import com.liferay.jethr0.util.BaseRetryable;
 import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import java.net.URL;
+import java.net.URLConnection;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -77,6 +86,44 @@ public class GitHubClient {
 
 	private String _requestGet(URL url) {
 		String urlString = url.toString();
+
+		if (urlString.startsWith("https://raw.githubusercontent.com")) {
+			try {
+				URLConnection urlConnection = url.openConnection();
+
+				urlConnection.setRequestProperty(
+					"Accept", MediaType.APPLICATION_JSON_VALUE);
+				urlConnection.setRequestProperty(
+					"Authorization", _getAuthorization());
+
+				InputStream inputStream = urlConnection.getInputStream();
+
+				BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(inputStream));
+
+				StringBuilder sb = new StringBuilder();
+
+				String inputLine;
+
+				while ((inputLine = bufferedReader.readLine()) != null) {
+					sb.append(inputLine);
+					sb.append("\n");
+				}
+
+				try {
+					return sb.toString();
+				}
+				finally {
+					bufferedReader.close();
+					inputStream.close();
+				}
+			}
+			catch (IOException ioException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ioException);
+				}
+			}
+		}
 
 		String gitHubURL = urlString.replaceAll(
 			"https://api\\.github\\.com", _gitHubProxyURL);
@@ -160,6 +207,8 @@ public class GitHubClient {
 
 		return retryable.executeWithRetries();
 	}
+
+	private static final Log _log = LogFactory.getLog(GitHubClient.class);
 
 	@Value("${JETHR0_GITHUB_PROXY_URL:https://api.github.com}")
 	private String _gitHubProxyURL;

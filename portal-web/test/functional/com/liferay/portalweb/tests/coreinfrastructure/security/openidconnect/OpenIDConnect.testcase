@@ -1031,7 +1031,9 @@ definition {
 		task ("Enable and set the OpenID connect token refresh offset time") {
 			OpenIDConnect.enableOpenIdConnect();
 
-			OpenIDConnect.setTokenRefreshOffset(expirationTime = 60);
+			OpenIDConnect.setTokenRefreshOffset(
+				expectedTime = 60,
+				expirationTime = 60);
 		}
 	}
 
@@ -1364,7 +1366,9 @@ definition {
 
 		OpenIDConnect.enableOpenIdConnect();
 
-		OpenIDConnect.setTokenRefreshOffset(expirationTime = 20);
+		OpenIDConnect.setTokenRefreshOffset(
+			expectedTime = 30,
+			expirationTime = 20);
 
 		AssertVisible(
 			key_alertMessage = "Token refresh offset is less than 30 seconds",

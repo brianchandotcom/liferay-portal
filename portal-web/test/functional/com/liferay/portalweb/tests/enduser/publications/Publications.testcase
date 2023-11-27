@@ -1562,6 +1562,10 @@ definition {
 
 			MenuItem.click(menuItem = "Show System Changes");
 
+			PublicationsChanges.filterChangesByItem(
+				checkboxName = "Portlet Preference Value",
+				menuItem = "Types");
+
 			PublicationsChanges.viewChanges(
 				changeCategory = "Portlet Preference Value",
 				changeSite = "",

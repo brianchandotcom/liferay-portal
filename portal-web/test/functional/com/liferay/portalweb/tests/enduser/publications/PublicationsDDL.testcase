@@ -645,6 +645,10 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
+		PublicationsChanges.filterChangesByItem(
+			checkboxName = "Dynamic Data Mapping Structure",
+			menuItem = "Types");
+
 		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeSite = "Site Name",

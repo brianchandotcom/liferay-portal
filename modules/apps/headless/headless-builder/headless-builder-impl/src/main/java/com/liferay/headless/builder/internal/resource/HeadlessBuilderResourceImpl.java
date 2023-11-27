@@ -204,8 +204,15 @@ public class HeadlessBuilderResourceImpl {
 			).build();
 		}
 
+		Object object = successUnsafeFunction.apply(endpoint);
+
+		if (object == null) {
+			return Response.noContent(
+			).build();
+		}
+
 		return Response.ok(
-			successUnsafeFunction.apply(endpoint)
+			object
 		).build();
 	}
 

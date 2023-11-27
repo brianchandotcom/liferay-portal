@@ -222,6 +222,10 @@ public class EndpointHelper {
 			ObjectEntry objectEntry, APIApplication.Schema schema)
 		throws Exception {
 
+		if (schema == null) {
+			return null;
+		}
+
 		Map<String, Object> responseEntityMap = new HashMap<>();
 
 		Map<String, Object> objectEntryProperties = _getObjectEntryProperties(

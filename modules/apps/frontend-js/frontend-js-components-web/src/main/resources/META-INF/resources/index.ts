@@ -5,6 +5,7 @@
 
 export {default as BetaBadge} from './beta_indicator/BetaBadge';
 export {default as BetaButton} from './beta_indicator/BetaButton';
+export {default as FeatureIndicator} from './feature_indicator/FeatureIndicator';
 
 export {
 	default as ClientExtension,

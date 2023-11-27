@@ -81,12 +81,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 				() ->
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-							_getGroupId(),
-							ParamUtil.getLong(
-								_httpServletRequest,
-								"layoutPageTemplateCollectionId",
-								LayoutPageTemplateConstants.
-									PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
+							_getGroupId(), _getLayoutPageTemplateCollectionId(),
 							_assetDisplayPageSelectorCriterion.getClassNameId(),
 							_assetDisplayPageSelectorCriterion.getClassTypeId(),
 							_getKeywords(),
@@ -98,12 +93,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 								getOrderByComparator()),
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-						_getGroupId(),
-						ParamUtil.getLong(
-							_httpServletRequest,
-							"layoutPageTemplateCollectionId",
-							LayoutPageTemplateConstants.
-								PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
+						_getGroupId(), _getLayoutPageTemplateCollectionId(),
 						_assetDisplayPageSelectorCriterion.getClassNameId(),
 						_assetDisplayPageSelectorCriterion.getClassTypeId(),
 						_getKeywords(),
@@ -130,12 +120,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 			() ->
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-						_getGroupId(),
-						ParamUtil.getLong(
-							_httpServletRequest,
-							"layoutPageTemplateCollectionId",
-							LayoutPageTemplateConstants.
-								PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
+						_getGroupId(), _getLayoutPageTemplateCollectionId(),
 						_assetDisplayPageSelectorCriterion.getClassNameId(),
 						_assetDisplayPageSelectorCriterion.getClassTypeId(),
 						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
@@ -145,11 +130,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 						assetDisplayPageSearchContainer.getOrderByComparator()),
 			LayoutPageTemplateEntryServiceUtil.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_getGroupId(),
-					ParamUtil.getLong(
-						_httpServletRequest, "layoutPageTemplateCollectionId",
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
+					_getGroupId(), _getLayoutPageTemplateCollectionId(),
 					_assetDisplayPageSelectorCriterion.getClassNameId(),
 					_assetDisplayPageSelectorCriterion.getClassTypeId(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,

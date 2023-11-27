@@ -118,12 +118,13 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 				}
 
 				sb.append(mergedValues);
-				sb.append("\n\n");
+				sb.append("\n");
 			}
 			else {
 				sb.append(values.get(0));
-				sb.append("\n");
 			}
+
+			sb.append("\n");
 		}
 
 		if (sb.length() > 0) {

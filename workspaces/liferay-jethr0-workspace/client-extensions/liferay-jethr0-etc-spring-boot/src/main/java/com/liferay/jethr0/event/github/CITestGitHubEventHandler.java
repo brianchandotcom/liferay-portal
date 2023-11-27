@@ -15,16 +15,12 @@ import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
-import com.liferay.jethr0.util.PropertiesUtil;
-import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,30 +59,6 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
-	}
-
-	private Set<String> _getAvailableTestSuites()
-		throws InvalidJSONException, IOException {
-
-		Set<String> availableTestSuites = new HashSet<>();
-
-		String upstreamAvailableTestSuites = _getUpstreamBranchCIPropertyValue(
-			"ci.test.available.suites");
-
-		if (!StringUtil.isNullOrEmpty(upstreamAvailableTestSuites)) {
-			Collections.addAll(
-				availableTestSuites, upstreamAvailableTestSuites.split(","));
-		}
-
-		String senderAvailableTestSuites = _getSenderBranchCIPropertyValue(
-			"ci.test.available.suites");
-
-		if (!StringUtil.isNullOrEmpty(senderAvailableTestSuites)) {
-			Collections.addAll(
-				availableTestSuites, senderAvailableTestSuites.split(","));
-		}
-
-		return availableTestSuites;
 	}
 
 	private JobEntity _getJobEntity() throws InvalidJSONException, IOException {
@@ -151,24 +123,6 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 		return jobEntity;
 	}
 
-	private String _getSenderBranchCIPropertyValue(String propertyName)
-		throws InvalidJSONException, IOException {
-
-		GitBranchEntity gitBranchEntity = getSenderGitBranchEntity();
-
-		if (gitBranchEntity == null) {
-			return null;
-		}
-
-		Properties properties = gitBranchEntity.getProperties("ci.properties");
-
-		if (properties == null) {
-			return null;
-		}
-
-		return PropertiesUtil.getPropertyValue(properties, propertyName);
-	}
-
 	private List<String> _getTestOptions() throws InvalidJSONException {
 		List<String> testOptions = new ArrayList<>();
 
@@ -188,7 +142,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 	}
 
 	private String _getTestSuite() throws InvalidJSONException, IOException {
-		Set<String> availableTestSuites = _getAvailableTestSuites();
+		Set<String> availableTestSuites = getAvailableTestSuites();
 
 		for (String testOption : _getTestOptions()) {
 			if (availableTestSuites.contains(testOption)) {
@@ -197,24 +151,6 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 		}
 
 		return "default";
-	}
-
-	private String _getUpstreamBranchCIPropertyValue(String propertyName)
-		throws InvalidJSONException, IOException {
-
-		GitBranchEntity gitBranchEntity = getUpstreamGitBranchEntity();
-
-		if (gitBranchEntity == null) {
-			return null;
-		}
-
-		Properties properties = gitBranchEntity.getProperties("ci.properties");
-
-		if (properties == null) {
-			return null;
-		}
-
-		return PropertiesUtil.getPropertyValue(properties, propertyName);
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

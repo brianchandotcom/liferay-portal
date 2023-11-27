@@ -82,6 +82,7 @@ import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -1595,7 +1596,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			7, true, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_addAPIApplicationWithPostEndpoint(
-			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1, 7,
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1, true, 7,
 			objectDefinition.getExternalReferenceCode(), "/test",
 			APIApplication.Endpoint.Scope.COMPANY);
 
@@ -1723,7 +1724,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			8, true, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_addAPIApplicationWithPostEndpoint(
-			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1, 8,
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1, true, 8,
 			objectDefinition.getExternalReferenceCode(), "/test",
 			APIApplication.Endpoint.Scope.COMPANY);
 
@@ -1745,6 +1746,43 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				Http.Method.POST
 			).toString(),
 			JSONCompareMode.STRICT);
+	}
+
+	@Test
+	public void testPostWithoutResponseSchema() throws Exception {
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			9, false, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_addAPIApplicationWithPostEndpoint(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1, false, 9,
+			objectDefinition.getExternalReferenceCode(), "/test",
+			APIApplication.Endpoint.Scope.COMPANY);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		String textPropertyValue = RandomTestUtil.randomString();
+
+		JSONAssert.assertEquals(
+			"{}",
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"textProperty", textPropertyValue
+				).toString(),
+				StringBundler.concat("c/", _BASE_URL_1, "/test"),
+				Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				0, objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		ObjectEntry objectEntry = objectEntries.get(objectEntries.size() - 1);
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals(textPropertyValue, values.get("textField"));
 	}
 
 	private void _addAggregationObjectField(
@@ -2052,7 +2090,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private void _addAPIApplicationWithPostEndpoint(
 			String apiApplicationExternalReferenceCode,
-			String apiEndpointExternalReferenceCode, String baseURL, int index,
+			String apiEndpointExternalReferenceCode, String baseURL,
+			boolean hasResponseSchema, int index,
 			String objectDefinitionExternalReferenceCode, String path,
 			APIApplication.Endpoint.Scope scope)
 		throws Exception {
@@ -2216,14 +2255,17 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"/requestAPISchemaToAPIEndpoints/",
 				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
-		assertSuccessfulJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				apiSchemaExternalReferenceCode,
-				"/responseAPISchemaToAPIEndpoints/",
-				apiEndpointExternalReferenceCode),
-			Http.Method.PUT);
+
+		if (hasResponseSchema) {
+			assertSuccessfulJSONObject(
+				null,
+				StringBundler.concat(
+					"headless-builder/schemas/by-external-reference-code/",
+					apiSchemaExternalReferenceCode,
+					"/responseAPISchemaToAPIEndpoints/",
+					apiEndpointExternalReferenceCode),
+				Http.Method.PUT);
+		}
 	}
 
 	private void _addAPIFilter(

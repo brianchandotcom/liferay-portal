@@ -14,6 +14,9 @@ import com.liferay.jethr0.util.PropertiesUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
@@ -63,13 +66,18 @@ public class CIHelpGitHubEventHandler extends BaseGitHubEventHandler {
 			sb.append("<details><summary><strong>Available test suites:");
 			sb.append("</strong></summary>\n\n");
 
-			for (String availableTestSuite : availableTestSuites) {
+			List<String> orderedTestSuites = new ArrayList<>(
+				availableTestSuites);
+
+			Collections.sort(orderedTestSuites);
+
+			for (String testSuite : orderedTestSuites) {
 				sb.append("- &nbsp;&nbsp;&nbsp;&nbsp;ci:test:**");
-				sb.append(availableTestSuite);
+				sb.append(testSuite);
 				sb.append("** - ");
 
 				String ciTestSuiteDescription = getCIProperty(
-					"ci.test.suite.description[" + availableTestSuite + "]");
+					"ci.test.suite.description[" + testSuite + "]");
 
 				if (ciTestSuiteDescription != null) {
 					sb.append(ciTestSuiteDescription);

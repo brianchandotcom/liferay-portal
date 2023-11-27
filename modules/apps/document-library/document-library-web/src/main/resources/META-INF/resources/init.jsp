@@ -98,6 +98,7 @@ page import="com.liferay.document.library.web.internal.dao.search.IGResultRowSpl
 page import="com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAdminNavigationDisplayContext" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLConfigurationDisplaycontext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditDDMStructureDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLSelectRestrictedFileEntryTypesDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryMetadataSetsDisplayContext" %><%@

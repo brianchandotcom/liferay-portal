@@ -28,10 +28,12 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 
 <aui:script use="aui-toggler,json,liferay-calendar-list,liferay-scheduler">
 	var calendarContainer = Liferay.component(
-		'<portlet:namespace />calendarContainer'
+		'<%= portletDisplay.getNamespace() %>calendarContainer'
 	);
 
-	var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
+	var remoteServices = Liferay.component(
+		'<%= portletDisplay.getNamespace() %>remoteServices'
+	);
 
 	var showMoreStrings = {
 		close: '<liferay-ui:message key="close" />',
@@ -39,109 +41,129 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 	};
 
 	<c:if test="<%= !hideDayView %>">
-		window.<portlet:namespace />dayView = new Liferay.SchedulerDayView({
-			headerViewConfig: {
-				eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
-				strings: showMoreStrings,
-			},
-			height: 700,
-			isoTime: <%= useIsoTimeFormat %>,
-			readOnly: <%= readOnly %>,
-			strings: {
-				allDay: '<liferay-ui:message key="all-day" />',
-			},
-		});
+		window.<%= portletDisplay.getNamespace() %>dayView = new Liferay.SchedulerDayView(
+			{
+				headerViewConfig: {
+					eventsOverlayConstrain:
+						'#p_p_id<%= portletDisplay.getNamespace() %>',
+					strings: showMoreStrings,
+				},
+				height: 700,
+				isoTime: <%= useIsoTimeFormat %>,
+				readOnly: <%= readOnly %>,
+				strings: {
+					allDay: '<liferay-ui:message key="all-day" />',
+				},
+			}
+		);
 	</c:if>
 
 	<c:if test="<%= !hideWeekView %>">
-		window.<portlet:namespace />weekView = new Liferay.SchedulerWeekView({
-			headerViewConfig: {
-				displayDaysInterval: A.DataType.DateMath.WEEK_LENGTH,
-				eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
-				strings: showMoreStrings,
-			},
-			height: 700,
-			isoTime: <%= useIsoTimeFormat %>,
-			readOnly: <%= readOnly %>,
-			strings: {
-				allDay: '<liferay-ui:message key="all-day" />',
-			},
-		});
+		window.<%= portletDisplay.getNamespace() %>weekView = new Liferay.SchedulerWeekView(
+			{
+				headerViewConfig: {
+					displayDaysInterval: A.DataType.DateMath.WEEK_LENGTH,
+					eventsOverlayConstrain:
+						'#p_p_id<%= portletDisplay.getNamespace() %>',
+					strings: showMoreStrings,
+				},
+				height: 700,
+				isoTime: <%= useIsoTimeFormat %>,
+				readOnly: <%= readOnly %>,
+				strings: {
+					allDay: '<liferay-ui:message key="all-day" />',
+				},
+			}
+		);
 	</c:if>
 
 	<c:if test="<%= !hideMonthView %>">
-		window.<portlet:namespace />monthView = new Liferay.SchedulerMonthView({
-			eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
-			height: 'auto',
-			isoTime: <%= useIsoTimeFormat %>,
-			readOnly: <%= readOnly %>,
-			strings: showMoreStrings,
-		});
+		window.<%= portletDisplay.getNamespace() %>monthView = new Liferay.SchedulerMonthView(
+			{
+				eventsOverlayConstrain: '#p_p_id<%= portletDisplay.getNamespace() %>',
+				height: 'auto',
+				isoTime: <%= useIsoTimeFormat %>,
+				readOnly: <%= readOnly %>,
+				strings: showMoreStrings,
+			}
+		);
 	</c:if>
 
 	<c:if test="<%= !hideAgendaView %>">
-		window.<portlet:namespace />agendaView = new Liferay.SchedulerAgendaView({
-			daysCount: <%= maxDaysDisplayed + 1 %>,
-			height: 700,
-			isoTime: <%= useIsoTimeFormat %>,
-			readOnly: <%= readOnly %>,
-			strings: {
-				noEvents: '<liferay-ui:message key="no-events" />',
-			},
-		});
+		window.<%= portletDisplay.getNamespace() %>agendaView = new Liferay.SchedulerAgendaView(
+			{
+				daysCount: <%= maxDaysDisplayed + 1 %>,
+				height: 700,
+				isoTime: <%= useIsoTimeFormat %>,
+				readOnly: <%= readOnly %>,
+				strings: {
+					noEvents: '<liferay-ui:message key="no-events" />',
+				},
+			}
+		);
 	</c:if>
 
 	<c:if test="<%= !readOnly && (defaultCalendar != null) %>">
 		var width = Math.min(window.innerWidth, 550);
 
-		window.<portlet:namespace />eventRecorder = new Liferay.SchedulerEventRecorder({
-			bodyTemplate: new A.Template(
-				A.one('#<portlet:namespace />eventRecorderBodyTpl').html()
-			),
-			calendarContainer: calendarContainer,
-			calendarId: <%= defaultCalendar.getCalendarId() %>,
-			color: '<%= ColorUtil.toHexString(defaultCalendar.getColor()) %>',
-			duration: <%= defaultDuration %>,
-			editCalendarBookingURL: '<%= HtmlUtil.escapeJS(editCalendarBookingURL) %>',
-			headerTemplate: new A.Template(
-				A.one('#<portlet:namespace />eventRecorderHeaderTpl').html()
-			),
-			permissionsCalendarBookingURL:
-				'<%= HtmlUtil.escapeJS(permissionsCalendarBookingURL) %>',
-			popover: {
-				width: width,
-			},
-			portletNamespace: '<portlet:namespace />',
-			remoteServices: remoteServices,
-			showHeader: <%= showSchedulerHeader %>,
-			strings: {
-				'description-hint': '<liferay-ui:message key="description-hint" />',
-			},
-			viewCalendarBookingURL: '<%= HtmlUtil.escapeJS(viewCalendarBookingURL) %>',
-		});
+		window.<%= portletDisplay.getNamespace() %>eventRecorder = new Liferay.SchedulerEventRecorder(
+			{
+				bodyTemplate: new A.Template(
+					A.one(
+						'#<%= portletDisplay.getNamespace() %>eventRecorderBodyTpl'
+					).html()
+				),
+				calendarContainer: calendarContainer,
+				calendarId: <%= defaultCalendar.getCalendarId() %>,
+				color: '<%= ColorUtil.toHexString(defaultCalendar.getColor()) %>',
+				duration: <%= defaultDuration %>,
+				editCalendarBookingURL:
+					'<%= HtmlUtil.escapeJS(editCalendarBookingURL) %>',
+				headerTemplate: new A.Template(
+					A.one(
+						'#<%= portletDisplay.getNamespace() %>eventRecorderHeaderTpl'
+					).html()
+				),
+				permissionsCalendarBookingURL:
+					'<%= HtmlUtil.escapeJS(permissionsCalendarBookingURL) %>',
+				popover: {
+					width: width,
+				},
+				portletNamespace: '<%= portletDisplay.getNamespace() %>',
+				remoteServices: remoteServices,
+				showHeader: <%= showSchedulerHeader %>,
+				strings: {
+					'description-hint': '<liferay-ui:message key="description-hint" />',
+				},
+				viewCalendarBookingURL:
+					'<%= HtmlUtil.escapeJS(viewCalendarBookingURL) %>',
+			}
+		);
 	</c:if>
 
 	var views = [];
 
 	<c:if test="<%= !hideDayView %>">
-		views.push(window.<portlet:namespace />dayView);
+		views.push(window.<%= portletDisplay.getNamespace() %>dayView);
 	</c:if>
 
 	<c:if test="<%= !hideWeekView %>">
-		views.push(window.<portlet:namespace />weekView);
+		views.push(window.<%= portletDisplay.getNamespace() %>weekView);
 	</c:if>
 
 	<c:if test="<%= !hideMonthView %>">
-		views.push(window.<portlet:namespace />monthView);
+		views.push(window.<%= portletDisplay.getNamespace() %>monthView);
 	</c:if>
 
 	<c:if test="<%= !hideAgendaView %>">
-		views.push(window.<portlet:namespace />agendaView);
+		views.push(window.<%= portletDisplay.getNamespace() %>agendaView);
 	</c:if>
 
-	window.<portlet:namespace />scheduler = new Liferay.Scheduler({
+	window.<%= portletDisplay.getNamespace() %>scheduler = new Liferay.Scheduler({
 		activeView:
-			window['<portlet:namespace /><%= HtmlUtil.escapeJS(activeView) %>View'],
+			window[
+				'<%= portletDisplay.getNamespace() %><%= HtmlUtil.escapeJS(activeView) %>View'
+			],
 		ariaLabels: {
 			agenda: '<liferay-ui:message key="agenda-view" />',
 			calendar: '<liferay-ui:message key="calendar-views" />',
@@ -153,7 +175,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			week: '<liferay-ui:message key="week-view" />',
 			year: '<liferay-ui:message key="year-view" />',
 		},
-		boundingBox: '#<portlet:namespace />scheduler',
+		boundingBox: '#<%= portletDisplay.getNamespace() %>scheduler',
 		calendarContainer: calendarContainer,
 
 		<%
@@ -185,14 +207,14 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			disabled: true,
 		</c:if>
 
-		eventRecorder: window.<portlet:namespace />eventRecorder,
+		eventRecorder: window.<%= portletDisplay.getNamespace() %>eventRecorder,
 		eventsPerPage: <%= eventsPerPage %>,
 		filterCalendarBookings:
 			window['<%= HtmlUtil.escapeJS(filterCalendarBookings) %>'],
 		firstDayOfWeek: <%= weekStartsOn %>,
 		items: A.Object.values(calendarContainer.get('availableCalendars')),
 		maxDaysDisplayed: <%= maxDaysDisplayed %>,
-		portletNamespace: '<portlet:namespace />',
+		portletNamespace: '<%= portletDisplay.getNamespace() %>',
 		preventPersistence: <%= ParamUtil.getBoolean(request, "preventPersistence") %>,
 		remoteServices: remoteServices,
 		render: true,
@@ -222,7 +244,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 
 	var destroySchedulers = function (event) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {
-			window.<portlet:namespace />scheduler.destroy();
+			window.<%= portletDisplay.getNamespace() %>scheduler.destroy();
 
 			Liferay.detach('destroyPortlet', destroySchedulers);
 		}

@@ -10,6 +10,7 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -100,6 +101,15 @@ public class AddAssetListEntryVariationMVCActionCommand
 		).setParameter(
 			"assetListEntryId", assetListEntryId
 		).setParameter(
+			"backURLTitle",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return _language.get(themeDisplay.getLocale(), "collections");
+			}
+		).setParameter(
 			"segmentsEntryId", segmentsEntryId
 		).buildString();
 	}
@@ -109,6 +119,9 @@ public class AddAssetListEntryVariationMVCActionCommand
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

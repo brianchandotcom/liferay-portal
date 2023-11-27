@@ -48,6 +48,11 @@ public class ImportTranslationPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		try {
 			return PortletURLBuilder.create(
 				_translationURLProvider.getImportTranslationURL(
@@ -57,16 +62,9 @@ public class ImportTranslationPortletConfigurationIcon
 			).setRedirect(
 				_portal.getCurrentURL(portletRequest)
 			).setPortletResource(
-				() -> {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)portletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					PortletDisplay portletDisplay =
-						themeDisplay.getPortletDisplay();
-
-					return portletDisplay.getId();
-				}
+				portletDisplay.getId()
+			).setParameter(
+				"backURLTitle", portletDisplay.getPortletDisplayName()
 			).buildString();
 		}
 		catch (PortalException portalException) {

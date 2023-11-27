@@ -550,11 +550,11 @@ public class PayPalCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
+		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
+
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
 				commercePaymentEntry.getClassPK());
-
-		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 

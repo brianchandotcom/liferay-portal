@@ -94,6 +94,9 @@ public class SimpleCaptchaResourceTest
 
 		_assertStatus(
 			captchaToken, jsonObject.getString("answer"), 204, builder.build());
+
+		_assertStatus(
+			captchaToken, jsonObject.getString("answer"), 400, builder.build());
 	}
 
 	private void _assertStatus(

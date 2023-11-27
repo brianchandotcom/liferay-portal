@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.servlet.filters.secure.NonceUtil;
 
 import java.util.Date;
 
@@ -32,7 +33,9 @@ public class CaptchaTokenUtil {
 		JSONObject captchaJSONObject = JSONFactoryUtil.createJSONObject(
 			captchaJSONString);
 
-		if (!isValidCaptchaToken(captchaJSONObject)) {
+		if (!isValidCaptchaToken(captchaJSONObject) ||
+			!NonceUtil.verify(captchaJSONObject.getString("nonce"))) {
+
 			throw new IllegalArgumentException(
 				"Illegal captcha token: " + captchaToken);
 		}
@@ -47,7 +50,8 @@ public class CaptchaTokenUtil {
 		}
 	}
 
-	public static String generateCaptchaToken(Company company, String answer)
+	public static String generateCaptchaToken(
+			Company company, String answer, String nonce)
 		throws EncryptorException {
 
 		return EncryptorUtil.encrypt(
@@ -57,6 +61,8 @@ public class CaptchaTokenUtil {
 			).put(
 				"expiryTime",
 				System.currentTimeMillis() + _CAPTCHA_TOKEN_EXPIRY_DURATION
+			).put(
+				"nonce", nonce
 			).toString());
 	}
 

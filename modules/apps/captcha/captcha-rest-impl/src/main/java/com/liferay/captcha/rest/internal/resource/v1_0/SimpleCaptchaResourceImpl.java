@@ -17,6 +17,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.servlet.filters.secure.NonceUtil;
 
 import java.io.ByteArrayOutputStream;
 
@@ -56,7 +57,10 @@ public class SimpleCaptchaResourceImpl extends BaseSimpleCaptchaResourceImpl {
 		return new SimpleCaptcha() {
 			{
 				captchaToken = CaptchaTokenUtil.generateCaptchaToken(
-					contextCompany, answer);
+					contextCompany, answer,
+					NonceUtil.generate(
+						contextCompany.getCompanyId(),
+						contextHttpServletRequest.getRemoteAddr()));
 
 				image = base64CaptchaImage;
 			}

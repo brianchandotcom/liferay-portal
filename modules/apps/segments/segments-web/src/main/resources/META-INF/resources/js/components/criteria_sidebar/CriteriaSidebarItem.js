@@ -9,6 +9,10 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {
+	useDisableKeyboardMovement,
+	useSetMovementSource,
+} from '../../contexts/KeyboardMovementContext';
 import useDragSource from '../../hooks/useDragSource';
 import useKeyboardNavigation from '../../hooks/useKeyboardNavigation';
 import {DragTypes} from '../../utils/dragTypes';
@@ -28,6 +32,8 @@ export default function CriteriaSidebarItem({
 		type: LIST_ITEM_TYPES.listItem,
 	});
 
+	const itemIcon = icon || TYPE_ICONS[type] || 'text';
+
 	const {handlerRef, isDragging} = useDragSource({
 		item: {
 			criterion: {
@@ -35,12 +41,15 @@ export default function CriteriaSidebarItem({
 				propertyName,
 				type,
 			},
-			icon: icon || TYPE_ICONS[type] || 'text',
+			icon: itemIcon,
 			name: label,
 			propertyKey,
 			type: DragTypes.PROPERTY,
 		},
 	});
+
+	const setMovementSource = useSetMovementSource();
+	const disableMovement = useDisableKeyboardMovement();
 
 	return (
 		<li
@@ -52,6 +61,19 @@ export default function CriteriaSidebarItem({
 					dragging: isDragging,
 				}
 			)}
+			onBlur={disableMovement}
+			onKeyDown={(event) => {
+				if (event.key === 'Enter') {
+					setMovementSource({
+						defaultValue,
+						icon: itemIcon,
+						label,
+						propertyKey,
+						propertyName,
+						type,
+					});
+				}
+			}}
 			ref={setElement}
 			role="menuitem"
 			tabIndex={isTarget ? 0 : -1}

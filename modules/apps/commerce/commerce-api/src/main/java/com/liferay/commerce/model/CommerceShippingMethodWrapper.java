@@ -51,6 +51,7 @@ public class CommerceShippingMethodWrapper
 		attributes.put("imageId", getImageId());
 		attributes.put("priority", getPriority());
 		attributes.put("trackingURL", getTrackingURL());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -146,6 +147,12 @@ public class CommerceShippingMethodWrapper
 
 		if (trackingURL != null) {
 			setTrackingURL(trackingURL);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 
@@ -441,6 +448,23 @@ public class CommerceShippingMethodWrapper
 	@Override
 	public String getTrackingURL() {
 		return model.getTrackingURL();
+	}
+
+	/**
+	 * Returns the type settings of this commerce shipping method.
+	 *
+	 * @return the type settings of this commerce shipping method
+	 */
+	@Override
+	public String getTypeSettings() {
+		return model.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsUnicodeProperties() {
+
+		return model.getTypeSettingsUnicodeProperties();
 	}
 
 	/**
@@ -751,6 +775,24 @@ public class CommerceShippingMethodWrapper
 	@Override
 	public void setTrackingURL(String trackingURL) {
 		model.setTrackingURL(trackingURL);
+	}
+
+	/**
+	 * Sets the type settings of this commerce shipping method.
+	 *
+	 * @param typeSettings the type settings of this commerce shipping method
+	 */
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		model.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsUnicodeProperties) {
+
+		model.setTypeSettingsUnicodeProperties(typeSettingsUnicodeProperties);
 	}
 
 	/**

@@ -477,6 +477,21 @@ public interface CommerceShippingMethodModel
 	 */
 	public void setTrackingURL(String trackingURL);
 
+	/**
+	 * Returns the type settings of this commerce shipping method.
+	 *
+	 * @return the type settings of this commerce shipping method
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this commerce shipping method.
+	 *
+	 * @param typeSettings the type settings of this commerce shipping method
+	 */
+	public void setTypeSettings(String typeSettings);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

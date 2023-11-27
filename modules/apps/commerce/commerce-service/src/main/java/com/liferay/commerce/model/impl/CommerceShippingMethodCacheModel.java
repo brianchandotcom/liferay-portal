@@ -69,7 +69,7 @@ public class CommerceShippingMethodCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,8 @@ public class CommerceShippingMethodCacheModel
 		sb.append(priority);
 		sb.append(", trackingURL=");
 		sb.append(trackingURL);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -172,13 +174,22 @@ public class CommerceShippingMethodCacheModel
 			commerceShippingMethodImpl.setTrackingURL(trackingURL);
 		}
 
+		if (typeSettings == null) {
+			commerceShippingMethodImpl.setTypeSettings("");
+		}
+		else {
+			commerceShippingMethodImpl.setTypeSettings(typeSettings);
+		}
+
 		commerceShippingMethodImpl.resetOriginalValues();
 
 		return commerceShippingMethodImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		commerceShippingMethodId = objectInput.readLong();
@@ -201,6 +212,7 @@ public class CommerceShippingMethodCacheModel
 
 		priority = objectInput.readDouble();
 		trackingURL = objectInput.readUTF();
+		typeSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -258,6 +270,13 @@ public class CommerceShippingMethodCacheModel
 		else {
 			objectOutput.writeUTF(trackingURL);
 		}
+
+		if (typeSettings == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(typeSettings);
+		}
 	}
 
 	public long mvccVersion;
@@ -275,5 +294,6 @@ public class CommerceShippingMethodCacheModel
 	public long imageId;
 	public double priority;
 	public String trackingURL;
+	public String typeSettings;
 
 }

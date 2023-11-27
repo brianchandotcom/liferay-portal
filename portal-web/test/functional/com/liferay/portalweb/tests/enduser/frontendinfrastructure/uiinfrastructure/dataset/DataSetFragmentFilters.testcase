@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "LPS-185995 Verify it's possible to create a exclude selection filter with pre populated values."
-	@priority = 5
+	@priority = 4
 	test AssertExcludeSingleSelectionPrePopulatedFilterIsDisplayed {
 		task ("Given a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Transport");
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "LPS-185995 Verify it's possible create a include selection filter with pre populated values."
-	@priority = 5
+	@priority = 4
 	test AssertIncludeMultipleSelectionPrePopulatedFilterIsDisplayed {
 		task ("Given a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Transport");
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@description = "LPS-185995 Verify it's possible to create a selection filter without pre populated values."
-	@priority = 5
+	@priority = 4
 	test AssertSingleSelectionFilterIsDisplayed {
 		task ("Given a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Transport");

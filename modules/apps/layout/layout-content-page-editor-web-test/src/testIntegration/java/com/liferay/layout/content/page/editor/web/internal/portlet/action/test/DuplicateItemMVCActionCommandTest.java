@@ -124,17 +124,9 @@ public class DuplicateItemMVCActionCommandTest {
 
 	@Test
 	public void testDuplicateDropZoneFragmentEntryLink() throws Exception {
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
-
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
 		FragmentEntryLink dropzoneFragmentEntryLink = _addFragmentEntryLink(
 			"{}",
@@ -142,6 +134,14 @@ public class DuplicateItemMVCActionCommandTest {
 				"data-lfr-drop-zone-id=${fragmentEntryLinkNamespace}>" +
 					"</lfr-drop-zone>",
 			null, segmentsExperienceId);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_layout.getGroupId(), _layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
 		FragmentStyledLayoutStructureItem
 			dropZoneFragmentStyledLayoutStructureItem =

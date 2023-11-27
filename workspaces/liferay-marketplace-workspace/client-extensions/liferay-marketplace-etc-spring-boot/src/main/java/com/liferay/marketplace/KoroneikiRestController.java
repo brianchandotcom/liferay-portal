@@ -11,11 +11,8 @@ import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
-import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
@@ -219,16 +216,12 @@ public class KoroneikiRestController extends BaseRestController {
 			return;
 		}
 
-		JSONArray orderItemsJSONArray = commerceOrderJSONObject.getJSONArray(
-			"orderItems");
-
 		_initResourceBuilders(jwt);
 
 		Order order = _orderResource.getOrder(
 			commerceOrderJSONObject.getLong("id"));
 
-		if ((orderItemsJSONArray == null) ||
-			!Objects.equals(
+		if (!Objects.equals(
 				order.getOrderTypeExternalReferenceCode(), "DXPAPP")) {
 
 			if (_log.isInfoEnabled()) {
@@ -245,20 +238,22 @@ public class KoroneikiRestController extends BaseRestController {
 
 		_orderResource.patchOrder(commerceOrderJSONObject.getLong("id"), order);
 
-		long cpDefinitionId = Long.valueOf(
-			orderItemsJSONArray.getJSONObject(
-				0
-			).getString(
-				"cpDefinitionId"
-			));
-
-		Product product = _productResource.getProduct(cpDefinitionId + 1);
+		com.liferay.headless.commerce.admin.order.client.pagination.Page
+			<OrderItem> orderItemPage =
+				_orderItemResource.getOrderIdOrderItemsPage(
+					order.getId(),
+					com.liferay.headless.commerce.admin.order.client.pagination.
+						Pagination.of(1, 10));
 
 		Map<String, String> productSpecificationsMap =
 			_getProductSpecificationsMap(
 				_productSpecificationResource.
 					getProductIdProductSpecificationsPage(
-						product.getProductId(), Pagination.of(1, 20)
+						_skuResource.getSku(
+							orderItemPage.fetchFirstItem(
+							).getSkuId()
+						).getProductId(),
+						Pagination.of(1, 20)
 					).getItems());
 
 		if (Objects.equals(
@@ -288,15 +283,10 @@ public class KoroneikiRestController extends BaseRestController {
 			_accountResource.patchAccount(account.getId(), account);
 		}
 
-		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
-
 		try {
-			for (int i = 0; i < orderItemsJSONArray.length(); i++) {
+			for (OrderItem orderItem : orderItemPage.getItems()) {
 				_postAccountAccountKeyProductPurchase(
-					account, commerceOrderJSONObject,
-					dxpLicenseUsageTypePropertiesMap, jsonObject,
-					orderItemsJSONArray.getJSONObject(i), product,
-					productSpecificationsMap);
+					account, jwt, orderItem, productSpecificationsMap);
 			}
 
 			order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
@@ -307,16 +297,6 @@ public class KoroneikiRestController extends BaseRestController {
 		catch (Exception exception) {
 			_log.error("Unable to create account product purchase", exception);
 		}
-	}
-
-	private String _getProductKey(String skuString, Collection<Sku> skus) {
-		for (Sku sku : skus) {
-			if (Objects.equals(sku.getSku(), skuString)) {
-				return sku.getExternalReferenceCode();
-			}
-		}
-
-		return null;
 	}
 
 	private Map<String, String> _getProductSpecificationsMap(
@@ -395,13 +375,6 @@ public class KoroneikiRestController extends BaseRestController {
 			liferayMarketplaceKoroneikiAuthURL
 		).build();
 
-		_productResource = ProductResource.builder(
-		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-		).endpoint(
-			liferayDXPURL
-		).build();
-
 		_productSpecificationResource = ProductSpecificationResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
@@ -449,17 +422,16 @@ public class KoroneikiRestController extends BaseRestController {
 	}
 
 	private void _postAccountAccountKeyProductPurchase(
-			Account account, JSONObject commerceOrderJSONObject,
-			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap,
-			JSONObject jsonObject, JSONObject orderItemJSONObject,
-			Product product, Map<String, String> productSpecificationsMap)
+			Account account, Jwt jwt, OrderItem orderItem,
+			Map<String, String> productSpecificationsMap)
 		throws Exception {
+
+		Map<String, Boolean> dxpLicenseUsageTypePropertiesMap = new HashMap<>();
 
 		ProductPurchase productPurchase = new ProductPurchase();
 
 		_populateDXPLicenseUsageTypePropertiesMap(
-			dxpLicenseUsageTypePropertiesMap,
-			orderItemJSONObject.getString("options"));
+			dxpLicenseUsageTypePropertiesMap, orderItem.getOptions());
 
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
@@ -482,8 +454,7 @@ public class KoroneikiRestController extends BaseRestController {
 		ExternalLink externalLink = new ExternalLink();
 
 		externalLink.setDomain("salesforce");
-		externalLink.setEntityId(
-			String.valueOf(commerceOrderJSONObject.getLong("id")));
+		externalLink.setEntityId(String.valueOf(orderItem.getOrderId()));
 		externalLink.setEntityName("opportunity");
 
 		productPurchase.setExternalLinks(new ExternalLink[] {externalLink});
@@ -491,20 +462,16 @@ public class KoroneikiRestController extends BaseRestController {
 		productPurchase.setPerpetual(
 			Objects.equals(
 				productSpecificationsMap.get("license-type"), "Perpetual"));
-		productPurchase.setProductKey(
-			_getProductKey(
-				orderItemJSONObject.getString("sku"),
-				_skuResource.getProductIdSkusPage(
-					product.getProductId(), Pagination.of(1, 10)
-				).getItems()));
-		productPurchase.setQuantity(orderItemJSONObject.getInt("quantity"));
+		productPurchase.setProductKey(orderItem.getSkuExternalReferenceCode());
+		productPurchase.setQuantity(
+			orderItem.getQuantity(
+			).intValue());
 		productPurchase.setStartDate(Date.from(zonedDateTime.toInstant()));
 		productPurchase.setStatus(ProductPurchase.Status.APPROVED);
 
 		productPurchase =
 			_productPurchaseResource.postAccountAccountKeyProductPurchase(
-				jsonObject.getString("userName"),
-				String.valueOf(commerceOrderJSONObject.getInt("userId")),
+				jwt.getClaim("username"), jwt.getClaim("sub"),
 				account.getExternalReferenceCode(), productPurchase);
 
 		if (_log.isInfoEnabled()) {
@@ -516,16 +483,32 @@ public class KoroneikiRestController extends BaseRestController {
 			_postKoroneikiAccount(Account account, Jwt jwt)
 		throws Exception {
 
+		String code = account.getName(
+		).replaceAll(
+			StringPool.SPACE, StringPool.BLANK
+		).toUpperCase();
+
+		com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
+			<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account>
+				koroneikiAccountResourceAccountsPage =
+					_koroneikiAccountResource.getAccountsPage(
+						"", "code eq '" + code + "'",
+						com.liferay.osb.koroneiki.phloem.rest.client.pagination.
+							Pagination.of(1, 5),
+						"");
+
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
 			koroneikiAccount =
-				new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
-					Account();
+				koroneikiAccountResourceAccountsPage.fetchFirstItem();
 
-		koroneikiAccount.setCode(
-			account.getName(
-			).replaceAll(
-				StringPool.SPACE, StringPool.BLANK
-			).toUpperCase());
+		if (koroneikiAccount != null) {
+			return koroneikiAccount;
+		}
+
+		koroneikiAccount =
+			new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account();
+
+		koroneikiAccount.setCode(code);
 
 		Map<String, String> customFieldsMap = new HashMap<>();
 
@@ -611,7 +594,6 @@ public class KoroneikiRestController extends BaseRestController {
 	private PostalAddressResource _postalAddressResource;
 	private ProductPurchaseResource _productPurchaseResource;
 	private ProductPurchaseViewResource _productPurchaseViewResource;
-	private ProductResource _productResource;
 	private ProductSpecificationResource _productSpecificationResource;
 	private SkuResource _skuResource;
 

@@ -101,8 +101,6 @@ public class ContentDashboardAdminPortletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		UserTestUtil.setUser(TestPropsValues.getUser());
-
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.fetchCompany(_group.getCompanyId());

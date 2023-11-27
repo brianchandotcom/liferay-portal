@@ -14,6 +14,15 @@ import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
+import com.liferay.jethr0.util.PropertiesUtil;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.io.IOException;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -26,6 +35,30 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
+	}
+
+	protected Set<String> getAvailableTestSuites()
+		throws InvalidJSONException, IOException {
+
+		Set<String> availableTestSuites = new HashSet<>();
+
+		String upstreamAvailableTestSuites = _getUpstreamBranchCIPropertyValue(
+			"ci.test.available.suites");
+
+		if (!StringUtil.isNullOrEmpty(upstreamAvailableTestSuites)) {
+			Collections.addAll(
+				availableTestSuites, upstreamAvailableTestSuites.split(","));
+		}
+
+		String senderAvailableTestSuites = _getSenderBranchCIPropertyValue(
+			"ci.test.available.suites");
+
+		if (!StringUtil.isNullOrEmpty(senderAvailableTestSuites)) {
+			Collections.addAll(
+				availableTestSuites, senderAvailableTestSuites.split(","));
+		}
+
+		return availableTestSuites;
 	}
 
 	protected GitHubComment getGitHubComment() throws InvalidJSONException {
@@ -121,6 +154,42 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 			gitHubPullRequest.getUpstreamBranchURL());
 
 		return _upstreamGitBranchEntity;
+	}
+
+	private String _getSenderBranchCIPropertyValue(String propertyName)
+		throws InvalidJSONException, IOException {
+
+		GitBranchEntity gitBranchEntity = getSenderGitBranchEntity();
+
+		if (gitBranchEntity == null) {
+			return null;
+		}
+
+		Properties properties = gitBranchEntity.getProperties("ci.properties");
+
+		if (properties == null) {
+			return null;
+		}
+
+		return PropertiesUtil.getPropertyValue(properties, propertyName);
+	}
+
+	private String _getUpstreamBranchCIPropertyValue(String propertyName)
+		throws InvalidJSONException, IOException {
+
+		GitBranchEntity gitBranchEntity = getUpstreamGitBranchEntity();
+
+		if (gitBranchEntity == null) {
+			return null;
+		}
+
+		Properties properties = gitBranchEntity.getProperties("ci.properties");
+
+		if (properties == null) {
+			return null;
+		}
+
+		return PropertiesUtil.getPropertyValue(properties, propertyName);
 	}
 
 	private GitHubPullRequest _gitHubPullRequest;

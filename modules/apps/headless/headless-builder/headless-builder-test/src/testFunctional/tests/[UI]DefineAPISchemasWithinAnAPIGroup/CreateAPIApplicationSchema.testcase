@@ -156,9 +156,8 @@ definition {
 
 		task ("Then a text 'Add a short description that describes this schema' visible in the Description field") {
 			AssertElementPresent(
-				key_fieldName = "Add a short description that describes this schema",
-				key_fieldValue = "Add a short description that describes this schema",
-				locator1 = "Translation#TARGET_LANGUAGE_TEXT_BOX_FIELD");
+				key_value = "schema",
+				locator1 = "APIBuilder#DESCRIPTION");
 		}
 	}
 

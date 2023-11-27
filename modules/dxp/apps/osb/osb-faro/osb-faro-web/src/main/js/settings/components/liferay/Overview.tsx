@@ -162,7 +162,7 @@ class LiferayOverview extends React.Component<ILiferayOverviewProps> {
 	handleValidate(value) {
 		const {dataSource, groupId} = this.props;
 
-		let error = '';
+		let error = null;
 
 		if (value !== dataSource.name) {
 			if (this._cachedNameValues.has(value)) {

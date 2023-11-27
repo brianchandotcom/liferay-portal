@@ -61,7 +61,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 	};
 
 	const validateUniqueName = (value: string) => {
-		let error = '';
+		let error = null;
 
 		if (_cachedNameValues.current.has(value)) {
 			error = _cachedNameValues.current.get(value);

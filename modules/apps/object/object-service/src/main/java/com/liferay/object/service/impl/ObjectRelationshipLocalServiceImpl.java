@@ -1347,7 +1347,10 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (count > 0) {
 			throw new DuplicateObjectRelationshipException(
-				"Duplicate name " + name);
+				StringBundler.concat(
+					"There is already an object relationship with this name ",
+					"in the object definition \"",
+					objectDefinition1.getShortName(), "\"."));
 		}
 
 		_validateNameObjectFieldName(name, objectDefinition1);

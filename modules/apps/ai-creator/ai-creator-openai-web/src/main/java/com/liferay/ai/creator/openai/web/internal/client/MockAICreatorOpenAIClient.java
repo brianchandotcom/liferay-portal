@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Lourdes Fernández Besada
+ * @author Roberto Díaz
  */
 @Component(
 	enabled = false, property = "service.ranking:Integer=200",
@@ -51,6 +52,36 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 		}
 
 		throw _getAICreatorOpenAIClientException(content);
+	}
+
+	@Override
+	public String[] getGenerations(
+		String apiKey, String prompt, String size, int numberOfImages) {
+
+		if (Objects.equals(apiKey, "VALID_API_KEY") &&
+			Objects.equals(prompt, "USER_IMAGES")) {
+
+			String[] generations = new String[numberOfImages];
+
+			for (int i = 0; i < numberOfImages; i++) {
+				_getSampleGenerations(
+					"http/localhost:8080/mock/url", numberOfImages);
+			}
+
+			return generations;
+		}
+
+		if (Validator.isNotNull(prompt) &&
+			prompt.startsWith(_USER_IMAGES_URL_)) {
+
+			return _getSampleGenerations(
+				GetterUtil.getString(
+					prompt.substring(
+						_USER_CONTENT_SLEEP_MILLIS_PREFIX.length())),
+				numberOfImages);
+		}
+
+		throw _getAICreatorOpenAIClientException(prompt);
 	}
 
 	@Override
@@ -99,8 +130,20 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 		return "OPENAI_API_COMPLETION_RESPONSE_CONTENT";
 	}
 
+	private String[] _getSampleGenerations(String url, int numberOfImages) {
+		String[] generations = new String[numberOfImages];
+
+		for (int i = 0; i < numberOfImages; i++) {
+			generations[i] = url;
+		}
+
+		return generations;
+	}
+
 	private static final String _USER_CONTENT_SLEEP_MILLIS_PREFIX =
 		"USER_CONTENT_SLEEP_MILLIS_";
+
+	private static final String _USER_IMAGES_URL_ = "USER_IMAGES_URL_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MockAICreatorOpenAIClient.class);

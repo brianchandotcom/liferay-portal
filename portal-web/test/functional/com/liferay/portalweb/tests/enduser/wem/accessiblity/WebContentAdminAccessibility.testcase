@@ -1,0 +1,78 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Web Content Administration";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-199463. Assert screen reader announces the title with the copy in the same language as the website."
+	@priority = 3
+	test AnnounceCopyTitleInSiteLanguage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given a user sets Spanish as default language") {
+			JSONUser.addUser(
+				preferredLocale = "es_ES",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When the user makes a copy of web content") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "Realizar una copia");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the screen reader should announce the copy title in site language") {
+			AssertAttributeValue(
+				key_listEntry = "Web Content Title (Copy)",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+				value1 = "title",
+				value2 = "Web Content Title (Copy)");
+		}
+	}
+
+}

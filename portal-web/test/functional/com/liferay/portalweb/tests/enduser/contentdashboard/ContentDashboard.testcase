@@ -2779,20 +2779,22 @@ definition {
 	test DocumentsVersionHistoryClickBack {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(
 					dmDocumentDescription = "DM Document Description",
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
 					mimeType = "text/plain",
+					repositoryId = ${groupId},
 					sourceFileName = "Document_1.txt");
 			}
 
 			task ("Add versions for the document") {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					versionsCreated = 10);
 			}
 
@@ -2954,20 +2956,22 @@ definition {
 	@priority = 3
 	@uitest
 	test DocumentsVersionHistoryInformation {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(
 					dmDocumentDescription = "DM Document Description",
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
 					mimeType = "text/plain",
+					repositoryId = ${groupId},
 					sourceFileName = "Document_1.txt");
 			}
 
 			task ("Add versions for the document") {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					versionsCreated = 10);
 			}
 
@@ -3059,20 +3063,22 @@ definition {
 	@priority = 3
 	@uitest
 	test DocumentsVersionHistoryOrdered {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(
 					dmDocumentDescription = "DM Document Description",
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
 					mimeType = "text/plain",
+					repositoryId = ${groupId},
 					sourceFileName = "Document_1.txt");
 			}
 
 			task ("Add versions for the document") {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					versionsCreated = 10);
 			}
 
@@ -3204,20 +3210,22 @@ definition {
 	test DocumentsVersionHistoryViewVersion {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(
 					dmDocumentDescription = "DM Document Description",
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
 					mimeType = "text/plain",
+					repositoryId = ${groupId},
 					sourceFileName = "Document_1.txt");
 			}
 
 			task ("Add versions for the document") {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					versionsCreated = 10);
 			}
 
@@ -6739,20 +6747,22 @@ definition {
 	test ViewMoreButtonToDocumentsVersionHistory {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Given the info panel of a document") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(
 					dmDocumentDescription = "DM Document Description",
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
 					mimeType = "text/plain",
+					repositoryId = ${groupId},
 					sourceFileName = "Document_1.txt");
 			}
 
 			task ("Add versions for the document") {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					versionsCreated = 10);
 			}
 		}

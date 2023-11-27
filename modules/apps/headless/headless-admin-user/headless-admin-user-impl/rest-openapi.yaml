@@ -645,12 +645,10 @@ components:
                 description:
                     description:
                         The role's description.
-                    readOnly: true
                     type: string
                 description_i18n:
                     additionalProperties:
                         type: string
-                    readOnly: true
                     type: object
                 externalReferenceCode:
                     # @review
@@ -666,17 +664,18 @@ components:
                 name:
                     description:
                         The role's name.
-                    readOnly: true
                     type: string
                 name_i18n:
                     additionalProperties:
                         type: string
-                    readOnly: true
                     type: object
+                rolePermissions:
+                    items:
+                        $ref: "#/components/schemas/RolePermission"
+                    type: array
                 roleType:
                     description:
                         The role's type.
-                    readOnly: true
                     type: string
             type: object
         RoleBrief:
@@ -700,6 +699,28 @@ components:
                         type: string
                     readOnly: true
                     type: object
+            type: object
+        RolePermission:
+            properties:
+                actionIds:
+                    items:
+                        type: string
+                    type: array
+                id:
+                    format: int64
+                    type: integer
+                label:
+                    type: string
+                primaryKey:
+                    type: string
+                resourceName:
+                    type: string
+                roleId:
+                    format: int64
+                    type: integer
+                scope:
+                    format: int64
+                    type: integer
             type: object
         Segment:
             description:
@@ -4252,6 +4273,30 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Role"
                                 type: array
+            tags: ["Role"]
+        post:
+            description:
+                Creates a new role
+            operationId: postRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                    description:
+                        "Roles successfully created"
             tags: ["Role"]
     "/roles/{roleId}":
         get:

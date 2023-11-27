@@ -470,6 +470,10 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 					fieldValidators.put(validatorName, fieldValidator);
 				}
 
+				if (_productionMode) {
+					fieldElement = null;
+				}
+
 				fields.put(fieldName + _ELEMENTS_SUFFIX, fieldElement);
 				fields.put(fieldName + _TYPE_SUFFIX, fieldType);
 				fields.put(fieldName + _LOCALIZATION_SUFFIX, fieldLocalized);

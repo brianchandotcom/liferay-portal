@@ -66,7 +66,8 @@ interface GetObjectFolderActionsProps {
 		objectDefinitionActions: Actions;
 		objectFolderActions: Actions;
 	};
-	id: number;
+	baseResourceURL: string;
+	objectFolderId: number;
 	objectFolderPermissionsURL: string;
 	setModalImportObjectDefinitionInfo: (
 		value: ModalImportObjectDefinitionInfo
@@ -75,7 +76,8 @@ interface GetObjectFolderActionsProps {
 }
 export declare function getObjectFolderActions({
 	actions,
-	id,
+	baseResourceURL,
+	objectFolderId,
 	objectFolderPermissionsURL,
 	setModalImportObjectDefinitionInfo,
 	setShowModal,

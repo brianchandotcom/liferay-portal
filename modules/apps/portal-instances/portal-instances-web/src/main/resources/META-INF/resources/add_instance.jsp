@@ -93,7 +93,7 @@
 			<p class="text-3 text-center text-secondary"><liferay-ui:message key="the-creation-of-the-site-may-take-some-time-.closing-the-window-will-not-cancel-the-process" /></p>
 		</div>
 
-		<input type="submit" hidden />
+		<input hidden type="submit" />
 	</liferay-frontend:edit-form>
 </clay:container-fluid>
 

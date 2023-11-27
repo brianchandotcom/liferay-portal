@@ -72,7 +72,13 @@ public class DefaultPortalPullRequestJobEntity
 
 	@Override
 	public String getTestSuiteName() {
-		if (_testSuiteName != null) {
+		if (!StringUtil.isNullOrEmpty(_testSuiteName)) {
+			return _testSuiteName;
+		}
+
+		_testSuiteName = super.getTestSuiteName();
+
+		if (!StringUtil.isNullOrEmpty(_testSuiteName)) {
 			return _testSuiteName;
 		}
 

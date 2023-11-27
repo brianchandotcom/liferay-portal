@@ -1,8 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-192282=true";
-	property portal.acceptance = "true";
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-191488=true${line.separator}feature.flag.LPS-192282=true${line.separator}feature.flag.LPS-194395=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -48,6 +47,254 @@ definition {
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-191485. Verify if all the fields are displayed correctly when the type field is selected in the Item Action"
+	@priority = 3
+	test AllFieldsAreInAsyncTypeFieldOnItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("And the user clicks on Type field") {
+			Click(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+		}
+
+		task ("Then the options Headless, Async, Link, Modal and Side Panel are displayed in the modal") {
+			for (var assertFields : list "Headless,Async,Link,Modal,Side Panel") {
+				AssertElementPresent(
+					key_fieldLabel = "Type",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${assertFields});
+			}
+		}
+
+		task ("When the user selects the Async option in Type field") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+		}
+
+		task ("Then Method, Title, URL, Headless Action Key, Confirmation Message, Message Type are displayed") {
+			AssertElementPresent(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			AssertElementPresent(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			AssertElementPresent(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID");
+
+			AssertElementPresent(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER");
+
+			AssertElementPresent(
+				key_placeholder = "Add a message here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER");
+
+			AssertElementPresent(
+				key_fieldLabel = "Message Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+		}
+	}
+
+	@description = "LPS-191485. Verify if the options GET, POST, PATCH, LPS-199219DELETE are present in the Method dropdown in the Item Action"
+	@priority = 4
+	test AssertAllMethodOptionsArePresentOnItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("When the user selects the Async option in Type field") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+		}
+
+		task ("And fills URL field") {
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "wwww.liferay.com");
+		}
+
+		task ("Then Confirm that the DELETE option is selected by default.") {
+			AssertElementPresent(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "DELETE");
+		}
+
+		task ("When the user selects the Method option") {
+			Select(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "DELETE");
+		}
+
+		task ("Then The options GET, POST, PATCH, DELETE are present in the Method dropdown") {
+			for (var assertFields : list "GET,POST,PATCH,DELETE") {
+				AssertElementPresent(
+					key_fieldLabel = "Method",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${assertFields});
+			}
+		}
+
+		task ("And confirm that it is not possible to save the action") {
+			AssertVisible(
+				key_title = "New Item Action",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
+
+	@description = "LPS-191485. Verify if when the user selects the Headless option, the following fields are displayed in the modal in the Item Action"
+	@priority = 3
+	test AssertAllTypeOptionsArePresentOnItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("And the user selects the Headless option in Type field") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Headless");
+		}
+
+		task ("Then Headless Action Key, Confirmation Message, Message Type are displayed") {
+			AssertElementPresent(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER");
+
+			AssertElementPresent(
+				key_placeholder = "Add a message here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER");
+
+			AssertElementPresent(
+				key_fieldLabel = "Message Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that the field field cannot be edited in the Creation Action"
+	@priority = 4
+	test CanAssertThatTheTypeFieldIsDisabledInCreationAction {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button and edit") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then Error messages are displayed and the save button is disabled") {
+			AssertElementPresent(
+				key_placeholderText = "Please select an option.",
+				locator1 = "DataSet#ANY_DISABLED");
+		}
+	}
+
+	@description = "LPS-194351 confirm that when creating an action, and clicking on the three dots button, the "Edit" option is displayed in the Creation Action"
+	@priority = 3
+	test CanAssertTheEditButtonActionInCreationAction {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			AssertElementPresent(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then the Delete and Edit option is listed in the dropdown menu") {
+			AssertElementPresent(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that a created action can be deleted, and a success message is displayed in the Creation Action"
+	@priority = 5
+	test CanBeDeletedAction {
+		property portal.acceptance = "true";
+
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option and clicks on delete button") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then a modal is opened with the message: “Are you sure you want to delete this action?/ and click on delete") {
+			AssertElementPresent(
+				key_modalText = "Are you sure you want to delete this action?",
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
+
+			Click(locator1 = "Button#MODAL_DELETE");
+		}
+
+		task ("Then a successful toast message is displayed and the creation action list is empty") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
 		}
 	}
 
@@ -143,6 +390,75 @@ definition {
 		}
 	}
 
+	@description = "LPS-191485. Verify if is possible to cancel a Async Item Action"
+	@priority = 5
+	test CanCancelAsyncItemAction {
+		property portal.acceptance = "true";
+
+		task ("When Create a New Action") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Fill in the required fields") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Async Item Action");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = "asterisk");
+
+			Click.clickNoMouseOver(
+				key_text = "asterisk",
+				locator1 = "Modal#MODAL_ICON");
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "/group/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_objectDefinitionId=34759&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_externalReferenceCode={externalReferenceCode}");
+
+			Select(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "GET");
+
+			Type(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Passed.");
+
+			ClickNoError(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+
+			Type(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Failed.");
+		}
+
+		task ("And clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("And the link action doesn't appear in the Action tab table") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "Async Item Action",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 	@description = "LPS-186876. Confirm that is possible to cancel changes in the Actions tab."
 	@priority = 3
 	test CanCancelChangesOnActions {
@@ -172,6 +488,93 @@ definition {
 			AssertElementPresent(
 				key_entryName = "No actions were created.",
 				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that when trying to delete a created action, the deletion can be canceled using the cancel button in the Item Action"
+	@priority = 3
+	test CanCancelDeletionOnCancelButtonOnItemAction {
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option and clicks on delete button") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And clicking on Cancel button inside the modal") {
+			Button.clickCancel();
+		}
+
+		task ("Then The item is not deleted") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that editing an action is canceled when the user clicks the cancel button in the Creation Action"
+	@priority = 3
+	test CanCancelEditActionOnCancelButtonInCreationAction {
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And Edit the action item created, and click on "Cancel" button") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Edited label");
+
+			Type(
+				key_fieldName = "Add a value here",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+
+			Button.clickCancel();
+		}
+
+		task ("And it appears on the creation Action tab table with the original label.") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
 		}
 	}
 
@@ -220,6 +623,73 @@ definition {
 			AssertElementPresent(
 				key_position = 1,
 				keyName = "delete",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-191485. Verify if is possible to cancel a Headless Item Action"
+	@priority = 5
+	test CanCancelHedlessItemAction {
+		property portal.acceptance = "true";
+
+		task ("When Create a New Action") {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Headless Item Action");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = "asterisk");
+
+			Click.clickNoMouseOver(
+				key_text = "asterisk",
+				locator1 = "Modal#MODAL_ICON");
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Headless");
+
+			Type(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = "xx-ee");
+
+			Select(
+				key_fieldLabel = "Message Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Warning");
+
+			Type(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Passed.");
+
+			ClickNoError(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+
+			Type(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Failed.");
+		}
+
+		task ("And clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then the list of action items is empty") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "Async Item Action",
 				locator1 = "DataSet#FIELDS_TABLE");
 		}
 	}
@@ -418,6 +888,142 @@ definition {
 		}
 	}
 
+	@description = "LPS-191485. Verify if the use can create a Async item action"
+	@priority = 5
+	test CanCreateAsyncItemActionOnItemAction {
+		property portal.acceptance = "true";
+
+		task ("When Create a New Action") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Fill in the required fields") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Async Item Action");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = "asterisk");
+
+			Click.clickNoMouseOver(
+				key_text = "asterisk",
+				locator1 = "Modal#MODAL_ICON");
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "/group/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_objectDefinitionId=34759&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_externalReferenceCode={externalReferenceCode}");
+
+			Select(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "GET");
+
+			Type(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Passed.");
+
+			ClickNoError(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+
+			Type(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Failed.");
+		}
+
+		task ("And clicks on Save button") {
+			PortletEntry.save();
+		}
+
+		task ("Then the success toast alert appears") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And it appears on the Action tab table") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Async Item Action",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-191485. Verify if is possible to create a Headless Item Action"
+	@priority = 5
+	test CanCreateHeadlessItemAction {
+		property portal.acceptance = "true";
+
+		task ("When Create a New Action") {
+			DataSetAdmin.addActions(
+				actionName = "Headless Item Action",
+				errorMessage = "Failed.",
+				headlessAction = "xx-ee",
+				icon = "asterisk",
+				messageType = "Warning",
+				successMessage = "Passed.",
+				type = "Headless");
+		}
+
+		task ("Then the success toast alert appears") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And it appears on the Action tab table") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Headless Item Action",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-191485. Verify if is possible to delete a Async Item Action created"
+	@priority = 5
+	test CanDeleteAAsyncItemAction {
+		property portal.acceptance = "true";
+
+		task ("When Create a New Action") {
+			DataSetAdmin.addActions(
+				actionName = "Async Item Action",
+				errorMessage = "Failed.",
+				icon = "asterisk",
+				method = "GET",
+				successMessage = "Passed.",
+				type = "Async",
+				url = "/group/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_objectDefinitionId=34759&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_externalReferenceCode={externalReferenceCode}");
+		}
+
+		task ("Then it appears on the Action tab") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Async Item Action",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+
+		task ("When the user Delete Async Item Action item") {
+			DataSetAdmin.deleteActionEntry(actionName = "Async Item Action");
+		}
+
+		task ("Then the list of action items is empty") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "Async Item Action",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 	@description = "LPS-191486. Verify if the user can delete an Action entry"
 	@priority = 5
 	test CanDeleteAction {
@@ -463,6 +1069,41 @@ definition {
 			AssertElementNotPresent(
 				key_position = 1,
 				keyName = "delete",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-191485. Verify if is possible to delete a Headless Item Action created"
+	@priority = 5
+	test CanDeleteAHeadlessItemAction {
+		property portal.acceptance = "true";
+
+		task ("When Create a New Action") {
+			DataSetAdmin.addActions(
+				actionName = "Headless Item Action",
+				errorMessage = "Failed.",
+				headlessAction = "xx-ee",
+				icon = "asterisk",
+				messageType = "Warning",
+				successMessage = "Passed.",
+				type = "Headless");
+		}
+
+		task ("Then it appears on the Action tab") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Headless Item Action",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+
+		task ("When the user Delete Headless Item Action item") {
+			DataSetAdmin.deleteActionEntry(actionName = "Headless Item Action");
+		}
+
+		task ("Then the list of action items is empty") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "Headless Item Action",
 				locator1 = "DataSet#FIELDS_TABLE");
 		}
 	}
@@ -514,6 +1155,198 @@ definition {
 				key_position = 2,
 				keyName = "view",
 				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-191485. Verify if is possible to edit a Async Item created"
+	@priority = 5
+	test CanEditAsyncItemAction {
+		property portal.acceptance = "true";
+
+		task ("When Create a New Action") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Fill in the required fields") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Async Item Action");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = "asterisk");
+
+			Click.clickNoMouseOver(
+				key_text = "asterisk",
+				locator1 = "Modal#MODAL_ICON");
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "/group/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_objectDefinitionId=34759&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_externalReferenceCode={externalReferenceCode}");
+
+			Select(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "GET");
+
+			Type(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Passed.");
+
+			ClickNoError(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+
+			Type(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Failed.");
+
+			PortletEntry.save();
+		}
+
+		task ("And Edit the action item created") {
+			DataSetAdmin.editActions(
+				newActionName = "Async Item Action Edited",
+				newErrorMessage = "Failed Edited.",
+				newIcon = "reload",
+				newMethod = "POST",
+				newSuccessMessage = "Passed Edited.",
+				oldActionName = "Async Item Action");
+		}
+
+		task ("Then it appears on the Action tab table with the new title.") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Async Item Action Edited",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+
+		task ("When Open the item creates") {
+			Click(
+				key_tableEntry = "Async Item Action Edited",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Check all the values set in the creation for all the fields are still present") {
+			AssertElementPresent(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Async Item Action Edited");
+
+			AssertElementPresent(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+
+			AssertElementPresent(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "POST");
+
+			AssertElementPresent(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Passed Edited.");
+
+			ClickNoError(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Failed Edited.");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that a created action can be edited and changes are displayed in the Creation Action"
+	@priority = 5
+	test CanEditCreationActionInCreationAction {
+		property portal.acceptance = "true";
+
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And Edit the action item created") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Edited label");
+
+			Type(
+				key_fieldName = "Add a value here",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "xx-ee edited");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_mvcPath=%2Ffds_view.jsp&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryId=33344&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryLabel=Data+Set+Test&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsViewId=33346&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsViewLabel=View+Test");
+
+			PortletEntry.save();
+		}
+
+		task ("Then a successful toast message is displayed and it appears on the creation Action tab table with the new title and edit again") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edited label",
+				locator1 = "DataSet#FIELDS_TABLE");
+
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then Confirm that the edited values are present") {
+			AssertElementPresent(
+				key_unnamedTitle = "Edited label",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
+
+			AssertElementPresent(
+				key_unnamedTitle = "xx-ee edited",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
 		}
 	}
 
@@ -584,6 +1417,64 @@ definition {
 		}
 	}
 
+	@description = "LPS-191485. Verify if the success and error fields are present and Status Message section can be hidden in the Item Action"
+	@priority = 3
+	test CanHiddeStatusMessageSectionOnItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("When the user selects the Async option in Type field") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+		}
+
+		task ("Then The text “You can write status messages related to this action.” is present in Status messages section,") {
+			AssertElementPresent(
+				columnName = "You can write status messages related to this action.",
+				locator1 = "FrontendDataSet#COLUMN_NAME");
+		}
+
+		task ("And The tabs Success and Error are displayed within the section") {
+			AssertVisible(
+				key_text = "Success",
+				locator1 = "Button#ANY");
+
+			AssertVisible(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And The tab Success is preselected by default") {
+			AssertElementPresent(
+				key_class = "active btn btn-unstyled",
+				key_index = 1,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+		}
+
+		task ("And The Message field is present within the tab") {
+			AssertElementPresent(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD");
+		}
+
+		task ("When clicks on Status messages collapse button") {
+			DataSetAdmin.openOrCloseCollapse(
+				key_fieldName = "Status Messages",
+				key_status = "Close");
+		}
+
+		task ("Then The text “You can write status messages related to this action.” is hidden") {
+			AssertNotVisible(
+				columnName = "You can write status messages related to this action.",
+				locator1 = "FrontendDataSet#COLUMN_NAME");
+		}
+	}
+
 	@description = "LPS-191488. Confirm that is not possible to edit the Type field."
 	@priority = 5
 	test CannotEditTypeField {
@@ -611,6 +1502,179 @@ definition {
 			AssertElementPresent(
 				key_fieldName = "Type",
 				locator1 = "DataSet#VIEW_SELECT_DISABLED");
+		}
+	}
+
+	@description = "LPS-191485. Verify if the mandatory fields cannot be empty after the edition a Async Item Action"
+	@priority = 4
+	test CannotLeaveMandatoryFieldEmptyInEditAsyncAction {
+		task ("When Create a New Action") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Fill in the required fields") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Async Item Action");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = "asterisk");
+
+			Click.clickNoMouseOver(
+				key_text = "asterisk",
+				locator1 = "Modal#MODAL_ICON");
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "/group/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_objectDefinitionId=34759&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_externalReferenceCode={externalReferenceCode}");
+
+			Select(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "GET");
+
+			Type(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Passed.");
+
+			ClickNoError(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+
+			Type(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Failed.");
+
+			PortletEntry.save();
+		}
+
+		task ("And Edit the action item created") {
+			DataSetAdmin.editActions(
+				newActionName = "Async Item Action Edited",
+				newErrorMessage = "Failed Edited.",
+				newIcon = "reload",
+				newMethod = "POST",
+				newSuccessMessage = "Passed Edited.",
+				newURL = "",
+				oldActionName = "Async Item Action");
+		}
+
+		task ("Then A message error appears") {
+			AssertElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED");
+		}
+
+		task ("And the changes cannot be saved") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "Async Item Action Edited",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-191485. Verify if the mandatory fields cannot be empty after the edition a Headless Item Action"
+	@priority = 4
+	test CannotLeaveMandatoryFieldEmptyInEditHeadlessItemAction {
+		task ("When Create a New Action") {
+			DataSetAdmin.addActions(
+				actionName = "Headless Item Action",
+				errorMessage = "Failed.",
+				headlessAction = "xx-ee",
+				icon = "asterisk",
+				messageType = "Warning",
+				successMessage = "Passed.",
+				type = "Headless");
+		}
+
+		task ("And Edit the action item created") {
+			DataSetAdmin.editActions(
+				newActionName = "Headless Item Action Edited",
+				newErrorMessage = "Failed Edited.",
+				newHeadlessAction = "xx-ee edited",
+				newIcon = "reload",
+				newMessageType = "Info",
+				newSuccessMessage = "Passed Edited.",
+				oldActionName = "Headless Item Action");
+		}
+
+		task ("Then it appears on the Action tab table with the new title.") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Headless Item Action Edited",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+
+		task ("When Open the item creates") {
+			Click(
+				key_tableEntry = "",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Check all the values set in the creation for all the fields are still present") {
+			AssertElementPresent(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Async Item Action Edited");
+
+			AssertElementPresent(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Headless");
+
+			AssertElementPresent(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Passed Edited.");
+
+			ClickNoError(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = "Failed Edited.");
+		}
+	}
+
+	@description = "LPS-191485. Verify if is not possible to leave title field empty in the Headless Item Action"
+	@priority = 4
+	test CannotLeaveTitleFieldEmptyInHeadlessItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("Then Headless Action Key, Confirmation Message, Message Type are displayed") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Headless");
+
+			Type(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = "Headless Action Test");
+		}
+
+		task ("And confirm that it is not possible to save the action") {
+			AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");
 		}
 	}
 
@@ -943,6 +2007,64 @@ definition {
 		}
 	}
 
+	@description = "LPS-191485. Verify if is possible to see and hidde the text in the Section Message Section in the Item Action"
+	@priority = 3
+	test CanSeeAndHiddeTextInStatusMessageSectionOnItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("And the user selects the Headless option in Type field") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Headless");
+		}
+
+		task ("Then The text “You can write status messages related to this action.” is present in Status messages section") {
+			AssertElementPresent(
+				columnName = "You can write status messages related to this action.",
+				locator1 = "FrontendDataSet#COLUMN_NAME");
+		}
+
+		task ("And The tabs Success and Error are displayed within the section") {
+			AssertElementPresent(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD");
+
+			AssertElementPresent(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD");
+		}
+
+		task ("And The tab Success is preselected by default") {
+			AssertElementPresent(
+				key_class = "active btn btn-unstyled",
+				key_index = 1,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+		}
+
+		task ("And The Message field is present within the tab") {
+			AssertElementPresent(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD");
+		}
+
+		task ("When clicks on Status messages collapse button") {
+			DataSetAdmin.openOrCloseCollapse(
+				key_fieldName = "Status Messages",
+				key_status = "Close");
+		}
+
+		task ("Then The text “You can write status messages related to this action.” is hidden") {
+			AssertNotVisible(
+				columnName = "You can write status messages related to this action.",
+				locator1 = "FrontendDataSet#COLUMN_NAME");
+		}
+	}
+
 	@description = "LPS-192149. Verify if when an Action entry was not created, a text and an empty table will appears"
 	@priority = 4
 	test CanSeeEmptyActionTable {
@@ -985,6 +2107,80 @@ definition {
 			AssertVisible(
 				key_title = "delete",
 				locator1 = "Header#H2_TITLE");
+		}
+	}
+
+	@description = "LPS-191485. Verify if when the user hovers over the Message field a text appears in the Item Action"
+	@priority = 3
+	test CanSeeTextInMessageTabsFieldOnItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("And the user selects the Headless option in Type field") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Headless");
+		}
+
+		task ("Then Confirm the place-hoder inside the success message tab: “The user will see this message if the action is successful") {
+			AssertElementPresent(
+				key_title = "",
+				locator1 = "DataSet#FILTER_TOOLTIP",
+				value1 = "The user will see this message if the action is successful");
+		}
+
+		task ("When go to Error tab") {
+			Click(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then Confirm the place-hoder inside the success message tab: “The user will see this message if the action fails") {
+			AssertElementPresent(
+				key_title = "",
+				locator1 = "DataSet#FILTER_TOOLTIP",
+				value1 = "The user will see this message if the action fails");
+		}
+	}
+
+	@description = "LPS-191485. Verify if the Error tab can be selected and see the message inside Tooltip icon in the Item Action"
+	@priority = 3
+	test CanSelectErrorTabAndSeeTooltipInfoOnItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("When the user selects the Async option in Type field") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Async");
+		}
+
+		task ("Then Confirm the place-hoder inside the success message tab: “The user will see this message if the action is successful") {
+			AssertElementPresent(
+				key_title = "",
+				locator1 = "DataSet#FILTER_TOOLTIP",
+				value1 = "The user will see this message if the action is successful");
+		}
+
+		task ("When go to Error tab") {
+			Click(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then Confirm the place-hoder inside the success message tab: “The user will see this message if the action fails“") {
+			AssertElementPresent(
+				key_title = "",
+				locator1 = "DataSet#FILTER_TOOLTIP",
+				value1 = "The user will see this message if the action fails");
 		}
 	}
 
@@ -1432,6 +2628,176 @@ definition {
 				key_position = 1,
 				keyName = "New Action",
 				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that a created action can be edited and changes are displayed, and the Headless Action Key and Confirmation Message fields can be left empty in the Creation Action"
+	@priority = 3
+	test SomeFieldsMayBeEmptyInCreationAction {
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And Edit the action item created") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Edited label");
+
+			Type(
+				key_fieldName = "Add a value here",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+
+			PortletEntry.save();
+		}
+
+		task ("Then a successful toast message is displayed and it appears on the creation Action tab table with the new title and edit again") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edited label",
+				locator1 = "DataSet#FIELDS_TABLE");
+
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then Confirm that the edited values are present") {
+			AssertElementPresent(
+				key_unnamedTitle = "Edited label",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
+
+			AssertElementPresent(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that when editing an already created Link action, it is not possible to leave the fields empty in the Creation Action"
+	@priority = 4
+	test TheLinkActionInCreationActionFieldsCannotBeEmpty {
+		task ("And creates a new item action") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				readlessAction = "xx-ee",
+				type = "Link",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("When the user clicks on the new item action 3 dots button and edit") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And go to Edit page for the action item created and leave the required fields, title and url empty") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "");
+		}
+
+		task ("Then Error messages are displayed and the save button is disabled") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "This field is required.");
+
+			AssertElementPresent(locator1 = "DataSet#ANY_BUTTON_DISABLED");
+		}
+	}
+
+	@description = "LPS-194351 Confirm that when editing an already created modal action, it is not possible to leave the fields empty in the Creation Action"
+	@priority = 4
+	test TheModalActionFieldsCannotBeEmptyInCreationAction {
+		task ("And clicks on Create Item Action button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				actionTab = "Creation Actions",
+				icon = "pencil",
+				inputText = "Products",
+				type = "Modal",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example",
+				variant = "Full Screen");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_index = 2,
+				key_text = "Actions",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_N");
+
+			Click(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("And go to Edit page for the action item created and leave the required fields, label, title and url empty") {
+			Type(
+				key_fieldName = "add-here-the-title-of-the-modal",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "");
+
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "");
+		}
+
+		task ("Then Error messages are displayed and the save button is disabled") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "This field is required.");
+
+			AssertElementPresent(locator1 = "DataSet#ANY_BUTTON_DISABLED");
 		}
 	}
 

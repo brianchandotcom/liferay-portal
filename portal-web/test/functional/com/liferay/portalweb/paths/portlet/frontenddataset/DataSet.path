@@ -484,6 +484,21 @@
 	<td>xpath=(//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))] | //button[not(contains(@class,'borderless'))][not(contains(@class,'btn-unstyled'))][*[contains(@class,'icon-plus')]])[2]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MESSAGE_FIELD</td>
+	<td>//div[contains(@aria-labelledby, "${key_option}")]//label[text()='Message']/..//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLAPSE_OPEN</td>
+	<td>//span[contains(.,'${key_fieldName}')]/../*[*[name()='svg'][contains(@class,'lexicon-icon-angle-down')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLAPSE_CLOSED</td>
+	<td>//span[contains(.,'${key_fieldName}')]/../*[*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

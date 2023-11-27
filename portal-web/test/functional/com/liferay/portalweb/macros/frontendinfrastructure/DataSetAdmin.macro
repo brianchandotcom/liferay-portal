@@ -1,7 +1,9 @@
 definition {
 
 	@summary = "Default summary"
-	macro addActions(messageType = null, icon = null, headlessAction = null, type = null, url = null, actionName = null, confirmationMessage = null, actionTab = null, variant = null, inputText = null) {
+	macro addActions(messageType = null, icon = null, headlessAction = null, type = null,method = null, url = null, actionName = null,key_actionNameList = null, confirmationMessage = null, actionTab = null, successMessage = null, errorMessage = null, inputText = null, variant = null) {
+		var key_actionNameList = ${actionName};
+
 		if (isSet(actionTab)) {
 			Button.click(button = ${actionTab});
 
@@ -13,59 +15,60 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 
-		if (isSet(actionName)) {
-			var key_actionNameList = ${actionName};
-		}
-
-		if (isSet(variant)) {
-			var key_variant = ${variant};
-		}
-
-		if (isSet(inputText)) {
-			var key_inputText = ${inputText};
-		}
-
-		if (isSet(icon)) {
-			var key_actionIcon = ${icon};
-		}
-
-		if (isSet(type)) {
-			var key_actionType = ${type};
-		}
-
-		if (isSet(messageType)) {
-			var key_actionMessageType = ${messageType};
-		}
-
-		for (var key_actionName : list ${key_actionNameList}) {
+		for (var actionName : list ${key_actionNameList}) {
 			Type(
 				key_unnamedTitle = "",
 				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
-				value1 = ${key_actionName});
+				value1 = ${actionName});
 
-			if (isSet(key_actionIcon)) {
-				Click(locator1 = "Button#PLUS");
+			if (isSet(icon)) {
+				LexiconEntry.gotoAdd();
 
 				SelectFrameTop();
 
 				Type(
 					locator1 = "DataSet#MODAL_SEARCH",
-					value1 = ${key_actionIcon});
+					value1 = ${icon});
 
 				Click.mouseOverClick(
-					key_text = ${key_actionIcon},
-					locator1 = "Icon#ANY");
+					key_text = ${icon},
+					locator1 = "Modal#MODAL_ICON");
 			}
 
-			Select(
-				key_fieldLabel = "Type",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${key_actionType});
+			if (isSet(type)) {
+				Select(
+					key_fieldLabel = "Type",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${type});
+			}
 
-			Type(
-				key_fieldId = "URL",
-				locator1 = "TextArea#ANY_ID",
-				value1 = ${url});
+			if (isSet(variant)) {
+				Select(
+					key_fieldLabel = "Variant",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${variant});
+			}
+
+			if (isSet(inputText)) {
+				Type(
+					key_fieldName = "add-here-the-title-of-the-modal",
+					locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+					value1 = ${variant});
+			}
+
+			if (isSet(method)) {
+				Select(
+					key_fieldLabel = "Method",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${method});
+			}
+
+			if (isSet(url)) {
+				Type(
+					key_fieldId = "URL",
+					locator1 = "TextArea#ANY_ID",
+					value1 = ${url});
+			}
 
 			if (isSet(headlessAction)) {
 				Type(
@@ -81,29 +84,33 @@ definition {
 					value1 = ${confirmationMessage});
 			}
 
-			if (isSet(key_variant)) {
-				Select(
-					key_fieldLabel = "Variant",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${key_variant});
-			}
-
-			if (isSet(key_inputText)) {
-				Type(
-					key_fieldName = "add-here-the-title-of-the-modal",
-					locator1 = "DataSet#PRESELECT_VALUE_INPUT",
-					value1 = ${key_inputText});
-			}
-
-			if (isSet(key_actionMessageType)) {
+			if (isSet(messageType)) {
 				Select(
 					key_fieldLabel = "Message Type",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${key_actionMessageType});
+					value1 = ${messageType});
+			}
+
+			if (isSet(successMessage)) {
+				Type(
+					key_option = "Success",
+					locator1 = "DataSet#MESSAGE_FIELD",
+					value1 = ${successMessage});
+			}
+
+			if (isSet(errorMessage)) {
+				ClickNoError(
+					key_text = "Error",
+					locator1 = "Button#ANY");
+
+				Type(
+					key_option = "Error",
+					locator1 = "DataSet#MESSAGE_FIELD",
+					value1 = ${errorMessage});
 			}
 
 			Click(
-				key_text = ${key_actionIcon},
+				key_text = ${icon},
 				locator1 = "Icon#ANY");
 
 			PortletEntry.save();
@@ -111,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAFDSFieldWithTranslation(selectLanguage = null, key_fieldName = null, dropdownMenuItem = null, key_newLabel = null,) {
+	macro addAFDSFieldWithTranslation(selectLanguage = null, key_fieldName = null, dropdownMenuItem = null, key_newLabel = null) {
 		Click(
 			key_fieldName = ${key_fieldName},
 			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
@@ -532,6 +539,32 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro deleteActionEntry(actionName = null, actionTab = null) {
+		if (isSet(actionTab)) {
+			Button.click(button = ${actionTab});
+
+			if (${actionTab} == "Creation Actions") {
+				Click(
+					key_tableEntry = ${actionName},
+					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+				MenuItem.click(menuItem = "Delete");
+
+				Button.clickDelete();
+			}
+		}
+		else {
+			Click(
+				key_tableEntry = ${actionName},
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Delete");
+
+			Button.clickDelete();
+		}
+	}
+
+	@summary = "Default summary"
 	macro deleteAllDataSetEntries() {
 		DataSetAdmin.goToDataSetAdminPage();
 
@@ -631,6 +664,111 @@ definition {
 		Button.click(button = "Delete");
 
 		Alert.viewSuccessMessage();
+	}
+
+	@summary = "Default summary"
+	macro editActions(newMessageType = null, newIcon = null, newHeadlessAction = null, newType = null,newMethod = null, newURL = null, newActionName = null,oldActionName = null, newConfirmationMessage = null, actionTab = null, newSuccessMessage = null, newErrorMessage = null) {
+		if (isSet(actionTab)) {
+			Button.click(button = ${actionTab});
+
+			if (${actionTab} == "Creation Actions") {
+				Click(
+					key_tableEntry = ${oldActionName},
+					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+				MenuItem.click(menuItem = "Edit");
+			}
+		}
+		else {
+			Click(
+				key_tableEntry = ${oldActionName},
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		Type(
+			key_unnamedTitle = "",
+			locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+			value1 = ${newActionName});
+
+		if (isSet(newIcon)) {
+			Click.mouseOverClick(
+				key_text = "change",
+				locator1 = "Icon#ANY");
+
+			SelectFrameTop();
+
+			Type(
+				locator1 = "DataSet#MODAL_SEARCH",
+				value1 = ${newIcon});
+
+			Click.mouseOverClick(
+				key_text = ${newIcon},
+				locator1 = "Modal#MODAL_ICON");
+		}
+
+		if (isSet(newType)) {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${newType});
+		}
+
+		if (isSet(newMethod)) {
+			Select(
+				key_fieldLabel = "Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${newMethod});
+		}
+
+		if (isSet(newURL)) {
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = ${newURL});
+		}
+
+		if (isSet(newHeadlessAction)) {
+			Type(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = ${newHeadlessAction});
+		}
+
+		if (isSet(newConfirmationMessage)) {
+			Type(
+				key_placeholder = "Add a message here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = ${newConfirmationMessage});
+		}
+
+		if (isSet(newMessageType)) {
+			Select(
+				key_fieldLabel = "Message Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${newMessageType});
+		}
+
+		if (isSet(newSuccessMessage)) {
+			Type(
+				key_option = "Success",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = ${newSuccessMessage});
+		}
+
+		if (isSet(newErrorMessage)) {
+			ClickNoError(
+				key_text = "Error",
+				locator1 = "Button#ANY");
+
+			Type(
+				key_option = "Error",
+				locator1 = "DataSet#MESSAGE_FIELD",
+				value1 = ${newErrorMessage});
+		}
+
+		PortletEntry.save();
 	}
 
 	@summary = "Default summary"
@@ -764,6 +902,25 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 		Click(locator1 = "DataSet#VIEW_ENTRY_BUTTON");
+	}
+
+	@summary = "Default summary"
+	macro openOrCloseCollapse(key_status = null, key_fieldName = null) {
+		if (${key_status} == "Open") {
+			if (IsVisible(locator1 = "DataSet#COLLAPSE_CLOSED", value1 = ${key_fieldName})) {
+				Click(
+					locator1 = "DataSet#COLLAPSE_CLOSED",
+					value1 = ${key_fieldName});
+			}
+		}
+
+		if (${key_status} == "Close") {
+			if (IsVisible(locator1 = "DataSet#COLLAPSE_OPEN", value1 = ${key_fieldName})) {
+				Click(
+					locator1 = "DataSet#COLLAPSE_OPEN",
+					value1 = ${key_fieldName});
+			}
+		}
 	}
 
 	@summary = "Default summary"

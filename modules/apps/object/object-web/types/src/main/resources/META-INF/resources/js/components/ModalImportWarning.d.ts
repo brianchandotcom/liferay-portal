@@ -7,14 +7,14 @@
 
 interface ModalImportWarningProps {
 	handleImport: () => void;
+	handleOnClose: (value: boolean) => void;
 	header: string;
-	onClose: (value: boolean) => void;
 	paragraphs: string[];
 }
 export declare function ModalImportWarning({
 	handleImport,
+	handleOnClose,
 	header,
-	onClose,
 	paragraphs,
 }: ModalImportWarningProps): JSX.Element;
 export {};

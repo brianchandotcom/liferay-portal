@@ -39,7 +39,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -58,10 +57,12 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(service = {})
 public class PortletConfigurationExtender
-	implements BundleTrackerCustomizer<Configuration> {
+	implements BundleTrackerCustomizer<ServiceRegistration<Configuration>> {
 
 	@Override
-	public Configuration addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+	public ServiceRegistration<Configuration> addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
+
 		if (!BundleUtil.isLiferayServiceBundle(bundle)) {
 			return null;
 		}
@@ -101,36 +102,27 @@ public class PortletConfigurationExtender
 				exception);
 		}
 
-		_serviceRegistrations.put(
-			bundle.getSymbolicName(),
-			_bundleContext.registerService(
-				Configuration.class, portletConfiguration,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"name", "portlet"
-				).put(
-					"origin.bundle.symbolic.name", bundle.getSymbolicName()
-				).build()));
-
-		return portletConfiguration;
+		return _bundleContext.registerService(
+			Configuration.class, portletConfiguration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"name", "portlet"
+			).put(
+				"origin.bundle.symbolic.name", bundle.getSymbolicName()
+			).build());
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		Configuration portletConfiguration) {
+		ServiceRegistration<Configuration> serviceRegistration) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		Configuration portletConfiguration) {
+		ServiceRegistration<Configuration> serviceRegistration) {
 
-		ServiceRegistration<Configuration> serviceRegistration =
-			_serviceRegistrations.remove(bundle.getSymbolicName());
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
+		serviceRegistration.unregister();
 	}
 
 	@Activate
@@ -150,14 +142,6 @@ public class PortletConfigurationExtender
 		_bundleTracker.close();
 
 		_saveURLTimestamps(_bundleContext, _refreshedURLTimestamps);
-
-		for (ServiceRegistration<Configuration> serviceRegistration :
-				_serviceRegistrations.values()) {
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations.clear();
 	}
 
 	private void _enqueue(
@@ -347,8 +331,6 @@ public class PortletConfigurationExtender
 	@Reference
 	private ResourceActions _resourceActions;
 
-	private final Map<String, ServiceRegistration<Configuration>>
-		_serviceRegistrations = new ConcurrentHashMap<>();
 	private Map<String, Long> _urlTimestamps;
 
 }

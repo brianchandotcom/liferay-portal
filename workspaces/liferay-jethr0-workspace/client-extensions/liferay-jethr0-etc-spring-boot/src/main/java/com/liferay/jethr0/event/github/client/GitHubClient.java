@@ -49,7 +49,7 @@ public class GitHubClient {
 			StringUtil.toURL(
 				StringUtil.combine(
 					"https://raw.githubusercontent.com/",
-					gitBranchEntity.getBranchName(), "/",
+					gitBranchEntity.getBranchUserName(), "/",
 					gitBranchEntity.getRepositoryName(), "/",
 					gitBranchEntity.getBranchName(), "/", filePath)));
 	}

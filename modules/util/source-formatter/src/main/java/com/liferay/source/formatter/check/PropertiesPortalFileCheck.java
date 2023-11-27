@@ -178,22 +178,22 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private String _mergeValues(List<String> list) {
-		StringBundler sb = new StringBundler(3 * list.size());
+	private String _mergeValues(List<String> values) {
+		StringBundler sb = new StringBundler(3 * values.size());
 
-		for (String s : list) {
-			if (!StringUtil.equals(s, StringPool.CLOSE_BRACKET) &&
-				!StringUtil.equals(s, StringPool.OPEN_BRACKET)) {
+		for (String value : values) {
+			if (!StringUtil.equals(value, StringPool.CLOSE_BRACKET) &&
+				!StringUtil.equals(value, StringPool.OPEN_BRACKET)) {
 
 				sb.append(StringPool.FOUR_SPACES);
 			}
 
-			sb.append(s);
+			sb.append(value);
 
-			if (StringUtil.equals(s, StringPool.BACK_SLASH)) {
+			if (StringUtil.equals(value, StringPool.BACK_SLASH)) {
 				sb.append("\n");
 			}
-			else if (StringUtil.equals(s, StringPool.OPEN_BRACKET)) {
+			else if (StringUtil.equals(value, StringPool.OPEN_BRACKET)) {
 				sb.append("\\\n");
 			}
 			else {

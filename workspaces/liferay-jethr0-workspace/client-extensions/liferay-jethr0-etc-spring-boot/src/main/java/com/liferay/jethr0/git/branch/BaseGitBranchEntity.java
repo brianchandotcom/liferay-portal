@@ -76,7 +76,15 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 			"branchURL", getBranchURL()
 		).put(
 			"rebased", getRebased()
-		).put(
+		);
+
+		Type type = getType();
+
+		if (type != null) {
+			jsonObject.put("type", type.getJSONObject());
+		}
+
+		jsonObject.put(
 			"upstreamBranchSHA", getUpstreamBranchSHA()
 		).put(
 			"upstreamBranchURL", getUpstreamBranchURL()

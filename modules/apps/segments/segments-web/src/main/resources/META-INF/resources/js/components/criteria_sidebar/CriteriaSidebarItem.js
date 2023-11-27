@@ -32,22 +32,20 @@ function CriteriaSidebarItem({
 		<li
 			aria-label={sub(Liferay.Language.get('drag-x'), label)}
 			className={classNames(
-				'align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-1 c-my-1 d-flex ',
+				'align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex',
+				className,
 				{
 					dragging,
-				},
-				className
+				}
 			)}
 			ref={setElement}
 			role="menuitem"
 			tabIndex={isTarget ? 0 : -1}
 		>
-			<ClayIcon symbol="drag" />
+			<ClayIcon className="mt-0" symbol="drag" />
 
-			<span className="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark">
-				<span className="inline-item">
-					<ClayIcon symbol={icon || TYPE_ICONS[type] || 'text'} />
-				</span>
+			<span className="sticker">
+				<ClayIcon symbol={icon || TYPE_ICONS[type] || 'text'} />
 			</span>
 
 			{label}

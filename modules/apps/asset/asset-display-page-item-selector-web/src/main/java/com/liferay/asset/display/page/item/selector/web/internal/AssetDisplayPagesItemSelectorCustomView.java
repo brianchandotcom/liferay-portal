@@ -89,7 +89,7 @@ public class AssetDisplayPagesItemSelectorCustomView
 			assetDisplayPagesItemSelectorCustomViewDisplayContext =
 				new AssetDisplayPagesItemSelectorCustomViewDisplayContext(
 					(HttpServletRequest)servletRequest, itemSelectedEventName,
-					assetDisplayPageSelectorCriterion, portletURL, search);
+					assetDisplayPageSelectorCriterion, portletURL);
 
 		servletRequest.setAttribute(
 			AssetDisplayPagesItemSelectorCustomViewDisplayContext.class.

@@ -77,7 +77,7 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 
 		int endDateType = ParamUtil.getInteger(actionRequest, "endDateType");
 
-		if (endDateType == 1) {
+		if (endDateType == _END_DATE_TYPE_END_BY) {
 			Calendar endCalendar = ReportsEngineConsoleUtil.getDate(
 				actionRequest, "schedulerEndDate", true);
 
@@ -160,6 +160,8 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 
 		return _dateFormat.format(calendar.getTime());
 	}
+
+	private static final int _END_DATE_TYPE_END_BY = 1;
 
 	private static final int _END_DATE_TYPE_NO_END_DATE = 0;
 

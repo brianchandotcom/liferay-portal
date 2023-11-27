@@ -112,16 +112,14 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 				));
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Entry.class.getName(), actionRequest);
-
 		_entryService.addEntry(
 			themeDisplay.getScopeGroupId(), definitionId, format, true,
 			startCalendar.getTime(), schedulerEndDate,
 			recurrenceType != Recurrence.NO_RECURRENCE, cronText,
 			emailNotifications, emailDelivery, portletId, generatedReportsURL,
 			reportName, entryReportParametersJSONArray.toString(),
-			serviceContext);
+			ServiceContextFactory.getInstance(
+				Entry.class.getName(), actionRequest));
 	}
 
 	private String _getEntryReportParameterValue(

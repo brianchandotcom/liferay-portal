@@ -236,8 +236,7 @@ public class ContentDashboardAdminPortletTest {
 	public void testGetSearchContainer() throws Exception {
 		User user = UserTestUtil.addGroupAdminUser(_group);
 
-		Group group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), TestPropsValues.getUserId(), 0);
+		Group group = GroupTestUtil.addGroup();
 
 		try {
 			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
@@ -1069,8 +1068,7 @@ public class ContentDashboardAdminPortletTest {
 
 	@Test
 	public void testGetSearchContainerWithScope() throws Exception {
-		Group group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), TestPropsValues.getUserId(), 0);
+		Group group = GroupTestUtil.addGroup();
 
 		try {
 			JournalArticle journalArticle = JournalTestUtil.addArticle(

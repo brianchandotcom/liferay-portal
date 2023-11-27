@@ -82,8 +82,8 @@ public class GitHubPullRequest {
 	public URL getUpstreamBranchURL() {
 		return StringUtil.toURL(
 			StringUtil.combine(
-				"https://githb.com/liferay/", getBaseRepositoryName(), "/tree/",
-				getHeadBranchName()));
+				"https://github.com/liferay/", getBaseRepositoryName(), "/tree/",
+				getBaseBranchName()));
 	}
 
 	private final String _baseBranchName;

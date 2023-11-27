@@ -7,6 +7,7 @@ package com.liferay.notification.service.test.util;
 
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -92,13 +95,31 @@ public class NotificationTemplateUtil {
 		User user, String body, String description, String subject,
 		String type) {
 
-		return createNotificationContext(
-			user, body, description,
-			Collections.singletonList(
+		List<NotificationRecipientSetting> notificationRecipientSettings =
+			new ArrayList<>();
+
+		if (type.equals(NotificationConstants.TYPE_EMAIL)) {
+			notificationRecipientSettings = Arrays.asList(
 				createNotificationRecipientSetting(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString())),
-			subject, type);
+					NotificationRecipientSettingConstants.NAME_FROM,
+					"[%CURRENT_USER_EMAIL_ADDRESS%]"),
+				createNotificationRecipientSetting(
+					NotificationRecipientSettingConstants.NAME_FROM_NAME,
+					"[%CURRENT_USER_FIRST_NAME%]"),
+				createNotificationRecipientSetting(
+					NotificationRecipientSettingConstants.NAME_TO,
+					"test@liferay.com"));
+		}
+		else if (type.equals(NotificationConstants.TYPE_USER_NOTIFICATION)) {
+			notificationRecipientSettings = Collections.singletonList(
+				createNotificationRecipientSetting(
+					NotificationRecipientSettingConstants.NAME_USER_SCREEN_NAME,
+					user.getScreenName()));
+		}
+
+		return createNotificationContext(
+			user, body, description, notificationRecipientSettings, subject,
+			type);
 	}
 
 	public static NotificationQueueEntry createNotificationQueueEntry(

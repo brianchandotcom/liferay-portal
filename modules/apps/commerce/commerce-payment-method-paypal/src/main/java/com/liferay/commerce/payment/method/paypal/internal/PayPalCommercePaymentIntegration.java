@@ -76,6 +76,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -194,18 +195,12 @@ public class PayPalCommercePaymentIntegration
 		catch (IOException ioException) {
 			_log.error(ioException);
 
-			HttpException httpException = (HttpException)ioException;
-
-			JSONObject jsonObject = new JSONObject(httpException.getMessage());
-
 			commercePaymentEntry.setErrorMessages(
 				_getErrorMessages(
-					jsonObject, StringPool.BLANK
+					new JSONObject(ioException), StringPool.BLANK
 				).toString());
-
 			commercePaymentEntry.setPaymentStatus(
 				CommercePaymentEntryConstants.STATUS_FAILED);
-
 			commercePaymentEntry.setTransactionCode(transactionId);
 
 			return commercePaymentEntry;
@@ -257,13 +252,9 @@ public class PayPalCommercePaymentIntegration
 		catch (IOException ioException) {
 			_log.error(ioException);
 
-			HttpException httpException = (HttpException)ioException;
-
-			JSONObject jsonObject = new JSONObject(httpException.getMessage());
-
 			commercePaymentEntry.setErrorMessages(
 				_getErrorMessages(
-					jsonObject, StringPool.BLANK
+					ioException, StringPool.BLANK
 				).toString());
 
 			return commercePaymentEntry;
@@ -330,15 +321,10 @@ public class PayPalCommercePaymentIntegration
 		catch (IOException ioException) {
 			_log.error(ioException);
 
-			HttpException httpException = (HttpException)ioException;
-
-			JSONObject jsonObject = new JSONObject(httpException.getMessage());
-
 			commercePaymentEntry.setErrorMessages(
 				_getErrorMessages(
-					jsonObject, StringPool.BLANK
+					ioException, StringPool.BLANK
 				).toString());
-
 			commercePaymentEntry.setPaymentStatus(
 				CommercePaymentEntryConstants.STATUS_FAILED);
 
@@ -379,7 +365,6 @@ public class PayPalCommercePaymentIntegration
 					commercePaymentEntry.getTransactionCode());
 
 			capturesRefundRequest.prefer("return=representation");
-
 			capturesRefundRequest.requestBody(
 				_buildRefundRequestBody(
 					commercePaymentEntry.getAmount(
@@ -426,15 +411,10 @@ public class PayPalCommercePaymentIntegration
 		catch (IOException ioException) {
 			_log.error(ioException);
 
-			HttpException httpException = (HttpException)ioException;
-
-			JSONObject jsonObject = new JSONObject(httpException.getMessage());
-
 			commercePaymentEntry.setErrorMessages(
 				_getErrorMessages(
-					jsonObject, StringPool.BLANK
+					ioException, StringPool.BLANK
 				).toString());
-
 			commercePaymentEntry.setPaymentStatus(
 				CommercePaymentEntryConstants.STATUS_FAILED);
 
@@ -554,18 +534,12 @@ public class PayPalCommercePaymentIntegration
 		catch (IOException ioException) {
 			_log.error(ioException);
 
-			HttpException httpException = (HttpException)ioException;
-
-			JSONObject jsonObject = new JSONObject(httpException.getMessage());
-
 			commercePaymentEntry.setErrorMessages(
 				_getErrorMessages(
-					jsonObject, StringPool.BLANK
+					ioException, StringPool.BLANK
 				).toString());
-
 			commercePaymentEntry.setPaymentStatus(
 				CommercePaymentEntryConstants.STATUS_FAILED);
-
 			commercePaymentEntry.setTransactionCode(transactionId);
 
 			return commercePaymentEntry;
@@ -816,15 +790,24 @@ public class PayPalCommercePaymentIntegration
 	}
 
 	private List<String> _getErrorMessages(
+		IOException ioException, String prefix) {
+
+		HttpException httpException = (HttpException)ioException;
+
+		JSONObject jsonObject = new JSONObject(httpException.getMessage());
+
+		return _getErrorMessages(jsonObject, prefix);
+	}
+
+	private List<String> _getErrorMessages(
 		JSONObject jsonObject, String prefix) {
 
-		List<String> errorMessages = new ArrayList<>();
-
-		Iterator<?> keysIterator = jsonObject.keys();
 		StringBuilder stringBuilder = new StringBuilder();
 
-		while (keysIterator.hasNext()) {
-			String key = (String)keysIterator.next();
+		Iterator<String> iterator = jsonObject.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
 
 			stringBuilder.append(
 				String.format("%s%s: ", prefix, StringUtils.capitalize(key)));
@@ -850,9 +833,7 @@ public class PayPalCommercePaymentIntegration
 			}
 		}
 
-		errorMessages.add(stringBuilder.toString());
-
-		return errorMessages;
+		return Collections.singletonList(stringBuilder.toString());
 	}
 
 	private PayPalGroupServiceConfiguration _getPayPalGroupServiceConfiguration(

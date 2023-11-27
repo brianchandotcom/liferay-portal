@@ -43,6 +43,21 @@ public class DynamicObjectDefinitionTableUtil {
 		return sql;
 	}
 
+	public static String getAlterTableAddColumnSQL(
+		String tableName, String columnName, String dbType,
+		String sqlColumnNull) {
+
+		String sql = StringBundler.concat(
+			"alter table ", tableName, " add ", columnName, StringPool.SPACE,
+			getDataType(dbType), StringPool.SPACE, sqlColumnNull);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("SQL: " + sql);
+		}
+
+		return sql;
+	}
+
 	public static String getDataType(String dbType) {
 		return _dataTypes.get(dbType);
 	}

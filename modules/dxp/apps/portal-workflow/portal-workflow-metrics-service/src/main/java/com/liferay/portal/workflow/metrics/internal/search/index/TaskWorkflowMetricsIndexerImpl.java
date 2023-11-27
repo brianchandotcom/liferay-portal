@@ -50,7 +50,9 @@ public class TaskWorkflowMetricsIndexerImpl
 	public Document addTask(AddTaskRequest addTaskRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+		if (!workflowMetricsIndicesAvailabilityChecker.check(
+				addTaskRequest.getCompanyId())) {
+
 			return documentBuilder.build();
 		}
 
@@ -295,7 +297,9 @@ public class TaskWorkflowMetricsIndexerImpl
 	public Document updateTask(UpdateTaskRequest updateTaskRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+		if (!workflowMetricsIndicesAvailabilityChecker.check(
+				updateTaskRequest.getCompanyId())) {
+
 			return documentBuilder.build();
 		}
 
@@ -406,7 +410,7 @@ public class TaskWorkflowMetricsIndexerImpl
 	}
 
 	private void _deleteTask(long companyId, long taskId) {
-		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+		if (!workflowMetricsIndicesAvailabilityChecker.check(companyId)) {
 			return;
 		}
 

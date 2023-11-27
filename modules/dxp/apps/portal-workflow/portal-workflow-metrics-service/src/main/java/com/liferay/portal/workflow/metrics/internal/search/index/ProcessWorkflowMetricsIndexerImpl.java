@@ -34,7 +34,9 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 	@Override
 	public void addDocument(Document document) {
-		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+		if (!workflowMetricsIndicesAvailabilityChecker.check(
+				document.getLong("companyId"))) {
+
 			return;
 		}
 
@@ -145,7 +147,9 @@ public class ProcessWorkflowMetricsIndexerImpl
 	public Document updateProcess(UpdateProcessRequest updateProcessRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+		if (!workflowMetricsIndicesAvailabilityChecker.check(
+				updateProcessRequest.getCompanyId())) {
+
 			return documentBuilder.build();
 		}
 

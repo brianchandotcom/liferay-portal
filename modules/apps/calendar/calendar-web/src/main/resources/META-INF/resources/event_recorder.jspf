@@ -5,7 +5,7 @@
  */
 --%>
 
-<aui:script id="<portlet:namespace />eventRecorderHeaderTpl" type="text/x-alloy-template">
+<aui:script id='<%= portletDisplay.getNamespace() + "eventRecorderHeaderTpl" %>' type="text/x-alloy-template">
 	<div class="calendar-portlet-event-recorder">
 		<div class="scheduler-event-recorder-header">
 			<tpl if="values.permissions.MANAGE_BOOKINGS">
@@ -21,7 +21,7 @@
 	</div>
 </aui:script>
 
-<aui:script id="<portlet:namespace />eventRecorderBodyTpl" type="text/x-alloy-template">
+<aui:script id='<%= portletDisplay.getNamespace() + "eventRecorderBodyTpl" %>' type="text/x-alloy-template">
 	<div class="calendar-portlet-event-recorder">
 		<input name="instanceIndex" type="hidden" value="{instanceIndex}" />
 		<input name="allDay" type="hidden" value="{allDay}" />
@@ -63,7 +63,7 @@
 					</td>
 					<td>
 						<tpl if="values.permissions.MANAGE_BOOKINGS">
-							<select id="<portlet:namespace />eventRecorderCalendar" name="calendarId">
+							<select id="<%= portletDisplay.getNamespace() %>eventRecorderCalendar" name="calendarId">
 								<tpl for="calendarIds">
 									<tpl for="parent.availableCalendars[values]">
 										<tpl if="values.get('manageable') == true">
@@ -83,7 +83,7 @@
 				</tr>
 
 				<tpl if="values.editing && values.permissions.VIEW_BOOKING_DETAILS">
-					<tr id="<portlet:namespace />eventRecorderUsers">
+					<tr id="<%= portletDisplay.getNamespace() %>eventRecorderUsers">
 						<td>
 							<liferay-ui:message key="users" />:
 						</td>
@@ -91,7 +91,7 @@
 							<label class="calendar-portlet-invitees"><liferay-ui:message key="loading" /></label>
 						</td>
 					</tr>
-					<tr id="<portlet:namespace />eventRecorderResources">
+					<tr id="<%= portletDisplay.getNamespace() %>eventRecorderResources">
 						<td>
 							<liferay-ui:message key="resources" />:
 						</td>

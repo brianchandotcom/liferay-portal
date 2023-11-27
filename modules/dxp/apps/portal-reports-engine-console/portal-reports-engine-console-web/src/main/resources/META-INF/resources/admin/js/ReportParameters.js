@@ -7,16 +7,22 @@ import {format} from 'date-fns';
 import {delegate, openConfirmModal, unescapeHTML} from 'frontend-js-web';
 
 const TPL_TAG_FORM =
-	'<div class="form-inline {key} c-mb-4" >' +
-	'<input class="form-control c-mr-4" type="text" disabled="disabled" value="{parameterKey}" /> ' +
-	'<input class="form-control c-mr-4" type="text" disabled="disabled" value="{parameterValue}" /> ' +
-	'<button class="btn btn-secondary remove-{key}-parameter"' +
+	'<div class="c-mb-4 row {key}" >' +
+	'<div class="col-md-4">' +
+	'<input class="form-control c-mr-4" type="text" disabled="disabled" value="{parameterKey}" />' +
+	'</div>' +
+	'<div class="col-md-4">' +
+	'<input class="form-control c-mr-4" type="text" disabled="disabled" value="{parameterValue}" />' +
+	'</div>' +
+	'<div class="col-md-4">' +
+	'<button class="btn btn-monospaced btn-secondary remove-{key}-parameter"' +
 	' data-parameterKey="{parameterKey}"' +
 	' data-parameterValue="{parameterValue}"' +
 	' data-parameterType="{parameterType}"' +
 	' type="button">' +
 	Liferay.Util.getLexiconIconTpl('times') +
 	'</button>' +
+	'</div>' +
 	'</div>';
 
 export default function ReportParameters({namespace, parameters}) {

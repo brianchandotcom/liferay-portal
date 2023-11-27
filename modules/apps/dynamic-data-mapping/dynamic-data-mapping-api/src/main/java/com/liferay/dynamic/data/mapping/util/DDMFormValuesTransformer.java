@@ -5,11 +5,16 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
+import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -63,12 +68,27 @@ public class DDMFormValuesTransformer {
 				continue;
 			}
 
-			String fieldType = ddmFormField.getType();
+			String type = ddmFormField.getType();
 
-			if (_ddmFormFieldValueTransformersMap.containsKey(fieldType)) {
+			if (StringUtil.equals(type, DDMFormFieldType.DOCUMENT_LIBRARY)) {
+				type = DDMFormFieldTypeConstants.DOCUMENT_LIBRARY;
+			}
+			else if (StringUtil.equals(
+						type, DDMFormFieldType.JOURNAL_ARTICLE)) {
+
+				type = JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE;
+			}
+			else if (StringUtil.equals(type, DDMFormFieldType.LINK_TO_PAGE)) {
+				type = LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT;
+			}
+			else if (StringUtil.equals(type, DDMFormFieldType.TEXT_HTML)) {
+				type = DDMFormFieldTypeConstants.RICH_TEXT;
+			}
+
+			if (_ddmFormFieldValueTransformersMap.containsKey(type)) {
 				performTransformation(
 					ddmFormFieldValues,
-					_ddmFormFieldValueTransformersMap.get(fieldType));
+					_ddmFormFieldValueTransformersMap.get(type));
 			}
 
 			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {

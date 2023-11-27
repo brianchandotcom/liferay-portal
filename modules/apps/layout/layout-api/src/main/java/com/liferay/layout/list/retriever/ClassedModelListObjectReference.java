@@ -38,7 +38,7 @@ public class ClassedModelListObjectReference implements ListObjectReference {
 	}
 
 	@Override
-	public String toJSONString() {
+	public String toJSON() {
 		return JSONUtil.put(
 			"className", _className
 		).put(

@@ -33,7 +33,7 @@ public class KeyListObjectReference implements ListObjectReference {
 	}
 
 	@Override
-	public String toJSONString() {
+	public String toJSON() {
 		return JSONUtil.put(
 			"itemType", _itemType
 		).put(

@@ -17,7 +17,7 @@ public interface ListObjectReference {
 
 	public String getItemType();
 
-	public default String toJSONString() {
+	public default String toJSON() {
 		return JSONUtil.put(
 			"itemType", this::getItemType
 		).toString();

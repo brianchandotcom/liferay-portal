@@ -19,6 +19,8 @@ public class AccountWebKeys {
 
 	public static final String ACTION_COMMAND_NAME = "ACTION_COMMAND_NAME";
 
+	public static final String ADDRESS_DISPLAY = "ADDRESS_DISPLAY";
+
 	public static final String EDITABLE = "EDITABLE";
 
 	public static final String FORM_LABEL = "FORM_LABEL";

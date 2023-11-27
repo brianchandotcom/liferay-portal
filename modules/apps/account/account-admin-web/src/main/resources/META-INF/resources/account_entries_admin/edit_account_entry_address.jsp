@@ -8,11 +8,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long accountEntryAddressId = ParamUtil.getLong(renderRequest, "accountEntryAddressId");
+long accountEntryId = 0;
 
-Address address = AddressLocalServiceUtil.fetchAddress(accountEntryAddressId);
+AddressDisplay addressDisplay = (AddressDisplay)request.getAttribute(AccountWebKeys.ADDRESS_DISPLAY);
 
-long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
+Address address = AddressLocalServiceUtil.fetchAddress(addressDisplay.getAddressId());
+
+if (address != null) {
+	accountEntryId = address.getClassPK();
+}
 %>
 
 <liferay-frontend:screen-navigation
@@ -24,7 +28,7 @@ long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
 		).setMVCRenderCommandName(
 			"/account_admin/edit_account_entry_address"
 		).setParameter(
-			"accountEntryAddressId", accountEntryAddressId
+			"accountEntryAddressId", addressDisplay.getAddressId()
 		).setParameter(
 			"accountEntryId", accountEntryId
 		).buildPortletURL()

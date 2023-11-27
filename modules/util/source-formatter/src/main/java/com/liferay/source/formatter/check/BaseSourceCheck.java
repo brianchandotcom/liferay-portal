@@ -631,6 +631,62 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected String getVariableTypeName(
+		JavaTerm javaTerm, String fileContent, String fileName,
+		String variableName) {
+
+		return getVariableTypeName(
+			javaTerm, fileContent, fileName, variableName, false);
+	}
+
+	protected String getVariableTypeName(
+		JavaTerm javaTerm, String fileContent, String fileName,
+		String variableName, boolean includeArrayOrCollectionTypes) {
+
+		if (variableName == null) {
+			return null;
+		}
+
+		String content = javaTerm.getContent();
+
+		String variableTypeName = _getVariableTypeName(
+			content, variableName, includeArrayOrCollectionTypes);
+
+		if ((variableTypeName != null) || content.equals(fileContent)) {
+			return variableTypeName;
+		}
+
+		try {
+			JavaClass javaClass = _getJavaClass(
+				javaTerm, fileContent, fileName);
+
+			if (javaClass == null) {
+				return variableTypeName;
+			}
+
+			for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+				if (childJavaTerm.isJavaVariable()) {
+					JavaVariable javaVariable = (JavaVariable)childJavaTerm;
+
+					String variableContent = javaVariable.getContent();
+
+					variableTypeName = _getVariableTypeName(
+						variableContent, variableName,
+						includeArrayOrCollectionTypes);
+
+					if (variableTypeName != null) {
+						return variableTypeName;
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			return variableTypeName;
+		}
+
+		return variableTypeName;
+	}
+
+	protected String getVariableTypeName(
 		String content, String fileContent, String fileName,
 		String variableName) {
 
@@ -656,7 +712,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		JavaClass javaClass = null;
 
 		try {
-			javaClass = JavaClassParser.parseJavaClass(fileName, fileContent);
+			javaClass = _getJavaClass(null, fileContent, fileName);
 
 			if (javaClass == null) {
 				return variableTypeName;
@@ -854,6 +910,21 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private JavaClass _getJavaClass(
+			JavaTerm javaTerm, String fileContent, String fileName)
+		throws Exception {
+
+		if (javaTerm != null) {
+			if (javaTerm instanceof JavaClass) {
+				return (JavaClass)javaTerm;
+			}
+
+			return javaTerm.getParentJavaClass();
+		}
+
+		return JavaClassParser.parseJavaClass(fileName, fileContent);
+	}
 
 	private String _getVariableTypeName(
 		String content, String variableName,

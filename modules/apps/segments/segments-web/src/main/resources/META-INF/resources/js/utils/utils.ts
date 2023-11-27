@@ -53,6 +53,10 @@ export function getPluralMessage(
  * Example of returned value: ['group_02', 'group_03']
  */
 export function getChildGroupIds(criteria: Criteria) {
+	if (!criteria?.items) {
+		return [];
+	}
+
 	let childGroupIds: string[] = [];
 
 	if (criteria.items && criteria.items.length) {

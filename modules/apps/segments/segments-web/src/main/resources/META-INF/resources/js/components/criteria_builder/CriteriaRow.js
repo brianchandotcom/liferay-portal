@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
 import React, {useCallback, useContext, useEffect} from 'react';
-import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
+import {DropTarget as dropTarget} from 'react-dnd';
 
 import ThemeContext from '../../ThemeContext.es';
 import {
@@ -17,7 +17,6 @@ import {
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
 import {DragTypes} from '../../utils/drag-types';
-import {TYPE_ICONS} from '../../utils/typeIcons';
 import {
 	createNewGroup,
 	getSupportedOperatorsFromType,
@@ -123,31 +122,6 @@ function drop(props, monitor) {
 }
 
 /**
- * Passes the required values to the drop target.
- * This method must be called `beginDrag`.
- * @param {Object} props Component's current props
- * @returns {Object} The props to be passed to the drop target.
- */
-function beginDrag({
-	criterion,
-	groupId,
-	index,
-	propertyKey,
-	supportedProperties,
-}) {
-	const item = getSelectedItem(supportedProperties, criterion.propertyName);
-
-	return {
-		criterion,
-		groupId,
-		icon: item.icon || TYPE_ICONS[item.type] || 'text',
-		index,
-		name: item.label,
-		propertyKey,
-	};
-}
-
-/**
  * Gets the selected item object with a `name` and `label` property for a
  * selection input. If one isn't found, a new object is returned using the
  * idSelected for name and label.
@@ -170,18 +144,18 @@ function getSelectedItem(list, idSelected) {
 
 function CriteriaRow({
 	canDrop,
-	connectDragPreview,
-	connectDragSource,
 	connectDropTarget,
 	criterion = {},
 	dragging,
 	editing = true,
 	entityName,
+	groupId,
 	hover,
 	index,
 	onAdd,
 	onChange,
 	onDelete,
+	propertyKey,
 	renderEmptyValuesErrors = false,
 	supportedProperties = [],
 }) {
@@ -352,13 +326,18 @@ function CriteriaRow({
 				>
 					{editing ? (
 						<CriteriaRowEditable
-							connectDragSource={connectDragSource}
 							criterion={criterion}
 							error={error}
+							groupId={groupId}
 							index={index}
+							item={getSelectedItem(
+								supportedProperties,
+								criterion.propertyName
+							)}
 							onAdd={onAdd}
 							onChange={onChange}
 							onDelete={onDelete}
+							propertyKey={propertyKey}
 							renderEmptyValuesErrors={renderEmptyValuesErrors}
 							selectedOperator={selectedOperator}
 							selectedProperty={selectedProperty}
@@ -370,8 +349,6 @@ function CriteriaRow({
 							selectedProperty={selectedProperty}
 						/>
 					)}
-
-					{connectDragPreview(<div />)}
 				</div>
 			)}
 			{error &&
@@ -397,7 +374,6 @@ function CriteriaRow({
 CriteriaRow.propTypes = {
 	canDrop: PropTypes.bool,
 	connectDragPreview: PropTypes.func,
-	connectDragSource: PropTypes.func,
 	connectDropTarget: PropTypes.func,
 	criterion: PropTypes.object,
 	dragging: PropTypes.bool,
@@ -416,18 +392,6 @@ CriteriaRow.propTypes = {
 	supportedProperties: PropTypes.array,
 };
 
-const CriteriaRowWithDrag = dragSource(
-	DragTypes.CRITERIA_ROW,
-	{
-		beginDrag,
-	},
-	(connect, monitor) => ({
-		connectDragPreview: connect.dragPreview(),
-		connectDragSource: connect.dragSource(),
-		dragging: monitor.isDragging(),
-	})
-)(CriteriaRow);
-
 export default dropTarget(
 	acceptedDragTypes,
 	{
@@ -439,4 +403,4 @@ export default dropTarget(
 		connectDropTarget: connect.dropTarget(),
 		hover: monitor.isOver(),
 	})
-)(CriteriaRowWithDrag);
+)(CriteriaRow);

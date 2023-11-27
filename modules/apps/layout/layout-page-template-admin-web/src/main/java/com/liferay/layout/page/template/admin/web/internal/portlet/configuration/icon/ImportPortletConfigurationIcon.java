@@ -70,7 +70,7 @@ public class ImportPortletConfigurationIcon
 					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 					PortletRequest.RENDER_PHASE)
 			).setTabs1(
-				ParamUtil.getString(portletRequest, "tabs1")
+				ParamUtil.getString(portletRequest, "tabs1", "master-layouts")
 			).setParameter(
 				"layoutPageTemplateCollectionId",
 				ParamUtil.getString(

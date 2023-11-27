@@ -5702,11 +5702,13 @@ definition {
 	test OrderByModificationDate {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Create 5 Web Contents") {
 			for (var count : list "1,2,3,4,5") {
 				JSONWebcontent.addWebContent(
 					content = "WC Content ${count}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "WC Title ${count}");
 			}
 		}
@@ -5782,11 +5784,13 @@ definition {
 	test OrderByTitle {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Create 5 Web Contents") {
 			for (var count : list "1,2,3,4,5") {
 				JSONWebcontent.addWebContent(
 					content = "WC Content ${count}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "WC Title ${count}");
 			}
 		}
@@ -5815,11 +5819,13 @@ definition {
 	test PaginationDisplaySelectedNumberOfRows {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Create 10 WC using JSON") {
 			for (var count : list "1,2,3,4,5,6,7,8,9,10") {
 				JSONWebcontent.addWebContent(
 					content = "WC Content ${count}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "WC Title ${count}");
 			}
 		}
@@ -5838,11 +5844,13 @@ definition {
 	@description = "LPS-132254 When a user use the <, > buttons, the page displayed moves forward/backward"
 	@priority = 3
 	test PaginationMoveAcrossPagesWithButtons {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Create 6 WC using JSON") {
 			for (var count : list "1,2,3,4,5,6") {
 				JSONWebcontent.addWebContent(
 					content = "WC Content ${count}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "WC Title ${count}");
 			}
 		}
@@ -5867,11 +5875,13 @@ definition {
 	@description = "LPS-132254 When a user clicks on a page number, that page is displayed in the Content Dashboard"
 	@priority = 3
 	test PaginationMoveAcrossPagesWithNumber {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Create 6 WC using JSON") {
 			for (var count : list "1,2,3,4,5,6") {
 				JSONWebcontent.addWebContent(
 					content = "WC Content ${count}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "WC Title ${count}");
 			}
 		}

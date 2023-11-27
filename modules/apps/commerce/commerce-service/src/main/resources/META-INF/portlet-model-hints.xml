@@ -375,6 +375,9 @@
 		<field name="trackingURL" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel">
 		<field name="mvccVersion" type="long" />

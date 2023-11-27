@@ -12,15 +12,18 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
+import javax.portlet.MutablePortletParameters;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.MutableResourceParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
+import javax.portlet.PortletParameters;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.RenderURL;
 import javax.portlet.WindowState;
@@ -110,7 +113,7 @@ public class MockLiferayPortletURL implements LiferayPortletURL, RenderURL {
 
 	@Override
 	public MutableRenderParameters getRenderParameters() {
-		return null;
+		return new MockMutableRenderParameters();
 	}
 
 	@Override
@@ -337,5 +340,86 @@ public class MockLiferayPortletURL implements LiferayPortletURL, RenderURL {
 
 	private Map<String, String[]> _parameters = new ConcurrentHashMap<>();
 	private String _portletId = "param";
+
+	private class MockMutableRenderParameters
+		implements MutableRenderParameters {
+
+		@Override
+		public MutablePortletParameters add(
+			PortletParameters portletParameters) {
+
+			return this;
+		}
+
+		@Override
+		public void clear() {
+		}
+
+		@Override
+		public void clearPrivate() {
+		}
+
+		@Override
+		public void clearPublic() {
+		}
+
+		@Override
+		public MutableRenderParameters clone() {
+			return new MockMutableRenderParameters();
+		}
+
+		@Override
+		public Set<String> getNames() {
+			return Collections.emptySet();
+		}
+
+		@Override
+		public String getValue(String name) {
+			return null;
+		}
+
+		@Override
+		public String[] getValues(String name) {
+			return new String[0];
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return false;
+		}
+
+		@Override
+		public boolean isPublic(String name) {
+			return false;
+		}
+
+		@Override
+		public boolean removeParameter(String name) {
+			return false;
+		}
+
+		@Override
+		public MutablePortletParameters set(
+			PortletParameters portletParameters) {
+
+			return this;
+		}
+
+		@Override
+		public String setValue(String name, String value) {
+			return null;
+		}
+
+		@Override
+		public String[] setValues(String name, String... values) {
+			return new String[0];
+		}
+
+		@Override
+		public int size() {
+			return 0;
+		}
+
+	}
 
 }

@@ -337,8 +337,7 @@ export default function ModalImportObjectDefinition({
 	) : warningModalVisible ? (
 		<ModalImportWarning
 			handleImport={() => handleImport(importFormData as FormData)}
-			header={Liferay.Language.get('update-existing-object-definition')}
-			onClose={(value: boolean) => {
+			handleOnClose={(value: boolean) => {
 				if (setModalImportObjectDefinitionInfo) {
 					setModalImportObjectDefinitionInfo(
 						(previousState: ModalImportObjectDefinitionInfo) => ({
@@ -350,6 +349,7 @@ export default function ModalImportObjectDefinition({
 				setWarningModalVisible(false);
 				setImportFormData(undefined);
 			}}
+			header={Liferay.Language.get('update-existing-object-definition')}
 			paragraphs={warningModalBody}
 		/>
 	) : null;

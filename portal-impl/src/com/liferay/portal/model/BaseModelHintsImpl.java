@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -409,7 +408,7 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 				name);
 
 			if (fieldDataBags == null) {
-				fieldDataBags = new LinkedHashMap<>();
+				fieldDataBags = new HashMap<>();
 
 				_fieldDataBagsMap.put(name, fieldDataBags);
 			}

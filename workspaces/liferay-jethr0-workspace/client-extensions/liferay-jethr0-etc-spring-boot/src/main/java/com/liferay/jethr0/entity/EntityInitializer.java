@@ -81,6 +81,9 @@ public class EntityInitializer {
 	private BuildRunEntityRepository _buildRunEntityRepository;
 
 	@Autowired
+	private GitBranchEntityRepository _gitBranchEntityRepository;
+
+	@Autowired
 	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;
 
 	@Autowired
@@ -97,9 +100,6 @@ public class EntityInitializer {
 
 	@Autowired
 	private JobPrioritizerEntityRepository _jobPrioritizerEntityRepository;
-
-	@Autowired
-	private GitBranchEntityRepository _gitBranchEntityRepository;
 
 	@Autowired
 	private JobQueue _jobQueue;

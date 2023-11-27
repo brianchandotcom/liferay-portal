@@ -8,12 +8,9 @@ package com.liferay.jethr0.event.github;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
-import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
-import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
-import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
@@ -92,22 +89,6 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 		return availableTestSuites;
 	}
 
-	private GitHubPullRequest _getGitHubPullRequest()
-		throws InvalidJSONException {
-
-		if (_gitHubPullRequest != null) {
-			return _gitHubPullRequest;
-		}
-
-		GitHubIssue gitHubIssue = getGitHubIssue();
-
-		GitHubClient gitHubClient = getGitHubClient();
-
-		_gitHubPullRequest = gitHubClient.getGitHubPullRequest(gitHubIssue);
-
-		return _gitHubPullRequest;
-	}
-
 	private JobEntity _getJobEntity() throws InvalidJSONException, IOException {
 		String testSuite = _getTestSuite();
 
@@ -132,7 +113,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 
 			portalPullRequestJobEntity.setTestSuiteName(testSuite);
 
-			GitHubPullRequest gitHubPullRequest = _getGitHubPullRequest();
+			GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 			if (gitHubPullRequest != null) {
 				portalPullRequestJobEntity.setPortalPullRequestURL(
@@ -155,7 +136,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 			}
 
 			GitBranchEntity upstreamGitBranchEntity =
-				_getUpstreamGitBranchEntity();
+				getUpstreamGitBranchEntity();
 
 			if (upstreamGitBranchEntity != null) {
 				portalPullRequestJobEntity.setUpstreamBranchName(
@@ -173,7 +154,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 	private String _getSenderBranchCIPropertyValue(String propertyName)
 		throws InvalidJSONException, IOException {
 
-		GitBranchEntity gitBranchEntity = _getSenderGitBranchEntity();
+		GitBranchEntity gitBranchEntity = getSenderGitBranchEntity();
 
 		if (gitBranchEntity == null) {
 			return null;
@@ -186,24 +167,6 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 		}
 
 		return PropertiesUtil.getPropertyValue(properties, propertyName);
-	}
-
-	private GitBranchEntity _getSenderGitBranchEntity()
-		throws InvalidJSONException {
-
-		if (_senderGitBranchEntity != null) {
-			return _senderGitBranchEntity;
-		}
-
-		GitBranchEntityRepository gitBranchEntityRepository =
-			getGitBranchEntityRepository();
-
-		GitHubPullRequest gitHubPullRequest = _getGitHubPullRequest();
-
-		_senderGitBranchEntity = gitBranchEntityRepository.getByURL(
-			gitHubPullRequest.getHeadBranchURL());
-
-		return _senderGitBranchEntity;
 	}
 
 	private List<String> _getTestOptions() throws InvalidJSONException {
@@ -239,7 +202,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 	private String _getUpstreamBranchCIPropertyValue(String propertyName)
 		throws InvalidJSONException, IOException {
 
-		GitBranchEntity gitBranchEntity = _getUpstreamGitBranchEntity();
+		GitBranchEntity gitBranchEntity = getUpstreamGitBranchEntity();
 
 		if (gitBranchEntity == null) {
 			return null;
@@ -254,29 +217,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 		return PropertiesUtil.getPropertyValue(properties, propertyName);
 	}
 
-	private GitBranchEntity _getUpstreamGitBranchEntity()
-		throws InvalidJSONException {
-
-		if (_upstreamGitBranchEntity != null) {
-			return _upstreamGitBranchEntity;
-		}
-
-		GitBranchEntityRepository gitBranchEntityRepository =
-			getGitBranchEntityRepository();
-
-		GitHubPullRequest gitHubPullRequest = _getGitHubPullRequest();
-
-		_upstreamGitBranchEntity = gitBranchEntityRepository.getByURL(
-			gitHubPullRequest.getUpstreamBranchURL());
-
-		return _upstreamGitBranchEntity;
-	}
-
 	private static final Pattern _pattern = Pattern.compile(
 		"ci:test(?<testOptions>\\:[^\\s]+)?");
-
-	private GitHubPullRequest _gitHubPullRequest;
-	private GitBranchEntity _senderGitBranchEntity;
-	private GitBranchEntity _upstreamGitBranchEntity;
 
 }

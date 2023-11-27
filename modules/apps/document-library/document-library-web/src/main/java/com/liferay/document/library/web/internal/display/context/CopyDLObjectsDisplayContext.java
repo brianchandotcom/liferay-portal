@@ -108,7 +108,13 @@ public class CopyDLObjectsDisplayContext {
 			if (useParentFolderName) {
 				DLFolder parentFolder = dlFolder.getParentFolder();
 
-				_dlObjectName = parentFolder.getName();
+				if (parentFolder == null) {
+					_dlObjectName = LanguageUtil.get(
+						_httpServletRequest, "home");
+				}
+				else {
+					_dlObjectName = parentFolder.getName();
+				}
 			}
 			else {
 				_dlObjectName = dlFolder.getName();

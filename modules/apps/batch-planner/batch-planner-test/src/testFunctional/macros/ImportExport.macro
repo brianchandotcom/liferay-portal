@@ -255,8 +255,15 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureImport(containsHeaders = null, fileName = null, templateName = null, entityType = null, scope = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
-		UploadDependencyFile.uploadFile(fileName = ${fileName});
+	macro configureImport(containsHeaders = null, fileName = null, tempFileName = null, templateName = null, entityType = null, scope = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
+		if (isSet(tempFileName)) {
+			UploadTempFile.uploadTempFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = ${tempFileName});
+		}
+		else {
+			UploadDependencyFile.uploadFile(fileName = ${fileName});
+		}
 
 		if (isSet(importName)) {
 			Type(
@@ -346,6 +353,17 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro getTempFilePath(fileName = null) {
+		Variables.assertDefined(parameterList = ${fileName});
+
+		var tempFileDirectory = selenium.getOutputDirName();
+
+		var filePath = "${tempFileDirectory}/${fileName}";
+
+		return ${filePath};
+	}
+
+	@summary = "Default summary"
 	macro gotoExport() {
 		Click(locator1 = "Button#PLUS");
 
@@ -360,12 +378,19 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importFile(containsHeaders = null, fileName = null, entityType = null, importName = null, csvSeparator = null, fieldMappings = null, stopImportOnError = null) {
+	macro importFile(containsHeaders = null, fileName = null, tempFileName = null, entityType = null, importName = null, csvSeparator = null, fieldMappings = null, stopImportOnError = null) {
 		Click(locator1 = "Button#PLUS");
 
 		MenuItem.click(menuItem = "Import File");
 
-		UploadDependencyFile.uploadFile(fileName = ${fileName});
+		if (isSet(tempFileName)) {
+			UploadTempFile.uploadTempFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = ${tempFileName});
+		}
+		else {
+			UploadDependencyFile.uploadFile(fileName = ${fileName});
+		}
 
 		if (isSet(importName)) {
 			Type(

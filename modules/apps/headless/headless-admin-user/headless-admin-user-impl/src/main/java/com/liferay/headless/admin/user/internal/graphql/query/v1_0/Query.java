@@ -13,6 +13,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
+import com.liferay.headless.admin.user.dto.v1_0.RolePermission;
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.admin.user.dto.v1_0.SegmentUser;
 import com.liferay.headless.admin.user.dto.v1_0.Site;
@@ -930,7 +931,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {role(roleId: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, roleType}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {role(roleId: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, rolePermissions, roleType}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the role.")
 	public Role role(@GraphQLName("roleId") Long roleId) throws Exception {
@@ -2115,11 +2116,11 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(AccountRole.class)
+	@GraphQLTypeExtension(RolePermission.class)
 	public class GetRoleTypeExtension {
 
-		public GetRoleTypeExtension(AccountRole accountRole) {
-			_accountRole = accountRole;
+		public GetRoleTypeExtension(RolePermission rolePermission) {
+			_rolePermission = rolePermission;
 		}
 
 		@GraphQLField(description = "Retrieves the role.")
@@ -2127,10 +2128,11 @@ public class Query {
 			return _applyComponentServiceObjects(
 				_roleResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				roleResource -> roleResource.getRole(_accountRole.getRoleId()));
+				roleResource -> roleResource.getRole(
+					_rolePermission.getRoleId()));
 		}
 
-		private AccountRole _accountRole;
+		private RolePermission _rolePermission;
 
 	}
 

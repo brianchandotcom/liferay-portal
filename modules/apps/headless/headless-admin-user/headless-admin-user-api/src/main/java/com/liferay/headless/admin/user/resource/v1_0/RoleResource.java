@@ -57,6 +57,11 @@ public interface RoleResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
+	public Role postRole(Role role) throws Exception;
+
+	public Response postRoleBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Role getRole(Long roleId) throws Exception;
 
 	public void deleteRoleUserAccountAssociation(

@@ -257,6 +257,28 @@ public class Role implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
+	public RolePermission[] getRolePermissions() {
+		return rolePermissions;
+	}
+
+	public void setRolePermissions(RolePermission[] rolePermissions) {
+		this.rolePermissions = rolePermissions;
+	}
+
+	public void setRolePermissions(
+		UnsafeSupplier<RolePermission[], Exception>
+			rolePermissionsUnsafeSupplier) {
+
+		try {
+			rolePermissions = rolePermissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected RolePermission[] rolePermissions;
+
 	public String getRoleType() {
 		return roleType;
 	}

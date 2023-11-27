@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Role;
+import com.liferay.headless.admin.user.client.dto.v1_0.RolePermission;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -194,6 +195,26 @@ public class RoleSerDes {
 			sb.append(_toJSON(role.getName_i18n()));
 		}
 
+		if (role.getRolePermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rolePermissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < role.getRolePermissions().length; i++) {
+				sb.append(String.valueOf(role.getRolePermissions()[i]));
+
+				if ((i + 1) < role.getRolePermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (role.getRoleType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -315,6 +336,14 @@ public class RoleSerDes {
 			map.put("name_i18n", String.valueOf(role.getName_i18n()));
 		}
 
+		if (role.getRolePermissions() == null) {
+			map.put("rolePermissions", null);
+		}
+		else {
+			map.put(
+				"rolePermissions", String.valueOf(role.getRolePermissions()));
+		}
+
 		if (role.getRoleType() == null) {
 			map.put("roleType", null);
 		}
@@ -404,6 +433,22 @@ public class RoleSerDes {
 				if (jsonParserFieldValue != null) {
 					role.setName_i18n(
 						(Map)RoleSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "rolePermissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					RolePermission[] rolePermissionsArray =
+						new RolePermission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < rolePermissionsArray.length; i++) {
+						rolePermissionsArray[i] = RolePermissionSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					role.setRolePermissions(rolePermissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleType")) {

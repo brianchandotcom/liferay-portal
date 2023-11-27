@@ -236,7 +236,7 @@ public class Role implements Serializable {
 	}
 
 	@GraphQLField(description = "The role's description.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
 	@Schema
@@ -266,7 +266,7 @@ public class Role implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
 	@Schema(description = "The portable ID of this role.")
@@ -346,7 +346,7 @@ public class Role implements Serializable {
 	}
 
 	@GraphQLField(description = "The role's name.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@Schema
@@ -376,8 +376,38 @@ public class Role implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
+
+	@Schema
+	@Valid
+	public RolePermission[] getRolePermissions() {
+		return rolePermissions;
+	}
+
+	public void setRolePermissions(RolePermission[] rolePermissions) {
+		this.rolePermissions = rolePermissions;
+	}
+
+	@JsonIgnore
+	public void setRolePermissions(
+		UnsafeSupplier<RolePermission[], Exception>
+			rolePermissionsUnsafeSupplier) {
+
+		try {
+			rolePermissions = rolePermissionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected RolePermission[] rolePermissions;
 
 	@Schema(description = "The role's type.")
 	public String getRoleType() {
@@ -404,7 +434,7 @@ public class Role implements Serializable {
 	}
 
 	@GraphQLField(description = "The role's type.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String roleType;
 
 	@Override
@@ -579,6 +609,26 @@ public class Role implements Serializable {
 			sb.append("\"name_i18n\": ");
 
 			sb.append(_toJSON(name_i18n));
+		}
+
+		if (rolePermissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rolePermissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < rolePermissions.length; i++) {
+				sb.append(String.valueOf(rolePermissions[i]));
+
+				if ((i + 1) < rolePermissions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (roleType != null) {

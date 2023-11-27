@@ -540,6 +540,14 @@ public class ServletDataImpl implements ServletData {
 							RoleResourceImpl.class,
 							"postRolesPageExportBatch"));
 					put(
+						"mutation#createRole",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "postRole"));
+					put(
+						"mutation#createRoleBatch",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "postRoleBatch"));
+					put(
 						"mutation#deleteRoleUserAccountAssociation",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
@@ -1190,7 +1198,7 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"getAccountUserAccountsByExternalReferenceCodePage"));
 					put(
-						"query#AccountRole.role",
+						"query#RolePermission.role",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class, "getRole"));
 					put(

@@ -304,6 +304,21 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
+	public void testPostRole() throws Exception {
+		Role randomRole = randomRole();
+
+		Role postRole = testPostRole_addRole(randomRole);
+
+		assertEquals(randomRole, postRole);
+		assertValid(postRole);
+	}
+
+	protected Role testPostRole_addRole(Role role) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetRole() throws Exception {
 		Role postRole = testGetRole_addRole();
 
@@ -681,6 +696,14 @@ public abstract class BaseRoleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("rolePermissions", additionalAssertFieldName)) {
+				if (role.getRolePermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("roleType", additionalAssertFieldName)) {
 				if (role.getRoleType() == null) {
 					valid = false;
@@ -908,6 +931,17 @@ public abstract class BaseRoleResourceTestCase {
 			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)role1.getName_i18n(), (Map)role2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("rolePermissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						role1.getRolePermissions(),
+						role2.getRolePermissions())) {
 
 					return false;
 				}
@@ -1254,6 +1288,11 @@ public abstract class BaseRoleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("rolePermissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

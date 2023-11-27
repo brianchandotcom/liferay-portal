@@ -50,7 +50,8 @@ public class ContentDashboardSearchRequestBuilderFactory {
 		).entryClassNames(
 			searchContext.getEntryClassNames()
 		).fields(
-			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.ROOT_ENTRY_CLASS_PK, Field.UID
 		).highlightEnabled(
 			false
 		);

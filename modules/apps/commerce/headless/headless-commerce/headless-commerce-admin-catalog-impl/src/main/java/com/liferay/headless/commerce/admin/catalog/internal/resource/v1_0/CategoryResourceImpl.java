@@ -86,8 +86,29 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 			@NestedFieldId(value = "productId") Long id, Pagination pagination)
 		throws Exception {
 
-		return _getCategoriesPage(
-			id, contextAcceptLanguage.getPreferredLocale(), pagination);
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find Product with ID: " + id);
+		}
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryService.getCategories(
+				_classNameLocalService.getClassNameId(
+					cpDefinition.getModelClass()),
+				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
+				pagination.getEndPosition());
+
+		int totalItems = _assetCategoryService.getCategoriesCount(
+			_classNameLocalService.getClassNameId(cpDefinition.getModelClass()),
+			cpDefinition.getCPDefinitionId());
+
+		return Page.of(
+			_toProductCategories(
+				assetCategories, contextAcceptLanguage.getPreferredLocale()),
+			pagination, totalItems);
 	}
 
 	@Override
@@ -130,34 +151,6 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
-	}
-
-	private Page<Category> _getCategoriesPage(
-			long id, Locale locale, Pagination pagination)
-		throws Exception {
-
-		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
-
-		if (cpDefinition == null) {
-			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
-		}
-
-		List<AssetCategory> assetCategories =
-			_assetCategoryService.getCategories(
-				_classNameLocalService.getClassNameId(
-					cpDefinition.getModelClass()),
-				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		int totalItems = _assetCategoryService.getCategoriesCount(
-			_classNameLocalService.getClassNameId(cpDefinition.getModelClass()),
-			cpDefinition.getCPDefinitionId());
-
-		return Page.of(
-			_toProductCategories(assetCategories, locale), pagination,
-			totalItems);
 	}
 
 	private List<Category> _toProductCategories(

@@ -67,8 +67,32 @@ public class ProductSpecificationResourceImpl
 			@NestedFieldId(value = "productId") Long id, Pagination pagination)
 		throws Exception {
 
-		return _getProductSpecificationsPage(
-			id, contextAcceptLanguage.getPreferredLocale(), pagination);
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find Product with ID: " + id);
+		}
+
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValues(
+						cpDefinition.getCPDefinitionId(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), null);
+
+		int totalItems =
+			_cpDefinitionSpecificationOptionValueService.
+				getCPDefinitionSpecificationOptionValuesCount(
+					cpDefinition.getCPDefinitionId());
+
+		return Page.of(
+			_toProductSpecifications(
+				cpDefinitionSpecificationOptionValues,
+				contextAcceptLanguage.getPreferredLocale()),
+			pagination, totalItems);
 	}
 
 	@Override
@@ -147,37 +171,6 @@ public class ProductSpecificationResourceImpl
 		return _toProductSpecification(
 			cpDefinitionSpecificationOptionValue.
 				getCPDefinitionSpecificationOptionValueId());
-	}
-
-	private Page<ProductSpecification> _getProductSpecificationsPage(
-			long productId, Locale locale, Pagination pagination)
-		throws Exception {
-
-		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
-
-		if (cpDefinition == null) {
-			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + productId);
-		}
-
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues =
-				_cpDefinitionSpecificationOptionValueService.
-					getCPDefinitionSpecificationOptionValues(
-						cpDefinition.getCPDefinitionId(),
-						pagination.getStartPosition(),
-						pagination.getEndPosition(), null);
-
-		int totalItems =
-			_cpDefinitionSpecificationOptionValueService.
-				getCPDefinitionSpecificationOptionValuesCount(
-					cpDefinition.getCPDefinitionId());
-
-		return Page.of(
-			_toProductSpecifications(
-				cpDefinitionSpecificationOptionValues, locale),
-			pagination, totalItems);
 	}
 
 	private ProductSpecification _toProductSpecification(

@@ -166,8 +166,24 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			Long id, Pagination pagination)
 		throws Exception {
 
-		return _getOrderItemsPage(
-			id, contextAcceptLanguage.getPreferredLocale(), pagination);
+		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
+			id);
+
+		if (commerceOrder == null) {
+			return Page.of(Collections.emptyList());
+		}
+
+		List<CommerceOrderItem> commerceOrderItems =
+			_commerceOrderItemService.getCommerceOrderItems(
+				id, pagination.getStartPosition(), pagination.getEndPosition());
+
+		int totalItems = _commerceOrderItemService.getCommerceOrderItemsCount(
+			id);
+
+		return Page.of(
+			_toOrderItems(
+				commerceOrderItems, contextAcceptLanguage.getPreferredLocale()),
+			pagination, totalItems);
 	}
 
 	@Override
@@ -585,28 +601,6 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			CommerceOrderItem.class.getName(), contextCompany.getCompanyId(),
 			orderItem.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private Page<OrderItem> _getOrderItemsPage(
-			Long id, Locale locale, Pagination pagination)
-		throws Exception {
-
-		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
-			id);
-
-		if (commerceOrder == null) {
-			return Page.of(Collections.emptyList());
-		}
-
-		List<CommerceOrderItem> commerceOrderItems =
-			_commerceOrderItemService.getCommerceOrderItems(
-				id, pagination.getStartPosition(), pagination.getEndPosition());
-
-		int totalItems = _commerceOrderItemService.getCommerceOrderItemsCount(
-			id);
-
-		return Page.of(
-			_toOrderItems(commerceOrderItems, locale), pagination, totalItems);
 	}
 
 	private OrderItem _toOrderItem(long commerceOrderItemId) throws Exception {

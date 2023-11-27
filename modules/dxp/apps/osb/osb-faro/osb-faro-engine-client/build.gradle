@@ -13,7 +13,7 @@ dependencies {
 	compileInclude group: "org.springframework", name: "spring-core", version: "5.2.24.RELEASE"
 	compileInclude group: "org.springframework", name: "spring-web", version: "5.2.24.RELEASE"
 	compileInclude group: "org.springframework.boot", name: "spring-boot", version: "2.4.13"
-	compileInclude group: "org.springframework.hateoas", name: "spring-hateoas", version: "1.4.1"
+	compileInclude group: "org.springframework.hateoas", name: "spring-hateoas", version: "1.5.5"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"

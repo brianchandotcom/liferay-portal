@@ -367,19 +367,22 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 
 			Map<String, String> defaultHints = new HashMap<>();
 
-			_defaultHints.put(name, defaultHints);
+			if (!_productionMode) {
+				_defaultHints.put(name, defaultHints);
 
-			Element defaultHintsElement = modelElement.element("default-hints");
+				Element defaultHintsElement = modelElement.element(
+					"default-hints");
 
-			if (defaultHintsElement != null) {
-				List<Element> hintElements = defaultHintsElement.elements(
-					"hint");
+				if (defaultHintsElement != null) {
+					List<Element> hintElements = defaultHintsElement.elements(
+						"hint");
 
-				for (Element hintElement : hintElements) {
-					String hintName = hintElement.attributeValue("name");
-					String hintValue = hintElement.getText();
+					for (Element hintElement : hintElements) {
+						String hintName = hintElement.attributeValue("name");
+						String hintValue = hintElement.getText();
 
-					defaultHints.put(hintName, hintValue);
+						defaultHints.put(hintName, hintValue);
+					}
 				}
 			}
 

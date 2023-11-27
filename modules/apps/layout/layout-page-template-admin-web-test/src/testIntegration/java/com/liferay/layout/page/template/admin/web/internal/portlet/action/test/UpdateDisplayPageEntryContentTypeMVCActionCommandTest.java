@@ -351,18 +351,14 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 		).setRedirect(
 			redirect
 		).setParameter(
-			"classNameId",
-			String.valueOf(layoutPageTemplateEntry.getClassNameId())
+			"classNameId", layoutPageTemplateEntry.getClassNameId()
 		).setParameter(
-			"classTypeId",
-			String.valueOf(layoutPageTemplateEntry.getClassTypeId())
+			"classTypeId", layoutPageTemplateEntry.getClassTypeId()
 		).setParameter(
 			"layoutPageTemplateEntryId",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 		).setParameter(
-			"defaultTemplate",
-			String.valueOf(layoutPageTemplateEntry.isDefaultTemplate())
+			"defaultTemplate", layoutPageTemplateEntry.isDefaultTemplate()
 		).buildString();
 	}
 

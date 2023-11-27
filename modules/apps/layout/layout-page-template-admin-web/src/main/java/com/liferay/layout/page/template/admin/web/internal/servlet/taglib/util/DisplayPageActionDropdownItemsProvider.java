@@ -689,18 +689,14 @@ public class DisplayPageActionDropdownItemsProvider {
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
-			"classNameId",
-			String.valueOf(_layoutPageTemplateEntry.getClassNameId())
+			"classNameId", _layoutPageTemplateEntry.getClassNameId()
 		).setParameter(
-			"classTypeId",
-			String.valueOf(_layoutPageTemplateEntry.getClassTypeId())
+			"classTypeId", _layoutPageTemplateEntry.getClassTypeId()
 		).setParameter(
 			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 		).setParameter(
-			"defaultTemplate",
-			String.valueOf(_layoutPageTemplateEntry.isDefaultTemplate())
+			"defaultTemplate", _layoutPageTemplateEntry.isDefaultTemplate()
 		).buildString();
 
 		return _viewUsagesURL;

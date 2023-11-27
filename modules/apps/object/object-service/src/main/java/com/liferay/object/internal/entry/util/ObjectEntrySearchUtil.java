@@ -100,16 +100,22 @@ public class ObjectEntrySearchUtil {
 	public static Predicate getUniqueCompositeKeyObjectFieldPredicate(
 		Column<?, Object> column, String dbType, String value) {
 
+		Predicate predicate = null;
+
 		if (dbType.equals(ObjectFieldConstants.DB_TYPE_INTEGER) ||
 			dbType.equals(ObjectFieldConstants.DB_TYPE_LONG)) {
 
-			return column.eq(GetterUtil.getLong(value));
+			predicate = column.eq(GetterUtil.getLong(value));
 		}
 		else if (dbType.equals(ObjectFieldConstants.DB_TYPE_STRING)) {
-			return column.eq(value);
+			predicate = column.eq(value);
 		}
 
-		return null;
+		if ((predicate != null) && (value == null)) {
+			predicate = column.isNull();
+		}
+
+		return predicate;
 	}
 
 }

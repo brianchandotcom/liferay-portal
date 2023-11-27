@@ -42,6 +42,7 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -733,16 +734,25 @@ public class ObjectValidationRuleLocalServiceImpl
 				ObjectFieldLocalService objectFieldLocalService =
 					_objectFieldLocalServiceSnapshot.get();
 
-				Column<?, ?> column = objectFieldLocalService.getColumn(
-					objectDefinition.getObjectDefinitionId(),
-					objectField.getName());
+				Column<?, Object> column =
+					(Column<?, Object>)objectFieldLocalService.getColumn(
+						objectDefinition.getObjectDefinitionId(),
+						objectField.getName());
 
 				ObjectEntryLocalService objectEntryLocalService =
 					_objectEntryLocalServiceSnapshot.get();
 
+				Predicate predicate = column.isNotNull();
+
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+					predicate = column.neq(0L);
+				}
+
 				long objectEntriesCount =
 					objectEntryLocalService.getObjectEntriesCount(
-						0, objectDefinition, column.isNotNull());
+						0, objectDefinition, predicate);
 
 				if (objectEntriesCount > 0) {
 					throw new ObjectValidationRuleSettingValueException.

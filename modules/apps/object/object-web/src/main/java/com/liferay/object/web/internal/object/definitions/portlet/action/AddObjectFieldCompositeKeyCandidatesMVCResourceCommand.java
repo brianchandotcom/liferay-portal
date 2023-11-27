@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -13,6 +14,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -78,11 +80,19 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 				Table<?> table = _objectFieldLocalService.getTable(
 					objectDefinitionId, objectField.getName());
 
-				Column<?, ?> column = table.getColumn(
+				Column<?, Object> column = (Column<?, Object>)table.getColumn(
 					objectField.getDBColumnName());
 
+				Predicate predicate = column.isNotNull();
+
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+					predicate = column.neq(0L);
+				}
+
 				long count = _objectEntryLocalService.getObjectEntriesCount(
-					0, objectDefinition, column.isNotNull());
+					0, objectDefinition, predicate);
 
 				if (count == 0) {
 					continue;

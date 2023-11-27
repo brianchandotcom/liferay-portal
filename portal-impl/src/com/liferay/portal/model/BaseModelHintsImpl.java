@@ -462,6 +462,11 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 				fields.put(fieldName + _ELEMENTS_SUFFIX, fieldElement);
 				fields.put(fieldName + _TYPE_SUFFIX, fieldType);
 				fields.put(fieldName + _LOCALIZATION_SUFFIX, fieldLocalized);
+
+				if (fieldHints.isEmpty()) {
+					fieldHints = Collections.emptyMap();
+				}
+
 				fields.put(fieldName + _HINTS_SUFFIX, fieldHints);
 
 				if (fieldSanitize != null) {

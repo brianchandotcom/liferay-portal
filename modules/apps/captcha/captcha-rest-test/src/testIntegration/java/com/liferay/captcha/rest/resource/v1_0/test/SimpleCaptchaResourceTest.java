@@ -74,26 +74,26 @@ public class SimpleCaptchaResourceTest
 	@Override
 	@Test
 	public void testPostSimpleCaptcha() throws Exception {
+		String captchaToken = _getCaptchaToken();
+
+		SimpleCaptchaResource.Builder builder = SimpleCaptchaResource.builder();
+
+		_assertStatus(
+			captchaToken, RandomTestUtil.randomString(10), 400,
+			builder.build());
 	}
 
 	@Test
 	public void testStatelessCaptcha() throws Exception {
-		SimpleCaptchaResource.Builder builder = SimpleCaptchaResource.builder();
-
-		SimpleCaptchaResource captchaResourceForGuestAccess = builder.build();
-
 		String captchaToken = _getCaptchaToken();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			EncryptorUtil.decrypt(testCompany.getKeyObj(), captchaToken));
 
-		String answer = jsonObject.getString("answer");
+		SimpleCaptchaResource.Builder builder = SimpleCaptchaResource.builder();
 
 		_assertStatus(
-			captchaToken, RandomTestUtil.randomString(10), 400,
-			captchaResourceForGuestAccess);
-
-		_assertStatus(captchaToken, answer, 204, captchaResourceForGuestAccess);
+			captchaToken, jsonObject.getString("answer"), 204, builder.build());
 	}
 
 	private void _assertStatus(

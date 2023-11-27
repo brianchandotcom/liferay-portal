@@ -44,6 +44,7 @@ import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -788,6 +789,23 @@ public class JournalEditArticleDisplayContext {
 			_themeDisplay.getScopeGroupId());
 
 		return _groupId;
+	}
+
+	public List<Map<String, Object>> getLanguages() {
+		return TransformUtil.transform(
+			getAvailableLocales(),
+			locale -> {
+				String bcp47LanguageId = LanguageUtil.getBCP47LanguageId(
+					locale);
+
+				return HashMapBuilder.<String, Object>put(
+					"icon", StringUtil.toLowerCase(bcp47LanguageId)
+				).put(
+					"id", LanguageUtil.getLanguageId(locale)
+				).put(
+					"label", bcp47LanguageId
+				).build();
+			});
 	}
 
 	public String getPortletResource() {

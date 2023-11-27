@@ -1717,6 +1717,36 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 	}
 
+	@Test
+	public void testPostWithObjectException() throws Exception {
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			8, true, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_addAPIApplicationWithPostEndpoint(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1, 8,
+			objectDefinition.getExternalReferenceCode(), "/test",
+			APIApplication.Endpoint.Scope.COMPANY);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"No value was provided for required object field " +
+					"\"richTextField\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"booleanProperty", RandomTestUtil.randomBoolean()
+				).toString(),
+				StringBundler.concat("c/", _BASE_URL_1, "/test"),
+				Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+	}
+
 	private void _addAggregationObjectField(
 			ObjectDefinition objectDefinition, String relationshipName)
 		throws Exception {

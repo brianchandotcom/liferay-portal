@@ -240,7 +240,7 @@ describe('getDefaultValue', () => {
 	it('gets default value for field mapping list', () => {
 		expect(
 			getDefaultValue({
-				defaultValue: [
+				fieldMappings: [
 					{
 						boost: 2,
 						field: 'localized_title',

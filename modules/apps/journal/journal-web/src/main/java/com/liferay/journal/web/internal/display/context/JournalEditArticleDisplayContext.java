@@ -580,6 +580,20 @@ public class JournalEditArticleDisplayContext {
 		return _defaultArticleLanguageId;
 	}
 
+	public Map<String, Object> getFieldMap() throws PortalException {
+		if (_article == null) {
+			return null;
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"description", _article.getDescriptionMap()
+		).put(
+			"friendlyURL", _article.getFriendlyURLMap()
+		).put(
+			"title", _article.getTitleMap()
+		).build();
+	}
+
 	public long getFolderId() {
 		if (_folderId != null) {
 			return _folderId;

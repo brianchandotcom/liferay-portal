@@ -134,6 +134,18 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		return role;
 	}
 
+	@Override
+	public Role fetchRole(long companyId, String name) throws PortalException {
+		Role role = roleLocalService.fetchRole(companyId, name);
+
+		if (role != null) {
+			RolePermissionUtil.check(
+				getPermissionChecker(), role.getRoleId(), ActionKeys.VIEW);
+		}
+
+		return role;
+	}
+
 	/**
 	 * Returns all the roles associated with the group.
 	 *

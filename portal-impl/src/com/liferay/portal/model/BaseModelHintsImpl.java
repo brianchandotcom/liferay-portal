@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -503,6 +504,18 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 
 				if (fieldHints.isEmpty()) {
 					fieldHints = Collections.emptyMap();
+				}
+				else if (fieldHints.size() == 1) {
+					Set<Map.Entry<String, String>> entrySet =
+						fieldHints.entrySet();
+
+					Iterator<Map.Entry<String, String>> iterator =
+						entrySet.iterator();
+
+					Map.Entry<String, String> entry = iterator.next();
+
+					fieldHints = Collections.singletonMap(
+						entry.getKey(), entry.getValue());
 				}
 
 				fieldDataBag._hints = fieldHints;

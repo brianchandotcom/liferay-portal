@@ -206,8 +206,15 @@ public class ContentDashboardItemSearchContainerFactory {
 		Document document) {
 
 		try {
-			return contentDashboardItemFactory.create(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+			long classPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			if (classPK == 0) {
+				classPK = GetterUtil.getLong(
+					document.get(Field.ROOT_ENTRY_CLASS_PK));
+			}
+
+			return contentDashboardItemFactory.create(classPK);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

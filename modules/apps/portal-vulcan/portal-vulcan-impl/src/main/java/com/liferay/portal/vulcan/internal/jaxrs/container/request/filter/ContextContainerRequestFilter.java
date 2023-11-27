@@ -390,10 +390,10 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 					instance,
 					_vulcanBatchEngineImportTaskResourceFactory.create());
 			}
-
-			_setInstanceFields(
-				clazz.getSuperclass(), httpServletRequest, message, instance);
 		}
+
+		_setInstanceFields(
+			clazz.getSuperclass(), httpServletRequest, message, instance);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

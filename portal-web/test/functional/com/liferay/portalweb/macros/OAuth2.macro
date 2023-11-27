@@ -323,7 +323,9 @@ definition {
 
 	@summary = "Default summary"
 	macro deployInstanceConfigFile(osgiConfigFileName = null) {
-		var companyId = JSONCompany.getCompanyId();
+		var portalURL = ${portalURL};
+
+		var companyId = JSONCompany.getCompanyId(portalURL = ${portalURL});
 		var bundleId = ${bundleId};
 
 		if (isSet(bundleId)) {

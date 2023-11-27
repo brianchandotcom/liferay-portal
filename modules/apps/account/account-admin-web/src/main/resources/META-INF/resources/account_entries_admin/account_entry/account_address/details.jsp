@@ -8,9 +8,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long accountEntryAddressId = ParamUtil.getLong(renderRequest, "accountEntryAddressId");
+AddressDisplay addressDisplay = (AddressDisplay)request.getAttribute(AccountWebKeys.ADDRESS_DISPLAY);
 
-Address address = AddressLocalServiceUtil.fetchAddress(accountEntryAddressId);
+Address address = AddressLocalServiceUtil.fetchAddress(addressDisplay.getAddressId());
 
 String defaultType = ParamUtil.getString(request, "defaultType");
 
@@ -29,7 +29,7 @@ String backURL = PortletURLBuilder.createRenderURL(
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((accountEntryAddressId == 0) ? LanguageUtil.get(request, "add-address") : LanguageUtil.get(request, "edit-address"));
+renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(request, "add-address") : LanguageUtil.get(request, "edit-address"));
 %>
 
 <portlet:actionURL name="/account_admin/edit_account_entry_address" var="editAccountEntryAddressURL" />
@@ -37,9 +37,9 @@ renderResponse.setTitle((accountEntryAddressId == 0) ? LanguageUtil.get(request,
 <liferay-frontend:edit-form
 	action="<%= editAccountEntryAddressURL %>"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryAddressId == 0) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (addressDisplay.getAddressId() == 0) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
-	<aui:input name="accountEntryAddressId" type="hidden" value="<%= accountEntryAddressId %>" />
+	<aui:input name="addressDisplay.getAddressId()" type="hidden" value="<%= addressDisplay.getAddressId() %>" />
 	<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryDisplay.getAccountEntryId() %>" />
 	<aui:input name="defaultType" type="hidden" value="<%= defaultType %>" />
 

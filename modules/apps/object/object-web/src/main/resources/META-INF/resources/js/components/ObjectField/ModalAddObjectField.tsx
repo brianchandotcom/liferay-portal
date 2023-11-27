@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {API, Input, Toggle} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
@@ -146,108 +147,115 @@ export function ModalAddObjectField({
 
 	return (
 		<ClayModalProvider>
-			<ClayModal center observer={observer}>
-				<ClayForm onSubmit={handleSubmit}>
-					<ClayModal.Header>
-						{Liferay.Language.get('new-field')}
-					</ClayModal.Header>
+			<ClayTooltipProvider>
+				<ClayModal center observer={observer}>
+					<ClayForm onSubmit={handleSubmit}>
+						<ClayModal.Header>
+							{Liferay.Language.get('new-field')}
+						</ClayModal.Header>
 
-					<ClayModal.Body>
-						{error && (
-							<ClayAlert displayType="danger">{error}</ClayAlert>
-						)}
-
-						<Input
-							error={errors.label}
-							label={Liferay.Language.get('label')}
-							name="label"
-							onChange={({target: {value}}) => {
-								setValues({
-									label: {[defaultLanguageId]: value},
-								});
-							}}
-							required
-							value={values.label?.[defaultLanguageId]}
-						/>
-
-						<ObjectFieldFormBase
-							errors={errors}
-							handleChange={handleChange}
-							objectDefinition={objectDefinition}
-							objectDefinitionExternalReferenceCode={
-								objectDefinitionExternalReferenceCode
-							}
-							objectDefinitionName={
-								objectDefinitionName ?? objectDefinition
-									? objectDefinition?.name ?? ''
-									: ''
-							}
-							objectField={values}
-							objectFieldTypes={objectFieldTypes}
-							setValues={setValues}
-						>
-							{showEnableTranslationToggle && (
-								<div className="lfr-objects-add-object-field-enable-translations-toggle">
-									<Toggle
-										disabled={
-											!objectDefinition?.enableLocalization
-										}
-										label={Liferay.Language.get(
-											'enable-entry-translations'
-										)}
-										onToggle={(localized) =>
-											setValues({
-												localized,
-												required:
-													!localized &&
-													values.required,
-											})
-										}
-										toggled={values.localized}
-										tooltip={Liferay.Language.get(
-											'users-will-be-able-to-add-translations-for-the-entries-of-this-field'
-										)}
-									/>
-								</div>
+						<ClayModal.Body>
+							{error && (
+								<ClayAlert displayType="danger">
+									{error}
+								</ClayAlert>
 							)}
-						</ObjectFieldFormBase>
 
-						{values.state && (
-							<ListTypeDefaultValueSelect
-								creationLanguageId={creationLanguageId}
-								defaultValue={
-									values.objectFieldSettings?.find(
-										(setting) =>
-											setting.name === 'defaultValue'
-									)?.value
-								}
-								error={errors.defaultValue}
-								label={Liferay.Language.get('default-value')}
+							<Input
+								error={errors.label}
+								label={Liferay.Language.get('label')}
+								name="label"
+								onChange={({target: {value}}) => {
+									setValues({
+										label: {[defaultLanguageId]: value},
+									});
+								}}
 								required
-								setValues={setValues}
-								values={values}
+								value={values.label?.[defaultLanguageId]}
 							/>
-						)}
-					</ClayModal.Body>
 
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									displayType="secondary"
-									onClick={() => onClose()}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
+							<ObjectFieldFormBase
+								baseResourceURL={baseResourceURL}
+								errors={errors}
+								handleChange={handleChange}
+								objectDefinition={objectDefinition}
+								objectDefinitionExternalReferenceCode={
+									objectDefinitionExternalReferenceCode
+								}
+								objectDefinitionName={
+									objectDefinitionName ?? objectDefinition
+										? objectDefinition?.name ?? ''
+										: ''
+								}
+								objectField={values}
+								objectFieldTypes={objectFieldTypes}
+								setValues={setValues}
+							>
+								{showEnableTranslationToggle && (
+									<div className="lfr-objects-add-object-field-enable-translations-toggle">
+										<Toggle
+											disabled={
+												!objectDefinition?.enableLocalization
+											}
+											label={Liferay.Language.get(
+												'enable-entry-translations'
+											)}
+											onToggle={(localized) =>
+												setValues({
+													localized,
+													required:
+														!localized &&
+														values.required,
+												})
+											}
+											toggled={values.localized}
+											tooltip={Liferay.Language.get(
+												'users-will-be-able-to-add-translations-for-the-entries-of-this-field'
+											)}
+										/>
+									</div>
+								)}
+							</ObjectFieldFormBase>
 
-								<ClayButton type="submit">
-									{Liferay.Language.get('save')}
-								</ClayButton>
-							</ClayButton.Group>
-						}
-					/>
-				</ClayForm>
-			</ClayModal>
+							{values.state && (
+								<ListTypeDefaultValueSelect
+									creationLanguageId={creationLanguageId}
+									defaultValue={
+										values.objectFieldSettings?.find(
+											(setting) =>
+												setting.name === 'defaultValue'
+										)?.value
+									}
+									error={errors.defaultValue}
+									label={Liferay.Language.get(
+										'default-value'
+									)}
+									required
+									setValues={setValues}
+									values={values}
+								/>
+							)}
+						</ClayModal.Body>
+
+						<ClayModal.Footer
+							last={
+								<ClayButton.Group spaced>
+									<ClayButton
+										displayType="secondary"
+										onClick={() => onClose()}
+									>
+										{Liferay.Language.get('cancel')}
+									</ClayButton>
+
+									<ClayButton type="submit">
+										{Liferay.Language.get('save')}
+									</ClayButton>
+								</ClayButton.Group>
+							}
+						/>
+					</ClayForm>
+				</ClayModal>
+			</ClayTooltipProvider>
 		</ClayModalProvider>
 	);
 }

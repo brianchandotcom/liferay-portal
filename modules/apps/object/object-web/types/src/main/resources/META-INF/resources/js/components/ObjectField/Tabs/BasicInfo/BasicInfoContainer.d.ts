@@ -8,6 +8,7 @@ import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 import {AggregationFilters} from './BasicInfoTab';
 import '../../EditObjectFieldContent.scss';
 interface BasicInfoContainerProps {
+	baseResourceURL: string;
 	creationLanguageId2?: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -26,6 +27,7 @@ interface BasicInfoContainerProps {
 	values: Partial<ObjectField>;
 }
 export declare function BasicInfoContainer({
+	baseResourceURL,
 	creationLanguageId2,
 	errors,
 	handleChange,

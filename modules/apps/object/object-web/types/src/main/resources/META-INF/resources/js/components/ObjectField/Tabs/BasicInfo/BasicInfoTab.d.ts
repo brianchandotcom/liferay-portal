@@ -21,6 +21,7 @@ export interface AggregationFilters {
 	valueList?: LabelValueObject[];
 }
 interface BasicInfoTabProps {
+	baseResourceURL: string;
 	containerWrapper: ElementType;
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
@@ -39,6 +40,7 @@ interface BasicInfoTabProps {
 	workflowStatuses: LabelValueObject[];
 }
 export declare function BasicInfoTab({
+	baseResourceURL,
 	containerWrapper: ContainerWrapper,
 	errors,
 	filterOperators,

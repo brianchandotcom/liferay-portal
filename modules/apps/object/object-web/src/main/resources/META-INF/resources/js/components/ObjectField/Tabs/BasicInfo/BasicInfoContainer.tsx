@@ -18,6 +18,7 @@ import {MaxLengthProperties} from './MaxLengthProperties';
 import '../../EditObjectFieldContent.scss';
 
 interface BasicInfoContainerProps {
+	baseResourceURL: string;
 	creationLanguageId2?: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -37,6 +38,7 @@ interface BasicInfoContainerProps {
 }
 
 export function BasicInfoContainer({
+	baseResourceURL,
 	creationLanguageId2,
 	errors,
 	handleChange,
@@ -93,6 +95,7 @@ export function BasicInfoContainer({
 			/>
 
 			<ObjectFieldFormBase
+				baseResourceURL={baseResourceURL}
 				creationLanguageId2={
 					creationLanguageId2 as Liferay.Language.Locale
 				}
@@ -100,6 +103,7 @@ export function BasicInfoContainer({
 				editingObjectField
 				errors={errors}
 				handleChange={handleChange}
+				modelBuilder={modelBuilder}
 				objectDefinition={objectDefinition}
 				objectDefinitionExternalReferenceCode={
 					objectDefinitionExternalReferenceCode

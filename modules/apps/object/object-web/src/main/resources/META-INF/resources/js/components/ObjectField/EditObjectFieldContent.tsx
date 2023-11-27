@@ -133,6 +133,7 @@ export function EditObjectFieldContent({
 							})}
 						>
 							<BasicInfoTab
+								baseResourceURL={baseResourceURL}
 								containerWrapper={containerWrapper}
 								errors={errors}
 								filterOperators={filterOperators}
@@ -179,6 +180,7 @@ export function EditObjectFieldContent({
 				</>
 			) : (
 				<BasicInfoTab
+					baseResourceURL={baseResourceURL}
 					containerWrapper={containerWrapper}
 					errors={errors}
 					filterOperators={filterOperators}

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Option, Text} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import {
@@ -12,6 +13,8 @@ import {
 	SingleSelect,
 	Toggle,
 } from '@liferay/object-js-components-web';
+import classNames from 'classnames';
+import {createResourceURL} from 'frontend-js-web';
 import React, {
 	ChangeEventHandler,
 	ReactNode,
@@ -36,13 +39,17 @@ import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
 
+import ClayIcon from '@clayui/icon';
+
 interface ObjectFieldFormBaseProps {
+	baseResourceURL: string;
 	children?: ReactNode;
 	creationLanguageId2?: Liferay.Language.Locale;
 	disabled?: boolean;
 	editingObjectField?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
+	modelBuilder?: boolean;
 	objectDefinition?: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionName: string;
@@ -114,6 +121,14 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 	],
 ]);
 
+async function updateListTypeDefinitions(
+	setListTypeDefinitions: (value: ListTypeDefinition[]) => void
+) {
+	const listTypeDefinitions = await API.getListTypeDefinitions();
+
+	setListTypeDefinitions(listTypeDefinitions);
+}
+
 async function getObjectFieldSettingsByBusinessType(
 	objectRelationshipId: number,
 	setListTypeDefinitions: (value: ListTypeDefinition[]) => void,
@@ -124,9 +139,7 @@ async function getObjectFieldSettingsByBusinessType(
 	const {businessType, objectFieldSettings} = values;
 
 	if (businessType === 'Picklist' || businessType === 'MultiselectPicklist') {
-		const listTypeDefinitions = await API.getListTypeDefinitions();
-
-		setListTypeDefinitions(listTypeDefinitions);
+		updateListTypeDefinitions(setListTypeDefinitions);
 	}
 
 	if (businessType === 'Formula') {
@@ -155,12 +168,14 @@ async function getObjectFieldSettingsByBusinessType(
 }
 
 export default function ObjectFieldFormBase({
+	baseResourceURL,
 	children,
 	creationLanguageId2,
 	disabled,
 	editingObjectField = false,
 	errors,
 	handleChange,
+	modelBuilder = false,
 	objectDefinition,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionName,
@@ -175,6 +190,10 @@ export default function ObjectFieldFormBase({
 	const [listTypeDefinitions, setListTypeDefinitions] = useState<
 		Partial<ListTypeDefinition>[]
 	>([]);
+
+	const [listTypeDefinitionsURL, setListTypeDefinitionsURL] = useState<
+		string
+	>('');
 
 	const [
 		oneToManyObjectRelationship,
@@ -357,6 +376,17 @@ export default function ObjectFieldFormBase({
 				setSelectedOutputValue,
 				values
 			);
+
+			const listTypeDefinitionsURL = createResourceURL(baseResourceURL, {
+				p_p_resource_id:
+					'/object_definitions/get_view_list_type_definitions_url',
+			}).href;
+
+			const {url} = await API.fetchJSON<{
+				url: string;
+			}>(listTypeDefinitionsURL);
+
+			setListTypeDefinitionsURL(url);
 		};
 
 		makeFetch();
@@ -517,48 +547,92 @@ export default function ObjectFieldFormBase({
 
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
-				<SingleSelect
-					disabled={disabled}
-					error={errors.listTypeDefinitionId}
-					id="objectFieldFormBase"
-					items={listTypeDefinitionsItems}
-					label={Liferay.Language.get('picklist')}
-					onSelectionChange={(value) => {
-						const selectedListTypeDefinition = listTypeDefinitions.find(
-							({externalReferenceCode}) =>
-								externalReferenceCode === value
-						);
-						if (selectedListTypeDefinition) {
-							setValues({
-								listTypeDefinitionExternalReferenceCode:
-									selectedListTypeDefinition.externalReferenceCode,
-								listTypeDefinitionId:
-									selectedListTypeDefinition.id,
-								objectFieldSettings: removeFieldSettings(
-									['defaultValue', 'stateFlow'],
-									values
-								),
-							});
+				<div
+					className={classNames(
+						editingObjectField
+							? modelBuilder
+								? 'lfr-objects__object-field-form-base-picklist-edit-field-model-builder'
+								: 'lfr-objects__object-field-form-base-picklist-edit-field'
+							: 'lfr-objects__object-field-form-base-picklist-add-field'
+					)}
+				>
+					<div className="lfr-objects__object-field-form-base-picklist-container">
+						<SingleSelect
+							className="lfr-objects__object-field-form-base-picklist-select-field"
+							disabled={disabled}
+							error={errors.listTypeDefinitionId}
+							id="objectFieldFormBase"
+							items={listTypeDefinitionsItems}
+							label={Liferay.Language.get('picklist')}
+							onSelectionChange={(value) => {
+								const selectedListTypeDefinition = listTypeDefinitions.find(
+									({externalReferenceCode}) =>
+										externalReferenceCode === value
+								);
+								if (selectedListTypeDefinition) {
+									setValues({
+										listTypeDefinitionExternalReferenceCode:
+											selectedListTypeDefinition.externalReferenceCode,
+										listTypeDefinitionId:
+											selectedListTypeDefinition.id,
+										objectFieldSettings: removeFieldSettings(
+											['defaultValue', 'stateFlow'],
+											values
+										),
+									});
 
-							if (onSubmit) {
-								onSubmit({
-									...values,
-									listTypeDefinitionExternalReferenceCode:
-										selectedListTypeDefinition.externalReferenceCode,
-									listTypeDefinitionId:
-										selectedListTypeDefinition.id,
-									objectFieldSettings: removeFieldSettings(
-										['defaultValue', 'stateFlow'],
-										values
-									),
-								});
+									if (onSubmit) {
+										onSubmit({
+											...values,
+											listTypeDefinitionExternalReferenceCode:
+												selectedListTypeDefinition.externalReferenceCode,
+											listTypeDefinitionId:
+												selectedListTypeDefinition.id,
+											objectFieldSettings: removeFieldSettings(
+												['defaultValue', 'stateFlow'],
+												values
+											),
+										});
+									}
+								}
+							}}
+							selectedKey={
+								selectedListTypeDefinitionExternalReferenceCode
 							}
-						}
-					}}
-					selectedKey={
-						selectedListTypeDefinitionExternalReferenceCode
-					}
-				/>
+						/>
+
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('refresh-list')}
+							className="lfr-objects__object-field-form-base-picklist-reload-button"
+							data-tooltip-align="top"
+							displayType="secondary"
+							onClick={() =>
+								updateListTypeDefinitions(
+									setListTypeDefinitions
+								)
+							}
+							symbol="reload"
+							title={Liferay.Language.get('refresh-list')}
+						/>
+					</div>
+
+					<ClayButton
+						aria-labelledby={Liferay.Language.get(
+							'manage-picklists'
+						)}
+						className="lfr-objects__object-field-form-base-picklist-manage-button"
+						displayType="secondary"
+						onClick={() => {
+							window.open(listTypeDefinitionsURL, '_blank');
+						}}
+					>
+						<span className="icon">
+							{Liferay.Language.get('manage-picklists')}
+						</span>
+
+						<ClayIcon symbol="shortcut" />
+					</ClayButton>
+				</div>
 			)}
 
 			{values.businessType === 'DateTime' && (

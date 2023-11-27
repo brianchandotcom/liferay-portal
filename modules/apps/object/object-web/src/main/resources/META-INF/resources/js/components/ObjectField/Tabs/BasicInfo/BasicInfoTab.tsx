@@ -31,6 +31,7 @@ export interface AggregationFilters {
 }
 
 interface BasicInfoTabProps {
+	baseResourceURL: string;
 	containerWrapper: ElementType;
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
@@ -50,6 +51,7 @@ interface BasicInfoTabProps {
 }
 
 export function BasicInfoTab({
+	baseResourceURL,
 	containerWrapper: ContainerWrapper,
 	errors,
 	filterOperators,
@@ -106,6 +108,7 @@ export function BasicInfoTab({
 				title={Liferay.Language.get('basic-info')}
 			>
 				<BasicInfoContainer
+					baseResourceURL={baseResourceURL}
 					creationLanguageId2={creationLanguageId2}
 					errors={errors}
 					handleChange={handleChange}

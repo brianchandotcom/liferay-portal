@@ -16,6 +16,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -40,7 +42,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -148,6 +152,55 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 			message);
 	}
 
+	@Test
+	public void testUpdateDisplayPageEntryContentTypeOnLockedLayout()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DDMStructure ddmStructure = _addDDMStructure(serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				serviceContext.getScopeGroupId(), 0,
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				ddmStructure.getStructureId(), RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		User user = UserTestUtil.addCompanyAdminUser(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+
+		Layout draftLayout = _lockLayoutPageTemplateEntryDraftLayout(
+			layoutPageTemplateEntry, user);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				layoutPageTemplateEntry, RandomTestUtil.randomString());
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doProcessAction",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+
+		_assertLayoutUnlocked(user, draftLayout);
+
+		_assertLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getClassNameId(),
+			layoutPageTemplateEntry.getClassTypeId(), layoutPageTemplateEntry);
+
+		_assertMockLiferayPortletActionResponse(
+			JSONUtil.put("error", JSONUtil.put("isLocked", true)),
+			mockLiferayPortletActionResponse);
+
+		Assert.assertTrue(
+			SessionErrors.isEmpty(mockLiferayPortletActionRequest));
+	}
+
 	private DDMStructure _addDDMStructure(ServiceContext serviceContext)
 		throws Exception {
 
@@ -178,6 +231,14 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getClassTypeId(), classTypeId,
 			layoutPageTemplateEntry.getClassTypeId());
+	}
+
+	private void _assertLayoutUnlocked(User user, Layout layout)
+		throws Exception {
+
+		Assert.assertTrue(layout.isUnlocked(Constants.EDIT, user.getUserId()));
+		Assert.assertFalse(
+			layout.isUnlocked(Constants.EDIT, TestPropsValues.getUserId()));
 	}
 
 	private void _assertMockLiferayPortletActionResponse(
@@ -229,6 +290,24 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
+	private Layout _lockLayoutPageTemplateEntryDraftLayout(
+			LayoutPageTemplateEntry layoutPageTemplateEntry, User user)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		_layoutLockManager.getLock(draftLayout, user.getUserId());
+
+		_assertLayoutUnlocked(user, draftLayout);
+
+		return draftLayout;
+	}
+
 	private Company _company;
 
 	@Inject
@@ -247,6 +326,9 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutLockManager _layoutLockManager;
 
 	@Inject
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

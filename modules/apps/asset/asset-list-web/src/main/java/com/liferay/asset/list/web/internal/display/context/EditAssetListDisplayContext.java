@@ -1264,6 +1264,14 @@ public class EditAssetListDisplayContext {
 					"assetListEntryId",
 					assetListEntrySegmentsEntryRel.getAssetListEntryId()
 				).setParameter(
+					"backURLTitle",
+					() -> {
+						PortletDisplay portletDisplay =
+							_themeDisplay.getPortletDisplay();
+
+						return portletDisplay.getPortletDisplayName();
+					}
+				).setParameter(
 					"segmentsEntryId",
 					assetListEntrySegmentsEntryRel.getSegmentsEntryId()
 				).buildString()

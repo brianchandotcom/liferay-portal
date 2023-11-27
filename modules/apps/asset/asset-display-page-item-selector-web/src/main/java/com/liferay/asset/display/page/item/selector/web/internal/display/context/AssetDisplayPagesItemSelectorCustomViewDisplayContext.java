@@ -47,13 +47,12 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 	public AssetDisplayPagesItemSelectorCustomViewDisplayContext(
 		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion,
-		PortletURL portletURL, boolean search) {
+		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
 		_assetDisplayPageSelectorCriterion = assetDisplayPageSelectorCriterion;
 		_portletURL = portletURL;
-		_search = search;
 
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -63,45 +62,6 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 
 	public SearchContainer<?> getAssetDisplayPageSearchContainer() {
 		if (_assetDisplayPageSearchContainer != null) {
-			return _assetDisplayPageSearchContainer;
-		}
-
-		if (_search) {
-			SearchContainer<Object> assetDisplayPageSearchContainer =
-				new SearchContainer<>(
-					_portletRequest, _portletURL, null,
-					"there-are-no-display-page-templates");
-
-			assetDisplayPageSearchContainer.setOrderByCol(_getOrderByCol());
-			assetDisplayPageSearchContainer.setOrderByComparator(
-				_getLayoutPageTemplateEntryOrderByComparator(
-					_getOrderByCol(), getOrderByType()));
-			assetDisplayPageSearchContainer.setOrderByType(getOrderByType());
-			assetDisplayPageSearchContainer.setResultsAndTotal(
-				() ->
-					LayoutPageTemplateEntryServiceUtil.
-						getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-							_getGroupId(), _getLayoutPageTemplateCollectionId(),
-							_assetDisplayPageSelectorCriterion.getClassNameId(),
-							_assetDisplayPageSelectorCriterion.getClassTypeId(),
-							_getKeywords(),
-							LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-							WorkflowConstants.STATUS_APPROVED,
-							assetDisplayPageSearchContainer.getStart(),
-							assetDisplayPageSearchContainer.getEnd(),
-							assetDisplayPageSearchContainer.
-								getOrderByComparator()),
-				LayoutPageTemplateEntryServiceUtil.
-					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-						_getGroupId(), _getLayoutPageTemplateCollectionId(),
-						_assetDisplayPageSelectorCriterion.getClassNameId(),
-						_assetDisplayPageSelectorCriterion.getClassTypeId(),
-						_getKeywords(),
-						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-						WorkflowConstants.STATUS_APPROVED));
-
-			_assetDisplayPageSearchContainer = assetDisplayPageSearchContainer;
-
 			return _assetDisplayPageSearchContainer;
 		}
 
@@ -115,7 +75,6 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 			_getLayoutPageTemplateEntryOrderByComparator(
 				_getOrderByCol(), getOrderByType()));
 		assetDisplayPageSearchContainer.setOrderByType(getOrderByType());
-
 		assetDisplayPageSearchContainer.setResultsAndTotal(
 			() ->
 				LayoutPageTemplateEntryServiceUtil.
@@ -123,6 +82,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 						_getGroupId(), _getLayoutPageTemplateCollectionId(),
 						_assetDisplayPageSelectorCriterion.getClassNameId(),
 						_assetDisplayPageSelectorCriterion.getClassTypeId(),
+						_getKeywords(),
 						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 						WorkflowConstants.STATUS_APPROVED,
 						assetDisplayPageSearchContainer.getStart(),
@@ -133,6 +93,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 					_getGroupId(), _getLayoutPageTemplateCollectionId(),
 					_assetDisplayPageSelectorCriterion.getClassNameId(),
 					_assetDisplayPageSelectorCriterion.getClassTypeId(),
+					_getKeywords(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					WorkflowConstants.STATUS_APPROVED));
 
@@ -305,7 +266,6 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 	private String _orderByType;
 	private final PortletRequest _portletRequest;
 	private final PortletURL _portletURL;
-	private final boolean _search;
 	private final ThemeDisplay _themeDisplay;
 
 }

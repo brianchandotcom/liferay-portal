@@ -9,11 +9,14 @@ import ClayIcon from '@clayui/icon';
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
+import useDragSource from '../../hooks/useDragSource';
 import {
 	PROPERTY_TYPES,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
+import {DragTypes} from '../../utils/drag-types';
+import {TYPE_ICONS} from '../../utils/typeIcons';
 import {createNewGroup, getSupportedOperatorsFromType} from '../../utils/utils';
 import BooleanInput from '../inputs/BooleanInput';
 import CollectionInput from '../inputs/CollectionInput';
@@ -24,17 +27,31 @@ import SelectEntityInput from '../inputs/SelectEntityInput';
 import StringInput from '../inputs/StringInput';
 
 export default function CriteriaRowEditable({
-	connectDragSource,
 	criterion = {},
 	error,
+	groupId,
 	index,
+	item,
 	onAdd,
 	onChange,
 	onDelete,
+	propertyKey,
 	renderEmptyValuesErrors,
 	selectedOperator,
 	selectedProperty,
 }) {
+	const {handlerRef} = useDragSource({
+		item: {
+			criterion,
+			groupId,
+			icon: item.icon || TYPE_ICONS[item.type] || 'text',
+			index,
+			name: item.label,
+			propertyKey,
+			type: DragTypes.CRITERIA_ROW,
+		},
+	});
+
 	const _handleDelete = (event) => {
 		event.preventDefault();
 
@@ -172,11 +189,9 @@ export default function CriteriaRowEditable({
 
 	return (
 		<div className="edit-container">
-			{connectDragSource(
-				<div className="drag-icon">
-					<ClayIcon symbol="drag" />
-				</div>
-			)}
+			<div className="drag-icon" ref={handlerRef}>
+				<ClayIcon symbol="drag" />
+			</div>
 
 			{_renderEditableProperty({
 				error,
@@ -230,7 +245,6 @@ export default function CriteriaRowEditable({
 }
 
 CriteriaRowEditable.propTypes = {
-	connectDragSource: PropTypes.func,
 	criterion: PropTypes.object.isRequired,
 	error: PropTypes.bool,
 	index: PropTypes.number.isRequired,

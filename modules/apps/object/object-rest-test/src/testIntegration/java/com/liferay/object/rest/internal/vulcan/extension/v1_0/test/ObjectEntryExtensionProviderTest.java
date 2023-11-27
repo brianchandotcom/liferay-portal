@@ -263,11 +263,8 @@ public class ObjectEntryExtensionProviderTest {
 		Assert.assertEquals(
 			values.get("decimal"), extendedProperties.get("decimal"));
 
-		BigDecimal bigDecimal = new BigDecimal(
-			String.valueOf(values.get("precisionDecimal")));
-
 		Assert.assertEquals(
-			bigDecimal.setScale(16),
+			new BigDecimal(String.valueOf(values.get("precisionDecimal"))),
 			extendedProperties.get("precisionDecimal"));
 	}
 

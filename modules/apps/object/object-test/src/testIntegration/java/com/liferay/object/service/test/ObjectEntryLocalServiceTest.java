@@ -101,6 +101,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -3062,9 +3063,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private BigDecimal _getBigDecimal(long value) {
-		BigDecimal bigDecimal = BigDecimal.valueOf(value);
-
-		return bigDecimal.setScale(16);
+		return BigDecimalUtil.stripTrailingZeros(BigDecimal.valueOf(value));
 	}
 
 	private Map<String, Serializable> _getValuesFromCacheField(

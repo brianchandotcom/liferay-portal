@@ -7,6 +7,7 @@ package com.liferay.jethr0.entity;
 
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
@@ -54,6 +55,7 @@ public class EntityInitializer {
 
 		_buildEntityRepository.initialize();
 		_buildRunEntityRepository.initialize();
+		_gitBranchEntityRepository.initialize();
 		_jenkinsCohortEntityRepository.initialize();
 		_jenkinsNodeEntityRepository.initialize();
 		_jenkinsServerEntityRepository.initialize();
@@ -63,6 +65,7 @@ public class EntityInitializer {
 
 		_buildEntityRepository.initializeRelationships();
 		_buildRunEntityRepository.initializeRelationships();
+		_gitBranchEntityRepository.initializeRelationships();
 		_jenkinsCohortEntityRepository.initializeRelationships();
 		_jenkinsNodeEntityRepository.initializeRelationships();
 		_jenkinsServerEntityRepository.initializeRelationships();
@@ -94,6 +97,9 @@ public class EntityInitializer {
 
 	@Autowired
 	private JobPrioritizerEntityRepository _jobPrioritizerEntityRepository;
+
+	@Autowired
+	private GitBranchEntityRepository _gitBranchEntityRepository;
 
 	@Autowired
 	private JobQueue _jobQueue;

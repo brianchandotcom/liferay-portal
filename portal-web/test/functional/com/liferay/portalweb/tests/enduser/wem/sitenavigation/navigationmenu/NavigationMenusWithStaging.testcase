@@ -27,12 +27,15 @@ definition {
 	@description = "This is a test for LPS-135675. The user can create navigate menu items based on assets with associated display page template in staging site."
 	@priority = 4
 	test AddDisplayPageTypeNavigationMenuItems {
+		var groupId = JSONGroupSetter.setGroupId(
+			groupName = "Test Site Name (Staging)",
+			site = "false");
+
 		task ("Add the first display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Web Content DPT",
-				groupName = "Test Site Name-staging",
-				site = "false",
+				groupId = ${groupId},
 				subType = "Basic Web Content");
 		}
 
@@ -56,8 +59,7 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Blogs Entry DPT",
-				groupName = "Test Site Name-staging",
-				site = "false");
+				groupId = ${groupId});
 		}
 
 		task ("Add a Display Page Content fragment to the second display page template") {
@@ -80,8 +82,7 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Document DPT",
-				groupName = "Test Site Name-staging",
-				site = "false",
+				groupId = ${groupId},
 				subType = "Basic Document");
 		}
 
@@ -105,8 +106,7 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
 				displayPageTemplateEntryName = "Category DPT",
-				groupName = "Test Site Name-staging",
-				site = "false");
+				groupId = ${groupId});
 		}
 
 		task ("Add a Display Page Content fragment to the fourth display page template") {
@@ -128,47 +128,41 @@ definition {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name (Staging)",
-				site = "false",
+				groupId = ${groupId},
 				title = "Web Content Title");
 		}
 
 		task ("Add a blogs entry") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name (Staging)",
-				site = "false",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with an image") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name-staging",
 				mimeType = "image/jpeg",
-				site = "false",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name (Staging)",
-				site = "false",
+				groupId = ${groupId},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			JSONCategory.addCategory(
-				groupName = "Test Site Name (Staging)",
-				site = "false",
+				groupId = ${groupId},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name (Staging)",
-				site = "false",
+				groupId = ${groupId},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
@@ -206,9 +200,8 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false");
+				groupId = ${groupId},
+				layoutName = "Test Page Name");
 		}
 
 		task ("Select the navigation menu in Navigation Menu widget") {

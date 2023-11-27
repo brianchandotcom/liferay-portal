@@ -2100,11 +2100,13 @@ definition {
 	test ViewDisplayPageTemplateViaCollectionItems {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Web Content DPT",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				subType = "Basic Web Content");
 		}
 
@@ -2124,7 +2126,7 @@ definition {
 			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${i}",
-					groupName = ${randomSiteName},
+					groupId = ${groupId},
 					title = "Web Content Title ${i}");
 			}
 		}
@@ -2144,16 +2146,16 @@ definition {
 		}
 
 		task ("Add a manual collection with Web Content Article item type and Basic Web Content item subtype") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Manual Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Select all web contents as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetType = "Basic Web Content",

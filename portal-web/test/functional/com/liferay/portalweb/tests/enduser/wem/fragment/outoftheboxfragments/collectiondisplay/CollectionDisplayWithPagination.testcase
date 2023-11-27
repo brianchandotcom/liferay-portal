@@ -915,6 +915,8 @@ definition {
 	test ViewDefaultSettingsOfCollectionDisplayWithCollection {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Given a page creator has a content page with Collection Display fragment") {
 			task ("Add 21 web contents") {
 				var i = 1;
@@ -922,7 +924,7 @@ definition {
 				while ((${i} != 22) && (maxIterations = "25")) {
 					JSONWebcontent.addWebContent(
 						content = "Web Content Content ${i}",
-						groupName = "Test Site Name",
+						groupId = ${groupId},
 						title = "Web Content Title ${i}");
 
 					var i = ${i} + 1;
@@ -930,10 +932,11 @@ definition {
 			}
 
 			task ("Add a dynamic collection for All Types") {
-				JSONAssetlist.addDynamicAssetListEntryWithItemType(
-					groupName = "Test Site Name",
-					itemType = "All Types",
-					title = "Dynamic Collection");
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+				AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 			}
 
 			task ("Add a Collection Display to page") {

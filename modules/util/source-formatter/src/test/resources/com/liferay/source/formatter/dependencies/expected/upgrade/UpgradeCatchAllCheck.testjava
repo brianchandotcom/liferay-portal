@@ -375,6 +375,20 @@ public class UpgradeCatchAllCheck {
 		_dlAppLocalService.updateFileEntry(userId, fileEntryId, sourceFileName, mimeType, title, null, description, changeLog, dlVersionNumberIncrease, bytes, null, null, serviceContext);
 	}
 
+	public void method(
+		long companyId, long[] groupIds, long[] calendarIds,
+		long[] calendarResourceIds, long parentCalendarBookingId,
+		String keywords, long startTime, long endTime, boolean recurring,
+		int[] statuses, int start, int end,
+		OrderByComparator<CalendarBooking> orderByComparator) {
+
+			CalendarBookingLocalServiceUtil.search(companyId, groupIds, calendarIds, calendarResourceIds, parentCalendarBookingId, keywords, startTime, endTime, null, recurring, statuses, start, end, orderByComparator);
+			CalendarBookingServiceUtil.search(123, groupIds, calendarIds, calendarResourceIds, parentCalendarBookingId, keywords, startTime, endTime, recurring, statuses, start, end, orderByComparator);
+			CalendarBookingServiceUtil.search(companyId, groupIds, calendarIds, calendarResourceIds, parentCalendarBookingId, keywords, startTime, endTime, null, recurring, statuses, start, end, orderByComparator);
+			_calendarBookingLocalService.search(companyId, groupIds, calendarIds, calendarResourceIds, parentCalendarBookingId, keywords, startTime, endTime, null, recurring, statuses, start, end, orderByComparator);
+			_calendarBookingService.search(companyId, groupIds, calendarIds, calendarResourceIds, parentCalendarBookingId, keywords, startTime, endTime, null, recurring, statuses, start, end, orderByComparator);
+	}
+
 	public void method(long companyId, String externalReferenceCode) {
 		AccountGroupLocalServiceUtil.fetchAccountGroupByExternalReferenceCode(externalReferenceCode, companyId);
 		_accountGroupLocalService.fetchCommerceAccountGroupByExternalReferenceCode(123, "test123");
@@ -508,6 +522,12 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private CalendarBookingLocalService _calendarBookingLocalService;
+
+	@Reference
+	private CalendarBookingService _calendarBookingService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

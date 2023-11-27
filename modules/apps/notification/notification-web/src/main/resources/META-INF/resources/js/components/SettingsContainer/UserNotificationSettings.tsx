@@ -87,6 +87,12 @@ export function UserNotificationSettings({
 		setUserList([]);
 	};
 
+	const getTerms = async () => {
+		const recipientList = values.recipients as UserNotificationRecipients[];
+
+		setToTerms(recipientList.map(({term}) => term).join());
+	};
+
 	const getUserAccounts = async () => {
 		const apiURL = '/o/headless-admin-user/v1.0/user-accounts';
 		const query = `${apiURL}?page=-1&sort=givenName:asc`;
@@ -138,6 +144,12 @@ export function UserNotificationSettings({
 		const makeFetch = async () => {
 			if (values.recipientType === 'role') {
 				await getRoles();
+
+				return;
+			}
+
+			if (values.recipientType === 'term') {
+				await getTerms();
 
 				return;
 			}
@@ -200,7 +212,6 @@ export function UserNotificationSettings({
 			{values.recipientType === 'term' && (
 				<Input
 					component="textarea"
-					disabled={values.system}
 					label={Liferay.Language.get('to')}
 					onChange={({target}) => {
 						setToTerms(target.value);

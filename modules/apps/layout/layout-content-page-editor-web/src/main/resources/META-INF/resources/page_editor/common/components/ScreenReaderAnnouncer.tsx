@@ -22,7 +22,7 @@ type ScreenReaderAnnouncerProps = {
 
 const ScreenReaderAnnouncer = React.forwardRef<any, ScreenReaderAnnouncerProps>(
 	(
-		{'aria-atomic': ariaAtomic = true, 'aria-live': ariaLive = 'polite'},
+		{'aria-atomic': ariaAtomic = false, 'aria-live': ariaLive = 'polite'},
 		ref
 	) => {
 		const [textMap, setTextMap] = useState<Record<string, string>>({});

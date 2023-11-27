@@ -34,10 +34,7 @@ export default function ScreenReaderAnnouncerContextProvider({
 
 	return (
 		<ScreenReaderAnnouncerContext.Provider value={{sendMessage}}>
-			<ScreenReaderAnnouncer
-				aria-atomic={false}
-				ref={screenReaderAnnouncerRef}
-			/>
+			<ScreenReaderAnnouncer ref={screenReaderAnnouncerRef} />
 
 			{children}
 		</ScreenReaderAnnouncerContext.Provider>

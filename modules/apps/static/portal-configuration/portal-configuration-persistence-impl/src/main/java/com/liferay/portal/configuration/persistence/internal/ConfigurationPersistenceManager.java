@@ -199,11 +199,18 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	public void start() throws Exception {
-		if (!StartupHelperUtil.isDBNew()) {
-			_populateDictionaries();
+	public void start() {
+		try {
+			if (!StartupHelperUtil.isDBNew()) {
+				_populateDictionaries();
 
-			return;
+				return;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		_createConfigurationTable();

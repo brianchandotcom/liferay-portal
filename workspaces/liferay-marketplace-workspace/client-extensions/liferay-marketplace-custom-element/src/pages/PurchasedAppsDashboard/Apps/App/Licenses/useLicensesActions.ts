@@ -7,11 +7,11 @@ import {useModal} from '@clayui/modal';
 import {useCallback} from 'react';
 import {KeyedMutator} from 'swr';
 
-import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
+import i18n from '../../../../../i18n';
+import {Liferay} from '../../../../../liferay/liferay';
 import ProvisioningKoroneikiOAuth2, {
 	LicenseKey,
-} from '../../../../services/oauth/ProvisioningKoroneikiOAuth2';
+} from '../../../../../services/oauth/ProvisioningKoroneikiOAuth2';
 
 type Props = {
 	deactivateLicenseModal: ReturnType<typeof useModal>;

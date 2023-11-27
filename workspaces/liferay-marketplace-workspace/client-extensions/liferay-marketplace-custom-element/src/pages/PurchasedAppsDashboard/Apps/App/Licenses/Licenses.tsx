@@ -8,11 +8,11 @@ import {useMemo, useState} from 'react';
 import {Link, useOutletContext, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
-import solutionsIcon from '../../../../assets/icons/bookmarks_icon.svg';
-import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
-import StatusCell from '../../../../components/Table/StatusCell';
-import Table from '../../../../components/Table/Table';
-import i18n from '../../../../i18n';
+import solutionsIcon from '../../../../../assets/icons/bookmarks_icon.svg';
+import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
+import StatusCell from '../../../../../components/Table/StatusCell';
+import Table from '../../../../../components/Table/Table';
+import i18n from '../../../../../i18n';
 
 import './Licenses.scss';
 
@@ -21,14 +21,14 @@ import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
-import DeactivateKeysModal from '../../../../components/DeactivateKeysModal/DeactivateKeysModal';
-import Modal from '../../../../components/Modal';
-import {OrderStatuses} from '../../../../components/OrderStatus';
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {OrderType} from '../../../../enums/OrderType';
-import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
-import {LicenseKey} from '../../../../services/oauth/ProvisioningKoroneikiOAuth2';
-import useProvisioningKoroneikiOAuth2 from '../../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
+import DeactivateKeysModal from '../../../../../components/DeactivateKeysModal/DeactivateKeysModal';
+import Modal from '../../../../../components/Modal';
+import {OrderStatuses} from '../../../../../components/OrderStatus';
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
+import {OrderType} from '../../../../../enums/OrderType';
+import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
+import {LicenseKey} from '../../../../../services/oauth/ProvisioningKoroneikiOAuth2';
+import useProvisioningKoroneikiOAuth2 from '../../../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
 import LicenseDetailsModalHeader from './components/LicenseDetailsModalHeader';
 import LicenceKeyModalContent from './components/LicenseModalContent';
 import TableActions from './components/TableActions';
@@ -322,13 +322,13 @@ const Licenses = () => {
 					size="lg"
 				>
 					<LicenceKeyModalContent
-						Header={() => (
+						Header={
 							<LicenseDetailsModalHeader
 								modalData={modalData}
 								myUserAccount={myUserAccount}
 								product={product as Product}
 							/>
-						)}
+						}
 						modalData={modalData as LicenseKey}
 					/>
 				</Modal>

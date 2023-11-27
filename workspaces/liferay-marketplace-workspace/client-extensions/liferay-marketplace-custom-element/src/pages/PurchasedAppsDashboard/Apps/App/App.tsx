@@ -11,11 +11,9 @@ import {formatDate} from '../../../PublishedAppsDashboard/PublishedDashboardPage
 
 const App = () => {
 	const {orderId} = useParams();
-	const {data} = useOutletContext<any>();
+	const {placedOrder, product} = useOutletContext<any>();
 
-	const placedOrder = data.placedOrder;
-
-	const projectNameField = data.product.customFields.find(
+	const projectNameField = product.customFields.find(
 		(field: {name: string}) => field.name === 'Project Name'
 	);
 

@@ -9,11 +9,11 @@ import './index.scss';
 
 import {format, isBefore} from 'date-fns';
 
-import i18n from '../../../../../../i18n';
-import {LicenseKey} from '../../../../../../services/oauth/ProvisioningKoroneikiOAuth2';
+import i18n from '../../../../../../../i18n';
+import {LicenseKey} from '../../../../../../../services/oauth/ProvisioningKoroneikiOAuth2';
 
 type LicenseKeyModalProps = {
-	Header: React.FC;
+	Header: React.ReactNode;
 	modalData: LicenseKey;
 };
 
@@ -33,9 +33,7 @@ const LicenceKeyModalContent = ({Header, modalData}: LicenseKeyModalProps) => {
 
 	return (
 		<div className="container mkt-license-details-content">
-			<div className="mb-7 mt-3">
-				<Header />
-			</div>
+			<div className="mb-7 mt-3">{Header}</div>
 
 			<div className="row">
 				<div className="col-3">

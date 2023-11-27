@@ -51,7 +51,9 @@ const ExtendBanner: React.FC<ExtendBannerProps> = ({subscription}) => (
 			</small>
 			<small className="col-6 col-md-4 subscription-banner-text text-nowrap">
 				{formatDate(subscription?.startDate)} &ndash;{' '}
-				{subscription?.endDate ?? 'DNE'}
+				{subscription?.endDate
+					? formatDate(subscription?.endDate)
+					: 'DNE'}
 			</small>
 		</div>
 	</>

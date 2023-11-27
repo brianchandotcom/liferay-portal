@@ -135,10 +135,6 @@
 						path: 'logo_editor.js',
 						requires: ['aui-image-cropper', 'liferay-portlet-base'],
 					},
-					'liferay-logo-selector': {
-						path: 'logo_selector.js',
-						requires: ['aui-base'],
-					},
 					'liferay-menu': {
 						path: 'menu.js',
 						requires: ['aui-debounce', 'aui-node'],

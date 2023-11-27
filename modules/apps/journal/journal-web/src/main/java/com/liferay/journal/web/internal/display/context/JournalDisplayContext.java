@@ -64,6 +64,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1912,7 +1913,16 @@ public class JournalDisplayContext {
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");
 
-		if (ddmStructureId > 0) {
+		long highlightedDDMStructureId = ParamUtil.getLong(
+			_httpServletRequest, "highlightedDDMStructureId");
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
+			(highlightedDDMStructureId > 0)) {
+
+			searchContext.setClassTypeIds(
+				new long[] {highlightedDDMStructureId});
+		}
+		else if (ddmStructureId > 0) {
 			searchContext.setClassTypeIds(new long[] {ddmStructureId});
 		}
 

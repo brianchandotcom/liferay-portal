@@ -33,8 +33,7 @@ const getCommerceProduct = async (channelId) => {
 		const product = await response.json();
 
 		return product ?? {skus: []};
-	}
-	catch {
+	} catch {
 		return {skus: []};
 	}
 };
@@ -69,27 +68,6 @@ ${
 }
 `;
 
-const openContactPublisherModal = (product) => {
-	Liferay.Util.openModal({
-		bodyHTML: getModalTemplate({
-			accountName: product.name,
-			email: '',
-			logoURL: `/o/${product.urlImage.split('/o/')[1]}`,
-			website: 'https://liferay.com',
-		}),
-		buttons: [
-			{
-				displayType: 'secondary',
-				label: 'Close',
-				type: 'cancel',
-			},
-		],
-		center: true,
-		headerHTML: 'Publisher Contact Info',
-		size: 'md',
-	});
-};
-
 const customizeUnavailableButton = async (product) => {
 	contactPublisherButtonElement.onmouseover = () =>
 		tooltipElement.classList.replace('hide', 'show');
@@ -110,8 +88,33 @@ const customizeUnavailableButton = async (product) => {
 		return;
 	}
 
+	const customFields = product.customFields ?? [];
+
+	const getCustomFieldValue = (name) =>
+		customFields.find((customField) => customField.name === name)
+			?.customValue?.data ?? '';
+
 	contactPublisherButtonElement.onclick = () =>
-		openContactPublisherModal(product);
+		Liferay.Util.openModal({
+			bodyHTML: getModalTemplate({
+				accountName: product.catalogName || product.name,
+				email: getCustomFieldValue('Support'),
+				logoURL:
+					getCustomFieldValue('Publisher Icon') ||
+					`/o/${product.urlImage.split('/o/')[1]}`,
+				website: getCustomFieldValue('Developer Website'),
+			}),
+			buttons: [
+				{
+					displayType: 'secondary',
+					label: 'Close',
+					type: 'cancel',
+				},
+			],
+			center: true,
+			headerHTML: 'Publisher Contact Info',
+			size: 'md',
+		});
 
 	if (sessionStorage.getItem('@marketplace/redirect-to')) {
 		contactPublisherButtonElement.click();

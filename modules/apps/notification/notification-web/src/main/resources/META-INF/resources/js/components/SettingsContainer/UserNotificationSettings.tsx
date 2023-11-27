@@ -136,14 +136,14 @@ export function UserNotificationSettings({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			if (values.recipientType === 'user') {
-				await getUserAccounts();
+			if (values.recipientType === 'role') {
+				await getRoles();
 
 				return;
 			}
 
-			if (values.recipientType === 'role') {
-				await getRoles();
+			if (values.recipientType === 'user') {
+				await getUserAccounts();
 
 				return;
 			}

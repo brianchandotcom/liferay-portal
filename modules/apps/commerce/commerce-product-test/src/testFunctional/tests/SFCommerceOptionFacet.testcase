@@ -14,6 +14,202 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-12895. Verify that is possible to use the Max Options field to decide how many Options need to be displayed"
+	@priority = 5
+	test CanUseMaxOptionsField {
+		property portal.acceptance = "true";
+
+		task ("Given the admin creates 10 Options") {
+			for (var index : list "1,2,3,4,5,6,7,8,9,Final") {
+				CommerceJSONOptionsAPI._addCommerceOption(
+					facetable = "true",
+					fieldType = "select",
+					optionKey = "color${index}",
+					optionName = "Color${index}",
+					optionValues = "value${index}:Value${index}:1");
+			}
+		}
+
+		task ("And the Options are linked to ABS Sensor") {
+			for (var optionKeyAndPriority : list "Color1:color1,Color2:color2,Color3:color3,Color4:color4,Color5:color5,Color6:color6,Color7:color7,Color8:color8,Color9:color9,ColorFinal:colorfinal") {
+				var optionName = StringUtil.extractFirst(${optionKeyAndPriority}, ":");
+				var optionKey = StringUtil.extractLast(${optionKeyAndPriority}, ":");
+
+				CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+					fieldType = "select",
+					optionKey = ${optionKey},
+					optionName = ${optionName},
+					productName = "ABS Sensor");
+			}
+		}
+
+		task ("And the admin opens Minium catalog") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
+
+		task ("When the admin configure 15 as the number of the options that is possible to show") {
+			CommerceWidget.updateFacetConfiguration(
+				maxOptions = 15,
+				portletName = "Option Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then all the 11 options are present") {
+			for (var optionTitle : list "Package Quantity,Color1,Color2,Color3,Color4,Color5,Color6,Color7,Color8,Color9,ColorFinal") {
+				AssertElementPresent(
+					key_entry = ${optionTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		task ("But if the admin changes the configuration again by setting 1 as the number of the options that is possible to show") {
+			CommerceWidget.updateFacetConfiguration(
+				maxOptions = 1,
+				portletName = "Option Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then only 1 option is present") {
+			AssertElementPresent(
+				key_entry = "Package Quantity",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			for (var optionTitle : list "Color1,Color2,Color3,Color4,Color5,Color6,Color7,Color8,Color9,ColorFinal") {
+				AssertElementNotPresent(
+					key_entry = ${optionTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		task ("And the values present into the Option is untouched") {
+			CommerceWidget.assertOptionFacetsCount(
+				expectedLabels = 5,
+				optionName = "Package Quantity");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12895. Verify that is possible to use the Max Terms field to decide how many Option terms need to be displayed"
+	@priority = 5
+	test CanUseMaxTermsFieldForOptions {
+		property portal.acceptance = "true";
+
+		task ("Given an option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				facetable = "true",
+				fieldType = "select",
+				optionKey = "color",
+				optionName = "Color",
+				optionValues = "value1:Value1:1,value2:Value2:2");
+		}
+
+		task ("And linked to ABS Sensor") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "color",
+				optionName = "Color",
+				productName = "ABS Sensor");
+		}
+
+		task ("And the admin opens Minium catalog") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
+
+		task ("When the admin configure 15 as the number of the max terms that is possible to show for options") {
+			CommerceWidget.updateFacetConfiguration(
+				maxTerms = 15,
+				portletName = "Option Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then all the option values are present") {
+			for (var optionNameAndValues : list "Package Quantity:5,Color:2") {
+				var optionName = StringUtil.extractFirst(${optionNameAndValues}, ":");
+				var optionValueNumber = StringUtil.extractLast(${optionNameAndValues}, ":");
+
+				CommerceWidget.assertOptionFacetsCount(
+					expectedLabels = ${optionValueNumber},
+					optionName = ${optionName});
+			}
+		}
+
+		task ("But if the admin changes the configuration again by setting 1 as the number of the option terms that is possible to show") {
+			CommerceWidget.updateFacetConfiguration(
+				maxTerms = 1,
+				portletName = "Option Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then only 1 option term for each Option is present") {
+			for (var optionNameAndValues : list "Package Quantity:1,Color:1") {
+				var optionName = StringUtil.extractFirst(${optionNameAndValues}, ":");
+				var optionValueNumber = StringUtil.extractLast(${optionNameAndValues}, ":");
+
+				CommerceWidget.assertOptionFacetsCount(
+					expectedLabels = ${optionValueNumber},
+					optionName = ${optionName});
+			}
+		}
+
+		task ("And the Option entries present are untouched") {
+			for (var specificationTitle : list "Package Quantity,Color") {
+				AssertElementPresent(
+					key_entry = ${specificationTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		task ("But if the admin try changes again the max terms by setting 2 as the number of the option terms that is possible to show") {
+			CommerceWidget.updateFacetConfiguration(
+				maxTerms = 2,
+				portletName = "Option Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("And 2 terms for 2 options are present") {
+			for (var optionNameAndValues : list "Package Quantity:2,Color:2") {
+				var optionName = StringUtil.extractFirst(${optionNameAndValues}, ":");
+				var optionValueNumber = StringUtil.extractLast(${optionNameAndValues}, ":");
+
+				CommerceWidget.assertOptionFacetsCount(
+					expectedLabels = ${optionValueNumber},
+					optionName = ${optionName});
+			}
+
+			for (var specificationTitle : list "Package Quantity,Color") {
+				AssertElementPresent(
+					key_entry = ${specificationTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		task ("When the admin uses the frequency threshold") {
+			CommerceWidget.updateFacetConfiguration(
+				frequencyThreshold = 2,
+				portletName = "Option Facet");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Then only 1 option with 1 term is present") {
+			AssertElementPresent(
+				key_entry = "Package Quantity",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			AssertElementNotPresent(
+				key_entry = "Color",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			CommerceWidget.assertOptionFacetsCount(
+				expectedLabels = 1,
+				optionName = "Package Quantity");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-8646"
 	@priority = 4
 	test VerifyDisplayFrequencies {

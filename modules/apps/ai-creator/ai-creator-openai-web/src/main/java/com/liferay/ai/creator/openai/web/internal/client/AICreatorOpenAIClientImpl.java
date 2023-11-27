@@ -90,6 +90,13 @@ public class AICreatorOpenAIClientImpl implements AICreatorOpenAIClient {
 	}
 
 	@Override
+	public String[] getGenerations(
+		String apiKey, String prompt, String size, int numberOfImages) {
+
+		return new String[0];
+	}
+
+	@Override
 	public void validateAPIKey(String apiKey) throws Exception {
 		Http.Options options = new Http.Options();
 

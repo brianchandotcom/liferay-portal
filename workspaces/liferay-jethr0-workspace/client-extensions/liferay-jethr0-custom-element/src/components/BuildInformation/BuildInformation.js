@@ -42,6 +42,8 @@ function BuildInformation({build}) {
 					Create Date: {toLocaleString(build.dateCreated)}
 					<br />
 					Modified Date: {toLocaleString(build.dateModified)}
+					<br />
+					Jenkins Job Name: {build.jenkinsJobName}
 				</ClayPanel.Body>
 			</ClayPanel>
 			{parameters && (

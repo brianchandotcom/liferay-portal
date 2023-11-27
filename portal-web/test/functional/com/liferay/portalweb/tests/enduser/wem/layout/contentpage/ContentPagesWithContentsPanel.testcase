@@ -340,10 +340,6 @@ definition {
 		}
 
 		task ("View the edited web content in view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
 			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content Edit");
 		}
 	}

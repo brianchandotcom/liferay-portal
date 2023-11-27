@@ -760,10 +760,6 @@ definition {
 		}
 
 		task ("Then the page designer should see the mapped image shown on associated display page template") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
 			Button.click(button = "Go Somewhere");
 
 			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});

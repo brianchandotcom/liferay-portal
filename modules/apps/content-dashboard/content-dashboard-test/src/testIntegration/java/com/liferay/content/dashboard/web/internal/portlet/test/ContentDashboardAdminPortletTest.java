@@ -547,44 +547,30 @@ public class ContentDashboardAdminPortletTest {
 	public void testGetSearchContainerWithExpiredJournalArticle()
 		throws Exception {
 
-		User user = UserTestUtil.addGroupAdminUser(_group);
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest();
 
-		Group group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), TestPropsValues.getUserId(), 0);
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			mockLiferayPortletRenderRequest);
 
-		try {
-			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-				_getMockLiferayPortletRenderRequest();
+		int initialCount = searchContainer.getTotal();
 
-			SearchContainer<Object> searchContainer = _getSearchContainer(
-				mockLiferayPortletRenderRequest);
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-			int initialCount = searchContainer.getTotal();
+		JournalArticle updateJournalArticle = JournalTestUtil.updateArticle(
+			journalArticle, journalArticle.getTitleMap(),
+			journalArticle.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-			JournalArticle journalArticle = JournalTestUtil.addArticle(
-				_group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		JournalTestUtil.expireArticle(
+			_group.getGroupId(), updateJournalArticle,
+			updateJournalArticle.getVersion());
 
-			JournalArticle updateJournalArticle = JournalTestUtil.updateArticle(
-				journalArticle, journalArticle.getTitleMap(),
-				journalArticle.getContent(), true, true,
-				ServiceContextTestUtil.getServiceContext());
+		searchContainer = _getSearchContainer(mockLiferayPortletRenderRequest);
 
-			JournalTestUtil.expireArticle(
-				_group.getGroupId(), updateJournalArticle,
-				updateJournalArticle.getVersion());
-
-			searchContainer = _getSearchContainer(
-				mockLiferayPortletRenderRequest);
-
-			int actualCount = searchContainer.getTotal();
-
-			Assert.assertEquals(initialCount + 1, actualCount);
-		}
-		finally {
-			GroupTestUtil.deleteGroup(group);
-			_userLocalService.deleteUser(user);
-		}
+		Assert.assertEquals(initialCount + 1, searchContainer.getTotal());
 	}
 
 	@Test
@@ -1004,68 +990,56 @@ public class ContentDashboardAdminPortletTest {
 	public void testGetSearchContainerWithoutGoogleDriveShortcut()
 		throws Exception {
 
-		User user = UserTestUtil.addGroupAdminUser(_group);
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest();
 
-		Group group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), TestPropsValues.getUserId(), 0);
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			mockLiferayPortletRenderRequest);
 
-		try {
-			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-				_getMockLiferayPortletRenderRequest();
+		int initialCount = searchContainer.getTotal();
 
-			SearchContainer<Object> searchContainer = _getSearchContainer(
-				mockLiferayPortletRenderRequest);
+		JournalTestUtil.addArticle(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0);
 
-			int initialCount = searchContainer.getTotal();
+		FileEntry gifFileEntry = _addFileEntry("gif");
+		FileEntry jpgFileEntry = _addFileEntry("jpg");
 
-			JournalTestUtil.addArticle(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0);
+		FileEntry futureGoogleDriveShortCutFileEntry = _addFileEntry("pdf");
 
-			FileEntry gifFileEntry = _addFileEntry("gif");
-			FileEntry jpgFileEntry = _addFileEntry("jpg");
+		Object futureGoogleDriveShortModel =
+			futureGoogleDriveShortCutFileEntry.getModel();
 
-			FileEntry futureGoogleDriveShortCutFileEntry = _addFileEntry("pdf");
+		DLFileEntry googleDriveShortcutFileEntry =
+			(DLFileEntry)futureGoogleDriveShortModel;
 
-			Object futureGoogleDriveShortModel =
-				futureGoogleDriveShortCutFileEntry.getModel();
+		DLFileEntryType googleDocsDLFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				_company.getGroupId(), "GOOGLE_DOCS");
 
-			DLFileEntry googleDriveShortcutFileEntry =
-				(DLFileEntry)futureGoogleDriveShortModel;
+		googleDriveShortcutFileEntry.setFileEntryTypeId(
+			googleDocsDLFileEntryType.getFileEntryTypeId());
 
-			DLFileEntryType googleDocsDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-					_company.getGroupId(), "GOOGLE_DOCS");
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(
+			googleDriveShortcutFileEntry);
 
-			googleDriveShortcutFileEntry.setFileEntryTypeId(
-				googleDocsDLFileEntryType.getFileEntryTypeId());
+		searchContainer = _getSearchContainer(mockLiferayPortletRenderRequest);
 
-			DLFileEntryLocalServiceUtil.updateDLFileEntry(
-				googleDriveShortcutFileEntry);
+		int actualCount = searchContainer.getTotal();
 
-			searchContainer = _getSearchContainer(
-				mockLiferayPortletRenderRequest);
+		Assert.assertEquals(initialCount + 3, actualCount);
 
-			int actualCount = searchContainer.getTotal();
+		List<Object> results = searchContainer.getResults();
 
-			Assert.assertEquals(initialCount + 3, actualCount);
-
-			List<Object> results = searchContainer.getResults();
-
-			Assert.assertEquals(
-				jpgFileEntry.getFileName(),
-				ReflectionTestUtil.invoke(
-					results.get(0), "getTitle", new Class<?>[] {Locale.class},
-					LocaleUtil.US));
-			Assert.assertEquals(
-				gifFileEntry.getFileName(),
-				ReflectionTestUtil.invoke(
-					results.get(1), "getTitle", new Class<?>[] {Locale.class},
-					LocaleUtil.US));
-		}
-		finally {
-			GroupTestUtil.deleteGroup(group);
-			_userLocalService.deleteUser(user);
-		}
+		Assert.assertEquals(
+			jpgFileEntry.getFileName(),
+			ReflectionTestUtil.invoke(
+				results.get(0), "getTitle", new Class<?>[] {Locale.class},
+				LocaleUtil.US));
+		Assert.assertEquals(
+			gifFileEntry.getFileName(),
+			ReflectionTestUtil.invoke(
+				results.get(1), "getTitle", new Class<?>[] {Locale.class},
+				LocaleUtil.US));
 	}
 
 	@Test

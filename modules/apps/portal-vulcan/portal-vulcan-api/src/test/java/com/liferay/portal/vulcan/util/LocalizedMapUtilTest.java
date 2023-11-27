@@ -36,8 +36,8 @@ public class LocalizedMapUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testMergeI18nMap() {
-		Map<String, String> map = LocalizedMapUtil.mergeI18nMap(
+	public void testMergeLanguageIdMap() {
+		Map<String, String> map = LocalizedMapUtil.mergeLanguageIdMap(
 			HashMapBuilder.put(
 				"en_US", "Brazil"
 			).build(),
@@ -46,12 +46,12 @@ public class LocalizedMapUtilTest {
 		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertEquals("Brazil", map.get("en_US"));
 
-		map = LocalizedMapUtil.mergeI18nMap(null, "pt_BR", "Brasil");
+		map = LocalizedMapUtil.mergeLanguageIdMap(null, "pt_BR", "Brasil");
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertEquals("Brasil", map.get("pt_BR"));
 
-		map = LocalizedMapUtil.mergeI18nMap(
+		map = LocalizedMapUtil.mergeLanguageIdMap(
 			HashMapBuilder.put(
 				"pt_BR", "Brasil"
 			).build(),
@@ -61,7 +61,7 @@ public class LocalizedMapUtilTest {
 		Assert.assertEquals("Brazil", map.get("en_US"));
 		Assert.assertEquals("Brasil", map.get("pt_BR"));
 
-		map = LocalizedMapUtil.mergeI18nMap(
+		map = LocalizedMapUtil.mergeLanguageIdMap(
 			HashMapBuilder.put(
 				"en_US", "Brazil"
 			).build(),

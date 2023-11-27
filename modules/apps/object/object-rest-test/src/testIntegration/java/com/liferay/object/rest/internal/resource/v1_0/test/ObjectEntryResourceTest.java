@@ -6379,6 +6379,27 @@ public class ObjectEntryResourceTest {
 			}
 		);
 
+		String randomExternalReferenceCode = RandomTestUtil.randomString();
+		long randomGroupId = RandomTestUtil.randomLong();
+
+		_testPatchPutCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				"status", "NOT_FOUND"
+			).put(
+				"title",
+				StringBundler.concat(
+					"No DLFolder exists with the key {externalReferenceCode=",
+					randomExternalReferenceCode, ", groupId=", randomGroupId,
+					"}")
+			),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				randomExternalReferenceCode, randomGroupId),
+			httpMethod, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+			useExternalReferenceCode);
+
 		// File with a nonexistent name (documents and media source)
 
 		DLFolder dlFolder1 = DLTestUtil.addDLFolder(
@@ -6851,6 +6872,26 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 			}
 		);
+
+		String randomExternalReferenceCode = RandomTestUtil.randomString();
+		long randomGroupId = RandomTestUtil.randomLong();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				"status", "NOT_FOUND"
+			).put(
+				"title",
+				StringBundler.concat(
+					"No DLFolder exists with the key {externalReferenceCode=",
+					randomExternalReferenceCode, ", groupId=", randomGroupId,
+					"}")
+			),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				randomExternalReferenceCode, randomGroupId),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
 		// File with a nonexistent name (documents and media source)
 

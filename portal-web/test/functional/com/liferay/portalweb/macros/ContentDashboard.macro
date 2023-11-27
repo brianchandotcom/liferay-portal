@@ -135,10 +135,12 @@ definition {
 		while (${count} != ${versionsCreated}) {
 			JSONDocument.checkOutFile(
 				dmDocumentTitle = ${dmDocumentTitle},
+				groupId = ${groupId},
 				groupName = ${groupName});
 
 			JSONDocument.checkInFile(
 				dmDocumentTitle = ${dmDocumentTitle},
+				groupId = ${groupId},
 				groupName = ${groupName});
 
 			var count = ${count} + 1;

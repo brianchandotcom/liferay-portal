@@ -72,7 +72,7 @@ export default request => {
 		path
 	} = request;
 
-	const requestURL = `${baseURL}/${path}`;
+	let requestURL = `${baseURL}/${path}`;
 
 	const authData = {
 		...stringifyValues(data)
@@ -81,7 +81,7 @@ export default request => {
 	const config = {method};
 
 	if (method === 'GET') {
-		config.data = authData;
+		requestURL = `${requestURL}?${new URLSearchParams(authData)}`;
 	} else {
 		config.body = getFormData(authData);
 	}

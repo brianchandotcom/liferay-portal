@@ -20,15 +20,13 @@ export default function ReportParameters({namespace, parameters}) {
 		'</button>' +
 		'</div>';
 
-	const portletMessageContainer = document.getElementsByClassName(
-		'report-message'
-	)[0];
+	const portletMessageContainer = document.querySelector('.report-message');
 
 	let delegateHandler;
 
 	portletMessageContainer.style.display = 'none';
 
-	document.getElementsByClassName('report-parameters')[0].value = parameters;
+	document.querySelector('.report-parameters').value = parameters;
 
 	if (parameters) {
 		const reportParameters = JSON.parse(parameters);
@@ -51,16 +49,12 @@ export default function ReportParameters({namespace, parameters}) {
 	function addParameter(namespace) {
 		portletMessageContainer.style.display = 'none';
 
-		let parameterKey = document.getElementsByClassName('parameters-key')[0]
+		let parameterKey = document.querySelector('.parameters-key').value;
+
+		let parameterType = document.querySelector('.parameters-input-type')
 			.value;
 
-		let parameterType = document.getElementsByClassName(
-			'parameters-input-type'
-		)[0].value;
-
-		let parameterValue = document.getElementsByClassName(
-			'parameters-value'
-		)[0].value;
+		let parameterValue = document.querySelector('.parameters-value').value;
 
 		let message = '';
 
@@ -83,9 +77,8 @@ export default function ReportParameters({namespace, parameters}) {
 			return;
 		}
 
-		const reportParameters = document.getElementsByClassName(
-			'report-parameters'
-		)[0].value;
+		const reportParameters = document.querySelector('.report-parameters')
+			.value;
 
 		if (reportParameters) {
 			const reportParametersJSON = JSON.parse(reportParameters);
@@ -119,17 +112,16 @@ export default function ReportParameters({namespace, parameters}) {
 
 		addReportParameter(parameterKey, parameterValue, parameterType);
 
-		document.getElementsByClassName('parameters-key')[0].value = '';
-		document.getElementsByClassName('parameters-value')[0].value = '';
+		document.querySelector('.parameters-key').value = '';
+		document.querySelector('.parameters-value').value = '';
+
 		disableAddParameterButton(namespace);
 	}
 
 	function addReportParameter(parameterKey, parameterValue, parameterType) {
 		let reportParameters = [];
 
-		const parametersInput = document.getElementsByClassName(
-			'report-parameters'
-		)[0];
+		const parametersInput = document.querySelector('.report-parameters');
 
 		if (parametersInput.value) {
 			reportParameters = JSON.parse(parametersInput.value);
@@ -147,7 +139,7 @@ export default function ReportParameters({namespace, parameters}) {
 	}
 
 	function addTag(parameterKey, parameterValue, parameterType) {
-		const tagsContainer = document.getElementsByClassName('report-tags')[0];
+		const tagsContainer = document.querySelector('.report-tags');
 
 		const key = encodeURIComponent(
 			('report-tag-' + parameterKey).replace(/ /g, 'BLANK')
@@ -203,9 +195,9 @@ export default function ReportParameters({namespace, parameters}) {
 			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
-					const parametersInput = document.getElementsByClassName(
-						'report-parameters'
-					)[0];
+					const parametersInput = document.querySelector(
+						'.report-parameters'
+					);
 
 					const reportParameters = JSON.parse(parametersInput.value);
 
@@ -221,27 +213,23 @@ export default function ReportParameters({namespace, parameters}) {
 
 					parametersInput.value = JSON.stringify(reportParameters);
 
-					const key = ('report-tag-' + parameterKey).replace(
+					const key = ('.report-tag-' + parameterKey).replace(
 						/ /g,
 						'BLANK'
 					);
 
-					document.getElementsByClassName(key)[0].remove();
+					document.querySelector(key).remove();
 				}
 			},
 		});
 	}
 
 	function disableAddParameterButton() {
-		document
-			.getElementsByClassName('add-parameter')[0]
-			.classList.add('disabled');
+		document.querySelector('.add-parameter').classList.add('disabled');
 	}
 
 	function enableAddParameterButton() {
-		document
-			.getElementsByClassName('add-parameter')[0]
-			.classList.remove('disabled');
+		document.querySelector('.add-parameter').classList.remove('disabled');
 	}
 
 	function getDateValue(namespace) {
@@ -275,17 +263,12 @@ export default function ReportParameters({namespace, parameters}) {
 	}
 
 	function toggleAddParameterButton(namespace) {
-		const parameterKey = document.getElementsByClassName(
-			'parameters-key'
-		)[0].value;
+		const parameterKey = document.querySelector('.parameters-key').value;
 
-		const parameterType = document.getElementsByClassName(
-			'parameters-input-type'
-		)[0].value;
+		const parameterType = document.querySelector('.parameters-input-type')
+			.value;
 
-		let parameterValue = document.getElementsByClassName(
-			'parameters-value'
-		)[0].value;
+		let parameterValue = document.querySelector('.parameters-value').value;
 
 		if (parameterType === 'date') {
 			parameterValue = getDateValue(namespace);
@@ -300,35 +283,27 @@ export default function ReportParameters({namespace, parameters}) {
 	}
 
 	document
-		.getElementsByClassName('parameters-key')[0]
-		.addEventListener('input', () => {
-			toggleAddParameterButton(namespace);
-		});
+		.querySelector('.parameters-key')
+		.addEventListener('change', () => toggleAddParameterButton(namespace));
 
 	document
-		.getElementsByClassName('parameters-value')[0]
-		.addEventListener('input', () => {
-			toggleAddParameterButton(namespace);
-		});
+		.querySelector('.parameters-value')
+		.addEventListener('change', () => toggleAddParameterButton(namespace));
 
 	document
-		.getElementsByClassName('add-parameter')[0]
-		.addEventListener('click', () => {
-			addParameter(namespace);
-		});
+		.querySelector('.add-parameter')
+		.addEventListener('click', () => addParameter(namespace));
 
 	document
-		.getElementsByClassName('parameters-input-type')[0]
+		.querySelector('.parameters-input-type')
 		.addEventListener('change', (event) => {
 			const currentTarget = event.currentTarget;
 
-			const parametersInputDate = document.getElementsByClassName(
-				'parameters-input-date'
-			)[0];
+			const parametersInputDate = document.querySelector(
+				'.parameters-input-date'
+			);
 
-			const parametersValue = document.getElementsByClassName(
-				'parameters-value'
-			)[0];
+			const parametersValue = document.querySelector('.parameters-value');
 
 			const keyInput = document.getElementById(namespace + 'key');
 

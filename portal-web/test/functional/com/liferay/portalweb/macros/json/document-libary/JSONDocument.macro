@@ -344,11 +344,12 @@ definition {
 
 	@summary = "Default summary"
 	macro checkInFile(dmDocumentTitle = null, groupName = null) {
-		Variables.assertDefined(parameterList = "${groupName},${dmDocumentTitle}");
+		Variables.assertDefined(parameterList = ${dmDocumentTitle});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
+			groupId = ${groupId},
 			groupName = ${groupName});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -364,11 +365,12 @@ definition {
 
 	@summary = "Default summary"
 	macro checkOutFile(dmDocumentTitle = null, groupName = null) {
-		Variables.assertDefined(parameterList = "${groupName},${dmDocumentTitle}");
+		Variables.assertDefined(parameterList = ${dmDocumentTitle});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
+			groupId = ${groupId},
 			groupName = ${groupName});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -425,10 +427,12 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = ${groupName},
-			portalURL = ${portalURL},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = ${groupName},
+				portalURL = ${portalURL},
+				site = ${site});
+		}
 
 		if (!(isSet(folderId))) {
 			var folderId = 0;

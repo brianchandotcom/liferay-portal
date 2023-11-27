@@ -266,7 +266,14 @@ public interface ${schemaName}Resource {
 					<#else>
 						<#assign
 							bodyJavaMethodParameters = freeMarkerTool.getBodyJavaMethodParameters(javaMethodSignature)
+							requestBodyMediaTypes = javaMethodSignature.getRequestBodyMediaTypes()
 						/>
+
+						<#if requestBodyMediaTypes?has_content>
+							<#assign requestBodyMediaType = requestBodyMediaTypes[0] />
+						<#else>
+							<#assign requestBodyMediaType = "application/json" />
+						</#if>
 
 						<#if bodyJavaMethodParameters?has_content>
 								<#list bodyJavaMethodParameters as javaMethodParameter>
@@ -286,14 +293,14 @@ public interface ${schemaName}Resource {
 												);
 											}
 
-											httpInvoker.body(values.toString(), "application/json");
+											httpInvoker.body(values.toString(), "${requestBodyMediaType}");
 										<#else>
-											httpInvoker.body(${javaMethodParameter.parameterName}.toString(), "application/json");
+											httpInvoker.body(${javaMethodParameter.parameterName}.toString(), "${requestBodyMediaType}");
 										</#if>
 									</#if>
 								</#list>
 						<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch", "post", "put")>
-							httpInvoker.body("[]", "application/json");
+							httpInvoker.body("[]", "${requestBodyMediaType}");
 						</#if>
 					</#if>
 				</#if>

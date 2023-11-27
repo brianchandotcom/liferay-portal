@@ -348,15 +348,12 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, long layoutPageTemplateCollectionId, long classNameId,
 		long classTypeId, String name, int type, int status) {
 
-		Table<?> layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable =
-			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, classNameId,
-				classTypeId, name, type, status);
-
 		return layoutPageTemplateEntryPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
-				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
+				_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
+					groupId, layoutPageTemplateCollectionId, classNameId,
+					classTypeId, name, type, status)
 			));
 	}
 

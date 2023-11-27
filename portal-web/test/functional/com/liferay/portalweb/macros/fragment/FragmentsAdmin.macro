@@ -79,22 +79,18 @@ definition {
 	macro addResource(resourceFile = null) {
 		LexiconEntry.gotoAdd();
 
-		IFrame.selectConfigurationFrame();
-
 		WaitForEditable(locator1 = "TextInput#FILE");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
 			value1 = ${resourceFile});
-
-		IFrame.selectConfigurationFrame();
-
-		Button.clickAdd();
 	}
 
 	@summary = "Default summary"
 	macro addResourceToFolder(resourceFile = null, folderName = null) {
 		LexiconCard.clickCardTitleLink(card = ${folderName});
+
+		LexiconEntry.gotoAdd();
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",

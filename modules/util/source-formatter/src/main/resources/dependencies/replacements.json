@@ -707,5 +707,16 @@
 		"from": "addCPDefinitionLinkByCProductId(long, long, double, String, ServiceContext)",
 		"issueKey": "LPS-198610",
 		"to": "addCPDefinitionLinkByCProductId(param#0#, param#1#, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, param#2#, param#3#, param#4#)"
+	},
+	{
+		"classNames": [
+			"CalendarBookingLocalService",
+			"CalendarBookingLocalServiceUtil",
+			"CalendarBookingService",
+			"CalendarBookingServiceUtil"
+		],
+		"from": "search(long, long[], long[], long[], long, String, long, long, boolean, int[], int, int, OrderByComparator<CalendarBooking>)",
+		"issueKey": "LPS-202779",
+		"to": "search(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, null, param#8#, param#9#, param#10#, param#11#, param#12#)"
 	}
 ]

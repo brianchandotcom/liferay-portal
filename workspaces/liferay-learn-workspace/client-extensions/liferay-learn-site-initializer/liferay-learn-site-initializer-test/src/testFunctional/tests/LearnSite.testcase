@@ -1,0 +1,19 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "liferay-learn-site-initializer";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Liferay Learn Site Initializer";
+
+	@description = "Story: ISSD-1 | Test Summary: Verify if Learn Site can be created"
+	@ignore = "Test Stub"
+	@priority = 5
+	test AssertThatCanLearnBeCreated {
+
+		// TODO ISSD-1 AssertThatCanLearnBeCreated pending implementation
+
+	}
+
+}

@@ -6,6 +6,8 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -15,7 +17,9 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -28,6 +32,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.RenderURLBuilder;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -201,6 +207,82 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 			SessionErrors.isEmpty(mockLiferayPortletActionRequest));
 	}
 
+	@Test
+	public void testUpdateDisplayPageEntryContentTypeWithUsages()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		long classNameId = _portal.getClassNameId(
+			JournalArticle.class.getName());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				serviceContext.getScopeGroupId(), 0, classNameId,
+				journalArticle.getDDMStructureId(),
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			journalArticle.getResourcePrimKey(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
+
+		Assert.assertEquals(
+			1,
+			_assetDisplayPageEntryLocalService.getAssetDisplayPageEntriesCount(
+				layoutPageTemplateEntry.getClassNameId(),
+				layoutPageTemplateEntry.getClassTypeId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				layoutPageTemplateEntry.isDefaultTemplate()));
+
+		String redirect = RandomTestUtil.randomString();
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				layoutPageTemplateEntry, redirect);
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doProcessAction",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+
+		_assertLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getClassNameId(),
+			layoutPageTemplateEntry.getClassTypeId(), layoutPageTemplateEntry);
+
+		_assertMockLiferayPortletActionResponse(
+			JSONUtil.put(
+				"error",
+				JSONUtil.put(
+					"assetType",
+					_resourceActions.getModelResource(
+						_portal.getSiteDefaultLocale(_group),
+						JournalArticle.class.getName())
+				).put(
+					"hasUsages", true
+				).put(
+					"viewUsagesURL",
+					_getExpectedViewUsagesURL(
+						mockLiferayPortletActionResponse, redirect,
+						layoutPageTemplateEntry)
+				)),
+			mockLiferayPortletActionResponse);
+
+		Assert.assertTrue(
+			SessionErrors.isEmpty(mockLiferayPortletActionRequest));
+	}
+
 	private DDMStructure _addDDMStructure(ServiceContext serviceContext)
 		throws Exception {
 
@@ -256,6 +338,32 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 		Assert.assertEquals(content, expectedJSONObject.toString(), content);
 	}
 
+	private String _getExpectedViewUsagesURL(
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse,
+		String redirect, LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		return RenderURLBuilder.createRenderURL(
+			mockLiferayPortletActionResponse
+		).setMVCRenderCommandName(
+			"/layout_page_template_admin/view_asset_display_page_usages"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"classNameId",
+			String.valueOf(layoutPageTemplateEntry.getClassNameId())
+		).setParameter(
+			"classTypeId",
+			String.valueOf(layoutPageTemplateEntry.getClassTypeId())
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+		).setParameter(
+			"defaultTemplate",
+			String.valueOf(layoutPageTemplateEntry.isDefaultTemplate())
+		).buildString();
+	}
+
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
 			LayoutPageTemplateEntry layoutPageTemplateEntry, String redirect)
 		throws Exception {
@@ -308,6 +416,10 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 		return draftLayout;
 	}
 
+	@Inject
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
+
 	private Company _company;
 
 	@Inject
@@ -340,5 +452,8 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ResourceActions _resourceActions;
 
 }

@@ -9,6 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +17,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -76,8 +81,17 @@ public class BuildQueue {
 	public void initialize() {
 		sort();
 
-		for (BuildEntity buildEntity : getBuildEntities()) {
-			System.out.println(buildEntity);
+		if (_log.isInfoEnabled()) {
+			List<BuildEntity> buildEntities = getBuildEntities();
+
+			for (int i = 0; i < buildEntities.size(); i++) {
+				BuildEntity buildEntity = buildEntities.get(i);
+
+				_log.info(
+					StringUtil.combine(
+						i + 1, ". ", _liferayPortalURL, "/#/jobs/builds/",
+						buildEntity.getId()));
+			}
 		}
 	}
 
@@ -150,8 +164,15 @@ public class BuildQueue {
 
 	}
 
+	private static final Log _log = LogFactory.getLog(BuildQueue.class);
+
 	@Autowired
 	private JobQueue _jobQueue;
+
+	@Value(
+		"${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.main.domain}"
+	)
+	private String _liferayPortalURL;
 
 	private final List<BuildEntity> _sortedBuildEntities = new ArrayList<>();
 

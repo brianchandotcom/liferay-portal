@@ -115,3 +115,29 @@ PortletToolbar is being removed from util-spring, it needs a static INSTANCE fie
 Directly use PortletToolbar.INSTANCE to get the instance of PortletToolbar.
 ----
 ```
+----
+
+# f971716348b82b1ea6747ae3c011b40616bb5884
+
+Missing breaking change
+
+Correct message should be:
+```
+LPS-198809 Remove ModelSearchRegistrarHelper, not used anymore
+
+# breaking_change_report
+## What modules/apps/portal-search/portal-search-spi/src/main/java/com/liferay/portal/search/spi/model/registrar/ModelSearchRegistrarHelper.java
+ModelSearchRegistrarHelper is removed.
+## Why
+The self bootstraping style *SearchRegistrar has been changed to service collecting of ModelSearchConfigurator
+----
+
+# breaking_change_report
+## What modules/apps/portal-search/portal-search-spi/src/main/java/com/liferay/portal/search/spi/model/registrar/contributor/ModelSearchDefinitionContributor.java
+ModelSearchDefinitionContributor is removed.
+## Why
+The self bootstraping style *SearchRegistrar has been changed to service collecting of ModelSearchConfigurator
+## Alternatives
+Rewrite *SearchRegistrar to become an osgi service of type ModelSearchConfigurator. Move all previous ModelSearchConfigurator setter call parameter as corresponding ModelSearchConfigurator getter return value.
+----
+```

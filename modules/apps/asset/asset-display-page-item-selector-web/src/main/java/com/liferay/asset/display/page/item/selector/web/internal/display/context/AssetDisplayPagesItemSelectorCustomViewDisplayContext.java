@@ -74,7 +74,7 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 
 			assetDisplayPageSearchContainer.setOrderByCol(_getOrderByCol());
 			assetDisplayPageSearchContainer.setOrderByComparator(
-				_getLayoutPageTemplateEntryOrderByComparatorWithKeywords(
+				_getLayoutPageTemplateEntryOrderByComparator(
 					_getOrderByCol(), getOrderByType()));
 			assetDisplayPageSearchContainer.setOrderByType(getOrderByType());
 			assetDisplayPageSearchContainer.setResultsAndTotal(
@@ -291,31 +291,6 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 			orderByComparator =
 				new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(
 					orderByAsc);
-		}
-		else if (orderByCol.equals("name")) {
-			orderByComparator =
-				new LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(
-					orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
-	private OrderByComparator<Object>
-		_getLayoutPageTemplateEntryOrderByComparatorWithKeywords(
-			String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<Object> orderByComparator = null;
-
-		if (orderByCol.equals("create-date")) {
-			orderByComparator =
-				new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator();
 		}
 		else if (orderByCol.equals("name")) {
 			orderByComparator =

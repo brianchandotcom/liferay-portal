@@ -358,7 +358,9 @@ public class FriendlyURLServlet extends HttpServlet {
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 					for (Layout layout : layouts) {
-						if (layout.matches(httpServletRequest, layoutFriendlyURL)) {
+						if (layout.matches(
+								httpServletRequest, layoutFriendlyURL)) {
+
 							redirectLayout = layout;
 
 							break;

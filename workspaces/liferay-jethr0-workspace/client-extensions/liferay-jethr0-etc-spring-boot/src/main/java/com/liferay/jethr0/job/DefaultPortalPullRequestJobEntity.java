@@ -36,6 +36,7 @@ public class DefaultPortalPullRequestJobEntity
 
 		int pullRequestNumber = 0;
 		String receiverUserName = null;
+		String repositoryName = null;
 
 		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
 			String pullRequestNumberParameterValue =
@@ -54,15 +55,24 @@ public class DefaultPortalPullRequestJobEntity
 			if (!StringUtil.isNullOrEmpty(receiverUserNameParameterValue)) {
 				receiverUserName = receiverUserNameParameterValue;
 			}
+
+			String repositoryNameParameterValue =
+				initialBuildEntity.getBuildParameterValue(
+					"GITHUB_REPOSITORY_NAME");
+
+			if (!StringUtil.isNullOrEmpty(repositoryNameParameterValue)) {
+				repositoryName = repositoryNameParameterValue;
+			}
 		}
 
 		if ((pullRequestNumber > 0) &&
-			!StringUtil.isNullOrEmpty(receiverUserName)) {
+			!StringUtil.isNullOrEmpty(receiverUserName) &&
+			!StringUtil.isNullOrEmpty(repositoryName)) {
 
 			_portalPullRequestURL = StringUtil.toURL(
 				StringUtil.combine(
-					"https://github.com/", receiverUserName,
-					"/liferay-portal/pull/", pullRequestNumber));
+					"https://github.com/", receiverUserName, "/",
+					repositoryName, "/pull/", pullRequestNumber));
 
 			return _portalPullRequestURL;
 		}
@@ -106,6 +116,8 @@ public class DefaultPortalPullRequestJobEntity
 		initialBuildParamaters.put(
 			"GITHUB_RECEIVER_USERNAME", _getPullRequestReceiverUserName());
 		initialBuildParamaters.put(
+			"GITHUB_REPOSITORY_NAME", _getPullRequestRepositoryName());
+		initialBuildParamaters.put(
 			"GITHUB_SENDER_BRANCH_NAME", getSenderBranchName());
 		initialBuildParamaters.put(
 			"GITHUB_SENDER_BRANCH_SHA", getSenderBranchSHA());
@@ -123,7 +135,9 @@ public class DefaultPortalPullRequestJobEntity
 
 	@Override
 	protected String getJenkinsJobName() {
-		return "test-portal-acceptance-pullrequest(master)";
+		return StringUtil.combine(
+			"test-portal-acceptance-pullrequest(", getUpstreamBranchName(),
+			")");
 	}
 
 	private long _getPullRequestNumber() {
@@ -160,14 +174,33 @@ public class DefaultPortalPullRequestJobEntity
 		return null;
 	}
 
+	private String _getPullRequestRepositoryName() {
+		if (!StringUtil.isNullOrEmpty(_repositoryName)) {
+			return _repositoryName;
+		}
+
+		Matcher matcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getPortalPullRequestURL()));
+
+		if (matcher.find()) {
+			_repositoryName = matcher.group("repositoryName");
+
+			return _repositoryName;
+		}
+
+		return null;
+	}
+
 	private static final Pattern _pullRequestURLPattern = Pattern.compile(
 		StringUtil.combine(
-			"https://github.com/(?<receiverUserName>[^/]+)/liferay-portal",
+			"https://github.com/(?<receiverUserName>[^/]+)/",
+			"(?<repositoryName>liferay-portal(-ee)?)",
 			"/pull/(?<number>\\d+)"));
 
 	private URL _portalPullRequestURL;
 	private long _pullRequestNumber;
 	private String _receiverUserName;
+	private String _repositoryName;
 	private String _testSuiteName;
 
 }

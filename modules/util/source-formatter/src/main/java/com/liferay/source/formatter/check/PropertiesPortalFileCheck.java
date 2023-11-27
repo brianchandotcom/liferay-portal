@@ -297,9 +297,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 			String propertyKey = properties.getKey();
 
-			char c = propertyKey.charAt(0);
-
-			if (!Validator.isChar(c)) {
+			if (!Validator.isChar(propertyKey.charAt(0))) {
 				continue;
 			}
 

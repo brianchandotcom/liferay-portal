@@ -20,8 +20,10 @@ public class GitHubIssue {
 		_jsonObject = jsonObject;
 	}
 
-	public URL getApiURL() {
-		return StringUtil.toURL(_jsonObject.getString("url"));
+	public URL getPullRequestApiURL() {
+		JSONObject jsonObject = _jsonObject.getJSONObject("pull_request");
+
+		return StringUtil.toURL(jsonObject.getString("url"));
 	}
 
 	public URL getCommentsURL() {

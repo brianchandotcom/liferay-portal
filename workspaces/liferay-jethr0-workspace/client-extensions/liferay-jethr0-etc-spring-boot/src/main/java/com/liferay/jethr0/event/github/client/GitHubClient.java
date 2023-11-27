@@ -56,7 +56,7 @@ public class GitHubClient {
 
 	public GitHubPullRequest getGitHubPullRequest(GitHubIssue gitHubIssue) {
 		return new GitHubPullRequest(
-			new JSONObject(_requestGet(gitHubIssue.getApiURL())));
+			new JSONObject(_requestGet(gitHubIssue.getPullRequestApiURL())));
 	}
 
 	public GitHubRef getGitHubRef(URL gitHubRefURL) {

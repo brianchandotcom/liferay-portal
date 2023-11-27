@@ -24,58 +24,64 @@ import MinimumSearchesInput from './inputs/MinimumSearchesInput';
 import SizeInput from './inputs/SizeInput';
 import TimeRangeInput from './inputs/TimeRangeInput';
 
-const ASAH_RECENT_ACTIVITY_OPTIONS = [
-	{
-		contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES,
-		description: Liferay.Language.get('recent-searches-help'),
-		learnMessageResourceKey: 'search-bar-suggestions-site-activities',
-		title: Liferay.Language.get('recent-searches'),
-	},
-	{
-		contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES,
-		description: Liferay.Language.get('recent-pages-help'),
-		learnMessageResourceKey: 'search-bar-suggestions-site-activities',
-		title: Liferay.Language.get('recent-pages'),
-	},
-	{
-		contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SITES,
-		description: Liferay.Language.get('recent-sites-help'),
-		learnMessageResourceKey: 'search-bar-suggestions-site-activities',
-		title: Liferay.Language.get('recent-sites'),
-	},
-	{
-		contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS,
-		description: Liferay.Language.get('recently-viewed-help'),
-		learnMessageResourceKey: 'search-bar-suggestions-site-activities',
-		title: Liferay.Language.get('recently-viewed'),
-	},
-];
+function getSiteActivitiesContributorActivityOptions() {
+	const options = [
+		{
+			contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+			description: Liferay.Language.get('top-searches-help'),
+			learnMessageResourceKey: 'search-bar-suggestions-site-activities',
+			title: Liferay.Language.get('top-searches'),
+		},
+		{
+			contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+			description: Liferay.Language.get('trending-searches-help'),
+			learnMessageResourceKey: 'search-bar-suggestions-site-activities',
+			title: Liferay.Language.get('trending-searches'),
+		},
+	];
 
-const ASAH_TOP_TRENDING_SEARCH_OPTIONS = [
-	{
-		contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
-		description: Liferay.Language.get('top-searches-help'),
-		learnMessageResourceKey: 'search-bar-suggestions-site-activities',
-		title: Liferay.Language.get('top-searches'),
-	},
-	{
-		contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
-		description: Liferay.Language.get('trending-searches-help'),
-		learnMessageResourceKey: 'search-bar-suggestions-site-activities',
-		title: Liferay.Language.get('trending-searches'),
-	},
-];
+	if (Liferay.FeatureFlags['LPS-176691']) {
+		return options.concat([
+			{
+				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES,
+				description: Liferay.Language.get('recent-searches-help'),
+				learnMessageResourceKey:
+					'search-bar-suggestions-site-activities',
+				title: Liferay.Language.get('recent-searches'),
+			},
+			{
+				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES,
+				description: Liferay.Language.get('recent-pages-help'),
+				learnMessageResourceKey:
+					'search-bar-suggestions-site-activities',
+				title: Liferay.Language.get('recent-pages'),
+			},
+			{
+				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SITES,
+				description: Liferay.Language.get('recent-sites-help'),
+				learnMessageResourceKey:
+					'search-bar-suggestions-site-activities',
+				title: Liferay.Language.get('recent-sites'),
+			},
+			{
+				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS,
+				description: Liferay.Language.get('recently-viewed-help'),
+				learnMessageResourceKey:
+					'search-bar-suggestions-site-activities',
+				title: Liferay.Language.get('recently-viewed'),
+			},
+		]);
+	}
+
+	return options;
+}
 
 function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 	const [showActivityDropdown, setShowActivityDropdown] = useState(false);
 
 	const alignElementRef = useRef();
 
-	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = Liferay.FeatureFlags[
-		'LPS-176691'
-	]
-		? ASAH_TOP_TRENDING_SEARCH_OPTIONS.concat(ASAH_RECENT_ACTIVITY_OPTIONS)
-		: ASAH_TOP_TRENDING_SEARCH_OPTIONS;
+	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = getSiteActivitiesContributorActivityOptions();
 
 	const _handleChangeAttributeInput = (property) => (event) => {
 		onInputSetItemChange(index, {

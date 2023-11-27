@@ -250,11 +250,20 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 			return tag;
 		}
 
+		boolean withoutValueAttribute = false;
+
 		while (true) {
 			x = s.indexOf(CharPool.EQUAL);
 
 			if (x == -1) {
-				return null;
+				x = s.indexOf(CharPool.SPACE);
+
+				if (x != -1) {
+					withoutValueAttribute = true;
+				}
+				else {
+					return null;
+				}
 			}
 
 			String attributeName = StringUtil.trim(s.substring(0, x));
@@ -264,6 +273,22 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 			}
 
 			s = StringUtil.trimLeading(s.substring(x + 1));
+
+			if (withoutValueAttribute) {
+				tag.putAttribute(attributeName, "_WITHOUT_VALUE_");
+
+				if (s.equals(">") || s.equals("/>") ||
+					(tagName.matches("[-\\w:]+") &&
+					 s.matches(">\\s*</" + tagName + "\\s*>"))) {
+
+					tag.setClosingTag(
+						StringUtil.removeChars(
+							s, CharPool.NEW_LINE, CharPool.SPACE,
+							CharPool.TAB));
+
+					return tag;
+				}
+			}
 
 			char delimeter = s.charAt(0);
 
@@ -440,11 +465,15 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 
 				sb.append(entry.getKey());
 
+				String attributeValue = entry.getValue();
+
+				if (attributeValue.equals("_WITHOUT_VALUE_")) {
+					continue;
+				}
+
 				sb.append(StringPool.EQUAL);
 
 				String delimeter = null;
-
-				String attributeValue = entry.getValue();
 
 				if (_escapeQuotes ||
 					!attributeValue.contains(StringPool.QUOTE) ||

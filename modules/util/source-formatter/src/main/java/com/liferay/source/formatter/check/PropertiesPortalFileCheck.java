@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -165,6 +166,18 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		return _portalPropertiesContent;
 	}
 
+	private boolean _hasPortalPropertiesCommonPrefixes(String propertyKey) {
+		for (String portalPropertiesCommonPrefix :
+				_PORTAL_PROPERTIES_COMMON_PREFIXES) {
+
+			if (propertyKey.startsWith(portalPropertiesCommonPrefix)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private String _mergeValues(List<String> list) {
 		StringBundler sb = new StringBundler(3 * list.size());
 
@@ -209,6 +222,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 			String key = null;
 			String line = null;
+			String value = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				line = line.trim();
@@ -221,8 +235,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 				if (line.indexOf('=') >= 0) {
 					key = line.substring(0, line.indexOf('='));
-
-					String value = line.substring(line.indexOf('=') + 1);
+					value = line.substring(line.indexOf('=') + 1);
 
 					if (!Objects.isNull(value) && !value.equals("\\")) {
 						List<String> set = propertiesMap.get(key);
@@ -241,7 +254,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 					}
 				}
 				else {
-					String value = line;
+					value = line;
 
 					if (value.endsWith(",\\")) {
 						value = value.substring(0, value.length() - 2);
@@ -285,7 +298,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 			if (portalPropertiesContent.contains(propertyKey) ||
 				portalPropertiesContent.contains("#" + propertyKey) ||
-				propertyKey.startsWith("module.framework.")) {
+				_hasPortalPropertiesCommonPrefixes(propertyKey)) {
 
 				portalPropertiesMap.put(
 					propertyKey, propertiesMap.get(propertyKey));
@@ -319,19 +332,31 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 	private static final String _ALLOWED_SINGLE_LINE_PROPERTY_KEYS =
 		"allowedSingleLinePropertyKeys";
 
+	private static final String[] _PORTAL_PROPERTIES_COMMON_PREFIXES = {
+		"com.liferay.portal.servlet.filters.",
+		"data.limit.model.max.count[com.liferay.", "module.framework."
+	};
+
 	private String _portalPropertiesContent;
 
 	private class PortalPropertiesComparator
 		extends NaturalOrderStringComparator {
 
 		public PortalPropertiesComparator() {
-			_lastModuleFrameworkPosition = _portalPropertiesContent.lastIndexOf(
-				"    module.framework.");
+			for (String portalPropertiesCommonPrefix :
+					_PORTAL_PROPERTIES_COMMON_PREFIXES) {
 
-			if (_lastModuleFrameworkPosition == -1) {
-				_lastModuleFrameworkPosition =
-					_portalPropertiesContent.lastIndexOf(
-						"    #module.framework.");
+				int x = _portalPropertiesContent.lastIndexOf(
+					StringPool.FOUR_SPACES + portalPropertiesCommonPrefix);
+
+				if (x == -1) {
+					x = _portalPropertiesContent.lastIndexOf(
+						StringPool.FOUR_SPACES + StringPool.POUND +
+							portalPropertiesCommonPrefix);
+				}
+
+				_commonPrefixesLastPositionsMap.put(
+					portalPropertiesCommonPrefix, x);
 			}
 		}
 
@@ -342,39 +367,66 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			int propertyKey2Position = _getPortalPropertiesPosition(
 				_portalPropertiesContent, propertyKey2);
 
-			if (propertyKey1Position == -1) {
-				if (propertyKey2Position <= _lastModuleFrameworkPosition) {
+			if ((propertyKey1Position != -1) && (propertyKey2Position != -1)) {
+				return propertyKey1Position - propertyKey2Position;
+			}
+
+			int propertiesLastPosition1 = _getCommonPrefixLastPosition(
+				propertyKey1);
+
+			if ((propertyKey1Position == -1) && (propertyKey2Position != -1)) {
+				if (propertyKey2Position <= propertiesLastPosition1) {
 					return 1;
 				}
 
 				return -1;
 			}
 
-			if (propertyKey2Position == -1) {
-				if (propertyKey1Position <= _lastModuleFrameworkPosition) {
+			int propertiesLastPosition2 = _getCommonPrefixLastPosition(
+				propertyKey2);
+
+			if ((propertyKey1Position != -1) && (propertyKey2Position == -1)) {
+				if (propertyKey1Position <= propertiesLastPosition2) {
 					return -1;
 				}
 
 				return 1;
 			}
 
-			return propertyKey1Position - propertyKey2Position;
+			if (propertiesLastPosition1 != propertiesLastPosition2) {
+				return propertiesLastPosition1 - propertiesLastPosition2;
+			}
+
+			return super.compare(propertyKey1, propertyKey2);
+		}
+
+		private int _getCommonPrefixLastPosition(String propertyKey) {
+			for (Map.Entry<String, Integer> entry :
+					_commonPrefixesLastPositionsMap.entrySet()) {
+
+				if (StringUtil.startsWith(propertyKey, entry.getKey())) {
+					return entry.getValue();
+				}
+			}
+
+			return -1;
 		}
 
 		private int _getPortalPropertiesPosition(
 			String content, String propertyKey) {
 
-			int pos = content.indexOf(StringPool.FOUR_SPACES + propertyKey);
+			int x = content.indexOf(StringPool.FOUR_SPACES + propertyKey);
 
-			if (pos == -1) {
-				pos = content.indexOf(
+			if (x == -1) {
+				x = content.indexOf(
 					StringPool.FOUR_SPACES + StringPool.POUND + propertyKey);
 			}
 
-			return pos;
+			return x;
 		}
 
-		private int _lastModuleFrameworkPosition = -1;
+		private final Map<String, Integer> _commonPrefixesLastPositionsMap =
+			new HashMap<>();
 
 	}
 

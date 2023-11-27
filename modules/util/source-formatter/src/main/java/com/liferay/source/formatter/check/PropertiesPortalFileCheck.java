@@ -297,6 +297,12 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 			String propertyKey = properties.getKey();
 
+			char c = propertyKey.charAt(0);
+
+			if (!Validator.isChar(c)) {
+				continue;
+			}
+
 			if (portalPropertiesContent.contains(propertyKey + "=") ||
 				portalPropertiesContent.contains("#" + propertyKey + "=") ||
 				_hasPortalPropertiesCommonPrefixes(propertyKey)) {

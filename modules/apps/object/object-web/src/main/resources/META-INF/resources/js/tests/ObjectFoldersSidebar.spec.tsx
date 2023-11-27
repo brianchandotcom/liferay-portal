@@ -8,15 +8,9 @@ import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import ObjectFoldersSideBar from '../components/ViewObjectDefinitions/ObjectFoldersSidebar';
-const emptyAction = {href: '', method: ''};
-
-const objectFolderActions = {
-	create: emptyAction,
-	get: emptyAction,
-};
 
 const ticketObjectFolder = {
-	actions: objectFolderActions,
+	actions: {get: {href: '', method: 'GET'}},
 	dateCreated: '2023-08-07T14:45:00Z',
 	dateModified: '2023-08-07T14:45:00Z',
 	externalReferenceCode: 'ticket',
@@ -27,7 +21,7 @@ const ticketObjectFolder = {
 };
 
 const uncategorizedObjectFolder = {
-	actions: objectFolderActions,
+	actions: {get: {href: '', method: 'GET'}},
 	dateCreated: '2023-08-07T14:42:21Z',
 	dateModified: '2023-08-07T14:42:21Z',
 	externalReferenceCode: 'uncategorized',
@@ -38,7 +32,7 @@ const uncategorizedObjectFolder = {
 };
 
 const objectFoldersRequestInfo = {
-	actions: objectFolderActions,
+	actions: {create: {href: '', method: 'POST'}},
 	items: [ticketObjectFolder, uncategorizedObjectFolder],
 };
 
@@ -46,6 +40,8 @@ describe('The ObjectFoldersSidebar component should', () => {
 	it('render all created object folders', () => {
 		render(
 			<ObjectFoldersSideBar
+				baseResourceURL=""
+				objectDefinitionsActions={{create: {href: '', method: 'POST'}}}
 				objectFoldersRequestInfo={objectFoldersRequestInfo}
 				selectedObjectFolder={uncategorizedObjectFolder}
 				setModalImportObjectDefinitionInfo={() => {}}

@@ -12,7 +12,7 @@ import {
 	stringToURLParameterFormat,
 } from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
 	IFDSTableProps,
@@ -364,6 +364,7 @@ export default function ViewObjectDefinitions({
 					) : (
 						<>
 							<ObjectFoldersSideBar
+								baseResourceURL={baseResourceURL}
 								objectDefinitionsActions={
 									objectDefinitionsActions as Actions
 								}
@@ -394,9 +395,8 @@ export default function ViewObjectDefinitions({
 													objectDefinitionActions: objectDefinitionsActions as Actions,
 													objectFolderActions: selectedObjectFolder.actions as Actions,
 												},
-												id:
-													selectedObjectFolder.id ??
-													0,
+												baseResourceURL,
+												objectFolderId: selectedObjectFolder.id as number,
 												objectFolderPermissionsURL,
 												setModalImportObjectDefinitionInfo,
 												setShowModal,

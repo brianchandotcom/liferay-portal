@@ -13,9 +13,11 @@ import {sub} from 'frontend-js-web';
 import React, {SetStateAction} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
+import {exportObjectFolder} from '../../utils/exportObjectFolder';
 import {ModalImportObjectDefinitionInfo} from './ViewObjectDefinitions';
 
 interface ObjectFoldersSidebarProps {
+	baseResourceURL: string;
 	objectDefinitionsActions: Actions;
 	objectFoldersRequestInfo: ObjectFoldersRequestInfo;
 	selectedObjectFolder: ObjectFolder;
@@ -29,6 +31,7 @@ interface ObjectFoldersSidebarProps {
 }
 
 export default function ObjectFoldersSideBar({
+	baseResourceURL,
 	objectDefinitionsActions,
 	objectFoldersRequestInfo,
 	selectedObjectFolder,
@@ -43,7 +46,12 @@ export default function ObjectFoldersSideBar({
 			Liferay.Language.get('export-x'),
 			Liferay.Language.get('object-folder')
 		),
-		onClick: () => {},
+		onClick: () => {
+			exportObjectFolder({
+				baseResourceURL,
+				objectFolderId: selectedObjectFolder.id,
+			});
+		},
 		symbolLeft: 'export',
 		value: 'exportObjectFolder',
 	});

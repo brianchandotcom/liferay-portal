@@ -258,12 +258,11 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 			if (x == -1) {
 				x = s.indexOf(CharPool.SPACE);
 
-				if (x != -1) {
-					withoutValueAttribute = true;
-				}
-				else {
+				if (x == -1) {
 					return null;
 				}
+
+				withoutValueAttribute = true;
 			}
 
 			String attributeName = StringUtil.trim(s.substring(0, x));

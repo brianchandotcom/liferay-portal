@@ -325,7 +325,7 @@ export default function ReportParameters({namespace, parameters}) {
 
 	return {
 		dispose() {
-			delegateHandler.dispose();
+			delegateHandler?.dispose();
 		},
 	};
 }

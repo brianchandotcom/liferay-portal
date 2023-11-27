@@ -48,6 +48,14 @@ import org.dom4j.io.SAXReader;
  */
 public abstract class BaseModelHintsImpl implements ModelHints {
 
+	public BaseModelHintsImpl() {
+		this(false);
+	}
+
+	public BaseModelHintsImpl(boolean productionMode) {
+		_productionMode = productionMode;
+	}
+
 	public void afterPropertiesSet() {
 		_hintCollections = new ConcurrentHashMap<>();
 		_defaultHints = new ConcurrentHashMap<>();
@@ -516,5 +524,6 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 	private Map<String, Map<String, String>> _hintCollections;
 	private Map<String, Object> _modelFields;
 	private Set<String> _models;
+	private final boolean _productionMode;
 
 }

@@ -22,6 +22,10 @@ import org.dom4j.io.SAXReader;
  */
 public class DefaultModelHintsImpl extends BaseModelHintsImpl {
 
+	public DefaultModelHintsImpl() {
+		super(true);
+	}
+
 	@Override
 	public ModelHintsCallback getModelHintsCallback() {
 		return _modelHintsCallback;

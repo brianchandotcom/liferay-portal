@@ -3,5 +3,6 @@
 <suppressions>
 	<source-check>
 		<suppress checks="IllegalTaglibsCheck" files="docroot/html/taglib/ui/icon/page\.jsp" />
+		<suppress checks="IllegalTaglibsCheck" files="docroot/html/taglib/ui/page_iterator/start\.jsp" />
 	</source-check>
 </suppressions>

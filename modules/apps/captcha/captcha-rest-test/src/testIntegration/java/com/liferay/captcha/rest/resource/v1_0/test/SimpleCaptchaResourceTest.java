@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
@@ -31,6 +33,42 @@ public class SimpleCaptchaResourceTest
 	@Override
 	@Test
 	public void testGetSimpleCaptcha() throws Exception {
+		SimpleCaptchaResource.Builder builder = SimpleCaptchaResource.builder();
+
+		SimpleCaptchaResource captchaResourceForGuestAccess = builder.build();
+
+		SimpleCaptcha simpleCaptcha =
+			captchaResourceForGuestAccess.getSimpleCaptcha();
+
+		String captchaToken = simpleCaptcha.getCaptchaToken();
+
+		Assert.assertNotNull("CaptchaToken was not returned", captchaToken);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			EncryptorUtil.decrypt(testCompany.getKeyObj(), captchaToken));
+
+		Assert.assertNotNull(
+			"Decrypted captcha token does not include the captcha answer",
+			jsonObject.get("answer"));
+
+		Assert.assertTrue(
+			"Decrypted captcha token does not include a future expiry time",
+			(GetterUtil.getLong(jsonObject.get("expiryTime")) - 1000L) >
+				System.currentTimeMillis());
+
+		String base64Header = "data:image/png;base64,";
+		String base64CaptchaImage = simpleCaptcha.getImage();
+
+		Assert.assertEquals(
+			"Expected image data to start with \"" + base64Header + "\"",
+			base64Header,
+			base64CaptchaImage.substring(0, base64Header.length()));
+
+		Assert.assertTrue(
+			"Invalid Base64 encoded image data returned",
+			Base64.decode(
+				base64CaptchaImage.substring(base64Header.length())).length >
+					0);
 	}
 
 	@Override

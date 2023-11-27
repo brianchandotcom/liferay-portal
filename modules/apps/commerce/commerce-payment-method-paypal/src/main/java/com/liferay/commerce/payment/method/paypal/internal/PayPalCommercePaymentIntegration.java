@@ -168,8 +168,8 @@ public class PayPalCommercePaymentIntegration
 									authorizations.get(0);
 
 								if (authorization != null) {
-									transactionId = authorization.id();
 									success = true;
+									transactionId = authorization.id();
 								}
 							}
 						}
@@ -281,15 +281,14 @@ public class PayPalCommercePaymentIntegration
 				new AuthorizationsCaptureRequest(
 					commercePaymentEntry.getTransactionCode());
 
-			authorizationsCaptureRequest.requestBody(new OrderRequest());
-
-			authorizationsCaptureRequest.payPalRequestId(
-				String.valueOf(
-					commercePaymentEntry.getCommercePaymentEntryId()));
 			authorizationsCaptureRequest.header(
 				PayPalCommercePaymentMethodConstants.
 					PAYPAL_PARTNER_ATTRIBUTION_ID,
 				"Liferay_SP_PPCP_API");
+			authorizationsCaptureRequest.payPalRequestId(
+				String.valueOf(
+					commercePaymentEntry.getCommercePaymentEntryId()));
+			authorizationsCaptureRequest.requestBody(new OrderRequest());
 
 			if (_log.isDebugEnabled()) {
 				String headers = new Gson(

@@ -98,7 +98,9 @@ public class NodeWorkflowMetricsIndexerImpl
 
 	@Override
 	protected void addDocument(Document document) {
-		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+		if (!workflowMetricsIndicesAvailabilityChecker.check(
+				document.getLong("companyId"))) {
+
 			return;
 		}
 

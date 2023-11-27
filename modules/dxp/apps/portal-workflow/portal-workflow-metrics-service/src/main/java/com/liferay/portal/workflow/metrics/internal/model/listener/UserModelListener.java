@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.query.BooleanQuery;
@@ -23,6 +22,7 @@ import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
+import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndicesAvailabilityChecker;
 
 import java.util.Objects;
 
@@ -39,7 +39,9 @@ public class UserModelListener extends BaseModelListener<User> {
 	public void onBeforeUpdate(User originalUser, User user)
 		throws ModelListenerException {
 
-		if (!_searchCapabilities.isWorkflowMetricsSupported()) {
+		if (!_workflowMetricsIndicesAvailabilityChecker.check(
+				originalUser.getCompanyId())) {
+
 			return;
 		}
 
@@ -110,10 +112,11 @@ public class UserModelListener extends BaseModelListener<User> {
 	private Scripts _scripts;
 
 	@Reference
-	private SearchCapabilities _searchCapabilities;
+	private UserLocalService _userLocalService;
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private WorkflowMetricsIndicesAvailabilityChecker
+		_workflowMetricsIndicesAvailabilityChecker;
 
 	@Reference
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;

@@ -441,21 +441,8 @@ public class PublicationsDisplayContext {
 				_language.get(_httpServletRequest, "permissions"), "get",
 				"permissions", "modal-permissions"),
 			new FDSActionDropdownItem(
-				_language.get(
-					_httpServletRequest,
-					"are-you-sure-you-want-to-delete-this-publication"),
-				PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/change_tracking/delete_ct_collection"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"ctCollectionId", "{id}"
-				).buildString(),
-				"times-circle", "delete",
-				_language.get(_httpServletRequest, "delete"), "get", "delete",
-				null),
+				null, "times-circle", "delete",
+				_language.get(_httpServletRequest, "delete"), null, null, null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse

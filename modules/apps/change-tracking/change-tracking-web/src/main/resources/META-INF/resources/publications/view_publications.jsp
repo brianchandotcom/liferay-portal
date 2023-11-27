@@ -17,6 +17,7 @@
 		creationMenu="<%= publicationsDisplayContext.getCreationMenu() %>"
 		fdsActionDropdownItems="<%= publicationsDisplayContext.getFDSActionDropdownItems() %>"
 		id="<%= PublicationsFDSNames.PUBLICATIONS_ONGOING %>"
+		propsTransformer="publications/js/components/DeletePublicationsFDSPropsTransformer"
 	/>
 </clay:container-fluid>
 

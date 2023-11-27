@@ -87,17 +87,15 @@ public class ProductChannelResourceImpl extends BaseProductChannelResourceImpl {
 			long id, Pagination pagination)
 		throws Exception {
 
-		int commerceChannelRelsCount =
-			_commerceChannelRelService.getCommerceChannelRelsCount(
-				CPDefinition.class.getName(), id);
-
 		return Page.of(
 			transform(
 				_commerceChannelRelService.getCommerceChannelRels(
 					CPDefinition.class.getName(), id, null,
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				this::_toProductChannel),
-			pagination, commerceChannelRelsCount);
+			pagination,
+			_commerceChannelRelService.getCommerceChannelRelsCount(
+				CPDefinition.class.getName(), id));
 	}
 
 	private ProductChannel _toProductChannel(

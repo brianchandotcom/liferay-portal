@@ -29,7 +29,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -192,26 +191,18 @@ public class ProductSpecificationResourceImpl
 	}
 
 	private List<ProductSpecification> _toProductSpecifications(
-			List<CPDefinitionSpecificationOptionValue>
-				cpDefinitionSpecificationOptionValues,
-			Locale locale)
-		throws Exception {
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues,
+		Locale locale) {
 
-		List<ProductSpecification> productSpecifications = new ArrayList<>();
-
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					cpDefinitionSpecificationOptionValues) {
-
-			productSpecifications.add(
+		return transform(
+			cpDefinitionSpecificationOptionValues,
+			cpDefinitionSpecificationOptionValue ->
 				_productSpecificationDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
 						cpDefinitionSpecificationOptionValue.
 							getCPDefinitionSpecificationOptionValueId(),
 						locale)));
-		}
-
-		return productSpecifications;
 	}
 
 	private CPDefinitionSpecificationOptionValue _updateProductSpecification(

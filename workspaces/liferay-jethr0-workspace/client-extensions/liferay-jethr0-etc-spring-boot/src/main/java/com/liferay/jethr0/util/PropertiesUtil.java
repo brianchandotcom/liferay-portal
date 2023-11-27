@@ -29,6 +29,30 @@ import org.apache.commons.lang3.ObjectUtils;
  */
 public class PropertiesUtil {
 
+	public static Properties combine(Properties... propertiesArray)
+		throws IOException {
+
+		Properties properties = new Properties();
+
+		if (propertiesArray != null) {
+			for (Properties propertiesEntry : propertiesArray) {
+				if (propertiesEntry == null) {
+					continue;
+				}
+
+				for (String propertyName :
+						propertiesEntry.stringPropertyNames()) {
+
+					properties.setProperty(
+						propertyName,
+						propertiesEntry.getProperty(propertyName));
+				}
+			}
+		}
+
+		return properties;
+	}
+
 	public static Properties getProperties(String propertiesContent)
 		throws IOException {
 

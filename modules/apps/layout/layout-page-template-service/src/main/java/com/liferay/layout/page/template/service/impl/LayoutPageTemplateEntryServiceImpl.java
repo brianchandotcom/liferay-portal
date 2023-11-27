@@ -22,6 +22,7 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1019,7 +1021,7 @@ public class LayoutPageTemplateEntryServiceImpl
 				() -> {
 					if (Validator.isNotNull(name)) {
 						return LayoutPageTemplateEntryTable.INSTANCE.name.like(
-							StringPool.PERCENT + name + StringPool.PERCENT);
+							StringUtil.quote(name, CharPool.PERCENT));
 					}
 
 					return null;
@@ -1068,8 +1070,7 @@ public class LayoutPageTemplateEntryServiceImpl
 						if (Validator.isNotNull(name)) {
 							return LayoutPageTemplateCollectionTable.INSTANCE.
 								name.like(
-									StringPool.PERCENT + name +
-										StringPool.PERCENT);
+									StringUtil.quote(name, CharPool.PERCENT));
 						}
 
 						return null;

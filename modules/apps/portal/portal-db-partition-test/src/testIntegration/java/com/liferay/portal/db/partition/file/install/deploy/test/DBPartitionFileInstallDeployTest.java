@@ -323,6 +323,21 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 		}
 		finally {
 			Files.deleteIfExists(path);
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(
+								"delete from Configuration_ where " +
+									"configurationId = ?")) {
+
+						preparedStatement.setString(
+							1, _CONFIGURATION_FACTORY_PID);
+						preparedStatement.executeUpdate();
+					}
+				});
+
+			_fileInstaller.uninstall(path.toFile());
 		}
 	}
 

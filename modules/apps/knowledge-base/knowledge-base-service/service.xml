@@ -143,6 +143,21 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="R_G_NotS" return-type="Collection">
+			<finder-column name="resourcePrimKey" />
+			<finder-column name="groupId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="R_L_NotS" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="resourcePrimKey" />
+			<finder-column name="latest" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="R_M_NotS" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="resourcePrimKey" />
+			<finder-column name="main" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
 		<finder name="G_ERC_V" return-type="KBArticle" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="externalReferenceCode" />
@@ -193,6 +208,48 @@
 			<finder-column arrayable-operator="OR" comparator="LIKE" name="sections" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_L_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="latest" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="G_M_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="main" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="C_L_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="latest" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="C_M_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="main" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="P_L_NotS" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="parentResourcePrimKey" />
+			<finder-column name="latest" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="P_M_NotS" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="parentResourcePrimKey" />
+			<finder-column name="main" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="R_G_L_NotS" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="resourcePrimKey" />
+			<finder-column name="groupId" />
+			<finder-column name="latest" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="R_G_M_NotS" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="resourcePrimKey" />
+			<finder-column name="groupId" />
+			<finder-column name="main" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
 		<finder name="G_P_L_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="parentResourcePrimKey" />
@@ -216,6 +273,30 @@
 			<finder-column name="kbFolderId" />
 			<finder-column name="urlTitle" />
 			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
+		<finder name="G_KBFI_UT_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="kbFolderId" />
+			<finder-column name="urlTitle" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="G_KBFI_L_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="kbFolderId" />
+			<finder-column name="latest" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder db-index="false" name="G_LikeS_L_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" comparator="LIKE" name="sections" />
+			<finder-column name="latest" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder db-index="false" name="G_LikeS_M_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" comparator="LIKE" name="sections" />
+			<finder-column name="main" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="KBComment" remote-service="true" uuid="true">

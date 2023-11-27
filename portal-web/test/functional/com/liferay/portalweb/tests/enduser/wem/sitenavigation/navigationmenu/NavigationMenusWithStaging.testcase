@@ -24,17 +24,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a test for LPS-135675. The user can create navigate menu items based on assets with associated display page template in staging site."
 	@priority = 4
 	test AddDisplayPageTypeNavigationMenuItems {

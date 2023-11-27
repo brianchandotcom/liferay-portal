@@ -10,8 +10,8 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuSubscriptionConfiguration;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.SkuSubscriptionConfigurationDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuSubscriptionConfigurationResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -81,8 +81,10 @@ public class SkuSubscriptionConfigurationResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private SkuSubscriptionConfigurationDTOConverter
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.SkuSubscriptionConfigurationDTOConverter)"
+	)
+	private DTOConverter<CPInstance, SkuSubscriptionConfiguration>
 		_skuSubscriptionConfigurationDTOConverter;
 
 }

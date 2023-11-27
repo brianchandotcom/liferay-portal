@@ -1,0 +1,319 @@
+@component-name = "portal-batch-planner"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Import/Export";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Custom object Student with fields: required text field 'name', optional Attachment field 'diploma' created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "student",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentName");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Attachment",
+				fieldLabelName = "diploma",
+				fieldName = "diploma",
+				fieldType = "Long",
+				fileSource = "userComputer",
+				isRequired = "false",
+				objectName = "Student");
+		}
+
+		task ("And Given object Subject with text field 'name' created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "subject",
+				en_US_plural_label = "subjects",
+				name = "Subject",
+				objectDefinitionExternalReferenceCode = "subject",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "subjectName");
+		}
+
+		task ("And Given a one-to-many relationship subjectStudents created with Subject as parent") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Student",
+				deletionType = "cascade",
+				name = "subjectStudents",
+				parentObjectName = "Subject",
+				type = "oneToMany");
+		}
+
+		task ("And Given 'Math' Subject created") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				externalReferenceCode = "Math",
+				name = "Math");
+		}
+
+		task ("And Given creating a Student entry with: name 'Jane', an uploaded file 'diploma', subjectStudents 'Math'") {
+			var studentEntryId = CustomObjectAPI.createObjectRelatedToAnotherObject(
+				en_US_plural_label = "students",
+				externalReferenceCode = "studentErc",
+				name = "Jane",
+				relatedObjectErc = "Math",
+				relatedObjectName = "subject",
+				relationshipName = "subjectStudents");
+
+			ObjectAdmin.selectAttachmentFileInObjectEntryViaUI(
+				fileName = "Document_1.jpg",
+				key_entry = ${studentEntryId},
+				objectName = "Student");
+		}
+
+		task ("And Given navigate to export in Data Migration Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		BatchPlanner.batchPlannerTearDown();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanCreateAndUpdateExistingObjectEntriesWithSameFile {
+		property portal.acceptance = "true";
+
+		task ("And Given exporting C_Student in Import/Export Center with fields 'name','r_subjectStudents_c_subjectERC', 'externalReferenceCode', 'diploma' as jsonl file") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "multiple_objectEntries_import.jsonl");
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+
+			var attachmenId = JSONPathUtil.getProperty(
+				property = "$.items..diploma.id",
+				response = ${response});
+			var attachmenHref = JSONPathUtil.getProperty(
+				property = "$.items..diploma.link.href",
+				response = ${response});
+		}
+
+		task ("And Given based on Export action example creating .jsonl file two Students: existing ERC with new value for name field, nonexisting ERC with name") {
+			FileUtil.replaceStringInFile(${filePath}, 38589, ${attachmenId});
+
+			FileUtil.replaceStringInFile(${filePath}, "/documents/38586/38588/Document_1.jpg/b3a2213c-225f-fc83-fa10-4ea862e5005f?version=1.0&t=1701061267059", ${attachmenHref});
+
+			FileUtil.replaceStringInFile(${filePath}, "Jane", "John");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+		}
+
+		task ("When importing .jsonl file as 'C_Student' Entity Type with default settings") {
+			ImportExport.configureImport(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				fileName = "multiple_objectEntries_import.jsonl");
+
+			ImportExport.startImportAndWaitForSuccess();
+		}
+
+		task ("Then one new Student item is created") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.externalReferenceCode=='testErc')].name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Jack");
+		}
+
+		task ("And Then existing Student item's name is updated") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.externalReferenceCode=='studentErc')].name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "John");
+		}
+
+		task ("And Then existing Student's relationship field is unchanged") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.externalReferenceCode=='studentErc')].subjectStudentsERC");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Math");
+		}
+	}
+
+	@priority = 5
+	test CanCreateObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("And Given exporting C_Student in Import/Export Center with fields of existing entry 'name','r_subjectStudents_c_subjectERC','diploma' as json file") {
+			ImportExport.exportAndUnzipFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "name,diploma,r_subjectStudents_c_subjectERC",
+				exportFileFormat = "JSON");
+		}
+
+		task ("And Given changing value of field 'name' to 'John' in the file") {
+			var filePath = ImportExport.getTempFilePath(fileName = "export.json");
+
+			FileUtil.replaceStringInFile(${filePath}, "Jane", "John");
+		}
+
+		task ("When importing .json file as 'C_Student' Entity Type with default setting") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.importFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				fieldMappings = "name:name,r_subjectStudents_c_subjectERC:r_subjectStudents_c_subjectERC,diploma:diploma",
+				tempFileName = "export.json");
+		}
+
+		task ("Then new Student item with name 'John', subjectStudents 'Math', diploma 'Example.jpg' is created") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+			var actualValueList = ListUtil.newList();
+
+			for (var fieldNameList : list "name,r_subjectStudents_c_subjectERC,diploma.name") {
+				var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items..[0]${fieldNameList}");
+
+				ListUtil.add(${actualValueList}, ${actualValue});
+			}
+
+			var actualValueList = ListUtil.toString(${actualValueList});
+
+			TestUtils.assertEquals(
+				actual = ${actualValueList},
+				expected = "Jane,John,Math,Math,Document_1.jpg,Document_1.jpg");
+		}
+	}
+
+	@priority = 4
+	test CanCreateObjectEntryFromFileContainingExistingAndNewWithUncheckedStopImportOnError {
+		property portal.acceptance = "true";
+
+		task ("And Given exporting C_Student in Import/Export Center with fields 'name','r_subjectStudents_c_subjectERC', 'externalReferenceCode' as jsonl file") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "multiple_objectEntries_import.jsonl");
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+
+			var attachmenId = JSONPathUtil.getProperty(
+				property = "$.items..diploma.id",
+				response = ${response});
+			var attachmenHref = JSONPathUtil.getProperty(
+				property = "$.items..diploma.link.href",
+				response = ${response});
+		}
+
+		task ("And Given based on Export action example creating .jsonl file with one existing Student and one with unexisting 'externalReferenceCode' value") {
+			FileUtil.replaceStringInFile(${filePath}, 38589, ${attachmenId});
+
+			FileUtil.replaceStringInFile(${filePath}, "/documents/38586/38588/Document_1.jpg/b3a2213c-225f-fc83-fa10-4ea862e5005f?version=1.0&t=1701061267059", ${attachmenHref});
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+		}
+
+		task ("When importing .jsonl file as 'C_Student' Entity Type with 'Only Add New Records Import Strategy', 'Stop the Import on Error' unchecked") {
+			ImportExport.configureImport(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				fileName = "multiple_objectEntries_import.jsonl",
+				importStrategy = "Only Add New Records",
+				stopImportOnError = "false");
+
+			ImportExport.startImportAndWaitForSuccess();
+		}
+
+		task ("Then one new Student item is created") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..[0]name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Jane,Jack");
+		}
+	}
+
+	@priority = 4
+	test CannotCreateObjectEntryWithoutRequiredFields {
+		property portal.acceptance = "true";
+
+		task ("And Given exporting C_Student in Import/Export Center with fields 'r_subjectStudents_c_subjectERC' as json file") {
+			ImportExport.exportAndUnzipFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "r_subjectStudents_c_subjectERC",
+				exportFileFormat = "JSON");
+		}
+
+		task ("When importing .json file as 'C_Student' Entity Type with default setting") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				fieldMappings = "r_subjectStudents_c_subjectERC:r_subjectStudents_c_subjectERC",
+				tempFileName = "export.json");
+
+			Button.click(button = "Next");
+		}
+
+		task ("Then importing the item is prevented") {
+			AssertElementNotPresent(
+				key_text = "Start Import",
+				locator1 = "Button#ANY");
+		}
+	}
+
+	@priority = 4
+	test CanUpdateObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("And Given exporting C_Student in Import/Export Center with fields 'name','r_subjectStudents_c_subjectERC', 'externalReferenceCode' as jsonl file") {
+			ImportExport.exportAndUnzipFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "name,externalReferenceCode,r_subjectStudents_c_subjectERC",
+				exportFileFormat = "JSONL");
+		}
+
+		task ("And Given changing value of fields 'name' to 'Johny'") {
+			var filePath = ImportExport.getTempFilePath(fileName = "export.jsonl");
+
+			FileUtil.replaceStringInFile(${filePath}, "Jane", "Johny");
+		}
+
+		task ("When importing .jsonl file as 'C_Student' Entity Type with default setting") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.importFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				fieldMappings = "name:name,r_subjectStudents_c_subjectERC:r_subjectStudents_c_subjectERC,externalReferenceCode:externalReferenceCode",
+				tempFileName = "export.jsonl");
+		}
+
+		task ("Then Student item's name is updated") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items[0].name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Johny");
+		}
+	}
+
+}

@@ -98,12 +98,6 @@ class ResultRankingsForm extends Component {
 		dataMap: {},
 
 		/**
-		 * Disable buttons, checkboxes and text inputs if the status is not applicable.
-		 * @type {boolean}
-		 */
-		disabled: this.props.initialStatus === STATUS_TYPES.NOT_APPLICABLE,
-
-		/**
 		 * Display an error message when a data fetch request fails.
 		 * @type {boolean}
 		 */
@@ -764,7 +758,6 @@ class ResultRankingsForm extends Component {
 			dataLoadingHidden,
 			dataLoadingVisible,
 			dataMap,
-			disabled,
 			displayError,
 			displayErrorHidden,
 			hiddenCur,
@@ -786,7 +779,6 @@ class ResultRankingsForm extends Component {
 					valueMap={{
 						addedHiddenIds: this._getHiddenAdded(),
 						aliases,
-						disabled,
 						groupExternalReferenceCode: initialGroupExternalReferenceCode,
 						pinnedIds: resultIdsPinned,
 						pinnedIdsEndIndex: dataLoadIndex.pinned.end,
@@ -858,7 +850,9 @@ class ResultRankingsForm extends Component {
 							toast
 						>
 							<Alias
-								disabled={disabled}
+								disabled={
+									status === STATUS_TYPES.NOT_APPLICABLE
+								}
 								keywords={aliases}
 								onChange={this._handleUpdateAliases}
 							/>
@@ -914,7 +908,10 @@ class ResultRankingsForm extends Component {
 										<List
 											dataLoading={dataLoadingVisible}
 											dataMap={dataMap}
-											disabled={this.state.disabled}
+											disabled={
+												status ===
+												STATUS_TYPES.NOT_APPLICABLE
+											}
 											displayError={displayError}
 											fetchDocumentsSearchURL={
 												fetchDocumentsSearchURL
@@ -944,7 +941,10 @@ class ResultRankingsForm extends Component {
 										<List
 											dataLoading={dataLoadingHidden}
 											dataMap={dataMap}
-											disabled={this.state.disabled}
+											disabled={
+												status ===
+												STATUS_TYPES.NOT_APPLICABLE
+											}
 											displayError={displayErrorHidden}
 											onClickHide={this._handleClickHide}
 											onClickPin={this._handleClickPin}

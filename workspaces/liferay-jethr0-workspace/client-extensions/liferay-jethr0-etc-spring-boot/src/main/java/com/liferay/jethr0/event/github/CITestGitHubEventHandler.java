@@ -117,7 +117,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 					upstreamGitBranchEntity.getBranchSHA());
 			}
 
-			jobEntityRepository.update(jobEntity);
+			jobEntityRepository.update(portalPullRequestJobEntity);
 		}
 
 		return jobEntity;
@@ -154,6 +154,6 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"ci:test(?<testOptions>\\:[^\\s]+)?");
+		"ci:test(\\:(?<testOptions>[^\\s]+))?");
 
 }

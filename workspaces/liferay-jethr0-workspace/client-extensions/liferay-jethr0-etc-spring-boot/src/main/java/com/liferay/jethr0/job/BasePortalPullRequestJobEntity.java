@@ -74,22 +74,7 @@ public abstract class BasePortalPullRequestJobEntity
 
 	@Override
 	public URL getPortalPullRequestURL() {
-		if (_portalPullRequestURL != null) {
-			return _portalPullRequestURL;
-		}
-
-		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
-			String pullRequestURL = initialBuildEntity.getBuildParameterValue(
-				"PULL_REQUEST_URL");
-
-			if (!StringUtil.isNullOrEmpty(pullRequestURL)) {
-				_portalPullRequestURL = StringUtil.toURL(pullRequestURL);
-
-				return _portalPullRequestURL;
-			}
-		}
-
-		return null;
+		return _portalPullRequestURL;
 	}
 
 	@Override
@@ -298,12 +283,19 @@ public abstract class BasePortalPullRequestJobEntity
 		for (Map.Entry<String, String> initialBuildParameter :
 				initialBuildParameters.entrySet()) {
 
+			String initialBuildParameterValue =
+				initialBuildParameter.getValue();
+
+			if (StringUtil.isNullOrEmpty(initialBuildParameterValue)) {
+				continue;
+			}
+
 			JSONObject initialBuildParameterJSONObject = new JSONObject();
 
 			initialBuildParameterJSONObject.put(
 				"name", initialBuildParameter.getKey()
 			).put(
-				"value", initialBuildParameter.getValue()
+				"value", initialBuildParameterValue
 			);
 
 			initialBuildParametersJSONArray.put(

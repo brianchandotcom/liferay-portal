@@ -5,7 +5,10 @@
 
 package com.liferay.jethr0.job;
 
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -20,6 +23,54 @@ public class DefaultPortalPullRequestJobEntity
 	extends BasePortalPullRequestJobEntity {
 
 	@Override
+	public URL getPortalPullRequestURL() {
+		if (_portalPullRequestURL != null) {
+			return _portalPullRequestURL;
+		}
+
+		_portalPullRequestURL = super.getPortalPullRequestURL();
+
+		if (_portalPullRequestURL != null) {
+			return _portalPullRequestURL;
+		}
+
+		int pullRequestNumber = 0;
+		String receiverUserName = null;
+
+		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
+			String pullRequestNumberParameterValue =
+				initialBuildEntity.getBuildParameterValue(
+					"GITHUB_PULL_REQUEST_NUMBER");
+
+			if (!StringUtil.isNullOrEmpty(pullRequestNumberParameterValue)) {
+				pullRequestNumber = Integer.valueOf(
+					pullRequestNumberParameterValue);
+			}
+
+			String receiverUserNameParameterValue =
+				initialBuildEntity.getBuildParameterValue(
+					"GITHUB_RECEIVER_USERNAME");
+
+			if (!StringUtil.isNullOrEmpty(receiverUserNameParameterValue)) {
+				receiverUserName = receiverUserNameParameterValue;
+			}
+		}
+
+		if ((pullRequestNumber > 0) &&
+			!StringUtil.isNullOrEmpty(receiverUserName)) {
+
+			_portalPullRequestURL = StringUtil.toURL(
+				StringUtil.combine(
+					"https://github.com/", receiverUserName,
+					"/liferay-portal/pull/", pullRequestNumber));
+
+			return _portalPullRequestURL;
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getTestSuiteName() {
 		if (_testSuiteName != null) {
 			return _testSuiteName;
@@ -32,9 +83,6 @@ public class DefaultPortalPullRequestJobEntity
 
 	protected DefaultPortalPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		setPortalPullRequestURL(
-			StringUtil.toURL(jsonObject.optString("portalPullRequestURL")));
 
 		_testSuiteName = jsonObject.optString("testSuiteName");
 	}
@@ -111,6 +159,7 @@ public class DefaultPortalPullRequestJobEntity
 			"https://github.com/(?<receiverUserName>[^/]+)/liferay-portal",
 			"/pull/(?<number>\\d+)"));
 
+	private URL _portalPullRequestURL;
 	private long _pullRequestNumber;
 	private String _receiverUserName;
 	private String _testSuiteName;

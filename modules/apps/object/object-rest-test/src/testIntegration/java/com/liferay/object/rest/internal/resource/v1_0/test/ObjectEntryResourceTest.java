@@ -73,6 +73,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -85,6 +87,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
@@ -93,6 +96,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -122,6 +126,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import java.io.Serializable;
 
@@ -5734,6 +5739,17 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(), type);
 	}
 
+	private void _addResourcePermission(
+			String actionId, ObjectDefinition objectDefinition, Role role)
+		throws Exception {
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			actionId);
+	}
+
 	private TaxonomyCategory _addTaxonomyCategory() throws Exception {
 		return _taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(),
@@ -6280,6 +6296,89 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE,
 			useExternalReferenceCode);
 
+		String userName = RandomTestUtil.randomString();
+		String userPassword = RandomTestUtil.randomString();
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			userName + "@liferay.com", userPassword
+		).apply(
+			() -> {
+				DLFolder dlFolder = DLTestUtil.addDLFolder(
+					TestPropsValues.getGroupId());
+
+				Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+				User user = UserTestUtil.addUser(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					userPassword, userName + "@liferay.com", userName,
+					LocaleUtil.getDefault(), userName, userName, null,
+					ServiceContextTestUtil.getServiceContext());
+
+				_roleLocalService.addUserRole(
+					user.getUserId(), role.getRoleId());
+
+				_addResourcePermission(
+					ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, role);
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					TestPropsValues.getCompanyId(), DLConstants.RESOURCE_NAME,
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(TestPropsValues.getGroupId()),
+					role.getRoleId(), new String[] {ActionKeys.ADD_DOCUMENT});
+
+				com.liferay.object.rest.dto.v1_0.FileEntry testFileEntry =
+					_toFileEntry(
+						Base64::encode, RandomTestUtil.randomString(),
+						RandomTestUtil.randomString() + ".txt",
+						dlFolder.getExternalReferenceCode(),
+						dlFolder.getGroupId());
+
+				_testPatchPutCustomObjectEntryWithAttachmentField(
+					fileEntry -> JSONUtil.put(
+						"status", "FORBIDDEN"
+					).put(
+						"title",
+						StringBundler.concat(
+							"User ", user.getUserId(),
+							" must have ADD_DOCUMENT permission for com.",
+							"liferay.portal.kernel.repository.model.Folder ",
+							dlFolder.getFolderId())
+					),
+					testFileEntry, httpMethod, null, objectDefinition,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+					useExternalReferenceCode);
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					TestPropsValues.getCompanyId(),
+					DLFolderConstants.getClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(dlFolder.getFolderId()), role.getRoleId(),
+					new String[] {ActionKeys.ADD_DOCUMENT});
+
+				_testPatchPutCustomObjectEntryWithAttachmentField(
+					fileEntry -> JSONUtil.put(
+						_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+						JSONUtil.put(
+							"id",
+							_testDLFileEntryModelListener.getLastFileEntryId()
+						).put(
+							"link",
+							_getLinkJSONObject(
+								dlFolder,
+								_testDLFileEntryModelListener.
+									getLastFileEntryId(),
+								fileEntry.getName(), fileEntry.getFolder(),
+								objectDefinition)
+						).put(
+							"name", fileEntry.getName()
+						)),
+					testFileEntry, httpMethod, null, objectDefinition,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+					useExternalReferenceCode);
+			}
+		);
+
 		// File with a nonexistent name (documents and media source)
 
 		DLFolder dlFolder1 = DLTestUtil.addDLFolder(
@@ -6674,6 +6773,84 @@ public class ObjectEntryResourceTest {
 				RandomTestUtil.randomString() + ".txt", null, null),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE);
+
+		String userName = RandomTestUtil.randomString();
+		String userPassword = RandomTestUtil.randomString();
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			userName + "@liferay.com", userPassword
+		).apply(
+			() -> {
+				DLFolder dlFolder = DLTestUtil.addDLFolder(
+					TestPropsValues.getGroupId());
+
+				Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+				User user = UserTestUtil.addUser(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					userPassword, userName + "@liferay.com", userName,
+					LocaleUtil.getDefault(), userName, userName, null,
+					ServiceContextTestUtil.getServiceContext());
+
+				_roleLocalService.addUserRole(
+					user.getUserId(), role.getRoleId());
+
+				_addResourcePermission(
+					ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, role);
+
+				_testPostCustomObjectEntryWithAttachmentField(
+					fileEntry -> JSONUtil.put(
+						"status", "FORBIDDEN"
+					).put(
+						"title",
+						StringBundler.concat(
+							"User ", user.getUserId(),
+							" must have ADD_DOCUMENT permission for com.",
+							"liferay.portal.kernel.repository.model.Folder ",
+							dlFolder.getFolderId())
+					),
+					_toFileEntry(
+						Base64::encode, RandomTestUtil.randomString(),
+						RandomTestUtil.randomString() + ".txt",
+						dlFolder.getExternalReferenceCode(),
+						dlFolder.getGroupId()),
+					null, objectDefinition,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					TestPropsValues.getCompanyId(),
+					DLFolderConstants.getClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(dlFolder.getFolderId()), role.getRoleId(),
+					new String[] {ActionKeys.ADD_DOCUMENT});
+
+				_testPostCustomObjectEntryWithAttachmentField(
+					fileEntry -> JSONUtil.put(
+						_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+						JSONUtil.put(
+							"id",
+							_testDLFileEntryModelListener.getLastFileEntryId()
+						).put(
+							"link",
+							_getLinkJSONObject(
+								dlFolder,
+								_testDLFileEntryModelListener.
+									getLastFileEntryId(),
+								fileEntry.getName(), fileEntry.getFolder(),
+								objectDefinition)
+						).put(
+							"name", fileEntry.getName()
+						)),
+					_toFileEntry(
+						Base64::encode, RandomTestUtil.randomString(),
+						RandomTestUtil.randomString() + ".txt",
+						dlFolder.getExternalReferenceCode(),
+						dlFolder.getGroupId()),
+					null, objectDefinition,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+			}
+		);
 
 		// File with a nonexistent name (documents and media source)
 
@@ -7493,6 +7670,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	private ObjectDefinition _siteScopedObjectDefinition1;
 	private ObjectEntry _siteScopedObjectEntry1;

@@ -556,9 +556,9 @@ public class PayPalCommercePaymentIntegration
 			_commerceOrderLocalService.getCommerceOrder(
 				commercePaymentEntry.getClassPK());
 
-		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
-
 		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+
+		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
 		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
 

@@ -125,9 +125,6 @@ public class PayPalCommercePaymentIntegration
 				"Liferay_SP_PPCP_API");
 			ordersAuthorizeRequest.requestBody(new OrderRequest());
 
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
-
 			if (_log.isDebugEnabled()) {
 				String headers = new Gson(
 				).toJson(
@@ -144,13 +141,14 @@ public class PayPalCommercePaymentIntegration
 				_log.debug("Authorize request body: " + requestBody);
 			}
 
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
 			HttpResponse<Order> authorizeHttpResponse =
 				payPalHttpClient.execute(ordersAuthorizeRequest);
 
 			if (authorizeHttpResponse.statusCode() == 201) {
 				Order authorizeOrder = authorizeHttpResponse.result();
-
-				success = true;
 
 				List<PurchaseUnit> purchaseUnits =
 					authorizeOrder.purchaseUnits();
@@ -171,6 +169,7 @@ public class PayPalCommercePaymentIntegration
 
 								if (authorization != null) {
 									transactionId = authorization.id();
+									success = true;
 								}
 							}
 						}
@@ -224,9 +223,6 @@ public class PayPalCommercePaymentIntegration
 				new AuthorizationsVoidRequest(
 					commercePaymentEntry.getTransactionCode());
 
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
-
 			if (_log.isDebugEnabled()) {
 				String headers = new Gson(
 				).toJson(
@@ -242,6 +238,9 @@ public class PayPalCommercePaymentIntegration
 
 				_log.debug("Cancel request body: " + requestBody);
 			}
+
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
 
 			HttpResponse<Void> cancelHttpResponse = payPalHttpClient.execute(
 				authorizationsVoidRequest);
@@ -292,9 +291,6 @@ public class PayPalCommercePaymentIntegration
 					PAYPAL_PARTNER_ATTRIBUTION_ID,
 				"Liferay_SP_PPCP_API");
 
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
-
 			if (_log.isDebugEnabled()) {
 				String headers = new Gson(
 				).toJson(
@@ -310,6 +306,9 @@ public class PayPalCommercePaymentIntegration
 
 				_log.debug("Capture request body: " + requestBody);
 			}
+
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
 
 			HttpResponse<Capture> captureHttpResponse =
 				payPalHttpClient.execute(authorizationsCaptureRequest);
@@ -388,9 +387,6 @@ public class PayPalCommercePaymentIntegration
 					).toString(),
 					commercePaymentEntry.getCurrencyCode()));
 
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
-
 			if (_log.isDebugEnabled()) {
 				String headers = new Gson(
 				).toJson(
@@ -406,6 +402,9 @@ public class PayPalCommercePaymentIntegration
 
 				_log.debug("Refund request body: " + requestBody);
 			}
+
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
 
 			HttpResponse<Refund> refundHttpResponse = payPalHttpClient.execute(
 				capturesRefundRequest);
@@ -531,11 +530,12 @@ public class PayPalCommercePaymentIntegration
 						commercePaymentEntry.setRedirectURL(
 							linkDescription.href());
 
+						success = true;
+
 						break;
 					}
 				}
 
-				success = true;
 				transactionId = createOrder.id();
 			}
 
@@ -585,6 +585,8 @@ public class PayPalCommercePaymentIntegration
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+
 		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
 
 		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
@@ -619,8 +621,6 @@ public class PayPalCommercePaymentIntegration
 		amountBreakdown.taxTotal(taxTotalMoney);
 
 		amountWithBreakdown.amountBreakdown(amountBreakdown);
-
-		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
 		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
 
@@ -759,12 +759,12 @@ public class PayPalCommercePaymentIntegration
 	private RefundRequest _buildRefundRequestBody(
 		String amount, String currencyCode) {
 
+		RefundRequest refundRequest = new RefundRequest();
+
 		com.paypal.payments.Money amountMoney = new com.paypal.payments.Money();
 
 		amountMoney.currencyCode(currencyCode);
 		amountMoney.value(amount);
-
-		RefundRequest refundRequest = new RefundRequest();
 
 		refundRequest.amount(amountMoney);
 

@@ -228,47 +228,25 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 					boolean sitemapInclude = GetterUtil.getBoolean(layoutTypeSettingsUnicodeProperties.getProperty(LayoutTypePortletConstants.SITEMAP_INCLUDE), true);
 					%>
 
-					<c:if test="<%= nondefaultAssetDisplayPage %>">
-						<div class="section-disabled">
+					<div class="<%= nondefaultAssetDisplayPage ? "section-disabled" : StringPool.BLANK %>">
+						<c:if test="<%= nondefaultAssetDisplayPage %>">
 							<clay:alert
 								displayType="info"
 								message="only-display-page-templates-that-are-marked-as-default-for-an-asset-type-will-be-indexed-in-order-to-avoid-duplicity"
 							/>
+						</c:if>
 
-							<aui:select cssClass="propagatable-field" disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="include" name="">
-								<aui:option label="yes" value="1" />
-								<aui:option label="no" selected="<%= true %>" value="0" />
-							</aui:select>
-
-							<aui:input cssClass="propagatable-field" disabled="<%= true %>" helpMessage="page-priority-help" id="<%= StringUtil.randomId() %>" label="page-priority" name="" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
-								<aui:validator name="number" />
-								<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
-							</aui:input>
-
-							<aui:select cssClass="propagatable-field" disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="change-frequency" name="" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
-								<aui:option label="always" />
-								<aui:option label="hourly" />
-								<aui:option label="daily" />
-								<aui:option label="weekly" />
-								<aui:option label="monthly" />
-								<aui:option label="yearly" />
-								<aui:option label="never" />
-							</aui:select>
-						</div>
-					</c:if>
-
-					<div class="<%= nondefaultAssetDisplayPage ? "d-none" : StringPool.BLANK %>">
-						<aui:select cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="include" name="TypeSettingsProperties--sitemap-include--">
+						<aui:select cssClass="propagatable-field" disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>" label="include" name="TypeSettingsProperties--sitemap-include--">
 							<aui:option label="yes" selected="<%= sitemapInclude %>" value="1" />
 							<aui:option label="no" selected="<%= !sitemapInclude %>" value="0" />
 						</aui:select>
 
-						<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="page-priority-help" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
+						<aui:input cssClass="propagatable-field" disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="page-priority-help" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
 							<aui:validator name="number" />
 							<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
 						</aui:input>
 
-						<aui:select cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
+						<aui:select cssClass="propagatable-field" disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>" label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
 							<aui:option label="always" />
 							<aui:option label="hourly" />
 							<aui:option label="daily" />

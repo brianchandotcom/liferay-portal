@@ -44,9 +44,9 @@ export default function ReportParameters({namespace, parameters}) {
 		}
 	}
 
-	disableAddParameterButton(namespace);
+	disableAddParameterButton();
 
-	function addParameter(namespace) {
+	function addParameter() {
 		portletMessageContainer.style.display = 'none';
 
 		let parameterKey = document.querySelector('.parameters-key').value;
@@ -101,7 +101,7 @@ export default function ReportParameters({namespace, parameters}) {
 		}
 
 		if (parameterType === 'date') {
-			parameterValue = getDateValue(namespace);
+			parameterValue = getDateValue();
 		}
 
 		parameterKey = encodeURIComponent(parameterKey);
@@ -115,7 +115,7 @@ export default function ReportParameters({namespace, parameters}) {
 		document.querySelector('.parameters-key').value = '';
 		document.querySelector('.parameters-value').value = '';
 
-		disableAddParameterButton(namespace);
+		disableAddParameterButton();
 	}
 
 	function addReportParameter(parameterKey, parameterValue, parameterType) {
@@ -232,7 +232,7 @@ export default function ReportParameters({namespace, parameters}) {
 		document.querySelector('.add-parameter').classList.remove('disabled');
 	}
 
-	function getDateValue(namespace) {
+	function getDateValue() {
 		const parameterDateDay = document.getElementById(
 			namespace + 'parameterDateDay'
 		);
@@ -262,7 +262,7 @@ export default function ReportParameters({namespace, parameters}) {
 		portletMessageContainer.style.display = 'block';
 	}
 
-	function toggleAddParameterButton(namespace) {
+	function toggleAddParameterButton() {
 		const parameterKey = document.querySelector('.parameters-key').value;
 
 		const parameterType = document.querySelector('.parameters-input-type')
@@ -271,7 +271,7 @@ export default function ReportParameters({namespace, parameters}) {
 		let parameterValue = document.querySelector('.parameters-value').value;
 
 		if (parameterType === 'date') {
-			parameterValue = getDateValue(namespace);
+			parameterValue = getDateValue();
 		}
 
 		if (parameterKey && parameterValue) {
@@ -284,15 +284,15 @@ export default function ReportParameters({namespace, parameters}) {
 
 	document
 		.querySelector('.parameters-key')
-		.addEventListener('change', () => toggleAddParameterButton(namespace));
+		.addEventListener('change', () => toggleAddParameterButton());
 
 	document
 		.querySelector('.parameters-value')
-		.addEventListener('change', () => toggleAddParameterButton(namespace));
+		.addEventListener('change', () => toggleAddParameterButton());
 
 	document
 		.querySelector('.add-parameter')
-		.addEventListener('click', () => addParameter(namespace));
+		.addEventListener('click', () => addParameter());
 
 	document
 		.querySelector('.parameters-input-type')

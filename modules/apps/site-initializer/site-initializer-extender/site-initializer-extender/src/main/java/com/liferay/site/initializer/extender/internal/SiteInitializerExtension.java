@@ -13,6 +13,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -104,6 +105,7 @@ public class SiteInitializerExtension {
 		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
+		CETManager cetManager,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
 		ConfigurationProvider configurationProvider,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -184,7 +186,7 @@ public class SiteInitializerExtension {
 			accountGroupLocalService, accountGroupRelService,
 			accountResourceFactory, accountRoleLocalService,
 			accountRoleResourceFactory, assetCategoryLocalService,
-			assetListEntryLocalService, bundle,
+			assetListEntryLocalService, bundle, cetManager,
 			clientExtensionEntryLocalService, configurationProvider,
 			ddmStructureLocalService, ddmTemplateLocalService,
 			defaultDDMStructureHelper, dlURLHelper,

@@ -24,6 +24,8 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -182,6 +184,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -245,6 +248,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
+		CETManager cetManager,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
 		ConfigurationProvider configurationProvider,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -326,6 +330,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
+		_cetManager = cetManager;
 		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
 		_configurationProvider = configurationProvider;
 		_ddmStructureLocalService = ddmStructureLocalService;
@@ -1460,6 +1465,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
+		List<CET> cets = _cetManager.getCETs(
+			serviceContext.getCompanyId(), null, null,
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
+
+		for (CET cet : cets) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("com_liferay_client_extension_web_internal_portlet_");
+			sb.append("ClientExtensionEntryPortlet_");
+			sb.append(cet.getCompanyId());
+			sb.append("_");
+			sb.append(
+				cet.getExternalReferenceCode(
+				).replaceAll(
+					"\\W", StringPool.UNDERLINE
+				));
+
+			stringUtilReplaceValues.put(
+				"CLIENT_EXTENSION_ENTRY_ERC:" + cet.getExternalReferenceCode(),
+				sb.toString());
+		}
+
 		String json = SiteInitializerUtil.read(
 			"/site-initializer/client-extension-entries.json", _servletContext);
 
@@ -1472,17 +1499,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb1 = new StringBundler();
 
 			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 				"properties");
 
 			if (propertiesJSONObject != null) {
 				for (String key : propertiesJSONObject.keySet()) {
-					sb.append(key);
-					sb.append(StringPool.EQUAL);
-					sb.append(propertiesJSONObject.getString(key));
-					sb.append(StringPool.NEW_LINE);
+					sb1.append(key);
+					sb1.append(StringPool.EQUAL);
+					sb1.append(propertiesJSONObject.getString(key));
+					sb1.append(StringPool.NEW_LINE);
 				}
 			}
 
@@ -1490,7 +1517,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getString("externalReferenceCode"),
 				serviceContext.getUserId(), StringPool.BLANK,
 				SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")),
-				sb.toString(), StringPool.BLANK,
+				sb1.toString(), StringPool.BLANK,
 				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
 				UnicodePropertiesBuilder.create(
 					true
@@ -1523,16 +1550,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 					"useESM", jsonObject.getBoolean("useESM", false)
 				).buildString());
 
+			StringBundler sb2 = new StringBundler(5);
+
+			sb2.append("com_liferay_client_extension_web_internal_portlet_");
+			sb2.append("ClientExtensionEntryPortlet_");
+			sb2.append(serviceContext.getCompanyId());
+			sb2.append("_");
+			sb2.append(
+				jsonObject.getString(
+					"externalReferenceCode"
+				).replaceAll(
+					"\\W", StringPool.UNDERLINE
+				));
+
 			stringUtilReplaceValues.put(
-				"CLIENT_EXTENSION_ENTRY_ID:" +
-					jsonObject.getString("clientExtensionEntryKey"),
-				_replace(
-					jsonObject.getString("widgetName"),
-					StringBundler.concat(
-						"[$CLIENT_EXTENSION_ENTRY_ID:",
-						jsonObject.getString("clientExtensionEntryKey"), "$]"),
-					serviceContext.getCompanyId() + StringPool.UNDERLINE +
-						jsonObject.getString("externalReferenceCode")));
+				"CLIENT_EXTENSION_ENTRY_ERC:" +
+					jsonObject.getString("externalReferenceCode"),
+				sb2.toString());
 		}
 	}
 
@@ -5044,6 +5078,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
+	private final CETManager _cetManager;
 	private final ClassLoader _classLoader;
 	private final Map<String, String> _classNameIdStringUtilReplaceValues;
 	private final ClientExtensionEntryLocalService

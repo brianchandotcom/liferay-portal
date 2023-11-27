@@ -13,6 +13,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -134,7 +135,7 @@ public class SiteInitializerExtender
 				_accountGroupLocalService, _accountGroupRelService,
 				_accountResourceFactory, _accountRoleLocalService,
 				_accountRoleResourceFactory, _assetCategoryLocalService,
-				_assetListEntryLocalService, bundle,
+				_assetListEntryLocalService, bundle, _cetManager,
 				_clientExtensionEntryLocalService, _configurationProvider,
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _dependencyManager, _dlURLHelper,
@@ -256,9 +257,10 @@ public class SiteInitializerExtender
 					new FileBackedBundleDelegate(
 						_bundleContext, file, _jsonFactory, symbolicName),
 					null),
-				_clientExtensionEntryLocalService, _configurationProvider,
-				_ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _dependencyManager, _dlURLHelper,
+				_cetManager, _clientExtensionEntryLocalService,
+				_configurationProvider, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_dependencyManager, _dlURLHelper,
 				_documentFolderResourceFactory, _documentResourceFactory,
 				_expandoValueLocalService, _fragmentsImporter,
 				_groupLocalService, _journalArticleLocalService, _jsonFactory,
@@ -337,6 +339,9 @@ public class SiteInitializerExtender
 
 	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;

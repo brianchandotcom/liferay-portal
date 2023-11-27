@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.liferay.jethr0.util.StringUtil;
 import org.json.JSONObject;
 
 /**
@@ -64,7 +65,11 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 	private JobEntity _getJobEntity() throws InvalidJSONException, IOException {
 		String testSuite = _getTestSuite();
 
-		String name = "Portal Pull Request - ci:test:" + testSuite;
+		GitBranchEntity upstreamGitBranchEntity =
+			getUpstreamGitBranchEntity();
+
+		String name = StringUtil.combine(
+			upstreamGitBranchEntity.getBranchName(), " - ci:test:", testSuite);
 
 		int priority = 5;
 		JobEntity.Type type = JobEntity.Type.PORTAL_PULL_REQUEST;
@@ -106,9 +111,6 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 				portalPullRequestJobEntity.setUpstreamBranchSHA(
 					gitHubPullRequest.getBaseBranchSHA());
 			}
-
-			GitBranchEntity upstreamGitBranchEntity =
-				getUpstreamGitBranchEntity();
 
 			if (upstreamGitBranchEntity != null) {
 				portalPullRequestJobEntity.setUpstreamBranchName(

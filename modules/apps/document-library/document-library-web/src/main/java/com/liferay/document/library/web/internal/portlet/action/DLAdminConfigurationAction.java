@@ -74,7 +74,10 @@ public class DLAdminConfigurationAction
 	private void _validate(ActionRequest actionRequest) {
 		validateEmail(actionRequest, "emailFileEntryAdded");
 		validateEmail(actionRequest, "emailFileEntryUpdated");
-		validateEmailFrom(actionRequest);
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-197692")) {
+			validateEmailFrom(actionRequest);
+		}
 	}
 
 	@Reference

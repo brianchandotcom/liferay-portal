@@ -234,6 +234,11 @@ public class DisplayPageDisplayContext {
 	}
 
 	public List<BreadcrumbEntry> getLayoutPageTemplateBreadcrumbEntries() {
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionLocalServiceUtil.
+				fetchLayoutPageTemplateCollection(
+					_getLayoutPageTemplateCollectionId());
+
 		return BreadcrumbEntryListBuilder.add(
 			breadcrumbEntry -> {
 				breadcrumbEntry.setTitle(
@@ -250,42 +255,30 @@ public class DisplayPageDisplayContext {
 					).buildString());
 			}
 		).addAll(
-			() ->
-				_getLayoutPageTemplateCollectionId() !=
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			() -> layoutPageTemplateCollection != null,
 			() -> {
-				LayoutPageTemplateCollection layoutPageTemplateCollection =
-					LayoutPageTemplateCollectionLocalServiceUtil.
-						fetchLayoutPageTemplateCollection(
-							_getLayoutPageTemplateCollectionId());
+				List<LayoutPageTemplateCollection>
+					layoutPageTemplateCollections =
+						layoutPageTemplateCollection.getAncestors();
 
-				if (layoutPageTemplateCollection != null) {
-					List<LayoutPageTemplateCollection>
-						layoutPageTemplateCollections =
-							layoutPageTemplateCollection.getAncestors();
+				Collections.reverse(layoutPageTemplateCollections);
 
-					Collections.reverse(layoutPageTemplateCollections);
-
-					return TransformUtil.transform(
-						layoutPageTemplateCollections,
-						curLayoutPageTemplateCollection ->
-							BreadcrumbEntryBuilder.setTitle(
-								curLayoutPageTemplateCollection.getName()
-							).setURL(
-								PortletURLBuilder.createRenderURL(
-									_renderResponse
-								).setTabs1(
-									"display-page-templates"
-								).setParameter(
-									"layoutPageTemplateCollectionId",
-									curLayoutPageTemplateCollection.
-										getLayoutPageTemplateCollectionId()
-								).buildString()
-							).build());
-				}
-
-				return Collections.emptyList();
+				return TransformUtil.transform(
+					layoutPageTemplateCollections,
+					curLayoutPageTemplateCollection ->
+						BreadcrumbEntryBuilder.setTitle(
+							curLayoutPageTemplateCollection.getName()
+						).setURL(
+							PortletURLBuilder.createRenderURL(
+								_renderResponse
+							).setTabs1(
+								"display-page-templates"
+							).setParameter(
+								"layoutPageTemplateCollectionId",
+								curLayoutPageTemplateCollection.
+									getLayoutPageTemplateCollectionId()
+							).buildString()
+						).build());
 			}
 		).build();
 	}

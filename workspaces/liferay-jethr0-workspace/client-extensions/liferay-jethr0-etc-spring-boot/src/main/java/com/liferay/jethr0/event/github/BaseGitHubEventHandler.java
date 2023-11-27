@@ -61,6 +61,26 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		return availableTestSuites;
 	}
 
+	protected String getCIProperty(String ciPropertyName)
+		throws InvalidJSONException, IOException {
+
+		String upstreamBranchCIPropertyValue =
+			_getUpstreamBranchCIPropertyValue(ciPropertyName);
+
+		if (!StringUtil.isNullOrEmpty(upstreamBranchCIPropertyValue)) {
+			return upstreamBranchCIPropertyValue;
+		}
+
+		String senderBranchCIPropertyValue = _getSenderBranchCIPropertyValue(
+			ciPropertyName);
+
+		if (!StringUtil.isNullOrEmpty(senderBranchCIPropertyValue)) {
+			return senderBranchCIPropertyValue;
+		}
+
+		return null;
+	}
+
 	protected GitHubComment getGitHubComment() throws InvalidJSONException {
 		JSONObject messageJSONObject = getMessageJSONObject();
 

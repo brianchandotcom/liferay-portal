@@ -721,6 +721,7 @@
 		<column name="imageId" type="long" />
 		<column name="priority" type="double" />
 		<column name="trackingURL" type="String" />
+		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 

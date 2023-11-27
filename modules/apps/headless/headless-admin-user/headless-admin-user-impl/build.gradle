@@ -16,6 +16,7 @@ dependencies {
 	compileOnly project(":apps:headless:headless-common-spi")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+	compileOnly project(":apps:roles:roles-admin-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":apps:user-associated-data:user-associated-data-api")

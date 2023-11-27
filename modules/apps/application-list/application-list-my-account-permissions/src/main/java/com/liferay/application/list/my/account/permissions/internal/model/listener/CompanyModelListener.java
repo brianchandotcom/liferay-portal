@@ -85,12 +85,12 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		String filter = StringBundler.concat(
-			"(&(objectClass=", PanelApp.class.getName(), ")",
-			"(panel.category.key=", PanelCategoryKeys.USER_MY_ACCOUNT, "*))");
-
 		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, filter,
+			bundleContext,
+			StringBundler.concat(
+				"(&(objectClass=", PanelApp.class.getName(), ")",
+				"(panel.category.key=", PanelCategoryKeys.USER_MY_ACCOUNT,
+				"*))"),
 			new PanelAppServiceTrackerCustomizer(bundleContext));
 	}
 

@@ -534,6 +534,47 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_G_NotS() throws Exception {
+		_persistence.countByR_G_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByR_G_NotS(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByR_L_NotS() throws Exception {
+		_persistence.countByR_L_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByR_L_NotS(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByR_L_NotSArrayable() throws Exception {
+		_persistence.countByR_L_NotS(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByR_M_NotS() throws Exception {
+		_persistence.countByR_M_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByR_M_NotS(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByR_M_NotSArrayable() throws Exception {
+		_persistence.countByR_M_NotS(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+	}
+
+	@Test
 	public void testCountByG_ERC_V() throws Exception {
 		_persistence.countByG_ERC_V(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
@@ -687,6 +728,110 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_L_NotS() throws Exception {
+		_persistence.countByG_L_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_L_NotS(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByG_M_NotS() throws Exception {
+		_persistence.countByG_M_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_M_NotS(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByC_L_NotS() throws Exception {
+		_persistence.countByC_L_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_L_NotS(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByC_M_NotS() throws Exception {
+		_persistence.countByC_M_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_M_NotS(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByP_L_NotS() throws Exception {
+		_persistence.countByP_L_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByP_L_NotS(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByP_L_NotSArrayable() throws Exception {
+		_persistence.countByP_L_NotS(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByP_M_NotS() throws Exception {
+		_persistence.countByP_M_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByP_M_NotS(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByP_M_NotSArrayable() throws Exception {
+		_persistence.countByP_M_NotS(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByR_G_L_NotS() throws Exception {
+		_persistence.countByR_G_L_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+
+		_persistence.countByR_G_L_NotS(
+			0L, 0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByR_G_L_NotSArrayable() throws Exception {
+		_persistence.countByR_G_L_NotS(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByR_G_M_NotS() throws Exception {
+		_persistence.countByR_G_M_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+
+		_persistence.countByR_G_M_NotS(
+			0L, 0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByR_G_M_NotSArrayable() throws Exception {
+		_persistence.countByR_G_M_NotS(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+	}
+
+	@Test
 	public void testCountByG_P_L_S() throws Exception {
 		_persistence.countByG_P_L_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -756,6 +901,73 @@ public class KBArticlePersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.randomString(),
 			new int[] {RandomTestUtil.nextInt(), 0});
+	}
+
+	@Test
+	public void testCountByG_KBFI_UT_NotS() throws Exception {
+		_persistence.countByG_KBFI_UT_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_KBFI_UT_NotS(0L, 0L, "null", 0);
+
+		_persistence.countByG_KBFI_UT_NotS(0L, 0L, (String)null, 0);
+	}
+
+	@Test
+	public void testCountByG_KBFI_L_NotS() throws Exception {
+		_persistence.countByG_KBFI_L_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_KBFI_L_NotS(
+			0L, 0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByG_LikeS_L_NotS() throws Exception {
+		_persistence.countByG_LikeS_L_NotS(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_LikeS_L_NotS(
+			0L, "null", RandomTestUtil.randomBoolean(), 0);
+
+		_persistence.countByG_LikeS_L_NotS(
+			0L, (String)null, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByG_LikeS_L_NotSArrayable() throws Exception {
+		_persistence.countByG_LikeS_L_NotS(
+			RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			},
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByG_LikeS_M_NotS() throws Exception {
+		_persistence.countByG_LikeS_M_NotS(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_LikeS_M_NotS(
+			0L, "null", RandomTestUtil.randomBoolean(), 0);
+
+		_persistence.countByG_LikeS_M_NotS(
+			0L, (String)null, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByG_LikeS_M_NotSArrayable() throws Exception {
+		_persistence.countByG_LikeS_M_NotS(
+			RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			},
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
 	}
 
 	@Test

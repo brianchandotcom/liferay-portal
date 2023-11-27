@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -115,6 +116,24 @@ public class LayoutsSEODisplayContext {
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getBackURL() throws PortalException {
+		if (Validator.isNotNull(_backURL)) {
+			return _backURL;
+		}
+
+		String backURL = ParamUtil.getString(
+			_httpServletRequest, "backURL", _getRedirect());
+
+		if (Validator.isNull(backURL)) {
+			backURL = PortalUtil.getLayoutFullURL(
+				getSelLayout(), _themeDisplay);
+		}
+
+		_backURL = backURL;
+
+		return _backURL;
 	}
 
 	public DDMFormValues getDDMFormValues() throws StorageException {
@@ -365,6 +384,47 @@ public class LayoutsSEODisplayContext {
 		).build();
 	}
 
+	public Map<String, Object> getOpenGraphPreviewSeoProperties()
+		throws Exception {
+
+		return HashMapBuilder.<String, Object>put(
+			"displayType", "og"
+		).put(
+			"targets",
+			HashMapBuilder.<String, Object>put(
+				"description",
+				HashMapBuilder.<String, Object>put(
+					"defaultValue",
+					() -> {
+						Layout selLayout = getSelLayout();
+
+						return selLayout.getDescriptionMap();
+					}
+				).put(
+					"id", "openGraphDescription"
+				).build()
+			).put(
+				"imgUrl",
+				HashMapBuilder.<String, Object>put(
+					"defaultValue", getDefaultOpenGraphImageURL()
+				).put(
+					"value", getOpenGraphImageURL()
+				).build()
+			).put(
+				"title",
+				HashMapBuilder.<String, Object>put(
+					"defaultValue", getDefaultPageTitleWithSuffixMap()
+				).put(
+					"id", "openGraphTitle"
+				).build()
+			).put(
+				"url",
+				Collections.singletonMap(
+					"defaultValue", getDefaultCanonicalURLMap())
+			).build()
+		).build();
+	}
+
 	public String getPageTitleSuffix() throws PortalException {
 		Company company = _themeDisplay.getCompany();
 
@@ -435,6 +495,44 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"title",
 			_selLayout.getTypeSettingsProperty("mapped-title", "${title}")
+		).build();
+	}
+
+	public Map<String, Object> getSeoPreviewSeoProperties()
+		throws PortalException {
+
+		return HashMapBuilder.<String, Object>put(
+			"targets",
+			HashMapBuilder.<String, Object>put(
+				"description",
+				HashMapBuilder.put(
+					"defaultValue",
+					() -> {
+						Layout selLayout = getSelLayout();
+
+						return selLayout.getDescription(
+							_themeDisplay.getLocale());
+					}
+				).put(
+					"id", "descriptionSEO"
+				).build()
+			).put(
+				"title",
+				HashMapBuilder.<String, Object>put(
+					"defaultValue", getDefaultPageTitleMap()
+				).put(
+					"id", "title"
+				).build()
+			).put(
+				"url",
+				HashMapBuilder.<String, Object>put(
+					"defaultValue", getDefaultCanonicalURLMap()
+				).put(
+					"id", "canonicalURL"
+				).build()
+			).build()
+		).put(
+			"titleSuffix", getPageTitleSuffix()
 		).build();
 	}
 
@@ -586,6 +684,16 @@ public class LayoutsSEODisplayContext {
 		return _layoutPageTemplateEntry;
 	}
 
+	private String _getRedirect() {
+		if (Validator.isNotNull(_redirect)) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+
+		return _redirect;
+	}
+
 	private Long _getSelPlid() {
 		if (_selPlid != null) {
 			return _selPlid;
@@ -633,6 +741,7 @@ public class LayoutsSEODisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsSEODisplayContext.class);
 
+	private String _backURL;
 	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private DDMStructure _ddmStructure;
 	private final DLAppService _dlAppService;
@@ -652,6 +761,7 @@ public class LayoutsSEODisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _privateLayout;
+	private String _redirect;
 	private Layout _selLayout;
 	private Long _selPlid;
 	private final ThemeDisplay _themeDisplay;

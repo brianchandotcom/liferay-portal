@@ -8,15 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
 LayoutsSEODisplayContext layoutsSEODisplayContext = (LayoutsSEODisplayContext)request.getAttribute(LayoutSEOWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT);
-
-if (Validator.isNull(backURL)) {
-	backURL = PortalUtil.getLayoutFullURL(layoutsSEODisplayContext.getSelLayout(), themeDisplay);
-}
 
 Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 
@@ -42,7 +34,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 	wrappedFormContent="<%= false %>"
 >
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="backURL" type="hidden" value="<%= layoutsSEODisplayContext.getBackURL() %>" />
 	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
 	<aui:input name="groupId" type="hidden" value="<%= layoutsSEODisplayContext.getGroupId() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsSEODisplayContext.isPrivateLayout() %>" />
@@ -153,35 +145,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 							<div>
 								<react:component
 									module="js/seo/PreviewSeo.es"
-									props='<%=
-										HashMapBuilder.<String, Object>put(
-											"targets",
-											HashMapBuilder.<String, Object>put(
-												"description",
-												HashMapBuilder.put(
-													"defaultValue", selLayout.getDescription(locale)
-												).put(
-													"id", "descriptionSEO"
-												).build()
-											).put(
-												"title",
-												HashMapBuilder.<String, Object>put(
-													"defaultValue", layoutsSEODisplayContext.getDefaultPageTitleMap()
-												).put(
-													"id", "title"
-												).build()
-											).put(
-												"url",
-												HashMapBuilder.<String, Object>put(
-													"defaultValue", layoutsSEODisplayContext.getDefaultCanonicalURLMap()
-												).put(
-													"id", "canonicalURL"
-												).build()
-											).build()
-										).put(
-											"titleSuffix", layoutsSEODisplayContext.getPageTitleSuffix()
-										).build()
-									%>'
+									props="<%= layoutsSEODisplayContext.getSeoPreviewSeoProperties() %>"
 									servletContext="<%= application %>"
 								/>
 							</div>
@@ -263,7 +227,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 
 	<liferay-frontend:edit-form-footer>
 		<liferay-frontend:edit-form-buttons
-			redirect="<%= backURL %>"
+			redirect="<%= layoutsSEODisplayContext.getBackURL() %>"
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

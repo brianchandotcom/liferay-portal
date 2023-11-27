@@ -45,8 +45,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration" %>
 
-<%@ page import="java.util.Collections" %>
-
 <%@ page import="javax.portlet.PortletRequest" %>
 
 <liferay-frontend:defineObjects />

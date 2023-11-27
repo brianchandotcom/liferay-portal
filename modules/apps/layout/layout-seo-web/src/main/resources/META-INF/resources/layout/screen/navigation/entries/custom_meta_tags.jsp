@@ -8,15 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
 LayoutsSEODisplayContext layoutsSEODisplayContext = (LayoutsSEODisplayContext)request.getAttribute(LayoutSEOWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT);
-
-if (Validator.isNull(backURL)) {
-	backURL = PortalUtil.getLayoutFullURL(layoutsSEODisplayContext.getSelLayout(), themeDisplay);
-}
 %>
 
 <h2 class="mb-4 text-7"><liferay-ui:message key="custom-meta-tags" /></h2>
@@ -78,7 +70,7 @@ if (Validator.isNull(backURL)) {
 
 	<liferay-frontend:edit-form-footer>
 		<liferay-frontend:edit-form-buttons
-			redirect="<%= backURL %>"
+			redirect="<%= layoutsSEODisplayContext.getBackURL() %>"
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

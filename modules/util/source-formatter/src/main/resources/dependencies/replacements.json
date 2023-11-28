@@ -773,6 +773,14 @@
 	},
 	{
 		"classNames": [
+			"DefaultFragmentRendererContext"
+		],
+		"from": "setSegmentsExperienceIds(long[])",
+		"issueKey": "LPS-198401",
+		"to": ""
+	},
+	{
+		"classNames": [
 			"CPDefinitionLinkLocalService",
 			"CPDefinitionLinkLocalServiceUtil"
 		],

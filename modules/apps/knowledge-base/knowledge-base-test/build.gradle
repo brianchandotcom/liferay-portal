@@ -10,5 +10,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal:portal-props-test-util")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":apps:subscription:subscription-api")
+	testIntegrationImplementation project(":apps:trash:trash-api")
+	testIntegrationImplementation project(":apps:trash:trash-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

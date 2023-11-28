@@ -223,10 +223,17 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	}
 
 	private void _reindexKBArticles(KBArticle kbArticle) throws Exception {
-		List<KBArticle> kbArticles =
+		List<KBArticle> kbArticles = new ArrayList<>();
+
+		kbArticles.addAll(
+			kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
+				kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
+				null));
+
+		kbArticles.addAll(
 			kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
 				kbArticle.getResourcePrimKey(),
-				WorkflowConstants.STATUS_APPROVED, null);
+				WorkflowConstants.STATUS_IN_TRASH, null));
 
 		Collection<Document> documents = new ArrayList<>();
 

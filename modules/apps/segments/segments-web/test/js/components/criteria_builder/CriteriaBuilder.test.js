@@ -9,7 +9,11 @@ import {wrapInTestContext} from 'react-dnd-test-utils';
 
 import {default as Component} from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaBuilder';
 
-const CriteriaBuilder = wrapInTestContext(Component);
+const TestComponent = React.forwardRef(({...props}, ref) => (
+	<Component testRef={ref} {...props} />
+));
+
+const CriteriaBuilder = wrapInTestContext(TestComponent);
 
 describe('CriteriaBuilder', () => {
 	afterEach(cleanup);

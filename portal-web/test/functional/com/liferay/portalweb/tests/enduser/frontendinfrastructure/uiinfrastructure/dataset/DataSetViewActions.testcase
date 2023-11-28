@@ -331,6 +331,63 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 When the user clicks on the Variant field, a dropdown with the options “Full Screen”, “Large” and “Small” is displayed"
+	@priority = 5
+	test AllVariantOptionArePresentInItemAction {
+		property portal.acceptance = "true";
+
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And chooses the Modal option on Type field") {
+			LexiconEntry.gotoAdd();
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Modal");
+		}
+
+		task ("And clicks on Variant field") {
+			Click(
+				key_fieldLabel = "Variant",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+		}
+
+		task ("Then the options Full Screen, Large and Small are displayed in the dropdown") {
+			for (var assertFields : list "Full Screen,Large,Small") {
+				AssertElementPresent(
+					key_fieldLabel = "Variant",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${assertFields});
+			}
+		}
+	}
+
 
 	@description = "LPS-191485. Verify if the options GET, POST, PATCH, LPS-199219DELETE are present in the Method dropdown in the Item Action"
 	@priority = 4

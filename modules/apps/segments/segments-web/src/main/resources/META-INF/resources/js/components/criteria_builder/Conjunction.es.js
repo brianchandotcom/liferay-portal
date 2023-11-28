@@ -17,7 +17,7 @@ function Conjunction({className, conjunctionName, editing, onSelect}) {
 
 	const classnames = classNames(
 		{
-			'conjunction-button': editing,
+			'conjunction-button py-2': editing,
 			'conjunction-label': !editing,
 		},
 		className

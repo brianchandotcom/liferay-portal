@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
@@ -84,11 +83,7 @@ function DropZone({before, canDrop, connectDropTarget, hover}) {
 	return (
 		<div className="drop-zone-root position-relative">
 			{connectDropTarget(
-				<div
-					className={classNames('drop-zone-target', {
-						'drop-zone-target-before': before,
-					})}
-				>
+				<div className="drop-zone-target">
 					{canDrop && hover && (
 						<div className="drop-zone-indicator w-100" />
 					)}

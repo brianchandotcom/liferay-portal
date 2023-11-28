@@ -11,21 +11,12 @@
 		margin-top: 16px;
 	}
 
-	.conjunction-button + .drop-zone-root + .criterion-group {
-		margin-top: 8px;
-	}
-
-	&.criteria-group-item {
-		padding: $gap;
-
-		.criteria-group-drag-icon {
-			left: 1px;
-		}
+	&.criteria-group-item .criteria-group-drag-icon {
+		left: 1px;
 	}
 
 	&.criteria-group-item-root {
 		border-left: 3px solid $blue;
-		padding: 8px;
 
 		@include generatePropertyGroupLoop(
 			$propertyGroupsColors,

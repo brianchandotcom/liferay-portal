@@ -49,6 +49,26 @@ public class GitBranchEntityRepository
 			gitHubRefURL, GitBranchEntity.Type.UPSTREAM);
 	}
 
+	public Set<GitBranchEntity> getAllByType(GitBranchEntity.Type... types) {
+		Set<GitBranchEntity> gitBranchEntities = new HashSet<>();
+
+		if ((types == null) || (types.length == 0)) {
+			return gitBranchEntities;
+		}
+
+		for (GitBranchEntity gitBranchEntity : getAll()) {
+			for (GitBranchEntity.Type type : types) {
+				if (gitBranchEntity.getType() == type) {
+					gitBranchEntities.add(gitBranchEntity);
+
+					break;
+				}
+			}
+		}
+
+		return gitBranchEntities;
+	}
+
 	public GitBranchEntity getByURL(URL url) {
 		for (GitBranchEntity gitBranchEntity : getAll()) {
 			if (Objects.equals(gitBranchEntity.getBranchURL(), url)) {

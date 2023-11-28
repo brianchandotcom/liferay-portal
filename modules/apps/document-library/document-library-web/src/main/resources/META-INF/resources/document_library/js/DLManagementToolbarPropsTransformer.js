@@ -311,6 +311,7 @@ export default function propsTransformer({
 		}
 		else {
 			openSelectionModal({
+				height: '70vh',
 				size: 'lg',
 				title: Liferay.Language.get('create-ai-image'),
 				url: aiImageCreatorURL,

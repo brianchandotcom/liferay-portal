@@ -1,6 +1,9 @@
 {
 	"configuration": {
 		"className": "com.liferay.headless.admin.user.dto.v1_0.Account",
+		"parameters": {
+			"fileName": "/batch8/data2.batch-engine-data.json"
+		},
 		"version": "v1.0"
 	},
 	"items": [

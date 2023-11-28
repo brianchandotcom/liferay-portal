@@ -80,7 +80,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		for (int i = 0; i < parameterTypes.length; i++) {
 			String variableTypeName = getVariableTypeName(
-				content, fileContent, fileName, parameterList[i], true);
+				content, null, fileContent, fileName, parameterList[i], true);
 
 			if ((variableTypeName == null) ||
 				!parameterTypes[i].equals(variableTypeName)) {
@@ -631,71 +631,15 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected String getVariableTypeName(
-		JavaTerm javaTerm, String fileContent, String fileName,
+		String content, JavaTerm javaTerm, String fileContent, String fileName,
 		String variableName) {
 
 		return getVariableTypeName(
-			javaTerm, fileContent, fileName, variableName, false);
+			content, javaTerm, fileContent, fileName, variableName, false);
 	}
 
 	protected String getVariableTypeName(
-		JavaTerm javaTerm, String fileContent, String fileName,
-		String variableName, boolean includeArrayOrCollectionTypes) {
-
-		if (variableName == null) {
-			return null;
-		}
-
-		String content = javaTerm.getContent();
-
-		String variableTypeName = _getVariableTypeName(
-			content, variableName, includeArrayOrCollectionTypes);
-
-		if ((variableTypeName != null) || content.equals(fileContent)) {
-			return variableTypeName;
-		}
-
-		try {
-			JavaClass javaClass = _getJavaClass(
-				javaTerm, fileContent, fileName);
-
-			if (javaClass == null) {
-				return variableTypeName;
-			}
-
-			for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
-				if (childJavaTerm.isJavaVariable()) {
-					JavaVariable javaVariable = (JavaVariable)childJavaTerm;
-
-					String variableContent = javaVariable.getContent();
-
-					variableTypeName = _getVariableTypeName(
-						variableContent, variableName,
-						includeArrayOrCollectionTypes);
-
-					if (variableTypeName != null) {
-						return variableTypeName;
-					}
-				}
-			}
-		}
-		catch (Exception exception) {
-			return variableTypeName;
-		}
-
-		return variableTypeName;
-	}
-
-	protected String getVariableTypeName(
-		String content, String fileContent, String fileName,
-		String variableName) {
-
-		return getVariableTypeName(
-			content, fileContent, fileName, variableName, false);
-	}
-
-	protected String getVariableTypeName(
-		String content, String fileContent, String fileName,
+		String content, JavaTerm javaTerm, String fileContent, String fileName,
 		String variableName, boolean includeArrayOrCollectionTypes) {
 
 		if (variableName == null) {
@@ -712,7 +656,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		JavaClass javaClass = null;
 
 		try {
-			javaClass = _getJavaClass(null, fileContent, fileName);
+			javaClass = _getJavaClass(javaTerm, fileContent, fileName);
 
 			if (javaClass == null) {
 				return variableTypeName;
@@ -752,7 +696,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		String variableTypeName = getVariableTypeName(
-			content, fileContent, fileName, variable.trim(), true);
+			content, null, fileContent, fileName, variable.trim(), true);
 
 		if ((variableTypeName != null) &&
 			variableTypeName.startsWith(className)) {

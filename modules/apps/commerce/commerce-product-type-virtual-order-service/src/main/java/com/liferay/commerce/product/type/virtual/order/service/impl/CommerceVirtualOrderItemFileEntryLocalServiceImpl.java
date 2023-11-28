@@ -78,6 +78,16 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceVirtualOrderItemFileEntry>
+		getCommerceVirtualOrderItemFileEntries(
+			long commerceVirtualOrderItemId, int start, int end) {
+
+		return commerceVirtualOrderItemFileEntryPersistence.
+			findByCommerceVirtualOrderItemId(
+				commerceVirtualOrderItemId, start, end);
+	}
+
+	@Override
 	public int getCommerceVirtualOrderItemFileEntriesCount(
 		long commerceVirtualOrderItemId) {
 

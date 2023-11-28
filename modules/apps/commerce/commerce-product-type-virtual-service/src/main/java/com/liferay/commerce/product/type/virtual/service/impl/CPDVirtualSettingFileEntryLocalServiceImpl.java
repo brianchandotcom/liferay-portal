@@ -82,6 +82,15 @@ public class CPDVirtualSettingFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDVirtualSettingFileEntry> getCPDVirtualSettingFileEntries(
+		long cpDefinitionVirtualSettingId, int start, int end) {
+
+		return cpdVirtualSettingFileEntryPersistence.
+			findByCPDefinitionVirtualSettingId(
+				cpDefinitionVirtualSettingId, start, end, null);
+	}
+
+	@Override
 	public int getCPDVirtualSettingFileEntriesCount(
 		long cpDefinitionVirtualSettingId) {
 

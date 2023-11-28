@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -82,6 +84,19 @@ public class CPDVirtualSettingFileEntryServiceImpl
 		}
 
 		return cpdVirtualSettingFileEntry;
+	}
+
+	@Override
+	public List<CPDVirtualSettingFileEntry> getCPDVirtualSettingFileEntries(
+			String className, long classPK, long cpDefinitionVirtualSettingId,
+			int start, int end)
+		throws PortalException {
+
+		_checkPermission(className, classPK, ActionKeys.VIEW);
+
+		return cpdVirtualSettingFileEntryLocalService.
+			getCPDVirtualSettingFileEntries(
+				cpDefinitionVirtualSettingId, start, end);
 	}
 
 	@Override

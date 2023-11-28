@@ -11,11 +11,12 @@ import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrde
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
 import com.liferay.commerce.product.type.virtual.order.service.base.CommerceVirtualOrderItemFileEntryServiceBaseImpl;
-import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,6 +63,28 @@ public class CommerceVirtualOrderItemFileEntryServiceImpl
 	}
 
 	@Override
+	public List<CommerceVirtualOrderItemFileEntry>
+			getCommerceVirtualOrderItemFileEntries(
+				long commerceVirtualOrderItemId, int start, int end)
+		throws PortalException {
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			_commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItem(
+				commerceVirtualOrderItemId);
+
+		CommerceOrderItem commerceOrderItem =
+			commerceVirtualOrderItem.getCommerceOrderItem();
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.VIEW);
+
+		return commerceVirtualOrderItemFileEntryLocalService.
+			getCommerceVirtualOrderItemFileEntries(
+				commerceVirtualOrderItemId, start, end);
+	}
+
+	@Override
 	public CommerceVirtualOrderItemFileEntry
 			updateCommerceVirtualOrderItemFileEntry(
 				long commerceVirtualOrderItemFileEntryId, long fileEntryId,
@@ -89,9 +112,6 @@ public class CommerceVirtualOrderItemFileEntryServiceImpl
 			updateCommerceVirtualOrderItemFileEntry(
 				commerceVirtualOrderItemFileEntryId, fileEntryId, url, version);
 	}
-
-	@Reference
-	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

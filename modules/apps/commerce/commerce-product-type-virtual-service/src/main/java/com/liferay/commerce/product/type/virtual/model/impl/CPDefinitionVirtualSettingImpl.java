@@ -33,7 +33,6 @@ public class CPDefinitionVirtualSettingImpl
 				getCPDefinitionVirtualSettingId());
 	}
 
-
 	@Override
 	public FileEntry getSampleFileEntry() throws PortalException {
 		if (isUseSampleURL()) {

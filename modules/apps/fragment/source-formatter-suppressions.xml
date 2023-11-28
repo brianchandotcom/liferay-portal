@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JSPEmptyLinesCheck" files="fragment-video-streaming/src/main/resources/META-INF/resources/page\.jsp" />
-	</source-check>
-</suppressions>

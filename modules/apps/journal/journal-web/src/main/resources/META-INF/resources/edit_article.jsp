@@ -216,7 +216,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 											<liferay-ui:message key="friendly-url" />
 
 											<%
-											StringBundler sb = new StringBundler(5);
+											StringBundler sb = new StringBundler(3);
 
 											sb.append(LanguageUtil.get(request, "changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft"));
 											sb.append(StringPool.SPACE);

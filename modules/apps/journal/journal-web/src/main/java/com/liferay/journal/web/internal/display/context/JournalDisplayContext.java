@@ -125,6 +125,7 @@ import com.liferay.trash.TrashHelper;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -1221,7 +1222,11 @@ public class JournalDisplayContext {
 		return _tab;
 	}
 
-	public String getTitle() {
+	public String getTitle() throws PortalException {
+		if (isSearch() || isFilterApplied()) {
+			return LanguageUtil.get(_httpServletRequest, "search-results");
+		}
+
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 			getHighlightedDDMStructureId());
 
@@ -1298,6 +1303,29 @@ public class JournalDisplayContext {
 	public boolean isCommentsTabSelected() throws PortalException {
 		if (Objects.equals(getTab(), "comments")) {
 			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isFilterApplied() {
+		if (getStatus() != WorkflowConstants.STATUS_ANY) {
+			return true;
+		}
+
+		if (isNavigationHome()) {
+			return false;
+		}
+
+		List<String> filters = Arrays.asList(
+			"assetCategoryId", "assetTagId", "ddmStructureId", "navigation");
+
+		for (String filter : filters) {
+			if (Validator.isNotNull(
+					ParamUtil.getString(_httpServletRequest, filter))) {
+
+				return true;
+			}
 		}
 
 		return false;

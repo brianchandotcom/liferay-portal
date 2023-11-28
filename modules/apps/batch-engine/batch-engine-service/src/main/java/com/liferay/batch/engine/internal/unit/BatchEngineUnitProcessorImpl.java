@@ -215,8 +215,6 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchEngineTaskItemDelegate);
 
 		try {
-			BatchEngineUnitThreadLocal.setDataFileName(
-				batchEngineUnit.getDataFileName());
 			BatchEngineUnitThreadLocal.setFileName(
 				batchEngineUnit.getFileName());
 
@@ -225,7 +223,6 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchEngineUnitConfiguration.isCheckPermissions());
 		}
 		finally {
-			BatchEngineUnitThreadLocal.setDataFileName(StringPool.BLANK);
 			BatchEngineUnitThreadLocal.setFileName(StringPool.BLANK);
 		}
 

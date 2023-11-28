@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -25,12 +24,14 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.net.URL;
 
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.Assert;
@@ -108,6 +109,13 @@ public class BatchEngineBundleTrackerTest {
 				"/batch9/data.batch-engine-data.json"));
 	}
 
+	private String _getFileName(BatchEngineImportTask batchEngineImportTask) {
+		Map<String, Serializable> parameters =
+			batchEngineImportTask.getParameters();
+
+		return (String)parameters.get("fileName");
+	}
+
 	private void _testProcessBatchEngineBundle(
 			String dirName, int expectedCount, List<String> dataFilesExpected)
 		throws Exception {
@@ -137,7 +145,7 @@ public class BatchEngineBundleTrackerTest {
 
 						actualCount.increment();
 						dataFilesProcessed.add(
-							BatchEngineUnitThreadLocal.getDataFileName());
+							_getFileName(batchEngineImportTask));
 					}
 
 					@Override
@@ -149,7 +157,7 @@ public class BatchEngineBundleTrackerTest {
 
 						actualCount.increment();
 						dataFilesProcessed.add(
-							BatchEngineUnitThreadLocal.getDataFileName());
+							_getFileName(batchEngineImportTask));
 					}
 
 				},

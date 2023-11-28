@@ -647,7 +647,7 @@
 	</tr>
 	<tr>
 		<td>GO_TO_FOLDER</td>
-		<td>//div[contains(@class, 'autofit-col-expand') and contains(., 'key_folderName')]//*[contains(@title, 'Go to Folder')]</td>
+		<td>//div[contains(@class, 'autofit-col-expand') and contains(., '${key_folderLabel}')]//*[contains(@title, 'Go to Folder')]</td>
 		<td></td>
 	</tr>
 	<tr>

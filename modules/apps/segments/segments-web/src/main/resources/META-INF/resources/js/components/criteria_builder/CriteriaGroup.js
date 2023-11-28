@@ -209,7 +209,7 @@ export default function CriteriaGroup({
 		<div
 			className={classNames(
 				{
-					'criteria-group-root w-100': criteria,
+					'criteria-group-root my-2 p-2 w-100': criteria,
 					disabled,
 				},
 				`color--${propertyKey} criteria-group-item${

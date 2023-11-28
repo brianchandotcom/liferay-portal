@@ -208,6 +208,16 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteKBArticles(
+			long groupId, long parentResourcePrimKey,
+			boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_kbArticleLocalService.deleteKBArticles(
+			groupId, parentResourcePrimKey, includeTrashedEntries);
+	}
+
+	@Override
 	public void deleteKBArticles(long[] resourcePrimKeys)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

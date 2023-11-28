@@ -176,6 +176,11 @@ public interface KBArticleLocalService
 	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws PortalException;
 
+	public void deleteKBArticles(
+			long groupId, long parentResourcePrimKey,
+			boolean includeTrashedEntries)
+		throws PortalException;
+
 	public void deleteKBArticles(long[] resourcePrimKeys)
 		throws PortalException;
 

@@ -331,19 +331,23 @@ const AddFieldsModalContent = ({
 								{({children, label}: IFieldTreeItem) => (
 									<TreeView.Item>
 										<TreeView.ItemStack>
-											<ClayCheckbox
-												checked
-												label={label}
-											/>
+											<ClayCheckbox checked>
+												<Highlight
+													query={query}
+													text={label}
+												/>
+											</ClayCheckbox>
 										</TreeView.ItemStack>
 
 										<TreeView.Group items={children}>
 											{({label}: IFieldTreeItem) => (
 												<TreeView.Item>
-													<ClayCheckbox
-														checked
-														label={label}
-													/>
+													<ClayCheckbox checked>
+														<Highlight
+															query={query}
+															text={label}
+														/>
+													</ClayCheckbox>
 												</TreeView.Item>
 											)}
 										</TreeView.Group>

@@ -49,7 +49,9 @@ definition {
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
 			value1 = ${dueDateTime});
 
-		Workflow.confirmWorkflowAction();
+		IFrame.selectConfigurationFrame();
+
+		Click(locator1 = "Button#DONE");
 	}
 
 	@summary = "Default summary"

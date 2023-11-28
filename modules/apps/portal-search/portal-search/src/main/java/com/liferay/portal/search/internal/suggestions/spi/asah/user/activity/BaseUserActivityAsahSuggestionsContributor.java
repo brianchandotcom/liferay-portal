@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.suggestions.spi.asah.individuals;
+package com.liferay.portal.search.internal.suggestions.spi.asah.user.activity;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringBundler;
@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.internal.configuration.AsahIndividualsConfiguration;
+import com.liferay.portal.search.internal.configuration.AsahUserActivityConfiguration;
 import com.liferay.portal.search.internal.suggestions.spi.asah.BaseAsahSuggestionsContributor;
 import com.liferay.portal.search.internal.web.cache.AsahWebCacheItem;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
@@ -32,13 +32,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gustavo Lima
  */
-public abstract class BaseAsahIndividualsSuggestionsContributor
+public abstract class BaseUserActivityAsahSuggestionsContributor
 	extends BaseAsahSuggestionsContributor {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_asahIndividualsConfiguration = ConfigurableUtil.createConfigurable(
-			AsahIndividualsConfiguration.class, properties);
+		_asahUserActivityConfiguration = ConfigurableUtil.createConfigurable(
+			AsahUserActivityConfiguration.class, properties);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public abstract class BaseAsahIndividualsSuggestionsContributor
 			suggestionsContributorConfiguration.getSize(), 5);
 
 		return AsahWebCacheItem.get(
-			analyticsConfiguration, _asahIndividualsConfiguration,
+			analyticsConfiguration, _asahUserActivityConfiguration,
 			getURL(
 				analyticsConfiguration,
 				StringBundler.concat(
@@ -198,8 +198,9 @@ public abstract class BaseAsahIndividualsSuggestionsContributor
 	private static final int _MIN_COUNTS = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseAsahIndividualsSuggestionsContributor.class);
+		BaseUserActivityAsahSuggestionsContributor.class);
 
-	private volatile AsahIndividualsConfiguration _asahIndividualsConfiguration;
+	private volatile AsahUserActivityConfiguration
+		_asahUserActivityConfiguration;
 
 }

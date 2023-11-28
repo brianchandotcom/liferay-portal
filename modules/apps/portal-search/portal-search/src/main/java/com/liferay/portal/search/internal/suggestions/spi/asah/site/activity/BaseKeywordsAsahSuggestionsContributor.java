@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.suggestions.spi.asah.pages;
+package com.liferay.portal.search.internal.suggestions.spi.asah.site.activity;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringBundler;
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Activate;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseAsahKeywordsSuggestionsContributor
+public abstract class BaseKeywordsAsahSuggestionsContributor
 	extends BaseAsahSuggestionsContributor {
 
 	@Activate

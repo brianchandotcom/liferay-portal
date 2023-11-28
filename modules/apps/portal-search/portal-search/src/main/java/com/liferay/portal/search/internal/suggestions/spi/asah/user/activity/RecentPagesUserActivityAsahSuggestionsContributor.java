@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.suggestions.spi.asah.individuals;
+package com.liferay.portal.search.internal.suggestions.spi.asah.user.activity;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -20,12 +20,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Gustavo Lima
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.internal.configuration.AsahIndividualsConfiguration",
-	property = "search.suggestions.contributor.name=asahRecentSites",
+	configurationPid = "com.liferay.portal.search.internal.configuration.AsahUserActivityConfiguration",
+	property = "search.suggestions.contributor.name=asahRecentPages",
 	service = SuggestionsContributor.class
 )
-public class AsahRecentSitesIndividualsContributor
-	extends BaseAsahIndividualsSuggestionsContributor
+public class RecentPagesUserActivityAsahSuggestionsContributor
+	extends BaseUserActivityAsahSuggestionsContributor
 	implements SuggestionsContributor {
 
 	@Override
@@ -38,19 +38,17 @@ public class AsahRecentSitesIndividualsContributor
 
 		return getSuggestionsContributorResults(
 			AsahSuggestionsConstants.INDIVIDUALS,
-			AsahSuggestionsConstants.RECENT_SITES, searchContext,
-			"lastVisitDate,visits,firstVisitDate,groupId",
+			AsahSuggestionsConstants.RECENT_PAGES, searchContext,
+			"lastVisitDate,visits,displayLanguageId,firstVisitDate,url",
 			suggestionsContributorConfiguration);
 	}
 
-	@Override
 	protected String getAssetURL(
 		String destinationBaseURL, JSONObject itemJSONObject) {
 
 		return itemJSONObject.getString("url");
 	}
 
-	@Override
 	protected String getText(JSONObject itemJSONObject) {
 		return itemJSONObject.getString("title");
 	}

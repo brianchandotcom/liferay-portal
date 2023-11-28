@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import com.paypal.core.PayPalEnvironment;
 import com.paypal.core.PayPalHttpClient;
+import com.paypal.http.HttpRequest;
 import com.paypal.http.HttpResponse;
 import com.paypal.http.exceptions.HttpException;
 import com.paypal.orders.AddressPortable;
@@ -127,23 +128,15 @@ public class PayPalCommercePaymentIntegration
 				"Liferay_SP_PPCP_API");
 			ordersAuthorizeRequest.requestBody(new OrderRequest());
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Authorize headers: " +
-						_toJSON(ordersAuthorizeRequest.headers()));
-				_log.debug(
-					"Authorize request body: " +
-						_toJSON(ordersAuthorizeRequest.requestBody()));
-			}
+			_debug(ordersAuthorizeRequest);
 
 			HttpResponse<Order> authorizeHttpResponse =
 				payPalHttpClient.execute(ordersAuthorizeRequest);
 
 			if (authorizeHttpResponse.statusCode() == 201) {
-				Order authorizeOrder = authorizeHttpResponse.result();
+				Order order = authorizeHttpResponse.result();
 
-				List<PurchaseUnit> purchaseUnits =
-					authorizeOrder.purchaseUnits();
+				List<PurchaseUnit> purchaseUnits = order.purchaseUnits();
 
 				if (ListUtil.isNotEmpty(purchaseUnits)) {
 					PurchaseUnit purchaseUnit = purchaseUnits.get(0);
@@ -208,21 +201,7 @@ public class PayPalCommercePaymentIntegration
 				new AuthorizationsVoidRequest(
 					commercePaymentEntry.getTransactionCode());
 
-			if (_log.isDebugEnabled()) {
-				String headers = new Gson(
-				).toJson(
-					authorizationsVoidRequest.headers()
-				);
-
-				_log.debug("Cancel headers: " + headers);
-
-				String requestBody = new Gson(
-				).toJson(
-					authorizationsVoidRequest.requestBody()
-				);
-
-				_log.debug("Cancel request body: " + requestBody);
-			}
+			_debug(authorizationsVoidRequest);
 
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
@@ -269,21 +248,7 @@ public class PayPalCommercePaymentIntegration
 					commercePaymentEntry.getCommercePaymentEntryId()));
 			authorizationsCaptureRequest.requestBody(new OrderRequest());
 
-			if (_log.isDebugEnabled()) {
-				String headers = new Gson(
-				).toJson(
-					authorizationsCaptureRequest.headers()
-				);
-
-				_log.debug("Capture headers: " + headers);
-
-				String requestBody = new Gson(
-				).toJson(
-					authorizationsCaptureRequest.requestBody()
-				);
-
-				_log.debug("Capture request body: " + requestBody);
-			}
+			_debug(authorizationsCaptureRequest);
 
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
@@ -357,21 +322,7 @@ public class PayPalCommercePaymentIntegration
 					).toString(),
 					commercePaymentEntry.getCurrencyCode()));
 
-			if (_log.isDebugEnabled()) {
-				String headers = new Gson(
-				).toJson(
-					capturesRefundRequest.headers()
-				);
-
-				_log.debug("Refund headers: " + headers);
-
-				String requestBody = new Gson(
-				).toJson(
-					capturesRefundRequest.requestBody()
-				);
-
-				_log.debug("Refund request body: " + requestBody);
-			}
+			_debug(capturesRefundRequest);
 
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
@@ -460,21 +411,7 @@ public class PayPalCommercePaymentIntegration
 				"Liferay_SP_PPCP_API"
 			);
 
-			if (_log.isDebugEnabled()) {
-				String headers = new Gson(
-				).toJson(
-					ordersCreateRequest.headers()
-				);
-
-				_log.debug("Set up payment headers: " + headers);
-
-				String requestBody = new Gson(
-				).toJson(
-					ordersCreateRequest.requestBody()
-				);
-
-				_log.debug("Set up payment request body: " + requestBody);
-			}
+			_debug(ordersCreateRequest);
 
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
@@ -726,6 +663,21 @@ public class PayPalCommercePaymentIntegration
 		return refundRequest;
 	}
 
+	private void _debug(HttpRequest httpRequest) {
+		if (!_log.isDebugEnabled()) {
+			return;
+		}
+
+		Class<?> clazz = httpRequest.getClass();
+
+		_log.debug(clazz.getName());
+
+		Gson gson = new Gson();
+
+		_log.debug("Headers: " + gson.toJson(httpRequest.headers()));
+		_log.debug("Request body: " + gson.toJson(httpRequest.requestBody()));
+	}
+
 	private String _getAmountValue(
 		BigDecimal amount, CommerceCurrency commerceCurrency) {
 
@@ -883,12 +835,6 @@ public class PayPalCommercePaymentIntegration
 		sb.append("&orderType=normal");
 
 		return sb.toString();
-	}
-
-	private String _toJSON(Object object) {
-		Gson gson = new Gson();
-
-		return gson.toJson(object);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

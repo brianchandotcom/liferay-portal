@@ -7,8 +7,11 @@ package com.liferay.layout.internal.layout.admin.util;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -18,6 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
@@ -153,6 +157,31 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	private boolean _isExcludeLayoutFromSitemap(
 		Layout layout, UnicodeProperties typeSettingsUnicodeProperties) {
 
+		if (FeatureFlagManagerUtil.isEnabled("LPS-187793")) {
+			LayoutSEOEntry layoutSEOEntry =
+				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getLayoutId());
+
+			if ((layoutSEOEntry != null) &&
+				layoutSEOEntry.isCanonicalURLEnabled()) {
+
+				return true;
+			}
+
+			Map<Locale, String> robotsMap = layout.getRobotsMap();
+
+			for (Map.Entry<Locale, String> entry : robotsMap.entrySet()) {
+				String value = entry.getValue();
+
+				if (StringUtil.containsIgnoreCase(value, "nofollow") ||
+					StringUtil.containsIgnoreCase(value, "noindex")) {
+
+					return true;
+				}
+			}
+		}
+
 		if (!GetterUtil.getBoolean(
 				typeSettingsUnicodeProperties.getProperty(
 					LayoutTypePortletConstants.SITEMAP_INCLUDE),
@@ -170,6 +199,9 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

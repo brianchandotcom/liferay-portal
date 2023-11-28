@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {
 	API,
 	SingleSelect,
@@ -71,6 +72,13 @@ export function AggregationFormBase({
 	setValues,
 	values,
 }: AggregationFormBaseProps) {
+	const [objectRelationships, setObjectRelationships] = useState<
+		TObjectRelationship[]
+	>();
+	const [objectRelationshipFields, setObjectRelationshipFields] = useState<
+		ObjectField[]
+	>();
+	const [reload, setReload] = useState(false);
 	const [
 		selectedRelatedObjectRelationship,
 		setSelectRelatedObjectRelationship,
@@ -83,12 +91,6 @@ export function AggregationFormBase({
 		selectedAggregationFunctionValue,
 		setSelectedAggregationFunctionValue,
 	] = useState<string>();
-	const [objectRelationships, setObjectRelationships] = useState<
-		TObjectRelationship[]
-	>();
-	const [objectRelationshipFields, setObjectRelationshipFields] = useState<
-		ObjectField[]
-	>();
 
 	const filteredObjectRelationships = useMemo(() => {
 		return objectRelationships?.map(({label, name}) => ({
@@ -111,6 +113,161 @@ export function AggregationFormBase({
 			value: name,
 		}));
 	}, [creationLanguageId2, objectRelationshipFields]);
+
+	const handleChangeRelatedObjectRelationship = async (
+		objectRelationshipName: string
+	) => {
+		const selectedObjectRelationship = objectRelationships?.find(
+			({name}) => name === objectRelationshipName
+		);
+
+		setSelectRelatedObjectRelationship(selectedObjectRelationship);
+		setSelectedSummarizeFieldName(undefined);
+
+		const relatedFields = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
+			selectedObjectRelationship?.objectDefinitionExternalReferenceCode2 as string
+		);
+
+		const numericFields = relatedFields.filter(
+			(objectField) =>
+				objectField.businessType === 'Integer' ||
+				objectField.businessType === 'LongInteger' ||
+				objectField.businessType === 'Decimal' ||
+				objectField.businessType === 'PrecisionDecimal'
+		);
+
+		setObjectRelationshipFields(numericFields);
+
+		const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
+			(fieldSettings) =>
+				fieldSettings.name !== 'objectFieldName' &&
+				fieldSettings.name !== 'filters' &&
+				fieldSettings.name !== 'objectRelationshipName'
+		);
+
+		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
+			...fieldSettingWithoutSummarizeField,
+			{
+				name: 'objectRelationshipName',
+				value: selectedObjectRelationship?.name as string,
+			},
+			{
+				name: 'filters',
+				value: [],
+			},
+		];
+
+		if (onAggregationFilterChange) {
+			onAggregationFilterChange([]);
+		}
+
+		setValues({
+			objectFieldSettings: newObjectFieldSettings,
+		});
+
+		if (onObjectRelationshipChange) {
+			onObjectRelationshipChange(
+				selectedObjectRelationship?.objectDefinitionExternalReferenceCode2 as string
+			);
+		}
+
+		if (onSubmit) {
+			onSubmit({
+				...values,
+				objectFieldSettings: newObjectFieldSettings,
+			});
+		}
+	};
+
+	const handleAggregationFunctionChange = (value: string) => {
+		const aggregationFunction = aggregationFunctions.find(
+			(aggregationFunction) => aggregationFunction.value === value
+		);
+
+		setSelectedAggregationFunctionValue(aggregationFunction?.value);
+
+		let newObjectFieldSettings: ObjectFieldSetting[] | undefined;
+
+		if (value === 'COUNT') {
+			setSelectedSummarizeFieldName(undefined);
+
+			const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
+				(fieldSettings) => fieldSettings.name !== 'objectFieldName'
+			);
+
+			newObjectFieldSettings = [
+				...fieldSettingWithoutSummarizeField.filter(
+					(fieldSettings) => fieldSettings.name !== 'function'
+				),
+				{
+					name: 'function',
+					value,
+				},
+			];
+
+			setValues({
+				objectFieldSettings: newObjectFieldSettings,
+			});
+
+			if (onSubmit) {
+				onSubmit({
+					...values,
+					objectFieldSettings: newObjectFieldSettings,
+				});
+			}
+
+			return;
+		}
+
+		newObjectFieldSettings = [
+			...objectFieldSettings.filter(
+				(fieldSettings) => fieldSettings.name !== 'function'
+			),
+			{
+				name: 'function',
+				value,
+			},
+		];
+
+		setValues({
+			objectFieldSettings: newObjectFieldSettings,
+		});
+
+		if (onSubmit) {
+			onSubmit({
+				...values,
+				objectFieldSettings: newObjectFieldSettings,
+			});
+		}
+	};
+
+	const handleSummarizeFieldChange = (objectFieldName: string) => {
+		const selectedObjectField = objectRelationshipFields?.find(
+			({name}) => name === objectFieldName
+		);
+
+		setSelectedSummarizeFieldName(selectedObjectField?.name);
+
+		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
+			...objectFieldSettings.filter(
+				(fieldSettings) => fieldSettings.name !== 'objectFieldName'
+			),
+			{
+				name: 'objectFieldName',
+				value: selectedObjectField?.name as string,
+			},
+		];
+
+		setValues({
+			objectFieldSettings: newObjectFieldSettings,
+		});
+
+		if (onSubmit) {
+			onSubmit({
+				objectFieldSettings: newObjectFieldSettings,
+			});
+		}
+	};
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -199,174 +356,30 @@ export function AggregationFormBase({
 		onObjectRelationshipChange,
 	]);
 
-	const handleChangeRelatedObjectRelationship = async (
-		objectRelationshipName: string
-	) => {
-		const selectedObjectRelationship = objectRelationships?.find(
-			({name}) => name === objectRelationshipName
-		);
-
-		setSelectRelatedObjectRelationship(selectedObjectRelationship);
-		setSelectedSummarizeFieldName('');
-
-		const relatedFields = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-			selectedObjectRelationship?.objectDefinitionExternalReferenceCode2 as string
-		);
-
-		const numericFields = relatedFields.filter(
-			(objectField) =>
-				objectField.businessType === 'Integer' ||
-				objectField.businessType === 'LongInteger' ||
-				objectField.businessType === 'Decimal' ||
-				objectField.businessType === 'PrecisionDecimal'
-		);
-
-		setObjectRelationshipFields(numericFields);
-
-		const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
-			(fieldSettings) =>
-				fieldSettings.name !== 'objectFieldName' &&
-				fieldSettings.name !== 'filters' &&
-				fieldSettings.name !== 'objectRelationshipName'
-		);
-
-		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
-			...fieldSettingWithoutSummarizeField,
-			{
-				name: 'objectRelationshipName',
-				value: selectedObjectRelationship?.name as string,
-			},
-			{
-				name: 'filters',
-				value: [],
-			},
-		];
-
-		if (onAggregationFilterChange) {
-			onAggregationFilterChange([]);
+	useEffect(() => {
+		if (selectedAggregationFunctionValue !== 'COUNT') {
+			setReload(true);
+			setTimeout(() => {
+				setReload(false);
+			}, 100);
 		}
-
-		setValues({
-			objectFieldSettings: newObjectFieldSettings,
-		});
-
-		if (onObjectRelationshipChange) {
-			onObjectRelationshipChange(
-				selectedObjectRelationship?.objectDefinitionExternalReferenceCode2 as string
-			);
-		}
-
-		if (onSubmit) {
-			onSubmit({
-				...values,
-				objectFieldSettings: newObjectFieldSettings,
-			});
-		}
-	};
-
-	const handleAggregationFunctionChange = (value: string) => {
-		const aggregationFunction = aggregationFunctions.find(
-			(aggregationFunction) => aggregationFunction.value === value
-		);
-
-		setSelectedAggregationFunctionValue(aggregationFunction?.value);
-
-		let newObjectFieldSettings: ObjectFieldSetting[] | undefined;
-
-		if (value === 'COUNT') {
-			setSelectedSummarizeFieldName('');
-
-			const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
-				(fieldSettings) => fieldSettings.name !== 'objectFieldName'
-			);
-
-			newObjectFieldSettings = [
-				...fieldSettingWithoutSummarizeField.filter(
-					(fieldSettings) => fieldSettings.name !== 'function'
-				),
-				{
-					name: 'function',
-					value,
-				},
-			];
-
-			setValues({
-				objectFieldSettings: newObjectFieldSettings,
-			});
-
-			if (onSubmit) {
-				onSubmit({
-					...values,
-					objectFieldSettings: newObjectFieldSettings,
-				});
-			}
-
-			return;
-		}
-
-		newObjectFieldSettings = [
-			...objectFieldSettings.filter(
-				(fieldSettings) => fieldSettings.name !== 'function'
-			),
-			{
-				name: 'function',
-				value,
-			},
-		];
-
-		setValues({
-			objectFieldSettings: newObjectFieldSettings,
-		});
-
-		if (onSubmit) {
-			onSubmit({
-				...values,
-				objectFieldSettings: newObjectFieldSettings,
-			});
-		}
-	};
-
-	const handleSummarizeFieldChange = (objectFieldName: string) => {
-		const selectedObjectField = objectRelationshipFields?.find(
-			({name}) => name === objectFieldName
-		);
-
-		setSelectedSummarizeFieldName(selectedObjectField?.name);
-
-		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
-			...objectFieldSettings.filter(
-				(fieldSettings) => fieldSettings.name !== 'objectFieldName'
-			),
-			{
-				name: 'objectFieldName',
-				value: selectedObjectField?.name as string,
-			},
-		];
-
-		setValues({
-			objectFieldSettings: newObjectFieldSettings,
-		});
-
-		if (onSubmit) {
-			onSubmit({
-				objectFieldSettings: newObjectFieldSettings,
-			});
-		}
-	};
+	}, [selectedAggregationFunctionValue]);
 
 	return (
 		<>
-			<SingleSelect
-				error={errors.objectRelationshipName}
-				id="objectFieldAggregationRelationship"
-				items={filteredObjectRelationships ?? []}
-				label={Liferay.Language.get('relationship')}
-				onSelectionChange={(value) => {
-					handleChangeRelatedObjectRelationship(value as string);
-				}}
-				required
-				selectedKey={selectedRelatedObjectRelationship?.name}
-			/>
+			{objectRelationships && (
+				<SingleSelect
+					error={errors.objectRelationshipName}
+					id="objectFieldAggregationRelationship"
+					items={filteredObjectRelationships ?? []}
+					label={Liferay.Language.get('relationship')}
+					onSelectionChange={(value) => {
+						handleChangeRelatedObjectRelationship(value as string);
+					}}
+					required
+					selectedKey={selectedRelatedObjectRelationship?.name}
+				/>
+			)}
 
 			<SingleSelect
 				disabled={disabled}
@@ -380,18 +393,22 @@ export function AggregationFormBase({
 				selectedKey={selectedAggregationFunctionValue}
 			/>
 
-			{selectedAggregationFunctionValue !== 'COUNT' && (
-				<SingleSelect
-					error={errors.objectFieldName}
-					id="objectFieldAggregationField"
-					items={filteredObjectRelationshipFields ?? []}
-					label={Liferay.Language.get('field')}
-					onSelectionChange={(value) => {
-						handleSummarizeFieldChange(value as string);
-					}}
-					required
-					selectedKey={selectedSummarizeFieldName}
-				/>
+			{reload && selectedAggregationFunctionValue ? (
+				<ClayLoadingIndicator displayType="secondary" size="sm" />
+			) : (
+				selectedAggregationFunctionValue !== 'COUNT' && (
+					<SingleSelect
+						error={errors.objectFieldName}
+						id="objectFieldAggregationField"
+						items={filteredObjectRelationshipFields ?? []}
+						label={Liferay.Language.get('field')}
+						onSelectionChange={(value) => {
+							handleSummarizeFieldChange(value as string);
+						}}
+						required
+						selectedKey={selectedSummarizeFieldName}
+					/>
+				)
 			)}
 		</>
 	);

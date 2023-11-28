@@ -1,0 +1,11 @@
+{
+	"description": "Widgets",
+	"description_i18n": {
+		"en_US": "Widgets"
+	},
+	"name": "Widgets",
+	"name_i18n": {
+		"en_US": "Widgets"
+	},
+	"viewableBy": "Anyone"
+}

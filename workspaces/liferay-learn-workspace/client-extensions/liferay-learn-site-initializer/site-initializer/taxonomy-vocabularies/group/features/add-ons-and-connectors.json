@@ -1,0 +1,11 @@
+{
+	"description": "Add-ons and Connectors",
+	"description_i18n": {
+		"en_US": "Add-ons and Connectors"
+	},
+	"name": "Add-ons and Connectors",
+	"name_i18n": {
+		"en_US": "Add-ons and Connectors"
+	},
+	"viewableBy": "Anyone"
+}

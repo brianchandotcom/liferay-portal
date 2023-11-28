@@ -1,0 +1,11 @@
+{
+	"description": "Blogs",
+	"description_i18n": {
+		"en_US": "Blogs"
+	},
+	"name": "Blogs",
+	"name_i18n": {
+		"en_US": "Blogs"
+	},
+	"viewableBy": "Anyone"
+}

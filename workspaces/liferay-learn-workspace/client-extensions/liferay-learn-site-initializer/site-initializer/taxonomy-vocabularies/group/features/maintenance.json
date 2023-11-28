@@ -1,0 +1,11 @@
+{
+	"description": "Maintenance",
+	"description_i18n": {
+		"en_US": "Maintenance"
+	},
+	"name": "Maintenance",
+	"name_i18n": {
+		"en_US": "Maintenance"
+	},
+	"viewableBy": "Anyone"
+}

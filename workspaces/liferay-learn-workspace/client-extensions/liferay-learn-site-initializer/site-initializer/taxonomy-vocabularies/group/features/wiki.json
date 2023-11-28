@@ -1,0 +1,11 @@
+{
+	"description": "Wiki",
+	"description_i18n": {
+		"en_US": "Wiki"
+	},
+	"name": "Wiki",
+	"name_i18n": {
+		"en_US": "Wiki"
+	},
+	"viewableBy": "Anyone"
+}

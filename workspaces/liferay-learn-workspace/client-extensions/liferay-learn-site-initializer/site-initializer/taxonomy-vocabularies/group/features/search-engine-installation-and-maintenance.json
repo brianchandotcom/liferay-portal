@@ -1,0 +1,11 @@
+{
+	"description": "Search Engine Installation and Maintenance",
+	"description_i18n": {
+		"en_US": "Search Engine Installation and Maintenance"
+	},
+	"name": "Search Engine Installation and Maintenance",
+	"name_i18n": {
+		"en_US": "Search Engine Installation and Maintenance"
+	},
+	"viewableBy": "Anyone"
+}

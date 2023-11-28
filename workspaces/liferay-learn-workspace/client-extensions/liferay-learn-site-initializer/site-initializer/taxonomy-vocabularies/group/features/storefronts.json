@@ -1,0 +1,11 @@
+{
+	"description": "Storefronts",
+	"description_i18n": {
+		"en_US": "Storefronts"
+	},
+	"name": "Storefronts",
+	"name_i18n": {
+		"en_US": "Storefronts"
+	},
+	"viewableBy": "Anyone"
+}

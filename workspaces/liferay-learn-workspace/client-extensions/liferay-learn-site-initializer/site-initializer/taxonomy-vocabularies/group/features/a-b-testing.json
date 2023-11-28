@@ -1,0 +1,11 @@
+{
+	"description": "A/B Testing",
+	"description_i18n": {
+		"en_US": "A/B Testing"
+	},
+	"name": "A/B Testing",
+	"name_i18n": {
+		"en_US": "A/B Testing"
+	},
+	"viewableBy": "Anyone"
+}

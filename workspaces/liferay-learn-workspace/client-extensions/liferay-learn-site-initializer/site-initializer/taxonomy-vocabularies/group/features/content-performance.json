@@ -1,0 +1,11 @@
+{
+	"description": "Content Performance",
+	"description_i18n": {
+		"en_US": "Content Performance"
+	},
+	"name": "Content Performance",
+	"name_i18n": {
+		"en_US": "Content Performance"
+	},
+	"viewableBy": "Anyone"
+}

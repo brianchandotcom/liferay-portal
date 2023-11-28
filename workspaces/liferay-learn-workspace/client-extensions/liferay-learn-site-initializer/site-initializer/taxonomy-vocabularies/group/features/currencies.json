@@ -1,0 +1,11 @@
+{
+	"description": "Currencies",
+	"description_i18n": {
+		"en_US": "Currencies"
+	},
+	"name": "Currencies",
+	"name_i18n": {
+		"en_US": "Currencies"
+	},
+	"viewableBy": "Anyone"
+}

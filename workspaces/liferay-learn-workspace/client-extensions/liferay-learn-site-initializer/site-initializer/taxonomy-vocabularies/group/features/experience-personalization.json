@@ -1,0 +1,11 @@
+{
+	"description": "Experience Personalization",
+	"description_i18n": {
+		"en_US": "Experience Personalization"
+	},
+	"name": "Experience Personalization",
+	"name_i18n": {
+		"en_US": "Experience Personalization"
+	},
+	"viewableBy": "Anyone"
+}

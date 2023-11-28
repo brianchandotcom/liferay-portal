@@ -1,0 +1,11 @@
+{
+	"description": "Upgrade",
+	"description_i18n": {
+		"en_US": "Upgrade"
+	},
+	"name": "Upgrade",
+	"name_i18n": {
+		"en_US": "Upgrade"
+	},
+	"viewableBy": "Anyone"
+}

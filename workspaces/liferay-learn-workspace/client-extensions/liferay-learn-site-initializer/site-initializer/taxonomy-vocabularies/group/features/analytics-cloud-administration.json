@@ -1,0 +1,11 @@
+{
+	"description": "Analytics Cloud Administration",
+	"description_i18n": {
+		"en_US": "Analytics Cloud Administration"
+	},
+	"name": "Analytics Cloud Administration",
+	"name_i18n": {
+		"en_US": "Analytics Cloud Administration"
+	},
+	"viewableBy": "Anyone"
+}

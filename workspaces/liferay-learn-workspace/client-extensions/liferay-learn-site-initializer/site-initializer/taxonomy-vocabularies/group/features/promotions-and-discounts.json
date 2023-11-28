@@ -1,0 +1,11 @@
+{
+	"description": "Promotions and Discounts",
+	"description_i18n": {
+		"en_US": "Promotions and Discounts"
+	},
+	"name": "Promotions and Discounts",
+	"name_i18n": {
+		"en_US": "Promotions and Discounts"
+	},
+	"viewableBy": "Anyone"
+}

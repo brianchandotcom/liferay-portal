@@ -1,0 +1,11 @@
+{
+	"description": "Style Books",
+	"description_i18n": {
+		"en_US": "Style Books"
+	},
+	"name": "Style Books",
+	"name_i18n": {
+		"en_US": "Style Books"
+	},
+	"viewableBy": "Anyone"
+}

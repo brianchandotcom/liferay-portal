@@ -1,0 +1,11 @@
+{
+	"description": "Fragments",
+	"description_i18n": {
+		"en_US": "Fragments"
+	},
+	"name": "Fragments",
+	"name_i18n": {
+		"en_US": "Fragments"
+	},
+	"viewableBy": "Anyone"
+}

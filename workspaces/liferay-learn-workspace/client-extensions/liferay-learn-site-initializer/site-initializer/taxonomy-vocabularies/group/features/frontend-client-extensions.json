@@ -1,0 +1,11 @@
+{
+	"description": "Frontend Client Extensions",
+	"description_i18n": {
+		"en_US": "Frontend Client Extensions"
+	},
+	"name": "Frontend Client Extensions",
+	"name_i18n": {
+		"en_US": "Frontend Client Extensions"
+	},
+	"viewableBy": "Anyone"
+}

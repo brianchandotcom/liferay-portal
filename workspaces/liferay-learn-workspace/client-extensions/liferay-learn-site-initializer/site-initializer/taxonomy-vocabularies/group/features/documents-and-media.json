@@ -1,0 +1,11 @@
+{
+	"description": "Asset Libraries",
+	"description_i18n": {
+		"en_US": "Asset Libraries"
+	},
+	"name": "Asset Libraries",
+	"name_i18n": {
+		"en_US": "Asset Libraries"
+	},
+	"viewableBy": "Anyone"
+}

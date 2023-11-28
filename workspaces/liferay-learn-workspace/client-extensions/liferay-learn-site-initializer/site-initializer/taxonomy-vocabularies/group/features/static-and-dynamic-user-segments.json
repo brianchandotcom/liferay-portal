@@ -1,0 +1,11 @@
+{
+	"description": "Static and Dynamic User Segments",
+	"description_i18n": {
+		"en_US": "Static and Dynamic User Segments"
+	},
+	"name": "Static and Dynamic User Segments",
+	"name_i18n": {
+		"en_US": "Static and Dynamic User Segments"
+	},
+	"viewableBy": "Anyone"
+}

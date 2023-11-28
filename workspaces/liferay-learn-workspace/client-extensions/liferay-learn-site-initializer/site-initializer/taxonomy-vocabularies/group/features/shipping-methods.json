@@ -1,0 +1,11 @@
+{
+	"description": "Shipping Methods",
+	"description_i18n": {
+		"en_US": "Shipping Methods"
+	},
+	"name": "Shipping Methods",
+	"name_i18n": {
+		"en_US": "Shipping Methods"
+	},
+	"viewableBy": "Anyone"
+}

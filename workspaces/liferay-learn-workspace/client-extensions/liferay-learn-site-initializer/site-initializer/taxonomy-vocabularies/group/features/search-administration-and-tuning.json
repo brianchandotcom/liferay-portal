@@ -1,0 +1,11 @@
+{
+	"description": "Search Administration and Tuning",
+	"description_i18n": {
+		"en_US": "Search Administration and Tuning"
+	},
+	"name": "Search Administration and Tuning",
+	"name_i18n": {
+		"en_US": "Search Administration and Tuning"
+	},
+	"viewableBy": "Anyone"
+}

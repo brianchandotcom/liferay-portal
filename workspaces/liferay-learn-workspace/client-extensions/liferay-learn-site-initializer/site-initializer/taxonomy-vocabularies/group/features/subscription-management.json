@@ -1,0 +1,11 @@
+{
+	"description": "Subscription Management",
+	"description_i18n": {
+		"en_US": "Subscription Management"
+	},
+	"name": "Subscription Management",
+	"name_i18n": {
+		"en_US": "Subscription Management"
+	},
+	"viewableBy": "Anyone"
+}

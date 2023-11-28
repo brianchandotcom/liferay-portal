@@ -1,0 +1,11 @@
+{
+	"description": "Email Notifications and Notification Templates",
+	"description_i18n": {
+		"en_US": "Email Notifications and Notification Templates"
+	},
+	"name": "Email Notifications and Notification Templates",
+	"name_i18n": {
+		"en_US": "Email Notifications and Notification Templates"
+	},
+	"viewableBy": "Anyone"
+}

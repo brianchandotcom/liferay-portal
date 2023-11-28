@@ -1,0 +1,11 @@
+{
+	"description": "Localization",
+	"description_i18n": {
+		"en_US": "Localization"
+	},
+	"name": "Localization",
+	"name_i18n": {
+		"en_US": "Localization"
+	},
+	"viewableBy": "Anyone"
+}

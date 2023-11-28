@@ -1,0 +1,11 @@
+{
+	"description": "Taxes",
+	"description_i18n": {
+		"en_US": "Taxes"
+	},
+	"name": "Taxes",
+	"name_i18n": {
+		"en_US": "Taxes"
+	},
+	"viewableBy": "Anyone"
+}

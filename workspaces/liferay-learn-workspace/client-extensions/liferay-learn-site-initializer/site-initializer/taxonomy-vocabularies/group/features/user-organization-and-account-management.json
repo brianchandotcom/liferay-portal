@@ -1,0 +1,11 @@
+{
+	"description": "User, Organization, and Account Management",
+	"description_i18n": {
+		"en_US": "User, Organization, and Account Management"
+	},
+	"name": "User, Organization, and Account Management",
+	"name_i18n": {
+		"en_US": "User, Organization, and Account Management"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,11 @@
+{
+	"description": "DXP - Self Hosted",
+	"description_i18n": {
+		"en_US": "DXP - Self Hosted"
+	},
+	"name": "DXP - Self Hosted",
+	"name_i18n": {
+		"en_US": "DXP - Self Hosted"
+	},
+	"viewableBy": "Anyone"
+}

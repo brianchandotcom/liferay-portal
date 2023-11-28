@@ -1,0 +1,11 @@
+{
+	"description": "Site Analytics",
+	"description_i18n": {
+		"en_US": "Site Analytics"
+	},
+	"name": "Site Analytics",
+	"name_i18n": {
+		"en_US": "Site Analytics"
+	},
+	"viewableBy": "Anyone"
+}

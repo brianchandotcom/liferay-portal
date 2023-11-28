@@ -1,0 +1,11 @@
+{
+	"description": "Data Integration",
+	"description_i18n": {
+		"en_US": "Data Integration"
+	},
+	"name": "Data Integration",
+	"name_i18n": {
+		"en_US": "Data Integration"
+	},
+	"viewableBy": "Anyone"
+}

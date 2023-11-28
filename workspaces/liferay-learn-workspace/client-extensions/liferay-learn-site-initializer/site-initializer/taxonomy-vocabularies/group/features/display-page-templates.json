@@ -1,0 +1,11 @@
+{
+	"description": "Display Page Templates",
+	"description_i18n": {
+		"en_US": "Display Page Templates"
+	},
+	"name": "Display Page Templates",
+	"name_i18n": {
+		"en_US": "Display Page Templates"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,11 @@
+{
+	"description": "Content Configurations",
+	"description_i18n": {
+		"en_US": "Content Configurations"
+	},
+	"name": "Content Configurations",
+	"name_i18n": {
+		"en_US": "Content Configurations"
+	},
+	"viewableBy": "Anyone"
+}

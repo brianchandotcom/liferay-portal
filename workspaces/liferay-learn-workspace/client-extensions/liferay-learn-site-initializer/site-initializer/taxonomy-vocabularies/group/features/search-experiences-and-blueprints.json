@@ -1,0 +1,11 @@
+{
+	"description": "Search Experiences and Blueprints",
+	"description_i18n": {
+		"en_US": "Search Experiences and Blueprints"
+	},
+	"name": "Search Experiences and Blueprints",
+	"name_i18n": {
+		"en_US": "Search Experiences and Blueprints"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,11 @@
+{
+	"description": "Publications",
+	"description_i18n": {
+		"en_US": "Publications"
+	},
+	"name": "Publications",
+	"name_i18n": {
+		"en_US": "Publications"
+	},
+	"viewableBy": "Anyone"
+}

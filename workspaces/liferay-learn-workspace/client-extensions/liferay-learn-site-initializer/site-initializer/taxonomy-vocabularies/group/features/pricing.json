@@ -1,0 +1,11 @@
+{
+	"description": "Pricing",
+	"description_i18n": {
+		"en_US": "Pricing"
+	},
+	"name": "Pricing",
+	"name_i18n": {
+		"en_US": "Pricing"
+	},
+	"viewableBy": "Anyone"
+}

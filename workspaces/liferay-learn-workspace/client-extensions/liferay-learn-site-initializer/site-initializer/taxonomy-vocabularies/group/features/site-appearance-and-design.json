@@ -1,0 +1,11 @@
+{
+	"description": "Site Appearance and Design",
+	"description_i18n": {
+		"en_US": "Site Appearance and Design"
+	},
+	"name": "Site Appearance and Design",
+	"name_i18n": {
+		"en_US": "Site Appearance and Design"
+	},
+	"viewableBy": "Anyone"
+}

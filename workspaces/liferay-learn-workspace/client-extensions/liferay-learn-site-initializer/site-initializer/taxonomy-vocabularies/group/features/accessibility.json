@@ -1,0 +1,11 @@
+{
+	"description": "Accessibility",
+	"description_i18n": {
+		"en_US": "Accessibility"
+	},
+	"name": "Accessibility",
+	"name_i18n": {
+		"en_US": "Accessibility"
+	},
+	"viewableBy": "Anyone"
+}

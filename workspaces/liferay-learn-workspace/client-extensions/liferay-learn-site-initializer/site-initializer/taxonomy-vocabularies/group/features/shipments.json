@@ -1,0 +1,11 @@
+{
+	"description": "Shipments",
+	"description_i18n": {
+		"en_US": "Shipments"
+	},
+	"name": "Shipments",
+	"name_i18n": {
+		"en_US": "Shipments"
+	},
+	"viewableBy": "Anyone"
+}

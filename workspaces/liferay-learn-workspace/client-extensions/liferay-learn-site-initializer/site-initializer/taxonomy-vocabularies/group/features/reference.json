@@ -1,0 +1,11 @@
+{
+	"description": "Reference",
+	"description_i18n": {
+		"en_US": "Reference"
+	},
+	"name": "Reference",
+	"name_i18n": {
+		"en_US": "Reference"
+	},
+	"viewableBy": "Anyone"
+}

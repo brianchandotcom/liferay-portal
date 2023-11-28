@@ -1,0 +1,11 @@
+{
+	"description": "Staging",
+	"description_i18n": {
+		"en_US": "Staging"
+	},
+	"name": "Staging",
+	"name_i18n": {
+		"en_US": "Staging"
+	},
+	"viewableBy": "Anyone"
+}

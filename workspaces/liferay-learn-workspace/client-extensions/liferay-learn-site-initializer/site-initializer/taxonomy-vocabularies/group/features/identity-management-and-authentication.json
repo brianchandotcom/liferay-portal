@@ -1,0 +1,11 @@
+{
+	"description": "Identity Management and Authentication",
+	"description_i18n": {
+		"en_US": "Identity Management and Authentication"
+	},
+	"name": "Identity Management and Authentication",
+	"name_i18n": {
+		"en_US": "Identity Management and Authentication"
+	},
+	"viewableBy": "Anyone"
+}

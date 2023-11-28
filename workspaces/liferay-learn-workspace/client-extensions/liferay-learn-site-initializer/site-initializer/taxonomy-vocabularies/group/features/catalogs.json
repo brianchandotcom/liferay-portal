@@ -1,0 +1,11 @@
+{
+	"description": "Catalogs",
+	"description_i18n": {
+		"en_US": "Catalogs"
+	},
+	"name": "Catalogs",
+	"name_i18n": {
+		"en_US": "Catalogs"
+	},
+	"viewableBy": "Anyone"
+}

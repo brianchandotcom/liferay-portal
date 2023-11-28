@@ -1,0 +1,11 @@
+{
+	"description": "Categories and Tags",
+	"description_i18n": {
+		"en_US": "Categories and Tags"
+	},
+	"name": "Categories and Tags",
+	"name_i18n": {
+		"en_US": "Categories and Tags"
+	},
+	"viewableBy": "Anyone"
+}

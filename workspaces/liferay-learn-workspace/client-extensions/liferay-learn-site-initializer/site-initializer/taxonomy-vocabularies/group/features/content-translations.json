@@ -1,0 +1,11 @@
+{
+	"description": "Content Translations",
+	"description_i18n": {
+		"en_US": "Content Translations"
+	},
+	"name": "Content Translations",
+	"name_i18n": {
+		"en_US": "Content Translations"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,11 @@
+{
+	"description": "Payment",
+	"description_i18n": {
+		"en_US": "Payment"
+	},
+	"name": "Payment",
+	"name_i18n": {
+		"en_US": "Payment"
+	},
+	"viewableBy": "Anyone"
+}

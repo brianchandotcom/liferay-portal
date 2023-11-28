@@ -1,0 +1,11 @@
+{
+	"description": "Information Templates",
+	"description_i18n": {
+		"en_US": "Information Templates"
+	},
+	"name": "Information Templates",
+	"name_i18n": {
+		"en_US": "Information Templates"
+	},
+	"viewableBy": "Anyone"
+}

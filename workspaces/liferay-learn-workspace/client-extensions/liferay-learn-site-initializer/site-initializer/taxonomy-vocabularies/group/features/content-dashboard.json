@@ -1,0 +1,11 @@
+{
+	"description": "Content Dashboard",
+	"description_i18n": {
+		"en_US": "Content Dashboard"
+	},
+	"name": "Content Dashboard",
+	"name_i18n": {
+		"en_US": "Content Dashboard"
+	},
+	"viewableBy": "Anyone"
+}

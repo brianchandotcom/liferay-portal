@@ -1,0 +1,11 @@
+{
+	"description": "SEO",
+	"description_i18n": {
+		"en_US": "SEO"
+	},
+	"name": "SEO",
+	"name_i18n": {
+		"en_US": "SEO"
+	},
+	"viewableBy": "Anyone"
+}

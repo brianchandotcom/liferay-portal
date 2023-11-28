@@ -1,0 +1,11 @@
+{
+	"description": "Publishing Tools",
+	"description_i18n": {
+		"en_US": "Publishing Tools"
+	},
+	"name": "Publishing Tools",
+	"name_i18n": {
+		"en_US": "Publishing Tools"
+	},
+	"viewableBy": "Anyone"
+}

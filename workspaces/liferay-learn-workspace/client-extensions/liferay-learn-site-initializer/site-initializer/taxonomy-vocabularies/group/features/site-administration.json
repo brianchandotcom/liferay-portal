@@ -1,0 +1,11 @@
+{
+	"description": "Site Administration",
+	"description_i18n": {
+		"en_US": "Site Administration"
+	},
+	"name": "Site Administration",
+	"name_i18n": {
+		"en_US": "Site Administration"
+	},
+	"viewableBy": "Anyone"
+}

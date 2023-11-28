@@ -1,0 +1,11 @@
+{
+	"description": "Workflow",
+	"description_i18n": {
+		"en_US": "Workflow"
+	},
+	"name": "Workflow",
+	"name_i18n": {
+		"en_US": "Workflow"
+	},
+	"viewableBy": "Anyone"
+}

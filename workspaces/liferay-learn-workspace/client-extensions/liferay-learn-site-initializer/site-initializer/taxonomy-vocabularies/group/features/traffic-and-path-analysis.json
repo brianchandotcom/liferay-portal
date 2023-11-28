@@ -1,0 +1,11 @@
+{
+	"description": "Traffic and Path Analysis",
+	"description_i18n": {
+		"en_US": "Traffic and Path Analysis"
+	},
+	"name": "Traffic and Path Analysis",
+	"name_i18n": {
+		"en_US": "Traffic and Path Analysis"
+	},
+	"viewableBy": "Anyone"
+}

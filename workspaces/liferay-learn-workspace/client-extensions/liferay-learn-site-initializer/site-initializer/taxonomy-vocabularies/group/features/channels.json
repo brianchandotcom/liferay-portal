@@ -1,0 +1,11 @@
+{
+	"description": "Channels",
+	"description_i18n": {
+		"en_US": "Channels"
+	},
+	"name": "Channels",
+	"name_i18n": {
+		"en_US": "Channels"
+	},
+	"viewableBy": "Anyone"
+}

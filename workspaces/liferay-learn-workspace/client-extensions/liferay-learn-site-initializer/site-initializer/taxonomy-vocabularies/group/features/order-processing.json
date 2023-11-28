@@ -1,0 +1,11 @@
+{
+	"description": "Order Processing",
+	"description_i18n": {
+		"en_US": "Order Processing"
+	},
+	"name": "Order Processing",
+	"name_i18n": {
+		"en_US": "Order Processing"
+	},
+	"viewableBy": "Anyone"
+}

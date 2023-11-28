@@ -1,0 +1,11 @@
+{
+	"description": "User Interests and Content Recommendations",
+	"description_i18n": {
+		"en_US": "User Interests and Content Recommendations"
+	},
+	"name": "User Interests and Content Recommendations",
+	"name_i18n": {
+		"en_US": "User Interests and Content Recommendations"
+	},
+	"viewableBy": "Anyone"
+}

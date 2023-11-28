@@ -1,0 +1,11 @@
+{
+	"description": "Personal Data Management",
+	"description_i18n": {
+		"en_US": "Personal Data Management"
+	},
+	"name": "Personal Data Management",
+	"name_i18n": {
+		"en_US": "Personal Data Management"
+	},
+	"viewableBy": "Anyone"
+}

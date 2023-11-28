@@ -1,0 +1,11 @@
+{
+	"description": "Widget Pages",
+	"description_i18n": {
+		"en_US": "Widget Pages"
+	},
+	"name": "Widget Pages",
+	"name_i18n": {
+		"en_US": "Widget Pages"
+	},
+	"viewableBy": "Anyone"
+}

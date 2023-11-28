@@ -1,0 +1,11 @@
+{
+	"description": "Master Page Templates",
+	"description_i18n": {
+		"en_US": "Master Page Templates"
+	},
+	"name": "Master Page Templates",
+	"name_i18n": {
+		"en_US": "Master Page Templates"
+	},
+	"viewableBy": "Anyone"
+}

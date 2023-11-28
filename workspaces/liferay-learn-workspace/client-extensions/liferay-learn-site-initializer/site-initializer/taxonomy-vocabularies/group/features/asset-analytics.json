@@ -1,0 +1,11 @@
+{
+	"description": "Asset Analytics",
+	"description_i18n": {
+		"en_US": "Asset Analytics"
+	},
+	"name": "Asset Analytics",
+	"name_i18n": {
+		"en_US": "Asset Analytics"
+	},
+	"viewableBy": "Anyone"
+}

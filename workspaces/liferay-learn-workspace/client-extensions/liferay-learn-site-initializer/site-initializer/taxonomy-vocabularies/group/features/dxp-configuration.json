@@ -1,0 +1,11 @@
+{
+	"description": "DXP Configuration",
+	"description_i18n": {
+		"en_US": "DXP Configuration"
+	},
+	"name": "DXP Configuration",
+	"name_i18n": {
+		"en_US": "DXP Configuration"
+	},
+	"viewableBy": "Anyone"
+}

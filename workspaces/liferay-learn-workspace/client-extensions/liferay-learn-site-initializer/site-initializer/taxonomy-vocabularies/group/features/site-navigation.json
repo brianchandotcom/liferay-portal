@@ -1,0 +1,11 @@
+{
+	"description": "Site Navigation",
+	"description_i18n": {
+		"en_US": "Site Navigation"
+	},
+	"name": "Site Navigation",
+	"name_i18n": {
+		"en_US": "Site Navigation"
+	},
+	"viewableBy": "Anyone"
+}

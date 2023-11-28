@@ -1,0 +1,11 @@
+{
+	"description": "Objects",
+	"description_i18n": {
+		"en_US": "Objects"
+	},
+	"name": "Objects",
+	"name_i18n": {
+		"en_US": "Objects"
+	},
+	"viewableBy": "Anyone"
+}

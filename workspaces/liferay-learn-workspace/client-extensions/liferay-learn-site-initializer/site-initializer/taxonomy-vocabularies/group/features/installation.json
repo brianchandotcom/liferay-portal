@@ -1,0 +1,11 @@
+{
+	"description": "Installation",
+	"description_i18n": {
+		"en_US": "Installation"
+	},
+	"name": "Installation",
+	"name_i18n": {
+		"en_US": "Installation"
+	},
+	"viewableBy": "Anyone"
+}

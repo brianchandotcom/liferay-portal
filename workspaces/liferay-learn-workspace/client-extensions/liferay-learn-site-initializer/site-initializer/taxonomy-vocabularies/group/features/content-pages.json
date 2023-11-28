@@ -1,0 +1,11 @@
+{
+	"description": "Content Pages",
+	"description_i18n": {
+		"en_US": "Content Pages"
+	},
+	"name": "Content Pages",
+	"name_i18n": {
+		"en_US": "Content Pages"
+	},
+	"viewableBy": "Anyone"
+}

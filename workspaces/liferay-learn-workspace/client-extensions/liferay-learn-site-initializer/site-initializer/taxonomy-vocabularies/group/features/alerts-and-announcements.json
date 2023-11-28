@@ -1,0 +1,11 @@
+{
+	"description": "Alerts and Announcements",
+	"description_i18n": {
+		"en_US": "Alerts and Announcements"
+	},
+	"name": "Alerts and Announcements",
+	"name_i18n": {
+		"en_US": "Alerts and Announcements"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,11 @@
+{
+	"description": "Liferay Enterprise Search",
+	"description_i18n": {
+		"en_US": "Liferay Enterprise Search"
+	},
+	"name": "Liferay Enterprise Search",
+	"name_i18n": {
+		"en_US": "Liferay Enterprise Search"
+	},
+	"viewableBy": "Anyone"
+}

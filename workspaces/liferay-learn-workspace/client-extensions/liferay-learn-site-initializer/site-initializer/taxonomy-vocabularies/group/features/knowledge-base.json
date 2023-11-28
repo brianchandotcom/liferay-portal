@@ -1,0 +1,11 @@
+{
+	"description": "Knowledge Base",
+	"description_i18n": {
+		"en_US": "Knowledge Base"
+	},
+	"name": "Knowledge Base",
+	"name_i18n": {
+		"en_US": "Knowledge Base"
+	},
+	"viewableBy": "Anyone"
+}

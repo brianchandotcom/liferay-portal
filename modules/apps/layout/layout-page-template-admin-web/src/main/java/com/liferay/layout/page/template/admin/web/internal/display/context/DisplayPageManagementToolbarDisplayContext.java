@@ -268,6 +268,8 @@ public class DisplayPageManagementToolbarDisplayContext
 			"/layout_page_template_admin/delete_layout_page_template_entry"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
+		).setTabs1(
+			"display-page-templates"
 		).buildString();
 	}
 

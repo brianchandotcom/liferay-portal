@@ -10,6 +10,7 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -65,6 +66,9 @@ public class KBArticleModelResourcePermissionWrapper
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
+	@Reference
+	private KBFolderLocalService _kbFolderLocalService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.knowledge.base.model.KBFolder)"
 	)
@@ -103,18 +107,23 @@ public class KBArticleModelResourcePermissionWrapper
 				KBFolderConstants.getClassName());
 
 			if (parentResourceClassNameId == kbFolderClassNameId) {
-				if (!_kbFolderModelResourcePermission.contains(
-						permissionChecker, parentResourcePrimKey, actionId)) {
+				KBFolder kbFolder = _kbFolderLocalService.fetchKBFolder(
+					parentResourcePrimKey);
+
+				if ((kbFolder != null) &&
+					!_kbFolderModelResourcePermission.contains(
+						permissionChecker, kbFolder, actionId)) {
 
 					return false;
 				}
 			}
 			else {
 				KBArticle parentKBArticle =
-					_kbArticleLocalService.getLatestKBArticle(
+					_kbArticleLocalService.fetchLatestKBArticle(
 						parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-				if (!_kbArticleModelResourcePermission.contains(
+				if ((parentKBArticle != null) &&
+					!_kbArticleModelResourcePermission.contains(
 						permissionChecker, parentKBArticle, actionId)) {
 
 					return false;

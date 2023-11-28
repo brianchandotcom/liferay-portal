@@ -3479,6 +3479,67 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 Confirm that the mandatory fields cannot be empty after the edition"
+	@priority = 4
+	test MandatoryFieldsCannotBeEmptyInModalActionOnItemAction {
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates a modal item action and clicks on save button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				icon = "pencil",
+				title = "Edit item Action",
+				type = "Modal",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example",
+				variant = "Small");
+		}
+
+		task ("When the user leaves mandatory fields empty") {
+			DataSetAdmin.editActions(
+				newActionName = "",
+				newIcon = "pencil",
+				newTitle = "",
+				newVariant = "Small",
+				oldActionName = "Edit");
+		}
+
+		task ("Then an error message is displayed") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "This field is required.");
+		}
+
+		task ("And the changes cannot be saved") {
+			AssertVisible(
+				key_title = "Edit",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
 
 	@description = "LPS-192149. Verify if the URL field is mandatory"
 	@priority = 4

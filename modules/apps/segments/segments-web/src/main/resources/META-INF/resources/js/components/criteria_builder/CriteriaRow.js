@@ -11,11 +11,7 @@ import React, {useCallback, useContext, useEffect} from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
 import ThemeContext from '../../ThemeContext.es';
-import {
-	PROPERTY_TYPES,
-	SUPPORTED_OPERATORS,
-	SUPPORTED_PROPERTY_TYPES,
-} from '../../utils/constants';
+import {PROPERTY_TYPES, SUPPORTED_OPERATORS} from '../../utils/constants';
 import {DragTypes} from '../../utils/dragTypes';
 import {
 	createNewGroup,
@@ -89,11 +85,7 @@ function drop(props, monitor) {
 
 	const droppedCriterionValue = value || defaultValue;
 
-	const operators = getSupportedOperatorsFromType(
-		SUPPORTED_OPERATORS,
-		SUPPORTED_PROPERTY_TYPES,
-		type
-	);
+	const operators = getSupportedOperatorsFromType(type);
 
 	const newCriterion = {
 		displayValue,

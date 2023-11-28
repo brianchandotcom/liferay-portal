@@ -9,11 +9,7 @@ import {PropTypes} from 'prop-types';
 import React, {Fragment} from 'react';
 
 import useDragSource from '../../hooks/useDragSource';
-import {
-	CONJUNCTIONS,
-	SUPPORTED_OPERATORS,
-	SUPPORTED_PROPERTY_TYPES,
-} from '../../utils/constants';
+import {CONJUNCTIONS} from '../../utils/constants';
 import {DragTypes} from '../../utils/dragTypes';
 import {
 	generateGroupId,
@@ -80,11 +76,7 @@ export default function CriteriaGroup({
 
 		const criterionValue = value || defaultValue;
 
-		const operators = getSupportedOperatorsFromType(
-			SUPPORTED_OPERATORS,
-			SUPPORTED_PROPERTY_TYPES,
-			type
-		);
+		const operators = getSupportedOperatorsFromType(type);
 
 		const newCriterion = {
 			operatorName: operatorName ? operatorName : operators[0].name,

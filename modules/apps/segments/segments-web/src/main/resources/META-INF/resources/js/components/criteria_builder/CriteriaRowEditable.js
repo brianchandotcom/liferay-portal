@@ -10,11 +10,7 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 
 import useDragSource from '../../hooks/useDragSource';
-import {
-	PROPERTY_TYPES,
-	SUPPORTED_OPERATORS,
-	SUPPORTED_PROPERTY_TYPES,
-} from '../../utils/constants';
+import {PROPERTY_TYPES} from '../../utils/constants';
 import {DragTypes} from '../../utils/dragTypes';
 import {TYPE_ICONS} from '../../utils/typeIcons';
 import {createNewGroup, getSupportedOperatorsFromType} from '../../utils/utils';
@@ -108,8 +104,6 @@ export default function CriteriaRowEditable({
 		const propertyType = selectedProperty ? selectedProperty.type : '';
 
 		const filteredSupportedOperators = getSupportedOperatorsFromType(
-			SUPPORTED_OPERATORS,
-			SUPPORTED_PROPERTY_TYPES,
 			propertyType
 		);
 

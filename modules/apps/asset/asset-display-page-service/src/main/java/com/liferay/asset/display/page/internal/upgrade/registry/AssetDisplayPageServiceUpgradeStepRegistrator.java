@@ -10,6 +10,7 @@ import com.liferay.asset.display.page.internal.upgrade.v2_1_0.AssetDisplayLayout
 import com.liferay.asset.display.page.internal.upgrade.v2_1_1.AssetDisplayPrivateLayoutUpgradeProcess;
 import com.liferay.asset.display.page.internal.upgrade.v2_2_1.AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess;
 import com.liferay.asset.display.page.internal.upgrade.v3_0_0.UpgradeAssetDisplayPageEntry;
+import com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryModelImpl;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -90,6 +92,11 @@ public class AssetDisplayPageServiceUpgradeStepRegistrator
 			new com.liferay.asset.display.page.internal.upgrade.v3_1_0.
 				AssetDisplayLayoutUpgradeProcess(
 					_layoutPageTemplateEntryLocalService));
+
+		registry.register(
+			"3.1.0", "4.0.0",
+			UpgradeProcessFactory.dropColumns(
+				AssetDisplayPageEntryModelImpl.TABLE_NAME, "plid"));
 	}
 
 	@Reference

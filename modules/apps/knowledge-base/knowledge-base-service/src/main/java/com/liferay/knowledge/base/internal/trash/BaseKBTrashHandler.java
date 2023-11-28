@@ -8,6 +8,7 @@ package com.liferay.knowledge.base.internal.trash;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -115,6 +116,16 @@ public abstract class BaseKBTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public int getTrashContainedModelsCount(long classPK)
+		throws PortalException {
+
+		KBFolder kbFolder = kbFolderLocalService.getKBFolder(classPK);
+
+		return kbArticleLocalService.getKBArticlesCount(
+			kbFolder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
+	}
+
+	@Override
 	public String getTrashContainerModelName() {
 		return "folders";
 	}
@@ -164,6 +175,9 @@ public abstract class BaseKBTrashHandler extends BaseTrashHandler {
 	}
 
 	protected abstract long getGroupId(long classPK) throws PortalException;
+
+	@Reference
+	protected KBArticleLocalService kbArticleLocalService;
 
 	@Reference
 	protected KBFolderLocalService kbFolderLocalService;

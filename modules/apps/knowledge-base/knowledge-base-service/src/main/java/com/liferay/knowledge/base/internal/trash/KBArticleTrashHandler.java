@@ -9,7 +9,6 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -41,8 +40,8 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		_kbArticleLocalService.deleteKBArticle(
-			_kbArticleLocalService.getLatestKBArticle(classPK));
+		kbArticleLocalService.deleteKBArticle(
+			kbArticleLocalService.getLatestKBArticle(classPK));
 	}
 
 	@Override
@@ -54,8 +53,7 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 	public ContainerModel getParentContainerModel(long classPK)
 		throws PortalException {
 
-		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
-			classPK);
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(classPK);
 
 		long parentKBFolderId = kbArticle.getKbFolderId();
 
@@ -80,8 +78,7 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
-			classPK);
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(classPK);
 
 		if (!kbArticle.hasParentKBArticle()) {
 			return KnowledgeBaseUtil.getKBFolderControlPanelLink(
@@ -102,7 +99,7 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 
 	@Override
 	public TrashedModel getTrashedModel(long classPK) {
-		return _kbArticleLocalService.fetchLatestKBArticle(
+		return kbArticleLocalService.fetchLatestKBArticle(
 			classPK, WorkflowConstants.STATUS_ANY);
 	}
 
@@ -124,8 +121,7 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 
 	@Override
 	public boolean isMovable(long classPK) throws PortalException {
-		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
-			classPK);
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(classPK);
 
 		if (kbArticle.getKbFolderId() > 0) {
 			KBFolder parentKBFolder = kbFolderLocalService.fetchKBFolder(
@@ -141,14 +137,13 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 
 	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
-		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
-			classPK);
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(classPK);
 
 		if (kbArticle.getKbFolderId() > 0) {
-			KBFolder bookmarksFolder = kbFolderLocalService.fetchKBFolder(
+			KBFolder kbFolder = kbFolderLocalService.fetchKBFolder(
 				kbArticle.getKbFolderId());
 
-			if (bookmarksFolder == null) {
+			if (kbFolder == null) {
 				return false;
 			}
 		}
@@ -170,10 +165,9 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
-			classPK);
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(classPK);
 
-		_kbArticleLocalService.moveKBArticle(
+		kbArticleLocalService.moveKBArticle(
 			userId, kbArticle.getResourcePrimKey(),
 			_classNameLocalService.getClassNameId(
 				KBFolderConstants.getClassName()),
@@ -186,7 +180,7 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_kbArticleLocalService.moveKBArticleFromTrash(
+		kbArticleLocalService.moveKBArticleFromTrash(
 			userId, classPK,
 			_classNameLocalService.getClassNameId(
 				KBFolderConstants.getClassName()),
@@ -197,13 +191,12 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		_kbArticleLocalService.restoreKBArticleFromTrash(userId, classPK);
+		kbArticleLocalService.restoreKBArticleFromTrash(userId, classPK);
 	}
 
 	@Override
 	protected long getGroupId(long classPK) throws PortalException {
-		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
-			classPK);
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(classPK);
 
 		return kbArticle.getGroupId();
 	}
@@ -215,14 +208,11 @@ public class KBArticleTrashHandler extends BaseKBTrashHandler {
 
 		return _kbArticleModelResourcePermission.contains(
 			permissionChecker,
-			_kbArticleLocalService.getLatestKBArticle(classPK), actionId);
+			kbArticleLocalService.getLatestKBArticle(classPK), actionId);
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private KBArticleLocalService _kbArticleLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)"

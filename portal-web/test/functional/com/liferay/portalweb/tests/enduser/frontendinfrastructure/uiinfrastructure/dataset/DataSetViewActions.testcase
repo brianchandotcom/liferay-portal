@@ -1459,6 +1459,61 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 Confirm that is possible to create a Modal Actions on the Item Action"
+	@priority = 5
+	test CanCreateModalItemAction {
+		property portal.acceptance = "true";
+
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates a modal item action and clicks on save button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				icon = "pencil",
+				title = "Edit item Action",
+				type = "Modal",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example",
+				variant = "Full Screen");
+		}
+
+		task ("Then the modal item action is created and a successful toast message is displayed") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
+
 	@description = "LPS-191485. Verify if is possible to delete a Async Item Action created"
 	@priority = 5
 	test CanDeleteAAsyncItemAction {

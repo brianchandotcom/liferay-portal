@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
+import {useMovementTarget} from '../../contexts/KeyboardMovementContext';
 import {DragTypes} from '../../utils/dragTypes';
 import EmptyPlaceholder from './EmptyPlaceholder.es';
 
@@ -39,17 +40,22 @@ function drop(props, monitor) {
 }
 
 function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
-	const displayEmptyDropZone = canDrop || !emptyContributors;
+	const movementTarget = useMovementTarget();
+
+	const isKeyboardTarget = movementTarget?.groupId === 'root';
+
+	const displayEmptyDropZone =
+		canDrop || !emptyContributors || isKeyboardTarget;
 
 	return connectDropTarget(
 		displayEmptyDropZone ? (
 			<div
 				className={classNames('empty-drop-zone p-6 rounded', {
-					'border-primary': canDrop || hover,
+					'border-primary': canDrop || hover || isKeyboardTarget,
 					'border-secondary-light': !canDrop,
 					'empty-drop-zone--dashed':
 						!emptyContributors || (canDrop && !hover),
-					'empty-drop-zone--target': hover,
+					'empty-drop-zone--target': hover || isKeyboardTarget,
 				})}
 			/>
 		) : (

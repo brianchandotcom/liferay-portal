@@ -7,6 +7,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
+import {
+	POSITIONS,
+	useMovementSource,
+	useMovementTarget,
+} from '../../contexts/KeyboardMovementContext';
 import {DragTypes} from '../../utils/dragTypes';
 
 const {CRITERIA_GROUP, CRITERIA_ROW, PROPERTY} = DragTypes;
@@ -79,14 +84,57 @@ function drop(props, monitor) {
 	}
 }
 
-function DropZone({before, canDrop, connectDropTarget, hover}) {
+function isKeyboardTarget(before, groupId, index, propertyKey, source, target) {
+	if (!source || !target) {
+		return false;
+	}
+
+	if (
+		source.propertyKey !== propertyKey ||
+		target.groupId !== groupId ||
+		target.index !== index
+	) {
+		return false;
+	}
+
+	if (
+		(before && target.position === POSITIONS.top) ||
+		(!before && target.position === POSITIONS.bottom)
+	) {
+		return true;
+	}
+
+	return false;
+}
+
+function DropZone({
+	before,
+	canDrop,
+	connectDropTarget,
+	groupId,
+	hover,
+	index,
+	propertyKey,
+}) {
+	const movementSource = useMovementSource();
+	const movementTarget = useMovementTarget();
+
+	const isTarget = isKeyboardTarget(
+		before,
+		groupId,
+		index,
+		propertyKey,
+		movementSource,
+		movementTarget
+	);
+
 	return (
 		<div className="drop-zone-root position-relative">
 			{connectDropTarget(
 				<div className="drop-zone-target">
-					{canDrop && hover && (
+					{(canDrop && hover) || isTarget ? (
 						<div className="drop-zone-indicator w-100" />
-					)}
+					) : null}
 				</div>
 			)}
 		</div>

@@ -12,6 +12,7 @@
 <liferay-util:dynamic-include key="/html/common/themes/top_head.jsp#pre" />
 
 <link href="<%= themeDisplay.getFaviconURL() %>" rel="apple-touch-icon" />
+
 <link href="<%= themeDisplay.getFaviconURL() %>" rel="icon" />
 
 <%-- Portal CSS --%>

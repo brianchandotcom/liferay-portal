@@ -44,9 +44,9 @@ portletDisplay.setURLBackTitle("web-content");
 		<clay:col
 			lg="9"
 		>
-			<h1>
+			<h2>
 				<%= journalConfigurationDisplayContext.getTitle() %>
-			</h1>
+			</h2>
 
 			<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 				<portlet:param name="navigation" value="<%= journalConfigurationDisplayContext.getNavigation() %>" />
@@ -59,7 +59,7 @@ portletDisplay.setURLBackTitle("web-content");
 					cssClass="c-mb-4 c-mt-4 c-p-0"
 					size="full"
 				>
-					<h2 class="c-pl-4 c-pr-4 c-pt-4 sheet-title">
+					<h3 class="c-pl-4 c-pr-4 c-pt-4 sheet-title">
 						<clay:content-row
 							verticalAlign="center"
 						>
@@ -67,7 +67,7 @@ portletDisplay.setURLBackTitle("web-content");
 								<%= journalConfigurationDisplayContext.getSubtitle() %>
 							</clay:content-col>
 						</clay:content-row>
-					</h2>
+					</h3>
 
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="redirect" type="hidden" value="<%= journalConfigurationDisplayContext.getRedirect() %>" />

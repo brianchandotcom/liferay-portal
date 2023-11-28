@@ -56,11 +56,11 @@ public class GitHubClient {
 
 	public GitHubPullRequest getGitHubPullRequest(GitHubIssue gitHubIssue) {
 		return new GitHubPullRequest(
-			new JSONObject(_requestGet(gitHubIssue.getPullRequestApiURL())));
+			new JSONObject(_requestGet(gitHubIssue.getPullRequestAPIURL())));
 	}
 
 	public GitHubRef getGitHubRef(URL gitHubRefURL) {
-		URL gitHubRefApiURL = StringUtil.toURL(
+		URL gitHubRefAPIURL = StringUtil.toURL(
 			StringUtil.combine(
 				"https://api.github.com/repos/",
 				GitHubRef.getUserName(gitHubRefURL), "/",
@@ -68,7 +68,7 @@ public class GitHubClient {
 				GitHubRef.getRefName(gitHubRefURL)));
 
 		return new GitHubRef(
-			gitHubRefURL, new JSONObject(_requestGet(gitHubRefApiURL)));
+			gitHubRefURL, new JSONObject(_requestGet(gitHubRefAPIURL)));
 	}
 
 	private String _getAuthorization() {

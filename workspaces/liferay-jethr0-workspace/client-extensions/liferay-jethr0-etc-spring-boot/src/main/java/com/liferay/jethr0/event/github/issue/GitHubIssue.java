@@ -28,7 +28,7 @@ public class GitHubIssue {
 		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 
-	public URL getPullRequestApiURL() {
+	public URL getPullRequestAPIURL() {
 		JSONObject jsonObject = _jsonObject.getJSONObject("pull_request");
 
 		return StringUtil.toURL(jsonObject.getString("url"));

@@ -536,31 +536,22 @@ public class PayPalCommercePaymentIntegration
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
 		purchaseUnitRequest.amountWithBreakdown(
-			new AmountWithBreakdown() {
-				{
-					amountBreakdown(
-						new AmountBreakdown() {
-							{
-								itemTotal(
-									_toMoney(
-										commerceCurrency,
-										commerceOrder.getSubtotal()));
-								shipping(
-									_toMoney(
-										commerceCurrency,
-										commerceOrder.getShippingAmount()));
-								taxTotal(
-									_toMoney(
-										commerceCurrency,
-										commerceOrder.getTaxAmount()));
-							}
-						});
-					currencyCode(commerceCurrency.getCode());
-					value(
-						_toScaledString(
-							commerceCurrency, commerceOrder.getTotal()));
-				}
-			});
+			new AmountWithBreakdown(
+			).amountBreakdown(
+				new AmountBreakdown(
+				).itemTotal(
+					_toMoney(commerceCurrency, commerceOrder.getSubtotal())
+				).shipping(
+					_toMoney(
+						commerceCurrency, commerceOrder.getShippingAmount())
+				).taxTotal(
+					_toMoney(commerceCurrency, commerceOrder.getTaxAmount())
+				)
+			).currencyCode(
+				commerceCurrency.getCode()
+			).value(
+				_toScaledString(commerceCurrency, commerceOrder.getTotal())
+			));
 
 		purchaseUnitRequest.description(
 			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
@@ -572,23 +563,23 @@ public class PayPalCommercePaymentIntegration
 			TransformUtil.transform(
 				commerceOrder.getCommerceOrderItems(),
 				commerceOrderItem -> {
-					Item item = new Item();
-
-					item.name(commerceOrderItem.getName(locale));
-					item.quantity(
-						String.valueOf(
-							commerceOrderItem.getQuantity(
-							).stripTrailingZeros()));
-					item.sku(commerceOrderItem.getSku());
-
 					BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
 
 					BigDecimal unitAmount = finalPrice.divide(
 						commerceOrderItem.getQuantity());
 
-					item.unitAmount(_toMoney(commerceCurrency, unitAmount));
-
-					return item;
+					return new Item(
+					).name(
+						commerceOrderItem.getName(locale)
+					).quantity(
+						String.valueOf(
+							commerceOrderItem.getQuantity(
+							).stripTrailingZeros())
+					).sku(
+						commerceOrderItem.getSku()
+					).unitAmount(
+						_toMoney(commerceCurrency, unitAmount)
+					);
 				}));
 
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =

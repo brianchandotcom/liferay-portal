@@ -70,12 +70,6 @@ definition {
 				key_entry = ${studentEntryId},
 				objectName = "Student");
 		}
-
-		task ("And Given navigate to export in Data Migration Center") {
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.gotoExport();
-		}
 	}
 
 	tearDown {
@@ -94,8 +88,8 @@ definition {
 	test CanCreateAndUpdateExistingObjectEntriesWithSameFile {
 		property portal.acceptance = "true";
 
-		task ("And Given exporting C_Student in Import/Export Center with fields 'name','r_subjectStudents_c_subjectERC', 'externalReferenceCode', 'diploma' as jsonl file") {
-			var filePath = TestCase.getDependenciesDirPath(fileName = "multiple_objectEntries_import.jsonl");
+		task ("When importing .jsonl file as 'C_Student' Entity Type with default settings") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "multiple_objectEntries_import_create_update.jsonl");
 			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
 
 			var attachmenId = JSONPathUtil.getProperty(
@@ -104,24 +98,18 @@ definition {
 			var attachmenHref = JSONPathUtil.getProperty(
 				property = "$.items..diploma.link.href",
 				response = ${response});
-		}
 
-		task ("And Given based on Export action example creating .jsonl file two Students: existing ERC with new value for name field, nonexisting ERC with name") {
 			FileUtil.replaceStringInFile(${filePath}, 38589, ${attachmenId});
 
 			FileUtil.replaceStringInFile(${filePath}, "/documents/38586/38588/Document_1.jpg/b3a2213c-225f-fc83-fa10-4ea862e5005f?version=1.0&t=1701061267059", ${attachmenHref});
 
-			FileUtil.replaceStringInFile(${filePath}, "Jane", "John");
-
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.gotoImport();
-		}
 
-		task ("When importing .jsonl file as 'C_Student' Entity Type with default settings") {
 			ImportExport.configureImport(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
-				fileName = "multiple_objectEntries_import.jsonl");
+				fileName = "multiple_objectEntries_import_create_update.jsonl");
 
 			ImportExport.startImportAndWaitForSuccess();
 		}
@@ -160,6 +148,12 @@ definition {
 	@priority = 5
 	test CanCreateObjectEntry {
 		property portal.acceptance = "true";
+
+		task ("And Given navigate to export in Data Migration Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
 
 		task ("And Given exporting C_Student in Import/Export Center with fields of existing entry 'name','r_subjectStudents_c_subjectERC','diploma' as json file") {
 			ImportExport.exportAndUnzipFile(
@@ -205,8 +199,8 @@ definition {
 	test CanCreateObjectEntryFromFileContainingExistingAndNewWithUncheckedStopImportOnError {
 		property portal.acceptance = "true";
 
-		task ("And Given exporting C_Student in Import/Export Center with fields 'name','r_subjectStudents_c_subjectERC', 'externalReferenceCode' as jsonl file") {
-			var filePath = TestCase.getDependenciesDirPath(fileName = "multiple_objectEntries_import.jsonl");
+		task ("When importing .jsonl file as 'C_Student' Entity Type with 'Only Add New Records Import Strategy', 'Stop the Import on Error' unchecked") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "multiple_objectEntries_import_create.jsonl");
 			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
 
 			var attachmenId = JSONPathUtil.getProperty(
@@ -215,9 +209,7 @@ definition {
 			var attachmenHref = JSONPathUtil.getProperty(
 				property = "$.items..diploma.link.href",
 				response = ${response});
-		}
 
-		task ("And Given based on Export action example creating .jsonl file with one existing Student and one with unexisting 'externalReferenceCode' value") {
 			FileUtil.replaceStringInFile(${filePath}, 38589, ${attachmenId});
 
 			FileUtil.replaceStringInFile(${filePath}, "/documents/38586/38588/Document_1.jpg/b3a2213c-225f-fc83-fa10-4ea862e5005f?version=1.0&t=1701061267059", ${attachmenHref});
@@ -225,12 +217,10 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.gotoImport();
-		}
 
-		task ("When importing .jsonl file as 'C_Student' Entity Type with 'Only Add New Records Import Strategy', 'Stop the Import on Error' unchecked") {
 			ImportExport.configureImport(
 				entityType = "C_Student (v1_0 - Liferay Object REST)",
-				fileName = "multiple_objectEntries_import.jsonl",
+				fileName = "multiple_objectEntries_import_create.jsonl",
 				importStrategy = "Only Add New Records",
 				stopImportOnError = "false");
 
@@ -251,6 +241,12 @@ definition {
 	@priority = 4
 	test CannotCreateObjectEntryWithoutRequiredFields {
 		property portal.acceptance = "true";
+
+		task ("And Given navigate to export in Data Migration Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
 
 		task ("And Given exporting C_Student in Import/Export Center with fields 'r_subjectStudents_c_subjectERC' as json file") {
 			ImportExport.exportAndUnzipFile(
@@ -282,6 +278,12 @@ definition {
 	@priority = 4
 	test CanUpdateObjectEntry {
 		property portal.acceptance = "true";
+
+		task ("And Given navigate to export in Data Migration Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
 
 		task ("And Given exporting C_Student in Import/Export Center with fields 'name','r_subjectStudents_c_subjectERC', 'externalReferenceCode' as jsonl file") {
 			ImportExport.exportAndUnzipFile(

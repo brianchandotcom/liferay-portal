@@ -136,6 +136,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<not>
 					<or>
 						<equals arg1="${app.server.type}" arg2="jboss" />
+						<equals arg1="${app.server.type}" arg2="openliberty" />
 						<equals arg1="${app.server.type}" arg2="tcserver" />
 						<equals arg1="${app.server.type}" arg2="tomcat" />
 						<equals arg1="${app.server.type}" arg2="weblogic" />
@@ -144,7 +145,7 @@ module.framework.properties.osgi.console=11312</echo>
 					</or>
 				</not>
 				<then>
-					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, tcserver, tomcat, weblogic, websphere, or wildfly.</fail>
+					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, openliberty, tcserver, tomcat, weblogic, websphere, or wildfly.</fail>
 				</then>
 			</if>
 

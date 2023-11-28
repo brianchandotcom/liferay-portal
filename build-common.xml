@@ -2000,7 +2000,7 @@ rerun your task.
 					<propertyref prefix="source.formatter." />
 					<propertyref prefix="systemProp." />
 					<propertyref regex=".+\.ignore\.local$" />
-					<propertyref regex="^\s*app\.server\.(?:jboss|tcserver|tomcat|weblogic|websphere|wildfly).*" />
+					<propertyref regex="^\s*app\.server\.(?:jboss|openliberty|tcserver|tomcat|weblogic|websphere|wildfly).*" />
 				</propertyset>
 			</echoproperties>
 

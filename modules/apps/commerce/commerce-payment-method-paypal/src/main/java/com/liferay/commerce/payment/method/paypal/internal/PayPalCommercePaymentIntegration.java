@@ -573,42 +573,8 @@ public class PayPalCommercePaymentIntegration
 				}
 			});
 
-		CommerceAddress shippingCommerceAddress =
-			commerceOrder.getShippingAddress();
-
-		if (shippingCommerceAddress != null) {
-			ShippingDetail shippingDetail = new ShippingDetail();
-
-			AddressPortable addressPortable = new AddressPortable();
-
-			addressPortable.addressLine1(shippingCommerceAddress.getStreet1());
-			addressPortable.addressLine2(shippingCommerceAddress.getStreet2());
-
-			Region region = shippingCommerceAddress.getRegion();
-
-			if (region != null) {
-				addressPortable.adminArea1(region.getRegionCode());
-			}
-
-			addressPortable.adminArea2(shippingCommerceAddress.getCity());
-
-			Country country = shippingCommerceAddress.getCountry();
-
-			addressPortable.countryCode(country.getA2());
-
-			addressPortable.postalCode(shippingCommerceAddress.getZip());
-
-			shippingDetail.addressPortable(addressPortable);
-
-			shippingDetail.name(
-				new Name() {
-					{
-						fullName(shippingCommerceAddress.getName());
-					}
-				});
-
-			purchaseUnitRequest.shippingDetail(shippingDetail);
-		}
+		purchaseUnitRequest.shippingDetail(
+			_toShippingDetail(commerceOrder.getShippingAddress()));
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			commercePaymentEntry.getLanguageId());
@@ -827,6 +793,44 @@ public class PayPalCommercePaymentIntegration
 			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
 
 		return scaledValue.toPlainString();
+	}
+
+	private ShippingDetail _toShippingDetail(
+			CommerceAddress shippingCommerceAddress)
+		throws PortalException {
+
+		if (shippingCommerceAddress == null) {
+			return null;
+		}
+
+		Country country = shippingCommerceAddress.getCountry();
+		Region region = shippingCommerceAddress.getRegion();
+
+		return new ShippingDetail() {
+			{
+				addressPortable(
+					new AddressPortable() {
+						{
+							addressLine1(shippingCommerceAddress.getStreet1());
+							addressLine2(shippingCommerceAddress.getStreet2());
+
+							if (region != null) {
+								adminArea1(region.getRegionCode());
+							}
+
+							adminArea2(shippingCommerceAddress.getCity());
+							countryCode(country.getA2());
+							postalCode(shippingCommerceAddress.getZip());
+						}
+					});
+				name(
+					new Name() {
+						{
+							fullName(shippingCommerceAddress.getName());
+						}
+					});
+			}
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

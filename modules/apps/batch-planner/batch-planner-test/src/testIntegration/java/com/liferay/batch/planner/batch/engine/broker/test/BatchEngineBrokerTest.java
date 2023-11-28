@@ -588,17 +588,26 @@ public class BatchEngineBrokerTest {
 			String externalReferenceCode, List<String> fieldNames)
 		throws Exception {
 
+		CSVFormat csvFormat = CSVFormat.Builder.create(
+		).setDelimiter(
+			_DELIMITER_VALUE
+		).setIgnoreEmptyLines(
+			true
+		).setQuote(
+			_ENCLOSING_CHARACTER_VALUE.charAt(0)
+		).build();
+
 		CSVParser actualCSVParser = CSVParser.parse(
 			new UnsyncBufferedReader(
 				new InputStreamReader(
 					new ByteArrayInputStream(actualCSVString.getBytes()))),
-			_setCSVFormat());
+			csvFormat);
 
 		CSVParser expectedCSVParser = CSVParser.parse(
 			new UnsyncBufferedReader(
 				new InputStreamReader(
 					new ByteArrayInputStream(expectedCSVString.getBytes()))),
-			_setCSVFormat());
+			csvFormat);
 
 		List<CSVRecord> actualCSVParserRecords = actualCSVParser.getRecords();
 
@@ -1160,19 +1169,6 @@ public class BatchEngineBrokerTest {
 				originalPermissionChecker);
 			PrincipalThreadLocal.setName(originalName);
 		}
-	}
-
-	private CSVFormat _setCSVFormat() {
-		CSVFormat.Builder builder = CSVFormat.Builder.create(
-		).setDelimiter(
-			_DELIMITER_VALUE
-		).setIgnoreEmptyLines(
-			true
-		).setQuote(
-			_ENCLOSING_CHARACTER_VALUE.charAt(0)
-		);
-
-		return builder.build();
 	}
 
 	private void _setUpObjectDefinition(String name) throws Exception {

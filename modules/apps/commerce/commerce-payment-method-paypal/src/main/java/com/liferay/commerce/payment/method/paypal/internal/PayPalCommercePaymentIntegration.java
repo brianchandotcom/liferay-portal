@@ -162,7 +162,7 @@ public class PayPalCommercePaymentIntegration
 				}
 			}
 
-			if (Validator.isNull(transactionId)) {
+			if (Validator.isNotNull(transactionId)) {
 				commercePaymentEntry.setPaymentStatus(
 					CommercePaymentEntryConstants.STATUS_AUTHORIZED);
 			}

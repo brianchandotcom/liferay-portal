@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.util.SearchUtil;
+import com.liferay.portal.search.internal.util.AssetURLUtil;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -184,7 +184,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 						liferayPortletRequest, liferayPortletResponse));
 				suggestionBuilder.attribute(
 					"assetURL",
-					SearchUtil.getAssetURLView(
+					AssetURLUtil.getAssetURLView(
 						assetRenderer, assetRendererFactory, entryClassName,
 						entryClassPK, liferayPortletRequest,
 						liferayPortletResponse));

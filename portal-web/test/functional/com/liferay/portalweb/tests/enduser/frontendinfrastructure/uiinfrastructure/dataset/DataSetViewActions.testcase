@@ -2459,6 +2459,67 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 Confirm that the Title field cannot be empty on the Side Panel Item Action"
+	@priority = 4
+	test CannotLeaveTitleFieldEmptyInSidePanelItemAction {
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates a modal item action and clicks on save button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				icon = "pencil",
+				title = "",
+				type = "Side Panel",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("Then an error message is displayed") {
+			Type(
+				key_fieldName = "add-here-the-title-of-the-side-panel",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "test");
+
+			Type(
+				key_fieldName = "add-here-the-title-of-the-side-panel",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "");
+
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "This field is required.");
+		}
+
+		task ("And the changes cannot be saved") {
+			AssertVisible(
+				key_title = "New Item Action",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
 
 	@description = "LPS-191488. Confirm that is possible to leave the label field empty in the Actions tab."
 	@priority = 4

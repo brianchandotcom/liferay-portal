@@ -61,7 +61,7 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 				actionRequest, "rowIds");
 		}
 
-		List<Long> deleteLayoutPageTemplateIdsList = new ArrayList<>();
+		List<Long> deleteLayoutPageTemplateEntryIdsList = new ArrayList<>();
 
 		for (long deleteLayoutPageTemplateEntryId :
 				deleteLayoutPageTemplateEntryIds) {
@@ -75,7 +75,7 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 					_log.debug(portalException);
 				}
 
-				deleteLayoutPageTemplateIdsList.add(
+				deleteLayoutPageTemplateEntryIdsList.add(
 					deleteLayoutPageTemplateEntryId);
 			}
 		}
@@ -89,7 +89,7 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 		}
 
 		if (deleteLayoutPageTemplateEntryIds.length ==
-				deleteLayoutPageTemplateIdsList.size()) {
+				deleteLayoutPageTemplateEntryIdsList.size()) {
 
 			SessionErrors.add(actionRequest, PortalException.class);
 

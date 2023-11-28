@@ -57,7 +57,7 @@ public interface DDMFormFieldTypeSettings {
 
 	@DDMFormField(
 		label = "%field-name", properties = "normalizeField=true",
-		required = true, visibilityExpression = "FALSE"
+		required = true
 	)
 	public String name();
 

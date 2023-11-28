@@ -26,17 +26,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
-		}
-	}
-
 	@description = "This is a test for LPS-142641. Create a Site based on Team-Extranet"
 	@priority = 5
 	test AddTeamExtranetSite {

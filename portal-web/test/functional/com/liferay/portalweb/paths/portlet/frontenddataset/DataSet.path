@@ -509,7 +509,7 @@
 	<td>//span[contains(.,'${key_fieldName}')]/../*[*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
 	<td></td>
 </tr>
-
+<tr>
 	<td>RADIO_BUTTON_OPTION</td>
 	<td>//span[contains(., '${key_optionName}')]/preceding-sibling::input</td>
 	<td></td>

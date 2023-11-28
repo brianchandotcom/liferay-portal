@@ -815,15 +815,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editItem(itemName = null) {
-		Click(
-			key_fieldName = ${itemName},
-			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-		MenuItem.click(menuItem = "Edit");
-	}
-
-	@summary = "Default summary"
 	macro editFragmentFilter(newFilterValue = null, filterName = null) {
 		Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
 
@@ -840,6 +831,15 @@ definition {
 			locator1 = "DataSet#RADIO_BUTTON_OPTION");
 
 		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
+	}
+
+	@summary = "Default summary"
+	macro editItem(itemName = null) {
+		Click(
+			key_fieldName = ${itemName},
+			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+		MenuItem.click(menuItem = "Edit");
 	}
 
 	@summary = "Default summary"
@@ -1065,6 +1065,13 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro selectRadioButtonOption(optionName = null) {
+		Click(
+			key_optionName = ${optionName},
+			locator1 = "DataSet#RADIO_BUTTON_OPTION");
+	}
+
+	@summary = "Default summary"
 	macro setUpPicklistforDataSet(picklistItemList = null) {
 		Picklist.addPicklistViaAPI(picklistName = ${picklistName});
 
@@ -1074,13 +1081,6 @@ definition {
 				itemName = ${picklistItem},
 				picklistName = ${picklistName});
 		}
-	}
-
-	@summary = "Default summary"
-	macro selectRadioButtonOption(optionName = null) {
-		Click(
-			key_optionName = ${optionName},
-			locator1 = "DataSet#RADIO_BUTTON_OPTION");
 	}
 
 	@summary = "Default summary"

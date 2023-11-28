@@ -2073,7 +2073,7 @@ public class ServicePreAction extends Action {
 			"X-Liferay-Request-Group",
 			ArrayUtil.toString(
 				liferayRequestGroupHeader, StringPool.BLANK,
-				StringPool.COMMA_AND_SPACE));
+				StringPool.SPACE));
 
 		User user = themeDisplay.getUser();
 

@@ -215,10 +215,18 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 										<label for="<portlet:namespace />friendlyURL">
 											<liferay-ui:message key="friendly-url" />
 
+											<%
+											StringBundler sb = new StringBundler(5);
+
+											sb.append(LanguageUtil.get(request, "changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft"));
+											sb.append(StringPool.SPACE);
+											sb.append(LanguageUtil.get(request, "the-friendly-url-may-be-modified-to-ensure-uniqueness"));
+											%>
+
 											<clay:icon
 												cssClass="lfr-portal-tooltip"
 												symbol="question-circle-full"
-												title='<%= LanguageUtil.get(request, "changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft") + LanguageUtil.get(request, "the-friendly-url-may-be-modified-to-ensure-uniqueness") %>'
+												title="<%= sb.toString() %>"
 											/>
 										</label>
 

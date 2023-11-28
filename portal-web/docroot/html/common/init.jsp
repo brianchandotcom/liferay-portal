@@ -178,7 +178,6 @@ page import="javax.portlet.PortletPreferences" %><%@
 page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %><%@
 page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.ResourceURL" %><%@
 page import="javax.portlet.UnavailableException" %><%@
 page import="javax.portlet.WindowState" %>
 

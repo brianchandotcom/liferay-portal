@@ -485,11 +485,28 @@ definition {
 		}
 		else {
 			var publishTimeAMPM = "PM";
+			var publishTimeHours = ${publishTimeHours} - 12;
+		}
+
+		var hours = MathUtil.isLessThan(${publishTimeHours}, 10);
+
+		if (${hours} == "true") {
+			var publishTimeHours = "0${publishTimeHours}";
+		}
+
+		var minutes = MathUtil.isLessThan(${publishTimeMinutes}, 10);
+
+		if (${minutes} == "true") {
+			var publishTimeMinutes = "0${publishTimeMinutes}";
+		}
+
+		if (${publishTimeHours} == 00) {
+			var publishTimeHours = 12;
 		}
 
 		Type.sendKeys(
 			locator1 = "Publications#PUBLISH_TIME",
-			value1 = "${publishTimeHours}:${publishTimeMinutes} ${publishTimeAMPM}");
+			value1 = "${publishTimeHours}${publishTimeMinutes}${publishTimeAMPM}");
 
 		if (${reschedule} == "true") {
 			Click(locator1 = "Publications#RESCHEDULE_BUTTON");

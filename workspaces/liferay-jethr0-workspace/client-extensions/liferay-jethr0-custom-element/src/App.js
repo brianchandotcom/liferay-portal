@@ -11,6 +11,7 @@ import JobBuildPage from './pages/JobBuildPage/JobBuildPage';
 import JobPage from './pages/JobPage/JobPage';
 import JobsPage from './pages/JobsPage/JobsPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import UpstreamBranchesPage from './pages/UpstreamBranchesPage/UpstreamBranchesPage';
 
 import './App.css';
 
@@ -23,6 +24,7 @@ function App() {
 				<Route element={<JobBuildPage />} path="/jobs/builds/:id" />
 				<Route element={<JobPage />} path="/jobs/:id" />
 				<Route element={<JobsPage />} path="/jobs" />
+				<Route element={<UpstreamBranchesPage />} path="/upstream-branches" />
 				<Route element={<NotFoundPage />} path="*" />
 			</Routes>
 		</HashRouter>

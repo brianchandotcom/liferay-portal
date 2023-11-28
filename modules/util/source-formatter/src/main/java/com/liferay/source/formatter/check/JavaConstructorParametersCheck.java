@@ -327,7 +327,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			String globalVariableName = matcher.group(1);
 
 			String globalVariableTypeName = getVariableTypeName(
-				content, fileContent, fileName, globalVariableName, true);
+				content, null, fileContent, fileName, globalVariableName, true);
 
 			String parameterTypeName = parameter.getParameterType();
 

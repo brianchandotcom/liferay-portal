@@ -47,7 +47,7 @@ definition {
 		}
 	}
 
-	@description = "Automation Ticket: LPS-157452 | Test Summary: Assert if the user can renew the keys."
+	@description = "Automation Ticket: LPS-157452 | Test Summary: Assert if the user can renew keys."
 	@ignore = "true"
 	@priority = 4
 	test AssertThatTheUserCanRenewTheKeys {
@@ -56,43 +56,43 @@ definition {
 				accountRoleTitle = "Administrator",
 				accountUserName = "Test Test",
 				searchItem = "test",
-				testAccount = "${testAccount}");
+				testAccount = ${testAccount});
 		}
 
-		task ("And the user goes to Test Account") {
+		task ("And the user go to Test Account") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-		
-			CustomerPortal.search(searchItem = "${testAccount}");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
-		
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
 			CP2Utils.onboardingFlow();
 		}
-		
+
 		task ("And go to DXP for generate 2 new keys") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.fullFlowGenerateKey(
-				keyType = "Key Type",
-				option = "Production",
-				optionIndex = 2,
 				fieldText = "RenewKeys",
 				fieldType = "Environment Name",
-				hostName = "renewtest");
+				hostName = "renewtest",
+				keyType = "Key Type",
+				option = "Production",
+				optionIndex = 2);
 
 			CustomerPortal.clickAtButton(text = "Generate 1 Key");
-			
+
 			Button.click(button = "Cancel");
 
 			CP2ActivationKeys.fullFlowGenerateKey(
-				keyType = "Key Type",
-				option = "Production",
-				optionIndex = 2,
 				fieldText = "RenewKeys2",
 				fieldType = "Environment Name",
-				hostName = "renewtest");
+				hostName = "renewtest",
+				keyType = "Key Type",
+				option = "Production",
+				optionIndex = 2);
 
 			CustomerPortal.clickAtButton(text = "Generate 1 Key");
 
@@ -101,7 +101,7 @@ definition {
 			Button.click(button = "Cancel");
 		}
 
-		task ("When select the keys generated to renew the keys") {
+		task ("When you select the generated keys to renew them") {
 			CP2TeamMembers.searchCP(search = "RenewKeys");
 
 			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "RenewKeys");
@@ -109,7 +109,7 @@ definition {
 			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "RenewKeys2");
 		}
 
-		task("Then select the Renew button and renew the keys"){
+		task ("Then select the Renew button and renew the keys") {
 			Button.click(button = "Renew");
 
 			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 1);
@@ -119,4 +119,5 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 	}
+
 }

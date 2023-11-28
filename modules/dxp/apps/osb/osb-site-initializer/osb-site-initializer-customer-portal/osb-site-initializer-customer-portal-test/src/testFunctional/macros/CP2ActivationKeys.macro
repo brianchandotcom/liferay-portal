@@ -451,26 +451,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fullFlowGenerateKey(keyType = null,option = null,fieldText = null,fieldType = null,hostName = null,numberOfActivationKeys = null) {
-		CP2ActivationKeys.generateNewKey();
-
-		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-				field = ${keyType},
-				option = ${option});
-			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = ${optionIndex});
-
-			CustomerPortal.clickAtButton(text = "Next");
-			
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = ${fieldText},
-				field = ${fieldType});
-
-			CP2ActivationKeys.fulfillActivationKey(
-				numberOfActivationKeys = ${numberOfActivationKeys},
-				hostName = ${hostName});
-	}
-
-	@summary = "Default summary"
 	macro fulfillGenerateActivationKeyTextField(field = null,index = null,content = null) {
 		var key_index = 1;
 
@@ -483,6 +463,27 @@ definition {
 		Type(
 			locator1 = "CP2ActivationKeys#GENERATE_ACTIVATIONS_KEYS_TEXT_FIELD",
 			value1 = ${content});
+	}
+
+	@summary = "Generate a new key by clicking in the button and fill the form."
+	macro fullFlowGenerateKey(keyType = null,option = null,fieldText = null,fieldType = null,hostName = null,numberOfActivationKeys = null) {
+		CP2ActivationKeys.generateNewKey();
+
+		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+			field = ${keyType},
+			option = ${option});
+
+		CP2ActivationKeys.selectFistActiveSubscriptionInput(index = ${optionIndex});
+
+		CustomerPortal.clickAtButton(text = "Next");
+
+		CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+			content = ${fieldText},
+			field = ${fieldType});
+
+		CP2ActivationKeys.fulfillActivationKey(
+			hostName = ${hostName},
+			numberOfActivationKeys = ${numberOfActivationKeys});
 	}
 
 	@summary = "Default summary"

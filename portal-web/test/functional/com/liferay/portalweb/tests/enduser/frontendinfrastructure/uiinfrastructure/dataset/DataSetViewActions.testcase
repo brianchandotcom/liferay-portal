@@ -245,6 +245,92 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 Confirm that all the values set in the creation for all the fields are still present when the Edit modal is opened"
+	@priority = 5
+	test AllFieldsArePresentWhenEditASidePanelAction {
+		property portal.acceptance = "true";
+
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates a modal item action and clicks on save button and clicks on Save button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				confirmationMessage = "This is a confirmation message",
+				icon = "pencil",
+				messageType = "Info",
+				title = "Edit side panel",
+				type = "Modal",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And clicks on the new side panel item action 3 dot menu button") {
+			Click(
+				key_tableEntry = "Edit",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then the values set in the creation are still present") {
+			AssertElementPresent(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Edit");
+
+			AssertElementPresent(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Side Panel");
+
+			AssertElementPresent(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+
+			AssertElementPresent(
+				key_fieldName = "add-here-the-title-of-the-modal",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "Edit side panel");
+
+			AssertElementPresent(
+				key_placeholder = "Add a message here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = "This is a confirmation message");
+
+			AssertElementPresent(
+				key_fieldLabel = "Message Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Info");
+		}
+	}
+
 
 	@description = "LPS-191485. Verify if the options GET, POST, PATCH, LPS-199219DELETE are present in the Method dropdown in the Item Action"
 	@priority = 4

@@ -108,9 +108,11 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatSetterMethodCalls(
-			String content, String fileContent, String fileName,
+			JavaTerm javaTerm, String fileContent, String fileName,
 			List<String> importNames)
 		throws IOException {
+
+		String content = javaTerm.getContent();
 
 		Matcher matcher1 = _setterCallsPattern.matcher(content);
 
@@ -137,7 +139,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					previousVariableName = variableName;
 
 					variableTypeName = getVariableTypeName(
-						content, null, fileContent, fileName, variableName);
+						content, javaTerm, fileContent, fileName, variableName);
 
 					if (variableTypeName == null) {
 						continue outerLoop;

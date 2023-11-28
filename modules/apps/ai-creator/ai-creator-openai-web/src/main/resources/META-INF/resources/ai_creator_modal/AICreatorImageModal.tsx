@@ -131,11 +131,7 @@ export default function AICreatorImageModal({
 					>
 						<FormImage portletNamespace={portletNamespace} />
 
-						{imagesURL && (
-							<ImagesResult
-								imagesURL={imagesURL}
-							/>
-						)}
+						{imagesURL && <ImagesResult imagesURL={imagesURL} />}
 
 						<ClayForm.Group className="c-mb-0">
 							<LearnResourcesContext.Provider

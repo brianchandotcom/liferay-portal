@@ -12,21 +12,18 @@ interface Props {
 
 export function ImagesResult({imagesURL}: Props) {
 	return (
-        <>
-			<p>
-				{Liferay.Language.get('image-results')}
-			</p>
+		<>
+			<p>{Liferay.Language.get('image-results')}</p>
 
-            <ul className="card-page card-page-equal-height">
-
-			{imagesURL.map((imageURL, index) => (
-                <li className="card-page-item mr-2"  key={index}>
-                    <ClayCard displayType="image" selectable>
-                        <img src={imageURL} style={{ width: "200px" }}/>
-                    </ClayCard>
-                </li>
-            ))}
-            </ul>
-        </>
+			<ul className="card-page card-page-equal-height">
+				{imagesURL.map((imageURL, index) => (
+					<li className="card-page-item mr-2" key={index}>
+						<ClayCard displayType="image" selectable>
+							<img src={imageURL} style={{width: '200px'}} />
+						</ClayCard>
+					</li>
+				))}
+			</ul>
+		</>
 	);
 }

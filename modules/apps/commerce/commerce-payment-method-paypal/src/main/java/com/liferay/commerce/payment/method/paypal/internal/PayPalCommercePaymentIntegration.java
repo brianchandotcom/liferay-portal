@@ -387,13 +387,13 @@ public class PayPalCommercePaymentIntegration
 
 			ApplicationContext applicationContext = new ApplicationContext(
 			).cancelUrl(
-				_getCancelUrl(
-					httpServletRequest, commercePaymentEntry,
+				_getApplicationContextURL(
+					commercePaymentEntry, httpServletRequest, "&cancel=true",
 					commercePaymentEntry.getCancelURL())
 			).returnUrl(
-				_getReturnUrl(
-					httpServletRequest, commercePaymentEntry,
-					commercePaymentEntry.getCallbackURL())
+				_getApplicationContextURL(
+					commercePaymentEntry, httpServletRequest,
+					"&orderType=normal", commercePaymentEntry.getCallbackURL())
 			).shippingPreference(
 				PayPalCommercePaymentMethodConstants.
 					SHIPPING_PREFERENCE_PROVIDED
@@ -496,37 +496,30 @@ public class PayPalCommercePaymentIntegration
 		_log.debug("Request body: " + gson.toJson(httpRequest.requestBody()));
 	}
 
-	private StringBundler _getBaseUrl(
-		HttpServletRequest httpServletRequest,
-		CommercePaymentEntry commercePaymentEntry, String redirect) {
+	private String _getApplicationContextURL(
+		CommercePaymentEntry commercePaymentEntry,
+		HttpServletRequest httpServletRequest, String queryString,
+		String redirect) {
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append(_portal.getPortalURL(httpServletRequest));
 		sb.append(_portal.getPathModule());
 		sb.append(CharPool.SLASH);
 		sb.append(CommercePaymentMethodConstants.SERVLET_PATH);
-		sb.append("?entryId=");
+		sb.append(CharPool.QUESTION);
+
+		if (Validator.isNotNull(redirect)) {
+			sb.append("redirect=");
+			sb.append(URLCodec.encodeURL(redirect));
+			sb.append(CharPool.AMPERSAND);
+		}
+
+		sb.append("entryId=");
 		sb.append(commercePaymentEntry.getCommercePaymentEntryId());
 		sb.append("&entryKey=");
 		sb.append(KEY);
-
-		if (Validator.isNotNull(redirect)) {
-			sb.append("&redirect=");
-			sb.append(URLCodec.encodeURL(redirect));
-		}
-
-		return sb;
-	}
-
-	private String _getCancelUrl(
-		HttpServletRequest httpServletRequest,
-		CommercePaymentEntry commercePaymentEntry, String redirect) {
-
-		StringBundler sb = _getBaseUrl(
-			httpServletRequest, commercePaymentEntry, redirect);
-
-		sb.append("&cancel=true");
+		sb.append(queryString);
 
 		return sb.toString();
 	}
@@ -754,18 +747,6 @@ public class PayPalCommercePaymentIntegration
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
-	}
-
-	private String _getReturnUrl(
-		HttpServletRequest httpServletRequest,
-		CommercePaymentEntry commercePaymentEntry, String redirect) {
-
-		StringBundler sb = _getBaseUrl(
-			httpServletRequest, commercePaymentEntry, redirect);
-
-		sb.append("&orderType=normal");
-
-		return sb.toString();
 	}
 
 	private Money _toMoney(

@@ -16,11 +16,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "search", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.portal.search.internal.configuration.AsahIndividualsConfiguration",
+	id = "com.liferay.portal.search.internal.configuration.AsahUserActivityConfiguration",
 	localization = "content/Language",
-	name = "asah-search-individuals-configuration-name"
+	name = "asah-search-user-activity-configuration-name"
 )
-public interface AsahIndividualsConfiguration extends AsahConfiguration {
+public interface AsahUserActivityConfiguration extends AsahConfiguration {
 
 	@Meta.AD(deflt = "14400", name = "cache-timeout", required = false)
 	public int cacheTimeout();

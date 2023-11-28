@@ -1,9 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.suggestions.spi.asah.individuals;
+package com.liferay.portal.search.internal.suggestions.spi.asah.site.activity;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -16,15 +16,15 @@ import com.liferay.portal.search.suggestions.spi.constants.AsahSuggestionsConsta
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Gustavo Lima
+ * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.internal.configuration.AsahIndividualsConfiguration",
-	property = "search.suggestions.contributor.name=asahRecentSearches",
+	configurationPid = "com.liferay.portal.search.internal.configuration.AsahSearchKeywordsConfiguration",
+	property = "search.suggestions.contributor.name=asahRecentSearchKeywords",
 	service = SuggestionsContributor.class
 )
-public class AsahRecentSearchIndividualsContributor
-	extends BaseAsahIndividualsSuggestionsContributor
+public class RecentSearchKeywordsAsahSuggestionsContributor
+	extends BaseKeywordsAsahSuggestionsContributor
 	implements SuggestionsContributor {
 
 	@Override
@@ -36,10 +36,9 @@ public class AsahRecentSearchIndividualsContributor
 			suggestionsContributorConfiguration) {
 
 		return getSuggestionsContributorResults(
-			AsahSuggestionsConstants.INDIVIDUALS,
+			AsahSuggestionsConstants.PAGES,
 			AsahSuggestionsConstants.SEARCH_KEYWORDS, searchContext,
-			"counts,displayLanguageId,keywords,lastModifiedDate,createDate" +
-				",groupId",
+			"lastModifiedDate,desc,counts,desc,keywords,asc",
 			suggestionsContributorConfiguration);
 	}
 

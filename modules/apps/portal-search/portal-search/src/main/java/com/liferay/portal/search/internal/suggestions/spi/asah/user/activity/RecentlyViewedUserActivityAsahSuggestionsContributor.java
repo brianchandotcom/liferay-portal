@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.suggestions.spi.asah.individuals;
+package com.liferay.portal.search.internal.suggestions.spi.asah.user.activity;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -28,12 +28,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Gustavo Lima
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.internal.configuration.AsahIndividualsConfiguration",
+	configurationPid = "com.liferay.portal.search.internal.configuration.AsahUserActivityConfiguration",
 	property = "search.suggestions.contributor.name=asahRecentAssets",
 	service = SuggestionsContributor.class
 )
-public class AsahRecentlyViewedIndividualsContributor
-	extends BaseAsahIndividualsSuggestionsContributor
+public class RecentlyViewedUserActivityAsahSuggestionsContributor
+	extends BaseUserActivityAsahSuggestionsContributor
 	implements SuggestionsContributor {
 
 	@Override
@@ -92,7 +92,7 @@ public class AsahRecentlyViewedIndividualsContributor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AsahRecentlyViewedIndividualsContributor.class);
+		RecentlyViewedUserActivityAsahSuggestionsContributor.class);
 
 	private static final HashMap<String, String> _contentTypeToClassNameMap =
 		HashMapBuilder.put(

@@ -5,13 +5,14 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/bookmarks/init.jsp" %>
 
 <%
 BookmarksConfigurationDisplayContext bookmarksConfigurationDisplayContext = new BookmarksConfigurationDisplayContext(request, renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(bookmarksConfigurationDisplayContext.getBackURL());
+portletDisplay.setURLBackTitle("bookmarks");
 %>
 
 <clay:container-fluid
@@ -37,5 +38,285 @@ portletDisplay.setURLBack(bookmarksConfigurationDisplayContext.getBackURL());
 				verticalNavItems="<%= bookmarksConfigurationDisplayContext.getNotificationsVerticalNavItemList() %>"
 			/>
 		</clay:col>
+
+		<clay:col
+			lg="9"
+		>
+			<h2>
+				<%= bookmarksConfigurationDisplayContext.getTitle() %>
+			</h2>
+
+			<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
+				<portlet:param name="navigation" value="<%= bookmarksConfigurationDisplayContext.getNavigation() %>" />
+				<portlet:param name="serviceName" value="<%= BookmarksConstants.SERVICE_NAME %>" />
+				<portlet:param name="settingsScope" value="group" />
+			</liferay-portlet:actionURL>
+
+			<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+				<clay:sheet
+					cssClass="c-mb-4 c-mt-4 c-p-0"
+					size="full"
+				>
+					<h3 class="c-pl-4 c-pr-4 c-pt-4 sheet-title">
+						<clay:content-row
+							verticalAlign="center"
+						>
+							<clay:content-col>
+								<%= bookmarksConfigurationDisplayContext.getSubtitle() %>
+							</clay:content-col>
+						</clay:content-row>
+					</h3>
+
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+					<aui:input name="redirect" type="hidden" value="<%= bookmarksConfigurationDisplayContext.getRedirect() %>" />
+
+					<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
+					<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
+					<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
+
+					<%
+					Map<String, String> emailDefinitionTerms = BookmarksUtil.getEmailDefinitionTerms(renderRequest, bookmarksGroupServiceOverriddenConfiguration.emailFromAddress(), bookmarksGroupServiceOverriddenConfiguration.emailFromName());
+					%>
+
+					<c:choose>
+						<c:when test='<%= Objects.equals(bookmarksConfigurationDisplayContext.getNavigation(), "display-settings") %>'>
+							<div class="c-px-4">
+								<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
+								<aui:input name="preferences--folderColumns--" type="hidden" />
+								<aui:input name="preferences--entryColumns--" type="hidden" />
+
+								<div class="form-group">
+									<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
+
+									<aui:button name="selectFolderButton" value="select" />
+
+									<%
+									String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+									%>
+
+									<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+								</div>
+
+								<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>" />
+
+								<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showSubfolders() %>" />
+
+								<aui:field-wrapper label="show-columns">
+
+									<%
+									Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
+
+									// Left list
+
+									List<KeyValuePair> leftList = new ArrayList<>();
+
+									for (String folderColumn : folderColumns) {
+										leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
+									}
+
+									// Right list
+
+									List<KeyValuePair> rightList = new ArrayList<>();
+
+									Arrays.sort(folderColumns);
+
+									for (String folderColumn : availableFolderColumns) {
+										if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
+											rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
+										}
+									}
+
+									rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+									%>
+
+									<liferay-ui:input-move-boxes
+										leftBoxName="currentFolderColumns"
+										leftList="<%= leftList %>"
+										leftReorder="<%= Boolean.TRUE.toString() %>"
+										leftTitle="current"
+										rightBoxName="availableFolderColumns"
+										rightList="<%= rightList %>"
+										rightTitle="available"
+									/>
+								</aui:field-wrapper>
+
+								<aui:script>
+									var <portlet:namespace />selectFolderButton = document.getElementById(
+										'<portlet:namespace />selectFolderButton'
+									);
+
+									if (<portlet:namespace />selectFolderButton) {
+										<portlet:namespace />selectFolderButton.addEventListener( 'click', (event) => {
+											Liferay.Util.openSelectionModal({
+												onSelect: function (event) {
+													var folderData = {
+														idString: 'rootFolderId',
+														idValue: event.entityid,
+														nameString: 'rootFolderName',
+														nameValue: event.entityname,
+													};
+
+													Liferay.Util.selectFolder(
+														folderData,
+														'<portlet:namespace />'
+													);
+												},
+												selectEventName: '<%= HtmlUtil.escapeJS(PortalUtil.getPortletNamespace(portletResource)) %>selectFolder',
+												title: '<liferay-ui:message arguments="folder" key="select-x" />',
+												url: '<liferay-portlet:renderURL portletName="<%= portletResource %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
+											});
+										});
+									}
+								</aui:script>
+
+							</div>
+						</c:when>
+						<c:when test='<%= Objects.equals(bookmarksConfigurationDisplayContext.getNavigation(), "entry-added-email") %>'>
+							<div class="c-px-4">
+								<liferay-frontend:email-notification-settings
+									emailBodyLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedBody() %>"
+									emailDefinitionTerms="<%= emailDefinitionTerms %>"
+									emailEnabled="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedEnabled() %>"
+									emailParam="emailEntryAdded"
+									emailSubjectLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedSubject() %>"
+								/>
+							</div>
+						</c:when>
+						<c:when test='<%= Objects.equals(bookmarksConfigurationDisplayContext.getNavigation(), "entry-updated-email") %>'>
+							<div class="c-px-4">
+								<liferay-frontend:email-notification-settings
+									emailBodyLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedBody() %>"
+									emailDefinitionTerms="<%= emailDefinitionTerms %>"
+									emailEnabled="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedEnabled() %>"
+									emailParam="emailEntryUpdated"
+									emailSubjectLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedSubject() %>"
+								/>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="c-px-4">
+								<liferay-frontend:fieldset>
+									<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= bookmarksGroupServiceOverriddenConfiguration.emailFromName() %>">
+										<aui:validator errorMessage="please-enter-a-valid-name" name="required" />
+									</aui:input>
+
+									<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= bookmarksGroupServiceOverriddenConfiguration.emailFromAddress() %>">
+										<aui:validator errorMessage="please-enter-a-valid-email-address" name="required" />
+										<aui:validator name="email" />
+									</aui:input>
+								</liferay-frontend:fieldset>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</clay:sheet>
+
+				<c:if test='<%= Objects.equals(bookmarksConfigurationDisplayContext.getNavigation(), "display-settings") %>'>
+					<clay:sheet
+						cssClass="c-mb-4 c-p-0 mt-4"
+						size="full"
+					>
+						<h3 class="c-pl-4 c-pr-4 c-pt-4 sheet-title">
+							<clay:content-row
+								verticalAlign="center"
+							>
+								<clay:content-col>
+									<liferay-ui:message key="bookmarks-listing" />
+								</clay:content-col>
+							</clay:content-row>
+						</h3>
+
+						<div class="c-px-4">
+							<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>" />
+
+							<aui:field-wrapper label="show-columns">
+
+								<%
+								Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
+
+								// Left list
+
+								List<KeyValuePair> leftList = new ArrayList<>();
+
+								for (int i = 0; i < entryColumns.length; i++) {
+									String entryColumn = entryColumns[i];
+
+									leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
+								}
+
+								// Right list
+
+								List<KeyValuePair> rightList = new ArrayList<>();
+
+								Arrays.sort(entryColumns);
+
+								for (String entryColumn : availableEntryColumns) {
+									if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
+										rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
+									}
+								}
+
+								rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+								%>
+
+								<liferay-ui:input-move-boxes
+									leftBoxName="currentEntryColumns"
+									leftList="<%= leftList %>"
+									leftReorder="<%= Boolean.TRUE.toString() %>"
+									leftTitle="current"
+									rightBoxName="availableEntryColumns"
+									rightList="<%= rightList %>"
+									rightTitle="available"
+								/>
+							</aui:field-wrapper>
+						</div>
+					</clay:sheet>
+				</c:if>
+
+				<aui:button-row>
+					<aui:button cssClass="c-mr-2" type="submit" />
+
+					<aui:button href="<%= bookmarksConfigurationDisplayContext.getBackURL() %>" type="cancel" />
+				</aui:button-row>
+			</aui:form>
+		</clay:col>
 	</clay:row>
 </clay:container-fluid>
+
+<aui:script>
+	function <portlet:namespace />saveConfiguration() {
+	var Util = Liferay.Util;
+
+	var form = document.getElementById('<portlet:namespace />fm');
+
+	if (form) {
+	var currentFolderColumns = form.querySelector(
+	'#<portlet:namespace />currentFolderColumns'
+	);
+	var folderColumns = form.querySelector(
+	'#<portlet:namespace />folderColumns'
+	);
+
+	if (currentFolderColumns && folderColumns) {
+	folderColumns.value = Util.getSelectedOptionValues(
+	currentFolderColumns
+	);
+	}
+
+	var currentEntryColumns = form.querySelector(
+	'#<portlet:namespace />currentEntryColumns'
+	);
+	var entryColumns = form.querySelector(
+	'#<portlet:namespace />entryColumns'
+	);
+
+	if (currentEntryColumns && entryColumns) {
+	entryColumns.value = Util.getSelectedOptionValues(
+	currentEntryColumns
+	);
+	}
+
+	submitForm(form);
+	}
+	}
+</aui:script>

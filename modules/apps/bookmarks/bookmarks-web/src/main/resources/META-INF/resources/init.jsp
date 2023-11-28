@@ -45,6 +45,7 @@ page import="com.liferay.bookmarks.service.BookmarksEntryServiceUtil" %><%@
 page import="com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil" %><%@
 page import="com.liferay.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.bookmarks.web.internal.dao.search.BookmarksResultRowSplitter" %><%@
+page import="com.liferay.bookmarks.web.internal.display.context.BookmarksConfigurationDisplayContext" %><%@
 page import="com.liferay.bookmarks.web.internal.display.context.BookmarksDisplayContext" %><%@
 page import="com.liferay.bookmarks.web.internal.display.context.BookmarksManagementToolbarDisplayContext" %><%@
 page import="com.liferay.bookmarks.web.internal.portlet.util.BookmarksUtil" %><%@

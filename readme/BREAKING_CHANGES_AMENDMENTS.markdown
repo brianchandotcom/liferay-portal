@@ -141,3 +141,27 @@ The self bootstraping style *SearchRegistrar has been changed to service collect
 Rewrite *SearchRegistrar to become an osgi service of type ModelSearchConfigurator. Move all previous ModelSearchConfigurator setter call parameter as corresponding ModelSearchConfigurator getter return value.
 ----
 ```
+----
+
+# ce0cf3a6fab17cb1ac42b17f8bce790cbf176317
+
+Incorrect format on multiple file breaking change
+
+Correct message should be:
+```
+LPS-201086 Merge AuditMessageFactoryUtil/AuditMessageFactoryImpl into AuditMessageFactory
+
+# breaking_change_report
+## What portal-kernel/src/com/liferay/portal/kernel/audit/AuditMessageFactory.java
+AuditMessageFactoryUtil and AuditMessageFactoryImpl logic are merged into AuditMessageFactory
+## Why
+This interface/impl/util separation does not have any value. Merge it into single class to avoid the unnecessary module.
+----
+
+# breaking_change_report
+## What portal-kernel/src/com/liferay/portal/kernel/audit/AuditMessageFactoryUtil.java
+AuditMessageFactoryUtil and AuditMessageFactoryImpl logic are merged into AuditMessageFactory
+## Why
+This interface/impl/util separation does not have any value. Merge it into single class to avoid the unnecessary module.
+----
+```

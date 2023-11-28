@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addActions(messageType = null, icon = null, headlessAction = null, type = null,method = null, url = null, actionName = null,key_actionNameList = null, confirmationMessage = null, actionTab = null, successMessage = null, errorMessage = null, inputText = null, variant = null) {
+	macro addActions(messageType = null, icon = null, headlessAction = null, type = null,method = null, url = null, actionName = null,key_actionNameList = null, confirmationMessage = null, actionTab = null, successMessage = null, errorMessage = null, title = null, variant = null) {
 		var key_actionNameList = ${actionName};
 
 		if (isSet(actionTab)) {
@@ -49,11 +49,19 @@ definition {
 					value1 = ${variant});
 			}
 
-			if (isSet(inputText)) {
-				Type(
-					key_fieldName = "add-here-the-title-of-the-modal",
-					locator1 = "DataSet#PRESELECT_VALUE_INPUT",
-					value1 = ${variant});
+			if (isSet(title)) {
+				if (IsElementPresent(key_fieldName = "add-here-the-title-of-the-modal", locator1 = "DataSet#PRESELECT_VALUE_INPUT")) {
+					Type(
+						key_fieldName = "add-here-the-title-of-the-modal",
+						locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+						value1 = ${title});
+				}
+				else {
+					Type(
+						key_fieldName = "add-here-the-title-of-the-side-panel",
+						locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+						value1 = ${title});
+				}
 			}
 
 			if (isSet(method)) {

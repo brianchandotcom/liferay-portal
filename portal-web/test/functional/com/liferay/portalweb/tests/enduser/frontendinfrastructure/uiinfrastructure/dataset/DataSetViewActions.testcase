@@ -2764,7 +2764,7 @@ definition {
 				actionName = "Edit",
 				actionTab = "Creation Actions",
 				icon = "pencil",
-				inputText = "Products",
+				title = "Products",
 				type = "Modal",
 				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example",
 				variant = "Full Screen");

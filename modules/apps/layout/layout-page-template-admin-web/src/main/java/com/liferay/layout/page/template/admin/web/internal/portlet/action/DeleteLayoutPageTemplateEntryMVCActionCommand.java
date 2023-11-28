@@ -102,21 +102,15 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 
 			hideDefaultErrorMessage(actionRequest);
 		}
-		else {
-			int total =
-				deleteLayoutPageTemplateEntryIds.length -
-					deleteLayoutPageTemplateIdsList.size();
+		else if (deleteLayoutPageTemplateEntryIds.length > 0) {
+			hideDefaultSuccessMessage(actionRequest);
 
-			if (total > 0) {
-				hideDefaultSuccessMessage(actionRequest);
-
-				MultiSessionMessages.add(
-					actionRequest, "displayPageTemplateDeleted",
-					_language.format(
-						_portal.getHttpServletRequest(actionRequest),
-						"you-successfully-deleted-x-display-page-templates",
-						new Object[] {total}));
-			}
+			MultiSessionMessages.add(
+				actionRequest, "displayPageTemplateDeleted",
+				_language.format(
+					_portal.getHttpServletRequest(actionRequest),
+					"you-successfully-deleted-x-display-page-templates",
+					new Object[] {deleteLayoutPageTemplateEntryIds.length}));
 		}
 
 		sendRedirect(actionRequest, actionResponse);

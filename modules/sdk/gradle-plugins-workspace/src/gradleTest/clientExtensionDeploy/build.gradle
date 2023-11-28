@@ -8,7 +8,9 @@ runGradleTest {
 	doLast {
 		FileTree fileTree = project.fileTree("bundles/osgi/client-extensions")
 
-		assert fileTree.files.size() == 2
+		Set<File> files = fileTree.files
+
+		assert files.size() == 2
 
 		["with-version-client-extension-1.0.1.zip", "without-version-client-extension.zip"].each {
 			assert fileTree.contains(project.file("bundles/osgi/client-extensions/${it}"))

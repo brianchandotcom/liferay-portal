@@ -51,7 +51,6 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -69,15 +68,12 @@ public class OpenAPIResourceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
 		PortalInstances.initCompany(_company);
-	}
 
-	@Before
-	public void setUp() throws Exception {
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
@@ -515,6 +511,7 @@ public class OpenAPIResourceTest {
 	private static final String _OBJECT_FIELD_NAME =
 		"x" + RandomTestUtil.randomString();
 
+	@DeleteAfterTestRun
 	private static Company _company;
 
 	@Inject

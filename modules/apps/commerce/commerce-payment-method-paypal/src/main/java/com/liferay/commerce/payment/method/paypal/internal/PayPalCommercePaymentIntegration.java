@@ -579,22 +579,10 @@ public class PayPalCommercePaymentIntegration
 		if (shippingCommerceAddress != null) {
 			ShippingDetail shippingDetail = new ShippingDetail();
 
-			shippingDetail.name(
-				new Name() {
-					{
-						fullName(shippingCommerceAddress.getName());
-					}
-				});
-
 			AddressPortable addressPortable = new AddressPortable();
 
 			addressPortable.addressLine1(shippingCommerceAddress.getStreet1());
 			addressPortable.addressLine2(shippingCommerceAddress.getStreet2());
-			addressPortable.postalCode(shippingCommerceAddress.getZip());
-
-			Country country = shippingCommerceAddress.getCountry();
-
-			addressPortable.countryCode(country.getA2());
 
 			Region region = shippingCommerceAddress.getRegion();
 
@@ -604,7 +592,20 @@ public class PayPalCommercePaymentIntegration
 
 			addressPortable.adminArea2(shippingCommerceAddress.getCity());
 
+			Country country = shippingCommerceAddress.getCountry();
+
+			addressPortable.countryCode(country.getA2());
+
+			addressPortable.postalCode(shippingCommerceAddress.getZip());
+
 			shippingDetail.addressPortable(addressPortable);
+
+			shippingDetail.name(
+				new Name() {
+					{
+						fullName(shippingCommerceAddress.getName());
+					}
+				});
 
 			purchaseUnitRequest.shippingDetail(shippingDetail);
 		}

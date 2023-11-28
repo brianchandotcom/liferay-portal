@@ -16,9 +16,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.internal.configuration.AsahIndividualsConfiguration;
 import com.liferay.portal.search.internal.suggestions.spi.asah.BaseAsahSuggestionsContributor;
-import com.liferay.portal.search.internal.web.cache.AsahIndividualsWebCacheItem;
+import com.liferay.portal.search.internal.web.cache.AsahWebCacheItem;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 
 import java.security.MessageDigest;
@@ -58,19 +59,85 @@ public abstract class BaseAsahIndividualsSuggestionsContributor
 		SuggestionsContributorConfiguration
 			suggestionsContributorConfiguration) {
 
-		return AsahIndividualsWebCacheItem.get(
+		String contentType = _getContentType(attributes);
+		String displayLanguageId = getDisplayLanguageId(
+			attributes, searchContext.getLocale());
+		long groupId = getGroupId(searchContext);
+		int minCounts = getMinCounts(attributes, _MIN_COUNTS);
+		int page = _getPage(attributes);
+		int rangeKey = _getRangeKey(attributes);
+		int size = GetterUtil.getInteger(
+			suggestionsContributorConfiguration.getSize(), 5);
+
+		return AsahWebCacheItem.get(
 			analyticsConfiguration, _asahIndividualsConfiguration,
-			_getContentType(attributes), searchContext.getCompanyId(),
-			getDisplayLanguageId(attributes, searchContext.getLocale()),
+			getURL(
+				analyticsConfiguration,
+				StringBundler.concat(
+					basePath, StringPool.FORWARD_SLASH,
+					_getHashedEmail(searchContext.getUserId())),
+				contentType, displayLanguageId, groupId, minCounts, page, path,
+				rangeKey, size, sort),
 			StringBundler.concat(
-				basePath, StringPool.FORWARD_SLASH,
-				_getHashedEmail(searchContext.getUserId())),
-			path, getGroupId(searchContext),
-			getMinCounts(attributes, _MIN_COUNTS), _getPage(attributes),
-			_getRangeKey(attributes),
-			GetterUtil.getInteger(
-				suggestionsContributorConfiguration.getSize(), 5),
-			sort);
+				StringPool.POUND, searchContext.getCompanyId(),
+				StringPool.POUND, contentType, StringPool.POUND,
+				displayLanguageId, StringPool.POUND, groupId, StringPool.POUND,
+				minCounts, StringPool.POUND, page, StringPool.POUND, rangeKey,
+				StringPool.POUND, size, StringPool.POUND, sort));
+	}
+
+	protected String getURL(
+		AnalyticsConfiguration analyticsConfiguration, String basePath,
+		String contentType, String displayLanguageId, long groupId,
+		long minCounts, int page, String path, int rangeKey, int size,
+		String sort) {
+
+		StringBundler sb = new StringBundler(22);
+
+		sb.append(analyticsConfiguration.liferayAnalyticsFaroBackendURL());
+		sb.append("/api/1.0/");
+		sb.append(basePath);
+		sb.append("/");
+
+		sb.append(path);
+		sb.append("?");
+
+		if (minCounts > 0) {
+			sb.append("&minCounts=");
+			sb.append(minCounts);
+		}
+
+		if (!Validator.isBlank(contentType)) {
+			sb.append("&contentType=");
+			sb.append(contentType);
+		}
+
+		if (!Validator.isBlank(displayLanguageId)) {
+			sb.append("&displayLanguageId=");
+			sb.append(displayLanguageId);
+		}
+
+		if (groupId > 0) {
+			sb.append("&groupId=");
+			sb.append(groupId);
+		}
+
+		if (page > 0) {
+			sb.append("&page=");
+			sb.append(page);
+		}
+
+		if (rangeKey != 7) {
+			sb.append("&rangeKey=");
+			sb.append(rangeKey);
+		}
+
+		sb.append("&size=");
+		sb.append(size);
+		sb.append("&sort=");
+		sb.append(sort);
+
+		return sb.toString();
 	}
 
 	@Reference

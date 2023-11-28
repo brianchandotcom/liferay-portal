@@ -343,10 +343,11 @@ public class PayPalCommercePaymentIntegration
 				capturesRefundRequest);
 
 			if (httpResponse.statusCode() == 201) {
-				Refund refund = httpResponse.result();
-
 				commercePaymentEntry.setPaymentStatus(
 					CommerceOrderPaymentConstants.STATUS_REFUNDED);
+
+				Refund refund = httpResponse.result();
+
 				commercePaymentEntry.setTransactionCode(refund.id());
 
 				return commercePaymentEntry;

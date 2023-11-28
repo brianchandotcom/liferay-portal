@@ -20,6 +20,10 @@ public class BinaryExpressionConverterUtil {
 		Column<?, T> column, BinaryExpression.Operation operation, T value) {
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
+			if (value == null) {
+				return column.isNull();
+			}
+
 			return column.eq(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
@@ -35,6 +39,10 @@ public class BinaryExpressionConverterUtil {
 			return column.lt(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
+			if (value == null) {
+				return column.isNotNull();
+			}
+
 			return column.neq(value);
 		}
 

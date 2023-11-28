@@ -63,7 +63,7 @@ public class GitHubPullRequest {
 	public URL getHeadBranchURL() {
 		return StringUtil.toURL(
 			StringUtil.combine(
-				_headGitHubRepository.getHtmlURL(), "/tree/",
+				_headGitHubRepository.getHTMLURL(), "/tree/",
 				getHeadBranchName()));
 	}
 
@@ -71,7 +71,7 @@ public class GitHubPullRequest {
 		return _headGitHubUser.getName();
 	}
 
-	public URL getHtmlURL() {
+	public URL getHTMLURL() {
 		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 

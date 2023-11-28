@@ -24,7 +24,7 @@ public class GitHubIssue {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}
 
-	public URL getHtmlURL() {
+	public URL getHTMLURL() {
 		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 

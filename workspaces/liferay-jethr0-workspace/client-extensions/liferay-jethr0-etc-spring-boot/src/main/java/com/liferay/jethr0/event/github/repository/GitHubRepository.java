@@ -20,7 +20,7 @@ public class GitHubRepository {
 		_jsonObject = jsonObject;
 	}
 
-	public URL getHtmlURL() {
+	public URL getHTMLURL() {
 		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 

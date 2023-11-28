@@ -60,7 +60,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		try {
 			return gitBranchEntityRepository.getByURL(
-				new URL(gitHubRepository.getHtmlURL() + "/tree/" + refName));
+				new URL(gitHubRepository.getHTMLURL() + "/tree/" + refName));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

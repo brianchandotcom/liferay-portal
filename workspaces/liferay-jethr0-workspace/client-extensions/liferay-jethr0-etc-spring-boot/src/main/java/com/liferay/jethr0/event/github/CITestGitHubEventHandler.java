@@ -136,7 +136,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 
 			if (gitHubPullRequest != null) {
 				portalPullRequestJobEntity.setPortalPullRequestURL(
-					gitHubPullRequest.getHtmlURL());
+					gitHubPullRequest.getHTMLURL());
 
 				portalPullRequestJobEntity.setOriginName(
 					gitHubPullRequest.getHeadUserName());

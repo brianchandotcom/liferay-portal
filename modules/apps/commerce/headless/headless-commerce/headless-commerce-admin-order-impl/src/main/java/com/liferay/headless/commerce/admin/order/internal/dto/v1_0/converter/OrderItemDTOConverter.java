@@ -291,7 +291,7 @@ public class OrderItemDTOConverter
 									commerceVirtualOrderItemFileEntry.
 										getUrl())) {
 
-								_commerceMediaResolver.
+								return _commerceMediaResolver.
 									getDownloadVirtualOrderItemURL(
 										commerceVirtualOrderItem.
 											getCommerceVirtualOrderItemId(),

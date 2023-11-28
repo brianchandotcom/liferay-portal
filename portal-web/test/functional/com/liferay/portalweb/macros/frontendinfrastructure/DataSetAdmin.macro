@@ -726,6 +726,28 @@ definition {
 				value1 = ${newType});
 		}
 
+		if (isSet(newVariant)) {
+			Select(
+				key_fieldLabel = "Variant",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${newVariant});
+		}
+
+		if (isSet(newTitle)) {
+			if (IsElementPresent(key_fieldName = "add-here-the-title-of-the-modal", locator1 = "DataSet#PRESELECT_VALUE_INPUT")) {
+				Type(
+					key_fieldName = "add-here-the-title-of-the-modal",
+					locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+					value1 = ${newTitle});
+			}
+			else {
+				Type(
+					key_fieldName = "add-here-the-title-of-the-side-panel",
+					locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+					value1 = ${newTitle});
+			}
+		}
+
 		if (isSet(newMethod)) {
 			Select(
 				key_fieldLabel = "Method",

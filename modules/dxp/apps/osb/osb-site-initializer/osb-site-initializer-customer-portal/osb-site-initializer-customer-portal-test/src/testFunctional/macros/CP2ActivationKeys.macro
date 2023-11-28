@@ -451,6 +451,26 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro fullFlowGenerateKey(keyType = null,option = null,fieldText = null,fieldType = null,hostName = null,numberOfActivationKeys = null) {
+		CP2ActivationKeys.generateNewKey();
+
+		CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = ${keyType},
+				option = ${option});
+			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = ${optionIndex});
+
+			CustomerPortal.clickAtButton(text = "Next");
+			
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = ${fieldText},
+				field = ${fieldType});
+
+			CP2ActivationKeys.fulfillActivationKey(
+				numberOfActivationKeys = ${numberOfActivationKeys},
+				hostName = ${hostName});
+	}
+
+	@summary = "Default summary"
 	macro fulfillGenerateActivationKeyTextField(field = null,index = null,content = null) {
 		var key_index = 1;
 

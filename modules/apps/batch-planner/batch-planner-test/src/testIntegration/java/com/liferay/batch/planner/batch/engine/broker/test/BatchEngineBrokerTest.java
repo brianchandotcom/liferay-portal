@@ -82,7 +82,6 @@ import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -128,7 +127,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -597,17 +595,10 @@ public class BatchEngineBrokerTest {
 			_ENCLOSING_CHARACTER_VALUE.charAt(0)
 		).build();
 
-		CSVParser actualCSVParser = CSVParser.parse(
-			new UnsyncBufferedReader(
-				new InputStreamReader(
-					new ByteArrayInputStream(actualCSVString.getBytes()))),
-			csvFormat);
+		CSVParser actualCSVParser = CSVParser.parse(actualCSVString, csvFormat);
 
 		CSVParser expectedCSVParser = CSVParser.parse(
-			new UnsyncBufferedReader(
-				new InputStreamReader(
-					new ByteArrayInputStream(expectedCSVString.getBytes()))),
-			csvFormat);
+			expectedCSVString, csvFormat);
 
 		List<CSVRecord> actualCSVParserRecords = actualCSVParser.getRecords();
 

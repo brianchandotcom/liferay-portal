@@ -409,6 +409,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			Map<String, String> zipEntryNames, Repository repository)
 		throws Exception {
 
+		Map<String, Long> folderIdsMap = HashMapBuilder.put(
+			StringPool.BLANK, fragmentCollection.getResourcesFolderId()
+		).build();
+
 		if (repository != null) {
 			FragmentServiceConfiguration fragmentServiceConfiguration =
 				_configurationProvider.getCompanyConfiguration(
@@ -427,6 +431,31 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					if (fragmentServiceConfiguration.propagateChanges()) {
 						PortletFileRepositoryUtil.deletePortletFileEntry(
 							fileEntry.getFileEntryId());
+
+						String fileName = entry.getKey();
+						String folderPath = StringPool.BLANK;
+
+						int index = fileName.lastIndexOf(StringPool.SLASH);
+
+						if (index != -1) {
+							folderPath = fileName.substring(0, index);
+							fileName = fileName.substring(index + 1);
+						}
+
+						PortletFileRepositoryUtil.addPortletFileEntry(
+							null, groupId, userId,
+							FragmentCollection.class.getName(),
+							fragmentCollection.getFragmentCollectionId(),
+							FragmentPortletKeys.FRAGMENT,
+							_getOrCreateFolderId(
+								folderIdsMap, folderPath,
+								repository.getRepositoryId(), userId),
+							_getInputStream(
+								zipFile, zipEntryNames.get(fileName)),
+							fileName, MimeTypesUtil.getContentType(fileName),
+							false);
+
+						zipEntryNames.remove(fileEntry.getFileName());
 					}
 					else {
 						String folderPath = StringPool.BLANK;
@@ -463,10 +492,6 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			repository = PortletFileRepositoryUtil.addPortletRepository(
 				groupId, FragmentPortletKeys.FRAGMENT, serviceContext);
 		}
-
-		Map<String, Long> folderIdsMap = HashMapBuilder.put(
-			StringPool.BLANK, fragmentCollection.getResourcesFolderId()
-		).build();
 
 		for (Map.Entry<String, String> entry : zipEntryNames.entrySet()) {
 			String fileName = entry.getKey();

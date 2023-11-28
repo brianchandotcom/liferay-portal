@@ -155,6 +155,44 @@ definition {
 			dmDocumentTitle = "Document_1.doc");
 	}
 
+	@description = "This case covers LPS-201021. Site administrator have permissions to add an external video shortcut."
+	@priority = 4
+	test CanAddExternalVideoShortcutAsSiteAdministrator {
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "user@liferay.com");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Site Name",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "user@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+		User.impersonateCP(userName = "userfn");
+
+		UserBar.gotoMySite(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "External Video Shortcut");
+	}
+
 	@description = "This is a test for LPS-128366, it ensures that the folder permissions are removed after removing permissions during folder addition."
 	@priority = 3
 	@refactordone

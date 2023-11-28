@@ -11,7 +11,6 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
-import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,8 +39,6 @@ public class AssetDisplayPageEntryTableReferenceDefinition
 		).singleColumnReference(
 			AssetDisplayPageEntryTable.INSTANCE.layoutPageTemplateEntryId,
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId
-		).singleColumnReference(
-			AssetDisplayPageEntryTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
 		);
 	}
 

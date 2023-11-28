@@ -38,6 +38,17 @@ liferay {
 			version = project.properties["app.server.jonas.version"] ?: "5.2.3"
 		}
 
+		openliberty {
+			binDir = project.properties["app.server.openliberty.bin.dir"] ?: "${->liferay.appServers.openliberty.dir}/bin"
+			deployDir = project.properties["app.server.openliberty.deploy.dir"] ?: "${->liferay.appServers.openliberty.instance.dir}/apps"
+			dir = project.properties["app.server.openliberty.dir"] ?: "${->liferay.appServerParentDir}/wlp-${->liferay.appServers.openliberty.version}"
+			libGlobalDir = project.properties["app.server.openliberty.lib.global.dir"] ?: "${->liferay.appServers.openliberty.dir}/lib/ext"
+			portalDir = project.properties["app.server.openliberty.portal.dir"] ?: "${->liferay.appServers.openliberty.instance.dir}/apps/liferay-portal.war"
+			shieldedContainerLibPortalDir = project.properties["app.server.openliberty.shielded-container-lib.portal.dir"] ?: "${->liferay.appServers.openliberty.portalDir}/WEB-INF/shielded-container-lib"
+			version = project.properties["app.server.openliberty.version"] ?: "23.0.0.11"
+			zipUrl = project.properties["app.server.openliberty.zip.url"] ?: "https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/release/${->liferay.appServers.openliberty.version}/openliberty-${->liferay.appServers.openliberty.version}.zip"
+		}
+
 		resin {
 			deployDir = project.properties["app.server.resin.deploy.dir"] ?: "${->liferay.appServers.resin.dir}/webapps"
 			dir = project.properties["app.server.resin.dir"] ?: "${->liferay.appServerParentDir}/resin-${->liferay.appServers.resin.version}"

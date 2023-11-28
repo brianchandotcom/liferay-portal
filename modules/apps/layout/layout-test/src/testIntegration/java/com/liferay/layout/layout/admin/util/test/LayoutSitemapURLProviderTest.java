@@ -6,6 +6,7 @@
 package com.liferay.layout.layout.admin.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -72,6 +74,28 @@ public class LayoutSitemapURLProviderTest {
 		_initThemeDisplay();
 
 		LayoutTestUtil.addTypePortletLayout(_group);
+	}
+
+	@FeatureFlags("LPS-187793")
+	@Test
+	public void testLayoutSitemapURLProviderCanonicalURLEnabled()
+		throws Exception {
+
+		Element rootElement = _getRootElement();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), false);
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			layout.isPrivateLayout(), layout.getLayoutId(), true,
+			new HashMap<>(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSitemapURLProvider.visitLayout(
+			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
+
+		Assert.assertFalse(rootElement.hasContent());
 	}
 
 	@Test
@@ -181,6 +205,72 @@ public class LayoutSitemapURLProviderTest {
 		}
 	}
 
+	@FeatureFlags("LPS-187793")
+	@Test
+	public void testLayoutSitemapURLProviderRobotsWithNofollow()
+		throws Exception {
+
+		_assertVisitLayout(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "nofollow"
+			).build());
+	}
+
+	@FeatureFlags("LPS-187793")
+	@Test
+	public void testLayoutSitemapURLProviderRobotsWithNofollowNondefaultLanguage()
+		throws Exception {
+
+		_assertVisitLayout(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.SPAIN, "nofollow"
+			).build());
+	}
+
+	@FeatureFlags("LPS-187793")
+	@Test
+	public void testLayoutSitemapURLProviderRobotsWithNoindex()
+		throws Exception {
+
+		_assertVisitLayout(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "noindex"
+			).build());
+	}
+
+	@FeatureFlags("LPS-187793")
+	@Test
+	public void testLayoutSitemapURLProviderRobotsWithNoindexNondefaultLanguage()
+		throws Exception {
+
+		_assertVisitLayout(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.SPAIN, "noindex"
+			).build());
+	}
+
+	private void _assertVisitLayout(Map<Locale, String> robotsMap)
+		throws Exception {
+
+		Element rootElement = _getRootElement();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), false, RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), robotsMap, null,
+			new HashMap<>(), false);
+
+		_layoutSitemapURLProvider.visitLayout(
+			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
+
+		Assert.assertFalse(rootElement.hasContent());
+	}
+
 	private Element _getRootElement() {
 		Document document = _saxReader.createDocument();
 
@@ -229,6 +319,9 @@ public class LayoutSitemapURLProviderTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	private LayoutSet _layoutSet;
 

@@ -17,6 +17,8 @@ import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
 import MiniCartContext from './MiniCartContext';
 import {getCorrectedQuantity} from './util/index';
 
+const CART_QUICK_ADD_NAMESPACE = 'cartQuickAdd_';
+
 const getSearchSKUsURL = (page, search, accountId, channelId) => {
 	const url = new URL(
 		`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products`,
@@ -196,7 +198,14 @@ export default function CartQuickAdd() {
 		);
 
 		if (!unavailableSKU) {
-			addToCart(readySKUs, cartId, channel, accountId)
+			addToCart(
+				readySKUs,
+				cartId,
+				channel,
+				accountId,
+				null,
+				CART_QUICK_ADD_NAMESPACE
+			)
 				.then(() => {})
 				.catch((error) => {
 					Liferay.Util.openToast({

@@ -207,6 +207,10 @@ public class OrderItemDTOConverter
 									commerceVirtualOrderItem.
 										getCommerceVirtualOrderItemFileEntries();
 
+							if (commerceVirtualOrderItemFileEntries.isEmpty()) {
+								return null;
+							}
+
 							CommerceVirtualOrderItemFileEntry
 								commerceVirtualOrderItemFileEntry =
 									commerceVirtualOrderItemFileEntries.get(0);

@@ -96,6 +96,21 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return _commerceVirtualOrderItemFileEntry;
 	}
 
+	@Override
+	public CPDefinition getCPDefinition() throws PortalException {
+		CPDefinition cpDefinition = super.getCPDefinition();
+
+		if (cpDefinition == null) {
+			CPInstance cpInstance = getCPInstance();
+
+			if (cpInstance != null) {
+				return cpInstance.getCPDefinition();
+			}
+		}
+
+		return cpDefinition;
+	}
+
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting()
 		throws PortalException {
 

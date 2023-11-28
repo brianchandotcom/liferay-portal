@@ -71,9 +71,6 @@ public class ProductVirtualSettingsDTOConverter
 		List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries =
 			cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries();
 
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			cpdVirtualSettingFileEntries.get(0);
-
 		return new ProductVirtualSettings() {
 			{
 				activationStatus =
@@ -129,6 +126,13 @@ public class ProductVirtualSettingsDTOConverter
 					});
 				setSrc(
 					() -> {
+						if (cpdVirtualSettingFileEntries.isEmpty()) {
+							return null;
+						}
+
+						CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+							cpdVirtualSettingFileEntries.get(0);
+
 						long fileEntryId =
 							cpdVirtualSettingFileEntry.getFileEntryId();
 
@@ -157,6 +161,13 @@ public class ProductVirtualSettingsDTOConverter
 					});
 				setUrl(
 					() -> {
+						if (cpdVirtualSettingFileEntries.isEmpty()) {
+							return null;
+						}
+
+						CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+							cpdVirtualSettingFileEntries.get(0);
+
 						if (Validator.isNull(
 								cpdVirtualSettingFileEntry.getUrl())) {
 

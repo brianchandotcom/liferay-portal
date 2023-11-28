@@ -117,6 +117,10 @@ public class CPDefinitionVirtualSettingFDSDataProvider
 		_cpDefinitionVirtualSettingService;
 
 	@Reference
+	private CPDVirtualSettingFileEntryService
+		_cpdVirtualSettingFileEntryService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 }

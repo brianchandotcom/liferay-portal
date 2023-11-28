@@ -31,7 +31,7 @@ public class AICreatorOpenAIDisplayContext {
 	}
 
 	public Map<String, Object> getProps() {
-		if (isGetGenerations()) {
+		if (isGenerations()) {
 			return HashMapBuilder.<String, Object>put(
 				"getGenerationsURL",
 				() -> {
@@ -75,18 +75,17 @@ public class AICreatorOpenAIDisplayContext {
 		).build();
 	}
 
-	public boolean isGetGenerations() {
-		if (_getGenerations != null) {
-			return _getGenerations;
+	public boolean isGenerations() {
+		if (_generations != null) {
+			return _generations;
 		}
 
-		_getGenerations = ParamUtil.getBoolean(
-			_httpServletRequest, "getGenerations");
+		_generations = ParamUtil.getBoolean(_httpServletRequest, "generations");
 
-		return _getGenerations;
+		return _generations;
 	}
 
-	private Boolean _getGenerations;
+	private Boolean _generations;
 	private final HttpServletRequest _httpServletRequest;
 
 }

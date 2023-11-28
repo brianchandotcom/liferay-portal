@@ -24,8 +24,11 @@ function App() {
 				<Route element={<JobBuildPage />} path="/jobs/builds/:id" />
 				<Route element={<JobPage />} path="/jobs/:id" />
 				<Route element={<JobsPage />} path="/jobs" />
-				<Route element={<UpstreamBranchesPage />} path="/upstream-branches" />
 				<Route element={<NotFoundPage />} path="*" />
+				<Route
+					element={<UpstreamBranchesPage />}
+					path="/upstream-branches"
+				/>
 			</Routes>
 		</HashRouter>
 	);

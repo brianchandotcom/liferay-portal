@@ -166,6 +166,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-197694. The user could configure notifications on the configuration page of Web Content admin in site."
+	@priority = 4
+	test ConfigureWebContentNotificationsInSite {
+		property custom.properties = "feature.flag.LPS-197692=true";
+
+		task ("Given the web content admin configuration page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+		}
+
+		task ("Then the user can configure notifications") {
+			AssertTextEquals(
+				locator1 = "MenuBar#MENU_BAR_SUBTITLE",
+				sectionName = "Notifications",
+				value1 = "Notifications");
+
+			MenuBar.click(menuBar = "Email From");
+
+			AssertElementPresent(
+				key_title = "Email From",
+				locator1 = "Header#H1_TITLE");
+		}
+	}
+
 	@description = "Test that the UI for editing WC localization works."
 	@priority = 4
 	test EditWCAddLocalization {

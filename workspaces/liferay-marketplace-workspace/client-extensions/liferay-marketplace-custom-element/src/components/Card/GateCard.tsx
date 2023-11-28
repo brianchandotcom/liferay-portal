@@ -49,11 +49,14 @@ export function GateCard({description, image, label, link, title}: GateCard) {
 				</div>
 
 				{link && (
-					<ClayLink className="gate-card-link" href={link.href}>
+					<ClayLink
+						className="gate-card-link text-nowrap"
+						href={link.href}
+					>
 						{link.label}
 
 						<ClayIcon
-							className="gate-card-icon"
+							className="gate-card-icon ml-1"
 							symbol="order-arrow-right"
 						/>
 					</ClayLink>

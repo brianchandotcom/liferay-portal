@@ -13,9 +13,13 @@ export default {
 		'An App Build is your compiled or non-compiled code submitted on behalf of your account to the Marketplace. Once submitted, it will be reviewed and tested by our Marketplace administrators for approval in the Marketplace.',
 	'app-build': 'App Build',
 	'back-to-my-apps': 'Back to My Apps',
+	'becoming-a-liferay-marketplace-publisher':
+		'Becoming a Liferay Marketplace publisher',
 	'cancel': 'Cancel',
+	'cash': 'Cash',
 	'client-extensions': 'Client Extensions',
 	'cloud-compatible-?': 'Cloud Compatible?',
+	'cloud-upload': 'Cloud Upload',
 	'compatible-offering': 'Compatible Offering',
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
@@ -32,7 +36,9 @@ export default {
 	'environment': 'Environment',
 	'environment-type': 'Environment Type',
 	'expiration-date': 'Expiration Date',
+	'free': 'Free',
 	'fully-managed': 'Fully-Managed',
+	'go-back-to-marketplace': 'Go Back to Marketplace',
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
@@ -46,12 +52,14 @@ export default {
 	'key-deactivation-requested-succesfully':
 		'Key deactivation requested successfully',
 	'key-type': 'Key Type',
+	'learn-more': 'Learn More',
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
 	'lorem-ipsum-dolor-sit-amet-consectetur':
 		'Lorem ipsum dolor sit amet consectetur.',
 	'mac-addresses': 'Mac Addresses',
 	'manage': 'Manage',
+	'monetize-your-apps-and-solutions': 'Monetize your apps and solutions',
 	'more-info': 'More Info',
 	'no': 'No',
 	'no-licenses-yet': 'No Licenses yet',
@@ -59,6 +67,7 @@ export default {
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
 		'Only ZIP files are allowed. Max file size is 500MB',
 	'provide-app-build': 'Provide app build',
+	'request-account': 'Request Account',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',
 	'select-the-offering-of-liferay-your-app-is-compatible-with-the-compatibility-selections-will-determine-on-what-platforms-your-app-is-tested':
@@ -82,6 +91,10 @@ export default {
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',
 	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-hosted-liferay-cloud-formerly-dxp-cloud':
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP self-hosted Liferay Cloud (formerly DXP Cloud).',
+	'the-liferay-marketplace-gives-you-the-opportunity-to-monetize-your-app-or-solutions-from-a-single-use-case-to-many-while-engaging-with-new-customer-opportunities-and-generating-ongoing-revenue':
+		'The Liferay Marketplace gives you the opportunity to monetize your app or solutions from a single use case to many, while engaging with new customer opportunities and generating ongoing revenue.',
+	'the-liferay-marketplace-is-the-premier-place-for-liferay-customers-to-find-pre-built-pre-approved-app-extensions-to-quickly-extend-the-liferay-platform-to-new-and-legacy-technologies':
+		'The Liferay Marketplace is the premier place for Liferay customers to find pre-built, pre-approved app extensions to quickly extend the Liferay platform to new and legacy technologies.',
 	'the-order-must-be-completed-before-licensing-this-app.':
 		'The order must be completed before licensing this app.',
 	'there-was-an-unexpected-error-while-attempting-to-deactivate-key-please-try-again-in-a-few-moments':
@@ -105,6 +118,8 @@ export default {
 	'via-liferay-experience-cloud-integration':
 		'Via Liferay Experience Cloud Integration',
 	'via-zip-upload': 'Via ZIP Upload',
+	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account':
+		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace.  If you are an existing Liferay developer or partner, you can choose to join our pilot group of publishers to submit apps to the Marketplace.  Continue to request a publisher account.',
 	'yes': 'Yes',
 	'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb':
 		'You can upload one or many ZIP files. Max total size is 500MB.',

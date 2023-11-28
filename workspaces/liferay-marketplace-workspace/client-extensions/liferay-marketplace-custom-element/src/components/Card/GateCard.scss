@@ -33,7 +33,7 @@
 		height: 24px;
 		justify-content: center;
 		margin-left: 1rem;
-		width: 40px;
+		padding: 8px;
 	}
 	&-link {
 		align-items: center;
@@ -50,7 +50,6 @@
 
 		&-container {
 			display: flex;
-			justify-content: space-between;
 		}
 	}
 }

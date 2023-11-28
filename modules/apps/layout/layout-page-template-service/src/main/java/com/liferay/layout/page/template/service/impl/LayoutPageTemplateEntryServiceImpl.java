@@ -263,30 +263,6 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, long classNameId,
-		long classTypeId, int type, int status, int start, int end,
-		OrderByComparator<Object> orderByComparator) {
-
-		Table<?> layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable =
-			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, classNameId,
-				classTypeId, StringPool.BLANK, type, status);
-
-		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
-			DSLQueryFactoryUtil.select(
-				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
-			).from(
-				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
-			).orderBy(
-				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable,
-				orderByComparator
-			).limit(
-				start, end
-			));
-	}
-
-	@Override
-	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateCollectionId, long classNameId,
 		long classTypeId, String name, int type, int status, int start, int end,
 		OrderByComparator<Object> orderByComparator) {
 
@@ -316,25 +292,6 @@ public class LayoutPageTemplateEntryServiceImpl
 			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
 				groupId, layoutPageTemplateCollectionId, 0, 0, StringPool.BLANK,
 				type, -1);
-
-		return layoutPageTemplateEntryPersistence.dslQueryCount(
-			DSLQueryFactoryUtil.countDistinct(
-				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable.
-					getColumn("layoutPageTemplateEntryId")
-			).from(
-				layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable
-			));
-	}
-
-	@Override
-	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateCollectionId, long classNameId,
-		long classTypeId, int type, int status) {
-
-		Table<?> layoutPageTemplateCollectionAndLayoutPageTemplateEntryTable =
-			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, classNameId,
-				classTypeId, StringPool.BLANK, type, status);
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(

@@ -729,7 +729,7 @@ public class DefaultObjectEntryManagerImplTest
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"averageAggregationObjectFieldName",
-						"0.55555555544444440000"
+						"0.5555555554444444"
 					).put(
 						"countAggregationObjectFieldName1", "2"
 					).put(
@@ -758,7 +758,7 @@ public class DefaultObjectEntryManagerImplTest
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"averageAggregationObjectFieldName",
-						"0.12345678912345670000"
+						"0.1234567891234567"
 					).put(
 						"countAggregationObjectFieldName1", "1"
 					).put(

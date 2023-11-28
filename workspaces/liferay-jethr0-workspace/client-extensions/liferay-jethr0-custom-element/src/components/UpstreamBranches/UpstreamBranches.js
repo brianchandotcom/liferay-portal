@@ -22,7 +22,9 @@ function UpstreamBranches() {
 		return <div>Loading...</div>;
 	}
 
-	const gitHubURLRegExp = new RegExp("https://github.com/([^/]+)/([^/]+)/tree/([^/]+)");
+	const gitHubURLRegExp = new RegExp(
+		'https://github.com/([^/]+)/([^/]+)/tree/([^/]+)'
+	);
 
 	return (
 		<Jethr0Table>
@@ -40,16 +42,22 @@ function UpstreamBranches() {
 			<tbody>
 				{gitBranches &&
 					gitBranches.map((gitBranch) => {
-						const gitHubURLMatch = gitBranch.branchURL.match(gitHubURLRegExp);
+						const gitHubURLMatch = gitBranch.branchURL.match(
+							gitHubURLRegExp
+						);
 
 						const gitBranchName = gitHubURLMatch[3];
 						const gitBranchRepositoryName = gitHubURLMatch[2];
 						const gitBranchUserName = gitHubURLMatch[1];
+						const gitBranchSHA = gitBranch.branchSHA;
 
 						return (
 							<tr key={gitBranch.id}>
 								<th className="font-weight-semi-bold">
-									<Link title={gitBranch.id} to={'/jobs/' + gitBranch.id}>
+									<Link
+										title={gitBranch.id}
+										to={'/jobs/' + gitBranch.id}
+									>
 										{gitBranch.id}
 									</Link>
 								</th>
@@ -59,22 +67,45 @@ function UpstreamBranches() {
 									</Link>
 								</td>
 								<td>
-									<Link to={'https://github.com/' + gitBranchUserName + '/' + gitBranchRepositoryName + '/commit/' + gitBranch.branchSHA}>
-										{gitBranch.branchSHA.substring(0, 7)}
+									<Link
+										to={
+											'https://github.com/' +
+											gitBranchUserName +
+											'/' +
+											gitBranchRepositoryName +
+											'/commit/' +
+											gitBranchSHA
+										}
+									>
+										{gitBranchSHA.substring(0, 7)}
 									</Link>
 								</td>
 								<td>
-									<Link to={'https://github.com/' + gitBranchUserName + '/' + gitBranchRepositoryName}>
+									<Link
+										to={
+											'https://github.com/' +
+											gitBranchUserName +
+											'/' +
+											gitBranchRepositoryName
+										}
+									>
 										{gitBranchRepositoryName}
 									</Link>
 								</td>
 								<td>
-									<Link to={'https://github.com/' + gitBranchUserName}>
+									<Link
+										to={
+											'https://github.com/' +
+											gitBranchUserName
+										}
+									>
 										{gitBranchUserName}
 									</Link>
 								</td>
 								<td>{toLocaleString(gitBranch.dateCreated)}</td>
-								<td>{toLocaleString(gitBranch.dateModified)}</td>
+								<td>
+									{toLocaleString(gitBranch.dateModified)}
+								</td>
 							</tr>
 						);
 					})}

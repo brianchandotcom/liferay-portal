@@ -16,7 +16,9 @@ function Jethr0NavigationBar({active}) {
 				<ClayLink href="/#/jobs">Jobs</ClayLink>
 			</ClayNavigationBar.Item>
 			<ClayNavigationBar.Item active={active === 'Upstream Branches'}>
-				<ClayLink href="/#/upstream-branches">Upstream Branches</ClayLink>
+				<ClayLink href="/#/upstream-branches">
+					Upstream Branches
+				</ClayLink>
 			</ClayNavigationBar.Item>
 		</ClayNavigationBar>
 	);

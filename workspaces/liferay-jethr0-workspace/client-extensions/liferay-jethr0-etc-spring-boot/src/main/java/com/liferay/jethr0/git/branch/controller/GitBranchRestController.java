@@ -5,18 +5,9 @@
 
 package com.liferay.jethr0.git.branch.controller;
 
-import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
-import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.queue.JobQueue;
-import com.liferay.jethr0.job.repository.JobEntityRepository;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,7 +32,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class GitBranchRestController {
 
 	@GetMapping
-	public ResponseEntity<String> gitBranches(@AuthenticationPrincipal Jwt jwt) {
+	public ResponseEntity<String> gitBranches(
+		@AuthenticationPrincipal Jwt jwt) {
+
 		JSONArray jobsJSONArray = new JSONArray();
 
 		List<GitBranchEntity> gitBranchEntities = new ArrayList<>(
@@ -52,9 +45,14 @@ public class GitBranchRestController {
 			new Comparator<GitBranchEntity>() {
 
 				@Override
-				public int compare(GitBranchEntity gitBranchEntity1, GitBranchEntity gitBranchEntity2) {
-					String gitBranch1URL = String.valueOf(gitBranchEntity1.getBranchURL());
-					String gitBranch2URL = String.valueOf(gitBranchEntity2.getBranchURL());
+				public int compare(
+					GitBranchEntity gitBranchEntity1,
+					GitBranchEntity gitBranchEntity2) {
+
+					String gitBranch1URL = String.valueOf(
+						gitBranchEntity1.getBranchURL());
+					String gitBranch2URL = String.valueOf(
+						gitBranchEntity2.getBranchURL());
 
 					return gitBranch2URL.compareTo(gitBranch1URL);
 				}
@@ -69,20 +67,28 @@ public class GitBranchRestController {
 	}
 
 	@GetMapping("/upstream")
-	public ResponseEntity<String> upstreamGitBranches(@AuthenticationPrincipal Jwt jwt) {
+	public ResponseEntity<String> upstreamGitBranches(
+		@AuthenticationPrincipal Jwt jwt) {
+
 		JSONArray jobsJSONArray = new JSONArray();
 
 		List<GitBranchEntity> gitBranchEntities = new ArrayList<>(
-			_gitBranchEntityRepository.getAllByType(GitBranchEntity.Type.UPSTREAM));
+			_gitBranchEntityRepository.getAllByType(
+				GitBranchEntity.Type.UPSTREAM));
 
 		Collections.sort(
 			gitBranchEntities,
 			new Comparator<GitBranchEntity>() {
 
 				@Override
-				public int compare(GitBranchEntity gitBranchEntity1, GitBranchEntity gitBranchEntity2) {
-					String gitBranch1URL = String.valueOf(gitBranchEntity1.getBranchURL());
-					String gitBranch2URL = String.valueOf(gitBranchEntity2.getBranchURL());
+				public int compare(
+					GitBranchEntity gitBranchEntity1,
+					GitBranchEntity gitBranchEntity2) {
+
+					String gitBranch1URL = String.valueOf(
+						gitBranchEntity1.getBranchURL());
+					String gitBranch2URL = String.valueOf(
+						gitBranchEntity2.getBranchURL());
 
 					return gitBranch2URL.compareTo(gitBranch1URL);
 				}

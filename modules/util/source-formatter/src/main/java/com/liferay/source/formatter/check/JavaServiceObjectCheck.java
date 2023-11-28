@@ -87,7 +87,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			String variableName = matcher.group(1);
 
 			String variableTypeName = getVariableTypeName(
-				javaTerm, fileContent, fileName, variableName);
+				content, javaTerm, fileContent, fileName, variableName);
 
 			if (variableTypeName == null) {
 				continue;
@@ -137,7 +137,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					previousVariableName = variableName;
 
 					variableTypeName = getVariableTypeName(
-						content, fileContent, fileName, variableName);
+						content, null, fileContent, fileName, variableName);
 
 					if (variableTypeName == null) {
 						continue outerLoop;

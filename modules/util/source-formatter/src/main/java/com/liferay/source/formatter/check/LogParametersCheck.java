@@ -64,7 +64,7 @@ public class LogParametersCheck extends BaseFileCheck {
 			}
 
 			String variableTypeName = getVariableTypeName(
-				content, content, fileName, firstParameter);
+				content, null, content, fileName, firstParameter);
 
 			if (variableTypeName == null) {
 				continue;

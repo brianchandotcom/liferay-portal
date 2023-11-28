@@ -47,7 +47,7 @@ public class UpgradeJavaGetLayoutDisplayPageObjectProviderCheck
 
 			while (methodMatcher.find()) {
 				String variableTypeName = getVariableTypeName(
-					javaMethodContent, content, fileName,
+					javaMethodContent, null, content, fileName,
 					methodMatcher.group(2));
 
 				if (variableTypeName == null) {

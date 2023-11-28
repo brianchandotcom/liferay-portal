@@ -67,7 +67,7 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseUpgradeCheck {
 			methodCall);
 
 		String variableTypeName = getVariableTypeName(
-			javaMethodContent, content, fileName, parameterList.get(0));
+			javaMethodContent, null, content, fileName, parameterList.get(0));
 
 		if (variableTypeName == null) {
 			return false;

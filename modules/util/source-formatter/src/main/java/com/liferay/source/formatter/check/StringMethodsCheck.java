@@ -71,7 +71,7 @@ public class StringMethodsCheck extends BaseFileCheck {
 			String s = matcher.group(1);
 
 			String variableTypeName = getVariableTypeName(
-				content, content, fileName, s);
+				content, null, content, fileName, s);
 
 			if (variableTypeName == null) {
 				continue;
@@ -96,7 +96,7 @@ public class StringMethodsCheck extends BaseFileCheck {
 			String variableName = matcher.group(1);
 
 			String variableTypeName = getVariableTypeName(
-				content, content, fileName, variableName);
+				content, null, content, fileName, variableName);
 
 			if ((variableTypeName == null) ||
 				!Objects.equals(variableTypeName, "String")) {

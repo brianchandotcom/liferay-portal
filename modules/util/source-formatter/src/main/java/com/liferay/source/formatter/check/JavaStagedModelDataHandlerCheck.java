@@ -102,10 +102,10 @@ public class JavaStagedModelDataHandlerCheck extends BaseJavaTermCheck {
 		String importedVariableName = matcher.group(2);
 
 		String existingVariableTypeName = getVariableTypeName(
-			javaMethodContent, fileContent, fileName, existingVariableName);
+			javaMethodContent, javaTerm, fileContent, fileName, existingVariableName);
 
 		String importedVariableTypeName = getVariableTypeName(
-			javaMethodContent, fileContent, fileName, importedVariableName);
+			javaMethodContent, javaTerm, fileContent, fileName, importedVariableName);
 
 		if ((existingVariableTypeName == null) ||
 			(importedVariableTypeName == null)) {

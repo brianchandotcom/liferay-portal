@@ -32,7 +32,7 @@ public class UpgradeJavaPortletSharedSearchSettingsCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			String variableTypeName = getVariableTypeName(
-				newContent, newContent, fileName, matcher.group(1));
+				newContent, null, newContent, fileName, matcher.group(1));
 
 			if ((variableTypeName == null) ||
 				!variableTypeName.equals("PortletSharedSearchSettings")) {

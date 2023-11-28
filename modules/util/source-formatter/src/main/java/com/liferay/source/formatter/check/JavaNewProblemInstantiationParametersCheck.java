@@ -80,7 +80,7 @@ public class JavaNewProblemInstantiationParametersCheck
 			}
 
 			String variableTypeName = getVariableTypeName(
-				javaTermContent, fileContent, fileName, exceptionVariableName);
+				javaTermContent, javaTerm, fileContent, fileName, exceptionVariableName);
 
 			if ((variableTypeName == null) ||
 				!variableTypeName.endsWith("Exception") ||

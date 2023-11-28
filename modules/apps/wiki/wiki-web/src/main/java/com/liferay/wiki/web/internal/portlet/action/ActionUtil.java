@@ -5,15 +5,13 @@
 
 package com.liferay.wiki.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -161,29 +159,13 @@ public class ActionUtil {
 				serviceContext.setAddGuestPermissions(false);
 			}
 
-			int count = GroupLocalServiceUtil.dslQueryCount(
-				DSLQueryFactoryUtil.count(
-				).from(
-					GroupTable.INSTANCE
-				).where(
-					GroupTable.INSTANCE.ctCollectionId.eq(
-						CTConstants.CT_COLLECTION_ID_PRODUCTION
-					).and(
-						GroupTable.INSTANCE.groupId.eq(
-							themeDisplay.getScopeGroupId())
-					)
-				));
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				themeDisplay.getScopeGroupId());
 
-			if (count > 0) {
-				try (SafeCloseable safeCloseable =
-						CTCollectionThreadLocal.
-							setProductionModeWithSafeCloseable()) {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						group.getCtCollectionId())) {
 
-					node = WikiNodeLocalServiceUtil.addDefaultNode(
-						themeDisplay.getGuestUserId(), serviceContext);
-				}
-			}
-			else {
 				node = WikiNodeLocalServiceUtil.addDefaultNode(
 					themeDisplay.getGuestUserId(), serviceContext);
 			}

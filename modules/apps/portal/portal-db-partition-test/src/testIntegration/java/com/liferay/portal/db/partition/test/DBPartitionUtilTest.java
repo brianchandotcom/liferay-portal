@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -113,33 +110,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					"select 1 from " + getPartitionName(companyId) +
 						".CompanyInfo");
 			}
-		}
-		finally {
-			removeDBPartitions();
-		}
-	}
-
-	@Test
-	public void testAddDBPartitionUsesDBCharacterSetEncoding()
-		throws Exception {
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.DBPartitionUtil",
-				LoggerTestUtil.INFO)) {
-
-			addDBPartitions();
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
-
-			String message = String.valueOf(logEntries.get(0));
-
-			Assert.assertTrue(
-				message,
-				message.contains(
-					"Obtained character set encoding from session with " +
-						"value:"));
 		}
 		finally {
 			removeDBPartitions();

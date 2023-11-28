@@ -20,7 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "asah-search-keywords-configuration-name"
 )
-public interface AsahSearchKeywordsConfiguration {
+public interface AsahSearchKeywordsConfiguration extends AsahConfiguration {
 
 	@Meta.AD(deflt = "14400", name = "cache-timeout", required = false)
 	public int cacheTimeout();

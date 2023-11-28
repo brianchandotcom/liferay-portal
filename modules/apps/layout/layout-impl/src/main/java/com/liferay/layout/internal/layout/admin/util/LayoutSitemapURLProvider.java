@@ -111,11 +111,8 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		if (!GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.getProperty(
-					LayoutTypePortletConstants.SITEMAP_INCLUDE),
-				true) ||
-			!layout.isPublished()) {
+		if (_isExcludeLayoutFromSitemap(
+				layout, typeSettingsUnicodeProperties)) {
 
 			return;
 		}
@@ -151,6 +148,21 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		}
 
 		return availableLocales;
+	}
+
+	private boolean _isExcludeLayoutFromSitemap(
+		Layout layout, UnicodeProperties typeSettingsUnicodeProperties) {
+
+		if (!GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.getProperty(
+					LayoutTypePortletConstants.SITEMAP_INCLUDE),
+				true) ||
+			!layout.isPublished()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

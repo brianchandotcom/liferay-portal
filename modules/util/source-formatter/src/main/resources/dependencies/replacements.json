@@ -684,6 +684,78 @@
 	},
 	{
 		"classNames": [
+			"Contact"
+		],
+		"from": "getPrefixId",
+		"issueKey": "LPS-197984",
+		"to": "getPrefixListTypeId"
+	},
+	{
+		"classNames": [
+			"Organization"
+		],
+		"from": "getStatusId",
+		"issueKey": "LPS-197984",
+		"to": "getStatusListTypeId"
+	},
+	{
+		"classNames": [
+			"Contact"
+		],
+		"from": "getSuffixId",
+		"issueKey": "LPS-197984",
+		"to": "getSuffixListTypeId"
+	},
+	{
+		"classNames": [
+			"Address",
+			"EmailAddress",
+			"OrgLabor",
+			"Phone",
+			"Website"
+		],
+		"from": "getTypeId",
+		"issueKey": "LPS-197984",
+		"to": "getListTypeId"
+	},
+	{
+		"classNames": [
+			"Contact"
+		],
+		"from": "setPrefixId",
+		"issueKey": "LPS-197984",
+		"to": "setPrefixListTypeId"
+	},
+	{
+		"classNames": [
+			"Organization"
+		],
+		"from": "setStatusId",
+		"issueKey": "LPS-197984",
+		"to": "setStatusListTypeId"
+	},
+	{
+		"classNames": [
+			"Contact"
+		],
+		"from": "setSuffixId",
+		"issueKey": "LPS-197984",
+		"to": "setSuffixListTypeId"
+	},
+	{
+		"classNames": [
+			"Address",
+			"EmailAddress",
+			"OrgLabor",
+			"Phone",
+			"Website"
+		],
+		"from": "setTypeId",
+		"issueKey": "LPS-197984",
+		"to": "setListTypeId"
+	},
+	{
+		"classNames": [
 			"AssetVocabularyLocalService",
 			"AssetVocabularyLocalServiceUtil"
 		],

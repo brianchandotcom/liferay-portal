@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_TYPE_VISIBLE</td>
-	<td>//button[contains(@class,'panel-header')][contains(@class,'show')]//following-sibling::div//*[contains(@class, 'criteria-sidebar-item-root') and (text()='${key_propertyOption}')]</td>
+	<td>//button[contains(@class,'panel-header')][contains(@class,'show')]//following-sibling::div//*[contains(@class, 'criteria-sidebar-item-root')][normalize-space()='${key_propertyOption}']//div[@draggable='true']</td>
 	<td></td>
 </tr>
 <tr>

@@ -7,6 +7,8 @@ package com.liferay.captcha.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.captcha.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.captcha.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.captcha.rest.internal.resource.v1_0.SimpleCaptchaResourceImpl;
+import com.liferay.captcha.rest.resource.v1_0.SimpleCaptchaResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -16,8 +18,11 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Loc Pham
@@ -29,6 +34,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Query.setSimpleCaptchaResourceComponentServiceObjects(
+			_simpleCaptchaResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -65,7 +72,16 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"query#simpleCaptcha",
+						new ObjectValuePair<>(
+							SimpleCaptchaResourceImpl.class,
+							"getSimpleCaptcha"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SimpleCaptchaResource>
+		_simpleCaptchaResourceComponentServiceObjects;
 
 }

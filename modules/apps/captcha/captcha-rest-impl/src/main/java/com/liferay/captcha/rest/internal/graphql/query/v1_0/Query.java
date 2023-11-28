@@ -5,6 +5,8 @@
 
 package com.liferay.captcha.rest.internal.graphql.query.v1_0;
 
+import com.liferay.captcha.rest.dto.v1_0.SimpleCaptcha;
+import com.liferay.captcha.rest.resource.v1_0.SimpleCaptchaResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -12,7 +14,11 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
 
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -30,6 +36,60 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setSimpleCaptchaResourceComponentServiceObjects(
+		ComponentServiceObjects<SimpleCaptchaResource>
+			simpleCaptchaResourceComponentServiceObjects) {
+
+		_simpleCaptchaResourceComponentServiceObjects =
+			simpleCaptchaResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {simpleCaptcha{token}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SimpleCaptcha simpleCaptcha() throws Exception {
+		return _applyComponentServiceObjects(
+			_simpleCaptchaResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			simpleCaptchaResource -> simpleCaptchaResource.getSimpleCaptcha());
+	}
+
+	@GraphQLName("SimpleCaptchaPage")
+	public class SimpleCaptchaPage {
+
+		public SimpleCaptchaPage(Page simpleCaptchaPage) {
+			actions = simpleCaptchaPage.getActions();
+
+			items = simpleCaptchaPage.getItems();
+			lastPage = simpleCaptchaPage.getLastPage();
+			page = simpleCaptchaPage.getPage();
+			pageSize = simpleCaptchaPage.getPageSize();
+			totalCount = simpleCaptchaPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SimpleCaptcha> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
@@ -49,6 +109,24 @@ public class Query {
 			componentServiceObjects.ungetService(resource);
 		}
 	}
+
+	private void _populateResourceContext(
+			SimpleCaptchaResource simpleCaptchaResource)
+		throws Exception {
+
+		simpleCaptchaResource.setContextAcceptLanguage(_acceptLanguage);
+		simpleCaptchaResource.setContextCompany(_company);
+		simpleCaptchaResource.setContextHttpServletRequest(_httpServletRequest);
+		simpleCaptchaResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		simpleCaptchaResource.setContextUriInfo(_uriInfo);
+		simpleCaptchaResource.setContextUser(_user);
+		simpleCaptchaResource.setGroupLocalService(_groupLocalService);
+		simpleCaptchaResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private static ComponentServiceObjects<SimpleCaptchaResource>
+		_simpleCaptchaResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

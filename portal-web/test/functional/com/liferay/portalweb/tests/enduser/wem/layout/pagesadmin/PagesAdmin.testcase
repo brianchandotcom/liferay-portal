@@ -2157,7 +2157,6 @@ definition {
 
 		task ("Select all web contents as collection item") {
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetType = "Basic Web Content",
 				entryList = "Web Content Title 1,Web Content Title 2,Web Content Title 3");
 		}

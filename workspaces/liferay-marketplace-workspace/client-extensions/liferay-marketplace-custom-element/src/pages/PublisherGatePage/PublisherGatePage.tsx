@@ -41,7 +41,9 @@ export function PublisherGatePage() {
 						href: '',
 						label: i18n.translate('learn-more'),
 					}}
-					title="Publish apps to the Liferay Marketplace"
+					title={i18n.translate(
+						'publish-apps-to-the-liferay-marketplace'
+					)}
 				/>
 
 				<GateCard

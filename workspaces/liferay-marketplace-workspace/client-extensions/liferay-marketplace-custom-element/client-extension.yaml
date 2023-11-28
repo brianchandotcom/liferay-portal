@@ -43,20 +43,6 @@ liferay-marketplace-custom-element-customer-gate:
     urls:
         - "*.js"
     useESM: true
-liferay-marketplace-custom-element-publisher-gate:
-    cssURLs:
-        - "**/*.css"
-    friendlyURLMapping: liferay-marketplace-custom-element-publisher-gate
-    htmlElementName: liferay-marketplace-custom-element
-    instanceable: false
-    name: Liferay Marketplace Publisher Gate
-    portletCategoryName: category.client-extensions
-    properties:
-        route: publisher-gate
-    type: customElement
-    urls:
-        - "*.js"
-    useESM: true
 liferay-marketplace-custom-element-get-app:
     cssURLs:
         - "**/*.css"
@@ -95,6 +81,20 @@ liferay-marketplace-custom-element-published-apps:
     portletCategoryName: category.client-extensions
     properties:
         route: published-apps
+    type: customElement
+    urls:
+        - "*.js"
+    useESM: true
+liferay-marketplace-custom-element-publisher-gate:
+    cssURLs:
+        - "**/*.css"
+    friendlyURLMapping: liferay-marketplace-custom-element-publisher-gate
+    htmlElementName: liferay-marketplace-custom-element
+    instanceable: false
+    name: Liferay Marketplace Publisher Gate
+    portletCategoryName: category.client-extensions
+    properties:
+        route: publisher-gate
     type: customElement
     urls:
         - "*.js"

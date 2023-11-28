@@ -184,10 +184,9 @@ definition {
 		}
 
 		task ("Then the user can configure notifications") {
-			AssertTextEquals(
-				locator1 = "MenuBar#MENU_BAR_SUBTITLE",
-				sectionName = "Notifications",
-				value1 = "Notifications");
+			AssertVisible(
+				locator1 = "MenuBar#SHEET_TERTIARY_TITLE",
+				tertiaryTitle = "Notifications");
 
 			MenuBar.click(menuBar = "Email From");
 
@@ -213,10 +212,9 @@ definition {
 		}
 
 		task ("Then the user can configure notifications") {
-			AssertTextEquals(
-				locator1 = "MenuBar#MENU_BAR_SUBTITLE",
-				sectionName = "Notifications",
-				value1 = "Notifications");
+			AssertVisible(
+				locator1 = "MenuBar#SHEET_TERTIARY_TITLE",
+				tertiaryTitle = "Notifications");
 
 			MenuBar.click(menuBar = "Email From");
 

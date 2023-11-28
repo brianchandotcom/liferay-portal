@@ -73,7 +73,8 @@ public class UpgradeJavaFDSActionProviderCheck extends BaseUpgradeCheck {
 				methodCall);
 
 			String variableTypeName = getVariableTypeName(
-				javaMethodContent, null, fileContent, fileName, parameterList.get(0));
+				javaMethodContent, null, fileContent, fileName,
+				parameterList.get(0));
 
 			if (variableTypeName == null) {
 				continue;

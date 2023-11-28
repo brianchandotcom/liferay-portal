@@ -82,7 +82,8 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatMethod(
-			String content, JavaTerm javaTerm, String fileContent, String fileName)
+			String content, JavaTerm javaTerm, String fileContent,
+			String fileName)
 		throws Exception {
 
 		boolean hasSetGroupPermissions = false;
@@ -204,8 +205,8 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 	}
 
 	private boolean _isServiceContextMethodCall(
-			JavaTerm javaTerm, String fileContent, String fileName, String methodCall,
-			String variableName)
+			JavaTerm javaTerm, String fileContent, String fileName,
+			String methodCall, String variableName)
 		throws Exception {
 
 		String variableTypeName = getVariableTypeName(

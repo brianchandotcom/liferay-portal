@@ -388,6 +388,85 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 Confirm that all the values set in the creation for all the fields are still present when the Edit modal is opened"
+	@priority = 5
+	test AssertAllFieldsArePresentWhenEditAModalActionOnItemAction {
+		property portal.acceptance = "true";
+
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates a modal item action and clicks on save button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				icon = "pencil",
+				title = "Edit item Action",
+				type = "Modal",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example",
+				variant = "Small");
+		}
+
+		task ("And clicks on the new modal item action 3 dot menu button") {
+			Click(
+				key_tableEntry = "pencil",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then the values set in the creation are still present") {
+			AssertElementPresent(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "Edit");
+
+			AssertElementPresent(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Modal");
+
+			AssertElementPresent(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+
+			AssertElementPresent(
+				key_fieldLabel = "Variant",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Small");
+
+			AssertElementPresent(
+				key_fieldName = "add-here-the-title-of-the-modal",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "Edit item Action");
+		}
+	}
 
 	@description = "LPS-191485. Verify if the options GET, POST, PATCH, LPS-199219DELETE are present in the Method dropdown in the Item Action"
 	@priority = 4

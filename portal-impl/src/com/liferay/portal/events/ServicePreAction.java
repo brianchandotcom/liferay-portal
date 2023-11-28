@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -2002,78 +2001,66 @@ public class ServicePreAction extends Action {
 			"X-Liferay-Request-Company",
 			String.valueOf(themeDisplay.getCompanyId()));
 
-		String[] liferayRequestGroupHeader = {
-			String.valueOf(themeDisplay.getScopeGroupId())
-		};
+		List<String> liferayRequestGroupHeaderValues = new ArrayList<>();
+
+		liferayRequestGroupHeaderValues.add(
+			String.valueOf(themeDisplay.getScopeGroupId()));
 
 		Group group = themeDisplay.getScopeGroup();
 
-		liferayRequestGroupHeader = ArrayUtil.append(
-			liferayRequestGroupHeader, group.getType() + "t");
+		liferayRequestGroupHeaderValues.add(group.getType() + "t");
 
 		Layout layout = themeDisplay.getLayout();
 
 		if (group.getGroupId() == themeDisplay.getCompanyGroupId()) {
-			liferayRequestGroupHeader = ArrayUtil.append(
-				liferayRequestGroupHeader, "1x");
+			liferayRequestGroupHeaderValues.add("1x");
 		}
 
 		if (group.getParentGroupId() != 0) {
-			liferayRequestGroupHeader = ArrayUtil.append(
-				liferayRequestGroupHeader, "2x");
+			liferayRequestGroupHeaderValues.add("2x");
 		}
 
 		if (group.isStaged()) {
-			liferayRequestGroupHeader = ArrayUtil.append(
-				liferayRequestGroupHeader, "3x");
+			liferayRequestGroupHeaderValues.add("3x");
 		}
 
 		if (group.isControlPanel() || layout.isTypeControlPanel()) {
-			liferayRequestGroupHeader = ArrayUtil.append(
-				liferayRequestGroupHeader, "4x");
+			liferayRequestGroupHeaderValues.add("4x");
 		}
 
 		if (group.isUser()) {
 			if (layout.isPrivateLayout()) {
-				liferayRequestGroupHeader = ArrayUtil.append(
-					liferayRequestGroupHeader, "5x");
+				liferayRequestGroupHeaderValues.add("5x");
 			}
 			else {
-				liferayRequestGroupHeader = ArrayUtil.append(
-					liferayRequestGroupHeader, "10x");
+				liferayRequestGroupHeaderValues.add("10x");
 			}
 
 			if (layout instanceof VirtualLayout) {
-				liferayRequestGroupHeader = ArrayUtil.append(
-					liferayRequestGroupHeader, "6x");
+				liferayRequestGroupHeaderValues.add("6x");
 			}
 		}
 
 		if (group.isLayoutSetPrototype()) {
-			liferayRequestGroupHeader = ArrayUtil.append(
-				liferayRequestGroupHeader, "7x");
+			liferayRequestGroupHeaderValues.add("7x");
 		}
 
 		if (group.isLayoutPrototype() || (layout.getMasterLayoutPlid() > 0)) {
-			liferayRequestGroupHeader = ArrayUtil.append(
-				liferayRequestGroupHeader, "8x");
+			liferayRequestGroupHeaderValues.add("8x");
 		}
 
 		if (group.isOrganization()) {
-			liferayRequestGroupHeader = ArrayUtil.append(
-				liferayRequestGroupHeader, "9x");
+			liferayRequestGroupHeaderValues.add("9x");
 		}
 
 		if (group.isSite()) {
-			liferayRequestGroupHeader = ArrayUtil.append(
-				liferayRequestGroupHeader, "s");
+			liferayRequestGroupHeaderValues.add("s");
 		}
 
 		httpServletResponse.setHeader(
 			"X-Liferay-Request-Group",
-			ArrayUtil.toString(
-				liferayRequestGroupHeader, StringPool.BLANK,
-				StringPool.SPACE));
+			ListUtil.toString(
+				liferayRequestGroupHeaderValues, StringPool.SPACE));
 
 		User user = themeDisplay.getUser();
 

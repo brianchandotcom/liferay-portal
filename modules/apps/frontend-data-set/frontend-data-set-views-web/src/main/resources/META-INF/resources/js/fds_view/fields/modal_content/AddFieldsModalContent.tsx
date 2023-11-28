@@ -24,6 +24,7 @@ import {IFDSField} from '../Fields';
 
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
+	query?: string;
 	savedId?: number;
 	selected?: boolean;
 }
@@ -84,6 +85,7 @@ function filterFields(
 			filteredItems.push({
 				...field,
 				children: filteredChildren,
+				query,
 			});
 
 			if (onFilter) {
@@ -328,7 +330,7 @@ const AddFieldsModalContent = ({
 								selectionMode="multiple"
 								showExpanderOnHover={false}
 							>
-								{({children, label}: IFieldTreeItem) => (
+								{({children, label, query}: IFieldTreeItem) => (
 									<TreeView.Item>
 										<TreeView.ItemStack>
 											<ClayCheckbox checked>

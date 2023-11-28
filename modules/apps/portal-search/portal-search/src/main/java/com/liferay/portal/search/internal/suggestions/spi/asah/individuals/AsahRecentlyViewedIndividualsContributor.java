@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.search.internal.util.SearchUtil;
+import com.liferay.portal.search.internal.util.AssetURLUtil;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.spi.suggestions.SuggestionsContributor;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
@@ -74,7 +74,7 @@ public class AsahRecentlyViewedIndividualsContributor
 
 				long entryClassPK = itemJSONObject.getLong("assetId");
 
-				return SearchUtil.getAssetURLView(
+				return AssetURLUtil.getAssetURLView(
 					assetRendererFactory.getAssetRenderer(entryClassPK),
 					assetRendererFactory, entryClassName, entryClassPK,
 					_liferayPortletRequest, _liferayPortletResponse);

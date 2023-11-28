@@ -32,7 +32,7 @@ import javax.portlet.WindowState;
 /**
  * @author Gustavo Lima
  */
-public class SearchUtil {
+public class AssetURLUtil {
 
 	public static String getAssetURLView(
 		AssetRenderer<?> assetRenderer,
@@ -98,6 +98,6 @@ public class SearchUtil {
 		return StringPool.BLANK;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(SearchUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(AssetURLUtil.class);
 
 }

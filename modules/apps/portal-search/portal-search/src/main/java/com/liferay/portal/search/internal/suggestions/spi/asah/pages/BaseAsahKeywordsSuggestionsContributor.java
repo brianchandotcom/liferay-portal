@@ -6,14 +6,17 @@
 package com.liferay.portal.search.internal.suggestions.spi.asah.pages;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.internal.configuration.AsahSearchKeywordsConfiguration;
 import com.liferay.portal.search.internal.suggestions.spi.asah.BaseAsahSuggestionsContributor;
-import com.liferay.portal.search.internal.web.cache.AsahSearchKeywordsWebCacheItem;
+import com.liferay.portal.search.internal.web.cache.AsahWebCacheItem;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 
 import java.util.Map;
@@ -50,15 +53,57 @@ public abstract class BaseAsahKeywordsSuggestionsContributor
 		SuggestionsContributorConfiguration
 			suggestionsContributorConfiguration) {
 
-		return AsahSearchKeywordsWebCacheItem.get(
-			analyticsConfiguration, basePath, _asahSearchKeywordsConfiguration,
-			searchContext.getCompanyId(),
-			getDisplayLanguageId(attributes, searchContext.getLocale()),
-			getGroupId(searchContext), getMinCounts(attributes, _MIN_COUNTS),
-			path,
-			GetterUtil.getInteger(
-				suggestionsContributorConfiguration.getSize(), 5),
-			sort);
+		String displayLanguageId = getDisplayLanguageId(
+			attributes, searchContext.getLocale());
+		long groupId = getGroupId(searchContext);
+		int minCounts = getMinCounts(attributes, _MIN_COUNTS);
+		int size = GetterUtil.getInteger(
+			suggestionsContributorConfiguration.getSize(), 5);
+
+		return AsahWebCacheItem.get(
+			analyticsConfiguration, _asahSearchKeywordsConfiguration,
+			getURL(
+				analyticsConfiguration, basePath, displayLanguageId, groupId,
+				minCounts, path, size, sort),
+			StringBundler.concat(
+				StringPool.POUND, searchContext.getCompanyId(),
+				StringPool.POUND, displayLanguageId, StringPool.POUND, groupId,
+				StringPool.POUND, minCounts, StringPool.POUND, size,
+				StringPool.POUND, sort));
+	}
+
+	protected String getURL(
+		AnalyticsConfiguration analyticsConfiguration, String basePath,
+		String displayLanguageId, long groupId, int minCounts, String path,
+		int size, String sort) {
+
+		StringBundler sb = new StringBundler(15);
+
+		sb.append(analyticsConfiguration.liferayAnalyticsFaroBackendURL());
+		sb.append("/api/1.0/");
+		sb.append(basePath);
+		sb.append("/");
+		sb.append(path);
+
+		sb.append("?minCounts=");
+		sb.append(minCounts);
+
+		if (!Validator.isBlank(displayLanguageId)) {
+			sb.append("&displayLanguageId=");
+			sb.append(displayLanguageId);
+		}
+
+		if (groupId > 0) {
+			sb.append("&groupId=");
+			sb.append(groupId);
+		}
+
+		sb.append("&size=");
+		sb.append(size);
+		sb.append("&sort=");
+		sb.append(sort);
+
+		return sb.toString();
 	}
 
 	private static final int _CHARACTER_THRESHOLD = 2;

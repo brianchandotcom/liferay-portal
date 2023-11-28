@@ -121,20 +121,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewErrorRequestFailed() {
-		AssertTextPresent(
-			locator1 = "Message#ERROR",
-			value1 = "Your request failed to complete.");
-	}
-
-	@summary = "Default summary"
-	macro viewErrorValidDueDate() {
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_DISMISSIBLE",
-			value1 = "Please enter a valid due date.");
-	}
-
-	@summary = "Default summary"
 	macro viewMyWorkflowTaskItemPosition(title = null, rowPosition = null) {
 		var key_rowPosition = ${rowPosition};
 		var key_title = ${title};

@@ -1200,9 +1200,13 @@ definition {
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowTask = "Review");
 
-		MyWorkflowTasks.viewErrorRequestFailed();
+		AssertVisible(
+			key_alertMessage = "Your request failed to complete.",
+			locator1 = "Message#ERROR_ENTER_ANY");
 
-		MyWorkflowTasks.viewErrorValidDueDate();
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Please enter a valid due date.");
 	}
 
 	@description = "Verify that the pagination button indicates the selected page, even when there is only 1 page"

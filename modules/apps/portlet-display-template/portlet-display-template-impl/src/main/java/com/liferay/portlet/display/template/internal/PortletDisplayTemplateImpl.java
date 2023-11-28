@@ -14,8 +14,10 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -25,12 +27,14 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.servlet.DynamicServletRequestUtil;
 import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portlet.display.template.BasePortletDisplayTemplateHandler;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -453,7 +457,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(),
 			ddmTemplate.getLanguage(), unsyncStringWriter,
-			themeDisplay.getRequest(),
+			_getHttpServletRequest(httpServletRequest, themeDisplay),
 			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
 	}
 
@@ -484,6 +488,32 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return renderDDMTemplate(
 			httpServletRequest, httpServletResponse, ddmTemplate, entries,
 			contextObjects);
+	}
+
+	private HttpServletRequest _getHttpServletRequest(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		HttpServletRequest originalHttpServletRequest =
+			themeDisplay.getRequest();
+
+		if (originalHttpServletRequest == null) {
+			return httpServletRequest;
+		}
+
+		String portletId = ParamUtil.getString(
+			originalHttpServletRequest, "p_p_id");
+
+		if (Validator.isNotNull(portletId)) {
+			Portlet portlet = _portletLocalService.getPortletById(portletId);
+
+			if (portlet != null) {
+				return DynamicServletRequestUtil.createDynamicServletRequest(
+					httpServletRequest, portlet,
+					originalHttpServletRequest.getParameterMap(), true);
+			}
+		}
+
+		return httpServletRequest;
 	}
 
 	private Map<String, Object> _mergePortletPreferences(
@@ -530,6 +560,9 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	private static class TransformerHolder {
 

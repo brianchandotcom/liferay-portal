@@ -7,6 +7,7 @@ package com.liferay.journal.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
@@ -37,7 +38,7 @@ public class JournalDisplayPagePreviewFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
-		if (!isEditDefaultValues(article) &&
+		if (!JournalUtil.isEditDefaultValues(article) &&
 			isDepotOrGlobalScopeArticle(article)) {
 
 			return true;

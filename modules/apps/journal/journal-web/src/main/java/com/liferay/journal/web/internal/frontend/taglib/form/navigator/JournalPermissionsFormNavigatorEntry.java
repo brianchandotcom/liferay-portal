@@ -7,6 +7,7 @@ package com.liferay.journal.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.portal.kernel.model.User;
 
 import javax.servlet.ServletContext;
@@ -37,7 +38,7 @@ public class JournalPermissionsFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (((article != null) && (article.getId() > 0)) ||
-			!isClassNameIdDefault(article)) {
+			!JournalUtil.isClassNameIdDefault(article)) {
 
 			return false;
 		}

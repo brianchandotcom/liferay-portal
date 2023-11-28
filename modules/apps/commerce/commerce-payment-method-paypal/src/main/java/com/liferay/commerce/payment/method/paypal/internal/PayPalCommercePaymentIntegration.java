@@ -499,16 +499,6 @@ public class PayPalCommercePaymentIntegration
 		_log.debug("Request body: " + gson.toJson(httpRequest.requestBody()));
 	}
 
-	private String _getAmountValue(
-		BigDecimal amount, CommerceCurrency commerceCurrency) {
-
-		BigDecimal scaledAmount = amount.setScale(
-			commerceCurrency.getMaxFractionDigits(),
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
-
-		return scaledAmount.toPlainString();
-	}
-
 	private StringBundler _getBaseUrl(
 		HttpServletRequest httpServletRequest,
 		CommercePaymentEntry commercePaymentEntry, String redirect) {
@@ -548,48 +538,35 @@ public class PayPalCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+
+		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
+
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
 				commercePaymentEntry.getClassPK());
 
-		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
-
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
+		amountWithBreakdown.amountBreakdown(
+			new AmountBreakdown() {
+				{
+					itemTotal(
+						_toMoney(
+							commerceCurrency, commerceOrder.getSubtotal()));
+					shipping(
+						_toMoney(
+							commerceCurrency,
+							commerceOrder.getShippingAmount()));
+					taxTotal(
+						_toMoney(
+							commerceCurrency, commerceOrder.getTaxAmount()));
+				}
+			});
 
 		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
 		amountWithBreakdown.value(
-			_getAmountValue(commerceOrder.getTotal(), commerceCurrency));
-
-		AmountBreakdown amountBreakdown = new AmountBreakdown();
-
-		Money shippingMoney = new Money();
-
-		shippingMoney.currencyCode(commerceCurrency.getCode());
-		shippingMoney.value(
-			_getAmountValue(
-				commerceOrder.getShippingAmount(), commerceCurrency));
-
-		amountBreakdown.shipping(shippingMoney);
-
-		Money itemTotalMoney = new Money();
-
-		itemTotalMoney.currencyCode(commerceCurrency.getCode());
-		itemTotalMoney.value(
-			_getAmountValue(commerceOrder.getSubtotal(), commerceCurrency));
-
-		amountBreakdown.itemTotal(itemTotalMoney);
-
-		Money taxTotalMoney = new Money();
-
-		taxTotalMoney.currencyCode(commerceCurrency.getCode());
-		taxTotalMoney.value(
-			_getAmountValue(commerceOrder.getTaxAmount(), commerceCurrency));
-
-		amountBreakdown.taxTotal(taxTotalMoney);
-
-		amountWithBreakdown.amountBreakdown(amountBreakdown);
+			_toScaledString(commerceCurrency, commerceOrder.getTotal()));
 
 		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
 
@@ -645,19 +622,12 @@ public class PayPalCommercePaymentIntegration
 					).stripTrailingZeros()));
 			item.sku(commerceOrderItem.getSku());
 
-			Money unitAmountMoney = new Money();
-
-			unitAmountMoney.currencyCode(commerceCurrency.getCode());
-
 			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
 
 			BigDecimal unitAmount = finalPrice.divide(
 				commerceOrderItem.getQuantity());
 
-			unitAmountMoney.value(
-				_getAmountValue(unitAmount, commerceCurrency));
-
-			item.unitAmount(unitAmountMoney);
+			item.unitAmount(_toMoney(commerceCurrency, unitAmount));
 
 			items.add(item);
 		}
@@ -687,17 +657,17 @@ public class PayPalCommercePaymentIntegration
 
 		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
+		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
+
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePaymentEntry.getCompanyId(),
 				commercePaymentEntry.getCurrencyCode());
 
-		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
-
 		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
 		amountWithBreakdown.value(
-			_getAmountValue(
-				commercePaymentEntry.getAmount(), commerceCurrency));
+			_toScaledString(
+				commerceCurrency, commercePaymentEntry.getAmount()));
 
 		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
 
@@ -831,6 +801,27 @@ public class PayPalCommercePaymentIntegration
 		sb.append("&orderType=normal");
 
 		return sb.toString();
+	}
+
+	private Money _toMoney(
+		CommerceCurrency commerceCurrency, BigDecimal value) {
+
+		Money money = new Money();
+
+		money.currencyCode(commerceCurrency.getCode());
+		money.value(_toScaledString(commerceCurrency, value));
+
+		return money;
+	}
+
+	private String _toScaledString(
+		CommerceCurrency commerceCurrency, BigDecimal value) {
+
+		BigDecimal scaledValue = value.setScale(
+			commerceCurrency.getMaxFractionDigits(),
+			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
+
+		return scaledValue.toPlainString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

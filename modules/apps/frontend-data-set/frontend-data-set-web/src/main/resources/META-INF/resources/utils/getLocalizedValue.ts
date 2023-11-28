@@ -34,7 +34,6 @@ function getLanguageKey(data: any): string {
 
 function resolveField(path: string | Array<string>, item: any) {
 	const DELIMITER = '.';
-	const FULL_OBJECT_IDENTIFIER = '*';
 
 	if (Array.isArray(path) || !path.includes(DELIMITER)) {
 		const rootPropertyName = typeof path === 'string' ? path : path[0];
@@ -43,10 +42,6 @@ function resolveField(path: string | Array<string>, item: any) {
 	}
 
 	const itemPath = path.split(DELIMITER);
-
-	if (itemPath[itemPath.length - 1] === FULL_OBJECT_IDENTIFIER) {
-		itemPath.pop();
-	}
 
 	return {
 		resolvedFieldname: itemPath[itemPath.length - 1],

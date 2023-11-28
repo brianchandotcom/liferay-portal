@@ -314,12 +314,6 @@ definition {
 			Click(
 				key_sampleTab = "Customized",
 				locator1 = "FrontendDataSet#FDS_DATASET");
-
-			Click(locator1 = "FrontendDataSet#ITEMS_VIEW_MODE_BUTTON");
-
-			Click(
-				key_viewMode = "Table",
-				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
 		}
 
 		task ("Then the results will be displayed accordingly to the filter selected") {

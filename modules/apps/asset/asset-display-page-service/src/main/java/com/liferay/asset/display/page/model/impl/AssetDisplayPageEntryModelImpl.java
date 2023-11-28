@@ -72,8 +72,7 @@ public class AssetDisplayPageEntryModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"layoutPageTemplateEntryId", Types.BIGINT}, {"type_", Types.INTEGER},
-		{"plid", Types.BIGINT}
+		{"layoutPageTemplateEntryId", Types.BIGINT}, {"type_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,11 +93,10 @@ public class AssetDisplayPageEntryModelImpl
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetDisplayPageEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetDisplayPageEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutPageTemplateEntryId LONG,type_ INTEGER,plid LONG,primary key (assetDisplayPageEntryId, ctCollectionId))";
+		"create table AssetDisplayPageEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetDisplayPageEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutPageTemplateEntryId LONG,type_ INTEGER,primary key (assetDisplayPageEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetDisplayPageEntry";
@@ -300,8 +298,6 @@ public class AssetDisplayPageEntryModelImpl
 				AssetDisplayPageEntry::getLayoutPageTemplateEntryId);
 			attributeGetterFunctions.put(
 				"type", AssetDisplayPageEntry::getType);
-			attributeGetterFunctions.put(
-				"plid", AssetDisplayPageEntry::getPlid);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -377,10 +373,6 @@ public class AssetDisplayPageEntryModelImpl
 				"type",
 				(BiConsumer<AssetDisplayPageEntry, Integer>)
 					AssetDisplayPageEntry::setType);
-			attributeSetterBiConsumers.put(
-				"plid",
-				(BiConsumer<AssetDisplayPageEntry, Long>)
-					AssetDisplayPageEntry::setPlid);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -707,21 +699,6 @@ public class AssetDisplayPageEntryModelImpl
 		_type = type;
 	}
 
-	@JSON
-	@Override
-	public long getPlid() {
-		return _plid;
-	}
-
-	@Override
-	public void setPlid(long plid) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_plid = plid;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -803,7 +780,6 @@ public class AssetDisplayPageEntryModelImpl
 		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(
 			getLayoutPageTemplateEntryId());
 		assetDisplayPageEntryImpl.setType(getType());
-		assetDisplayPageEntryImpl.setPlid(getPlid());
 
 		assetDisplayPageEntryImpl.resetOriginalValues();
 
@@ -843,8 +819,6 @@ public class AssetDisplayPageEntryModelImpl
 			this.<Long>getColumnOriginalValue("layoutPageTemplateEntryId"));
 		assetDisplayPageEntryImpl.setType(
 			this.<Integer>getColumnOriginalValue("type_"));
-		assetDisplayPageEntryImpl.setPlid(
-			this.<Long>getColumnOriginalValue("plid"));
 
 		return assetDisplayPageEntryImpl;
 	}
@@ -981,8 +955,6 @@ public class AssetDisplayPageEntryModelImpl
 
 		assetDisplayPageEntryCacheModel.type = getType();
 
-		assetDisplayPageEntryCacheModel.plid = getPlid();
-
 		return assetDisplayPageEntryCacheModel;
 	}
 
@@ -1060,7 +1032,6 @@ public class AssetDisplayPageEntryModelImpl
 	private long _classPK;
 	private long _layoutPageTemplateEntryId;
 	private int _type;
-	private long _plid;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1108,7 +1079,6 @@ public class AssetDisplayPageEntryModelImpl
 		_columnOriginalValues.put(
 			"layoutPageTemplateEntryId", _layoutPageTemplateEntryId);
 		_columnOriginalValues.put("type_", _type);
-		_columnOriginalValues.put("plid", _plid);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1160,8 +1130,6 @@ public class AssetDisplayPageEntryModelImpl
 		columnBitmasks.put("layoutPageTemplateEntryId", 4096L);
 
 		columnBitmasks.put("type_", 8192L);
-
-		columnBitmasks.put("plid", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -53,7 +53,6 @@ public class AssetDisplayPageEntryWrapper
 		attributes.put(
 			"layoutPageTemplateEntryId", getLayoutPageTemplateEntryId());
 		attributes.put("type", getType());
-		attributes.put("plid", getPlid());
 
 		return attributes;
 	}
@@ -144,12 +143,6 @@ public class AssetDisplayPageEntryWrapper
 
 		if (type != null) {
 			setType(type);
-		}
-
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
 		}
 	}
 
@@ -268,11 +261,6 @@ public class AssetDisplayPageEntryWrapper
 		return model.getMvccVersion();
 	}
 
-	/**
-	 * Returns the plid of this asset display page entry.
-	 *
-	 * @return the plid of this asset display page entry
-	 */
 	@Override
 	public long getPlid() {
 		return model.getPlid();
@@ -446,16 +434,6 @@ public class AssetDisplayPageEntryWrapper
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	 * Sets the plid of this asset display page entry.
-	 *
-	 * @param plid the plid of this asset display page entry
-	 */
-	@Override
-	public void setPlid(long plid) {
-		model.setPlid(plid);
 	}
 
 	/**

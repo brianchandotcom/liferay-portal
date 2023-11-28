@@ -13,6 +13,5 @@ create table AssetDisplayPageEntry (
 	classPK LONG,
 	layoutPageTemplateEntryId LONG,
 	type_ INTEGER,
-	plid LONG,
 	primary key (assetDisplayPageEntryId, ctCollectionId)
 );

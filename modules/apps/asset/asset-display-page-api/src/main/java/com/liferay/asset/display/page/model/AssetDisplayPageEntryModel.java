@@ -303,20 +303,6 @@ public interface AssetDisplayPageEntryModel
 	 */
 	public void setType(int type);
 
-	/**
-	 * Returns the plid of this asset display page entry.
-	 *
-	 * @return the plid of this asset display page entry
-	 */
-	public long getPlid();
-
-	/**
-	 * Sets the plid of this asset display page entry.
-	 *
-	 * @param plid the plid of this asset display page entry
-	 */
-	public void setPlid(long plid);
-
 	@Override
 	public AssetDisplayPageEntry cloneWithOriginalValues();
 

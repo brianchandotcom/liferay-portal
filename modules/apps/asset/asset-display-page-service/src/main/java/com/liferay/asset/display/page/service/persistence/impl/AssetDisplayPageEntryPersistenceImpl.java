@@ -3694,7 +3694,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 		ctStrictColumnNames.add("classPK");
 		ctStrictColumnNames.add("layoutPageTemplateEntryId");
 		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("plid");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

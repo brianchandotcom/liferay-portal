@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/publisher-gate",
+	"hidden": true,
+	"name": "Publisher Gate",
+	"name_i18n": {
+		"en_US": "Publisher Gate"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

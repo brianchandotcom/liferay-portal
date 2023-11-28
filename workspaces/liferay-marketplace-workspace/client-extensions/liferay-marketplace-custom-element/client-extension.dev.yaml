@@ -13,6 +13,11 @@ liferay-marketplace-custom-element-customer-gate:
         - http://localhost:5173/@vite/client
         - http://localhost:5173/@vite/refresh.ts
         - http://localhost:5173/src/main.tsx
+liferay-marketplace-custom-element-publisher-gate:
+    urls:
+        - http://localhost:5173/@vite/client
+        - http://localhost:5173/@vite/refresh.ts
+        - http://localhost:5173/src/main.tsx
 liferay-marketplace-custom-element-get-app:
     urls:
         - http://localhost:5173/@vite/client

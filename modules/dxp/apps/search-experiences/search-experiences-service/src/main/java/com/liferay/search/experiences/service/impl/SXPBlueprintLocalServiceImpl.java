@@ -195,10 +195,8 @@ public class SXPBlueprintLocalServiceImpl
 						"#_validate"),
 				true)) {
 
-			return;
+			_sxpBlueprintValidator.validate(titleMap);
 		}
-
-		_sxpBlueprintValidator.validate(titleMap);
 	}
 
 	@Reference

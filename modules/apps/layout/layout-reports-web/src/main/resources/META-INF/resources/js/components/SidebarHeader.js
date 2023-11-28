@@ -4,6 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {SET_SELECTED_ITEM} from '../constants/actionTypes';
@@ -39,6 +40,10 @@ const DefaultSidebarHeader = () => {
 			<div>
 				{showRefreshButton && (
 					<ClayButtonWithIcon
+						aria-label={sub(
+							Liferay.Language.get('relaunch-x'),
+							Liferay.Language.get('page-audit')
+						)}
 						className="component-action mr-2 sidenav-relaunch text-secondary"
 						disabled={loading}
 						displayType="unstyled"
@@ -61,6 +66,10 @@ const DefaultSidebarHeader = () => {
 				)}
 
 				<ClayButtonWithIcon
+					aria-label={sub(
+						Liferay.Language.get('close-x'),
+						Liferay.Language.get('page-audit')
+					)}
 					className="component-action sidenav-close text-secondary"
 					displayType="unstyled"
 					symbol="times"
@@ -79,6 +88,7 @@ const IssueDetailSidebarHeader = () => {
 		<div className="d-flex justify-content-between p-3 sidebar-header">
 			<div className="d-flex">
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('go-back')}
 					className="align-items-start component-action flex-shrink-0 mr-2 sidenav-back text-secondary"
 					displayType="unstyled"
 					onClick={() => {
@@ -97,6 +107,10 @@ const IssueDetailSidebarHeader = () => {
 			</div>
 
 			<ClayButtonWithIcon
+				aria-label={sub(
+					Liferay.Language.get('close-x'),
+					Liferay.Language.get('sidebar')
+				)}
 				className="component-action flex-shrink-0 sidenav-close text-secondary"
 				displayType="unstyled"
 				symbol="times"

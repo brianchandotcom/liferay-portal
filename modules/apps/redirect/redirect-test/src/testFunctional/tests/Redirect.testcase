@@ -905,6 +905,22 @@ definition {
 			sourceURLVariation = "LengthLimit");
 	}
 
+	@description = "This test covers LPS-202129. It ensures that users can not add source URL including a valid locale keyword."
+	@priority = 4
+	test CannotAddSourceURLIncludingValidLocaleKeyword {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			localeKeyword = "/es",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "es/test-source-page",
+			sourceURLVariation = "LocaleKeyword");
+	}
+
 	@description = "This ensures that a user cannot create a redirect if the sourceURL has invalid characters."
 	@priority = 4
 	@refactordone
@@ -1408,31 +1424,6 @@ definition {
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			redirectType = "Permanent",
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
-	}
-
-	@description = "This test covers LPS-152732 and LPS-152154. It ensures that the default redirect can not override localized redirect and the redirect will occur when there is a locale in the URL"
-	@priority = 4
-	test DefaultRedirectCanNotOverrideLocalizedRedirect {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONRedirect.addRedirect(
-			destinationURL = "https://google.hu",
-			groupName = "Test Site Name",
-			permanent = "true",
-			sourceURL = "hu/google");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/hu/google");
-
-		AssertLocation(value1 = "https://www.google.hu/");
-
-		JSONRedirect.addRedirect(
-			destinationURL = "https://google.com",
-			groupName = "Test Site Name",
-			sourceURL = "google");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/hu/google");
-
-		AssertLocation(value1 = "https://www.google.hu/");
 	}
 
 }

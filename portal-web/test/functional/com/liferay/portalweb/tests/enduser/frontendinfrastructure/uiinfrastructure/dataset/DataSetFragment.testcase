@@ -532,7 +532,7 @@ definition {
 	}
 
 	@description = "LPS-190724. Confirm that the is possible to interact Roles and Data Set fragment using StructuredContent user schema"
-	@priority = 5
+	@priority = 4
 	test CanUseStructuredContentUserSchema {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -641,7 +641,7 @@ definition {
 	}
 
 	@description = "LPS-190724. Confirm that the is possible to interact Vocabulary and Data Set fragment using TaxonomyVocabulary schema"
-	@priority = 5
+	@priority = 4
 	test CanUseTaxonomyCategorySchema {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -732,7 +732,7 @@ definition {
 	}
 
 	@description = "LPS-185993. Confirm that by default the column is sortable and when the option is cleared the button Sort is no longer shown"
-	@priority = 5
+	@priority = 4
 	test ConfirmDefaultSort {
 		task ("Given creating a Data Set entry, view and fields") {
 			DataSetAdmin.createAndConfigureDataSetEntry(
@@ -864,7 +864,7 @@ definition {
 	}
 
 	@description = "LPS-185993. Confirm that you can configure the order by date of a fragment column"
-	@priority = 5
+	@priority = 4
 	test ConfirmNewSortingByDate {
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(

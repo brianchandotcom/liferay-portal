@@ -579,7 +579,7 @@ definition {
 	}
 
 	@description = "LPS-191488. Confirm that it's possible to cancel changes in the Actions tab."
-	@priority = 5
+	@priority = 4
 	test CanCancelEditions {
 		task ("And creates a new item action") {
 			DataSetAdmin.addActions(
@@ -1109,7 +1109,7 @@ definition {
 	}
 
 	@description = "LPS-192149. Verify if the user can change the entry order with drag and drop in the action entries table"
-	@priority = 4
+	@priority = 3
 	test CanDragAndDropActionEntry {
 		task ("And creates two or more item actions") {
 			DataSetAdmin.addActions(

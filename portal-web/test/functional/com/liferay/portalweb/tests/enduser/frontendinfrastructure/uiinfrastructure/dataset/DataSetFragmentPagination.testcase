@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "LPS-185986. Confirm that the Items Per Page values have been changed"
-	@priority = 5
+	@priority = 4
 	test AssertPaginationIsChanged {
 		task ("When goes to Fields Tab.") {
 			DataSetAdmin.goToTab(tabName = "Fields");
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@description = "LPS-185986. Confirm that invalid values filled in are not displayed in pagination"
-	@priority = 5
+	@priority = 4
 	test CanAddInvalidValuesInPagination {
 		task ("When goes to Fields Tab.") {
 			DataSetAdmin.goToTab(tabName = "Fields");
@@ -291,7 +291,7 @@ definition {
 	}
 
 	@description = "LPS-185986. Confirm that the changes made to pagination have been undone, and are set back to defaults."
-	@priority = 5
+	@priority = 4
 	test CanCancelChangesInPagination {
 		task ("When goes to Fields Tab.") {
 			DataSetAdmin.goToTab(tabName = "Fields");

@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "LPS-178858 Confirm the empty message on the Data Set administration page"
-	@priority = 5
+	@priority = 3
 	test AssertEmptyMessageInDSAdmin {
 		task ("And the text “No Datasets Created. Start creating one to show your data.” is present on the page") {
 			AssertTextPresent(
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "LPS-178858 Confirm that the new Data Set Modal is displayed by clicking on the add button"
-	@priority = 5
+	@priority = 3
 	test AssertNewDataSetModal {
 		task ("When the user clicks on “Create Dataset” button") {
 			LexiconEntry.gotoAdd();
@@ -393,8 +393,8 @@ definition {
 	}
 
 	@description = "LPS-178858 Confirm that the modal data set view is displayed"
-	@priority = 5
-	test CanAsserTheDataSetViewCanBeCreate {
+	@priority = 3
+	test CanAssertTheDataSetViewCanBeCreated {
 		task ("Given the creation of a new dataset") {
 			DataSetAdmin.createDataSet(
 				key_name = "DataSet Test",
@@ -517,7 +517,7 @@ definition {
 	}
 
 	@description = "LPS-178858 Confirm the empty message in the Data Set View admin page"
-	@priority = 5
+	@priority = 3
 	test CanAssertTheEmptyMessageInDataSetView {
 		task ("Given the creation of a new dataset") {
 			DataSetAdmin.createDataSet(
@@ -577,7 +577,7 @@ definition {
 	}
 
 	@description = "LPS-181546 Confirm that the rest endpoint /scopes/{scopeKey} is displayed in the data set"
-	@priority = 4
+	@priority = 3
 	test CanAssertTheEndpointObjectInDataSetModal {
 		task ("Given an object definition 'Student' with name field and Scope: Site created") {
 			DataSetAdmin.setUpObjectForDataSet(
@@ -611,7 +611,7 @@ definition {
 	}
 
 	@description = "LPS-185990 Confirm that when creating a filter, items added to the picklist appear in preselect value selecting Multiple radio button"
-	@priority = 5
+	@priority = 3
 	test CanAssertTheItemsInPreselectValueMultiple {
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -699,7 +699,7 @@ definition {
 	}
 
 	@description = "LPS-185990 Confirm that when creating a filter, items added to the picklist appear in preselect value selecting Single radio button"
-	@priority = 5
+	@priority = 3
 	test CanAssertTheItemsInPreselectValueSingle {
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -889,7 +889,7 @@ definition {
 	}
 
 	@description = "LPS-185990 Confirm that when creating a filter within the view, there is a search bar field to preselect values"
-	@priority = 5
+	@priority = 3
 	test CanAssertTheSearchBarField {
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -1142,7 +1142,7 @@ definition {
 	}
 
 	@description = "LPS-185990 Confirm that when searching for a valid item value, it is displayed in the drop-down menu"
-	@priority = 5
+	@priority = 4
 	test CanSearchASpecificItemCreated {
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -1965,7 +1965,7 @@ definition {
 	}
 
 	@description = "LPS-175990. Confirm that the user can cancel the creation of a data set entry"
-	@priority = 5
+	@priority = 4
 	test NotCreatedAfterCancel {
 		task ("When The user goes to add data sets") {
 			LexiconEntry.gotoAdd();
@@ -2195,7 +2195,7 @@ definition {
 	}
 
 	@description = "LPS-194126 Confirm that when creating a field with a pt-BR translation, the label is translated when pt is added to the page URL"
-	@priority = 5
+	@priority = 4
 	test TheFieldValueIsTranslated {
 		task ("Given a product created and a data set entry with app:/headless-commerce-admin-catalog/v1.0") {
 			ApplicationsMenu.gotoPortlet(

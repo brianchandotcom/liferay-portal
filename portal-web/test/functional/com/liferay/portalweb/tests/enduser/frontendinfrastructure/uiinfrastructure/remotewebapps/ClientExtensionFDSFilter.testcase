@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "LPS-190220. Verify that when the user clicks on Cancel, the changes are not saved."
-	@priority = 5
+	@priority = 4
 	test CanCancelChanges {
 		task ("Given Client Extension admin page") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();

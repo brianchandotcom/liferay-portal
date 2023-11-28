@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "LPS-172396. Confirm that a data set view can be deleted"
-	@priority = 5
+	@priority = 3
 	test AssertNumberOfCharactersExceededInNameField {
 		task ("And Clicking add button") {
 			LexiconEntry.gotoAdd();
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "LPS-172396. Confirm that description field is trunked if exceed 100 characters"
-	@priority = 4
+	@priority = 3
 	test AssertNumberOfCharactersInDescriptionField {
 		task ("When go to add View with name View Test and description with 150 characters") {
 			DataSetAdmin.createDataSetView(
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "LPS-172396. Confirm that field is trunked if exceed 100 characters"
-	@priority = 4
+	@priority = 3
 	test CanAssertNameFieldIsTrunkedIfExceedCharacters {
 		task ("When Clicking add button, and a user types a name that is more than 100 characters until 280 characters, and Filling the description field with 'Test Description', and Clicking Save button") {
 			DataSetAdmin.createDataSetView(
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "LPS-176189. Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
-	@priority = 5
+	@priority = 3
 	test CanAssertPagination {
 		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
 			DataSetAdmin.createFDSViewViaAPI(
@@ -263,7 +263,7 @@ definition {
 	}
 
 	@description = "LPS-172396. Confirm that the user can cancel a view criation by clicking on cancel button"
-	@priority = 5
+	@priority = 4
 	test CanCancelViewCreationOnCancelButton {
 		task ("When Add a view with the name 'View Test") {
 			LexiconEntry.gotoAdd();
@@ -289,7 +289,7 @@ definition {
 	}
 
 	@description = "LPS-181572 - Verify if is possible clicks on Data Set View Name and go to datail view page"
-	@priority = 5
+	@priority = 4
 	test CanClickOnCreatedDataViewName {
 		task ("And create a Dataset view") {
 			DataSetAdmin.createDataSetView(
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@description = "LPS-172396. Confirm that The user can create a view with no description"
-	@priority = 4
+	@priority = 3
 	test CanCreateViewWithNoDescription {
 		task ("When Clicking add button, And Filling the name with 'View Test', And Clicking the Save button") {
 			DataSetAdmin.createDataSetView(
@@ -421,7 +421,7 @@ definition {
 	}
 
 	@description = "LPS-172396. Assert that the user can edit or delet view"
-	@priority = 5
+	@priority = 3
 	test CanEditOrDeleteView {
 		task ("When go to the View page of the data set created, and click save button") {
 			DataSetAdmin.createDataSetView(
@@ -606,7 +606,7 @@ definition {
 	}
 
 	@description = "LPS-176189. Confirm that the view was really deleted"
-	@priority = 5
+	@priority = 4
 	test CanUpdateNumberOfViews {
 		task ("When Add a new view") {
 			DataSetAdmin.createDataSetView(
@@ -666,7 +666,7 @@ definition {
 	}
 
 	@description = "LPS-181572 - Verify if when user create a new Data Set, the informations will appears corretly"
-	@priority = 3
+	@priority = 4
 	test CanViewCreatedDataSet {
 		task ("When go to Dataset admin Page") {
 			Navigator.gotoBack();

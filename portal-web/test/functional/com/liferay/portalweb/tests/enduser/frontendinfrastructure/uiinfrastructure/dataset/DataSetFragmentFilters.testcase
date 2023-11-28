@@ -624,7 +624,7 @@ definition {
 	}
 
 	@description = "LPS-191295. An empty filter list is displayed when there is no filter created"
-	@priority = 4
+	@priority = 3
 	test ConfirmEmptyListOfFilters {
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(

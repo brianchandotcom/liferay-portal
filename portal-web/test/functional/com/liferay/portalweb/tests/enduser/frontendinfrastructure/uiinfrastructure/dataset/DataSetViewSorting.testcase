@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "LPS-182790. Confirms the sorting deletion message."
-	@priority = 5
+	@priority = 3
 	test AssertDeleteSortingMessage {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@description = "LPS-182790. Confirms the option of Edit a sorting appears."
-	@priority = 5
+	@priority = 3
 	test AssertEditOptionAppears {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "LPS-182790. Confirms Ascending and Descending options appears when editing a sorting."
-	@priority = 5
+	@priority = 3
 	test AssertEditSortingOptions {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
@@ -256,8 +256,10 @@ definition {
 	}
 
 	@description = "LPS-185326. Confirm that the Default Sort was created successfully."
-	@priority = 3
+	@priority = 5
 	test CanCreateDefaultSort {
+		property portal.acceptance = "true";
+
 		task ("And adding a new default sort ") {
 			DataSetAdmin.createASort(
 				key_field = "creator",
@@ -315,7 +317,7 @@ definition {
 	}
 
 	@description = "LPS-185322. Confirm that the new default sorting modal is displayed."
-	@priority = 4
+	@priority = 3
 	test CanDisplayedDefaultSort {
 		task ("And adds a new default sort, on "+" button or "New Default Sort" button.") {
 			LexiconEntry.gotoAdd();
@@ -330,7 +332,7 @@ definition {
 
 	@description = "LPS-182790. Confirms it's posible to order a sorting. Blocked by LPS-186225."
 	@ignore = "true"
-	@priority = 5
+	@priority = 4
 	test CanOrderSorting {
 		task ("When the user creates 2 or more new sorting") {
 			DataSetAdmin.createASort(
@@ -451,7 +453,7 @@ definition {
 	}
 
 	@description = "LPS-182790. Confirms it's possible to edit a sorting."
-	@priority = 5
+	@priority = 4
 	test CantEditField {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(

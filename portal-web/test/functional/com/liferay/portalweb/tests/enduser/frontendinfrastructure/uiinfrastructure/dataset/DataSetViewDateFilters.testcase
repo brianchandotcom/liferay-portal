@@ -599,7 +599,7 @@ definition {
 	}
 
 	@description = "LPS-190851. Confirm that a sticker 'in use' is shown in the field when we create a filter from it and that it is not possible to create another filter with the same field"
-	@priority = 5
+	@priority = 4
 	test ConfirmBadgeInUse {
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(

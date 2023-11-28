@@ -79,7 +79,7 @@ definition {
 	}
 
 	@description = "LPS-190851. Confirm that the filter options are shown after clicking on the Create Filter button"
-	@priority = 4
+	@priority = 3
 	test AssertOptionsAfterClickingCreateButton {
 		task ("And clicks to add a new filter") {
 			Click(
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "LPS-190851. Confirm that the filter options are shown after clicking on the button plus"
-	@priority = 4
+	@priority = 3
 	test AssertOptionsAfterClickingPlusButton {
 		task ("And clicks to add a new filter") {
 			LexiconEntry.gotoAdd();
@@ -114,7 +114,7 @@ definition {
 
 	@description = "LPS-186878 Confirm that the translated option appears when selecting pt_BR in the translation modal"
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test AssertTheTranslatedOption {
 		task ("And adds a new filter") {
 			LexiconEntry.gotoAdd();
@@ -160,7 +160,7 @@ definition {
 
 	@description = "LPS-186878 Confirm that translation options in filters are displayed on the page by adding pt to the URL"
 	@ignore = "true"
-	@priority = 5
+	@priority = 3
 	test AssertTheTranslationInFilters {
 		task ("And creating a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Transport");
@@ -273,7 +273,7 @@ definition {
 
 	@description = " LPS-186878 Confirm that the translation modal is opened and displayed correctly"
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test AssertTheTranslationModal {
 		task ("And adds a new filter") {
 			LexiconEntry.gotoAdd();
@@ -374,7 +374,7 @@ definition {
 
 	@description = "LPS-176187. Confirm that the fields Name and Filter by are present in the New Filter modal."
 	@ignore = "true"
-	@priority = 5
+	@priority = 3
 	test CanAssertFieldsIsPresent {
 		task ("And Clicks Save") {
 			LexiconEntry.gotoAdd();
@@ -452,8 +452,10 @@ definition {
 
 	@description = "LPS-176188. Confirm that the field is deleted and a successful message is displayed."
 	@ignore = "true"
-	@priority = 3
+	@priority = 5
 	test CanAssertFilterIsDeleted {
+		property portal.acceptance = "true";
+
 		task ("And adds a filter") {
 			DataSetAdmin.createFilters(
 				filterName = "Test Filter",
@@ -509,7 +511,7 @@ definition {
 
 	@description = "LPS-183056. Confirm that the preselect option shows Ana as the value."
 	@ignore = "true"
-	@priority = 5
+	@priority = 4
 	test CanAssertPreselectShowsAna {
 		task ("And creating two picklist Cars and Names, with two items Civic and Ana") {
 			Picklist.addPicklistViaAPI(picklistName = "Cars");
@@ -584,7 +586,7 @@ definition {
 
 	@description = "LPS-183056. Confirm that the "Multiple" and "Include" radio buttons are deselected."
 	@ignore = "true"
-	@priority = 5
+	@priority = 4
 	test CanAssertRadioButtonsIsDeselected {
 		task ("And creating a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
@@ -647,7 +649,7 @@ definition {
 
 	@description = "LPS-176187. Confirm that the Selection option is not displayed."
 	@ignore = "true"
-	@priority = 5
+	@priority = 4
 	test CanAssertSelectionIsNotDisplayed {
 		task ("And creating a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
@@ -739,7 +741,7 @@ definition {
 
 	@description = "LPS-183056. Confirm the change of the Source Options from Cars to Names."
 	@ignore = "true"
-	@priority = 5
+	@priority = 4
 	test CanAssertSourceOptionsIsNames {
 		task ("And creating two picklist Cars and Names, with two items Civic and Ana") {
 			Picklist.addPicklistViaAPI(picklistName = "Cars");
@@ -1029,7 +1031,7 @@ definition {
 
 	@description = "LPS-176188. Confirm that an element dragged and dropped below another,will be deprioritized."
 	@ignore = "true"
-	@priority = 5
+	@priority = 3
 	test CanBeDeprioritizedBelowAnother {
 		task ("And adds two or more new filters") {
 			DataSetAdmin.createFilters(
@@ -1059,7 +1061,7 @@ definition {
 
 	@description = "LPS-176188. Confirm that an element dragged and dropped on top of another element will be prioritized."
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test CanBePrioritizedOverAnother {
 		task ("And adds two or more new filters") {
 			DataSetAdmin.createFilters(
@@ -1340,7 +1342,7 @@ definition {
 
 	@description = "LPS-176187. Confirm the cancellation of the Filter creation with the close button."
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test CanCancelOnCloseButton {
 		task ("And creating a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
@@ -1462,7 +1464,7 @@ definition {
 
 	@description = "LPS-176187. Confirm that only one radio button can be selected."
 	@ignore = "true"
-	@priority = 5
+	@priority = 4
 	test CanOnlyOneRadioButtonIsSelected {
 		task ("And creating a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
@@ -1899,7 +1901,7 @@ definition {
 	}
 
 	@description = "LPS-183621. Confirm that by editing the filter and selecting Multiple, other items can be added and saved."
-	@priority = 5
+	@priority = 4
 	test SelectionTypeAfterEditFilterChangeSelectionToMultiple {
 		task ("And creating a picklist And Add items to the created picklist") {
 			DataSetAdmin.setUpPicklistforDataSet(
@@ -2040,7 +2042,7 @@ definition {
 	}
 
 	@description = "LPS-183621. Confirm that by selecting the radio button Multiple and selecting more than one item, the filter can be saved ."
-	@priority = 5
+	@priority = 4
 	test SelectionTypeWithSelectionMultipleField {
 		task ("And creating a picklist And Add items to the created picklist") {
 			DataSetAdmin.setUpPicklistforDataSet(
@@ -2157,7 +2159,7 @@ definition {
 
 	@description = "LPS-183056. Confirm that the Name field cannot be empty."
 	@ignore = "true"
-	@priority = 3
+	@priority = 4
 	test TheNameFieldCannotBeEmpty {
 		task ("And creating a picklist") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");

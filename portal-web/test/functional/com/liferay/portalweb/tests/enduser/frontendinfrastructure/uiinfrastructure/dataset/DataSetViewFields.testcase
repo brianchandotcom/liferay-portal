@@ -88,7 +88,7 @@ definition {
 	}
 
 	@description = "LPS-176516 Confirm the success of the changes, and addition of the new language"
-	@priority = 5
+	@priority = 4
 	test AssertTheSuccessMessageInField {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@description = "LPS-176516 Confirm that the language dropdown is displayed"
-	@priority = 5
+	@priority = 3
 	test AssertTheTranslationModal {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "LPS-176516 Confirm the translated in language selected"
-	@priority = 5
+	@priority = 3
 	test AssertTranslatedStatusIsDisplayes {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
@@ -228,6 +228,8 @@ definition {
 	@description = "LPS-179151. Confirm the change in the field label field."
 	@priority = 5
 	test CanAssertChangeInTheLabelField {
+		property portal.acceptance = "true";
+
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
@@ -265,7 +267,7 @@ definition {
 	}
 
 	@description = "LPS-185498. Confirm that when trying to delete field, modal appears."
-	@priority = 4
+	@priority = 3
 	test CanAssertModalWhenDeleteField {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -287,7 +289,7 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm that the Checkbox in the Field edit modal is displayed."
-	@priority = 5
+	@priority = 3
 	test CanAssertTheSortableCheckbox {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -499,7 +501,7 @@ definition {
 	}
 
 	@description = "LPS-185230. Confirm that the user can cancel adding a field by clicking on cancel button."
-	@priority = 4
+	@priority = 3
 	test CanCancelAddingOnCancelButton {
 		task ("And clicks on Add Fields button") {
 			LexiconEntry.gotoAdd();
@@ -521,7 +523,7 @@ definition {
 	}
 
 	@description = "LPS-185232. Confirm that the user can cancel adding a field by clicking on modal's close (X) button."
-	@priority = 4
+	@priority = 3
 	test CanCancelAddingOnCloseButton {
 		task ("And clicks on plus button") {
 			LexiconEntry.gotoAdd();
@@ -623,7 +625,7 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm the cancellation of the field edit by clicking on the Cancel button."
-	@priority = 5
+	@priority = 4
 	test CanCancelEditOnCancelButton {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -666,7 +668,7 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm the cancellation of the field edit by clicking on the Close button."
-	@priority = 5
+	@priority = 3
 	test CanCancelEditOnCloseButton {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -711,7 +713,7 @@ definition {
 	}
 
 	@description = "LPS-185500. Confirm that can cancel field deletion on cancel button."
-	@priority = 4
+	@priority = 3
 	test CanCancelFieldDeletion {
 		task ("And adds 'id' field") {
 			DataSetAdmin.addFields(key_fieldList = "id");
@@ -743,7 +745,7 @@ definition {
 	}
 
 	@description = "LPS-176516 Confirm that the indication of a translation in the field and stop with the cancel button"
-	@priority = 4
+	@priority = 3
 	test CanCancelTranslationOnCancelButton {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
@@ -933,7 +935,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-179282. Confirm that the user can check and uncheck all the fields"
+	@description = "LPS-174141. Confirm that the user can check and uncheck all the fields"
 	@priority = 4
 	test CanCheckAndUncheckAllFields {
 		task ("And Clicking to Add a new field") {
@@ -958,7 +960,7 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm that the checkbox in the field edit modal is checked."
-	@priority = 5
+	@priority = 4
 	test CanConfirmCheckedSortableCheckbox {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -1006,7 +1008,7 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm that the checkbox in the field edit modal is unchecked."
-	@priority = 5
+	@priority = 4
 	test CanConfirmUncheckedSortableCheckbox {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -1050,8 +1052,10 @@ definition {
 	}
 
 	@description = "LPS-185499. Confirm that field can be deleted."
-	@priority = 4
+	@priority = 5
 	test CanDeleteField {
+		property portal.acceptance = "true";
+
 		task ("And adds 'id' field") {
 			DataSetAdmin.addFields(key_fieldList = "id");
 		}
@@ -1163,7 +1167,7 @@ definition {
 	}
 
 	@description = "LPS-185501. Confirm that fields are not updated if proccess is canceled on cancel button."
-	@priority = 4
+	@priority = 3
 	test CannotUpdateFieldsIfCancelOnCancelButton {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -1199,7 +1203,7 @@ definition {
 	}
 
 	@description = "LPS-185502. Confirm that fields are not updated if proccess is canceled on close (X) button."
-	@priority = 4
+	@priority = 3
 	test CannotUpdateFieldsIfCancelOnCloseButton {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -1384,8 +1388,10 @@ definition {
 	}
 
 	@description = "LPS-185503. Confirm that fields are not updated when saving changes."
-	@priority = 4
+	@priority = 5
 	test CanUpdateFieldsWhenSave {
+		property portal.acceptance = "true";
+
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
@@ -1418,7 +1424,7 @@ definition {
 	}
 
 	@description = "LPS-176051. Confirm that the user can view Edit icon modal"
-	@priority = 5
+	@priority = 3
 	test CanViewEditModal {
 		task ("And add new fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -1440,7 +1446,7 @@ definition {
 	}
 
 	@description = "LPS-176051. Confirm that the user can view Edit icon of fields"
-	@priority = 5
+	@priority = 3
 	test CanViewEditOption {
 		task ("And add new fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");
@@ -1482,7 +1488,7 @@ definition {
 	}
 
 	@description = "LPS-188333. Confirm that changes in the fields are not autosaved when edit and delete an entry"
-	@priority = 4
+	@priority = 3
 	test FieldsChangesAreAutosaved {
 		task ("And the Save and Cancel button are not present") {
 			AssertElementNotPresent(locator1 = "Button#CANCEL");
@@ -1541,7 +1547,7 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm that the Field Edit modal is displayed."
-	@priority = 5
+	@priority = 3
 	test TheEditFieldModalIsDisplayed {
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,label");

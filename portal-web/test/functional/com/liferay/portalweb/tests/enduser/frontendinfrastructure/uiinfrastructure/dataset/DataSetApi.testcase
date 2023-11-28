@@ -53,8 +53,10 @@ definition {
 	}
 
 	@description = "LPS-181355. Confirm that views can be created through API"
-	@priority = 4
+	@priority = 5
 	test CanCreateViewsThroughAPI {
+		property portal.acceptance = "true";
+		
 		task ("Given creating a Data Set via API") {
 			DataSetAdmin.goToDataSetAdminPage();
 

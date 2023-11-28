@@ -241,7 +241,7 @@ definition {
 	}
 
 	@description = "LPS-188590 Confirm the description in the FF Data Set"
-	@priority = 5
+	@priority = 3
 	test CanConfirmTextInDataSetFF {
 		task ("Given the Instance Settings Admin page") {
 			ApplicationsMenu.gotoPortlet(

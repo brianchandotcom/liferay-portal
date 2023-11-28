@@ -82,7 +82,7 @@ definition {
 	}
 
 	@description = "LPS-183938. Confirm the default values for 'Pagination Items' and 'Default Value' fields"
-	@priority = 4
+	@priority = 3
 	test CanAssertDefaultValues {
 		task ("Then the default values for Pagination items will be 4, 8, 20, 40, 60, separated by commas") {
 			AssertElementPresent(
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "LPS-183950. Confirm that pagination creation can be cancelled when clicking on cancel button"
-	@priority = 5
+	@priority = 3
 	test CanCancelPaginationCreationOnCancelButton {
 		task ("And the user fills in the pagination items field") {
 			DataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "LPS-183941. Confirm the pagination can be created with one pagination item"
-	@priority = 5
+	@priority = 4
 	test CanCreateWithOnePaginationItem {
 		task ("Only one item is written in the pagination items") {
 			DataSetAdmin.changePaginationItems(paginationItems = 10);
@@ -175,7 +175,7 @@ definition {
 	}
 
 	@description = "LPS-183943. Confirm that pagination cannot exceed 25 pagination items"
-	@priority = 5
+	@priority = 3
 	test CannotExceed25PaginationItems {
 		task ("The user writes 26 items in the pagination items field //Pagination Items: 1,2,3,…,26") {
 			DataSetAdmin.changePaginationItems(paginationItems = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26");
@@ -199,7 +199,7 @@ definition {
 	}
 
 	@description = "LPS-183944. Confirm that pagination cannot exceed 1000 items per page"
-	@priority = 5
+	@priority = 3
 	test CannotExceed1000ItemsPerPage {
 		task ("The user fills the pagination items field") {
 			DataSetAdmin.changePaginationItems(paginationItems = "10, 100, 1000, 1001");
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "LPS-183948. Confirm that pagination cannot have characters in default value field"
-	@priority = 4
+	@priority = 3
 	test CannotUseCharactersInDefaultValueField {
 		task ("The user fills in the default value field some characters") {
 			DataSetAdmin.changePaginationDefaultItems(defaultPagination = "a");
@@ -272,7 +272,7 @@ definition {
 	}
 
 	@description = "LPS-183940. Confirm that error appears when pagination item is blank"
-	@priority = 5
+	@priority = 4
 	test ErrorAppearsWhenPaginationItemBlank {
 		task ("The user leaves the field Pagination Items empty") {
 			DataSetAdmin.changePaginationItems(paginationItems = "");

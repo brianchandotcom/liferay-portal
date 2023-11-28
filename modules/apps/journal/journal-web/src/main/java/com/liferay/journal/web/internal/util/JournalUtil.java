@@ -10,6 +10,7 @@ import com.liferay.diff.DiffVersionsInfo;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -18,6 +19,7 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,13 +33,19 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
@@ -46,6 +54,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Tom Wang
@@ -261,6 +271,54 @@ public class JournalUtil {
 					JournalArticle.class.getName());
 
 		if (count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isClassNameIdDefault(JournalArticle journalArticle) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		long classNameId = BeanPropertiesUtil.getLong(
+			journalArticle, "classNameId",
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
+
+		if (portletRequest != null) {
+			if (ParamUtil.getLong(portletRequest, "classNameId", classNameId) <=
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
+
+		if (Validator.isNotNull(portletId)) {
+			classNameId = ParamUtil.getLong(
+				httpServletRequest,
+				PortalUtil.getPortletNamespace(portletId) + "classNameId",
+				classNameId);
+		}
+
+		if (classNameId <= JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEditDefaultValues(JournalArticle article) {
+		if (!isClassNameIdDefault(article)) {
 			return true;
 		}
 

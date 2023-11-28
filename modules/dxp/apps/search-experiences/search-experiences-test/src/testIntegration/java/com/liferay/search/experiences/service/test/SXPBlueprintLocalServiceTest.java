@@ -6,7 +6,9 @@
 package com.liferay.search.experiences.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -20,12 +22,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.search.experiences.exception.DuplicateSXPBlueprintExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.NoSuchSXPBlueprintException;
+import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -62,7 +67,11 @@ public class SXPBlueprintLocalServiceTest {
 			CompanyTestUtil.addCompany());
 
 		SXPBlueprint differentCompanySXPBlueprint = _addSXPBlueprint(
-			sxpBlueprint.getExternalReferenceCode(), user.getUserId());
+			sxpBlueprint.getExternalReferenceCode(), user.getUserId(),
+			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(
 			sxpBlueprint.getExternalReferenceCode(),
@@ -156,23 +165,67 @@ public class SXPBlueprintLocalServiceTest {
 		_sxpBlueprintLocalService.updateSXPBlueprint(sxpBlueprint2);
 	}
 
+	@Test
+	public void testValidateSXPBlueprint() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		String attribute =
+			"com.liferay.search.experiences.service.impl." +
+				"SXPBlueprintLocalServiceImpl#_validate";
+
+		try {
+			_addSXPBlueprint(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+				Collections.emptyMap(), serviceContext);
+		}
+		catch (SXPBlueprintTitleException sxpBlueprintTitleException) {
+			Assert.assertNotNull(sxpBlueprintTitleException);
+		}
+
+		serviceContext.setAttribute(attribute, Boolean.TRUE);
+
+		try {
+			_addSXPBlueprint(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+				Collections.emptyMap(), serviceContext);
+		}
+		catch (SXPBlueprintTitleException sxpBlueprintTitleException) {
+			Assert.assertNotNull(sxpBlueprintTitleException);
+		}
+
+		serviceContext.setAttribute(attribute, Boolean.FALSE);
+
+		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+			Collections.emptyMap(), serviceContext);
+
+		Assert.assertEquals(Collections.emptyMap(), sxpBlueprint.getTitleMap());
+	}
+
 	private SXPBlueprint _addSXPBlueprint(String externalReferenceCode)
 		throws Exception {
 
 		return _addSXPBlueprint(
-			externalReferenceCode, TestPropsValues.getUserId());
-	}
-
-	private SXPBlueprint _addSXPBlueprint(
-			String externalReferenceCode, long userId)
-		throws Exception {
-
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			externalReferenceCode, userId, "{}",
-			Collections.singletonMap(LocaleUtil.US, ""), null, "",
+			externalReferenceCode, TestPropsValues.getUserId(),
+			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private SXPBlueprint _addSXPBlueprint(
+			String externalReferenceCode, long userId,
+			Map<Locale, String> descriptionMap, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			externalReferenceCode, userId, "{}", descriptionMap, null,
+			StringPool.BLANK, titleMap, serviceContext);
 
 		_sxpBlueprints.add(sxpBlueprint);
 

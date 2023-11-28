@@ -11,7 +11,6 @@
 
 	<!-- Listeners -->
 
-	<bean class="com.liferay.portal.internal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
 	<bean class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener" id="messageListener.live_users_cluster">
 		<property name="priority">
 			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
@@ -24,12 +23,6 @@
 	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.misc">
 		<property name="destinationConfigurations">
 			<util:set>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/async_service" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
-					</constructor-arg>
-				</bean>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
 					<constructor-arg name="destinationName" value="liferay/live_users" />
 					<constructor-arg name="destinationType">
@@ -46,11 +39,6 @@
 		</property>
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/async_service">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.async_service" />
-					</list>
-				</entry>
 				<entry key="liferay/live_users">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.live_users" />

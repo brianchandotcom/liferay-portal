@@ -130,11 +130,11 @@ public class PayPalCommercePaymentIntegration
 
 			_debug(ordersAuthorizeRequest);
 
-			HttpResponse<Order> authorizeHttpResponse =
-				payPalHttpClient.execute(ordersAuthorizeRequest);
+			HttpResponse<Order> httpResponse = payPalHttpClient.execute(
+				ordersAuthorizeRequest);
 
-			if (authorizeHttpResponse.statusCode() == 201) {
-				Order order = authorizeHttpResponse.result();
+			if (httpResponse.statusCode() == 201) {
+				Order order = httpResponse.result();
 
 				List<PurchaseUnit> purchaseUnits = order.purchaseUnits();
 
@@ -197,19 +197,19 @@ public class PayPalCommercePaymentIntegration
 		throws PortalException {
 
 		try {
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
 			AuthorizationsVoidRequest authorizationsVoidRequest =
 				new AuthorizationsVoidRequest(
 					commercePaymentEntry.getTransactionCode());
 
 			_debug(authorizationsVoidRequest);
 
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
-
-			HttpResponse<Void> cancelHttpResponse = payPalHttpClient.execute(
+			HttpResponse<Void> httpResponse = payPalHttpClient.execute(
 				authorizationsVoidRequest);
 
-			if (cancelHttpResponse.statusCode() == 204) {
+			if (httpResponse.statusCode() == 204) {
 				commercePaymentEntry.setPaymentStatus(
 					CommercePaymentEntryConstants.STATUS_CANCELLED);
 
@@ -235,6 +235,9 @@ public class PayPalCommercePaymentIntegration
 		throws PortalException {
 
 		try {
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
 			AuthorizationsCaptureRequest authorizationsCaptureRequest =
 				new AuthorizationsCaptureRequest(
 					commercePaymentEntry.getTransactionCode());
@@ -250,14 +253,11 @@ public class PayPalCommercePaymentIntegration
 
 			_debug(authorizationsCaptureRequest);
 
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
+			HttpResponse<Capture> httpResponse = payPalHttpClient.execute(
+				authorizationsCaptureRequest);
 
-			HttpResponse<Capture> captureHttpResponse =
-				payPalHttpClient.execute(authorizationsCaptureRequest);
-
-			if (captureHttpResponse.statusCode() == 201) {
-				Capture capture = captureHttpResponse.result();
+			if (httpResponse.statusCode() == 201) {
+				Capture capture = httpResponse.result();
 
 				commercePaymentEntry.setPaymentStatus(
 					CommercePaymentEntryConstants.STATUS_COMPLETED);

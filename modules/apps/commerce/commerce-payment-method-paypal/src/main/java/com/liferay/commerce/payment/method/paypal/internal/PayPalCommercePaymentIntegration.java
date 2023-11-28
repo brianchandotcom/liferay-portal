@@ -316,27 +316,30 @@ public class PayPalCommercePaymentIntegration
 
 			CapturesRefundRequest capturesRefundRequest =
 				new CapturesRefundRequest(
-					commercePaymentEntry.getTransactionCode());
+					commercePaymentEntry.getTransactionCode()
+				).prefer(
+					"return=representation"
+				).requestBody(
+					new RefundRequest() {
+						{
+							amount(
+								new com.paypal.payments.Money() {
+									{
+										currencyCode(
+											commercePaymentEntry.
+												getCurrencyCode());
 
-			capturesRefundRequest.prefer("return=representation");
-			capturesRefundRequest.requestBody(
-				new RefundRequest() {
-					{
-						amount(
-							new com.paypal.payments.Money() {
-								{
-									currencyCode(
-										commercePaymentEntry.getCurrencyCode());
+										// TODO Use _toScaledString
 
-									// TODO Use _toScaledString
-
-									value(
-										String.valueOf(
-											commercePaymentEntry.getAmount()));
-								}
-							});
+										value(
+											String.valueOf(
+												commercePaymentEntry.
+													getAmount()));
+									}
+								});
+						}
 					}
-				});
+				);
 
 			_debug(capturesRefundRequest);
 

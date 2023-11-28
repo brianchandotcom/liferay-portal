@@ -172,6 +172,79 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 Confirm that when the user selects the Side Panel option, the following fields are displayed in the modal"
+	@priority = 5
+	test AllFieldsAreInSidePanelOptionOnItemAction {
+		property portal.acceptance = "true";
+
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And clicks on Type field and chooses the Side Panel option") {
+			LexiconEntry.gotoAdd();
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Side Panel");
+		}
+
+		task ("Then the Panel Title field is displayed") {
+			AssertElementPresent(
+				key_fieldName = "add-here-the-title-of-the-side-panel",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "");
+		}
+
+		task ("And the URL field is displayed") {
+			AssertElementPresent(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID");
+		}
+
+		task ("And the Headless Action Key field is displayed") {
+			AssertElementPresent(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER");
+		}
+
+		task ("And the Confirmation Message field is displayed") {
+			AssertElementPresent(
+				key_placeholder = "Add a message here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER");
+		}
+
+		task ("And the Message Type field is displayed") {
+			AssertElementPresent(
+				key_fieldLabel = "Message Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+		}
+	}
+
 
 	@description = "LPS-191485. Verify if the options GET, POST, PATCH, LPS-199219DELETE are present in the Method dropdown in the Item Action"
 	@priority = 4

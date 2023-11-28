@@ -66,7 +66,7 @@ public class ProductSubscriptionConfigurationResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _toProductSubscriptionConfiguration(
@@ -111,7 +111,7 @@ public class ProductSubscriptionConfigurationResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		_updateProductSubscriptionConfiguration(

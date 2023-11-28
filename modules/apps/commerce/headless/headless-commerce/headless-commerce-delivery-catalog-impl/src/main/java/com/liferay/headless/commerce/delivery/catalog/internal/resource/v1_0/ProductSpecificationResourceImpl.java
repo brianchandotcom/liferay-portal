@@ -54,7 +54,7 @@ public class ProductSpecificationResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		List<CPDefinitionSpecificationOptionValue>

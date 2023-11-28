@@ -165,7 +165,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _toCatalog(cpDefinition.getCommerceCatalog());

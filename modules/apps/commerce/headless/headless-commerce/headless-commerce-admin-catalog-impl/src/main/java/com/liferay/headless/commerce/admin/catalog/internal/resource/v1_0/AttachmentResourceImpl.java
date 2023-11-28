@@ -147,7 +147,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _getAttachmentPage(
@@ -166,7 +166,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _getAttachmentPage(
@@ -297,7 +297,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _addOrUpdateProductAttachment(cpDefinition, attachment);
@@ -313,7 +313,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _addOrUpdateProductAttachment(cpDefinition, attachmentBase64);
@@ -329,7 +329,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _addOrUpdateProductAttachment(cpDefinition, attachmentUrl);
@@ -344,7 +344,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _addOrUpdateProductImage(cpDefinition, attachment);
@@ -360,7 +360,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _addOrUpdateProductImage(cpDefinition, attachmentBase64);
@@ -376,7 +376,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _addOrUpdateProductImage(cpDefinition, attachmentUrl);

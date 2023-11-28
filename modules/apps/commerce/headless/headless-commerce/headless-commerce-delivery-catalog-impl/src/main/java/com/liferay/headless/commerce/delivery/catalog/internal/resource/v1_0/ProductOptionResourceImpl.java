@@ -52,7 +52,7 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =

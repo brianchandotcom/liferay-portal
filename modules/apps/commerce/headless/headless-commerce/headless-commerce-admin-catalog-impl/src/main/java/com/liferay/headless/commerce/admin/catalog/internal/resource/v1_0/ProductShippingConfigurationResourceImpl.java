@@ -69,7 +69,7 @@ public class ProductShippingConfigurationResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _toProductShippingConfiguration(
@@ -111,7 +111,7 @@ public class ProductShippingConfigurationResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		_updateProductShippingConfiguration(

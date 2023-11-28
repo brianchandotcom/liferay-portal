@@ -70,7 +70,7 @@ public class ProductConfigurationResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _toProductConfiguration(cpDefinition.getCPDefinitionId());
@@ -116,7 +116,7 @@ public class ProductConfigurationResourceImpl
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		ProductConfigurationUtil.updateCPDefinitionInventory(

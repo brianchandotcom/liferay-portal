@@ -57,7 +57,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return _getAttachmentPage(
@@ -80,7 +80,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return _getAttachmentPage(

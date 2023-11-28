@@ -56,7 +56,7 @@ public class RelatedProductUtil {
 
 			if (cpDefinition == null) {
 				throw new NoSuchCPDefinitionException(
-					"Unable to find Product with ID: " +
+					"Unable to find product with ID " +
 						relatedProduct.getProductId());
 			}
 		}

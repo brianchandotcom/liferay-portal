@@ -117,7 +117,7 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		BaseModelSearchResult<CPDefinitionOptionRel>
@@ -256,7 +256,7 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return Page.of(

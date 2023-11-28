@@ -53,7 +53,7 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return _getRelatedProductPage(cpDefinition, type, pagination);

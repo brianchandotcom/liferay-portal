@@ -177,7 +177,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		_cpDefinitionService.deleteCPDefinition(
@@ -256,7 +256,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		return _toProduct(cpDefinition.getCPDefinitionId());
@@ -332,7 +332,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		_updateProduct(cpDefinition, product);
@@ -430,7 +430,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find Product with ID: " + id);
+				"Unable to find product with ID " + id);
 		}
 
 		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();

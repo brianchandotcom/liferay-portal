@@ -505,8 +505,7 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 					fieldHints = Collections.emptyMap();
 				}
 				else if (fieldHints.size() == 1) {
-					Set<Map.Entry<String, String>> set =
-						fieldHints.entrySet();
+					Set<Map.Entry<String, String>> set = fieldHints.entrySet();
 
 					Iterator<Map.Entry<String, String>> iterator =
 						set.iterator();

@@ -72,4 +72,98 @@ definition {
 		}
 	}
 
+	@description = "Assert that we can resolve bookmark entry conflicts by discarding changes."
+	@priority = 4
+	test ResolveConflictingPublicationsByDiscarding {
+		task ("Create a new site and add a new bookmark") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONBookmarks.addBookmarks(
+				groupName = "Site Name",
+				name = "Test Bookmark",
+				url = "https://www.google.com");
+		}
+
+		task ("Add and select a new publication") {
+			JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+		}
+
+		task ("Edit the bookmark and assert the entry change appears when reviewing changes") {
+			Bookmark.openBookmarksAdmin(siteURLKey = "site-name");
+
+			Bookmark.editPG(
+				bookmarkName = "Test Bookmark",
+				bookmarkNameEdit = "Test Bookmark Edit",
+				bookmarkURLEdit = "https://www.liferay.com");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 1 Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Bookmarks Entry",
+				changeSite = "Site Name",
+				changeTitle = "Test Bookmark Edit",
+				changeType = "Modified",
+				changeUser = "Test Test");
+		}
+
+		task ("Add and select another new publication") {
+			JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+		}
+
+		task ("Move the bookmark to the recycle bin") {
+			Bookmark.openBookmarksAdmin(siteURLKey = "site-name");
+
+			Bookmark.moveToRecycleBinPG(bookmarkName = "Test Bookmark");
+		}
+
+		task ("Assert the change appears when reviewing changes and publish Publication 2") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 2 Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Bookmarks Entry",
+				changeSite = "Site Name",
+				changeTitle = "Test Bookmark",
+				changeType = "Deleted",
+				changeUser = "Test Test");
+
+			Publications.publishPublication(publicationName = "Publication 2 Name");
+		}
+
+		task ("Assert there is a conflicting change in Publication 1") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 1 Name");
+
+			Publications.viewConflictingChangesWarning(warningMessage = "This publication contains conflicting changes that must be manually resolved before publishing.");
+
+			Publications.viewNeedsManualResolution(
+				entryTitle = "Test Bookmark Edit",
+				warningMessage = "Entity Recently Updated");
+		}
+
+		task ("Discard the change and publish Publication 1 with no errors") {
+			PublicationsChanges.discardChanges(
+				changeCategory = "Asset",
+				changeTitle = "Test Bookmark Edit",
+				conflictingChanges = "true",
+				entryTitle = "Test Bookmark Edit");
+
+			PublicationsChanges.discardChanges(
+				changeCategory = "Bookmarks Entry",
+				changeTitle = "Test Bookmark Edit",
+				conflictingChanges = "true",
+				entryTitle = "Test Bookmark Edit");
+
+			Publications.publishPublication(publicationName = "Publication 2 Name");
+		}
+	}
+
 }

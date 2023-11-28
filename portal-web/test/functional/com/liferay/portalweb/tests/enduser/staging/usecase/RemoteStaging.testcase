@@ -903,6 +903,8 @@ definition {
 	@description = "This is a use case for LPS-81950. Web contents can be published via their portlet."
 	@priority = 3
 	test StagingRemoteLiveWebContentViaPortletPG {
+		property osgi.module.configuration.file.names = "com.liferay.staging.configuration.StagingConfiguration.config";
+		property osgi.module.configurations = "publishDisplayedContent=\"true\"";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

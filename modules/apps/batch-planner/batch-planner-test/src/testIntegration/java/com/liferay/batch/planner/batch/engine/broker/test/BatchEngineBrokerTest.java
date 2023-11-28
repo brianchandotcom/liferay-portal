@@ -597,10 +597,10 @@ public class BatchEngineBrokerTest {
 
 		CSVParser actualCSVParser = CSVParser.parse(actualCSVString, csvFormat);
 
+		List<CSVRecord> actualCSVParserRecords = actualCSVParser.getRecords();
+
 		CSVParser expectedCSVParser = CSVParser.parse(
 			expectedCSVString, csvFormat);
-
-		List<CSVRecord> actualCSVParserRecords = actualCSVParser.getRecords();
 
 		List<CSVRecord> expectedCSVParserRecords =
 			expectedCSVParser.getRecords();

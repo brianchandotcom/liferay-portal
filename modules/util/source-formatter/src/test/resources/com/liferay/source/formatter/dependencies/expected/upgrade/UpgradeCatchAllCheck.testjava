@@ -71,6 +71,22 @@ public class UpgradeCatchAllCheck {
 		CookiesConstants.NAME_USER_UUID;
 	}
 
+	public void method(
+		Address address, EmailAddress emailAddress, OrgLabor orgLabor,
+		Phone phone, Website website) {
+
+		address.getListTypeId();
+		address.setListTypeId();
+		emailAddress.getListTypeId();
+		emailAddress.setListTypeId();
+		orgLabor.getListTypeId();
+		orgLabor.setListTypeId();
+		phone.getListTypeId();
+		phone.setListTypeId();
+		website.getListTypeId();
+		website.setListTypeId();
+	}
+
 	public void method(AssetCategory<?> assetCategory) {
 		AssetCategory::getCategoryId;
 		assetCategory.getCategoryId;
@@ -93,6 +109,13 @@ public class UpgradeCatchAllCheck {
 
 		commerceAddress.getRegion().getRegionCode();
 		region.getRegionCode();
+	}
+
+	public void method(Contact contact) {
+		contact.getPrefixListTypeId();
+		contact.getSuffixListTypeId();
+		contact.setPrefixListTypeId();
+		contact.setSuffixListTypeId();
 	}
 
 	public void method(HttpServletRequest httpServletRequest) {
@@ -455,6 +478,11 @@ public class UpgradeCatchAllCheck {
 		AddressServiceUtil.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
 		_addressLocalService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
 		_addressService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
+	}
+
+	public void method(Organization organization) {
+		organization.getStatusListTypeId();
+		organization.setStatusListTypeId();
 	}
 
 	public void method(PortletDisplay portletDisplay, Class<T> clazz) {

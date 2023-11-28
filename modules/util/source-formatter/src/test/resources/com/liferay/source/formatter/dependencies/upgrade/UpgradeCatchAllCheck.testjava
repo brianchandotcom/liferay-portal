@@ -48,6 +48,22 @@ public class UpgradeCatchAllCheck {
 		CookieKeys.SCREEN_NAME;
 	}
 
+	public void method(
+		Address address, EmailAddress emailAddress, OrgLabor orgLabor,
+		Phone phone, Website website) {
+
+		address.getTypeId();
+		address.setTypeId();
+		emailAddress.getTypeId();
+		emailAddress.setTypeId();
+		orgLabor.getTypeId();
+		orgLabor.setTypeId();
+		phone.getTypeId();
+		phone.setTypeId();
+		website.getTypeId();
+		website.setTypeId();
+	}
+
 	public void method(AssetCategory<?> assetCategory) {
 		AssetCategory::getLeftCategoryId;
 		assetCategory.getLeftCategoryId;
@@ -70,6 +86,13 @@ public class UpgradeCatchAllCheck {
 
 		commerceAddress.getRegion().getCode();
 		region.getCode();
+	}
+
+	public void method(Contact contact) {
+		contact.getPrefixId();
+		contact.getSuffixId();
+		contact.setPrefixId();
+		contact.setSuffixId();
 	}
 
 	public void method(HttpServletRequest httpServletRequest) {
@@ -432,6 +455,11 @@ public class UpgradeCatchAllCheck {
 		AddressServiceUtil.addAddress(userId, className, classPK, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary, serviceContext);
 		_addressLocalService.addAddress(userId, className, classPK, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary, serviceContext);
 		_addressService.addAddress(userId, className, classPK, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary, serviceContext);
+	}
+
+	public void method(Organization organization) {
+		organization.getStatusId();
+		organization.setStatusId();
 	}
 
 	public void method(PortletDisplay portletDisplay, Class<T> clazz) {

@@ -67,6 +67,8 @@ export default {
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
 		'Only ZIP files are allowed. Max file size is 500MB',
 	'provide-app-build': 'Provide app build',
+	'publish-apps-to-the-liferay-marketplace':
+		'Publish apps to the Liferay Marketplace',
 	'request-account': 'Request Account',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',

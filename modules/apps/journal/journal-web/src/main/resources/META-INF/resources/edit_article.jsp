@@ -185,13 +185,12 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 							displayType="secondary"
 							expanded="<%= true %>"
 						>
-							<div class="panel-body">
+							<div class="c-gap-4 d-flex flex-column panel-body">
 								<div>
 									<label for="<portlet:namespace />descriptionMapAsXML" id="<portlet:namespace />Aria"><liferay-ui:message key="description" /></label>
 
 									<liferay-ui:input-localized
 										availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"
-										cssClass="form-control"
 										defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
 										editorName="ckeditor"
 										formName="fm"
@@ -204,26 +203,34 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 								</div>
 
 								<c:if test="<%= !JournalUtil.isEditDefaultValues(article) %>">
-									<c:if test="<%= Validator.isNotNull(journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage()) %>">
-										<clay:alert
-											dismissible="<%= true %>"
-											displayType="warning"
-											message="<%= journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage() %>"
+									<div>
+										<c:if test="<%= Validator.isNotNull(journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage()) %>">
+											<clay:alert
+												dismissible="<%= true %>"
+												displayType="warning"
+												message="<%= journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage() %>"
+											/>
+										</c:if>
+
+										<label for="<portlet:namespace />friendlyURL">
+											<liferay-ui:message key="friendly-url" />
+
+											<clay:icon
+												cssClass="lfr-portal-tooltip"
+												symbol="question-circle-full"
+												title='<%= LanguageUtil.get(request, "changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft") + LanguageUtil.get(request, "the-friendly-url-may-be-modified-to-ensure-uniqueness") %>'
+											/>
+										</label>
+
+										<liferay-friendly-url:input
+											className="<%= JournalArticle.class.getName() %>"
+											classPK="<%= (article == null) || (article.getPrimaryKey() == 0) ? 0 : article.getResourcePrimKey() %>"
+											inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
+											name="friendlyURL"
+											showHistory="<%= false %>"
+											showLabel="<%= false %>"
 										/>
-									</c:if>
-
-									<p class="text-secondary"><liferay-ui:message key="changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft" /></p>
-
-									<p class="text-secondary"><liferay-ui:message key="the-friendly-url-may-be-modified-to-ensure-uniqueness" /></p>
-
-									<liferay-friendly-url:input
-										className="<%= JournalArticle.class.getName() %>"
-										classPK="<%= (article == null) || (article.getPrimaryKey() == 0) ? 0 : article.getResourcePrimKey() %>"
-										inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
-										name="friendlyURL"
-										showHistory="<%= false %>"
-										showLabel="<%= false %>"
-									/>
+									</div>
 								</c:if>
 							</div>
 						</clay:panel>

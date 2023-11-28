@@ -555,11 +555,11 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrderId);
 
 		if (commerceOrder.isGuestOrder()) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceOrder.class.getName(), actionRequest);
-
 			String emailAddress = ParamUtil.getString(
 				actionRequest, "emailAddress");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CommerceOrder.class.getName(), actionRequest);
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.addAccountEntry(

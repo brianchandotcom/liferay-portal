@@ -507,12 +507,34 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws PortalException {
 
-		List<KBArticle> childKBArticles = getKBArticles(
-			groupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		deleteKBArticles(groupId, parentResourcePrimKey, true);
+	}
+
+	@Override
+	public void deleteKBArticles(
+			long groupId, long parentResourcePrimKey,
+			boolean includeTrashedEntries)
+		throws PortalException {
+
+		List<KBArticle> childKBArticles = new ArrayList<>();
+
+		childKBArticles.addAll(
+			getKBArticles(
+				groupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+
+		childKBArticles.addAll(
+			getKBArticles(
+				groupId, parentResourcePrimKey,
+				WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null));
 
 		for (KBArticle childKBArticle : childKBArticles) {
-			kbArticleLocalService.deleteKBArticle(childKBArticle);
+			if (includeTrashedEntries ||
+				!_trashHelper.isInTrashExplicitly(childKBArticle)) {
+
+				kbArticleLocalService.deleteKBArticle(childKBArticle);
+			}
 		}
 	}
 
@@ -1226,13 +1248,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new TrashEntryException();
 		}
 
+		long classPK = kbArticle.getClassPK();
 		int oldStatus = kbArticle.getStatus();
 
 		kbArticle = _updateStatus(
 			userId, kbArticle, WorkflowConstants.STATUS_IN_TRASH);
 
 		_assetEntryLocalService.updateVisible(
-			KBArticle.class.getName(), resourcePrimKey, false);
+			KBArticle.class.getName(), classPK, false);
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", kbArticle.getTitle());
@@ -2350,6 +2373,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// KB article
 
+		long classPK = kbArticle.getClassPK();
 		int status = kbArticle.getStatus();
 
 		kbArticle.setStatus(WorkflowConstants.STATUS_IN_TRASH);
@@ -2371,7 +2395,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		// Asset
 
 		_assetEntryLocalService.updateVisible(
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey(), false);
+			KBArticle.class.getName(), classPK, false);
 
 		// Indexer
 

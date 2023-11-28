@@ -127,7 +127,8 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		throws PortalException {
 
 		_kbArticleLocalService.deleteKBArticles(
-			kbFolder.getGroupId(), kbFolder.getKbFolderId());
+			kbFolder.getGroupId(), kbFolder.getKbFolderId(),
+			includeTrashedEntries);
 
 		List<KBFolder> childKBFolders = kbFolderPersistence.findByG_P(
 			kbFolder.getGroupId(), kbFolder.getKbFolderId());

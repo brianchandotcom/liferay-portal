@@ -15,6 +15,7 @@ import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
 
@@ -25,7 +26,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.liferay.jethr0.util.StringUtil;
 import org.json.JSONObject;
 
 /**
@@ -65,8 +65,7 @@ public class CITestGitHubEventHandler extends BaseGitHubEventHandler {
 	private JobEntity _getJobEntity() throws InvalidJSONException, IOException {
 		String testSuite = _getTestSuite();
 
-		GitBranchEntity upstreamGitBranchEntity =
-			getUpstreamGitBranchEntity();
+		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
 
 		String name = StringUtil.combine(
 			upstreamGitBranchEntity.getBranchName(), " - ci:test:", testSuite);

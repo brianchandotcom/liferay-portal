@@ -67,7 +67,7 @@ function SegmentSelector({
 
 					<Picker
 						UNSAFE_menuClassName="cadmin"
-						aria-labelledBy={labelId}
+						aria-labelledby={labelId}
 						as={TriggerLabel}
 						id={selectorId}
 						items={segmentsEntries}

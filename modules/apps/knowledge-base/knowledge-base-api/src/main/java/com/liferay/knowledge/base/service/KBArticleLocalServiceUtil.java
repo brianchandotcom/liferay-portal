@@ -196,6 +196,15 @@ public class KBArticleLocalServiceUtil {
 		getService().deleteKBArticles(groupId, parentResourcePrimKey);
 	}
 
+	public static void deleteKBArticles(
+			long groupId, long parentResourcePrimKey,
+			boolean includeTrashedEntries)
+		throws PortalException {
+
+		getService().deleteKBArticles(
+			groupId, parentResourcePrimKey, includeTrashedEntries);
+	}
+
 	public static void deleteKBArticles(long[] resourcePrimKeys)
 		throws PortalException {
 

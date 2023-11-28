@@ -56,7 +56,9 @@ function UpstreamBranches() {
 								<th className="font-weight-semi-bold">
 									<Link
 										title={gitBranch.id}
-										to={'/jobs/' + gitBranch.id}
+										to={
+											'/upstream-branches/' + gitBranch.id
+										}
 									>
 										{gitBranch.id}
 									</Link>

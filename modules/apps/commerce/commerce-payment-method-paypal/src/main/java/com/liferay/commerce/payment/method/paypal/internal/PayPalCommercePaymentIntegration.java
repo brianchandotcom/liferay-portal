@@ -109,10 +109,12 @@ public class PayPalCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		boolean success = false;
 		String transactionId = StringPool.BLANK;
 
 		try {
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
 			OrdersAuthorizeRequest ordersAuthorizeRequest =
 				new OrdersAuthorizeRequest(
 					commercePaymentEntry.getTransactionCode()
@@ -127,23 +129,13 @@ public class PayPalCommercePaymentIntegration
 			ordersAuthorizeRequest.requestBody(new OrderRequest());
 
 			if (_log.isDebugEnabled()) {
-				String headers = new Gson(
-				).toJson(
-					ordersAuthorizeRequest.headers()
-				);
-
-				_log.debug("Authorize headers: " + headers);
-
-				String requestBody = new Gson(
-				).toJson(
-					ordersAuthorizeRequest.requestBody()
-				);
-
-				_log.debug("Authorize request body: " + requestBody);
+				_log.debug(
+					"Authorize headers: " +
+						_toJSON(ordersAuthorizeRequest.headers()));
+				_log.debug(
+					"Authorize request body: " +
+						_toJSON(ordersAuthorizeRequest.requestBody()));
 			}
-
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
 
 			HttpResponse<Order> authorizeHttpResponse =
 				payPalHttpClient.execute(ordersAuthorizeRequest);
@@ -158,18 +150,18 @@ public class PayPalCommercePaymentIntegration
 					PurchaseUnit purchaseUnit = purchaseUnits.get(0);
 
 					if (purchaseUnit != null) {
-						PaymentCollection payments = purchaseUnit.payments();
+						PaymentCollection paymentCollection =
+							purchaseUnit.payments();
 
-						if (payments != null) {
+						if (paymentCollection != null) {
 							List<Authorization> authorizations =
-								payments.authorizations();
+								paymentCollection.authorizations();
 
 							if (ListUtil.isNotEmpty(authorizations)) {
 								Authorization authorization =
 									authorizations.get(0);
 
 								if (authorization != null) {
-									success = true;
 									transactionId = authorization.id();
 								}
 							}
@@ -178,7 +170,7 @@ public class PayPalCommercePaymentIntegration
 				}
 			}
 
-			if (success) {
+			if (Validator.isNull(transactionId)) {
 				commercePaymentEntry.setPaymentStatus(
 					CommercePaymentEntryConstants.STATUS_AUTHORIZED);
 			}
@@ -905,6 +897,12 @@ public class PayPalCommercePaymentIntegration
 		sb.append("&orderType=normal");
 
 		return sb.toString();
+	}
+
+	private String _toJSON(Object object) {
+		Gson gson = new Gson();
+
+		return gson.toJson(object);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

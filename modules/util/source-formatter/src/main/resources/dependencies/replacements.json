@@ -781,6 +781,14 @@
 	},
 	{
 		"classNames": [
+			"DefaultFragmentRendererContext"
+		],
+		"from": "setFieldValues(Map<String, Object>)",
+		"issueKey": "LPS-198402",
+		"to": ""
+	},
+	{
+		"classNames": [
 			"CPDefinitionLinkLocalService",
 			"CPDefinitionLinkLocalServiceUtil"
 		],

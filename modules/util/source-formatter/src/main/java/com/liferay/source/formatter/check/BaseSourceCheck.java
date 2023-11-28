@@ -859,15 +859,15 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			JavaTerm javaTerm, String fileContent, String fileName)
 		throws Exception {
 
-		if (javaTerm != null) {
-			if (javaTerm instanceof JavaClass) {
-				return (JavaClass)javaTerm;
-			}
-
-			return javaTerm.getParentJavaClass();
+		if (javaTerm == null) {
+			return JavaClassParser.parseJavaClass(fileName, fileContent);
 		}
 
-		return JavaClassParser.parseJavaClass(fileName, fileContent);
+		if (javaTerm.isJavaClass()) {
+			return (JavaClass)javaTerm;
+		}
+
+		return javaTerm.getParentJavaClass();
 	}
 
 	private String _getVariableTypeName(

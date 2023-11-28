@@ -27,22 +27,6 @@ public class SharepointRepositoryTokenBrokerFactoryUtil {
 	public static SharepointRepositoryTokenBroker create(
 		ConfigurationAdmin configurationAdmin, String configurationPid) {
 
-		return create(
-			_getSharepointRepositoryConfiguration(
-				configurationAdmin, configurationPid));
-	}
-
-	public static SharepointRepositoryTokenBroker create(
-		SharepointRepositoryConfiguration sharepointRepositoryConfiguration) {
-
-		return new SharepointRepositoryTokenBroker(
-			sharepointRepositoryConfiguration);
-	}
-
-	private static SharepointRepositoryConfiguration
-		_getSharepointRepositoryConfiguration(
-			ConfigurationAdmin configurationAdmin, String configurationPid) {
-
 		try {
 			Configuration[] configurations =
 				configurationAdmin.listConfigurations(
@@ -57,8 +41,10 @@ public class SharepointRepositoryTokenBrokerFactoryUtil {
 				String name = (String)properties.get("name");
 
 				if ((name != null) && name.equals(configurationPid)) {
-					return ConfigurableUtil.createConfigurable(
-						SharepointRepositoryConfiguration.class, properties);
+					return create(
+						ConfigurableUtil.createConfigurable(
+							SharepointRepositoryConfiguration.class,
+							properties));
 				}
 			}
 
@@ -68,6 +54,13 @@ public class SharepointRepositoryTokenBrokerFactoryUtil {
 		catch (InvalidSyntaxException | IOException exception) {
 			throw new SystemException(exception);
 		}
+	}
+
+	public static SharepointRepositoryTokenBroker create(
+		SharepointRepositoryConfiguration sharepointRepositoryConfiguration) {
+
+		return new SharepointRepositoryTokenBroker(
+			sharepointRepositoryConfiguration);
 	}
 
 }

@@ -73,9 +73,9 @@ public class GetGenerationsMVCResourceCommand
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
-					"completion",
+					"generations",
 					JSONUtil.put(
-						"generations",
+						"content",
 						aiCreatorOpenAIClient.getGenerations(
 							apiKey, prompt,
 							ParamUtil.getString(

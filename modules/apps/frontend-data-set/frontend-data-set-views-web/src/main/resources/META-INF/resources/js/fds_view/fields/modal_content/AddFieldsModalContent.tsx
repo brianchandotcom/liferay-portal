@@ -119,6 +119,24 @@ function applyFilter({
 	};
 }
 
+const Highlight = ({query, text}: {query?: string; text?: string}) => {
+	if (!query || !text) {
+		return <>{text ?? ''}</>;
+	}
+
+	const indexMatch = text.search(RegExp(query, 'i'));
+
+	return indexMatch > -1 ? (
+		<>
+			{text.substring(0, indexMatch)}
+			<mark>{text.substring(indexMatch, indexMatch + query.length)}</mark>
+			{text.substring(indexMatch + query.length)}
+		</>
+	) : (
+		<>{text}</>
+	);
+};
+
 const AddFieldsModalContent = ({
 	closeModal,
 	fdsView,

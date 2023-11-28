@@ -101,7 +101,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 
 										<aui:form action="<%= String.valueOf(commerceVirtualOrderItemContentDisplayContext.getDownloadResourceURL(commerceVirtualOrderItem.getCommerceVirtualOrderItemId(), commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId())) %>" method="post" name='<%= commerceVirtualOrderItem.getCommerceVirtualOrderItemId() + "-" + commerceVirtualOrderItemFileEntry.getCommerceVirtualOrderItemFileEntryId() + "Fm" %>' />
 
-										<clay:icon
+										<liferay-ui:icon
 											data="<%= data %>"
 											label="<%= true %>"
 											message='<%= "download - " + commerceVirtualOrderItemFileEntry.getVersion() %>'

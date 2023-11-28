@@ -129,14 +129,6 @@ export default function CriteriaGroup({
 	const _renderConjunction = (index) => {
 		return (
 			<>
-				<DropZone
-					dropIndex={index}
-					groupId={groupId}
-					onCriterionAdd={_handleCriterionAdd}
-					onMove={onMove}
-					propertyKey={propertyKey}
-				/>
-
 				<Conjunction
 					conjunctionName={criteria.conjunctionName}
 					editing={editing}

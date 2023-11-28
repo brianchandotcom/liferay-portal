@@ -14,7 +14,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.payment.constants.CommercePaymentIntegrationConstants;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
 import com.liferay.commerce.payment.method.paypal.internal.configuration.PayPalGroupServiceConfiguration;
@@ -23,6 +22,7 @@ import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -76,7 +76,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -573,39 +572,34 @@ public class PayPalCommercePaymentIntegration
 				}
 			});
 
-		purchaseUnitRequest.shippingDetail(
-			_toShippingDetail(commerceOrder.getShippingAddress()));
+		purchaseUnitRequest.description(
+			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			commercePaymentEntry.getLanguageId());
 
-		List<Item> items = new ArrayList<>();
+		purchaseUnitRequest.items(
+			TransformUtil.transform(
+				commerceOrder.getCommerceOrderItems(),
+				commerceOrderItem -> {
+					Item item = new Item();
 
-		for (CommerceOrderItem commerceOrderItem :
-				commerceOrder.getCommerceOrderItems()) {
+					item.name(commerceOrderItem.getName(locale));
+					item.quantity(
+						String.valueOf(
+							commerceOrderItem.getQuantity(
+							).stripTrailingZeros()));
+					item.sku(commerceOrderItem.getSku());
 
-			Item item = new Item();
+					BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
 
-			item.name(commerceOrderItem.getName(locale));
-			item.quantity(
-				String.valueOf(
-					commerceOrderItem.getQuantity(
-					).stripTrailingZeros()));
-			item.sku(commerceOrderItem.getSku());
+					BigDecimal unitAmount = finalPrice.divide(
+						commerceOrderItem.getQuantity());
 
-			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
+					item.unitAmount(_toMoney(commerceCurrency, unitAmount));
 
-			BigDecimal unitAmount = finalPrice.divide(
-				commerceOrderItem.getQuantity());
-
-			item.unitAmount(_toMoney(commerceCurrency, unitAmount));
-
-			items.add(item);
-		}
-
-		purchaseUnitRequest.description(
-			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
-		purchaseUnitRequest.items(items);
+					return item;
+				}));
 
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
 			_getPayPalGroupServiceConfiguration(commerceOrder.getGroupId());
@@ -618,6 +612,8 @@ public class PayPalCommercePaymentIntegration
 
 		purchaseUnitRequest.referenceId(
 			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()));
+		purchaseUnitRequest.shippingDetail(
+			_toShippingDetail(commerceOrder.getShippingAddress()));
 
 		return purchaseUnitRequest;
 	}

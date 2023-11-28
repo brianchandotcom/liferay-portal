@@ -46,11 +46,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ITEMS_VIEW_MODE_BUTTON</td>
-	<td>//div[@class='dropdown']/parent::li[contains(@class,'nav-item')]//button[contains(@class,'nav-link')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ITEMS_VIEW_TYPE_DROPDOWN</td>
 	<td>//div[@class='dropdown-menu show']//*[@class='dropdown-item' and text()='${key_viewMode}']</td>
 	<td></td>

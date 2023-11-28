@@ -328,11 +328,11 @@ public class PayPalCommercePaymentIntegration
 
 								new com.paypal.payments.Money(
 								).currencyCode(
-									commercePaymentEntry.
-										getCurrencyCode()
+									commercePaymentEntry.getCurrencyCode()
 								).value(
 									String.valueOf(
-										commercePaymentEntry.getAmount())));
+										commercePaymentEntry.getAmount()))
+								);
 						}
 					}
 				);

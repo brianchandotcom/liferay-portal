@@ -1,4 +1,4 @@
-.lfr-objects-add-object-field-enable-translations-toggle {
+.lfr-objects__modal-add-object-field-enable-translations-toggle {
 	display: flex;
 	gap: 10px;
 	margin-bottom: 20px;
@@ -6,4 +6,9 @@
 	&-icon {
 		color: #a7a9bc;
 	}
+}
+
+.lfr-objects__modal-add-object-field-form-base .dropdown-menu {
+	max-width: 34rem;
+	width: 34rem;
 }

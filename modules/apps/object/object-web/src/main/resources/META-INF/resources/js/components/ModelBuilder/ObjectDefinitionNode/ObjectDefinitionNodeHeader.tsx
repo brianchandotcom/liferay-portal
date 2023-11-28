@@ -53,8 +53,11 @@ export default function ObjectDefinitionNodeHeader({
 					</div>
 
 					<ClayDropDownWithItems
-						className="lfr__object-web-view-object-definitions-actions"
 						items={dropDownItems}
+						menuElementAttrs={{
+							className:
+								'lfr-objects__model-builder-node-dropdown',
+						}}
 						trigger={
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(

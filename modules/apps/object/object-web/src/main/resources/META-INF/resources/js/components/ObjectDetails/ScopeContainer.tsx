@@ -22,6 +22,7 @@ const SCOPE_OPTIONS = [
 ];
 
 interface ScopeContainerProps {
+	className?: string;
 	companies: Scope[];
 	errors: FormError<ObjectDefinition>;
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -35,6 +36,7 @@ interface ScopeContainerProps {
 }
 
 export function ScopeContainer({
+	className,
 	companies,
 	errors,
 	hasUpdateObjectDefinitionPermission,
@@ -77,6 +79,7 @@ export function ScopeContainer({
 	return (
 		<>
 			<SingleSelect<LabelValueObject>
+				className={className}
 				disabled={
 					isApproved ||
 					!hasUpdateObjectDefinitionPermission ||
@@ -107,6 +110,7 @@ export function ScopeContainer({
 			/>
 
 			<SingleSelect
+				className={className}
 				disabled={
 					(!values.modifiable && values.system) ||
 					!hasUpdateObjectDefinitionPermission ||

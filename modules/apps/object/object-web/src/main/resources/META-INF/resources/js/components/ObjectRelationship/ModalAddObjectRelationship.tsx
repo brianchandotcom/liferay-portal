@@ -133,6 +133,7 @@ export function ModalAddObjectRelationship({
 
 						<ObjectRelationshipFormBase
 							baseResourceURL={baseResourceURL}
+							className="lfr-objects__modal-add-object-relationship-form-base"
 							errors={errors}
 							handleChange={handleChange}
 							hasDefinedObjectDefinitionTarget={

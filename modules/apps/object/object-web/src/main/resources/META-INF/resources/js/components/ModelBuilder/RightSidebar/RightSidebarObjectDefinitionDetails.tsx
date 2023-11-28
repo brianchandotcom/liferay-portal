@@ -240,6 +240,7 @@ export function RightSidebarObjectDefinitionDetails({
 
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<EntryDisplayContainer
+					className="lfr-objects__model-builder-right-sidebar-object-definition-entry-display-container"
 					errors={errors}
 					isLinkedObjectDefinition={
 						selectedObjectDefinitionNode?.data
@@ -255,6 +256,7 @@ export function RightSidebarObjectDefinitionDetails({
 				/>
 
 				<ScopeContainer
+					className="lfr-objects__model-builder-right-sidebar-object-definition-entry-display-container"
 					companies={companies}
 					errors={errors}
 					hasUpdateObjectDefinitionPermission={true}

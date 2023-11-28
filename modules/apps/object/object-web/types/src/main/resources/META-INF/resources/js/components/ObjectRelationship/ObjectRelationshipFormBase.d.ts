@@ -7,6 +7,7 @@ import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
 interface ObjectRelationshipFormBaseProps {
 	baseResourceURL: string;
+	className?: string;
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	hasDefinedObjectDefinitionTarget?: boolean;
@@ -49,6 +50,7 @@ export declare function useObjectRelationshipForm({
 };
 export declare function ObjectRelationshipFormBase({
 	baseResourceURL,
+	className,
 	errors,
 	handleChange,
 	hasDefinedObjectDefinitionTarget,

@@ -9,6 +9,7 @@ import './ObjectFieldFormBase.scss';
 interface ObjectFieldFormBaseProps {
 	baseResourceURL: string;
 	children?: ReactNode;
+	className?: string;
 	creationLanguageId2?: Liferay.Language.Locale;
 	disabled?: boolean;
 	editingObjectField?: boolean;
@@ -37,6 +38,7 @@ export declare type ObjectFieldErrors = FormError<
 export default function ObjectFieldFormBase({
 	baseResourceURL,
 	children,
+	className,
 	creationLanguageId2,
 	disabled,
 	editingObjectField,

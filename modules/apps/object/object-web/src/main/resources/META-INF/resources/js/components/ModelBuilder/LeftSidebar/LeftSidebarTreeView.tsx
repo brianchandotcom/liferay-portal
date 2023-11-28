@@ -330,6 +330,10 @@ export default function LeftSidebarTreeView({
 																	'move-folder',
 															},
 														]}
+														menuElementAttrs={{
+															className:
+																'lfr-objects__model-builder-left-sidebar-dropdown',
+														}}
 														trigger={
 															<ClayButton
 																aria-label={Liferay.Language.get(

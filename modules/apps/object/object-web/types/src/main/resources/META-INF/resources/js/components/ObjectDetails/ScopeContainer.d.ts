@@ -8,6 +8,7 @@
 import {FormError} from '@liferay/object-js-components-web';
 import {Scope} from './EditObjectDetails';
 interface ScopeContainerProps {
+	className?: string;
 	companies: Scope[];
 	errors: FormError<ObjectDefinition>;
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -20,6 +21,7 @@ interface ScopeContainerProps {
 	values: Partial<ObjectDefinition>;
 }
 export declare function ScopeContainer({
+	className,
 	companies,
 	errors,
 	hasUpdateObjectDefinitionPermission,

@@ -1,7 +1,3 @@
-.dropdown-menu {
-	max-width: 14.5rem;
-}
-
 .lfr-objects__model-builder-node {
 	&-container {
 		background: #fff;
@@ -35,4 +31,8 @@
 			transition: border 0.2s;
 		}
 	}
+}
+
+.lfr-objects__model-builder-node-dropdown.dropdown-menu {
+	max-width: 14.5rem;
 }

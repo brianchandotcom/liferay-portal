@@ -338,6 +338,7 @@ export function RightSidebarObjectRelationshipDetails({
 				/>
 
 				<SingleSelect
+					className="lfr-objects__model-builder-left-sidebar-object-relationship-single-select"
 					disabled={
 						readOnly ||
 						(Liferay.FeatureFlags['LPS-187142'] && values.edge)

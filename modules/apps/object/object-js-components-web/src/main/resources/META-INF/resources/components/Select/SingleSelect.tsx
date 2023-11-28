@@ -62,7 +62,9 @@ export function SingleSelect<T extends SingleSelectOption>({
 			tooltip={tooltip}
 		>
 			<Picker<T>
+				UNSAFE_menuClassName={className}
 				as={as}
+				className={className}
 				defaultSelectedKey={defaultSelectedKey}
 				disabled={disabled}
 				items={items}

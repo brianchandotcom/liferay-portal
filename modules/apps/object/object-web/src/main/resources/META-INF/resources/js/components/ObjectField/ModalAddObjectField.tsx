@@ -176,6 +176,7 @@ export function ModalAddObjectField({
 
 							<ObjectFieldFormBase
 								baseResourceURL={baseResourceURL}
+								className="lfr-objects__modal-add-object-field-form-base"
 								errors={errors}
 								handleChange={handleChange}
 								objectDefinition={objectDefinition}
@@ -192,7 +193,7 @@ export function ModalAddObjectField({
 								setValues={setValues}
 							>
 								{showEnableTranslationToggle && (
-									<div className="lfr-objects-add-object-field-enable-translations-toggle">
+									<div className="lfr-objects__modal-add-object-field-enable-translations-toggle">
 										<Toggle
 											disabled={
 												!objectDefinition?.enableLocalization

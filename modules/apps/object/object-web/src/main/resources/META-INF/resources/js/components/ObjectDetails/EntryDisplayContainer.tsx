@@ -11,6 +11,7 @@ import {
 import React, {useEffect, useMemo} from 'react';
 
 interface EntryDisplayContainerProps {
+	className?: string;
 	errors: FormError<ObjectDefinition>;
 	isLinkedObjectDefinition?: boolean;
 	nonRelationshipObjectFieldsInfo: {
@@ -24,6 +25,7 @@ interface EntryDisplayContainerProps {
 }
 
 export function EntryDisplayContainer({
+	className,
 	errors,
 	isLinkedObjectDefinition,
 	nonRelationshipObjectFieldsInfo,
@@ -60,6 +62,7 @@ export function EntryDisplayContainer({
 
 	return (
 		<SingleSelect<LabelValueObject>
+			className={className}
 			disabled={isLinkedObjectDefinition}
 			error={errors.titleObjectFieldId}
 			items={titleFieldOptions}

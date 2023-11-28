@@ -44,6 +44,7 @@ import ClayIcon from '@clayui/icon';
 interface ObjectFieldFormBaseProps {
 	baseResourceURL: string;
 	children?: ReactNode;
+	className?: string;
 	creationLanguageId2?: Liferay.Language.Locale;
 	disabled?: boolean;
 	editingObjectField?: boolean;
@@ -170,6 +171,7 @@ async function getObjectFieldSettingsByBusinessType(
 export default function ObjectFieldFormBase({
 	baseResourceURL,
 	children,
+	className,
 	creationLanguageId2,
 	disabled,
 	editingObjectField = false,
@@ -416,6 +418,7 @@ export default function ObjectFieldFormBase({
 			/>
 
 			<SingleSelect<ObjectFieldType>
+				className={className}
 				disabled={disabled}
 				error={errors.businessType}
 				items={

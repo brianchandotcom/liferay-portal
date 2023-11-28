@@ -107,10 +107,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that When the user selects the Modal option, the following fields are displayed in the modal:Variant,Title,URL,Headless Action Key,Confirmation Message,Message Type"
-	@priority = 5
+	@priority = 3
 	test AllFieldsAreInModalTypeOnItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -173,10 +171,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that when the user selects the Side Panel option, the following fields are displayed in the modal"
-	@priority = 5
+	@priority = 3
 	test AllFieldsAreInSidePanelOptionOnItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -246,10 +242,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that all the values set in the creation for all the fields are still present when the Edit modal is opened"
-	@priority = 5
+	@priority = 4
 	test AllFieldsArePresentWhenEditASidePanelAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -389,10 +383,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that all the values set in the creation for all the fields are still present when the Edit modal is opened"
-	@priority = 5
+	@priority = 4
 	test AssertAllFieldsArePresentWhenEditAModalActionOnItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -469,7 +461,7 @@ definition {
 	}
 
 	@description = "LPS-191485. Verify if the options GET, POST, PATCH, LPS-199219DELETE are present in the Method dropdown in the Item Action"
-	@priority = 4
+	@priority = 3
 	test AssertAllMethodOptionsArePresentOnItemAction {
 		task ("When clicks on New Action button") {
 			Click(
@@ -937,7 +929,7 @@ definition {
 	}
 
 	@description = "LPS-191488. Confirm that it's possible to cancel changes in the Actions tab."
-	@priority = 4
+	@priority = 3
 	test CanCancelEditions {
 		task ("And creates a new item action") {
 			DataSetAdmin.addActions(
@@ -1194,7 +1186,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-192149. Verify if the user can an Action"
+	@description = "LPS-192149. Verify if the user can create a Item Action Link type"
 	@priority = 5
 	test CanCreateActionEntry {
 		property portal.acceptance = "true";
@@ -1249,10 +1241,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm the Side Panel item action is created and it's present in the item action list"
-	@priority = 5
+	@priority = 4
 	test CanCreateASidePanelItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -1304,10 +1294,8 @@ definition {
 	}
 
 	@description = "LPS-191485. Verify if the use can create a Async item action"
-	@priority = 5
+	@priority = 4
 	test CanCreateAsyncItemActionOnItemAction {
-		property portal.acceptance = "true";
-
 		task ("When Create a New Action") {
 			LexiconEntry.gotoAdd();
 		}
@@ -1405,10 +1393,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that is possible to create a Modal Action with Large variant on the Item Action"
-	@priority = 5
+	@priority = 4
 	test CanCreateLargeModalItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -1460,10 +1446,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that is possible to create a Modal Actions on the Item Action"
-	@priority = 5
+	@priority = 4
 	test CanCreateModalItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -1514,10 +1498,8 @@ definition {
 	}
 
 	@description = "LPS-192956  Confirm that is possible to create a Modal Action with Small variant on the Item Action"
-	@priority = 5
+	@priority = 4
 	test CanCreateSmallModalItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -1565,41 +1547,6 @@ definition {
 			AssertElementPresent(
 				key_position = 1,
 				keyName = "Edit",
-				locator1 = "DataSet#FIELDS_TABLE");
-		}
-	}
-
-	@description = "LPS-191485. Verify if is possible to delete a Async Item Action created"
-	@priority = 5
-	test CanDeleteAAsyncItemAction {
-		property portal.acceptance = "true";
-
-		task ("When Create a New Action") {
-			DataSetAdmin.addActions(
-				actionName = "Async Item Action",
-				errorMessage = "Failed.",
-				icon = "asterisk",
-				method = "GET",
-				successMessage = "Passed.",
-				type = "Async",
-				url = "/group/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_objectDefinitionId=34759&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_mvcRenderCommandName=%2Fobject_entries%2Fedit_object_entry&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_34759_externalReferenceCode={externalReferenceCode}");
-		}
-
-		task ("Then it appears on the Action tab") {
-			AssertElementPresent(
-				key_position = 1,
-				keyName = "Async Item Action",
-				locator1 = "DataSet#FIELDS_TABLE");
-		}
-
-		task ("When the user Delete Async Item Action item") {
-			DataSetAdmin.deleteActionEntry(actionName = "Async Item Action");
-		}
-
-		task ("Then the list of action items is empty") {
-			AssertElementNotPresent(
-				key_position = 1,
-				keyName = "Async Item Action",
 				locator1 = "DataSet#FIELDS_TABLE");
 		}
 	}
@@ -1741,10 +1688,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that user can edit a Modal Item Action"
-	@priority = 5
+	@priority = 4
 	test CanEditAModalItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -1810,10 +1755,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that when the user modify different fields (variant, label, etc.) the changes are saved"
-	@priority = 5
+	@priority = 4
 	test CanEditASidePanelItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -2398,7 +2341,7 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that the Title field cannot be empty on the Modal Item Action"
-	@priority = 4
+	@priority = 3
 	test CannotLeaveTitleFieldEmptyInModalActionOnItemAction {
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -2460,7 +2403,7 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that the Title field cannot be empty on the Side Panel Item Action"
-	@priority = 4
+	@priority = 3
 	test CannotLeaveTitleFieldEmptyInSidePanelItemAction {
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -2928,7 +2871,7 @@ definition {
 	}
 
 	@description = "LPS-191488. Verify if the user can edit a created Action and see the informations"
-	@priority = 3
+	@priority = 4
 	test CanSeeModalWhenClicksOnEditAction {
 		task ("And creates a new item action") {
 			DataSetAdmin.addActions(
@@ -3030,10 +2973,8 @@ definition {
 	}
 
 	@description = "LPS-192150. Verify if is possible to see the Action icon in the Data Set fragment."
-	@priority = 5
+	@priority = 3
 	test CanViewActionIconInFragment {
-		property portal.acceptance = "true";
-
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Data Set Object",
@@ -3379,10 +3320,8 @@ definition {
 	}
 
 	@description = "LPS-192149. Verify if the Label field is mandatory and localized in Action"
-	@priority = 5
+	@priority = 3
 	test MandatoryAndLocalizedLabelField {
-		property portal.acceptance = "true";
-
 		task ("And clicks on Create Item Action button") {
 			LexiconEntry.gotoAdd();
 		}
@@ -3419,10 +3358,8 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that the mandatory fields cannot be empty after the edition"
-	@priority = 5
+	@priority = 3
 	test MandatoryFieldsCannotBeEmptyEditingSidePanelItemAction {
-		property portal.acceptance = "true";
-
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -3480,7 +3417,7 @@ definition {
 	}
 
 	@description = "LPS-192956 Confirm that the mandatory fields cannot be empty after the edition"
-	@priority = 4
+	@priority = 3
 	test MandatoryFieldsCannotBeEmptyInModalActionOnItemAction {
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();

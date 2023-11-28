@@ -76,7 +76,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -189,8 +188,7 @@ public class PayPalCommercePaymentIntegration
 
 			commercePaymentEntry.setErrorMessages(
 				_getErrorMessages(
-					new JSONObject(ioException), StringPool.BLANK
-				).toString());
+					new JSONObject(ioException), StringPool.BLANK));
 			commercePaymentEntry.setPaymentStatus(
 				CommercePaymentEntryConstants.STATUS_FAILED);
 			commercePaymentEntry.setTransactionCode(transactionId);
@@ -245,9 +243,7 @@ public class PayPalCommercePaymentIntegration
 			_log.error(ioException);
 
 			commercePaymentEntry.setErrorMessages(
-				_getErrorMessages(
-					ioException, StringPool.BLANK
-				).toString());
+				_getErrorMessages(ioException, StringPool.BLANK));
 
 			return commercePaymentEntry;
 		}
@@ -314,9 +310,7 @@ public class PayPalCommercePaymentIntegration
 			_log.error(ioException);
 
 			commercePaymentEntry.setErrorMessages(
-				_getErrorMessages(
-					ioException, StringPool.BLANK
-				).toString());
+				_getErrorMessages(ioException, StringPool.BLANK));
 			commercePaymentEntry.setPaymentStatus(
 				CommercePaymentEntryConstants.STATUS_FAILED);
 
@@ -404,9 +398,7 @@ public class PayPalCommercePaymentIntegration
 			_log.error(ioException);
 
 			commercePaymentEntry.setErrorMessages(
-				_getErrorMessages(
-					ioException, StringPool.BLANK
-				).toString());
+				_getErrorMessages(ioException, StringPool.BLANK));
 			commercePaymentEntry.setPaymentStatus(
 				CommercePaymentEntryConstants.STATUS_FAILED);
 
@@ -527,9 +519,7 @@ public class PayPalCommercePaymentIntegration
 			_log.error(ioException);
 
 			commercePaymentEntry.setErrorMessages(
-				_getErrorMessages(
-					ioException, StringPool.BLANK
-				).toString());
+				_getErrorMessages(ioException, StringPool.BLANK));
 			commercePaymentEntry.setPaymentStatus(
 				CommercePaymentEntryConstants.STATUS_FAILED);
 			commercePaymentEntry.setTransactionCode(transactionId);
@@ -781,9 +771,7 @@ public class PayPalCommercePaymentIntegration
 		return sb.toString();
 	}
 
-	private List<String> _getErrorMessages(
-		IOException ioException, String prefix) {
-
+	private String _getErrorMessages(IOException ioException, String prefix) {
 		HttpException httpException = (HttpException)ioException;
 
 		JSONObject jsonObject = new JSONObject(httpException.getMessage());
@@ -791,9 +779,7 @@ public class PayPalCommercePaymentIntegration
 		return _getErrorMessages(jsonObject, prefix);
 	}
 
-	private List<String> _getErrorMessages(
-		JSONObject jsonObject, String prefix) {
-
+	private String _getErrorMessages(JSONObject jsonObject, String prefix) {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		Iterator<String> iterator = jsonObject.keys();
@@ -825,7 +811,7 @@ public class PayPalCommercePaymentIntegration
 			}
 		}
 
-		return Collections.singletonList(stringBuilder.toString());
+		return stringBuilder.toString();
 	}
 
 	private PayPalGroupServiceConfiguration _getPayPalGroupServiceConfiguration(

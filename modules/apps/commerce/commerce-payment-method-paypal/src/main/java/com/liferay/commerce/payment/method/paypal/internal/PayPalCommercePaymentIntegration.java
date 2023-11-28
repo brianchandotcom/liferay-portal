@@ -323,20 +323,16 @@ public class PayPalCommercePaymentIntegration
 					new RefundRequest() {
 						{
 							amount(
-								new com.paypal.payments.Money() {
-									{
-										currencyCode(
-											commercePaymentEntry.
-												getCurrencyCode());
 
-										// TODO Use _toScaledString
+								// TODO Use _toScaledString
 
-										value(
-											String.valueOf(
-												commercePaymentEntry.
-													getAmount()));
-									}
-								});
+								new com.paypal.payments.Money(
+								).currencyCode(
+									commercePaymentEntry.
+										getCurrencyCode()
+								).value(
+									String.valueOf(
+										commercePaymentEntry.getAmount())));
 						}
 					}
 				);

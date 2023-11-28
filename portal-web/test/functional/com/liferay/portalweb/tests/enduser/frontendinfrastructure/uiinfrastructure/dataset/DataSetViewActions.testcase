@@ -106,6 +106,73 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 Confirm that When the user selects the Modal option, the following fields are displayed in the modal:Variant,Title,URL,Headless Action Key,Confirmation Message,Message Type"
+	@priority = 5
+	test AllFieldsAreInModalTypeOnItemAction {
+		property portal.acceptance = "true";
+
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And clicks on Type field and chooses the Modal option") {
+			LexiconEntry.gotoAdd();
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Modal");
+		}
+
+		task ("Then the Variant field is displayed") {
+			AssertElementPresent(
+				key_fieldLabel = "Variant",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+		}
+
+		task ("And Title field is displayed") {
+			AssertElementPresent(
+				key_placeholder = "add-here-the-title-of-the-modal",
+				locator1 = "FrontendDataSet#PLACEHOLDER");
+		}
+
+		task ("And the URL field is displayed") {
+			AssertElementPresent(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID");
+		}
+
+		task ("And the Headless Action Key field is displayed") {
+			AssertElementPresent(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER");
+		}
+	}
+
+
 	@description = "LPS-191485. Verify if the options GET, POST, PATCH, LPS-199219DELETE are present in the Method dropdown in the Item Action"
 	@priority = 4
 	test AssertAllMethodOptionsArePresentOnItemAction {

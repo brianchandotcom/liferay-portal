@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
@@ -17,6 +18,7 @@ import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
+import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.internal.validator.LayoutPageTemplateEntryValidator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -319,6 +322,17 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	public LayoutPageTemplateEntry deleteLayoutPageTemplateEntry(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
+
+		if (!GroupThreadLocal.isDeleteInProcess()) {
+			int assetDisplayPageEntriesCount =
+				_assetDisplayPageEntryLocalService.
+					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+			if (assetDisplayPageEntriesCount > 0) {
+				throw new RequiredLayoutPageTemplateEntryException();
+			}
+		}
 
 		// Layout page template
 
@@ -1096,6 +1110,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryLocalServiceImpl.class);
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

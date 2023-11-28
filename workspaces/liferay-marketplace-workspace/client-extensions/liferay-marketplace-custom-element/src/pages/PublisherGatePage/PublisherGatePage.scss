@@ -7,9 +7,8 @@
 		margin-bottom: 1.5rem;
 
 		&-container {
-			align-items: end;
 			display: flex;
-			flex-direction: column;
+			justify-content: end;
 			margin-bottom: 7.5rem;
 		}
 		&-link {

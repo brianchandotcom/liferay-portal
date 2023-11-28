@@ -11,61 +11,73 @@ import {GateCard} from '../../components/Card/GateCard';
 import {Header} from '../../components/Header/Header';
 
 import './PublisherGatePage.scss';
-
-import ClayLink from '@clayui/link';
+import {getSiteURL} from '../../components/InviteMemberModal/services';
+import i18n from '../../i18n';
+import {Liferay} from '../../liferay/liferay';
 
 export function PublisherGatePage() {
 	return (
 		<div className="publisher-gate-page-container">
 			<div className="publisher-gate-page-body">
 				<Header
-					description="We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace and access is invite only. If you are an existing Liferay developer or partner, please keep an eye out for an announcement related to the new Marketplace in the coming months!"
-					title="Becoming a Liferay Marketplace Publisher"
+					description={i18n.translate(
+						'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account'
+					)}
+					title={i18n.translate(
+						'becoming-a-liferay-marketplace-publisher'
+					)}
 				/>
 
 				<GateCard
-					description="The Liferay Marketplace is the premier place for Liferay customers to find pre-built, pre-approved app extensions to quickly extend the Liferay platform to new and legacy technologies."
+					description={i18n.translate(
+						'the-liferay-marketplace-is-the-premier-place-for-liferay-customers-to-find-pre-built-pre-approved-app-extensions-to-quickly-extend-the-liferay-platform-to-new-and-legacy-technologies'
+					)}
 					image={{
-						description: 'Cloud Upload',
+						description: i18n.translate('cloud-upload'),
 						svg: cloudUpload,
 					}}
-					label="Free"
+					label={i18n.translate('free')}
 					link={{
 						href: '',
-						label: 'Learn More',
+						label: i18n.translate('learn-more'),
 					}}
-					title="Publish Apps to the Liferay Marketplace"
+					title="Publish apps to the Liferay Marketplace"
 				/>
 
 				<GateCard
-					description="The Liferay Marketplace gives you the opportunity to monetize your app or solutions from a single use case to many, while engaging with new customer opportunities and generating ongoing revenue."
+					description={i18n.translate(
+						'the-liferay-marketplace-gives-you-the-opportunity-to-monetize-your-app-or-solutions-from-a-single-use-case-to-many-while-engaging-with-new-customer-opportunities-and-generating-ongoing-revenue'
+					)}
 					image={{
-						description: 'Cash',
+						description: i18n.translate('cash'),
 						svg: cash,
 					}}
 					link={{
 						href: '',
-						label: 'Learn More',
+						label: i18n.translate('learn-more'),
 					}}
-					title="Monetize Your Apps and Solutions"
+					title={i18n.translate('monetize-your-apps-and-solutions')}
 				/>
 
 				<hr className="publisher-gate-page-divider" />
 
 				<div className="publisher-gate-page-button-container">
 					<ClayButton
-						className="publisher-gate-page-button"
+						className="mr-4 publisher-gate-page-button"
+						displayType="secondary"
 						onClick={() => {
-							window.location.href =
-								'https://marketplace.liferay.com/';
+							window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/home`;
 						}}
 					>
-						Go Back to Marketplace
+						{i18n.translate('go-back-to-marketplace')}
 					</ClayButton>
 
-					<ClayLink className="publisher-gate-page-link" href="">
-						Learn More About Becoming a Liferay Publisher
-					</ClayLink>
+					<ClayButton
+						className="publisher-gate-page-button"
+						onClick={() => {}}
+					>
+						{i18n.translate('request-account')}
+					</ClayButton>
 				</div>
 			</div>
 		</div>

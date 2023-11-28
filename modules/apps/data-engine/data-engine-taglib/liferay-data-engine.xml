@@ -38,6 +38,12 @@
 				<required>false</required>
 			</attribute>
 			<attribute>
+				<name>displayFieldName</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>fieldSetContentType</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

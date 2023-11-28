@@ -668,7 +668,9 @@ definition {
 			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 		}
 		else if (isSet(pageRevision)) {
-			Close.closeAndSelectWindow(value1 = "title=Page Revision Page - Site Name - Liferay DXP");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+			Close.closeAndSelectWindow(value1 = "title=Page Revision Page - Site Name - ${siteName}");
 		}
 		else {
 			Close.closeAndSelectWindow(value1 = "title=${viewTitle}");

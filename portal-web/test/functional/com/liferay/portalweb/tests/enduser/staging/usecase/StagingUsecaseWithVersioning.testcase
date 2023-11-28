@@ -310,6 +310,9 @@ definition {
 	@description = "This is a use case for LPS-90924. Blocked by LPS-180479."
 	@priority = 3
 	test PublishPageRevisionWithPortletSettingsChanges {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow");

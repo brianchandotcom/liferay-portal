@@ -327,6 +327,9 @@ public class PayPalCommercePaymentIntegration
 								{
 									currencyCode(
 										commercePaymentEntry.getCurrencyCode());
+
+									// TODO Use _toScaledString
+
 									value(
 										String.valueOf(
 											commercePaymentEntry.getAmount()));

@@ -677,7 +677,7 @@ public abstract class BaseEmptyLinesCheck extends BaseFileCheck {
 	}
 
 	private static final String[] _ENFORCE_EMPTY_LINE_SELF_CLOSING_TAG_NAMES = {
-		"img", "input"
+		"img", "input", "link"
 	};
 
 	private static final String[] _STYLING_TAG_NAMES = {

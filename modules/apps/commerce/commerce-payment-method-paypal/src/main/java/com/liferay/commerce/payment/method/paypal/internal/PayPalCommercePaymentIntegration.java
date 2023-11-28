@@ -540,35 +540,38 @@ public class PayPalCommercePaymentIntegration
 
 		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
-		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
-
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
 				commercePaymentEntry.getClassPK());
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		amountWithBreakdown.amountBreakdown(
-			new AmountBreakdown() {
+		purchaseUnitRequest.amountWithBreakdown(
+			new AmountWithBreakdown() {
 				{
-					itemTotal(
-						_toMoney(
-							commerceCurrency, commerceOrder.getSubtotal()));
-					shipping(
-						_toMoney(
-							commerceCurrency,
-							commerceOrder.getShippingAmount()));
-					taxTotal(
-						_toMoney(
-							commerceCurrency, commerceOrder.getTaxAmount()));
+					amountBreakdown(
+						new AmountBreakdown() {
+							{
+								itemTotal(
+									_toMoney(
+										commerceCurrency,
+										commerceOrder.getSubtotal()));
+								shipping(
+									_toMoney(
+										commerceCurrency,
+										commerceOrder.getShippingAmount()));
+								taxTotal(
+									_toMoney(
+										commerceCurrency,
+										commerceOrder.getTaxAmount()));
+							}
+						});
+					currencyCode(commerceCurrency.getCode());
+					value(
+						_toScaledString(
+							commerceCurrency, commerceOrder.getTotal()));
 				}
 			});
-
-		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
-		amountWithBreakdown.value(
-			_toScaledString(commerceCurrency, commerceOrder.getTotal()));
-
-		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
 
 		CommerceAddress shippingCommerceAddress =
 			commerceOrder.getShippingAddress();
@@ -576,11 +579,12 @@ public class PayPalCommercePaymentIntegration
 		if (shippingCommerceAddress != null) {
 			ShippingDetail shippingDetail = new ShippingDetail();
 
-			Name name = new Name();
-
-			name.fullName(shippingCommerceAddress.getName());
-
-			shippingDetail.name(name);
+			shippingDetail.name(
+				new Name() {
+					{
+						fullName(shippingCommerceAddress.getName());
+					}
+				});
 
 			AddressPortable addressPortable = new AddressPortable();
 

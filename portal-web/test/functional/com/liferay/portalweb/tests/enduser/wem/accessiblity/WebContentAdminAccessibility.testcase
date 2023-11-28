@@ -84,13 +84,15 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 		}
 
-		task ("When the user navigates to the configuration page") {
+		task ("When the user navigates to the notifications configuration") {
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Configuration");
+
+			MenuBar.click(menuBar = "Email From");
 		}
 
-		task ("Then the user can check the accessibility of the page") {
+		task ("Then the notifications configuration should have correct accessibility") {
 			AssertAccessible();
 		}
 	}

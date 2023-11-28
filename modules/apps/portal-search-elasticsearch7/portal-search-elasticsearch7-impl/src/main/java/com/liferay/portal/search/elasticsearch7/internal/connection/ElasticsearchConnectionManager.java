@@ -5,10 +5,12 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -23,10 +25,14 @@ import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperU
 
 import java.net.InetAddress;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.FutureTask;
+import java.util.function.Supplier;
 
 import org.elasticsearch.client.RestHighLevelClient;
 
@@ -59,28 +65,54 @@ public class ElasticsearchConnectionManager
 			return;
 		}
 
+		Supplier<ElasticsearchConnection> elasticsearchConnectionSupplier;
+
 		if (elasticsearchConnection.isActive()) {
-			try {
-				elasticsearchConnection.connect();
-			}
-			catch (RuntimeException runtimeException) {
-				if (connectionId.equals(
-						ConnectionConstants.SIDECAR_CONNECTION_ID)) {
+			FutureTask<ElasticsearchConnection> futureTask = new FutureTask<>(
+				() -> {
+					try {
+						elasticsearchConnection.connect();
+					}
+					catch (RuntimeException runtimeException) {
+						if (connectionId.equals(
+								ConnectionConstants.SIDECAR_CONNECTION_ID)) {
 
-					_log.error(
-						StringBundler.concat(
-							"Elasticsearch sidecar could not be started. ",
-							"Search will be unavailable. Manual installation ",
-							"of Elasticsearch and activation of remote mode ",
-							"is recommended."),
-						runtimeException);
+							_log.error(
+								StringBundler.concat(
+									"Elasticsearch sidecar could not be ",
+									"started. Search will be unavailable. ",
+									"Manual installation of Elasticsearch and ",
+									"activation of remote mode is ",
+									"recommended."),
+								runtimeException);
+						}
+
+						throw runtimeException;
+					}
+
+					return elasticsearchConnection;
+				});
+
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
+
+			executorService.submit(futureTask);
+
+			elasticsearchConnectionSupplier = () -> {
+				try {
+					return futureTask.get();
 				}
-
-				throw runtimeException;
-			}
+				catch (Exception exception) {
+					return ReflectionUtil.throwException(exception);
+				}
+			};
+		}
+		else {
+			elasticsearchConnectionSupplier = () -> elasticsearchConnection;
 		}
 
-		_elasticsearchConnections.put(connectionId, elasticsearchConnection);
+		_elasticsearchConnectionSuppliers.put(
+			connectionId, elasticsearchConnectionSupplier);
 	}
 
 	@Override
@@ -104,11 +136,11 @@ public class ElasticsearchConnectionManager
 	public ElasticsearchConnection getElasticsearchConnection(
 		String connectionId) {
 
-		ElasticsearchConnection elasticsearchConnection =
-			_elasticsearchConnections.get(connectionId);
+		Supplier<ElasticsearchConnection> elasticsearchConnectionSupplier =
+			_elasticsearchConnectionSuppliers.get(connectionId);
 
 		if (_log.isInfoEnabled()) {
-			if (elasticsearchConnection != null) {
+			if (elasticsearchConnectionSupplier != null) {
 				_log.info("Returning connection with ID: " + connectionId);
 			}
 			else {
@@ -118,11 +150,24 @@ public class ElasticsearchConnectionManager
 			}
 		}
 
-		return elasticsearchConnection;
+		if (elasticsearchConnectionSupplier == null) {
+			return null;
+		}
+
+		return elasticsearchConnectionSupplier.get();
 	}
 
 	public Collection<ElasticsearchConnection> getElasticsearchConnections() {
-		return _elasticsearchConnections.values();
+		List<ElasticsearchConnection> elasticsearchConnections =
+			new ArrayList<>();
+
+		for (Supplier<ElasticsearchConnection> supplier :
+				_elasticsearchConnectionSuppliers.values()) {
+
+			elasticsearchConnections.add(supplier.get());
+		}
+
+		return elasticsearchConnections;
 	}
 
 	public String getLocalClusterConnectionId() {
@@ -234,16 +279,19 @@ public class ElasticsearchConnectionManager
 			return;
 		}
 
-		ElasticsearchConnection elasticsearchConnection =
-			_elasticsearchConnections.get(connectionId);
+		Supplier<ElasticsearchConnection> elasticsearchConnectionSupplier =
+			_elasticsearchConnectionSuppliers.get(connectionId);
 
-		if (elasticsearchConnection == null) {
+		if (elasticsearchConnectionSupplier == null) {
 			return;
 		}
 
+		ElasticsearchConnection elasticsearchConnection =
+			elasticsearchConnectionSupplier.get();
+
 		elasticsearchConnection.close();
 
-		_elasticsearchConnections.remove(connectionId);
+		_elasticsearchConnectionSuppliers.remove(connectionId);
 	}
 
 	@Activate
@@ -292,11 +340,10 @@ public class ElasticsearchConnectionManager
 	protected void deactivate() {
 		elasticsearchConfigurationWrapper.unregister(this);
 
-		Collection<ElasticsearchConnection> elasticsearchConnections =
-			_elasticsearchConnections.values();
+		for (Supplier<ElasticsearchConnection> supplier :
+				_elasticsearchConnectionSuppliers.values()) {
 
-		for (ElasticsearchConnection elasticsearchConnection :
-				elasticsearchConnections) {
+			ElasticsearchConnection elasticsearchConnection = supplier.get();
 
 			elasticsearchConnection.close();
 		}
@@ -427,7 +474,7 @@ public class ElasticsearchConnectionManager
 	@Reference
 	private ClusterExecutor _clusterExecutor;
 
-	private final Map<String, ElasticsearchConnection>
-		_elasticsearchConnections = new ConcurrentHashMap<>();
+	private final Map<String, Supplier<ElasticsearchConnection>>
+		_elasticsearchConnectionSuppliers = new ConcurrentHashMap<>();
 
 }

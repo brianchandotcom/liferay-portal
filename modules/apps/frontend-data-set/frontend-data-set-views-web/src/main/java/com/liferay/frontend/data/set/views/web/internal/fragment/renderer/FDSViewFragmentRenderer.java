@@ -260,15 +260,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			fragmentEntryLink.getCompanyId(), fdsEntryObjectEntryERC,
 			fdsEntryObjectDefinition);
 
-		JSONArray fdsFieldsJSONArray = _getFieldsJSONArray(
-			fragmentEntryLink, fdsViewObjectDefinition, fdsViewObjectEntry);
+		Set<ObjectEntry> fdsFieldsSet = _getFieldsSet(
+			fdsViewObjectDefinition, fdsViewObjectEntry);
 
 		_reactRenderer.renderReact(
 			componentDescriptor,
 			HashMapBuilder.<String, Object>put(
 				"apiURL",
 				_getAPIURL(
-					fdsEntryObjectEntry, fdsFieldsJSONArray, httpServletRequest)
+					fdsEntryObjectEntry, fdsFieldsSet, httpServletRequest)
 			).put(
 				"creationMenu",
 				_getCreationMenuJSONObject(
@@ -301,7 +301,11 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					).put(
 						"name", "table"
 					).put(
-						"schema", JSONUtil.put("fields", fdsFieldsJSONArray)
+						"schema",
+						JSONUtil.put(
+							"fields",
+							_getFieldsJSONArray(
+								fragmentEntryLink.getCompanyId(), fdsFieldsSet))
 					))
 			).build(),
 			httpServletRequest, writer);
@@ -314,8 +318,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getAPIURL(
-		ObjectEntry fdsEntryObjectEntry, JSONArray fdsFieldsJSONArray,
-		HttpServletRequest httpServletRequest) {
+			ObjectEntry fdsEntryObjectEntry, Set<ObjectEntry> fdsFieldsSet,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
 
 		Map<String, Object> properties = fdsEntryObjectEntry.getProperties();
 
@@ -328,7 +333,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				StringPool.BLANK));
 		sb.append(String.valueOf(properties.get("restEndpoint")));
 
-		String apiURL = _getNestedFields(sb.toString(), fdsFieldsJSONArray);
+		String apiURL = _getNestedFields(sb.toString(), fdsFieldsSet);
 
 		return _interpolateURL(apiURL, httpServletRequest);
 	}
@@ -402,27 +407,50 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		);
 	}
 
-	private JSONArray _getFieldNameJSONArray(String fieldName) {
-		JSONArray jsonArray = null;
+	private JSONArray _getFieldsJSONArray(
+			long companyId, Set<ObjectEntry> fdsFieldsSet)
+		throws Exception {
 
-		try {
-			jsonArray = _jsonFactory.createJSONArray(
-				StringUtil.split(fieldName, CharPool.PERIOD));
-		}
-		catch (Exception exception) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Unable to build JSONArray from '", fieldName, "'"),
-					exception);
-			}
-		}
+		return JSONUtil.toJSONArray(
+			fdsFieldsSet,
+			(ObjectEntry objectEntry) -> {
+				Map<String, Object> properties = objectEntry.getProperties();
 
-		return jsonArray;
+				JSONObject jsonObject = JSONUtil.put(
+					"contentRenderer",
+					String.valueOf(properties.get("renderer"))
+				).put(
+					"fieldName",
+					StringUtil.replaceLast(
+						String.valueOf(properties.get("name")), ".*",
+						StringPool.BLANK)
+				).put(
+					"label", _getValue("label", "name", properties)
+				).put(
+					"sortable", (boolean)properties.get("sortable")
+				);
+
+				String rendererType = String.valueOf(
+					properties.get("rendererType"));
+
+				if (!Objects.equals(rendererType, "clientExtension")) {
+					return jsonObject;
+				}
+
+				FDSCellRendererCET fdsCellRendererCET =
+					(FDSCellRendererCET)_cetManager.getCET(
+						companyId, String.valueOf(properties.get("renderer")));
+
+				return jsonObject.put(
+					"contentRendererClientExtension", true
+				).put(
+					"contentRendererModuleURL",
+					"default from " + fdsCellRendererCET.getURL()
+				);
+			});
 	}
 
-	private JSONArray _getFieldsJSONArray(
-			FragmentEntryLink fragmentEntryLink,
+	private Set<ObjectEntry> _getFieldsSet(
 			ObjectDefinition fdsViewObjectDefinition,
 			ObjectEntry fdsViewObjectEntry)
 		throws Exception {
@@ -442,41 +470,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSFieldRelationship"));
 
-		return JSONUtil.toJSONArray(
-			objectEntries,
-			(ObjectEntry objectEntry) -> {
-				Map<String, Object> properties = objectEntry.getProperties();
-
-				JSONObject jsonObject = JSONUtil.put(
-					"contentRenderer",
-					String.valueOf(properties.get("renderer"))
-				).put(
-					"fieldName", String.valueOf(properties.get("name"))
-				).put(
-					"label", _getValue("label", "name", properties)
-				).put(
-					"sortable", (boolean)properties.get("sortable")
-				);
-
-				String rendererType = String.valueOf(
-					properties.get("rendererType"));
-
-				if (!Objects.equals(rendererType, "clientExtension")) {
-					return jsonObject;
-				}
-
-				FDSCellRendererCET fdsCellRendererCET =
-					(FDSCellRendererCET)_cetManager.getCET(
-						fragmentEntryLink.getCompanyId(),
-						String.valueOf(properties.get("renderer")));
-
-				return jsonObject.put(
-					"contentRendererClientExtension", true
-				).put(
-					"contentRendererModuleURL",
-					"default from " + fdsCellRendererCET.getURL()
-				);
-			});
+		return objectEntries;
 	}
 
 	private JSONArray _getFiltersJSONArray(
@@ -712,43 +706,58 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getNestedFields(
-		String apiUrl, JSONArray fdsFieldsJSONArray) {
+			String apiUrl, Set<ObjectEntry> fdsFieldsSet)
+		throws Exception {
 
-		if (fdsFieldsJSONArray == null) {
+		if (fdsFieldsSet == null) {
 			return apiUrl;
 		}
 
-		String nestedFields = StringPool.BLANK;
-		int nestedFieldsDepth = 1;
+		JSONArray fdsFieldsJSONArray = JSONUtil.toJSONArray(
+			fdsFieldsSet,
+			(ObjectEntry objectEntry) -> {
+				Map<String, Object> properties = objectEntry.getProperties();
 
-		for (int i = 0; i < fdsFieldsJSONArray.length(); i++) {
-			JSONObject fdsFieldJSONObject = fdsFieldsJSONArray.getJSONObject(i);
+				JSONObject jsonObject = JSONUtil.put(
+					"fieldName", String.valueOf(properties.get("name")));
 
-			String fdsFieldValue = fdsFieldJSONObject.getString("fieldName");
+				String[] fieldNameArray = StringUtil.split(
+					jsonObject.getString("fieldName"), CharPool.PERIOD);
 
-			JSONArray jsonArray = _getFieldNameJSONArray(fdsFieldValue);
-
-			if (jsonArray.length() > 1) {
-				nestedFields = StringUtil.add(
-					nestedFields, jsonArray.getString(0));
-
-				if (jsonArray.length() > nestedFieldsDepth) {
-					nestedFieldsDepth = jsonArray.length() - 1;
+				if (fieldNameArray.length == 1) {
+					return null;
 				}
-			}
-		}
+
+				String[] fieldsName = new String[fieldNameArray.length - 1];
+
+				System.arraycopy(
+					fieldNameArray, 0, fieldsName, 0,
+					fieldNameArray.length - 1);
+
+				return fieldsName;
+			});
+
+		String nestedFields = fdsFieldsJSONArray.join(
+			StringPool.COMMA
+		).replaceAll(
+			StringPool.QUOTE, StringPool.BLANK
+		).replaceAll(
+			"\\[", StringPool.BLANK
+		).replaceAll(
+			"\\]", StringPool.BLANK
+		);
 
 		if (nestedFields.equals(StringPool.BLANK)) {
 			return apiUrl;
 		}
 
+		int nestedFieldsDepth = 1;
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(apiUrl);
 		sb.append("?nestedFields=");
-		sb.append(
-			StringUtil.replaceLast(
-				nestedFields, CharPool.COMMA, StringPool.BLANK));
+		sb.append(nestedFields);
 
 		if (nestedFieldsDepth > 1) {
 			sb.append("&nestedFieldsDepth=");

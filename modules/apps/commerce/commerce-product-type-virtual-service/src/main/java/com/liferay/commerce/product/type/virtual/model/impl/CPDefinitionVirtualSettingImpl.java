@@ -27,6 +27,13 @@ public class CPDefinitionVirtualSettingImpl
 			getCPDVirtualSettingFileEntries(getCPDefinitionVirtualSettingId());
 	}
 
+	public int getCPDVirtualSettingFileEntriesCount() {
+		return CPDVirtualSettingFileEntryLocalServiceUtil.
+			getCPDVirtualSettingFileEntriesCount(
+				getCPDefinitionVirtualSettingId());
+	}
+
+
 	@Override
 	public FileEntry getSampleFileEntry() throws PortalException {
 		if (isUseSampleURL()) {

@@ -56,11 +56,10 @@ public class CPDefinitionVirtualSettingFDSDataProvider
 				className, classPK);
 
 		if (cpDefinitionVirtualSetting != null) {
-			List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries =
-				cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries();
 
 			for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-					cpdVirtualSettingFileEntries) {
+					cpDefinitionVirtualSetting.
+						getCPDVirtualSettingFileEntries()) {
 
 				virtualFiles.add(
 					new VirtualFile(
@@ -87,10 +86,8 @@ public class CPDefinitionVirtualSettingFDSDataProvider
 				className, classPK);
 
 		if (cpDefinitionVirtualSetting != null) {
-			List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries =
-				cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries();
-
-			return cpdVirtualSettingFileEntries.size();
+				return cpDefinitionVirtualSetting.
+					getCPDVirtualSettingFileEntriesCount();
 		}
 
 		return 0;

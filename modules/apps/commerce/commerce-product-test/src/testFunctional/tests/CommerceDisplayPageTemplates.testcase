@@ -346,6 +346,75 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12950. As an admin I can view the correct format for the Description in the Paragraph Fragment in a Display Page Template"
+	@priority = 3
+	test CanDisplayCorrectDesriptionOnParagraphFragment {
+		property portal.acceptance = "false";
+
+		task ("Given a new product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				neverExpire = "false",
+				productDescription = "Full Description",
+				productName = "Simple Product",
+				productType = "Simple",
+				shortDescription = "Short Description");
+		}
+
+		task ("And a new Display Page Template for Commerce Product is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Product",
+				displayPageTemplateEntryName = "Master Page Blank",
+				groupName = "Minium");
+		}
+
+		task ("And the Paragraph Display fragment is deployed on the page") {
+			DisplayPageTemplate.addFragment(
+				collectionName = "Basic Components",
+				displayPageName = "Master Page Blank",
+				fragmentName = "Paragraph",
+				publish = "false",
+				siteURLKey = "minium");
+		}
+
+		task ("When the admin user goes to Paragraph Mappping") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+
+		task ("And Source, Item and Field are correctly filled") {
+			Click(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			Select(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Specific Content");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Simple Product",
+				navItem = "Products");
+
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Description");
+		}
+
+		task ("Then the Description is correctly formatted") {
+			AssertElementPresent(
+				key_text = "Full Description",
+				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+
+			AssertElementNotPresent(
+				key_text = "<p>Full Description<p>",
+				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+		}
+	}
+
 	@description = "COMMERCE-11201. Can display related diagram using Diagram Card list item style"
 	@priority = 5
 	test CanDisplayRelatedDiagramsWithDiagramCardListItemStyle {

@@ -128,18 +128,19 @@ describe('request', () => {
 		});
 	});
 
-	it('should set data attribute if method is GET', () => {
+	it('should update requestURL if method is GET', () => {
 		fetch.mockReturnValue(Promise.resolve(new Response('', {status: 204})));
 
 		return request({
 			data: {
 				a: 2
 			},
-			method: 'GET'
+			method: 'GET',
+			path: 'contacts/field_mapping'
 		}).then(() => {
-			const config = fetch.mock.calls[0][1];
+			const requestURL = fetch.mock.calls[0][0];
 
-			return expect(config.data.a).toBe(2);
+			expect(requestURL).toContain('field_mapping?a=2');
 		});
 	});
 

@@ -27,6 +27,7 @@ const filterSettingsContext = ({
 	defaultLanguageId,
 	disabledProperties,
 	disabledTabs,
+	displayFieldName,
 	editingLanguageId,
 	settingsContext: {pages, ...otherSettings},
 	unimplementedProperties,
@@ -101,7 +102,17 @@ const filterSettingsContext = ({
 					break;
 				}
 				case 'name': {
-					updatedProperties.readOnly = true;
+					if (!displayFieldName) {
+						updatedProperties.visible = false;
+					}
+
+					break;
+				}
+				case 'options': {
+					if (displayFieldName) {
+						updatedProperties.showKeyword = true;
+					}
+
 					break;
 				}
 				case 'predefinedValue': {
@@ -145,6 +156,7 @@ export function useSettingsContextFilter(settingsContext) {
 	const {
 		disabledProperties,
 		disabledTabs,
+		displayFieldName,
 		unimplementedProperties,
 		visibleProperties,
 	} = useConfig();
@@ -155,6 +167,7 @@ export function useSettingsContextFilter(settingsContext) {
 				defaultLanguageId,
 				disabledProperties,
 				disabledTabs,
+				displayFieldName,
 				editingLanguageId,
 				settingsContext,
 				unimplementedProperties,
@@ -164,6 +177,7 @@ export function useSettingsContextFilter(settingsContext) {
 			defaultLanguageId,
 			disabledProperties,
 			disabledTabs,
+			displayFieldName,
 			editingLanguageId,
 			settingsContext,
 			unimplementedProperties,

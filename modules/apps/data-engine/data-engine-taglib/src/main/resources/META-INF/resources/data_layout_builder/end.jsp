@@ -80,6 +80,8 @@
 			).put(
 				"defaultLanguageId", defaultLanguageId
 			).put(
+				"displayFieldName", displayFieldName
+			).put(
 				"fieldSetContentType", fieldSetContentType
 			).put(
 				"fieldTypes", fieldTypesJSONArray

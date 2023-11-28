@@ -1,0 +1,122 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "TesteremoveAccount";
+	var testProduct = "DXP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Login on OKTA") {
+			CustomerPortal.loginOktaToUpdateCP();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if (${testLiferayVirtualInstance} == "false") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Automation Ticket: LPS-157452 | Test Summary: Assert if the user can renew the keys."
+	@ignore = "true"
+	@priority = 4
+	test AssertThatTheUserCanRenewTheKeys {
+		task ("Given the user Role is Changed to Administrator") {
+			CP2Utils.assigneToRoleViaUsersTab(
+				accountRoleTitle = "Administrator",
+				accountUserName = "Test Test",
+				searchItem = "test",
+				testAccount = "${testAccount}");
+		}
+
+		task ("And the user goes to Test Account") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		
+			CP2Utils.onboardingFlow();
+		}
+		
+		task ("And go to DXP for generate 2 new keys") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.fullFlowGenerateKey(
+				keyType = "Key Type",
+				option = "Production",
+				optionIndex = 2,
+				fieldText = "RenewKeys",
+				fieldType = "Environment Name",
+				hostName = "renewtest");
+
+			CustomerPortal.clickAtButton(text = "Generate 1 Key");
+			
+			Button.click(button = "Cancel");
+
+			CP2ActivationKeys.fullFlowGenerateKey(
+				keyType = "Key Type",
+				option = "Production",
+				optionIndex = 2,
+				fieldText = "RenewKeys2",
+				fieldType = "Environment Name",
+				hostName = "renewtest");
+
+			CustomerPortal.clickAtButton(text = "Generate 1 Key");
+
+			Alert.viewErrorMessage(errorMessage = "Error:An unexpected error occurred.");
+
+			Button.click(button = "Cancel");
+		}
+
+		task ("When select the keys generated to renew the keys") {
+			CP2TeamMembers.searchCP(search = "RenewKeys");
+
+			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "RenewKeys");
+
+			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "RenewKeys2");
+		}
+
+		task("Then select the Renew button and renew the keys"){
+			Button.click(button = "Renew");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 1);
+
+			CustomerPortal.clickAtButton(text = "Generate 2 Keys");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+}

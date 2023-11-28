@@ -28,6 +28,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
+import com.liferay.search.experiences.exception.SXPElementTitleException;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
@@ -42,6 +43,7 @@ import com.liferay.search.experiences.service.SXPElementService;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -231,6 +233,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	@Override
 	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception {
+		_validateTitleI18n(sxpElement.getTitle_i18n());
+
 		return _sxpElementDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
@@ -371,6 +375,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			Long sxpElementId, SXPElement sxpElement)
 		throws Exception {
 
+		_validateTitleI18n(sxpElement.getTitle_i18n());
+
 		return _sxpElementDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
@@ -410,6 +416,22 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				sxpElement.getId())) {
 
 			throw new DuplicateSXPElementExternalReferenceCodeException();
+		}
+	}
+
+	private void _validateTitleI18n(Map<String, String> titleI18n)
+		throws Exception {
+
+		if (!titleI18n.containsKey(
+				LocaleUtil.getDefault(
+				).toString()) &&
+			!titleI18n.containsKey(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()))) {
+
+			throw new SXPElementTitleException(
+				"The title for the default locale " +
+					LocaleUtil.toLanguageId(LocaleUtil.getDefault()) +
+						" cannot be blank");
 		}
 	}
 

@@ -5,8 +5,7 @@
 
 package com.liferay.search.experiences.internal.validator;
 
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.search.experiences.exception.SXPElementTitleException;
 import com.liferay.search.experiences.validator.SXPElementValidator;
 
@@ -25,11 +24,8 @@ public class SXPElementValidatorImpl implements SXPElementValidator {
 	public void validate(Map<Locale, String> titleMap, int type)
 		throws SXPElementTitleException {
 
-		if (Validator.isBlank(titleMap.get(LocaleUtil.getDefault()))) {
-			throw new SXPElementTitleException(
-				"The title for the default locale " +
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()) +
-						" cannot be blank");
+		if (MapUtil.isEmpty(titleMap)) {
+			throw new SXPElementTitleException("Title is empty");
 		}
 	}
 

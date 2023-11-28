@@ -311,6 +311,9 @@ public class PayPalCommercePaymentIntegration
 		throws PortalException {
 
 		try {
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
 			CapturesRefundRequest capturesRefundRequest =
 				new CapturesRefundRequest(
 					commercePaymentEntry.getTransactionCode());
@@ -324,14 +327,11 @@ public class PayPalCommercePaymentIntegration
 
 			_debug(capturesRefundRequest);
 
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
-
-			HttpResponse<Refund> refundHttpResponse = payPalHttpClient.execute(
+			HttpResponse<Refund> httpResponse = payPalHttpClient.execute(
 				capturesRefundRequest);
 
-			if (refundHttpResponse.statusCode() == 201) {
-				Refund refund = refundHttpResponse.result();
+			if (httpResponse.statusCode() == 201) {
+				Refund refund = httpResponse.result();
 
 				commercePaymentEntry.setPaymentStatus(
 					CommerceOrderPaymentConstants.STATUS_REFUNDED);

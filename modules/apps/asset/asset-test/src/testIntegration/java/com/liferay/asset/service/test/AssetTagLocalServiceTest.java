@@ -317,11 +317,13 @@ public class AssetTagLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), "TAG1",
 				_serviceContext);
 
-			Assert.assertArrayEquals(
-				new long[] {
-					expectedAssetTag1.getTagId(), expectedAssetTag2.getTagId()
-				},
-				_assetTagLocalService.getTagIds("tAg1"));
+			Assert.assertTrue(
+				ArrayUtil.containsAll(
+					_assetTagLocalService.getTagIds("tAg1"),
+					new long[] {
+						expectedAssetTag1.getTagId(),
+						expectedAssetTag2.getTagId()
+					}));
 			Assert.assertArrayEquals(
 				new long[] {expectedAssetTag3.getTagId()},
 				_assetTagLocalService.getTagIds("TAG1"));

@@ -12,12 +12,7 @@ interface Props {
 	portletNamespace: string;
 }
 
-const NUMBER_OF_IMAGES_OPTIONS = [
-	'1',
-	'2',
-	'3',
-	'4',
-].map((option) => ({
+const NUMBER_OF_IMAGES_OPTIONS = ['1', '2', '3', '4'].map((option) => ({
 	label: option,
 }));
 

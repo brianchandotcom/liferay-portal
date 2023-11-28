@@ -16,8 +16,18 @@ AICreatorOpenAIDisplayContext aiCreatorOpenAIDisplayContext = (AICreatorOpenAIDi
 		<span aria-hidden="true" class="loading-animation"></span>
 	</div>
 
-	<react:component
-		module="ai_creator_modal/AICreatorModal"
-		props="<%= aiCreatorOpenAIDisplayContext.getProps() %>"
-	/>
+	<c:choose>
+		<c:when test="<%= aiCreatorOpenAIDisplayContext.isGetGenerations() %>">
+			<react:component
+				module="ai_creator_modal/AICreatorImageModal"
+				props="<%= aiCreatorOpenAIDisplayContext.getProps() %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<react:component
+				module="ai_creator_modal/AICreatorModal"
+				props="<%= aiCreatorOpenAIDisplayContext.getProps() %>"
+			/>
+		</c:otherwise>
+	</c:choose>
 </div>

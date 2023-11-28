@@ -84,21 +84,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		assetDisplayPageEntry.setPlid(
 			_getPlid(classNameId, classPK, layoutPageTemplateEntryId));
 
-		assetDisplayPageEntry = assetDisplayPageEntryPersistence.update(
-			assetDisplayPageEntry);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId);
-
-		if (layoutPageTemplateEntry != null) {
-			layoutPageTemplateEntry.setModifiedDate(new Date());
-
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry);
-		}
-
-		return assetDisplayPageEntry;
+		return assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 	}
 
 	@Override
@@ -226,21 +212,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		assetDisplayPageEntry.setPlid(plid);
 
-		assetDisplayPageEntry = assetDisplayPageEntryPersistence.update(
-			assetDisplayPageEntry);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId);
-
-		if (layoutPageTemplateEntry != null) {
-			layoutPageTemplateEntry.setModifiedDate(new Date());
-
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry);
-		}
-
-		return assetDisplayPageEntry;
+		return assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 	}
 
 	private long _getPlid(

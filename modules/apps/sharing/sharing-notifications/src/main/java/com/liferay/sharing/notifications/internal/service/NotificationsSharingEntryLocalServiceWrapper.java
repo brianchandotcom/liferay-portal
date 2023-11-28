@@ -7,6 +7,7 @@ package com.liferay.sharing.notifications.internal.service;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -134,51 +135,6 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		return ResourceBundleUtil.getString(resourceBundle, "nothing");
 	}
 
-	private String _getEmailActionTitle(
-			SharingEntry sharingEntry, ResourceBundle resourceBundle)
-		throws Exception {
-
-		SharingEntryInterpreter sharingEntryInterpreter =
-			_getSharingEntryInterpreter(sharingEntry);
-
-		if (sharingEntryInterpreter != null) {
-			return ResourceBundleUtil.getString(
-				resourceBundle, "view-x",
-				sharingEntryInterpreter.getAssetTypeTitle(
-					sharingEntry, resourceBundle.getLocale()));
-		}
-
-		return ResourceBundleUtil.getString(resourceBundle, "view");
-	}
-
-	private String _getExpirationDateText(
-		SharingEntry sharingEntry, Locale locale) {
-
-		if (sharingEntry.getExpirationDate() == null) {
-			return null;
-		}
-
-		Format expirationDateFormat = DateFormatFactoryUtil.getDate(locale);
-
-		return expirationDateFormat.format(sharingEntry.getExpirationDate());
-	}
-
-	private String _getFromUserName(
-		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
-
-		User user = _userLocalService.fetchUser(sharingEntry.getUserId());
-
-		return _getUserName(user, resourceBundle);
-	}
-
-	private Locale _getLocale(User toUser) {
-		if (toUser != null) {
-			return toUser.getLocale();
-		}
-
-		return LocaleUtil.getDefault();
-	}
-
 	private String _getNotificationEmailBody(
 			SharingEntry sharingEntry, PortletRequest portletRequest)
 		throws Exception {
@@ -197,11 +153,32 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 		User toUser = _userLocalService.fetchUser(sharingEntry.getToUserId());
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_getLocale(toUser), getClass());
+		Locale locale = LocaleUtil.getDefault();
 
-		template.put(
-			"actionTitle", _getEmailActionTitle(sharingEntry, resourceBundle));
+		if (toUser != null) {
+			locale = toUser.getLocale();
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		String emailActionTitle = StringPool.BLANK;
+
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_getSharingEntryInterpreter(sharingEntry);
+
+		if (sharingEntryInterpreter != null) {
+			emailActionTitle = ResourceBundleUtil.getString(
+				resourceBundle, "view-x",
+				sharingEntryInterpreter.getAssetTypeTitle(
+					sharingEntry, resourceBundle.getLocale()));
+		}
+		else {
+			emailActionTitle = ResourceBundleUtil.getString(
+				resourceBundle, "view");
+		}
+
+		template.put("actionTitle", emailActionTitle);
 
 		template.put(
 			"content",
@@ -222,13 +199,6 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	}
 
 	private String _getNotificationMessage(
-			SharingEntry sharingEntry, Locale locale)
-		throws PortalException {
-
-		return _getNotificationMessage(sharingEntry, locale, null);
-	}
-
-	private String _getNotificationMessage(
 			SharingEntry sharingEntry, Locale locale,
 			PortletRequest portletRequest)
 		throws PortalException {
@@ -242,13 +212,32 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
+		User user = _userLocalService.fetchUser(sharingEntry.getUserId());
+
+		String fromUserName = StringPool.BLANK;
+
+		if (user != null) {
+			fromUserName = HtmlUtil.escape(user.getFullName());
+		}
+		else {
+			fromUserName = ResourceBundleUtil.getString(
+				resourceBundle, "someone");
+		}
+
+		String expirationDateString = StringPool.BLANK;
+
+		if (sharingEntry.getExpirationDate() != null) {
+			Format expirationDateFormat = DateFormatFactoryUtil.getDate(locale);
+
+			expirationDateString = expirationDateFormat.format(
+				sharingEntry.getExpirationDate());
+		}
+
 		return ResourceBundleUtil.getString(
-			resourceBundle, languageKey,
-			_getFromUserName(sharingEntry, resourceBundle),
+			resourceBundle, languageKey, fromUserName,
 			_getSharingEntryObjectTitle(
 				sharingEntry, resourceBundle, portletRequest),
-			_getActionName(sharingEntry, resourceBundle),
-			_getExpirationDateText(sharingEntry, locale));
+			_getActionName(sharingEntry, resourceBundle), expirationDateString);
 	}
 
 	private String _getNotificationURL(
@@ -287,7 +276,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_getSharingEntryInterpreter(sharingEntry);
 
-		String title;
+		String title = StringPool.BLANK;
 
 		if (sharingEntryInterpreter != null) {
 			title = sharingEntryInterpreter.getTitle(sharingEntry);
@@ -306,14 +295,6 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		return title;
 	}
 
-	private String _getUserName(User user, ResourceBundle resourceBundle) {
-		if (user != null) {
-			return HtmlUtil.escape(user.getFullName());
-		}
-
-		return ResourceBundleUtil.getString(resourceBundle, "someone");
-	}
-
 	private void _sendNotificationEvent(
 		SharingEntry sharingEntry, int notificationType,
 		ServiceContext serviceContext) {
@@ -326,7 +307,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 					new SharingNotificationSubcriptionSender();
 
 			sharingNotificationSubcriptionSender.setSubject(
-				_getNotificationMessage(sharingEntry, user.getLocale()));
+				_getNotificationMessage(sharingEntry, user.getLocale(), null));
 
 			String entryURL = _getNotificationURL(
 				sharingEntry, serviceContext.getLiferayPortletRequest());

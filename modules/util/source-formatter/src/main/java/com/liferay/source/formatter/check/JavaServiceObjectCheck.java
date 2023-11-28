@@ -66,7 +66,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			javaTerm, fileContent, fileName, importNames);
 
 		return _formatSetterMethodCalls(
-			javaTermContent, fileContent, fileName, importNames);
+			javaTerm, javaTermContent, fileContent, fileName, importNames);
 	}
 
 	@Override
@@ -108,11 +108,9 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatSetterMethodCalls(
-			JavaTerm javaTerm, String fileContent, String fileName,
-			List<String> importNames)
+			JavaTerm javaTerm, String content, String fileContent,
+			String fileName, List<String> importNames)
 		throws IOException {
-
-		String content = javaTerm.getContent();
 
 		Matcher matcher1 = _setterCallsPattern.matcher(content);
 

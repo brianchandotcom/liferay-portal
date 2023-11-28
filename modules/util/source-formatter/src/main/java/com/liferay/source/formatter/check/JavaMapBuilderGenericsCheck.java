@@ -205,8 +205,8 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 		}
 		else {
 			mapTypeName = getVariableTypeName(
-				javaTerm.getContent(), fileContent, fileName, matcher.group(3),
-				true);
+				javaTerm.getContent(), javaTerm, fileContent, fileName,
+				matcher.group(3), true);
 		}
 
 		if (mapTypeName == null) {

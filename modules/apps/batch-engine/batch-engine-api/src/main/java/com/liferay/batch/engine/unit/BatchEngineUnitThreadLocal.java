@@ -13,29 +13,17 @@ import com.liferay.petra.string.StringPool;
  */
 public class BatchEngineUnitThreadLocal {
 
-	public static String getDataFileName() {
-		return _batchEngineUnitDataFileName.get();
-	}
-
 	public static String getFileName() {
-		return _batchEngineUnitFileName.get();
-	}
-
-	public static void setDataFileName(String dataFileName) {
-		_batchEngineUnitDataFileName.set(dataFileName);
+		return _batchEngineUnitThreadLocal.get();
 	}
 
 	public static void setFileName(String fileName) {
-		_batchEngineUnitFileName.set(fileName);
+		_batchEngineUnitThreadLocal.set(fileName);
 	}
 
-	private static final ThreadLocal<String> _batchEngineUnitDataFileName =
+	private static final ThreadLocal<String> _batchEngineUnitThreadLocal =
 		new CentralizedThreadLocal<>(
-			BatchEngineUnitThreadLocal.class + "._batchEngineUnitDataFileName",
-			() -> StringPool.BLANK);
-	private static final ThreadLocal<String> _batchEngineUnitFileName =
-		new CentralizedThreadLocal<>(
-			BatchEngineUnitThreadLocal.class + "._batchEngineUnitFileName",
+			BatchEngineUnitThreadLocal.class + "._batchEngineUnitThreadLocal",
 			() -> StringPool.BLANK);
 
 }

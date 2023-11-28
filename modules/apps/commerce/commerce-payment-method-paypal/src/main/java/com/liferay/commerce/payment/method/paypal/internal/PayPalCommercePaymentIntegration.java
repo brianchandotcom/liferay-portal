@@ -320,10 +320,20 @@ public class PayPalCommercePaymentIntegration
 
 			capturesRefundRequest.prefer("return=representation");
 			capturesRefundRequest.requestBody(
-				_buildRefundRequestBody(
-					commercePaymentEntry.getAmount(
-					).toString(),
-					commercePaymentEntry.getCurrencyCode()));
+				new RefundRequest() {
+					{
+						amount(
+							new com.paypal.payments.Money() {
+								{
+									currencyCode(
+										commercePaymentEntry.getCurrencyCode());
+									value(
+										String.valueOf(
+											commercePaymentEntry.getAmount()));
+								}
+							});
+					}
+				});
 
 			_debug(capturesRefundRequest);
 
@@ -423,9 +433,9 @@ public class PayPalCommercePaymentIntegration
 				ordersCreateRequest);
 
 			if (httpResponse.statusCode() == 201) {
-				Order createOrder = httpResponse.result();
+				Order order = httpResponse.result();
 
-				for (LinkDescription linkDescription : createOrder.links()) {
+				for (LinkDescription linkDescription : order.links()) {
 					if (Objects.equals(
 							PayPalCommercePaymentMethodConstants.APPROVE_URL,
 							linkDescription.rel())) {
@@ -439,7 +449,7 @@ public class PayPalCommercePaymentIntegration
 					}
 				}
 
-				transactionId = createOrder.id();
+				transactionId = order.id();
 			}
 
 			if (success) {
@@ -466,21 +476,6 @@ public class PayPalCommercePaymentIntegration
 
 			return commercePaymentEntry;
 		}
-	}
-
-	private RefundRequest _buildRefundRequestBody(
-		String amount, String currencyCode) {
-
-		RefundRequest refundRequest = new RefundRequest();
-
-		com.paypal.payments.Money amountMoney = new com.paypal.payments.Money();
-
-		amountMoney.currencyCode(currencyCode);
-		amountMoney.value(amount);
-
-		refundRequest.amount(amountMoney);
-
-		return refundRequest;
 	}
 
 	private void _debug(HttpRequest httpRequest) {

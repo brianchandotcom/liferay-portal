@@ -14,6 +14,7 @@ import com.liferay.commerce.order.content.web.internal.display.context.CommerceO
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -28,6 +29,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,6 +81,16 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 
 				if (accountEntry.getAccountEntryId() !=
 						commerceOrder.getCommerceAccountId()) {
+
+					HttpServletResponse httpServletResponse =
+						_portal.getHttpServletResponse(renderResponse);
+
+					httpServletResponse.sendRedirect(
+						_portletURLFactory.create(
+							_portal.getHttpServletRequest(renderRequest),
+							CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+							PortletRequest.RENDER_PHASE
+						).toString());
 
 					return "/pending_commerce_orders/view.jsp";
 				}
@@ -142,5 +155,8 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

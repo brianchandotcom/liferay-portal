@@ -205,6 +205,9 @@ public class ObjectFieldUtil {
 		else if ((value.length() == 28) && (value.charAt(23) == '+')) {
 			return "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 		}
+		else if (value.length() == 28) {
+			return "EEE MMM dd HH:mm:ss zzz yyyy";
+		}
 
 		return DateUtil.ISO_8601_PATTERN;
 	}

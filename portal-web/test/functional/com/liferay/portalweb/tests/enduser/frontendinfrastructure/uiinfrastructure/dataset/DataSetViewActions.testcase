@@ -29,13 +29,11 @@ definition {
 				key_dataSetViewNameList = "View Test");
 		}
 
-		task ("When the user goes to the Action tab") {
+		task ("When the user goes to the Action tab.") {
 			DataSetAdmin.goToSpecificViewPage(
 				dataSetName = "Data Set Test",
 				key_viewName = "View Test");
-		}
 
-		task ("When the user goes to the Action tab.") {
 			DataSetAdmin.goToTab(tabName = "Actions");
 		}
 	}

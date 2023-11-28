@@ -90,8 +90,8 @@ export default function AICreatorImageModal({
 				if (json.error) {
 					setErrorStatus(json.error.message);
 				}
-				else if (json.completion?.content) {
-					setText(json.completion.content);
+				else if (json.generations?.content) {
+					setText(json.generations.content);
 					setStatus({type: 'idle'});
 				}
 				else {
@@ -99,7 +99,7 @@ export default function AICreatorImageModal({
 				}
 			})
 			.catch((error) => {
-				if (process.env.NODE_ENV === 'developm̀ent') {
+				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
 				}
 

@@ -13,7 +13,7 @@ interface Props {
 export function ImagesResult({imagesURL}: Props) {
 	return (
 		<>
-			<p>{Liferay.Language.get('image-results')}</p>
+			<label>{Liferay.Language.get('image-results')}</label>
 
 			<ul className="card-page card-page-equal-height">
 				{imagesURL.map((imageURL, index) => (

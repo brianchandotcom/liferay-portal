@@ -660,33 +660,21 @@ public class UserManagerImpl implements UserManager {
 		try {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
-					String.format(
-						"(%s=%s*)", ConfigurationAdmin.SERVICE_FACTORYPID,
-						ScimClientOAuth2ApplicationConfiguration.class.
-							getName()));
+					StringBundler.concat(
+						"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
+						"=com.liferay.scim.rest.internal.configuration.",
+						"ScimClientOAuth2ApplicationConfiguration)(companyId=",
+						companyId, "))"));
 
 			if (ArrayUtil.isEmpty(configurations)) {
 				return null;
 			}
 
-			for (Configuration configuration : configurations) {
-				Map<String, Object> properties =
-					HashMapBuilder.<String, Object>putAll(
-						configuration.getProperties()
-					).build();
+			Configuration configuration = configurations[0];
 
-				long configurationCompanyId =
-					ConfigurationFactoryUtil.getCompanyId(
-						_companyLocalService, properties);
-
-				if (companyId == configurationCompanyId) {
-					return ConfigurableUtil.createConfigurable(
-						ScimClientOAuth2ApplicationConfiguration.class,
-						properties);
-				}
-			}
-
-			return null;
+			return ConfigurableUtil.createConfigurable(
+				ScimClientOAuth2ApplicationConfiguration.class,
+				configuration.getProperties());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

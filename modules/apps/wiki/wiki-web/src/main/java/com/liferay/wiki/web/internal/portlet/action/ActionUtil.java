@@ -5,18 +5,22 @@
 
 package com.liferay.wiki.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -157,10 +161,29 @@ public class ActionUtil {
 				serviceContext.setAddGuestPermissions(false);
 			}
 
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
+			int count = GroupLocalServiceUtil.dslQueryCount(
+				DSLQueryFactoryUtil.count(
+				).from(
+					GroupTable.INSTANCE
+				).where(
+					GroupTable.INSTANCE.ctCollectionId.eq(
+						CTConstants.CT_COLLECTION_ID_PRODUCTION
+					).and(
+						GroupTable.INSTANCE.groupId.eq(
+							themeDisplay.getScopeGroupId())
+					)
+				));
 
+			if (count > 0) {
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setProductionModeWithSafeCloseable()) {
+
+					node = WikiNodeLocalServiceUtil.addDefaultNode(
+						themeDisplay.getGuestUserId(), serviceContext);
+				}
+			}
+			else {
 				node = WikiNodeLocalServiceUtil.addDefaultNode(
 					themeDisplay.getGuestUserId(), serviceContext);
 			}

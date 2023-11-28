@@ -13,8 +13,8 @@ import React, {FormEvent, useState} from 'react';
 import {ErrorMessage} from './ErrorMessage';
 import {FormFooter} from './FormFooter';
 import {FormImage} from './FormImage';
+import {ImagesResult} from './ImagesResult';
 import {LoadingMessage} from './LoadingMessage';
-import {TextContent} from './TextContent';
 
 interface Props {
 	getGenerationsURL: string;
@@ -50,13 +50,13 @@ export default function AICreatorImageModal({
 	};
 
 	const [status, setStatus] = useState<RequestStatus>({type: 'idle'});
-	const [text, setText] = useState<string | null>(null);
+	const [imagesURL, setImagesURL] = useState<string[] | null>(null);
 
 	const onAdd = () => {
-		if (text) {
+		if (imagesURL) {
 			const opener = Liferay.Util.getOpener();
 
-			opener.Liferay.fire('closeModal', {text});
+			opener.Liferay.fire('closeModal', {imagesURL});
 		}
 	};
 
@@ -91,7 +91,7 @@ export default function AICreatorImageModal({
 					setErrorStatus(json.error.message);
 				}
 				else if (json.generations?.content) {
-					setText(json.generations.content);
+					setImagesURL(json.generations.content);
 					setStatus({type: 'idle'});
 				}
 				else {
@@ -131,12 +131,11 @@ export default function AICreatorImageModal({
 					>
 						<FormImage portletNamespace={portletNamespace} />
 
-						{text ? (
-							<TextContent
-								content={text}
-								portletNamespace={portletNamespace}
+						{imagesURL && (
+							<ImagesResult
+								imagesURL={imagesURL}
 							/>
-						) : null}
+						)}
 
 						<ClayForm.Group className="c-mb-0">
 							<LearnResourcesContext.Provider
@@ -154,9 +153,9 @@ export default function AICreatorImageModal({
 						<FormFooter
 							onAdd={onAdd}
 							onClose={closeModal}
-							showAddButton={Boolean(text)}
-							showCreateButton={!text}
-							showRetryButton={Boolean(text)}
+							showAddButton={Boolean(imagesURL?.length)}
+							showCreateButton={!imagesURL}
+							showRetryButton={Boolean(imagesURL?.length)}
 						/>
 					</div>
 				</fieldset>

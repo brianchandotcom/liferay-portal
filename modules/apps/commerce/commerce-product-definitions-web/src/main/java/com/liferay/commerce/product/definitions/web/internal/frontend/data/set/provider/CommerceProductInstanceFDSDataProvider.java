@@ -14,7 +14,6 @@ import com.liferay.commerce.product.definitions.web.internal.constants.CommerceP
 import com.liferay.commerce.product.definitions.web.internal.model.Sku;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -37,8 +36,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,23 +95,14 @@ public class CommerceProductInstanceFDSDataProvider
 			JSONArray jsonArray = CPJSONUtil.toJSONArray(
 				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
-			BigDecimal stockQuantity =
-				_commerceInventoryEngine.getStockQuantity(
-					cpInstance.getCompanyId(), cpDefinition.getGroupId(),
-					cpInstance.getSku(), StringPool.BLANK);
-
-			String availableQuantity = String.valueOf(stockQuantity);
-
-			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-				_cpInstanceUnitOfMeasureLocalService.
-					fetchPrimaryCPInstanceUnitOfMeasure(
-						cpInstance.getCPInstanceId());
-
-			if (cpInstanceUnitOfMeasure != null) {
-				availableQuantity = String.valueOf(
-					_commerceQuantityFormatter.format(
-						cpInstanceUnitOfMeasure, stockQuantity));
-			}
+			String availableQuantity = String.valueOf(
+				_commerceQuantityFormatter.format(
+					_cpInstanceUnitOfMeasureLocalService.
+						fetchPrimaryCPInstanceUnitOfMeasure(
+							cpInstance.getCPInstanceId()),
+					_commerceInventoryEngine.getStockQuantity(
+						cpInstance.getCompanyId(), cpDefinition.getGroupId(),
+						cpInstance.getSku(), StringPool.BLANK)));
 
 			String statusDisplayStyle = StringPool.BLANK;
 

@@ -7,6 +7,7 @@ package com.liferay.commerce.product.type.virtual.web.internal.frontend.data.set
 
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryService;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingFDSNames;
 import com.liferay.commerce.product.type.virtual.web.internal.model.VirtualFile;
@@ -58,8 +59,11 @@ public class CommerceVirtualOrderItemFileEntryFDSDataProvider
 		if (commerceVirtualOrderItem != null) {
 			for (CommerceVirtualOrderItemFileEntry
 					commerceVirtualOrderItemFileEntry :
-						commerceVirtualOrderItem.
-							getCommerceVirtualOrderItemFileEntries()) {
+						_commerceVirtualOrderItemFileEntryService.
+							getCommerceVirtualOrderItemFileEntries(
+								commerceVirtualOrderItemId,
+								fdsPagination.getStartPosition(),
+								fdsPagination.getEndPosition())) {
 
 				virtualFiles.add(
 					new VirtualFile(
@@ -108,6 +112,10 @@ public class CommerceVirtualOrderItemFileEntryFDSDataProvider
 
 		return commerceVirtualOrderItemFileEntry.getUrl();
 	}
+
+	@Reference
+	private CommerceVirtualOrderItemFileEntryService
+		_commerceVirtualOrderItemFileEntryService;
 
 	@Reference
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;

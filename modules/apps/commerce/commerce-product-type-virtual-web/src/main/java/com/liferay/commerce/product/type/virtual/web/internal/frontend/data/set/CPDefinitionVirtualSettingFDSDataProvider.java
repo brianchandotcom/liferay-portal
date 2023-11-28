@@ -7,6 +7,7 @@ package com.liferay.commerce.product.type.virtual.web.internal.frontend.data.set
 
 import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
 import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingFDSNames;
 import com.liferay.commerce.product.type.virtual.web.internal.model.VirtualFile;
@@ -56,10 +57,14 @@ public class CPDefinitionVirtualSettingFDSDataProvider
 				className, classPK);
 
 		if (cpDefinitionVirtualSetting != null) {
-
 			for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-					cpDefinitionVirtualSetting.
-						getCPDVirtualSettingFileEntries()) {
+					_cpdVirtualSettingFileEntryService.
+						getCPDVirtualSettingFileEntries(
+							className, classPK,
+							cpDefinitionVirtualSetting.
+								getCPDefinitionVirtualSettingId(),
+							fdsPagination.getStartPosition(),
+							fdsPagination.getEndPosition())) {
 
 				virtualFiles.add(
 					new VirtualFile(
@@ -86,8 +91,8 @@ public class CPDefinitionVirtualSettingFDSDataProvider
 				className, classPK);
 
 		if (cpDefinitionVirtualSetting != null) {
-				return cpDefinitionVirtualSetting.
-					getCPDVirtualSettingFileEntriesCount();
+			return cpDefinitionVirtualSetting.
+				getCPDVirtualSettingFileEntriesCount();
 		}
 
 		return 0;

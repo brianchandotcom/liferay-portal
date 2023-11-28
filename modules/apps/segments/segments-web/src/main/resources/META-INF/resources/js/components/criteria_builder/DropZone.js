@@ -23,11 +23,9 @@ const acceptedDragTypes = [CRITERIA_GROUP, CRITERIA_ROW, PROPERTY];
  * @returns {boolean} True if the target should accept the item.
  */
 function canDrop(props, monitor) {
-	const {
-		dropIndex: destIndex,
-		groupId: destGroupId,
-		propertyKey: destPropertyKey,
-	} = props;
+	const {groupId: destGroupId, index, propertyKey: destPropertyKey} = props;
+
+	const destIndex = props.before ? index : index + 1;
 
 	const {
 		childGroupIds = [],
@@ -62,12 +60,9 @@ function canDrop(props, monitor) {
  * @param {DropTargetMonitor} monitor
  */
 function drop(props, monitor) {
-	const {
-		dropIndex: destIndex,
-		groupId: destGroupId,
-		onCriterionAdd,
-		onMove,
-	} = props;
+	const {groupId: destGroupId, index, onCriterionAdd, onMove} = props;
+
+	const destIndex = props.before ? index : index + 1;
 
 	const {
 		criterion,

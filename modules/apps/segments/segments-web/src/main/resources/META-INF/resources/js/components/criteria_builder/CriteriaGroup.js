@@ -137,8 +137,8 @@ export default function CriteriaGroup({
 
 				<DropZone
 					before
-					dropIndex={index}
 					groupId={groupId}
+					index={index}
 					onCriterionAdd={_handleCriterionAdd}
 					onMove={onMove}
 					propertyKey={propertyKey}
@@ -189,8 +189,8 @@ export default function CriteriaGroup({
 				)}
 
 				<DropZone
-					dropIndex={index + 1}
 					groupId={groupId}
+					index={index}
 					onCriterionAdd={_handleCriterionAdd}
 					onMove={onMove}
 					propertyKey={propertyKey}
@@ -227,8 +227,8 @@ export default function CriteriaGroup({
 				<>
 					<DropZone
 						before
-						dropIndex={0}
 						groupId={groupId}
+						index={0}
 						onCriterionAdd={_handleCriterionAdd}
 						onMove={onMove}
 						propertyKey={propertyKey}

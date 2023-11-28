@@ -713,51 +713,53 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			return apiUrl;
 		}
 
+		String nestedFields = StringPool.BLANK;
+
+		int nestedFieldsDepth = 1;
+
 		JSONArray fdsFieldsJSONArray = JSONUtil.toJSONArray(
 			fdsFieldsSet,
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
-				JSONObject jsonObject = JSONUtil.put(
+				return JSONUtil.put(
 					"fieldName", String.valueOf(properties.get("name")));
+			});
 
-				String[] fieldNameArray = StringUtil.split(
-					jsonObject.getString("fieldName"), CharPool.PERIOD);
+		for (int i = 0; i < fdsFieldsJSONArray.length(); i++) {
+			JSONObject fdsFieldJSONObject = fdsFieldsJSONArray.getJSONObject(i);
 
-				if (fieldNameArray.length == 1) {
-					return null;
-				}
+			String[] fieldNameArray = StringUtil.split(
+				fdsFieldJSONObject.getString("fieldName"), CharPool.PERIOD);
 
+			if (fieldNameArray.length > 1) {
 				String[] fieldsName = new String[fieldNameArray.length - 1];
 
 				System.arraycopy(
 					fieldNameArray, 0, fieldsName, 0,
 					fieldNameArray.length - 1);
 
-				return fieldsName;
-			});
+				for (String fieldName : fieldsName) {
+					nestedFields = StringUtil.add(nestedFields, fieldName);
+				}
 
-		String nestedFields = fdsFieldsJSONArray.join(
-			StringPool.COMMA
-		).replaceAll(
-			StringPool.QUOTE, StringPool.BLANK
-		).replaceAll(
-			"\\[", StringPool.BLANK
-		).replaceAll(
-			"\\]", StringPool.BLANK
-		);
+				if (fieldNameArray.length > nestedFieldsDepth) {
+					nestedFieldsDepth = fieldNameArray.length - 1;
+				}
+			}
+		}
 
 		if (nestedFields.equals(StringPool.BLANK)) {
 			return apiUrl;
 		}
 
-		int nestedFieldsDepth = 1;
-
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(apiUrl);
 		sb.append("?nestedFields=");
-		sb.append(nestedFields);
+		sb.append(
+			StringUtil.replaceLast(
+				nestedFields, CharPool.COMMA, StringPool.BLANK));
 
 		if (nestedFieldsDepth > 1) {
 			sb.append("&nestedFieldsDepth=");

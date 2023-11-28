@@ -998,9 +998,9 @@ this task.
 				<mkdir dir="${app.server.parent.dir}" />
 
 				<mirrors-get
-						dest="${app.server.parent.dir}/${app.server.openliberty.zip.name}"
-						src="${app.server.openliberty.zip.url}"
-						verbose="true"
+					dest="${app.server.parent.dir}/${app.server.openliberty.zip.name}"
+					src="${app.server.openliberty.zip.url}"
+					verbose="true"
 				/>
 			</then>
 		</if>
@@ -1008,13 +1008,13 @@ this task.
 		<basename file="${app.server.openliberty.dir}" property="app.server.openliberty.dir.name" />
 
 		<unzip
-				dest="${app.server.parent.dir}"
-				src="${app.server.parent.dir}/${app.server.openliberty.zip.name}"
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/${app.server.openliberty.zip.name}"
 		>
 			<mapper
-					from="wlp/*"
-					to="${app.server.openliberty.dir.name}/*"
-					type="glob"
+				from="wlp/*"
+				to="${app.server.openliberty.dir.name}/*"
+				type="glob"
 			/>
 		</unzip>
 
@@ -1027,10 +1027,10 @@ this task.
 			</then>
 			<else>
 				<chmod
-						perm="a+x"
+					perm="a+x"
 				>
 					<fileset
-							dir="${app.server.openliberty.bin.dir}"
+						dir="${app.server.openliberty.bin.dir}"
 					>
 						<include name="server" />
 					</fileset>
@@ -1043,7 +1043,7 @@ this task.
 		</if>
 
 		<replace
-				file="${app.server.openliberty.conf.dir}/server.xml"
+			file="${app.server.openliberty.conf.dir}/server.xml"
 		>
 			<replacetoken><![CDATA[<applicationManager autoExpand="true"/>]]></replacetoken>
 			<replacevalue>

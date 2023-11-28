@@ -385,24 +385,23 @@ public class PayPalCommercePaymentIntegration
 
 			OrderRequest orderRequest = new OrderRequest();
 
-			ApplicationContext applicationContext = new ApplicationContext(
-			).cancelUrl(
-				_getApplicationContextURL(
-					commercePaymentEntry, httpServletRequest, "&cancel=true",
-					commercePaymentEntry.getCancelURL())
-			).returnUrl(
-				_getApplicationContextURL(
-					commercePaymentEntry, httpServletRequest,
-					"&orderType=normal", commercePaymentEntry.getCallbackURL())
-			).shippingPreference(
-				PayPalCommercePaymentMethodConstants.
-					SHIPPING_PREFERENCE_PROVIDED
-			).userAction(
-				PayPalCommercePaymentMethodConstants.USER_ACTION_PAY_NOW
-			);
-
-			orderRequest.applicationContext(applicationContext);
-
+			orderRequest.applicationContext(
+				new ApplicationContext(
+				).cancelUrl(
+					_getApplicationContextURL(
+						commercePaymentEntry, httpServletRequest,
+						"&cancel=true", commercePaymentEntry.getCancelURL())
+				).returnUrl(
+					_getApplicationContextURL(
+						commercePaymentEntry, httpServletRequest,
+						"&orderType=normal",
+						commercePaymentEntry.getCallbackURL())
+				).shippingPreference(
+					PayPalCommercePaymentMethodConstants.
+						SHIPPING_PREFERENCE_PROVIDED
+				).userAction(
+					PayPalCommercePaymentMethodConstants.USER_ACTION_PAY_NOW
+				));
 			orderRequest.checkoutPaymentIntent(
 				PayPalCommercePaymentMethodConstants.INTENT_AUTHORIZE);
 

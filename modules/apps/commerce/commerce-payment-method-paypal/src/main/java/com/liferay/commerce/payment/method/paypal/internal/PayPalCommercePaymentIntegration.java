@@ -77,6 +77,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -398,11 +399,14 @@ public class PayPalCommercePaymentIntegration
 					CommerceOrder.class.getName())) {
 
 				orderRequest.purchaseUnits(
-					_buildCommerceOrderRequestBody(commercePaymentEntry));
+					Collections.singletonList(
+						_getCommerceOrderPurchaseUnitRequest(
+							commercePaymentEntry)));
 			}
 			else {
 				orderRequest.purchaseUnits(
-					_buildGenericRequestBody(commercePaymentEntry));
+					Collections.singletonList(
+						_getDefaultPurchaseUnitRequest(commercePaymentEntry)));
 			}
 
 			OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest(
@@ -465,11 +469,84 @@ public class PayPalCommercePaymentIntegration
 		}
 	}
 
-	private List<PurchaseUnitRequest> _buildCommerceOrderRequestBody(
+	private RefundRequest _buildRefundRequestBody(
+		String amount, String currencyCode) {
+
+		RefundRequest refundRequest = new RefundRequest();
+
+		com.paypal.payments.Money amountMoney = new com.paypal.payments.Money();
+
+		amountMoney.currencyCode(currencyCode);
+		amountMoney.value(amount);
+
+		refundRequest.amount(amountMoney);
+
+		return refundRequest;
+	}
+
+	private void _debug(HttpRequest httpRequest) {
+		if (!_log.isDebugEnabled()) {
+			return;
+		}
+
+		Class<?> clazz = httpRequest.getClass();
+
+		_log.debug(clazz.getName());
+
+		Gson gson = new Gson();
+
+		_log.debug("Headers: " + gson.toJson(httpRequest.headers()));
+		_log.debug("Request body: " + gson.toJson(httpRequest.requestBody()));
+	}
+
+	private String _getAmountValue(
+		BigDecimal amount, CommerceCurrency commerceCurrency) {
+
+		BigDecimal scaledAmount = amount.setScale(
+			commerceCurrency.getMaxFractionDigits(),
+			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
+
+		return scaledAmount.toPlainString();
+	}
+
+	private StringBundler _getBaseUrl(
+		HttpServletRequest httpServletRequest,
+		CommercePaymentEntry commercePaymentEntry, String redirect) {
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_portal.getPortalURL(httpServletRequest));
+		sb.append(_portal.getPathModule());
+		sb.append(CharPool.SLASH);
+		sb.append(CommercePaymentMethodConstants.SERVLET_PATH);
+		sb.append("?entryId=");
+		sb.append(commercePaymentEntry.getCommercePaymentEntryId());
+		sb.append("&entryKey=");
+		sb.append(KEY);
+
+		if (Validator.isNotNull(redirect)) {
+			sb.append("&redirect=");
+			sb.append(URLCodec.encodeURL(redirect));
+		}
+
+		return sb;
+	}
+
+	private String _getCancelUrl(
+		HttpServletRequest httpServletRequest,
+		CommercePaymentEntry commercePaymentEntry, String redirect) {
+
+		StringBundler sb = _getBaseUrl(
+			httpServletRequest, commercePaymentEntry, redirect);
+
+		sb.append("&cancel=true");
+
+		return sb.toString();
+	}
+
+	private PurchaseUnitRequest _getCommerceOrderPurchaseUnitRequest(
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
-
-		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
 
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
@@ -601,23 +678,19 @@ public class PayPalCommercePaymentIntegration
 		purchaseUnitRequest.referenceId(
 			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()));
 
-		purchaseUnitRequests.add(purchaseUnitRequest);
-
-		return purchaseUnitRequests;
+		return purchaseUnitRequest;
 	}
 
-	private List<PurchaseUnitRequest> _buildGenericRequestBody(
+	private PurchaseUnitRequest _getDefaultPurchaseUnitRequest(
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePaymentEntry.getCompanyId(),
 				commercePaymentEntry.getCurrencyCode());
-
-		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
 		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
 
@@ -643,84 +716,7 @@ public class PayPalCommercePaymentIntegration
 		purchaseUnitRequest.referenceId(
 			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()));
 
-		purchaseUnitRequests.add(purchaseUnitRequest);
-
-		return purchaseUnitRequests;
-	}
-
-	private RefundRequest _buildRefundRequestBody(
-		String amount, String currencyCode) {
-
-		RefundRequest refundRequest = new RefundRequest();
-
-		com.paypal.payments.Money amountMoney = new com.paypal.payments.Money();
-
-		amountMoney.currencyCode(currencyCode);
-		amountMoney.value(amount);
-
-		refundRequest.amount(amountMoney);
-
-		return refundRequest;
-	}
-
-	private void _debug(HttpRequest httpRequest) {
-		if (!_log.isDebugEnabled()) {
-			return;
-		}
-
-		Class<?> clazz = httpRequest.getClass();
-
-		_log.debug(clazz.getName());
-
-		Gson gson = new Gson();
-
-		_log.debug("Headers: " + gson.toJson(httpRequest.headers()));
-		_log.debug("Request body: " + gson.toJson(httpRequest.requestBody()));
-	}
-
-	private String _getAmountValue(
-		BigDecimal amount, CommerceCurrency commerceCurrency) {
-
-		BigDecimal scaledAmount = amount.setScale(
-			commerceCurrency.getMaxFractionDigits(),
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
-
-		return scaledAmount.toPlainString();
-	}
-
-	private StringBundler _getBaseUrl(
-		HttpServletRequest httpServletRequest,
-		CommercePaymentEntry commercePaymentEntry, String redirect) {
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_portal.getPortalURL(httpServletRequest));
-		sb.append(_portal.getPathModule());
-		sb.append(CharPool.SLASH);
-		sb.append(CommercePaymentMethodConstants.SERVLET_PATH);
-		sb.append("?entryId=");
-		sb.append(commercePaymentEntry.getCommercePaymentEntryId());
-		sb.append("&entryKey=");
-		sb.append(KEY);
-
-		if (Validator.isNotNull(redirect)) {
-			sb.append("&redirect=");
-			sb.append(URLCodec.encodeURL(redirect));
-		}
-
-		return sb;
-	}
-
-	private String _getCancelUrl(
-		HttpServletRequest httpServletRequest,
-		CommercePaymentEntry commercePaymentEntry, String redirect) {
-
-		StringBundler sb = _getBaseUrl(
-			httpServletRequest, commercePaymentEntry, redirect);
-
-		sb.append("&cancel=true");
-
-		return sb.toString();
+		return purchaseUnitRequest;
 	}
 
 	private String _getErrorMessages(IOException ioException, String prefix) {

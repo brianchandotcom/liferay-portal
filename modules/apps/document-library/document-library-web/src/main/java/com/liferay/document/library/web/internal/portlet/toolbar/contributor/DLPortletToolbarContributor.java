@@ -70,7 +70,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		if (_isDLPortlet(themeDisplay) &&
 			!DLPortletToolbarContributorUtil.isShowActionsEnabled(
-				themeDisplay, portletRequest)) {
+				themeDisplay)) {
 
 			return null;
 		}

@@ -95,9 +95,7 @@ public class DLPortletToolbarContributorUtil {
 		return folder;
 	}
 
-	public static Boolean isShowActionsEnabled(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
-
+	public static Boolean isShowActionsEnabled(ThemeDisplay themeDisplay) {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		String portletDisplayId = portletDisplay.getId();

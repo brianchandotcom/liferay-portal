@@ -46,7 +46,7 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 			WebKeys.THEME_DISPLAY);
 
 		if (!DLPortletToolbarContributorUtil.isShowActionsEnabled(
-				themeDisplay, portletRequest)) {
+				themeDisplay)) {
 
 			return null;
 		}

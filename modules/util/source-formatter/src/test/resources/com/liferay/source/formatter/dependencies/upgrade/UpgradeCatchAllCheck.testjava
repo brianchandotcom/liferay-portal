@@ -460,6 +460,13 @@ public class UpgradeCatchAllCheck {
 		_addressService.addAddress(userId, className, classPK, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary, serviceContext);
 	}
 
+	public void method(long[] segmentsExperienceIds) {
+		DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(null);
+
+		defaultFragmentRendererContext.setSegmentsExperienceIds(new long[0]);
+		defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
+	}
+
 	public void method(Organization organization) {
 		organization.getStatusId();
 		organization.setStatusId();

@@ -13,7 +13,6 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -58,6 +56,7 @@ import com.liferay.scim.rest.internal.util.ScimUserUtil;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -822,7 +821,7 @@ public class UserManagerImpl implements UserManager {
 			scimUser.setActive(portalUser.isActive());
 			scimUser.setBirthday(portalUser.getBirthday());
 			scimUser.setCompanyId(portalUser.getCompanyId());
-			scimUser.setCreateDate(portalUser.getCreateDate());
+			scimUser.setCreateDate(_truncateDate(portalUser.getCreateDate()));
 			scimUser.setFirstName(portalUser.getFirstName());
 			scimUser.setEmailAddress(portalUser.getEmailAddress());
 			scimUser.setExternalReferenceCode(
@@ -833,7 +832,8 @@ public class UserManagerImpl implements UserManager {
 			scimUser.setLocale(portalUser.getLocale());
 			scimUser.setMale(portalUser.isMale());
 			scimUser.setMiddleName(portalUser.getMiddleName());
-			scimUser.setModifiedDate(portalUser.getModifiedDate());
+			scimUser.setModifiedDate(
+				_truncateDate(portalUser.getModifiedDate()));
 			scimUser.setScreenName(portalUser.getScreenName());
 
 			return scimUser;
@@ -847,6 +847,19 @@ public class UserManagerImpl implements UserManager {
 
 			return ReflectionUtil.throwException(portalException);
 		}
+	}
+
+	private Date _truncateDate(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(date);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return calendar.getTime();
 	}
 
 	private com.liferay.portal.kernel.model.User _updatePortalUser(

@@ -27,6 +27,7 @@ const requireUpdatePageFieldNames = [
 	'requireConfirmation',
 	'required',
 	'sendEmailNotification',
+	'storageType',
 	'validation',
 ];
 

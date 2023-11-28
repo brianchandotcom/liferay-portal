@@ -233,6 +233,20 @@
 		</for>
 	</target>
 
+	<target name="build-dist-openliberty">
+		<app-server-properties-update>
+			app.server.type=openliberty
+		</app-server-properties-update>
+
+		<antcall inheritAll="false" target="unzip-openliberty" />
+
+		<delete dir="${project.dir}/portal-web/classes" />
+
+		<ant inheritAll="false" target="deploy" />
+
+		<app-server-properties-reset />
+	</target>
+
 	<target name="build-dist-plugins">
 		<antcall inheritAll="false" target="update-plugins-includes">
 			<param name="plugins.includes.bundle.required" value="true" />
@@ -971,6 +985,77 @@ this task.
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
+	</target>
+
+	<target name="unzip-openliberty">
+		<delete dir="${app.server.openliberty.dir}" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.openliberty.zip.name}" />
+			</not>
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<mirrors-get
+						dest="${app.server.parent.dir}/${app.server.openliberty.zip.name}"
+						src="${app.server.openliberty.zip.url}"
+						verbose="true"
+				/>
+			</then>
+		</if>
+
+		<basename file="${app.server.openliberty.dir}" property="app.server.openliberty.dir.name" />
+
+		<unzip
+				dest="${app.server.parent.dir}"
+				src="${app.server.parent.dir}/${app.server.openliberty.zip.name}"
+		>
+			<mapper
+					from="wlp/*"
+					to="${app.server.openliberty.dir.name}/*"
+					type="glob"
+			/>
+		</unzip>
+
+		<if>
+			<os family="windows" />
+			<then>
+				<exec dir="${app.server.openliberty.bin.dir}" executable="cmd">
+					<arg line="/c set JAVA_OPTS= &amp; server.bat create liferay --template=javaee8" />
+				</exec>
+			</then>
+			<else>
+				<chmod
+						perm="a+x"
+				>
+					<fileset
+							dir="${app.server.openliberty.bin.dir}"
+					>
+						<include name="server" />
+					</fileset>
+				</chmod>
+
+				<exec dir="${app.server.openliberty.bin.dir}" executable="${app.server.openliberty.bin.dir}/server">
+					<arg line="create ${app.server.openliberty.instance.name} --template=javaee8" />
+				</exec>
+			</else>
+		</if>
+
+		<replace
+				file="${app.server.openliberty.conf.dir}/server.xml"
+		>
+			<replacetoken><![CDATA[<applicationManager autoExpand="true"/>]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+	<applicationManager autoExpand="true"/>
+
+	<webApplication id="liferay" location="liferay-portal.war" name="liferay" contextRoot="/" />]]></replacevalue>
+		</replace>
+
+		<echo file="${app.server.openliberty.conf.dir}/jvm.options">${app.server.tcserver.jvm.args}</echo>
+
+		<replaceregexp file="${app.server.openliberty.conf.dir}/jvm.options" flags="g" match="\s+" replace="${line.separator}" />
 	</target>
 
 	<target name="unzip-tcserver">

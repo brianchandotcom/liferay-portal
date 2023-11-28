@@ -354,6 +354,15 @@ message.
 			</then>
 		</if>
 
+		<if>
+			<not>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+			</not>
+			<then>
+				<ant antfile="build-dist.xml" target="unzip-${app.server.type}" />
+			</then>
+		</if>
+
 		<ant dir="portal-kernel" inheritAll="false" target="deploy" />
 
 		<ant dir="util-bridges" inheritAll="false" target="deploy" />

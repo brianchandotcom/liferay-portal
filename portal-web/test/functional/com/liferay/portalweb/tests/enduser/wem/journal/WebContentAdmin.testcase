@@ -424,6 +424,24 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-197694. The configuration page of Web Content admin should comply with WCAG 2.1 AA standard"
+	@priority = 4
+	test ViewAccessibilityOfNotificationsConfiguration {
+		property custom.properties = "feature.flag.LPS-197692=true";
+
+		task ("Given the web content admin configuration page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+		}
+
+		task ("Then the user can check the accessibility of the page") {
+			AssertAccessible();
+		}
+	}
+
 	@description = "This is a test for LPS-151948. The Filter by Status is available to the Versions tab."
 	@priority = 4
 	test ViewFilterByStatusAvailableToVersionsTab {

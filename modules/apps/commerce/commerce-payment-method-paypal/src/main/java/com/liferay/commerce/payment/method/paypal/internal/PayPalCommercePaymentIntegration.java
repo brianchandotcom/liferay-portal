@@ -367,6 +367,9 @@ public class PayPalCommercePaymentIntegration
 		String transactionId = StringPool.BLANK;
 
 		try {
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
 			OrderRequest orderRequest = new OrderRequest();
 
 			ApplicationContext applicationContext = new ApplicationContext(
@@ -413,14 +416,11 @@ public class PayPalCommercePaymentIntegration
 
 			_debug(ordersCreateRequest);
 
-			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
-				commercePaymentEntry);
+			HttpResponse<Order> httpResponse = payPalHttpClient.execute(
+				ordersCreateRequest);
 
-			HttpResponse<Order> orderCreateHttpResponse =
-				payPalHttpClient.execute(ordersCreateRequest);
-
-			if (orderCreateHttpResponse.statusCode() == 201) {
-				Order createOrder = orderCreateHttpResponse.result();
+			if (httpResponse.statusCode() == 201) {
+				Order createOrder = httpResponse.result();
 
 				for (LinkDescription linkDescription : createOrder.links()) {
 					if (Objects.equals(

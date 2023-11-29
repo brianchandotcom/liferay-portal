@@ -48,13 +48,19 @@ public class PlacedOrderAddressResourceImpl
 			throw new NoSuchOrderException();
 		}
 
+		long commerceAddressId = 0;
+
 		CommerceAddress commerceAddress =
-			_commerceAddressService.getCommerceAddress(
+			_commerceAddressService.fetchCommerceAddress(
 				commerceOrder.getBillingAddressId());
+
+		if (commerceAddress != null) {
+			commerceAddressId = commerceAddress.getCommerceAddressId();
+		}
 
 		return _placedOrderAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				_dtoConverterRegistry, commerceAddress.getCommerceAddressId(),
+				_dtoConverterRegistry, commerceAddressId,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

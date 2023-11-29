@@ -373,10 +373,10 @@ public class AssetTagLocalServiceTest {
 
 		_addArticle(tagNames);
 
-		_getTags("tag1", tagNames);
-		_getTags("TAG1", tagNames);
-		_getTags("TAG1", Arrays.copyOfRange(tagNames, 0, 1), 0, 1);
-		_getTags("Tag1", Arrays.copyOfRange(tagNames, 0, 1), 0, 1);
+		_getTags(tagNames.length, "tag1", tagNames);
+		_getTags(tagNames.length, "TAG1", tagNames);
+		_getTags(1, "TAG1", tagNames, 0, 1);
+		_getTags(1, "Tag1", tagNames, 0, 1);
 	}
 
 	@FeatureFlags("LPS-194362")
@@ -512,26 +512,30 @@ public class AssetTagLocalServiceTest {
 		return assetTags;
 	}
 
-	private void _getTags(String name, String[] expectedTagNames) {
-		_getTags(name, expectedTagNames, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	private void _getTags(long expectedLength, String name, String[] tagNames) {
+		_getTags(
+			expectedLength, name, tagNames, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	private void _getTags(
-		String name, String[] expectedTagNames, int start, int end) {
+		long expectedLength, String name, String[] tagNames, int start,
+		int end) {
 
-		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+		List<AssetTag> actualAssetTags = _assetTagLocalService.getTags(
 			_group.getGroupId(),
 			_classNameLocalService.getClassNameId(
 				JournalArticle.class.getName()),
 			name, start, end);
 
 		Assert.assertEquals(
-			assetTags.toString(), expectedTagNames.length, assetTags.size());
+			actualAssetTags.toString(), expectedLength, actualAssetTags.size());
+
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
+				tagNames,
 				TransformUtil.transformToArray(
-					assetTags, AssetTag::getName, String.class),
-				expectedTagNames));
+					actualAssetTags, AssetTag::getName, String.class)));
 	}
 
 	private void _testAddMultipleTags(List<String> tagNames)

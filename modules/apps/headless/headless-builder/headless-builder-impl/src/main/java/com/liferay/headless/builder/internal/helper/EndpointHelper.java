@@ -131,6 +131,8 @@ public class EndpointHelper {
 			APIApplication.Schema responseSchema, String scopeKey)
 		throws Exception {
 
+		ObjectEntry objectEntry = new ObjectEntry();
+
 		Map<String, Object> objectEntryProperties = new HashMap<>();
 
 		for (APIApplication.Property property : requestSchema.getProperties()) {
@@ -141,8 +143,6 @@ public class EndpointHelper {
 					property.getSourceFieldName(), object);
 			}
 		}
-
-		ObjectEntry objectEntry = new ObjectEntry();
 
 		objectEntry.setProperties(objectEntryProperties);
 

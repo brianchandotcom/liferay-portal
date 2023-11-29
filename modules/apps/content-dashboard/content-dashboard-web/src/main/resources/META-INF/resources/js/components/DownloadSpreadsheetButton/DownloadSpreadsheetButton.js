@@ -224,6 +224,9 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 		<>
 			<ClayTooltipProvider>
 				<ClayButton
+					aria-label={Liferay.Language.get(
+						'download-your-data-as-an-xls-file'
+					)}
 					borderless
 					className={classnames('download-spreadsheet-button', {
 						'download-spreadsheet-button--loading': loading,
@@ -260,6 +263,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			{loading && (
 				<ClayTooltipProvider>
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('cancel-export')}
 						borderless
 						className="c-ml-2"
 						data-tooltip-align="top"

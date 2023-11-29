@@ -5,7 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -53,6 +53,10 @@ const FileUrlCopyButton = ({url}) => {
 
 					<ClayInput.GroupItem append shrink>
 						<ClayButtonWithIcon
+							aria-label={sub(
+								Liferay.Language.get('copy-x'),
+								Liferay.Language.get('file-url')
+							)}
 							displayType="secondary"
 							onClick={clipboardHandler}
 							symbol={

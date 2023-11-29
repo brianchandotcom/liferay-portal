@@ -7233,10 +7233,22 @@ ${output.content}</echo>
 
 								<gradle-execute dir="${playwright.dir}" task="npmInstall" />
 
+								<local name="playwright.args" />
+
+								<if>
+									<isset property="PLAYWRIGHT_ARGS_${axis.variable}" />
+									<then>
+										<propertycopy from="PLAYWRIGHT_ARGS_${axis.variable}" name="playwright.args" />
+									</then>
+									<else>
+										<property name="playwright.args" value="" />
+									</else>
+								</if>
+
 								<docker-execute container="${playwright.docker.host}">
 									cd ${playwright.dir}
 
-									npx playwright test
+									npx playwright test ${playwright.args}
 								</docker-execute>
 							</try>
 							<finally>

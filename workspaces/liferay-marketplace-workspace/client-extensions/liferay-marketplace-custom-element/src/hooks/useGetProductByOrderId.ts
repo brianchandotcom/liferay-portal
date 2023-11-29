@@ -8,17 +8,21 @@ import useSWR from 'swr';
 import HeadlessCommerceDeliveryOrderImpl from '../services/rest/HeadlessCommerceDeliveryOrder';
 import {getProductById} from '../utils/api';
 
-const useGetProductByOrderId = (orderId?: string) => {
+const useGetProductByOrderId = (orderId: string) => {
 	return useSWR(`/placed-order/${orderId}`, async () => {
 		const placedOrder = await HeadlessCommerceDeliveryOrderImpl.getPlacedOrder(
-			orderId as string
+			orderId
 		);
 
-		const productId = placedOrder.placedOrderItems[0].productId;
+		if (placedOrder.placedOrderBillingAddressId > 0) {
+			placedOrder.placedOrderBillingAddress = await HeadlessCommerceDeliveryOrderImpl.getPlacedOrderBillingAddress(
+				orderId
+			);
+		}
 
 		const product = await getProductById({
 			nestedFields: 'attachments',
-			productId,
+			productId: placedOrder.placedOrderItems[0].productId,
 		});
 
 		return {

@@ -5,20 +5,13 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
-import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
-import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.configuration.FunctionObjectEntryManagerConfiguration;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.CompanyScoped;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -28,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -39,17 +31,15 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.Future;
 
 import org.osgi.service.component.annotations.Activate;
@@ -396,66 +386,22 @@ public class FunctionObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
-		ObjectEntry objectEntry = ObjectEntry.unsafeToDTO(json);
-
-		User user = dtoConverterContext.getUser();
-
-		objectEntry.setActions(
+		dtoConverterContext = new DefaultDTOConverterContext(
+			dtoConverterContext.isAcceptAllLanguages(),
 			HashMapBuilder.put(
-				"delete", addDeleteAction(objectDefinition, scopeKey, user)
-			).build());
+				"delete",
+				addDeleteAction(
+					objectDefinition, scopeKey, dtoConverterContext.getUser())
+			).build(),
+			dtoConverterContext.getDTOConverterRegistry(),
+			dtoConverterContext.getHttpServletRequest(),
+			dtoConverterContext.getId(), dtoConverterContext.getLocale(),
+			dtoConverterContext.getUriInfo(), dtoConverterContext.getUser());
 
-		if (objectEntry.getStatus() == null) {
-			objectEntry.setStatus(
-				new Status() {
-					{
-						code = WorkflowConstants.STATUS_APPROVED;
-						label = WorkflowConstants.LABEL_APPROVED;
-						label_i18n = language.get(
-							user.getLocale(), WorkflowConstants.LABEL_APPROVED);
-					}
-				});
-		}
+		dtoConverterContext.setAttribute("objectDefinition", objectDefinition);
+		dtoConverterContext.setAttribute("payload", json);
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
-		for (ObjectField objectField : objectFields) {
-			if (!Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				continue;
-			}
-
-			Map<String, Object> properties = objectEntry.getProperties();
-
-			Map<String, String> listTypeEntryMap =
-				(Map<String, String>)properties.get(objectField.getName());
-
-			ListTypeEntry listTypeEntry =
-				_listTypeEntryLocalService.getListTypeEntry(
-					objectField.getListTypeDefinitionId(),
-					listTypeEntryMap.get("key"));
-
-			properties.put(
-				objectField.getName(),
-				new ListEntry() {
-					{
-						key = listTypeEntry.getKey();
-						name = listTypeEntry.getName(
-							dtoConverterContext.getLocale());
-						name_i18n = LocalizedMapUtil.getI18nMap(
-							dtoConverterContext.isAcceptAllLanguages(),
-							listTypeEntry.getNameMap());
-					}
-				});
-
-			objectEntry.setProperties(properties);
-		}
-
-		return objectEntry;
+		return _objectEntryDTOConverter.toDTO(dtoConverterContext);
 	}
 
 	private long _companyId;
@@ -469,11 +415,11 @@ public class FunctionObjectEntryManagerImpl
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	@Reference
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
+	@Reference(
+		target = "(component.name=com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter)"
+	)
+	private DTOConverter<com.liferay.object.model.ObjectEntry, ObjectEntry>
+		_objectEntryDTOConverter;
 
 	@Reference
 	private PortalCatapult _portalCatapult;

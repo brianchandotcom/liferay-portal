@@ -128,7 +128,7 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 		}
 		%>
 
-		<div class="input-group-item input-group-item-shrink input-localized-content">
+		<div class="input-group-item input-group-item-shrink input-localized-content <%= languagesDropdownVisible ? "" : "hide" %>">
 
 			<%
 			String normalizedSelectedLanguageId = StringUtil.replace(selectedLanguageId, '_', '-');

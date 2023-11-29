@@ -31,6 +31,7 @@ boolean ignoreRequestValue = GetterUtil.getBoolean((String)request.getAttribute(
 String inputAddon = (String)request.getAttribute("liferay-ui:input-localized:inputAddon");
 String languageId = (String)request.getAttribute("liferay-ui:input-localized:languageId");
 String languagesDropdownDirection = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:languagesDropdownDirection"));
+boolean languagesDropdownVisible = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:languagesDropdownVisible"));
 String maxLength = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:maxLength"));
 String name = (String)request.getAttribute("liferay-ui:input-localized:name");
 String placeholder = (String)request.getAttribute("liferay-ui:input-localized:placeholder");

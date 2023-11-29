@@ -57,8 +57,42 @@ public class CookiesDomainTest {
 
 	@Test
 	public void testDomain1() throws Exception {
+		Assert.assertNull(CookiesManagerUtil.getDomain((String)null));
+
+		Assert.assertEquals(
+			"127.0.0.1", CookiesManagerUtil.getDomain("127.0.0.1"));
+
+		Assert.assertNull(CookiesManagerUtil.getDomain("com"));
+
+		Assert.assertEquals(
+			".liferay.com", CookiesManagerUtil.getDomain("liferay.com"));
+
 		Assert.assertEquals(
 			".liferay.com", CookiesManagerUtil.getDomain("www.liferay.com"));
+
+		Assert.assertEquals(
+			".cdn.liferay.com",
+			CookiesManagerUtil.getDomain("www.cdn.liferay.com"));
+
+		Assert.assertEquals(
+			".liferay.qld.gov.au",
+			CookiesManagerUtil.getDomain("liferay.qld.gov.au"));
+
+		Assert.assertEquals(
+			".liferay.qld.gov.au",
+			CookiesManagerUtil.getDomain("www.liferay.qld.gov.au"));
+
+		Assert.assertEquals(
+			".cdn.liferay.qld.gov.au",
+			CookiesManagerUtil.getDomain("www.cdn.liferay.qld.gov.au"));
+
+		Assert.assertNull(CookiesManagerUtil.getDomain("localhost"));
+
+		Assert.assertEquals(
+			".liferay.test", CookiesManagerUtil.getDomain("liferay.test"));
+
+		Assert.assertEquals(
+			".liferay.test", CookiesManagerUtil.getDomain("www.liferay.test"));
 	}
 
 	@Test

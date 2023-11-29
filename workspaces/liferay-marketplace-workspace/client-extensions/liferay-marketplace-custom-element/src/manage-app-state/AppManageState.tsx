@@ -33,7 +33,7 @@ export interface InitialStateProps {
 	appUsageTermsURL: Specification;
 	appVersion: string;
 	appWorkflowStatusInfo: string;
-	buildZIPFiles: UploadedFile[];
+	buildAppPackages: {[key: string]: UploadedFile[]};
 	catalogId: number;
 	dayTrial: string;
 	gravatarAPI: string;
@@ -45,12 +45,14 @@ export interface InitialStateProps {
 	skuTrialId: number;
 	skuVersionId: number;
 	supportURL: Specification;
+	versionName?: string;
 }
 
 const initialState = {
 	appBuild: 'upload',
 	appLicense: {value: 'Perpetual'},
 	appType: {value: 'cloud'},
+	buildAppPackages: {},
 	dayTrial: 'no',
 	priceModel: {value: 'Paid'},
 } as InitialStateProps;

@@ -510,7 +510,7 @@ public class UserManagerImpl implements UserManager {
 			if (Validator.isNotNull(userGroupScimClientId) &&
 				!Objects.equals(scimClientId, userGroupScimClientId)) {
 
-				throw new PortalException(
+				throw new ConflictException(
 					"Group was provisioned by another SCIM client");
 			}
 

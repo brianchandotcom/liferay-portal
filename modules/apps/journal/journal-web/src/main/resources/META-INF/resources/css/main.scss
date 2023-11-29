@@ -124,6 +124,10 @@ $productMenuWidth: 320px;
 				border: 0;
 			}
 
+			.translation-manager {
+				width: 115px;
+			}
+
 			@include media-breakpoint-up(lg) {
 				min-height: $toolbarDesktopHeight;
 

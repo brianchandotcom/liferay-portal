@@ -29,7 +29,7 @@ const Apps = () => {
 		>
 			<PublishedAppsTable items={publishedProductTable?.items ?? []} />
 
-			{!!publishedProductTable.items.length && (
+			{!!publishedProductTable?.items?.length && (
 				<ClayPaginationBarWithBasicItems
 					active={page}
 					activeDelta={publishedProductTable.pageSize}

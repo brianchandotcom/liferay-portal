@@ -92,7 +92,7 @@ const PublishedAppsDashboardOutlet = () => {
 	}, [selectedAccount?.id]);
 
 	const {data: publishedProductTable = {}, isLoading} = useSWR(
-		`/user-published-apps/${selectedAccount?.id}`,
+		catalogId ? `/user-published-apps/${selectedAccount?.id}` : null,
 		async () =>
 			HeadlessCommerceAdminCatalogImpl.getProducts(
 				new URLSearchParams({

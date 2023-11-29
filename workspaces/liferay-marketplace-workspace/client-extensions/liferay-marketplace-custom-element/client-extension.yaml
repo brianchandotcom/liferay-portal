@@ -3,7 +3,7 @@ assemble:
       into: static
 liferay-marketplace-custom-element:
     cssURLs:
-        - '**/*.css'
+        - "**/*.css"
     friendlyURLMapping: liferay-marketplace-custom-element
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
@@ -13,5 +13,5 @@ liferay-marketplace-custom-element:
         cloudBaseURL: https://console.liferay.cloud
     type: customElement
     urls:
-        - '*.js'
+        - "*.js"
     useESM: true

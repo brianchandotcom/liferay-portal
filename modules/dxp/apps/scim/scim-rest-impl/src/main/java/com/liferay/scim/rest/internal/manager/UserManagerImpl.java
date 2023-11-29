@@ -557,10 +557,10 @@ public class UserManagerImpl implements UserManager {
 			scimUser.getEmailAddress(), scimUser.getLocale(),
 			scimUser.getFirstName(), scimUser.getMiddleName(),
 			scimUser.getLastName(), 0, 0, scimUser.isMale(), birthdayMonth,
-			birthdayDay, birthdayYear, StringPool.BLANK, scimUser.getGroupIds(),
-			scimUser.getOrganizationIds(), scimUser.getRoleIds(),
-			scimUser.getUserGroupIds(), scimUser.isSendEmail(),
-			new ServiceContext());
+			birthdayDay, birthdayYear, scimUser.getJobTitle(),
+			scimUser.getGroupIds(), scimUser.getOrganizationIds(),
+			scimUser.getRoleIds(), scimUser.getUserGroupIds(),
+			scimUser.isSendEmail(), new ServiceContext());
 
 		portalUser.setExternalReferenceCode(
 			scimUser.getExternalReferenceCode());

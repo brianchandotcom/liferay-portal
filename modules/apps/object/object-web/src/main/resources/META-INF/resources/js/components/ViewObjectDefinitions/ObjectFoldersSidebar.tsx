@@ -14,12 +14,18 @@ import React, {SetStateAction} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 import {exportObjectFolder} from '../../utils/exportObjectFolder';
+import {ModalImportProperties} from './ViewObjectDefinitions';
 
 interface ObjectFoldersSidebarProps {
 	baseResourceURL: string;
+	importObjectFolderURL: string;
 	objectDefinitionsActions: Actions;
 	objectFoldersRequestInfo: ObjectFoldersRequestInfo;
+	portletNamespace: string;
 	selectedObjectFolder: ObjectFolder;
+	setModalImportProperties: (
+		value: SetStateAction<ModalImportProperties>
+	) => void;
 	setSelectedObjectFolder: (
 		value: SetStateAction<Partial<ObjectFolder>>
 	) => void;
@@ -28,9 +34,11 @@ interface ObjectFoldersSidebarProps {
 
 export default function ObjectFoldersSideBar({
 	baseResourceURL,
+	importObjectFolderURL,
 	objectDefinitionsActions,
 	objectFoldersRequestInfo,
 	selectedObjectFolder,
+	setModalImportProperties,
 	setSelectedObjectFolder,
 	setShowModal,
 }: ObjectFoldersSidebarProps) {
@@ -60,11 +68,24 @@ export default function ObjectFoldersSideBar({
 				Liferay.Language.get('import-x'),
 				Liferay.Language.get('object-folder')
 			),
-			onClick: () =>
+			onClick: () => {
+				setModalImportProperties({
+					JSONInputId: 'objectFolderJSON',
+					apiURL:
+						'/o/object-admin/v1.0/object-folders/by-external-reference-code/',
+					importURL: importObjectFolderURL,
+					label: Liferay.Language.get('object-folder'),
+					title: sub(
+						Liferay.Language.get('import-x'),
+						Liferay.Language.get('object-folder')
+					),
+				});
+
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 					...previousState,
 					importModal: true,
-				})),
+				}));
+			},
 			symbolLeft: 'import',
 			value: 'importObjectFolder',
 		});

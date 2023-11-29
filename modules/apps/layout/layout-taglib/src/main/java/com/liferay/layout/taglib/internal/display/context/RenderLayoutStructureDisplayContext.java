@@ -581,6 +581,12 @@ public class RenderLayoutStructureDisplayContext {
 			sb.append(");");
 		}
 
+		Set<String> displayedItemIds = getDisplayedItemIds();
+
+		if (displayedItemIds.contains(styledLayoutStructureItem.getItemId())) {
+			sb.append("display: block !important;");
+		}
+
 		return sb.toString();
 	}
 

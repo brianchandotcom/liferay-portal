@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -122,6 +124,10 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public KBFolder deleteKBFolder(
 			KBFolder kbFolder, boolean includeTrashedEntries)
 		throws PortalException {
@@ -171,7 +177,8 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 
 		KBFolder kbFolder = kbFolderPersistence.findByPrimaryKey(kbFolderId);
 
-		return deleteKBFolder(kbFolder, includeTrashedEntries);
+		return kbFolderLocalService.deleteKBFolder(
+			kbFolder, includeTrashedEntries);
 	}
 
 	@Override

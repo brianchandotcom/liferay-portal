@@ -52,9 +52,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -222,13 +225,22 @@ public class LayoutStructureRenderer {
 					getListObjectReference();
 
 			if (listObjectReference != null) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					listObjectReference.toJSON());
+				try {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						listObjectReference.toJSON());
 
-				if (jsonObject.has("key")) {
-					jspWriter.write(" id=\"analytics-targetable-collection-");
-					jspWriter.write(jsonObject.getString("key"));
-					jspWriter.write("\"");
+					if (jsonObject.has("key")) {
+						jspWriter.write(
+							" id=\"analytics-targetable-collection-");
+						jspWriter.write(jsonObject.getString("key"));
+						jspWriter.write("\"");
+					}
+				}
+				catch (JSONException jsonException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to parse JSON object", jsonException);
+					}
 				}
 			}
 		}
@@ -1327,6 +1339,9 @@ public class LayoutStructureRenderer {
 				fragmentStyledLayoutStructureItem));
 		jspWriter.write("\">");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutStructureRenderer.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;

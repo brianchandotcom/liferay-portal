@@ -288,6 +288,7 @@ boolean choiceField = checkboxField || radioField;
 					ignoreRequestValue="<%= ignoreRequestValue %>"
 					languageId="<%= languageId %>"
 					languagesDropdownDirection="<%= languagesDropdownDirection %>"
+					languagesDropdownVisible="<%= languagesDropdownVisible %>"
 					name="<%= name %>"
 					onChange="<%= onChange %>"
 					onClick="<%= onClick %>"

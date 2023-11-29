@@ -55,10 +55,11 @@ public class FacetDiscounter {
 
 			int frequency = termCollector.getFrequency() - exclusions;
 
-			if (frequency > 0) {
-				newTermCollectors.add(
-					new DefaultTermCollector(term, frequency));
+			if ((frequency == 0) && (exclusions > 0)) {
+				frequency = -1;
 			}
+
+			newTermCollectors.add(new DefaultTermCollector(term, frequency));
 		}
 
 		_facet.setFacetCollector(

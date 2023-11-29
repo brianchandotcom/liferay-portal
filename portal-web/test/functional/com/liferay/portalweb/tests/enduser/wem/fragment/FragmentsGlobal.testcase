@@ -287,7 +287,7 @@ definition {
 		class="${configuration.imageSize}"
 		data-lfr-editable-id="image-square"
 		data-lfr-editable-type="image"
-		src="[resources:Document_1.jpg]"
+		src="[resources:Document_1]"
 	/>
 </div>
 			''';
@@ -360,7 +360,7 @@ definition {
 
 			Navigator.gotoNavItem(navItem = "Resources");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Document_1.jpg");
+			FragmentsAdmin.viewEntryPresent(entry = "Document_1");
 		}
 	}
 

@@ -69,3 +69,7 @@
 	_layoutModels=defaultSiteHomePageContentLayoutModels
 	_templateFileName="default-homepage-layout-definition.json"
 />
+
+<#assign searchLayoutModel = dataFactory.newSearchLayoutModel(guestGroupModel.groupId) />
+
+<@insertLayout _layoutModel=searchLayoutModel />

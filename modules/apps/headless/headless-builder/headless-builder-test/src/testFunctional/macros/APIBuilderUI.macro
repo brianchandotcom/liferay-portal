@@ -11,8 +11,12 @@ definition {
 			title = ${title});
 
 		if (isSet(schemaName)) {
+			if (!(isSet(currentSchema))) {
+				var currentSchema = "Select a Schema";
+			}
+
 			Click(
-				key_value = "Select a Schema",
+				key_value = ${currentSchema},
 				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
 
 			Click(
@@ -186,6 +190,16 @@ definition {
 			Type(
 				locator1 = "TextInput#NAME",
 				value1 = ${name});
+		}
+
+		if (isSet(retrieveType)) {
+			Click(
+				key_value = "Select Type",
+				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
+
+			Click(
+				key_optionName = ${retrieveType},
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
 		}
 
 		if (isSet(scope)) {

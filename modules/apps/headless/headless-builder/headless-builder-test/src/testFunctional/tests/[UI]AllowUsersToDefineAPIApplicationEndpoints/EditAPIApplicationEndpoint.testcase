@@ -63,6 +63,7 @@ definition {
 
 		task ("When modifying endpoint again with API Schema schema2") {
 			APIBuilderUI.addAndPublishEndpointConfiguration(
+				currentSchema = "schema1",
 				entity = "Endpoints",
 				name = "testendpoint",
 				schemaName = "schema2",
@@ -73,8 +74,8 @@ definition {
 			Alert.viewSuccessMessage();
 
 			AssertElementPresent(
-				key_optionName = "schema2",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+				key_value = "schema2",
+				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
 		}
 	}
 
@@ -87,6 +88,7 @@ definition {
 
 			APIBuilderUI.createAPIEndpoint(
 				path = "testendpoint2",
+				retrieveType = "Collection",
 				scope = "Company");
 		}
 
@@ -307,21 +309,15 @@ definition {
 
 	@priority = 3
 	test GetIsDefaultMethodValue {
-		property portal.acceptance = "true";
-
-		task ("Given a created endpoint") {
-			EndpointAPI.createAPIEndpoint(
-				apiApplicationERC = "My-app",
-				name = "testendpoint",
-				path = "/testendpoint");
-		}
-
 		task ("When creating endpoint with valid data") {
-			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+			APIBuilderUI.switchToRelatedEntryInEditApplication(
 				entity = "Endpoints",
-				name = "testendpoint",
-				tabEntity = "Info",
 				title = "My-app");
+
+			APIBuilderUI.createAPIEndpoint(
+				path = "testendpoint2",
+				retrieveType = "Collection",
+				scope = "Company");
 		}
 
 		task ("Then enpoint method is GET by default") {

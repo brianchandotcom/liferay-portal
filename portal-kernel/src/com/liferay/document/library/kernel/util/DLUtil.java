@@ -8,6 +8,7 @@ package com.liferay.document.library.kernel.util;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.search.Hits;
@@ -29,51 +30,51 @@ import javax.portlet.RenderRequest;
 public class DLUtil {
 
 	public static int compareVersions(String version1, String version2) {
-		return _dl.compareVersions(version1, version2);
+		return getDL().compareVersions(version1, version2);
 	}
 
 	public static String getAbsolutePath(
 			PortletRequest portletRequest, long rootFolderId, long folderId)
 		throws PortalException {
 
-		return _dl.getAbsolutePath(portletRequest, rootFolderId, folderId);
+		return getDL().getAbsolutePath(portletRequest, rootFolderId, folderId);
 	}
 
 	public static Set<String> getAllMediaGalleryMimeTypes() {
-		return _dl.getAllMediaGalleryMimeTypes();
+		return getDL().getAllMediaGalleryMimeTypes();
 	}
 
 	public static String getDDMStructureKey(DLFileEntryType dlFileEntryType) {
-		return _dl.getDDMStructureKey(dlFileEntryType);
+		return getDL().getDDMStructureKey(dlFileEntryType);
 	}
 
 	public static String getDDMStructureKey(String fileEntryTypeUuid) {
-		return _dl.getDDMStructureKey(fileEntryTypeUuid);
+		return getDL().getDDMStructureKey(fileEntryTypeUuid);
 	}
 
 	public static String getDeprecatedDDMStructureKey(
 		DLFileEntryType dlFileEntryType) {
 
-		return _dl.getDeprecatedDDMStructureKey(dlFileEntryType);
+		return getDL().getDeprecatedDDMStructureKey(dlFileEntryType);
 	}
 
 	public static String getDeprecatedDDMStructureKey(long fileEntryTypeId) {
-		return _dl.getDeprecatedDDMStructureKey(fileEntryTypeId);
+		return getDL().getDeprecatedDDMStructureKey(fileEntryTypeId);
 	}
 
 	public static String getDividedPath(long id) {
-		return _dl.getDividedPath(id);
+		return getDL().getDividedPath(id);
 	}
 
 	public static DL getDL() {
-		return _dl;
+		return _dlSnapshot.get();
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(
 		RenderRequest renderRequest, String emailFromAddress,
 		String emailFromName) {
 
-		return _dl.getEmailDefinitionTerms(
+		return getDL().getEmailDefinitionTerms(
 			renderRequest, emailFromAddress, emailFromName);
 	}
 
@@ -81,30 +82,30 @@ public class DLUtil {
 		RenderRequest renderRequest, String emailFromAddress,
 		String emailFromName) {
 
-		return _dl.getEmailFromDefinitionTerms(
+		return getDL().getEmailFromDefinitionTerms(
 			renderRequest, emailFromAddress, emailFromName);
 	}
 
 	public static List<FileEntry> getFileEntries(Hits hits) {
-		return _dl.getFileEntries(hits);
+		return getDL().getFileEntries(hits);
 	}
 
 	public static String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay) {
 
-		return _dl.getFileEntryImage(fileEntry, themeDisplay);
+		return getDL().getFileEntryImage(fileEntry, themeDisplay);
 	}
 
 	public static String getFileIcon(String extension) {
-		return _dl.getFileIcon(extension);
+		return getDL().getFileIcon(extension);
 	}
 
 	public static String getFileIconCssClass(String extension) {
-		return _dl.getFileIconCssClass(extension);
+		return getDL().getFileIconCssClass(extension);
 	}
 
 	public static String getGenericName(String extension) {
-		return _dl.getGenericName(extension);
+		return getDL().getGenericName(extension);
 	}
 
 	/**
@@ -117,7 +118,7 @@ public class DLUtil {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString) {
 
-		return _dl.getPreviewURL(
+		return getDL().getPreviewURL(
 			fileEntry, fileVersion, themeDisplay, queryString);
 	}
 
@@ -132,7 +133,7 @@ public class DLUtil {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
-		return _dl.getPreviewURL(
+		return getDL().getPreviewURL(
 			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
 			absoluteURL);
 	}
@@ -140,86 +141,87 @@ public class DLUtil {
 	public static <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType) {
 
-		return _dl.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+		return getDL().getRepositoryModelOrderByComparator(
+			orderByCol, orderByType);
 	}
 
 	public static <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType, boolean orderByModel) {
 
-		return _dl.getRepositoryModelOrderByComparator(
+		return getDL().getRepositoryModelOrderByComparator(
 			orderByCol, orderByType, orderByModel);
 	}
 
 	public static String getSanitizedFileName(String title, String extension) {
-		return _dl.getSanitizedFileName(title, extension);
+		return getDL().getSanitizedFileName(title, extension);
 	}
 
 	public static String getTempFileId(long id, String version) {
-		return _dl.getTempFileId(id, version);
+		return getDL().getTempFileId(id, version);
 	}
 
 	public static String getTempFileId(
 		long id, String version, String languageId) {
 
-		return _dl.getTempFileId(id, version, languageId);
+		return getDL().getTempFileId(id, version, languageId);
 	}
 
 	public static String getThumbnailStyle() {
-		return _dl.getThumbnailStyle();
+		return getDL().getThumbnailStyle();
 	}
 
 	public static String getThumbnailStyle(boolean max, int margin) {
-		return _dl.getThumbnailStyle(max, margin);
+		return getDL().getThumbnailStyle(max, margin);
 	}
 
 	public static String getThumbnailStyle(
 		boolean max, int margin, int height, int width) {
 
-		return _dl.getThumbnailStyle(max, margin, height, width);
+		return getDL().getThumbnailStyle(max, margin, height, width);
 	}
 
 	public static String getTitleWithExtension(FileEntry fileEntry) {
-		return _dl.getTitleWithExtension(fileEntry);
+		return getDL().getTitleWithExtension(fileEntry);
 	}
 
 	public static String getTitleWithExtension(String title, String extension) {
-		return _dl.getTitleWithExtension(title, extension);
+		return getDL().getTitleWithExtension(title, extension);
 	}
 
 	public static String getUniqueFileName(
 		long groupId, long folderId, String fileName,
 		boolean ignoreDuplicateTitle) {
 
-		return _dl.getUniqueFileName(
+		return getDL().getUniqueFileName(
 			groupId, folderId, fileName, ignoreDuplicateTitle);
 	}
 
 	public static String getUniqueTitle(
 		long groupId, long folderId, String title) {
 
-		return _dl.getUniqueTitle(groupId, folderId, title);
+		return getDL().getUniqueTitle(groupId, folderId, title);
 	}
 
 	public static boolean hasWorkflowDefinitionLink(
 		long companyId, long groupId, long folderId, long fileEntryTypeId) {
 
-		return _dl.hasWorkflowDefinitionLink(
+		return getDL().hasWorkflowDefinitionLink(
 			companyId, groupId, folderId, fileEntryTypeId);
 	}
 
 	public static boolean isAutoGeneratedDLFileEntryTypeDDMStructureKey(
 		String ddmStructureKey) {
 
-		return _dl.isAutoGeneratedDLFileEntryTypeDDMStructureKey(
+		return getDL().isAutoGeneratedDLFileEntryTypeDDMStructureKey(
 			ddmStructureKey);
 	}
 
 	public static boolean isOfficeExtension(String extension) {
-		return _dl.isOfficeExtension(extension);
+		return getDL().isOfficeExtension(extension);
 	}
 
 	public static boolean isValidVersion(String version) {
-		return _dl.isValidVersion(version);
+		return getDL().isValidVersion(version);
 	}
 
 	public static void startWorkflowInstance(
@@ -227,14 +229,11 @@ public class DLUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_dl.startWorkflowInstance(
+		getDL().startWorkflowInstance(
 			userId, dlFileVersion, syncEventType, serviceContext);
 	}
 
-	public void setDL(DL dl) {
-		_dl = dl;
-	}
-
-	private static DL _dl;
+	private static final Snapshot<DL> _dlSnapshot = new Snapshot<>(
+		DLUtil.class, DL.class);
 
 }

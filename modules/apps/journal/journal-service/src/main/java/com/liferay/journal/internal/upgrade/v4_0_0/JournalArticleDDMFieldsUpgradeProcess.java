@@ -12,27 +12,28 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.io.StringReader;
+import java.io.StringWriter;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.StringReader;
-import java.io.StringWriter;
+import org.xml.sax.InputSource;
 
 /**
  * @author Preston Crary
@@ -92,15 +93,42 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 			},
 			null);
 	}
-	private String _convertFieldNames(String content)
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns("JournalArticle", "content")
+		};
+	}
+
+	private String _convertDocumentToString(Document document)
 		throws Exception {
-		Document document = DocumentBuilderFactory.newInstance()
-			.newDocumentBuilder()
-			.parse(new InputSource(new StringReader(content)));
+
+		TransformerFactory transformerFactory =
+			TransformerFactory.newInstance();
+
+		Transformer transformer = transformerFactory.newTransformer();
+
+		StringWriter writer = new StringWriter();
+
+		transformer.transform(
+			new DOMSource(document), new StreamResult(writer));
+
+		return writer.getBuffer(
+		).toString();
+	}
+
+	private String _convertFieldNames(String content) throws Exception {
+		Document document =
+			SecureXMLFactoryProviderUtil.newDocumentBuilderFactory(
+			).newDocumentBuilder(
+			).parse(
+				new InputSource(new StringReader(content))
+			);
 
 		NodeList nodeList = document.getElementsByTagName("dynamic-element");
 
-		for(int i = 0 ; i < nodeList.getLength() ; i++) {
+		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
 
 			NamedNodeMap namedNodeMap = node.getAttributes();
@@ -109,34 +137,13 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 
 			String oldNameValue = nodeName.getTextContent();
 
-			String newNameValue = oldNameValue.replaceAll(StringPool.MINUS, StringPool.BLANK);
+			String newNameValue = oldNameValue.replaceAll(
+				StringPool.MINUS, StringPool.BLANK);
 
 			nodeName.setTextContent(newNameValue);
 		}
 
 		return _convertDocumentToString(document);
-	}
-
-	private String _convertDocumentToString(Document document)
-		throws TransformerException {
-
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-
-		Transformer transformer = transformerFactory.newTransformer();
-
-		StringWriter writer = new StringWriter();
-
-		transformer.transform(new DOMSource(document), new StreamResult(writer));
-
-		return writer.getBuffer().toString();
-
-	}
-
-	@Override
-	protected UpgradeStep[] getPostUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropColumns("JournalArticle", "content")
-		};
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

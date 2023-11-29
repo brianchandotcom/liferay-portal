@@ -64,7 +64,7 @@ const PurchasedAppsDashboardOutlet = () => {
 	useEffect(() => {
 		const getAccountCommerce = async () => {
 			const commerceAccountResponse = await getAccountInfoFromCommerce(
-				selectedAccount.id
+				selectedAccount?.id
 			);
 
 			setCommerceAccount(commerceAccountResponse);

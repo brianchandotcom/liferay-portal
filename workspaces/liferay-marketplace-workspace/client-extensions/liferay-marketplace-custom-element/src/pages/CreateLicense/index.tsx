@@ -79,7 +79,7 @@ const CreateLicense = () => {
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
 	const {orderId} = useParams();
 	const {myUserAccount} = useMarketplaceContext();
-	const {data} = useGetProductByOrderId(orderId);
+	const {data} = useGetProductByOrderId(orderId as string);
 
 	const navigate = useNavigate();
 	const product = data?.product;
@@ -160,8 +160,7 @@ const CreateLicense = () => {
 				navigate(`/order/${orderId}/licenses`);
 
 				provisioningKoroneikiOAuth2.downloadLicenseKey(licenseKey.id);
-			}
-			catch {
+			} catch {
 				Liferay.Util.openToast({
 					message: 'Something went wrong to create a License Key',
 					type: 'danger',

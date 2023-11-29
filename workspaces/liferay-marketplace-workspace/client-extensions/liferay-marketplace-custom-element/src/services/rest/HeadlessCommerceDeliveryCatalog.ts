@@ -6,14 +6,31 @@
 import fetcher from '../fetcher';
 
 class HeadlessCommerceDeliveryCatalog {
+	async getProduct(
+		channelId: number | string,
+		productId: number | string,
+		searchParams = new URLSearchParams()
+	) {
+		return fetcher<Product>(
+			`o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?${searchParams.toString()}`,
+			{
+				headers: {
+					// As a public API there's no problem to remove the authentication
+					// For some reason authenticated request is throwing an error locally
+					// Removing token for now
+
+					'x-csrf-token': '',
+				},
+			}
+		);
+	}
+
 	async getProductsByChannelId(
 		channelId: number,
 		searchParams = new URLSearchParams()
 	) {
 		return fetcher<APIResponse<Product>>(
-			`o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?${encodeURI(
-				searchParams.toString()
-			)}`
+			`o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?${searchParams.toString()}`
 		);
 	}
 

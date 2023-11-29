@@ -630,21 +630,6 @@ export async function getProductImages({appProductId}: {appProductId: number}) {
 	return await response.json();
 }
 
-export async function getProducts(nestedFields?: string) {
-	let url = `${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=-1`;
-
-	if (nestedFields) {
-		url = url + `&nestedFields=${nestedFields}`;
-	}
-
-	const response = await fetch(url, {
-		headers,
-		method: 'GET',
-	});
-
-	return (await response.json()) as {items: Product[]};
-}
-
 export async function getProductSKU({appProductId}: {appProductId?: number}) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/skus`,

@@ -24,6 +24,7 @@ interface ILiferay {
 		account?: {
 			accountId: number | string | null;
 		};
+		commerceChannelId: string;
 	};
 	MarketplaceCustomerFlow: {appId: number};
 	OAuth2Client: IOAuth2Client;

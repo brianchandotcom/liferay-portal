@@ -23,7 +23,7 @@ import classNames from 'classnames';
 
 import DeactivateKeysModal from '../../../../../components/DeactivateKeysModal/DeactivateKeysModal';
 import Modal from '../../../../../components/Modal';
-import {OrderStatuses} from '../../../../../components/OrderStatus';
+import {Statuses as OrderStatuses} from '../../../../../components/OrderStatus';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {OrderType} from '../../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
@@ -44,6 +44,9 @@ const PAGE_SIZES = [
 	{label: 30},
 	{label: 50},
 ];
+
+const isLicenseExpired = (expirationDate: string) =>
+	!isBefore(new Date(), new Date(expirationDate));
 
 const Licenses = () => {
 	const [page, setPage] = useState(1);
@@ -77,8 +80,7 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			}
-			catch (error) {
+			} catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -87,9 +89,6 @@ const Licenses = () => {
 		}
 	);
 	const rows = licenseKeysResponse?.items ?? [];
-
-	const isLicenseExpired = (expirationDate: string) =>
-		!isBefore(new Date(), new Date(expirationDate));
 
 	const orderStatusIsNotCompleted =
 		placedOrder?.orderStatusInfo?.label !== OrderStatuses.COMPLETED;

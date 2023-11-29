@@ -13,7 +13,6 @@ import circleFillIcon from '../../assets/icons/circle_fill_icon.svg';
 import {
 	getOrderTypes,
 	getProductSKU,
-	getProducts,
 	patchOrderByERC,
 	postCartByChannelId,
 	postCheckoutCart,
@@ -23,12 +22,15 @@ import {ProjectDetails} from './ProjectDetails';
 import {RulesAndGuidelines} from './RulesAndGuidelines';
 
 import './CreateProjectModal.scss';
-interface CreateProjectModalProps {
+import SearchBuilder from '../../core/SearchBuilder';
+import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
+
+type CreateProjectModalProps = {
 	currentChannel: Channel;
 	handleClose: () => void;
 	selectedAccount: Account;
 	setShowNextStepsPage: (value: boolean) => void;
-}
+};
 
 const multiStepItemsInitialValues = [
 	{
@@ -69,86 +71,74 @@ export function CreateProjectModal({
 	});
 
 	const createNewProject = async () => {
-		const {items} = await getProducts();
+		const {items} = await HeadlessCommerceAdminCatalogImpl.getProducts(
+			new URLSearchParams({
+				filter: SearchBuilder.lambda('categoryNames', 'Project'),
+			})
+		);
 
-		const projectProduct = items.find(({categories}) => {
-			return !!categories.find(({name}) => name === 'Project');
+		if (!items?.length) {
+			return;
+		}
+
+		const [projectProduct] = items;
+
+		const {
+			items: [projectSKU],
+		} = await getProductSKU({appProductId: projectProduct.productId});
+		const orderTypes = await getOrderTypes();
+
+		const projectOrderType = orderTypes.find(
+			({name}) => name['en_US'] === 'Project - 60 days'
+		);
+
+		const cart: Partial<Cart> = {
+			accountId: selectedAccount?.id as number,
+			cartItems: [
+				{
+					price: {
+						currency: currentChannel.currencyCode,
+						discount: 0,
+						finalPrice: 0,
+						price: 0,
+					},
+					productId: projectProduct.id,
+					quantity: 1,
+					settings: {
+						maxQuantity: 1,
+					},
+					skuId: projectSKU.id as number,
+				},
+			],
+			currencyCode: currentChannel.currencyCode,
+			orderTypeExternalReferenceCode:
+				projectOrderType?.externalReferenceCode,
+			orderTypeId: projectOrderType?.id as number,
+		};
+
+		const cartResponse = await postCartByChannelId({
+			cartBody: cart,
+			channelId: currentChannel.id,
 		});
 
-		if (projectProduct) {
-			const {
-				items: [projectSKU],
-			} = await getProductSKU({appProductId: projectProduct.productId});
-			const orderTypes = await getOrderTypes();
+		const cartCheckoutResponse = await postCheckoutCart({
+			cartId: cartResponse.id,
+		});
 
-			const projectOrderType = orderTypes.find(
-				({name}) => name['en_US'] === 'Project - 60 days'
-			);
+		await patchOrderByERC(cartCheckoutResponse.orderUUID, {
+			orderStatus: 1,
+		});
 
-			const cart: Partial<Cart> = {
-				accountId: selectedAccount?.id as number,
-				cartItems: [
-					{
-						price: {
-							currency: currentChannel.currencyCode,
-							discount: 0,
-							finalPrice: 0,
-							price: 0,
-						},
-						productId: projectProduct.id,
-						quantity: 1,
-						settings: {
-							maxQuantity: 1,
-						},
-						skuId: projectSKU.id as number,
-					},
-				],
-				currencyCode: currentChannel.currencyCode,
-				orderTypeExternalReferenceCode:
-					projectOrderType?.externalReferenceCode,
-				orderTypeId: projectOrderType?.id as number,
-			};
+		await patchOrderByERC(cartCheckoutResponse.orderUUID, {
+			customFields: {
+				'Github username': githubUsername,
+				'Project Name': projectName,
+			},
+		});
 
-			let newCart: Partial<Cart> = {};
+		handleClose();
 
-			newCart = {
-				...cart,
-			};
-
-			const cartResponse = await postCartByChannelId({
-				cartBody: newCart,
-				channelId: currentChannel.id,
-			});
-
-			const cartCheckoutResponse = await postCheckoutCart({
-				cartId: cartResponse.id,
-			});
-
-			const newOrderValues = {
-				orderStatus: 1,
-			};
-
-			const orderCustomFields = {
-				customFields: {
-					'Github username': githubUsername,
-					'Project Name': projectName,
-				},
-			};
-
-			await patchOrderByERC(
-				cartCheckoutResponse.orderUUID,
-				newOrderValues
-			);
-
-			await patchOrderByERC(
-				cartCheckoutResponse.orderUUID,
-				orderCustomFields
-			);
-
-			handleClose();
-
-			setShowNextStepsPage(true);
-		}
+		setShowNextStepsPage(true);
 	};
 
 	return (

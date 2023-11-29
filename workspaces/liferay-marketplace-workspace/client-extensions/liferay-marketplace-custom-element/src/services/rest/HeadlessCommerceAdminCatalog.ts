@@ -46,20 +46,19 @@ class HeadlessCommerceAdminCatalog {
 		return (response?.items ?? []) as ProductSpecification[];
 	}
 
-	async getProduct(productId: string) {
+	async getProduct(
+		productId: string | number,
+		searchParams = new URLSearchParams()
+	) {
 		return fetcher(
-			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}`
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}?${searchParams.toString()}`
 		);
 	}
 
-	async getProducts(nestedFields?: string) {
-		let url = `/o/headless-commerce-admin-catalog/v1.0/products?pageSize=-1`;
-
-		if (nestedFields) {
-			url = url + `&nestedFields=${nestedFields}`;
-		}
-
-		return fetcher(url);
+	async getProducts(searchParams = new URLSearchParams()) {
+		return fetcher(
+			`/o/headless-commerce-admin-catalog/v1.0/products?${searchParams.toString()}`
+		);
 	}
 
 	async updateProductByExternalReferenceCode(

@@ -6,7 +6,6 @@
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 
-import './PublishedAppsDashboardTableRow.scss';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {MemberProps} from '../../pages/PublishedAppsDashboard/PublishedDashboardPageUtil';
 import {Avatar} from '../Avatar/Avatar';

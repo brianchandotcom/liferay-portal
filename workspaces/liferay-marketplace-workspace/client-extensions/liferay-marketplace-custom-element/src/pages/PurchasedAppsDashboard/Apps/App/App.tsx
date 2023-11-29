@@ -117,51 +117,60 @@ const App = () => {
 						</p>
 					</div>
 				</DetailedCard>
-				<DetailedCard
-					cardIconAltText="Location Icon"
-					cardTitle="Address"
-					clayIcon="geolocation"
-				>
-					<div className="mb-2 mt-4 row">
-						<h5 className="col-6">Billing Address</h5>
-						<div className="col-6">
-							<p>
-								{placedOrder.placedOrderBillingAddress
-									.street1 || ''}
-								,
-							</p>
-							{placedOrder.placedOrderBillingAddress.street2 && (
+				{placedOrder.placedOrderBillingAddress && (
+					<DetailedCard
+						cardIconAltText="Location Icon"
+						cardTitle="Address"
+						clayIcon="geolocation"
+					>
+						<div className="mb-2 mt-4 row">
+							<h5 className="col-6">Billing Address</h5>
+							<div className="col-6">
 								<p>
-									{
-										placedOrder.placedOrderBillingAddress
-											.street2
-									}
+									{placedOrder.placedOrderBillingAddress
+										.street1 || ''}
+									,
 								</p>
-							)}
-							{placedOrder.placedOrderBillingAddress.street3 && (
+								{placedOrder.placedOrderBillingAddress
+									.street2 && (
+									<p>
+										{
+											placedOrder
+												.placedOrderBillingAddress
+												.street2
+										}
+									</p>
+								)}
+								{placedOrder.placedOrderBillingAddress
+									.street3 && (
+									<p>
+										{
+											placedOrder
+												.placedOrderBillingAddress
+												.street3
+										}
+									</p>
+								)}
 								<p>
-									{
-										placedOrder.placedOrderBillingAddress
-											.street3
-									}
+									{placedOrder.placedOrderBillingAddress.city}
+									,
 								</p>
-							)}
-							<p>{placedOrder.placedOrderBillingAddress.city},</p>
-							<p>
-								{placedOrder.placedOrderBillingAddress
-									.regionISOCode || ''}
-								,{' '}
-								{placedOrder.placedOrderBillingAddress.zip ||
-									''}
-								,
-							</p>
-							<p>
-								{placedOrder.placedOrderBillingAddress
-									.countryISOCode || ''}
-							</p>
+								<p>
+									{placedOrder.placedOrderBillingAddress
+										.regionISOCode || ''}
+									,{' '}
+									{placedOrder.placedOrderBillingAddress
+										.zip || ''}
+									,
+								</p>
+								<p>
+									{placedOrder.placedOrderBillingAddress
+										.countryISOCode || ''}
+								</p>
+							</div>
 						</div>
-					</div>
-				</DetailedCard>
+					</DetailedCard>
+				)}
 			</div>
 		</div>
 	);

@@ -63,7 +63,7 @@ const AppOutlet = () => {
 
 	const {orderId} = useParams();
 
-	const {data, error, isLoading} = useGetProductByOrderId(orderId);
+	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
 
 	const appImage = getThumbnailByProductAttachment(
 		data?.product?.attachments

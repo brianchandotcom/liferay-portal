@@ -53,8 +53,16 @@ export function DashboardNavigation({
 							/>
 
 							<div className="dashboard-navigation-header-text-container">
-								<span className="dashboard-navigation-header-title">
-									{currentAccount?.name}
+								<span
+									className="dashboard-navigation-header-title"
+									title={currentAccount?.name}
+								>
+									{currentAccount?.name?.length >= 18
+										? `${currentAccount?.name.substring(
+												0,
+												18
+										  )} ...`
+										: currentAccount?.name}
 								</span>
 
 								<span className="dashboard-navigation-header-apps">

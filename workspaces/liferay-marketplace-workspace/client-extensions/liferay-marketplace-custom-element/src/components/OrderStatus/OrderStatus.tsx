@@ -8,7 +8,8 @@ import classNames from 'classnames';
 
 import './OrderStatus.scss';
 
-export enum OrderStatuses {
+export enum Statuses {
+	APPROVED = 'approved',
 	COMPLETED = 'completed',
 	PENDING = 'pending',
 	PROCESSING = 'processing',
@@ -23,12 +24,13 @@ const OrderStatus = ({children, orderStatus}: OrderStatusProps) => (
 	<>
 		<ClayIcon
 			className={classNames('mr-2 order-status-icon', {
-				'order-status-icon-completed':
-					orderStatus === OrderStatuses.COMPLETED,
-				'order-status-icon-pending':
-					orderStatus === OrderStatuses.PENDING,
+				'order-status-icon-completed': [
+					Statuses.COMPLETED,
+					Statuses.APPROVED,
+				].includes(orderStatus as Statuses),
+				'order-status-icon-pending': orderStatus === Statuses.PENDING,
 				'order-status-icon-processing':
-					orderStatus === OrderStatuses.PROCESSING,
+					orderStatus === Statuses.PROCESSING,
 			})}
 			symbol="circle"
 		/>

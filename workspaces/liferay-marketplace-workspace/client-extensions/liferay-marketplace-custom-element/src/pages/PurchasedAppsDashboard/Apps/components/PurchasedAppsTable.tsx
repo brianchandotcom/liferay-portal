@@ -11,7 +11,9 @@ import {useNavigate} from 'react-router-dom';
 
 import appsIcon from '../../../../assets/icons/apps_fill_icon.svg';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
-import OrderStatus, {OrderStatuses} from '../../../../components/OrderStatus';
+import OrderStatus, {
+	Statuses as OrderStatuses,
+} from '../../../../components/OrderStatus';
 import Table from '../../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderType} from '../../../../enums/OrderType';

@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
 import {useEffect, useMemo} from 'react';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
 import arrowDown from '../../../assets/icons/arrow_down_icon.svg';
@@ -19,6 +19,7 @@ import {TYPES} from '../../../manage-app-state/actionTypes';
 import {ReviewAndSubmitAppPage} from '../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 
 import './App.scss';
+import i18n from '../../../i18n';
 import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	getProductVersionFromSpecifications,
@@ -27,23 +28,29 @@ import {
 } from '../../../utils/util';
 
 const App = () => {
+	const navigate = useNavigate();
 	const [, dispatch] = useAppContext();
-	const {appId: productId} = useParams();
+	const {appId} = useParams();
 
-	const {data = []} = useSWR(`/apps/app/${productId}`, () =>
-		Promise.all([
-			HeadlessCommerceAdminCatalogImpl.getProduct(productId as string),
-			HeadlessCommerceAdminCatalogImpl.getProductSpecifications(
-				productId as string
-			),
-		])
+	const productId = Number(appId) + 1;
+
+	const {data: selectedApp, isLoading} = useSWR(
+		`/published-app/${productId}`,
+		() =>
+			HeadlessCommerceAdminCatalogImpl.getProduct(
+				productId,
+				new URLSearchParams({
+					nestedFields: 'attachments,productSpecifications',
+				})
+			)
 	);
 
-	const [selectedApp, productSpecifications = []] = data ?? [];
-
 	const appVersion = useMemo(
-		() => getProductVersionFromSpecifications(productSpecifications as []),
-		[productSpecifications]
+		() =>
+			getProductVersionFromSpecifications(
+				selectedApp?.productSpecifications ?? []
+			),
+		[selectedApp?.productSpecifications]
 	);
 
 	useEffect(() => {
@@ -67,7 +74,7 @@ const App = () => {
 		selectedApp?.productId,
 	]);
 
-	if (!selectedApp) {
+	if (!selectedApp || isLoading) {
 		return null;
 	}
 
@@ -80,10 +87,14 @@ const App = () => {
 
 	return (
 		<div className="app-details-page-container">
-			<button className="app-details-page-back-button">
-				<ClayIcon symbol="order-arrow-left" />
-				Back to Apps
-			</button>
+			<ClayButton
+				className="align-items-center d-flex"
+				displayType="unstyled"
+				onClick={() => navigate('..')}
+			>
+				<ClayIcon className="mr-2" symbol="order-arrow-left" />
+				<h5 className="mt-1">{i18n.translate('back-to-apps')}</h5>
+			</ClayButton>
 
 			{status === 'Draft' && (
 				<ClayAlert

@@ -759,7 +759,11 @@ const RenameFDSEntryModalContent = ({
 			},
 			method: itemData.actions.update.method,
 		})
-			.then(() => {
+			.then((response) => {
+				if (!response.ok) {
+					throw Error();
+				}
+
 				closeModal();
 
 				openDefaultSuccessToast();

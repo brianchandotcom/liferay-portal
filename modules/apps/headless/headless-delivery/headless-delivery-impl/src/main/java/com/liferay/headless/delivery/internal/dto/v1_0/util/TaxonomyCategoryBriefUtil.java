@@ -6,6 +6,8 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -45,6 +47,17 @@ public class TaxonomyCategoryBriefUtil {
 					assetCategory.getTitleMap());
 				taxonomyCategoryReference = _toTaxonomyCategoryReference(
 					assetCategory, dtoConverterContext);
+
+				AssetVocabulary assetVocabulary =
+					AssetVocabularyLocalServiceUtil.getAssetVocabulary(
+						assetCategory.getVocabularyId());
+
+				taxonomyVocabularyId = assetVocabulary.getVocabularyId();
+				taxonomyVocabularyName = assetVocabulary.getTitle(
+					dtoConverterContext.getLocale());
+				taxonomyVocabularyName_i18n = LocalizedMapUtil.getI18nMap(
+					dtoConverterContext.isAcceptAllLanguages(),
+					assetVocabulary.getTitleMap());
 			}
 		};
 	}

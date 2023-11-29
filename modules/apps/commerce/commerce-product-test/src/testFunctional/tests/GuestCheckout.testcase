@@ -843,6 +843,161 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12929. As an authenticated user, I want to be able to view the open order address for checkout that is not inherited from the guest's address and no default address pre-selected"
+	@priority = 5
+	test CanLoggedUserNotInheritGuestAddress {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an account address is added") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Account.addAddress(
+				addressCity = "Test City",
+				addressCountry = "United States",
+				addressName = "Test Address",
+				addressPostalCode = "Test Zip Code",
+				addressRegion = "California",
+				addressStreet1 = "Test Street");
+		}
+
+		task ("And 'Guest Checkout' is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Guest Checkout",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the Manage Addresses permission of Accounts is removed for the Buyer role") {
+			Permissions.removePermissionViaAPI(
+				groupName = "Minium",
+				resourceAction = "MANAGE_ADDRESSES",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Buyer",
+				roleType = "account");
+		}
+
+		task ("And the View permission of Catalog, Pending Orders, Checkout pages for Guest are checked") {
+			for (var pageName : list "Catalog,Pending Orders,Checkout") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "minium");
+
+				if (${pageName} == "Checkout") {
+					PagesAdmin.gotoPageEllipsisMenuItem(
+						menuItem = "Permissions",
+						pageName = ${pageName},
+						parentPagesHierarchy = "Pending Orders");
+				}
+				else {
+					PagesAdmin.gotoPageEllipsisMenuItem(
+						menuItem = "Permissions",
+						pageName = ${pageName});
+				}
+
+				Role.definePermissionPG(
+					permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+					roleTitle = "guest");
+			}
+		}
+
+		task ("And the guest user adds a product to the cart") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("And adds an address in the checkout page and moves to next step") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Choose Shipping Address",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			for (var fieldNames : list "Name,Address,Zip,City") {
+				AssertTextEquals(
+					key_fieldName = ${fieldNames},
+					locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+					value1 = "");
+			}
+
+			CommerceCheckout.setAddress(
+				guestEmail = "guest@liferay.com",
+				newAddressAddress = "Guest Address",
+				newAddressCity = "Guest City",
+				newAddressCountry = "United States",
+				newAddressName = "Guest Address Name",
+				newAddressZipCode = "Guest Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("When the buyer navigates to the checkout page via mini-cart on Minium") {
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+		}
+
+		task ("Then can view only account addresses that are created by admin are selectable and no default address pre-selected") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Choose Shipping Address",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Choose Address");
+
+			for (var optionName : list "Choose Address,Test Address,Guest Address Name") {
+				if (${optionName} == "Guest Address Name") {
+					AssertElementNotPresent(
+						key_fieldLabel = "Choose Shipping Address",
+						key_value = ${optionName},
+						locator1 = "Select#GENERIC_SELECT_VALUE");
+				}
+				else {
+					AssertElementPresent(
+						key_fieldLabel = "Choose Shipping Address",
+						key_value = ${optionName},
+						locator1 = "Select#GENERIC_SELECT_VALUE");
+				}
+			}
+
+			for (var fieldNames : list "Name,Address,Zip,City") {
+				AssertTextEquals(
+					key_fieldName = ${fieldNames},
+					locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED",
+					value1 = "");
+			}
+		}
+	}
+
 	@priority = 5
 	test GuestAccountIsNotCombinedWithExistingUserAccount {
 		property portal.acceptance = "true";

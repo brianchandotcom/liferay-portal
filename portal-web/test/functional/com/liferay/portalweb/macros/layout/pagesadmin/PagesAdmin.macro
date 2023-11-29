@@ -894,6 +894,24 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to convert the selected pages?");
 	}
 
+	@summary = "Convert the content page to content page template"
+	macro createPageTemplate(alertMessage = null, collectionName = null) {
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "Convert to Page Template",
+			pageName = ${pageName});
+
+		if (isSet(collectionName)) {
+			Select(
+				key_fieldLabel = "Page Template Set",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${collectionName});
+		}
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	@summary = "Default summary"
 	macro deleteFriendlyURL(locale = null) {
 		Navigator.gotoNavTab(navTab = "General");

@@ -6,7 +6,6 @@
 package com.liferay.layout.internal.search.spi.model.index.contributor;
 
 import com.liferay.layout.content.LayoutContentProvider;
-import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -123,9 +122,6 @@ public class LayoutModelDocumentContributor
 
 	@Reference
 	private LayoutContentProvider _layoutContentProvider;
-
-	@Reference
-	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
 
 	@Reference
 	private LayoutServiceContextHelper _layoutServiceContextHelper;

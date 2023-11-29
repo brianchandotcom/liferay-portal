@@ -16,11 +16,15 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalInstances;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -36,6 +40,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,6 +65,16 @@ public class BatchEngineBundleTrackerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.REQUIRED);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionConfig = builder.build();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_bundle = FrameworkUtil.getBundle(BatchEngineBundleTrackerTest.class);
@@ -68,7 +83,7 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	@Test
-	public void testProcessBatchEngineBundle() throws Exception {
+	public void testProcessBatchEngineBundle() throws Exception, Throwable {
 		_testProcessBatchEngineBundle(
 			"batch1", 1, Arrays.asList("/batch1/export.json"));
 		_testProcessBatchEngineBundle("batch2", 0, Arrays.asList());
@@ -100,7 +115,15 @@ public class BatchEngineBundleTrackerTest {
 		_testProcessBatchEngineBundle(
 			"batch9", 1, Arrays.asList("/batch9/data.batch-engine-data.json"));
 
-		_company = CompanyTestUtil.addCompany();
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			() -> {
+				_company = CompanyTestUtil.addCompany();
+
+				PortalInstances.initCompany(_company);
+
+				return null;
+			});
 
 		_testProcessBatchEngineBundle(
 			"batch9", 2,
@@ -237,6 +260,8 @@ public class BatchEngineBundleTrackerTest {
 
 		return new FileInputStream(zipWriter.getFile());
 	}
+
+	private static TransactionConfig _transactionConfig;
 
 	@Inject
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;

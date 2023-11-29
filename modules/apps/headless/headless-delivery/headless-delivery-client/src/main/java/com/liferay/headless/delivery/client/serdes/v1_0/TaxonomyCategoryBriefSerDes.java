@@ -114,6 +114,43 @@ public class TaxonomyCategoryBriefSerDes {
 					taxonomyCategoryBrief.getTaxonomyCategoryReference()));
 		}
 
+		if (taxonomyCategoryBrief.getTaxonomyVocabularyId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyVocabularyId\": ");
+
+			sb.append(taxonomyCategoryBrief.getTaxonomyVocabularyId());
+		}
+
+		if (taxonomyCategoryBrief.getTaxonomyVocabularyName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyVocabularyName\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(taxonomyCategoryBrief.getTaxonomyVocabularyName()));
+
+			sb.append("\"");
+		}
+
+		if (taxonomyCategoryBrief.getTaxonomyVocabularyName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyVocabularyName_i18n\": ");
+
+			sb.append(
+				_toJSON(
+					taxonomyCategoryBrief.getTaxonomyVocabularyName_i18n()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -184,6 +221,36 @@ public class TaxonomyCategoryBriefSerDes {
 					taxonomyCategoryBrief.getTaxonomyCategoryReference()));
 		}
 
+		if (taxonomyCategoryBrief.getTaxonomyVocabularyId() == null) {
+			map.put("taxonomyVocabularyId", null);
+		}
+		else {
+			map.put(
+				"taxonomyVocabularyId",
+				String.valueOf(
+					taxonomyCategoryBrief.getTaxonomyVocabularyId()));
+		}
+
+		if (taxonomyCategoryBrief.getTaxonomyVocabularyName() == null) {
+			map.put("taxonomyVocabularyName", null);
+		}
+		else {
+			map.put(
+				"taxonomyVocabularyName",
+				String.valueOf(
+					taxonomyCategoryBrief.getTaxonomyVocabularyName()));
+		}
+
+		if (taxonomyCategoryBrief.getTaxonomyVocabularyName_i18n() == null) {
+			map.put("taxonomyVocabularyName_i18n", null);
+		}
+		else {
+			map.put(
+				"taxonomyVocabularyName_i18n",
+				String.valueOf(
+					taxonomyCategoryBrief.getTaxonomyVocabularyName_i18n()));
+		}
+
 		return map;
 	}
 
@@ -244,6 +311,31 @@ public class TaxonomyCategoryBriefSerDes {
 				if (jsonParserFieldValue != null) {
 					taxonomyCategoryBrief.setTaxonomyCategoryReference(
 						TaxonomyCategoryReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyVocabularyId")) {
+
+				if (jsonParserFieldValue != null) {
+					taxonomyCategoryBrief.setTaxonomyVocabularyId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyVocabularyName")) {
+
+				if (jsonParserFieldValue != null) {
+					taxonomyCategoryBrief.setTaxonomyVocabularyName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyVocabularyName_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					taxonomyCategoryBrief.setTaxonomyVocabularyName_i18n(
+						(Map)TaxonomyCategoryBriefSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

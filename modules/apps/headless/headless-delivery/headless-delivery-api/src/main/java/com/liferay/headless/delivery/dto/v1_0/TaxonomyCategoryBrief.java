@@ -212,6 +212,100 @@ public class TaxonomyCategoryBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TaxonomyCategoryReference taxonomyCategoryReference;
 
+	@Schema(
+		description = "The vocabulary's ID. This can be used to retrieve more information in the `TaxonomyVocabulary` API."
+	)
+	public Long getTaxonomyVocabularyId() {
+		return taxonomyVocabularyId;
+	}
+
+	public void setTaxonomyVocabularyId(Long taxonomyVocabularyId) {
+		this.taxonomyVocabularyId = taxonomyVocabularyId;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyVocabularyId(
+		UnsafeSupplier<Long, Exception> taxonomyVocabularyIdUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyId = taxonomyVocabularyIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The vocabulary's ID. This can be used to retrieve more information in the `TaxonomyVocabulary` API."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long taxonomyVocabularyId;
+
+	@Schema(description = "The vocabulary's name.")
+	public String getTaxonomyVocabularyName() {
+		return taxonomyVocabularyName;
+	}
+
+	public void setTaxonomyVocabularyName(String taxonomyVocabularyName) {
+		this.taxonomyVocabularyName = taxonomyVocabularyName;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyVocabularyName(
+		UnsafeSupplier<String, Exception>
+			taxonomyVocabularyNameUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyName = taxonomyVocabularyNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The vocabulary's name.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String taxonomyVocabularyName;
+
+	@Schema(description = "The localized vocabulary's names.")
+	@Valid
+	public Map<String, String> getTaxonomyVocabularyName_i18n() {
+		return taxonomyVocabularyName_i18n;
+	}
+
+	public void setTaxonomyVocabularyName_i18n(
+		Map<String, String> taxonomyVocabularyName_i18n) {
+
+		this.taxonomyVocabularyName_i18n = taxonomyVocabularyName_i18n;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyVocabularyName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			taxonomyVocabularyName_i18nUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyName_i18n =
+				taxonomyVocabularyName_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The localized vocabulary's names.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> taxonomyVocabularyName_i18n;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -304,6 +398,40 @@ public class TaxonomyCategoryBrief implements Serializable {
 			sb.append("\"taxonomyCategoryReference\": ");
 
 			sb.append(String.valueOf(taxonomyCategoryReference));
+		}
+
+		if (taxonomyVocabularyId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyVocabularyId\": ");
+
+			sb.append(taxonomyVocabularyId);
+		}
+
+		if (taxonomyVocabularyName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyVocabularyName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(taxonomyVocabularyName));
+
+			sb.append("\"");
+		}
+
+		if (taxonomyVocabularyName_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyVocabularyName_i18n\": ");
+
+			sb.append(_toJSON(taxonomyVocabularyName_i18n));
 		}
 
 		sb.append("}");

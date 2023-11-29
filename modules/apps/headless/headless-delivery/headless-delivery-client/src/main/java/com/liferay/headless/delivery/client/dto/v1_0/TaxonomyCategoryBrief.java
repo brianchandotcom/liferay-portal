@@ -141,6 +141,74 @@ public class TaxonomyCategoryBrief implements Cloneable, Serializable {
 
 	protected TaxonomyCategoryReference taxonomyCategoryReference;
 
+	public Long getTaxonomyVocabularyId() {
+		return taxonomyVocabularyId;
+	}
+
+	public void setTaxonomyVocabularyId(Long taxonomyVocabularyId) {
+		this.taxonomyVocabularyId = taxonomyVocabularyId;
+	}
+
+	public void setTaxonomyVocabularyId(
+		UnsafeSupplier<Long, Exception> taxonomyVocabularyIdUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyId = taxonomyVocabularyIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long taxonomyVocabularyId;
+
+	public String getTaxonomyVocabularyName() {
+		return taxonomyVocabularyName;
+	}
+
+	public void setTaxonomyVocabularyName(String taxonomyVocabularyName) {
+		this.taxonomyVocabularyName = taxonomyVocabularyName;
+	}
+
+	public void setTaxonomyVocabularyName(
+		UnsafeSupplier<String, Exception>
+			taxonomyVocabularyNameUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyName = taxonomyVocabularyNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String taxonomyVocabularyName;
+
+	public Map<String, String> getTaxonomyVocabularyName_i18n() {
+		return taxonomyVocabularyName_i18n;
+	}
+
+	public void setTaxonomyVocabularyName_i18n(
+		Map<String, String> taxonomyVocabularyName_i18n) {
+
+		this.taxonomyVocabularyName_i18n = taxonomyVocabularyName_i18n;
+	}
+
+	public void setTaxonomyVocabularyName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			taxonomyVocabularyName_i18nUnsafeSupplier) {
+
+		try {
+			taxonomyVocabularyName_i18n =
+				taxonomyVocabularyName_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> taxonomyVocabularyName_i18n;
+
 	@Override
 	public TaxonomyCategoryBrief clone() throws CloneNotSupportedException {
 		return (TaxonomyCategoryBrief)super.clone();

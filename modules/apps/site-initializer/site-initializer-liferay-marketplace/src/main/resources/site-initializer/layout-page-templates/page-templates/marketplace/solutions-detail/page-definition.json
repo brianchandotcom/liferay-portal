@@ -3454,7 +3454,7 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "marketplace-master"
+			"key": "marketplace-master-public"
 		},
 		"styleBook": {
 			"key": "marketplace",

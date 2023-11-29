@@ -3,15 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 
-import App from './App';
+import AppRoutes, {RouteType} from './Routes';
 import MarketplaceContextProvider from './context/MarketplaceContext';
+import {getIconSpriteMap} from './liferay/constants';
 import {AppContextProvider} from './manage-app-state/AppManageState';
 import SWRCacheProvider from './services/SWRCacheProvider';
 
-const GRAVATAR_API = `https://www.gravatar.com/avatar`;
+import './index.scss';
+
+const GRAVATAR_API = 'https://www.gravatar.com/avatar';
 
 class WebComponent extends HTMLElement {
 	private root: Root | undefined;
@@ -34,7 +38,15 @@ class WebComponent extends HTMLElement {
 				>
 					<MarketplaceContextProvider properties={properties}>
 						<AppContextProvider gravatarAPI={GRAVATAR_API}>
-							<App route={this.getAttribute('route') || '/'} />
+							<ClayIconSpriteContext.Provider
+								value={getIconSpriteMap()}
+							>
+								<AppRoutes
+									path={
+										this.getAttribute('path') as RouteType
+									}
+								/>
+							</ClayIconSpriteContext.Provider>
 						</AppContextProvider>
 					</MarketplaceContextProvider>
 				</SWRConfig>

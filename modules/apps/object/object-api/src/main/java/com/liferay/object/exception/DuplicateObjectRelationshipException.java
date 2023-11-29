@@ -7,26 +7,48 @@ package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Marco Leo
  */
 public class DuplicateObjectRelationshipException extends PortalException {
 
-	public DuplicateObjectRelationshipException() {
+	public List<Object> getArguments() {
+		return _arguments;
 	}
 
-	public DuplicateObjectRelationshipException(String msg) {
-		super(msg);
+	public String getMessageKey() {
+		return _messageKey;
 	}
 
-	public DuplicateObjectRelationshipException(
-		String msg, Throwable throwable) {
+	public static class MustNotDuplicateName
+		extends DuplicateObjectRelationshipException {
 
-		super(msg, throwable);
+		public MustNotDuplicateName(String objectDefinitionName) {
+			super(
+				Collections.singletonList(objectDefinitionName),
+				String.format(
+					"There is an object relationship with the same name in " +
+						"the object definition \"%s\"",
+					objectDefinitionName),
+				"there-is-an-object-relationship-with-the-same-name-in-the-" +
+					"object-definition-x");
+		}
+
 	}
 
-	public DuplicateObjectRelationshipException(Throwable throwable) {
-		super(throwable);
+	private DuplicateObjectRelationshipException(
+		List<Object> arguments, String message, String messageKey) {
+
+		super(message);
+
+		_arguments = arguments;
+		_messageKey = messageKey;
 	}
+
+	private final List<Object> _arguments;
+	private final String _messageKey;
 
 }

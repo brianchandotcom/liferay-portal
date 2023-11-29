@@ -6,13 +6,18 @@
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
+import com.liferay.object.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Loc Pham
@@ -35,7 +40,17 @@ public class DuplicateObjectRelationshipExceptionMapper
 
 		return new Problem(
 			Response.Status.CONFLICT,
-			duplicateObjectRelationshipException.getMessage());
+			ObjectExceptionMapperUtil.getTitle(
+				_acceptLanguage,
+				duplicateObjectRelationshipException.getArguments(), _language,
+				duplicateObjectRelationshipException.getMessage(),
+				duplicateObjectRelationshipException.getMessageKey()));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

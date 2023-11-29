@@ -304,6 +304,18 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long userId, long repositoryId, long parentFolderId, String name,
+		String description, com.liferay.portal.kernel.service.ServiceContext
+		serviceContext) {
+
+			DLAppLocalServiceUtil.addFolder(userId, repositoryId, parentFolderId, name, description, serviceContext);
+			DLAppServiceUtil.addFolder(123, repositoryId, parentFolderId, name, description, serviceContext);
+			DLAppServiceUtil.addFolder(userId, repositoryId, parentFolderId, name, description, serviceContext);
+			_dlAppLocalService.addFolder(userId, repositoryId, parentFolderId, name, description, serviceContext);
+			_dlAppService.addFolder(userId, repositoryId, parentFolderId, name, description, serviceContext);
+	}
+
+	public void method(
 		long userId, long groupId, long parentFolderId, String name,
 		String description, ServiceContext serviceContext) {
 
@@ -578,6 +590,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;

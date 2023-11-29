@@ -4259,15 +4259,9 @@ public class DataFactory {
 	public GroupModel newGuestGroupModel() {
 		_guestGroupId = _counter.get();
 
-		String typeSettings = StringPool.BLANK;
-
-		if (!BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
-			typeSettings = "searchLayoutCreated=true";
-		}
-
 		return newGroupModel(
 			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
-			GroupConstants.GUEST, 0, typeSettings, true);
+			GroupConstants.GUEST, 0, "searchLayoutCreated=true", true);
 	}
 
 	public UserModel newGuestUserModel() {

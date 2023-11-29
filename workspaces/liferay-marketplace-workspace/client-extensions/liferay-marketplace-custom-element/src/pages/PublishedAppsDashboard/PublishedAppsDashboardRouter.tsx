@@ -17,19 +17,17 @@ import Solutions from './Solutions';
 const PublishedAppsDashboardRouter = () => (
 	<HashRouter>
 		<Routes>
-			<Route path=":accountId?">
-				<Route element={<AppCreationFlow />} path="app/create" />
+			<Route element={<AppCreationFlow />} path="app/create" />
 
-				<Route element={<PublishedAppsDashboardOutlet />}>
-					<Route element={<Apps />} index />
-					<Route path="app/:appId">
-						<Route element={<App />} index />
-					</Route>
-					<Route element={<Accounts />} path="accounts" />
-					<Route element={<Members />} path="members" />
-					<Route element={<Projects />} path="projects" />
-					<Route element={<Solutions />} path="solutions" />
+			<Route element={<PublishedAppsDashboardOutlet />}>
+				<Route element={<Apps />} index />
+				<Route path="app/:appId">
+					<Route element={<App />} index />
 				</Route>
+				<Route element={<Accounts />} path="accounts" />
+				<Route element={<Members />} path="members" />
+				<Route element={<Projects />} path="projects" />
+				<Route element={<Solutions />} path="solutions" />
 			</Route>
 		</Routes>
 	</HashRouter>

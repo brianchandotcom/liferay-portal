@@ -12,25 +12,15 @@ import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
 
 import './PublishedAppsDashboard.scss';
-import {Liferay} from '../../liferay/liferay';
-import {
-	getAccountInfoFromCommerce,
-	getAccounts,
-	getProducts,
-} from '../../utils/api';
-import {
-	getAccountImage,
-	getProductVersionFromSpecifications,
-} from '../../utils/util';
-import {
-	formatDate,
-	getAppListProductIds,
-	getAppListProductSpecifications,
-	getProductTypeFromSpecifications,
-	initialDashboardNavigationItems,
-} from './PublishedDashboardPageUtil';
 
-const PAGE_SIZE = 10;
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+
+import SearchBuilder from '../../core/SearchBuilder';
+import {Liferay} from '../../liferay/liferay';
+import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
+import {getAccountInfoFromCommerce, getAccounts} from '../../utils/api';
+import {getAccountImage} from '../../utils/util';
+import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
 
 const useAccountCached = (accounts: any[], accountId: string | null) => {
 	const {data: account} = useSWR(`/account/${accountId}`, async () => {
@@ -101,120 +91,54 @@ const PublishedAppsDashboardOutlet = () => {
 		getAccountCommerce();
 	}, [selectedAccount?.id]);
 
-	const {
-		data: publishedAppTable = {items: [], pageSize: 10, totalCount: 0},
-		isLoading,
-	} = useSWR(`/published-apps/${selectedAccount?.id}`, async () => {
-		if (!catalogId) {
-			return {
-				items: [],
-				totalCount: 0,
-			};
-		}
+	const {data: publishedProductTable = {}, isLoading} = useSWR(
+		`/user-published-apps/${selectedAccount?.id}`,
+		async () =>
+			HeadlessCommerceAdminCatalogImpl.getProducts(
+				new URLSearchParams({
+					filter: new SearchBuilder()
+						.eq('catalogId', catalogId as number, {unquote: true})
+						.and()
+						.lambda('categoryNames', 'App')
+						.build(),
 
-		const {items: products} = await getProducts(
-			'attachments,productChannels'
-		);
-
-		const appListProductSpecifications = await getAppListProductSpecifications(
-			getAppListProductIds(products)
-		);
-
-		const productSpecificationsMap = appListProductSpecifications.map(
-			(productSpecification, index) => ({
-				productId: products[index].id,
-				specification: productSpecification,
-			})
-		);
-
-		const producsFiltered = products
-			.filter((product) => {
-				const marketPlaceChannel = !!product.productChannels.find(
-					(channel) => channel.name === 'Marketplace Channel'
-				);
-
-				const isApp = product.categories.find(
-					(category) => category.name === 'App'
-				);
-
-				return (
-					isApp &&
-					marketPlaceChannel &&
-					product.catalogId === catalogId
-				);
-			})
-			.map((product) => ({
-				attachments: product.attachments,
-				catalogId: product.catalogId,
-				externalReferenceCode: product.externalReferenceCode,
-				name: product.name.en_US,
-				productId: product.productId,
-				status: product.workflowStatusInfo.label.replace(
-					/(^\w|\s\w)/g,
-					(m: string) => m.toUpperCase()
-				),
-				thumbnail: product.thumbnail,
-				type: getProductTypeFromSpecifications(
-					productSpecificationsMap.find(
-						({productId}) => productId === product.id
-					)?.specification ?? []
-				),
-				updatedDate: formatDate(product.modifiedDate),
-				version: getProductVersionFromSpecifications(
-					productSpecificationsMap.find(
-						({productId}) => productId === product.id
-					)?.specification ?? []
-				),
-			}));
-
-		return {
-			items: producsFiltered.slice(
-				PAGE_SIZE * (page - 1),
-				PAGE_SIZE * (page - 1) + PAGE_SIZE
-			),
-			pageSize: PAGE_SIZE,
-			totalCount: producsFiltered.length,
-		};
-	});
+					nestedFields:
+						'attachments,productChannels,productSpecifications',
+				})
+			)
+	);
 
 	return (
 		<div className="published-apps-dashboard-page-container">
 			<DashboardNavigation
-				accountAppsNumber={publishedAppTable.totalCount}
+				accountAppsNumber={publishedProductTable.totalCount}
 				accountIcon={getAccountImage(commerceAccount?.logoURL)}
 				accounts={accounts ?? []}
 				currentAccount={selectedAccount}
-				dashboardNavigationItems={initialDashboardNavigationItems.map(
-					(navigationItems) => {
-						if (navigationItems.itemName === 'apps') {
-							return {
-								...navigationItems,
-								items: [].slice(0, 4),
-							};
-						}
-
-						return navigationItems;
-					}
-				)}
+				dashboardNavigationItems={initialDashboardNavigationItems}
 			/>
 
-			<Outlet
-				context={{
-					accountId,
-					appsTotalCount: publishedAppTable.totalCount,
-					catalogId,
-					commerceAccount,
-					loading: isLoading,
-					publishedAppTable,
-					selectedAccount,
-					selectedApp,
-					setCommerceAccount,
-					setPage,
-					setSelectedApp,
-					setShowDashboardNavigation,
-					showDashboardNavigation,
-				}}
-			/>
+			{isLoading ? (
+				<ClayLoadingIndicator />
+			) : (
+				<Outlet
+					context={{
+						accountId,
+						appsTotalCount: publishedProductTable.totalCount,
+						catalogId,
+						commerceAccount,
+						page,
+						publishedProductTable,
+						selectedAccount,
+						selectedApp,
+						setCommerceAccount,
+						setPage,
+						setSelectedApp,
+						setShowDashboardNavigation,
+						showDashboardNavigation,
+					}}
+				/>
+			)}
 		</div>
 	);
 };

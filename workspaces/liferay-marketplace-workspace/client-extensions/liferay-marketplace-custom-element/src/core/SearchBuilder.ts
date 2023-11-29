@@ -29,6 +29,10 @@ export default class SearchBuilder {
 		this.useURIEncode = useURIEncode;
 	}
 
+	static unquote(criteria: string) {
+		return criteria.replaceAll("'", '');
+	}
+
 	/**
 	 * @description Contains
 	 * @example contains(title,'edmon')
@@ -55,6 +59,10 @@ export default class SearchBuilder {
 		}
 
 		return '';
+	}
+
+	static lambda(key: Key, value: Value) {
+		return `(${key}/any(x:(x eq '${value}')))`;
 	}
 
 	static ne(key: Key, value: Value) {
@@ -105,8 +113,16 @@ export default class SearchBuilder {
 		return this.setContext(SearchBuilder.contains(key, value));
 	}
 
-	public eq(key: Key, value: Value) {
-		return this.setContext(SearchBuilder.eq(key, value));
+	public eq(key: Key, value: Value, options = {unquote: false}) {
+		const parseFn = options.unquote
+			? SearchBuilder.unquote
+			: (fn: any) => fn;
+
+		return this.setContext(parseFn(SearchBuilder.eq(key, value)));
+	}
+
+	public lambda(key: Key, value: Value) {
+		return this.setContext(SearchBuilder.lambda(key, value));
 	}
 
 	public in(key: Key, values: Value[]) {

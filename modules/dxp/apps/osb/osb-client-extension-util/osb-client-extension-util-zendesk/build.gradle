@@ -1,20 +1,9 @@
-buildscript {
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
-	}
-
-	repositories {
-		mavenLocal()
-
-		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
-		}
+configurations {
+	compileOnly {
+		transitive = true
 	}
 }
 
-apply plugin: "application"
-apply plugin: "com.liferay.source.formatter"
-apply plugin: "java-library"
 
 dependencies {
 	api group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
@@ -22,12 +11,4 @@ dependencies {
 	api group: "org.springframework.boot", name: "spring-boot", version: "2.7.11"
 	api group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.11"
 	api group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.11"
-}
-
-repositories {
-	mavenLocal()
-
-	maven {
-		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
-	}
 }

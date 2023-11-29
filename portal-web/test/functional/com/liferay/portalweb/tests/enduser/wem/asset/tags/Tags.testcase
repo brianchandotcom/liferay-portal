@@ -233,7 +233,7 @@ definition {
 		task ("Merge tags into fifth tag") {
 			Tag.mergeTags(
 				mergedTag = "tagname5",
-				tagNameList = "tagname5,tagname3,tagname1,tagname6");
+				tagNameList = "tagname5, tagname3, tagname1, tagname6");
 		}
 
 		task ("View second, fourth and fifth tag are shown") {
@@ -267,7 +267,7 @@ definition {
 
 			Tag.mergeTags(
 				mergedTag = "tagname1",
-				tagNameList = "tagname3,tagname2,tagname1");
+				tagNameList = "tagname3, tagname2, tagname1");
 		}
 
 		task ("View first tag is shown") {

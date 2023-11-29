@@ -5,6 +5,8 @@
 
 package com.liferay.cookies.internal.manager;
 
+import com.google.common.net.InternetDomainName;
+
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -326,30 +328,29 @@ public class CookiesManagerImpl implements CookiesManager {
 			return host;
 		}
 
-		int x = host.lastIndexOf(CharPool.PERIOD);
+		InternetDomainName internetDomainName = InternetDomainName.from(host);
+
+		if (internetDomainName.isPublicSuffix()) {
+			return null;
+		}
+
+		if (internetDomainName.isTopPrivateDomain()) {
+			return StringPool.PERIOD + internetDomainName.toString();
+		}
+
+		int x = host.indexOf(CharPool.PERIOD);
 
 		if (x <= 0) {
 			return null;
 		}
 
-		int y = host.lastIndexOf(CharPool.PERIOD, x - 1);
+		int y = host.indexOf(CharPool.PERIOD, x + 1);
 
 		if (y <= 0) {
 			return StringPool.PERIOD + host;
 		}
 
-		int z = host.lastIndexOf(CharPool.PERIOD, y - 1);
-
-		String domain = null;
-
-		if (z <= 0) {
-			domain = host.substring(y);
-		}
-		else {
-			domain = host.substring(z);
-		}
-
-		return domain;
+		return host.substring(x);
 	}
 
 	@Override

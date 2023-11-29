@@ -30,8 +30,10 @@
 								"key": "notification-welcome",
 								"siteKey": "Marketplace"
 							},
-							"fragmentConfig": {},
-							"fragmentFields": [],
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"

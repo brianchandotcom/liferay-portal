@@ -112,6 +112,11 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	@Override
+	public String getKey() {
+		return KEY;
+	}
+
+	@Override
 	public String getName(Locale locale) {
 		return _language.get(_getResourceBundle(locale), "flat-rate");
 	}

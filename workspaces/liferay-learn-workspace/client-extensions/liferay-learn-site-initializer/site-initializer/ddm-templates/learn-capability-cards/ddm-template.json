@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.theme.NavItem",
+	"ddmTemplateKey": "LEARN_CAPABILITY_CARDS",
+	"name": "Learn Capability Cards",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

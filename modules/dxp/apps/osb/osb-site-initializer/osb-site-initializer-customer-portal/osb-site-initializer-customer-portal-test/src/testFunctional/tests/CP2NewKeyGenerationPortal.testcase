@@ -92,7 +92,7 @@ definition {
 		}
 
 		task ("When filling in the first form to Generate New License") {
-			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 3);
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput(index = 3);
 
 			CustomerPortal.clickAtButton(text = "Next");
 
@@ -197,7 +197,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -266,7 +266,7 @@ definition {
 	@priority = 3
 	test CanViewAnInformationalMessageInTheSubscription {
 		task ("Given I select the first available signature") {
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 		}
 
 		task ("Then I assert the Alert Info message content") {
@@ -297,7 +297,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 		}
 
 		task ("Then I should be able to see that the Next button is enabled") {
@@ -337,7 +337,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -397,7 +397,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -509,7 +509,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -597,7 +597,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -649,7 +649,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}

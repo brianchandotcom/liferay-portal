@@ -112,7 +112,7 @@ definition {
 		task ("Then select the Renew button and renew the keys") {
 			Button.click(button = "Renew");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 1);
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput(index = 1);
 
 			CustomerPortal.clickAtButton(text = "Generate 2 Keys");
 

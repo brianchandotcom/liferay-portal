@@ -91,7 +91,7 @@ definition {
 				field = "Key Type",
 				option = "Production (Virtual Cluster)");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -184,7 +184,7 @@ definition {
 		}
 
 		task ("When filling in the first form to Generate New License") {
-			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 6);
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput(index = 6);
 
 			CustomerPortal.clickAtButton(text = "Next");
 
@@ -389,7 +389,7 @@ definition {
 				field = "Key Type",
 				option = "Production (Virtual Cluster)");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -528,7 +528,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Cancel");
 		}
@@ -576,7 +576,7 @@ definition {
 				field = "Key Type",
 				option = "Production (Virtual Cluster)");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			Button.click(button = "Next");
 		}
@@ -995,7 +995,7 @@ definition {
 				field = "Key Type",
 				option = "Non-Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -1063,7 +1063,7 @@ definition {
 				field = "Key Type",
 				option = "Production (Virtual Cluster)");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}
@@ -1123,7 +1123,7 @@ definition {
 				field = "Key Type",
 				option = "Production (Virtual Cluster)");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			Button.click(button = "Next");
 		}
@@ -1179,7 +1179,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput();
 
 			Button.click(button = "Next");
 		}

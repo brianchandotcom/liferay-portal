@@ -587,7 +587,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectFistActiveSubscriptionInput(index = null) {
+	macro selectFirstActiveSubscriptionInput(index = null) {
 		if (isSet(index)) {
 			var key_position = ${index};
 

@@ -71,7 +71,7 @@ definition {
 				field = "Key Type",
 				option = "Production");
 
-			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 1);
+			CP2ActivationKeys.selectFirstActiveSubscriptionInput(index = 1);
 
 			CustomerPortal.clickAtButton(text = "Next");
 		}

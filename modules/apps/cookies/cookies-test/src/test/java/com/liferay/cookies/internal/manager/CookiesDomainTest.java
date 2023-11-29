@@ -9,9 +9,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -19,6 +21,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -41,8 +46,13 @@ public class CookiesDomainTest {
 			cookiesManager, "_configurationProvider",
 			Mockito.mock(ConfigurationProvider.class));
 
-		ReflectionTestUtil.setFieldValue(
-			CookiesManagerUtil.class, "_cookiesManager", cookiesManager);
+		_cookiesManagerServiceRegistration = _bundleContext.registerService(
+			CookiesManager.class, cookiesManager, null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_cookiesManagerServiceRegistration.unregister();
 	}
 
 	@Test
@@ -130,5 +140,10 @@ public class CookiesDomainTest {
 				value);
 		}
 	}
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static ServiceRegistration<CookiesManager>
+		_cookiesManagerServiceRegistration;
 
 }

@@ -7,9 +7,8 @@ package com.liferay.cookies.internal.events;
 
 import com.liferay.cookies.internal.manager.CookiesManagerImpl;
 import com.liferay.portal.kernel.cookies.CookiesManager;
-import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -20,11 +19,15 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -40,10 +43,15 @@ public class CookiesPreActionTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			CookiesManagerUtil.class, "_cookiesManager", _cookiesManager);
+	@BeforeClass
+	public static void setUpClass() {
+		_cookiesManagerServiceRegistration = _bundleContext.registerService(
+			CookiesManager.class, new CookiesManagerImpl(), null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_cookiesManagerServiceRegistration.unregister();
 	}
 
 	@Test
@@ -93,7 +101,11 @@ public class CookiesPreActionTest {
 		Assert.assertEquals("", userConsentConfiguredCookie.getValue());
 	}
 
-	private final CookiesManager _cookiesManager = new CookiesManagerImpl();
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static ServiceRegistration<CookiesManager>
+		_cookiesManagerServiceRegistration;
+
 	private final CookiesPreAction _cookiesPreAction = new CookiesPreAction();
 
 }

@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Validates data persistence and that the main storage functionalities using Advanced File System(AFS) are working correctly."
+	@summary = "Validates data persistence and that the main storage functionalities using Advanced File System(AFS) are working correctly"
 	macro viewAFSStoreUpgrade() {
 		task ("Assert no errors are thrown during upgrade") {
 			AssertConsoleTextNotPresent(value1 = "No errors thrown during upgrade");
@@ -99,7 +99,7 @@ definition {
 		}
 	}
 
-	@summary = "Validates data persistence and that the main storage functionalities using DBStore are working correctly."
+	@summary = "Validates data persistence and that the main storage functionalities using DBStore are working correctly"
 	macro viewDBStoreUpgrade() {
 		task ("Assert no errors are thrown during upgrade") {
 			AssertConsoleTextNotPresent(value1 = "No errors thrown during upgrade");

@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Changes the display style in between list, table or cards."
+	@summary = "Changes the display style in between list, table or cards"
 	macro changeDisplayStyle(displayStyle = null) {
 		task ("Change document view type but account for flakiness seen in test execution history") {
 			WaitForPageLoad();
@@ -19,7 +19,7 @@ definition {
 		}
 	}
 
-	@summary = "Retrieves and returns the portal servlet build number available in the Release_ DB table."
+	@summary = "Retrieves and returns the portal servlet build number available in the Release_ DB table"
 	macro getBuildNumber() {
 		var mysqlStatement = "SELECT buildNumber FROM Release_ WHERE servletContextName='portal';";
 
@@ -32,7 +32,7 @@ definition {
 		return ${portalBuildNumber};
 	}
 
-	@summary = "Retrieves and returns the desired servlet schema version available in the Release_ DB table."
+	@summary = "Retrieves and returns the desired servlet schema version available in the Release_ DB table"
 	macro getSchemaVersion() {
 		var mysqlStatement = ${mysqlStatement};
 
@@ -45,7 +45,7 @@ definition {
 		return ${portalSchemaVersion};
 	}
 
-	@summary = "Validates data persistence and that the basic portal functionalities are working correctly after an upgrade is executed."
+	@summary = "Validates data persistence and that the basic portal functionalities are working correctly after an upgrade is executed"
 	macro viewUpgrade() {
 		Navigator.gotoPage(pageName = "Web Content");
 

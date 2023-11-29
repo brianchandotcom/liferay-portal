@@ -193,7 +193,7 @@ definition {
 		Refresh();
 	}
 
-	@summary = "This macro can be used for clearing Organization Management Widget search bar."
+	@summary = "This macro can be used for clearing Organization Management Widget search bar"
 	macro clearOrganizationManagementWidgetSearchBar() {
 		DoubleClick(locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
 
@@ -202,7 +202,7 @@ definition {
 			value1 = "\BACK_SPACE");
 	}
 
-	@summary = "This macro can be used for deleting entry from Organization Management Chart."
+	@summary = "This macro can be used for deleting entry from Organization Management Chart"
 	macro deleteEntryFromOrganizationManagement(entryName = null) {
 		CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${entryName});
 
@@ -248,7 +248,7 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	@summary = "This macro can be used for editing account information from Organization Management Chart."
+	@summary = "This macro can be used for editing account information from Organization Management Chart"
 	macro editAccountFromOrganizationManagement(accountName = null, accountImage = null, newAccountName = null, accountTaxID = null, accountERC = null, accountDescription = null) {
 		if (isSet(viewAndEditAccount)) {
 			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${accountName});
@@ -305,7 +305,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "This macro can be used for editing user information from Organization Management Chart."
+	@summary = "This macro can be used for editing user information from Organization Management Chart"
 	macro editUserInformationFromOrganizationManagement(userBirthday = null, userEmailAddress = null, userFirstName = null, userImage = null, userLanguage = null, userLastName = null, userMiddleName = null, userPrefix = null, userScreenName = null, userSuffix = null) {
 		if (isSet(viewAndEditUser)) {
 			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${userName});
@@ -491,7 +491,7 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	@summary = "This macro can be used for removing account from Organization in Organization Management Chart."
+	@summary = "This macro can be used for removing account from Organization in Organization Management Chart"
 	macro removeAccountFromOrganization(accountName = null, organizationName = null) {
 		CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${accountName});
 
@@ -529,7 +529,7 @@ definition {
 		Click(locator1 = "Button#EXPAND");
 	}
 
-	@summary = "This macro can be used for removing user from Account in Organization Management Chart."
+	@summary = "This macro can be used for removing user from Account in Organization Management Chart"
 	macro removeUserFromAccount(userName = null, accountName = null) {
 		CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${userName});
 
@@ -544,7 +544,7 @@ definition {
 		AssertConfirm(value1 = "${userName} will be removed from ${accountName}.");
 	}
 
-	@summary = "This macro can be used for navigating to the Organization Management Widget entry."
+	@summary = "This macro can be used for navigating to the Organization Management Widget entry"
 	macro searchAndGoToOrganizationManagementWidgetEntry(entryName = null) {
 		Type(
 			locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
@@ -848,7 +848,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "This macro can be used for asserting account information from Organization Management Chart."
+	@summary = "This macro can be used for asserting account information from Organization Management Chart"
 	macro viewAccountDetailsAtSidebar(accountDescription = null, accountERC = null, accountID = null, accountImage = null, accountName = null, accountTaxID = null, accountType = null) {
 		if (isSet(viewCurrentInfo)) {
 			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${accountName});
@@ -872,7 +872,7 @@ definition {
 		}
 	}
 
-	@summary = "This macro can be used for asserting user information from Organization Management Chart."
+	@summary = "This macro can be used for asserting user information from Organization Management Chart"
 	macro viewUserInformationAtSidebar(userBirthday = null, userEmailAddress = null, userFirstName = null, userID = null, userImage = null, userLanguage = null, userLastName = null, userMiddleName = null, userPrefix = null, userScreenName = null, userSuffix = null) {
 		if (isSet(viewCurrentInfo)) {
 			CommerceWidget.searchAndGoToOrganizationManagementWidgetEntry(entryName = ${userName});

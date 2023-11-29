@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Retrieves and returns the content of 'upgrade_report.info' when using auto.upgrade."
+	@summary = "Retrieves and returns the content of 'upgrade_report.info' when using auto.upgrade"
 	macro getAutoUpgradeReportFileContent(directory = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -14,14 +14,14 @@ definition {
 		return ${fileContentReport};
 	}
 
-	@summary = "Retrieves and returns the total Upgrade execution time available in the 'upgrade_report.info' file."
+	@summary = "Retrieves and returns the total Upgrade execution time available in the 'upgrade_report.info' file"
 	macro getUpgradeExecutionTime(reportFileContent = null) {
 		var upgradeRunTimeReport = RegexUtil.replace(${reportFileContent}, "Execution time: (.*[0-9])", 1);
 
 		return ${upgradeRunTimeReport};
 	}
 
-	@summary = "Retrieves and returns the content of 'upgrade_report.info' when using DB Upgrade Tool."
+	@summary = "Retrieves and returns the content of 'upgrade_report.info' when using DB Upgrade Tool"
 	macro getUpgradeReportFileContent(directory = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -35,7 +35,7 @@ definition {
 		return ${fileContentReport};
 	}
 
-	@summary = "Prints the Upgrade execution time in the console."
+	@summary = "Prints the Upgrade execution time in the console"
 	macro printUpgradeExecutionTime(upgradeType = null) {
 		if (${upgradeType} == "auto") {
 			var reportFileContent = UpgradeReport.getAutoUpgradeReportFileContent();

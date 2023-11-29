@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "This macro can be used for adding a refund reason."
+	@summary = "This macro can be used for adding a refund reason"
 	macro addRefundReason(key = null) {
 		Button.clickAdd();
 
@@ -27,7 +27,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "This macro can be used for updating a refund reason."
+	@summary = "This macro can be used for updating a refund reason"
 	macro updateRefundReason(key = null) {
 		Type(
 			locator1 = "SystemSettings#KEY",

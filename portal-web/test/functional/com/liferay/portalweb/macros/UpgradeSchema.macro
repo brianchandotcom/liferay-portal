@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Validates that clean schema started from master and a upgraded schema have the same definitions."
+	@summary = "Validates that clean schema started from master and a upgraded schema have the same definitions"
 	macro validateSchemas(freshDBSchemaName = null, upgradedDBSchemaName = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 

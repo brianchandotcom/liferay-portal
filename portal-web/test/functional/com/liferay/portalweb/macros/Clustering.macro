@@ -168,7 +168,7 @@ definition {
 		echo(${fileContent});
 	}
 
-	@summary = "Shutdown the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat."
+	@summary = "Shutdown the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat"
 	macro shutdownSpecificServer(nodePort = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
@@ -177,7 +177,7 @@ definition {
 		AntCommands.runCommand("build-test.xml", "stop-app-server -Dapp.server.bundle.index=${bundleIndex}");
 	}
 
-	@summary = "Start the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat."
+	@summary = "Start the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat"
 	macro startSpecificServer(deleteLiferayHome = null, nodePort = null, keepCachedAppServerData = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 

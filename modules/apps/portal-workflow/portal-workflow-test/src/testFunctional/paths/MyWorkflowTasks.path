@@ -184,7 +184,7 @@
 </tr>
 <tr>
 	<td>DIALOG_BOX_COMMENT_FIELD</td>
-	<td>//textarea[contains(@id,'_comment')]</td>
+	<td>//div[contains(@class,'modal-body')]//textarea[contains(@id,'_comment')]</td>
 	<td></td>
 </tr>
 <tr>

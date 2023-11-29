@@ -1459,6 +1459,27 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro createAIImage() {
+
+		// This macro will be used for creating AI image. Remove this comment when working on LPS-199872.
+
+		DMNavigator.gotoCreateAIImage();
+
+		if (isSet(createAIImageWithoutKey)) {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Configure OpenAI");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Authentication is needed to use this feature. Contact your administrator to add an API key in instance or site settings.");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	@summary = "Default summary"
 	macro deleteCP(dmDocumentTitle = null) {
 		if (isSet(recycleBinDisabled)) {
 			LexiconEntry.delete(rowEntry = ${dmDocumentTitle});

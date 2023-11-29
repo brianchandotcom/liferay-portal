@@ -74,6 +74,20 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro gotoCreateAIImage(portletName = null) {
+		WaitForPageLoad();
+
+		if (${portletName} == "Documents and Media") {
+			Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+		}
+		else {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		MenuItem.click(menuItem = "Create AI Image");
+	}
+
+	@summary = "Default summary"
 	macro gotoDocumentCP(dmDocumentTitle = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${dmDocumentTitle});
 	}

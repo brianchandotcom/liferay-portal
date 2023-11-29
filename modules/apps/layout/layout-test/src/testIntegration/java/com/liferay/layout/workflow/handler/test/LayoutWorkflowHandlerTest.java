@@ -12,10 +12,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -57,6 +59,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -70,6 +73,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -138,6 +142,27 @@ public class LayoutWorkflowHandlerTest {
 
 		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				"{}", draftLayout, segmentsExperienceId);
+
+		String keywords = fragmentEntryLink.getHtml();
+
+		Assert.assertTrue(keywords, Validator.isNotNull(keywords));
+
+		IndexerFixture<Layout> layoutIndexerFixture = new IndexerFixture<>(
+			Layout.class);
+
+		layoutIndexerFixture.searchNoOne(keywords);
+
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
 				Layout.class.getName());
@@ -157,13 +182,7 @@ public class LayoutWorkflowHandlerTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, layout.getStatus());
 
-		LayoutLocalization layoutLocalization =
-			_layoutLocalizationLocalService.fetchLayoutLocalization(
-				layout.getGroupId(),
-				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				layout.getPlid());
-
-		Assert.assertNull(layoutLocalization);
+		layoutIndexerFixture.searchNoOne(keywords);
 
 		workflowHandler.updateStatus(
 			WorkflowConstants.STATUS_APPROVED,
@@ -182,13 +201,22 @@ public class LayoutWorkflowHandlerTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, layout.getStatus());
 
-		layoutLocalization =
-			_layoutLocalizationLocalService.fetchLayoutLocalization(
-				layout.getGroupId(),
-				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				layout.getPlid());
+		Locale locale = LocaleUtil.getSiteDefault();
 
-		Assert.assertNotNull(layoutLocalization);
+		Document document = layoutIndexerFixture.searchOnlyOne(
+			keywords, locale);
+
+		Assert.assertNotNull(document);
+
+		String content = document.get(
+			Field.getLocalizedName(locale, Field.CONTENT));
+
+		Assert.assertTrue(
+			content, StringUtil.contains(content, keywords, StringPool.BLANK));
+
+		Assert.assertEquals(
+			document.get(Field.ENTRY_CLASS_PK),
+			String.valueOf(layout.getPlid()));
 	}
 
 	@Test
@@ -548,9 +576,6 @@ public class LayoutWorkflowHandlerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

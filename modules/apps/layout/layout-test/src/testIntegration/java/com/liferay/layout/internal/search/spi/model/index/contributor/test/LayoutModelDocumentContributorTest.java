@@ -12,10 +12,9 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.model.LayoutLocalization;
-import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -91,10 +90,12 @@ public class LayoutModelDocumentContributorTest {
 
 		_assertReindex(elementText, layout);
 
-		Layout draftLayout = _addFragmentToLayout(
-			RandomTestUtil.randomString(), html, layout);
+		String draftElementText = RandomTestUtil.randomString();
 
-		_assertReindexDraftLayout(draftLayout);
+		Layout draftLayout = _addFragmentToLayout(
+			draftElementText, html, layout);
+
+		_assertReindexDraftLayout(draftElementText, draftLayout);
 
 		_assertSearch(elementText, layout.getPlid());
 	}
@@ -112,7 +113,13 @@ public class LayoutModelDocumentContributorTest {
 				"data-lfr-editable-type=\"text\">Heading Example</h1>";
 
 		_addFragmentEntryLinkToLayout(
-			elementText, html, layout,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text", JSONUtil.put(_languageId, elementText))
+			).toString(),
+			html, layout,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_reindexLogEntries(layout);
@@ -181,18 +188,11 @@ public class LayoutModelDocumentContributorTest {
 
 		Layout layout = _addTypeContentLayout(elementText, false);
 
-		List<LayoutLocalization> layoutLocalizations =
-			_layoutLocalizationLocalService.getLayoutLocalizations(
-				layout.getPlid());
-
-		Assert.assertTrue(
-			layoutLocalizations.toString(), layoutLocalizations.isEmpty());
-
-		_assertReindexDraftLayout(layout);
+		_assertReindexDraftLayout(elementText, layout);
 	}
 
 	private void _addFragmentEntryLinkToLayout(
-			String elementText, String html, Layout layout,
+			String editableValues, String html, Layout layout,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -210,13 +210,8 @@ public class LayoutModelDocumentContributorTest {
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"element-text", JSONUtil.put(_languageId, elementText))
-			).toString(),
-			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			editableValues, fragmentEntry.getCss(),
+			fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
 			fragmentEntry.getType(), null, 0,
@@ -233,7 +228,13 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertNotNull(draftLayout);
 
 		_addFragmentEntryLinkToLayout(
-			elementText, html, draftLayout,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text", JSONUtil.put(_languageId, elementText))
+			).toString(),
+			html, draftLayout,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return draftLayout;
@@ -265,33 +266,19 @@ public class LayoutModelDocumentContributorTest {
 
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
-		LayoutLocalization layoutLocalization =
-			_layoutLocalizationLocalService.fetchLayoutLocalization(
-				layout.getGroupId(), _languageId, layout.getPlid());
-
-		Assert.assertNotNull(layoutLocalization);
-
-		Assert.assertTrue(
-			layoutLocalization.getContent(),
-			StringUtil.contains(
-				layoutLocalization.getContent(), expectedContent));
-
 		_assertSearch(expectedContent, layout.getPlid());
 	}
 
-	private void _assertReindexDraftLayout(Layout draftLayout)
+	private void _assertReindexDraftLayout(String keywords, Layout layout)
 		throws Exception {
 
-		List<LogEntry> logEntries = _reindexLogEntries(draftLayout);
+		_layoutIndexerFixture.searchNoOne(keywords);
+
+		List<LogEntry> logEntries = _reindexLogEntries(layout);
 
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
-		List<LayoutLocalization> layoutLocalizations =
-			_layoutLocalizationLocalService.getLayoutLocalizations(
-				draftLayout.getPlid());
-
-		Assert.assertTrue(
-			layoutLocalizations.toString(), layoutLocalizations.isEmpty());
+		_layoutIndexerFixture.searchNoOne(keywords);
 	}
 
 	private void _assertSearch(String keywords, long plid) {
@@ -303,33 +290,11 @@ public class LayoutModelDocumentContributorTest {
 		String content = document.get(
 			Field.getLocalizedName(_locale, Field.CONTENT));
 
-		Assert.assertTrue(content, StringUtil.contains(content, keywords));
+		Assert.assertTrue(
+			content, StringUtil.contains(content, keywords, StringPool.BLANK));
 
 		Assert.assertEquals(
 			document.get(Field.ENTRY_CLASS_PK), String.valueOf(plid));
-	}
-
-	private int _deleteLayoutLocalizations(long plid) {
-		List<LayoutLocalization> layoutLocalizations =
-			_layoutLocalizationLocalService.getLayoutLocalizations(plid);
-
-		Assert.assertFalse(
-			layoutLocalizations.toString(), layoutLocalizations.isEmpty());
-
-		for (LayoutLocalization layoutLocalization : layoutLocalizations) {
-			_layoutLocalizationLocalService.deleteLayoutLocalization(
-				layoutLocalization);
-		}
-
-		int originalLayoutLocalizationsSize = layoutLocalizations.size();
-
-		layoutLocalizations =
-			_layoutLocalizationLocalService.getLayoutLocalizations(plid);
-
-		Assert.assertTrue(
-			layoutLocalizations.toString(), layoutLocalizations.isEmpty());
-
-		return originalLayoutLocalizationsSize;
 	}
 
 	private List<LogEntry> _reindexLogEntries(Layout layout) throws Exception {
@@ -360,9 +325,6 @@ public class LayoutModelDocumentContributorTest {
 
 	private String _languageId;
 	private IndexerFixture<Layout> _layoutIndexerFixture;
-
-	@Inject
-	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

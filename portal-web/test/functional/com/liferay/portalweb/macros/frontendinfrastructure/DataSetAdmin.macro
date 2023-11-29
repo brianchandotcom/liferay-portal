@@ -374,25 +374,6 @@ definition {
 			restSchema = ${restSchema});
 	}
 
-	@summary = "Creates and publishes an object with a field to be used in a data set entry "
-	macro setUpObjectForDataSet(labelName = null, objectName = null, pluralLabelName = null, scope = null, fieldBusinessType = null, fieldLabelName = null, fieldName = null, fieldType = null, ) {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = ${labelName},
-			objectName = ${objectName},
-			pluralLabelName = ${pluralLabelName},
-			scope = ${scope});
-		
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = ${fieldBusinessType},
-			fieldLabelName = ${fieldLabelName},
-			fieldName = ${fieldName},
-			fieldType = ${fieldType},
-			isRequired = "false",
-			objectName = ${objectName});
-
-		ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
-	}
-
 	@summary = "Default summary"
 	macro createDataSetView(key_name = null, description = null) {
 		if (isSet(key_name)) {
@@ -1088,6 +1069,25 @@ definition {
 		Click(
 			key_optionName = ${optionName},
 			locator1 = "DataSet#RADIO_BUTTON_OPTION");
+	}
+
+	@summary = "Creates and publishes an object with a field to be used in a data set entry "
+	macro setUpObjectForDataSet(labelName = null, objectName = null, pluralLabelName = null, scope = null, fieldBusinessType = null, fieldLabelName = null, fieldName = null, fieldType = null, ) {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = ${labelName},
+			objectName = ${objectName},
+			pluralLabelName = ${pluralLabelName},
+			scope = ${scope});
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = ${fieldBusinessType},
+			fieldLabelName = ${fieldLabelName},
+			fieldName = ${fieldName},
+			fieldType = ${fieldType},
+			isRequired = "false",
+			objectName = ${objectName});
+
+		ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 	}
 
 	@summary = "Default summary"

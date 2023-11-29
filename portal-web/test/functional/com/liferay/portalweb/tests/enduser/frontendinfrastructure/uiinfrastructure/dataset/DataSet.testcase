@@ -549,14 +549,14 @@ definition {
 	test CanAssertTheEndpointObjectInDataSetCreated {
 		task ("Given an object definition 'Student' with name field and Scope: Site created") {
 			DataSetAdmin.setUpObjectForDataSet(
-				labelName = "Student",
-				objectName = "Student",
-				pluralLabelName = "Student",
-				scope = "site",
 				fieldBusinessType = "Text",
 				fieldLabelName = "Custom Field",
 				fieldName = "customObjectField",
-				fieldType = "String");
+				fieldType = "String",
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Student",
+				scope = "site");
 		}
 
 		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema") {
@@ -581,14 +581,14 @@ definition {
 	test CanAssertTheEndpointObjectInDataSetModal {
 		task ("Given an object definition 'Student' with name field and Scope: Site created") {
 			DataSetAdmin.setUpObjectForDataSet(
-				labelName = "Student",
-				objectName = "Student",
-				pluralLabelName = "Student",
-				scope = "site",
 				fieldBusinessType = "Text",
 				fieldLabelName = "Custom Field",
 				fieldName = "customObjectField",
-				fieldType = "String");
+				fieldType = "String",
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Student",
+				scope = "site");
 		}
 
 		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema") {

@@ -51,10 +51,10 @@ function getResultText(searchValue, itemTotal, filterTotal) {
 
 	if (!searchValue) {
 		if (itemTotal === 1) {
-			return Liferay.Language.get('x-result');
+			return Liferay.Language.get('x-result-for');
 		}
 
-		return Liferay.Language.get('x-results');
+		return Liferay.Language.get('x-results-for');
 	}
 
 	if (itemTotal === 1) {

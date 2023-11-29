@@ -1439,10 +1439,10 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 		if (Validator.isNull(searchValue)) {
 			if (itemsTotal == 1) {
-				return "x-result";
+				return "x-result-for";
 			}
 
-			return "x-results";
+			return "x-results-for";
 		}
 
 		if (itemsTotal == 1) {

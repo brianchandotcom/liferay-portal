@@ -128,6 +128,7 @@ com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema=com.liferay
 com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder=com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder
 com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory=com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory
 com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField=com.liferay.frontend.data.set.view.table.FDSTableSchemaField
+com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView=com.liferay.frontend.data.set.view.table.selectable.BaseSelectableTableFDSView
 com.liferay.frontend.taglib.form.navigator.FormNavigatorContextConstants=com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants
 com.liferay.journal.JournalConstants=com.liferay.journal.constants.JournalConstants
 com.liferay.journal.model.JournalArticleConstants=com.liferay.journal.constants.JournalArticleConstants

@@ -19,7 +19,6 @@ import com.liferay.calendar.exception.NoSuchCalendarException;
 import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
-import com.liferay.calendar.internal.notification.NotificationSenderFactory;
 import com.liferay.calendar.internal.notification.NotificationTemplateContextFactory;
 import com.liferay.calendar.internal.recurrence.RecurrenceSplit;
 import com.liferay.calendar.internal.recurrence.RecurrenceSplitter;
@@ -42,6 +41,8 @@ import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -112,7 +113,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -1681,6 +1685,21 @@ public class CalendarBookingLocalServiceImpl
 			userId, calendarBooking, status, serviceContext);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_notificationSenderServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, NotificationSender.class, "notification.type");
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+
+		_notificationSenderServiceTrackerMap.close();
+	}
+
 	@Reference
 	protected MBMessageLocalService mbMessageLocalService;
 
@@ -2188,7 +2207,7 @@ public class CalendarBookingLocalServiceImpl
 		throws Exception {
 
 		NotificationSender notificationSender =
-			_notificationSenderFactory.getNotificationSender(
+			_notificationSenderServiceTrackerMap.getService(
 				notificationType.toString());
 
 		if (notificationTemplateType == NotificationTemplateType.DECLINE) {
@@ -2278,7 +2297,7 @@ public class CalendarBookingLocalServiceImpl
 			User user = notificationRecipient.getUser();
 
 			NotificationSender notificationSender =
-				_notificationSenderFactory.getNotificationSender(
+				_notificationSenderServiceTrackerMap.getService(
 					notificationType.toString());
 
 			NotificationTemplateContext notificationTemplateContext =
@@ -2730,8 +2749,8 @@ public class CalendarBookingLocalServiceImpl
 	@Reference
 	private HtmlParser _htmlParser;
 
-	@Reference
-	private NotificationSenderFactory _notificationSenderFactory;
+	private ServiceTrackerMap<String, NotificationSender>
+		_notificationSenderServiceTrackerMap;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

@@ -1741,7 +1741,7 @@ definition {
 			object = "Custom Object 41",
 			type = "One to Many");
 
-		Alert.viewErrorMessage(errorMessage = "Duplicate name relationship");
+		Alert.viewErrorMessage(errorMessage = '''There is already an object relationship with this name in the object definition "CustomObject41"''');
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to delete an Object without the Delete permission"

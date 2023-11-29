@@ -14,6 +14,7 @@ import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfi
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIdIndexNameBuilder;
@@ -177,9 +178,14 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 				operationModeResolver = _createOperationModeResolver(
 					elasticsearchConfigurationWrapper);
 
-				addElasticsearchConnection(
+				ElasticsearchConnection elasticsearchConnection =
 					elasticsearchConnectionFixture.
-						createElasticsearchConnection());
+						createElasticsearchConnection();
+
+				addElasticsearchConnection(elasticsearchConnection);
+
+				getElasticsearchConnection(
+					elasticsearchConnection.getConnectionId());
 			}
 		};
 	}

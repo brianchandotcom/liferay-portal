@@ -245,8 +245,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -308,8 +307,7 @@ export function ProvideAppBuildPage({
 				},
 				id: appType.id,
 			});
-		}
-		else {
+		} else {
 			const dataSpecification = await createSpecification({
 				body: {
 					key: ProductSpecification.TYPE.toLowerCase(),

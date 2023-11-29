@@ -101,7 +101,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 
 			return {
 				...state,
-				buildZIPFiles: {
+				buildAppPackages: {
 					...state.buildAppPackages,
 					[versionName]: files,
 				},
@@ -235,7 +235,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 		case TYPES.RESET_APP_PACKAGES: {
 			return {
 				...state,
-				buildZIPFiles: {},
+				buildAppPackages: {},
 			};
 		}
 

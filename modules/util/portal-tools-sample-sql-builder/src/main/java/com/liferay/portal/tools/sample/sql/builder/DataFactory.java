@@ -1647,12 +1647,11 @@ public class DataFactory {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			LayoutModel layoutModel = newLayoutModel(
-				groupId,
+				groupId, jsonObject.getString("layoutTemplateId"),
 				StringUtil.replace(
 					StringUtil.toLowerCase(jsonObject.getString("name")),
 					CharPool.SPACE, CharPool.DASH),
 				jsonObject.getBoolean("privateLayout"),
-				jsonObject.getString("layoutTemplateId"),
 				getPortletNames(jsonObject.getJSONArray("portlets")));
 
 			layoutModels.add(layoutModel);
@@ -1669,14 +1668,14 @@ public class DataFactory {
 
 					layoutModels.add(
 						newLayoutModel(
-							groupId, layoutModel.getLayoutId(),
+							groupId, sublayoutJSONObject.getBoolean("hidden"),
+							sublayoutJSONObject.getString("layoutTemplateId"),
 							StringUtil.replace(
 								StringUtil.toLowerCase(
 									sublayoutJSONObject.getString("name")),
 								CharPool.SPACE, CharPool.DASH),
 							sublayoutJSONObject.getBoolean("privateLayout"),
-							sublayoutJSONObject.getBoolean("hidden"),
-							sublayoutJSONObject.getString("layoutTemplateId"),
+							layoutModel.getLayoutId(),
 							getPortletNames(
 								sublayoutJSONObject.getJSONArray("portlets"))));
 				}
@@ -4511,7 +4510,7 @@ public class DataFactory {
 		long groupId, String name, String column1, String column2) {
 
 		return newLayoutModel(
-			groupId, name, false, "2_columns_ii", column1, column2);
+			groupId, "2_columns_ii", name, false, column1, column2);
 	}
 
 	public LayoutPageTemplateStructureModel newLayoutPageTemplateStructureModel(
@@ -5445,14 +5444,14 @@ public class DataFactory {
 		long groupId, LayoutModel layoutModel) {
 
 		return newLayoutModel(
-			groupId, layoutModel.getParentLayoutId(), layoutModel.getName(),
-			layoutModel.isPrivateLayout(), false, "layout",
+			"layout", groupId, false, layoutModel.getName(),
+			layoutModel.isPrivateLayout(), layoutModel.getParentLayoutId(),
 			layoutModel.getTypeSettings());
 	}
 
 	public LayoutModel newSearchLayoutModel(long groupId, boolean hidden) {
 		return newLayoutModel(
-			groupId, 0, "search", false, hidden, "1_2_columns_i",
+			groupId, hidden, "1_2_columns_i", "search", false, 0,
 			new String[] {
 				StringBundler.concat(
 					SearchBarPortletKeys.SEARCH_BAR, StringPool.COMMA,
@@ -6552,8 +6551,47 @@ public class DataFactory {
 	}
 
 	protected LayoutModel newLayoutModel(
-		long groupId, long parentLayoutId, String name, boolean privateLayout,
-		boolean hidden, String friendlyURL, String typeSettings) {
+		long groupId, boolean hidden, String layoutTemplateId, String name,
+		boolean privateLayout, long parentLayoutId, String... columns) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
+			).build();
+
+		for (int i = 0; i < columns.length; i++) {
+			if (!columns[i].equals("")) {
+				typeSettingsUnicodeProperties.setProperty(
+					"column-" + (i + 1), columns[i]);
+			}
+		}
+
+		if (name.equals("search")) {
+			typeSettingsUnicodeProperties.setProperty("privateLayout", "true");
+		}
+		else {
+			typeSettingsUnicodeProperties.setProperty(
+				"privateLayout", String.valueOf(privateLayout));
+		}
+
+		return newLayoutModel(
+			name, groupId, hidden, name, privateLayout, parentLayoutId,
+			typeSettingsUnicodeProperties.toString());
+	}
+
+	protected LayoutModel newLayoutModel(
+		long groupId, String layoutTemplateId, String name,
+		boolean privateLayout, String... columns) {
+
+		return newLayoutModel(
+			groupId, false, layoutTemplateId, name, privateLayout, 0, columns);
+	}
+
+	protected LayoutModel newLayoutModel(
+		String friendlyURL, long groupId, boolean hidden, String name,
+		boolean privateLayout, long parentLayoutId, String typeSettings) {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, privateLayout),
@@ -6598,45 +6636,6 @@ public class DataFactory {
 		layoutModel.setUuid(SequentialUUID.generate());
 
 		return layoutModel;
-	}
-
-	protected LayoutModel newLayoutModel(
-		long groupId, long parentLayoutId, String name, boolean privateLayout,
-		boolean hidden, String layoutTemplateId, String... columns) {
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
-			).build();
-
-		for (int i = 0; i < columns.length; i++) {
-			if (!columns[i].equals("")) {
-				typeSettingsUnicodeProperties.setProperty(
-					"column-" + (i + 1), columns[i]);
-			}
-		}
-
-		if (name.equals("search")) {
-			typeSettingsUnicodeProperties.setProperty("privateLayout", "true");
-		}
-		else {
-			typeSettingsUnicodeProperties.setProperty(
-				"privateLayout", String.valueOf(privateLayout));
-		}
-
-		return newLayoutModel(
-			groupId, parentLayoutId, name, privateLayout, hidden, name,
-			typeSettingsUnicodeProperties.toString());
-	}
-
-	protected LayoutModel newLayoutModel(
-		long groupId, String name, boolean privateLayout,
-		String layoutTemplateId, String... columns) {
-
-		return newLayoutModel(
-			groupId, 0, name, privateLayout, false, layoutTemplateId, columns);
 	}
 
 	protected LayoutSetModel newLayoutSetModel(

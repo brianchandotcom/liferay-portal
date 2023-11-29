@@ -53,7 +53,7 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n  background-color: #E7EFFF;\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: linear-gradient(180deg, #00256C 0%, #6399FF 100%);\n}",
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -120,7 +120,7 @@
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] h1 { \nfont-size: 3rem;\n}",
+											"customCSS": ".[$FRAGMENT_CLASS$] h1 {\ncolor: #FFF;\nfont-size: 3rem;\n}",
 											"fragment": {
 												"key": "BASIC_COMPONENT-heading"
 											},
@@ -177,7 +177,7 @@
 											],
 											"fragmentStyle": {
 												"textAlign": "center",
-												"textColor": "colorNeutral9"
+												"textColor": "colorNeutral0"
 											},
 											"indexed": true
 										},
@@ -213,141 +213,33 @@
 											}
 										},
 										"type": "Widget"
-									},
-									{
-										"definition": {
-											"cssClasses": [
-												"pb-4"
-											],
-											"fragment": {
-												"key": "BASIC_COMPONENT-heading"
-											},
-											"fragmentConfig": {
-												"headingLevel": "h4"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Browse By Topic"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"fontSize": "1.4375rem",
-												"textAlign": "center"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
 									}
 								],
 								"type": "Section"
-							}
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n  background: linear-gradient(to bottom, #E7EFFF 48px, white 48px);\n}",
-							"indexed": true,
-							"layout": {
-								"align": "Center",
-								"borderWidth": 0,
-								"contentDisplay": "FlexColumn",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
-								"widthType": "Fluid"
-							}
-						},
-						"pageElements": [
+							},
 							{
 								"definition": {
-									"cssClasses": [
-										"pb-4"
-									],
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
-									"widgetInstance": {
-										"widgetConfig": {
-											"displayDepth": "0",
-											"displayStyle": "ddmTemplate_LEARN_PRODUCT_CARDS",
-											"expandedLevels": "auto",
-											"rootMenuItemLevel": "0",
-											"rootMenuItemType": "absolute",
-											"siteNavigationMenuName": "Learn Products",
-											"siteNavigationMenuType": "-1"
-										},
-										"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
-									}
-								},
-								"type": "Widget"
-							}
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"indexed": true,
-							"layout": {
-								"align": "Center",
-								"borderWidth": 0,
-								"contentDisplay": "FlexColumn",
-								"justify": "Center",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
-								"widthType": "Fluid"
-							}
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"cssClasses": [
-										"pb-4",
-										"pt-2"
-									],
+									"customCSS": "div.svgClassRow {\nheight: 1px;\ndisplay: flex;\njustify-content: flex-end;\nalign-items: end;\nflex-wrap: nowrap;\n}",
 									"fragment": {
-										"key": "BASIC_COMPONENT-heading"
+										"key": "BASIC_COMPONENT-html"
 									},
 									"fragmentConfig": {
-										"headingLevel": "h4"
 									},
 									"fragmentFields": [
 										{
-											"id": "element-text",
+											"id": "element-html",
 											"value": {
-												"fragmentLink": {
-												},
-												"text": {
+												"html": {
 													"value_i18n": {
-														"en_US": "More Resources"
+														"en_US": "<div class=\"svgClassRow\">\n  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"345\" height=\"226\" viewBox=\"0 0 345 226\" fill=\"none\">\n\t\t<path d=\"M599.174 139.161C379.772 -318.423 -316.101 496.506 168.15 589.816C615.782 676.12 704.326 358.432 599.182 139.161H599.174Z\" fill=\"url(#paint0_linear_569_4073)\"></path>\n\t\t<defs>\n\t\t\t<linearGradient id=\"paint0_linear_569_4073\" x1=\"589.944\" y1=\"-12.3827\" x2=\"85.9847\" y2=\"692.371\" gradientUnits=\"userSpaceOnUse\">\n\t\t\t\t<stop stop-color=\"white\" stop-opacity=\"0.25\"></stop>\n\t\t\t\t<stop offset=\"0.64\" stop-color=\"white\" stop-opacity=\"0.08\"></stop>\n\t\t\t\t<stop offset=\"1\" stop-color=\"white\" stop-opacity=\"0\"></stop>\n\t\t\t</linearGradient>\n\t\t</defs>\n\t</svg>\n</div>"
 													}
 												}
 											}
 										}
 									],
 									"fragmentStyle": {
-										"fontSize": "1.4375rem",
-										"textAlign": "center"
+										"height": "1px",
+										"overflow": "visible"
 									},
 									"indexed": true
 								},
@@ -355,20 +247,199 @@
 							},
 							{
 								"definition": {
-									"widgetInstance": {
-										"widgetConfig": {
-											"displayDepth": "0",
-											"displayStyle": "ddmTemplate_MORE_RESOURCES_CARDS",
-											"expandedLevels": "auto",
-											"rootMenuItemLevel": "0",
-											"rootMenuItemType": "absolute",
-											"siteNavigationMenuName": "More Resources",
-											"siteNavigationMenuType": "-1"
+									"customCSS": "div.svgClassRow {\nheight: 1px;\ndisplay: flex;\njustify-content: flex-end;\nalign-items: end;\nflex-wrap: nowrap;\n}",
+									"fragment": {
+										"key": "BASIC_COMPONENT-html"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "element-html",
+											"value": {
+												"html": {
+													"value_i18n": {
+														"en_US": "<div class=\"svgClassRow\">\n  <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"348\" height=\"184\" viewBox=\"0 0 348 184\" fill=\"none\">\n  <path d=\"M154.177 86.5742C-201.648 163.477 140.917 681.17 361.932 657.517C582.977 633.941 776.843 274.589 613.272 94.549C449.592 -85.53 376.161 40.082 154.177 86.5742Z\" fill=\"url(#paint0_linear_569_4074)\"/>\n  \t<defs>\n    \t<linearGradient id=\"paint0_linear_569_4074\" x1=\"689.702\" y1=\"38.7335\" x2=\"26.9456\" y2=\"563.695\" gradientUnits=\"userSpaceOnUse\">\n      \t<stop stop-color=\"white\"/>\n      \t<stop offset=\"0.01\" stop-color=\"white\" stop-opacity=\"0.97\"/>\n      \t<stop offset=\"0.13\" stop-color=\"white\" stop-opacity=\"0.75\"/>\n      \t<stop offset=\"0.25\" stop-color=\"white\" stop-opacity=\"0.55\"/>\n      \t<stop offset=\"0.37\" stop-color=\"white\" stop-opacity=\"0.38\"/>\n      \t<stop offset=\"0.49\" stop-color=\"white\" stop-opacity=\"0.24\"/>\n      \t<stop offset=\"0.62\" stop-color=\"white\" stop-opacity=\"0.14\"/>\n      \t<stop offset=\"0.74\" stop-color=\"white\" stop-opacity=\"0.06\"/>\n      \t<stop offset=\"0.87\" stop-color=\"white\" stop-opacity=\"0.01\"/>\n      \t<stop offset=\"1\" stop-color=\"white\" stop-opacity=\"0\"/>\n    \t</linearGradient>\n  \t</defs>\n\t</svg>\n</div>"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"height": "1px",
+										"overflow": "visible"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}",
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": "",
+										"borderWidth": "0",
+										"marginBottom": "",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "",
+										"paddingBottom": "",
+										"paddingLeft": "2",
+										"paddingRight": "2",
+										"paddingTop": ""
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "3"
+											},
+											"id": "landscapeMobile"
 										},
-										"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"marginLeft": "0",
+												"marginRight": "0",
+												"paddingLeft": "3",
+												"paddingRight": "3"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"opacity": 100,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"widthType": "Fixed"
 									}
 								},
-								"type": "Widget"
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".component-tabs .navigation-bar-light {\n\tbackground-color: #FFF;\n}\n\n.component-tabs .navigation-bar-light .nav-link.active {\n\tbackground-color: #E6EDFB;\n\tborder-radius: 10px;\n\tmargin: 5px;\n}\n\n.component-tabs .navigation-bar-light .nav-link.active::after {\n\tbackground-color: rgba(0, 0, 0, 0)!important;\n}\n\ndiv.collapse.navbar-collapse {\n\tjustify-content: center;\n\tmargin-bottom: 2rem;\n}\n\nul.navbar-nav {\n\tbackground-color: #F7F7F8;\n\tborder-radius: 10px\n}",
+											"fragment": {
+												"key": "BASIC_COMPONENT-tabs"
+											},
+											"fragmentConfig": {
+												"numberOfTabs": 2,
+												"persistSelectedTab": false
+											},
+											"fragmentFields": [
+												{
+													"id": "title1",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Browse by Capability"
+															}
+														}
+													}
+												},
+												{
+													"id": "title2",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Browse by Product"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginTop": "5"
+											},
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentDropZoneId": "1"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayDepth": "0",
+																	"displayStyle": "ddmTemplate_LEARN_CAPABILITY_CARDS",
+																	"expandedLevels": "auto",
+																	"rootMenuItemLevel": "0",
+																	"rootMenuItemType": "absolute",
+																	"siteNavigationMenuName": "Learn Products",
+																	"siteNavigationMenuType": "-1"
+																},
+																"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "FragmentDropZone"
+											},
+											{
+												"definition": {
+													"fragmentDropZoneId": "2"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayDepth": "0",
+																	"displayStyle": "ddmTemplate_LEARN_PRODUCT_CARDS",
+																	"expandedLevels": "auto",
+																	"rootMenuItemLevel": "0",
+																	"rootMenuItemType": "absolute",
+																	"siteNavigationMenuName": "Learn Products",
+																	"siteNavigationMenuType": "-1"
+																},
+																"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
 							}
 						],
 						"type": "Section"

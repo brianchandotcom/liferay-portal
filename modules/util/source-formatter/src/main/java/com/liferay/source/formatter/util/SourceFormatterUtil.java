@@ -801,8 +801,6 @@ public class SourceFormatterUtil {
 
 	private static final FileSystem _fileSystem = FileSystems.getDefault();
 	private static File _gitTopLevelFolder;
-	private static List<String> _sfIgnoreDirectories;
-	private static List<String> _subrepoIgnoreDirectories;
 
 	private static class PathMatchers {
 
@@ -821,8 +819,6 @@ public class SourceFormatterUtil {
 
 			if (excludeSyntax.equals(ExcludeSyntax.GLOB) &&
 				excludePattern.endsWith("/**")) {
-
-				_excludeDirGlobs.add(excludePattern);
 
 				excludePattern = excludePattern.substring(
 					0, excludePattern.length() - 3);
@@ -847,10 +843,6 @@ public class SourceFormatterUtil {
 				_excludeFilePathMatchers.add(
 					_fileSystem.getPathMatcher(
 						excludeSyntax.getValue() + ":" + excludePattern));
-
-				if (excludeSyntax.equals(ExcludeSyntax.GLOB)) {
-					_excludeFileGlobs.add(excludePattern);
-				}
 			}
 		}
 
@@ -858,9 +850,7 @@ public class SourceFormatterUtil {
 			String propertiesFileLocation,
 			List<ExcludeSyntaxPattern> excludeSyntaxPatterns) {
 
-			List<String> excludeDirPathMatcherGlobsList = new ArrayList<>();
 			List<PathMatcher> excludeDirPathMatcherList = new ArrayList<>();
-			List<String> excludeFilePathMatcherGlobsList = new ArrayList<>();
 			List<PathMatcher> excludeFilePathMatcherList = new ArrayList<>();
 
 			for (ExcludeSyntaxPattern excludeSyntaxPattern :
@@ -879,8 +869,6 @@ public class SourceFormatterUtil {
 
 				if (excludeSyntax.equals(ExcludeSyntax.GLOB) &&
 					excludePattern.endsWith("/**")) {
-
-					excludeDirPathMatcherGlobsList.add(excludePattern);
 
 					excludePattern = excludePattern.substring(
 						0, excludePattern.length() - 3);
@@ -905,19 +893,11 @@ public class SourceFormatterUtil {
 					excludeFilePathMatcherList.add(
 						_fileSystem.getPathMatcher(
 							excludeSyntax.getValue() + ":" + excludePattern));
-
-					if (excludeSyntax.equals(ExcludeSyntax.GLOB)) {
-						excludeFilePathMatcherGlobsList.add(excludePattern);
-					}
 				}
 			}
 
-			_excludeDirGlobsMap.put(
-				propertiesFileLocation, excludeDirPathMatcherGlobsList);
 			_excludeDirPathMatchersMap.put(
 				propertiesFileLocation, excludeDirPathMatcherList);
-			_excludeFileGlobsMap.put(
-				propertiesFileLocation, excludeFilePathMatcherGlobsList);
 			_excludeFilePathMatchersMap.put(
 				propertiesFileLocation, excludeFilePathMatcherList);
 		}
@@ -925,15 +905,6 @@ public class SourceFormatterUtil {
 		public void addInclude(String include) {
 			_includeFilePathMatchers.add(
 				_fileSystem.getPathMatcher("glob:" + include));
-			_includeFileGlobs.add(include);
-		}
-
-		public List<String> getExcludeDirGlobs() {
-			return _excludeDirGlobs;
-		}
-
-		public Map<String, List<String>> getExcludeDirGlobsMap() {
-			return _excludeDirGlobsMap;
 		}
 
 		public List<PathMatcher> getExcludeDirPathMatchers() {
@@ -944,14 +915,6 @@ public class SourceFormatterUtil {
 			return _excludeDirPathMatchersMap;
 		}
 
-		public List<String> getExcludeFileGlobs() {
-			return _excludeFileGlobs;
-		}
-
-		public Map<String, List<String>> getExcludeFileGlobsMap() {
-			return _excludeFileGlobsMap;
-		}
-
 		public List<PathMatcher> getExcludeFilePathMatchers() {
 			return _excludeFilePathMatchers;
 		}
@@ -960,29 +923,18 @@ public class SourceFormatterUtil {
 			return _excludeFilePathMatchersMap;
 		}
 
-		public List<String> getIncludeFileGlobs() {
-			return _includeFileGlobs;
-		}
-
 		public List<PathMatcher> getIncludeFilePathMatchers() {
 			return _includeFilePathMatchers;
 		}
 
-		private final List<String> _excludeDirGlobs = new ArrayList<>();
-		private final Map<String, List<String>> _excludeDirGlobsMap =
-			new HashMap<>();
 		private final List<PathMatcher> _excludeDirPathMatchers =
 			new ArrayList<>();
 		private final Map<String, List<PathMatcher>>
 			_excludeDirPathMatchersMap = new HashMap<>();
-		private final List<String> _excludeFileGlobs = new ArrayList<>();
-		private final Map<String, List<String>> _excludeFileGlobsMap =
-			new HashMap<>();
 		private final List<PathMatcher> _excludeFilePathMatchers =
 			new ArrayList<>();
 		private final Map<String, List<PathMatcher>>
 			_excludeFilePathMatchersMap = new HashMap<>();
-		private final List<String> _includeFileGlobs = new ArrayList<>();
 		private final List<PathMatcher> _includeFilePathMatchers =
 			new ArrayList<>();
 

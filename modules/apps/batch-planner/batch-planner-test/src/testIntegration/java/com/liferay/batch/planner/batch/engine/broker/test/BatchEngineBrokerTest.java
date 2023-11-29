@@ -749,8 +749,9 @@ public class BatchEngineBrokerTest {
 	}
 
 	private File _createImportFile(
-			DLFileEntry dlFileEntry, String objectDefinitionExternalReferenceCode,
-			String objectEntryERC, String templateName)
+			DLFileEntry dlFileEntry,
+			String objectDefinitionExternalReferenceCode, String objectEntryERC,
+			String templateName)
 		throws Exception {
 
 		File file = _file.createTempFile("json");
@@ -758,8 +759,8 @@ public class BatchEngineBrokerTest {
 		String template = StreamUtil.toString(_getInputStream(templateName));
 
 		Link link = LinkUtil.toLink(
-			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionExternalReferenceCode,
-			objectEntryERC, _portal);
+			_dlAppService, dlFileEntry, _dlURLHelper,
+			objectDefinitionExternalReferenceCode, objectEntryERC, _portal);
 
 		template = StringUtil.replace(
 			template,

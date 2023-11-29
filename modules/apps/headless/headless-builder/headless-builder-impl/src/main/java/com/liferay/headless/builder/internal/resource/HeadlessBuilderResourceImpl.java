@@ -177,6 +177,19 @@ public class HeadlessBuilderResourceImpl {
 		).build();
 	}
 
+	private APIApplication.Endpoint _getEndpoint(
+		String path, APIApplication.Endpoint.Scope scope) {
+
+		EndpointMatcher endpointMatcher = _endpointMatcherFunction.apply(
+			_company.getCompanyId());
+
+		if (endpointMatcher == null) {
+			return null;
+		}
+
+		return endpointMatcher.getEndpoint("/" + path, scope);
+	}
+
 	private <T> Response _post(
 			String path, APIApplication.Endpoint.Scope scope,
 			UnsafeFunction<APIApplication.Endpoint, T, Exception>
@@ -194,19 +207,6 @@ public class HeadlessBuilderResourceImpl {
 		return Response.ok(
 			successUnsafeFunction.apply(endpoint)
 		).build();
-	}
-
-	private APIApplication.Endpoint _getEndpoint(
-		String path, APIApplication.Endpoint.Scope scope) {
-
-		EndpointMatcher endpointMatcher = _endpointMatcherFunction.apply(
-			_company.getCompanyId());
-
-		if (endpointMatcher == null) {
-			return null;
-		}
-
-		return endpointMatcher.getEndpoint("/" + path, scope);
 	}
 
 	@Context

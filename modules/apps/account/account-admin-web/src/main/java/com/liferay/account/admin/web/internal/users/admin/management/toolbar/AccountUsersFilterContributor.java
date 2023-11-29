@@ -53,7 +53,7 @@ public class AccountUsersFilterContributor implements FilterContributor {
 				"accountEntryIds",
 				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY});
 		}
-		else if (currentValue.equals("not-associated-users")) {
+		else if (currentValue.equals("unassociated-users")) {
 			params.put("noOrganizationsOrAccounts", new long[0]);
 		}
 
@@ -73,7 +73,7 @@ public class AccountUsersFilterContributor implements FilterContributor {
 	@Override
 	public String[] getValues() {
 		return new String[] {
-			"all", "company-users", "account-users", "not-associated-users"
+			"all", "company-users", "account-users", "unassociated-users"
 		};
 	}
 

@@ -195,3 +195,20 @@ AuditMessageFactoryUtil and AuditMessageFactoryImpl logic are merged into AuditM
 This interface/impl/util separation does not have any value. Merge it into single class to avoid the unnecessary module.
 ----
 ```
+----
+
+# 258a63398ddedbdba27e1b193c83c30031509725
+
+Incorrect the format of file path line
+
+Correct message should be:
+```
+LPS-200073 Remove class AssetEntriesFacet
+
+# breaking
+## What portal-kernel/src/com/liferay/portal/kernel/search/facet/AssetEntriesFacet.java
+Class is removed.
+## Why
+This class has been deprecated since 7.1.x, its only usage in rules_user_custom_attribute_content.drl is replaced by FacetImpl.
+----
+```

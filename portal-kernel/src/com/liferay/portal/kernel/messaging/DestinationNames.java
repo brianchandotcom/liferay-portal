@@ -84,9 +84,6 @@ public interface DestinationNames {
 	public static final String SCHEDULER_SCRIPTING =
 		"liferay/scheduler_scripting";
 
-	public static final String SUBSCRIPTION_CLEAN_UP =
-		"liferay/subscription_clean_up";
-
 	public static final String SUBSCRIPTION_SENDER =
 		"liferay/subscription_sender";
 

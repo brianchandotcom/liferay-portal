@@ -146,7 +146,7 @@ definition {
 				item = "Edit");
 
 			var htmlSnippet = '''[resources:''';
-			var fragmentHtml = '''[resources:Document_1.jpg''';
+			var fragmentHtml = '''[resources:Document_1''';
 
 			FragmentsEditor.typeHtmlEditor(content = "");
 
@@ -155,15 +155,15 @@ definition {
 				value1 = ${htmlSnippet});
 
 			AssertElementNotPresent(
-				autocompleteField = "Document_2.jpg",
+				autocompleteField = "Document_2",
 				locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
 
 			AssertElementPresent(
-				autocompleteField = "Document_1.jpg",
+				autocompleteField = "Document_1",
 				locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
 
 			Click(
-				autocompleteField = "Document_1.jpg",
+				autocompleteField = "Document_1",
 				locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
 
 			AssertTextEquals.assertPartialText(

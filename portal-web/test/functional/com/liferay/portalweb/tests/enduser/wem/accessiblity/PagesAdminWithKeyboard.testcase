@@ -1,0 +1,122 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Page Administration";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-194263. Using Keyboard navigation it is possible to Convert to Page Template an existing Content Page from the ellipsis menu of the card."
+	@priority = 3
+	test CreatePageTemplateFromContentPageViaKeyboard {
+		task ("Given a page creator has a contenge page") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then the page creator could convert the content page to content page template via keyboard") {
+			KeyPress(
+				key_pageName = "Test Page Name",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_pageName = "Test Page Name",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ELLIPSIS_ICON",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Orphan Widgets",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "Convert to Page Template",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				ariaLabel = "close",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_fieldLabel = "Page Template Set",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_fieldLabel = "Page Template Set",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_fieldLabel = "Page Template Set",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_text = "Save",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON",
+				value1 = "\ENTER");
+
+			Alert.viewSuccessMessage();
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Set");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Test Page Name - Page Template");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Test Page Name - Page Template",
+				workflowStatus = "Draft");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
+	}
+
+}

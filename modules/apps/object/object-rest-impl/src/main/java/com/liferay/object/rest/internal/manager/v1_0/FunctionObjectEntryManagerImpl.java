@@ -85,7 +85,7 @@ public class FunctionObjectEntryManagerImpl
 						objectDefinition.getExternalReferenceCode())),
 				dtoConverterContext.getUserId()
 			).get(),
-			objectDefinition, scopeKey, dtoConverterContext.getUser());
+			dtoConverterContext, objectDefinition, scopeKey);
 	}
 
 	@Override
@@ -146,8 +146,7 @@ public class FunctionObjectEntryManagerImpl
 				Http.Method.GET, null, resourcePath,
 				dtoConverterContext.getUserId()
 			).get(),
-			objectDefinition, pagination, scopeKey,
-			dtoConverterContext.getUser());
+			dtoConverterContext, objectDefinition, pagination, scopeKey);
 	}
 
 	@Override
@@ -179,7 +178,7 @@ public class FunctionObjectEntryManagerImpl
 					dtoConverterContext, resourcePath, scopeKey),
 				dtoConverterContext.getUserId()
 			).get(),
-			objectDefinition, scopeKey, dtoConverterContext.getUser());
+			dtoConverterContext, objectDefinition, scopeKey);
 	}
 
 	@Override
@@ -219,7 +218,7 @@ public class FunctionObjectEntryManagerImpl
 					StringPool.SLASH, externalReferenceCode),
 				dtoConverterContext.getUserId()
 			).get(),
-			objectDefinition, scopeKey, dtoConverterContext.getUser());
+			dtoConverterContext, objectDefinition, scopeKey);
 	}
 
 	@Activate
@@ -357,8 +356,9 @@ public class FunctionObjectEntryManagerImpl
 	}
 
 	private Page<ObjectEntry> _toObjectEntries(
-			byte[] bytes, ObjectDefinition objectDefinition,
-			Pagination pagination, String scopeKey, User user)
+			byte[] bytes, DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, Pagination pagination,
+			String scopeKey)
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -368,24 +368,26 @@ public class FunctionObjectEntryManagerImpl
 			JSONUtil.toList(
 				(JSONArray)jsonObject.get("items"),
 				itemJSONObject -> _toObjectEntry(
-					itemJSONObject.toString(), objectDefinition, scopeKey,
-					user)),
+					dtoConverterContext, itemJSONObject.toString(),
+					objectDefinition, scopeKey)),
 			pagination, (Integer)jsonObject.get("totalCount"));
 	}
 
 	private ObjectEntry _toObjectEntry(
-		byte[] bytes, ObjectDefinition objectDefinition, String scopeKey,
-		User user) {
+		byte[] bytes, DTOConverterContext dtoConverterContext,
+		ObjectDefinition objectDefinition, String scopeKey) {
 
 		return _toObjectEntry(
-			new String(bytes), objectDefinition, scopeKey, user);
+			dtoConverterContext, new String(bytes), objectDefinition, scopeKey);
 	}
 
 	private ObjectEntry _toObjectEntry(
-		String json, ObjectDefinition objectDefinition, String scopeKey,
-		User user) {
+		DTOConverterContext dtoConverterContext, String json,
+		ObjectDefinition objectDefinition, String scopeKey) {
 
 		ObjectEntry objectEntry = ObjectEntry.unsafeToDTO(json);
+
+		User user = dtoConverterContext.getUser();
 
 		objectEntry.setActions(
 			HashMapBuilder.put(

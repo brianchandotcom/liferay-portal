@@ -55,6 +55,11 @@
 		<td>//div[@id='${key_folderLabel}']//*[contains(@class, 'icon-link')]/../../following-sibling::div//span[text()='${key_objectLabel}']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>OBJECT_IN_LEFT_SIDEBAR_KEBAB_MENU</td>
+		<td>//span[normalize-space()='${key_objectLabel}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

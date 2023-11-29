@@ -11,10 +11,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scheduler.CronTextUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -61,17 +61,8 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		long definitionId = ParamUtil.getLong(actionRequest, "definitionId");
-		String format = ParamUtil.getString(actionRequest, "format");
 		Calendar startCalendar = ReportsEngineConsoleUtil.getDate(
 			actionRequest, "schedulerStartDate", true);
-		String emailNotifications = ParamUtil.getString(
-			actionRequest, "emailNotifications");
-		String emailDelivery = ParamUtil.getString(
-			actionRequest, "emailDelivery");
-		String portletId = _portal.getPortletId(actionRequest);
-		String generatedReportsURL = ParamUtil.getString(
-			actionRequest, "generatedReportsURL");
-		String reportName = ParamUtil.getString(actionRequest, "reportName");
 
 		Date schedulerEndDate = null;
 
@@ -86,9 +77,6 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 
 		int recurrenceType = ParamUtil.getInteger(
 			actionRequest, "recurrenceType");
-
-		String cronText = CronTextUtil.getCronText(
-			actionRequest, startCalendar, true, recurrenceType);
 
 		JSONArray entryReportParametersJSONArray =
 			_jsonFactory.createJSONArray();
@@ -112,14 +100,25 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 				));
 		}
 
-		_entryService.addEntry(
-			themeDisplay.getScopeGroupId(), definitionId, format, true,
+		Entry entry = _entryService.addEntry(
+			themeDisplay.getScopeGroupId(), definitionId,
+			ParamUtil.getString(actionRequest, "format"), true,
 			startCalendar.getTime(), schedulerEndDate,
-			recurrenceType != Recurrence.NO_RECURRENCE, cronText,
-			emailNotifications, emailDelivery, portletId, generatedReportsURL,
-			reportName, entryReportParametersJSONArray.toString(),
+			recurrenceType != Recurrence.NO_RECURRENCE,
+			CronTextUtil.getCronText(
+				actionRequest, startCalendar, true, recurrenceType),
+			ParamUtil.getString(actionRequest, "emailNotifications"),
+			ParamUtil.getString(actionRequest, "emailDelivery"),
+			_portal.getPortletId(actionRequest),
+			ParamUtil.getString(actionRequest, "generatedReportsURL"),
+			ParamUtil.getString(actionRequest, "reportName"),
+			entryReportParametersJSONArray.toString(),
 			ServiceContextFactory.getInstance(
 				Entry.class.getName(), actionRequest));
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			JSONUtil.put("entryId", entry.getEntryId()));
 	}
 
 	private String _getEntryReportParameterValue(

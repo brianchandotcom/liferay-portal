@@ -17,6 +17,39 @@ import org.wso2.charon3.core.protocol.endpoints.GroupResourceManager;
 public class GroupResourceManagerImpl extends GroupResourceManager {
 
 	@Override
+	public SCIMResponse delete(String id, UserManager userManager) {
+		try {
+			return super.delete(id, userManager);
+		}
+		catch (Exception exception) {
+			if (exception instanceof ConflictException) {
+				return AbstractResourceManager.encodeSCIMException(
+					(ConflictException)exception);
+			}
+
+			throw exception;
+		}
+	}
+
+	@Override
+	public SCIMResponse get(
+		String id, UserManager userManager, String attributes,
+		String excludeAttributes) {
+
+		try {
+			return super.get(id, userManager, attributes, excludeAttributes);
+		}
+		catch (Exception exception) {
+			if (exception instanceof ConflictException) {
+				return AbstractResourceManager.encodeSCIMException(
+					(ConflictException)exception);
+			}
+
+			throw exception;
+		}
+	}
+
+	@Override
 	public SCIMResponse updateWithPUT(
 		String existingId, String scimObjectString, UserManager userManager,
 		String attributes, String excludeAttributes) {

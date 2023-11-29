@@ -31,6 +31,10 @@
 		padding: 0;
 		width: 100%;
 
+		&.dnd-drag {
+			opacity: 0.4;
+		}
+
 		.criterion-input {
 			flex: 1;
 			margin-right: 8px;
@@ -60,10 +64,6 @@
 	.operator,
 	.operator-input {
 		text-transform: lowercase;
-	}
-
-	&.dnd-drag {
-		opacity: 0.4;
 	}
 
 	&.dnd-hover {

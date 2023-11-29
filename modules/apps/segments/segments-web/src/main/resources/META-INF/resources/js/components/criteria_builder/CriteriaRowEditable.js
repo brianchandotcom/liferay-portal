@@ -6,11 +6,13 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
 import {
 	useDisableKeyboardMovement,
+	useMovementSource,
 	useSetMovementSource,
 } from '../../contexts/KeyboardMovementContext';
 import useDragSource from '../../hooks/useDragSource';
@@ -42,7 +44,7 @@ export default function CriteriaRowEditable({
 }) {
 	const itemIcon = item.icon || TYPE_ICONS[item.type] || 'text';
 
-	const {handlerRef} = useDragSource({
+	const {handlerRef, isDragging} = useDragSource({
 		item: {
 			criterion,
 			groupId,
@@ -188,10 +190,18 @@ export default function CriteriaRowEditable({
 	const propertyLabel = selectedProperty ? selectedProperty.label : '';
 
 	const setMovementSource = useSetMovementSource();
+	const movementSource = useMovementSource();
 	const disableMovement = useDisableKeyboardMovement();
 
+	const isKeyboardSource =
+		movementSource?.groupId === groupId && movementSource?.index === index;
+
 	return (
-		<div className="edit-container">
+		<div
+			className={classNames('edit-container', {
+				'dnd-drag': isDragging || isKeyboardSource,
+			})}
+		>
 			<ClayButtonWithIcon
 				borderless
 				className="drag-icon text-secondary"

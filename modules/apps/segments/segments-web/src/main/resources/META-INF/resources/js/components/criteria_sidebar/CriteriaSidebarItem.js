@@ -11,6 +11,7 @@ import React from 'react';
 
 import {
 	useDisableKeyboardMovement,
+	useMovementSource,
 	useSetMovementSource,
 } from '../../contexts/KeyboardMovementContext';
 import useDragSource from '../../hooks/useDragSource';
@@ -49,7 +50,12 @@ export default function CriteriaSidebarItem({
 	});
 
 	const setMovementSource = useSetMovementSource();
+	const movementSource = useMovementSource();
 	const disableMovement = useDisableKeyboardMovement();
+
+	const isKeyboardSource =
+		movementSource?.propertyKey === propertyKey &&
+		movementSource?.propertyName === propertyName;
 
 	return (
 		<li
@@ -58,7 +64,7 @@ export default function CriteriaSidebarItem({
 				'align-items-center criteria-sidebar-item-root c-gap-2 c-my-2 c-p-2 d-flex',
 				className,
 				{
-					dragging: isDragging,
+					dragging: isDragging || isKeyboardSource,
 				}
 			)}
 			onBlur={disableMovement}

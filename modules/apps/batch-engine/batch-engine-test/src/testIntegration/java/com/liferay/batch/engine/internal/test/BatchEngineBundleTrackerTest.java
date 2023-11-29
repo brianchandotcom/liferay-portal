@@ -140,7 +140,7 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	private void _testProcessBatchEngineBundle(
-			String dirName, int expectedCount, List<String> dataFilesExpected)
+			String dirName, int expectedCount, List<String> expectedDataFiles)
 		throws Exception {
 
 		Class<?> clazz = _batchEngineImportTaskExecutor.getClass();
@@ -155,7 +155,7 @@ public class BatchEngineBundleTrackerTest {
 		promise.getValue();
 
 		IntegerWrapper actualCount = new IntegerWrapper();
-		List<String> dataFilesProcessed = new CopyOnWriteArrayList<>();
+		List<String> processedDataFiles = new CopyOnWriteArrayList<>();
 
 		ServiceRegistration<BatchEngineImportTaskExecutor> serviceRegistration =
 			_bundleContext.registerService(
@@ -167,7 +167,7 @@ public class BatchEngineBundleTrackerTest {
 						BatchEngineImportTask batchEngineImportTask) {
 
 						actualCount.increment();
-						dataFilesProcessed.add(
+						processedDataFiles.add(
 							_getFileName(batchEngineImportTask));
 					}
 
@@ -179,7 +179,7 @@ public class BatchEngineBundleTrackerTest {
 						boolean checkPermissions) {
 
 						actualCount.increment();
-						dataFilesProcessed.add(
+						processedDataFiles.add(
 							_getFileName(batchEngineImportTask));
 					}
 
@@ -198,14 +198,14 @@ public class BatchEngineBundleTrackerTest {
 
 			Assert.assertTrue(
 				StringBundler.concat(
-					"Expected ", dataFilesExpected.size(), " was ",
-					dataFilesProcessed.size()),
-				dataFilesExpected.size() == dataFilesProcessed.size());
+					"Expected ", expectedDataFiles.size(), " was ",
+					processedDataFiles.size()),
+				expectedDataFiles.size() == processedDataFiles.size());
 			Assert.assertTrue(
 				StringBundler.concat(
-					"Expected ", dataFilesExpected, " was ",
-					dataFilesProcessed),
-				dataFilesExpected.containsAll(dataFilesProcessed));
+					"Expected ", expectedDataFiles, " was ",
+					processedDataFiles),
+				expectedDataFiles.containsAll(processedDataFiles));
 
 			bundle.stop();
 

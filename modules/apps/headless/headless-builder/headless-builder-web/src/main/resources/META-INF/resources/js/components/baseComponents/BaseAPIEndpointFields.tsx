@@ -12,6 +12,7 @@ import {openToast, sub} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {Select} from '../fieldComponents/Select';
+import {HTTP_METHODS, RETRIEVE_TYPES, STR_BLANK} from '../utils/constants';
 import {fetchJSON} from '../utils/fetchUtil';
 import {
 	makeURLPathParameterString,
@@ -39,7 +40,7 @@ export default function BaseAPIEndpointFields({
 		[]
 	);
 
-	const [pathErrorMessage, setPathErrorMessage] = useState<string>('');
+	const [pathErrorMessage, setPathErrorMessage] = useState<string>(STR_BLANK);
 	const [pathHasErrors, setPathHasErrors] = useState<boolean>(false);
 
 	const [retrieveTypeOptions, setRetrieveTypeOptions] = useState<
@@ -59,13 +60,14 @@ export default function BaseAPIEndpointFields({
 		setPathHasErrors(
 			displayError.path ||
 				(displayError.parameter &&
-					selectedRetrieveType?.value === 'singleElement')
+					selectedRetrieveType?.value ===
+						RETRIEVE_TYPES.SINGLE_ELEMENT)
 		);
 
 		if (
 			displayError.path &&
 			displayError.parameter &&
-			selectedRetrieveType?.value === 'singleElement'
+			selectedRetrieveType?.value === RETRIEVE_TYPES.SINGLE_ELEMENT
 		) {
 			setPathErrorMessage(
 				Liferay.Language.get('please-enter-a-path-and-a-parameter')
@@ -112,7 +114,7 @@ export default function BaseAPIEndpointFields({
 			const options = response.listTypeEntries
 				? response.listTypeEntries.map((entry) => ({
 						label:
-							entry.key === 'singleElement'
+							entry.key === RETRIEVE_TYPES.SINGLE_ELEMENT
 								? Liferay.Language.get('single-element')
 								: Liferay.Language.get('collection'),
 						value: entry.key,
@@ -160,7 +162,7 @@ export default function BaseAPIEndpointFields({
 			);
 		}
 
-		if (data.retrieveType?.key === 'collection') {
+		if (data.retrieveType?.key === RETRIEVE_TYPES.COLLECTION) {
 			setData((previousValue) => {
 				delete previousValue.parameter;
 				delete previousValue.pathParameter;
@@ -188,7 +190,7 @@ export default function BaseAPIEndpointFields({
 			);
 		}
 
-		if (data.httpMethod?.key === 'post') {
+		if (data.httpMethod?.key === HTTP_METHODS.POST) {
 			setData((previousValue) => {
 				delete previousValue.parameter;
 				delete previousValue.pathParameter;
@@ -196,20 +198,25 @@ export default function BaseAPIEndpointFields({
 
 				return {
 					...previousValue,
-					retrieveType: {key: 'singleElement', value: ''},
+					retrieveType: {
+						key: RETRIEVE_TYPES.SINGLE_ELEMENT,
+						value: STR_BLANK,
+					},
 				};
 			});
 		}
-		else if (data.httpMethod?.key === 'get') {
+		else if (data.httpMethod?.key === HTTP_METHODS.GET) {
 			setData((previousValue) => {
 				delete previousValue.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId;
 
 				return {
 					...previousValue,
-					...(!previousValue.parameter && {parameter: ''}),
-					...(!previousValue.pathParameter && {pathParameter: ''}),
+					...(!previousValue.parameter && {parameter: STR_BLANK}),
+					...(!previousValue.pathParameter && {
+						pathParameter: STR_BLANK,
+					}),
 					...(!previousValue.pathParameterDescription && {
-						pathParameterDescription: '',
+						pathParameterDescription: STR_BLANK,
 					}),
 				};
 			});
@@ -224,7 +231,7 @@ export default function BaseAPIEndpointFields({
 	) => {
 		setData((previousValue) => ({
 			...previousValue,
-			[itemKey]: {key: value, value: ''},
+			[itemKey]: {key: value, value: STR_BLANK},
 		}));
 
 		onChangeFn({
@@ -288,7 +295,7 @@ export default function BaseAPIEndpointFields({
 				)}
 			</ClayForm.Group>
 
-			{selectedHttpMethod?.value === 'get' && (
+			{selectedHttpMethod?.value === HTTP_METHODS.GET && (
 				<ClayForm.Group
 					className={classNames({
 						'has-error': displayError.retrieveType,
@@ -441,13 +448,14 @@ export default function BaseAPIEndpointFields({
 							value={
 								data.path
 									? removeLeadingForwardSlash(data.path)
-									: ''
+									: STR_BLANK
 							}
 						/>
 					</ClayInput.GroupItem>
 
-					{selectedHttpMethod?.value === 'get' &&
-						selectedRetrieveType?.value === 'singleElement' && (
+					{selectedHttpMethod?.value === HTTP_METHODS.GET &&
+						selectedRetrieveType?.value ===
+							RETRIEVE_TYPES.SINGLE_ELEMENT && (
 							<>
 								<ClayInput.GroupItem
 									prepend
@@ -491,7 +499,7 @@ export default function BaseAPIEndpointFields({
 												? removeLeadingForwardSlash(
 														data.parameter
 												  )
-												: ''
+												: STR_BLANK
 										}
 									/>
 								</ClayInput.GroupItem>

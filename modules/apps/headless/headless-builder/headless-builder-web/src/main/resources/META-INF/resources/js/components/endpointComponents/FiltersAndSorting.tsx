@@ -10,6 +10,8 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction} from 'react';
 
+import {STR_BLANK} from '../utils/constants';
+
 interface FiltersAndSortingProps {
 	data: Partial<APIEndpointUIData>;
 	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
@@ -30,7 +32,7 @@ export default function FiltersAndSorting({
 	const handleODataFilterChange = (value: string) => {
 		setData((previousData) => ({
 			...previousData,
-			...(value !== ''
+			...(value !== STR_BLANK
 				? {
 						apiEndpointToAPIFilters: [
 							{
@@ -51,7 +53,7 @@ export default function FiltersAndSorting({
 	const handleODataSortChange = (value: string) => {
 		setData((previousData) => ({
 			...previousData,
-			...(value !== ''
+			...(value !== STR_BLANK
 				? {
 						apiEndpointToAPISorts: [
 							{

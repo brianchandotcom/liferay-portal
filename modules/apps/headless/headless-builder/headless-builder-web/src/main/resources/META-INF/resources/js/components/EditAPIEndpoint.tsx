@@ -24,6 +24,7 @@ import {hasEndpointDataChanged} from './utils/dataUtils';
 import {deleteData, fetchJSON, postData, updateData} from './utils/fetchUtil';
 
 import '../../css/main.scss';
+import {HTTP_METHODS, RETRIEVE_TYPES, STR_BLANK} from './utils/constants';
 import {
 	beginStringWithForwardSlash,
 	getAllButLastParameterFromPath,
@@ -125,8 +126,8 @@ export default function EditAPIEndpoint({
 		const mandatoryFields = ['httpMethod', 'path', 'retrieveType', 'scope'];
 
 		if (
-			localUIData.httpMethod?.key === 'get' &&
-			localUIData.retrieveType?.key === 'singleElement'
+			localUIData.httpMethod?.key === HTTP_METHODS.GET &&
+			localUIData.retrieveType?.key === RETRIEVE_TYPES.SINGLE_ELEMENT
 		) {
 			mandatoryFields.push('parameter');
 
@@ -135,7 +136,7 @@ export default function EditAPIEndpoint({
 			}
 		}
 
-		if (localUIData.httpMethod?.key === 'post') {
+		if (localUIData.httpMethod?.key === HTTP_METHODS.POST) {
 			mandatoryFields.push(
 				'r_requestAPISchemaToAPIEndpoints_c_apiSchemaId'
 			);
@@ -181,7 +182,10 @@ export default function EditAPIEndpoint({
 				Object.keys(localUIData).length &&
 				isDataValid
 			) {
-				if (localUIData.retrieveType?.key !== 'singleElement') {
+				if (
+					localUIData.retrieveType?.key !==
+					RETRIEVE_TYPES.SINGLE_ELEMENT
+				) {
 					handleModifyODataFields({
 						deleteSuccessMessage: Liferay.Language.get(
 							'the-filter-was-deleted'
@@ -209,11 +213,12 @@ export default function EditAPIEndpoint({
 					});
 				}
 
-				let parameter: string | undefined = '';
+				let parameter: string | undefined = STR_BLANK;
 
 				if (
-					localUIData.httpMethod?.key === 'get' &&
-					localUIData.retrieveType?.key === 'singleElement'
+					localUIData.httpMethod?.key === HTTP_METHODS.GET &&
+					localUIData.retrieveType?.key ===
+						RETRIEVE_TYPES.SINGLE_ELEMENT
 				) {
 					parameter = localUIData.parameter;
 				}
@@ -233,10 +238,10 @@ export default function EditAPIEndpoint({
 						},
 						pathParameter: localUIData.pathParameter
 							? localUIData.pathParameter
-							: '',
+							: STR_BLANK,
 						pathParameterDescription: localUIData.pathParameterDescription
 							? localUIData.pathParameterDescription
-							: '',
+							: STR_BLANK,
 						...(localUIData.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId && {
 							r_requestAPISchemaToAPIEndpoints_c_apiSchemaId:
 								localUIData.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId,

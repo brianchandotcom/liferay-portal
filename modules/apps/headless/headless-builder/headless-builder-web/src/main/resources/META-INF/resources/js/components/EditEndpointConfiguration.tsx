@@ -13,6 +13,7 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import FiltersAndSorting from './endpointComponents/FiltersAndSorting';
 import PathParameterConfiguration from './endpointComponents/PathParameterConfiguration';
 import {Select} from './fieldComponents/Select';
+import {HTTP_METHODS, RETRIEVE_TYPES} from './utils/constants';
 import {getAllItems} from './utils/fetchUtil';
 
 interface EditEndpointConfigurationProps {
@@ -96,7 +97,7 @@ export default function EditEndpointConfiguration({
 
 	return (
 		<ClayForm>
-			{data.httpMethod?.key === 'post' && (
+			{data.httpMethod?.key === HTTP_METHODS.POST && (
 				<ClayForm.Group
 					className={classNames('mb-4', {
 						'has-error':
@@ -180,8 +181,8 @@ export default function EditEndpointConfiguration({
 				/>
 			</ClayForm.Group>
 
-			{data.httpMethod?.key === 'get' &&
-				data.retrieveType?.key === 'singleElement' && (
+			{data.httpMethod?.key === HTTP_METHODS.GET &&
+				data.retrieveType?.key === RETRIEVE_TYPES.SINGLE_ELEMENT && (
 					<PathParameterConfiguration
 						data={data}
 						displayError={displayError}
@@ -190,8 +191,8 @@ export default function EditEndpointConfiguration({
 					/>
 				)}
 
-			{data.httpMethod?.key === 'get' &&
-				data.retrieveType?.key === 'collection' && (
+			{data.httpMethod?.key === HTTP_METHODS.GET &&
+				data.retrieveType?.key === RETRIEVE_TYPES.COLLECTION && (
 					<FiltersAndSorting data={data} setData={setData} />
 				)}
 		</ClayForm>

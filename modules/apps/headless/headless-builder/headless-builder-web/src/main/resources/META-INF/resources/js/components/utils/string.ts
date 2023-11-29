@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {STR_BLANK} from './constants';
+
 /**
  * If string does not start with a forward slash, add it.
  */
@@ -35,14 +37,16 @@ export function getAllButLastParameterFromPath(path: string) {
 			: path;
 	}
 
-	return '';
+	return STR_BLANK;
 }
 
 /*
  * Takes the last parameter of a path
  */
 export function getLastParameterFromPath(path: string) {
-	return path?.includes('/') ? path.substring(path.lastIndexOf('/')) : '';
+	return path?.includes('/')
+		? path.substring(path.lastIndexOf('/'))
+		: STR_BLANK;
 }
 
 /**
@@ -60,7 +64,7 @@ export function limitStringInputLengh(str: string, maxLengh: number) {
  * Make valid url path parameter string (Only numbers, letters and curly braces).
  */
 export function makeURLPathParameterString(str: string) {
-	return str.replace(/[^0-9A-Za-z{}]/g, '');
+	return str.replace(/[^0-9A-Za-z{}]/g, STR_BLANK);
 }
 
 /**

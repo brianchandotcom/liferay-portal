@@ -5,14 +5,20 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.configuration.FunctionObjectEntryManagerConfiguration;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.CompanyScoped;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -38,9 +44,12 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Future;
 
 import org.osgi.service.component.annotations.Activate;
@@ -374,16 +383,18 @@ public class FunctionObjectEntryManagerImpl
 	}
 
 	private ObjectEntry _toObjectEntry(
-		byte[] bytes, DTOConverterContext dtoConverterContext,
-		ObjectDefinition objectDefinition, String scopeKey) {
+			byte[] bytes, DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, String scopeKey)
+		throws Exception {
 
 		return _toObjectEntry(
 			dtoConverterContext, new String(bytes), objectDefinition, scopeKey);
 	}
 
 	private ObjectEntry _toObjectEntry(
-		DTOConverterContext dtoConverterContext, String json,
-		ObjectDefinition objectDefinition, String scopeKey) {
+			DTOConverterContext dtoConverterContext, String json,
+			ObjectDefinition objectDefinition, String scopeKey)
+		throws Exception {
 
 		ObjectEntry objectEntry = ObjectEntry.unsafeToDTO(json);
 
@@ -406,6 +417,44 @@ public class FunctionObjectEntryManagerImpl
 				});
 		}
 
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectField objectField : objectFields) {
+			if (!Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				continue;
+			}
+
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			Map<String, String> listTypeEntryMap =
+				(Map<String, String>)properties.get(objectField.getName());
+
+			ListTypeEntry listTypeEntry =
+				_listTypeEntryLocalService.getListTypeEntry(
+					objectField.getListTypeDefinitionId(),
+					listTypeEntryMap.get("key"));
+
+			properties.put(
+				objectField.getName(),
+				new ListEntry() {
+					{
+						key = listTypeEntry.getKey();
+						name = listTypeEntry.getName(
+							dtoConverterContext.getLocale());
+						name_i18n = LocalizedMapUtil.getI18nMap(
+							dtoConverterContext.isAcceptAllLanguages(),
+							listTypeEntry.getNameMap());
+					}
+				});
+
+			objectEntry.setProperties(properties);
+		}
+
 		return objectEntry;
 	}
 
@@ -419,6 +468,12 @@ public class FunctionObjectEntryManagerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private PortalCatapult _portalCatapult;

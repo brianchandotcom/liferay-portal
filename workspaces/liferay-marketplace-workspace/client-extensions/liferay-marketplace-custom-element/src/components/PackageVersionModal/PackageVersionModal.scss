@@ -18,26 +18,28 @@
 		border-top: 0;
 		justify-content: center;
 		padding-top: 0.25rem;
-		
+
 		.custom-control-label-text {
 			font-size: 0.8125rem;
 			font-weight: 600;
 		}
 
 		.management-bar > div {
-			background: #F7F7F8;
+			background: #f7f7f8;
 			border-radius: 0.625rem;
 		}
 
 		.navbar-form {
-			background: #F7F7F8;
+			background: #f7f7f8;
 		}
 
 		input[type='text'],
 		.input-group .input-group-inset-item,
-		.input-group-inset.focus~.input-group-inset-item, .input-group-inset:focus-visible~.input-group-inset-item, .c-prefers-focus .input-group-inset:focus~.input-group-inset-item {
-			background-color: #FFF;
-			border-color: #E7EFFF;
+		.input-group-inset.focus ~ .input-group-inset-item,
+		.input-group-inset:focus-visible ~ .input-group-inset-item,
+		.c-prefers-focus .input-group-inset:focus ~ .input-group-inset-item {
+			background-color: #fff;
+			border-color: #e7efff;
 		}
 
 		p {

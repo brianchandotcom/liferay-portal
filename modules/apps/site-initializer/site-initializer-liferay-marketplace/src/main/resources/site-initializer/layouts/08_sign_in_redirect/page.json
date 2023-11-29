@@ -9,20 +9,16 @@
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [
-				"VIEW"
-			],
+			"actionIds": ["VIEW"],
 			"roleName": "User",
 			"scope": 4
 		}
 	],
-	"private": false,
 	"system": false,
 	"type": "content"
 }

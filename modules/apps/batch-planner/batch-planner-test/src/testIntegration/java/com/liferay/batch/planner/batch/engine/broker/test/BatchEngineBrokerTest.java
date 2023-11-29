@@ -596,26 +596,23 @@ public class BatchEngineBrokerTest {
 
 		CSVParser actualCSVParser = CSVParser.parse(actualCSVString, csvFormat);
 
-		List<CSVRecord> actualCSVParserRecords = actualCSVParser.getRecords();
+		List<CSVRecord> actualCSVRecords = actualCSVParser.getRecords();
 
 		CSVParser expectedCSVParser = CSVParser.parse(
 			expectedCSVString, csvFormat);
 
-		List<CSVRecord> expectedCSVParserRecords =
-			expectedCSVParser.getRecords();
+		List<CSVRecord> expectedCSVRecords = expectedCSVParser.getRecords();
 
 		_assertColumnNames(
-			_toList(actualCSVParserRecords.get(0)),
-			_toList(expectedCSVParserRecords.get(0)), fieldNames);
+			_toList(actualCSVRecords.get(0)),
+			_toList(expectedCSVRecords.get(0)), fieldNames);
 
-		List<String> expectedCSVRecordList = _toList(
-			expectedCSVParserRecords.get(1));
+		List<String> expectedCSVRecordList = _toList(expectedCSVRecords.get(1));
 
 		boolean found = false;
 
-		for (int i = 1; i < actualCSVParserRecords.size(); i++) {
-			List<String> actualCSVRecordList = _toList(
-				actualCSVParserRecords.get(i));
+		for (int i = 1; i < actualCSVRecords.size(); i++) {
+			List<String> actualCSVRecordList = _toList(actualCSVRecords.get(i));
 
 			if (actualCSVRecordList.contains(externalReferenceCode)) {
 				Assert.assertEquals(expectedCSVRecordList, actualCSVRecordList);

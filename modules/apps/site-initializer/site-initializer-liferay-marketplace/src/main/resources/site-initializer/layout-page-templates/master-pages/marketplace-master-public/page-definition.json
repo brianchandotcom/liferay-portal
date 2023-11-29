@@ -818,7 +818,8 @@
 										"key": "marketplace-footer-public",
 										"siteKey": "[$GROUP_KEY$]"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 									],
 									"indexed": true

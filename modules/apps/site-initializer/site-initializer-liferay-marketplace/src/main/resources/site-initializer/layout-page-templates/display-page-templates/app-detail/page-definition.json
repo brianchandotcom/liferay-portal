@@ -1656,7 +1656,7 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "marketplace-master"
+			"key": "marketplace-master-public"
 		},
 		"themeName": "Classic",
 		"themeSettings": {

@@ -51,7 +51,7 @@ boolean last = position == (searchContainer.getTotal() - 1);
 			cssClass="lfr-portal-tooltip"
 			href="<%= moveAssetEntrySelectionUpURL %>"
 			icon="angle-up"
-			title='<%= LanguageUtil.get(request, "down") %>'
+			title='<%= LanguageUtil.get(request, "up") %>'
 		/>
 	</c:when>
 </c:choose>

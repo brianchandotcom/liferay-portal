@@ -69,6 +69,9 @@ public class UpgradeCatchAllCheck {
 		CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST;
 		CookiesConstants.NAME_ID;
 		CookiesConstants.NAME_USER_UUID;
+
+		PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX;
+		PortletDisplayTemplateConstants.ENTRIES;
 	}
 
 	public void method(

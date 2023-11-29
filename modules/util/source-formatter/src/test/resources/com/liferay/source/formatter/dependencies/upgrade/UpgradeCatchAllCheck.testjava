@@ -46,6 +46,9 @@ public class UpgradeCatchAllCheck {
 		CookieKeys.COMMERCE_CONTINUE_AS_GUEST;
 		CookieKeys.ID;
 		CookieKeys.SCREEN_NAME;
+
+		PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX;
+		PortletDisplayTemplateManager.ENTRIES;
 	}
 
 	public void method(

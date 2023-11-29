@@ -11,8 +11,11 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
@@ -67,13 +70,8 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			long objectFieldId, ServiceContext serviceContext)
 		throws Exception {
 
-		validateFileName(fileName);
-		validateFileExtension(fileName, objectFieldId);
-
-		User user = _userLocalService.getUser(serviceContext.getUserId());
-
-		validateFileSize(
-			fileName, fileContent.length, objectFieldId, !user.isGuestUser());
+		_validateFile(
+			fileContent, fileName, objectFieldId, serviceContext.getUserId());
 
 		DLFolder dlFolder = getDLFolder(
 			companyId, groupId, objectFieldId, serviceContext,
@@ -91,6 +89,51 @@ public class AttachmentManagerImpl implements AttachmentManager {
 					FileUtil.stripExtension(fileName)),
 				StringPool.BLANK, null, null, inputStream, fileContent.length,
 				null, null, serviceContext);
+		}
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long companyId, byte[] fileContent, String fileName,
+			String folderExternalReferenceCode, long groupId,
+			long objectFieldId, ServiceContext serviceContext)
+		throws Exception {
+
+		_validateFile(
+			fileContent, fileName, objectFieldId, serviceContext.getUserId());
+
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		long repositoryId = groupId;
+
+		if (Validator.isNotNull(folderExternalReferenceCode)) {
+			DLFolder dlFolder =
+				_dlFolderService.getDLFolderByExternalReferenceCode(
+					folderExternalReferenceCode, groupId);
+
+			folderId = dlFolder.getFolderId();
+			repositoryId = dlFolder.getRepositoryId();
+		}
+
+		ServiceContext cloneServiceContext =
+			(ServiceContext)serviceContext.clone();
+
+		cloneServiceContext.setCompanyId(companyId);
+
+		try (InputStream inputStream = new ByteArrayInputStream(fileContent)) {
+			_dlValidator.validateFileSize(
+				groupId, fileName,
+				_mimeTypes.getContentType(inputStream, fileName),
+				fileContent.length);
+
+			return _dlAppService.addFileEntry(
+				null, repositoryId, folderId,
+				DLUtil.getUniqueFileName(groupId, folderId, fileName, true),
+				_mimeTypes.getContentType(inputStream, fileName),
+				DLUtil.getUniqueTitle(
+					groupId, folderId, FileUtil.stripExtension(fileName)),
+				StringPool.BLANK, null, null, inputStream, fileContent.length,
+				null, null, cloneServiceContext);
 		}
 	}
 
@@ -284,13 +327,36 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		return storageDLFolderId;
 	}
 
+	private void _validateFile(
+			byte[] fileContent, String fileName, long objectFieldId,
+			long userId)
+		throws Exception {
+
+		validateFileName(fileName);
+		validateFileExtension(fileName, objectFieldId);
+
+		User user = _userLocalService.getUser(userId);
+
+		validateFileSize(
+			fileName, fileContent.length, objectFieldId, !user.isGuestUser());
+	}
+
 	private static final long _FILE_LENGTH_MB = 1024 * 1024;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private DLFolderService _dlFolderService;
+
+	@Reference
+	private DLValidator _dlValidator;
 
 	@Reference
 	private MimeTypes _mimeTypes;

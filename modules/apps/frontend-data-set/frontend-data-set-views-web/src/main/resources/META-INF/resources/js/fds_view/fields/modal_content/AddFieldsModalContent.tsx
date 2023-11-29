@@ -131,7 +131,9 @@ const Highlight = ({query, text}: {query?: string; text?: string}) => {
 	return indexMatch > -1 ? (
 		<>
 			{text.substring(0, indexMatch)}
-			<mark>{text.substring(indexMatch, indexMatch + query.length)}</mark>
+			<mark className="bg-transparent border-0 font-weight-bold p-0 shadow-none">
+				{text.substring(indexMatch, indexMatch + query.length)}
+			</mark>
 			{text.substring(indexMatch + query.length)}
 		</>
 	) : (

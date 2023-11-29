@@ -771,34 +771,36 @@ public class PayPalCommercePaymentIntegration
 			return null;
 		}
 
-		Country country = shippingCommerceAddress.getCountry();
+		ShippingDetail shippingDetail = new ShippingDetail();
+
+		AddressPortable addressPortable = new AddressPortable();
+
+		addressPortable.addressLine1(shippingCommerceAddress.getStreet1());
+		addressPortable.addressLine2(shippingCommerceAddress.getStreet2());
+
 		Region region = shippingCommerceAddress.getRegion();
 
-		return new ShippingDetail() {
-			{
-				addressPortable(
-					new AddressPortable() {
-						{
-							addressLine1(shippingCommerceAddress.getStreet1());
-							addressLine2(shippingCommerceAddress.getStreet2());
+		if (region != null) {
+			addressPortable.adminArea1(region.getRegionCode());
+		}
 
-							if (region != null) {
-								adminArea1(region.getRegionCode());
-							}
+		addressPortable.adminArea2(shippingCommerceAddress.getCity());
 
-							adminArea2(shippingCommerceAddress.getCity());
-							countryCode(country.getA2());
-							postalCode(shippingCommerceAddress.getZip());
-						}
-					});
-				name(
-					new Name() {
-						{
-							fullName(shippingCommerceAddress.getName());
-						}
-					});
-			}
-		};
+		Country country = shippingCommerceAddress.getCountry();
+
+		addressPortable.countryCode(country.getA2());
+
+		addressPortable.postalCode(shippingCommerceAddress.getZip());
+
+		shippingDetail.addressPortable(addressPortable);
+
+		Name name = new Name();
+
+		name.fullName(shippingCommerceAddress.getName());
+
+		shippingDetail.name(name);
+
+		return shippingDetail;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

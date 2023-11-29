@@ -382,7 +382,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			return newContent;
 		}
 
-		Set<String> keySet = jsonObject.keySet();
+		Set<String> keys = jsonObject.keySet();
 
 		if ((fileName.endsWith(".java") &&
 			 !jsonObject.getBoolean("skipParametersValidation") &&
@@ -390,7 +390,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				 javaMethodContent, newContent, fileName,
 				 ArrayUtil.toStringArray(parameterNames),
 				 ArrayUtil.toStringArray(parameterTypes))) ||
-			!keySet.contains("to")) {
+			!keys.contains("to")) {
 
 			addMessage(fileName, _getMessage(jsonObject));
 

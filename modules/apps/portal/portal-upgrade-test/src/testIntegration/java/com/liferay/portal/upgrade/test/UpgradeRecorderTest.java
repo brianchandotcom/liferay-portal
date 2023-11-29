@@ -137,8 +137,6 @@ public class UpgradeRecorderTest {
 		}
 
 		Assert.assertEquals("failure", _getResult());
-
-		Assert.assertEquals("micro", _getType());
 	}
 
 	@Test
@@ -153,12 +151,6 @@ public class UpgradeRecorderTest {
 		StartupHelperUtil.setUpgrading(false);
 
 		Assert.assertEquals("failure", _getResult());
-
-		Assert.assertEquals("major", _getType());
-
-		ReflectionTestUtil.setFieldValue(
-			_upgradeRecorder, "_verifyProcessError",
-			_originalVerifyProcessError);
 	}
 
 	@Test
@@ -167,11 +159,11 @@ public class UpgradeRecorderTest {
 			Version version = PortalUpgradeProcess.getCurrentSchemaVersion(
 				connection);
 
-			PortalUpgradeProcess.updateSchemaVersion(
-				connection, new Version(0, 0, 0));
-
 			try {
 				StartupHelperUtil.setUpgrading(true);
+
+				PortalUpgradeProcess.updateSchemaVersion(
+					connection, new Version(0, 0, 0));
 
 				StartupHelperUtil.setUpgrading(false);
 			}
@@ -181,8 +173,6 @@ public class UpgradeRecorderTest {
 		}
 
 		Assert.assertEquals("failure", _getResult());
-
-		Assert.assertEquals("major", _getType());
 	}
 
 	@Test

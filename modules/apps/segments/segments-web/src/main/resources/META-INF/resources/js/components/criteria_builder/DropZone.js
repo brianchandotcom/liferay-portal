@@ -4,7 +4,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
 import {
@@ -118,6 +118,7 @@ function DropZone({
 }) {
 	const movementSource = useMovementSource();
 	const movementTarget = useMovementTarget();
+	const ref = useRef();
 
 	const isTarget = isKeyboardTarget(
 		before,
@@ -128,8 +129,18 @@ function DropZone({
 		movementTarget
 	);
 
+	useEffect(() => {
+		if (isTarget) {
+			ref.current?.scrollIntoView?.({
+				behavior: 'smooth',
+				block: 'nearest',
+				inline: 'nearest',
+			});
+		}
+	}, [isTarget]);
+
 	return (
-		<div className="drop-zone-root position-relative">
+		<div className="drop-zone-root position-relative" ref={ref}>
 			{connectDropTarget(
 				<div className="drop-zone-target">
 					{(canDrop && hover) || isTarget ? (

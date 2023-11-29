@@ -5,7 +5,7 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
 import {useMovementTarget} from '../../contexts/KeyboardMovementContext';
@@ -42,10 +42,22 @@ function drop(props, monitor) {
 function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
 	const movementTarget = useMovementTarget();
 
+	const ref = useRef();
+
 	const isKeyboardTarget = movementTarget?.groupId === 'root';
 
 	const displayEmptyDropZone =
 		canDrop || !emptyContributors || isKeyboardTarget;
+
+	useEffect(() => {
+		if (isKeyboardTarget) {
+			ref.current?.scrollIntoView?.({
+				behavior: 'smooth',
+				block: 'nearest',
+				inline: 'nearest',
+			});
+		}
+	}, [isKeyboardTarget]);
 
 	return connectDropTarget(
 		displayEmptyDropZone ? (
@@ -57,6 +69,7 @@ function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
 						!emptyContributors || (canDrop && !hover),
 					'empty-drop-zone--target': hover || isKeyboardTarget,
 				})}
+				ref={ref}
 			/>
 		) : (
 			<div>

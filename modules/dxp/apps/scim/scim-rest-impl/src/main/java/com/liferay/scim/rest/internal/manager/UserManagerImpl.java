@@ -603,7 +603,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private UserGroup _fetchUserGroup(
-		long companyId, String externalReferenceCode, long groupId) {
+		long companyId, String externalReferenceCode, long userGroupId) {
 
 		UserGroup userGroup =
 			_userGroupLocalService.fetchUserGroupByExternalReferenceCode(
@@ -613,7 +613,7 @@ public class UserManagerImpl implements UserManager {
 			return userGroup;
 		}
 
-		return _userGroupLocalService.fetchUserGroup(groupId);
+		return _userGroupLocalService.fetchUserGroup(userGroupId);
 	}
 
 	private String _getScimClientId(
@@ -760,21 +760,22 @@ public class UserManagerImpl implements UserManager {
 		return _toScimUser(portalUser);
 	}
 
-	private UserGroup _getUserGroup(long companyId, long groupId)
+	private UserGroup _getUserGroup(long companyId, long userGroupId)
 		throws AbstractCharonException {
 
-		UserGroup userGroup = _userGroupLocalService.fetchUserGroup(groupId);
+		UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+			userGroupId);
 
 		if (userGroup == null) {
 			throw new NotFoundException(
-				"No group found with group ID " + groupId);
+				"No group found with group ID " + userGroupId);
 		}
 
 		String groupScimClientId = _getScimClientId(userGroup);
 
 		if (Validator.isNull(groupScimClientId)) {
 			throw new NotFoundException(
-				"No group found with group ID " + groupId);
+				"No group found with group ID " + userGroupId);
 		}
 
 		ScimClientOAuth2ApplicationConfiguration
